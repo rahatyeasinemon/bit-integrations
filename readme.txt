@@ -7,7 +7,7 @@ Requires PHP: 7.4
 Stable tag: 1.3.9
 License: GPLv2 or later
 
-Automation Plugin for WordPress; Integration of 60+ Triggers and 130+ Actions.The #1 highest no-code platform Automator plugin in WordPress. 
+Automation Plugin for WordPress; Integration of 60+ Triggers and 130+ Actions.The #1 highest no-code platform Automator plugin in WordPress.
 
 == Description ==
 
@@ -30,19 +30,17 @@ https://youtu.be/hgMkLvV-r6k
 
 2. When a user WooCommerce orders a product, you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
 
-3.  When a user enrolls in a course in [LearnDash](https://www.learndash.com/), [LifterLMS](https://wordpress.org/plugins/lifterlms/), [Tutor LMS ](https://wordpress.org/plugins/tutor/), etc. then you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
+3. When a user enrolls in a course in [LearnDash](https://www.learndash.com/), [LifterLMS](https://wordpress.org/plugins/lifterlms/), [Tutor LMS ](https://wordpress.org/plugins/tutor/), etc. then you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
 
 4. When a user registers on your site, you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
 
 5. When a user Donates to GiveWP,you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
 
-6. User can receive data via incoming [**webhook**](https://webhook.is/difference-between-webhook-and-api) from other platforms and send also data to other platform via outgoing [**webhook**](https://webhook.is/difference-between-webhook-and-api) as well. 
-
+6. User can receive data via incoming [**webhook**](https://webhook.is/difference-between-webhook-and-api) from other platforms and send also data to other platform via outgoing [**webhook**](https://webhook.is/difference-between-webhook-and-api) as well.
 
 Mak says about Bit Integrations in his youtube channel
 
 https://youtu.be/UhTu6LCmh8A
-
 
 ## ♻ How does this plugin work?
 
@@ -50,116 +48,145 @@ This plugin acts as a bridge between platforms, using Triggers and Actions. Trig
 For example, a contact form (Bit Form, WP Forms, etc.)
 is submitted, and you want to send data in your CRM, Email Marketing Software, Project Management Tools, Data Collection Tools, and Other WordPress plugins.
 
-
 Bit Integrations review in SaaS Master youtube channel
 
 https://youtu.be/eFuficjF_F4
 
-
 ### ⭐ WooCommerce integrations :
+
 integrated with [wooCommerce](https://wordpress.org/plugins/woocommerce/) popular addons like wooCommerce booking, wooCommerce subscriptions,
-25+ type options are available for [wooCommerce](https://wordpress.org/plugins/woocommerce/)  trigger and action.
+25+ type options are available for [wooCommerce](https://wordpress.org/plugins/woocommerce/) trigger and action.
 Users can send data when like customer create/update/delete, product create/update/delete,
 order create/update/delete, order specific product, order specific category, booking create, and more.
 
 ### ⭐ Page/Theme Builder Automation :
-6 page builders like [Elementor](https://wordpress.org/plugins/elementor/), [Divi](https://www.elegantthemes.com/gallery/divi/), [Brizy](https://wordpress.org/plugins/brizy/), [Breakdance](https://breakdance.com/), [Bricks](https://bricksbuilder.io/),  and [Beaver Builder](https://wordpress.org/plugins/beaver-builder-lite-version/).  Users can integrate [Elementor](https://wordpress.org/plugins/elementor/) forms with 100+ platforms.  
+
+6 page builders like [Elementor](https://wordpress.org/plugins/elementor/), [Divi](https://www.elegantthemes.com/gallery/divi/), [Brizy](https://wordpress.org/plugins/brizy/), [Breakdance](https://breakdance.com/), [Bricks](https://bricksbuilder.io/), and [Beaver Builder](https://wordpress.org/plugins/beaver-builder-lite-version/). Users can integrate [Elementor](https://wordpress.org/plugins/elementor/) forms with 100+ platforms.
 
 ### ⭐ Form Builder Automation :
-21+ form builder data sent to 110+ platforms when the form submit. 
+
+21+ form builder data sent to 110+ platforms when the form submit.
 The most popular forms are [Bit Form](https://wordpress.org/plugins/bit-form/), [Contact Form 7](https://wordpress.org/plugins/contact-form-7/), [Forminator form](https://wordpress.org/plugins/forminator/), [WPForms](https://wordpress.org/plugins/wpforms-lite/), [Fluent Form](https://wordpress.org/plugins/fluentform/), [Ninja Form](https://wordpress.org/plugins/ninja-forms/), [WS Forms](https://wordpress.org/plugins/ws-form/), [Gravity Form](https://www.gravityforms.com/), [ARForms](https://wordpress.org/plugins/arforms-form-builder/) , [Everest Form](https://wordpress.org/plugins/everest-forms/), [eForm](https://eform.live/) , [Happy Forms](https://wordpress.org/plugins/happyforms/) , [JetForm Builder](https://wordpress.org/plugins/jetformbuilder/) , [Kali Forms](https://wordpress.org/plugins/kali-forms/) , [Kadence Blocks Form](https://www.kadencewp.com/kadence-blocks/custom-blocks/form-block/) , [Met Form](https://wordpress.org/plugins/metform/) , [Piotnet Forms](https://wordpress.org/plugins/piotnetforms/) , [Tripetto Form](https://wordpress.org/plugins/tripetto/), [WeForms](https://wordpress.org/plugins/search/WeForms/) , [Formidable](https://wordpress.org/plugins/formidable/) , [FormCraft](https://wordpress.org/plugins/formcraft-form-builder/), Ws Form and more.
 
 ### ⭐ Customer Relation Management (CRM) Automation:
-Integrations with the most popular 17+ CRM like [Salesmate](https://www.salesmate.io/), [Zendesk](https://www.zendesk.com/), [ClinchPad](https://www.clinchpad.com/), [Salesforce](https://www.salesforce.com/), [Copper CRM](https://www.copper.com/), [Zoho CRM](https://www.zoho.com/crm/), [HubSpot](https://www.hubspot.com/), [Agile CRM](https://www.agilecrm.com/), [Capsule CRM](https://capsulecrm.com/), [FluentCRM](https://wordpress.org/plugins/fluent-crm/), [Keap](https://keap.com/), [Pipedrive](https://www.pipedrive.com/), [Integrately](https://integrately.com/), [Insightly](https://www.insightly.com/), [Autonami CRM](https://wordpress.org/plugins/wp-marketing-automations/), [CompanyHub](https://companyhub.com/), [Flowlu](https://www.flowlu.com/)  and  more.
-    
+
+Integrations with the most popular 17+ CRM like [Salesmate](https://www.salesmate.io/), [Zendesk](https://www.zendesk.com/), [ClinchPad](https://www.clinchpad.com/), [Salesforce](https://www.salesforce.com/), [Copper CRM](https://www.copper.com/), [Zoho CRM](https://www.zoho.com/crm/), [HubSpot](https://www.hubspot.com/), [Agile CRM](https://www.agilecrm.com/), [Capsule CRM](https://capsulecrm.com/), [FluentCRM](https://wordpress.org/plugins/fluent-crm/), [Keap](https://keap.com/), [Pipedrive](https://www.pipedrive.com/), [Integrately](https://integrately.com/), [Insightly](https://www.insightly.com/), [Autonami CRM](https://wordpress.org/plugins/wp-marketing-automations/), [CompanyHub](https://companyhub.com/), [Flowlu](https://www.flowlu.com/) and more.
+
 ### ⭐ Learning Management System (LMS) Automation:
+
 4 LMS like [LearnDash](https://www.learndash.com/), [LifterLMS](https://wordpress.org/plugins/lifterlms/), MasterStudy LMS, Thrive Apprentice, [Tutor LMS ](https://wordpress.org/plugins/tutor/), [WP Courseware](https://flyplugins.com/wp-courseware/), and more.
 Users can send data when like course create/update/delete, lesson create/update/delete, quiz create/update/delete, topic create/update/delete, student enroll/unEnroll, student complete course, and more.
 
 ### ⭐ Email Marketing Automation:
-You can send data from 40+ popular email marketing software like 
-[Mailify](https://www.mailify.com/), [Lemlist](https://www.lemlist.com/), [ActiveCampaign](https://www.activecampaign.com/), [Acumbamail](https://acumbamail.com/), [Benchmark](https://www.benchmarkemail.com/), [ConvertKit](https://convertkit.com/), [DirectIQ](https://www.directiq.com/),  [Elastic Email](https://elasticemail.com/), [Encharge](https://encharge.io/), [EmailOctopus](https://emailoctopus.com/),  [FluentCRM](https://wordpress.org/plugins/fluent-crm/), [Freshsales](https://www.freshworks.com/crm/sales/), [GetGist](https://getgist.com/), [Groundhogg](https://wordpress.org/plugins/groundhogg/), [GetResponse](https://www.getresponse.com/),  [Klaviyo](https://www.klaviyo.com/),  [Kirim.Email](https://kirim.email/), [MailBluster](https://mailbluster.com/), [Mailrelay](https://mailrelay.com/), [MailerLite](https://www.mailerlite.com/), [Mailchimp](https://mailchimp.com/), [MailPoet](https://wordpress.org/plugins/mailpoet/), [Mailjet](https://www.mailjet.com/), [Mautic](https://www.mautic.org/), [Moosend](https://moosend.com/), [Mailercloud](https://www.mailercloud.com/), [MailUp](https://mailup.com/), [Omnisend](https://www.omnisend.com/), [Rapidmail](https://www.rapidmail.com/), [Sales Plus](https://salesplus.ie/), [Salesforce](https://www.salesforce.com/), [SendinBlue(Brevo)](https://www.sendinblue.com/), [Sendy Widget](https://sendy.co/), [SendFox](https://sendfox.com/), [Selzy](https://selzy.com/), [Smaily](https://smaily.com/), [SendGrid](https://sendgrid.com/), [SureCart](https://surecart.com/), [SendPulse](https://sendpulse.com/), [Vbout ](https://www.vbout.com/), [Demio](https://www.demio.com/) .
+
+You can send data from 40+ popular email marketing software like
+[Mailify](https://www.mailify.com/), [Lemlist](https://www.lemlist.com/), [ActiveCampaign](https://www.activecampaign.com/), [Acumbamail](https://acumbamail.com/), [Benchmark](https://www.benchmarkemail.com/), [ConvertKit](https://convertkit.com/), [DirectIQ](https://www.directiq.com/), [Elastic Email](https://elasticemail.com/), [Encharge](https://encharge.io/), [EmailOctopus](https://emailoctopus.com/), [FluentCRM](https://wordpress.org/plugins/fluent-crm/), [Freshsales](https://www.freshworks.com/crm/sales/), [GetGist](https://getgist.com/), [Groundhogg](https://wordpress.org/plugins/groundhogg/), [GetResponse](https://www.getresponse.com/), [Klaviyo](https://www.klaviyo.com/), [Kirim.Email](https://kirim.email/), [MailBluster](https://mailbluster.com/), [Mailrelay](https://mailrelay.com/), [MailerLite](https://www.mailerlite.com/), [Mailchimp](https://mailchimp.com/), [MailPoet](https://wordpress.org/plugins/mailpoet/), [Mailjet](https://www.mailjet.com/), [Mautic](https://www.mautic.org/), [Moosend](https://moosend.com/), [Mailercloud](https://www.mailercloud.com/), [MailUp](https://mailup.com/), [Omnisend](https://www.omnisend.com/), [Rapidmail](https://www.rapidmail.com/), [Sales Plus](https://salesplus.ie/), [Salesforce](https://www.salesforce.com/), [SendinBlue(Brevo)](https://www.sendinblue.com/), [Sendy Widget](https://sendy.co/), [SendFox](https://sendfox.com/), [Selzy](https://selzy.com/), [Smaily](https://smaily.com/), [SendGrid](https://sendgrid.com/), [SureCart](https://surecart.com/), [SendPulse](https://sendpulse.com/), [Vbout ](https://www.vbout.com/), [Demio](https://www.demio.com/) .
 
 ### ⭐ Incoming and Outgoing Webhooks :
+
 You can send data via outgoing [**Webhooks**](https://webhook.is/difference-between-webhook-and-api) and receive data via incoming [**Webhooks**](https://webhook.is/difference-between-webhook-and-api).
 
 ### ⭐ Google Automation:
+
 Integration with [Google Sheets](https://www.google.com/sheets/about/), [Google Calendar](https://calendar.google.com/calendar/), [Google Drive](https://www.google.com/drive/), and [Google Contacts](https://contacts.google.com/).
 
 ### ⭐ Zoho Product Automation:
+
 [Zoho Bigin](https://www.bigin.com/), [Zoho CRM](https://www.zoho.com/crm/), [Zoho Campaigns](https://www.zoho.com/campaigns/), [Zoho Sheet](https://www.zoho.com/sheet/),[Zoho Desk](https://www.zoho.com/desk/), [Zoho Flow](https://www.zoho.com/flow/), [Zoho Marketing Hub](https://www.zoho.com/marketingautomation/), [Zoho Recruit](https://www.zoho.com/recruit/),
 [Zoom Meeting](https://zoom.us/), [Zoom Webinar](https://zoom.us/).
 
 ### ⭐ Membership Plugin Automation:
+
 4+ membership plugins like [MemberPress](https://wordpress.org/plugins/members/), [Paid Memberships Pro](https://wordpress.org/plugins/paid-memberships-pro/), [Restrict Content](https://wordpress.org/plugins/restrict-content/), BuddyBoss, GamiPress, Ultimate Member, MemberPress and [ARMember](https://wordpress.org/plugins/armember-membership/).
 Users can send data when like user Purchase membership, user cancel membership, user renew membership, user update membership, user delete membership, and more.
 
 ### ⭐ Affiliate Plugin Automation:
+
 3 affiliate plugins like [AffiliateWP](https://wordpress.org/plugins/affiliatewp-affiliate-area-shortcodes/), [Solid Affiliate](https://solidaffiliate.com/), and [SliceWP Affiliate](https://wordpress.org/plugins/slicewp/). Users can send data when like affiliate create, affiliate referral , affiliate referral conversion, and more.
 
 ### ⭐ Sales Funnels Automation:
+
 3 sales funnels like [SureCart](https://wordpress.org/plugins/surecart/), [CartFlows](https://wordpress.org/plugins/cartflows/), [WP funnels](https://wordpress.org/plugins/wpfunnels/).
 
 ### ⭐ Social Media Automation:
+
 When any trigger is fired, you can send data to 3 social media like [WhatsApp](https://www.whatsapp.com/), [Slack](https://slack.com/), and [Telegram](https://telegram.org/).
 
-
 ### ⭐ Task Management Automation:
+
 5 task management like [Airtable](https://www.airtable.com/), [Asana](https://www.asana.com/), [ClickUp](https://clickup.com/), [Notion](https://www.notion.so/), and [Trello](https://trello.com/).
 
 ### ⭐ Customer Support Automation:
-4+ customer support software's like [Fluent support](https://wordpress.org/plugins/fluent-support/), [Freshdesk](https://www.freshworks.com/freshdesk/) , [Twilio](https://www.twilio.com/en-us) , [Zoho Desk](https://www.zoho.com/desk/)  and more.  
+
+4+ customer support software's like [Fluent support](https://wordpress.org/plugins/fluent-support/), [Freshdesk](https://www.freshworks.com/freshdesk/) , [Twilio](https://www.twilio.com/en-us) , [Zoho Desk](https://www.zoho.com/desk/) and more.
 
 ### ⭐ Cloud Storage Automation:
-4 cloud storage software's like [Google Drive](https://www.google.com/drive/), OneDrive ,  [pCloud](https://www.pcloud.com/) , [Dropbox](https://www.dropbox.com/)  and more.  
+
+4 cloud storage software's like [Google Drive](https://www.google.com/drive/), OneDrive , [pCloud](https://www.pcloud.com/) , [Dropbox](https://www.dropbox.com/) and more.
 
 ### ⭐ Gamification Automation:
-[GamiPress](https://wordpress.org/plugins/gamipress/).  
+
+[GamiPress](https://wordpress.org/plugins/gamipress/).
 
 ### ⭐ Donation Plugin Automation:
+
 [GiveWP](https://wordpress.org/plugins/give/)
 
 ### ⭐ File Storage & Collaboration Platforms Integration:
+
 10+ File storage and Collaboration platforms like Airtable, Dropbox, Google Sheet, Google Calendar, Google Drive, Google Contacts, OneDrive, Slack, WhatsApp, Zoom Meeting, Zoom Webinar
 
 ### ⭐ Miscellaneous Platforms Integration:
+
 14+ Miscellaneous Platforms Amelia, Bit Assist, Breakdance, Custom Trigger, CartFlows, User Registration, Studiocart, Post Creation, KonnectzIT, Kirim.Email, Lemlist, Rapidmail, Selzy, Senfox, Smaily and more.
 
 ### ⭐ E-Commerce & Shopping Cart Integration:
+
 2 E-Commerce & Shopping Cart Platforms Easy Digital Downloads, WooCommerce
 
 ### ⭐ Event Management & Webinars Integration:
+
 1 Event Management & Webinars Integration Demio
 
 ### ⭐ Marketing & Campaign Management Platforms:
+
 12+ Marketing & Campaign Management Platforms Benchmark, ClickUp, Constant Contact, Moosend, Mailchimp, MailPoet, Mailjet, Mailrelay, MailUp, Mail Mint, Zoho Campaigns, Zoho Marketing Hub and more.
 
 ### ⭐ Document Management & Collaboration Integration:
+
 1 Document Management & Collaboration Integration Notion.
 
 ### ⭐ Lead Generation & Form Management Integration:
+
 1 Lead Generation & Form Management Integration Met Form.
 
 ### ⭐ Survey & Quiz Building Integration:
+
 1 Survey & Quiz Building Integration Tripetto Form.
 
 ### ⭐ Online Event & Webinar Platforms Integration:
+
 3 Online Event & Webinar Platforms Integration Demio, Zoom Meeting, Zoom Webinar
 
 ### ⭐ Content Management Systems (CMS) Integration:
+
 2 Content Management Systems (CMS) Integration Divi, Elementor
 
 ### ⭐ Data & Workflow Automation:
+
 15+ Data & Workflow Automation Integrately, Integromat(make), IFTTT, N8N, Webhooks, Zapier, FlowMattic, AutomatorWP, Uncanny Automator, Thrive Automator, WPWebhookss, Advanced Form Integration, Sperse.io, Albato, SureTriggers and more.
 
 ### ⭐ Cloud Storage & File Sharing Platform Integration:
+
 3 Cloud Storage & File Sharing Platform Integration Dropbox, Google Drive, OneDrive
 
 ### ⭐ Push Notification Platform Integration:
+
 1 Push Notification Platform Gravitec
 
 ### ⭐ Other:
-Users can get and send data to [JetEngine](https://crocoblock.com/plugins/jetengine/),  [RafflePress](https://wordpress.org/plugins/rafflepress/),
+
+Users can get and send data to [JetEngine](https://crocoblock.com/plugins/jetengine/), [RafflePress](https://wordpress.org/plugins/rafflepress/),
 
 ### ✔ Available Triggers are:
 
@@ -216,7 +243,7 @@ Users can get and send data to [JetEngine](https://crocoblock.com/plugins/jeteng
 51. [**Solid Affiliate :**](https://docs.bit-integrations.bitapps.pro/trigger/solid-affiliate) Solid Affiliate adds an affiliate registration page to your site. Affiliates/partners/influencers sign up, await your approval, and then gain access [[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/solid-affiliate/)|[**Website**](https://solidaffiliate.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJqJ6U-pXbBTTzKQJwy_jX-)|Free]
 52. [**SureCart :**](https://docs.bit-integrations.bitapps.pro/trigger/surecart) SureCart is a powerful checkout builder that levels up your online sales with insane conversion-boosting features [[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/surecart/)|[**Website**](https://surecart.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALWAM6nXMfveSjTUUxONz7Y)|[**Free**](https://wordpress.org/plugins/surecart/)]
 53. [**Tripetto :**](https://docs.bit-integrations.bitapps.pro/trigger/tripetto) Tripetto is like SurveyMonkey, Typeform and Landbot united, but with a fresh take on truly smart form building and safe data collection [[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/tripetto/)|[**Website**](https://tripetto.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKFEQ4Inx09-M8he5w5V80P)|[**Free**](https://wordpress.org/plugins/tripetto/)]
-54. [**Tutor LMS :**](https://docs.bit-integrations.bitapps.pro/trigger/tutor-lms) Tutor LMS  comes with a revolutionary drag & drop system to create resourceful courses. It's feature-rich, yet easy to use [[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/tutor-lms/)|[**Website**](https://www.themeum.com/product/tutor-lms/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKtLYQYbqcV6W_SYpVH9dJV)|[**Free**](https://wordpress.org/plugins/tutor/)]
+54. [**Tutor LMS :**](https://docs.bit-integrations.bitapps.pro/trigger/tutor-lms) Tutor LMS comes with a revolutionary drag & drop system to create resourceful courses. It's feature-rich, yet easy to use [[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/tutor-lms/)|[**Website**](https://www.themeum.com/product/tutor-lms/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKtLYQYbqcV6W_SYpVH9dJV)|[**Free**](https://wordpress.org/plugins/tutor/)]
 55. Thrive Apprentice : Thrive Apprentice Reports is the most advanced reporting engine for online course creators [Documentation|[**Website**](https://thrivethemes.com/apprentice/)|Tutorial|Free]
 56. [**weForms :**](https://docs.bit-integrations.bitapps.pro/trigger/we-form) weForms is an all-in-one form builder created for every skill level of user [[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/weforms/)|[**Website**](https://weformspro.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJxrtiuCRgT8ZyKMCDMJYIP)|[**Free**](https://wordpress.org/plugins/weforms/)]
 57. [**WP Post :**](https://docs.bit-integrations.bitapps.pro/trigger/wp-post) Posts, which are always associated with a date, are what make your blog a blog in Wordpress [[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/wp-post/)|Website|Tutorial|Free]
@@ -319,7 +346,7 @@ Users can get and send data to [JetEngine](https://crocoblock.com/plugins/jeteng
 87. [**SureCart :**](https://docs.bit-integrations.bitapps.pro/integrations/surecart) SureCart is a powerful checkout builder that levels up your online sales with insane conversion-boosting features [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/surecart/)|[**Website**](https://surecart.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALWAM6nXMfveSjTUUxONz7Y)|[**Free**](https://wordpress.org/plugins/surecart/)]
 88. SendPulse : SendPulse is a marketing automation platform that offers triggered emails, chatbots, scheduled SMS, and web push notifications [Documentation|[**Website**](https://sendpulse.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJlUggyhxxiPMqUvxFfqzGN)|[**Free**](https://wordpress.org/plugins/sendpulse-email-marketing-newsletter/)]
 89. [**Telegram :**](https://docs.bit-integrations.bitapps.pro/integrations/wpcf7-telegram) Telegram Messenger is a globally accessible freemium, encrypted, cloud-based and centralized instant messaging service [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/telegram/)|[**Website**](https://telegram.org/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKWf-FAvcCGFqgAzroUvrX5)]
-90. [**Tutor LMS  :**](https://docs.bit-integrations.bitapps.pro/integrations/tutor-lms) Tutor LMS  comes with a revolutionary drag & drop system to create resourceful courses [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/tutor-lms/)|[**Website**](https://www.themeum.com/product/tutor-lms/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKtLYQYbqcV6W_SYpVH9dJV)|[**Free**](https://wordpress.org/plugins/tutor/)]
+90. [**Tutor LMS :**](https://docs.bit-integrations.bitapps.pro/integrations/tutor-lms) Tutor LMS comes with a revolutionary drag & drop system to create resourceful courses [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/tutor-lms/)|[**Website**](https://www.themeum.com/product/tutor-lms/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKtLYQYbqcV6W_SYpVH9dJV)|[**Free**](https://wordpress.org/plugins/tutor/)]
 91. [**Trello :**](https://docs.bit-integrations.bitapps.pro/integrations/trello) Trello is a web-based, kanban-style, list-making application. A teamwork project management tool. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/trello/)|[**Website**](https://trello.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALwkqPjpDK9SbXzpG6xSJz4)]
 92. [**Twilio :**](https://docs.bit-integrations.bitapps.pro/integrations/twilio) Twilio is the industry-leading and trusted platform that efficiently powers your customer engagement innovation [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/twilio/)|[**Website**](https://www.twilio.com)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIdj2m4zjTUt6FaX8lWHeAf)]
 93. [**VBOUT :**](https://docs.bit-integrations.bitapps.pro/integrations/vbout) VBOUT offers several marketing tools into one powerful platform: Social media, landing pages, lead management, email marketing, automation and analytics [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/vbout/)|[**Website**](https://www.vbout.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKFBZEeN02rhG3lNCiy76yn)]
@@ -362,30 +389,23 @@ Users can get and send data to [JetEngine](https://crocoblock.com/plugins/jeteng
 130. Nimble : Nimble CRM enriches contacts with social and business data, streamlines workflows, and works across all channels [Documentation|[**Website**](https://www.nimble.com/)|Tutorial]
 131. Livestorm : Livestorm is a video engagement platform that delivers. Forget meeting fatigue, dull webinars and complex workflows [Documentation|[**Website**](https://livestorm.co/)|Tutorial]
 
-
 ## ⚡ Key Features:
 
 1.  Easy integration setup with a few clicks. Don't require any coding skills.
-    
 2.  You can create multiple integrations with a variety of applications under one form.
-    
 3.  Map necessary form fields with application fields under any module.
-    
 4.  Set conditional logic to trigger action.
-    
 5.  Record all the data submissions under the log.
 
 ### 🎉 Key Benefits of Plugin :
 
 Using the Bit Integrations plugin, you can control & manage your website data n different levels like- lead collection, creat products/customers for WooCommerce, CRM, Email marketing & so on actions. You can select your desired plugins & create actions to send data that will help you to reduce redundant work. Under one plugin, you can build several integrations. In a nutshell, it allows you to multitasking.
 
-
 ### ✨ [**Bit Integrations Pro Version Features**](https://www.bitapps.pro/bit-integrations/) :
 
 Free version allows you to use all available actions and triggers,
-but you are limited to one active integration. 
-With the pro version, you have the ability to create **Unlimited active integrations** Please check  [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations/).
-
+but you are limited to one active integration.
+With the pro version, you have the ability to create **Unlimited active integrations** Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations/).
 
 == ❣ What our customer say about Bit Integrations : ==
 
@@ -401,136 +421,259 @@ With the pro version, you have the ability to create **Unlimited active integrat
 💠 `Simplicity and Efficiency Combined!`
 💠 `Discover the Awesomeness of Bit Integrations`
 
-
 ### 💥 Don't worry, we give you some video tutorials with use cases to help you get started with the plugin.
 
 ### 🔅 [**Omnisend WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJtfMscjcjlQWfurvh2jy2J)
-### 🔅 [**GamiPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKvoKAatg5ioOep1N77Ek2d)
-### 🔅 [**Studiocart Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIzdZmtu18zJZwQFSZohEqq)
-### 🔅 [**Easy Digital Downloads (EDD) Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIrOtwsULBh0YD6Rz4pNaro)
-### 🔅 [**SendFox WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKhQzTDGUWR6OAVj-uN1-Ep)
-### 🔅 [**Twilio WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIdj2m4zjTUt6FaX8lWHeAf)
-### 🔅 [**Zoom Video Communications WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALsihVZKhQuq5QGINgro4DB)
-### 🔅 [**Notion WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI-HlfXA-3V-mMcJ_g8L6gl)
-### 🔅 [**KonnectzIT WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJWYHqcUzFwVsiCy_2uUxml)
-### 🔅 [**SendGrid WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI1QPJIx4YUwpQLVbTvw1KO)
-### 🔅 [**HubSpot WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI1QPJIx4YUwpQLVbTvw1KO)
-### 🔅 [**SureCart Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALWAM6nXMfveSjTUUxONz7Y)
-### 🔅 [**Integromat (Make.com) WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AL8HfPs26xjhzc_7ysFYrCu)
-### 🔅 [**Mailify (Sarbacane) WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJjJSkugTCNWW_mfwnFK02i)
-### 🔅 [**Salesmate CRM WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJehgjc-7kcMyoPLOSLDxoc)
-### 🔅 [**VBOUT WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKFBZEeN02rhG3lNCiy76yn)
-### 🔅 [**Wishlist Member Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIsdIcLNYtPXJGnTZ_UmWvT)
-### 🔅 [**Lemlist WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALlqBRAtTILihQLCYtJi2X3)
-### 🔅 [**Salesforce WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJHfZhVPrQ4KLQMNbVNgcnv)
-### 🔅 [**Brevo (Sendinblue) WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALjCKxsaR8FfT73Qv8mDEQ6)
-### 🔅 [**Google Calendar WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJ9gfbu6S8M1DCTaWWCWptu)
-### 🔅 [**MailUp WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKZoTOsege0sBuR1kPqnUhI)
-### 🔅 [**Integrately WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AInYjAN6svcuBDHJolbCkIZ)
-### 🔅 [**Pabbly Connect WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKWWLROSA7sPf75a4TfNKKg)
-### 🔅 [**Dropbox WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI7DZ2EQhJCISI84iaLhz6C)
-### 🔅 [**DirectIQ WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI9ZIECQakOnGjj8mKggEEl)
-### 🔅 [**Paid Memberships Pro Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJIZ020K3uZyVFDr00u-O6K)
-### 🔅 [**Asana WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALqRZ-IfDlhwqu40W6GG6iP)
-### 🔅 [**Agiled CRM WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKR_aHEcgno5CONC2GXgJj1)
-### 🔅 [**Restrict Content - Membership Plugin Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALYX6gagrSyQx7SHi6QeJ0B)
-### 🔅 [**Piotnet Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIC8HEO3M6L514FeS-4lsAE)
-### 🔅 [**Mailchimp WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALUaeqiK9GwBSxVkAod1PzP)
-### 🔅 [**WS Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKmyPCIy1-JR9tfZYhzRr38)
-### 🔅 [**Google Contacts WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AL2YdvUmvYmjjYx4brP5t81)
-### 🔅 [**GetGist WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALmJUyTlrw7KyKeWSwa0-9_)
-### 🔅 [**MetForm Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI6D0gHqgQMrKAD8uWxCF5j)
-### 🔅 [**SendPulse WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJlUggyhxxiPMqUvxFfqzGN)
-### 🔅 [**OneDrive WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKmwv84LP85aQDa2HdM9cPc)
-### 🔅 [**pCloud WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKN8YP9ZiA2Nr2YJkPsQL8x)
-### 🔅 [**MailerLite WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKe60pZMUmlWnHQWKrx8nw8)
-### 🔅 [**Piotnet Addons for Elementor Form (PAFE) Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIw22xCcveVAG1q1KgCXo7t)
-### 🔅 [**LifterLMS Integrations - WordPress LMS Plugin for eLearning**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJRGUfkF0prpGOOonGktABQ)
-### 🔅 [**Mailrelay WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AL4Qq3LwifB5Q0FMc9jbCBh)
-### 🔅 [**Smaily WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKu0p4pFVuQs66fDavvyL0o)
-### 🔅 [**Amelia Integrations - Booking for Appointments and Events Calendar**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJtHagrdIb16C3yVYX6rUTv)
-### 🔅 [**Moosend WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALkxq7mPauOZN1aU2vIWnER)
-### 🔅 [**WPFunnels Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIvMYNATfH66kAMiYH9nrx3)
-### 🔅 [**Freshdesk WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKSOvPOxvQ73003RJqjyzmq)
-### 🔅 [**WordPress User Registration Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKXUCcNE3JzpdQ-REGaZqP0)
-### 🔅 [**FormCraft Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIEaLLGpxecKyCtUEidGs8A)
-### 🔅 [**Propovoice CRM CRM Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALypdI2_549Vquqwc5qdDUE)
-### 🔅 [**LearnDash Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALIfOiZvP_7IGF8ASejyNWD)
-### 🔅 [**Google Sheet WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKuQdXT_tF6D9xEYIF2U5EF)
-### 🔅 [**WordPress Post Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKVAxNlFLKvcVd_9yiX1mgZ)
-### 🔅 [**Mailercloud WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIqOr2OMJT8FNh9QPVm2NQ6)
-### 🔅 [**Kali Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKZDVuoVAU1fIXuPDFjQKwd)
-### 🔅 [**Copper CRM WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIDfH9sPdxJ9vuUdWuJFx_p)
-### 🔅 [**Elementor Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALGg0fZNLDIHjh1QJPcDSXp)
-### 🔅 [**Ultimate Member – User Profile, Registration, Login, Member**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIQZ6_LkYASRj5zBJnNWDne)
-### 🔅 [**Slack WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALs0FkFMv0hh5_22fawGJsb)
-### 🔅 [**Solid Affiliate Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJqJ6U-pXbBTTzKQJwy_jX-)
-### 🔅 [**Tutor LMS  Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKtLYQYbqcV6W_SYpVH9dJV)
-### 🔅 [**Trello WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALwkqPjpDK9SbXzpG6xSJz4)
-### 🔅 [**JetFormBuilder Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJtNwId97vmLRjpqAWiZrpb)
-### 🔅 [**MailPoet Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJXbv17x7QVuO9dxddO6Z-1)
-### 🔅 [**GiveWP Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJd_oKE5n438PSWLUg35I2v)
-### 🔅 [**Mail Mint Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI0HbXNIZLj08eYGZQx4z9j)
-### 🔅 [**SliceWP Affiliate Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALhoOseAyoCeffUOwCssDeQ)
-### 🔅 [**GetResponse WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJ-gbPXJY3k6knIjPXiLuay)
-### 🔅 [**WooCommerce Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIjBabvB9-BmttQmFQGVd7_)
-### 🔅 [**MailBluster WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKizqbIH_kWIGoPaoRUmY0j)
-### 🔅 [**Bricks Page Builder Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKyyZhh4_n-MqdeaFv6x4iK)
-### 🔅 [**Convertkit WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AITR_K9KlAnPTJeYBFcFEcy)
-### 🔅 [**Groundhogg Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AITHa6jPQ3TfYo1P0FsNkF1)
-### 🔅 [**Zoho Marketing Automation WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKgaz3bG1iFFBYg2JuFpgVJ)
-### 🔅 [**Mautic WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIJBYngBbT4yuYwBd51yEXb)
-### 🔅 [**Divi Contact Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJpOfpcioYpZOYbhcY_qTLN)
-### 🔅 [**Happyforms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALmHg1oLd4UGLzes70-OqWe)
-### 🔅 [**Sendy Widget WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AINF7yrxJGD6b4kghdm6AyS)
-### 🔅 [**Breakdance Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKSASMJiVsaECw_seJI-hd0)
-### 🔅 [**Kadence Blocks Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIYYb6OSx05xgfrQ0v2Eatm)
-### 🔅 [**Zoho Sheet WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJVBb24m1J1z0CcKPhr1Een)
-### 🔅 [**Klaviyo WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIH42QKENrstP5MpfIieHtz)
-### 🔅 [**Bit Assist Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJeqs93IpMJ99064Sb_ebCO)
-### 🔅 [**ActiveCampaign WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJi9NlLdluJLhADHgyymPgf)
-### 🔅 [**Beaver Builder Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AL1d8J_r7brB_pZ7iRIpPpx)
-### 🔅 [**WPForms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKn6NqhMqYhgi61eZELRHFK)
-### 🔅 [**Bit SMTP - 100% free SMTP plugin for WordPress**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKDsASsBpjZseqCkHAf97HI)
-### 🔅 [**Telegram WordPress Integration**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKWf-FAvcCGFqgAzroUvrX5)
-### 🔅 [**Brizy Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJYTO5YvgqLeNdbWzGUmC_h)
-### 🔅 [**RapidMail WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIptiRzWyY65BhngKd_dqbQ)
-### 🔅 [**Gravity Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKbkYDUkBo_Z6zCviYruqmb)
-### 🔅 [**Zoho Desk WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIbT5j2wupZ1O3USH8gDilg)
-### 🔅 [**ARForms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALPmhxRCE2HuhGMPAlCoptE)
-### 🔅 [**Airtable WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKVpJtCejmJnsXrKl4xWLUz)
-### 🔅 [**Everest Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJ-BjBZjgzvMIgs8HXT5E3B)
-### 🔅 [**Benchmark Email WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIrUyTzC5KAyuEv22VDxXhU)
-### 🔅 [**Contact Form 7 Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AL85-ajsYQ7LOhs1t2y6toV)
-### 🔅 [**Selzy WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKX9kTxBGWtQ_6R36EzK68N)
-### 🔅 [**Formidable Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALZZxjFPE7bKPjoz0nVZUN3)
-### 🔅 [**Zoho Flow WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKT6gxT00O3YFk2GGYvQtMX)
-### 🔅 [**Restrict Content Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJq1l8SeKisLk60ewQRreg1)
-### 🔅 [**Freshsales WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJpdtINh80Pq8YQXdp0Wvsi)
-### 🔅 [**Ninja Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKq_x_MEanFAgLZtaYUstKY)
-### 🔅 [**Mailjet WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKgFBwkpaM0Uah1RPpaq0LO)
-### 🔅 [**Fluent Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIyB8ezuQkv5T-_8T7MaTV7)
-### 🔅 [**EmailOctopus WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJ9CS13FDnTgPfbhjMG2x1O)
-### 🔅 [**weForms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJxrtiuCRgT8ZyKMCDMJYIP)
-### 🔅 [**Google Drive WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI1G80MgmdIewYLPqsr7Bl2)
-### 🔅 [**Forminator Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALvmungUM60JXvI-PcsDK90)
-### 🔅 [**Encharge WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AImmtJe83OV_alDRJtl_Wm2)
-### 🔅 [**FluentCRM Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJy5hZGqcKBmtxO-9TSNlmy)
-### 🔅 [**Elastic Email WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKGk8q9MzrgeZvIqoP0yrWS)
-### 🔅 [**MetaBox Frontend Submission Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKm2-Ex0E2aUit6aai2LM09)
-### 🔅 [**Tripetto Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKFEQ4Inx09-M8he5w5V80P)
-### 🔅 [**Zoho Recruit WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIpAJSh09abQZaSe30pwk9E)
-### 🔅 [**Bit Assist**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKc9ZA1pBg8nujZF6fHgtm5)
-### 🔅 [**WooCommerce Bit Form Integration**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIRTzF919Kh67QBmTlNa3td)
-### 🔅 [**Bit Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALMEsKLYKebKb5XLGPWMNue)
-### 🔅 [**Webhooks**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AK9UTFZUC--v1aCMNms6QUr)
-### 🔅 [**Zoho Bigin WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALhsMoiWS1Bel1TtjIbtibB)
-### 🔅 [**Zoho Creator**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIQLjwPBmjmDlcU1dbBgkwz)
-### 🔅 [**Zoho Sheet**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKN4gEgctrcyht7zOwCyWpz)
-### 🔅 [**Zoho Projects**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJoFFks8-X5HhaM19_W9y3j)
-### 🔅 [**Conditional Logics**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJvTRBjjKOrNZARdHLa9OOf)
-### 🔅 [**Zoho CRM WordPress Integration**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALDlpDo9vCBjdiJDJ33Xx0z)
 
+### 🔅 [**GamiPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKvoKAatg5ioOep1N77Ek2d)
+
+### 🔅 [**Studiocart Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIzdZmtu18zJZwQFSZohEqq)
+
+### 🔅 [**Easy Digital Downloads (EDD) Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIrOtwsULBh0YD6Rz4pNaro)
+
+### 🔅 [**SendFox WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKhQzTDGUWR6OAVj-uN1-Ep)
+
+### 🔅 [**Twilio WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIdj2m4zjTUt6FaX8lWHeAf)
+
+### 🔅 [**Zoom Video Communications WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALsihVZKhQuq5QGINgro4DB)
+
+### 🔅 [**Notion WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI-HlfXA-3V-mMcJ_g8L6gl)
+
+### 🔅 [**KonnectzIT WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJWYHqcUzFwVsiCy_2uUxml)
+
+### 🔅 [**SendGrid WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI1QPJIx4YUwpQLVbTvw1KO)
+
+### 🔅 [**HubSpot WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI1QPJIx4YUwpQLVbTvw1KO)
+
+### 🔅 [**SureCart Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALWAM6nXMfveSjTUUxONz7Y)
+
+### 🔅 [**Integromat (Make.com) WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AL8HfPs26xjhzc_7ysFYrCu)
+
+### 🔅 [**Mailify (Sarbacane) WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJjJSkugTCNWW_mfwnFK02i)
+
+### 🔅 [**Salesmate CRM WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJehgjc-7kcMyoPLOSLDxoc)
+
+### 🔅 [**VBOUT WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKFBZEeN02rhG3lNCiy76yn)
+
+### 🔅 [**Wishlist Member Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIsdIcLNYtPXJGnTZ_UmWvT)
+
+### 🔅 [**Lemlist WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALlqBRAtTILihQLCYtJi2X3)
+
+### 🔅 [**Salesforce WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJHfZhVPrQ4KLQMNbVNgcnv)
+
+### 🔅 [**Brevo (Sendinblue) WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALjCKxsaR8FfT73Qv8mDEQ6)
+
+### 🔅 [**Google Calendar WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJ9gfbu6S8M1DCTaWWCWptu)
+
+### 🔅 [**MailUp WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKZoTOsege0sBuR1kPqnUhI)
+
+### 🔅 [**Integrately WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AInYjAN6svcuBDHJolbCkIZ)
+
+### 🔅 [**Pabbly Connect WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKWWLROSA7sPf75a4TfNKKg)
+
+### 🔅 [**Dropbox WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI7DZ2EQhJCISI84iaLhz6C)
+
+### 🔅 [**DirectIQ WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI9ZIECQakOnGjj8mKggEEl)
+
+### 🔅 [**Paid Memberships Pro Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJIZ020K3uZyVFDr00u-O6K)
+
+### 🔅 [**Asana WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALqRZ-IfDlhwqu40W6GG6iP)
+
+### 🔅 [**Agiled CRM WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKR_aHEcgno5CONC2GXgJj1)
+
+### 🔅 [**Restrict Content - Membership Plugin Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALYX6gagrSyQx7SHi6QeJ0B)
+
+### 🔅 [**Piotnet Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIC8HEO3M6L514FeS-4lsAE)
+
+### 🔅 [**Mailchimp WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALUaeqiK9GwBSxVkAod1PzP)
+
+### 🔅 [**WS Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKmyPCIy1-JR9tfZYhzRr38)
+
+### 🔅 [**Google Contacts WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AL2YdvUmvYmjjYx4brP5t81)
+
+### 🔅 [**GetGist WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALmJUyTlrw7KyKeWSwa0-9_)
+
+### 🔅 [**MetForm Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI6D0gHqgQMrKAD8uWxCF5j)
+
+### 🔅 [**SendPulse WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJlUggyhxxiPMqUvxFfqzGN)
+
+### 🔅 [**OneDrive WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKmwv84LP85aQDa2HdM9cPc)
+
+### 🔅 [**pCloud WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKN8YP9ZiA2Nr2YJkPsQL8x)
+
+### 🔅 [**MailerLite WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKe60pZMUmlWnHQWKrx8nw8)
+
+### 🔅 [**Piotnet Addons for Elementor Form (PAFE) Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIw22xCcveVAG1q1KgCXo7t)
+
+### 🔅 [**LifterLMS Integrations - WordPress LMS Plugin for eLearning**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJRGUfkF0prpGOOonGktABQ)
+
+### 🔅 [**Mailrelay WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AL4Qq3LwifB5Q0FMc9jbCBh)
+
+### 🔅 [**Smaily WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKu0p4pFVuQs66fDavvyL0o)
+
+### 🔅 [**Amelia Integrations - Booking for Appointments and Events Calendar**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJtHagrdIb16C3yVYX6rUTv)
+
+### 🔅 [**Moosend WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALkxq7mPauOZN1aU2vIWnER)
+
+### 🔅 [**WPFunnels Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIvMYNATfH66kAMiYH9nrx3)
+
+### 🔅 [**Freshdesk WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKSOvPOxvQ73003RJqjyzmq)
+
+### 🔅 [**WordPress User Registration Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKXUCcNE3JzpdQ-REGaZqP0)
+
+### 🔅 [**FormCraft Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIEaLLGpxecKyCtUEidGs8A)
+
+### 🔅 [**Propovoice CRM CRM Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALypdI2_549Vquqwc5qdDUE)
+
+### 🔅 [**LearnDash Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALIfOiZvP_7IGF8ASejyNWD)
+
+### 🔅 [**Google Sheet WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKuQdXT_tF6D9xEYIF2U5EF)
+
+### 🔅 [**WordPress Post Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKVAxNlFLKvcVd_9yiX1mgZ)
+
+### 🔅 [**Mailercloud WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIqOr2OMJT8FNh9QPVm2NQ6)
+
+### 🔅 [**Kali Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKZDVuoVAU1fIXuPDFjQKwd)
+
+### 🔅 [**Copper CRM WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIDfH9sPdxJ9vuUdWuJFx_p)
+
+### 🔅 [**Elementor Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALGg0fZNLDIHjh1QJPcDSXp)
+
+### 🔅 [**Ultimate Member – User Profile, Registration, Login, Member**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIQZ6_LkYASRj5zBJnNWDne)
+
+### 🔅 [**Slack WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALs0FkFMv0hh5_22fawGJsb)
+
+### 🔅 [**Solid Affiliate Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJqJ6U-pXbBTTzKQJwy_jX-)
+
+### 🔅 [**Tutor LMS Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKtLYQYbqcV6W_SYpVH9dJV)
+
+### 🔅 [**Trello WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALwkqPjpDK9SbXzpG6xSJz4)
+
+### 🔅 [**JetFormBuilder Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJtNwId97vmLRjpqAWiZrpb)
+
+### 🔅 [**MailPoet Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJXbv17x7QVuO9dxddO6Z-1)
+
+### 🔅 [**GiveWP Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJd_oKE5n438PSWLUg35I2v)
+
+### 🔅 [**Mail Mint Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI0HbXNIZLj08eYGZQx4z9j)
+
+### 🔅 [**SliceWP Affiliate Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALhoOseAyoCeffUOwCssDeQ)
+
+### 🔅 [**GetResponse WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJ-gbPXJY3k6knIjPXiLuay)
+
+### 🔅 [**WooCommerce Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIjBabvB9-BmttQmFQGVd7_)
+
+### 🔅 [**MailBluster WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKizqbIH_kWIGoPaoRUmY0j)
+
+### 🔅 [**Bricks Page Builder Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKyyZhh4_n-MqdeaFv6x4iK)
+
+### 🔅 [**Convertkit WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AITR_K9KlAnPTJeYBFcFEcy)
+
+### 🔅 [**Groundhogg Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AITHa6jPQ3TfYo1P0FsNkF1)
+
+### 🔅 [**Zoho Marketing Automation WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKgaz3bG1iFFBYg2JuFpgVJ)
+
+### 🔅 [**Mautic WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIJBYngBbT4yuYwBd51yEXb)
+
+### 🔅 [**Divi Contact Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJpOfpcioYpZOYbhcY_qTLN)
+
+### 🔅 [**Happyforms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALmHg1oLd4UGLzes70-OqWe)
+
+### 🔅 [**Sendy Widget WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AINF7yrxJGD6b4kghdm6AyS)
+
+### 🔅 [**Breakdance Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKSASMJiVsaECw_seJI-hd0)
+
+### 🔅 [**Kadence Blocks Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIYYb6OSx05xgfrQ0v2Eatm)
+
+### 🔅 [**Zoho Sheet WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJVBb24m1J1z0CcKPhr1Een)
+
+### 🔅 [**Klaviyo WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIH42QKENrstP5MpfIieHtz)
+
+### 🔅 [**Bit Assist Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJeqs93IpMJ99064Sb_ebCO)
+
+### 🔅 [**ActiveCampaign WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJi9NlLdluJLhADHgyymPgf)
+
+### 🔅 [**Beaver Builder Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AL1d8J_r7brB_pZ7iRIpPpx)
+
+### 🔅 [**WPForms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKn6NqhMqYhgi61eZELRHFK)
+
+### 🔅 [**Bit SMTP - 100% free SMTP plugin for WordPress**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKDsASsBpjZseqCkHAf97HI)
+
+### 🔅 [**Telegram WordPress Integration**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKWf-FAvcCGFqgAzroUvrX5)
+
+### 🔅 [**Brizy Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJYTO5YvgqLeNdbWzGUmC_h)
+
+### 🔅 [**RapidMail WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIptiRzWyY65BhngKd_dqbQ)
+
+### 🔅 [**Gravity Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKbkYDUkBo_Z6zCviYruqmb)
+
+### 🔅 [**Zoho Desk WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIbT5j2wupZ1O3USH8gDilg)
+
+### 🔅 [**ARForms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALPmhxRCE2HuhGMPAlCoptE)
+
+### 🔅 [**Airtable WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKVpJtCejmJnsXrKl4xWLUz)
+
+### 🔅 [**Everest Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJ-BjBZjgzvMIgs8HXT5E3B)
+
+### 🔅 [**Benchmark Email WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIrUyTzC5KAyuEv22VDxXhU)
+
+### 🔅 [**Contact Form 7 Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AL85-ajsYQ7LOhs1t2y6toV)
+
+### 🔅 [**Selzy WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKX9kTxBGWtQ_6R36EzK68N)
+
+### 🔅 [**Formidable Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALZZxjFPE7bKPjoz0nVZUN3)
+
+### 🔅 [**Zoho Flow WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKT6gxT00O3YFk2GGYvQtMX)
+
+### 🔅 [**Restrict Content Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJq1l8SeKisLk60ewQRreg1)
+
+### 🔅 [**Freshsales WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJpdtINh80Pq8YQXdp0Wvsi)
+
+### 🔅 [**Ninja Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKq_x_MEanFAgLZtaYUstKY)
+
+### 🔅 [**Mailjet WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKgFBwkpaM0Uah1RPpaq0LO)
+
+### 🔅 [**Fluent Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIyB8ezuQkv5T-_8T7MaTV7)
+
+### 🔅 [**EmailOctopus WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJ9CS13FDnTgPfbhjMG2x1O)
+
+### 🔅 [**weForms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJxrtiuCRgT8ZyKMCDMJYIP)
+
+### 🔅 [**Google Drive WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AI1G80MgmdIewYLPqsr7Bl2)
+
+### 🔅 [**Forminator Forms Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALvmungUM60JXvI-PcsDK90)
+
+### 🔅 [**Encharge WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AImmtJe83OV_alDRJtl_Wm2)
+
+### 🔅 [**FluentCRM Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJy5hZGqcKBmtxO-9TSNlmy)
+
+### 🔅 [**Elastic Email WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKGk8q9MzrgeZvIqoP0yrWS)
+
+### 🔅 [**MetaBox Frontend Submission Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKm2-Ex0E2aUit6aai2LM09)
+
+### 🔅 [**Tripetto Form Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKFEQ4Inx09-M8he5w5V80P)
+
+### 🔅 [**Zoho Recruit WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIpAJSh09abQZaSe30pwk9E)
+
+### 🔅 [**Bit Assist**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKc9ZA1pBg8nujZF6fHgtm5)
+
+### 🔅 [**WooCommerce Bit Form Integration**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIRTzF919Kh67QBmTlNa3td)
+
+### 🔅 [**Bit Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALMEsKLYKebKb5XLGPWMNue)
+
+### 🔅 [**Webhooks**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AK9UTFZUC--v1aCMNms6QUr)
+
+### 🔅 [**Zoho Bigin WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALhsMoiWS1Bel1TtjIbtibB)
+
+### 🔅 [**Zoho Creator**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIQLjwPBmjmDlcU1dbBgkwz)
+
+### 🔅 [**Zoho Sheet**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKN4gEgctrcyht7zOwCyWpz)
+
+### 🔅 [**Zoho Projects**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJoFFks8-X5HhaM19_W9y3j)
+
+### 🔅 [**Conditional Logics**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJvTRBjjKOrNZARdHLa9OOf)
+
+### 🔅 [**Zoho CRM WordPress Integration**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALDlpDo9vCBjdiJDJ33Xx0z)
 
 ✨ Overview of other products we are offering :
 
@@ -579,8 +722,6 @@ Yes, you can automate WordPress with 60+ trigger and 100+ actions.
 = 15. Can Bit Integrations connect plugins with external services like Zapier, Pabbly, N8N?=
 Yes, you can connect plugins with external services like Zapier, Pabbly, N8N with webhook.
 
-
-
 == Installation ==
 
 1. Download the plugin.
@@ -601,527 +742,517 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 == Changelog ==
 
 = 1.3.9 =
-*Release Date - *27th July 2023*
+*Release Date - *27th July 2023\*
 
-* **New Actions :**
-    * Nimble Integration & Automation
-    * Livestorm Integration & Automation
-    * Gravitec Integration & Automation
-    * FlowMattic Integration & Automation
-    * AutomatorWP Integration & Automation
-    * Uncanny Automator Integration & Automation
-    * Thrive Automator Integration & Automation
-    * WPWebhookss Integration & Automation
-    * Advanced Form Integration Integration & Automation
-    * Sperse.io Integration & Automation
-    * Albato Integration & Automation
-    * SureTriggers Integration & Automation
-* **Fixes :**
-    * Mautic required field & LogHandler issue Fixed.
-    * GoogleDrive signle/multiple file upload issue Fixed
-    * FluentSupport issue Fixed.
-    * Authentication window redirect issue Fixed
-    * DropBox multiple file submit issue Fixed
-    * Notion file upload issue fixed
+- **New Actions :**
+  - Nimble Integration & Automation : CRM Software To Grow Your Business
+  - Livestorm Integration & Automation : Better Webinar and Video - Livestorm - Conferencing Software
+  - Gravitec Integration & Automation : Marketing automation and content delivery for websites
+  - FlowMattic Integration & Automation : Must-have WordPress Automation Plugin
+  - AutomatorWP Integration & Automation : The most powerful automation plugin for WordPress
+  - Uncanny Automator Integration & Automation : The #1 no-code WordPress automation plugin
+  - Thrive Automator Integration & Automation : Create Smart Automations To Connect Your Favorite Tools
+  - WPWebhookss Integration & Automation : The #1 WordPress Automator plugin
+  - Advanced Form Integration Integration & Automation : Connect WooCommerce and Contact Form 7 to Google Sheets and other platforms
+  - Sperse.io Integration & Automation : App Integration Platform
+  - Albato Integration & Automation : a single no-code platform for all automations
+  - SureTriggers Integration & Automation : Automations Have Never Been This Easy
+- **Fixes :**
+  - Mautic required field & LogHandler issue Fixed.
+  - GoogleDrive signle/multiple file upload issue Fixed
+  - FluentSupport issue Fixed.
+  - Authentication window redirect issue Fixed
+  - DropBox multiple file submit issue Fixed
+  - Notion file upload issue fixed
 
 = 1.3.8 =
-*Release Date - *4th July 2023*
+*Release Date - *4th July 2023\*
 
-* **New Actions :**
-    * CompanyHub Integration & Automation
-    * Demio Integration & Automation
-    * Flowlu Integration & Automation
-* **Fixes :**
-    * Capsule CRM default & custom field issue Fixed
-    * Elementor container form issue Fixed
-    * Easy Digital Downloads email field issue Fixed
-    * Mautic Field Fetch Issue Fixed
+- **New Actions :**
+  - CompanyHub Integration & Automation : A Sales Automation CRM for Sales Teams
+  - Demio Integration & Automation : Hassle-free Webinar Software for Marketers
+  - Flowlu Integration & Automation : Business Management Software
+- **Fixes :**
+  - Capsule CRM default & custom field issue Fixed
+  - Elementor container form issue Fixed
+  - Easy Digital Downloads email field issue Fixed
+  - Mautic Field Fetch Issue Fixed
 
 = 1.3.7 =
-*Release Date - *13th June 2023*
+*Release Date - *13th June 2023\*
 
-* **New Actions :**
-    * LionDesk Integration & Automation
-    * Campaign Monitor Integration & Automation
-    * SuiteDash Integration & Automation
-* **Fixes :**
-    * Telegram Multiple Image Send Issue Fixed
-    * Acumbamail Authorization  Issue Fixed
-    * Forminator Calculation Field Issue Fixed
-    * DirectIQ form data api store Issue Fixed
-    * ConvertKit confirm msg error Issue Fixed
-    * BenchMark ARForms submitting Issue Fixed
-    * MailMint fieldmapping Issue Fixed
-    * BenchMark ARForms update form submitting Issue Fixed
-    * Conditional logic Issue Fixed
-* **Features :**
-    * Mailer Lite Classic and New Both Added.
-    * Accumbamail note field added.
+- **New Actions :**
+  - LionDesk Integration & Automation : Integrated CRM Platform & Marketing Automation
+  - Campaign Monitor Integration & Automation : Email Marketing Platform & Services
+  - SuiteDash Integration & Automation : Client Portal Software
+- **Fixes :**
+  - Telegram Multiple Image Send Issue Fixed
+  - Acumbamail Authorization Issue Fixed
+  - Forminator Calculation Field Issue Fixed
+  - DirectIQ form data api store Issue Fixed
+  - ConvertKit confirm msg error Issue Fixed
+  - BenchMark ARForms submitting Issue Fixed
+  - MailMint fieldmapping Issue Fixed
+  - BenchMark ARForms update form submitting Issue Fixed
+  - Conditional logic Issue Fixed
+- **Features :**
+  - Mailer Lite Classic and New Both Added.
+  - Accumbamail note field added.
 
 = 1.3.5 - 1.3.6 =
-*Release Date - * May 2023*
+_Release Date - _ May 2023\*
 
-* **New Actions :**
-    * Mailify Integration & Automation
-    * Lemlist Integration & Automation
-    * Salesmate Integration & Automation
- * **Features :**
-    * Groundhogg note field added.
-    * Elementor : Global content form added.
-* **Fixes :**
-    * Forminator multistep similar field issue fixed.
-    * Muatic authorization issue fixed.
-    * Telegram single file upload issue fixed.
-    * EDD pro plugin activation issue fixed.
-    * WooCommerce: WooCommerce issue fixed.	
-    * Brizy: Form not show in post issue fixed.
-* **Note :**
-	 * Custom Action: If server have exec function then custom code are 			 		 validate , otherwise function are not validated .But user can create integration & Automation. If code crush or error then Bit Integration & Automation are not 	responsible.
-	 
+- **New Actions :**
+  - Mailify Integration & Automation : All-in-one solution for your marketing communications
+  - Lemlist Integration & Automation : Your Go-To Cold Email Software & Outreach Automation Tool
+  - Salesmate Integration & Automation : Best Sales CRM Software with Advanced Automation for Teams
+- **Features :**
+  - Groundhogg note field added.
+  - Elementor : Global content form added.
+- **Fixes :**
+  - Forminator multistep similar field issue fixed.
+  - Muatic authorization issue fixed.
+  - Telegram single file upload issue fixed.
+  - EDD pro plugin activation issue fixed.
+  - WooCommerce: WooCommerce issue fixed.
+  - Brizy: Form not show in post issue fixed.
+- **Note :**
+  - Custom Action: If server have exec function then custom code are validate , otherwise function are not validated .But user can create integration & Automation. If code crush or error then Bit Integration & Automation are not responsible.
+
 = 1.3.4 =
-*Release Date - * April 2023*
+_Release Date - _ April 2023\*
 
-* **New Triggers :**
-    * Piotnet Addons For Elementor(PAFE only form) Integration & Automation
-* **New Actions :**
-    * Copper CRM Integration & Automation
-* **Fixes :**
-    * SliceWp issue fixed(action).
+- **New Triggers :**
+  - Piotnet Addons For Elementor(PAFE only form) Integration & Automation : Powerful Elementor Addons
+- **New Actions :**
+  - Copper CRM Integration & Automation : CRM Software Solutions Company
+- **Fixes :**
+  - SliceWp issue fixed(action).
 
 = 1.3.3 =
-*Release Date - 18 March 2023*
+_Release Date - 18 March 2023_
 
-* **New Triggers :**
-    * Ultimate Member Integration & Automation
-* **New Actions :**
-    * Propovoice CRM CRM Integration & Automation
-    * Mail Mint Integration & Automation
-    * ClinchPad Integration & Automation
-    * Clickup Integration & Automation
-* **Fixes :**
-    * ActiveCampaign issue fixed.
-    * Logo not show issue fixed.
-    * Capsule CRM issue fixed.
-    * User Registration issue fixed.
-    * Smart tag issue fixed. 
-    * Studiocart conditional login isssue fixed.
-    * ZohoCRM data upsert issue fixed.
-    * ZohoCRM data upsert issue fixed.
-    * MailerCloud custom field issue fixed.
+- **New Triggers :**
+  - Ultimate Member Integration & Automation : User Profile, Registration, Login, Member Directory, Content Restriction & Membership Plugin
+- **New Actions :**
+  - Propovoice CRM Integration & Automation : Best WordPress CRM & Invoicing Plugin
+  - Mail Mint Integration & Automation : Effortless Email Marketing Automation for Your Funnels
+  - ClinchPad Integration & Automation : Online sales CRM for small teams- track & manage your sales leads
+  - Clickup Integration & Automation : One app to replace them all
+- **Fixes :**
+  - ActiveCampaign issue fixed.
+  - Logo not show issue fixed.
+  - Capsule CRM issue fixed.
+  - User Registration issue fixed.
+  - Smart tag issue fixed.
+  - Studiocart conditional login isssue fixed.
+  - ZohoCRM data upsert issue fixed.
+  - ZohoCRM data upsert issue fixed.
+  - MailerCloud custom field issue fixed.
 
 = 1.3.2 =
-*Release Date - 1 March 2023*
+_Release Date - 1 March 2023_
 
-* **New Triggers :**
-    * Thrive Apprentice Integration & Automation
-    * MasterStudy LMS Integration & Automation
-* **New Actions :**
-    * MasterStudy LMS Integration & Automation
-    * Asana Integration & Automation
-    * Zendesk Integration & Automation
-* **Fixes :**
-    * MailerLite api version version updated.
-    * Tripetto issue fixed.
+- **New Triggers :**
+  - Thrive Apprentice Integration & Automation : Your WordPress Course and Membership Plugin
+  - MasterStudy LMS Integration & Automation : WordPress Plugin – for Online Courses and Education
+- **New Actions :**
+  - MasterStudy LMS Integration & Automation : WordPress Plugin – for Online Courses and Education
+  - Asana Integration & Automation : Manage your team's work, projects, & tasks online
+  - Zendesk Integration & Automation : Customer Service Software & Sales CRM
+- **Fixes :**
+  - MailerLite api version version updated.
+  - Tripetto issue fixed.
 
 = 1.3.1 =
-*Release Date - 21 February 2023*
+_Release Date - 21 February 2023_
 
-* **New Triggers :**
-    * ARMember Integration & Automation
-* **New Actions :**
-    * Capsule CRM Integration & Automation
-* **Features :**
-    * HubSpot authorization updated.
-    * Breakdance all form integrated.
-    * Groundhogg custom field added in meta value.
-    * Elementor lending page form added.
-    * WooCommerce order create type 
-        unit pice of product and sku field added. 
-    * SliceWp, MemberPress, Paid Membership Pro added user id field.
-* **Fixes :**
-    * WooCommerce order specific product issue fixed.
-    * WS Form issue fixed.
+- **New Triggers :**
+  - ARMember Integration & Automation : WordPress Membership Plugin For Your Website
+- **New Actions :**
+  - Capsule CRM Integration & Automation : CRM Made Simple
+- **Features :**
+  - HubSpot authorization updated.
+  - Breakdance all form integrated.
+  - Groundhogg custom field added in meta value.
+  - Elementor lending page form added.
+  - WooCommerce order create type
+    unit pice of product and sku field added.
+  - SliceWp, MemberPress, Paid Membership Pro added user id field.
+- **Fixes :**
+  - WooCommerce order specific product issue fixed.
+  - WS Form issue fixed.
 
 = 1.3 =
-*Release Date - 6 February 2023*
+_Release Date - 6 February 2023_
 
-* **Note :**
-    * This notice is informing that starting from February 6, there will be a change in the free version of a service. Specifically, the free version will only allow for one integration & Automation, but all previous integration & Automations will continue to work normally.
-* **New Triggers :**
-    * Groundhogg Integration & Automation
-    * LifterLMS Integration & Automation
-    * Easy Digital Downloads Integration & Automation
-    * FormCraft3 Integration & Automation
-* **New Actions :**
-    * SureCart Integration & Automation
-    * GiveWP Integration & Automation
-    * Agiled crm Integration & Automation
-    * ConvertKit Integration & Automation
-    * Benchmark Integration & Automation
-    * Smaily Integration & Automation
-    * DirectIq Integration & Automation
-    * Custom Api Integration & Automation
-    * IFTTT Integration & Automation
-    * Airtable Integration & Automation
-    * Zoho Sheet Integration & Automation
-    * SendPulse Integration & Automation
-    * Insightl Integration & Automation
-* **Fixes :**
-    * WS Form issue fixed.
-    * ARForms issue fixed.
-* **Features :**
-    * WooCommerce order product unit price field.
-    * Breakdance all form integrated.
+- **Note :**
+  - This notice is informing that starting from February 6, there will be a change in the free version of a service. Specifically, the free version will only allow for one integration & Automation, but all previous integration & Automations will continue to work normally.
+- **New Triggers :**
+  - Groundhogg Integration & Automation : Marketing Automation For WordPress
+  - LifterLMS Integration & Automation : Create & Sell Online Courses with WordPress
+  - Easy Digital Downloads Integration & Automation : The Best Digital eCommerce Plugin for WordPress
+  - FormCraft3 Integration & Automation : Contact Form Builder for WordPress Plugin
+- **New Actions :**
+  - SureCart Integration & Automation : Simplifying selling online with WordPress
+  - GiveWP Integration & Automation : WordPress Donation Plugin - Online Fundraising Simplified
+  - Agiled crm Integration & Automation : A Fantastic CRM Tool - Details, Pricing, & Features
+  - ConvertKit Integration & Automation : The creator marketing platform
+  - Benchmark Integration & Automation : WordPress Email Plugin
+  - Smaily Integration & Automation : Intentionally simple email marketing and automation
+  - DirectIq Integration & Automation : #1 Email marketing automation software for SMBs & startups
+  - Custom Api Integration & Automation
+  - IFTTT Integration & Automation : Connect Your Apps
+  - Airtable Integration & Automation : The platform to build next‒gen apps
+  - Zoho Sheet Integration & Automation : Create Spreadsheets for Free
+  - SendPulse Integration & Automation : Multi-Channel Marketing Automation Platform
+  - Insightly Integration & Automation : The modern, scalable CRM teams love
+- **Fixes :**
+  - WS Form issue fixed.
+  - ARForms issue fixed.
+- **Features :**
+  - WooCommerce order product unit price field.
+  - Breakdance all form integrated.
 
 = 1.2.4 =
-*Release Date - 16 January 2023*
+_Release Date - 16 January 2023_
 
-* **New Triggers :**
-    * SureCart Integration & Automation
-    * ARForms Integration & Automation
-    * GiveWP Integration & Automation
-* **New Actions :**
-    * SureCart (pro) Integration & Automation
-    * GiveWP (pro) Integration & Automation
-    * Agiled crm (pro) Integration & Automation
-    * ConvertKit (pro) Integration & Automation
-    * Benchmark (pro) Integration & Automation
-    * Smaily (pro) Integration & Automation
-    * DirectIq (pro) Integration & Automation
-    * Custom Api (pro) Integration & Automation
-    * IFTTT (pro) Integration & Automation
-    * Airtable (pro) Integration & Automation
-    * Zoho Sheet (pro) Integration & Automation
-    * SendPulse (pro) Integration & Automation
-* **Features :**
-    * In custom value field, you can use the form field value as a variable. 
+- **New Triggers :**
+  - SureCart Integration & Automation : Simplifying selling online with WordPress
+  - ARForms Integration & Automation : WordPress Form Builder
+  - GiveWP Integration & Automation : WordPress Donation Plugin - Online Fundraising Simplified
+- **New Actions :**
+  - SureCart (pro) Integration & Automation : Simplifying selling online with WordPress
+  - GiveWP (pro) Integration & Automation : WordPress Donation Plugin - Online Fundraising Simplified
+  - Agiled crm (pro) Integration & Automation : A Fantastic CRM Tool - Details, Pricing, & Features
+  - ConvertKit (pro) Integration & Automation : The creator marketing platform
+  - Benchmark (pro) Integration & Automation : WordPress Email Plugin
+  - Smaily (pro) Integration & Automation : Intentionally simple email marketing and automation
+  - DirectIq (pro) Integration & Automation : #1 Email marketing automation software for SMBs & startups
+  - Custom Api (pro) Integration & Automation
+  - IFTTT (pro) Integration & Automation : Connect Your Apps
+  - Airtable (pro) Integration & Automation : The platform to build next‒gen apps
+  - Zoho Sheet (pro) Integration & Automation : Create Spreadsheets for Free
+  - SendPulse (pro) Integration & Automation : Multi-Channel Marketing Automation Platform
+- **Features :**
+  - In custom value field, you can use the form field value as a variable.
 
 = 1.2.3 =
-*Release Date - 10 December 2022*
+_Release Date - 10 December 2022_
 
-* **New Triggers :**
-    * Custom Trigger Integration & Automation
-* **New Actions :**
-    * Custom Action Integration & Automation
-    * Mailjet (pro) Integration & Automation
-    * SendGrid (pro) Integration & Automation
-    * pCloud (pro) Integration & Automation
-    * Pipedrive (pro) Integration & Automation
-    * EmailOctopus (pro) Integration & Automation
-* **Fixes :**
-    * Divi theme builder form duplicate issue fixed.
-    * RafflePress trigger does not detect issue fixed.
-    * LearnDash authorization issue fixed (free).
-    * Fluent forms date time format reorganized.
-* **Features :**
-    * integrate with divi template global header, body and footer form. 
+- **New Triggers :**
+  - Custom Trigger Integration & Automation
+- **New Actions :**
+  - Custom Action Integration & Automation
+  - Mailjet (pro) Integration & Automation : Email Delivery Service for Marketing & Developer Teams
+  - SendGrid (pro) Integration & Automation : Email Delivery, API, Marketing Service
+  - pCloud (pro) Integration & Automation : The Most Secure Cloud Storage
+  - Pipedrive (pro) Integration & Automation : The Original Pipeline CRM
+  - EmailOctopus (pro) Integration & Automation : Easy to use, quick to master
+- **Fixes :**
+  - Divi theme builder form duplicate issue fixed.
+  - RafflePress trigger does not detect issue fixed.
+  - LearnDash authorization issue fixed (free).
+  - Fluent forms date time format reorganized.
+- **Features :**
+  - integrate with divi template global header, body and footer form.
 
 = 1.2.2 =
-*Release Date - 16 November 2022*
+_Release Date - 16 November 2022_
 
-* **New Triggers :**
-    * Bit Assist Integration & Automation
-    * Paid Memberships Pro Integration & Automation
-    * SliceWP Affiliate Integration & Automation
-    * RafflePress Integration & Automation
-* **New Actions :**
-    * Paid Memberships Pro (pro) Integration & Automation
-    * SliceWP Affiliate (pro) Integration & Automation
-    * MailBluster (pro) Integration & Automation
-    * Mailrelay (pro) Integration & Automation
-    * Constant Contact (pro) Integration & Automation
-    * Notion (pro) Integration & Automation
-    * MailUp (pro) Integration & Automation
-    * Omnisend (pro) Integration & Automation
-* **Notice :**
-    * Piotnet Form working in latest way.
+- **New Triggers :**
+  - Bit Assist Integration & Automation : Connect with Customers Using Multiple Messaging Channels
+  - Paid Memberships Pro Integration & Automation : WordPress Membership Plugin and Subscriptions Platform
+  - SliceWP Affiliate Integration & Automation : WordPress Affiliate Plugin
+  - RafflePress Integration & Automation : The Best WordPress Giveaway and Contest Plugin
+- **New Actions :**
+  - Paid Memberships Pro (pro) Integration & Automation : WordPress Membership Plugin and Subscriptions Platform
+  - SliceWP Affiliate (pro) Integration & Automation : WordPress Affiliate Plugin
+  - MailBluster (pro) Integration & Automation : Send First-class Email Newsletters at the Least
+  - Mailrelay (pro) Integration & Automation : The reliable email marketing platform
+  - Constant Contact (pro) Integration & Automation : Digital and Email Marketing Platform
+  - Notion (pro) Integration & Automation : Your connected workspace for wiki, docs & projects
+  - MailUp (pro) Integration & Automation : Email Marketing Software
+  - Omnisend (pro) Integration & Automation : Ecommerce Email Marketing and SMS Platform
+- **Notice :**
+  - Piotnet Form working in latest way.
 
 = 1.2.1 =
-*Release Date - 1 November 2022*
+_Release Date - 1 November 2022_
 
-* **New Triggers :**
-    * MemberPress Integration & Automation
-    * CartFlows Integration & Automation
-    * Solid Affiliate Integration & Automation
-* **New Actions :**
-    * MemberPress (pro) Integration & Automation
-    * Moosend (pro) Integration & Automation
-    * Mailercloud (pro) Integration & Automation
-    * GetResponse (pro) Integration & Automation
+- **New Triggers :**
+  - MemberPress Integration & Automation : #1 WordPress Membership Plugin
+  - CartFlows Integration & Automation : #1 Sales Funnel Builder for WordPress & WooCommerce
+  - Solid Affiliate Integration & Automation : Affiliate Plugin for WordPress
+- **New Actions :**
+  - MemberPress (pro) Integration & Automation : #1 WordPress Membership Plugin
+  - Moosend (pro) Integration & Automation : Email Marketing Software for Thriving Businesses
+  - Mailercloud (pro) Integration & Automation : An All In One Email Marketing Tool
+  - GetResponse (pro) Integration & Automation : Professional Email Marketing for Everyone
 
 = 1.2.0 =
-*Release Date - 18 October 2022*
+_Release Date - 18 October 2022_
 
-* **New Triggers :**
-    * JetEngine Integration & Automation
-* **New Actions :**
-    * Selzy (pro) Integration & Automation
-* **Features :**
-    * ActiveCampaign
-        * Default 20 field show only,now it will show more than 1000+ field.
-* **Fixes :**
-    * Brizy issue fixed.
-* **Note :**
-    * Zoho all platforms authorization updated according to current auth system. 
+- **New Triggers :**
+  - JetEngine Integration & Automation : WordPress Plugin for Elementor, Gutenberg & Bricks | Crocoblock
+- **New Actions :**
+  - Selzy (pro) Integration & Automation : Email Marketing Platform
+- **Features :**
+  - ActiveCampaign
+    - Default 20 field show only,now it will show more than 1000+ field.
+- **Fixes :**
+  - Brizy issue fixed.
+- **Note :**
+  - Zoho all platforms authorization updated according to current auth system.
 
 = 1.1.9 =
-*Release Date - 9 October 2022*
+_Release Date - 9 October 2022_
 
-* **New Actions :**
-    * Klaviyo(Pro) Integration & Automation
-* **Features :**
-    * WooCommerce
-        * Booking create(trigger).
-* **Fixes :**
-    * Sendy Widget issue fixed(Pro).
-    * Order status change issue fixed(trigger).
-
+- **New Actions :**
+  - Klaviyo(Pro) Integration & Automation : Marketing Automation Platform for Email, SMS & Push
+- **Features :**
+  - WooCommerce
+    - Booking create(trigger).
+- **Fixes :**
+  - Sendy Widget issue fixed(Pro).
+  - Order status change issue fixed(trigger).
 
 = 1.1.8 =
-*Release Date - 24 September 2022*
+_Release Date - 24 September 2022_
 
-* **Features :**
-    * Multisite.
-    * WooCommerce
-        * Order specific category.
-        * Cancel subscription product(Pro).
-    * BuddyBoss profile custom field map-able.
-    * Elementor Popup form added.
-    * Post
-        * Post trashed.
-        * Comment trashed.
-        * Comment updated.
-* **Fixes :**
-    * Twilio issue fixed(pro).
-    * WooCommerce 'Order specific product' issue fixed.
+- **Features :**
+  - Multisite.
+  - WooCommerce
+    - Order specific category.
+    - Cancel subscription product(Pro).
+  - BuddyBoss profile custom field map-able.
+  - Elementor Popup form added.
+  - Post
+    - Post trashed.
+    - Comment trashed.
+    - Comment updated.
+- **Fixes :**
+  - Twilio issue fixed(pro).
+  - WooCommerce 'Order specific product' issue fixed.
 
 = 1.1.7 =
-*Release Date - * September 2022*
+_Release Date - _ September 2022\*
 
-* **New Actions :**
-    * Salesforce (pro) Integration & Automation
-* **Features :**
-    * Able to map password when creating user in User Registration Trigger.
-    * able to map user data when complete course and lesson in Tutor LMS  Trigger.
-* **Fixes :**
-    * WooCommerce to GoogleSheet order create issue fixed (when line item field mapped).
+- **New Actions :**
+  - Salesforce (pro) Integration & Automation : #1 CRM for Nonprofits and Education
+- **Features :**
+  - Able to map password when creating user in User Registration Trigger.
+  - able to map user data when complete course and lesson in Tutor LMS Trigger.
+- **Fixes :**
+  - WooCommerce to GoogleSheet order create issue fixed (when line item field mapped).
 
 = 1.1.6 =
-*Release Date - 21 August 2022*
+_Release Date - 21 August 2022_
 
-* **Notice :**
-    * MailChimp contact default email formate not changed.
+- **Notice :**
+  - MailChimp contact default email formate not changed.
 
 = 1.1.5 =
-*Release Date - 20 August 2022*
+_Release Date - 20 August 2022_
 
-* **New Triggers :**
-    * Breakdance Integration & Automation
-    * GamiPress Integration & Automation
-* **New Actions :**
-    * Google contacts (pro) Integration & Automation
-    * Kirim.Email (pro) Integration & Automation
-    * GamiPress (pro) Integration & Automation
-* **Features :**
-    * Trigger
-        * Elementor
-            * Show inner section form.
-* **Fixes :**
-    * WPForms Name field simple variation support.
-    * Post Creation(trigger) issue fixed.
-
+- **New Triggers :**
+  - Breakdance Integration & Automation : Website Builder for WordPress
+  - GamiPress Integration & Automation : Gamification for WordPress
+- **New Actions :**
+  - Google contacts (pro) Integration & Automation
+  - Kirim.Email (pro) Integration & Automation : Email Infrastructure Untuk Bisnis Di Internet​
+  - GamiPress (pro) Integration & Automation : Gamification for WordPress
+- **Features :**
+  - Trigger
+    - Elementor
+      - Show inner section form.
+- **Fixes :**
+  - WPForms Name field simple variation support.
+  - Post Creation(trigger) issue fixed.
 
 = 1.1.4 =
-*Release Date - 4 August 2022*
+_Release Date - 4 August 2022_
 
-* **New Trigger :**
-    * WeForms Integration & Automation
-    * Piotnet Addon (form) Integration & Automation
+- **New Trigger :**
 
-* **Features :**
-    * Trigger
-        * Bricks Integration & Automation
-            * Show bricks template form.
-        * Elementor Integration & Automation
-            * Show elementor template form.
-        * FluentCRM Integration & Automation
-            * Added FluentCRM edit option
-* **Fixes :**
-    * Tutor Lms edit option loading issue fixed.
-    * BuddyBoss issue fixed.
+  - WeForms Integration & Automation : Easy Drag & Drop Contact Form Builder For WordPress
+  - Piotnet Addon (form) Integration & Automation : Piotnet Addons For Elementor
+
+- **Features :**
+  - Trigger
+    - Bricks Integration & Automation
+      - Show bricks template form.
+    - Elementor Integration & Automation
+      - Show elementor template form.
+    - FluentCRM Integration & Automation
+      - Added FluentCRM edit option
+- **Fixes :**
+  - Tutor Lms edit option loading issue fixed.
+  - BuddyBoss issue fixed.
 
 = 1.1.3 =
-*Release Date - 24 July 2022*
+_Release Date - 24 July 2022_
 
-* **Features :**
-    * Trigger
-        * WooCommerce Integration & Automation
-            * User order status change Specific status.
-            * User subscribe product.
-            * User unsubscribe/cancel product.
-            * user subscription product time expire.
-            * User subscription product status change.
-            * user subscription product trial period end.
-        * Post Integration & Automation
-            * Added post edit option.
-        * User Registration Integration & Automation
-            * User Login.
-            * User reset password.
-            * User delete account.
-* **Fixes :**
-    * First name and last name are not visible for field map on FluentCRM issue fixed.
-
+- **Features :**
+  - Trigger
+    - WooCommerce Integration & Automation
+      - User order status change Specific status.
+      - User subscribe product.
+      - User unsubscribe/cancel product.
+      - user subscription product time expire.
+      - User subscription product status change.
+      - user subscription product trial period end.
+    - Post Integration & Automation
+      - Added post edit option.
+    - User Registration Integration & Automation
+      - User Login.
+      - User reset password.
+      - User delete account.
+- **Fixes :**
+  - First name and last name are not visible for field map on FluentCRM issue fixed.
 
 = 1.1.2 =
-*Release Date - 5 July 2022*
+_Release Date - 5 July 2022_
 
-* **New Actions :**
-    * AffiliateWP(pro) Integration & Automation
-    * BuddyBoss(18 type actions added)(pro) Integration & Automation
-* **Added: New smart tag **
-    * WordPress Locale Code Integration & Automation
-    * Post Publish Date Integration & Automation
-    * Post Modified Date Integration & Automation
-    * Current User Role Integration & Automation
-    * Post Author ID Integration & Automation
-    * Post Author Display Name Integration & Automation
-    * Post Author Email Integration & Automation
-* **Fixes :**
-    * Amelia data are not fetching .
-* ** Note :**
-    * All smart tag available in pro.
+- **New Actions :**
+  - AffiliateWP(pro) Integration & Automation : Affiliate Plugin for WordPress
+  - BuddyBoss(18 type actions added)(pro) Integration & Automation : The #1 course & community platform for WordPress.
+- **Added: New smart tag **
+  - WordPress Locale Code Integration & Automation
+  - Post Publish Date Integration & Automation
+  - Post Modified Date Integration & Automation
+  - Current User Role Integration & Automation
+  - Post Author ID Integration & Automation
+  - Post Author Display Name Integration & Automation
+  - Post Author Email Integration & Automation
+- **Fixes :**
+  - Amelia data are not fetching .
+- ** Note :**
+  - All smart tag available in pro.
 
 = 1.1.1 =
-*Release Date - 28 June 2022*
+_Release Date - 28 June 2022_
 
-* **Fixes :**
-    * WooCommerce field are not fetching properly.
-
+- **Fixes :**
+  - WooCommerce field are not fetching properly.
 
 = 1.1.0 =
-*Release Date - 26 June 2022*
+_Release Date - 26 June 2022_
 
-* **New Triggers :**
-    * Restrict Content Integration & Automation
-    * LearnDash Integration & Automation
-    * BuddyBoss Integration & Automation
-    * AffiliateWP Integration & Automation
-
+- **New Triggers :**
+  - Restrict Content Integration & Automation : Membership Plugin
+  - LearnDash Integration & Automation : Learning Management System. Sell Courses using WordPress
+  - BuddyBoss Integration & Automation : The #1 course & community platform for WordPress.
+  - AffiliateWP Integration & Automation : Affiliate Plugin for WordPress
 
 = 1.0.9 =
-*Release Date - 13 June 2022*
+_Release Date - 13 June 2022_
 
-* **New Actions :**
-    * Restrict Content (Pro) Integration & Automation
-    * LearnDash (Pro) Integration & Automation
-
+- **New Actions :**
+  - Restrict Content (Pro) Integration & Automation : Membership Plugin
+  - LearnDash (Pro) Integration & Automation : Learning Management System. Sell Courses using WordPress
 
 = 1.0.8 =
-*Release Date - 04 June 2022*
+_Release Date - 04 June 2022_
 
-* **New Triggers :**
-    * LearnDash Integration & Automation
-* **Features :**
-    * Specific a product order in wooCommerce trigger Integration & Automation
-
+- **New Triggers :**
+  - LearnDash Integration & Automation : Learning Management System. Sell Courses using WordPress
+- **Features :**
+  - Specific a product order in wooCommerce trigger Integration & Automation
 
 = 1.0.7 =
-*Release Date - 24 May 2022*
+_Release Date - 24 May 2022_
 
-* **New Triggers :**
-    * Met Form Integration & Automation
-    * Kadence Blocks Form Integration & Automation
-    * N8N Integration & Automation
-* **Fixes :**
-    * BitForm edit bug fixed (Action)
-    * Conditional logic error status not added timeline issue fixed
+- **New Triggers :**
+  - Met Form Integration & Automation : Elementor Contact Form Builder plugin
+  - Kadence Blocks Form Integration & Automation : Create Stunning WordPress Websites
+  - N8N Integration & Automation : a powerful workflow automation tool
+- **Fixes :**
+  - BitForm edit bug fixed (Action)
+  - Conditional logic error status not added timeline issue fixed
 
 = 1.0.6 =
-*Release Date - 14 May 2022*
+_Release Date - 14 May 2022_
 
-* **Fixes :**
-    * Webhooks data format error issue fixed
+- **Fixes :**
+  - Webhooks data format error issue fixed
 
 = 1.0.5 =
-*Release Date - 30 April 2022*
+_Release Date - 30 April 2022_
 
-* **Features :**
-    * Added more theme support for Divi
-* **Fixes :**
-    * Fluent Forms container fields not showing in field map fixed
-
+- **Features :**
+  - Added more theme support for Divi
+- **Fixes :**
+  - Fluent Forms container fields not showing in field map fixed
 
 = 1.0.4 =
-*Release Date - 24 April 2022*
+_Release Date - 24 April 2022_
 
-* **New Actions :**
-    * Bit Form Integration & Automation
-    * Webhooks Integration & Automation
-    * Zapier Integration & Automation
-    * Integromat Integration & Automation
-    * Integrately Integration & Automation
-    * Pabbly Integration & Automation
-    * SyncSpider Integration & Automation
-    * KonnectzIT Integration & Automation
-    * Ant Apps Integration & Automation
-    * Trello Integration & Automation
-* **New Triggers :**
-    * WP Post Integration & Automation
-* **Features :**
-    * Added search facility for triggers
-* **Fixes :**
-    * WP Courseware bug fixed (Trigger)
-    * Mail integration & Automation edit bug fixed
-
+- **New Actions :**
+  - Bit Form Integration & Automation : Easiest Contact Form, Payment Form, Order Form, Calculator Form Builder Plugin for WordPress
+  - Webhooks Integration & Automation : Automated messages sent from apps when something happens
+  - Zapier Integration & Automation : Automate Your Work — Fast
+  - Integromat Integration & Automation : Make Connector
+  - Integrately Integration & Automation : 8 Million+ Ready Automations For 1100+ Apps
+  - Pabbly Integration & Automation : Online Marketing & Sales Software
+  - SyncSpider Integration & Automation : eCommerce automation and integration
+  - KonnectzIT Integration & Automation : Smart Way to Connect & Automate Applications
+  - Ant Apps Integration & Automation
+  - Trello Integration & Automation : Manage Your Team's Projects From Anywhere
+- **New Triggers :**
+  - WP Post Integration & Automation
+- **Features :**
+  - Added search facility for triggers
+- **Fixes :**
+  - WP Courseware bug fixed (Trigger)
+  - Mail integration & Automation edit bug fixed
 
 = 1.0.3 =
-*Release Date - 4 April 2022*
+_Release Date - 4 April 2022_
 
-* **New Triggers :**
-    * Divi Integration & Automation
-    * Bricks Integration & Automation
-    * Beaver Builder Integration & Automation
-    * WP Courseware Integration & Automation
-    * Tutor LMS  Integration & Automation
-    * FluentCRM Integration & Automation
-    * Studiocart Integration & Automation
-    * HappyForms Integration & Automation
-    * Formideble Forms Integration & Automation
-    * JetForm Integration & Automation
-    * Amelia Integration & Automation
-    * KaliForms Integration & Automation
-    * WPFunnels Integration & Automation
-* **Fixes :**
-    * WebHook bug fixed (Trigger)
-
+- **New Triggers :**
+  - Divi Integration & Automation : The Ultimate WordPress Theme & Visual Page Builder
+  - Bricks Integration & Automation : Visual Site Builder for WordPress
+  - Beaver Builder Integration & Automation : WordPress Page Builder Plugin
+  - WP Courseware Integration & Automation : Course Builder for WordPress
+  - Tutor LMS Integration & Automation : Most Powerful WordPress LMS Plugin
+  - FluentCRM Integration & Automation : Marketing Automation For WordPress
+  - Studiocart Integration & Automation : eCommerce Shopping Cart and Funnel Builder
+  - HappyForms Integration & Automation : The easiest form builder for WordPress
+  - Formideble Forms Integration & Automation : The Most Advanced WordPress Forms Plugin
+  - JetForm Integration & Automation : Best WordPress Form Builder Plugin
+  - Amelia Integration & Automation : Global Leader in Conversational AI
+  - KaliForms Integration & Automation : The Best WordPress Forms Builder Plugin
+  - WPFunnels Integration & Automation : Drag & Drop Sales Funnel Builder for WordPress
+- **Fixes :**
+  - WebHook bug fixed (Trigger)
 
 = 1.0.2 =
-*Release Date - 7 February 2022*
+_Release Date - 7 February 2022_
 
-* **New Triggers :**
-    * Everest Forms Integration & Automation
-
+- **New Triggers :**
+  - Everest Forms Integration & Automation : The Best WordPress Form Plugin
 
 = 1.0.1 =
-*Release Date - 2 February 2022*
+_Release Date - 2 February 2022_
 
-* **New Triggers :**
-    * WooCommerce Integration & Automation
-    * Elementor Integration & Automation
-    * Forminator Integration & Automation
-    * WS Form Integration & Automation
-    * Piotnet Forms Integration & Automation
-    * eForm Integration & Automation
-    * User Registration Integration & Automation
-    * Fluent Forms Integration & Automation
-    * Gravity Forms Integration & Automation
-    * Ninja Forms Integration & Automation
-    * WPForms Integration & Automation
-    * Webhooks Integration & Automation
-* **Fixes :**
-    * Google Sheet MultiSelect, Checkbox & Radio field issue fixed
-    * MailChimp Date field issue fixed
-
+- **New Triggers :**
+  - WooCommerce Integration & Automation : Open Source Ecommerce Platform
+  - Elementor Integration & Automation : #1 Free WordPress Website Builder
+  - Forminator Integration & Automation : Contact Form, Payment Form & Custom Form Builder
+  - WS Form Integration & Automation : Build Better WordPress Forms
+  - Piotnet Forms Integration & Automation : Highly Customizable WordPress Form Builder
+  - eForm Integration & Automation : Ultimate WordPress Form Builder Solution
+  - User Registration Integration & Automation
+  - Fluent Forms Integration & Automation : The Fastest WordPress Form Builder
+  - Gravity Forms Integration & Automation : The Best WordPress Form Plugin | Form Builder
+  - Ninja Forms Integration & Automation : Your Drag & Drop WordPress Form Builder
+  - WPForms Integration & Automation : Drag & Drop WordPress Form Builder
+  - Webhooks Integration & Automation : Automated messages sent from apps when something happens.
+- **Fixes :**
+  - Google Sheet MultiSelect, Checkbox & Radio field issue fixed
+  - MailChimp Date field issue fixed
 
 = 1.0.0 =
-* Initial release
+
+- Initial release
