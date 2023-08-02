@@ -42,7 +42,7 @@ class Admin_Bar
                 <path d="M25.1091 12.817C24.2234 12.031 23.8672 11.1284 24.2607 10.0266C24.6155 9.03294 25.3347 8.50758 26.3946 8.43723C27.4598 8.36652 28.2492 8.81474 28.7137 9.74617C29.1593 10.6397 29.0929 11.5514 28.4554 12.3458C27.8047 13.1566 26.9435 13.4549 25.9254 13.1827C25.6584 13.1113 25.4118 12.9637 25.1091 12.817Z" fill="#808285"/>
                 </svg>
                 '), 30);
-            $submenu['bit-integrations'][] = [__('Bit Integrations', 'bit-integrations'), $capability, 'admin.php?page=bit-integrations#/'];
+            // $submenu['bit-integrations'][] = [__('Bit Integrations', 'bit-integrations'), $capability, 'admin.php?page=bit-integrations#/'];
         }
     }
 
@@ -92,7 +92,7 @@ class Admin_Bar
         if (wp_script_is('wp-i18n')) {
             $deps = ['btcbi-vendors', 'btcbi-runtime', 'wp-i18n'];
         } else {
-            $deps = ['btcbi-vendors', 'btcbi-runtime', ];
+            $deps = ['btcbi-vendors', 'btcbi-runtime',];
         }
 
         wp_enqueue_script(
