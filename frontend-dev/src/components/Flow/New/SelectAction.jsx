@@ -213,7 +213,7 @@ export default function SelectAction() {
                 </div>
               )}
               {/* <img loading="lazy" src={inte.logo} alt="" /> */}
-              <GetLogo name={inte.type} extension="svg" />
+              <GetLogo name={inte.type} extension="webp" />
               <div className="txt-center">
                 {inte.type}
               </div>

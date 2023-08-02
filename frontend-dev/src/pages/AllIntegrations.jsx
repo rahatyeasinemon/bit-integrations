@@ -173,7 +173,7 @@ function AllIntegrations({ isLicenseActive }) {
     setShowLicenseModal({ show: true })
   }
   const proHandler = (e) => {
-    premiumModal({ show: true })
+    setPremiumModal({ show: true })
   }
 
   if (isLoading) {
@@ -198,7 +198,7 @@ function AllIntegrations({ isLicenseActive }) {
         <>
           <div className="af-header flx flx-between">
             <h2>{__('Integrations', 'bit-integrations')}</h2>
-            {!isLicenseActive
+            {integrations.length >= 1
               ? (
                 // eslint-disable-next-line react/button-has-type
                 <button className="btn round btcd-btn-lg dp-blue" onClick={(e) => proHandler(e)}>
