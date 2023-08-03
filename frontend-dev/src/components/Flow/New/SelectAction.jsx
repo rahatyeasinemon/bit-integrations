@@ -24,7 +24,7 @@ export default function SelectAction() {
     { type: 'Web Hooks' },
     { type: 'Zapier' },
     { type: 'IFTTT' },
-    { type: 'Integromat' },
+    { type: 'Make(Integromat)' },
     { type: 'Integrately' },
     { type: 'Pabbly' },
     { type: 'N8n' },
