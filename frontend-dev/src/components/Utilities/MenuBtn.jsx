@@ -45,11 +45,13 @@ export default function MenuBtn(props) {
           &nbsp;
           Edit
         </Link>
-        <button type="button" aria-label="actions" className="flx" onClick={props.dup}>
-          <CopyIcn size={16} />
-          &nbsp;
-          Clone
-        </button>
+        {props.isLicenseActive &&
+          (<button type="button" aria-label="actions" className="flx" onClick={props.dup}>
+            <CopyIcn size={16} />
+            &nbsp;
+            Clone
+          </button>)
+        }
         <button type="button" aria-label="actions" className="flx" onClick={props.del}>
           <TrashIcn size={16} />
           &nbsp;
