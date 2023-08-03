@@ -27,7 +27,7 @@ class RecordApiHelper
         $this->integrationId      = $integId;
         $this->apiUrl             = "https://api.clickup.com/api/v2/";
         $this->defaultHeader      = [
-            "Authorization" =>$integrationDetails->api_key,
+            "Authorization" => $integrationDetails->api_key,
             'content-type' => 'application/json'
         ];
     }
@@ -48,8 +48,8 @@ class RecordApiHelper
                 }
             } else {
                 $requestParams['custom_fields'][] = (object) [
-                    'id'=> $key,
-                    'value'=> $value,
+                    'id' => $key,
+                    'value' => $value,
                 ];
             }
         }
@@ -57,7 +57,7 @@ class RecordApiHelper
         $this->type     = 'Task';
         $this->typeName = 'Task created';
         $listId = $this->integrationDetails->selectedList;
-        $apiEndpoint = $this->apiUrl."list/{$listId}/task";
+        $apiEndpoint = $this->apiUrl . "list/{$listId}/task";
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -92,7 +92,7 @@ class RecordApiHelper
             $apiResponse = $this->addTask($finalData);
         }
 
-        if ($apiResponse->data->id || $apiResponse->status === 'success') {
+        if ($apiResponse->id) {
             $res = [$this->typeName . ' successfully'];
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
         } else {
