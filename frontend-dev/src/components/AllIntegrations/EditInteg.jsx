@@ -394,7 +394,7 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditDirectIq allIntegURL={allIntegURL} />
     case 'SendPulse':
       return <EditSendPulse allIntegURL={allIntegURL} />
-    case 'GiveWP':
+    case 'GiveWp':
       return <EditGiveWp allIntegURL={allIntegURL} />
     case 'Airtable':
       return <EditAirtable allIntegURL={allIntegURL} />
