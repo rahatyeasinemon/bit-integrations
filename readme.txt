@@ -80,7 +80,7 @@ Users can send data when like course create/update/delete, lesson create/update/
 ### ⭐ Email Marketing Automation:
 
 You can send data from 40+ popular email marketing software like
-[Mailify](https://www.mailify.com/), [Lemlist](https://www.lemlist.com/), [ActiveCampaign](https://www.activecampaign.com/), [Acumbamail](https://acumbamail.com/), [Benchmark](https://www.benchmarkemail.com/), [ConvertKit](https://convertkit.com/), [DirectIQ](https://www.directiq.com/), [Elastic Email](https://elasticemail.com/), [Encharge](https://encharge.io/), [EmailOctopus](https://emailoctopus.com/), [FluentCRM](https://wordpress.org/plugins/fluent-crm/), [Freshsales](https://www.freshworks.com/crm/sales/), [GetGist](https://getgist.com/), [Groundhogg](https://wordpress.org/plugins/groundhogg/), [GetResponse](https://www.getresponse.com/), [Klaviyo](https://www.klaviyo.com/), [Kirim.Email](https://kirim.email/), [MailBluster](https://mailbluster.com/), [Mailrelay](https://mailrelay.com/), [MailerLite](https://www.mailerlite.com/), [Mailchimp](https://mailchimp.com/), [MailPoet](https://wordpress.org/plugins/mailpoet/), [Mailjet](https://www.mailjet.com/), [Mautic](https://www.mautic.org/), [Moosend](https://moosend.com/), [Mailercloud](https://www.mailercloud.com/), [MailUp](https://mailup.com/), [Omnisend](https://www.omnisend.com/), [Rapidmail](https://www.rapidmail.com/), [Sales Plus](https://salesplus.ie/), [Salesforce](https://www.salesforce.com/), [SendinBlue(Brevo)](https://www.sendinblue.com/), [Sendy Widget](https://sendy.co/), [SendFox](https://sendfox.com/), [Selzy](https://selzy.com/), [Smaily](https://smaily.com/), [SendGrid](https://sendgrid.com/), [SureCart](https://surecart.com/), [SendPulse](https://sendpulse.com/), [Vbout ](https://www.vbout.com/), [Demio](https://www.demio.com/) .
+[Sarbacane(Mailify)](https://www.mailify.com/), [Lemlist](https://www.lemlist.com/), [ActiveCampaign](https://www.activecampaign.com/), [Acumbamail](https://acumbamail.com/), [Benchmark](https://www.benchmarkemail.com/), [ConvertKit](https://convertkit.com/), [DirectIQ](https://www.directiq.com/), [Elastic Email](https://elasticemail.com/), [Encharge](https://encharge.io/), [EmailOctopus](https://emailoctopus.com/), [FluentCRM](https://wordpress.org/plugins/fluent-crm/), [Freshsales](https://www.freshworks.com/crm/sales/), [GetGist](https://getgist.com/), [Groundhogg](https://wordpress.org/plugins/groundhogg/), [GetResponse](https://www.getresponse.com/), [Klaviyo](https://www.klaviyo.com/), [Kirim.Email](https://kirim.email/), [MailBluster](https://mailbluster.com/), [Mailrelay](https://mailrelay.com/), [MailerLite](https://www.mailerlite.com/), [Mailchimp](https://mailchimp.com/), [MailPoet](https://wordpress.org/plugins/mailpoet/), [Mailjet](https://www.mailjet.com/), [Mautic](https://www.mautic.org/), [Moosend](https://moosend.com/), [Mailercloud](https://www.mailercloud.com/), [MailUp](https://mailup.com/), [Omnisend](https://www.omnisend.com/), [Rapidmail](https://www.rapidmail.com/), [Sales Plus](https://salesplus.ie/), [Salesforce](https://www.salesforce.com/), [SendinBlue(Brevo)](https://www.sendinblue.com/), [Sendy Widget](https://sendy.co/), [SendFox](https://sendfox.com/), [Selzy](https://selzy.com/), [Smaily](https://smaily.com/), [SendGrid](https://sendgrid.com/), [SureCart](https://surecart.com/), [SendPulse](https://sendpulse.com/), [Vbout ](https://www.vbout.com/), [Demio](https://www.demio.com/) .
 
 ### ⭐ Incoming and Outgoing Webhooks :
 
@@ -174,7 +174,7 @@ When any trigger is fired, you can send data to 3 social media like [WhatsApp](h
 
 ### ⭐ Data & Workflow Automation:
 
-15+ Data & Workflow Automation Integrately, Integromat(make), IFTTT, N8N, Webhooks, Zapier, FlowMattic, AutomatorWP, Uncanny Automator, Thrive Automator, WPWebhookss, Advanced Form Integration, Sperse.io, Albato, SureTriggers and more.
+15+ Data & Workflow Automation Integrately, Integromat(make), IFTTT, N8N, Webhooks, Zapier, FlowMattic, AutomatorWP, Uncanny Automator, Thrive Automator, WP Webhooks, Advanced Form Integration, Sperse.io, Albato, SureTriggers and more.
 
 ### ⭐ Cloud Storage & File Sharing Platform Integration:
 
@@ -367,7 +367,7 @@ Users can get and send data to [JetEngine](https://crocoblock.com/plugins/jeteng
 108. [**Zoom Meeting :**](https://docs.bit-integrations.bitapps.pro/integrations/zoom-meeting) Modernize workflows with Zoom's trusted collaboration tools: including video meetings, team chat, VoIP phone, webinars, whiteboard, contact center and many more. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/zoom-meeting/)|[**Website**](https://zoom.us/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALsihVZKhQuq5QGINgro4DB)]
 109. [**Zoom Webinar :**](https://docs.bit-integrations.bitapps.pro/integrations/zoom-webinar) Zoom Webinars allow you to connect with large audiences and share video, audio, and content from any location and device for better engagement [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/zoom-webinar/)|[**Website**](https://explore.zoom.us/en/products/webinars/)|Tutorial]
 110. Zendesk : Zendesk is award-winning customer service software trusted by 200K+ customers [Documentation|[**Website**](https://www.zendesk.com/)|Tutorial]
-111. Mailify : Mailify uses the data collected to identify users who connect to its services and to communicate with them afterwards [Documentation|[**Website**](https://www.sarbacane.com/en)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJjJSkugTCNWW_mfwnFK02i)|[**Free**](https://ms.wordpress.org/plugins/mailify/)]
+111. Sarbacane(Mailify) : Sarbacane(Mailify) uses the data collected to identify users who connect to its services and to communicate with them afterwards [Documentation|[**Website**](https://www.sarbacane.com/en)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJjJSkugTCNWW_mfwnFK02i)|[**Free**](https://ms.wordpress.org/plugins/mailify/)]
 112. Lemlist : lemlist is your cold email batmobile. Personalization, automation, deliverability... everything you need to get more replies is there [Documentation|[**Website**](https://www.lemlist.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALlqBRAtTILihQLCYtJi2X3)]
 113. Salesmate : Salesmate offers industry's best built-in calling and texting in 90+ countries. You don't need a separate calling software [Documentation|[**Website**](https://www.salesmate.io/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJehgjc-7kcMyoPLOSLDxoc)|[**Free**](https://wordpress.org/plugins/gf-salesmate-add-on/)]
 114. LionDesk : LionDesk is a CRM designed for ease of use and systems integration so you have one log in for all your business building tools [Documentation|[**Website**](https://liondesk.com/)|Tutorial]
@@ -449,7 +449,7 @@ With the pro version, you have the ability to create **Unlimited active integrat
 
 ### 🔅 [**Integromat (Make.com) WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AL8HfPs26xjhzc_7ysFYrCu)
 
-### 🔅 [**Mailify (Sarbacane) WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJjJSkugTCNWW_mfwnFK02i)
+### 🔅 [**Sarbacane(Mailify) WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJjJSkugTCNWW_mfwnFK02i)
 
 ### 🔅 [**Salesmate CRM WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJehgjc-7kcMyoPLOSLDxoc)
 
@@ -745,18 +745,18 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 *Release Date - *27th July 2023\*
 
 - **New Actions :**
-  - Nimble Integration & Automation : CRM Software To Grow Your Business
-  - Livestorm Integration & Automation : Better Webinar and Video - Livestorm - Conferencing Software
-  - Gravitec Integration & Automation : Marketing automation and content delivery for websites
-  - FlowMattic Integration & Automation : Must-have WordPress Automation Plugin
-  - AutomatorWP Integration & Automation : The most powerful automation plugin for WordPress
-  - Uncanny Automator Integration & Automation : The #1 no-code WordPress automation plugin
-  - Thrive Automator Integration & Automation : Create Smart Automations To Connect Your Favorite Tools
-  - WPWebhookss Integration & Automation : The #1 WordPress Automator plugin
-  - Advanced Form Integration Integration & Automation : Connect WooCommerce and Contact Form 7 to Google Sheets and other platforms
-  - Sperse.io Integration & Automation : App Integration Platform
-  - Albato Integration & Automation : a single no-code platform for all automations
-  - SureTriggers Integration & Automation : Automations Have Never Been This Easy
+  - CRM Software To Grow Your Business | Try Nimble Free - Nimble Integration & Automation
+  - Video Conferencing Software for Webinars and Virtual Meetings - Livestorm Integration & Automation
+  - Gravitec.net – Web Push Notifications - Gravitec Integration & Automation
+  - FlowMattic - Must-have WordPress Automation Plugin - FlowMattic Integration & Automation
+  - AutomatorWP – The most flexible and powerful no-code automation plugin for WordPress - AutomatorWP Integration & Automation
+  - Uncanny Automator – Automate everything with the #1 no-code Automation tool for WordPress - Uncanny Automator Integration & Automation
+  - Create Smart Automations To Connect Your Favorite Tools - Thrive Automator Integration & Automation
+  - WP Webhooks – Create powerful automation workflows directly within WordPress - WP Webhooks Integration & Automation
+  - Advanced Form Integration – Connect WooCommerce and Contact Form 7 to Google Sheets and other platforms - Advanced Form Integration Integration & Automation
+  - Automate Hub Free by Sperse.IO - Sperse.io Integration & Automation
+  - A single no-code platform for all automations - Albato Integration & Automation
+  - SureTriggers – Connect All Your Plugins, Apps, Tools & Automate Everything! - SureTriggers Integration & Automation
 - **Fixes :**
   - Mautic required field & LogHandler issue Fixed.
   - GoogleDrive signle/multiple file upload issue Fixed
@@ -769,9 +769,9 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 *Release Date - *4th July 2023\*
 
 - **New Actions :**
-  - CompanyHub Integration & Automation : A Sales Automation CRM for Sales Teams
-  - Demio Integration & Automation : Hassle-free Webinar Software for Marketers
-  - Flowlu Integration & Automation : Business Management Software
+  - CompanyHub: A Sales Automation CRM for Sales Teams - CompanyHub Integration & Automation
+  - Demio - Demio Webinar-Software - Demio Integration & Automation
+  - Flowlu - Business Management Software - Flowlu Integration & Automation
 - **Fixes :**
   - Capsule CRM default & custom field issue Fixed
   - Elementor container form issue Fixed
@@ -782,9 +782,9 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 *Release Date - *13th June 2023\*
 
 - **New Actions :**
-  - LionDesk Integration & Automation : Integrated CRM Platform & Marketing Automation
-  - Campaign Monitor Integration & Automation : Email Marketing Platform & Services
-  - SuiteDash Integration & Automation : Client Portal Software
+  - LionDesk(R) - Integrated CRM Platform & Marketing Automation - LionDesk Integration & Automation
+  - Campaign Monitor for WordPress - Campaign Monitor Integration & Automation
+  - Client Portal Software : SuiteDash : Secure + White Label - SuiteDash Integration & Automation
 - **Fixes :**
   - Telegram Multiple Image Send Issue Fixed
   - Acumbamail Authorization Issue Fixed
@@ -803,9 +803,9 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 _Release Date - _ May 2023\*
 
 - **New Actions :**
-  - Mailify Integration & Automation : All-in-one solution for your marketing communications
-  - Lemlist Integration & Automation : Your Go-To Cold Email Software & Outreach Automation Tool
-  - Salesmate Integration & Automation : Best Sales CRM Software with Advanced Automation for Teams
+  - Sarbacane - Emailing, SMS, automation & conseils marketing - Sarbacane(Mailify) Integration & Automation
+  - Your Go-To Cold Email Software & Outreach Automation Tool - Lemlist Integration & Automation
+  - Best Sales CRM Software with Advanced Automation for Teams - Salesmate Integration & Automation
 - **Features :**
   - Groundhogg note field added.
   - Elementor : Global content form added.
@@ -823,9 +823,9 @@ _Release Date - _ May 2023\*
 _Release Date - _ April 2023\*
 
 - **New Triggers :**
-  - Piotnet Addons For Elementor(PAFE only form) Integration & Automation : Powerful Elementor Addons
+  - Powerful Elementor Addons - Piotnet Addons For Elementor (PAFE) - Piotnet Addons For Elementor(PAFE only form) Integration & Automation
 - **New Actions :**
-  - Copper CRM Integration & Automation : CRM Software Solutions Company
+  - CRM Software Solutions Company | Copper - Copper CRM Integration & Automation
 - **Fixes :**
   - SliceWp issue fixed(action).
 
@@ -833,12 +833,12 @@ _Release Date - _ April 2023\*
 _Release Date - 18 March 2023_
 
 - **New Triggers :**
-  - Ultimate Member Integration & Automation : User Profile, Registration, Login, Member Directory, Content Restriction & Membership Plugin
+  - Ultimate Member – User Profile, Registration, Login, Member Directory, Content Restriction & Membership Plugin - Ultimate Member Integration & Automation
 - **New Actions :**
-  - Propovoice CRM Integration & Automation : Best WordPress CRM & Invoicing Plugin
-  - Mail Mint Integration & Automation : Effortless Email Marketing Automation for Your Funnels
-  - ClinchPad Integration & Automation : Online sales CRM for small teams- track & manage your sales leads
-  - Clickup Integration & Automation : One app to replace them all
+  - Propovoice CRM – Best CRM & Invoicing Plugin to Manage Leads, Clients and Billings automation - Propovoice CRM Integration & Automation
+  - Effortless Email Marketing Automation for Your Funnels – Mail Mint - Mail Mint Integration & Automation
+  - Online sales CRM for small teams- track & manage your sales leads - ClinchPad Integration & Automation
+  - ClickUp™ | One app to replace them all - Clickup Integration & Automation
 - **Fixes :**
   - ActiveCampaign issue fixed.
   - Logo not show issue fixed.
@@ -854,12 +854,12 @@ _Release Date - 18 March 2023_
 _Release Date - 1 March 2023_
 
 - **New Triggers :**
-  - Thrive Apprentice Integration & Automation : Your WordPress Course and Membership Plugin
-  - MasterStudy LMS Integration & Automation : WordPress Plugin – for Online Courses and Education
+  - Thrive Apprentice: Your WordPress Course and Membership Plugin - Thrive Apprentice Integration & Automation
+  - MasterStudy LMS WordPress Plugin – for Online Courses and Education - MasterStudy LMS Integration & Automation
 - **New Actions :**
-  - MasterStudy LMS Integration & Automation : WordPress Plugin – for Online Courses and Education
-  - Asana Integration & Automation : Manage your team's work, projects, & tasks online
-  - Zendesk Integration & Automation : Customer Service Software & Sales CRM
+  - MasterStudy LMS WordPress Plugin – for Online Courses and Education - MasterStudy LMS Integration & Automation
+  - Manage your team's work, projects, & tasks online • Asana - Asana Integration & Automation
+  - Zendesk: Customer Service Software & Sales CRM | Best in 2023 - Zendesk Integration & Automation
 - **Fixes :**
   - MailerLite api version version updated.
   - Tripetto issue fixed.
@@ -868,9 +868,9 @@ _Release Date - 1 March 2023_
 _Release Date - 21 February 2023_
 
 - **New Triggers :**
-  - ARMember Integration & Automation : WordPress Membership Plugin For Your Website
+  - ARMember – Membership Plugin, Content Restriction, Member Levels, User Profile & User signup - ARMember Integration & Automation
 - **New Actions :**
-  - Capsule CRM Integration & Automation : CRM Made Simple
+  - CRM Made Simple | Capsule - Capsule CRM Integration & Automation
 - **Features :**
   - HubSpot authorization updated.
   - Breakdance all form integrated.
@@ -889,17 +889,17 @@ _Release Date - 6 February 2023_
 - **Note :**
   - This notice is informing that starting from February 6, there will be a change in the free version of a service. Specifically, the free version will only allow for one integration & Automation, but all previous integration & Automations will continue to work normally.
 - **New Triggers :**
-  - Groundhogg Integration & Automation : Marketing Automation For WordPress
-  - LifterLMS Integration & Automation : Create & Sell Online Courses with WordPress
-  - Easy Digital Downloads Integration & Automation : The Best Digital eCommerce Plugin for WordPress
-  - FormCraft3 Integration & Automation : Contact Form Builder for WordPress Plugin
+  - WordPress CRM, Email & Marketing Automation for WordPress | Award Winner — Groundhogg - Groundhogg Integration & Automation
+  - LifterLMS – WordPress LMS Plugin for eLearning - LifterLMS Integration & Automation
+  - Easy Digital Downloads – Simple eCommerce for Selling Digital Files - Easy Digital Downloads Integration & Automation
+  - FormCraft - Premium WordPress Form Builder - FormCraft (FormCraft3) Integration & Automation
 - **New Actions :**
-  - SureCart Integration & Automation : Simplifying selling online with WordPress
-  - GiveWP Integration & Automation : WordPress Donation Plugin - Online Fundraising Simplified
-  - Agiled crm Integration & Automation : A Fantastic CRM Tool - Details, Pricing, & Features
-  - ConvertKit Integration & Automation : The creator marketing platform
-  - Benchmark Integration & Automation : WordPress Email Plugin
-  - Smaily Integration & Automation : Intentionally simple email marketing and automation
+  - WordPress Ecommerce For Creating Fast Online Stores – By SureCart - SureCart Integration & Automation
+  - GiveWP – Donation Plugin and Fundraising Platform - GiveWP Integration & Automation
+  - Agiled - Manage all your business processes in one - Agiled CRM Integration & Automation
+  - ConvertKit – Email Marketing, Email Newsletter, Subscribers and Landing Pages - ConvertKit Integration & Automation
+  - WordPress Plugin - Benchmark Email - Benchmark Integration & Automation
+  - Intentionally simple email marketing and automation - Smaily Integration & Automation
   - DirectIq Integration & Automation : #1 Email marketing automation software for SMBs & startups
   - Custom Api Integration & Automation
   - IFTTT Integration & Automation : Connect Your Apps
@@ -924,7 +924,7 @@ _Release Date - 16 January 2023_
 - **New Actions :**
   - SureCart (pro) Integration & Automation : Simplifying selling online with WordPress
   - GiveWP (pro) Integration & Automation : WordPress Donation Plugin - Online Fundraising Simplified
-  - Agiled crm (pro) Integration & Automation : A Fantastic CRM Tool - Details, Pricing, & Features
+  - Agiled CRM (pro) Integration & Automation : A Fantastic CRM Tool - Details, Pricing, & Features
   - ConvertKit (pro) Integration & Automation : The creator marketing platform
   - Benchmark (pro) Integration & Automation : WordPress Email Plugin
   - Smaily (pro) Integration & Automation : Intentionally simple email marketing and automation
