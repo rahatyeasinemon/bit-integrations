@@ -25,8 +25,6 @@ export default function MenuBtn(props) {
 
     document.addEventListener('click', checkIfClickedOutside)
   }, [isMenuOpen])
-
-  console.log(menuList.current)
   const height = isMenuOpen ? `${menuList.current.clientHeight}px` : 'auto'
 
   return (
