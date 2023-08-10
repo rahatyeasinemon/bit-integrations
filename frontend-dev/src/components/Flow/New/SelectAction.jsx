@@ -124,7 +124,7 @@ export default function SelectAction() {
     { type: 'Propovoice CRM' },
     { type: 'Mail Mint' },
     { type: 'CopperCRM' },
-    { type: 'Mailify' },
+    { type: 'Sarbacane(Mailify)' },
     { type: 'Lemlist' },
     { type: 'Salesmate' },
     { type: 'LionDesk' },

@@ -18,7 +18,7 @@ use BitCode\FI\Actions\Telegram\RecordApiHelper;
 class TelegramController
 {
     private $_integrationID;
-    const APIENDPOINT = 'https://api.telegram.org/bot';
+    public const APIENDPOINT = 'https://api.telegram.org/bot';
 
     // public function __construct($integrationID=0)
     // {
@@ -57,6 +57,7 @@ class TelegramController
         $apiEndpoint = self::APIENDPOINT . $requestsParams->bot_api_key . '/getUpdates';
         $authorizationHeader["Accept"] = 'application/x-www-form-urlencoded';
         $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+
 
         if (is_wp_error($apiResponse) || !$apiResponse->ok) {
             wp_send_json_error(
