@@ -6,6 +6,7 @@
  * @category Database
  * @author   BitCode Developer <developer@bitcode.pro>
  */
+
 namespace BitCode\FI\Core\Database;
 
 /**
@@ -21,7 +22,7 @@ final class DB
     public static function migrate()
     {
         global $wpdb;
-        global $btcbi_pro_db_version;
+        global $btcbi_db_version;
         $collate = '';
 
         if ($wpdb->has_cap('collation')) {
@@ -66,8 +67,8 @@ final class DB
         }
 
         update_option(
-            'btcbi_pro_db_version',
-            $btcbi_pro_db_version
+            'btcbi_db_version',
+            $btcbi_db_version
         );
     }
 
@@ -77,9 +78,9 @@ final class DB
         $wpdb->query("RENAME TABLE `{$wpdb->prefix}btcfi_log` TO `{$wpdb->prefix}btcbi_log`, 
                                    `{$wpdb->prefix}btcfi_flow` TO `{$wpdb->prefix}btcbi_flow`;");
         $options = [
-            'btcfi_db_version' => 'btcbi_pro_db_version',
-            'btcfi_installed' => 'btcbi_pro_installed',
-            'btcfi_version' => 'btcbi_pro_version'
+            'btcfi_db_version' => 'btcbi_db_version',
+            'btcfi_installed' => 'btcbi_installed',
+            'btcfi_version' => 'btcbi_version'
         ];
 
         foreach ($options as $key => $option) {

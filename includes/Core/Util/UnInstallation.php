@@ -20,7 +20,7 @@ final class UnInstallation
     {
         $option = get_option('btcbi_app_conf');
         if (isset($option->erase_db)) {
-            add_action('btcbi_pro_uninstall', array($this, 'uninstall'));
+            add_action('btcbi_uninstall', array($this, 'uninstall'));
         }
     }
 
@@ -28,7 +28,7 @@ final class UnInstallation
     {
         global $wpdb;
         $freeVersionInstalled = get_option('btcbi_installed');
-        $columns = ["btcbi_pro_db_version", "btcbi_pro_installed", "btcbi_pro_version"];
+        $columns = ["btcbi_db_version", "btcbi_installed", "btcbi_version"];
 
         if (!$freeVersionInstalled) {
             $tableArray = [

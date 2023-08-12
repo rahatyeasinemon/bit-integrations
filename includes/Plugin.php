@@ -61,14 +61,10 @@ final class Plugin
     public function init_classes()
     {
         static::update_tables();
-        $isBitFiLicActive = Plugin::instance()->isLicenseActive();
         if (Request::Check('admin')) {
             (new Admin_Bar())->register();
-            new Updater();
         }
         new HookService();
-        global $wp_rewrite;
-        define('BTCBI_API_MAIN', get_site_url() . ($wp_rewrite->permalink_structure ? '/wp-json' : '/?rest_route='));
     }
 
     /**
@@ -102,18 +98,11 @@ final class Plugin
         if (!Capabilities::Check('manage_options')) {
             return;
         }
-        global $btcbi_pro_db_version;
-        $installed_db_version = get_site_option('btcbi_pro_db_version');
-        if ($installed_db_version != $btcbi_pro_db_version) {
+        global $btcbi_db_version;
+        $installed_db_version = get_site_option('btcbi_db_version');
+        if ($installed_db_version != $btcbi_db_version) {
             DB::migrate();
         }
-    }
-    public function isLicenseActive()
-    {
-        if (!isset($this->isLicActive)) {
-            $this->isLicActive = API::isLicenseActive();
-        }
-        return $this->isLicActive;
     }
 
     /**

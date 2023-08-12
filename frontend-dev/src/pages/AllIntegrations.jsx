@@ -18,14 +18,14 @@ import BuyProModal from '../components/Utilities/BuyProModal'
 
 const Welcome = lazy(() => import('./Welcome'))
 
-function AllIntegrations({ isLicenseActive }) {
+function AllIntegrations() {
   const { data, isLoading } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
   const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
   const [snack, setSnackbar] = useState({ show: false })
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const [proModal, setProModal] = useState({ show: false, msg: '' })
   const [premiumModal, setPremiumModal] = useState({ show: false, msg: '' })
-  const [showLicenseModal, setShowLicenseModal] = useState({ show: isLicenseActive === false })
+  // const [showLicenseModal, setShowLicenseModal] = useState({ show: isLicenseActive === false })
 
   const [cols, setCols] = useState([
     { width: 250, minWidth: 80, Header: __('Trigger', 'bit-integrations'), accessor: 'triggered_entity' },
@@ -169,10 +169,10 @@ function AllIntegrations({ isLicenseActive }) {
     setProModal({ show: true, msg: 'Only one integration can be done in the free version.' })
   }
 
-  const actionHandler = (e) => {
-    setShowLicenseModal({ show: true })
+  const clsPremiumMdl = () => {
+    setPremiumModal({ show: false })
   }
-  const proHandler = (e) => {
+  const actionHandler = (e) => {
     setPremiumModal({ show: true })
   }
 
@@ -201,12 +201,12 @@ function AllIntegrations({ isLicenseActive }) {
             {integrations.length >= 1
               ? (
                 // eslint-disable-next-line react/button-has-type
-                <button className="btn round btcd-btn-lg dp-blue" onClick={(e) => proHandler(e)}>
+                <button className="btn round btcd-btn-lg blue blue-sh" onClick={(e) => actionHandler(e)}>
                   {__('Create Integration', 'bit-integrations')}
                 </button>
               )
               : (
-                <Link to="/flow/new" className="btn round btcd-btn-lg dp-blue">
+                <Link to="/flow/new" className="btn round btcd-btn-lg blue blue-sh">
                   {__('Create Integration', 'bit-integrations')}
                 </Link>
               )}
@@ -234,9 +234,9 @@ function AllIntegrations({ isLicenseActive }) {
             data={integrations.length}
           />
         </>
-      ) : <Welcome isLicenseActive={isLicenseActive} actionHandler={actionHandler} />}
+      ) : <Welcome />}
 
-      <Modal
+      {/* <Modal
         sm
         show={showLicenseModal.show}
         setModal={() => setShowLicenseModal({ show: false })}
@@ -250,7 +250,7 @@ function AllIntegrations({ isLicenseActive }) {
           <a href={window.btcbi.licenseURL} rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Active license', 'bit-integrations')}</button></a>
         </div>
 
-      </Modal>
+      </Modal> */}
     </div>
   )
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Core\Update;
 
 use WP_Error;
@@ -97,14 +98,5 @@ final class API
     public static function removeKeyData()
     {
         return delete_option('btcbi_integrate_key_data');
-    }
-
-    public static function isLicenseActive()
-    {
-        $integrateData = get_option('btcbi_integrate_key_data');
-        if (!empty($integrateData) && is_array($integrateData) && $integrateData['status'] === 'success') {
-            return true;
-        }
-        return false;
     }
 }

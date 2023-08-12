@@ -26,7 +26,6 @@ function App() {
 
   useEffect(() => { removeUnwantedCSS() }, [])
 
-  const isLicenseActive = typeof btcbi !== 'undefined' ? ('isPro' in btcbi ? btcbi.isPro : false) : false
 
   return (
     <Suspense fallback={(<Loader className="g-c" style={loaderStyle} />)}>
@@ -78,7 +77,7 @@ function App() {
               path="/"
               element={(
                 <Suspense fallback={<TableLoader />}>
-                  <AllIntegrations isLicenseActive={isLicenseActive} />
+                  <AllIntegrations />
                 </Suspense>
               )}
             />
@@ -94,11 +93,11 @@ function App() {
 
             <Route
               path="/flow/new"
-              element={isLicenseActive ? (
+              element={
                 <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
                   <FlowBuilder />
                 </Suspense>
-              ) : (<h1 className="txt-center mt-5">License is not active</h1>)}
+              }
             />
 
             <Route
