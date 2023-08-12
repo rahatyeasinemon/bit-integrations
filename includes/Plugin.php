@@ -102,9 +102,9 @@ final class Plugin
         if (!Capabilities::Check('manage_options')) {
             return;
         }
-        global $btcbi_pro_db_version;
-        $installed_db_version = get_site_option('btcbi_pro_db_version');
-        if ($installed_db_version != $btcbi_pro_db_version) {
+        global $btcbi_db_version;
+        $installed_db_version = get_site_option('btcbi_db_version');
+        if ($installed_db_version != $btcbi_db_version) {
             DB::migrate();
         }
     }
