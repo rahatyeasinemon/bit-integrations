@@ -1,17 +1,20 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable max-len */
 import { lazy, memo, useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import Loader from '../components/Loaders/Loader'
-import BuyProModal from '../components/Utilities/BuyProModal'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import MenuBtn from '../components/Utilities/MenuBtn'
+import Modal from '../components/Utilities/Modal'
 import SingleToggle2 from '../components/Utilities/SingleToggle2'
 import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
+import useFetch from '../hooks/useFetch'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
+import BuyProModal from '../components/Utilities/BuyProModal'
 
 const Welcome = lazy(() => import('./Welcome'))
 
@@ -20,21 +23,25 @@ function AllIntegrations() {
   const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
   const [snack, setSnackbar] = useState({ show: false })
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
+  const [proModal, setProModal] = useState({ show: false, msg: '' })
   const [premiumModal, setPremiumModal] = useState({ show: false, msg: '' })
   // const [showLicenseModal, setShowLicenseModal] = useState({ show: isLicenseActive === false })
 
   const [cols, setCols] = useState([
     { width: 250, minWidth: 80, Header: __('Trigger', 'bit-integrations'), accessor: 'triggered_entity' },
     { width: 250, minWidth: 80, Header: __('Action Name', 'bit-integrations'), accessor: 'name' },
-    { width: 220, minWidth: 200, Header: __('Created At', 'bit-integrations'), accessor: 'created_at' },
+    { width: 200, minWidth: 200, Header: __('Created At', 'bit-integrations'), accessor: 'created_at' },
     { width: 70, minWidth: 60, Header: __('Status', 'bit-integrations'), accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.id)} checked={Number(value.row.original.status) === 1} /> },
   ])
 
   useEffect(() => {
-    const ncols = cols.filter(itm => itm.accessor !== 't_action' && itm.accessor !== 'status')
+    !isLoading && data.success && data?.data?.integrations && setIntegrations(data.data.integrations)
+  }, [data])
 
+  useEffect(() => {
+    const ncols = cols.filter(itm => itm.accessor !== 't_action' && itm.accessor !== 'status')
     ncols.push({ width: 70, minWidth: 60, Header: __('Status', 'bit-integrations'), accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.id)} checked={Number(value.row.original.status) === 1} /> })
-    ncols.push({ sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn id={val.row.original.id} name={val.row.original.name} index={val.row.id} del={() => showDelModal(val.row.original.id, val.row.index)} /* dup={() => showDupMdl(val.row.original.formID)} export={() => showExportMdl(val.row.original.formID)} */ /> })
+    ncols.push({ sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn id={val.row.original.id} name={val.row.original.name} index={val.row.id} del={() => showDelModal(val.row.original.id, val.row.index)} dup={() => showDupMdl(val.row.original.id, val.row.index)} /> })
     setCols([...ncols])
   }, [integrations])
 
@@ -55,13 +62,47 @@ function AllIntegrations() {
   }
 
   const handleDelete = (id, index) => {
-    bitsFetch({ id }, 'flow/delete').then(response => {
+    const deleteLoad = bitsFetch({ id }, 'flow/delete').then(response => {
       if (response.success) {
         const tmpIntegrations = [...integrations]
         tmpIntegrations.splice(index, 1)
         setIntegrations(tmpIntegrations)
-        toast.success(__(response.data, 'bit-integrations'))
+        return 'Integration deleted successfully'
       }
+      return response.data
+    })
+
+    toast.promise(deleteLoad, {
+      success: msg => msg,
+      error: __('Error Occurred', 'bit-integrations'),
+      loading: __('delete...'),
+    })
+  }
+
+  const handleClone = (id) => {
+    const loadClone = bitsFetch({ id }, 'flow/clone').then(response => {
+      if (response.success) {
+        const newInteg = response.data
+        const tmpIntegrations = [...integrations]
+        const exist = tmpIntegrations.find(item => item.id === id)
+        const cpyInteg = {
+          id: newInteg.id,
+          name: `duplicate of ${exist.name}`,
+          triggered_entity: exist.triggered_entity,
+          status: exist.status,
+          created_at: newInteg.created_at,
+        }
+        tmpIntegrations.push(cpyInteg)
+        setIntegrations(tmpIntegrations)
+        return 'Integration clone successfully'
+      }
+      return response.data
+    })
+
+    toast.promise(loadClone, {
+      success: msg => msg,
+      error: __('Error Occurred', 'bit-integrations'),
+      loading: __('cloning...'),
     })
   }
 
@@ -72,16 +113,22 @@ function AllIntegrations() {
       rowID.push(rows[i].id)
       flowID.push(rows[i].original.id)
     }
-
-    bitsFetch({ flowID }, 'flow/bulk-delete').then(response => {
+    const bulkDeleteLoading = bitsFetch({ flowID }, 'flow/bulk-delete').then(response => {
       if (response.success) {
         const newData = [...integrations]
         for (let i = rowID.length - 1; i >= 0; i -= 1) {
           newData.splice(Number(rowID[i]), 1)
         }
         setIntegrations(newData)
-        toast.success(__(response.data, 'bit-integrations'))
+        return 'Integration Deleted Successfully'
       }
+      return response.data
+    })
+
+    toast.promise(bulkDeleteLoading, {
+      success: msg => msg,
+      error: __('Error Occurred', 'bit-integrations'),
+      loading: __('delete...'),
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [integrations])
@@ -101,8 +148,14 @@ function AllIntegrations() {
     setconfMdl({ ...confMdl })
   }
 
-  const actionHandler = () => {
-    setPremiumModal({ show: true })
+  const showDupMdl = (formID) => {
+    confMdl.action = () => { handleClone(formID); closeConfMdl() }
+    confMdl.btnTxt = __('Clone', 'bit-integration')
+    confMdl.btn2Txt = null
+    confMdl.btnClass = 'blue'
+    confMdl.body = __('Are you sure to clone this Integration ?', 'bitform')
+    confMdl.show = true
+    setconfMdl({ ...confMdl })
   }
 
   const loaderStyle = {
@@ -129,7 +182,6 @@ function AllIntegrations() {
     )
   }
   return (
-
     <div id="all-forms">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <ConfirmModal
@@ -142,7 +194,6 @@ function AllIntegrations() {
         btn2Action={confMdl.btn2Action}
         btnClass={confMdl.btnClass}
       />
-
       {integrations && integrations?.length ? (
         <>
           <div className="af-header flx flx-between">
