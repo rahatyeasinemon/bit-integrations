@@ -15,10 +15,14 @@ import { __ } from '../Utils/i18nwrap'
 
 const Welcome = lazy(() => import('./Welcome'))
 
-function AllIntegrations({ integrations, setIntegrations, isLoading }) {
+function AllIntegrations() {
+  const { data, isLoading } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
+  const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
   const [snack, setSnackbar] = useState({ show: false })
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const [premiumModal, setPremiumModal] = useState({ show: false, msg: '' })
+  // const [showLicenseModal, setShowLicenseModal] = useState({ show: isLicenseActive === false })
+
   const [cols, setCols] = useState([
     { width: 250, minWidth: 80, Header: __('Trigger', 'bit-integrations'), accessor: 'triggered_entity' },
     { width: 250, minWidth: 80, Header: __('Action Name', 'bit-integrations'), accessor: 'name' },
@@ -108,6 +112,17 @@ function AllIntegrations({ integrations, setIntegrations, isLoading }) {
     alignItems: 'center',
   }
 
+  const setAlrtMdl = () => {
+    setProModal({ show: true, msg: 'Only one integration can be done in the free version.' })
+  }
+
+  const clsPremiumMdl = () => {
+    setPremiumModal({ show: false })
+  }
+  const actionHandler = (e) => {
+    setPremiumModal({ show: true })
+  }
+
   if (isLoading) {
     return (
       <Loader style={loaderStyle} />
@@ -135,7 +150,7 @@ function AllIntegrations({ integrations, setIntegrations, isLoading }) {
             {integrations.length >= 1
               ? (
                 // eslint-disable-next-line react/button-has-type
-                <button className="btn round btcd-btn-lg blue blue-sh" onClick={() => actionHandler()}>
+                <button className="btn round btcd-btn-lg blue blue-sh" onClick={(e) => actionHandler(e)}>
                   {__('Create Integration', 'bit-integrations')}
                 </button>
               )
@@ -169,6 +184,22 @@ function AllIntegrations({ integrations, setIntegrations, isLoading }) {
           />
         </>
       ) : <Welcome />}
+
+      {/* <Modal
+        sm
+        show={showLicenseModal.show}
+        setModal={() => setShowLicenseModal({ show: false })}
+        title={__('Please active your license', 'bit-integrations')}
+        className="pro-modal"
+      >
+        <h4 className="txt-center mt-5">
+          {__('Please active your license to make unlimited integrations .', 'bit-integrations')}
+        </h4>
+        <div className="txt-center">
+          <a href={window.btcbi.licenseURL} rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Active license', 'bit-integrations')}</button></a>
+        </div>
+
+      </Modal> */}
     </div>
   )
 }

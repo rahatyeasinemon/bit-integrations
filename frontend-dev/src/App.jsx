@@ -100,7 +100,7 @@ function App() {
               path="/"
               element={(
                 <Suspense fallback={<TableLoader />}>
-                  <AllIntegrations integrations={integrations} setIntegrations={setIntegrations} isLoading={isLoading} />
+                  <AllIntegrations />
                 </Suspense>
               )}
             />
@@ -114,24 +114,11 @@ function App() {
             />
 
             <Route
-              path="/doc-support"
-              element={(
+              path="/flow/new"
+              element={
                 <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
                   <DocSupport />
                 </Suspense>
-              )}
-            />
-
-            <Route
-              path="/flow/new"
-              element={
-                flowNumber >= 1
-                  ? <Route to="/" />
-                  : (
-                    <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                      <FlowBuilder />
-                    </Suspense>
-                  )
               }
             />
 

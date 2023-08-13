@@ -16,12 +16,11 @@ class Admin_Bar
     public function register()
     {
         Hooks::add('in_admin_header', [$this, 'RemoveAdminNotices']);
-        Hooks::add('admin_menu', array($this, 'AdminMenu'));
-        Hooks::add('admin_enqueue_scripts', array($this, 'AdminAssets'), 9);
+        Hooks::add('admin_menu', [$this, 'AdminMenu'], 11);
+        Hooks::add('admin_enqueue_scripts', [$this, 'AdminAssets'], 11);
         // Hooks::filter('btcbi_localized_script', [$this, 'filterAdminScriptVar']);
         add_filter('script_loader_tag', [$this, 'scriptTagFilter'], 0, 3);
     }
-
 
     /**
      * Register the admin menu
@@ -38,6 +37,14 @@ class Admin_Bar
                 </svg>'), 30);
         }
     }
+
+    /**
+     * Filter variables for admin script
+     *
+     * @param Array $previousValue Current values
+     *
+     * @return $previousValue Filtered Values
+     */
 
     /**
      * Load the asset libraries
@@ -139,7 +146,7 @@ class Admin_Bar
     }
 
     /**
-     * App root id provider
+     * Bit-Integrations  apps-root id provider
      *
      * @return void
      */
@@ -157,6 +164,7 @@ class Admin_Bar
         remove_all_actions('admin_notices');
         remove_all_actions('all_admin_notices');
     }
+
     public function scriptTagFilter($html, $handle, $href)
     {
         $newTag = $html;
