@@ -60,18 +60,18 @@ class OneHashCRMController
     {
         $integrationDetails = $integrationData->flow_details;
         $integId            = $integrationData->id;
-        $apiToken           = $integrationDetails->api_token;
+        $apiKey             = $integrationDetails->api_key;
+        $apiSecret          = $integrationDetails->api_secret;
         $fieldMap           = $integrationDetails->field_map;
         $actionName         = $integrationDetails->actionName;
-        $actionId           = $integrationDetails->actionId;
-        $domain           = $integrationDetails->domain;
+        $domain             = $integrationDetails->domain;
 
-        if (empty($fieldMap) || empty($apiToken) || empty($actionName) || empty($domain)) {
+        if (empty($fieldMap) || empty($apiKey) || empty($apiSecret) || empty($actionName) || empty($domain)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for OneHashCRM api', 'bit-integrations'));
         }
 
-        $recordApiHelper        = new RecordApiHelper($integrationDetails, $integId, $apiToken, $domain);
-        $oneHashCRMApiResponse   = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
+        $recordApiHelper        = new RecordApiHelper($integrationDetails, $integId, $apiKey, $apiSecret,  $domain);
+        $oneHashCRMApiResponse  = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
 
         if (is_wp_error($oneHashCRMApiResponse)) {
             return $oneHashCRMApiResponse;

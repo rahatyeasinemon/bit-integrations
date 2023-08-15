@@ -74,8 +74,6 @@ export default function OneHashCRMIntegLayout({ formFields, handleInput, oneHash
         && (
           <>
             <br />
-            <br />
-            <br />
             <div className="flx">
               <b className="wdt-200 d-in-b">{__('Customer Type:', 'bit-integrations')}</b>
               <MultiSelect

@@ -21,28 +21,32 @@ class RecordApiHelper
     private $type;
     private $typeName;
 
-    public function __construct($integrationDetails, $integId, $apiToken, $domain)
+    public function __construct($integrationDetails, $integId, $apiKey, $apiSecret, $domain)
     {
         $this->integrationDetails = $integrationDetails;
         $this->integrationId      = $integId;
-        $this->apiUrl             = "{$domain}/api";
+        $this->apiUrl             = "https://{$domain}.onehash.ai/api/resource";
         $this->defaultHeader      = [
-            "authtoken"     => $apiToken,
+            "Authorization" => "token {$apiKey}:$apiSecret",
             "Content-type"  => "application/json",
-            "Content-type"  => "application/x-www-form-urlencoded",
         ];
     }
 
     public function addCustomer($finalData)
     {
-        if (empty($finalData['company'])) {
-            return ['success' => false, 'message' => 'Required field Company is empty', 'code' => 400];
+        if (empty($finalData['customer_name'])) {
+            return ['success' => false, 'message' => 'Required field Full Name is empty', 'code' => 400];
+        } elseif (!isset($this->integrationDetails->selectedCustomerType) || empty($this->integrationDetails->selectedCustomerType)) {
+            return ['success' => false, 'message' => 'Required field Customer Type is empty', 'code' => 400];
         }
 
-        $this->type     = 'Customer';
-        $this->typeName = 'Customer created';
-        $apiEndpoint = $this->apiUrl . "/customers";
-        return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
+        $finalData['customer_type']     = $this->integrationDetails->selectedCustomerType;
+        $finalData['customer_group']    = "All Customer Groups";
+        $finalData['territory']         = "All Territories";
+        $this->type                     = 'Customer';
+        $this->typeName                 = 'Customer created';
+        $apiEndpoint                    = $this->apiUrl . "/Customer";
+        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -101,43 +105,6 @@ class RecordApiHelper
         return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
     }
 
-    public function addProject($finalData)
-    {
-        if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field name is empty', 'code' => 400];
-        } elseif (empty($finalData['start_date'])) {
-            return ['success' => false, 'message' => 'Required field Start Date is empty', 'code' => 400];
-        } elseif (isset($this->integrationDetails->selectedProjectStatus) && empty($this->integrationDetails->selectedProjectStatus)) {
-            return ['success' => false, 'message' => 'Required field Project Status is empty', 'code' => 400];
-        } elseif (isset($this->integrationDetails->selectedProjectType) && empty($this->integrationDetails->selectedProjectType)) {
-            return ['success' => false, 'message' => 'Required field Project Type is empty', 'code' => 400];
-        } elseif (isset($this->integrationDetails->selectedbillingType) && empty($this->integrationDetails->selectedbillingType)) {
-            return ['success' => false, 'message' => 'Required field Billing Type is empty', 'code' => 400];
-        } elseif (isset($this->integrationDetails->selectedCustomer) && empty($this->integrationDetails->selectedCustomer)) {
-            return ['success' => false, 'message' => 'Required field Customer is empty', 'code' => 400];
-        }
-
-        $finalData['status']        = $this->integrationDetails->selectedProjectStatus;
-        $finalData['rel_type']      = $this->integrationDetails->selectedProjectType;
-        $finalData['billing_type']  = $this->integrationDetails->selectedbillingType;
-        $finalData['clientid']      = $this->integrationDetails->selectedCustomer;
-
-        if ($this->integrationDetails->selectedbillingType === 1) {
-            $finalData['project_cost'] = $this->integrationDetails->totalRate;
-        } elseif ($this->integrationDetails->selectedbillingType === 2) {
-            $finalData['project_rate_per_hour'] = $this->integrationDetails->ratePerHour;
-        }
-
-        if (isset($this->integrationDetails->selectedProjectMembers) && !empty($this->integrationDetails->selectedProjectMembers)) {
-            $finalData['project_members'] = explode(',', $this->integrationDetails->selectedProjectMembers);
-        }
-
-        $this->type     = 'Project';
-        $this->typeName = 'Project created';
-        $apiEndpoint = $this->apiUrl . "/projects";
-        return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
-    }
-
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -158,11 +125,9 @@ class RecordApiHelper
             $apiResponse = $this->addContact($finalData);
         } elseif ($actionName === "lead") {
             $apiResponse = $this->addLead($finalData);
-        } elseif ($actionName === "project") {
-            $apiResponse = $this->addProject($finalData);
         }
 
-        if ($apiResponse->status) {
+        if (isset($apiResponse->data)) {
             $res = [$this->typeName . '  successfully'];
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
         } else {
