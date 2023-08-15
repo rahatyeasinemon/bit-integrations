@@ -54,13 +54,6 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
       } else {
         delete newConf.actions.MarketSegment
       }
-    } else if (type === 'LeadIndustry') {
-      if (e.target?.checked) {
-        newConf.actions.LeadIndustry = true
-        newConf.LeadIndustries = ['Motion Picture & Video', 'Music', 'Newspaper Publishers', 'Online Auctions', 'Pension Funds', 'Pharmaceuticals', 'Private Equity', 'Publishing', 'Real State', 'Retail & Wholesale', 'Securities & Commodity Exchanges', 'Service', 'Soup & Detergent', 'Software', 'Sports', 'Technology', 'Telecommunications', 'Television', 'Transportation', 'Venture Capital']
-      } else {
-        delete newConf.actions.LeadIndustry
-      }
     } else if (type === 'ContactStatus') {
       if (e.target?.checked) {
         newConf.actions.ContactStatus = true
@@ -92,7 +85,6 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
       {oneHashCRMConf.actionName === 'lead' && <TableCheckBox checked={oneHashCRMConf?.selectedLeadType || false} onChange={(e) => actionHandler(e, 'LeadType')} className="wdt-200 mt-4 mr-2" value="LeadType" title={__('Add Lead Type', 'bit - integrations')} subTitle={__('Add Lead Type')} />}
       {oneHashCRMConf.actionName === 'lead' && <TableCheckBox checked={oneHashCRMConf?.selectedRequestType || false} onChange={(e) => actionHandler(e, 'RequestType')} className="wdt-200 mt-4 mr-2" value="RequestType" title={__('Add Request Type', 'bit - integrations')} subTitle={__('Add Request Type')} />}
       {oneHashCRMConf.actionName === 'lead' && <TableCheckBox checked={oneHashCRMConf?.selectedMarketSegment || false} onChange={(e) => actionHandler(e, 'MarketSegment')} className="wdt-200 mt-4 mr-2" value="MarketSegment" title={__('Add Market Segment', 'bit - integrations')} subTitle={__('Add Market Segment')} />}
-      {oneHashCRMConf.actionName === 'lead' && <TableCheckBox checked={oneHashCRMConf?.selectedLeadIndustry || false} onChange={(e) => actionHandler(e, 'LeadIndustry')} className="wdt-200 mt-4 mr-2" value="LeadIndustry" title={__('Add Industry', 'bit - integrations')} subTitle={__('Add Industry')} />}
       {oneHashCRMConf.actionName === 'contact' && <TableCheckBox checked={oneHashCRMConf?.selectedContactStatus || false} onChange={(e) => actionHandler(e, 'ContactStatus')} className="wdt-200 mt-4 mr-2" value="ContactStatus" title={__('Add Status', 'bit - integrations')} subTitle={__('Add Status')} />}
 
       <ConfirmModal
@@ -227,34 +219,6 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
             className="msl-wrp-options"
             defaultValue={oneHashCRMConf?.selectedMarketSegment}
             onChange={val => setChanges(val, 'selectedMarketSegment')}
-            singleSelect
-            closeOnSelect
-          />
-        </div>
-      </ConfirmModal>
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'LeadIndustry'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Add Industry', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Industry', 'bit-integrations')}
-        </div>
-
-
-        <div className="flx flx-between mt-2">
-          <MultiSelect
-            options={oneHashCRMConf?.LeadIndustries?.map(industry => ({ label: industry, value: industry }))}
-            className="msl-wrp-options"
-            defaultValue={oneHashCRMConf?.selectedLeadIndustry}
-            onChange={val => setChanges(val, 'selectedLeadIndustry')}
             singleSelect
             closeOnSelect
           />

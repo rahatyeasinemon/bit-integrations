@@ -68,27 +68,39 @@ class RecordApiHelper
 
     public function addLead($finalData)
     {
-        if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field name is empty', 'code' => 400];
+        if (empty($finalData['lead_name'])) {
+            return ['success' => false, 'message' => 'Required Person Name is empty', 'code' => 400];
+        } elseif (empty($finalData['company_name'])) {
+            return ['success' => false, 'message' => 'Required Organization Name is empty', 'code' => 400];
+        } elseif (!isset($this->integrationDetails->selectedLeadStatus) || empty($this->integrationDetails->selectedLeadStatus)) {
+            return ['success' => false, 'message' => 'Required Lead Status is empty', 'code' => 400];
         }
 
-        $finalData['status'] = 1;
-        $finalData['source'] = 1;
+        if (isset($this->integrationDetails->selectedLeadSource) && !empty($this->integrationDetails->selectedLeadSource)) {
+            $finalData['source'] = ($this->integrationDetails->selectedLeadSource);
+        }
+        if (isset($this->integrationDetails->actions->organizationLead) && !empty($this->integrationDetails->actions->organizationLead)) {
+            $finalData['organization_lead'] = $this->integrationDetails->actions->organizationLead;
+        }
+        if (isset($this->integrationDetails->selectedLeadAddressType) && !empty($this->integrationDetails->selectedLeadAddressType)) {
+            $finalData['address_type'] = $this->integrationDetails->selectedLeadAddressType;
+        }
+        if (isset($this->integrationDetails->selectedLeadType) && !empty($this->integrationDetails->selectedLeadType)) {
+            $finalData['type'] = $this->integrationDetails->selectedLeadType;
+        }
+        if (isset($this->integrationDetails->selectedRequestType) && !empty($this->integrationDetails->selectedRequestType)) {
+            $finalData['request_type'] = $this->integrationDetails->selectedRequestType;
+        }
+        if (isset($this->integrationDetails->selectedMarketSegment) && !empty($this->integrationDetails->selectedMarketSegment)) {
+            $finalData['market_segment'] = $this->integrationDetails->selectedMarketSegment;
+        }
 
-        if (isset($this->integrationDetails->selectedCustomer) && !empty($this->integrationDetails->selectedCustomer)) {
-            $finalData['client_id'] = ($this->integrationDetails->selectedCustomer);
-        }
-        if (isset($this->integrationDetails->actions->leadIsPublic) && !empty($this->integrationDetails->actions->leadIsPublic)) {
-            $finalData['is_public'] = $this->integrationDetails->actions->leadIsPublic;
-        }
-        if (isset($this->integrationDetails->actions->contactedToday) && !empty($this->integrationDetails->actions->contactedToday)) {
-            $finalData['contacted_today'] = $this->integrationDetails->actions->contactedToday;
-        }
-
-        $this->type     = 'Lead';
-        $this->typeName = 'Lead created';
-        $apiEndpoint = $this->apiUrl . "/leads";
-        return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
+        $finalData['status']    = $this->integrationDetails->selectedLeadStatus;
+        $finalData['territory'] = "All Territories";
+        $this->type             = 'Lead';
+        $this->typeName         = 'Lead created';
+        $apiEndpoint            = $this->apiUrl . "/Lead";
+        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
