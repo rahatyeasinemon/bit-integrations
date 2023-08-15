@@ -39,7 +39,6 @@ export default function OneHashCRMIntegLayout({ formFields, handleInput, oneHash
 
     setOneHashCRMConf({ ...newConf })
   }
-  console.log(oneHashCRMConf)
 
   return (
     <>
@@ -92,7 +91,7 @@ export default function OneHashCRMIntegLayout({ formFields, handleInput, oneHash
           </>
         )}
 
-      {(isLoading || loading.customers || loading.leads) && (
+      {isLoading && (
         <Loader style={{
           display: 'flex',
           justifyContent: 'center',
