@@ -140,6 +140,7 @@ const EditWPWebhooks = lazy(() => import('./WPWebhooks/EditWPWebhooks'))
 const EditAdvancedFormIntegration = lazy(() => import('./AdvancedFormIntegration/EditAdvancedFormIntegration'))
 const EditPerfexCRM = lazy(() => import('./PerfexCRM/EditPerfexCRM'))
 const EditSureTriggers = lazy(() => import('./SureTriggers/EditSureTriggers'))
+const EditOneHashCRM = lazy(() => import('./OneHashCRM/EditOneHashCRM'))
 
 const loaderStyle = {
   display: 'flex',
@@ -483,6 +484,8 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditPerfexCRM allIntegURL={allIntegURL} />
     case 'SureTriggers':
       return <EditSureTriggers allIntegURL={allIntegURL} />
+    case 'OneHashCRM':
+      return <EditOneHashCRM allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }

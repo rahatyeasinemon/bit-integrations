@@ -129,6 +129,7 @@ const WPWebhooksAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/
 const AdvancedFormIntegrationAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
 const PerfexCRMAuthorization = lazy(() => import('./PerfexCRM/PerfexCRMAuthorization'))
 const SureTriggersAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
+const OneHashCRMAuthorization = lazy(() => import('./OneHashCRM/OneHashCRMAuthorization'))
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -402,6 +403,8 @@ export default function IntegInfo() {
         return <PerfexCRMAuthorization perfexCRMConf={integrationConf} step={1} isInfo />
       case 'SureTriggers':
         return <SureTriggersAuthorization webHooks={integrationConf} step={1} isInfo />
+      case 'OneHashCRM':
+        return <OneHashCRMAuthorization oneHashCRMConf={integrationConf} step={1} isInfo />
       default:
         return <></>
     }
