@@ -51,33 +51,19 @@ class RecordApiHelper
 
     public function addContact($finalData)
     {
-        if (empty($finalData['firstname'])) {
+        if (empty($finalData['first_name'])) {
             return ['success' => false, 'message' => 'Required field First Name is empty', 'code' => 400];
-        } elseif (empty($finalData['lastname'])) {
-            return ['success' => false, 'message' => 'Required field Last Name is empty', 'code' => 400];
-        } elseif (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
-        } elseif (isset($this->integrationDetails->selectedCustomer) && empty($this->integrationDetails->selectedCustomer)) {
-            return ['success' => false, 'message' => 'Required field Customer is empty', 'code' => 400];
         }
 
-        $finalData['customer_id'] = ($this->integrationDetails->selectedCustomer);
-        $finalData['send_set_password_email'] = 'on';
-
-        if (isset($this->integrationDetails->selectedDirection) && !empty($this->integrationDetails->selectedDirection)) {
-            $finalData['direction'] = ($this->integrationDetails->selectedDirection);
-        }
-        if (isset($this->integrationDetails->selectedPermission) && !empty($this->integrationDetails->selectedPermission)) {
-            $finalData['permissions'] = explode(',', $this->integrationDetails->selectedPermission);
-        }
-        if (isset($this->integrationDetails->actions->contactIsPrimary) && !empty($this->integrationDetails->actions->contactIsPrimary)) {
-            $finalData['is_primary'] = $this->integrationDetails->actions->contactIsPrimary ? 'on' : $this->integrationDetails->actions->contactIsPrimary;
+        if (isset($this->integrationDetails->selectedContactStatus) && !empty($this->integrationDetails->selectedContactStatus)) {
+            $finalData['status'] = ($this->integrationDetails->selectedContactStatus);
         }
 
-        $this->type     = 'Contact';
-        $this->typeName = 'Contact created';
-        $apiEndpoint = $this->apiUrl . "/contacts";
-        return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
+        $finalData['is_primary_contact']    = true;
+        $this->type                         = 'Contact';
+        $this->typeName                     = 'Contact created';
+        $apiEndpoint                        = $this->apiUrl . "/Contact";
+        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
     public function addLead($finalData)
