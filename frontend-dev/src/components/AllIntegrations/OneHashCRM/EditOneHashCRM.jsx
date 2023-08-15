@@ -31,35 +31,13 @@ function EditOneHashCRM({ allIntegURL }) {
       return
     }
 
-    if (oneHashCRMConf.actionName === 'contact' && !oneHashCRMConf.selectedCustomer) {
-      toast.error('Please select a Customer')
+    if (oneHashCRMConf.actionName === 'customer' && !oneHashCRMConf.selectedCustomerType) {
+      toast.error('Please select Customer Type')
       return
     }
-    if (oneHashCRMConf.actionName === 'project') {
-      if (!oneHashCRMConf.selectedProjectStatus) {
-        toast.error('Please select Project status')
-        return
-      }
-      if (!oneHashCRMConf.selectedProjectType) {
-        toast.error('Please select Project Related With...')
-        return
-      }
-      if (!oneHashCRMConf.selectedbillingType) {
-        toast.error('Please select a Billing type')
-        return
-      }
-      if (!oneHashCRMConf.selectedCustomer) {
-        toast.error('Please select a Customer')
-        return
-      }
-      if (Number(oneHashCRMConf.selectedbillingType) === 1 && !oneHashCRMConf.totalRate) {
-        toast.error('Please select a Total Rate')
-        return
-      }
-      if (Number(oneHashCRMConf.selectedbillingType) === 2 && !oneHashCRMConf.ratePerHour) {
-        toast.error('Please select a Rate Per Hour')
-        return
-      }
+    if (oneHashCRMConf.actionName === 'lead' && !oneHashCRMConf.selectedLeadStatus) {
+      toast.error('Please select Lead Status')
+      return
     }
 
     saveActionConf({ flow, allIntegURL, conf: oneHashCRMConf, navigate, edit: 1, setIsLoading, setSnackbar })
