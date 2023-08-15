@@ -70,6 +70,13 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
       } else {
         delete newConf.actions.LeadIndustry
       }
+    } else if (type === 'ContactStatus') {
+      if (e.target?.checked) {
+        newConf.actions.ContactStatus = true
+        newConf.ContactStatus = ['Passive', 'Open', 'Replied']
+      } else {
+        delete newConf.actions.ContactStatus
+      }
     }
 
     setActionMdl({ show: type })
@@ -96,9 +103,7 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
       {oneHashCRMConf.actionName === 'lead' && <TableCheckBox checked={oneHashCRMConf?.selectedMarketSegment || false} onChange={(e) => actionHandler(e, 'MarketSegment')} className="wdt-200 mt-4 mr-2" value="MarketSegment" title={__('Add Market Segment', 'bit - integrations')} subTitle={__('Add Market Segment')} />}
       {oneHashCRMConf.actionName === 'lead' && <TableCheckBox checked={oneHashCRMConf?.selectedLeadIndustry || false} onChange={(e) => actionHandler(e, 'LeadIndustry')} className="wdt-200 mt-4 mr-2" value="LeadIndustry" title={__('Add Industry', 'bit - integrations')} subTitle={__('Add Industry')} />}
       {oneHashCRMConf.actionName === 'lead' && <TableCheckBox checked={oneHashCRMConf?.selectedTerritory || false} onChange={(e) => actionHandler(e, 'Territory')} className="wdt-200 mt-4 mr-2" value="Territory" title={__('Add Territory', 'bit - integrations')} subTitle={__('Add Territory')} />}
-      {/* {oneHashCRMConf.actionName === 'contact' && <TableCheckBox checked={oneHashCRMConf?.selectedPermission?.length || false} onChange={(e) => actionHandler(e, 'permission')} className="wdt-200 mt-4 mr-2" value="permission" title={__('Add Permissions', 'bit - integrations')} subTitle={__('Add Permissions for this contact')} />}
-      {oneHashCRMConf.actionName === 'contact' && <TableCheckBox checked={oneHashCRMConf.actions?.contactIsPrimary || false} onChange={(e) => actionHandler(e, 'contactIsPrimary')} className="wdt-200 mt-4 mr-2" value="contactIsPrimary" title={__('Is it Primary Contact?', 'bit-integrations')} subTitle={__('Is it Primary Contact?', 'bit-integrations')} />}
-      {oneHashCRMConf.actionName === 'project' && <TableCheckBox checked={oneHashCRMConf?.selectedProjectMembers || false} onChange={(e) => actionHandler(e, 'projectMembers')} className="wdt-200 mt-4 mr-2" value="projectMembers" title={__('Add Project Members', 'bit-integrations')} subTitle={__('Add Project Members', 'bit-integrations')} />} */}
+      {oneHashCRMConf.actionName === 'contact' && <TableCheckBox checked={oneHashCRMConf?.selectedContactStatus || false} onChange={(e) => actionHandler(e, 'ContactStatus')} className="wdt-200 mt-4 mr-2" value="ContactStatus" title={__('Add Status', 'bit - integrations')} subTitle={__('Add Status')} />}
 
       <ConfirmModal
         className="custom-conf-mdl"
@@ -288,6 +293,34 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
             className="msl-wrp-options"
             defaultValue={oneHashCRMConf?.selectedLeadIndustry}
             onChange={val => setChanges(val, 'selectedLeadIndustry')}
+            singleSelect
+            closeOnSelect
+          />
+        </div>
+      </ConfirmModal>
+
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt={__('Ok', 'bit-integrations')}
+        show={actionMdl.show === 'ContactStatus'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title={__('Add Industry', 'bit-integrations')}
+      >
+        <div className="btcd-hr mt-2 mb-2" />
+        <div className="mt-2">
+          {__('Select Industry', 'bit-integrations')}
+        </div>
+
+
+        <div className="flx flx-between mt-2">
+          <MultiSelect
+            options={oneHashCRMConf?.ContactStatus?.map(status => ({ label: status, value: status }))}
+            className="msl-wrp-options"
+            defaultValue={oneHashCRMConf?.selectedContactStatus}
+            onChange={val => setChanges(val, 'selectedContactStatus')}
             singleSelect
             closeOnSelect
           />
