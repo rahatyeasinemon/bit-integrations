@@ -37,11 +37,6 @@ export default function OneHashCRMIntegLayout({ formFields, handleInput, oneHash
     const newConf = { ...oneHashCRMConf }
     newConf[name] = val
 
-    if (name === "selectedProjectType" && val === 'customer') {
-      getAllCustomer(oneHashCRMConf, setOneHashCRMConf, loading, setLoading)
-    } else if (name === "selectedProjectType" && val === 'lead') {
-      getAllLeads(oneHashCRMConf, setOneHashCRMConf, loading, setLoading)
-    }
     setOneHashCRMConf({ ...newConf })
   }
   console.log(oneHashCRMConf)
@@ -76,19 +71,19 @@ export default function OneHashCRMIntegLayout({ formFields, handleInput, oneHash
             </div>
           </>
         )}
-      {oneHashCRMConf.actionName === 'project'
+      {oneHashCRMConf.actionName === 'customer'
         && (
           <>
             <br />
             <br />
             <br />
             <div className="flx">
-              <b className="wdt-200 d-in-b">{__('Project Related With:', 'bit-integrations')}</b>
+              <b className="wdt-200 d-in-b">{__('Customer Type:', 'bit-integrations')}</b>
               <MultiSelect
-                options={['customer', 'lead']?.map(type => ({ label: type.charAt(0).toUpperCase() + type.slice(1), value: type }))}
+                options={['Company', 'Individual']?.map(type => ({ label: type, value: type }))}
                 className="msl-wrp-options dropdown-custom-width"
-                defaultValue={oneHashCRMConf?.selectedProjectType}
-                onChange={val => setChanges(val, 'selectedProjectType')}
+                defaultValue={oneHashCRMConf?.selectedCustomerType}
+                onChange={val => setChanges(val, 'selectedCustomerType')}
                 disabled={isLoading}
                 singleSelect
                 closeOnSelect
