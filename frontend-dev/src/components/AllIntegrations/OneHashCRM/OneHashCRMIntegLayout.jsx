@@ -6,7 +6,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from './IntegrationHelpers'
 import OneHashCRMActions from './OneHashCRMActions'
-import { generateMappedField, getAllCustomer, getAllLeads } from './OneHashCRMCommonFunc'
+import { generateMappedField } from './OneHashCRMCommonFunc'
 import OneHashCRMFieldMap from './OneHashCRMFieldMap'
 
 export default function OneHashCRMIntegLayout({ formFields, handleInput, oneHashCRMConf, setOneHashCRMConf, loading, setLoading, isLoading, setIsLoading, setSnackbar }) {

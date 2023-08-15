@@ -4,10 +4,8 @@ import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { __ } from '../../../Utils/i18nwrap'
-import Loader from '../../Loaders/Loader'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
-import { getAllStaffs } from './OneHashCRMCommonFunc'
 
 export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, loading, setLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
@@ -56,13 +54,6 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
       } else {
         delete newConf.actions.MarketSegment
       }
-    } else if (type === 'Territory') {
-      if (e.target?.checked) {
-        newConf.actions.Territory = true
-        newConf.Territories = ['All Territories', 'Rest Of The World']
-      } else {
-        delete newConf.actions.Territory
-      }
     } else if (type === 'LeadIndustry') {
       if (e.target?.checked) {
         newConf.actions.LeadIndustry = true
@@ -102,7 +93,6 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
       {oneHashCRMConf.actionName === 'lead' && <TableCheckBox checked={oneHashCRMConf?.selectedRequestType || false} onChange={(e) => actionHandler(e, 'RequestType')} className="wdt-200 mt-4 mr-2" value="RequestType" title={__('Add Request Type', 'bit - integrations')} subTitle={__('Add Request Type')} />}
       {oneHashCRMConf.actionName === 'lead' && <TableCheckBox checked={oneHashCRMConf?.selectedMarketSegment || false} onChange={(e) => actionHandler(e, 'MarketSegment')} className="wdt-200 mt-4 mr-2" value="MarketSegment" title={__('Add Market Segment', 'bit - integrations')} subTitle={__('Add Market Segment')} />}
       {oneHashCRMConf.actionName === 'lead' && <TableCheckBox checked={oneHashCRMConf?.selectedLeadIndustry || false} onChange={(e) => actionHandler(e, 'LeadIndustry')} className="wdt-200 mt-4 mr-2" value="LeadIndustry" title={__('Add Industry', 'bit - integrations')} subTitle={__('Add Industry')} />}
-      {oneHashCRMConf.actionName === 'lead' && <TableCheckBox checked={oneHashCRMConf?.selectedTerritory || false} onChange={(e) => actionHandler(e, 'Territory')} className="wdt-200 mt-4 mr-2" value="Territory" title={__('Add Territory', 'bit - integrations')} subTitle={__('Add Territory')} />}
       {oneHashCRMConf.actionName === 'contact' && <TableCheckBox checked={oneHashCRMConf?.selectedContactStatus || false} onChange={(e) => actionHandler(e, 'ContactStatus')} className="wdt-200 mt-4 mr-2" value="ContactStatus" title={__('Add Status', 'bit - integrations')} subTitle={__('Add Status')} />}
 
       <ConfirmModal
@@ -237,34 +227,6 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
             className="msl-wrp-options"
             defaultValue={oneHashCRMConf?.selectedMarketSegment}
             onChange={val => setChanges(val, 'selectedMarketSegment')}
-            singleSelect
-            closeOnSelect
-          />
-        </div>
-      </ConfirmModal>
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'Territory'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Add Territory', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Territory', 'bit-integrations')}
-        </div>
-
-
-        <div className="flx flx-between mt-2">
-          <MultiSelect
-            options={oneHashCRMConf?.Territories?.map(Territory => ({ label: Territory, value: Territory }))}
-            className="msl-wrp-options"
-            defaultValue={oneHashCRMConf?.selectedTerritory}
-            onChange={val => setChanges(val, 'selectedTerritory')}
             singleSelect
             closeOnSelect
           />
