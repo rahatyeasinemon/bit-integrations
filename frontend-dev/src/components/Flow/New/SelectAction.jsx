@@ -147,6 +147,7 @@ export default function SelectAction() {
     { type: 'PerfexCRM' },
     { type: 'SureTriggers' },
     { type: 'OneHashCRM' },
+    { type: 'Salesflare' },
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState((isPro && sortByField(integs, 'type', 'ASC')) || integs)

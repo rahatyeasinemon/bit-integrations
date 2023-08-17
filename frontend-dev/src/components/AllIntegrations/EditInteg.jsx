@@ -141,6 +141,7 @@ const EditAdvancedFormIntegration = lazy(() => import('./AdvancedFormIntegration
 const EditPerfexCRM = lazy(() => import('./PerfexCRM/EditPerfexCRM'))
 const EditSureTriggers = lazy(() => import('./SureTriggers/EditSureTriggers'))
 const EditOneHashCRM = lazy(() => import('./OneHashCRM/EditOneHashCRM'))
+const EditSalesflare = lazy(() => import('./Salesflare/EditSalesflare'))
 
 const loaderStyle = {
   display: 'flex',
@@ -486,6 +487,8 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditSureTriggers allIntegURL={allIntegURL} />
     case 'OneHashCRM':
       return <EditOneHashCRM allIntegURL={allIntegURL} />
+    case 'Salesflare':
+      return <EditSalesflare allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }
