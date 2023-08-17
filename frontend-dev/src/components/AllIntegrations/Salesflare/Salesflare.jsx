@@ -21,49 +21,40 @@ function Salesflare({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
 
-  const customerFields = [
-    { key: 'customer_name', label: 'Full Name', required: true },
-    { key: 'mobile_no', label: 'Mobile Number', required: false },
-    { key: 'email_id', label: 'Email Address', required: false },
-    { key: 'primary_address', label: 'Primary Address', required: false },
-    { key: 'customer_primary_contact', label: 'customer Primary Contact', required: false },
-    { key: 'customer_primary_address', label: 'customer Primary Address', required: false }
+  const accountFields = [
+    { key: 'name', label: 'Account name', required: true },
+    { key: 'website', label: 'Account website', required: false },
+    { key: 'description', label: 'Description', required: false },
+    { key: 'size', label: 'Size', required: false },
+    { key: 'email', label: 'Account email', required: false },
+    { key: 'phone_number', label: 'Phone', required: false },
+    { key: 'street', label: 'Street', required: false },
+    { key: 'zip', label: 'Zip/Postal Code', required: false },
+    { key: 'city', label: 'City', required: false },
+    { key: 'region', label: 'State/Region', required: false },
+    { key: 'country', label: 'Country', required: false },
   ]
 
   const contactFields = [
-    { key: 'first_name', label: 'First Name', required: true },
-    { key: 'middle_name', label: 'Middle Name', required: false },
-    { key: 'last_name', label: 'Last Name', required: false },
-    { key: 'email_id', label: 'Email Address', required: false },
-    { key: 'designation', label: 'Designation', required: false },
-    { key: 'phone', label: 'Phone Number', required: false },
-    { key: 'mobile_no', label: 'Mobile Number', required: false },
-    { key: 'gender', label: 'Gender', required: false },
-    { key: 'department', label: 'Department', required: false },
-    { key: 'company_name', label: 'Company Name', required: false },
+    { key: 'firstname', label: 'First Name', required: true },
+    { key: 'Prefix', label: 'Prefix', required: false },
+    { key: 'middle', label: 'Middle Name', required: false },
+    { key: 'lastname', label: 'Last Name', required: false },
+    { key: 'email', label: 'Email Address', required: true },
+    { key: 'suffix', label: 'Suffix', required: false },
+    { key: 'phone_number', label: 'Phone Number', required: false },
+    { key: 'street', label: 'Street', required: false },
+    { key: 'zip', label: 'Zip/Postal Code', required: false },
+    { key: 'city', label: 'City', required: false },
+    { key: 'region', label: 'State/Region', required: false },
+    { key: 'country', label: 'Country', required: false },
   ]
 
-  const leadFields = [
-    { key: 'lead_name', label: 'Person Name', required: true },
-    { key: 'company_name', label: 'Organization Name', required: true },
-    { key: 'email_id', label: 'Email Address', required: false },
-    { key: 'title', label: 'Title', required: false },
-    { key: 'phone', label: 'Phone Number', required: false },
-    { key: 'mobile_no', label: 'Mobile Number', required: false },
-    { key: 'fax', label: 'Fax', required: false },
-    { key: 'designation', label: 'Designation', required: false },
-    { key: 'gender', label: 'Gender', required: false },
-    { key: 'campaign_name', label: 'Campaign Name', required: false },
-    { key: 'website', label: 'Website', required: false },
-    { key: 'notes', label: 'Notes', required: false },
-    { key: 'address_title', label: 'Address Title', required: false },
-    { key: 'address_line1', label: 'Address Line 1', required: false },
-    { key: 'address_line2', label: 'Address Line 2', required: false },
-    { key: 'city', label: 'City', required: false },
-    { key: 'county', label: 'County', required: false },
-    { key: 'state', label: 'State', required: false },
-    { key: 'pincode', label: 'Postal Code', required: false },
-    { key: 'country', label: 'Country', required: false },
+  const oppotunityFields = [
+    { key: 'name', label: 'Opportunity name', required: true },
+    { key: 'value', label: 'Value', required: true },
+    { key: 'start_date', label: 'Start date', required: false },
+    { key: 'close_date', label: 'Close date', required: false },
   ]
 
   const [salesflareConf, setSalesflareConf] = useState({
@@ -75,9 +66,9 @@ function Salesflare({ formFields, setFlow, flow, allIntegURL }) {
     ],
     actionName: '',
     actionId: '',
-    customerFields,
+    accountFields,
     contactFields,
-    leadFields,
+    oppotunityFields,
     actions: {},
   })
 

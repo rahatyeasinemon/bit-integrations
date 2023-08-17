@@ -47,9 +47,9 @@ export default function SalesflareIntegLayout({ formFields, handleInput, salesfl
       <b className="wdt-200 d-in-b">{__('Select Action:', 'bit-integrations')}</b>
       <select onChange={handleActionInput} name="actionName" value={salesflareConf.actionName} className="btcd-paper-inp w-5">
         <option value="">{__('Select an action', 'bit-integrations')}</option>
-        <option value="lead" data-action_name="lead">{__('Create Lead', 'bit-integrations')}</option>
-        <option value="customer" data-action_name="customer">{__('Create Customer', 'bit-integrations')}</option>
+        <option value="account" data-action_name="account">{__('Create Account', 'bit-integrations')}</option>
         <option value="contact" data-action_name="contact">{__('Create Contact', 'bit-integrations')}</option>
+        <option value="opportunities" data-action_name="opportunities">{__('Create Opportunity', 'bit-integrations')}</option>
       </select>
       <br />
       {salesflareConf.actionName === 'lead'
