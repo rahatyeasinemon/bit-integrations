@@ -29,24 +29,12 @@ export default function SalesflareAuthorization({ salesflareConf, setSalesflareC
     setSalesflareConf(newConf)
   }
 
-  const handleApiTokenLink = () => {
-    salesflareConf.domain
-      ? window.open(
-        `${salesflareConf.domain}/app/user`,
-        '_blank',
-        'noreferrer'
-      )
-      : toast.error(
-        __("Access API URL is required!", "bit-integrations")
-      )
-  }
-
   const ActiveInstructions = `
-            <h4>Get API Token</h4>
+            <h4>Get API Key</h4>
             <ul>
-                <li>Go to your OneHash CRM's user dashboard and click the profile buttom from Right top corner</li>
-                <li>Then select "My Settings"</li>
-                <li>Then go to "API Access → Generates Keys"</li>
+                <li>Go to your Salesflare user dashboard</li>
+                <li>Then click "Settings"</li>
+                <li>Then click "API Keys → Generates Keys"</li>
             </ul>`
 
   return (
@@ -54,35 +42,21 @@ export default function SalesflareAuthorization({ salesflareConf, setSalesflareC
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={salesflareConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 
-      <div className="mt-3"><b>{__('Access API URL:', 'bit-integrations')}</b></div>
-      <div className="btcd-input-group w-6 mt-1">
-        <div className="btcd-input-group-icon">https://</div>
-        <div className="btcd-input-group-area">
-          <input className="btcd-paper-inp" onChange={handleInput} name="domain" value={salesflareConf.domain} type="text" placeholder={__('Access API URL...', 'bit-integrations')} disabled={isInfo} />
-        </div>
-        <div className="btcd-input-group-icon">.onehash.ai</div>
-      </div>
-      <div style={{ color: 'red', fontSize: '15px' }}>{error.domain}</div>
-
       <div className="mt-3"><b>{__('API Key:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={salesflareConf.api_key} type="text" placeholder={__('API Key...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
 
-      <div className="mt-3"><b>{__('API Secret:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_secret" value={salesflareConf.api_secret} type="text" placeholder={__('API Token...', 'bit-integrations')} disabled={isInfo} />
-      <div style={{ color: 'red', fontSize: '15px' }}>{error.api_secret}</div>
-
       <small className="d-blk mt-3">
-        {__('To Get API Key & API Secret, Please Visit', 'bit-integrations')}
+        {__('To Get API Key, Please Visit', 'bit-integrations')}
         &nbsp;
-        <a className="btcd-link" onClick={handleApiTokenLink}>{__('Salesflare API Key & API Secret', 'bit-integrations')}</a>
+        <a className="btcd-link" onClick="https://app.salesflare.com/#/settings/apikeys">{__('Salesflare API Key', 'bit-integrations')}</a>
       </small>
       <br />
       <br />
 
       {!isInfo && (
         <div>
-          <button onClick={() => salesflareAuthentication(salesflareConf, setSalesflareConf, setError, setIsAuthorized, loading, setLoading)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized || loading.auth}>
+          <button onClick={() => salesflareAuthentication(salesflareConf, setError, setIsAuthorized, loading, setLoading)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized || loading.auth}>
             {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
             {loading.auth && <LoaderSm size="20" clr="#022217" className="ml-2" />}
           </button>

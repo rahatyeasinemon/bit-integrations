@@ -69,9 +69,7 @@ function Salesflare({ formFields, setFlow, flow, allIntegURL }) {
   const [salesflareConf, setSalesflareConf] = useState({
     name: 'Salesflare',
     type: 'Salesflare',
-    api_key: process.env.NODE_ENV === 'development' ? '445c5ba7af5cb92' : '',
-    api_secret: process.env.NODE_ENV === 'development' ? '2d2d270f95038eb' : '',
-    domain: process.env.NODE_ENV === 'development' ? 'bitintegrations' : '',
+    api_key: process.env.NODE_ENV === 'development' ? 'qL2oAebEsF6UM-QZ84t6WgeYm4aBQ1cwkPPOQfwDPM_wD' : '',
     field_map: [
       { formField: '', salesflareFormField: '' },
     ],

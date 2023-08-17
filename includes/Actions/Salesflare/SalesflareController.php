@@ -20,21 +20,21 @@ class SalesflareController
 
     private function setApiEndpoint()
     {
-        return $this->apiEndpoint = "https://{$this->domain}.onehash.ai/api/resource";
+        return $this->apiEndpoint = "https://api.salesflare.com";
     }
 
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
-        if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_secret) || empty($fieldsRequestParams->domain) || empty($customParam)) {
+        if (empty($fieldsRequestParams->api_key) || empty($customParam)) {
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
-    private function setHeaders($apiKey, $apiSecret)
+    private function setHeaders($apiKey)
     {
         return
             [
-                "Authorization" => "token {$apiKey}:$apiSecret",
+                "Authorization" => "Bearer {$apiKey}",
                 "Content-type"  => "application/json",
             ];
     }
@@ -42,17 +42,15 @@ class SalesflareController
     public function authentication($fieldsRequestParams)
     {
         $this->checkValidation($fieldsRequestParams);
-        $this->domain   = $fieldsRequestParams->domain;
         $apiKey         = $fieldsRequestParams->api_key;
-        $apiSecret      = $fieldsRequestParams->api_secret;
-        $apiEndpoint    = $this->setApiEndpoint() . "/Lead";
-        $headers        = $this->setHeaders($apiKey, $apiSecret);
+        $apiEndpoint    = $this->setApiEndpoint() . "/accounts";
+        $headers        = $this->setHeaders($apiKey);
         $response       = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (isset($response->data)) {
+        if (!isset($response->error)) {
             wp_send_json_success('Authentication successful', 200);
         } else {
-            wp_send_json_error('Please enter valid API Key & Secret or Access Api URL', 400);
+            wp_send_json_error('Please enter valid API Key', 400);
         }
     }
 
