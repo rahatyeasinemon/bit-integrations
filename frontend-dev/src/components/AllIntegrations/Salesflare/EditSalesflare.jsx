@@ -31,13 +31,19 @@ function EditSalesflare({ allIntegURL }) {
       return
     }
 
-    if (salesflareConf.actionName === 'customer' && !salesflareConf.selectedCustomerType) {
-      toast.error('Please select Customer Type')
-      return
-    }
-    if (salesflareConf.actionName === 'lead' && !salesflareConf.selectedLeadStatus) {
-      toast.error('Please select Lead Status')
-      return
+    if (salesflareConf.actionName === 'opportunities') {
+      if (!salesflareConf.selectedAccount) {
+        toast.error('Please select an Account')
+        return
+      }
+      if (!salesflareConf.selectedPipeline) {
+        toast.error('Please select a Pipeline')
+        return
+      }
+      if (salesflareConf.selectedPipeline && !salesflareConf.selectedStage) {
+        toast.error('Please select a Stage')
+        return
+      }
     }
 
     saveActionConf({ flow, allIntegURL, conf: salesflareConf, navigate, edit: 1, setIsLoading, setSnackbar })
