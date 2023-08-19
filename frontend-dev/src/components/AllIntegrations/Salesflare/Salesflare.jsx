@@ -43,6 +43,8 @@ function Salesflare({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'email', label: 'Email Address', required: true },
     { key: 'suffix', label: 'Suffix', required: false },
     { key: 'phone_number', label: 'Phone Number', required: false },
+    { key: 'role', label: 'Role', required: false },
+    { key: 'organisation', label: 'Organisation', required: false },
     { key: 'street', label: 'Street', required: false },
     { key: 'zip', label: 'Zip/Postal Code', required: false },
     { key: 'city', label: 'City', required: false },

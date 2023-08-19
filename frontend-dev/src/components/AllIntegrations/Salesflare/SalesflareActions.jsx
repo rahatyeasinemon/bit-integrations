@@ -121,9 +121,10 @@ export default function SalesflareActions({ salesflareConf, setSalesflareConf, l
                 <MultiSelect
                   options={salesflareConf?.tags?.map(tag => ({ label: tag, value: tag }))}
                   className="msl-wrp-options"
-                  defaultValue={salesflareConf?.selectedLeadSource}
-                  onChange={val => setChanges(val, 'selectedLeadSource')}
+                  defaultValue={salesflareConf?.selectedTags}
+                  onChange={val => setChanges(val, 'selectedTags')}
                 />
+                <button onClick={() => getAllTags(salesflareConf, setSalesflareConf, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Tags', 'bit-integrations')}'` }} type="button">&#x21BB;</button>
               </div>
             )
         }

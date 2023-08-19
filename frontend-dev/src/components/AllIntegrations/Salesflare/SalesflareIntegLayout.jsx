@@ -51,7 +51,7 @@ export default function SalesflareIntegLayout({ formFields, handleInput, salesfl
         <option value="opportunities" data-action_name="opportunities">{__('Create Opportunity', 'bit-integrations')}</option>
       </select>
       <br />
-      {salesflareConf.actionName === 'lead'
+      {salesflareConf.actionName === 'opportunities'
         && (
           <>
             <br />
