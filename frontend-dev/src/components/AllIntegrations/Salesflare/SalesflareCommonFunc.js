@@ -126,3 +126,26 @@ export const salesflareFields = (
     })
     .catch(() => setIsLoading(false));
 };
+
+export const getAllTags = (salesflareConf, setSalesflareConf, setLoading) => {
+  setLoading({ ...setLoading, tags: true });
+  const requestParams = {
+    api_key: salesflareConf.api_key,
+  };
+
+  bitsFetch(requestParams, "Salesflare_fetch_all_tags").then((result) => {
+    if (result && result.success) {
+      setSalesflareConf((prevConf) => {
+        const draftConf = { ...prevConf };
+        draftConf.tags = result.data;
+        return draftConf;
+      });
+
+      toast.success(__("Tags fetched successfully", "bit-integrations"));
+      setLoading({ ...setLoading, tags: false });
+      return;
+    }
+    setLoading({ ...setLoading, tags: false });
+    toast.error(__("Tags fetching failed", "bit-integrations"));
+  });
+};
