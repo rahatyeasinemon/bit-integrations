@@ -159,16 +159,14 @@ class SalesflareController
         $integrationDetails = $integrationData->flow_details;
         $integId            = $integrationData->id;
         $apiKey             = $integrationDetails->api_key;
-        $apiSecret          = $integrationDetails->api_secret;
         $fieldMap           = $integrationDetails->field_map;
         $actionName         = $integrationDetails->actionName;
-        $domain             = $integrationDetails->domain;
 
-        if (empty($fieldMap) || empty($apiKey) || empty($apiSecret) || empty($actionName) || empty($domain)) {
+        if (empty($fieldMap) || empty($apiKey) || empty($actionName)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Salesflare api', 'bit-integrations'));
         }
 
-        $recordApiHelper        = new RecordApiHelper($integrationDetails, $integId, $apiKey, $apiSecret,  $domain);
+        $recordApiHelper        = new RecordApiHelper($integrationDetails, $integId, $apiKey);
         $salesflareApiResponse  = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
 
         if (is_wp_error($salesflareApiResponse)) {

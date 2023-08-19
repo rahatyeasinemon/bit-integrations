@@ -21,31 +21,43 @@ class RecordApiHelper
     private $type;
     private $typeName;
 
-    public function __construct($integrationDetails, $integId, $apiKey, $apiSecret, $domain)
+    public function __construct($integrationDetails, $integId, $apiKey)
     {
         $this->integrationDetails = $integrationDetails;
         $this->integrationId      = $integId;
-        $this->apiUrl             = "https://{$domain}.onehash.ai/api/resource";
+        $this->apiUrl             = "https://api.salesflare.com";
         $this->defaultHeader      = [
-            "Authorization" => "token {$apiKey}:$apiSecret",
+            "Authorization" => "Bearer {$apiKey}",
             "Content-type"  => "application/json",
         ];
     }
 
-    public function addCustomer($finalData)
+    public function addAccount($finalData)
     {
-        if (empty($finalData['customer_name'])) {
-            return ['success' => false, 'message' => 'Required field Full Name is empty', 'code' => 400];
-        } elseif (!isset($this->integrationDetails->selectedCustomerType) || empty($this->integrationDetails->selectedCustomerType)) {
-            return ['success' => false, 'message' => 'Required field Customer Type is empty', 'code' => 400];
+        if (empty($finalData['name'])) {
+            return ['success' => false, 'message' => 'Required field Account Name is empty', 'code' => 400];
         }
 
-        $finalData['customer_type']     = $this->integrationDetails->selectedCustomerType;
-        $finalData['customer_group']    = "All Customer Groups";
-        $finalData['territory']         = "All Territories";
-        $this->type                     = 'Customer';
-        $this->typeName                 = 'Customer created';
-        $apiEndpoint                    = $this->apiUrl . "/Customer";
+        $formData = [];
+        $addressKeys = ['city', 'country', 'region', 'state_region', 'street', 'zip', '_dirty'];
+        foreach ($finalData as $key => $value) {
+            if (array_search($key, $addressKeys) !== false) {
+                $formData['address'][$key] = $value;
+            } else {
+                $formData[$key] = $value;
+            }
+        }
+
+        if (isset($this->integrationDetails->selectedTags) && !empty($this->integrationDetails->selectedTags)) {
+            $formData['tags'] = explode(',', $this->integrationDetails->selectedTags);
+        }
+
+        var_dump($this->integrationDetails->selectedTags);
+        die;
+
+        $this->type                     = 'Account';
+        $this->typeName                 = 'Account created';
+        $apiEndpoint                    = $this->apiUrl . "/account";
         return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
@@ -117,11 +129,11 @@ class RecordApiHelper
     public function execute($fieldValues, $fieldMap, $actionName)
     {
         $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        if ($actionName === "customer") {
-            $apiResponse = $this->addCustomer($finalData);
-        } elseif ($actionName === "contact") {
+        if ($actionName === "accounts") {
+            $apiResponse = $this->addAccount($finalData);
+        } elseif ($actionName === "contacts") {
             $apiResponse = $this->addContact($finalData);
-        } elseif ($actionName === "lead") {
+        } elseif ($actionName === "opportunities") {
             $apiResponse = $this->addLead($finalData);
         }
 
