@@ -6,7 +6,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from './IntegrationHelpers'
 import SalesflareActions from './SalesflareActions'
-import { generateMappedField, salesflareFields } from './SalesflareCommonFunc'
+import { generateMappedField, getallAccounts, salesflareFields } from './SalesflareCommonFunc'
 import SalesflareFieldMap from './SalesflareFieldMap'
 
 export default function SalesflareIntegLayout({ formFields, handleInput, salesflareConf, setSalesflareConf, loading, setLoading, isLoading, setIsLoading, setSnackbar }) {
@@ -23,8 +23,9 @@ export default function SalesflareIntegLayout({ formFields, handleInput, salesfl
           draftConf.salesflareFields = draftConf.contactFields
         } else if (draftConf.actionName === "opportunities") {
           draftConf.salesflareFields = draftConf.opportunitiyFields
+          getallAccounts(draftConf, setSalesflareConf, loading, setLoading)
         }
-        salesflareFields(draftConf, setSalesflareConf, setIsLoading, setSnackbar)
+        salesflareFields(draftConf, setSalesflareConf, setIsLoading, loading, setSnackbar)
 
       } else {
         delete draftConf[name]
@@ -51,18 +52,28 @@ export default function SalesflareIntegLayout({ formFields, handleInput, salesfl
         <option value="opportunities" data-action_name="opportunities">{__('Create Opportunity', 'bit-integrations')}</option>
       </select>
       <br />
-      {salesflareConf.actionName === 'opportunities'
+      {loading.account && (
+        <Loader style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 100,
+          transform: 'scale(0.7)',
+        }}
+        />
+      )}
+      {salesflareConf.actionName === 'opportunities' && salesflareConf?.accounts && !loading.account
         && (
           <>
             <br />
             <div className="flx">
-              <b className="wdt-200 d-in-b">{__('Lead Status:', 'bit-integrations')}</b>
+              <b className="wdt-200 d-in-b">{__('Select Account:', 'bit-integrations')}</b>
               <MultiSelect
-                options={salesflareConf?.leadStatus.map(status => ({ label: status, value: status }))}
+                options={salesflareConf?.accounts.map(account => ({ label: account.name, value: account.id.toString() }))}
                 className="msl-wrp-options dropdown-custom-width"
-                defaultValue={salesflareConf?.selectedLeadStatus}
-                onChange={val => setChanges(val, 'selectedLeadStatus')}
-                disabled={isLoading}
+                defaultValue={salesflareConf?.selectedAccount}
+                onChange={val => setChanges(val, 'selectedAccount')}
+                disabled={loading.account}
                 singleSelect
                 closeOnSelect
               />
@@ -105,6 +116,15 @@ export default function SalesflareIntegLayout({ formFields, handleInput, salesfl
             <b className="wdt-100">
               {__('Field Map', 'bit-integrations')}
             </b>
+            <button
+              onClick={() => salesflareFields(salesflareConf, setSalesflareConf, setIsLoading, setSnackbar)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh Custom Fields', 'bit-integrations')}'` }}
+              type="button"
+              disabled={isLoading}
+            >
+              &#x21BB;
+            </button>
           </div>
 
           <br />

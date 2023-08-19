@@ -101,6 +101,32 @@ class SalesflareController
         }
     }
 
+    public function getAllAccounts($fieldsRequestParams)
+    {
+        $this->checkValidation($fieldsRequestParams);
+        $apiKey         = $fieldsRequestParams->api_key;
+        $apiEndpoint    = $this->setApiEndpoint() . "/accounts";
+        $headers        = $this->setHeaders($apiKey);
+        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+
+        if (!isset($response->error)) {
+            $accounts = [];
+            foreach ($response as $account) {
+                array_push(
+                    $accounts,
+                    [
+                        'id' => $account->id,
+                        'name' => $account->name,
+                    ]
+                );
+            }
+
+            wp_send_json_success($accounts, 200);
+        } else {
+            wp_send_json_error('Accounts fetching failed!', 400);
+        }
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;

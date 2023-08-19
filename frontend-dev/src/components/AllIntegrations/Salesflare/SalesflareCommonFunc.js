@@ -149,3 +149,31 @@ export const getAllTags = (salesflareConf, setSalesflareConf, setLoading) => {
     toast.error(__("Tags fetching failed", "bit-integrations"));
   });
 };
+
+export const getallAccounts = (
+  salesflareConf,
+  setSalesflareConf,
+  loading,
+  setLoading
+) => {
+  setLoading({ ...loading, account: true });
+  const requestParams = {
+    api_key: salesflareConf.api_key,
+  };
+
+  bitsFetch(requestParams, "Salesflare_fetch_all_account").then((result) => {
+    if (result && result.success) {
+      setSalesflareConf((prevConf) => {
+        const draftConf = { ...prevConf };
+        draftConf.accounts = result.data;
+        return draftConf;
+      });
+
+      toast.success(__("Accounts fetched successfully", "bit-integrations"));
+      setLoading({ ...loading, account: false });
+      return;
+    }
+    setLoading({ ...loading, account: false });
+    toast.error(__("Accounts fetching failed", "bit-integrations"));
+  });
+};
