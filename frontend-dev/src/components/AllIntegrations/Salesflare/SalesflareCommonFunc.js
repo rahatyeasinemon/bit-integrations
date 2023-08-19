@@ -177,3 +177,30 @@ export const getallAccounts = (
     toast.error(__("Accounts fetching failed", "bit-integrations"));
   });
 };
+export const getallPipelines = (
+  salesflareConf,
+  setSalesflareConf,
+  loading,
+  setLoading
+) => {
+  setLoading({ ...loading, pipeline: true });
+  const requestParams = {
+    api_key: salesflareConf.api_key,
+  };
+
+  bitsFetch(requestParams, "Salesflare_fetch_all_pipelines").then((result) => {
+    if (result && result.success) {
+      setSalesflareConf((prevConf) => {
+        const draftConf = { ...prevConf };
+        draftConf.pipelines = result.data;
+        return draftConf;
+      });
+
+      toast.success(__("pipelines fetched successfully", "bit-integrations"));
+      setLoading({ ...loading, pipeline: false });
+      return;
+    }
+    setLoading({ ...loading, pipeline: false });
+    toast.error(__("pipelines fetching failed", "bit-integrations"));
+  });
+};

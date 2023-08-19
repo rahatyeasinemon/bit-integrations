@@ -6,7 +6,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from './IntegrationHelpers'
 import SalesflareActions from './SalesflareActions'
-import { generateMappedField, getallAccounts, salesflareFields } from './SalesflareCommonFunc'
+import { getallAccounts, getallPipelines, salesflareFields } from './SalesflareCommonFunc'
 import SalesflareFieldMap from './SalesflareFieldMap'
 
 export default function SalesflareIntegLayout({ formFields, handleInput, salesflareConf, setSalesflareConf, loading, setLoading, isLoading, setIsLoading, setSnackbar }) {
@@ -24,6 +24,7 @@ export default function SalesflareIntegLayout({ formFields, handleInput, salesfl
         } else if (draftConf.actionName === "opportunities") {
           draftConf.salesflareFields = draftConf.opportunitiyFields
           getallAccounts(draftConf, setSalesflareConf, loading, setLoading)
+          getallPipelines(draftConf, setSalesflareConf, loading, setLoading)
         }
         salesflareFields(draftConf, setSalesflareConf, setIsLoading, loading, setSnackbar)
 
@@ -36,6 +37,14 @@ export default function SalesflareIntegLayout({ formFields, handleInput, salesfl
   const setChanges = (val, name) => {
     const newConf = { ...salesflareConf }
     newConf[name] = val
+
+    if (name === 'selectedPipeline') {
+      salesflareConf?.pipelines.forEach(pipeline => {
+        if (pipeline.id.toString() === val) {
+          newConf.stages = pipeline.stages
+        }
+      })
+    }
 
     setSalesflareConf({ ...newConf })
   }
@@ -52,7 +61,7 @@ export default function SalesflareIntegLayout({ formFields, handleInput, salesfl
         <option value="opportunities" data-action_name="opportunities">{__('Create Opportunity', 'bit-integrations')}</option>
       </select>
       <br />
-      {loading.account && (
+      {(loading.account || loading.pipeline) && (
         <Loader style={{
           display: 'flex',
           justifyContent: 'center',
@@ -62,7 +71,7 @@ export default function SalesflareIntegLayout({ formFields, handleInput, salesfl
         }}
         />
       )}
-      {salesflareConf.actionName === 'opportunities' && salesflareConf?.accounts && !loading.account
+      {salesflareConf.actionName === 'opportunities' && salesflareConf?.accounts
         && (
           <>
             <br />
@@ -77,21 +86,57 @@ export default function SalesflareIntegLayout({ formFields, handleInput, salesfl
                 singleSelect
                 closeOnSelect
               />
+              <button
+                onClick={() => getallAccounts(salesflareConf, setSalesflareConf, loading, setLoading)}
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': `'${__('Refresh Stages', 'bit-integrations')}'` }}
+                type="button"
+                disabled={loading.account}
+              >
+                &#x21BB;
+              </button>
             </div>
           </>
         )}
-      {salesflareConf.actionName === 'customer'
+      {salesflareConf.actionName === 'opportunities' && salesflareConf?.pipelines
         && (
           <>
             <br />
             <div className="flx">
-              <b className="wdt-200 d-in-b">{__('Customer Type:', 'bit-integrations')}</b>
+              <b className="wdt-200 d-in-b">{__('Select Pipeline:', 'bit-integrations')}</b>
               <MultiSelect
-                options={['Company', 'Individual']?.map(type => ({ label: type, value: type }))}
+                options={salesflareConf?.pipelines.map(pipeline => ({ label: pipeline.name, value: pipeline.id.toString() }))}
                 className="msl-wrp-options dropdown-custom-width"
-                defaultValue={salesflareConf?.selectedCustomerType}
-                onChange={val => setChanges(val, 'selectedCustomerType')}
-                disabled={isLoading}
+                defaultValue={salesflareConf?.selectedPipeline}
+                onChange={val => setChanges(val, 'selectedPipeline')}
+                disabled={loading.pipeline}
+                singleSelect
+                closeOnSelect
+              />
+              <button
+                onClick={() => getallPipelines(salesflareConf, setSalesflareConf, loading, setLoading)}
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': `'${__('Refresh Pipelines', 'bit-integrations')}'` }}
+                type="button"
+                disabled={loading.pipeline}
+              >
+                &#x21BB;
+              </button>
+            </div>
+          </>
+        )}
+      {salesflareConf.actionName === 'opportunities' && salesflareConf?.stages
+        && (
+          <>
+            <br />
+            <div className="flx">
+              <b className="wdt-200 d-in-b">{__('Select Stage:', 'bit-integrations')}</b>
+              <MultiSelect
+                options={salesflareConf?.stages.map(stage => ({ label: stage.name, value: stage.id.toString() }))}
+                className="msl-wrp-options dropdown-custom-width"
+                defaultValue={salesflareConf?.selectedStage}
+                onChange={val => setChanges(val, 'selectedStage')}
+                disabled={loading.stage}
                 singleSelect
                 closeOnSelect
               />

@@ -67,7 +67,7 @@ class SalesflareController
             foreach ($response as $field) {
                 array_push(
                     $fieldMap,
-                    [
+                    (object) [
                         'key' => $field->id,
                         'label' => $field->name,
                         'required' => $field->required
@@ -114,7 +114,7 @@ class SalesflareController
             foreach ($response as $account) {
                 array_push(
                     $accounts,
-                    [
+                    (object) [
                         'id' => $account->id,
                         'name' => $account->name,
                     ]
@@ -122,6 +122,33 @@ class SalesflareController
             }
 
             wp_send_json_success($accounts, 200);
+        } else {
+            wp_send_json_error('Accounts fetching failed!', 400);
+        }
+    }
+
+    public function getAllPipelines($fieldsRequestParams)
+    {
+        $this->checkValidation($fieldsRequestParams);
+        $apiKey         = $fieldsRequestParams->api_key;
+        $apiEndpoint    = $this->setApiEndpoint() . "/pipelines";
+        $headers        = $this->setHeaders($apiKey);
+        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+
+        if (!isset($response->error)) {
+            $pipelines = [];
+            foreach ($response as $pipeline) {
+                array_push(
+                    $pipelines,
+                    (object) [
+                        'id' => $pipeline->id,
+                        'name' => $pipeline->name,
+                        'stages' => $pipeline->stages,
+                    ]
+                );
+            }
+
+            wp_send_json_success($pipelines, 200);
         } else {
             wp_send_json_error('Accounts fetching failed!', 400);
         }

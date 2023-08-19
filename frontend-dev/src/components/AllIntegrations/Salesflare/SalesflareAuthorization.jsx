@@ -49,7 +49,7 @@ export default function SalesflareAuthorization({ salesflareConf, setSalesflareC
       <small className="d-blk mt-3">
         {__('To Get API Key, Please Visit', 'bit-integrations')}
         &nbsp;
-        <a className="btcd-link" onClick="https://app.salesflare.com/#/settings/apikeys">{__('Salesflare API Key', 'bit-integrations')}</a>
+        <a className="btcd-link" href="https://app.salesflare.com/#/settings/apikeys">{__('Salesflare API Key', 'bit-integrations')}</a>
       </small>
       <br />
       <br />
