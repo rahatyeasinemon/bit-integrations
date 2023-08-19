@@ -54,6 +54,33 @@ class SalesflareController
         }
     }
 
+    public function customFields($fieldsRequestParams)
+    {
+        $this->checkValidation($fieldsRequestParams, $fieldsRequestParams->action_name);
+        $apiKey         = $fieldsRequestParams->api_key;
+        $apiEndpoint    = $this->setApiEndpoint() . "/customfields/{$fieldsRequestParams->action_name}";
+        $headers        = $this->setHeaders($apiKey);
+        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+
+        if (!isset($response->error)) {
+            $fieldMap = [];
+            foreach ($response as $field) {
+                array_push(
+                    $fieldMap,
+                    [
+                        'key' => $field->id,
+                        'label' => $field->name,
+                        'required' => $field->required
+                    ]
+                );
+            }
+
+            wp_send_json_success($fieldMap, 200);
+        } else {
+            wp_send_json_error('Custom fields not found!', 400);
+        }
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;

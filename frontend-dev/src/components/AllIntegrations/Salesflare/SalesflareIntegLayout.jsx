@@ -6,7 +6,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from './IntegrationHelpers'
 import SalesflareActions from './SalesflareActions'
-import { generateMappedField } from './SalesflareCommonFunc'
+import { generateMappedField, salesflareFields } from './SalesflareCommonFunc'
 import SalesflareFieldMap from './SalesflareFieldMap'
 
 export default function SalesflareIntegLayout({ formFields, handleInput, salesflareConf, setSalesflareConf, loading, setLoading, isLoading, setIsLoading, setSnackbar }) {
@@ -17,15 +17,14 @@ export default function SalesflareIntegLayout({ formFields, handleInput, salesfl
       if (e.target.value !== '') {
         draftConf.actionName = e.target.value
 
-        if (draftConf.actionName === "customer") {
-          draftConf.salesflareFields = draftConf.customerFields
-        } else if (draftConf.actionName === "contact") {
+        if (draftConf.actionName === "accounts") {
+          draftConf.salesflareFields = draftConf.accountFields
+        } else if (draftConf.actionName === "contacts") {
           draftConf.salesflareFields = draftConf.contactFields
-        } else if (draftConf.actionName === "lead") {
-          draftConf.salesflareFields = draftConf.leadFields
-          draftConf.leadStatus = ['Lead', 'Open', 'Replied', 'Opportunity', 'Quotation', 'Lost Quotation', 'Interested', 'Converted', 'Do Not Contact']
+        } else if (draftConf.actionName === "opportunities") {
+          draftConf.salesflareFields = draftConf.opportunitiyFields
         }
-        draftConf.field_map = generateMappedField(draftConf)
+        salesflareFields(draftConf, setSalesflareConf, setIsLoading, setSnackbar)
 
       } else {
         delete draftConf[name]
@@ -47,8 +46,8 @@ export default function SalesflareIntegLayout({ formFields, handleInput, salesfl
       <b className="wdt-200 d-in-b">{__('Select Action:', 'bit-integrations')}</b>
       <select onChange={handleActionInput} name="actionName" value={salesflareConf.actionName} className="btcd-paper-inp w-5">
         <option value="">{__('Select an action', 'bit-integrations')}</option>
-        <option value="account" data-action_name="account">{__('Create Account', 'bit-integrations')}</option>
-        <option value="contact" data-action_name="contact">{__('Create Contact', 'bit-integrations')}</option>
+        <option value="accounts" data-action_name="accounts">{__('Create Account', 'bit-integrations')}</option>
+        <option value="contacts" data-action_name="contacts">{__('Create Contact', 'bit-integrations')}</option>
         <option value="opportunities" data-action_name="opportunities">{__('Create Opportunity', 'bit-integrations')}</option>
       </select>
       <br />

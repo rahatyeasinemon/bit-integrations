@@ -50,9 +50,9 @@ function Salesflare({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'country', label: 'Country', required: false },
   ]
 
-  const oppotunityFields = [
+  const opportunitiyFields = [
     { key: 'name', label: 'Opportunity name', required: true },
-    { key: 'value', label: 'Value', required: true },
+    { key: 'value', label: 'Value', required: false },
     { key: 'start_date', label: 'Start date', required: false },
     { key: 'close_date', label: 'Close date', required: false },
   ]
@@ -68,7 +68,7 @@ function Salesflare({ formFields, setFlow, flow, allIntegURL }) {
     actionId: '',
     accountFields,
     contactFields,
-    oppotunityFields,
+    opportunitiyFields,
     actions: {},
   })
 

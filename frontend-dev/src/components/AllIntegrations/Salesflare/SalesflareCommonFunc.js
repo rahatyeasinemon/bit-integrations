@@ -3,6 +3,7 @@
 import toast from "react-hot-toast";
 import bitsFetch from "../../../Utils/bitsFetch";
 import { __ } from "../../../Utils/i18nwrap";
+import { create } from "mutative";
 
 export const handleInput = (e, salesflareConf, setSalesflareConf) => {
   const newConf = { ...salesflareConf };
@@ -82,4 +83,46 @@ export const salesflareAuthentication = (
       __("Authorized failed, Please enter valid API Key", "bit-integrations")
     );
   });
+};
+
+export const salesflareFields = (
+  salesflareConf,
+  setSalesflareConf,
+  setIsLoading,
+  setSnackbar
+) => {
+  setIsLoading(true);
+  const requestParams = {
+    api_key: salesflareConf.api_key,
+    action_name: salesflareConf.actionName,
+  };
+
+  bitsFetch(requestParams, "Salesflare_custom_fields")
+    .then((result) => {
+      if (result && result.success) {
+        setSalesflareConf((prevConf) => {
+          const draftConf = prevConf;
+          draftConf.field_map = [{ formField: "", salesmateFormField: "" }];
+          if (result.data) {
+            draftConf.salesflareFields = [
+              ...draftConf.salesflareFields,
+              ...result.data,
+            ];
+          }
+          draftConf.field_map = generateMappedField(draftConf);
+          return draftConf;
+        });
+        setSnackbar({
+          show: true,
+          msg: __("Salesflare custom fields refreshed", "bit-integrations"),
+        });
+      } else {
+        setSnackbar({
+          show: true,
+          msg: __("Salesflare custom fields not found.", "bit-integrations"),
+        });
+      }
+      setIsLoading(false);
+    })
+    .catch(() => setIsLoading(false));
 };
