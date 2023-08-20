@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Core\Util;
 
 use BitCode\FI\Triggers\TriggerController;
@@ -15,7 +16,7 @@ final class Helper
      */
     public static function splitStringToarray($data)
     {
-        $params = new \stdClass;
+        $params = new \stdClass();
         $params->id = $data['bit-integrator%trigger_data%']['triggered_entity_id'];
         $trigger = $data['bit-integrator%trigger_data%']['triggered_entity'];
         $fields = TriggerController::getTriggerField($trigger, $params);

@@ -18,14 +18,15 @@ import BuyProModal from '../components/Utilities/BuyProModal'
 
 const Welcome = lazy(() => import('./Welcome'))
 
-function AllIntegrations() {
+function AllIntegrations({ isLicenseActive }) {
+  console.log('isLicenseActive', isLicenseActive)
   const { data, isLoading } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
   const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
   const [snack, setSnackbar] = useState({ show: false })
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const [proModal, setProModal] = useState({ show: false, msg: '' })
   const [premiumModal, setPremiumModal] = useState({ show: false, msg: '' })
-  // const [showLicenseModal, setShowLicenseModal] = useState({ show: isLicenseActive === false })
+  const [showLicenseModal, setShowLicenseModal] = useState({ show: isLicenseActive === true })
 
   const [cols, setCols] = useState([
     { width: 250, minWidth: 80, Header: __('Trigger', 'bit-integrations'), accessor: 'triggered_entity' },
@@ -173,7 +174,11 @@ function AllIntegrations() {
     setPremiumModal({ show: false })
   }
   const actionHandler = (e) => {
-    setPremiumModal({ show: true })
+    if (btcbi.isPro && !isLicenseActive) {
+      setShowLicenseModal({ show: true })
+    } else {
+      setPremiumModal({ show: true })
+    }
   }
 
   if (isLoading) {
@@ -181,6 +186,8 @@ function AllIntegrations() {
       <Loader style={loaderStyle} />
     )
   }
+  console.log('btcbi.isPro', btcbi.isPro);
+  console.log('showLicenseModal.show', showLicenseModal.show);
   return (
     <div id="all-forms">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -198,7 +205,7 @@ function AllIntegrations() {
         <>
           <div className="af-header flx flx-between">
             <h2>{__('Integrations', 'bit-integrations')}</h2>
-            {integrations.length >= 1
+            {integrations.length >= 1 && !btcbi.isPro
               ? (
                 // eslint-disable-next-line react/button-has-type
                 <button className="btn round btcd-btn-lg blue blue-sh" onClick={(e) => actionHandler(e)}>
@@ -234,9 +241,9 @@ function AllIntegrations() {
             data={integrations.length}
           />
         </>
-      ) : <Welcome />}
+      ) : <Welcome isLicenseActive={isLicenseActive} actionHandler={actionHandler} />}
 
-      {/* <Modal
+      <Modal
         sm
         show={showLicenseModal.show}
         setModal={() => setShowLicenseModal({ show: false })}
@@ -250,7 +257,7 @@ function AllIntegrations() {
           <a href={window.btcbi.licenseURL} rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Active license', 'bit-integrations')}</button></a>
         </div>
 
-      </Modal> */}
+      </Modal>
     </div>
   )
 }

@@ -14,6 +14,10 @@ final class TriggerController
      */
     public static function triggerList()
     {
+        // if(!Plugin::instance()->isLicenseActive()) {
+        //     return wp_send_json_error(['message' => 'License is not active']);
+        // }
+
         $triggers = [];
         $dirs = new FilesystemIterator(__DIR__);
         foreach ($dirs as $dirInfo) {

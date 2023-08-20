@@ -47,9 +47,9 @@ final class Activation
         update_option('btcbi_version', BTCBI_VERSION);
 
         // disable free version if pro version is active
-        if (defined('BTCBI_PLUGIN_MAIN_FILE') && is_plugin_active(plugin_basename(BTCBI_PLUGIN_MAIN_FILE))) {
-            deactivate_plugins(plugin_basename(BTCBI_PLUGIN_MAIN_FILE));
-        }
+        // if (defined('BTCBI_PLUGIN_MAIN_FILE') && is_plugin_active(plugin_basename(BTCBI_PLUGIN_MAIN_FILE))) {
+        //     deactivate_plugins(plugin_basename(BTCBI_PLUGIN_MAIN_FILE));
+        // }
     }
 
     public static function handle_new_site(WP_Site $new_site)

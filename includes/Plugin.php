@@ -18,7 +18,6 @@ use BitCode\FI\Core\Hooks\HookService;
 use BitCode\FI\Core\Update\API;
 use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Core\Update\Updater;
 use BitCode\FI\Log\LogHandler;
 
 final class Plugin

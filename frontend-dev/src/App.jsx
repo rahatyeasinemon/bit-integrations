@@ -18,6 +18,7 @@ import Settings from './pages/Settings'
 import './resource/icons/style.css'
 import { __ } from './Utils/i18nwrap'
 import TableLoader from './components/Loaders/TableLoader2'
+import { $btcbi } from './GlobalStates'
 
 const AllIntegrations = lazy(() => import('./pages/AllIntegrations'))
 const Error404 = lazy(() => import('./pages/Error404'))
@@ -35,6 +36,8 @@ function App() {
   // check integrations end
   const flowNumber = integrations.length
   useEffect(() => { removeUnwantedCSS() }, [])
+
+  const isLicenseActive = typeof btcbi !== 'undefined' ? ('isPro' in btcbi ? btcbi.isPro : false) : false
 
   return (
     <Suspense fallback={(<Loader className="g-c" style={loaderStyle} />)}>
@@ -94,42 +97,40 @@ function App() {
           </div>
         </div>
 
+
         <div className="route-wrp">
           <Routes>
-            <Route
-              path="/"
-              element={(
-                <Suspense fallback={<TableLoader />}>
-                  <AllIntegrations />
-                </Suspense>
-              )}
-            />
-            <Route
-              path="/app-settings"
-              element={(
-                <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                  <Settings />
-                </Suspense>
-              )}
-            />
+            <Route path="/" element={
+              <Suspense fallback={<TableLoader />}>
+                <AllIntegrations integrations={integrations} setIntegrations={setIntegrations} isLoading={isLoading} isLicenseActive={isLicenseActive} />
+              </Suspense>
+            } />
+            <Route path="/app-settings" element={
+              <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                <Settings />
+              </Suspense>
+            } />
 
-            <Route
-              path="/flow/new"
-              element={
-                <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                  <DocSupport />
-                </Suspense>
-              }
-            />
+            <Route path="/doc-support" element={
+              <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                <DocSupport />
+              </Suspense>
+            } />
 
-            <Route
-              path="/flow/action/*"
-              element={(
+
+            <Route path="/flow/new" element={
+              flowNumber >= 1 && !isLicenseActive ?
+                <Route to="/" /> :
                 <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                  <Integrations />
+                  <FlowBuilder />
                 </Suspense>
-              )}
-            />
+            } />
+
+            <Route path="/flow/action/*" element={
+              <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                <Integrations />
+              </Suspense>
+            } />
 
             <Route path="*" element={<Error404 />} />
           </Routes>
