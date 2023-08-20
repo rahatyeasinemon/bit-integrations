@@ -6,23 +6,20 @@ export const refreshCrmList = (
   formID,
   fluentCrmConf,
   setFluentCrmConf,
-  setIsLoading,
+  loading,
+  setLoading,
   setSnackbar
 ) => {
-  setIsLoading(true);
+  setLoading({ ...loading, fluentCrmList: true });
   bitsFetch({}, "refresh_fluent_crm_lists")
     .then((result) => {
       if (result && result.success) {
-        const newConf = { ...fluentCrmConf };
-        if (!newConf.default) {
-          newConf.default = {};
-        }
-        if (result.data.fluentCrmList) {
-          newConf.default.fluentCrmList = result.data.fluentCrmList;
-        }
-        if (result.data.fluentCrmTags) {
-          newConf.default.fluentCrmTags = result.data.fluentCrmTags;
-        }
+        setFluentCrmConf((prevConf) =>
+          create(prevConf, (newConf) => {
+            newConf.fluentCrmList = result.data.fluentCrmList;
+            newConf.fluentCrmTags = result.data.fluentCrmTags;
+          })
+        );
         setSnackbar({
           show: true,
           msg: __("FluentCRM list refreshed", "bit-integrations"),
@@ -50,19 +47,20 @@ export const refreshCrmList = (
           ),
         });
       }
-      setIsLoading(false);
+      setLoading({ ...loading, fluentCrmList: false });
     })
-    .catch(() => setIsLoading(false));
+    .catch(() => setLoading({ ...loading, fluentCrmTags: true }));
 };
 
 export const refreshCrmTag = (
   formID,
   fluentCrmConf,
   setFluentCrmConf,
-  setIsLoading,
+  loading,
+  setLoading,
   setSnackbar
 ) => {
-  setIsLoading(true);
+  setLoading({ ...loading, fluentCrmTags: true });
   bitsFetch({}, "refresh_fluent_crm_tags")
     .then((result) => {
       if (result && result.success) {
@@ -103,9 +101,9 @@ export const refreshCrmTag = (
           ),
         });
       }
-      setIsLoading(false);
+      setLoading({ ...loading, fluentCrmTags: false });
     })
-    .catch(() => setIsLoading(false));
+    .catch(() => setLoading({ ...loading, fluentCrmTags: false }));
 };
 
 export const refreshfluentCrmHeader = (

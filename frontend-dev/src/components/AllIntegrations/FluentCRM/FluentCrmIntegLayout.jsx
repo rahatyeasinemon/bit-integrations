@@ -6,7 +6,7 @@ import FluentCrmActions from './FluentCrmActions'
 import { refreshCrmList, refreshCrmTag, refreshfluentCrmHeader } from './FluentCrmCommonFunc'
 import FluentCrmFieldMap from './FluentCrmFieldMap'
 
-export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf, setFluentCrmConf, isLoading, setIsLoading, setSnackbar }) {
+export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf, setFluentCrmConf, isLoading, setIsLoading, loading, setLoading, setSnackbar }) {
   const tags = (val) => {
     const newConf = { ...fluentCrmConf }
     if (val) {
@@ -32,6 +32,9 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
   const handleAction = (e) => {
     const newConf = { ...fluentCrmConf }
     const { name, value } = e.target
+    delete newConf?.fluentCrmList
+    delete newConf?.fluentCrmTags
+
     // if (e.target.value !== '') {
     //   newConf[name] = value
 
@@ -58,8 +61,11 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
         setIsLoading,
         setSnackbar
       );
-      if (value === 'add-tag') {
-        refreshCrmTag(formID, newConf, setFluentCrmConf, setIsLoading, setSnackbar)
+
+      if (value === 'add-user' || value === 'remove-user') {
+        refreshCrmList(formID, newConf, setFluentCrmConf, loading, setLoading, setSnackbar)
+      } else {
+        refreshCrmTag(formID, newConf, setFluentCrmConf, loading, setLoading, setSnackbar)
       }
 
     } else {
@@ -85,23 +91,33 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
         </select>
       </div>
       <br />
-      {(fluentCrmConf?.actionName === 'add-user' || fluentCrmConf?.actionName === 'remove-user') && (
+      {(loading.fluentCrmList || loading.fluentCrmTags) && (
+        <Loader style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 100,
+          transform: 'scale(0.7)',
+        }}
+        />
+      )}
+      {(fluentCrmConf?.actionName === 'add-user' || fluentCrmConf?.actionName === 'remove-user') && fluentCrmConf?.fluentCrmList && !loading.fluentCrmList && (
         <div className="flx">
           <b className="wdt-200 d-in-b">{__('Fluent CRM List:', 'bit-integrations')}</b>
           <select onChange={(e) => inputHendler(e)} name="list_id" value={fluentCrmConf.list_id} className="btcd-paper-inp w-5">
             <option value="">{__('Select Fluent CRM list', 'bit-integrations')}</option>
             {
-              fluentCrmConf?.default?.fluentCrmList && Object.keys(fluentCrmConf.default.fluentCrmList).map(fluentCrmListName => (
-                <option key={fluentCrmListName} value={fluentCrmConf.default.fluentCrmList[fluentCrmListName].id}>
-                  {fluentCrmConf.default.fluentCrmList[fluentCrmListName].title}
+              fluentCrmConf?.fluentCrmList && Object.keys(fluentCrmConf.fluentCrmList).map(fluentCrmListName => (
+                <option key={fluentCrmListName} value={fluentCrmConf.fluentCrmList[fluentCrmListName].id}>
+                  {fluentCrmConf.fluentCrmList[fluentCrmListName].title}
                 </option>
               ))
             }
           </select>
-          <button onClick={() => refreshCrmList(formID, fluentCrmConf, setFluentCrmConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh List, Tag & Field', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+          <button onClick={() => refreshCrmList(formID, fluentCrmConf, setFluentCrmConf, loading, setLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh List, Tag & Field', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
         </div>
       )}
-      {fluentCrmConf?.actionName && fluentCrmConf?.actionName !== 'remove-user' && fluentCrmConf?.fluentCrmTags && !isLoading && (
+      {fluentCrmConf?.actionName && fluentCrmConf?.actionName !== 'remove-user' && fluentCrmConf?.fluentCrmTags && !loading.fluentCrmTags && (
         <div className="flx mt-5">
           <b className="wdt-200 d-in-b">{__('Fluent CRM Tags: ', 'bit-integrations')}</b>
           <MultiSelect
@@ -110,7 +126,7 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
             options={fluentCrmConf?.fluentCrmTags && Object.keys(fluentCrmConf.fluentCrmTags).map(tag => ({ label: fluentCrmConf.fluentCrmTags[tag].title, value: fluentCrmConf.fluentCrmTags[tag].id.toString() }))}
             onChange={val => tags(val)}
           />
-          <button onClick={() => refreshCrmTag(formID, fluentCrmConf, setFluentCrmConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Tag & Field', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+          <button onClick={() => refreshCrmTag(formID, fluentCrmConf, setFluentCrmConf, loading, setLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Tag & Field', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
 
         </div>
       )}

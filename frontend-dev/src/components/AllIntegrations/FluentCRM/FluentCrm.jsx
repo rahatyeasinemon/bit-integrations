@@ -15,6 +15,7 @@ export default function FluentCrm({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
   const { formID } = useParams()
   const [isLoading, setIsLoading] = useState(false)
+  const [loading, setLoading] = useState({})
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [fluentCrmConf, setFluentCrmConf] = useState({
@@ -79,6 +80,8 @@ export default function FluentCrm({ formFields, setFlow, flow, allIntegURL }) {
           setFluentCrmConf={setFluentCrmConf}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
+          loading={loading}
+          setLoading={setLoading}
           setSnackbar={setSnackbar}
         />
         <br />
