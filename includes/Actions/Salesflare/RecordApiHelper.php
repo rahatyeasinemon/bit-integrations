@@ -52,13 +52,10 @@ class RecordApiHelper
             $formData['tags'] = explode(',', $this->integrationDetails->selectedTags);
         }
 
-        var_dump($this->integrationDetails->selectedTags);
-        die;
-
         $this->type                     = 'Account';
         $this->typeName                 = 'Account created';
-        $apiEndpoint                    = $this->apiUrl . "/account";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        $apiEndpoint                    = $this->apiUrl . "/accounts";
+        return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -137,7 +134,7 @@ class RecordApiHelper
             $apiResponse = $this->addLead($finalData);
         }
 
-        if (isset($apiResponse->data)) {
+        if (isset($apiResponse->id)) {
             $res = [$this->typeName . '  successfully'];
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
         } else {
