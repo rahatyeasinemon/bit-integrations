@@ -35,24 +35,6 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
     delete newConf?.fluentCrmList
     delete newConf?.fluentCrmTags
 
-    // if (e.target.value !== '') {
-    //   newConf[name] = value
-
-    //   const tmp = {
-    //     name: 'Fluent CRM',
-    //     type: 'Fluent Crm',
-    //     actionName: value,
-    //     field_map: [
-    //       { formField: '', fluentCRMField: '' },
-    //     ],
-    //     actions: {},
-    //   }
-    //   setFluentCrmConf(tmp)
-    // } else {
-    //   delete newConf[name]
-    //   setFluentCrmConf({ ...newConf })
-    // }
-
     if (e.target.value !== '') {
       newConf[name] = value
       refreshfluentCrmHeader(

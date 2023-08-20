@@ -119,7 +119,7 @@ export const refreshfluentCrmHeader = (
         if (result.data.fluentCrmFlelds) {
           setFluentCrmConf((prevConf) =>
             create(prevConf, (newConf) => {
-              newConf.fields = result.data.fluentCrmFlelds;
+              newConf.fluentCrmFlelds = result.data.fluentCrmFlelds;
               newConf.field_map = mapNewRequiredFields(newConf);
             })
           );
@@ -152,8 +152,8 @@ export const refreshfluentCrmHeader = (
 
 export const mapNewRequiredFields = (fluentCrmConf) => {
   const { field_map } = fluentCrmConf;
-  const { fields } = fluentCrmConf;
-  const required = Object.values(fields)
+  const { fluentCrmFlelds } = fluentCrmConf;
+  const required = Object.values(fluentCrmFlelds)
     .filter((f) => f.required)
     .map((f) => ({ formField: "", fluentCRMField: f.key, required: true }));
   const requiredFieldNotInFieldMap = required.filter(
@@ -163,7 +163,7 @@ export const mapNewRequiredFields = (fluentCrmConf) => {
     (f) => f.fluentCRMField || f.formField
   );
   const newFieldMap = notEmptyFieldMap.map((f) => {
-    const field = fields[f.fluentCRMField];
+    const field = fluentCrmFlelds[f.fluentCRMField];
     if (field) {
       return { ...f, formField: field.label };
     }

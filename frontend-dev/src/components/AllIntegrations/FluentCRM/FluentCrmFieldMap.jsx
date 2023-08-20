@@ -9,7 +9,7 @@ import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function FluentCrmFieldMap({ i, formFields, field, fluentCrmConf, setFluentCrmConf }) {
   const isRequired = field.required
-  const notResquiredField = fluentCrmConf?.fields && Object.values(fluentCrmConf?.fields).filter((f => !f.required))
+  const notResquiredField = fluentCrmConf?.fluentCrmFlelds && Object.values(fluentCrmConf?.fluentCrmFlelds).filter((f => !f.required))
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
   const addFieldMap = (indx) => {
@@ -67,7 +67,7 @@ export default function FluentCrmFieldMap({ i, formFields, field, fluentCrmConf,
         <select className="btcd-paper-inp" name="fluentCRMField" value={field.fluentCRMField} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {
-            isRequired ? fluentCrmConf.fields && Object.values(fluentCrmConf.fields).map(fld => (
+            isRequired ? fluentCrmConf.fluentCrmFlelds && Object.values(fluentCrmConf.fluentCrmFlelds).map(fld => (
               <option key={`${fld.key}-1`} value={fld.key}>
                 {fld.label}
               </option>

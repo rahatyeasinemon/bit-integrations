@@ -13,7 +13,7 @@ import { getAllAchievementType, getAllRankType } from '../Triggers/TriggerHelper
 import getAllDonationForms, { getAllRecurringDonationForms } from '../Triggers/TriggerHelpers/GiveWpHelper/GiveWpCommonFunction'
 import { getAllPostTypeJetEngine } from '../Triggers/TriggerHelpers/JetEngineHelper/JetEngineCommonFunction'
 import { getAllCourses, getAllGroups, getAllQuizes } from '../Triggers/TriggerHelpers/LearndashHelper/LearnDashCommonFunction'
-import {getAllLifterLmsQuiz, getAllLifterLmsLesson, getAllLifterLmsCourse, getAllLifterLmsMembership } from '../Triggers/TriggerHelpers/LifterLmsHelper/LifterLmsCommonFunction.js'
+import { getAllLifterLmsQuiz, getAllLifterLmsLesson, getAllLifterLmsCourse, getAllLifterLmsMembership } from '../Triggers/TriggerHelpers/LifterLmsHelper/LifterLmsCommonFunction.js'
 import { getAllMembership, getAllOneTimeMembership, getAllRecurringMembership } from '../Triggers/TriggerHelpers/MemberpressHelper/MemberpressCommonFunction'
 import getAllPaidMembershipProLevel from '../Triggers/TriggerHelpers/PaidMembershipProHelper/PaidMembershipProCommonFunction'
 import { getAllPostPosts, getAllPostType } from '../Triggers/TriggerHelpers/PostHelper/PostCommonFunction'
@@ -45,12 +45,12 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     let queryData = { id: value }
     if (
       flow.triggered_entity === 'Elementor'
-            || flow.triggered_entity === 'Divi'
-            || flow.triggered_entity === 'Bricks'
-            || flow.triggered_entity === 'Brizy'
-            || flow.triggered_entity === 'PiotnetAddon'
-            || flow.triggered_entity === 'Breakdance'
-            || flow.triggered_entity === 'CartFlow'
+      || flow.triggered_entity === 'Divi'
+      || flow.triggered_entity === 'Bricks'
+      || flow.triggered_entity === 'Brizy'
+      || flow.triggered_entity === 'PiotnetAddon'
+      || flow.triggered_entity === 'Breakdance'
+      || flow.triggered_entity === 'CartFlow'
     ) {
       queryData = { ...queryData, postId: formPost[value] ?? flow.flow_details.postId }
     } else {
@@ -59,6 +59,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
 
     const loadFormFields = bitsFetch(queryData, `${flow.triggered_entity.toLowerCase()}/get/form`).then((res) => {
       if (res.success) {
+        console.log("field", res.data.fields)
         setFormFields(res.data.fields)
       }
       return res.data
@@ -74,11 +75,11 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     if (trigger === 'LearnDash') {
       if (
         data.triggered_entity_id === '1'
-                || data.triggered_entity_id === '2'
-                || data.triggered_entity_id === '3'
-                || data.triggered_entity_id === '4'
-                || data.triggered_entity_id === '5'
-                || data.triggered_entity_id === '11'
+        || data.triggered_entity_id === '2'
+        || data.triggered_entity_id === '3'
+        || data.triggered_entity_id === '4'
+        || data.triggered_entity_id === '5'
+        || data.triggered_entity_id === '11'
       ) {
         getAllCourses(data, setFlow)
       } else if (data.triggered_entity_id === '6' || data.triggered_entity_id === '7' || data.triggered_entity_id === '8') {
@@ -132,11 +133,11 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     if (trigger === 'FluentCrm') {
       if (
         data.triggered_entity_id === 'fluentcrm-1'
-                || data.triggered_entity_id === 'fluentcrm-2'
+        || data.triggered_entity_id === 'fluentcrm-2'
       ) {
         getFluentCrmTags(data, setFlow)
       } else if (data.triggered_entity_id === 'fluentcrm-3'
-      || data.triggered_entity_id === 'fluentcrm-4') {
+        || data.triggered_entity_id === 'fluentcrm-4') {
         getFluentCrmLists(data, setFlow)
       } else if (data.triggered_entity_id === 'fluentcrm-5') {
         getFluentCrmStatus(data, setFlow)
@@ -175,7 +176,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       }
     }
     if (trigger === 'SureCart') {
-      if ([1,2,3].includes(Number(data.triggered_entity_id))) {
+      if ([1, 2, 3].includes(Number(data.triggered_entity_id))) {
         getSureCartAllProduct(data, setFlow)
       }
     }
@@ -187,32 +188,32 @@ function EditFormInteg({ setSnackbar, className = '' }) {
         getAllRecurringDonationForms(data, setFlow)
       }
     }
-    if (trigger === 'LifterLms'){
-      if ([1,2,3].includes(Number(data.triggered_entity_id))) {
+    if (trigger === 'LifterLms') {
+      if ([1, 2, 3].includes(Number(data.triggered_entity_id))) {
         getAllLifterLmsQuiz(data, setFlow)
       } else if ([4].includes(Number(data.triggered_entity_id))) {
         getAllLifterLmsLesson(data, setFlow)
-      } else if ([5,6,7].includes(Number(data.triggered_entity_id))) {
+      } else if ([5, 6, 7].includes(Number(data.triggered_entity_id))) {
         getAllLifterLmsCourse(data, setFlow)
       } else if ([8].includes(Number(data.triggered_entity_id))) {
         getAllLifterLmsMembership(data, setFlow)
       }
     }
-    if (trigger === 'EDD'){
+    if (trigger === 'EDD') {
       if ([1].includes(Number(data.triggered_entity_id))) {
         getAllEDDProduct(data, setFlow)
       } else if ([2].includes(Number(data.triggered_entity_id))) {
         getAllEDDDiscountCode(data, setFlow)
       }
     }
-    if (trigger === 'MasterStudyLms'){
-      if ([1,3,4,5].includes(Number(data.triggered_entity_id))) {
+    if (trigger === 'MasterStudyLms') {
+      if ([1, 3, 4, 5].includes(Number(data.triggered_entity_id))) {
         getAllMasterStudyLmsCourse(data, setFlow)
       } else if ([2].includes(Number(data.triggered_entity_id))) {
         getAllMasterStudyLmsLesson(data, setFlow)
       }
     }
-    if (trigger === 'ThriveApprentice'){
+    if (trigger === 'ThriveApprentice') {
       if ([1].includes(Number(data.triggered_entity_id))) {
         getAllThriveApprenticeCourse(data, setFlow)
       } else if ([2].includes(Number(data.triggered_entity_id))) {
@@ -221,7 +222,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
         getAllThriveApprenticeModule(data, setFlow)
       }
     }
-    if (trigger === 'UltimateMember'){
+    if (trigger === 'UltimateMember') {
       if (data.triggered_entity_id == 'roleSpecificChange') {
         getAllUMrole(data, setFlow)
       }
