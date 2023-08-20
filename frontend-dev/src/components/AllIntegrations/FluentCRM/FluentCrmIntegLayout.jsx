@@ -3,7 +3,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import FluentCrmActions from './FluentCrmActions'
-import { refreshCrmList, refreshCrmTag } from './FluentCrmCommonFunc'
+import { refreshCrmList, refreshCrmTag, refreshfluentCrmHeader } from './FluentCrmCommonFunc'
 import FluentCrmFieldMap from './FluentCrmFieldMap'
 
 export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf, setFluentCrmConf, isLoading, setIsLoading, setSnackbar }) {
@@ -32,25 +32,42 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
   const handleAction = (e) => {
     const newConf = { ...fluentCrmConf }
     const { name, value } = e.target
+    // if (e.target.value !== '') {
+    //   newConf[name] = value
+
+    //   const tmp = {
+    //     name: 'Fluent CRM',
+    //     type: 'Fluent Crm',
+    //     actionName: value,
+    //     field_map: [
+    //       { formField: '', fluentCRMField: '' },
+    //     ],
+    //     actions: {},
+    //   }
+    //   setFluentCrmConf(tmp)
+    // } else {
+    //   delete newConf[name]
+    //   setFluentCrmConf({ ...newConf })
+    // }
+
     if (e.target.value !== '') {
       newConf[name] = value
-
-      const tmp = {
-        name: 'Fluent CRM',
-        type: 'Fluent Crm',
-        actionName: value,
-        field_map: [
-          { formField: '', fluentCRMField: '' },
-        ],
-        actions: {},
+      refreshfluentCrmHeader(
+        newConf,
+        setFluentCrmConf,
+        setIsLoading,
+        setSnackbar
+      );
+      if (value === 'add-tag') {
+        refreshCrmTag(formID, newConf, setFluentCrmConf, setIsLoading, setSnackbar)
       }
-      setFluentCrmConf(tmp)
+
     } else {
       delete newConf[name]
-      setFluentCrmConf({ ...newConf })
     }
+    setFluentCrmConf(newConf)
   }
-
+  console.log(fluentCrmConf?.fluentCrmTags)
   return (
     <>
       <br />
@@ -90,7 +107,7 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
           <MultiSelect
             defaultValue={fluentCrmConf?.tags}
             className="btcd-paper-drpdwn w-5"
-            options={fluentCrmConf?.default?.fluentCrmTags && Object.keys(fluentCrmConf.default.fluentCrmTags).map(tag => ({ label: fluentCrmConf.default.fluentCrmTags[tag].title, value: fluentCrmConf.default.fluentCrmTags[tag].id.toString() }))}
+            options={fluentCrmConf?.fluentCrmTags && Object.keys(fluentCrmConf.fluentCrmTags).map(tag => ({ label: fluentCrmConf.fluentCrmTags[tag].title, value: fluentCrmConf.fluentCrmTags[tag].id.toString() }))}
             onChange={val => tags(val)}
           />
           <button onClick={() => refreshCrmTag(formID, fluentCrmConf, setFluentCrmConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Tag & Field', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
@@ -107,30 +124,33 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
         }}
         />
       )}
-      <div className="mt-4">
-        <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
-      </div>
-      <div className="btcd-hr mt-1" />
-      <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-        <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
-        <div className="txt-dp"><b>{__('Fluent CRM Fields', 'bit-integrations')}</b></div>
-      </div>
+      {fluentCrmConf?.actionName && !isLoading &&
+        <>
+          <div className="mt-4">
+            <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
+          </div>
+          <div className="btcd-hr mt-1" />
+          <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
+            <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
+            <div className="txt-dp"><b>{__('Fluent CRM Fields', 'bit-integrations')}</b></div>
+          </div>
 
-      {fluentCrmConf.field_map.map((itm, i) => (
-        <FluentCrmFieldMap
-          key={`fluentcrm-m-${i + 9}`}
-          i={i}
-          field={itm}
-          fluentCrmConf={fluentCrmConf}
-          formFields={formFields}
-          setFluentCrmConf={setFluentCrmConf}
-        />
-      ))}
+          {fluentCrmConf.field_map.map((itm, i) => (
+            <FluentCrmFieldMap
+              key={`fluentcrm-m-${i + 9}`}
+              i={i}
+              field={itm}
+              fluentCrmConf={fluentCrmConf}
+              formFields={formFields}
+              setFluentCrmConf={setFluentCrmConf}
+            />
+          ))}
+          <div className="txt-center btcbi-field-map-button mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(fluentCrmConf.field_map.length, fluentCrmConf, setFluentCrmConf)} className="icn-btn sh-sm" type="button">+</button></div>
+        </>
+      }
       {fluentCrmConf?.actionName === 'add-user' && (
         <>
-          <div className="txt-center btcbi-field-map-button mt-2" style={{ marginRight: 85 }}><button onClick={() => addFieldMap(fluentCrmConf.field_map.length, fluentCrmConf, setFluentCrmConf)} className="icn-btn sh-sm" type="button">+</button></div>
           <br />
-
           <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
           <div className="btcd-hr mt-1" />
           <FluentCrmActions

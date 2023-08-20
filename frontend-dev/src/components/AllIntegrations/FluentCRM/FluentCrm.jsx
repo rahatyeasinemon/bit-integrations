@@ -20,6 +20,7 @@ export default function FluentCrm({ formFields, setFlow, flow, allIntegURL }) {
   const [fluentCrmConf, setFluentCrmConf] = useState({
     name: 'Fluent CRM',
     type: 'Fluent Crm',
+    actionName: '',
     field_map: [
       { formField: '', fluentCRMField: '' },
     ],
@@ -44,9 +45,9 @@ export default function FluentCrm({ formFields, setFlow, flow, allIntegURL }) {
       }
     } else {
       setStep(val)
-      if (val === 2 && fluentCrmConf.name) {
-        refreshCrmList(formID, fluentCrmConf, setFluentCrmConf, setIsLoading, setSnackbar)
-      }
+      // if (val === 2 && fluentCrmConf.name) {
+      //   refreshCrmList(formID, fluentCrmConf, setFluentCrmConf, setIsLoading, setSnackbar)
+      // }
     }
   }
 
@@ -76,6 +77,7 @@ export default function FluentCrm({ formFields, setFlow, flow, allIntegURL }) {
           formFields={formFields}
           fluentCrmConf={fluentCrmConf}
           setFluentCrmConf={setFluentCrmConf}
+          isLoading={isLoading}
           setIsLoading={setIsLoading}
           setSnackbar={setSnackbar}
         />
