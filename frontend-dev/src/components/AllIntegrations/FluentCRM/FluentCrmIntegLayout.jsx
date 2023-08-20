@@ -67,7 +67,7 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
     }
     setFluentCrmConf(newConf)
   }
-  console.log(fluentCrmConf?.fluentCrmTags)
+
   return (
     <>
       <br />
@@ -101,7 +101,7 @@ export default function FluentCrmIntegLayout({ formID, formFields, fluentCrmConf
           <button onClick={() => refreshCrmList(formID, fluentCrmConf, setFluentCrmConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh List, Tag & Field', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
         </div>
       )}
-      {(fluentCrmConf?.actionName && fluentCrmConf?.actionName !== 'remove-user') && (
+      {fluentCrmConf?.actionName && fluentCrmConf?.actionName !== 'remove-user' && fluentCrmConf?.fluentCrmTags && !isLoading && (
         <div className="flx mt-5">
           <b className="wdt-200 d-in-b">{__('Fluent CRM Tags: ', 'bit-integrations')}</b>
           <MultiSelect
