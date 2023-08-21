@@ -101,41 +101,42 @@ class RecordApiHelper
         return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
     }
 
-    public function addLead($finalData)
+    public function addOpprtunity($finalData)
     {
-        if (empty($finalData['lead_name'])) {
-            return ['success' => false, 'message' => 'Required Person Name is empty', 'code' => 400];
-        } elseif (empty($finalData['company_name'])) {
-            return ['success' => false, 'message' => 'Required Organization Name is empty', 'code' => 400];
-        } elseif (!isset($this->integrationDetails->selectedLeadStatus) || empty($this->integrationDetails->selectedLeadStatus)) {
-            return ['success' => false, 'message' => 'Required Lead Status is empty', 'code' => 400];
+        if (empty($finalData['name'])) {
+            return ['success' => false, 'message' => 'Required Opportunity Name is empty', 'code' => 400];
+        } elseif (!isset($this->integrationDetails->selectedAccount) || empty($this->integrationDetails->selectedAccount)) {
+            return ['success' => false, 'message' => 'Required Account field is empty', 'code' => 400];
+        } elseif (!isset($this->integrationDetails->selectedPipeline) || empty($this->integrationDetails->selectedPipeline)) {
+            return ['success' => false, 'message' => 'Required Pipeline field is empty', 'code' => 400];
+        } elseif (!isset($this->integrationDetails->selectedStage) || empty($this->integrationDetails->selectedStage)) {
+            return ['success' => false, 'message' => 'Required Stage field is empty', 'code' => 400];
         }
 
-        if (isset($this->integrationDetails->selectedLeadSource) && !empty($this->integrationDetails->selectedLeadSource)) {
-            $finalData['source'] = ($this->integrationDetails->selectedLeadSource);
-        }
-        if (isset($this->integrationDetails->actions->organizationLead) && !empty($this->integrationDetails->actions->organizationLead)) {
-            $finalData['organization_lead'] = $this->integrationDetails->actions->organizationLead;
-        }
-        if (isset($this->integrationDetails->selectedLeadAddressType) && !empty($this->integrationDetails->selectedLeadAddressType)) {
-            $finalData['address_type'] = $this->integrationDetails->selectedLeadAddressType;
-        }
-        if (isset($this->integrationDetails->selectedLeadType) && !empty($this->integrationDetails->selectedLeadType)) {
-            $finalData['type'] = $this->integrationDetails->selectedLeadType;
-        }
-        if (isset($this->integrationDetails->selectedRequestType) && !empty($this->integrationDetails->selectedRequestType)) {
-            $finalData['request_type'] = $this->integrationDetails->selectedRequestType;
-        }
-        if (isset($this->integrationDetails->selectedMarketSegment) && !empty($this->integrationDetails->selectedMarketSegment)) {
-            $finalData['market_segment'] = $this->integrationDetails->selectedMarketSegment;
+        $formData = [];
+        $customfields = [];
+        foreach ($finalData as $key => $value) {
+            if (strpos($key, 'custom_field_') !== false) {
+                $custom_key = explode('custom_field_', $key);
+                $customfields[$custom_key[1]] = $value;
+            } else {
+                $formData[$key] = $value;
+            }
         }
 
-        $finalData['status']    = $this->integrationDetails->selectedLeadStatus;
-        $finalData['territory'] = "All Territories";
-        $this->type             = 'Lead';
-        $this->typeName         = 'Lead created';
-        $apiEndpoint            = $this->apiUrl . "/Lead";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        if (isset($this->integrationDetails->selectedTags) && !empty($this->integrationDetails->selectedTags)) {
+            $formData['tags'] = explode(',', $this->integrationDetails->selectedTags);
+        }
+        if (!empty($customfields)) {
+            $formData['custom'] = (object) $customfields;
+        }
+
+        $formData['account']    = $this->integrationDetails->selectedAccount;
+        $formData['stage']      = $this->integrationDetails->selectedStage;
+        $this->type             = 'Opportunity';
+        $this->typeName         = 'Opportunity created';
+        $apiEndpoint            = $this->apiUrl . "/opportunities";
+        return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -157,7 +158,7 @@ class RecordApiHelper
         } elseif ($actionName === "contacts") {
             $apiResponse = $this->addContact($finalData);
         } elseif ($actionName === "opportunities") {
-            $apiResponse = $this->addLead($finalData);
+            $apiResponse = $this->addOpprtunity($finalData);
         }
 
         if (isset($apiResponse->id)) {
