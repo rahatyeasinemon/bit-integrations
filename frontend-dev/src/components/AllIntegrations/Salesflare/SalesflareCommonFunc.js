@@ -3,7 +3,6 @@
 import toast from "react-hot-toast";
 import bitsFetch from "../../../Utils/bitsFetch";
 import { __ } from "../../../Utils/i18nwrap";
-import { create } from "mutative";
 
 export const handleInput = (e, salesflareConf, setSalesflareConf) => {
   const newConf = { ...salesflareConf };

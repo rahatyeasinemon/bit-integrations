@@ -32,12 +32,8 @@ class RecordApiHelper
         ];
     }
 
-    public function addAccount($finalData)
+    private function setData($finalData)
     {
-        if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Account Name is empty', 'code' => 400];
-        }
-
         $formData = [];
         $customfields = [];
         $addressKeys = ['city', 'country', 'region', 'state_region', 'street', 'zip', '_dirty'];
@@ -59,9 +55,19 @@ class RecordApiHelper
             $formData['custom'] = (object) $customfields;
         }
 
-        $this->type                     = 'Account';
-        $this->typeName                 = 'Account created';
-        $apiEndpoint                    = $this->apiUrl . "/accounts";
+        return $formData;
+    }
+
+    public function addAccount($finalData)
+    {
+        if (empty($finalData['name'])) {
+            return ['success' => false, 'message' => 'Required field Account Name is empty', 'code' => 400];
+        }
+
+        $this->type     = 'Account';
+        $this->typeName = 'Account created';
+        $formData       = $this->setData($finalData);
+        $apiEndpoint    = $this->apiUrl . "/accounts";
         return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
     }
 
@@ -74,30 +80,10 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field Email Address is empty', 'code' => 400];
         }
 
-        $formData = [];
-        $customfields = [];
-        $addressKeys = ['city', 'country', 'region', 'state_region', 'street', 'zip', '_dirty'];
-        foreach ($finalData as $key => $value) {
-            if (array_search($key, $addressKeys) !== false) {
-                $formData['address'][$key] = $value;
-            } elseif (strpos($key, 'custom_field_') !== false) {
-                $custom_key = explode('custom_field_', $key);
-                $customfields[$custom_key[1]] = $value;
-            } else {
-                $formData[$key] = $value;
-            }
-        }
-
-        if (isset($this->integrationDetails->selectedTags) && !empty($this->integrationDetails->selectedTags)) {
-            $formData['tags'] = explode(',', $this->integrationDetails->selectedTags);
-        }
-        if (!empty($customfields)) {
-            $formData['custom'] = (object) $customfields;
-        }
-
-        $this->type                         = 'Contact';
-        $this->typeName                     = 'Contact created';
-        $apiEndpoint                        = $this->apiUrl . "/contacts";
+        $this->type     = 'Contact';
+        $this->typeName = 'Contact created';
+        $formData       = $this->setData($finalData);
+        $apiEndpoint    = $this->apiUrl . "/contacts";
         return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
     }
 
@@ -113,28 +99,11 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required Stage field is empty', 'code' => 400];
         }
 
-        $formData = [];
-        $customfields = [];
-        foreach ($finalData as $key => $value) {
-            if (strpos($key, 'custom_field_') !== false) {
-                $custom_key = explode('custom_field_', $key);
-                $customfields[$custom_key[1]] = $value;
-            } else {
-                $formData[$key] = $value;
-            }
-        }
-
-        if (isset($this->integrationDetails->selectedTags) && !empty($this->integrationDetails->selectedTags)) {
-            $formData['tags'] = explode(',', $this->integrationDetails->selectedTags);
-        }
-        if (!empty($customfields)) {
-            $formData['custom'] = (object) $customfields;
-        }
-
-        $formData['account']    = $this->integrationDetails->selectedAccount;
-        $formData['stage']      = $this->integrationDetails->selectedStage;
         $this->type             = 'Opportunity';
         $this->typeName         = 'Opportunity created';
+        $formData               = $this->setData($finalData);
+        $formData['account']    = $this->integrationDetails->selectedAccount;
+        $formData['stage']      = $this->integrationDetails->selectedStage;
         $apiEndpoint            = $this->apiUrl . "/opportunities";
         return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
     }
