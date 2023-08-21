@@ -39,10 +39,14 @@ class RecordApiHelper
         }
 
         $formData = [];
+        $customfields = [];
         $addressKeys = ['city', 'country', 'region', 'state_region', 'street', 'zip', '_dirty'];
         foreach ($finalData as $key => $value) {
             if (array_search($key, $addressKeys) !== false) {
                 $formData['address'][$key] = $value;
+            } elseif (strpos($key, 'custom_field_') !== false) {
+                $custom_key = explode('custom_field_', $key);
+                $customfields[$custom_key[1]] = $value;
             } else {
                 $formData[$key] = $value;
             }
@@ -50,6 +54,9 @@ class RecordApiHelper
 
         if (isset($this->integrationDetails->selectedTags) && !empty($this->integrationDetails->selectedTags)) {
             $formData['tags'] = explode(',', $this->integrationDetails->selectedTags);
+        }
+        if (!empty($customfields)) {
+            $formData['custom'] = (object) $customfields;
         }
 
         $this->type                     = 'Account';
@@ -60,19 +67,38 @@ class RecordApiHelper
 
     public function addContact($finalData)
     {
-        if (empty($finalData['first_name'])) {
+        if (empty($finalData['firstname'])) {
             return ['success' => false, 'message' => 'Required field First Name is empty', 'code' => 400];
         }
-
-        if (isset($this->integrationDetails->selectedContactStatus) && !empty($this->integrationDetails->selectedContactStatus)) {
-            $finalData['status'] = ($this->integrationDetails->selectedContactStatus);
+        if (empty($finalData['email'])) {
+            return ['success' => false, 'message' => 'Required field Email Address is empty', 'code' => 400];
         }
 
-        $finalData['is_primary_contact']    = true;
+        $formData = [];
+        $customfields = [];
+        $addressKeys = ['city', 'country', 'region', 'state_region', 'street', 'zip', '_dirty'];
+        foreach ($finalData as $key => $value) {
+            if (array_search($key, $addressKeys) !== false) {
+                $formData['address'][$key] = $value;
+            } elseif (strpos($key, 'custom_field_') !== false) {
+                $custom_key = explode('custom_field_', $key);
+                $customfields[$custom_key[1]] = $value;
+            } else {
+                $formData[$key] = $value;
+            }
+        }
+
+        if (isset($this->integrationDetails->selectedTags) && !empty($this->integrationDetails->selectedTags)) {
+            $formData['tags'] = explode(',', $this->integrationDetails->selectedTags);
+        }
+        if (!empty($customfields)) {
+            $formData['custom'] = (object) $customfields;
+        }
+
         $this->type                         = 'Contact';
         $this->typeName                     = 'Contact created';
-        $apiEndpoint                        = $this->apiUrl . "/Contact";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        $apiEndpoint                        = $this->apiUrl . "/contacts";
+        return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
     }
 
     public function addLead($finalData)

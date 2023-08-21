@@ -6,8 +6,8 @@ import { __ } from '../../../Utils/i18nwrap'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './IntegrationHelpers'
 
 export default function SalesflareFieldMap({ i, formFields, field, salesflareConf, setSalesflareConf }) {
-  const requiredFields = salesflareConf?.salesflareFields && salesflareConf?.salesflareFields.filter(fld => fld.required === true) || []
-  const allNonRequiredFields = salesflareConf?.salesflareFields && salesflareConf?.salesflareFields.filter(fld => fld.required === false) || []
+  const requiredFields = salesflareConf?.salesflareAllFields && salesflareConf?.salesflareAllFields.filter(fld => fld.required === true) || []
+  const allNonRequiredFields = salesflareConf?.salesflareAllFields && salesflareConf?.salesflareAllFields.filter(fld => fld.required === false) || []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi

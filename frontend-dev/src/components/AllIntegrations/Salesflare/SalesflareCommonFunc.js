@@ -18,8 +18,8 @@ export const handleInput = (e, salesflareConf, setSalesflareConf) => {
 
 export const generateMappedField = (salesflareConf) => {
   const requiredFlds =
-    salesflareConf?.salesflareFields &&
-    salesflareConf?.salesflareFields.filter(
+    salesflareConf?.salesflareAllFields &&
+    salesflareConf?.salesflareAllFields.filter(
       (fld) =>
         fld.required === true && fld.key !== "owner" && fld.key !== "pipeline"
     );
@@ -104,7 +104,8 @@ export const salesflareFields = (
           const draftConf = prevConf;
           draftConf.field_map = [{ formField: "", salesmateFormField: "" }];
           if (result.data) {
-            draftConf.salesflareFields = [
+            draftConf.salesflareAllFields = [];
+            draftConf.salesflareAllFields = [
               ...draftConf.salesflareFields,
               ...result.data,
             ];

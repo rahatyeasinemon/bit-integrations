@@ -68,6 +68,7 @@ function EditSalesflare({ allIntegURL }) {
         setSalesflareConf={setSalesflareConf}
         loading={loading}
         setLoading={setLoading}
+        isLoading={isLoading}
         setIsLoading={setIsLoading}
         setSnackbar={setSnackbar}
       />

@@ -26,7 +26,7 @@ export default function SalesflareIntegLayout({ formFields, handleInput, salesfl
           getallAccounts(draftConf, setSalesflareConf, loading, setLoading)
           getallPipelines(draftConf, setSalesflareConf, loading, setLoading)
         }
-        salesflareFields(draftConf, setSalesflareConf, setIsLoading, loading, setSnackbar)
+        salesflareFields(draftConf, setSalesflareConf, setIsLoading, setSnackbar)
 
       } else {
         delete draftConf[name]

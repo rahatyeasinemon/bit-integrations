@@ -68,7 +68,7 @@ class SalesflareController
                 array_push(
                     $fieldMap,
                     (object) [
-                        'key' => $field->id,
+                        'key' => "custom_field_{$field->api_field}",
                         'label' => $field->name,
                         'required' => $field->required
                     ]
