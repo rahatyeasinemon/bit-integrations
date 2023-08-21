@@ -24,9 +24,12 @@ function GiveWp({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
   // for action 1
   const giveWpFields = [
     { key: 'email', label: 'Email', required: true },
+    { key: 'name', label: 'Name', required: false },
     { key: 'first_name', label: 'First Name', required: false },
     { key: 'last_name', label: 'Last Name', required: false },
-    { key: 'company_name', label: 'Company Name', required: false },
+    // { key: 'company_name', label: 'Company Name', required: false },
+    { key: 'purchase_value', label: 'Purchase Value', required: false },
+    { key: 'purchase_count', label: 'Purchase Count', required: false },
   ]
 
   const [giveWpConf, setGiveWpConf] = useState({

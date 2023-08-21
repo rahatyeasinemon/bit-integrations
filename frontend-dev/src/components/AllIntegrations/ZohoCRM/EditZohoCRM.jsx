@@ -23,7 +23,6 @@ function EditZohoCRM({ allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
   const [tab, settab] = useState(0)
   const formFields = useRecoilValue($formFields)
-
   const saveConfig = () => {
     if (!checkMappedFields(crmConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })

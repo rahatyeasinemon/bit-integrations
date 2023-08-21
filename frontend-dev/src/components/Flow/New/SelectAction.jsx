@@ -144,8 +144,10 @@ export default function SelectAction() {
     { type: 'ThriveAutomator' },
     { type: 'WPWebhooks' },
     { type: 'AdvancedFormIntegration' },
-    // { type: 'PerfexCRM' },
+    { type: 'PerfexCRM' },
     { type: 'SureTriggers' },
+    { type: 'OneHashCRM' },
+    { type: 'Salesflare' },
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState((isPro && sortByField(integs, 'type', 'ASC')) || integs)

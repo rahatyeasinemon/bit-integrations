@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Actions\GiveWp;
 
 use BitCode\FI\Core\Util\Common;

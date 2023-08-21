@@ -55,7 +55,7 @@ class RecordApiHelper
         $this->typeName = 'Organization created';
 
 
-        $apiEndpoint = $this->apiUrl."/organizations";
+        $apiEndpoint = $this->apiUrl . "/organizations";
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -80,13 +80,13 @@ class RecordApiHelper
         }
 
         if (!empty($this->integrationDetails->actions->parentOrganization)) {
-            $requestParams['organization_id'] =($this->integrationDetails->selectedParentOrganization);
+            $requestParams['organization_id'] = ($this->integrationDetails->selectedParentOrganization);
         }
 
         $this->type     = 'Contact';
         $this->typeName = 'Contact created';
 
-        $apiEndpoint = $this->apiUrl."/contacts";
+        $apiEndpoint = $this->apiUrl . "/contacts";
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -122,7 +122,7 @@ class RecordApiHelper
         $this->typeName = 'Lead created';
 
 
-        $apiEndpoint = $this->apiUrl."/leads";
+        $apiEndpoint = $this->apiUrl . "/leads";
 
         $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
         $this->addContactToLead($response->_id, $contactId);
@@ -130,7 +130,7 @@ class RecordApiHelper
 
     public function addContactToLead($leadId, $contactId)
     {
-        $apiEndpoint = $this->apiUrl."/leads/{$leadId}/contacts/{$contactId}";
+        $apiEndpoint = $this->apiUrl . "/leads/{$leadId}/contacts/{$contactId}";
 
         return $response = HttpHelper::post($apiEndpoint, $this->defaultHeader);
     }
@@ -169,7 +169,7 @@ class RecordApiHelper
             $apiResponse = $this->addLead($finalData);
         }
 
-        if ($apiResponse->data->id || $apiResponse->status === 'success') {
+        if ($apiResponse->_id) {
             $res = [$this->typeName . ' successfully'];
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
         } else {

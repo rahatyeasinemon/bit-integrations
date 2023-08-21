@@ -141,6 +141,8 @@ const WPWebhooks = lazy(() => import('./WPWebhooks/WPWebhooks'))
 const AdvancedFormIntegration = lazy(() => import('./AdvancedFormIntegration/AdvancedFormIntegration'))
 const PerfexCRM = lazy(() => import('./PerfexCRM/PerfexCRM'))
 const SureTriggers = lazy(() => import('./SureTriggers/SureTriggers'))
+const OneHashCRM = lazy(() => import('./OneHashCRM/OneHashCRM'))
+const Salesflare = lazy(() => import('./Salesflare/Salesflare'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
@@ -417,6 +419,10 @@ export default function NewInteg({ allIntegURL }) {
         return <PerfexCRM allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'SureTriggers':
         return <SureTriggers allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
+      case 'OneHashCRM':
+        return <OneHashCRM allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
+      case 'Salesflare':
+        return <Salesflare allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       default:
         return <></>
     }

@@ -25,11 +25,12 @@ export default function MenuBtn(props) {
 
     document.addEventListener('click', checkIfClickedOutside)
   }, [isMenuOpen])
+  const height = isMenuOpen ? `${menuList.current.clientHeight}px` : 'auto'
 
   return (
     <div className="btcd-menu">
       <button ref={menuButton} className="btcd-menu-btn btcd-mnu sh-sm" onClick={() => setIsMenuOpen(oldState => !oldState)} aria-label="toggle menu" type="button" />
-      <div ref={menuList} className={`btcd-menu-list ${isMenuOpen ? 'btcd-m-a' : ''}`}>
+      <div ref={menuList} className={`btcd-menu-list ${isMenuOpen ? 'btcd-m-a' : ''}`} style={{ height }}>
         <Link to={`/flow/action/info/${props.id}/${props.name}`} type="button" className="flx" aria-label="actions">
           <InfoIcn size={16} />
           &nbsp;

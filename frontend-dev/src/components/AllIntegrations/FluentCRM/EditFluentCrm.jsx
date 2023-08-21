@@ -21,6 +21,7 @@ function EditFluentCrm({ allIntegURL }) {
   const [flow, setFlow] = useRecoilState($newFlow)
   const formFields = useRecoilValue($formFields)
   const [isLoading, setIsLoading] = useState(false)
+  const [loading, setLoading] = useState({})
   const [snack, setSnackbar] = useState({ show: false })
   const saveConfig = () => {
     if (!checkMappedFields(fluentCrmConf)) {
@@ -29,6 +30,7 @@ function EditFluentCrm({ allIntegURL }) {
     }
     saveActionConf({ flow, setFlow, allIntegURL, conf: fluentCrmConf, navigate, edit: 1, setIsLoading, setSnackbar })
   }
+
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -48,6 +50,8 @@ function EditFluentCrm({ allIntegURL }) {
         isLoading={isLoading}
         step={2}
         setIsLoading={setIsLoading}
+        loading={loading}
+        setLoading={setLoading}
         setSnackbar={setSnackbar}
       />
 

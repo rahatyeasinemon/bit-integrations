@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { $actionConf, $formFields, $newFlow } from '../../GlobalStates'
 import useFetch from '../../hooks/useFetch'
 import { __ } from '../../Utils/i18nwrap'
@@ -140,6 +140,8 @@ const EditWPWebhooks = lazy(() => import('./WPWebhooks/EditWPWebhooks'))
 const EditAdvancedFormIntegration = lazy(() => import('./AdvancedFormIntegration/EditAdvancedFormIntegration'))
 const EditPerfexCRM = lazy(() => import('./PerfexCRM/EditPerfexCRM'))
 const EditSureTriggers = lazy(() => import('./SureTriggers/EditSureTriggers'))
+const EditOneHashCRM = lazy(() => import('./OneHashCRM/EditOneHashCRM'))
+const EditSalesflare = lazy(() => import('./Salesflare/EditSalesflare'))
 
 const loaderStyle = {
   display: 'flex',
@@ -152,11 +154,14 @@ export default function EditInteg({ allIntegURL }) {
   const { id } = useParams()
   const { data, isLoading, isError } = useFetch({
     payload: { id },
-    action: 'flow/get',
+    action: ['flow/get', id],
   })
   const [flow, setFlow] = useRecoilState($newFlow)
-  const setActionConf = useSetRecoilState($actionConf)
+  const [actionConfig, setActionConfig] = useRecoilState($actionConf)
   const setFormFields = useSetRecoilState($formFields)
+  const actionConfReset = useResetRecoilState($actionConf)
+  const formFieldsReset = useResetRecoilState($formFields)
+  const flowReset = useResetRecoilState($newFlow)
   const [snack, setSnackbar] = useState({ show: false, msg: '' })
   useEffect(() => {
     if (!isLoading && !isError && data?.data?.integration) {
@@ -167,8 +172,14 @@ export default function EditInteg({ allIntegURL }) {
         })
       }
       setFlow(data.data?.integration)
-      setActionConf(data.data?.integration?.flow_details)
+      setActionConfig(data.data?.integration?.flow_details)
       setFormFields(data.data?.integration?.fields || [])
+    }
+
+    return () => {
+      actionConfReset()
+      formFieldsReset()
+      flowReset()
     }
   }, [data])
   if (isLoading || isError) {
@@ -194,12 +205,14 @@ export default function EditInteg({ allIntegURL }) {
       <Suspense
         fallback={<Loader className="g-c" style={{ height: '82vh' }} />}
       >
-        <IntegType
-          allIntegURL={allIntegURL}
-          formFields={flow.fields}
-          flow={flow}
-          setFlow={setFlow}
-        />
+        {actionConfig && Object.keys(actionConfig).length && (
+          <IntegType
+            allIntegURL={allIntegURL}
+            formFields={flow.fields}
+            flow={flow}
+            setFlow={setFlow}
+          />
+        )}
       </Suspense>
     </div>
   )
@@ -394,7 +407,7 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditDirectIq allIntegURL={allIntegURL} />
     case 'SendPulse':
       return <EditSendPulse allIntegURL={allIntegURL} />
-    case 'GiveWP':
+    case 'GiveWp':
       return <EditGiveWp allIntegURL={allIntegURL} />
     case 'Airtable':
       return <EditAirtable allIntegURL={allIntegURL} />
@@ -472,6 +485,10 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditPerfexCRM allIntegURL={allIntegURL} />
     case 'SureTriggers':
       return <EditSureTriggers allIntegURL={allIntegURL} />
+    case 'OneHashCRM':
+      return <EditOneHashCRM allIntegURL={allIntegURL} />
+    case 'Salesflare':
+      return <EditSalesflare allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }
