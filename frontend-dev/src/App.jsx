@@ -4,7 +4,7 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 
 import { lazy, Suspense, useEffect, useState } from 'react'
-import { Link, NavLink, Route, Routes } from 'react-router-dom'
+import { Link, NavLink, Route, Routes, useNavigate } from 'react-router-dom'
 import './resource/sass/app.scss'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Toaster } from 'react-hot-toast'
@@ -26,6 +26,7 @@ const Error404 = lazy(() => import('./pages/Error404'))
 function App() {
   const loaderStyle = { height: '82vh' }
 
+  let navigate = useNavigate();
   // check if integrations are available
   const { data, isLoading } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
 
@@ -119,8 +120,8 @@ function App() {
 
 
             <Route path="/flow/new" element={
-              flowNumber >= 1 && !isLicenseActive ?
-                <Route to="/" /> :
+              flowNumber >= 1 && (!isLicenseActive || isLicenseActive === 'undefined') ?
+                navigate("/") :
                 <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
                   <FlowBuilder />
                 </Suspense>
