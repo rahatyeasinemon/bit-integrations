@@ -96,7 +96,7 @@ function App() {
               </a>
 
             </nav>
-            <div className="flx flx-center">
+            <div className="flx flx-center" style={{ marginLeft: 'auto' }}>
               <ChangelogToggle />
             </div>
           </div>
