@@ -18,7 +18,6 @@ import FlowBuilder from './pages/FlowBuilder'
 import Settings from './pages/Settings'
 import './resource/icons/style.css'
 import { __ } from './Utils/i18nwrap'
-import TableLoader from './components/Loaders/TableLoader2'
 import { $btcbi } from './GlobalStates'
 import ChangelogToggle from './pages/ChangelogToggle'
 
