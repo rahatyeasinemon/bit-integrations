@@ -35,7 +35,7 @@
   "scripts": {
     "build": "vite build",
     "hot": "vite --force",
-    "pda": "pnpm build && pnpm i18n:php",
+    "pda": "pnpm build && pnpm gettext-parser && pnpm i18n:php",
     "clear-lint-cache": "eslint . --cache --cache-file eslint-cache/eslintcache",
     "gettext-parser": "npx react-gettext-parser --output ./locale.pot --config ./gettext-parser.config.js  './src/**/{*.js,*.jsx}'",
     "i18n:json": "npx po2json locale.pot ../languages/bitform-btcbi-admin-script.json -f jed1.x",
