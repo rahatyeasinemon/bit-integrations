@@ -25,7 +25,7 @@ global $btcbi_db_version;
 $btcbi_db_version = '1.0';
 
 // Define most essential constants.
-define('BTCBI_VERSION', '1.3.9');
+define('BTCBI_VERSION', '1.4.0');
 define('BTCBI_PLUGIN_MAIN_FILE', __FILE__);
 
 require_once plugin_dir_path(__FILE__) . 'includes/loader.php';

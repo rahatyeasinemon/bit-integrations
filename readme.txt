@@ -1,10 +1,10 @@
-=== Automation Plugin for WordPress – Best no-code Automator & Integration tool to Automate 200+ Platforms : Bit Integrations ===
+=== Automation Plugin for WordPress : Best no-code Automator & Integration tool to Automate 200+ Platforms - Bit Integrations ===
 Contributors: bitpressadmin
 Tags: automation,integration,connector,workflow automation,automator,Zapier,Platform integrations,Wp WebHooks,Pabbly,Integrately
 Requires at least: 5.1
 Tested up to: 6.2
 Requires PHP: 7.4
-Stable tag: 1.3.9
+Stable tag: 1.4.0
 License: GPLv2 or later
 
 Automation Plugin for WordPress; Integration of 60+ Triggers and 130+ Actions.The #1 highest no-code platform Automator plugin in WordPress.
@@ -74,7 +74,7 @@ Integrations with the most popular 17+ CRM like [Salesmate](https://www.salesmat
 
 ### ⭐ Learning Management System (LMS) Automation:
 
-4 LMS like [LearnDash](https://www.learndash.com/), [LifterLMS](https://wordpress.org/plugins/lifterlms/), MasterStudy LMS, Thrive Apprentice, [Tutor LMS ](https://wordpress.org/plugins/tutor/), [WP Courseware](https://flyplugins.com/wp-courseware/), and more.
+5+ LMS like [LearnDash](https://www.learndash.com/), [LifterLMS](https://wordpress.org/plugins/lifterlms/), MasterStudy LMS, Thrive Apprentice, [Tutor LMS ](https://wordpress.org/plugins/tutor/), [WP Courseware](https://flyplugins.com/wp-courseware/), and more.
 Users can send data when like course create/update/delete, lesson create/update/delete, quiz create/update/delete, topic create/update/delete, student enroll/unEnroll, student complete course, and more.
 
 ### ⭐ Email Marketing Automation:
@@ -102,11 +102,11 @@ Users can send data when like user Purchase membership, user cancel membership, 
 
 ### ⭐ Affiliate Plugin Automation:
 
-3 affiliate plugins like [AffiliateWP](https://wordpress.org/plugins/affiliatewp-affiliate-area-shortcodes/), [Solid Affiliate](https://solidaffiliate.com/), and [SliceWP Affiliate](https://wordpress.org/plugins/slicewp/). Users can send data when like affiliate create, affiliate referral , affiliate referral conversion, and more.
+3+ affiliate plugins like [AffiliateWP](https://wordpress.org/plugins/affiliatewp-affiliate-area-shortcodes/), [Solid Affiliate](https://solidaffiliate.com/), and [SliceWP Affiliate](https://wordpress.org/plugins/slicewp/). Users can send data when like affiliate create, affiliate referral , affiliate referral conversion, and more.
 
 ### ⭐ Sales Funnels Automation:
 
-3 sales funnels like [SureCart](https://wordpress.org/plugins/surecart/), [CartFlows](https://wordpress.org/plugins/cartflows/), [WP funnels](https://wordpress.org/plugins/wpfunnels/).
+3+ sales funnels like [SureCart](https://wordpress.org/plugins/surecart/), [CartFlows](https://wordpress.org/plugins/cartflows/), [WP funnels](https://wordpress.org/plugins/wpfunnels/).
 
 ### ⭐ Social Media Automation:
 
@@ -114,7 +114,7 @@ When any trigger is fired, you can send data to 3 social media like [WhatsApp](h
 
 ### ⭐ Task Management Automation:
 
-5 task management like [Airtable](https://www.airtable.com/), [Asana](https://www.asana.com/), [ClickUp](https://clickup.com/), [Notion](https://www.notion.so/), and [Trello](https://trello.com/).
+5+ task management like [Airtable](https://www.airtable.com/), [Asana](https://www.asana.com/), [ClickUp](https://clickup.com/), [Notion](https://www.notion.so/), and [Trello](https://trello.com/).
 
 ### ⭐ Customer Support Automation:
 
@@ -122,7 +122,7 @@ When any trigger is fired, you can send data to 3 social media like [WhatsApp](h
 
 ### ⭐ Cloud Storage Automation:
 
-4 cloud storage software's like [Google Drive](https://www.google.com/drive/), OneDrive , [pCloud](https://www.pcloud.com/) , [Dropbox](https://www.dropbox.com/) and more.
+4+ cloud storage software's like [Google Drive](https://www.google.com/drive/), OneDrive , [pCloud](https://www.pcloud.com/) , [Dropbox](https://www.dropbox.com/) and more.
 
 ### ⭐ Gamification Automation:
 
@@ -142,7 +142,7 @@ When any trigger is fired, you can send data to 3 social media like [WhatsApp](h
 
 ### ⭐ E-Commerce & Shopping Cart Integration:
 
-2 E-Commerce & Shopping Cart Platforms Easy Digital Downloads, WooCommerce
+2+ E-Commerce & Shopping Cart Platforms Easy Digital Downloads, WooCommerce
 
 ### ⭐ Event Management & Webinars Integration:
 
@@ -166,11 +166,11 @@ When any trigger is fired, you can send data to 3 social media like [WhatsApp](h
 
 ### ⭐ Online Event & Webinar Platforms Integration:
 
-3 Online Event & Webinar Platforms Integration Demio, Zoom Meeting, Zoom Webinar
+3+ Online Event & Webinar Platforms Integration Demio, Zoom Meeting, Zoom Webinar
 
 ### ⭐ Content Management Systems (CMS) Integration:
 
-2 Content Management Systems (CMS) Integration Divi, Elementor
+2+ Content Management Systems (CMS) Integration Divi, Elementor
 
 ### ⭐ Data & Workflow Automation:
 
@@ -178,7 +178,7 @@ When any trigger is fired, you can send data to 3 social media like [WhatsApp](h
 
 ### ⭐ Cloud Storage & File Sharing Platform Integration:
 
-3 Cloud Storage & File Sharing Platform Integration Dropbox, Google Drive, OneDrive
+3+ Cloud Storage & File Sharing Platform Integration Dropbox, Google Drive, OneDrive
 
 ### ⭐ Push Notification Platform Integration:
 
@@ -190,7 +190,7 @@ Users can get and send data to [JetEngine](https://crocoblock.com/plugins/jeteng
 
 ### ✔ Available Triggers are:
 
-1. Bit Form : \*\* \*\*
+1. Contact Form Builder by Bit Form – Easiest Contact Form, Payment Form, Order Form, Calculator Form Builder Plugin for WordPress: BitForm is the easiest WordPress form builder plugin, with a user-friendly drag-and-drop builder, allowing users to customize forms as they prefer. BitForm offers advanced features like double opt-in, partial form submission, PDF attachment & Field piping with its most powerful conditional logics. It provides 30+ fully customizable fields (Country, Currency, Phone Number, Repeater, Signature, etc.), 3 payment options (PayPal, Razorpay, Stripe), and 100+ integrations (Google Sheet, WooCommerce, Hubspot, Mailchimp, Webhooks, etc.). Anyone can create secured & spam-free Contact forms, Payment forms, Order forms, Calculator forms, and more with ReCaptcha v2/v3 & well-thought honeypot protection. Its efficient memory usage and minimal impact on page speed makes it one of the fastest & most lightweight form builder plugin for WordPress. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/bitform)|[**Website**](https://bitapps.pro/bit-form/)|[**Free**](https://wordpress.org/plugins/bit-form/)]
 2. [**Booking for Appointments and Events Calendar – Amelia :**](https://docs.bit-integrations.bitapps.pro/trigger/amelia) Amelia Lite WordPress Booking Plugin is an excellent solution for companies, individuals, event organizers, and managers. Amelia's booking solution ... [[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/amelia)|[**Website**](https://wpamelia.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJtHagrdIb16C3yVYX6rUTv)|[**Free**](https://wordpress.org/plugins/ameliabooking/)]
 3. [**WordPress Affiliate Program Plugin Shortcodes by AffiliateWP :**](https://docs.bit-integrations.bitapps.pro/trigger/affiliate) AffiliateWP is the leading premium affiliate plugin for WordPress. It provides a complete affiliate management system for your WordPress website which ... [[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/affiliatewp/)|[**Website**](https://affiliatewp.com/)|Tutorial|[**Free**](https://wordpress.org/plugins/affiliatewp-allowed-products/)]
 4. [**Contact Form, Survey & Popup Form Plugin for WordPress – ARForms Form Builder :**](https://docs.bit-integrations.bitapps.pro/trigger/arform) Most Advanced Form Builder Plugin that helps you create Contact Forms, Multi-Step Forms, Popup Forms, Sticky Forms, Survey Forms, and more. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/arform)|[**Website**](https://www.arformsplugin.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALPmhxRCE2HuhGMPAlCoptE)|[**Free**](https://wordpress.org/plugins/arforms-form-builder/)]
@@ -741,6 +741,20 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 6. All integration list
 
 == Changelog ==
+
+= 1.4.0 =
+*Release Date - *22th August 2023\*
+
+- **New Actions :**
+  - Perfex CRM: Customer Relationship & Project Management - Perfex CRM Integration & Automation
+  - OneHash - All-in-One CRM, ERP, and Business Solution - OneHash Integration & Automation
+  - Salesflare - Simple yet powerful CRM for small businesses - Salesflare Integration & Automation
+- **Fixes :**
+  - ClickUp Log success message issue Fixed
+  - ClinchPad Log success message issue Fixed
+  - GiveWP Purchase Value Issue Fixed
+  - ZohoCrm EditActions caching data issue Fixed
+  - Fluent CRM issues Fixed
 
 = 1.3.9 =
 *Release Date - *27th July 2023\*
