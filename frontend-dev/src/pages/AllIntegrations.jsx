@@ -186,8 +186,6 @@ function AllIntegrations({ isLicenseActive }) {
       <Loader style={loaderStyle} />
     )
   }
-  console.log('btcbi.isPro', btcbi.isPro);
-  console.log('showLicenseModal.show', showLicenseModal.show);
   return (
     <div id="all-forms">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
