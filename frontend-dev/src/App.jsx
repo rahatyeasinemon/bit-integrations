@@ -96,9 +96,9 @@ function App() {
               </a>
 
             </nav>
-          </div>
-          <div className="flx flx-center">
-            <ChangelogToggle />
+            <div className="flx flx-center">
+              <ChangelogToggle />
+            </div>
           </div>
         </div>
 
