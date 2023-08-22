@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Core\Util;
 
 /**
@@ -17,7 +18,7 @@ final class Deactivation
      */
     public function register()
     {
-        add_action('btcbi_pro_deactivation', [$this, 'deactive']);
+        add_action('btcbi_deactivation', [$this, 'deactive']);
     }
 
     public function deactive()

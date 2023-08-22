@@ -14,7 +14,7 @@ final class Activation
 {
     public function activate()
     {
-        add_action('btcbi_pro_activation', [$this, 'install']);
+        add_action('btcbi_activation', [$this, 'install']);
     }
 
     public function install($network_wide)
@@ -36,20 +36,20 @@ final class Activation
 
     public function installAsSingleSite()
     {
-        $installed = get_option('btcbi_pro_installed');
+        $installed = get_option('btcbi_installed');
         if ($installed) {
-            $oldVersion = get_option('btcbi_pro_version');
+            $oldVersion = get_option('btcbi_version');
         }
         if (!$installed || version_compare($oldVersion, BTCBI_VERSION, '!=')) {
             DB::migrate();
-            update_option('btcbi_pro_installed', time());
+            update_option('btcbi_installed', time());
         }
-        update_option('btcbi_pro_version', BTCBI_VERSION);
+        update_option('btcbi_version', BTCBI_VERSION);
 
         // disable free version if pro version is active
-        if (defined('BTCBI_PLUGIN_MAIN_FILE') && is_plugin_active(plugin_basename(BTCBI_PLUGIN_MAIN_FILE))) {
-            deactivate_plugins(plugin_basename(BTCBI_PLUGIN_MAIN_FILE));
-        }
+        // if (defined('BTCBI_PLUGIN_MAIN_FILE') && is_plugin_active(plugin_basename(BTCBI_PLUGIN_MAIN_FILE))) {
+        //     deactivate_plugins(plugin_basename(BTCBI_PLUGIN_MAIN_FILE));
+        // }
     }
 
     public static function handle_new_site(WP_Site $new_site)
@@ -59,7 +59,7 @@ final class Activation
         if (is_plugin_active_for_network($plugin)) {
             activate_plugin($plugin);
         } else {
-            do_action('btcbi_pro_activation');
+            do_action('btcbi_activation');
         }
         restore_current_blog();
     }

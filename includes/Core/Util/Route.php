@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Core\Util;
 
 final class Route
@@ -20,6 +21,8 @@ final class Route
 
     public static function request($method, $hook, $invokeable)
     {
+        // var_dump('request', $method, $hook, $invokeable);
+        // die;
         if ($_SERVER['REQUEST_METHOD'] != $method || !isset($_REQUEST['action']) || strpos($_REQUEST['action'], $hook) === false) {
             if (static::$_no_auth) {
                 static::$_no_auth = false;
@@ -43,6 +46,8 @@ final class Route
 
     public static function action()
     {
+        // var_dump('action');
+        // die;
         if (
             isset(static::$_invokeable[sanitize_text_field($_REQUEST['action'])][$_SERVER['REQUEST_METHOD'] . '_ignore_token'])
             || isset($_REQUEST['_ajax_nonce']) && wp_verify_nonce(sanitize_text_field($_REQUEST['_ajax_nonce']), 'btcbi_nonce')

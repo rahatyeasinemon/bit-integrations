@@ -428,6 +428,23 @@ export default function NewInteg({ allIntegURL }) {
     }
   }
 
+  let integrationName
+
+  switch (integUrlName) {
+    case 'SendinBlue':
+      integrationName = 'Brevo(Sendinblue)'
+      break
+    case 'Integromat':
+      integrationName = 'Make(Integromat)'
+      break
+    case 'Mailify':
+      integrationName = 'Sarbacane(Mailify)'
+      break
+    default:
+      integrationName = integUrlName
+      break
+  }
+
   const goBack = () => {
     const tmpFlow = { ...flow }
     delete tmpFlow.action
@@ -447,7 +464,7 @@ export default function NewInteg({ allIntegURL }) {
         </button>
         <div className="w-10 txt-center" style={{ marginRight: '73px' }}>
           <div className="mb-2">
-            <b className="f-lg">{integUrlName === 'SendinBlue' ? 'Brevo(Sendinblue)' : integUrlName}</b>
+            <b className="f-lg">{integrationName}</b>
           </div>
           <div>{__('Integration Settings', 'bit-integrations')}</div>
         </div>

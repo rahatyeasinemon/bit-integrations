@@ -4,6 +4,7 @@
  *
  * @package bit-integrations
  */
+
 namespace BitCode\FI\Flow;
 
 use BitCode\FI\Core\Util\Common;
@@ -159,10 +160,6 @@ final class Flow
 
     public function save($data)
     {
-        if(!Plugin::instance()->isLicenseActive()){
-            return wp_send_json_error(['message' => 'License is not active']);
-        }
-
         $missing_field = null;
         if (!property_exists($data, 'trigger')) {
             $missing_field = 'Trigger';

@@ -19,8 +19,8 @@ function Mailify({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [mailifyConf, setMailifyConf] = useState({
-    name: 'Mailify',
-    type: 'Mailify',
+    name: 'Sarbacane(Mailify)',
+    type: 'Sarbacane(Mailify)',
     account_id: process.env.NODE_ENV === 'development' ? '643240d170f32e4b76f5e52b' : '',
     api_key: process.env.NODE_ENV === 'development' ? 'hoWqax0jSVuMsxGBizHOUg' : '',
     field_map: [

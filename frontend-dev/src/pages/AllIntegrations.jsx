@@ -19,13 +19,14 @@ import BuyProModal from '../components/Utilities/BuyProModal'
 const Welcome = lazy(() => import('./Welcome'))
 
 function AllIntegrations({ isLicenseActive }) {
+  console.log('isLicenseActive', isLicenseActive)
   const { data, isLoading } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
   const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
   const [snack, setSnackbar] = useState({ show: false })
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const [proModal, setProModal] = useState({ show: false, msg: '' })
   const [premiumModal, setPremiumModal] = useState({ show: false, msg: '' })
-  const [showLicenseModal, setShowLicenseModal] = useState({ show: isLicenseActive === false })
+  const [showLicenseModal, setShowLicenseModal] = useState({ show: isLicenseActive === true })
 
   const [cols, setCols] = useState([
     { width: 250, minWidth: 80, Header: __('Trigger', 'bit-integrations'), accessor: 'triggered_entity' },
@@ -41,7 +42,7 @@ function AllIntegrations({ isLicenseActive }) {
   useEffect(() => {
     const ncols = cols.filter(itm => itm.accessor !== 't_action' && itm.accessor !== 'status')
     ncols.push({ width: 70, minWidth: 60, Header: __('Status', 'bit-integrations'), accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.id)} checked={Number(value.row.original.status) === 1} /> })
-    ncols.push({ sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn isLicenseActive={isLicenseActive} id={val.row.original.id} name={val.row.original.name} index={val.row.id} del={() => showDelModal(val.row.original.id, val.row.index)} dup={() => showDupMdl(val.row.original.id, val.row.index)} /> })
+    ncols.push({ sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn id={val.row.original.id} name={val.row.original.name} index={val.row.id} del={() => showDelModal(val.row.original.id, val.row.index)} dup={() => showDupMdl(val.row.original.id, val.row.index)} /> })
     setCols([...ncols])
   }, [integrations])
 
@@ -169,11 +170,15 @@ function AllIntegrations({ isLicenseActive }) {
     setProModal({ show: true, msg: 'Only one integration can be done in the free version.' })
   }
 
-  const actionHandler = (e) => {
-    setShowLicenseModal({ show: true })
+  const clsPremiumMdl = () => {
+    setPremiumModal({ show: false })
   }
-  const proHandler = (e) => {
-    setPremiumModal({ show: true })
+  const actionHandler = (e) => {
+    if (btcbi.isPro && !isLicenseActive) {
+      setShowLicenseModal({ show: true })
+    } else {
+      setPremiumModal({ show: true })
+    }
   }
 
   if (isLoading) {
@@ -181,6 +186,8 @@ function AllIntegrations({ isLicenseActive }) {
       <Loader style={loaderStyle} />
     )
   }
+  console.log('btcbi.isPro', btcbi.isPro);
+  console.log('showLicenseModal.show', showLicenseModal.show);
   return (
     <div id="all-forms">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -198,15 +205,15 @@ function AllIntegrations({ isLicenseActive }) {
         <>
           <div className="af-header flx flx-between">
             <h2>{__('Integrations', 'bit-integrations')}</h2>
-            {integrations.length >= 1
+            {integrations.length >= 1 && !btcbi.isPro
               ? (
                 // eslint-disable-next-line react/button-has-type
-                <button className="btn round btcd-btn-lg dp-blue" onClick={(e) => proHandler(e)}>
+                <button className="btn round btcd-btn-lg blue blue-sh" onClick={(e) => actionHandler(e)}>
                   {__('Create Integration', 'bit-integrations')}
                 </button>
               )
               : (
-                <Link to="/flow/new" className="btn round btcd-btn-lg dp-blue">
+                <Link to="/flow/new" className="btn round btcd-btn-lg blue blue-sh">
                   {__('Create Integration', 'bit-integrations')}
                 </Link>
               )}
