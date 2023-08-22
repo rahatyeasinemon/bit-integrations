@@ -4,28 +4,13 @@ import { useRecoilValue } from 'recoil'
 import { $btcbi } from '../GlobalStates'
 import ChangelogIcn from '../Icons/ChangeLogIcn'
 import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
-import changelogInfo from '../Utils/StaticData/changeloginfo'
 import { __ } from '../Utils/i18nwrap'
 import Modal from '../components/Utilities/Modal'
 
 export default function ChangelogToggle() {
     const btcbi = useRecoilValue($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const [currentVersion, setCurrentVersion] = useState(btcbi.version)
-    const currenChangelog = changelogInfo['2.3.0']
 
-    // const setChangeLogVersion = () => {
-    //     setShow(false)
-    //     bitsFetch({
-    //         version: btcbi.version,
-    //     }, 'bitforms_changelog_version')
-    //         .then(() => {
-    //             console.log('done')
-    //             setBits(prevBits => ({ ...prevBits, changelogVersion: prevBits.version }))
-    //         })
-    // }
-
-    if (!currenChangelog) return
 
     return (
         <div className="changelog-toggle">
@@ -44,65 +29,66 @@ export default function ChangelogToggle() {
                 <ChangelogIcn size={25} />
             </button>
             <Modal sm show={show} setModal={setShow} >
-                <div>
+                <div style={{ padding: '0px 30px' }}>
+                    <h4 style={{
+                        backgroundColor: '#ff000012',
+                        color: 'red',
+                        padding: '4px 8px',
+                        textAlign: 'center',
+                        borderRadius: '5px',
+                    }}> From next update,To use pro plugin free version is required. </h4>
                     <div className="flx flx-col flx-center">
                         <h3 style={{ margin: 5 }}>{__('What\'s New?')}</h3>
+                        <small>22 August 2023</small>
                     </div>
-                    <div>
-                        <h3 style={{ margin: 0 }}>
-                            <a href="https://bitapps.pro/docs/bit-form/changelog/" target="_blank" rel="noreferrer">
-                                {'Version 2.3.0 '}
-                                <ExternalLinkIcn size="14" />
-                            </a>
-                        </h3>
-                        <p style={{ margin: '0px 5px 5px' }}>{`Date: ${currenChangelog.date}`}</p>
+                    <div style={{ marginTop: '10px' }}>
+                        {/* <h4>New Integration</h4> */}
+                        {/* <p>New Integration</p> */}
+                        <span style={{
+                            backgroundColor: 'green',
+                            color: 'white',
+                            padding: '4px 8px',
+                            textAlign: 'center',
+                            borderRadius: '5px',
+                        }}><b>New Integration</b></span>
+
+                        <div>
+                            <ul style={{ listStyleType: 'number' }}>
+                                <li>Perfex</li>
+                                <li>OneHash</li>
+                                <li>Salesflare</li>
+                            </ul>
+                        </div>
+
+                        <span style={{
+                            backgroundColor: 'yellow',
+                            color: 'black',
+                            padding: '4px 8px',
+                            textAlign: 'center',
+                            borderRadius: '5px',
+                        }}><b>Fixed</b></span>
+
+                        <div>
+                            <ul style={{ listStyleType: 'circle' }}>
+                                <li>ClickUp Log success message issue fixed</li>
+                                <li>ClinchPad Log success message issue fixed</li>
+                                <li>GiveWP Purchase Value Issue fixed</li>
+                                <li>ZohoCrm EditActions caching data issue fixed</li>
+                                <li>Fluent CRM issues fixed</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div className={styles.content}>
-                        {Object.entries(currenChangelog.changes).map(([titile, obj]) => (
-                            <div style={{ padding: '0px 5px' }} key={titile}>
-                                <span className={styles.bdg}>{obj.label}</span>
-                                {obj.tag && <span className={styles.tag}>{obj.tag}</span>}
-                                <ul className={styles.ul}>
-                                    {obj.list.map((tempObj, index) => getChangesList(tempObj, `${titile}-${index}`))}
-                                </ul>
-                            </div>
-                        ))}
-                    </div>
-                    <div>
+                    {/* <div>
                         <span style={{ margin: '0px 5px 5px' }}>{__('For more details,')}</span>
                         <a href="https://bitapps.pro/docs/bit-form/changelog/" target="_blank" rel="noreferrer">
                             {__('Click here ')}
                             <ExternalLinkIcn size="14" />
                         </a>
-                    </div>
+                    </div> */}
                 </div>
-            </Modal>
-        </div>
+            </Modal >
+        </div >
     )
-}
-
-function getChangesList(listObj, parentKey = '') {
-    if (typeof listObj === 'string') return <li key={parentKey}>{listObj}</li>
-    if (Array.isArray(listObj)) return listObj.map((tempObj, index) => getChangesList(tempObj, `${parentKey}-${index}`))
-    if (typeof listObj === 'object') {
-        const { label, tag, list } = listObj
-        return (
-            <Fragment key={parentKey}>
-                <li>
-                    {label}
-                    {tag && <span className={styles.tag}>{tag}</span>}
-                </li>
-                {
-                    list && (
-                        <ul className={styles.ul}>
-                            {list.map((tempObj, index) => getChangesList(tempObj, `${parentKey}-${index}`))}
-                        </ul>
-                    )
-                }
-
-            </Fragment>
-        )
-    }
 }
 
 const styles = {
@@ -175,4 +161,11 @@ const styles = {
         bd: '#FFD000',
         c: '#24292e',
     },
+    badge: {
+        backgroundColor: 'red',
+        color: 'white',
+        padding: '4px 8px',
+        textAlign: 'center',
+        borderRadius: '5px',
+    }
 }
