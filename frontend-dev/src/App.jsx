@@ -19,6 +19,7 @@ import './resource/icons/style.css'
 import { __ } from './Utils/i18nwrap'
 import TableLoader from './components/Loaders/TableLoader2'
 import { $btcbi } from './GlobalStates'
+import ChangelogToggle from './pages/ChangelogToggle'
 
 const AllIntegrations = lazy(() => import('./pages/AllIntegrations'))
 const Error404 = lazy(() => import('./pages/Error404'))
@@ -94,7 +95,11 @@ function App() {
               >
                 {__('Review us', 'bit-integrations')}
               </a>
+
             </nav>
+          </div>
+          <div className="flx flx-center">
+            <ChangelogToggle />
           </div>
         </div>
 
