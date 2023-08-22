@@ -3,7 +3,8 @@ import Loader from '../components/Loaders/Loader'
 import PlaceholderIcon from '../Icons/PlaceholderIcon'
 
 function GetLogo({ name, style, extension }) {
-    const logo = camelize(name)
+    /**TODO: Fix the fluentCRM name in trigger or action */
+    const logo = name === 'FluentCrm' ? 'fluentCRM' : camelize(name) // Temporary solution
     const dynamicModule = import(`../resource/img/integ/${logo}.${extension}`)
     const [Component, setComponent] = useState(null)
     useEffect(() => {

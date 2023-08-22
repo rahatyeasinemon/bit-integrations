@@ -1,21 +1,18 @@
 
 import { Fragment, useState } from 'react'
-import { useFela } from 'react-fela'
+import { useRecoilValue } from 'recoil'
+import { $btcbi } from '../GlobalStates'
 import ChangelogIcn from '../Icons/ChangeLogIcn'
 import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
-import bitsFetch from '../Utils/bitsFetch'
-import { __ } from '../Utils/i18nwrap'
 import changelogInfo from '../Utils/StaticData/changeloginfo'
-import { $btcbi } from '../GlobalStates'
+import { __ } from '../Utils/i18nwrap'
 import Modal from '../components/Utilities/Modal'
-import { useRecoilValue } from 'recoil'
 
 export default function ChangelogToggle() {
     const btcbi = useRecoilValue($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
     const [currentVersion, setCurrentVersion] = useState(btcbi.version)
     const currenChangelog = changelogInfo['2.3.0']
-    const { css } = useFela()
 
     // const setChangeLogVersion = () => {
     //     setShow(false)
@@ -35,39 +32,39 @@ export default function ChangelogToggle() {
             <button
                 title={__('What\'s New')}
                 type="button"
-                className={css(styles.button)}
+                className={styles.button}
                 onClick={() => setShow(true)}
             >
                 {/* <QuestionIcn size={25} /> */}
                 <ChangelogIcn size={25} />
             </button>
-            <Modal sm show={show} onCloseMdl={setChangeLogVersion}>
+            <Modal sm show={show} setModal={setShow} >
                 <div>
                     <div className="flx flx-col flx-center">
-                        <h3 className={css({ m: 5 })}>{__('What\'s New?')}</h3>
+                        <h3 style={{ margin: 5 }}>{__('What\'s New?')}</h3>
                     </div>
                     <div>
-                        <h3 className={css({ m: 0 })}>
+                        <h3 style={{ margin: 0 }}>
                             <a href="https://bitapps.pro/docs/bit-form/changelog/" target="_blank" rel="noreferrer">
                                 {'Version 2.3.0 '}
                                 <ExternalLinkIcn size="14" />
                             </a>
                         </h3>
-                        <p className={css({ m: '0px 5px 5px' })}>{`Date: ${currenChangelog.date}`}</p>
+                        <p style={{ margin: '0px 5px 5px' }}>{`Date: ${currenChangelog.date}`}</p>
                     </div>
-                    <div className={css(styles.content)}>
+                    <div className={styles.content}>
                         {Object.entries(currenChangelog.changes).map(([titile, obj]) => (
-                            <div className={css({ p: '0px 5px' })} key={titile}>
-                                <span className={css(styles.bdg, styles[titile])}>{obj.label}</span>
-                                {obj.tag && <span className={css(styles.tag)}>{obj.tag}</span>}
-                                <ul className={css(styles.ul, { mt: 5 })}>
-                                    {obj.list.map((tempObj, index) => getChangesList(tempObj, css, `${titile}-${index}`))}
+                            <div style={{ padding: '0px 5px' }} key={titile}>
+                                <span className={styles.bdg}>{obj.label}</span>
+                                {obj.tag && <span className={styles.tag}>{obj.tag}</span>}
+                                <ul className={styles.ul}>
+                                    {obj.list.map((tempObj, index) => getChangesList(tempObj, `${titile}-${index}`))}
                                 </ul>
                             </div>
                         ))}
                     </div>
-                    <div className={css({})}>
-                        <span className={css({ m: '0px 5px 5px' })}>{__('For more details,')}</span>
+                    <div>
+                        <span style={{ margin: '0px 5px 5px' }}>{__('For more details,')}</span>
                         <a href="https://bitapps.pro/docs/bit-form/changelog/" target="_blank" rel="noreferrer">
                             {__('Click here ')}
                             <ExternalLinkIcn size="14" />
@@ -79,21 +76,21 @@ export default function ChangelogToggle() {
     )
 }
 
-function getChangesList(listObj, css, parentKey = '') {
+function getChangesList(listObj, parentKey = '') {
     if (typeof listObj === 'string') return <li key={parentKey}>{listObj}</li>
-    if (Array.isArray(listObj)) return listObj.map((tempObj, index) => getChangesList(tempObj, css, `${parentKey}-${index}`))
+    if (Array.isArray(listObj)) return listObj.map((tempObj, index) => getChangesList(tempObj, `${parentKey}-${index}`))
     if (typeof listObj === 'object') {
         const { label, tag, list } = listObj
         return (
             <Fragment key={parentKey}>
                 <li>
                     {label}
-                    {tag && <span className={css(styles.tag)}>{tag}</span>}
+                    {tag && <span className={styles.tag}>{tag}</span>}
                 </li>
                 {
                     list && (
-                        <ul className={css(styles.ul)}>
-                            {list.map((tempObj, index) => getChangesList(tempObj, css, `${parentKey}-${index}`))}
+                        <ul className={styles.ul}>
+                            {list.map((tempObj, index) => getChangesList(tempObj, `${parentKey}-${index}`))}
                         </ul>
                     )
                 }

@@ -24,7 +24,12 @@ export default function MenuBtn(props) {
     if (!isMenuOpen) menuButton.current.blur()
 
     document.addEventListener('click', checkIfClickedOutside)
+
+    return () => {
+      document.removeEventListener('click', checkIfClickedOutside)
+    }
   }, [isMenuOpen])
+
   const height = isMenuOpen ? `${menuList.current.clientHeight}px` : 'auto'
 
   return (

@@ -389,6 +389,7 @@ Users can get and send data to [JetEngine](https://crocoblock.com/plugins/jeteng
 131. Video Conferencing Software for Webinars and Virtual Meetings - Livestorm : A video engagement platform that delivers. Forget meeting fatigue, dull webinars and complex workflows. Build engaging events in minutes and wow your audience. [Documentation|[**Website**](https://livestorm.co/)|Tutorial]
 132. Perfex CRM - Customer Relationship & Project Management : Manage Customers, Projects, and Create Invoices in the Cloud. Customer Relationship Management software that is a great fit for almost any small business, ... [Documentation|[**Website**](https://www.perfexcrm.com/)|Tutorial]
 133. OneHash - All-in-One CRM, ERP, and Business Solution : Boost your business with OneHash, a powerful all-in-one software offering CRM, ERP, and more. Affordable and scalable for sustainable growth. [Documentation|[**Website**](https://www.onehash.ai/)|Tutorial]
+134. Salesflare - Make your team love CRM again : CRM without typing. Easy to set up, easy to use, and automated. Work Together As One Team. Integrate Sales Toolset. Input Less Data. [Documentation|[**Website**](https://salesflare.com/)|Tutorial]
 
 ## ⚡ Key Features:
 
