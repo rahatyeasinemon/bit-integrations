@@ -34,6 +34,11 @@ export default function ChangelogToggle() {
                 type="button"
                 className={styles.button}
                 onClick={() => setShow(true)}
+                style={{
+                    borderRadius: '12px',
+                    background: '#fff',
+                    padding: '6px',
+                }}
             >
                 {/* <QuestionIcn size={25} /> */}
                 <ChangelogIcn size={25} />
