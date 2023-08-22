@@ -19,7 +19,6 @@ import BuyProModal from '../components/Utilities/BuyProModal'
 const Welcome = lazy(() => import('./Welcome'))
 
 function AllIntegrations({ isLicenseActive }) {
-  console.log('isLicenseActive', isLicenseActive)
   const { data, isLoading } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
   const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
   const [snack, setSnackbar] = useState({ show: false })

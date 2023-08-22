@@ -4,21 +4,20 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 
 import { lazy, Suspense, useEffect, useState } from 'react'
-import { Link, NavLink, Route, Routes, useNavigate } from 'react-router-dom'
+import { Link, Navigate, NavLink, Route, Routes } from 'react-router-dom'
 import './resource/sass/app.scss'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Toaster } from 'react-hot-toast'
 import logo from '../logo.svg'
 import Integrations from './components/Integrations'
 import Loader from './components/Loaders/Loader'
+import TableLoader from './components/Loaders/TableLoader2'
 import useFetch from './hooks/useFetch'
 import DocSupport from './pages/DocSupport'
 import FlowBuilder from './pages/FlowBuilder'
 import Settings from './pages/Settings'
 import './resource/icons/style.css'
 import { __ } from './Utils/i18nwrap'
-import TableLoader from './components/Loaders/TableLoader2'
-import { $btcbi } from './GlobalStates'
 
 const AllIntegrations = lazy(() => import('./pages/AllIntegrations'))
 const Error404 = lazy(() => import('./pages/Error404'))
@@ -26,7 +25,6 @@ const Error404 = lazy(() => import('./pages/Error404'))
 function App() {
   const loaderStyle = { height: '82vh' }
 
-  let navigate = useNavigate();
   // check if integrations are available
   const { data, isLoading } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
 
@@ -118,10 +116,9 @@ function App() {
               </Suspense>
             } />
 
-
             <Route path="/flow/new" element={
-              flowNumber >= 1 && (!isLicenseActive || isLicenseActive === 'undefined') ?
-                navigate("/") :
+              (flowNumber >= 1 && (!isLicenseActive || isLicenseActive === 'undefined')) ?
+                <Navigate to="/" /> :
                 <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
                   <FlowBuilder />
                 </Suspense>
