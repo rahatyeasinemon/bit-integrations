@@ -150,8 +150,7 @@ export default function SelectAction() {
     { type: 'Salesflare' },
   ]
 
-  const [availableIntegs, setAvailableIntegs] = useState((isPro && sortByField(integs, 'type', 'ASC')) || integs)
-
+  const [availableIntegs, setAvailableIntegs] = useState(sortByField(integs, 'type', 'ASC') || integs)
   const organizeIntegs = () => {
     const bitformIndex = availableIntegs.findIndex(i => i.type === 'Bit Form')
     if (bitformIndex === -1) return availableIntegs
