@@ -39,7 +39,7 @@ export default function ChangelogToggle() {
                     }}> From next update,To use pro plugin free version is required. </h4>
                     <div className="flx flx-col flx-center">
                         <h3 style={{ margin: 5 }}>{__('What\'s New?')}</h3>
-                        <small>22 August 2023</small>
+                        <small>23 August 2023</small>
                     </div>
                     <div style={{ marginTop: '10px' }}>
                         {/* <h4>New Integration</h4> */}
@@ -54,9 +54,9 @@ export default function ChangelogToggle() {
 
                         <div>
                             <ul style={{ listStyleType: 'number' }}>
-                                <li>Perfex</li>
-                                <li>OneHash</li>
-                                <li>Salesflare</li>
+                                <li>Perfex CRM</li>
+                                <li>OneHash CRM</li>
+                                <li>Salesflare CRM</li>
                             </ul>
                         </div>
 
