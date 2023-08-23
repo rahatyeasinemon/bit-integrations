@@ -1,10 +1,10 @@
 import { useRecoilValue } from 'recoil'
 import { $btcbi } from '../../../GlobalStates'
-import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
-import MtInput from '../../Utilities/MtInput'
+import { __ } from '../../../Utils/i18nwrap'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 import { addFieldMap, delFieldMap } from './IntegrationHelpers'
+import TagifyInput from '../../Utilities/TagifyInput'
 
 export default function GoogleCalendarFieldMap({ i, formFields, field, googleCalendarConf, setGoogleCalendarConf }) {
   const isRequired = field.required
