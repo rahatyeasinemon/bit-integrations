@@ -32,7 +32,7 @@ function App() {
 
   const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
   useEffect(() => {
-    !isLoading && data.success && data?.data?.integrations && setIntegrations(data.data.integrations)
+    !isLoading && setIntegrations(data.success ? data.data.integrations : [])
   }, [data])
   // check integrations end
   const flowNumber = integrations.length

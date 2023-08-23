@@ -46,9 +46,6 @@ function GoogleCalendar({ formFields, setFlow, flow, allIntegURL }) {
   const saveConfig = () => {
     saveActionConf({ flow, setFlow, allIntegURL, conf: googleCalendarConf, navigate, setIsLoading, setSnackbar })
   }
-  setTimeout(() => {
-    document.getElementById('btcd-settings-wrp').scrollTop = 0
-  }, 300)
 
   return (
     <div>
