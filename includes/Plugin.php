@@ -15,7 +15,6 @@ use BitCode\FI\Core\Util\Activation;
 use BitCode\FI\Core\Util\Deactivation;
 use BitCode\FI\Core\Util\UnInstallation;
 use BitCode\FI\Core\Hooks\HookService;
-use BitCode\FI\Core\Update\API;
 use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Log\LogHandler;
@@ -102,6 +101,14 @@ final class Plugin
         if ($installed_db_version != $btcbi_db_version) {
             DB::migrate();
         }
+    }
+
+    public function isLicenseActive()
+    {
+        if (!isset($this->isLicActive)) {
+            $this->isLicActive = false;
+        }
+        return $this->isLicActive;
     }
 
     /**
