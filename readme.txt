@@ -744,7 +744,7 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 == Changelog ==
 
 = 1.4.0 =
-*Release Date - *22th August 2023\*
+*Release Date - *23th August 2023\*
 
 - **New Actions :**
   - Perfex CRM: Customer Relationship & Project Management - Perfex CRM Integration & Automation
