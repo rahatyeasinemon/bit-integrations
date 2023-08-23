@@ -38,10 +38,6 @@ function PCloud({ formFields, setFlow, flow, allIntegURL }) {
     saveActionConf({ flow, setFlow, allIntegURL, conf: pCloudConf, navigate, setIsLoading, setSnackbar })
   }
 
-  setTimeout(() => {
-    document.getElementById('btcd-settings-wrp').scrollTop = 0
-  }, 300)
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

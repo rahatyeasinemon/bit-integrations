@@ -56,9 +56,6 @@ function GoogleContacts({ formFields, setFlow, flow, allIntegURL }) {
   const saveConfig = () => {
     saveActionConf({ flow, setFlow, allIntegURL, conf: googleContactsConf, navigate, setIsLoading, setSnackbar })
   }
-  setTimeout(() => {
-    document.getElementById('btcd-settings-wrp').scrollTop = 0
-  }, 300)
 
   return (
     <div>

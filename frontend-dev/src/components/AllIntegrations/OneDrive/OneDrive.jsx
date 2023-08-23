@@ -39,10 +39,6 @@ function OneDrive({ formFields, setFlow, flow, allIntegURL }) {
     saveActionConf({ flow, setFlow, allIntegURL, conf: oneDriveConf, navigate, setIsLoading, setSnackbar })
   }
 
-  setTimeout(() => {
-    document.getElementById('btcd-settings-wrp').scrollTop = 0
-  }, 300)
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
