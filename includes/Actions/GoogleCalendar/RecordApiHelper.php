@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Actions\GoogleCalendar;
 
 use BitCode\FI\Core\Util\Common;
@@ -92,8 +93,11 @@ class RecordApiHelper
         $fieldData = [];
         foreach ($fieldMap as $value) {
             if (!empty($value->googleCalendarFormField)) {
-                if ($value->formField === 'custom' && isset(Common::replaceFieldWithValue($value->customValue, $fieldValues))) {
-                    $fieldData[$value->googleCalendarFormField] = Common::replaceFieldWithValue($value->customValue, $fieldValues);
+                if ($value->formField === 'custom') {
+                    $replaceFieldWithValue = Common::replaceFieldWithValue($value->customValue, $fieldValues);
+                    if (isset($replaceFieldWithValue)) {
+                        $fieldData[$value->googleCalendarFormField] = $replaceFieldWithValue;
+                    }
                 } else {
                     $fieldData[$value->googleCalendarFormField] = is_array($fieldValues[$value->formField]) ? json_encode($fieldValues[$value->formField]) : $fieldValues[$value->formField];
                 }
