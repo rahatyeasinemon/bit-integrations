@@ -37,7 +37,8 @@ final class ZohoCRMController
      */
     public static function generateTokens($requestsParams)
     {
-        if (empty($requestsParams->{'accounts-server'})
+        if (
+            empty($requestsParams->{'accounts-server'})
             || empty($requestsParams->dataCenter)
             || empty($requestsParams->clientId)
             || empty($requestsParams->clientSecret)
@@ -79,7 +80,8 @@ final class ZohoCRMController
      */
     public static function refreshModulesAjaxHelper($queryParams)
     {
-        if (empty($queryParams->tokenDetails)
+        if (
+            empty($queryParams->tokenDetails)
             || empty($queryParams->dataCenter)
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
@@ -113,7 +115,7 @@ final class ZohoCRMController
         );
         $modulesMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/crm/v2.1/settings/modules";
         $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $isBitFiLicActive =Plugin::instance()->isLicenseActive();
+        $isBitFiLicActive = Plugin::instance()->isLicenseActive();
         if ($isBitFiLicActive) {
             $modulesMetaResponse = HttpHelper::get($modulesMetaApiEndpoint, null, $authorizationHeader);
             if (!is_wp_error($modulesMetaResponse) && (empty($modulesMetaResponse->status) || (!empty($modulesMetaResponse->status) && $modulesMetaResponse->status !== 'error'))) {
@@ -162,7 +164,8 @@ final class ZohoCRMController
      */
     public static function refreshLayoutsAjaxHelper($queryParams)
     {
-        if (empty($queryParams->module)
+        if (
+            empty($queryParams->module)
             || empty($queryParams->tokenDetails)
             || empty($queryParams->dataCenter)
             || empty($queryParams->clientId)
@@ -204,7 +207,8 @@ final class ZohoCRMController
                         if (!$isBitFiLicActive && !in_array($fieldDetails->api_name, $fieldToShow)) {
                             continue;
                         }
-                        if (empty($fieldDetails->subform)
+                        if (
+                            empty($fieldDetails->subform)
                             && !empty($fieldDetails->api_name)
                             && !empty($fieldDetails->view_type->create)
                             && $fieldDetails->view_type->create
@@ -282,7 +286,8 @@ final class ZohoCRMController
      */
     protected static function _refreshAccessToken($apiData)
     {
-        if (empty($apiData->dataCenter)
+        if (
+            empty($apiData->dataCenter)
             || empty($apiData->clientId)
             || empty($apiData->clientSecret)
             || empty($apiData->tokenDetails)
@@ -349,7 +354,8 @@ final class ZohoCRMController
      */
     public static function getAssignmentRulesAjaxHelper($queryParams)
     {
-        if (empty($queryParams->module)
+        if (
+            empty($queryParams->module)
             || empty($queryParams->tokenDetails)
             || empty($queryParams->dataCenter)
             || empty($queryParams->clientId)
@@ -369,7 +375,8 @@ final class ZohoCRMController
         }
         $metaDataApiHelper = new MetaDataApiHelper($queryParams->tokenDetails, true);
         $assignmentRulesResponse = $metaDataApiHelper->getAssignmentRules($queryParams->module);
-        if (!is_wp_error($assignmentRulesResponse)
+        if (
+            !is_wp_error($assignmentRulesResponse)
             && !empty($assignmentRulesResponse)
             && empty($assignmentRulesResponse->status)
         ) {
@@ -379,8 +386,8 @@ final class ZohoCRMController
         } else {
             wp_send_json_error(
                 !empty($assignmentRulesResponse->status)
-                        && $assignmentRulesResponse->status === 'error' ?
-                        $assignmentRulesResponse->message : (empty($assignmentRulesResponse) ? __('Assignment rules is empty', 'bit-integrations') : 'Unknown'),
+                    && $assignmentRulesResponse->status === 'error' ?
+                    $assignmentRulesResponse->message : (empty($assignmentRulesResponse) ? __('Assignment rules is empty', 'bit-integrations') : 'Unknown'),
                 empty($assignmentRulesResponse) ? 204 : 400
             );
         }
@@ -398,7 +405,8 @@ final class ZohoCRMController
      */
     public static function getRelatedListsAjaxHelper($queryParams)
     {
-        if (empty($queryParams->module)
+        if (
+            empty($queryParams->module)
             || empty($queryParams->tokenDetails)
             || empty($queryParams->dataCenter)
             || empty($queryParams->clientId)
@@ -418,7 +426,8 @@ final class ZohoCRMController
         }
         $metaDataApiHelper = new MetaDataApiHelper($queryParams->tokenDetails);
         $relatedListResponse = $metaDataApiHelper->getRelatedLists($queryParams->module);
-        if (!is_wp_error($relatedListResponse)
+        if (
+            !is_wp_error($relatedListResponse)
             && !empty($relatedListResponse)
             && is_array($relatedListResponse)
         ) {
@@ -447,7 +456,8 @@ final class ZohoCRMController
      */
     public static function refreshUsersAjaxHelper($queryParams)
     {
-        if (empty($queryParams->tokenDetails)
+        if (
+            empty($queryParams->tokenDetails)
             || empty($queryParams->dataCenter)
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
@@ -515,7 +525,8 @@ final class ZohoCRMController
      */
     public static function refreshTagListAjaxHelper($queryParams)
     {
-        if (empty($queryParams->module)
+        if (
+            empty($queryParams->module)
             || empty($queryParams->tokenDetails)
             || empty($queryParams->dataCenter)
             || empty($queryParams->clientId)
@@ -640,7 +651,8 @@ final class ZohoCRMController
         $actions = $integrationDetails->actions;
         $defaultDataConf = $integrationDetails->default;
 
-        if (empty($tokenDetails)
+        if (
+            empty($tokenDetails)
             || empty($module)
             || empty($layout)
             || empty($fieldMap)
@@ -687,7 +699,8 @@ final class ZohoCRMController
         if (is_wp_error($zcrmApiResponse)) {
             return $zcrmApiResponse;
         }
-        if (!empty($zcrmApiResponse->data)
+        if (
+            !empty($zcrmApiResponse->data)
             && !empty($zcrmApiResponse->data[0]->code)
             && $zcrmApiResponse->data[0]->code === 'SUCCESS'
             && count($integrationDetails->relatedlists)

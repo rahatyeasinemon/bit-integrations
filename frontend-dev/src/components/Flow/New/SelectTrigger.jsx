@@ -31,7 +31,7 @@ export default function SelectTrigger() {
     setAllTriggers({ data: sortFeaturedProducts(data?.data) })
   }, [data])
 
-  const featuredProducts = ['BitAssist', 'BitForm']
+  const featuredProducts = ['BitAssist']
 
   const sortFeaturedProducts = (dataObj = {}) => {
     if (dataObj) {
