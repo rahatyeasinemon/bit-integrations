@@ -32,7 +32,7 @@ function App() {
 
   const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
   useEffect(() => {
-    !isLoading && data.success && data?.data?.integrations && setIntegrations(data.data.integrations)
+    !isLoading && setIntegrations(data.success ? data.data.integrations : [])
   }, [data])
   // check integrations end
   const flowNumber = integrations.length
@@ -69,20 +69,20 @@ function App() {
             <nav className="top-nav ml-2">
               <NavLink
                 to="/"
-                className={({ $isActive, $isPending }) => ($isPending ? 'pending' : $isActive ? 'app-link-active' : '')}
+                className={({ isActive, isPending }) => (isPending ? 'pending' : isActive ? 'app-link-active' : '')}
               // className="app-link-active"
               >
                 {__('Integrations', 'bit-integrations')}
               </NavLink>
               <NavLink
                 to="/app-settings"
-                className={({ $isActive, $isPending }) => ($isPending ? 'pending' : $isActive ? 'app-link-active' : '')}
+                className={({ isActive, isPending }) => (isPending ? 'pending' : isActive ? 'app-link-active' : '')}
               >
                 {__('Settings', 'bit-integrations')}
               </NavLink>
               <NavLink
                 to="/doc-support"
-                className={({ $isActive, $isPending }) => ($isPending ? 'pending' : $isActive ? 'app-link-active' : '')}
+                className={({ isActive, isPending }) => (isPending ? 'pending' : isActive ? 'app-link-active' : '')}
               >
                 {__('Doc & Support', 'bit-integrations')}
               </NavLink>
