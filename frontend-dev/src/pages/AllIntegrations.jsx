@@ -19,7 +19,7 @@ import BuyProModal from '../components/Utilities/BuyProModal'
 const Welcome = lazy(() => import('./Welcome'))
 
 function AllIntegrations({ isLicenseActive }) {
-  const { data, isLoading } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
+  const { data, isLoading, mutate } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
   const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
   const [snack, setSnackbar] = useState({ show: false })
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
@@ -35,7 +35,7 @@ function AllIntegrations({ isLicenseActive }) {
   ])
 
   useEffect(() => {
-    !isLoading && data.success && data?.data?.integrations && setIntegrations(data.data.integrations)
+    !isLoading && setIntegrations(data.success ? data.data.integrations : [])
   }, [data])
 
   useEffect(() => {
@@ -62,10 +62,11 @@ function AllIntegrations({ isLicenseActive }) {
   }
 
   const handleDelete = (id, index) => {
+    const tmpIntegrations = [...integrations]
     const deleteLoad = bitsFetch({ id }, 'flow/delete').then(response => {
       if (response.success) {
-        const tmpIntegrations = [...integrations]
         tmpIntegrations.splice(index, 1)
+        mutate(tmpIntegrations)
         setIntegrations(tmpIntegrations)
         return 'Integration deleted successfully'
       }
@@ -173,6 +174,7 @@ function AllIntegrations({ isLicenseActive }) {
     setPremiumModal({ show: false })
   }
   const actionHandler = (e) => {
+    console.log("first")
     if (btcbi.isPro && !isLicenseActive) {
       setShowLicenseModal({ show: true })
     } else {
