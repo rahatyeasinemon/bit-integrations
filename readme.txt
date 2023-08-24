@@ -998,14 +998,14 @@ _Release Date - 1 November 2022_
 
 - **New Triggers :**
   - MemberPress | #1 WordPress Membership Plugin - MemberPress Integration & Automation
-  - WooCommerce Checkout & Funnel Builder by CartFlows – Create High Converting Stores For WooCommerce
-  - CartFlows Integration & Automation
+  - WooCommerce - Open Source Ecommerce Platform - WooCommerce Integration & Automation
+  - CartFlows - #1 Sales Funnel Builder for WordPress & WooCommerce - CartFlows Integration & Automation
   - Solid Affiliate - Affiliate Plugin for WordPress - Solid Affiliate Integration & Automation
 - **New Actions :**
   - MemberPress | #1 WordPress Membership Plugin - MemberPress (pro) Integration & Automation
-  - Moosend Website Connector - Moosend (pro) Integration & Automation
-  - Mailercloud – Integrate webforms and synchronize website contacts - Mailercloud (pro) Integration & Automation
-  - GetResponse for WordPress - GetResponse (pro) Integration & Automation
+  - Moosend: Email Marketing Software for Thriving Businesses - Moosend (pro) Integration & Automation
+  - MMailercloud: An All In One Email Marketing Tool - Mailercloud (pro) Integration & Automation
+  - GetResponse | Professional Email Marketing for Everyone - GetResponse (pro) Integration & Automation
 
 = 1.2.0 =
 _Release Date - 18 October 2022_
@@ -1026,7 +1026,7 @@ _Release Date - 18 October 2022_
 _Release Date - 9 October 2022_
 
 - **New Actions :**
-  - Klaviyo: Marketing Automation Platform for Email, SMS & Push - Klaviyo(Pro) Integration & Automation
+  - Klaviyo: Marketing Automation for Email Marketing & SMS - Klaviyo(Pro) Integration & Automation
 - **Features :**
   - WooCommerce
     - Booking create(trigger).
@@ -1074,11 +1074,11 @@ _Release Date - 20 August 2022_
 
 - **New Triggers :**
   - Breakdance - Website Builder for WordPress- Breakdance Integration & Automation : Website Builder for WordPress
-  - GamiPress – The most flexible and powerful gamification plugin for WordPress - GamiPress Integration & Automation
+  - GamiPress | Gamification for WordPress - GamiPress Integration & Automation
 - **New Actions :**
   - Google contacts (pro) Integration & Automation
-  - Kirim.Email Form Integration - Kirim.Email (pro) Integration & Automation
-  - GamiPress – The most flexible and powerful gamification plugin for WordPress - GamiPress (pro) Integration & Automation
+  - Email Infrastructure For Business On The Internet - kirim.email - Kirim.Email (pro) Integration & Automation
+  - GamiPress | Gamification for WordPress - GamiPress (pro) Integration & Automation
 - **Features :**
   - Trigger
     - Elementor
@@ -1092,8 +1092,8 @@ _Release Date - 4 August 2022_
 
 - **New Trigger :**
 
-  - weForms – Easy Drag & Drop Contact Form Builder For WordPress - WeForms Integration & Automation
-  - Piotnet Addons For Elementor - Piotnet Addon (form) Integration & Automation
+  - Better Contact Forms for your WordPress Website | weForms Pro - WeForms Integration & Automation
+  - Powerful Elementor Addons - Piotnet Addons For Elementor (PAFE) - Piotnet Addon (form) Integration & Automation
 
 - **Features :**
   - Trigger
@@ -1112,7 +1112,7 @@ _Release Date - 24 July 2022_
 
 - **Features :**
   - Trigger
-    - WooCommerce Integration & Automation
+    - WooCommerce - Open Source Ecommerce Platform - WooCommerce Integration & Automation
       - User order status change Specific status.
       - User subscribe product.
       - User unsubscribe/cancel product.
@@ -1132,7 +1132,7 @@ _Release Date - 24 July 2022_
 _Release Date - 5 July 2022_
 
 - **New Actions :**
-  - WordPress Affiliate Program Plugin Shortcodes by AffiliateWP - AffiliateWP(pro) Integration & Automation
+  - AffiliateWP - Affiliate Plugin for WordPress - AffiliateWP(pro) Integration & Automation
   - BuddyBoss: The #1 course & community platform for WordPress - BuddyBoss(18 type actions added)(pro) Integration & Automation
 - **Added: New smart tag **
   - WordPress Locale Code Integration & Automation
@@ -1157,16 +1157,16 @@ _Release Date - 28 June 2022_
 _Release Date - 26 June 2022_
 
 - **New Triggers :**
-  - Membership Plugin – Restrict Content - Restrict Content Integration & Automation
+  - The easy membership plugin for WordPress - Restrict Content Integration & Automation
   - LearnDash Learning Management System. Sell Courses using WordPress | LearnDash - LearnDash Integration & Automation
   - BuddyBoss: The #1 course & community platform for WordPress. - BuddyBoss Integration & Automation
-  - WordPress Affiliate Program Plugin Shortcodes by AffiliateWP - AffiliateWP Integration & Automation
+  - AffiliateWP - Affiliate Plugin for WordPress - AffiliateWP Integration & Automation
 
 = 1.0.9 =
 _Release Date - 13 June 2022_
 
 - **New Actions :**
-  - Membership Plugin – Restrict Content - Restrict Content (Pro) Integration & Automation
+  - The easy membership plugin for WordPress - Restrict Content (Pro) Integration & Automation
   - LearnDash Learning Management System. Sell Courses using WordPress | LearnDash - LearnDash (Pro) Integration & Automation
 
 = 1.0.8 =
@@ -1181,9 +1181,9 @@ _Release Date - 04 June 2022_
 _Release Date - 24 May 2022_
 
 - **New Triggers :**
-  - Metform Elementor Contact Form Builder - Metform Integration & Automation
-  - Gutenberg Blocks by Kadence Blocks – Page Builder Features - Kadence Blocks Form Integration & Automation
-  - Create workflows with Wordpress integrations - N8N Integration & Automation
+  - Elementor Contact Form Builder plugin Metform - Metform Integration & Automation
+  - Kadence Blocks - Create Stunning WordPress Websites - Kadence Blocks Form Integration & Automation
+  - n8n.io - a powerful workflow automation tool - N8N Integration & Automation
 - **Fixes :**
   - BitForm edit bug fixed (Action)
   - Conditional logic error status not added timeline issue fixed
@@ -1206,10 +1206,9 @@ _Release Date - 30 April 2022_
 _Release Date - 24 April 2022_
 
 - **New Actions :**
-  - Contact Form Builder by Bit Form – Easiest Contact Form, Payment Form, Order Form, Calculator Form Builder Plugin for WordPress - Bit Form Integration & Automation
-  - Automated messages sent from apps when something happens - Webhooks Integration & Automation
-  - Zapier for WordPress - Zapier Integration & Automation
-  - WP Webhooks App Help Docs | Integromat Help Center - Integromat Integration & Automation
+  - Ultimate Form Builder In WordPress - Bit Form - Bit Form Integration & Automation
+  - Zapier.com - Automate Your Work — Fast - Zapier Integration & Automation
+  - Make | Work the way you imagine - Integromat Integration & Automation
   - Integrately: 8 Million+ Ready Automations For 1100+ Apps - Integrately Integration & Automation
   - Pabbly - Online Marketing & Sales Software - Pabbly Integration & Automation
   - SyncSpider: eCommerce automation and integration - SyncSpider Integration & Automation
@@ -1231,16 +1230,16 @@ _Release Date - 4 April 2022_
   - Divi — The Ultimate WordPress Theme & Visual Page Builder - Divi Integration & Automation
   - Bricks – Visual Site Builder for WordPress - Bricks Integration & Automation
   - Beaver Builder – WordPress Page Builder - Beaver Builder Integration & Automation
-  - WP Courseware | Course Builder for WordPress - WP Courseware Integration & Automation
-  - Tutor LMS – eLearning and online course solution - Tutor LMS Integration & Automation
-  - Email Marketing, Newsletter, Email Automation and CRM Plugin for WordPress by FluentCRM - FluentCRM Integration & Automation
-  - eCommerce Shopping Cart and Funnel Builder – Studiocart - Studiocart Integration & Automation
-  - Form builder to get in touch with visitors, grow your email list and collect payments — Happyforms - HappyForms Integration & Automation
-  - Formidable Forms – Contact Form, Survey, Quiz, Calculator & Custom Form Builder - Formidable Forms Integration & Automation
-  - JetFormBuilder — Dynamic Blocks Form Builder - JetForm Integration & Automation
-  - Booking for Appointments and Events Calendar – Amelia - Amelia Integration & Automation
-  - Contact Form builder with drag & drop for WordPress – Kali Forms - KaliForms Integration & Automation
-  - Drag & Drop Sales Funnel Builder for WordPress – WPFunnels - WPFunnels Integration & Automation
+  - Course Builder for WordPress | WP Courseware - WP Courseware Integration & Automation
+  - Tutor LMS - Most Powerful WordPress LMS Plugin - Tutor LMS Integration & Automation
+  - FluentCRM: Marketing Automation For WordPress - FluentCRM Integration & Automation
+  - Optimized checkout pages and sales funnels on your own website. No coding necessary - Studiocart Integration & Automation
+  - Happyforms: The easiest form builder for WordPress — Happyforms - HappyForms Integration & Automation
+  - Formidable Forms - The Most Advanced WordPress Forms Plugin - Formidable Forms Integration & Automation
+  - JetFormBuilder - Best WordPress Form Builder Plugin - JetForm Integration & Automation
+  - Amelia, Global Leader in Conversational AI | Amelia - Amelia Integration & Automation
+  - Meet Kali Forms - The Best WordPress Forms Builder Plugin - KaliForms Integration & Automation
+  - WPFunnels - Drag & Drop Sales Funnel Builder for WordPress - WPFunnels Integration & Automation
 - **Fixes :**
   - WebHook bug fixed (Trigger)
 
@@ -1248,23 +1247,23 @@ _Release Date - 4 April 2022_
 _Release Date - 7 February 2022_
 
 - **New Triggers :**
-  - Everest Forms Integration & Automation : The Best WordPress Form Plugin
+  - Everest Forms - Best WordPress Form Plugin - Everest Forms Integration & Automation
 
 = 1.0.1 =
 _Release Date - 2 February 2022_
 
 - **New Triggers :**
   - WooCommerce - Open Source Ecommerce Platform - WooCommerce Integration & Automation
-  - Elementor Website Builder – More than Just a Page Builder - Elementor Integration & Automation
-  - Forminator – Contact Form, Payment Form & Custom Form Builder- Forminator Integration & Automation
-  - WS Form LITE – Drag & Drop Contact Form Builder for WordPress - WS Form Integration & Automation
+  - Elementor: The Best Free Website Builder for WordPress - Elementor Integration & Automation
+  - Forminator – Easy-to-create pro WordPress forms for every site and situation - Forminator Integration & Automation
+  - WS Form - WordPress Form Plugin – Build Better WordPress Forms - WS Form Integration & Automation
   - Piotnet Forms - Highly Customizable WordPress Form Builder - Piotnet Forms Integration & Automation
   - eForm - Ultimate WordPress Form Builder Solution - eForm Integration & Automation
   - User Registration Integration & Automation
   - Contact Form Plugin – Fastest Contact Form Builder Plugin for WordPress by Fluent Forms - Fluent Forms Integration & Automation
   - Gravity Forms | The Best WordPress Form Plugin | Form Builder - Gravity Forms Integration & Automation
-  - Ninja Forms Contact Form – The Drag and Drop Form Builder for WordPress - Ninja Forms Integration & Automation
-  - Contact Form by WPForms – Drag & Drop Form Builder for WordPress - WPForms Integration & Automation
+  - Ninja Forms - Your Drag & Drop WordPress Form Builder - Ninja Forms Integration & Automation
+  - WPForms - The World's Best Drag & Drop WordPress Forms Plugin - WPForms Integration & Automation
   - Webhooks Integration & Automation
 - **Fixes :**
   - Google Sheet MultiSelect, Checkbox & Radio field issue fixed
