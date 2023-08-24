@@ -82,58 +82,60 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field name is empty', 'code' => 400];
         }
 
-        $finalData['currency'] = isset($this->integrationDetails->selectedCurrency) && !empty($this->integrationDetails->selectedCurrency) ? $this->integrationDetails->selectedCurrency : 'USD';
+        $finalData['status'] = 1;
+        $finalData['source'] = 1;
 
-        if (isset($this->integrationDetails->selectedTag) && !empty($this->integrationDetails->selectedTag)) {
-            $finalData['tags'] = ($this->integrationDetails->selectedTag);
+        if (isset($this->integrationDetails->selectedCustomer) && !empty($this->integrationDetails->selectedCustomer)) {
+            $finalData['client_id'] = ($this->integrationDetails->selectedCustomer);
         }
-        if (isset($this->integrationDetails->selectedType) && !empty($this->integrationDetails->selectedType)) {
-            $finalData['type'] = ($this->integrationDetails->selectedType);
+        if (isset($this->integrationDetails->actions->leadIsPublic) && !empty($this->integrationDetails->actions->leadIsPublic)) {
+            $finalData['is_public'] = $this->integrationDetails->actions->leadIsPublic;
         }
-        if (isset($this->integrationDetails->selectedCRMOwner) && !empty($this->integrationDetails->selectedCRMOwner)) {
-            $finalData['owner'] = ($this->integrationDetails->selectedCRMOwner);
+        if (isset($this->integrationDetails->actions->contactedToday) && !empty($this->integrationDetails->actions->contactedToday)) {
+            $finalData['contacted_today'] = $this->integrationDetails->actions->contactedToday;
         }
 
-        $this->type     = 'Company';
-        $this->typeName = 'Company created';
-        $apiEndpoint = $this->apiUrl . "company/v4";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        $this->type     = 'Lead';
+        $this->typeName = 'Lead created';
+        $apiEndpoint = $this->apiUrl . "/leads";
+        return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
     }
 
     public function addProject($finalData)
     {
-        if (empty($finalData['title'])) {
-            return ['success' => false, 'message' => 'Required field title is empty', 'code' => 400];
+        if (empty($finalData['name'])) {
+            return ['success' => false, 'message' => 'Required field name is empty', 'code' => 400];
+        } elseif (empty($finalData['start_date'])) {
+            return ['success' => false, 'message' => 'Required field Start Date is empty', 'code' => 400];
+        } elseif (isset($this->integrationDetails->selectedProjectStatus) && empty($this->integrationDetails->selectedProjectStatus)) {
+            return ['success' => false, 'message' => 'Required field Project Status is empty', 'code' => 400];
+        } elseif (isset($this->integrationDetails->selectedProjectType) && empty($this->integrationDetails->selectedProjectType)) {
+            return ['success' => false, 'message' => 'Required field Project Type is empty', 'code' => 400];
+        } elseif (isset($this->integrationDetails->selectedbillingType) && empty($this->integrationDetails->selectedbillingType)) {
+            return ['success' => false, 'message' => 'Required field Billing Type is empty', 'code' => 400];
+        } elseif (isset($this->integrationDetails->selectedCustomer) && empty($this->integrationDetails->selectedCustomer)) {
+            return ['success' => false, 'message' => 'Required field Customer is empty', 'code' => 400];
         }
 
-        $finalData['currency'] = isset($this->integrationDetails->selectedCurrency) && !empty($this->integrationDetails->selectedCurrency) ? $this->integrationDetails->selectedCurrency : 'USD';
-        $finalData['status'] = isset($this->integrationDetails->selectedStatus) && !empty($this->integrationDetails->selectedStatus) ? $this->integrationDetails->selectedStatus : 'Open';
-        $finalData['source'] = isset($this->integrationDetails->selectedSource) && !empty($this->integrationDetails->selectedSource) ? $this->integrationDetails->selectedSource : 'Ads';
-        $finalData['priority'] = isset($this->integrationDetails->selectedPriority) && !empty($this->integrationDetails->selectedPriority) ? $this->integrationDetails->selectedPriority : 'High';
+        $finalData['status']        = $this->integrationDetails->selectedProjectStatus;
+        $finalData['rel_type']      = $this->integrationDetails->selectedProjectType;
+        $finalData['billing_type']  = $this->integrationDetails->selectedbillingType;
+        $finalData['clientid']      = $this->integrationDetails->selectedCustomer;
 
-        if (isset($this->integrationDetails->selectedTag) && !empty($this->integrationDetails->selectedTag)) {
-            $finalData['tags'] = ($this->integrationDetails->selectedTag);
-        }
-        if (isset($this->integrationDetails->selectedType) && !empty($this->integrationDetails->selectedType)) {
-            $finalData['type'] = ($this->integrationDetails->selectedType);
-        }
-        if (isset($this->integrationDetails->selectedCRMContact) && !empty($this->integrationDetails->selectedCRMContact)) {
-            $finalData['primaryContact'] = ($this->integrationDetails->selectedCRMContact);
-        }
-        if (isset($this->integrationDetails->selectedCRMOwner) && !empty($this->integrationDetails->selectedCRMOwner)) {
-            $finalData['owner'] = ($this->integrationDetails->selectedCRMOwner);
-        }
-        if (isset($this->integrationDetails->selectedCRMPipeline) && !empty($this->integrationDetails->selectedCRMPipeline)) {
-            $finalData['pipeline'] = ($this->integrationDetails->selectedCRMPipeline);
-        }
-        if (isset($this->integrationDetails->selectedCRMStage) && !empty($this->integrationDetails->selectedCRMStage)) {
-            $finalData['stage'] = ($this->integrationDetails->selectedCRMStage);
+        if ($this->integrationDetails->selectedbillingType === 1) {
+            $finalData['project_cost'] = $this->integrationDetails->totalRate;
+        } elseif ($this->integrationDetails->selectedbillingType === 2) {
+            $finalData['project_rate_per_hour'] = $this->integrationDetails->ratePerHour;
         }
 
-        $this->type     = 'Deal';
-        $this->typeName = 'Deal created';
-        $apiEndpoint = $this->apiUrl . "deal/v4";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        if (isset($this->integrationDetails->selectedProjectMembers) && !empty($this->integrationDetails->selectedProjectMembers)) {
+            $finalData['project_members'] = explode(',', $this->integrationDetails->selectedProjectMembers);
+        }
+
+        $this->type     = 'Project';
+        $this->typeName = 'Project created';
+        $apiEndpoint = $this->apiUrl . "/projects";
+        return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

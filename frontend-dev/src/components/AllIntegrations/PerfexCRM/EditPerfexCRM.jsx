@@ -31,7 +31,7 @@ function EditPerfexCRM({ allIntegURL }) {
       return
     }
 
-    if ((perfexCRMConf.actionName === 'contact' || perfexCRMConf.actionName === 'lead') && !perfexCRMConf.selectedCustomer) {
+    if (perfexCRMConf.actionName === 'contact' && !perfexCRMConf.selectedCustomer) {
       toast.error('Please select a Customer')
       return
     }
@@ -48,12 +48,8 @@ function EditPerfexCRM({ allIntegURL }) {
         toast.error('Please select a Billing type')
         return
       }
-      if (perfexCRMConf.selectedProjectType === 'customer' && !perfexCRMConf.selectedCustomer) {
+      if (!perfexCRMConf.selectedCustomer) {
         toast.error('Please select a Customer')
-        return
-      }
-      if (perfexCRMConf.selectedProjectType === 'lead' && !perfexCRMConf.selectedLead) {
-        toast.error('Please select a Lead')
         return
       }
       if (Number(perfexCRMConf.selectedbillingType) === 1 && !perfexCRMConf.totalRate) {

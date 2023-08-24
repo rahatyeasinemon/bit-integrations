@@ -107,7 +107,7 @@ export default function PerfexCRMIntegLayout({ formFields, handleInput, perfexCR
             </div>
           </>
         )}
-      {(perfexCRMConf.actionName === 'contact' || perfexCRMConf.actionName === 'lead' || (perfexCRMConf.actionName === 'project' && perfexCRMConf?.selectedProjectType === 'customer')) && perfexCRMConf?.customers && !loading.customers
+      {(perfexCRMConf.actionName === 'contact' || perfexCRMConf.actionName === 'lead' || perfexCRMConf.actionName === 'project') && perfexCRMConf?.customers && !loading.customers
         && (
           <>
             <br />
@@ -128,33 +128,6 @@ export default function PerfexCRMIntegLayout({ formFields, handleInput, perfexCR
                 style={{ '--tooltip-txt': `'${__('Refresh Customers', 'bit-integrations')}'` }}
                 type="button"
                 disabled={loading.customers}
-              >
-                &#x21BB;
-              </button>
-            </div>
-          </>
-        )}
-      {perfexCRMConf.actionName === 'project' && perfexCRMConf?.selectedProjectType === 'lead' && perfexCRMConf?.leads && !loading.leads
-        && (
-          <>
-            <br />
-            <div className="flx">
-              <b className="wdt-200 d-in-b">{__('Select Lead:', 'bit-integrations')}</b>
-              <MultiSelect
-                options={perfexCRMConf?.leads?.map(lead => ({ label: lead.name, value: lead.id.toString() }))}
-                className="msl-wrp-options dropdown-custom-width"
-                defaultValue={perfexCRMConf?.selectedLead}
-                onChange={val => setChanges(val, 'selectedLead')}
-                disabled={loading.leads}
-                singleSelect
-                closeOnSelect
-              />
-              <button
-                onClick={() => getAllLeads(perfexCRMConf, setPerfexCRMConf, loading, setLoading)}
-                className="icn-btn sh-sm ml-2 mr-2 tooltip"
-                style={{ '--tooltip-txt': `'${__('Refresh Leads', 'bit-integrations')}'` }}
-                type="button"
-                disabled={loading.leads}
               >
                 &#x21BB;
               </button>
