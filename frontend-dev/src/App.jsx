@@ -123,7 +123,7 @@ function App() {
             } />
 
             <Route path="/flow/new" element={
-              (flowNumber >= 1 && (!isLicenseActive || isLicenseActive === 'undefined')) ?
+              (flowNumber >= 1 && !isLicenseActive) ?
                 <Navigate to="/" /> :
                 <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
                   <FlowBuilder />
