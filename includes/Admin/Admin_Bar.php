@@ -16,8 +16,8 @@ class Admin_Bar
     public function register()
     {
         Hooks::add('in_admin_header', [$this, 'RemoveAdminNotices']);
-        Hooks::add('admin_menu', [$this, 'AdminMenu'], 11);
-        Hooks::add('admin_enqueue_scripts', [$this, 'AdminAssets'], 11);
+        Hooks::add('admin_menu', [$this, 'AdminMenu']);
+        Hooks::add('admin_enqueue_scripts', [$this, 'AdminAssets']);
         // Hooks::filter('btcbi_localized_script', [$this, 'filterAdminScriptVar']);
         add_filter('script_loader_tag', [$this, 'scriptTagFilter'], 0, 3);
     }
@@ -158,7 +158,7 @@ class Admin_Bar
     public function RemoveAdminNotices()
     {
         global $plugin_page;
-        if (strpos($plugin_page, 'bit-integrations') === false) {
+        if (is_string($plugin_page) && strpos($plugin_page, 'bit-integrations') === false) {
             return;
         }
         remove_all_actions('admin_notices');

@@ -32,27 +32,27 @@ export default function ChangelogToggle() {
                 <div style={{ padding: '0px 30px' }}>
                     <h4 style={{
                         backgroundColor: '#ff000012',
-                        color: 'red',
+                        color: '#d00c0cd1',
                         padding: '4px 8px',
                         textAlign: 'center',
                         borderRadius: '5px',
-                    }}> From next update,To use pro plugin free version is required. </h4>
-                    <div className="flx flx-col flx-center">
-                        <h3 style={{ margin: 5 }}>{__('What\'s New?')}</h3>
-                        <small>23 August 2023</small>
+                    }}> From 1.4.1 update,To use pro plugin free version is required. </h4>
+                    <div className="flx flx-col flx-center" style={{ margin: "0px 0px 35px 0px" }}>
+                        <h3 style={{ margin: 5 }}>{__('What\'s New in (1.4.0-1.4.1)?')}</h3>
+                        <small>28 August 2023</small>
                     </div>
                     <div style={{ marginTop: '10px' }}>
                         {/* <h4>New Integration</h4> */}
                         {/* <p>New Integration</p> */}
                         <span style={{
-                            backgroundColor: 'green',
+                            backgroundColor: '#1ab944a3',
                             color: 'white',
                             padding: '4px 8px',
                             textAlign: 'center',
                             borderRadius: '5px',
-                        }}><b>New Integration</b></span>
+                        }}><b>New Integrations</b></span>
 
-                        <div>
+                        <div style={{ margin: "0px 0px 25px 0px" }}>
                             <ul style={{ listStyleType: 'number' }}>
                                 <li>Perfex CRM</li>
                                 <li>OneHash CRM</li>
@@ -61,15 +61,15 @@ export default function ChangelogToggle() {
                         </div>
 
                         <span style={{
-                            backgroundColor: 'yellow',
-                            color: 'black',
+                            backgroundColor: 'rgb(0 173 255 / 66%)',
+                            color: 'white',
                             padding: '4px 8px',
                             textAlign: 'center',
                             borderRadius: '5px',
                         }}><b>Fixed</b></span>
 
-                        <div>
-                            <ul style={{ listStyleType: 'circle' }}>
+                        <div style={{ margin: "0px 0px 35px 0px" }}>
+                            <ul style={{ listStyleType: 'number' }}>
                                 <li>ClickUp Log success message issue fixed</li>
                                 <li>ClinchPad Log success message issue fixed</li>
                                 <li>GiveWP Purchase Value Issue fixed</li>
@@ -78,13 +78,13 @@ export default function ChangelogToggle() {
                             </ul>
                         </div>
                     </div>
-                    {/* <div>
+                    <div>
                         <span style={{ margin: '0px 5px 5px' }}>{__('For more details,')}</span>
-                        <a href="https://bitapps.pro/docs/bit-form/changelog/" target="_blank" rel="noreferrer">
+                        <a href="https://bitapps.pro/docs/bit-integrations/free-changelogs/" target="_blank" rel="noreferrer">
                             {__('Click here ')}
                             <ExternalLinkIcn size="14" />
                         </a>
-                    </div> */}
+                    </div>
                 </div>
             </Modal >
         </div >
