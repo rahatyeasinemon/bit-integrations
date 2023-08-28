@@ -174,10 +174,10 @@ function AllIntegrations({ isLicenseActive }) {
     setPremiumModal({ show: false })
   }
   const actionHandler = (e) => {
-    if ((!isLicenseActive)) {
-      setShowLicenseModal({ show: true })
-    } else {
+    if ((!isLicenseActive || btcbi.pro === 'undefined')) {
       setPremiumModal({ show: true })
+    } else {
+      setShowLicenseModal({ show: true })
     }
   }
 
