@@ -239,7 +239,7 @@ function AllIntegrations({ isLicenseActive }) {
             data={integrations.length}
           />
         </>
-      ) : <Welcome isLicenseActive={isLicenseActive} actionHandler={actionHandler} />}
+      ) : <Welcome isLicenseActive={isLicenseActive} actionHandler={actionHandler} integrations={integrations} />}
 
       <Modal
         sm
