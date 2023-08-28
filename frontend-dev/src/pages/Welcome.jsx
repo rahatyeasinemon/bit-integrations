@@ -15,7 +15,9 @@ export default function Welcome({ setModal, isLicenseActive, actionHandler }) {
       {/* <Link to="/flow/new" className="btn round btcd-btn-lg dp-blue">
         {__('Create Integration', 'bit-integrations')}
       </Link> */}
-      {!isLicenseActive && btcbi.isPro ?
+
+
+      {!isLicenseActive ?
         (
           // eslint-disable-next-line react/button-has-type
           <button className="btn round btcd-btn-lg dp-blue" onClick={(e) => actionHandler(e)}>

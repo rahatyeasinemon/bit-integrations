@@ -26,7 +26,6 @@ export const handleFieldMapping = (event, index, conftTmp, setConf) => {
   if (event.target.value === 'customFieldKey') {
     newConf.field_map[index].customFieldKey = ''
   }
-  console.log(newConf)
   setConf({ ...newConf })
 }
 

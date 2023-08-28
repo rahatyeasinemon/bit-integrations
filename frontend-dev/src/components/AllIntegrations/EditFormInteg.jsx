@@ -59,7 +59,6 @@ function EditFormInteg({ setSnackbar, className = '' }) {
 
     const loadFormFields = bitsFetch(queryData, `${flow.triggered_entity.toLowerCase()}/get/form`).then((res) => {
       if (res.success) {
-        console.log("field", res.data.fields)
         setFormFields(res.data.fields)
       }
       return res.data

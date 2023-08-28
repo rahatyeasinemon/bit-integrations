@@ -174,8 +174,7 @@ function AllIntegrations({ isLicenseActive }) {
     setPremiumModal({ show: false })
   }
   const actionHandler = (e) => {
-    console.log("first")
-    if (btcbi.isPro && !isLicenseActive) {
+    if ((!isLicenseActive)) {
       setShowLicenseModal({ show: true })
     } else {
       setPremiumModal({ show: true })
@@ -204,7 +203,7 @@ function AllIntegrations({ isLicenseActive }) {
         <>
           <div className="af-header flx flx-between">
             <h2>{__('Integrations', 'bit-integrations')}</h2>
-            {integrations.length >= 1 && !btcbi.isPro
+            {(integrations.length >= 1 && !isLicenseActive)
               ? (
                 // eslint-disable-next-line react/button-has-type
                 <button className="btn round btcd-btn-lg blue blue-sh" onClick={(e) => actionHandler(e)}>
