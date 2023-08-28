@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'
 import greeting from '../resource/img/home.svg'
 
-export default function Welcome({ setModal, isLicenseActive, actionHandler }) {
+export default function Welcome({ setModal, isLicenseActive, actionHandler, integrations }) {
   return (
     <div className="btcd-greeting">
       <img src={greeting} alt="" />
@@ -17,7 +17,7 @@ export default function Welcome({ setModal, isLicenseActive, actionHandler }) {
       </Link> */}
 
 
-      {!isLicenseActive ?
+      {(integrations.length >= 1 && !isLicenseActive) ?
         (
           // eslint-disable-next-line react/button-has-type
           <button className="btn round btcd-btn-lg dp-blue" onClick={(e) => actionHandler(e)}>
