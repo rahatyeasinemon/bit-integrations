@@ -3,6 +3,7 @@
 /**
  * Provides IP related functionality
  */
+
 namespace BitCode\FI\Core\Util;
 
 final class IpTool
@@ -10,7 +11,7 @@ final class IpTool
     /**
      * Check ip address
      *
-     * @return ip_addr IP address of current visitor
+     * @return string IP address of current visitor
      */
     private static function _checkIP()
     {
@@ -37,16 +38,10 @@ final class IpTool
      */
     private static function _checkDevice()
     {
-        if (isset($_SERVER)) {
+        if (isset($_SERVER) && isset($_SERVER['HTTP_USER_AGENT'])) {
             $user_agent = sanitize_text_field($_SERVER['HTTP_USER_AGENT']);
         } else {
-            global $HTTP_SERVER_VARS;
-            if (isset($HTTP_SERVER_VARS)) {
-                $user_agent = $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
-            } else {
-                global $HTTP_USER_AGENT;
-                $user_agent = $HTTP_USER_AGENT;
-            }
+            $user_agent = '';
         }
         return IpTool::_getBrowserName($user_agent) . '|' . IpTool::_getOS($user_agent);
     }
@@ -54,11 +49,11 @@ final class IpTool
     /**
      * Get browser name
      *
-     * @link https://stackoverflow.com/questions/18070154/get-operating-system-info
-     *
      * @param string $user_agent $_SERVER['HTTP_USER_AGENT']
      *
      * @return void
+     *
+     * @link https://stackoverflow.com/questions/18070154/get-operating-system-info
      */
     private static function _getBrowserName($user_agent)
     {

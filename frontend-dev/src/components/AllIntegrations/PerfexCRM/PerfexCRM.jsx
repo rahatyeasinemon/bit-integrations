@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate } from 'react-router-dom'
-import toast from 'react-hot-toast'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
@@ -117,7 +117,7 @@ function PerfexCRM({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if ((perfexCRMConf.actionName === 'contact' || perfexCRMConf.actionName === 'lead') && !perfexCRMConf.selectedCustomer) {
+    if (perfexCRMConf.actionName === 'contact' && !perfexCRMConf.selectedCustomer) {
       toast.error('Please select a Customer')
       return
     }
@@ -134,12 +134,8 @@ function PerfexCRM({ formFields, setFlow, flow, allIntegURL }) {
         toast.error('Please select a Billing type')
         return
       }
-      if (perfexCRMConf.selectedProjectType === 'customer' && !perfexCRMConf.selectedCustomer) {
+      if (!perfexCRMConf.selectedCustomer) {
         toast.error('Please select a Customer')
-        return
-      }
-      if (perfexCRMConf.selectedProjectType === 'lead' && !perfexCRMConf.selectedLead) {
-        toast.error('Please select a Lead')
         return
       }
       if (Number(perfexCRMConf.selectedbillingType) === 1 && !perfexCRMConf.totalRate) {

@@ -48,10 +48,10 @@ class PerfexCRMController
         $headers       = $this->setHeaders($apiToken);
         $response      = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (!isset($response->status)) {
-            wp_send_json_success('Authentication successful', 200);
-        } else {
+        if (isset($response->errors) || (isset($response->status) && !$response->status)) {
             wp_send_json_error('Please enter valid API Token or Access Api URL', 400);
+        } else {
+            wp_send_json_success('Authentication successful', 200);
         }
     }
 
@@ -84,7 +84,9 @@ class PerfexCRMController
         $headers        = $this->setHeaders($apiToken);
         $response       = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (!isset($response->status)) {
+        if (isset($response->errors) || (isset($response->status) && !$response->status)) {
+            wp_send_json_error('Custom Fields fetching failed', 400);
+        } else {
             $fieldMap = [];
             foreach ($response as $field) {
                 array_push(
@@ -97,8 +99,6 @@ class PerfexCRMController
                 );
             }
             wp_send_json_success($fieldMap, 200);
-        } else {
-            wp_send_json_error('Custom Fields fetching failed', 400);
         }
     }
 
@@ -111,7 +111,9 @@ class PerfexCRMController
         $headers        = $this->setHeaders($apiToken);
         $response       = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (!isset($response->status)) {
+        if (isset($response->errors) || (isset($response->status) && !$response->status)) {
+            wp_send_json_error('Customer fetching failed', 400);
+        } else {
             $customers = [];
             foreach ($response as $customer) {
                 array_push(
@@ -123,8 +125,6 @@ class PerfexCRMController
                 );
             }
             wp_send_json_success($customers, 200);
-        } else {
-            wp_send_json_error('Customer fetching failed', 400);
         }
     }
 
@@ -137,7 +137,9 @@ class PerfexCRMController
         $headers        = $this->setHeaders($apiToken);
         $response       = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (!isset($response->status)) {
+        if (isset($response->errors) || (isset($response->status) && !$response->status)) {
+            wp_send_json_error('Lead fetching failed', 400);
+        } else {
             $leads = [];
             foreach ($response as $lead) {
                 array_push(
@@ -149,8 +151,6 @@ class PerfexCRMController
                 );
             }
             wp_send_json_success($leads, 200);
-        } else {
-            wp_send_json_error('Lead fetching failed', 400);
         }
     }
 
@@ -163,7 +163,9 @@ class PerfexCRMController
         $headers        = $this->setHeaders($apiToken);
         $response       = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (!isset($response->status)) {
+        if (isset($response->errors) || (isset($response->status) && !$response->status)) {
+            wp_send_json_error('Project Member fetching failed', 400);
+        } else {
             $staffs = [];
             foreach ($response as $staff) {
                 array_push(
@@ -175,8 +177,6 @@ class PerfexCRMController
                 );
             }
             wp_send_json_success($staffs, 200);
-        } else {
-            wp_send_json_error('Project Member fetching failed', 400);
         }
     }
 
@@ -188,7 +188,7 @@ class PerfexCRMController
         $fieldMap           = $integrationDetails->field_map;
         $actionName         = $integrationDetails->actionName;
         $actionId           = $integrationDetails->actionId;
-        $domain           = $integrationDetails->domain;
+        $domain             = $integrationDetails->domain;
 
         if (empty($fieldMap) || empty($apiToken) || empty($actionName) || empty($domain)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for PerfexCRM api', 'bit-integrations'));

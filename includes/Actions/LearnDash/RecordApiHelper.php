@@ -291,7 +291,7 @@ class RecordApiHelper
 
         if ($lesson_quiz_list) {
             foreach ($lesson_quiz_list as $ql) {
-                $this->quiz_list[$ql['post']->ID] = 0;
+                self::$quiz_list[$ql['post']->ID] = 0;
             }
         }
 

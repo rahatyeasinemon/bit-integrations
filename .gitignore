@@ -14,5 +14,4 @@ node_modules
 yarn.lock
 .npmrc
 package-lock.json
-pnpm-lock.yaml
 

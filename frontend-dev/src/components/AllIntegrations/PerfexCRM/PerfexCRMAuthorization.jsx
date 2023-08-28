@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
+import { toast } from 'react-hot-toast'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
-import { perfexCRMAuthentication } from './PerfexCRMCommonFunc'
 import Note from '../../Utilities/Note'
-import { toast } from 'react-hot-toast'
+import { perfexCRMAuthentication } from './PerfexCRMCommonFunc'
 
 export default function PerfexCRMAuthorization({ perfexCRMConf, setPerfexCRMConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
