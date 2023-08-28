@@ -2,9 +2,9 @@
 Contributors: bitpressadmin
 Tags: automation,integration,connector,workflow automation,automator,Zapier,Platform integrations,Wp WebHooks,Pabbly,Integrately
 Requires at least: 5.1
-Tested up to: 6.2
+Tested up to: 6.3
 Requires PHP: 7.4
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 
 Automation Plugin for WordPress; Integration of 60+ Triggers and 130+ Actions.The #1 highest no-code platform Automator plugin in WordPress.
@@ -743,8 +743,8 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 
 == Changelog ==
 
-= 1.4.0 =
-*Release Date - *23th August 2023\*
+= 1.4.0 - 1.4.1  =
+*Release Date - *28th August 2023\*
 
 - **New Actions :**
   - Perfex CRM: Customer Relationship & Project Management - Perfex CRM Integration & Automation
