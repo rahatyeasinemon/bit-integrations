@@ -25,7 +25,7 @@ class RecordApiHelper
     {
         $this->integrationDetails = $integrationDetails;
         $this->integrationId      = $integId;
-        $this->apiUrl             = "https://{$domain}.onehash.ai/api/resource";
+        $this->apiUrl             = "{$domain}/api/resource";
         $this->defaultHeader      = [
             "Authorization" => "token {$apiKey}:$apiSecret",
             "Content-type"  => "application/json",
@@ -59,7 +59,27 @@ class RecordApiHelper
             $finalData['status'] = ($this->integrationDetails->selectedContactStatus);
         }
 
-        $finalData['is_primary_contact']    = true;
+        if (isset($finalData['email_id'])) {
+            $finalData["email_ids"] = [
+                (object) [
+                    "email_id"      => $finalData['email_id'],
+                    "is_primary"    => true
+                ]
+            ];
+        }
+        if (isset($finalData['phone'])) {
+            $finalData["phone_nos"][] = (object) [
+                "phone"             => $finalData['phone'],
+                "is_primary_phone"  => true
+            ];
+        }
+        if (isset($finalData['mobile_no'])) {
+            $finalData["phone_nos"][] = (object) [
+                "phone"                 => $finalData['mobile_no'],
+                "is_primary_mobile_no"  => true
+            ];
+        }
+
         $this->type                         = 'Contact';
         $this->typeName                     = 'Contact created';
         $apiEndpoint                        = $this->apiUrl . "/Contact";
