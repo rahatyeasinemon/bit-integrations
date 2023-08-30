@@ -55,13 +55,7 @@ export default function OneHashCRMAuthorization({ oneHashCRMConf, setOneHashCRMC
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={oneHashCRMConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 
       <div className="mt-3"><b>{__('Access API URL:', 'bit-integrations')}</b></div>
-      <div className="btcd-input-group w-6 mt-1">
-        <div className="btcd-input-group-icon">https://</div>
-        <div className="btcd-input-group-area">
-          <input className="btcd-paper-inp" onChange={handleInput} name="domain" value={oneHashCRMConf.domain} type="text" placeholder={__('Access API URL...', 'bit-integrations')} disabled={isInfo} />
-        </div>
-        <div className="btcd-input-group-icon">.onehash.ai</div>
-      </div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="domain" value={oneHashCRMConf.domain} type="text" placeholder={__('Access API URL...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.domain}</div>
 
       <div className="mt-3"><b>{__('API Key:', 'bit-integrations')}</b></div>

@@ -20,7 +20,7 @@ class OneHashCRMController
 
     private function setApiEndpoint()
     {
-        return $this->apiEndpoint = "https://{$this->domain}.onehash.ai/api/resource";
+        return $this->apiEndpoint = "{$this->domain}/api/resource";
     }
 
     private function checkValidation($fieldsRequestParams, $customParam = '**')
