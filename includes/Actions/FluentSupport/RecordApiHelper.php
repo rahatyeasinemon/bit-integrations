@@ -10,6 +10,7 @@ use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use FluentSupport\App\Models\Ticket;
 use FluentSupport\App\Models\Customer;
+use FluentSupport\App\Services\Helper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -66,6 +67,10 @@ class RecordApiHelper
 
     public function createTicketByExistCustomer($finalData)
     {
+        if (!isset($finalData['mailbox_id']) || empty($finalData['mailbox_id'])) {
+            $mailbox = Helper::getDefaultMailBox();
+            $finalData['mailbox_id'] = $mailbox->id;
+        }
         $ticket = Ticket::create($finalData);
 
         if (isset($ticket->id)) {
@@ -90,6 +95,10 @@ class RecordApiHelper
         $customerExits                  = $this->getCustomerExits($finalData['email']);
         $finalData['client_priority']   = !empty($integrationDetails->actions->client_priority) ? $integrationDetails->actions->client_priority : 'normal';
         $finalData['agent_id']          = $integrationDetails->actions->support_staff;
+
+        if (isset($integrationDetails->actions->business_inbox) && !empty($integrationDetails->actions->business_inbox)) {
+            $finalData['mailbox_id'] = $integrationDetails->actions->business_inbox;
+        }
 
         if ($customerExits) {
             $finalData['customer_id'] = $customerExits;
