@@ -84,8 +84,9 @@ class Admin_Bar
         }
 
         if (!defined('BITAPPS_DEV')) {
-            wp_enqueue_script('index-BTCBI-MODULE', BTCBI_ASSET_URI . '/main.js', [], null);
-            wp_enqueue_style('bf-css', BTCBI_ASSET_URI . '/main.css');
+            $build_hash = file_get_contents(BTCBI_PLUGIN_DIR_PATH . '/build-hash.txt');
+            wp_enqueue_script('index-BTCBI-MODULE', BTCBI_ASSET_URI . "/main-{$build_hash}.js", [], null);
+            wp_enqueue_style('bf-css', BTCBI_ASSET_URI . "/main-{$build_hash}.css");
         }
 
         if (wp_script_is('wp-i18n')) {
@@ -140,7 +141,7 @@ class Admin_Bar
         );
         if (get_locale() !== 'en_US' && file_exists(BTCBI_PLUGIN_BASEDIR . '/languages/generatedString.php')) {
             include_once BTCBI_PLUGIN_BASEDIR . '/languages/generatedString.php';
-            $btcbi['translations'] = $btcbi_i18n_strings;
+            $btcbi['translations'] = $bit_integrations_i18n_strings;
         }
         wp_localize_script('index-BTCBI-MODULE', 'btcbi', $btcbi);
     }
