@@ -41,7 +41,7 @@ function AllIntegrations({ isLicenseActive }) {
   useEffect(() => {
     const ncols = cols.filter(itm => itm.accessor !== 't_action' && itm.accessor !== 'status')
     ncols.push({ width: 70, minWidth: 60, Header: __('Status', 'bit-integrations'), accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.id)} checked={Number(value.row.original.status) === 1} /> })
-    ncols.push({ sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn id={val.row.original.id} name={val.row.original.name} index={val.row.id} del={() => showDelModal(val.row.original.id, val.row.index)} dup={() => showDupMdl(val.row.original.id, val.row.index)} /> })
+    ncols.push({ sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn isLicenseActive={isLicenseActive} id={val.row.original.id} name={val.row.original.name} index={val.row.id} del={() => showDelModal(val.row.original.id, val.row.index)} dup={() => showDupMdl(val.row.original.id, val.row.index)} /> })
     setCols([...ncols])
   }, [integrations])
 
