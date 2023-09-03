@@ -360,7 +360,7 @@ export default function IntegInfo() {
         return <CopperCRMAuthorization copperCRMConf={integrationConf} step={1} isInfo />
       case 'Drip':
         return <DripAuthorization dripConf={integrationConf} step={1} isInfo />
-      case 'Mailify':
+      case 'Mailify': case 'Sarbacane(Mailify)':
         return <MailifyAuthorization mailifyConf={integrationConf} step={1} isInfo />
       case 'Lemlist':
         return <LemlistAuthorization lemlistConf={integrationConf} step={1} isInfo />

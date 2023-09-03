@@ -441,7 +441,7 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditWebHooks allIntegURL={allIntegURL} />
     case 'Drip':
       return <EditDrip allIntegURL={allIntegURL} />
-    case 'Mailify':
+    case 'Mailify': case 'Sarbacane(Mailify)':
       return <EditMailify allIntegURL={allIntegURL} />
     case 'Lemlist':
       return <EditLemlist allIntegURL={allIntegURL} />
