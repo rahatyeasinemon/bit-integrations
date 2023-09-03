@@ -192,7 +192,7 @@ export default function IntegInfo() {
         return <MailChimpAuthorization sheetConf={integrationConf} step={1} redirectLocation={location} isInfo />
       case 'Mail Poet':
         return <MailPoetAuthorization mailPoetConf={integrationConf} step={1} isInfo />
-      case 'SendinBlue':
+      case 'SendinBlue': case 'Brevo(Sendinblue)':
         return <SendinblueAuthorization sendinBlueConf={integrationConf} step={1} isInfo />
       case 'WooCommerce':
         return <WooCommerceAuthorization wcConf={integrationConf} step={1} isInfo />
