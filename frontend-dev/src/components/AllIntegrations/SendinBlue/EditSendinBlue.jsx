@@ -22,6 +22,7 @@ function EditSendinBlue({ allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
   const [error, setError] = useState({ templateId: '', RedirectionUrl: '' })
+
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

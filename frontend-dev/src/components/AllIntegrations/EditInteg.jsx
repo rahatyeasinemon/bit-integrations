@@ -247,7 +247,7 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditPod allIntegURL={allIntegURL} />
     case 'Mail Poet':
       return <EditMailPoet allIntegURL={allIntegURL} />
-    case 'SendinBlue':
+    case 'SendinBlue': case 'Brevo(Sendinblue)':
       return <EditSendinBlue allIntegURL={allIntegURL} />
     case 'WooCommerce':
       return <EditWooCommerce allIntegURL={allIntegURL} />
