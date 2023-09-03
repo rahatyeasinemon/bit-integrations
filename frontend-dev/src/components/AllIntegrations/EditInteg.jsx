@@ -271,7 +271,7 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditAntApps allIntegURL={allIntegURL} />
     case 'Integrately':
       return <EditIntegrately allIntegURL={allIntegURL} />
-    case 'Integromat':
+    case 'Integromat': case 'Make(Integromat)':
       return <EditIntegromat allIntegURL={allIntegURL} />
     case 'Zoho Flow':
       return <EditZohoFlow allIntegURL={allIntegURL} />

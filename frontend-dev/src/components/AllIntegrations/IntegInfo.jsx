@@ -204,7 +204,7 @@ export default function IntegInfo() {
         return <ZapierAuthorization webHooks={integrationConf} step={1} isInfo />
       case 'IFTTT':
         return <IFTTTAuthorization webHooks={integrationConf} step={1} isInfo />
-      case 'Integromat':
+      case 'Integromat': case 'Make(Integromat)':
         return <IntegromatAuthorization webHooks={integrationConf} step={1} isInfo />
       case 'Integrately':
         return <IntegratelyAuthorization webHooks={integrationConf} step={1} isInfo />
