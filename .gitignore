@@ -14,4 +14,4 @@ node_modules
 yarn.lock
 .npmrc
 package-lock.json
-
+build-hash.txt

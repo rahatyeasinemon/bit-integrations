@@ -84,8 +84,9 @@ class Admin_Bar
         }
 
         if (!defined('BITAPPS_DEV')) {
-            wp_enqueue_script('index-BTCBI-MODULE', BTCBI_ASSET_URI . '/main.js', [], null);
-            wp_enqueue_style('bf-css', BTCBI_ASSET_URI . '/main.css');
+            $build_hash = file_get_contents(BTCBI_PLUGIN_DIR_PATH . '/build-hash.txt');
+            wp_enqueue_script('index-BTCBI-MODULE', BTCBI_ASSET_URI . "/main-{$build_hash}.js", [], null);
+            wp_enqueue_style('bf-css', BTCBI_ASSET_URI . "/main-{$build_hash}.css");
         }
 
         if (wp_script_is('wp-i18n')) {

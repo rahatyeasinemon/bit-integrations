@@ -1,14 +1,18 @@
 /* eslint-disable no-plusplus */
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import fs from 'fs'
 import { defineConfig } from 'vite'
+import { normalizePath } from 'vite'
 
 let chunkCount = 0
+const newBuildHash = hash()
 
 export default defineConfig(({ mode }) => ({
 
   plugins: [
     react(),
+    storeBuildHash(mode),
   ],
 
   root: 'src',
@@ -27,7 +31,7 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       input: path.resolve(__dirname, 'src/main.jsx'),
       output: {
-        entryFileNames: 'main.js',
+        entryFileNames: `main-${newBuildHash}.js`,
         compact: true,
         validate: true,
         generatedCode: {
@@ -40,7 +44,7 @@ export default defineConfig(({ mode }) => ({
           const fileName = pathArr[pathArr.length - 1]
 
           if (fileName === 'main.css') {
-            return 'main.css'
+            return `main-${newBuildHash}.css`
           }
           if (fileName === 'logo.svg') {
             return 'logo.svg'
@@ -67,4 +71,14 @@ export default defineConfig(({ mode }) => ({
 
 function hash() {
   return Math.round(Math.random() * (999 - 1) + 1)
+}
+
+function storeBuildHash(mode) {
+  if (mode === 'development') {
+    return null
+  }
+  fs.writeFileSync(absPath('../build-hash.txt'), String(newBuildHash))
+}
+function absPath(relativePath) {
+  return normalizePath(path.resolve(__dirname, relativePath))
 }
