@@ -30,6 +30,7 @@ final class Plugin
     private static $_instance = null;
 
     private $isLicActive;
+    private $isPro;
 
     /**
      * Initialize the hooks
@@ -109,6 +110,16 @@ final class Plugin
             $this->isLicActive = false;
         }
         return $this->isLicActive;
+    }
+    public function isProVer()
+    {
+        $plugins_keys = array_keys(get_plugins());
+        if (in_array('bit-integrations-pro/bitwpfi.php', $plugins_keys)) {
+            $isPro =  true;
+        } else {
+            $isPro = false;
+        }
+        return $this->isPro;
     }
 
     /**
