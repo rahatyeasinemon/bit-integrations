@@ -115,7 +115,12 @@ final class ZohoCRMController
         );
         $modulesMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/crm/v2.1/settings/modules";
         $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $isBitFiLicActive = Plugin::instance()->isLicenseActive();
+        $isProVersion = Plugin::instance()->isProVer();
+        if ($isProVersion) {
+            $isBitFiLicActive =  \BitApps\BTCBI_PRO\Plugin::instance()->isLicenseActive();
+        } else {
+            $isBitFiLicActive = false;
+        }
         if ($isBitFiLicActive) {
             $modulesMetaResponse = HttpHelper::get($modulesMetaApiEndpoint, null, $authorizationHeader);
             if (!is_wp_error($modulesMetaResponse) && (empty($modulesMetaResponse->status) || (!empty($modulesMetaResponse->status) && $modulesMetaResponse->status !== 'error'))) {
@@ -190,7 +195,12 @@ final class ZohoCRMController
         if (!is_wp_error($layoutsMetaResponse) && (empty($layoutsMetaResponse->status) || (!empty($layoutsMetaResponse->status) && $layoutsMetaResponse->status !== 'error'))) {
             $retriveLayoutsData = $layoutsMetaResponse->layouts;
             $layouts = [];
-            $isBitFiLicActive = Plugin::instance()->isLicenseActive();
+            $isProVersion = Plugin::instance()->isProVer();
+            if ($isProVersion) {
+                $isBitFiLicActive =  \BitApps\BTCBI_PRO\Plugin::instance()->isLicenseActive();
+            } else {
+                $isBitFiLicActive = false;
+            }
             foreach ($retriveLayoutsData as $layoutKey => $layoutValue) {
                 if (!$isBitFiLicActive && $layoutValue->name !== 'Standard') {
                     continue;
@@ -553,7 +563,7 @@ final class ZohoCRMController
         } else {
             wp_send_json_error(
                 is_wp_error($tagListApiResponse) ? $tagListApiResponse->get_error_message() : (empty($tagListApiResponse) ? __('Tag is empty', 'bit-integrations') : 'Unknown'),
-                empty($tagListApiResponse) ?  204 : 400
+                empty($tagListApiResponse) ? 204 : 400
             );
         }
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
