@@ -7,14 +7,14 @@ class ElementorHelper
     public static function get_all_inner_forms($elements)
     {
         $block_is_on_page = array();
-        if (! empty($elements)) {
+        if (!empty($elements)) {
             foreach ($elements as $element) {
                 if ('widget' === $element->elType && 'form' === $element->widgetType) {
                     $block_is_on_page[] = $element;
                 }
-                if (! empty($element->elements)) {
+                if (!empty($element->elements)) {
                     $inner_block_is_on_page = self::get_all_inner_forms($element->elements);
-                    if (! empty($inner_block_is_on_page)) {
+                    if (!empty($inner_block_is_on_page)) {
                         $block_is_on_page = array_merge($block_is_on_page, $inner_block_is_on_page);
                     }
                 }
@@ -45,10 +45,10 @@ WHERE p.post_type IS NOT NULL
             )
         );
 
-        if (! empty($post_metas)) {
+        if (!empty($post_metas)) {
             foreach ($post_metas as $post_meta) {
                 $inner_forms = self::get_all_inner_forms(json_decode($post_meta->meta_value));
-                if (! empty($inner_forms)) {
+                if (!empty($inner_forms)) {
                     foreach ($inner_forms as $form) {
                         $AllForms[] = [
                             'id' => $form->id,
@@ -61,39 +61,11 @@ WHERE p.post_type IS NOT NULL
         }
 
         return $AllForms;
-    }//end if
+    } //end if
 
     public static function all_forms()
     {
         $formsDetails = self::all_elementor_forms();
         return $formsDetails;
-    }
-
-    public static function all_fields($form_id)
-    {
-        $fields = [];
-        $allFormsDetails = self::all_elementor_forms();
-
-        foreach($allFormsDetails as $form) {
-            if($form['id'] == $form_id) {
-                foreach ($form['form_fields'] as $field) {
-                    $type = isset($field->field_type) ? $field->field_type : 'text';
-                    if ($type === 'upload') {
-                        $type = 'file';
-                    }
-
-                    $fields[] = [
-                        'name' => $field->custom_id,
-                        'type' => $type,
-                        'label' => $field->field_label,
-                    ];
-                }
-            }
-        }
-
-        if(!empty($fields)) {
-            return $fields;
-        }
-        return false;
     }
 }

@@ -60,11 +60,12 @@ final class ElementorController
         if (!self::pluginActive()) {
             wp_send_json_error(__('Elementor Pro is not installed or activated', 'bit-integrations'));
         }
-        if (empty($data->id) && empty($data->postId)) {
+
+        if (empty($data->id)) {
             wp_send_json_error(__('Form doesn\'t exists', 'bit-integrations'));
         }
 
-        $fields = ElementorHelper::all_fields($data->id);
+        $fields = self::fields($data);
         if (empty($fields)) {
             wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
@@ -72,6 +73,38 @@ final class ElementorController
         $responseData['fields'] = $fields;
         $responseData['postId'] = $data->postId;
         wp_send_json_success($responseData);
+    }
+
+    public static function fields($data)
+    {
+        if (empty($data->id)) {
+            wp_send_json_error(__('Form doesn\'t exists', 'bit-integrations'));
+        }
+        $form_id = $data->id;
+        $fields = [];
+        $allFormsDetails = ElementorHelper::all_elementor_forms();
+
+        foreach ($allFormsDetails as $form) {
+            if ($form['id'] == $form_id) {
+                foreach ($form['form_fields'] as $field) {
+                    $type = isset($field->field_type) ? $field->field_type : 'text';
+                    if ($type === 'upload') {
+                        $type = 'file';
+                    }
+
+                    $fields[] = [
+                        'name' => $field->custom_id,
+                        'type' => $type,
+                        'label' => $field->field_label,
+                    ];
+                }
+            }
+        }
+
+        if (!empty($fields)) {
+            return $fields;
+        }
+        return false;
     }
 
     public static function handle_elementor_submit($record)
@@ -91,5 +124,4 @@ final class ElementorController
 
         Flow::execute('Elementor', $form_id, $data, $flows);
     }
-
 }
