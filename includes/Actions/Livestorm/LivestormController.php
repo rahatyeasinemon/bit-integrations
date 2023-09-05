@@ -47,8 +47,10 @@ class LivestormController
 
         if (!count((array) $response)) {
             wp_send_json_success('Authentication successful', 200);
+        } elseif (isset($response->errors) && $response->errors[0]->title === "Workspace blocked") {
+            wp_send_json_error($response->errors[0]->detail, 400);
         } else {
-            wp_send_json_error('Please enter valid API Key & API Secret', 400);
+            wp_send_json_error('Authorized failed, Please enter valid API Key', 400);
         }
     }
 
