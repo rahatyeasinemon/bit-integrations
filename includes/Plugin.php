@@ -114,7 +114,8 @@ final class Plugin
     public function isProVer()
     {
         $plugins_keys = array_keys(get_plugins());
-        if (in_array('bit-integrations-pro/bitwpfi.php', $plugins_keys)) {
+        $plugin = 'bit-integrations-pro/bitwpfi.php';
+        if (in_array($plugin, $plugins_keys) && is_plugin_active($plugin)) {
             $this->isPro =  true;
         } else {
             $this->isPro = false;
