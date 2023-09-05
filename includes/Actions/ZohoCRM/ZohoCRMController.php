@@ -128,7 +128,7 @@ final class ZohoCRMController
 
                 $allModules = [];
                 foreach ($retriveModuleData as $key => $value) {
-                    if ((!empty($value->inventory_template_supported) && $value->inventory_template_supported) || \in_array($value->api_name, $zohosIntegratedModules)) {
+                    if ((!empty($value->inventory_template_supported) && $value->inventory_template_supported) || \in_array($value->api_name, $zohosIntegratedModules) || count((array)$value->parent_module) > 0) {
                         continue;
                     }
                     if (!empty($value->api_supported) && $value->api_supported && !empty($value->editable) && $value->editable) {

@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 import { useRecoilValue } from 'recoil'
-import { __ } from '../../../Utils/i18nwrap'
-import { addFieldMap, delFieldMap, handleFieldMapping } from './IntegrationHelpers'
-import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import { $btcbi } from '../../../GlobalStates'
+import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
+import { __ } from '../../../Utils/i18nwrap'
 import { generateMappedField } from './ClinchPadCommonFunc'
+import CustomField from './CustomField'
+import { addFieldMap, delFieldMap, handleFieldMapping } from './IntegrationHelpers'
 
 export default function ClinchPadFieldMap({ i, formFields, field, clinchPadConf, setClinchPadConf }) {
   let allFields = []

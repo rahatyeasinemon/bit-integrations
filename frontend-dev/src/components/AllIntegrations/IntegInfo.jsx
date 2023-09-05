@@ -192,7 +192,7 @@ export default function IntegInfo() {
         return <MailChimpAuthorization sheetConf={integrationConf} step={1} redirectLocation={location} isInfo />
       case 'Mail Poet':
         return <MailPoetAuthorization mailPoetConf={integrationConf} step={1} isInfo />
-      case 'SendinBlue':
+      case 'SendinBlue': case 'Brevo(Sendinblue)':
         return <SendinblueAuthorization sendinBlueConf={integrationConf} step={1} isInfo />
       case 'WooCommerce':
         return <WooCommerceAuthorization wcConf={integrationConf} step={1} isInfo />
@@ -204,7 +204,7 @@ export default function IntegInfo() {
         return <ZapierAuthorization webHooks={integrationConf} step={1} isInfo />
       case 'IFTTT':
         return <IFTTTAuthorization webHooks={integrationConf} step={1} isInfo />
-      case 'Integromat':
+      case 'Integromat': case 'Make(Integromat)':
         return <IntegromatAuthorization webHooks={integrationConf} step={1} isInfo />
       case 'Integrately':
         return <IntegratelyAuthorization webHooks={integrationConf} step={1} isInfo />
@@ -360,7 +360,7 @@ export default function IntegInfo() {
         return <CopperCRMAuthorization copperCRMConf={integrationConf} step={1} isInfo />
       case 'Drip':
         return <DripAuthorization dripConf={integrationConf} step={1} isInfo />
-      case 'Mailify':
+      case 'Mailify': case 'Sarbacane(Mailify)':
         return <MailifyAuthorization mailifyConf={integrationConf} step={1} isInfo />
       case 'Lemlist':
         return <LemlistAuthorization lemlistConf={integrationConf} step={1} isInfo />

@@ -19,22 +19,22 @@ export const generateMappedField = (livestormFields) => {
   const requiredFlds = livestormFields.filter((fld) => fld.required === true);
   return requiredFlds.length > 0
     ? requiredFlds.map((field) => ({
-        formField: "",
-        livestormFormField: field.key,
-      }))
+      formField: "",
+      livestormFormField: field.key,
+    }))
     : [{ formField: "", livestormFormField: "" }];
 };
 
 export const checkMappedFields = (livestormConf) => {
   const mappedFields = livestormConf?.field_map
     ? livestormConf.field_map.filter(
-        (mappedField) =>
-          !mappedField.formField ||
-          !mappedField.livestormFormField ||
-          (mappedField.formField === "custom" && !mappedField.customValue) ||
-          (mappedField.livestormFormField === "customFieldKey" &&
-            !mappedField.customFieldKey)
-      )
+      (mappedField) =>
+        !mappedField.formField ||
+        !mappedField.livestormFormField ||
+        (mappedField.formField === "custom" && !mappedField.customValue) ||
+        (mappedField.livestormFormField === "customFieldKey" &&
+          !mappedField.customFieldKey)
+    )
     : [];
   if (mappedFields.length > 0) {
     return false;
@@ -72,7 +72,7 @@ export const livestormAuthentication = (
     }
     setLoading({ ...loading, auth: false });
     toast.error(
-      __("Authorized failed, Please enter valid API Key", "bit-integrations")
+      __(result?.data || "Authorized failed, Please enter valid API Key", "bit-integrations")
     );
   });
 };

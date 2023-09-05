@@ -409,6 +409,23 @@ final class Flow
                     continue;
                 }
                 $integrationName = is_null($flowData->flow_details->type) ? null : ucfirst(str_replace(' ', '', $flowData->flow_details->type));
+
+                switch ($integrationName) {
+                    case 'Brevo(Sendinblue)':
+                        $integrationName = 'SendinBlue';
+                        break;
+                    case 'Make(Integromat)':
+                        $integrationName = 'Integromat';
+                        break;
+                    case 'Sarbacane(Mailify)':
+                        $integrationName = 'Mailify';
+                        break;
+
+                    default:
+                        $integrationName = $integrationName;
+                        break;
+                }
+
                 if (!is_null($integrationName) && $integration = static::isActionExists($integrationName)) {
                     $handler = new $integration($flowData->id);
                     if (isset($flowData->flow_details->field_map)) {

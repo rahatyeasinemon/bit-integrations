@@ -69,9 +69,9 @@ function OneHashCRM({ formFields, setFlow, flow, allIntegURL }) {
   const [oneHashCRMConf, setOneHashCRMConf] = useState({
     name: 'OneHashCRM',
     type: 'OneHashCRM',
-    api_key: process.env.NODE_ENV === 'development' ? '445c5ba7af5cb92' : '',
-    api_secret: process.env.NODE_ENV === 'development' ? '2d2d270f95038eb' : '',
-    domain: process.env.NODE_ENV === 'development' ? 'bitintegrations' : '',
+    api_key: process.env.NODE_ENV === 'development' ? '5949cd9c3985169' : '',
+    api_secret: process.env.NODE_ENV === 'development' ? '8846dcd0bf4a44c' : '',
+    domain: process.env.NODE_ENV === 'development' ? 'https://bitcode.onehash.is' : '',
     field_map: [
       { formField: '', oneHashCRMFormField: '' },
     ],

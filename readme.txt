@@ -677,6 +677,294 @@ With the pro version, you have the ability to create **Unlimited active integrat
 
 ### 126. [**Zoom Video Communications WordPress Integrations**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALsihVZKhQuq5QGINgro4DB)
 
+### 💥 Don't worry, we give you some [**Trigger's**](https://bitapps.pro/docs/bit-integrations/trigger/) documentation with use cases to help you get started with the plugin.
+
+### 1. [**AffiliateWP Integration**](https://bitapps.pro/docs/bit-integrations/trigger/affiliatewp/)
+
+### 2. [**Amelia Integration**](https://bitapps.pro/docs/bit-integrations/trigger/amelia/)
+
+### 3. [**ARForm Integration**](https://bitapps.pro/docs/bit-integrations/trigger/arform/)
+
+### 4. [**Beaver Builder Integration**](https://bitapps.pro/docs/bit-integrations/trigger/beaver-builder/)
+
+### 5. [**Bit Assist Integration**](https://bitapps.pro/docs/bit-integrations/trigger/bit-assist/)
+
+### 6. [**Breakdance Integration**](https://bitapps.pro/docs/bit-integrations/trigger/breakdance/)
+
+### 7. [**Bricks Integration**](https://bitapps.pro/docs/bit-integrations/trigger/bricks/)
+
+### 8. [**Brizy Integration**](https://bitapps.pro/docs/bit-integrations/trigger/brizy/)
+
+### 9. [**BuddyBoss Integration**](https://bitapps.pro/docs/bit-integrations/trigger/buddyboss/)
+
+### 10. [**Cart Flow Integration**](https://bitapps.pro/docs/bit-integrations/trigger/cart-flow/)
+
+### 11. [**Contact Form 7 Integration**](https://bitapps.pro/docs/bit-integrations/trigger/contact-form/)
+
+### 12. [**Divi Integration**](https://bitapps.pro/docs/bit-integrations/trigger/divi/)
+
+### 13. [**Easy Digital Downloads Integration**](https://bitapps.pro/docs/bit-integrations/trigger/easy-digital-downloads/)
+
+### 14. [**eForm Integration**](https://bitapps.pro/docs/bit-integrations/trigger/eform/)
+
+### 15. [**Elementor Form Integration**](https://bitapps.pro/docs/bit-integrations/trigger/elementor-form/)
+
+### 16. [**Fluent CRM Integration**](https://bitapps.pro/docs/bit-integrations/trigger/fluent-crm/)
+
+### 17. [**Fluent Forms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/fluent-forms/)
+
+### 18. [**Fluent Support Integration**](https://bitapps.pro/docs/bit-integrations/trigger/fluent-support/)
+
+### 19. [**FormCraft Integration**](https://bitapps.pro/docs/bit-integrations/trigger/formcraft/)
+
+### 20. [**Formidable Forms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/formidable-forms/)
+
+### 21. [**Forminator Integration**](https://bitapps.pro/docs/bit-integrations/trigger/forminator/)
+
+### 22. [**Forminator Integration**](https://bitapps.pro/docs/bit-integrations/trigger/forminator/)
+
+### 23. [**GamiPress Integration**](https://bitapps.pro/docs/bit-integrations/trigger/gamipress/)
+
+### 24. [**GiveWP Integration**](https://bitapps.pro/docs/bit-integrations/trigger/givewp/)
+
+### 25. [**Gravity Forms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/gravity-forms/)
+
+### 26. [**Groundhogg Integration**](https://bitapps.pro/docs/bit-integrations/trigger/groundhogg/)
+
+### 27. [**Happy Forms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/happy-forms/)
+
+### 28. [**JetFormBuilder Integration**](https://bitapps.pro/docs/bit-integrations/trigger/jetformbuilder/)
+
+### 29. [**Kadence Blocks Integration**](https://bitapps.pro/docs/bit-integrations/trigger/kadence-blocks-form/)
+
+### 31. [**LearnDash LMS Integration**](https://bitapps.pro/docs/bit-integrations/trigger/learndash-lms/)
+
+### 32. [**LifterLMS Integration**](https://bitapps.pro/docs/bit-integrations/trigger/lifterlms/)
+
+### 33. [**MB Frontend Submission Integration**](https://bitapps.pro/docs/bit-integrations/trigger/mb-frontend-submission/)
+
+### 34. [**Memberpress Integration**](https://bitapps.pro/docs/bit-integrations/trigger/memberpress/)
+
+### 35. [**MetForm Integration**](https://bitapps.pro/docs/bit-integrations/trigger/metform/)
+
+### 36. [**Ninja Form Integration**](https://bitapps.pro/docs/bit-integrations/trigger/ninja-forms/)
+
+### 37. [**Paid Membership Pro Integration**](https://bitapps.pro/docs/bit-integrations/trigger/paid-membership-pro/)
+
+### 38. [**Piotnet Addon For Elementor Integration**](https://bitapps.pro/docs/bit-integrations/trigger/piotnet-addon-for-elementor/)
+
+### 39. [**Piotnet Forms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/piotnet-forms/)
+
+### 40. [**Rafflepress Integration**](https://bitapps.pro/docs/bit-integrations/trigger/rafflepress/)
+
+### 41. [**Restrict Content Integration**](https://bitapps.pro/docs/bit-integrations/trigger/restrict-content/)
+
+### 42. [**SliceWP Integration**](https://bitapps.pro/docs/bit-integrations/trigger/SliceWP/)
+
+### 43. [**Solid Affiliate Integration**](https://bitapps.pro/docs/bit-integrations/trigger/solid-affiliate/)
+
+### 44. [**StudioCart Integration**](https://bitapps.pro/docs/bit-integrations/trigger/studiocart/)
+
+### 45. [**SureCart Integration**](https://bitapps.pro/docs/bit-integrations/trigger/surecart/)
+
+### 46. [**Tripetto Integration**](https://bitapps.pro/docs/bit-integrations/trigger/tripetto/)
+
+### 47. [**Tutor LMS Integration**](https://bitapps.pro/docs/bit-integrations/trigger/tutor-lms/)
+
+### 48. [**User Registration Integration**](https://bitapps.pro/docs/bit-integrations/trigger/user-registration/)
+
+### 49. [**weforms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/WeForms/)
+
+### 50. [**Webhook Integration**](https://bitapps.pro/docs/bit-integrations/trigger/webhook/)
+
+### 51. [**Woocommerce Integration**](https://bitapps.pro/docs/bit-integrations/trigger/woocommerce/)
+
+### 52. [**WP Courseware Integration**](https://bitapps.pro/docs/bit-integrations/trigger/wp-courseware/)
+
+### 53. [**WPForms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/wpforms/)
+
+### 54. [**WP Post Integration**](https://bitapps.pro/docs/bit-integrations/trigger/wp-post/)
+
+### 55. [**WS Form Integration**](https://bitapps.pro/docs/bit-integrations/trigger/ws-form/)
+
+### 💥 Don't worry, we give you some [**Action's**](https://bitapps.pro/docs/bit-integrations/actions/) documentation with use cases to help you get started with the plugin.
+
+### 1. [**ActiveCampaign Integration**](https://bitapps.pro/docs/bit-integrations/trigger/active-campaign/)
+
+### 2. [**Acumbamail Integration**](https://bitapps.pro/docs/bit-integrations/trigger/acumbamail/)
+
+### 3. [**Airtable Integration**](https://bitapps.pro/docs/bit-integrations/trigger/airtable/)
+
+### 4. [**Asana Integration**](https://bitapps.pro/docs/bit-integrations/trigger/asana-integrations/)
+
+### 5. [**Agiled CRM Integration**](https://bitapps.pro/docs/bit-integrations/trigger/agiled-crm/)
+
+### 6. [**Autonami Integration**](https://bitapps.pro/docs/bit-integrations/trigger/autonami/)
+
+### 7. [**Benchmark Email Integration**](https://bitapps.pro/docs/bit-integrations/trigger/benchmark/)
+
+### 8. [**Bit Form Integration**](https://bitapps.pro/docs/bit-integrations/trigger/bit-form/)
+
+### 9. [**Brevo (Sendinblue) Integration**](https://bitapps.pro/docs/bit-integrations/trigger/brevo-sendinblue/)
+
+### 10. [**BuddyBoss Integration**](https://bitapps.pro/docs/bit-integrations/trigger/buddyboss/)
+
+### 11. [**Capsule CRM Integration**](https://bitapps.pro/docs/bit-integrations/trigger/capsule-crm-integrations/)
+
+### 12. [**ClickUp Integration**](https://bitapps.pro/docs/bit-integrations/trigger/clickup/)
+
+### 13. [**Constant Contact Integration**](https://bitapps.pro/docs/bit-integrations/trigger/constantcontact/)
+
+### 14. [**ConvertKit Integration**](https://bitapps.pro/docs/bit-integrations/trigger/convertkit/)
+
+### 15. [**Custom Action Integration**](https://bitapps.pro/docs/bit-integrations/trigger/custom-action/)
+
+### 16. [**DirectIQ Integration**](https://bitapps.pro/docs/bit-integrations/trigger/directiq/)
+
+### 17. [**Dropbox Integration**](https://bitapps.pro/docs/bit-integrations/trigger/dropbox/)
+
+### 18. [**Elastic Email Integration**](https://bitapps.pro/docs/bit-integrations/trigger/elastic-email/)
+
+### 19. [**Elastic Email Integration**](https://bitapps.pro/docs/bit-integrations/trigger/elastic-email/)
+
+### 20. [**EmailOctopus Integration**](https://bitapps.pro/docs/bit-integrations/trigger/emailoctopus/)
+
+### 21. [**Encharge Integration**](https://bitapps.pro/docs/bit-integrations/trigger/encharge/)
+
+### 22. [**Fluent Support Integration**](https://bitapps.pro/docs/bit-integrations/trigger/fluent-support/)
+
+### 23. [**FluentCRM Integration**](https://bitapps.pro/docs/bit-integrations/trigger/fluentcrm/)
+
+### 24. [**Freshdesk Integration**](https://bitapps.pro/docs/bit-integrations/trigger/freshdesk/)
+
+### 25. [**FreshSales Integration**](https://bitapps.pro/docs/bit-integrations/trigger/freshsales/)
+
+### 26. [**GamiPress Integration**](https://bitapps.pro/docs/bit-integrations/trigger/gamipress/)
+
+### 27. [**Get Response Integration**](https://bitapps.pro/docs/bit-integrations/trigger/get-response/)
+
+### 27. [**Getgist Integration**](https://bitapps.pro/docs/bit-integrations/trigger/getgist/)
+
+### 28. [**GiveWp Integration**](https://bitapps.pro/docs/bit-integrations/trigger/givewp/)
+
+### 29. [**Google Contacts Integration**](https://bitapps.pro/docs/bit-integrations/trigger/google-contacts/)
+
+### 30. [**Google Calendar Integration**](https://bitapps.pro/docs/bit-integrations/trigger/google-calendar/)
+
+### 31. [**Google Drive Integration**](https://bitapps.pro/docs/bit-integrations/trigger/google-drive/)
+
+### 32. [**Google Sheet Integration**](https://bitapps.pro/docs/bit-integrations/trigger/google-sheet/)
+
+### 33. [**Groundhogg Integration**](https://bitapps.pro/docs/bit-integrations/trigger/groundhogg/)
+
+### 34. [**Hubspot Integration**](https://bitapps.pro/docs/bit-integrations/trigger/hubspot/)
+
+### 35. [**Keap Integration**](https://bitapps.pro/docs/bit-integrations/trigger/keap/)
+
+### 36. [**Kirim Email Integration**](https://bitapps.pro/docs/bit-integrations/trigger/kirim-email/)
+
+### 37. [**Klaviyo Integration**](https://bitapps.pro/docs/bit-integrations/trigger/klaviyo/)
+
+### 38. [**Konnectzit Integration**](https://bitapps.pro/docs/bit-integrations/trigger/konnectzit/)
+
+### 39. [**LearnDash LMS Integration**](https://bitapps.pro/docs/bit-integrations/trigger/learndash-lms/)
+
+### 40. [**Mail Mint Integration**](https://bitapps.pro/docs/bit-integrations/trigger/mail-mint/)
+
+### 41. [**MailBluster Integration**](https://bitapps.pro/docs/bit-integrations/trigger/mailbluster/)
+
+### 42. [**Mailchimp Integration**](https://bitapps.pro/docs/bit-integrations/trigger/mailchimp/)
+
+### 43. [**Mailercloud Integration**](https://bitapps.pro/docs/bit-integrations/trigger/mailercloud/)
+
+### 44. [**MailerLite Integration**](https://bitapps.pro/docs/bit-integrations/trigger/mailerlite/)
+
+### 45. [**Mailjet Integration**](https://bitapps.pro/docs/bit-integrations/trigger/mailjet/)
+
+### 46. [**Mailpoet Integration**](https://bitapps.pro/docs/bit-integrations/trigger/mailpoet/)
+
+### 47. [**Mailrelay Integration**](https://bitapps.pro/docs/bit-integrations/trigger/mailrelay/)
+
+### 48. [**Mailup Integration**](https://bitapps.pro/docs/bit-integrations/trigger/mailup/)
+
+### 49. [**Mautic Integration**](https://bitapps.pro/docs/bit-integrations/trigger/mautic/)
+
+### 50. [**Memberpress Integration**](https://bitapps.pro/docs/bit-integrations/trigger/memberpress/)
+
+### 51. [**Moosend Integration**](https://bitapps.pro/docs/bit-integrations/trigger/moosend/)
+
+### 52. [**OmniSend Integration**](https://bitapps.pro/docs/bit-integrations/trigger/omnisend/)
+
+### 53. [**OneDrive Integration**](https://bitapps.pro/docs/bit-integrations/trigger/onedrive/)
+
+### 54. [**Paid Membership Pro Integration**](https://bitapps.pro/docs/bit-integrations/trigger/paid-membership-pro/)
+
+### 55. [**PCloud Integration**](https://bitapps.pro/docs/bit-integrations/trigger/pcloud/)
+
+### 56. [**Perfex CRM Integration**](https://bitapps.pro/docs/bit-integrations/trigger/perfex-crm-integrations/)
+
+### 57. [**PipeDrive Integration**](https://bitapps.pro/docs/bit-integrations/trigger/pipedrive/)
+
+### 58. [**Pods Integration**](https://bitapps.pro/docs/bit-integrations/trigger/pods/)
+
+### 59. [**Post Creation Integration**](https://bitapps.pro/docs/bit-integrations/trigger/post-creation/)
+
+### 60. [**Rapid Mail Integration**](https://bitapps.pro/docs/bit-integrations/trigger/rapid-mail/)
+
+### 61. [**Registration Integration**](https://bitapps.pro/docs/bit-integrations/trigger/registration/)
+
+### 62. [**Restrict Content Integration**](https://bitapps.pro/docs/bit-integrations/trigger/restrict-content/)
+
+### 63. [**Salesforce Integration**](https://bitapps.pro/docs/bit-integrations/trigger/salesforce/)
+
+### 64. [**Selzy Integration**](https://bitapps.pro/docs/bit-integrations/trigger/selzy/)
+
+### 65. [**Sendfox Integration**](https://bitapps.pro/docs/bit-integrations/trigger/sendfox/)
+
+### 66. [**SendGrid Integration**](https://bitapps.pro/docs/bit-integrations/trigger/sendgrid/)
+
+### 67. [**Sendy Integration**](https://bitapps.pro/docs/bit-integrations/trigger/sendy/)
+
+### 68. [**Slack Integration**](https://bitapps.pro/docs/bit-integrations/trigger/slack/)
+
+### 69. [**SliceWp Integration**](https://bitapps.pro/docs/bit-integrations/trigger/slicewp/)
+
+### 70. [**SureCart Integration**](https://bitapps.pro/docs/bit-integrations/trigger/surecart/)
+
+### 71. [**Telegram Integration**](https://bitapps.pro/docs/bit-integrations/trigger/telegram/)
+
+### 72. [**Trello Integration**](https://bitapps.pro/docs/bit-integrations/trigger/trello/)
+
+### 73. [**Tutor LMS Integration**](https://bitapps.pro/docs/bit-integrations/trigger/tutor-lms/)
+
+### 74. [**Twilio Integration**](https://bitapps.pro/docs/bit-integrations/trigger/twilio/)
+
+### 75. [**Vbout Integration**](https://bitapps.pro/docs/bit-integrations/trigger/vbout/)
+
+### 76. [**Webhooks Integration**](https://bitapps.pro/docs/bit-integrations/trigger/web-hooks/)
+
+### 77. [**WhatsApp Integration**](https://bitapps.pro/docs/bit-integrations/trigger/whatsapp/)
+
+### 78. [**WishList Integration**](https://bitapps.pro/docs/bit-integrations/trigger/wishlist/)
+
+### 79. [**wooCommerce Integration**](https://bitapps.pro/docs/bit-integrations/trigger/woocommerce/)
+
+### 80. [**WP Courseware Integration**](https://bitapps.pro/docs/bit-integrations/trigger/wp-courseware/)
+
+### 81. [**Zoho CRM Integration**](https://bitapps.pro/docs/bit-integrations/trigger/zoho-crm/)
+
+### 82. [**Zoho Desk Integration**](https://bitapps.pro/docs/bit-integrations/trigger/zoho-desk/)
+
+### 83. [**Zoho Flow Integration**](https://bitapps.pro/docs/bit-integrations/trigger/zoho-flow/)
+
+### 84. [**Zoho Recruit Integration**](https://bitapps.pro/docs/bit-integrations/trigger/zoho-recruit/)
+
+### 85. [**Zoho Bigin Integration**](https://bitapps.pro/docs/bit-integrations/trigger/zoho-bigin/)
+
+### 86. [**Zoho Campaign Integration**](https://bitapps.pro/docs/bit-integrations/trigger/zoho-campaign/)
+
+### 87. [**Zoho Marketing Hub Integration**](https://bitapps.pro/docs/bit-integrations/trigger/zoho-marketing-hub/)
+
 ✨ Overview of other products we are offering :
 
 📝[**Bit Form**](https://wordpress.org/plugins/bit-form/): One of our bestselling product. Bit Form is an amazing drag & drop form builder that allows you to create custom forms to interact with your visitors. It gives you the freedom to create any form you want, with no coding required.

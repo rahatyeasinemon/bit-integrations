@@ -115,9 +115,9 @@ final class Plugin
     {
         $plugins_keys = array_keys(get_plugins());
         if (in_array('bit-integrations-pro/bitwpfi.php', $plugins_keys)) {
-            $isPro =  true;
+            $this->isPro =  true;
         } else {
-            $isPro = false;
+            $this->isPro = false;
         }
         return $this->isPro;
     }

@@ -9,6 +9,7 @@ namespace BitCode\FI\Actions\FluentSupport;
 use WP_Error;
 use BitCode\FI\Core\Util\IpTool;
 use FluentSupport\App\Models\Agent;
+use FluentSupport\App\Models\MailBox;
 
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Actions\FluentSupport\RecordApiHelper;
@@ -44,6 +45,19 @@ class FluentSupportController
             );
         }
         wp_send_json_success(is_string($supportStaff) ? json_decode($supportStaff) : $supportStaff, 200);
+    }
+
+    public function getAllBusinessInboxes()
+    {
+        $businessInboxes = MailBox::all();
+
+        if (is_wp_error($businessInboxes)) {
+            wp_send_json_error(
+                empty($businessInboxes->error) ? 'Unknown' : $businessInboxes->error,
+                400
+            );
+        }
+        wp_send_json_success(is_string($businessInboxes) ? json_decode($businessInboxes) : $businessInboxes, 200);
     }
 
     public function execute($integrationData, $fieldValues)

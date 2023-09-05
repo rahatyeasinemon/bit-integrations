@@ -247,7 +247,7 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditPod allIntegURL={allIntegURL} />
     case 'Mail Poet':
       return <EditMailPoet allIntegURL={allIntegURL} />
-    case 'SendinBlue':
+    case 'SendinBlue': case 'Brevo(Sendinblue)':
       return <EditSendinBlue allIntegURL={allIntegURL} />
     case 'WooCommerce':
       return <EditWooCommerce allIntegURL={allIntegURL} />
@@ -271,7 +271,7 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditAntApps allIntegURL={allIntegURL} />
     case 'Integrately':
       return <EditIntegrately allIntegURL={allIntegURL} />
-    case 'Integromat':
+    case 'Integromat': case 'Make(Integromat)':
       return <EditIntegromat allIntegURL={allIntegURL} />
     case 'Zoho Flow':
       return <EditZohoFlow allIntegURL={allIntegURL} />
@@ -441,7 +441,7 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditWebHooks allIntegURL={allIntegURL} />
     case 'Drip':
       return <EditDrip allIntegURL={allIntegURL} />
-    case 'Mailify':
+    case 'Mailify': case 'Sarbacane(Mailify)':
       return <EditMailify allIntegURL={allIntegURL} />
     case 'Lemlist':
       return <EditLemlist allIntegURL={allIntegURL} />

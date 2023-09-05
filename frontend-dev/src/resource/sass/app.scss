@@ -5047,3 +5047,71 @@ _:-ms-fullscreen,
     margin-right: 9%;
   }
 }
+
+.changelog-toggle{
+  .changelog-btn{
+    border-radius: 12px;
+    background: #fff;
+    padding: 6px;
+  }
+
+  .changelog{
+    padding: 0px 30px;
+    
+    .changelog-notif{
+      background-color: #ff000012;
+      color: #d00c0cd1;
+      padding: 4px 8px;
+      text-align: center;
+      border-radius: 5px;
+    }
+    
+    .whats-new{
+      margin: 0px 0px 35px 0px;
+      
+      h3{
+        margin: 5px
+      }
+    }
+    
+    .changelog-content{
+      margin-top: 10px;
+
+      .new-integration{
+        background-color: #1ab944a3;
+        color: white;
+        padding: 4px 8px;
+        text-align: center;
+        border-radius: 5px;
+      }
+
+      .integration-list{
+        margin: 0px 0px 25px 0px;
+
+        & > ul{
+          list-style-type: decimal;
+        }
+      }
+
+      .fixes{
+        background-color: rgb(0 173 255 / 66%);
+        color: white;
+        padding: 4px 8px;
+        text-align: center;
+        border-radius: 5px;
+      }
+
+      .fixes-list{
+        margin: 0px 0px 35px 0px;
+
+        & > ul{
+          list-style-type: decimal;
+        }
+      }
+    }
+
+    .footer{
+      margin: 0px 5px 5px;
+    }
+  }
+}

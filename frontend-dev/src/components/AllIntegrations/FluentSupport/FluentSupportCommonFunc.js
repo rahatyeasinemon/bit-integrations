@@ -68,6 +68,44 @@ export const supportStaff = (
     .catch(() => setIsLoading(false));
 };
 
+export const getAllBusinessInboxes = (
+  formID,
+  fluentSupportConf,
+  setFluentSupportConf,
+  setIsLoading,
+  setSnackbar
+) => {
+  setIsLoading(true);
+  
+  bitsFetch('',"fluent_support_get_all_business_inboxes")
+    .then((result) => {
+      if (result && result.success) {
+        const newConf = { ...fluentSupportConf };
+        if (!newConf.default) {
+          newConf.default = {};
+        }
+        if (result.data) {
+          newConf.default.businessInboxes = result.data;
+        }
+        setSnackbar({
+          show: true,
+          msg: __("Business Inboxes refreshed", "bit-integrations"),
+        });
+        setFluentSupportConf({ ...newConf });
+      } else {
+        setSnackbar({
+          show: true,
+          msg: __(
+            "Business Inboxes refresh failed. please try again",
+            "bit-integrations"
+          ),
+        });
+      }
+      setIsLoading(false);
+    })
+    .catch(() => setIsLoading(false));
+};
+
 export const generateMappedField = (fluentSupportConf) => {
   const requiredFlds = fluentSupportConf?.fluentSupportFields.filter(
     (fld) => fld.required === true
