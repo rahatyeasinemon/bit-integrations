@@ -4,7 +4,7 @@ Tags: automation,integration,connector,workflow automation,automator,Zapier,Plat
 Requires at least: 5.1
 Tested up to: 6.3
 Requires PHP: 7.4
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 
 Automation Plugin for WordPress; Integration of 60+ Triggers and 130+ Actions.The #1 highest no-code platform Automator plugin in WordPress.
@@ -1030,6 +1030,18 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 6. All integration list
 
 == Changelog ==
+
+= 1.4.3  =
+*Release Date - *6th September 2023\*
+
+- **Fixes :**
+  - FluentSupport business inbox issue fixed
+  - Brevo(Sendinblue) integration edit & data submit issue fixed
+  - Make(Integromat) integration edit & data submit issue fixed
+  - Sarbacane(Mailify) integration edit & data submit issue fixed
+  - Elementor fields fetching issue fixed
+  - ZohoCRM pro modules & sub modules fetching issue fixed
+  - Custom field blank screen issue fixed
 
 = 1.4.0 - 1.4.2  =
 *Release Date - *29th August 2023\*
