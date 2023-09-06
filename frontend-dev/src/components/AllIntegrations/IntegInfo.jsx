@@ -182,7 +182,7 @@ export default function IntegInfo() {
         return <ZohoRecruitAuthorization recruitConf={integrationConf} step={1} redirectLocation={location} isInfo />
       case 'Zoho Campaigns':
         return <ZohoCampaignsAuthorization campaignsConf={integrationConf} step={1} redirectLocation={location} isInfo />
-      case 'Zoho Marketing Hub':
+      case 'Zoho Marketing Hub': case 'Zoho Marketing Automation(Zoho Marketing Hub)':
         return <ZohoMarketingHubAuthorization marketingHubConf={integrationConf} step={1} redirectLocation={location} isInfo />
       case 'Zoho Bigin':
         return <ZohoBiginAuthorization biginConf={integrationConf} step={1} redirectLocation={location} isInfo />

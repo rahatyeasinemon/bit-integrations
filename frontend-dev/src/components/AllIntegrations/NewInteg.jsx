@@ -440,6 +440,10 @@ export default function NewInteg({ allIntegURL }) {
     case 'Mailify':
       integrationName = 'Sarbacane(Mailify)'
       break
+    case 'Zoho Marketing Hub':
+      integrationName = 'Zoho Marketing Automation(Zoho Marketing Hub)'
+      break
+
     default:
       integrationName = integUrlName
       break

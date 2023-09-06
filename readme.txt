@@ -92,7 +92,7 @@ Integration with [Google Sheets](https://www.google.com/sheets/about/), [Google 
 
 ### ⭐ Zoho Product Automation:
 
-[Zoho Bigin](https://www.bigin.com/), [Zoho CRM](https://www.zoho.com/crm/), [Zoho Campaigns](https://www.zoho.com/campaigns/), [Zoho Sheet](https://www.zoho.com/sheet/),[Zoho Desk](https://www.zoho.com/desk/), [Zoho Flow](https://www.zoho.com/flow/), [Zoho Marketing Hub](https://www.zoho.com/marketingautomation/), [Zoho Recruit](https://www.zoho.com/recruit/),
+[Zoho Bigin](https://www.bigin.com/), [Zoho CRM](https://www.zoho.com/crm/), [Zoho Campaigns](https://www.zoho.com/campaigns/), [Zoho Sheet](https://www.zoho.com/sheet/),[Zoho Desk](https://www.zoho.com/desk/), [Zoho Flow](https://www.zoho.com/flow/), [Zoho Marketing Automation(Zoho Marketing Hub)](https://www.zoho.com/marketingautomation/), [Zoho Recruit](https://www.zoho.com/recruit/),
 [Zoom Meeting](https://zoom.us/), [Zoom Webinar](https://zoom.us/).
 
 ### ⭐ Membership Plugin Automation:
@@ -150,7 +150,7 @@ When any trigger is fired, you can send data to 3 social media like [WhatsApp](h
 
 ### ⭐ Marketing & Campaign Management Platforms:
 
-12+ Marketing & Campaign Management Platforms Benchmark, ClickUp, Constant Contact, Moosend, Mailchimp, MailPoet, Mailjet, Mailrelay, MailUp, Mail Mint, Zoho Campaigns, Zoho Marketing Hub and more.
+12+ Marketing & Campaign Management Platforms Benchmark, ClickUp, Constant Contact, Moosend, Mailchimp, MailPoet, Mailjet, Mailrelay, MailUp, Mail Mint, Zoho Campaigns, Zoho Marketing Automation(Zoho Marketing Hub) and more.
 
 ### ⭐ Document Management & Collaboration Integration:
 
@@ -361,7 +361,7 @@ Users can get and send data to [JetEngine](https://crocoblock.com/plugins/jeteng
 103. **Create Spreadsheets for Free - Zoho Sheet :** Powered by an automated data processor, an AI-assisted data analyst, and 1,000+ integration possibilities, Zoho Sheet makes data handling easier and more ... [[**Documentation**](https://bitapps.pro/docs/bit-form/integrations/zoho-sheet/)|[**Website**](https://www.zoho.com/sheet/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJVBb24m1J1z0CcKPhr1Een)]
 104. [**Zoho Desk | Top Rated Customer Service Help Desk Software :**](https://docs.bit-integrations.bitapps.pro/integrations/zoho-desk) Zoho Desk is an online customer service help desk software for happier customers, empowered agents, and healthier businesses.[[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/zoho-desk/)|[**Website**](https://www.zoho.com/desk/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIbT5j2wupZ1O3USH8gDilg)]
 105. [**Integrate your apps to automate business workflows | Zoho Flow :**](https://docs.bit-integrations.bitapps.pro/integrations/zoho-flow) Zoho Flow is an integration platform that helps you connect your apps without any code. Automate complex business workflows within minutes. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/zoho-flow/)|[**Website**](https://www.zoho.com/flow/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKT6gxT00O3YFk2GGYvQtMX)]
-106. [**Best marketing automation platform for your business - Zoho Marketing Hub :**](https://docs.bit-integrations.bitapps.pro/integrations/wpcf7-zoho-marketing-hub) Zoho Marketing Automation is a multichannel software solution with features designed to ease the marketing process and generate sales-ready leads. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/zoho-marketing-hub/)|[**Website**](https://www.zoho.com/marketingautomation/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKgaz3bG1iFFBYg2JuFpgVJ)]
+106. [**Best marketing automation platform for your business - Zoho Marketing Automation(Zoho Marketing Hub) :**](https://docs.bit-integrations.bitapps.pro/integrations/wpcf7-zoho-marketing-hub) Zoho Marketing Automation is a multichannel software solution with features designed to ease the marketing process and generate sales-ready leads. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/zoho-marketing-hub/)|[**Website**](https://www.zoho.com/marketingautomation/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKgaz3bG1iFFBYg2JuFpgVJ)]
 107. [**One stop recruitment solution | Talent Acquisition Software - Zoho Recruit :**](https://docs.bit-integrations.bitapps.pro/integrations/wpcf7-zohorecruit) Zoho Recruit is a cloud-based hiring platform that gives HR teams and recruitment agencies the digital tools needed to fill roles quickly and efficiently. It's ... [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/zoho-recruit/)|[**Website**](https://www.zoho.com/recruit/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIpAJSh09abQZaSe30pwk9E)]
 108. [**Zoom One platform to connect - Zoom Meeting :**](https://docs.bit-integrations.bitapps.pro/integrations/zoom-meeting) Modernize workflows with Zoom's trusted collaboration tools: including video meetings, team chat, VoIP phone, webinars, whiteboard, contact center, ... [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/zoom-meeting/)|[**Website**](https://zoom.us/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALsihVZKhQuq5QGINgro4DB)]
 109. [**Expand your reach, connect with Zoom Webinars :**](https://docs.bit-integrations.bitapps.pro/integrations/zoom-webinar) Zoom Webinars allow you to connect with large audiences and share video, audio, and content from any location and device for better engagement. The simple ... [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/zoom-webinar/)|[**Website**](https://explore.zoom.us/en/products/webinars/)|Tutorial]
@@ -963,7 +963,7 @@ With the pro version, you have the ability to create **Unlimited active integrat
 
 ### 86. [**Zoho Campaign Integration**](https://bitapps.pro/docs/bit-integrations/trigger/zoho-campaign/)
 
-### 87. [**Zoho Marketing Hub Integration**](https://bitapps.pro/docs/bit-integrations/trigger/zoho-marketing-hub/)
+### 87. [**Zoho Marketing Automation(Zoho Marketing Hub) Integration**](https://bitapps.pro/docs/bit-integrations/trigger/zoho-marketing-hub/)
 
 ✨ Overview of other products we are offering :
 

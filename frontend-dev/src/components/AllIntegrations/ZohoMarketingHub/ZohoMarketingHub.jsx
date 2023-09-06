@@ -18,8 +18,8 @@ function ZohoMarketingHub({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [marketingHubConf, setMarketingHubConf] = useState({
-    name: 'Zoho Marketing Hub',
-    type: 'Zoho Marketing Hub',
+    name: 'Zoho Marketing Automation(Zoho Marketing Hub)',
+    type: 'Zoho Marketing Automation(Zoho Marketing Hub)',
     clientId: process.env.NODE_ENV === 'development' ? '1000.HFCU8M8XENMULNWH12RO937GWC4V9A' : '',
     clientSecret: process.env.NODE_ENV === 'development' ? '88870e8fe81cdeeb4c452dc953be3973603bd8f87c' : '',
     list: '',

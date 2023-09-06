@@ -233,7 +233,7 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditZohoRecruit allIntegURL={allIntegURL} />
     case 'Zoho Campaigns':
       return <EditZohoCampaigns allIntegURL={allIntegURL} />
-    case 'Zoho Marketing Hub':
+    case 'Zoho Marketing Hub': case 'Zoho Marketing Automation(Zoho Marketing Hub)':
       return <EditZohoMarketingHub allIntegURL={allIntegURL} />
     case 'Zoho Bigin':
       return <EditZohoBigin allIntegURL={allIntegURL} />

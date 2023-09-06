@@ -52,7 +52,7 @@ export default function SelectAction() {
     { type: 'WooCommerce' },
     { type: 'Zoho Bigin' },
     { type: 'Zoho Campaigns' },
-    { type: 'Zoho Marketing Hub' },
+    { type: 'Zoho Marketing Automation(Zoho Marketing Hub)' },
     { type: 'Zoho Recruit' },
     { type: 'Getgist' },
     { type: 'ElasticEmail' },

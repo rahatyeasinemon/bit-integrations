@@ -420,6 +420,9 @@ final class Flow
                     case 'Sarbacane(Mailify)':
                         $integrationName = 'Mailify';
                         break;
+                    case 'Zoho Marketing Automation(Zoho Marketing Hub)':
+                        $integrationName = 'Zoho Marketing Hub';
+                        break;
 
                     default:
                         $integrationName = $integrationName;
