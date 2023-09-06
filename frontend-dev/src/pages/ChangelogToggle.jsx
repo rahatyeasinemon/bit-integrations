@@ -26,31 +26,33 @@ export default function ChangelogToggle() {
                 <div className='changelog'>
                     <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4>
                     <div className="flx flx-col flx-center whats-new">
-                        <h3>{__('What\'s New in (1.4.0-1.4.1)?')}</h3>
-                        <small>28 August 2023</small>
+                        <h3>{__(`What\'s New in ${btcbi.isPro ? '(1.4.1)' : '(1.4.3)'}?`)}</h3>
+                        <small>06 September 2023</small>
                     </div>
                     <div className='changelog-content'>
                         {/* <h4>New Integration</h4> */}
                         {/* <p>New Integration</p> */}
-                        <span className='new-integration'><b>New Integrations</b></span>
+                        {/* <span className='new-integration'><b>New Integrations</b></span> */}
 
-                        <div className='integration-list'>
+                        {/* <div className='integration-list'>
                             <ul>
                                 <li>Perfex CRM</li>
                                 <li>OneHash CRM</li>
                                 <li>Salesflare CRM</li>
                             </ul>
-                        </div>
+                        </div> */}
 
                         <span className='fixes'><b>Fixed</b></span>
 
                         <div className='fixes-list'>
                             <ul>
-                                <li>ClickUp Log success message issue fixed</li>
-                                <li>ClinchPad Log success message issue fixed</li>
-                                <li>GiveWP Purchase Value Issue fixed</li>
-                                <li>ZohoCrm EditActions caching data issue fixed</li>
-                                <li>Fluent CRM issues fixed</li>
+                                <li>FluentSupport business inbox issue fixed</li>
+                                <li>Brevo(Sendinblue) integration edit & data submit issue fixed</li>
+                                <li>Make(Integromat) integration edit & data submit issue fixed</li>
+                                <li>Sarbacane(Mailify) integration edit & data submit issue fixed</li>
+                                <li>Elementor fields fetching issue fixed</li>
+                                <li>ZohoCRM pro modules & sub modules fetching issue fixed</li>
+                                <li>Custom field blank screen issue fixed</li>
                             </ul>
                         </div>
                     </div>
