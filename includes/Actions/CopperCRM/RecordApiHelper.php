@@ -30,7 +30,7 @@ class RecordApiHelper
             "X-PW-AccessToken"  => $integrationDetails->api_key,
             "X-PW-Application"  => "developer_api",
             "X-PW-UserEmail"    => $integrationDetails->api_email,
-            "Content-Type"      =>"application/json"
+            "Content-Type"      => "application/json"
         ];
     }
 
@@ -41,12 +41,12 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
         }
 
-        $staticFieldsKeys = ['name', 'email_domain', 'details', 'street', 'city', 'state', 'postal_code', 'country',  'phone_numbers','websites'];
+        $staticFieldsKeys = ['name', 'email_domain', 'details', 'street', 'city', 'state', 'postal_code', 'country',  'phone_numbers', 'websites'];
 
         foreach ($finalData as $key => $value) {
             if (in_array($key, $staticFieldsKeys)) {
                 if (($key == 'street' || $key == 'city' || $key == 'state' || $key == 'postal_code' || $key == 'country')) {
-                    $requestParams['address'][$key] =   $value ;
+                    $requestParams['address'][$key] =   $value;
                 } elseif (($key == 'websites')) {
                     $requestParams['websites'][] = (object) [
                         'url'   => $value,
@@ -74,7 +74,7 @@ class RecordApiHelper
         $this->type     = 'Company';
         $this->typeName = 'Company created';
 
-        $apiEndpoint = $this->apiEmail."/companies";
+        $apiEndpoint = $this->apiEmail . "/companies";
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -85,15 +85,20 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
         }
 
-        $staticFieldsKeys = ['name', 'title', 'details', 'email', 'phone_numbers', 'street', 'city', 'state', 'postal_code', 'country', 'websites'];
+        $staticFieldsKeys = ['name', 'title', 'details', 'email', 'email_domain', 'phone_numbers', 'street', 'city', 'state', 'postal_code', 'country', 'websites'];
 
         foreach ($finalData as $key => $value) {
             if (in_array($key, $staticFieldsKeys)) {
                 if (($key == 'street' || $key == 'city' || $key == 'state' || $key == 'postal_code' || $key == 'country')) {
-                    $requestParams['address'][$key] =   $value ;
+                    $requestParams['address'][$key] =   $value;
                 } elseif (($key == 'websites')) {
                     $requestParams['websites'][] = (object) [
                         'url'   => $value,
+                        'category' => 'work'
+                    ];
+                } elseif ($key === 'email' || $key === 'email_domain') {
+                    $requestParams['emails'][] = (object) [
+                        'email'   => $value,
                         'category' => 'work'
                     ];
                 } elseif ($key == 'phone_numbers') {
@@ -118,7 +123,7 @@ class RecordApiHelper
         $this->type     = 'Person';
         $this->typeName = 'Person created';
 
-        $apiEndpoint = $this->apiEmail."/people";
+        $apiEndpoint = $this->apiEmail . "/people";
 
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
@@ -134,7 +139,7 @@ class RecordApiHelper
         foreach ($finalData as $key => $value) {
             if (in_array($key, $staticFieldsKeys)) {
                 if ($key == 'close_date') {
-                    $requestParams['close_date'] =date("m/d/Y", strtotime($value));
+                    $requestParams['close_date'] = date("m/d/Y", strtotime($value));
                 } else {
                     $requestParams[$key] = $value;
                 }
@@ -147,13 +152,13 @@ class RecordApiHelper
         }
 
         if (!empty($this->integrationDetails->selectedCRMPeople)) {
-            $requestParams['primary_contact_id'] = (int)($this->integrationDetails->selectedCRMPeople) ;
+            $requestParams['primary_contact_id'] = (int)($this->integrationDetails->selectedCRMPeople);
         }
         if (!empty($this->integrationDetails->selectedCRMPipelines)) {
-            $requestParams['pipeline_id'] =(int)($this->integrationDetails->selectedCRMPipelines) ;
+            $requestParams['pipeline_id'] = (int)($this->integrationDetails->selectedCRMPipelines);
         }
         if ($this->integrationDetails->actions->owner) {
-            $requestParams['assignee_id'] = (int)($this->integrationDetails->selectedOwner) ;
+            $requestParams['assignee_id'] = (int)($this->integrationDetails->selectedOwner);
         }
         if ($this->integrationDetails->actions->company) {
             $requestParams['company_id'] = (int)($this->integrationDetails->selectedCompany);
@@ -165,7 +170,7 @@ class RecordApiHelper
         $this->type     = 'Opportunity';
         $this->typeName = 'Opportunity created';
 
-        $apiEndpoint = $this->apiEmail."/opportunities";
+        $apiEndpoint = $this->apiEmail . "/opportunities";
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -194,13 +199,13 @@ class RecordApiHelper
         }
 
         if ($this->integrationDetails->actions->owner) {
-            $requestParams['assignee_id'] = (int)($this->integrationDetails->selectedOwner) ;
+            $requestParams['assignee_id'] = (int)($this->integrationDetails->selectedOwner);
         }
 
         $this->type     = 'Task';
         $this->typeName = 'Task created';
 
-        $apiEndpoint = $this->apiEmail."/tasks";
+        $apiEndpoint = $this->apiEmail . "/tasks";
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -241,7 +246,7 @@ class RecordApiHelper
             $apiResponse = $this->addTask($finalData);
         }
 
-        if ($apiResponse->data->id || $apiResponse->status === 'success') {
+        if ($apiResponse->id || $apiResponse->status === 'success') {
             $res = [$this->typeName . ' successfully'];
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
         } else {
