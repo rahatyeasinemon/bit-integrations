@@ -6,6 +6,11 @@ use BitCode\FI\Flow\Flow;
 
 final class BitFormController
 {
+    private static function isPluginActive()
+    {
+        return is_plugin_active('bitform/bitforms.php');
+    }
+
     public static function info()
     {
         $plugin_path = 'bitform/bitforms.php';
@@ -14,7 +19,7 @@ final class BitFormController
             'title' => 'Contact Form Plugin - Fastest Contact Form Builder Plugin for WordPress by Bit Forms.',
             'slug' => $plugin_path,
             'type' => 'form',
-            'is_active' => is_plugin_active('bitform/bitforms.php'),
+            'is_active' => self::isPluginActive(),
             'activation_url' => wp_nonce_url(self_admin_url('plugins.php?action=activate&amp;plugin=' . $plugin_path . '&amp;plugin_status=all&amp;paged=1&amp;s'), 'activate-plugin_' . $plugin_path),
             'install_url' => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
             'list' => [
@@ -31,7 +36,7 @@ final class BitFormController
 
     public function getAll()
     {
-        if (!is_plugin_active('bitform/bitforms.php')) {
+        if (!self::isPluginActive()) {
             wp_send_json_error(__('Bit Form is not installed or activated', 'bit-integrations'));
         }
 
@@ -44,18 +49,6 @@ final class BitFormController
             ];
         }
         wp_send_json_success($all_forms);
-    }
-
-    private static function _getFieldLabel($field)
-    {
-        if (property_exists($field->settings, 'label') && $field->settings->label) {
-            return $field->settings->label;
-        } elseif (property_exists($field->settings, 'admin_field_label') && $field->settings->admin_field_label) {
-            return $field->settings->admin_field_label;
-        } elseif (is_object($field->attributes) && property_exists($field->attributes, 'name') && $field->attributes->name) {
-            return $field->attributes->name;
-        }
-        return '';
     }
 
     public function get_a_form($data)
