@@ -87,85 +87,29 @@ final class BitFormController
 
         $fields = [];
         foreach ($fieldDetails as $key => $field) {
-            if (isset($field->lbl)) {
-                // if (property_exists($field, 'raw') && array_key_exists('multiple_name', $field->raw) && $field->raw['multiple_name'] && $field->raw['type'] == 'name') {
-                //     $tmpName = $field->raw;
-                //     $names = [];
-                //     foreach ($tmpName as $key => $val) {
-                //         if ($key == 'element_id' && $val) {
-                //             $last_dash_position = strrpos($val, "-");
-                //             $index = substr($val, $last_dash_position + 1);
-                //         }
-                //         if (($key == 'fname' || $key == 'lname' || $key == 'mname' || $key == 'prefix') && $val) {
-                //             if ($key == 'fname') {
-                //                 $names['first-name-' . $index] = 'First Name-' . $index;
-                //             } elseif ($key == 'lname') {
-                //                 $names['last-name-' . $index] = 'Last Name-' . $index;
-                //             } elseif ($key == 'mname') {
-                //                 $names['middle-name-' . $index] = 'Middle Name-' . $index;
-                //             } elseif ($key == 'prefix') {
-                //                 $names['prefix'] = 'Name Prefix';
-                //             }
-                //         }
-                //     }
+            if (isset($field->lbl) && !isset($field->txt) && $field->typ !== 'repeater') {
+                $name = str_replace(' ', '-', $field->lbl);
 
-                //     foreach ($names as $key => $value) {
-                //         $fields[] = [
-                //             'name' => $key,
-                //             'type' => 'text',
-                //             'label' => $value,
-                //         ];
-                //     }
-                // } elseif (property_exists($field, 'raw') && $field->raw['type'] == 'address' && is_array(($field->raw))) {
-                //     $all_fields = $field->raw;
-                //     $address = [
-                //         'street_address' => 'Street Address',
-                //         'city' => 'Address City',
-                //         'state' => 'Address State',
-                //         'zip' => 'Address Zip',
-                //         'country' => 'Address Country',
-                //         'address_line' => 'Address Line',
-                //     ];
-                //     $keys = ['street_address', 'address_city', 'address_state', 'address_zip', 'address_country', 'address_line'];
-                //     foreach ($all_fields as $key => $value) {
-                //         if (in_array($key, $keys)) {
-                //             if (array_key_exists($key, $all_fields) && $all_fields[$key]) {
-                //                 if ($key != 'street_address' && $key != 'address_line') {
-                //                     $key = substr($key, 8);
-                //                 }
-                //                 if ($key == 'element_id' && $value) {
-                //                     $last_dash_position = strrpos($value, "-");
-                //                     $index = substr($value, $last_dash_position + 1);
-                //                 }
-                //                 $fields[] = [
-                //                     'name' => $key . '-' . $index,
-                //                     'type' => 'text',
-                //                     'label' => $address[$key] . '-' . $index,
-                //                 ];
-                //             }
-                //         }
-                //     }
-                // } else {
-                //     $type = $field->type;
-                //     if ($type === 'upload') {
-                //         $type = 'file';
-                //     }
-                //     if ($field->slug) {
-                //         $last_dash_position = strrpos($field->slug, "-");
-                //         $index = substr($field->slug, $last_dash_position + 1);
-                //     }
-                //     $fields[] = [
-                //         'name' => $field->slug,
-                //         'type' => $type,
-                //         'label' => $field->field_label . '-' . $index,
-                //     ];
-                // }
-
-                $fields[] = [
-                    'name' => $key,
-                    'type' => $field->typ,
-                    'label' => $field->lbl
-                ];
+                if ($field->typ === 'file-up') {
+                    $fields[] = [
+                        'name' => strtolower($name) . '-' . $key,
+                        'type' => 'file',
+                        'label' => $field->lbl
+                    ];
+                } elseif ($field->typ === 'decision-box') {
+                    $name = str_replace(' ', '-', $field->adminLbl);
+                    $fields[] = [
+                        'name' => strtolower($name) . '-' . $key,
+                        'type' => $field->typ,
+                        'label' => $field->adminLbl
+                    ];
+                } else {
+                    $fields[] = [
+                        'name' => strtolower($name) . '-' . $key,
+                        'type' => $field->typ,
+                        'label' => $field->lbl
+                    ];
+                }
             }
         }
         return $fields;
