@@ -2,8 +2,6 @@
 
 namespace BitCode\FI\Triggers\BitForm;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\DateTimeHelper;
 use BitCode\FI\Flow\Flow;
 
 final class BitFormController
@@ -88,24 +86,21 @@ final class BitFormController
         $fields = [];
         foreach ($fieldDetails as $key => $field) {
             if (isset($field->lbl) && !isset($field->txt) && $field->typ !== 'repeater') {
-                $name = str_replace(' ', '-', $field->lbl);
-
                 if ($field->typ === 'file-up') {
                     $fields[] = [
-                        'name' => strtolower($name) . '-' . $key,
+                        'name' => $key,
                         'type' => 'file',
                         'label' => $field->lbl
                     ];
                 } elseif ($field->typ === 'decision-box') {
-                    $name = str_replace(' ', '-', $field->adminLbl);
                     $fields[] = [
-                        'name' => strtolower($name) . '-' . $key,
+                        'name' => $key,
                         'type' => $field->typ,
                         'label' => $field->adminLbl
                     ];
                 } else {
                     $fields[] = [
-                        'name' => strtolower($name) . '-' . $key,
+                        'name' => $key,
                         'type' => $field->typ,
                         'label' => $field->lbl
                     ];
@@ -117,64 +112,20 @@ final class BitFormController
 
     public static function handle_bitform_submit($formId, $entryId, $formData)
     {
-        // error_log(print_r(['entryId:', $entryId], true));
-        // error_log(print_r(['formData:', $formData], true));
-        // error_log(print_r(['formId:', $formId], true));
-
-        // Flow::execute('BitForm', $form_id, $formData, $flows);
-
         if (!empty($formId)) {
             $data = [];
             if ($entryId) {
-                $formData['entry_id'] = $entryId;
+                $data['entry_id'] = $entryId;
             }
-            // foreach ($formData as $fldDetail) {
-            //     if (is_array($fldDetail['value'])) {
-            //         if (array_key_exists('file', $fldDetail['value'])) {
-            //             $data[$fldDetail['name']] = [$fldDetail['value']['file']['file_path']];
-            //         } elseif (explode("-", $fldDetail['name'])[0] == 'name') {
-            //             if ($fldDetail['name']) {
-            //                 $last_dash_position = strrpos($fldDetail['name'], "-");
-            //                 $index = substr($fldDetail['name'], $last_dash_position + 1);
-            //             }
-            //             foreach ($fldDetail['value'] as $nameKey => $nameVal) {
-            //                 $data[$nameKey . '-' . $index] = $nameVal;
-            //             }
-            //         } elseif (explode("-", $fldDetail['name'])[0] == 'address') {
-            //             if ($fldDetail['name']) {
-            //                 $last_dash_position = strrpos($fldDetail['name'], "-");
-            //                 $index = substr($fldDetail['name'], $last_dash_position + 1);
-            //             }
-            //             foreach ($fldDetail['value'] as $nameKey => $nameVal) {
-            //                 $data[$nameKey . '-' . $index] = $nameVal;
-            //             }
-            //         } else {
-            //             $val = $fldDetail['value'];
-            //             if (array_key_exists('ampm', $val)) {
-            //                 $time = $val['hours'] . ':' . $val['minutes'] . ' ' . $val['ampm'];
-            //                 $data[$fldDetail['name']] = $time;
-            //             } elseif (array_key_exists('year', $val)) {
-            //                 $date = $val['year'] . '-' . $val['month'] . '-' . $val['day'];
-            //                 $data[$fldDetail['name']] = $date;
-            //             } elseif (array_key_exists('formatting_result', $val)) {
-            //                 $data[$fldDetail['name']] = $fldDetail['value']['formatting_result'];
-            //             } else {
-            //                 $data[$fldDetail['name']] = $fldDetail['value'];
-            //             }
-            //         }
-            //     } else {
-            //         if (strtotime($fldDetail['value'])) {
-            //             $dateTmp = new DateTime($fldDetail['value']);
-            //             $dateFinal = date_format($dateTmp, 'Y-m-d');
-            //             $data[$fldDetail['name']] = $dateFinal;
-            //         } else {
-            //             $data[$fldDetail['name']] = $fldDetail['value'];
-            //         }
-            //     }
-            // }
-
+            foreach ($formData as $key => $value) {
+                if (is_string($value) && str_contains($value, '__bf__')) {
+                    $data[$key] = explode('__bf__', $value);
+                } else {
+                    $data[$key] = $value;
+                }
+            }
             if (!empty($formId) && $flows = Flow::exists('BitForm', $formId)) {
-                Flow::execute('FormBitForminator', $formId, $formData, $flows);
+                Flow::execute('FormBitForminator', $formId, $data, $flows);
             }
         }
     }
