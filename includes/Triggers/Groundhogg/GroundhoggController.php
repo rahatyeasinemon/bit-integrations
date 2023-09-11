@@ -47,10 +47,20 @@ final class GroundhoggController
         $form_id = 1;
         global $wp_rest_server;
         $request = $wp_rest_server->get_raw_data();
-        $data= json_decode($request);
+        $data = json_decode($request);
         $meta = $data->meta;
         $fieldValues['primary_phone'] = $meta->primary_phone;
         $fieldValues['mobile_phone'] = $meta->mobile_phone;
+
+        if (isset($data->tags)) {
+            $tags = new Tags();
+
+            $tag_list = [];
+            foreach ($data->tags as $tag_id) {
+                $tag_list[] = $tags->get_tag($tag_id)->tag_name;
+            }
+            $fieldValues['tags'] = implode(',', $tag_list);
+        }
 
         $flows = Flow::exists('Groundhogg', $form_id);
         if (!$flows) {
