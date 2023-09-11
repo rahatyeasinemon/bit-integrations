@@ -158,6 +158,11 @@ function Insightly({ formFields, setFlow, flow, allIntegURL }) {
       }
     }
 
+    if (insightlyConf.actionName === 'lead' && !checkRequiredFields(insightlyConf)) {
+      toast.error('Please select Lead Status or Lead Source')
+      return
+    }
+
     insightlyConf.field_map.length > 0 && setStep(pageNo)
   }
 
@@ -193,7 +198,7 @@ function Insightly({ formFields, setFlow, flow, allIntegURL }) {
         {insightlyConf?.actionName && (
           <button
             onClick={() => nextPage(3)}
-            disabled={!(checkMappedFields(insightlyConf) && checkRequiredFields(insightlyConf))}
+            disabled={!(checkMappedFields(insightlyConf))}
             className="btn f-right btcd-btn-lg green sh-sm flx"
             type="button"
           >

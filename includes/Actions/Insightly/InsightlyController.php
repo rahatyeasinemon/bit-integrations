@@ -24,17 +24,17 @@ class InsightlyController
 
         $apiUrl       = $fieldsRequestParams->api_url;
         $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = "https://api.".$apiUrl."/v3.1/Users";
+        $apiEndpoint = "https://api." . $apiUrl . "/v3.1/Users";
         $headers = [
             "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (isset($response)) {
+        if (is_array($response) && isset($response[0]->USER_ID)) {
             wp_send_json_success('Authentication successful', 200);
         } else {
-            wp_send_json_error('Please enter valid Brand name & API key', 400);
+            wp_send_json_error('Please enter valid API URL & API key', 400);
         }
     }
 
@@ -47,7 +47,7 @@ class InsightlyController
 
         $apiUrl       = $fieldsRequestParams->api_url;
         $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = "https://api.".$apiUrl."/v3.1/Organisations";
+        $apiEndpoint = "https://api." . $apiUrl . "/v3.1/Organisations";
         $headers = [
             "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
         ];
@@ -77,11 +77,11 @@ class InsightlyController
 
 
         if ($fieldsRequestParams->action_name == "opportunity") {
-            $apiEndpoint = "https://api.".$apiUrl."/v3.1/OpportunityCategories";
+            $apiEndpoint = "https://api." . $apiUrl . "/v3.1/OpportunityCategories";
         } elseif ($fieldsRequestParams->action_name == "project") {
-            $apiEndpoint = "https://api.".$apiUrl."/v3.1/ProjectCategories";
+            $apiEndpoint = "https://api." . $apiUrl . "/v3.1/ProjectCategories";
         } elseif ($fieldsRequestParams->action_name == "task") {
-            $apiEndpoint = "https://api.".$apiUrl."/v3.1/TaskCategories";
+            $apiEndpoint = "https://api." . $apiUrl . "/v3.1/TaskCategories";
         }
 
         $headers = [
@@ -138,7 +138,7 @@ class InsightlyController
 
         $apiUrl       = $fieldsRequestParams->api_url;
         $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = "https://api.".$apiUrl."/v3.1/LeadStatuses";
+        $apiEndpoint = "https://api." . $apiUrl . "/v3.1/LeadStatuses";
         $headers = [
             "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
         ];
@@ -165,7 +165,7 @@ class InsightlyController
 
         $apiUrl       = $fieldsRequestParams->api_url;
         $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = "https://api.".$apiUrl."/v3.1/LeadSources";
+        $apiEndpoint = "https://api." . $apiUrl . "/v3.1/LeadSources";
         $headers = [
             "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
         ];
@@ -192,7 +192,7 @@ class InsightlyController
 
         $apiUrl       = $fieldsRequestParams->api_url;
         $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = "https://api.".$apiUrl."/v3.1/Pipelines";
+        $apiEndpoint = "https://api." . $apiUrl . "/v3.1/Pipelines";
         $headers = [
             "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
         ];
@@ -228,10 +228,10 @@ class InsightlyController
 
         $apiUrl         = $fieldsRequestParams->api_url;
         $apiKey         = $fieldsRequestParams->api_key;
-        $apiEndpoint    = "https://api.".$apiUrl."/v3.1/PipelineStages";
+        $apiEndpoint    = "https://api." . $apiUrl . "/v3.1/PipelineStages";
         $headers        = [
-                            "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
-                        ];
+            "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
+        ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
         if (!empty($response)) {
