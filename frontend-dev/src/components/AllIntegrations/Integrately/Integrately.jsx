@@ -42,7 +42,7 @@ function Integrately({ formFields, setFlow, flow, allIntegURL }) {
       </div>
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
+      <div className="btcd-stp-page" style={{ width: step === 2 && '100%', height: step === 2 && 'auto' }}>
 
         <WebHooksStepTwo
           step={step}
