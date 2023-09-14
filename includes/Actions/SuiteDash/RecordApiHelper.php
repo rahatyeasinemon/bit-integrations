@@ -60,7 +60,7 @@ class RecordApiHelper
                     str_replace('address-', '', $key) => $value
                 ];
             } elseif (stripos($key, "custom-") > -1) {
-                $contactData["custom"] = (object)[
+                $contactData["custom_fields"] = (object)[
                     str_replace('custom-', '', $key) => $value
                 ];
             }
