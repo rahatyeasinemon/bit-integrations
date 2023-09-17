@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\NF;
 
 use BitCode\FI\Flow\Flow;
@@ -62,6 +63,9 @@ final class NFController
 
     public static function fields($form_id)
     {
+        if (!(function_exists('Ninja_Forms') && is_callable('Ninja_Forms'))) {
+            wp_send_json_error(__('Ninja Forms  is not installed or activated', 'bit-integrations'));
+        }
         $fieldDetails = Ninja_Forms()->form($form_id)->get_fields();
 
         if (empty($fieldDetails)) {
