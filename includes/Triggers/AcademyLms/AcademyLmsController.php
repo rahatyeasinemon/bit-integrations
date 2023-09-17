@@ -3,6 +3,7 @@
 namespace BitCode\FI\Triggers\AcademyLms;
 
 use BitCode\FI\Flow\Flow;
+use Academy\Shortcode\AcademyCourses;
 
 final class AcademyLmsController
 {
@@ -30,28 +31,37 @@ final class AcademyLmsController
         ];
     }
 
-    public function getAll()
+    public static function isPluginActive()
     {
         if (!class_exists('Academy')) {
             wp_send_json_error(__('Academy Lms is not installed or activated', 'bit-integrations'));
         }
+    }
 
-        $types = ['Course-Enroll', 'User attempts(submit) a quiz', 'Completed a lesson', 'Complete a course', 'User achieves a targeted percentage on a quiz'];
-        $tutor_action = [];
+    public function getAll()
+    {
+        self::isPluginActive();
+        $types = [
+            'User Enrolled in a Course',
+            'User attempts(submit) a quiz',
+            'User Complete a Lesson',
+            'User Complete a Course',
+            'User achieves a targeted percentage on a quiz'
+        ];
+
+        $academy_action = [];
         foreach ($types as $index => $type) {
-            $tutor_action[] = (object)[
+            $academy_action[] = (object)[
                 'id' => $index + 1,
                 'title' => $type,
             ];
         }
-        wp_send_json_success($tutor_action);
+        wp_send_json_success($academy_action);
     }
 
     public function get_a_form($data)
     {
-        if (!function_exists('tutor')) {
-            wp_send_json_error(__('Academy Lms is not installed or activated', 'bit-integrations'));
-        }
+        self::isPluginActive();
         if (empty($data->id)) {
             wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
@@ -63,9 +73,8 @@ final class AcademyLmsController
 
         if ($data->id == 1) {
             $courses = [];
-
             $courseList = get_posts([
-                'post_type' => 'courses',
+                'post_type' => 'academy_courses',
                 'post_status' => 'publish',
                 'numberposts' => -1
             ]);
@@ -86,7 +95,7 @@ final class AcademyLmsController
             $quizzes = [];
 
             $allQuiz = get_posts([
-                'post_type' => 'tutor_quiz',
+                'post_type' => 'academy_quiz',
                 'post_status' => 'publish',
                 'numberposts' => -1
             ]);
@@ -149,7 +158,7 @@ final class AcademyLmsController
             $quizzes = [];
 
             $allQuiz = get_posts([
-                'post_type' => 'tutor_quiz',
+                'post_type' => 'academy_quiz',
                 'post_status' => 'publish',
                 'numberposts' => -1
             ]);
@@ -186,6 +195,7 @@ final class AcademyLmsController
             $responseData['percentageCondition'] = $percentageCondition;
         }
 
+
         $responseData['fields'] = $fields;
         wp_send_json_success($responseData);
     }
@@ -215,69 +225,17 @@ final class AcademyLmsController
 
         if ($entity === 'course-enroll') {
             $fields = [
-                'Course ID' => (object) [
+                'Course Id' => (object) [
                     'fieldKey' => 'course_id',
-                    'fieldName' => 'Course ID'
+                    'fieldName' => 'Course Id'
                 ],
                 'Course Title' => (object) [
                     'fieldKey' => 'course_title',
-                    'fieldName' => 'Course Title',
-                    'required' => true
+                    'fieldName' => 'Course Title'
                 ],
-                'Course Author' => (object) [
-                    'fieldKey' => 'course_author',
-                    'fieldName' => 'Course Author',
-                    'required' => false
-                ],
-                'Student ID' => (object) [
-                    'fieldKey' => 'student_id',
-                    'fieldName' => 'Student ID',
-                    'required' => false
-                ],
-                'Student Name' => (object) [
-                    'fieldKey' => 'student_name',
-                    'fieldName' => 'Student Name',
-                    'required' => false
-                ],
-                'Maximum Student' => (object) [
-                    'fieldKey' => 'maximum_students',
-                    'fieldName' => 'Maximum Student',
-                    'required' => false
-                ],
-                'Course Duration' => (object) [
-                    'fieldKey' => '_course_duration',
-                    'fieldName' => 'Course Duration',
-                    'required' => false
-                ],
-                'Tutor Course Level' => (object) [
-                    'fieldKey' => '_tutor_course_level',
-                    'fieldName' => 'Tutor Course Level',
-                    'required' => false
-                ],
-                'Tutor Course Benifits' => (object) [
-                    'fieldKey' => '_tutor_course_benefits',
-                    'fieldName' => 'Tutor Course Benifits',
-                    'required' => false
-                ],
-                'Tutor Course Requirements' => (object) [
-                    'fieldKey' => '_tutor_course_requirements',
-                    'fieldName' => 'Tutor Course Requirements',
-                    'required' => false
-                ],
-                'Tutor Course Material Includes' => (object) [
-                    'fieldKey' => '_tutor_course_material_includes',
-                    'fieldName' => 'Tutor Course Material Includes',
-                    'required' => false
-                ],
-                'Tutor Course Product ID' => (object) [
-                    'fieldKey' => '_tutor_course_product_id',
-                    'fieldName' => 'Tutor Course Product ID',
-                    'required' => false
-                ],
-                'Tutor Course Price Type' => (object) [
-                    'fieldKey' => '_tutor_course_price_type',
-                    'fieldName' => 'Tutor Course Price Type',
-                    'required' => false
+                'Course Content' => (object) [
+                    'fieldKey' => 'post_content',
+                    'fieldName' => 'Course Content'
                 ],
             ];
         } elseif ($entity === 'quiz-attempt' || $entity === 'targeted-percentage') {
@@ -597,7 +555,7 @@ final class AcademyLmsController
     {
         $flows = Flow::exists('AcademyLms', 2);
 
-        $attempt = tutor_utils()->get_attempt($attempt_id);
+        $attempt = academy_utils()->get_attempt($attempt_id);
 
         $quiz_id = $attempt->quiz_id;
 
@@ -606,7 +564,7 @@ final class AcademyLmsController
             return;
         }
 
-        if ('tutor_quiz' !== get_post_type($quiz_id)) {
+        if ('academy_quiz' !== get_post_type($quiz_id)) {
             return;
         }
 
@@ -654,7 +612,7 @@ final class AcademyLmsController
     {
         $flows = Flow::exists('AcademyLms', 5);
 
-        $attempt = tutor_utils()->get_attempt($attempt_id);
+        $attempt = academy_utils()->get_attempt($attempt_id);
 
         $quiz_id = $attempt->quiz_id;
 
@@ -663,7 +621,7 @@ final class AcademyLmsController
             return;
         }
 
-        if ('tutor_quiz' !== get_post_type($quiz_id)) {
+        if ('academy_quiz' !== get_post_type($quiz_id)) {
             return;
         }
 
