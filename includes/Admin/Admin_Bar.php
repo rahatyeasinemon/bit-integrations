@@ -78,9 +78,9 @@ class Admin_Bar
         //     true
         // );
         if (defined('BITAPPS_DEV') && BITAPPS_DEV) {
-            wp_enqueue_script('vite-client-helper-BTCBI-MODULE', BIT_DEV_URL . '/config/devHotModule.js', [], null);
-            wp_enqueue_script('vite-client-BTCBI-MODULE', BIT_DEV_URL . '/@vite/client', [], null);
-            wp_enqueue_script('index-BTCBI-MODULE', BIT_DEV_URL . '/main.jsx', [], null);
+            wp_enqueue_script('vite-client-helper-BTCBI-MODULE', BTCBI_BIT_DEV_URL . '/config/devHotModule.js', [], null);
+            wp_enqueue_script('vite-client-BTCBI-MODULE', BTCBI_BIT_DEV_URL . '/@vite/client', [], null);
+            wp_enqueue_script('index-BTCBI-MODULE', BTCBI_BIT_DEV_URL . '/main.jsx', [], null);
         }
 
         if (!defined('BITAPPS_DEV')) {
