@@ -71,7 +71,7 @@ final class AcademyLmsController
             wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
-        if ($data->id == 1) {
+        if ($data->id == 1 || $data->id == 4) {
             $courses = [];
             $courseList = get_posts([
                 'post_type' => 'academy_courses',
@@ -127,27 +127,6 @@ final class AcademyLmsController
                 ];
             }
             $responseData['lessons'] = $lessons;
-        } elseif ($data->id == 4) {
-            $courses = [];
-
-            $courseList = get_posts([
-                'post_type' => 'courses',
-                'post_status' => 'publish',
-                'numberposts' => -1
-            ]);
-
-            $courses[] = [
-                'course_id' => 'any',
-                'course_title' => 'Any Course',
-            ];
-
-            foreach ($courseList as $key => $val) {
-                $courses[] = [
-                    'course_id' => $val->ID,
-                    'course_title' => $val->post_title,
-                ];
-            }
-            $responseData['courses'] = $courses;
         } elseif ($data->id == 5) {
             $quizzes = [];
 
