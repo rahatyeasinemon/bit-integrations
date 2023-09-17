@@ -3,7 +3,7 @@
 namespace BitCode\FI\Triggers\AcademyLms;
 
 use BitCode\FI\Flow\Flow;
-use Academy\Shortcode\AcademyCourses;
+// use Academy\Traits\Lessons;
 
 final class AcademyLmsController
 {
@@ -113,14 +113,8 @@ final class AcademyLmsController
                 $responseData['quizzes'] = $quizzes;
             }
         } elseif ($data->id == 3) {
+            $lessonList = \Academy\Traits\Lessons::get_lessons();
             $lessons = [];
-
-            $lessonList = get_posts([
-                'post_type' => 'lesson',
-                'post_status' => 'publish',
-                'numberposts' => -1
-            ]);
-
             $lessons[] = [
                 'lesson_id' => 'any',
                 'lesson_title' => 'Any Lesson',
