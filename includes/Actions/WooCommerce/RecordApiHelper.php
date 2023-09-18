@@ -3,6 +3,7 @@
 /**
  * WooCommerce Record Api
  */
+
 namespace BitCode\FI\Actions\WooCommerce;
 
 use WP_Error;
@@ -38,7 +39,6 @@ class RecordApiHelper
                 }
             }
         }
-
         $existUser = get_user_by('email', $fieldDataCustomer['user_email']);
         if (in_array('customer', (array) $existUser->roles)) {
             return $existUser->ID;
@@ -326,7 +326,6 @@ class RecordApiHelper
                 LogHandler::save($this->_integrationID, ['type' => 'product', 'type_name' => $entry_type], 'success', $product_id);
             }
         }
-
         if ($module === 'customer') {
             $user_fields = ['user_pass', 'user_login', 'user_nicename', 'user_url', 'user_email', 'display_name', 'nickname', 'first_name', 'last_name', 'description', 'locale'];
 
@@ -339,7 +338,6 @@ class RecordApiHelper
             if (isset($id)) {
                 $fieldData['ID'] = $id;
             }
-
             $user_id = wp_insert_user($fieldData);
 
             if (is_wp_error($user_id) || !$user_id) {
@@ -356,12 +354,13 @@ class RecordApiHelper
         }
 
         if ($module === 'order') {
-            $triggerEntity = $fieldValues['bit-integrator%trigger_data%']['triggered_entity'];
 
+            $triggerEntity = $fieldValues['bit-integrator%trigger_data%']['triggered_entity'];
             $fieldDataCustomer = [];
             $fieldMapCustomer = $integrationDetails->customer->field_map;
 
             $find_customer_id = $this->findCustomer($fieldMapCustomer, $required, $module, $fieldValues);
+
             if (!empty($find_customer_id)) {
                 $customer_id = $find_customer_id;
             } else {
@@ -398,6 +397,8 @@ class RecordApiHelper
 
             $fieldMapLine = $integrationDetails->line_item->field_map;
 
+            $order = \wc_create_order(['customer_id' => $customer_id]);
+
             if ($triggerEntity === 'FF') {
                 $lineItemsFld = $fieldValues['repeater_field'];
 
@@ -425,7 +426,7 @@ class RecordApiHelper
                     $fieldDataLine[$key] = (object) $fieldDataLineTemp;
                 }
 
-                $order = \wc_create_order(['customer_id' => $customer_id]);
+
 
                 foreach ($fieldDataLine as $key => $lineItem) {
                     $product_id = wc_get_product_id_by_sku($lineItem->sku);
@@ -461,7 +462,7 @@ class RecordApiHelper
                     $lineItemCnt++;
                 }
 
-                $order = \wc_create_order(['customer_id' => $customer_id]);
+
                 foreach ($fieldDataLine as $key => $lineItem) {
                     $product_id = wc_get_product_id_by_sku($lineItem->sku);
 
@@ -499,7 +500,7 @@ class RecordApiHelper
                     // $lineItemCnt++;
                 }
 
-                $order = \wc_create_order(['customer_id' => $customer_id]);
+
                 foreach ($fieldDataLine as $key => $lineItem) {
                     $product_id = wc_get_product_id_by_sku($lineItem->sku);
 
