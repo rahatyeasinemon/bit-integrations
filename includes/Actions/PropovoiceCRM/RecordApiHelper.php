@@ -35,9 +35,10 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function createLead($finalData){
+    public function createLead($finalData)
+    {
         $propovoiceLeadInstance = new \Ndpv\Model\Lead();
-        $propovoiceLeadInstance->create($finalData);
+        return $propovoiceLeadInstance->create($finalData);
     }
 
     public function execute(
@@ -49,15 +50,16 @@ class RecordApiHelper
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $apiResponse = null;
         if ($mainAction == '1') {
-            $tags = explode(',',$integrationDetails->tags);
+            $tags = explode(',', $integrationDetails->tags);
             $label = $integrationDetails->label;
             $finalData['tags'] = $tags;
             $finalData['level_id'] = $label;
             $apiResponse = $this->createLead($finalData);
-            if ($apiResponse) {
-                LogHandler::save($this->_integrationID, json_encode(['type' => 'insert', 'type_name' => 'add-subscriber']), 'success', json_encode($apiResponse));
+
+            if (!$apiResponse) {
+                LogHandler::save($this->_integrationID, 'Lead', 'success', "Lead Created Successfully");
             } else {
-                LogHandler::save($this->_integrationID, json_encode(['type' => 'insert', 'type_name' => 'add-subscriber']), 'error', json_encode($apiResponse));
+                LogHandler::save($this->_integrationID, 'Lead', 'error', json_encode($apiResponse));
             }
         }
         return $apiResponse;
