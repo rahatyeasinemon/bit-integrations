@@ -483,6 +483,8 @@ final class AcademyLmsController
     {
         $flows = Flow::exists('AcademyLms', 1);
         $flows = self::flowFilter($flows, 'selectedCourse', $course_id);
+        error_log(print_r($course_id, true));
+        die;
         if (!$flows) {
             return;
         }
