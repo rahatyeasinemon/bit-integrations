@@ -57,6 +57,9 @@ class HookService
         if (empty($activeTrigger)) {
             $activeTrigger = $storeInCacheInstance::getActiveFlow();
         }
+        if (!$activeTrigger) {
+            $activeTrigger = [];
+        }
         $activeTrigger[] = 'CustomTrigger';
         if (empty($activeTrigger) || !is_array($activeTrigger)) {
             return;
@@ -85,7 +88,7 @@ class HookService
      */
     private function _includeTriggerTaskHooks($task_name)
     {
-        $task_dir = BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR ;
+        $task_dir = BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR;
         $task_path = $task_dir . 'Triggers' . DIRECTORY_SEPARATOR . $task_name . DIRECTORY_SEPARATOR;
         if (is_readable($task_path . 'Hooks.php')) {
             include $task_path . 'Hooks.php';
