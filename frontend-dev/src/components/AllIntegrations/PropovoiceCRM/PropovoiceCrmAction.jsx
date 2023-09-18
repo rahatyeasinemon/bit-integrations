@@ -11,25 +11,28 @@ import { getAllLeadLabel, getAllLeadTags } from './PropovoiceCrmCommonFunc'
 
 export default function PropovoiceCrmActions({ propovoiceCrmConf, setPropovoiceCrmConf, formFields, isLoading, setIsLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
-  
+  const [loading, setLoading] = useState({ tags: false, label: false })
+
   const actionHandler = (e, type) => {
     const newConf = { ...propovoiceCrmConf }
     if (type === 'tags') {
       if (e.target?.checked) {
         newConf.actions.tags = true
+        getAllLeadTags(newConf, setPropovoiceCrmConf, loading, setLoading)
         setActionMdl({ show: 'tags' })
       } else {
         setActionMdl({ show: false })
         delete newConf.actions.tags
       }
     } else if (type === 'label') {
-        if (e.target?.checked) {
-            newConf.actions.label = true
-            setActionMdl({ show: 'label' })
-        } else {
-            setActionMdl({ show: false })
-            delete newConf.actions.label
-        }
+      if (e.target?.checked) {
+        newConf.actions.label = true
+        getAllLeadLabel(newConf, setPropovoiceCrmConf, loading, setLoading)
+        setActionMdl({ show: 'label' })
+      } else {
+        setActionMdl({ show: false })
+        delete newConf.actions.label
+      }
     }
     setPropovoiceCrmConf({ ...newConf })
   }
@@ -38,10 +41,10 @@ export default function PropovoiceCrmActions({ propovoiceCrmConf, setPropovoiceC
   }
   const onSelectHandler = (val, type) => {
     const newConf = { ...propovoiceCrmConf }
-    if (type === 'tags'){
-        newConf.tags = val
-    } else if (type === 'label'){
-        newConf.label = val
+    if (type === 'tags') {
+      newConf.tags = val
+    } else if (type === 'label') {
+      newConf.label = val
     }
     setPropovoiceCrmConf(newConf)
   }
@@ -65,7 +68,7 @@ export default function PropovoiceCrmActions({ propovoiceCrmConf, setPropovoiceC
       >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select tag', 'bit-integrations')}</div>
-        {isLoading
+        {loading?.tags
           ? (
             <Loader style={{
               display: 'flex',
@@ -79,12 +82,12 @@ export default function PropovoiceCrmActions({ propovoiceCrmConf, setPropovoiceC
           : (
             <div className="flx flx-between mt-2">
               <MultiSelect
-                options={propovoiceCrmConf?.default?.allTags ? propovoiceCrmConf.default.allTags.map((tag) => ({ label: tag.name, value: tag.term_id})): []}
+                options={propovoiceCrmConf?.default?.allTags ? propovoiceCrmConf.default.allTags.map((tag) => ({ label: tag.name, value: tag.term_id })) : []}
                 className="msl-wrp-options"
                 defaultValue={propovoiceCrmConf?.tags}
                 onChange={val => onSelectHandler(val, 'tags')}
               />
-               <button onClick={() => getAllLeadTags(propovoiceCrmConf, setPropovoiceCrmConf, isLoading, setIsLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Tags', 'bit-integrations')}'` }} type="button" >&#x21BB;</button>
+              <button onClick={() => getAllLeadTags(propovoiceCrmConf, setPropovoiceCrmConf, loading, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Tags', 'bit-integrations')}'` }} type="button" >&#x21BB;</button>
             </div>
           )}
       </ConfirmModal>
@@ -102,7 +105,7 @@ export default function PropovoiceCrmActions({ propovoiceCrmConf, setPropovoiceC
       >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">{__('Select label', 'bit-integrations')}</div>
-        {isLoading
+        {loading?.label
           ? (
             <Loader style={{
               display: 'flex',
@@ -116,13 +119,13 @@ export default function PropovoiceCrmActions({ propovoiceCrmConf, setPropovoiceC
           : (
             <div className="flx flx-between mt-2">
               <MultiSelect
-                options={propovoiceCrmConf?.default?.allLabels ? propovoiceCrmConf.default.allLabels.map((tag) => ({ label: tag.name, value: tag.term_id})) : []}
+                options={propovoiceCrmConf?.default?.allLabels ? propovoiceCrmConf.default.allLabels.map((tag) => ({ label: tag.name, value: tag.term_id })) : []}
                 singleSelect
                 className="msl-wrp-options"
                 defaultValue={propovoiceCrmConf?.label}
                 onChange={val => onSelectHandler(val, 'label')}
               />
-               <button onClick={() => getAllLeadLabel(propovoiceCrmConf, setPropovoiceCrmConf, isLoading, setIsLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Label', 'bit-integrations')}'` }} type="button" >&#x21BB;</button>
+              <button onClick={() => getAllLeadLabel(propovoiceCrmConf, setPropovoiceCrmConf, loading, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Label', 'bit-integrations')}'` }} type="button" >&#x21BB;</button>
             </div>
           )}
       </ConfirmModal>

@@ -93,7 +93,7 @@ function PropovoiceCrm({ formFields, setFlow, flow, allIntegURL }) {
         />
         <button
           onClick={() => nextPage(3)}
-          disabled={isLoading}
+          disabled={!checkMappedFields(propovoiceCrmConf)}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >

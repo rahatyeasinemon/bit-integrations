@@ -14,13 +14,22 @@ export const handleInput = (e, slackConf, setSlackConf) => {
   setSlackConf({ ...newConf })
 }
 
-export const checkMappedFields = fieldsMapped => {
-  const checkedField = fieldsMapped
-    ? fieldsMapped?.filter(item => (!item.formField || !item.propovoiceCrmFormField))
-    : []
-  if (checkedField.length > 0) return false
-  return true
-}
+export const checkMappedFields = (propovoiceCrmConf) => {
+  const mappedFields = propovoiceCrmConf?.field_map
+    ? propovoiceCrmConf.field_map.filter(
+      (mappedField) =>
+        mappedField.formField === '' ||
+        mappedField.salesflareFormField === '' ||
+        (mappedField.formField === "custom" && mappedField.customValue === '') ||
+        (mappedField.salesflareFormField === "customFieldKey" &&
+          mappedField.customFieldKey === '')
+    )
+    : [];
+  if (mappedFields.length > 0) {
+    return false;
+  }
+  return true;
+};
 
 export const generateMappedField = (propovoiceCrmConf) => {
   const requiredFlds = propovoiceCrmConf?.leadFields.filter(fld => fld.required === true)
@@ -50,8 +59,8 @@ export const getALLPropovoiceFields = (propovoiceCrmConf, setPropovoiceCrmConf, 
     .catch(() => setIsLoading(false))
 }
 
-export const getAllLeadTags = (propovoiceCrmConf, setPropovoiceCrmConf, isLoading, setIsLoading) => {
-  setIsLoading(true)
+export const getAllLeadTags = (propovoiceCrmConf, setPropovoiceCrmConf, loading, setLoading) => {
+  setLoading({ ...loading, tags: true })
   bitsFetch(null, 'propovoice_crm_lead_tags')
     .then((result) => {
       if (result && result.success) {
@@ -65,18 +74,18 @@ export const getAllLeadTags = (propovoiceCrmConf, setPropovoiceCrmConf, isLoadin
           }
           return newConf
         })
-        setIsLoading(false)
+        setLoading({ ...loading, tags: false })
         toast.success(__('All tags fetched successfully', 'bit-integrations'))
         return
       }
-      setIsLoading(false)
+      setLoading({ ...loading, tags: false })
       toast.error(__('Propovoice Crm tags fetch failed. please try again', 'bit-integrations'))
     })
-    .catch(() => setIsLoading(false))
+    .catch(() => setLoading({ ...loading, tags: false }))
 }
 
-export const getAllLeadLabel = (propovoiceCrmConf, setPropovoiceCrmConf, isLoading, setIsLoading) => {
-  setIsLoading(true)
+export const getAllLeadLabel = (propovoiceCrmConf, setPropovoiceCrmConf, loading, setLoading) => {
+  setLoading({ ...loading, label: true })
   bitsFetch(null, 'propovoice_crm_lead_label')
     .then((result) => {
       if (result && result.success) {
@@ -90,39 +99,12 @@ export const getAllLeadLabel = (propovoiceCrmConf, setPropovoiceCrmConf, isLoadi
           }
           return newConf
         })
-        setIsLoading(false)
+        setLoading({ ...loading, label: false })
         toast.success(__('All label fetched successfully', 'bit-integrations'))
         return
       }
-      setIsLoading(false)
+      setLoading({ ...loading, label: false })
       toast.error(__('Propovoice Crm label fetch failed. please try again', 'bit-integrations'))
     })
-    .catch(() => setIsLoading(false))
+    .catch(() => setLoading({ ...loading, label: false }))
 }
-
-
-
-
-
-// export const getAllLeadLabel = (propovoiceCrmConf, setPropovoiceCrmConf, isLoading, setIsLoading) => {
-//   setIsLoading(true)
-//   bitsFetch(null, 'propovoice_crm_lead_label')
-//     .then((result) => {
-//       if (result && result.success) {
-//         const newConf = { ...propovoiceCrmConf }
-//         if (!newConf.default) {
-//           newConf.default = {}
-//         }
-//         if (result.data) {
-//           newConf.default.allLabels = result.data
-//         }
-//         setPropovoiceCrmConf({ ...newConf })
-//         setIsLoading(false)
-//         toast.success(__('All label fetched successfully', 'bit-integrations'))
-//         return
-//       }
-//       setIsLoading(false)
-//       toast.error(__('Propovoice Crm label fetch failed. please try again', 'bit-integrations'))
-//     })
-//     .catch(() => setIsLoading(false))
-// }
