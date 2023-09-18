@@ -49,6 +49,8 @@ export const FormPluginStateHelper = (val, tmpNewFlow, resp, setNewFlow) => {
     EDDStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else if (tmpNewFlow?.triggered_entity === 'UltimateMember') {
     UltimateMemberStateFP(val, tmpNewFlow, resp, setNewFlow)
+  } else if (tmpNewFlow?.triggered_entity === 'AcademyLms') {
+    academylmsStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else {
     setNewFlow(tmpNewFlow)
   }
@@ -141,37 +143,37 @@ export const buddybossStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
 export const LifterLmsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   if (val.toString() === '1' || val.toString() === '2' || val.toString() === '3') {
     tmpNewFlow.triggerData.allQuiz = resp.data.allQuiz
-  } else if (val.toString() === '4'){
+  } else if (val.toString() === '4') {
     tmpNewFlow.triggerData.allLesson = resp.data.allLesson
-  } else if (val.toString() === '5' || val.toString() === '6' || val.toString() === '7'){
+  } else if (val.toString() === '5' || val.toString() === '6' || val.toString() === '7') {
     tmpNewFlow.triggerData.allCourse = resp.data.allCourse
-  } else if (val.toString() === '8'){
+  } else if (val.toString() === '8') {
     tmpNewFlow.triggerData.allMembership = resp.data.allMembership
   }
   setNewFlow(tmpNewFlow)
 }
 
 export const MasterStudyLmsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
-  if (val.toString() === '2'){
+  if (val.toString() === '2') {
     tmpNewFlow.triggerData.allLesson = resp.data.allLesson
-  } 
-  if (['1','3','4','5'].includes(val.toString())){
+  }
+  if (['1', '3', '4', '5'].includes(val.toString())) {
     tmpNewFlow.triggerData.allCourse = resp.data.allCourse
-  } 
+  }
   if (val.toString() === '4' || val.toString() === '5') {
     tmpNewFlow.triggerData.allQuiz = resp.data.allQuiz
-  }  
+  }
   setNewFlow(tmpNewFlow)
 }
 
 export const ThriveApprenticeStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
-  if (['1'].includes(val.toString())){
+  if (['1'].includes(val.toString())) {
     tmpNewFlow.triggerData.allCourse = resp.data.allCourse
-  } else if (val.toString() === '2'){
+  } else if (val.toString() === '2') {
     tmpNewFlow.triggerData.allLesson = resp.data.allLesson
   } else if (val.toString() === '3') {
     tmpNewFlow.triggerData.allModule = resp.data.allModule
-  }  
+  }
   setNewFlow(tmpNewFlow)
 }
 
@@ -370,7 +372,7 @@ export const wooCommerceStateIH = (tmpConf, flowData) => {
     tmpConf.selectedProductCategory = flowData.selectedProductCategory
     tmpConf.allProductCategories = flowData.allProductCategories
   }
-  if (flowData.formID === '20'){
+  if (flowData.formID === '20') {
     tmpConf.selectedVariableProduct = flowData.selectedVariableProduct
     tmpConf.allVariableProduct = flowData.allVariableProduct
     tmpConf.selectedVariation = flowData.selectedVariation
@@ -563,13 +565,13 @@ export const LifterLmsStateIH = (tmpConf, flowData) => {
   if (val === 1 || val === 2 || val === 3) {
     tmpConf.selectedQuiz = flowData.selectedQuiz
     tmpConf.allQuiz = flowData.allQuiz
-  } else if (val === 4 ){
+  } else if (val === 4) {
     tmpConf.selectedLesson = flowData.selectedLesson
     tmpConf.allLesson = flowData.allLesson
-  } else if (val === 5 || val === 6 || val === 7 ){
+  } else if (val === 5 || val === 6 || val === 7) {
     tmpConf.selectedCourse = flowData.selectedCourse
     tmpConf.allCourse = flowData.allCourse
-  } else if (val === 8){
+  } else if (val === 8) {
     tmpConf.selectedMembership = flowData.selectedMembership
     tmpConf.allMembership = flowData.allMembership
   }
@@ -577,44 +579,44 @@ export const LifterLmsStateIH = (tmpConf, flowData) => {
 }
 export const MasterStudyLmsStateIH = (tmpConf, flowData) => {
   const val = Number(flowData.formID)
-  if (val === 2 ){
+  if (val === 2) {
     tmpConf.selectedLesson = flowData.selectedLesson
     tmpConf.allLesson = flowData.allLesson
-  } 
-  if (val === 1 || val === 3 || val === 4 || val === 5 ){
+  }
+  if (val === 1 || val === 3 || val === 4 || val === 5) {
     tmpConf.selectedCourse = flowData.selectedCourse
     tmpConf.allCourse = flowData.allCourse
-  } 
+  }
   if (val === 4 || val === 5) {
     tmpConf.selectedQuiz = flowData.selectedQuiz
     tmpConf.allQuiz = flowData.allQuiz
-  } 
+  }
   return tmpConf
 }
 
 export const ThriveApprenticeStateIH = (tmpConf, flowData) => {
   const val = Number(flowData.formID)
-  if (val === 1 ){
+  if (val === 1) {
     tmpConf.selectedCourse = flowData.selectedCourse
     tmpConf.allCourse = flowData.allCourse
   }
-  else if (val === 2 ){
+  else if (val === 2) {
     tmpConf.selectedLesson = flowData.selectedLesson
     tmpConf.allLesson = flowData.allLesson
-  } 
-  if (val === 3 ){
+  }
+  if (val === 3) {
     tmpConf.selectedModule = flowData.selectedModule
     tmpConf.allModule = flowData.allModule
-  } 
+  }
   return tmpConf
 }
 
 export const EDDStateIH = (tmpConf, flowData) => {
   const val = Number(flowData.formID)
-  if (val === 1 ) {
+  if (val === 1) {
     tmpConf.selectedProduct = flowData.selectedProduct
     tmpConf.allProduct = flowData.allProduct
-  } else if (val === 2 ) {
+  } else if (val === 2) {
     tmpConf.selectedDiscount = flowData.selectedDiscount
     tmpConf.allDiscountCode = flowData.allDiscountCode
   }
@@ -623,10 +625,25 @@ export const EDDStateIH = (tmpConf, flowData) => {
 
 export const UltimateMemberStateIH = (tmpConf, flowData) => {
   const val = flowData.formID
-  if (val === 'roleSpecificChange' ) {
+  if (val === 'roleSpecificChange') {
     tmpConf.selectedRole = flowData.selectedRole
     tmpConf.allRole = flowData.allRole
-  } 
+  }
 
   return tmpConf
+}
+
+
+export const academylmsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
+  if (val === '2') {
+    tmpNewFlow.triggerData.quizzes = resp.data.quizzes
+  } else if (val === '3') {
+    tmpNewFlow.triggerData.lessons = resp.data.lessons
+  } else if (val === '4' || val === '1') {
+    tmpNewFlow.triggerData.courses = resp.data.courses
+  } else if (val === '5') {
+    tmpNewFlow.triggerData.quizzes = resp.data.quizzes
+    tmpNewFlow.triggerData.percentageCondition = resp.data.percentageCondition
+  }
+  setNewFlow(tmpNewFlow)
 }

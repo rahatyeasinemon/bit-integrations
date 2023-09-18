@@ -123,7 +123,7 @@ final class AcademyLmsController
             foreach ($lessonList as $key => $val) {
                 $lessons[] = [
                     'lesson_id' => $val->ID,
-                    'lesson_title' => $val->post_title,
+                    'lesson_title' => $val->lesson_title,
                 ];
             }
             $responseData['lessons'] = $lessons;
@@ -417,49 +417,49 @@ final class AcademyLmsController
         return $fieldsNew;
     }
 
-    public static function metaboxFields($module)
-    {
-        $fileTypes = [
-            'image',
-            'image_upload',
-            'file_advanced',
-            'file_upload',
-            'single_image',
-            'file',
-            'image_advanced',
-            'video'
-        ];
+    // public static function metaboxFields($module)
+    // {
+    //     $fileTypes = [
+    //         'image',
+    //         'image_upload',
+    //         'file_advanced',
+    //         'file_upload',
+    //         'single_image',
+    //         'file',
+    //         'image_advanced',
+    //         'video'
+    //     ];
 
-        $metaboxFields = [];
-        $metaboxUploadFields = [];
+    //     $metaboxFields = [];
+    //     $metaboxUploadFields = [];
 
-        if (function_exists('rwmb_meta')) {
-            if ($module === 'customer') {
-                $field_registry = rwmb_get_registry('field');
-                $meta_boxes = $field_registry->get_by_object_type($object_type = 'user');
-                $metaFields = isset($meta_boxes['user']) && is_array($meta_boxes['user']) ? array_values($meta_boxes['user']) : [];
-            } else {
-                $metaFields = array_values(rwmb_get_object_fields($module));
-            }
-            foreach ($metaFields as $index => $field) {
-                if (!in_array($field['type'], $fileTypes)) {
-                    $metaboxFields[$index] = (object) [
-                        'fieldKey' => $field['id'],
-                        'fieldName' => 'Metabox Field - ' . $field['name'],
-                        'required' => $field['required'],
-                    ];
-                } else {
-                    $metaboxUploadFields[$index] = (object) [
-                        'fieldKey' => $field['id'],
-                        'fieldName' => 'Metabox Field - ' . $field['name'],
-                        'required' => $field['required'],
-                    ];
-                }
-            }
-        }
+    //     if (function_exists('rwmb_meta')) {
+    //         if ($module === 'customer') {
+    //             $field_registry = rwmb_get_registry('field');
+    //             $meta_boxes = $field_registry->get_by_object_type($object_type = 'user');
+    //             $metaFields = isset($meta_boxes['user']) && is_array($meta_boxes['user']) ? array_values($meta_boxes['user']) : [];
+    //         } else {
+    //             $metaFields = array_values(rwmb_get_object_fields($module));
+    //         }
+    //         foreach ($metaFields as $index => $field) {
+    //             if (!in_array($field['type'], $fileTypes)) {
+    //                 $metaboxFields[$index] = (object) [
+    //                     'fieldKey' => $field['id'],
+    //                     'fieldName' => 'Metabox Field - ' . $field['name'],
+    //                     'required' => $field['required'],
+    //                 ];
+    //             } else {
+    //                 $metaboxUploadFields[$index] = (object) [
+    //                     'fieldKey' => $field['id'],
+    //                     'fieldName' => 'Metabox Field - ' . $field['name'],
+    //                     'required' => $field['required'],
+    //                 ];
+    //             }
+    //         }
+    //     }
 
-        return ['meta_fields' => $metaboxFields, 'upload_fields' => $metaboxUploadFields];
-    }
+    //     return ['meta_fields' => $metaboxFields, 'upload_fields' => $metaboxUploadFields];
+    // }
 
     public static function getUserInfo($user_id)
     {
