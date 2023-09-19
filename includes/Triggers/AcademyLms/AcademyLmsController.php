@@ -198,17 +198,74 @@ final class AcademyLmsController
 
         if ($entity === 'course-enroll') {
             $fields = [
-                'Course Id' => (object) [
+                'Course ID' => (object) [
                     'fieldKey' => 'course_id',
-                    'fieldName' => 'Course Id'
+                    'fieldName' => 'Course ID'
                 ],
                 'Course Title' => (object) [
                     'fieldKey' => 'course_title',
-                    'fieldName' => 'Course Title'
+                    'fieldName' => 'Course Title',
+                    'required' => true
                 ],
-                'Course Content' => (object) [
-                    'fieldKey' => 'post_content',
-                    'fieldName' => 'Course Content'
+                'Course Author' => (object) [
+                    'fieldKey' => 'course_author',
+                    'fieldName' => 'Course Author',
+                    'required' => false
+                ],
+                'Student ID' => (object) [
+                    'fieldKey' => 'student_id',
+                    'fieldName' => 'Student ID',
+                    'required' => false
+                ],
+                'Student Name' => (object) [
+                    'fieldKey' => 'student_name',
+                    'fieldName' => 'Student Name',
+                    'required' => false
+                ],
+                'Maximum Student' => (object) [
+                    'fieldKey' => 'academy_course_max_students',
+                    'fieldName' => 'Maximum Student',
+                    'required' => false
+                ],
+                'Course Curriculam' => (object) [
+                    'fieldKey' => 'academy_course_curriculum',
+                    'fieldName' => 'Course Curriculam',
+                    'required' => false
+                ],
+                'Course Duration' => (object) [
+                    'fieldKey' => 'academy_course_duration',
+                    'fieldName' => 'Course Duration',
+                    'required' => false
+                ],
+                'Academy Course Level' => (object) [
+                    'fieldKey' => 'academy_course_difficulty_level',
+                    'fieldName' => 'Academy Course Level',
+                    'required' => false
+                ],
+                'Academy Course Benifits' => (object) [
+                    'fieldKey' => 'academy_course_benefits',
+                    'fieldName' => 'Academy Course Benifits',
+                    'required' => false
+                ],
+                'Academy Course Requirements' => (object) [
+                    'fieldKey' => 'academy_course_requirements',
+                    'fieldName' => 'Academy Course Requirements',
+                    'required' => false
+                ],
+                'Academy Course Material Includes' => (object) [
+                    'fieldKey' => 'academy_course_materials_included',
+                    'fieldName' => 'Academy Course Material Includes',
+                    'required' => false
+                ],
+                'Academy Course Product ID' => (object) [
+                    'fieldKey' => 'academy_course_product_id',
+                    'fieldName' => 'Academy Course Product ID',
+                    'required' => false
+                ],
+                'Academy Course Price Type' => (object) [
+                    'fieldKey' => 'academy_course_type',
+                    'fieldName' => 'Academy Course Price Type',
+                    'required' => false
                 ],
             ];
         } elseif ($entity === 'quiz-attempt' || $entity === 'targeted-percentage') {
@@ -483,8 +540,6 @@ final class AcademyLmsController
     {
         $flows = Flow::exists('AcademyLms', 1);
         $flows = self::flowFilter($flows, 'selectedCourse', $course_id);
-        error_log(print_r($course_id, true));
-        die;
         if (!$flows) {
             return;
         }
@@ -519,10 +574,9 @@ final class AcademyLmsController
             }
             $course_temp[$key] = $val;
         }
+
         $result = $result + $course_temp;
-
         $result['post_id'] = $enrollment_id;
-
         Flow::execute('AcademyLms', 1, $result, $flows);
     }
 
