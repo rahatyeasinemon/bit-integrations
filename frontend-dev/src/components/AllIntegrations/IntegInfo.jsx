@@ -131,6 +131,7 @@ const PerfexCRMAuthorization = lazy(() => import('./PerfexCRM/PerfexCRMAuthoriza
 const SureTriggersAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
 const OneHashCRMAuthorization = lazy(() => import('./OneHashCRM/OneHashCRMAuthorization'))
 const SalesflareAuthorization = lazy(() => import('./Salesflare/SalesflareAuthorization'))
+const MoxieCRMAuthorization = lazy(() => import('./MoxieCRM/MoxieCRMAuthorization'))
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -408,6 +409,8 @@ export default function IntegInfo() {
         return <OneHashCRMAuthorization oneHashCRMConf={integrationConf} step={1} isInfo />
       case 'Salesflare':
         return <SalesflareAuthorization salesflareConf={integrationConf} step={1} isInfo />
+      case 'MoxieCRM':
+        return <MoxieCRMAuthorization moxieCRMConf={integrationConf} step={1} isInfo />
       default:
         return <></>
     }

@@ -148,6 +148,7 @@ export default function SelectAction() {
     { type: 'SureTriggers' },
     { type: 'OneHashCRM' },
     { type: 'Salesflare' },
+    { type: 'MoxieCRM' },
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(sortByField(integs, 'type', 'ASC') || integs)

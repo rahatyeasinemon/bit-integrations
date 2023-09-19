@@ -142,6 +142,7 @@ const EditPerfexCRM = lazy(() => import('./PerfexCRM/EditPerfexCRM'))
 const EditSureTriggers = lazy(() => import('./SureTriggers/EditSureTriggers'))
 const EditOneHashCRM = lazy(() => import('./OneHashCRM/EditOneHashCRM'))
 const EditSalesflare = lazy(() => import('./Salesflare/EditSalesflare'))
+const EditMoxieCRM = lazy(() => import('./MoxieCRM/EditMoxieCRM'))
 
 const loaderStyle = {
   display: 'flex',
@@ -489,6 +490,8 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditOneHashCRM allIntegURL={allIntegURL} />
     case 'Salesflare':
       return <EditSalesflare allIntegURL={allIntegURL} />
+    case 'MoxieCRM':
+      return <EditMoxieCRM allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }
