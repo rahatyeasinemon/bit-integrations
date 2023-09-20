@@ -16,7 +16,7 @@ class RecordApiHelper
 {
     private $integrationDetails;
     private $integrationId;
-    private $apiEmail;
+    private $apiUrl;
     private $defaultHeader;
     private $type;
     private $typeName;
@@ -25,39 +25,25 @@ class RecordApiHelper
     {
         $this->integrationDetails = $integrationDetails;
         $this->integrationId      = $integId;
-        $this->apiEmail             = "https://api.moxie.com/developer_api/v1";
+        $this->apiUrl             = $integrationDetails->api_url;
         $this->defaultHeader      = [
-            "X-API-KEY"  => $integrationDetails->api_key,,
-            "X-PW-UserEmail"    => $integrationDetails->api_url,
+            "X-API-KEY"  => $integrationDetails->api_key,
             "Content-Type"      => "application/json"
         ];
     }
 
 
-    public function addCompany($finalData)
+    public function addClient($finalData)
     {
         if (empty($finalData['name'])) {
             return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
         }
 
-        $staticFieldsKeys = ['name', 'email_domain', 'details', 'street', 'city', 'state', 'postal_code', 'country',  'phone_numbers','websites'];
+        $staticFieldsKeys = ['name', 'address1', 'address2', 'city', 'locality', 'postal', 'country', 'website',  'phone','leadSource','hourlyAmount','currency','notes','firstName','lastName','email'];
 
         foreach ($finalData as $key => $value) {
             if (in_array($key, $staticFieldsKeys)) {
-                if (($key == 'street' || $key == 'city' || $key == 'state' || $key == 'postal_code' || $key == 'country')) {
-                    $requestParams['address'][$key] =   $value ;
-                } elseif (($key == 'websites')) {
-                    $requestParams['websites'][] = (object) [
-                        'url'   => $value,
-                        'category' => 'work'
-                    ];
-                } elseif ($key == 'phone_numbers') {
-                    $requestParams[$key][] = (object) [
-                        'number' => $value,
-                    ];
-                } else {
-                    $requestParams[$key] = $value;
-                }
+                $requestParams[$key] = $value;
             } else {
                 $requestParams['custom_fields'][] = (object) [
                     'value'   => $value,
@@ -66,14 +52,14 @@ class RecordApiHelper
             }
         }
 
-        if ($this->integrationDetails->actions->owner) {
-            $requestParams['assignee_id'] = (int)($this->integrationDetails->selectedOwner);
+        if ($this->integrationDetails->recordType) {
+            $requestParams['clientType'] = $this->integrationDetails->recordType;
         }
 
-        $this->type     = 'Company';
-        $this->typeName = 'Company created';
+        $this->type     = 'Client';
+        $this->typeName = 'Client created';
 
-        $apiEndpoint = $this->apiEmail."/companies";
+        $apiEndpoint = 'https://'. $this->apiUrl . "/api/public/action/clients/create";
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -154,8 +140,8 @@ class RecordApiHelper
         if ($this->integrationDetails->actions->owner) {
             $requestParams['assignee_id'] = (int)($this->integrationDetails->selectedOwner) ;
         }
-        if ($this->integrationDetails->actions->company) {
-            $requestParams['company_id'] = (int)($this->integrationDetails->selectedCompany);
+        if ($this->integrationDetails->actions->client) {
+            $requestParams['client_id'] = (int)($this->integrationDetails->selectedClient);
         }
         if (!empty($this->integrationDetails->actions->pipelineStage)) {
             $requestParams['pipeline_stage_id'] =  (int)($this->integrationDetails->selectedPipelineStage);
@@ -230,9 +216,9 @@ class RecordApiHelper
     public function execute($fieldValues, $fieldMap, $actionName)
     {
         $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        if ($actionName === 'company') {
-            $apiResponse = $this->addCompany($finalData);
-        } elseif ($actionName === 'person') {
+        if ($actionName === 'client') {
+            $apiResponse = $this->addClient($finalData);
+        } elseif ($actionName === 'contact') {
             $apiResponse = $this->addPerson($finalData);
         } elseif ($actionName === 'opportunity') {
             $apiResponse = $this->addOpportunity($finalData);

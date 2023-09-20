@@ -42,7 +42,7 @@ export default function MoxieCRMAuthorization({ moxiecrmConf, setMoxieCRMConf, s
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={moxiecrmConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 
       <div className="mt-3"><b>{__('Your API Url:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_url" value={moxiecrmConf.api_url} type="text" placeholder={__('Your Company...', 'bit-integrations')} disabled={isInfo} />
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_url" value={moxiecrmConf.api_url} type="text" placeholder={__('Your Client...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_url}</div>
       {/* <small className="d-blk mt-3">
         {__('Example: {name}.moxiecrm.com', 'bit-integrations')}

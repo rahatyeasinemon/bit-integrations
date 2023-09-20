@@ -21,20 +21,26 @@ function MoxieCRM({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
 
-  const companyFields = [
+  const clientFields = [
     { key: 'name', label: 'Name', required: true },
-    { key: 'email_domain', label: 'Email', required: false },
-    { key: 'details', label: 'Description', required: false },
-    { key: 'street', label: 'Street', required: false },
+    { key: 'address1', label: 'Address1', required: false },
+    { key: 'address2', label: 'Address2', required: false },
     { key: 'city', label: 'City', required: false },
-    { key: 'state', label: 'State', required: false },
-    { key: 'postal_code', label: 'Postal Code', required: false },
+    { key: 'locality', label: 'Locality', required: false },
+    { key: 'postal', label: 'Postal', required: false },
     { key: 'country', label: 'Country', required: false },
-    { key: 'phone_numbers', label: 'Phone', required: false },
-    { key: 'websites', label: 'Website', required: false },
+    { key: 'website', label: 'Website', required: false },
+    { key: 'phone', label: 'Phone', required: false },
+    { key: 'leadSource', label: 'Lead Source', required: false },
+    { key: 'hourlyAmount', label: 'Hourly Amount', required: false },
+    { key: 'currency', label: 'Currency', required: false },
+    { key: 'notes', label: 'Notes', required: false },
+    { key: 'firstName', label: 'Contact First Name', required: false },
+    { key: 'lastName', label: 'Contact Last Name', required: false },
+    { key: 'email', label: 'Contact Email', required: false },
   ]
 
-  const personFields = [
+  const contactFields = [
     { key: 'name', label: 'Name', required: true },
     { key: 'title', label: 'Title', required: false },
     { key: 'details', label: 'Description', required: false },
@@ -71,8 +77,8 @@ function MoxieCRM({ formFields, setFlow, flow, allIntegURL }) {
       { formField: '', moxiecrmFormField: '' },
     ],
     actionName: '',
-    companyFields,
-    personFields,
+    clientFields,
+    contactFields,
     opportunityFields,
     taskFields,
     actions: {},

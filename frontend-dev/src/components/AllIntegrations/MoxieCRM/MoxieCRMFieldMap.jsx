@@ -10,10 +10,10 @@ import CustomField from './CustomField'
 export default function MoxieCRMFieldMap({ i, formFields, field, moxiecrmConf, setMoxieCRMConf }) {
   let allFields = []
   let newFields = []
-  if (moxiecrmConf.actionName === 'company') {
-    allFields = moxiecrmConf?.companyFields
-  } else if (moxiecrmConf.actionName === 'person') {
-    allFields = moxiecrmConf?.personFields
+  if (moxiecrmConf.actionName === 'client') {
+    allFields = moxiecrmConf?.clientFields
+  } else if (moxiecrmConf.actionName === 'contact') {
+    allFields = moxiecrmConf?.contactFields
   } else if (moxiecrmConf.actionName === 'opportunity') {
     allFields = moxiecrmConf?.opportunityFields
   } else if (moxiecrmConf.actionName === 'task') {
@@ -88,7 +88,7 @@ export default function MoxieCRMFieldMap({ i, formFields, field, moxiecrmConf, s
                 ))
               )
             }
-            {(moxiecrmConf.actionName === 'company' || moxiecrmConf.actionName === 'person' || moxiecrmConf.actionName === 'opportunity' || moxiecrmConf.actionName === 'task')
+            {(moxiecrmConf.actionName === 'client' || moxiecrmConf.actionName === 'contact' || moxiecrmConf.actionName === 'opportunity' || moxiecrmConf.actionName === 'task')
               && <option value="customFieldKey">{__('Custom Field', 'bit-integrations')}</option>}
           </select>
           {field.moxiecrmFormField === 'customFieldKey'

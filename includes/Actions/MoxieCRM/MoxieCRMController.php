@@ -53,7 +53,7 @@ class MoxieCRMController
         $apiKey      = $fieldsRequestParams->api_key;
         $action      = $fieldsRequestParams->action;
         $apiEmail    = $fieldsRequestParams->api_url;
-        // if ($action == 'person' || $action == 'company') {
+        // if ($action == 'contact' || $action == 'client') {
         //     $apiEndpoint = $this->apiEndpoint."/peoples/fields/definitions";
         // } elseif ($action == 'opportunity') {
         //     $apiEndpoint = $this->apiEndpoint."/opportunities/fields/definitions";
@@ -138,7 +138,7 @@ class MoxieCRMController
         }
     }
 
-    public function getAllCompanies($fieldsRequestParams)
+    public function getAllClients($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
@@ -154,15 +154,15 @@ class MoxieCRMController
         $response = HttpHelper::post($apiEndpoint, null, $headers);
 
         if (isset($response)) {
-            foreach ($response as $company) {
+            foreach ($response as $client) {
                 $companies[] = [
-                    'id'   => (string) $company->id,
-                    'name' => $company->name
+                    'id'   => (string) $client->id,
+                    'name' => $client->name
                 ];
             }
             wp_send_json_success($companies, 200);
         } else {
-            wp_send_json_error('Companies fetching failed', 400);
+            wp_send_json_error('Clients fetching failed', 400);
         }
     }
 

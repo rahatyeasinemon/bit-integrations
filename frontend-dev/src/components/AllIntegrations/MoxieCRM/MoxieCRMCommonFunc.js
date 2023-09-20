@@ -17,10 +17,10 @@ export const handleInput = (e, moxiecrmConf, setMoxieCRMConf) => {
 
 export const generateMappedField = (moxiecrmConf) => {
   let allRequiredFields = [];
-  if (moxiecrmConf.actionName === "company") {
-    allRequiredFields = moxiecrmConf?.companyFields;
-  } else if (moxiecrmConf.actionName === "person") {
-    allRequiredFields = moxiecrmConf?.personFields;
+  if (moxiecrmConf.actionName === "client") {
+    allRequiredFields = moxiecrmConf?.clientFields;
+  } else if (moxiecrmConf.actionName === "contact") {
+    allRequiredFields = moxiecrmConf?.contactFields;
   } else if (moxiecrmConf.actionName === "opportunity") {
     allRequiredFields = moxiecrmConf?.opportunityFields;
   } else if (moxiecrmConf.actionName === "task") {
@@ -184,7 +184,7 @@ export const getAllOwners = (confTmp, setConf, setLoading) => {
   });
 };
 
-export const getAllCompanies = (confTmp, setConf, setLoading) => {
+export const getAllClients = (confTmp, setConf, setLoading) => {
   setLoading({ ...setLoading, companies: true });
 
   const requestParams = {
@@ -201,11 +201,11 @@ export const getAllCompanies = (confTmp, setConf, setLoading) => {
       setConf(newConf);
       setLoading({ ...setLoading, companies: false });
 
-      toast.success(__("Companies fetched successfully", "bit-integrations"));
+      toast.success(__("Clients fetched successfully", "bit-integrations"));
       return;
     }
     setLoading({ ...setLoading, companies: false });
-    toast.error(__("Companies fetching failed", "bit-integrations"));
+    toast.error(__("Clients fetching failed", "bit-integrations"));
   });
 };
 

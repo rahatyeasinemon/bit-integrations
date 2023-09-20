@@ -44,11 +44,24 @@ export default function MoxieCRMIntegLayout({ formFields, handleInput, moxiecrmC
       <b className="wdt-200 d-in-b">{__('Select Action:', 'bit-integrations')}</b>
       <select onChange={handleActionInput} name="actionName" value={moxiecrmConf.actionName} className="btcd-paper-inp w-5">
         <option value="">{__('Select an action', 'bit-integrations')}</option>
-        <option value="company">{__('Create Company', 'bit-integrations')}</option>
-        <option value="person">{__('Create Person', 'bit-integrations')}</option>
+        <option value="client">{__('Create Client', 'bit-integrations')}</option>
+        <option value="contact">{__('Create Person', 'bit-integrations')}</option>
         <option value="opportunity">{__('Create Opportunity', 'bit-integrations')}</option>
         <option value="task">{__('Create Task', 'bit-integrations')}</option>
       </select>
+      {(moxiecrmConf.actionName === 'client')
+        && (
+          <>
+            <br />
+            <br />
+            <b className="wdt-200 d-in-b">{__('Select Record Type:', 'bit-integrations')}</b>
+            <select onChange={handleActionInput} name="recordType" value={moxiecrmConf.recordType} className="btcd-paper-inp w-5">
+              <option value="Client">{__('Client', 'bit-integrations')}</option>
+              <option value="Prospect">{__('Prospect', 'bit-integrations')}</option>
+            </select>
+          </>
+        )}
+
       {(loading.CRMPeoples || loading.CRMPipelines) && (
         <Loader style={{
           display: 'flex',

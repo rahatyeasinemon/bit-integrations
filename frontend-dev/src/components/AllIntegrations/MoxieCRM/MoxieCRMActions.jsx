@@ -7,7 +7,7 @@ import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Loader from '../../Loaders/Loader'
-import { getAllOpportunities, getAllOwners, getAllCompanies, getAllPipelineStages } from './MoxieCRMCommonFunc'
+import { getAllOpportunities, getAllOwners, getAllClients, getAllPipelineStages } from './MoxieCRMCommonFunc'
 
 export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading, setLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
@@ -20,6 +20,11 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
   const opportunityTypes = [
     { label: 'New Business', value: 'New Business' },
     { label: 'Existing Business', value: 'Existing Business' },
+  ]
+
+  const recordTypes = [
+    { label: 'Client', value: 'Client' },
+    { label: 'Prospect', value: 'Prospect' },
   ]
 
   const actionHandler = (e, type) => {
@@ -41,13 +46,13 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
         setActionMdl({ show: false })
         delete newConf.actions.owner
       }
-    } else if (type === 'company') {
+    } else if (type === 'client') {
       if (e.target?.checked) {
-        getAllCompanies(moxiecrmConf, setMoxieCRMConf, setLoading)
-        newConf.actions.company = true
+        getAllClients(moxiecrmConf, setMoxieCRMConf, setLoading)
+        newConf.actions.recordType = true
       } else {
         setActionMdl({ show: false })
-        delete newConf.actions.company
+        delete newConf.actions.client
       }
     } else if (type === 'pipelineStage') {
       if (e.target?.checked) {
@@ -89,9 +94,10 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
 
   return (
     <div className="pos-rel d-flx flx-wrp">
-      {/* {(moxiecrmConf.actionName === 'person') && <TableCheckBox checked={moxiecrmConf?.selectedCompany?.length || false} onChange={(e) => actionHandler(e, 'company')} className="wdt-200 mt-4 mr-2" value="company" title={__('Add Company', 'bit - integrations')} subTitle={__('Add an company')} />} */}
-      {(moxiecrmConf.actionName === 'person' || moxiecrmConf.actionName === 'company' || moxiecrmConf.actionName === 'opportunity' || moxiecrmConf.actionName === 'task') && <TableCheckBox checked={moxiecrmConf?.selectedOwner?.length || false} onChange={(e) => actionHandler(e, 'owner')} className="wdt-200 mt-4 mr-2" value="owner" title={__('Add Owner', 'bit - integrations')} subTitle={__('Add an owner')} />}
-      {(moxiecrmConf.actionName === 'opportunity') && <TableCheckBox checked={moxiecrmConf?.selectedCompany?.length || false} onChange={(e) => actionHandler(e, 'company')} className="wdt-200 mt-4 mr-2" value="company" title={__('Add Company', 'bit - integrations')} subTitle={__('Add an company')} />}
+      {/* {(moxiecrmConf.actionName === 'contact') && <TableCheckBox checked={moxiecrmConf?.selectedClient?.length || false} onChange={(e) => actionHandler(e, 'client')} className="wdt-200 mt-4 mr-2" value="client" title={__('Add Client', 'bit - integrations')} subTitle={__('Add an client')} />} */}
+      {/* {(moxiecrmConf.actionName === 'contact' || moxiecrmConf.actionName === 'client' || moxiecrmConf.actionName === 'opportunity' || moxiecrmConf.actionName === 'task') && <TableCheckBox checked={moxiecrmConf?.selectedOwner?.length || false} onChange={(e) => actionHandler(e, 'owner')} className="wdt-200 mt-4 mr-2" value="owner" title={__('Add Owner', 'bit - integrations')} subTitle={__('Add an owner')} />} */}
+      {/* {(moxiecrmConf.actionName === 'client') && <TableCheckBox checked={moxiecrmConf?.selectedOwner?.length || false} onChange={(e) => actionHandler(e, 'recordType')} className="wdt-200 mt-4 mr-2" value="recordType" title={__('Add Record Type', 'bit - integrations')} subTitle={__('Add an recordType')} />} */}
+      {(moxiecrmConf.actionName === 'opportunity') && <TableCheckBox checked={moxiecrmConf?.selectedClient?.length || false} onChange={(e) => actionHandler(e, 'client')} className="wdt-200 mt-4 mr-2" value="client" title={__('Add Client', 'bit - integrations')} subTitle={__('Add an client')} />}
       {(moxiecrmConf.actionName === 'opportunity') && <TableCheckBox checked={moxiecrmConf?.selectedPipelineStage?.length || false} onChange={(e) => actionHandler(e, 'pipelineStage')} className="wdt-200 mt-4 mr-2" value="pipelineStage" title={__('Add PipelineStage', 'bit - integrations')} subTitle={__('Add a pipelineStage')} />}
       {/* {(moxiecrmConf.actionName === 'task') && <TableCheckBox checked={moxiecrmConf?.selectedOpportunity?.length || false} onChange={(e) => actionHandler(e, 'opportunity')} className="wdt-200 mt-4 mr-2" value="opportunity" title={__('Add Opportunity', 'bit - integrations')} subTitle={__('Add a opportunity')} />} */}
 
@@ -180,14 +186,14 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
         mainMdlCls="o-v"
         btnClass="blue"
         btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'company'}
+        show={actionMdl.show === 'client'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Companies', 'bit-integrations')}
+        title={__('Clients', 'bit-integrations')}
       >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">
-          {__('Select Company', 'bit-integrations')}
+          {__('Select Client', 'bit-integrations')}
         </div>
         {
           loading.companies ? (
@@ -203,13 +209,13 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
             : (
               <div className="flx flx-between mt-2">
                 <MultiSelect
-                  options={moxiecrmConf?.companies?.map(company => ({ label: company.name, value: company.id }))}
+                  options={moxiecrmConf?.companies?.map(client => ({ label: client.name, value: client.id }))}
                   className="msl-wrp-options"
-                  defaultValue={moxiecrmConf?.selectedCompany}
-                  onChange={val => setChanges(val, 'selectedCompany')}
+                  defaultValue={moxiecrmConf?.selectedClient}
+                  onChange={val => setChanges(val, 'selectedClient')}
                   singleSelect
                 />
-                <button onClick={() => getAllCompanies(moxiecrmConf, setMoxieCRMConf, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Companies', 'bit-integrations')}'` }} type="button">&#x21BB;</button>
+                <button onClick={() => getAllClients(moxiecrmConf, setMoxieCRMConf, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Clients', 'bit-integrations')}'` }} type="button">&#x21BB;</button>
               </div>
             )
         }
@@ -334,6 +340,28 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
             className="msl-wrp-options"
             defaultValue={moxiecrmConf?.selectedOpportunityType}
             onChange={val => setChanges(val, 'selectedOpportunityType')}
+            singleSelect
+          />
+        </div>
+      </ConfirmModal>
+
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt={__('Ok', 'bit-integrations')}
+        show={actionMdl.show === 'recordType'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title={__('Record types', 'bit-integrations')}
+      >
+        <div className="btcd-hr mt-2 mb-2" />
+        <div className="flx flx-center mt-2">
+          <MultiSelect
+            options={recordTypes?.map(recordType => ({ label: recordType.label, value: recordType.value }))}
+            className="msl-wrp-options"
+            defaultValue={moxiecrmConf?.selectedRecordType}
+            onChange={val => setChanges(val, 'selectedRecordType')}
             singleSelect
           />
         </div>
