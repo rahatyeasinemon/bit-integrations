@@ -364,6 +364,26 @@ final class AcademyLmsController
                     'fieldName' => 'Lesson Status',
                     'required' => false,
                 ],
+                'Quiz ID' => (object) [
+                    'fieldKey' => 'quiz_id',
+                    'fieldName' => 'Quiz ID',
+                    'required' => false,
+                ],
+                'Quiz Title' => (object) [
+                    'fieldKey' => 'quiz_title',
+                    'fieldName' => 'Quiz Title',
+                    'required' => false,
+                ],
+                'Quiz Description' => (object) [
+                    'fieldKey' => 'quiz_description',
+                    'fieldName' => 'Quiz Description',
+                    'required' => false,
+                ],
+                'Quiz URL' => (object) [
+                    'fieldKey' => 'quiz_url',
+                    'fieldName' => 'Quiz URL',
+                    'required' => false,
+                ],
                 'Course ID' => (object) [
                     'fieldKey' => 'course_id',
                     'fieldName' => 'Course ID',
@@ -557,6 +577,8 @@ final class AcademyLmsController
 
     public static function handleQuizAttempt($attempt)
     {
+        error_log(print_r('handleQuizAttempt', true));
+        die;
         $flows = Flow::exists('AcademyLms', 2);
         // $attempt = \AcademyQuizzes\Classes\Query::get_quiz_attempt($attempt_id);
         $quiz_id = $attempt->quiz_id;
@@ -584,33 +606,14 @@ final class AcademyLmsController
             $attempt_details[$key] = maybe_unserialize($val);
         }
 
-        // if (array_key_exists('attempt_info', $attempt_details)) {
-        //     $attempt_info_tmp = $attempt_details['attempt_info'];
-        //     unset($attempt_details['attempt_info']);
-
-        //     foreach ($attempt_info_tmp as $key => $val) {
-        //         $attempt_info[$key] = maybe_unserialize($val);
-        //     }
-
-        //     $attempt_details['passing_grade'] = $attempt_info['passing_grade'];
-        //     $totalMark = $attempt_details['total_marks'];
-        //     $earnMark = $attempt_details['earned_marks'];
-        //     $passGrade = $attempt_details['passing_grade'];
-        //     $mark = $totalMark * ($passGrade / 100);
-
-        //     if ($earnMark >= $mark) {
-        //         $attempt_details['result_status'] = 'Passed';
-        //     } else {
-        //         $attempt_details['result_status'] = 'Failed';
-        //     }
-        // }
-
         $attempt_details['post_id'] = $attempt->attempt_id;
         Flow::execute('AcademyLms', 2, $attempt_details, $flows);
     }
 
     public static function handleQuizTarget($attempt_id)
     {
+        error_log(print_r('handleQuizTarget', true));
+        die;
         $flows = Flow::exists('AcademyLms', 5);
 
         $attempt = academy_utils()->get_attempt($attempt_id);
@@ -716,14 +719,26 @@ final class AcademyLmsController
             return;
         }
 
-        $lessonPost = \Academy\Traits\Lessons::get_lesson($topic_id);
-        $lessonData = [];
-        $lessonData = [
-            'lesson_id' => $lessonPost->ID,
-            'lesson_title' => $lessonPost->lesson_title,
-            'lesson_description' => $lessonPost->lesson_content,
-            'lesson_status' => $lessonPost->lesson_status,
-        ];
+        $topicData = [];
+        if ($topic_type === 'lesson') {
+            $lessonPost = \Academy\Traits\Lessons::get_lesson($topic_id);
+            $topicData = [
+                'lesson_id' => $lessonPost->ID,
+                'lesson_title' => $lessonPost->lesson_title,
+                'lesson_description' => $lessonPost->lesson_content,
+                'lesson_status' => $lessonPost->lesson_status,
+            ];
+        }
+
+        if ($topic_type === 'quiz') {
+            $quiz = get_post($topic_id);
+            $topicData = [
+                'quiz_id' => $quiz->ID,
+                'quiz_title' => $quiz->post_title,
+                'quiz_description' => $quiz->post_content,
+                'quiz_url' => $quiz->guid,
+            ];
+        }
 
         $user = self::getUserInfo($user_id);
         $current_user = [
@@ -743,7 +758,7 @@ final class AcademyLmsController
             'course_url' => $coursePost->guid,
         ];
 
-        $lessonDataFinal = $lessonData + $courseData + $current_user;
+        $lessonDataFinal = $topicData + $courseData + $current_user;
         $lessonDataFinal['post_id'] = $topic_id;
         Flow::execute('AcademyLms', 3, $lessonDataFinal, $flows);
     }
