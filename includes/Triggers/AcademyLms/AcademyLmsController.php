@@ -305,11 +305,6 @@ final class AcademyLmsController
                     'fieldName' => 'Total Marks',
                     'required' => false,
                 ],
-                'Total Marks' => (object) [
-                    'fieldKey' => 'total_marks',
-                    'fieldName' => 'Total Marks',
-                    'required' => false,
-                ],
                 'Earn Marks' => (object) [
                     'fieldKey' => 'earned_marks',
                     'fieldName' => 'Earn Marks',
@@ -325,13 +320,13 @@ final class AcademyLmsController
                     'fieldName' => 'Attempt Ended At',
                     'required' => false,
                 ],
-                'Passing Grade' => (object) [
-                    'fieldKey' => 'passing_grade',
-                    'fieldName' => 'Passing Grade',
+                'Attempt Info' => (object) [
+                    'fieldKey' => 'attempt_info',
+                    'fieldName' => 'Attempt Info',
                     'required' => false,
                 ],
                 'Result Status(Passed/Failed)' => (object) [
-                    'fieldKey' => 'result_status',
+                    'fieldKey' => 'attempt_status',
                     'fieldName' => 'Result Status(Passed/Failed)',
                     'required' => false,
                 ],
@@ -580,12 +575,10 @@ final class AcademyLmsController
         Flow::execute('AcademyLms', 1, $result, $flows);
     }
 
-    public static function handleQuizAttempt($attempt_id)
+    public static function handleQuizAttempt($attempt)
     {
         $flows = Flow::exists('AcademyLms', 2);
-
-        $attempt = academy_utils()->get_attempt($attempt_id);
-
+        // $attempt = \AcademyQuizzes\Classes\Query::get_quiz_attempt($attempt_id);
         $quiz_id = $attempt->quiz_id;
 
         $flows = self::flowFilter($flows, 'selectedQuiz', $quiz_id);
@@ -597,7 +590,7 @@ final class AcademyLmsController
             return;
         }
 
-        if ('attempt_ended' !== $attempt->attempt_status) {
+        if ('pending' === $attempt->attempt_status) {
             return;
         }
 
@@ -611,29 +604,28 @@ final class AcademyLmsController
             $attempt_details[$key] = maybe_unserialize($val);
         }
 
-        if (array_key_exists('attempt_info', $attempt_details)) {
-            $attempt_info_tmp = $attempt_details['attempt_info'];
-            unset($attempt_details['attempt_info']);
+        // if (array_key_exists('attempt_info', $attempt_details)) {
+        //     $attempt_info_tmp = $attempt_details['attempt_info'];
+        //     unset($attempt_details['attempt_info']);
 
-            foreach ($attempt_info_tmp as $key => $val) {
-                $attempt_info[$key] = maybe_unserialize($val);
-            }
+        //     foreach ($attempt_info_tmp as $key => $val) {
+        //         $attempt_info[$key] = maybe_unserialize($val);
+        //     }
 
-            $attempt_details['passing_grade'] = $attempt_info['passing_grade'];
-            $totalMark = $attempt_details['total_marks'];
-            $earnMark = $attempt_details['earned_marks'];
-            $passGrade = $attempt_details['passing_grade'];
-            $mark = $totalMark * ($passGrade / 100);
+        //     $attempt_details['passing_grade'] = $attempt_info['passing_grade'];
+        //     $totalMark = $attempt_details['total_marks'];
+        //     $earnMark = $attempt_details['earned_marks'];
+        //     $passGrade = $attempt_details['passing_grade'];
+        //     $mark = $totalMark * ($passGrade / 100);
 
-            if ($earnMark >= $mark) {
-                $attempt_details['result_status'] = 'Passed';
-            } else {
-                $attempt_details['result_status'] = 'Failed';
-            }
-        }
+        //     if ($earnMark >= $mark) {
+        //         $attempt_details['result_status'] = 'Passed';
+        //     } else {
+        //         $attempt_details['result_status'] = 'Failed';
+        //     }
+        // }
 
-        $attempt_details['post_id'] = $attempt_id;
-
+        $attempt_details['post_id'] = $attempt->attempt_id;
         Flow::execute('AcademyLms', 2, $attempt_details, $flows);
     }
 
