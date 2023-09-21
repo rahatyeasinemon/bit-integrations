@@ -432,10 +432,10 @@ final class AcademyLmsController
                     'fieldName' => 'Course ID',
                     'required' => false,
                 ],
-                'Course Name' => (object) [
-                    'fieldKey' => 'course_name',
-                    'fieldName' => 'Course Name',
-                    'required' => false,
+                'Course Title' => (object) [
+                    'fieldKey' => 'course_title',
+                    'fieldName' => 'Course Title',
+                    'required' => false
                 ],
                 'First Name' => (object) [
                     'fieldKey' => 'first_name',
@@ -581,8 +581,8 @@ final class AcademyLmsController
         // $attempt = \AcademyQuizzes\Classes\Query::get_quiz_attempt($attempt_id);
         $quiz_id = $attempt->quiz_id;
 
-        $flows = self::flowFilter($flows, 'selectedQuiz', $quiz_id);
-        if (!$flows) {
+        $flows = $flows ? self::flowFilter($flows, 'selectedQuiz', $quiz_id) : false;
+        if (!$flows || empty($flow)) {
             return;
         }
 
@@ -637,7 +637,7 @@ final class AcademyLmsController
 
         $quiz_id = $attempt->quiz_id;
 
-        $flows = self::flowFilter($flows, 'selectedQuiz', $quiz_id);
+        $flows = $flows ? self::flowFilter($flows, 'selectedQuiz', $quiz_id) : false;
         if (!$flows) {
             return;
         }
@@ -728,15 +728,18 @@ final class AcademyLmsController
         return $res;
     }
 
-    public static function handleLessonComplete($lesson_id)
+    public static function handleLessonComplete($topic_type, $course_id, $topic_id, $user_id)
     {
-        $flows = Flow::exists('AcademyLms', 3);
-        $flows = self::flowFilter($flows, 'selectedLesson', $lesson_id);
+        error_log(print_r(['$topic_type' => $topic_type, '$course_id' => $course_id, '$topic_id' => $topic_id, '$user_id' => $user_id], true));
+        die;
 
-        if (!$flows) {
+        $flows = Flow::exists('AcademyLms', 3);
+        $flows = $flows ? self::flowFilter($flows, 'selectedLesson', $topic_id) : false;
+
+        if (!$flows || empty($flow)) {
             return;
         }
-        $lessonPost = get_post($lesson_id);
+        $lessonPost = get_post($topic_id);
 
         $lessonData = [];
         $lessonData = [
@@ -772,28 +775,25 @@ final class AcademyLmsController
         ];
 
         $lessonDataFinal = $lessonData + $topicData + $courseData + $current_user;
-        $lessonDataFinal['post_id'] = $lesson_id;
+        $lessonDataFinal['post_id'] = $topic_id;
         Flow::execute('AcademyLms', 3, $lessonDataFinal, $flows);
     }
 
     public static function handleCourseComplete($course_id)
     {
         $flows = Flow::exists('AcademyLms', 4);
-        $flows = self::flowFilter($flows, 'selectedCourse', $course_id);
+        $flows = $flows ? self::flowFilter($flows, 'selectedCourse', $course_id) : false;
 
         if (!$flows) {
             return;
         }
 
         $coursePost = get_post($course_id);
-
-        $courseData = [];
         $courseData = [
             'course_id' => $coursePost->ID,
             'course_title' => $coursePost->post_title,
             'course_url' => $coursePost->guid,
         ];
-
         $user = self::getUserInfo(get_current_user_id());
         $current_user = [
             'first_name' => $user['first_name'],
@@ -804,7 +804,6 @@ final class AcademyLmsController
         ];
 
         $courseDataFinal = $courseData + $current_user;
-
         $courseDataFinal['post_id'] = $course_id;
         Flow::execute('AcademyLms', 4, $courseDataFinal, $flows);
     }
