@@ -469,50 +469,6 @@ final class AcademyLmsController
         return $fieldsNew;
     }
 
-    // public static function metaboxFields($module)
-    // {
-    //     $fileTypes = [
-    //         'image',
-    //         'image_upload',
-    //         'file_advanced',
-    //         'file_upload',
-    //         'single_image',
-    //         'file',
-    //         'image_advanced',
-    //         'video'
-    //     ];
-
-    //     $metaboxFields = [];
-    //     $metaboxUploadFields = [];
-
-    //     if (function_exists('rwmb_meta')) {
-    //         if ($module === 'customer') {
-    //             $field_registry = rwmb_get_registry('field');
-    //             $meta_boxes = $field_registry->get_by_object_type($object_type = 'user');
-    //             $metaFields = isset($meta_boxes['user']) && is_array($meta_boxes['user']) ? array_values($meta_boxes['user']) : [];
-    //         } else {
-    //             $metaFields = array_values(rwmb_get_object_fields($module));
-    //         }
-    //         foreach ($metaFields as $index => $field) {
-    //             if (!in_array($field['type'], $fileTypes)) {
-    //                 $metaboxFields[$index] = (object) [
-    //                     'fieldKey' => $field['id'],
-    //                     'fieldName' => 'Metabox Field - ' . $field['name'],
-    //                     'required' => $field['required'],
-    //                 ];
-    //             } else {
-    //                 $metaboxUploadFields[$index] = (object) [
-    //                     'fieldKey' => $field['id'],
-    //                     'fieldName' => 'Metabox Field - ' . $field['name'],
-    //                     'required' => $field['required'],
-    //                 ];
-    //             }
-    //         }
-    //     }
-
-    //     return ['meta_fields' => $metaboxFields, 'upload_fields' => $metaboxUploadFields];
-    // }
-
     public static function getUserInfo($user_id)
     {
         $userInfo = get_userdata($user_id);
@@ -577,10 +533,7 @@ final class AcademyLmsController
 
     public static function handleQuizAttempt($attempt)
     {
-        error_log(print_r('handleQuizAttempt', true));
-        die;
         $flows = Flow::exists('AcademyLms', 2);
-        // $attempt = \AcademyQuizzes\Classes\Query::get_quiz_attempt($attempt_id);
         $quiz_id = $attempt->quiz_id;
 
         $flows = $flows ? self::flowFilter($flows, 'selectedQuiz', $quiz_id) : false;
@@ -597,8 +550,6 @@ final class AcademyLmsController
         }
 
         $attempt_details = [];
-        $attempt_info = [];
-
         foreach ($attempt as $key => $val) {
             if (is_array($val)) {
                 $val = maybe_unserialize($val[0]);
@@ -606,18 +557,12 @@ final class AcademyLmsController
             $attempt_details[$key] = maybe_unserialize($val);
         }
 
-        $attempt_details['post_id'] = $attempt->attempt_id;
         Flow::execute('AcademyLms', 2, $attempt_details, $flows);
     }
 
-    public static function handleQuizTarget($attempt_id)
+    public static function handleQuizTarget($attempt)
     {
-        error_log(print_r('handleQuizTarget', true));
-        die;
         $flows = Flow::exists('AcademyLms', 5);
-
-        $attempt = academy_utils()->get_attempt($attempt_id);
-
         $quiz_id = $attempt->quiz_id;
 
         $flows = $flows ? self::flowFilter($flows, 'selectedQuiz', $quiz_id) : false;
@@ -629,54 +574,26 @@ final class AcademyLmsController
             return;
         }
 
-        if ('attempt_ended' !== $attempt->attempt_status) {
+        if ('pending' === $attempt->attempt_status) {
             return;
         }
 
         $attempt_details = [];
-        $attempt_info = [];
-
         foreach ($attempt as $key => $val) {
             if (is_array($val)) {
                 $val = maybe_unserialize($val[0]);
             }
             $attempt_details[$key] = maybe_unserialize($val);
         }
-
-        if (array_key_exists('attempt_info', $attempt_details)) {
-            $attempt_info_tmp = $attempt_details['attempt_info'];
-            unset($attempt_details['attempt_info']);
-
-            foreach ($attempt_info_tmp as $key => $val) {
-                $attempt_info[$key] = maybe_unserialize($val);
-            }
-
-            $attempt_details['passing_grade'] = $attempt_info['passing_grade'];
-            $totalMark = $attempt_details['total_marks'];
-            $earnMark = $attempt_details['earned_marks'];
-            $passGrade = $attempt_details['passing_grade'];
-            $mark = $totalMark * ($passGrade / 100);
-
-            if ($earnMark >= $mark) {
-                $attempt_details['result_status'] = 'Passed';
-            } else {
-                $attempt_details['result_status'] = 'Failed';
-            }
-
-            foreach ($flows as $flow) {
-                $flow_details = $flow->flow_details;
-                $reqPercent = $flow_details->requiredPercent;
-                $mark = $totalMark * ($reqPercent / 100);
-                $condition = $flow_details->selectedCondition;
-                $achived = self::checkedAchived($condition, $mark, $earnMark);
-                $attempt_details['achived_status'] = $achived;
-
-                $attempt_details['post_id'] = $attempt_id;
-
-                Flow::execute('AcademyLms', 5, $attempt_details, $flows = [$flow]);
-            }
+        foreach ($flows as $flow) {
+            $flow_details = $flow->flow_details;
+            $reqPercent = $flow_details->requiredPercent;
+            $mark = $attempt_details['total_marks'] * ($reqPercent / 100);
+            $condition = $flow_details->selectedCondition;
+            $achived = self::checkedAchived($condition, $mark, $attempt_details['earned_marks']);
+            $attempt_details['achived_status'] = $achived;
         }
-        return;
+        Flow::execute('AcademyLms', 5, $attempt_details, $flows);
     }
 
     public static function checkedAchived($condition, $mark, $earnMark)
