@@ -359,29 +359,9 @@ final class AcademyLmsController
                     'fieldName' => 'Lesson Description',
                     'required' => false,
                 ],
-                'Lesson URL' => (object) [
-                    'fieldKey' => 'lesson_url',
-                    'fieldName' => 'Lesson URL',
-                    'required' => false,
-                ],
-                'Topic ID' => (object) [
-                    'fieldKey' => 'topic_id',
-                    'fieldName' => 'Topic ID',
-                    'required' => false,
-                ],
-                'Topic Title' => (object) [
-                    'fieldKey' => 'topic_title',
-                    'fieldName' => 'Topic Title',
-                    'required' => false,
-                ],
-                'Topic Description' => (object) [
-                    'fieldKey' => 'topic_description',
-                    'fieldName' => 'Topic Description',
-                    'required' => false,
-                ],
-                'Topic URL' => (object) [
-                    'fieldKey' => 'topic_url',
-                    'fieldName' => 'Topic URL',
+                'Lesson Status' => (object) [
+                    'fieldKey' => 'lesson_status',
+                    'fieldName' => 'Lesson Status',
                     'required' => false,
                 ],
                 'Course ID' => (object) [
@@ -390,7 +370,7 @@ final class AcademyLmsController
                     'required' => false,
                 ],
                 'Course Name' => (object) [
-                    'fieldKey' => 'course_name',
+                    'fieldKey' => 'course_title',
                     'fieldName' => 'Course Name',
                     'required' => false,
                 ],
@@ -730,26 +710,22 @@ final class AcademyLmsController
 
     public static function handleLessonComplete($topic_type, $course_id, $topic_id, $user_id)
     {
-        error_log(print_r(['$topic_type' => $topic_type, '$course_id' => $course_id, '$topic_id' => $topic_id, '$user_id' => $user_id], true));
-        die;
-
         $flows = Flow::exists('AcademyLms', 3);
         $flows = $flows ? self::flowFilter($flows, 'selectedLesson', $topic_id) : false;
-
-        if (!$flows || empty($flow)) {
+        if (!$flows) {
             return;
         }
-        $lessonPost = get_post($topic_id);
 
+        $lessonPost = \Academy\Traits\Lessons::get_lesson($topic_id);
         $lessonData = [];
         $lessonData = [
             'lesson_id' => $lessonPost->ID,
-            'lesson_title' => $lessonPost->post_title,
-            'lesson_description' => $lessonPost->post_content,
-            'lesson_url' => $lessonPost->guid,
+            'lesson_title' => $lessonPost->lesson_title,
+            'lesson_description' => $lessonPost->lesson_content,
+            'lesson_status' => $lessonPost->lesson_status,
         ];
 
-        $user = self::getUserInfo(get_current_user_id());
+        $user = self::getUserInfo($user_id);
         $current_user = [
             'first_name' => $user['first_name'],
             'last_name' => $user['last_name'],
@@ -759,22 +735,15 @@ final class AcademyLmsController
         ];
 
         $courseData = [];
-        $topicPost = get_post($lessonPost->post_parent);
-        $topicData = [
-            'topic_id' => $topicPost->ID,
-            'topic_title' => $topicPost->post_title,
-            'topic_description' => $topicPost->post_content,
-            'topic_url' => $topicPost->guid,
-        ];
-        $coursePost = get_post($topicPost->post_parent);
+        $coursePost = get_post($course_id);
         $courseData = [
             'course_id' => $coursePost->ID,
-            'course_name' => $coursePost->post_title,
+            'course_title' => $coursePost->post_title,
             'course_description' => $coursePost->post_content,
             'course_url' => $coursePost->guid,
         ];
 
-        $lessonDataFinal = $lessonData + $topicData + $courseData + $current_user;
+        $lessonDataFinal = $lessonData + $courseData + $current_user;
         $lessonDataFinal['post_id'] = $topic_id;
         Flow::execute('AcademyLms', 3, $lessonDataFinal, $flows);
     }
