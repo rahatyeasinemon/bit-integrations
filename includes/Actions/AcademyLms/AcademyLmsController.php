@@ -5,7 +5,7 @@ namespace BitCode\FI\Actions\AcademyLms;
 use BitCode\FI\Log\LogHandler;
 
 /**
- * Provide functionality for Tutor LMS integration
+ * Provide functionality for Academy Lms integration
  */
 class AcademyLmsController
 {
@@ -21,20 +21,20 @@ class AcademyLmsController
      *
      * @return JSON zoho crm api response and status
      */
-    public static function TutorAuthorize()
+    public static function Authorization()
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
-        if (is_plugin_active('tutor/tutor.php')) {
+        if (is_plugin_active('academy/academy.php')) {
             wp_send_json_success(true, 200);
         }
 
-        wp_send_json_error(__('Tutor LMS must be activated!', 'bit-integrations'));
+        wp_send_json_error(__('Academy Lms must be activated!', 'bit-integrations'));
     }
 
     public static function getAllLesson()
     {
         if (!function_exists('tutor')) {
-            wp_send_json_error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
+            wp_send_json_error(__('Academy Lms is not installed or activated', 'bit-integrations'));
         }
 
         $lessons = [];
@@ -58,7 +58,7 @@ class AcademyLmsController
     {
         $action = $queryParams->type;
         if (!function_exists('tutor')) {
-            wp_send_json_error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
+            wp_send_json_error(__('Academy Lms is not installed or activated', 'bit-integrations'));
         }
 
 

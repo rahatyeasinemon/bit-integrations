@@ -12,7 +12,7 @@ export default function AcademyLmsAuthorization({ academyLmsConf, setAcademyLmsC
 
   const authorizeHandler = () => {
     setIsLoading('auth')
-    bitsFetch({}, 'academyLms_authorize')
+    bitsFetch({}, 'academy_lms_authorize')
       .then(result => {
         if (result?.success) {
           setisAuthorized(true)
