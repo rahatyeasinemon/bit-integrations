@@ -45,9 +45,8 @@ export default function MoxieCRMIntegLayout({ formFields, handleInput, moxiecrmC
       <select onChange={handleActionInput} name="actionName" value={moxiecrmConf.actionName} className="btcd-paper-inp w-5">
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="client">{__('Create Client', 'bit-integrations')}</option>
-        <option value="contact">{__('Create Person', 'bit-integrations')}</option>
+        <option value="contact">{__('Create Contact', 'bit-integrations')}</option>
         <option value="opportunity">{__('Create Opportunity', 'bit-integrations')}</option>
-        <option value="task">{__('Create Task', 'bit-integrations')}</option>
       </select>
       {(moxiecrmConf.actionName === 'client')
         && (
@@ -62,70 +61,6 @@ export default function MoxieCRMIntegLayout({ formFields, handleInput, moxiecrmC
           </>
         )}
 
-      {(loading.CRMPeoples || loading.CRMPipelines) && (
-        <Loader style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 100,
-          transform: 'scale(0.7)',
-        }}
-        />
-      )}
-      {(moxiecrmConf.actionName === 'opportunity')
-        && (
-          <>
-            <br />
-            <br />
-            <div className="flx">
-              <b className="wdt-200 d-in-b">{__('Select People:', 'bit-integrations')}</b>
-              <MultiSelect
-                options={moxiecrmConf?.CRMPeoples?.map(CRMPeople => ({ label: CRMPeople.name, value: CRMPeople.id }))}
-                className="msl-wrp-options dropdown-custom-width"
-                defaultValue={moxiecrmConf?.selectedCRMPeople}
-                onChange={val => setChanges(val, 'selectedCRMPeople')}
-                disabled={loading.CRMPeoples}
-                singleSelect
-              />
-              <button
-                onClick={() => getAllCRMPeoples(moxiecrmConf, setMoxieCRMConf, setLoading)}
-                className="icn-btn sh-sm ml-2 mr-2 tooltip"
-                style={{ '--tooltip-txt': `'${__('Refresh peoples', 'bit-integrations')}'` }}
-                type="button"
-                disabled={loading.CRMPeoples}
-              >
-                &#x21BB;
-              </button>
-            </div>
-          </>
-        )}
-      {((moxiecrmConf.actionName === 'opportunity') && moxiecrmConf.selectedCRMPeople)
-        && (
-          <>
-            <br />
-            <br />
-            <div className="flx">
-              <b className="wdt-200 d-in-b">{__('Select Pipeline:', 'bit-integrations')}</b>
-              <MultiSelect
-                options={moxiecrmConf?.CRMPipelines?.map(CRMPipeline => ({ label: CRMPipeline.name, value: CRMPipeline.id }))}
-                className="msl-wrp-options dropdown-custom-width"
-                defaultValue={moxiecrmConf?.selectedCRMPipelines}
-                onChange={val => setChanges(val, 'selectedCRMPipelines')}
-                disabled={loading.CRMPipelines}
-                singleSelect
-              />
-              <button
-                onClick={() => getAllCRMPipelines(moxiecrmConf, setMoxieCRMConf, setLoading)}
-                className="icn-btn sh-sm ml-2 mr-2 tooltip"
-                style={{ '--tooltip-txt': `'${__('Refresh Pipelines', 'bit-integrations')}'` }}
-                type="button"
-                disabled={loading.CRMPipelines}
-              >
-                &#x21BB;
-              </button>
-            </div>
-          </>
-        )}
       {(loading.customFields) && (
         <Loader style={{
           display: 'flex',

@@ -41,32 +41,35 @@ function MoxieCRM({ formFields, setFlow, flow, allIntegURL }) {
   ]
 
   const contactFields = [
-    { key: 'name', label: 'Name', required: true },
-    { key: 'title', label: 'Title', required: false },
-    { key: 'details', label: 'Description', required: false },
-    { key: 'email_domain', label: 'Email', required: false },
-    { key: 'phone_numbers', label: 'Phone', required: false },
-    { key: 'street', label: 'Street', required: false },
-    { key: 'city', label: 'City', required: false },
-    { key: 'state', label: 'State', required: false },
-    { key: 'postal_code', label: 'Postal Code', required: false },
-    { key: 'country', label: 'Country', required: false },
-    { key: 'websites', label: 'Website', required: false },
+    { key: 'email', label: 'Email Address', required: true },
+    { key: 'first', label: 'First Name', required: false },
+    { key: 'last', label: 'Last Name', required: false },
+    { key: 'phone', label: 'Phone', required: false },
+    { key: 'notes', label: 'Notes', required: false },
+
   ]
 
   const opportunityFields = [
     { key: 'name', label: 'Opportunity Name', required: true },
-    { key: 'close_date', label: 'Close Date', required: false },
-    { key: 'details', label: 'Opportunity Details', required: false },
-    { key: 'monetary_value', label: 'Value', required: false },
+    { key: 'description', label: 'Description', required: false },
+    { key: 'value', label: 'Value', required: false },
+    { key: 'firstName', label: 'Lead First Name', required: false },
+    { key: 'lastName', label: 'Lead Last Name', required: false },
+    { key: 'email', label: 'Lead Email', required: false },
+    { key: 'phone', label: 'Lead Phone', required: false },
+    { key: 'role', label: 'Lead Role', required: false },
+    { key: 'businessName', label: 'Lead Business Name', required: false },
+    { key: 'website', label: 'Lead Website', required: false },
+    { key: 'address1', label: 'Lead Address 1', required: false },
+    { key: 'address2', label: 'Lead Address 2', required: false },
+    { key: 'city', label: 'Lead City', required: false },
+    { key: 'locality', label: 'Lead Locality', required: false },
+    { key: 'postal', label: 'Lead Postal', required: false },
+    { key: 'country', label: 'Lead Country', required: false },
+    { key: 'sourceUrl', label: 'Lead Source Url', required: false },
+    { key: 'leadSource', label: 'Lead Source', required: false },
   ]
 
-  const taskFields = [
-    { key: 'name', label: 'Task Name', required: true },
-    { key: 'due_date', label: 'Due Date', required: false },
-    { key: 'reminder_date', label: 'Reminder Date', required: false },
-    { key: 'details', label: 'Description', required: false },
-  ]
 
   const [moxiecrmConf, setMoxieCRMConf] = useState({
     name: 'MoxieCRM',
@@ -80,7 +83,6 @@ function MoxieCRM({ formFields, setFlow, flow, allIntegURL }) {
     clientFields,
     contactFields,
     opportunityFields,
-    taskFields,
     actions: {},
   })
 
@@ -105,17 +107,6 @@ function MoxieCRM({ formFields, setFlow, flow, allIntegURL }) {
     if (!checkMappedFields(moxiecrmConf)) {
       toast.error('Please map mandatory fields')
       return
-    }
-
-    if (moxiecrmConf.actionName === 'opportunity') {
-      if (!moxiecrmConf.selectedCRMPeople) {
-        toast.error('Please select a people')
-        return
-      }
-      if (!moxiecrmConf.selectedCRMPipelines && moxiecrmConf.actionName === 'opportunity') {
-        toast.error('Please select a Pipeline')
-        return
-      }
     }
 
     moxiecrmConf.field_map.length > 0 && setStep(pageNo)

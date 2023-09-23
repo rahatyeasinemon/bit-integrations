@@ -52,14 +52,7 @@ class MoxieCRMController
 
         $apiKey      = $fieldsRequestParams->api_key;
         $action      = $fieldsRequestParams->action;
-        $apiEmail    = $fieldsRequestParams->api_url;
-        // if ($action == 'contact' || $action == 'client') {
-        //     $apiEndpoint = $this->apiEndpoint."/peoples/fields/definitions";
-        // } elseif ($action == 'opportunity') {
-        //     $apiEndpoint = $this->apiEndpoint."/opportunities/fields/definitions";
-        // } elseif ($action == 'task') {
-        //     $apiEndpoint = $this->apiEndpoint."/kases/fields/definitions";
-        // }
+        $apiUrl    = $fieldsRequestParams->api_url;
 
         $apiEndpoint = $this->apiEndpoint . "/custom_field_definitions";
         $headers = [
@@ -110,61 +103,35 @@ class MoxieCRMController
         }
     }
 
-    public function getAllOwners($fieldsRequestParams)
-    {
-        if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
-        }
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEmail     = $fieldsRequestParams->api_url;
-        $apiEndpoint = $this->apiEndpoint . "/users";
-        $headers = [
-            "X-API-KEY"  => $apiKey,
-            "Content-Type"      => "application/json"
-        ];
-
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
-
-        if (isset($response)) {
-            foreach ($response as $owner) {
-                $owners[] = [
-                    'id'   => (string) $owner->id,
-                    'name' => $owner->name
-                ];
-            }
-            wp_send_json_success($owners, 200);
-        } else {
-            wp_send_json_error('Owners fetching failed', 400);
-        }
-    }
-
     public function getAllClients($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
         $apiKey      = $fieldsRequestParams->api_key;
-        $apiEmail     = $fieldsRequestParams->api_url;
-        $apiEndpoint = $this->apiEndpoint . "/companies/search";
+        $apiUrl     = $fieldsRequestParams->api_url;
+        $apiEndpoint = 'https://'. $apiUrl . "/api/public/action/clients/list";
         $headers = [
             "X-API-KEY"  => $apiKey,
             "Content-Type"      => "application/json"
         ];
 
-        $response = HttpHelper::post($apiEndpoint, null, $headers);
+
+        $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (isset($response)) {
             foreach ($response as $client) {
-                $companies[] = [
+                $clients[] = [
                     'id'   => (string) $client->id,
                     'name' => $client->name
                 ];
             }
-            wp_send_json_success($companies, 200);
+            wp_send_json_success($clients, 200);
         } else {
             wp_send_json_error('Clients fetching failed', 400);
         }
     }
+
 
     public function getAllPipelineStages($fieldsRequestParams)
     {
@@ -173,8 +140,7 @@ class MoxieCRMController
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
-        $apiEmail     = $fieldsRequestParams->api_url;
-        $apiEndpoint = $this->apiEndpoint . "/pipeline_stages";
+        $apiEndpoint = 'https://'.$fieldsRequestParams->api_url . "/api/public/action/pipelineStages/list";
         $headers = [
             "X-API-KEY"  => $apiKey,
             "Content-Type"      => "application/json"
@@ -185,8 +151,8 @@ class MoxieCRMController
         if (isset($response)) {
             foreach ($response as $pipelineStage) {
                 $pipelineStages[] = [
-                    'id'   => (string) $pipelineStage->id,
-                    'name' => $pipelineStage->name
+                    'id'   => $pipelineStage->id,
+                    'name' => $pipelineStage->label
                 ];
             }
             wp_send_json_success($pipelineStages, 200);
@@ -202,7 +168,7 @@ class MoxieCRMController
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
-        $apiEmail     = $fieldsRequestParams->api_url;
+        $apiUrl     = $fieldsRequestParams->api_url;
         $apiEndpoint = $this->apiEndpoint . "/people/search";
         $headers = [
             "X-API-KEY"  => $apiKey,
@@ -231,7 +197,7 @@ class MoxieCRMController
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
-        $apiEmail     = $fieldsRequestParams->api_url;
+        $apiUrl     = $fieldsRequestParams->api_url;
         $apiEndpoint = $this->apiEndpoint . "/pipelines";
         $headers = [
             "X-API-KEY"  => $apiKey,

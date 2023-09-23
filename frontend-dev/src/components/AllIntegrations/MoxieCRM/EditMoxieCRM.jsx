@@ -31,17 +31,6 @@ function EditMoxieCRM({ allIntegURL }) {
       return
     }
 
-    if (moxiecrmConf.actionName === 'opportunity') {
-      if (!moxiecrmConf.selectedCRMPeople) {
-        toast.error('Please select a people')
-        return
-      }
-      if (!moxiecrmConf.selectedCRMPipelines && moxiecrmConf.actionName === 'opportunity') {
-        toast.error('Please select a Pipeline')
-        return
-      }
-    }
-
     saveActionConf({ flow, allIntegURL, conf: moxiecrmConf, navigate, edit: 1, setLoading, setSnackbar })
   }
 

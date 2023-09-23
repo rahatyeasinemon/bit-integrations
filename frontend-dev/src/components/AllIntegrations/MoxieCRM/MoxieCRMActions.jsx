@@ -7,7 +7,7 @@ import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Loader from '../../Loaders/Loader'
-import { getAllOpportunities, getAllOwners, getAllClients, getAllPipelineStages } from './MoxieCRMCommonFunc'
+import { getAllOpportunities, getAllClients, getAllPipelineStages } from './MoxieCRMCommonFunc'
 
 export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading, setLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
@@ -38,18 +38,10 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
         setActionMdl({ show: false })
         delete newConf.actions.opportunity
       }
-    } else if (type === 'owner') {
-      if (e.target?.checked) {
-        getAllOwners(moxiecrmConf, setMoxieCRMConf, setLoading)
-        newConf.actions.owner = true
-      } else {
-        setActionMdl({ show: false })
-        delete newConf.actions.owner
-      }
     } else if (type === 'client') {
       if (e.target?.checked) {
         getAllClients(moxiecrmConf, setMoxieCRMConf, setLoading)
-        newConf.actions.recordType = true
+        newConf.actions.client = true
       } else {
         setActionMdl({ show: false })
         delete newConf.actions.client
@@ -94,92 +86,8 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
 
   return (
     <div className="pos-rel d-flx flx-wrp">
-      {/* {(moxiecrmConf.actionName === 'contact') && <TableCheckBox checked={moxiecrmConf?.selectedClient?.length || false} onChange={(e) => actionHandler(e, 'client')} className="wdt-200 mt-4 mr-2" value="client" title={__('Add Client', 'bit - integrations')} subTitle={__('Add an client')} />} */}
-      {/* {(moxiecrmConf.actionName === 'contact' || moxiecrmConf.actionName === 'client' || moxiecrmConf.actionName === 'opportunity' || moxiecrmConf.actionName === 'task') && <TableCheckBox checked={moxiecrmConf?.selectedOwner?.length || false} onChange={(e) => actionHandler(e, 'owner')} className="wdt-200 mt-4 mr-2" value="owner" title={__('Add Owner', 'bit - integrations')} subTitle={__('Add an owner')} />} */}
-      {/* {(moxiecrmConf.actionName === 'client') && <TableCheckBox checked={moxiecrmConf?.selectedOwner?.length || false} onChange={(e) => actionHandler(e, 'recordType')} className="wdt-200 mt-4 mr-2" value="recordType" title={__('Add Record Type', 'bit - integrations')} subTitle={__('Add an recordType')} />} */}
-      {(moxiecrmConf.actionName === 'opportunity') && <TableCheckBox checked={moxiecrmConf?.selectedClient?.length || false} onChange={(e) => actionHandler(e, 'client')} className="wdt-200 mt-4 mr-2" value="client" title={__('Add Client', 'bit - integrations')} subTitle={__('Add an client')} />}
+      {((moxiecrmConf.actionName === 'contact') || (moxiecrmConf.actionName === 'opportunity')) && <TableCheckBox checked={moxiecrmConf?.selectedClient?.length || false} onChange={(e) => actionHandler(e, 'client')} className="wdt-200 mt-4 mr-2" value="client" title={__('Add Client', 'bit - integrations')} subTitle={__('Add an client')} />}
       {(moxiecrmConf.actionName === 'opportunity') && <TableCheckBox checked={moxiecrmConf?.selectedPipelineStage?.length || false} onChange={(e) => actionHandler(e, 'pipelineStage')} className="wdt-200 mt-4 mr-2" value="pipelineStage" title={__('Add PipelineStage', 'bit - integrations')} subTitle={__('Add a pipelineStage')} />}
-      {/* {(moxiecrmConf.actionName === 'task') && <TableCheckBox checked={moxiecrmConf?.selectedOpportunity?.length || false} onChange={(e) => actionHandler(e, 'opportunity')} className="wdt-200 mt-4 mr-2" value="opportunity" title={__('Add Opportunity', 'bit - integrations')} subTitle={__('Add a opportunity')} />} */}
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'opportunity'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Opportunities', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Opportunity', 'bit-integrations')}
-        </div>
-        {
-          loading.opportunities ? (
-            <Loader style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: 45,
-              transform: 'scale(0.5)',
-            }}
-            />
-          )
-            : (
-              <div className="flx flx-between mt-2">
-                <MultiSelect
-                  options={moxiecrmConf?.opportunities?.map(opportunity => ({ label: opportunity.name, value: opportunity.id }))}
-                  className="msl-wrp-options"
-                  defaultValue={moxiecrmConf?.selectedOpportunity}
-                  onChange={val => setChanges(val, 'selectedOpportunity')}
-                  singleSelect
-                />
-                <button onClick={() => getAllOpportunities(moxiecrmConf, setMoxieCRMConf, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Opportunities', 'bit-integrations')}'` }} type="button">&#x21BB;</button>
-              </div>
-            )
-        }
-      </ConfirmModal>
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'owner'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Owners', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Owner', 'bit-integrations')}
-        </div>
-        {
-          loading.owners ? (
-            <Loader style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: 45,
-              transform: 'scale(0.5)',
-            }}
-            />
-          )
-            : (
-              <div className="flx flx-between mt-2">
-                <MultiSelect
-                  options={moxiecrmConf?.owners?.map(owner => ({ label: owner.name, value: owner.id }))}
-                  className="msl-wrp-options"
-                  defaultValue={moxiecrmConf?.selectedOwner}
-                  onChange={val => setChanges(val, 'selectedOwner')}
-                  singleSelect
-                />
-                <button onClick={() => getAllOwners(moxiecrmConf, setMoxieCRMConf, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Owners', 'bit-integrations')}'` }} type="button">&#x21BB;</button>
-              </div>
-            )
-        }
-      </ConfirmModal>
 
       <ConfirmModal
         className="custom-conf-mdl"
@@ -196,7 +104,7 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
           {__('Select Client', 'bit-integrations')}
         </div>
         {
-          loading.companies ? (
+          loading.clients ? (
             <Loader style={{
               display: 'flex',
               justifyContent: 'center',
@@ -209,7 +117,7 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
             : (
               <div className="flx flx-between mt-2">
                 <MultiSelect
-                  options={moxiecrmConf?.companies?.map(client => ({ label: client.name, value: client.id }))}
+                  options={moxiecrmConf?.clients?.map(client => ({ label: client.name, value: client.name }))}
                   className="msl-wrp-options"
                   defaultValue={moxiecrmConf?.selectedClient}
                   onChange={val => setChanges(val, 'selectedClient')}
@@ -219,152 +127,6 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
               </div>
             )
         }
-      </ConfirmModal>
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'pipelineStage'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('PipelineStages', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select PipelineStage', 'bit-integrations')}
-        </div>
-        {
-          loading.pipelineStages ? (
-            <Loader style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: 45,
-              transform: 'scale(0.5)',
-            }}
-            />
-          )
-            : (
-              <div className="flx flx-between mt-2">
-                <MultiSelect
-                  options={moxiecrmConf?.pipelineStages?.map(pipelineStage => ({ label: pipelineStage.name, value: pipelineStage.id }))}
-                  className="msl-wrp-options"
-                  defaultValue={moxiecrmConf?.selectedPipelineStage}
-                  onChange={val => setChanges(val, 'selectedPipelineStage')}
-                  singleSelect
-                />
-                <button onClick={() => getAllPipelineStages(moxiecrmConf, setMoxieCRMConf, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh PipelineStages', 'bit-integrations')}'` }} type="button">&#x21BB;</button>
-              </div>
-            )
-        }
-      </ConfirmModal>
-
-      {/* <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'status'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Statuses', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Status', 'bit-integrations')}
-        </div>
-        {
-          loading.statuses ? (
-            <Loader style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: 45,
-              transform: 'scale(0.5)',
-            }}
-            />
-          )
-            : (
-              <div className="flx flx-between mt-2">
-                <MultiSelect
-                  options={moxiecrmConf?.statuses?.map(status => ({ label: status.name, value: status.id }))}
-                  className="msl-wrp-options"
-                  defaultValue={moxiecrmConf?.selectedStatus}
-                  onChange={val => setChanges(val, 'selectedStatus')}
-                  singleSelect
-                />
-                <button onClick={() => getAllStatuses(moxiecrmConf, setMoxieCRMConf, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh statuses', 'bit-integrations')}'` }} type="button">&#x21BB;</button>
-              </div>
-            )
-        }
-      </ConfirmModal> */}
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'followUp'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Follow Up', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="flx flx-center mt-2">
-          <MultiSelect
-            options={followUps?.map(followUp => ({ label: followUp.label, value: followUp.value }))}
-            className="msl-wrp-options"
-            defaultValue={moxiecrmConf?.selectedFollowUp}
-            onChange={val => setChanges(val, 'selectedFollowUp')}
-            singleSelect
-          />
-        </div>
-      </ConfirmModal>
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'opportunityType'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Opportunity types', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="flx flx-center mt-2">
-          <MultiSelect
-            options={opportunityTypes?.map(opportunityType => ({ label: opportunityType.label, value: opportunityType.value }))}
-            className="msl-wrp-options"
-            defaultValue={moxiecrmConf?.selectedOpportunityType}
-            onChange={val => setChanges(val, 'selectedOpportunityType')}
-            singleSelect
-          />
-        </div>
-      </ConfirmModal>
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'recordType'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Record types', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="flx flx-center mt-2">
-          <MultiSelect
-            options={recordTypes?.map(recordType => ({ label: recordType.label, value: recordType.value }))}
-            className="msl-wrp-options"
-            defaultValue={moxiecrmConf?.selectedRecordType}
-            onChange={val => setChanges(val, 'selectedRecordType')}
-            singleSelect
-          />
-        </div>
       </ConfirmModal>
     </div>
   )

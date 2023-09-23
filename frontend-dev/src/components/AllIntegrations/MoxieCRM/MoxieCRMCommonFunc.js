@@ -23,8 +23,6 @@ export const generateMappedField = (moxiecrmConf) => {
     allRequiredFields = moxiecrmConf?.contactFields;
   } else if (moxiecrmConf.actionName === "opportunity") {
     allRequiredFields = moxiecrmConf?.opportunityFields;
-  } else if (moxiecrmConf.actionName === "task") {
-    allRequiredFields = moxiecrmConf?.taskFields;
   }
   const requiredFlds = allRequiredFields?.filter(
     (fld) => fld.required === true
@@ -130,84 +128,32 @@ export const getCustomFields = (confTmp, setConf, setLoading) => {
   });
 };
 
-export const getAllOpportunities = (confTmp, setConf, setLoading) => {
-  setLoading({ ...setLoading, opportunities: true });
-
-  const requestParams = {
-    api_key: confTmp.api_key,
-    api_url: confTmp.api_url,
-  };
-
-  bitsFetch(requestParams, "moxiecrm_fetch_all_opportunities").then(
-    (result) => {
-      if (result && result.success) {
-        const newConf = { ...confTmp };
-        if (result.data) {
-          newConf.opportunities = result.data;
-        }
-        setConf(newConf);
-        setLoading({ ...setLoading, opportunities: false });
-
-        toast.success(
-          __("Opportunities fetched successfully", "bit-integrations")
-        );
-        return;
-      }
-      setLoading({ ...setLoading, opportunities: false });
-      toast.error(__("Opportunities fetching failed", "bit-integrations"));
-    }
-  );
-};
-
-export const getAllOwners = (confTmp, setConf, setLoading) => {
-  setLoading({ ...setLoading, owners: true });
-
-  const requestParams = {
-    api_key: confTmp.api_key,
-    api_url: confTmp.api_url,
-  };
-
-  bitsFetch(requestParams, "moxiecrm_fetch_all_owners").then((result) => {
-    if (result && result.success) {
-      const newConf = { ...confTmp };
-      if (result.data) {
-        newConf.owners = result.data;
-      }
-      setConf(newConf);
-      setLoading({ ...setLoading, owners: false });
-
-      toast.success(__("Owners fetched successfully", "bit-integrations"));
-      return;
-    }
-    setLoading({ ...setLoading, owners: false });
-    toast.error(__("Owners fetching failed", "bit-integrations"));
-  });
-};
 
 export const getAllClients = (confTmp, setConf, setLoading) => {
-  setLoading({ ...setLoading, companies: true });
+  setLoading({ ...setLoading, clients: true });
 
   const requestParams = {
     api_key: confTmp.api_key,
     api_url: confTmp.api_url,
   };
 
-  bitsFetch(requestParams, "moxiecrm_fetch_all_companies").then((result) => {
+  bitsFetch(requestParams, "moxiecrm_fetch_all_clients").then((result) => {
     if (result && result.success) {
       const newConf = { ...confTmp };
       if (result.data) {
-        newConf.companies = result.data;
+        newConf.clients = result.data;
       }
       setConf(newConf);
-      setLoading({ ...setLoading, companies: false });
+      setLoading({ ...setLoading, clients: false });
 
       toast.success(__("Clients fetched successfully", "bit-integrations"));
       return;
     }
-    setLoading({ ...setLoading, companies: false });
+    setLoading({ ...setLoading, clients: false });
     toast.error(__("Clients fetching failed", "bit-integrations"));
   });
 };
+
 
 export const getAllPipelineStages = (confTmp, setConf, setLoading) => {
   setLoading({ ...setLoading, pipelineStages: true });
@@ -239,55 +185,3 @@ export const getAllPipelineStages = (confTmp, setConf, setLoading) => {
   );
 };
 
-export const getAllCRMPeoples = (confTmp, setConf, setLoading) => {
-  setLoading({ ...setLoading, CRMPeoples: true });
-
-  const requestParams = {
-    api_key: confTmp.api_key,
-    api_url: confTmp.api_url,
-    action_name: confTmp.actionName,
-  };
-
-  bitsFetch(requestParams, "moxiecrm_fetch_all_CRMPeoples").then((result) => {
-    if (result && result.success) {
-      const newConf = { ...confTmp };
-      if (result.data) {
-        newConf.CRMPeoples = result.data;
-      }
-      setConf(newConf);
-      setLoading({ ...setLoading, CRMPeoples: false });
-
-      toast.success(__("Peoples fetched successfully", "bit-integrations"));
-      return;
-    }
-    setLoading({ ...setLoading, CRMPeoples: false });
-    toast.error(__("Peoples fetching failed", "bit-integrations"));
-  });
-};
-
-export const getAllCRMPipelines = (confTmp, setConf, setLoading) => {
-  setLoading({ ...setLoading, CRMPipelines: true });
-
-  const requestParams = {
-    api_key: confTmp.api_key,
-    api_url: confTmp.api_url,
-  };
-
-  bitsFetch(requestParams, "moxiecrm_fetch_all_CRMPipelines").then(
-    (result) => {
-      if (result && result.success) {
-        const newConf = { ...confTmp };
-        if (result.data) {
-          newConf.CRMPipelines = result.data;
-        }
-        setConf(newConf);
-        setLoading({ ...setLoading, CRMPipelines: false });
-
-        toast.success(__("Pipelines fetched successfully", "bit-integrations"));
-        return;
-      }
-      setLoading({ ...setLoading, CRMPipelines: false });
-      toast.error(__("Pipelines fetching failed", "bit-integrations"));
-    }
-  );
-};

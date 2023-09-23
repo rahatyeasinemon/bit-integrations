@@ -16,8 +16,6 @@ export default function MoxieCRMFieldMap({ i, formFields, field, moxiecrmConf, s
     allFields = moxiecrmConf?.contactFields
   } else if (moxiecrmConf.actionName === 'opportunity') {
     allFields = moxiecrmConf?.opportunityFields
-  } else if (moxiecrmConf.actionName === 'task') {
-    allFields = moxiecrmConf?.taskFields
   }
   // newFields = [...allFields, ...moxiecrmConf?.customFields]
   const requiredFields = allFields.filter(fld => fld.required === true) || []
@@ -88,7 +86,7 @@ export default function MoxieCRMFieldMap({ i, formFields, field, moxiecrmConf, s
                 ))
               )
             }
-            {(moxiecrmConf.actionName === 'client' || moxiecrmConf.actionName === 'contact' || moxiecrmConf.actionName === 'opportunity' || moxiecrmConf.actionName === 'task')
+            {(moxiecrmConf.actionName === 'client' || moxiecrmConf.actionName === 'contact' || moxiecrmConf.actionName === 'opportunity')
               && <option value="customFieldKey">{__('Custom Field', 'bit-integrations')}</option>}
           </select>
           {field.moxiecrmFormField === 'customFieldKey'
