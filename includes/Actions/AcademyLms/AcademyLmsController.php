@@ -102,7 +102,7 @@ class AcademyLmsController
         if ($type === "enroll") {
             foreach ($course_ids as $course_id) {
                 add_filter('is_course_purchasable', '__return_false', 10);
-                tutor_utils()->do_enroll($course_id, false, $user_id);
+                \Academy\Helper::do_enroll($course_id, $user_id);
                 remove_filter('is_course_purchasable', '__return_false', 10);
             }
             return "course enrolled";
