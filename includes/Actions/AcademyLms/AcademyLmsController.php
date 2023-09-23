@@ -108,7 +108,7 @@ class AcademyLmsController
             return "course enrolled";
         } else {
             foreach ($course_ids as $course_id) {
-                tutor_utils()->cancel_course_enrol($course_id, $user_id);
+                \Academy\Helper::cancel_course_enroll($course_id, $user_id);
             }
             return "course unenrolled";
         }
@@ -230,8 +230,10 @@ class AcademyLmsController
                     $response = self::completeCourse($selectedCourse);
                 } else if ($actionName === 'reset-course') {
                     $response = self::resetCourse($selectedCourse);
-                } else {
+                } else if ($actionName === 'enroll-course') {
                     $response = self::enrollCourse($selectedCourse, $selectedAllCourse, "enroll");
+                } else {
+                    $response = self::enrollCourse($selectedCourse, $selectedAllCourse, "unenroll");
                 }
                 break;
             case "complete-lesson":
