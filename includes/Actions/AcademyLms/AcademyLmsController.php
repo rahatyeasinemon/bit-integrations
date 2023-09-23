@@ -33,7 +33,7 @@ class AcademyLmsController
 
     public static function getAllLesson()
     {
-        if (!function_exists('tutor')) {
+        if (!class_exists('Academy')) {
             wp_send_json_error(__('Academy Lms is not installed or activated', 'bit-integrations'));
         }
 
@@ -57,13 +57,13 @@ class AcademyLmsController
     public static function getAllCourse($queryParams)
     {
         $action = $queryParams->type;
-        if (!function_exists('tutor')) {
+        if (!class_exists('Academy')) {
             wp_send_json_error(__('Academy Lms is not installed or activated', 'bit-integrations'));
         }
 
 
         $courseList = get_posts([
-            'post_type' => 'courses',
+            'post_type' => 'academy_courses',
             'post_status' => 'publish',
             'numberposts' => -1
         ]);

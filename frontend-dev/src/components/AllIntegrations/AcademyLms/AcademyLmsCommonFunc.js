@@ -34,7 +34,7 @@ export const moduleChange = (academyLmsConf, setAcademyLmsConf, setIsLoading, se
 export const getAllCourses = (academyLmsConf, setAcademyLmsConf, setIsLoading, value = null) => {
   setIsLoading(true)
   const queryParams = { type: value }
-  const loadPostTypes = bitsFetch(null, 'tutor_all_course', queryParams, 'GET')
+  const loadPostTypes = bitsFetch(null, 'academy_lms_all_course', queryParams, 'GET')
     .then(result => {
       if (result && result.success) {
         const newConf = { ...academyLmsConf }
