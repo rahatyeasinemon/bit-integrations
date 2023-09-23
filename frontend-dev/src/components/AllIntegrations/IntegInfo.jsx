@@ -409,7 +409,7 @@ export default function IntegInfo() {
         return <OneHashCRMAuthorization oneHashCRMConf={integrationConf} step={1} isInfo />
       case 'Salesflare':
         return <SalesflareAuthorization salesflareConf={integrationConf} step={1} isInfo />
-      case 'AcademyLms':
+      case 'Academy Lms':
         return <AcademyLmsAuthorization academyLmsConf={integrationConf} step={1} isInfo />
       default:
         return <></>

@@ -490,7 +490,7 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditOneHashCRM allIntegURL={allIntegURL} />
     case 'Salesflare':
       return <EditSalesflare allIntegURL={allIntegURL} />
-    case 'AcademyLms':
+    case 'Academy Lms':
       return <EditAcademyLms allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />

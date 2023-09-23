@@ -39,16 +39,12 @@ class AcademyLmsController
 
         $lessons = [];
 
-        $lessonList = get_posts([
-            'post_type' => 'lesson',
-            'post_status' => 'publish',
-            'numberposts' => -1
-        ]);
+        $lessonList = \Academy\Traits\Lessons::get_lessons();
 
         foreach ($lessonList as $key => $val) {
             $lessons[] = [
                 'lessonId' => $val->ID,
-                'lessonTitle' => $val->post_title,
+                'lessonTitle' => $val->lesson_title,
             ];
         }
         wp_send_json_success($lessons, 200);

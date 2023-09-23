@@ -71,7 +71,6 @@ export default function AcademyLmsIntegLayout({ academyLmsConf, setAcademyLmsCon
       {
         (academyLmsConf?.actionName === 'enroll-course' || academyLmsConf?.actionName === 'unenroll-course' || academyLmsConf?.actionName === 'complete-course' || academyLmsConf?.actionName === 'reset-course')
         && (
-
           <div className="flx">
             <b className="wdt-200 d-in-b">{__('Select Course: ', 'bit-integrations')}</b>
             <MultiSelect
@@ -82,9 +81,7 @@ export default function AcademyLmsIntegLayout({ academyLmsConf, setAcademyLmsCon
               singleSelect={academyLmsConf?.actionName === 'complete-course' || academyLmsConf?.actionName === 'reset-course'}
             />
             <button onClick={() => getAllCourses(academyLmsConf, setAcademyLmsConf, setIsLoading, academyLmsConf?.actionName)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Courses', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
-
           </div>
-
         )
       }
       {

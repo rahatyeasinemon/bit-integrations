@@ -56,7 +56,7 @@ export const getAllCourses = (academyLmsConf, setAcademyLmsConf, setIsLoading, v
 
 export const getAllLesson = (academyLmsConf, setAcademyLmsConf, setIsLoading) => {
   setIsLoading(true)
-  const loadPostTypes = bitsFetch(null, 'tutor_all_lesson', '', 'GET')
+  const loadPostTypes = bitsFetch(null, 'academy_lms_all_lesson', '', 'GET')
     .then(result => {
       if (result && result.success) {
         const newConf = { ...academyLmsConf }
