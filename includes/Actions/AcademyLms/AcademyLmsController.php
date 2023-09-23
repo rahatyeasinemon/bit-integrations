@@ -1,13 +1,13 @@
 <?php
 
-namespace BitCode\FI\Actions\TutorLms;
+namespace BitCode\FI\Actions\AcademyLms;
 
 use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Tutor LMS integration
  */
-class TutorLmsController
+class AcademyLmsController
 {
     private $_integrationID;
 
