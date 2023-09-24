@@ -127,18 +127,41 @@ class AcademyLmsController
         $user_id = get_current_user_id();
         $course_id = $selectedCourse[0];
 
-        if (!tutils()->is_completed_course($course_id, $user_id)) {
+        global $wpdb;
+        do_action('academy/admin/course_complete_before', $course_id);
+        $date = gmdate('Y-m-d H:i:s', \Academy\Helper::get_time());
 
-            $lessons = tutils()->get_lesson($course_id, -1);
-            if (count($lessons)) {
-                foreach ($lessons as $lesson) {
-                    tutils()->mark_lesson_complete($lesson->ID, $user_id);
-                }
-            }
+        // hash is unique.
+        do {
+            $hash    = substr(md5(wp_generate_password(32) . $date . $course_id . $user_id), 0, 16);
+            $hasHash = (int) $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT COUNT(comment_ID) from {$wpdb->comments} 
+				WHERE comment_agent = 'academy' AND comment_type = 'course_completed' AND comment_content = %s ",
+                    $hash
+                )
+            );
+        } while ($hasHash > 0);
+
+        $data = array(
+            'comment_post_ID'  => $course_id,
+            'comment_author'   => $user_id,
+            'comment_date'     => $date,
+            'comment_date_gmt' => get_gmt_from_date($date),
+            'comment_content'  => $hash,
+            'comment_approved' => 'approved',
+            'comment_agent'    => 'academy',
+            'comment_type'     => 'course_completed',
+            'user_id'          => $user_id,
+        );
+        $is_complete = $wpdb->insert($wpdb->comments, $data);
+
+        do_action('academy/admin/course_complete_after', $course_id, $user_id);
+
+        if ($is_complete) {
+            return 'Successfully Completed.';
         }
-
-        $completed = self::completedCourse($course_id, $user_id);
-        return "Course Completed";
+        return;
     }
 
     public static function resetCourse($selectedCourse)
