@@ -27,10 +27,11 @@ export default function AcademyLmsIntegLayout({ academyLmsConf, setAcademyLmsCon
       if (newConf?.selectedAllCourse) delete newConf.selectedAllCourse
       setAcademyLmsConf({ ...newConf })
 
-      if (value === 'enroll-course' || value === 'unenroll-course' || value === 'complete-course' || value === 'reset-course') {
+      if (value !== '') {
         getAllCourses(newConf, setAcademyLmsConf, setIsLoading, value)
-      } else if (value === 'complete-lesson') {
-        getAllLesson(newConf, setAcademyLmsConf, setIsLoading)
+        if (value === 'complete-lesson') {
+          getAllLesson(newConf, setAcademyLmsConf, setIsLoading)
+        }
       }
     } else {
       setAcademyLmsConf({ ...newConf })
@@ -69,7 +70,7 @@ export default function AcademyLmsIntegLayout({ academyLmsConf, setAcademyLmsCon
       <br />
 
       {
-        (academyLmsConf?.actionName === 'enroll-course' || academyLmsConf?.actionName === 'unenroll-course' || academyLmsConf?.actionName === 'complete-course' || academyLmsConf?.actionName === 'reset-course')
+        (academyLmsConf?.actionName === 'enroll-course' || academyLmsConf?.actionName === 'unenroll-course' || academyLmsConf?.actionName === 'complete-course' || academyLmsConf?.actionName === 'reset-course' || academyLmsConf?.actionName === 'complete-lesson')
         && (
           <div className="flx">
             <b className="wdt-200 d-in-b">{__('Select Course: ', 'bit-integrations')}</b>
@@ -78,12 +79,13 @@ export default function AcademyLmsIntegLayout({ academyLmsConf, setAcademyLmsCon
               className="btcd-paper-drpdwn w-5"
               options={academyLmsConf?.default?.courses && academyLmsConf.default.courses.map(course => ({ label: course.courseTitle, value: course.courseId.toString() }))}
               onChange={val => setChanges(val, 'selectedCourse')}
-              singleSelect={academyLmsConf?.actionName === 'complete-course' || academyLmsConf?.actionName === 'reset-course'}
+              singleSelect={academyLmsConf?.actionName === 'complete-course' || academyLmsConf?.actionName === 'complete-lesson' || academyLmsConf?.actionName === 'reset-course'}
             />
             <button onClick={() => getAllCourses(academyLmsConf, setAcademyLmsConf, setIsLoading, academyLmsConf?.actionName)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Courses', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
           </div>
         )
       }
+      <br />
       {
         (academyLmsConf?.actionName === 'complete-lesson')
         && (

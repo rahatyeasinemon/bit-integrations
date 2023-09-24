@@ -64,7 +64,7 @@ class AcademyLmsController
             'numberposts' => -1
         ]);
 
-        if ($action !== 'complete-course' && $action !== 'reset-course') {
+        if ($action !== 'complete-course' && $action !== 'reset-course' && $action !== 'complete-lesson') {
             $courses[] = [
                 'courseId' => "all-course",
                 'courseTitle' => "All Course",
@@ -114,12 +114,27 @@ class AcademyLmsController
         }
     }
 
-    public static function completeLesson($selectedLesson)
+    public static function completeLesson($selectedCourse, $selectedLesson)
     {
         $user_id = get_current_user_id();
-        $lesson_id = $selectedLesson[0];
-        tutils()->mark_lesson_complete($lesson_id, $user_id);
-        return "Lesson completed";
+        $topic_id = $selectedLesson[0];
+        $course_id = $selectedCourse[0];
+        $topic_type = "lesson";
+
+        do_action('academy/frontend/before_mark_topic_complete', $topic_type, $course_id, $topic_id, $user_id);
+
+        $option_name = 'academy_course_' . $course_id . '_completed_topics';
+        $saved_topics_lists = (array) json_decode(get_user_meta($user_id, $option_name, true), true);
+
+        if (isset($saved_topics_lists[$topic_type][$topic_id])) {
+            unset($saved_topics_lists[$topic_type][$topic_id]);
+        } else {
+            $saved_topics_lists[$topic_type][$topic_id] = \Academy\Helper::get_time();
+        }
+        $saved_topics_lists = wp_json_encode($saved_topics_lists);
+        update_user_meta($user_id, $option_name, $saved_topics_lists);
+        do_action('academy/frontend/after_mark_topic_complete', $topic_type, $course_id, $topic_id, $user_id);
+        return "Lesson Completed";
     }
 
     public static function completeCourse($selectedCourse)
@@ -159,7 +174,7 @@ class AcademyLmsController
         do_action('academy/admin/course_complete_after', $course_id, $user_id);
 
         if ($is_complete) {
-            return 'Successfully Completed.';
+            return 'Course Completed.';
         }
         return;
     }
@@ -260,8 +275,9 @@ class AcademyLmsController
                 }
                 break;
             case "complete-lesson":
+                $selectedCourse = $integrationData->flow_details->selectedCourse;
                 $selectedLesson = $integrationData->flow_details->selectedLesson;
-                $response = self::completeLesson($selectedLesson);
+                $response = self::completeLesson($selectedCourse, $selectedLesson);
                 break;
         }
 
