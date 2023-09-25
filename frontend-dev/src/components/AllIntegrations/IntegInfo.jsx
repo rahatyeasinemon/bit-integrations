@@ -132,6 +132,7 @@ const SureTriggersAuthorization = lazy(() => import('./IntegrationHelpers/WebHoo
 const OneHashCRMAuthorization = lazy(() => import('./OneHashCRM/OneHashCRMAuthorization'))
 const SalesflareAuthorization = lazy(() => import('./Salesflare/SalesflareAuthorization'))
 const MoxieCRMAuthorization = lazy(() => import('./MoxieCRM/MoxieCRMAuthorization'))
+const WPFusionAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -411,6 +412,8 @@ export default function IntegInfo() {
         return <SalesflareAuthorization salesflareConf={integrationConf} step={1} isInfo />
       case 'MoxieCRM':
         return <MoxieCRMAuthorization moxieCRMConf={integrationConf} step={1} isInfo />
+      case 'WPFusion':
+        return <WPFusionAuthorization webHooks={integrationConf} step={1} isInfo />
       default:
         return <></>
     }

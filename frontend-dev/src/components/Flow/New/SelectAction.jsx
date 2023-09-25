@@ -149,6 +149,7 @@ export default function SelectAction() {
     { type: 'OneHashCRM' },
     { type: 'Salesflare' },
     { type: 'MoxieCRM' },
+    { type: 'WP Fusion' },
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(sortByField(integs, 'type', 'ASC') || integs)

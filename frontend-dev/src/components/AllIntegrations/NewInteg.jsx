@@ -144,6 +144,7 @@ const SureTriggers = lazy(() => import('./SureTriggers/SureTriggers'))
 const OneHashCRM = lazy(() => import('./OneHashCRM/OneHashCRM'))
 const Salesflare = lazy(() => import('./Salesflare/Salesflare'))
 const MoxieCRM = lazy(() => import('./MoxieCRM/MoxieCRM'))
+const WPFusion = lazy(() => import('./WPFusion/WPFusion'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
@@ -426,6 +427,8 @@ export default function NewInteg({ allIntegURL }) {
         return <Salesflare allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'MoxieCRM':
         return <MoxieCRM allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
+      case 'WPFusion':
+        return <WPFusion allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       default:
         return <></>
     }

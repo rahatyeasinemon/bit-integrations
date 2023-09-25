@@ -7,7 +7,7 @@ import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Loader from '../../Loaders/Loader'
-import { getAllOpportunities, getAllClients, getAllPipelineStages } from './MoxieCRMCommonFunc'
+import { getAllClients, getAllPipelineStages } from './MoxieCRMCommonFunc'
 
 export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading, setLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
