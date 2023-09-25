@@ -414,7 +414,7 @@ export default function IntegInfo() {
       case 'Academy Lms':
         return <AcademyLmsAuthorization academyLmsConf={integrationConf} step={1} isInfo />
       case 'MoxieCRM':
-        return <MoxieCRMAuthorization moxieCRMConf={integrationConf} step={1} isInfo />
+        return <MoxieCRMAuthorization moxiecrmConf={integrationConf} step={1} isInfo />
       case 'WPFusion':
         return <WPFusionAuthorization webHooks={integrationConf} step={1} isInfo />
       default:
