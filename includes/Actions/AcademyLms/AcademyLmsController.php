@@ -184,69 +184,21 @@ class AcademyLmsController
         global $wpdb;
         $user_id = get_current_user_id();
         $course_id = $selectedCourse[0];
+        $complete_topics = "academy_course_{$course_id}_completed_topics";
 
-        $completedLessonIds = $wpdb->get_col("select post_id from {$wpdb->postmeta} where meta_key = '_tutor_course_id_for_lesson' AND meta_value = {$course_id} ");
+        $wpdb->query("DELETE from {$wpdb->postmeta} WHERE post_id = '{$course_id}' AND meta_key = 'academy_course_curriculum' ");
+        $wpdb->query("DELETE from {$wpdb->usermeta} WHERE user_id = '{$user_id}' AND meta_key = '{$complete_topics}' ");
+        $wpdb->query("DELETE from {$wpdb->posts} WHERE post_author = '{$user_id}' AND post_parent = '{$course_id}' AND post_type = 'academy_enrolled' ");
 
-        if (is_array($completedLessonIds) && count($completedLessonIds)) {
-            $lessonMetaIds = [];
-            foreach ($completedLessonIds as $lesson_id) {
-                $lessonMetaIds[] = '_tutor_completed_lesson_id_' . $lesson_id;
-            }
-            $ids = implode("','", $lessonMetaIds);
+        $QuizIds = $wpdb->get_col("select quiz_id from {$wpdb->prefix}academy_quiz_attempts where user_id = '14' AND course_id = '{$course_id}' ");
 
-            $wpdb->query("DELETE from {$wpdb->usermeta} WHERE user_id = '{$user_id}' AND meta_key in('{$ids}') ");
+        if (!empty($QuizIds)) {
+            $QuizIds = "'" . implode("','", $QuizIds) . "'";
+            $wpdb->query("DELETE from {$wpdb->prefix}academy_quiz_attempts WHERE user_id = '{$user_id}' AND course_id = '{$course_id}' ");
+            $wpdb->query("DELETE from {$wpdb->prefix}academy_quiz_attempt_answers WHERE user_id = '{$user_id}' AND quiz_id in ({$QuizIds}) ");
         }
-
-        $courseContents = tutils()->get_course_contents_by_id($course_id);
-        $cntContents = tutils()->count($courseContents);
-        if ($cntContents) {
-            foreach ($courseContents as $content) {
-                if ('tutor_quiz' === $content->post_type) {
-                    $quiz_id = $content->ID;
-                    $wpdb->query("DELETE FROM {$wpdb->tutor_quiz_attempts} WHERE quiz_id = {$quiz_id} AND user_id = {$user_id} ; ");
-                } elseif ('tutor_assignments' === $content->post_type) {
-                    $assignment_id = $content->ID;
-                    $wpdb->query("DELETE FROM {$wpdb->comments} WHERE comment_type = 'tutor_assignment' AND user_id = {$user_id} AND comment_post_ID = {$assignment_id} ");
-                }
-            }
-        }
-
-        $wpdb->query(" DELETE from {$wpdb->comments} WHERE comment_agent = 'TutorLMSPlugin' AND comment_type = 'course_completed' AND comment_post_ID = {$course_id} AND user_id = {$user_id} ;");
+        $wpdb->query(" DELETE from {$wpdb->comments} WHERE comment_agent = 'academy' AND comment_type = 'course_completed' AND comment_post_ID = {$course_id} AND user_id = {$user_id}");
         return "Course progress reseted";
-    }
-
-    public static function completedCourse($course_id, $user_id)
-    {
-
-        global $wpdb;
-        do_action('tutor_course_complete_before', $course_id);
-
-        $date = date("Y-m-d H:i:s", tutor_time());
-
-        $hash    = substr(md5(wp_generate_password(32) . $date . $course_id . $user_id), 0, 16);
-        $has_unique_hash = $wpdb->get_var("SELECT COUNT(comment_ID) from {$wpdb->comments} WHERE comment_agent = 'TutorLMSPlugin' AND comment_type = 'course_completed' AND comment_content = '{$hash}' ");
-
-        while ((int)$has_unique_hash > 0) {
-            $hash    = substr(md5(wp_generate_password(32) . $date . $course_id . $user_id), 0, 16);
-            $has_unique_hash = $wpdb->get_var("SELECT COUNT(comment_ID) from {$wpdb->comments} WHERE comment_agent = 'TutorLMSPlugin' AND comment_type = 'course_completed' AND comment_content = '{$hash}' ");
-        }
-
-        $data = array(
-            'comment_post_ID'  => $course_id,
-            'comment_author'   => $user_id,
-            'comment_date'     => $date,
-            'comment_date_gmt' => get_gmt_from_date($date),
-            'comment_content'  => $hash,
-            'comment_approved' => 'approved',
-            'comment_agent'    => 'TutorLMSPlugin',
-            'comment_type'     => 'course_completed',
-            'user_id'          => $user_id,
-        );
-
-        $wpdb->insert($wpdb->comments, $data);
-
-        do_action('tutor_course_complete_after', $course_id);
-        return true;
     }
 
     public function execute($integrationData, $fieldValues)
