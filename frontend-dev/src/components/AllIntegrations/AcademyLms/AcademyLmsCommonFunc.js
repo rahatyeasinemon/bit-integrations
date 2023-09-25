@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast'
-import { __ } from '../../../Utils/i18nwrap'
-import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
+import bitsFetch from '../../../Utils/bitsFetch'
+import { __ } from '../../../Utils/i18nwrap'
 
 export const handleInput = (e, academyLmsConf, setAcademyLmsConf, setIsLoading, setSnackbar) => {
   let newConf = deepCopy(academyLmsConf)

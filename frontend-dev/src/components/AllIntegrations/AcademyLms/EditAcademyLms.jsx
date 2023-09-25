@@ -1,17 +1,16 @@
 /* eslint-disable no-param-reassign */
 
 import { useState } from 'react'
-import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import EditFormInteg from '../EditFormInteg'
 import EditWebhookInteg from '../EditWebhookInteg'
 import { checkWebhookIntegrationsExist, saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
-import AcademyLmsIntegLayout from './AcademyLmsIntegLayout'
 import { handleInput } from './AcademyLmsCommonFunc'
+import AcademyLmsIntegLayout from './AcademyLmsIntegLayout'
 
 function EditAcademyLms({ allIntegURL }) {
   const navigate = useNavigate()

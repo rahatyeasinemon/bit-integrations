@@ -2,15 +2,14 @@
 import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate } from 'react-router-dom'
-import toast from 'react-hot-toast'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import AcademyLmsAuthorization from './AcademyLmsAuthorization'
-import AcademyLmsIntegLayout from './AcademyLmsIntegLayout'
 import { handleInput } from './AcademyLmsCommonFunc'
+import AcademyLmsIntegLayout from './AcademyLmsIntegLayout'
 
 function AcademyLms({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()

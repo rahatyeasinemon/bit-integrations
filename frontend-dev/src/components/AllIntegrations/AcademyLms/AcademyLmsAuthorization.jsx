@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import BackIcn from '../../../Icons/BackIcn'
-import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
+import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 
