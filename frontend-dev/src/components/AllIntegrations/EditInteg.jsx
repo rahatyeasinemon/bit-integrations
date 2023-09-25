@@ -143,6 +143,8 @@ const EditSureTriggers = lazy(() => import('./SureTriggers/EditSureTriggers'))
 const EditOneHashCRM = lazy(() => import('./OneHashCRM/EditOneHashCRM'))
 const EditSalesflare = lazy(() => import('./Salesflare/EditSalesflare'))
 const EditAcademyLms = lazy(() => import('./AcademyLms/EditAcademyLms'))
+const EditMoxieCRM = lazy(() => import('./MoxieCRM/EditMoxieCRM'))
+const EditWPFusion = lazy(() => import('./WPFusion/EditWPFusion'))
 
 const loaderStyle = {
   display: 'flex',
@@ -492,6 +494,10 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditSalesflare allIntegURL={allIntegURL} />
     case 'Academy Lms':
       return <EditAcademyLms allIntegURL={allIntegURL} />
+    case 'MoxieCRM':
+      return <EditMoxieCRM allIntegURL={allIntegURL} />
+    case 'WPFusion':
+      return <EditWPFusion allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }

@@ -43,9 +43,9 @@ export default defineConfig(({ mode }) => ({
           const pathArr = fInfo.name.split('/')
           const fileName = pathArr[pathArr.length - 1]
 
-          if (fileName === 'main.css') {
-            return `main-${newBuildHash}.css`
-          }
+          // if (fileName === 'main.css') {
+          //   return `main-${newBuildHash}.css`
+          // }
           if (fileName === 'logo.svg') {
             return 'logo.svg'
           }
