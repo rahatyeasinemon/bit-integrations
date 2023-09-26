@@ -134,6 +134,7 @@ const SalesflareAuthorization = lazy(() => import('./Salesflare/SalesflareAuthor
 const AcademyLmsAuthorization = lazy(() => import('./AcademyLms/AcademyLmsAuthorization'))
 const MoxieCRMAuthorization = lazy(() => import('./MoxieCRM/MoxieCRMAuthorization'))
 const WPFusionAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
+const WoodpeckerAuthorization = lazy(() => import('./Woodpecker/WoodpeckerAuthorization'))
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -417,6 +418,8 @@ export default function IntegInfo() {
         return <MoxieCRMAuthorization moxiecrmConf={integrationConf} step={1} isInfo />
       case 'WPFusion':
         return <WPFusionAuthorization webHooks={integrationConf} step={1} isInfo />
+      case 'Woodpecker':
+        return <WoodpeckerAuthorization woodpeckerConf={integrationConf} step={1} isInfo />
       default:
         return <></>
     }

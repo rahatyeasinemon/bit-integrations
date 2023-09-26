@@ -151,6 +151,7 @@ export default function SelectAction() {
     { type: 'AcademyLms' },
     { type: 'MoxieCRM' },
     { type: 'WP Fusion' },
+    { type: 'Woodpecker' },
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(sortByField(integs, 'type', 'ASC') || integs)

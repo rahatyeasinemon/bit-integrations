@@ -145,6 +145,7 @@ const EditSalesflare = lazy(() => import('./Salesflare/EditSalesflare'))
 const EditAcademyLms = lazy(() => import('./AcademyLms/EditAcademyLms'))
 const EditMoxieCRM = lazy(() => import('./MoxieCRM/EditMoxieCRM'))
 const EditWPFusion = lazy(() => import('./WPFusion/EditWPFusion'))
+const EditWoodpecker = lazy(() => import('./Woodpecker/EditWoodpecker'))
 
 const loaderStyle = {
   display: 'flex',
@@ -498,6 +499,8 @@ const IntegType = ({ allIntegURL, flow }) => {
       return <EditMoxieCRM allIntegURL={allIntegURL} />
     case 'WPFusion':
       return <EditWPFusion allIntegURL={allIntegURL} />
+    case 'Woodpecker':
+      return <EditWoodpecker allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }
