@@ -20,7 +20,7 @@ class WoodpeckerController
 
     private function setApiEndpoint()
     {
-        return $this->apiEndpoint = "https://api.woodpecker.co/rest/v1/";
+        return $this->apiEndpoint = "https://api.woodpecker.co/rest/v1";
     }
 
     private function checkValidation($fieldsRequestParams, $customParam = '**')
@@ -34,7 +34,7 @@ class WoodpeckerController
     {
         return
             [
-                "Authorization" => "Bearer {$apiKey}",
+                "Authorization" => "Basic $apiKey",
                 "Content-type"  => "application/json",
             ];
     }
@@ -43,14 +43,14 @@ class WoodpeckerController
     {
         $this->checkValidation($fieldsRequestParams);
         $apiKey         = $fieldsRequestParams->api_key;
-        $apiEndpoint    = $this->setApiEndpoint() . "/accounts";
-        $headers        = $this->setHeaders($apiKey);
+        $apiEndpoint    = $this->setApiEndpoint() . "/campaign_list";
+        $headers        = $this->setHeaders(base64_encode($apiKey));
         $response       = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (!isset($response->error)) {
-            wp_send_json_success('Authentication successful', 200);
-        } else {
+        if (isset($response->status) && $response->status->status === "ERROR") {
             wp_send_json_error('Please enter valid API Key', 400);
+        } else {
+            wp_send_json_success('Authentication successful', 200);
         }
     }
 

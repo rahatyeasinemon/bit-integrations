@@ -31,9 +31,9 @@ export default function WoodpeckerAuthorization({ woodpeckerConf, setWoodpeckerC
   const ActiveInstructions = `
             <h4>Get API Key</h4>
             <ul>
-                <li>Go to your Woodpecker user dashboard</li>
-                <li>Then click "Settings"</li>
-                <li>Then click "API Keys → Generates Keys"</li>
+                <li> Log into your Woodpecker account on <a className="btcd-link" href="https://app.woodpecker.co/panel" target="_blank">app.woodpecker.co.</a></li>
+                <li>Go to the <b>Marketplace</b> → <b>INTEGRATIONS</b> → <b>API keys</b>.</li>
+                <li>Use the green button to <b>CREATE A KEY</b>.</li>
             </ul>`
 
   return (
@@ -48,7 +48,7 @@ export default function WoodpeckerAuthorization({ woodpeckerConf, setWoodpeckerC
       <small className="d-blk mt-3">
         {__('To Get API Key, Please Visit', 'bit-integrations')}
         &nbsp;
-        <a className="btcd-link" href="https://app.woodpecker.com/#/settings/apikeys">{__('Woodpecker API Key', 'bit-integrations')}</a>
+        <a className="btcd-link" href="https://app.woodpecker.co/panel?u=411340#marketplace/integrations/api-keys" target="_blank">{__('Woodpecker API Key', 'bit-integrations')}</a>
       </small>
       <br />
       <br />

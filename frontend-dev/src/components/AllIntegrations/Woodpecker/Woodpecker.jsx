@@ -62,7 +62,7 @@ function Woodpecker({ formFields, setFlow, flow, allIntegURL }) {
   const [woodpeckerConf, setWoodpeckerConf] = useState({
     name: 'Woodpecker',
     type: 'Woodpecker',
-    api_key: process.env.NODE_ENV === 'development' ? 'qL2oAebEsF6UM-QZ84t6WgeYm4aBQ1cwkPPOQfwDPM_wD' : '',
+    api_key: process.env.NODE_ENV === 'development' ? '411340.5e782bcaf07998f5344948482d2e862630f438756971599d0c95f76c5b7098f7' : '',
     field_map: [
       { formField: '', woodpeckerFormField: '' },
     ],
