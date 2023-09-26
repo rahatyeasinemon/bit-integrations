@@ -6,7 +6,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from './IntegrationHelpers'
 import WoodpeckerActions from './WoodpeckerActions'
-import { getallAccounts, getallPipelines, woodpeckerFields } from './WoodpeckerCommonFunc'
+import { generateMappedField, getallAccounts, getallPipelines, woodpeckerFields } from './WoodpeckerCommonFunc'
 import WoodpeckerFieldMap from './WoodpeckerFieldMap'
 
 export default function WoodpeckerIntegLayout({ formFields, handleInput, woodpeckerConf, setWoodpeckerConf, loading, setLoading, isLoading, setIsLoading, setSnackbar }) {
@@ -17,21 +17,21 @@ export default function WoodpeckerIntegLayout({ formFields, handleInput, woodpec
       if (e.target.value !== '') {
         draftConf.actionName = e.target.value
 
-        if (draftConf.actionName === "accounts") {
-          draftConf.woodpeckerFields = draftConf.accountFields
+        if (draftConf.actionName === "adding_prospects_to_the_prospects_list" || draftConf.actionName === "adding_prospects_to_the_campaign") {
+          draftConf.woodpeckerAllFields = draftConf.prospectsFields
         } else if (draftConf.actionName === "contacts") {
-          draftConf.woodpeckerFields = draftConf.contactFields
+          draftConf.woodpeckerAllFields = draftConf.contactFields
         } else if (draftConf.actionName === "opportunities") {
-          draftConf.woodpeckerFields = draftConf.opportunitiyFields
+          draftConf.woodpeckerAllFields = draftConf.opportunitiyFields
           getallAccounts(draftConf, setWoodpeckerConf, loading, setLoading)
           getallPipelines(draftConf, setWoodpeckerConf, loading, setLoading)
         }
-        woodpeckerFields(draftConf, setWoodpeckerConf, setIsLoading, setSnackbar)
-
+        draftConf.field_map = generateMappedField(draftConf);
       } else {
         delete draftConf[name]
       }
     }))
+    console.log(woodpeckerConf)
   }
 
   const setChanges = (val, name) => {
@@ -56,9 +56,8 @@ export default function WoodpeckerIntegLayout({ formFields, handleInput, woodpec
       <b className="wdt-200 d-in-b">{__('Select Action:', 'bit-integrations')}</b>
       <select onChange={handleActionInput} name="actionName" value={woodpeckerConf.actionName} className="btcd-paper-inp w-5">
         <option value="">{__('Select an action', 'bit-integrations')}</option>
-        <option value="accounts" data-action_name="accounts">{__('Create Account', 'bit-integrations')}</option>
-        <option value="contacts" data-action_name="contacts">{__('Create Contact', 'bit-integrations')}</option>
-        <option value="opportunities" data-action_name="opportunities">{__('Create Opportunity', 'bit-integrations')}</option>
+        <option value="adding_prospects_to_the_prospects_list" data-action_name="Adding prospects to the Prospects list">{__('Adding prospects to the Prospects list', 'bit-integrations')}</option>
+        <option value="adding_prospects_to_the_campaign" data-action_name="Adding prospects to the Campaign">{__('Adding prospects to the Campaign', 'bit-integrations')}</option>
       </select>
       <br />
       {(loading.account || loading.pipeline) && (

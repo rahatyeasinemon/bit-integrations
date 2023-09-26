@@ -22,6 +22,12 @@ export default function WoodpeckerActions({ woodpeckerConf, setWoodpeckerConf, l
         setActionMdl({ show: false })
         delete newConf.actions.tags
       }
+    } else if (type === 'update') {
+      if (e.target.checked) {
+        newConf.actions.update = true
+      } else {
+        delete newConf.actions.update
+      }
     }
 
     setActionMdl({ show: type })
@@ -41,6 +47,7 @@ export default function WoodpeckerActions({ woodpeckerConf, setWoodpeckerConf, l
   return (
     <div className="pos-rel d-flx flx-wrp">
       {woodpeckerConf.actionName && <TableCheckBox checked={woodpeckerConf?.selectedTags || false} onChange={(e) => actionHandler(e, 'tags')} className="wdt-200 mt-4 mr-2" value="tags" title={__('Add Tags', 'bit-integrations')} subTitle={__('Add Tags', 'bit-integrations')} />}
+      {woodpeckerConf.actionName && <TableCheckBox checked={woodpeckerConf.actions?.update || false} onChange={(e) => actionHandler(e, 'update')} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Update Prospects', 'bit-integrations')} subTitle={__('Update Responses with Prospects existing Data?', 'bit-integrations')} />}
 
       <ConfirmModal
         className="custom-conf-mdl"

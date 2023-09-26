@@ -159,6 +159,7 @@ class WoodpeckerController
         $integrationDetails = $integrationData->flow_details;
         $integId            = $integrationData->id;
         $apiKey             = $integrationDetails->api_key;
+        $actions            = $integrationDetails->actions;
         $fieldMap           = $integrationDetails->field_map;
         $actionName         = $integrationDetails->actionName;
 
@@ -166,8 +167,8 @@ class WoodpeckerController
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Woodpecker api', 'bit-integrations'));
         }
 
-        $recordApiHelper        = new RecordApiHelper($integrationDetails, $integId, $apiKey);
-        $woodpeckerApiResponse  = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
+        $recordApiHelper        = new RecordApiHelper($integrationDetails, $integId, base64_encode($apiKey));
+        $woodpeckerApiResponse  = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName, $actions);
 
         if (is_wp_error($woodpeckerApiResponse)) {
             return $woodpeckerApiResponse;

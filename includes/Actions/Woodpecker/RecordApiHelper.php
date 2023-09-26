@@ -25,9 +25,9 @@ class RecordApiHelper
     {
         $this->integrationDetails = $integrationDetails;
         $this->integrationId      = $integId;
-        $this->apiUrl             = "https://api.woodpecker.com";
+        $this->apiUrl             = "https://api.woodpecker.co/rest/v1";
         $this->defaultHeader      = [
-            "Authorization" => "Bearer {$apiKey}",
+            "Authorization" => "Basic $apiKey",
             "Content-type"  => "application/json",
         ];
     }
@@ -58,17 +58,26 @@ class RecordApiHelper
         return $formData;
     }
 
-    public function addAccount($finalData)
+    public function addProspects($finalData, $actionName, $actions)
     {
-        if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Account Name is empty', 'code' => 400];
+        if (empty($finalData['email'])) {
+            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
         }
 
-        $this->type     = 'Account';
-        $this->typeName = 'Account created';
-        $formData       = $this->setData($finalData);
-        $apiEndpoint    = $this->apiUrl . "/accounts";
-        return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
+        $requestData = [];
+        $requestData['update'] = $actions->update ? true : false;
+        $requestData['prospects'] = [(object) $finalData];
+
+        if ($actionName === "adding_prospects_to_the_prospects_list") {
+            $apiEndpoint    = $this->apiUrl . "/add_prospects_list";
+        } else {
+            $apiEndpoint    = $this->apiUrl . "/add_prospects_campaign";
+        }
+
+
+        $this->type     = 'Prospects';
+        $this->typeName = 'Prospects created';
+        return HttpHelper::post($apiEndpoint, json_encode($requestData), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -119,22 +128,22 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $actionName)
+    public function execute($fieldValues, $fieldMap, $actionName, $actions)
     {
         $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        if ($actionName === "accounts") {
-            $apiResponse = $this->addAccount($finalData);
+        if ($actionName === "adding_prospects_to_the_prospects_list" || $actionName === "adding_prospects_to_the_campaign") {
+            $apiResponse = $this->addProspects($finalData, $actionName, $actions);
         } elseif ($actionName === "contacts") {
             $apiResponse = $this->addContact($finalData);
         } elseif ($actionName === "opportunities") {
             $apiResponse = $this->addOpprtunity($finalData);
         }
 
-        if (isset($apiResponse->id)) {
+        if (isset($apiResponse->status) && $apiResponse->status->status === "ERROR") {
+            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
+        } else {
             $res = [$this->typeName . '  successfully'];
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
-        } else {
-            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
         }
         return $apiResponse;
     }
