@@ -98,19 +98,9 @@ function Woodpecker({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (woodpeckerConf.actionName === 'opportunities') {
-      if (!woodpeckerConf.selectedAccount) {
-        toast.error('Please select an Account')
-        return
-      }
-      if (!woodpeckerConf.selectedPipeline) {
-        toast.error('Please select a Pipeline')
-        return
-      }
-      if (woodpeckerConf.selectedPipeline && !woodpeckerConf.selectedStage) {
-        toast.error('Please select a Stage')
-        return
-      }
+    if (woodpeckerConf.actionName === 'adding_prospects_to_the_campaign' && !woodpeckerConf.selectedCampaign) {
+      toast.error('Please select a Campaign')
+      return
     }
 
     woodpeckerConf.field_map.length > 0 && setStep(pageNo)
