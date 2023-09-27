@@ -23,7 +23,7 @@ function Woodpecker({ formFields, setFlow, flow, allIntegURL }) {
 
   const prospectsFields = [
     { key: 'first_name', label: 'First name', required: false },
-    { key: 'last_name ', label: 'Last name', required: false },
+    { key: 'last_name', label: 'Last name', required: false },
     { key: 'company', label: 'Company', required: false },
     { key: 'industry', label: 'Industry', required: false },
     { key: 'website', label: 'Website', required: false },
