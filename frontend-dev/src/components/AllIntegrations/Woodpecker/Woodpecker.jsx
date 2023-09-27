@@ -17,7 +17,6 @@ function Woodpecker({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({})
-
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
 

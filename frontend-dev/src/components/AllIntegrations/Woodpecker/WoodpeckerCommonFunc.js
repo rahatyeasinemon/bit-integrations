@@ -84,49 +84,6 @@ export const woodpeckerAuthentication = (
   });
 };
 
-export const woodpeckerFields = (
-  woodpeckerConf,
-  setWoodpeckerConf,
-  setIsLoading,
-  setSnackbar
-) => {
-  setIsLoading(true);
-  const requestParams = {
-    api_key: woodpeckerConf.api_key,
-    action_name: woodpeckerConf.actionName,
-  };
-
-  bitsFetch(requestParams, "Woodpecker_custom_fields")
-    .then((result) => {
-      if (result && result.success) {
-        setWoodpeckerConf((prevConf) => {
-          const draftConf = prevConf;
-          draftConf.field_map = [{ formField: "", salesmateFormField: "" }];
-          if (result.data) {
-            draftConf.woodpeckerAllFields = [];
-            draftConf.woodpeckerAllFields = [
-              ...draftConf.woodpeckerFields,
-              ...result.data,
-            ];
-          }
-          draftConf.field_map = generateMappedField(draftConf);
-          return draftConf;
-        });
-        setSnackbar({
-          show: true,
-          msg: __("Woodpecker custom fields refreshed", "bit-integrations"),
-        });
-      } else {
-        setSnackbar({
-          show: true,
-          msg: __("Woodpecker custom fields not found.", "bit-integrations"),
-        });
-      }
-      setIsLoading(false);
-    })
-    .catch(() => setIsLoading(false));
-};
-
 export const getAllCampaign = (woodpeckerConf, setWoodpeckerConf, loading, setLoading) => {
   setLoading({ ...loading, campaign: true });
   const requestParams = {
@@ -147,60 +104,5 @@ export const getAllCampaign = (woodpeckerConf, setWoodpeckerConf, loading, setLo
     }
     setLoading({ ...loading, campaign: false });
     toast.error(__("Campaigns fetching failed", "bit-integrations"));
-  });
-};
-
-export const getallAccounts = (
-  woodpeckerConf,
-  setWoodpeckerConf,
-  loading,
-  setLoading
-) => {
-  setLoading({ ...loading, account: true });
-  const requestParams = {
-    api_key: woodpeckerConf.api_key,
-  };
-
-  bitsFetch(requestParams, "Woodpecker_fetch_all_account").then((result) => {
-    if (result && result.success) {
-      setWoodpeckerConf((prevConf) => {
-        const draftConf = { ...prevConf };
-        draftConf.accounts = result.data;
-        return draftConf;
-      });
-
-      toast.success(__("Accounts fetched successfully", "bit-integrations"));
-      setLoading({ ...loading, account: false });
-      return;
-    }
-    setLoading({ ...loading, account: false });
-    toast.error(__("Accounts fetching failed", "bit-integrations"));
-  });
-};
-export const getallPipelines = (
-  woodpeckerConf,
-  setWoodpeckerConf,
-  loading,
-  setLoading
-) => {
-  setLoading({ ...loading, pipeline: true });
-  const requestParams = {
-    api_key: woodpeckerConf.api_key,
-  };
-
-  bitsFetch(requestParams, "Woodpecker_fetch_all_pipelines").then((result) => {
-    if (result && result.success) {
-      setWoodpeckerConf((prevConf) => {
-        const draftConf = { ...prevConf };
-        draftConf.pipelines = result.data;
-        return draftConf;
-      });
-
-      toast.success(__("pipelines fetched successfully", "bit-integrations"));
-      setLoading({ ...loading, pipeline: false });
-      return;
-    }
-    setLoading({ ...loading, pipeline: false });
-    toast.error(__("pipelines fetching failed", "bit-integrations"));
   });
 };

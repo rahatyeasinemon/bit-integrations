@@ -6,7 +6,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from './IntegrationHelpers'
 import WoodpeckerActions from './WoodpeckerActions'
-import { generateMappedField, getAllCampaign, getallAccounts, getallPipelines, woodpeckerFields } from './WoodpeckerCommonFunc'
+import { generateMappedField, getAllCampaign } from './WoodpeckerCommonFunc'
 import WoodpeckerFieldMap from './WoodpeckerFieldMap'
 
 export default function WoodpeckerIntegLayout({ formFields, handleInput, woodpeckerConf, setWoodpeckerConf, loading, setLoading, isLoading, setIsLoading, setSnackbar }) {
@@ -115,15 +115,6 @@ export default function WoodpeckerIntegLayout({ formFields, handleInput, woodpec
             <b className="wdt-100">
               {__('Field Map', 'bit-integrations')}
             </b>
-            <button
-              onClick={() => woodpeckerFields(woodpeckerConf, setWoodpeckerConf, setIsLoading, setSnackbar)}
-              className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh Custom Fields', 'bit-integrations')}'` }}
-              type="button"
-              disabled={isLoading}
-            >
-              &#x21BB;
-            </button>
           </div>
 
           <br />
@@ -152,9 +143,6 @@ export default function WoodpeckerIntegLayout({ formFields, handleInput, woodpec
           <WoodpeckerActions
             woodpeckerConf={woodpeckerConf}
             setWoodpeckerConf={setWoodpeckerConf}
-            formFields={formFields}
-            loading={loading}
-            setLoading={setLoading}
           />
         </div>
       )}
