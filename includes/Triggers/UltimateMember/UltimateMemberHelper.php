@@ -63,7 +63,7 @@ class UltimateMemberHelper
                             $input_title = $field['title'];
                             $token_id    = "$input_id";
                             $input_type  = $field['type'];
-                            if ($token_id !== 'user_password'){
+                            if ($token_id !== 'user_password') {
                                 $fields[]    = array(
                                     'name'         => $token_id,
                                     'label'       => $input_title,
@@ -72,7 +72,7 @@ class UltimateMemberHelper
                             }
                         }
                     }
-                    if($formType == 'login'){
+                    if ($formType == 'login') {
                         $fields = array_merge($fields, $userFields);
                     }
                 }
@@ -81,7 +81,7 @@ class UltimateMemberHelper
         foreach ($fields as $field) {
             $fieldsNew[] = [
                 'name' => $field['name'],
-                'type' => array_key_exists('type',$field) ? $field['type'] : 'text',
+                'type' => array_key_exists('type', $field) ? $field['type'] : 'text',
                 'label' => $field['label'],
             ];
         }
@@ -97,7 +97,7 @@ class UltimateMemberHelper
             'post_type'        => 'um_form',
             'post_status'      => 'publish',
             'suppress_filters' => true,
-            'fields'           => array( 'ids', 'titles' ),
+            'fields'           => array('ids', 'titles'),
             'meta_query'       => array(
                 array(
                     'key'     => '_um_mode',
@@ -111,9 +111,9 @@ class UltimateMemberHelper
         $forms_list = get_posts($args);
         $formName = ucfirst($formType);
         foreach ($forms_list as $form) {
-            $allForms[]= [
+            $allForms[] = [
                 'id' => "$form->ID",
-                'title' => "$formName vai $form->post_title",
+                'title' => "$formName via $form->post_title",
             ];
         }
         return $allForms;
