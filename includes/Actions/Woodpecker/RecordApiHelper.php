@@ -65,18 +65,26 @@ class RecordApiHelper
         }
 
         $requestData = [];
-        $requestData['update'] = $actions->update ? true : false;
-        $requestData['prospects'] = [(object) $finalData];
-
         if ($actionName === "adding_prospects_to_the_prospects_list") {
             $apiEndpoint    = $this->apiUrl . "/add_prospects_list";
+            $this->typeName = 'Prospects created into Prospects List';
         } else {
+            if (!isset($this->integrationDetails->selectedCampaign) || empty($this->integrationDetails->selectedCampaign)) {
+                return ['success' => false, 'message' => 'Required Campaign field is empty', 'code' => 400];
+            }
+
             $apiEndpoint    = $this->apiUrl . "/add_prospects_campaign";
+            $requestData['campaign'] = (object) [
+                "campaign_id" => $this->integrationDetails->selectedCampaign
+            ];
+            $this->typeName = 'Prospects created into Campaign List';
         }
 
-
+        $requestData['update'] = $actions->update ? true : false;
+        $requestData['prospects'] = [(object) $finalData];
+        // var_dump($actionName);
+        // die;
         $this->type     = 'Prospects';
-        $this->typeName = 'Prospects created';
         return HttpHelper::post($apiEndpoint, json_encode($requestData), $this->defaultHeader);
     }
 
