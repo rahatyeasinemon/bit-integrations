@@ -54,30 +54,29 @@ class WoodpeckerController
         }
     }
 
-    public function customFields($fieldsRequestParams)
+    public function getAllCampagns($fieldsRequestParams)
     {
-        $this->checkValidation($fieldsRequestParams, $fieldsRequestParams->action_name);
+        $this->checkValidation($fieldsRequestParams);
         $apiKey         = $fieldsRequestParams->api_key;
-        $apiEndpoint    = $this->setApiEndpoint() . "/customfields/{$fieldsRequestParams->action_name}";
-        $headers        = $this->setHeaders($apiKey);
+        $apiEndpoint    = $this->setApiEndpoint() . "/campaign_list";
+        $headers        = $this->setHeaders(base64_encode($apiKey));
         $response       = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (!isset($response->error)) {
-            $fieldMap = [];
-            foreach ($response as $field) {
+        if (isset($response->status) && $response->status->status === "ERROR") {
+            wp_send_json_error('Campaign not found!', 400);
+        } else {
+            $campaigns = [];
+            foreach ($response as $campaign) {
                 array_push(
-                    $fieldMap,
+                    $campaigns,
                     (object) [
-                        'key' => "custom_field_{$field->api_field}",
-                        'label' => $field->name,
-                        'required' => $field->required
+                        'id' => $campaign->id,
+                        'name' => $campaign->name,
                     ]
                 );
             }
 
-            wp_send_json_success($fieldMap, 200);
-        } else {
-            wp_send_json_error('Custom fields not found!', 400);
+            wp_send_json_success($campaigns, 200);
         }
     }
 

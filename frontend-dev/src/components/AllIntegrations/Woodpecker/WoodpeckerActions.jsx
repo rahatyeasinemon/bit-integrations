@@ -7,7 +7,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
-import { getAllTags } from './WoodpeckerCommonFunc'
+// import { getAllTags } from './WoodpeckerCommonFunc'
 
 export default function WoodpeckerActions({ woodpeckerConf, setWoodpeckerConf, loading, setLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
@@ -17,7 +17,7 @@ export default function WoodpeckerActions({ woodpeckerConf, setWoodpeckerConf, l
     if (type === 'tags') {
       if (e.target?.checked) {
         newConf.actions.tags = true
-        getAllTags(woodpeckerConf, setWoodpeckerConf, setLoading)
+        // getAllTags(woodpeckerConf, setWoodpeckerConf, setLoading)
       } else {
         setActionMdl({ show: false })
         delete newConf.actions.tags
@@ -77,12 +77,12 @@ export default function WoodpeckerActions({ woodpeckerConf, setWoodpeckerConf, l
           )
             : (
               <div className="flx flx-between mt-2">
-                <MultiSelect
+                {/* <MultiSelect
                   options={woodpeckerConf?.tags?.map(tag => ({ label: tag, value: tag }))}
                   className="msl-wrp-options"
                   defaultValue={woodpeckerConf?.selectedTags}
                   onChange={val => setChanges(val, 'selectedTags')}
-                />
+                /> */}
                 <button onClick={() => getAllTags(woodpeckerConf, setWoodpeckerConf, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Tags', 'bit-integrations')}'` }} type="button">&#x21BB;</button>
               </div>
             )

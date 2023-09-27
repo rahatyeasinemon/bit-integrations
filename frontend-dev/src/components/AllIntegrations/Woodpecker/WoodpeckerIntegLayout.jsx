@@ -6,7 +6,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from './IntegrationHelpers'
 import WoodpeckerActions from './WoodpeckerActions'
-import { generateMappedField, getallAccounts, getallPipelines, woodpeckerFields } from './WoodpeckerCommonFunc'
+import { generateMappedField, getAllCampaign, getallAccounts, getallPipelines, woodpeckerFields } from './WoodpeckerCommonFunc'
 import WoodpeckerFieldMap from './WoodpeckerFieldMap'
 
 export default function WoodpeckerIntegLayout({ formFields, handleInput, woodpeckerConf, setWoodpeckerConf, loading, setLoading, isLoading, setIsLoading, setSnackbar }) {
@@ -19,6 +19,10 @@ export default function WoodpeckerIntegLayout({ formFields, handleInput, woodpec
 
         if (draftConf.actionName === "adding_prospects_to_the_prospects_list" || draftConf.actionName === "adding_prospects_to_the_campaign") {
           draftConf.woodpeckerAllFields = draftConf.prospectsFields
+
+          if (draftConf.actionName === "adding_prospects_to_the_campaign") {
+            getAllCampaign(draftConf, setWoodpeckerConf, loading, setLoading)
+          }
         } else if (draftConf.actionName === "contacts") {
           draftConf.woodpeckerAllFields = draftConf.contactFields
         } else if (draftConf.actionName === "opportunities") {
@@ -31,7 +35,6 @@ export default function WoodpeckerIntegLayout({ formFields, handleInput, woodpec
         delete draftConf[name]
       }
     }))
-    console.log(woodpeckerConf)
   }
 
   const setChanges = (val, name) => {
@@ -60,7 +63,7 @@ export default function WoodpeckerIntegLayout({ formFields, handleInput, woodpec
         <option value="adding_prospects_to_the_campaign" data-action_name="Adding prospects to the Campaign">{__('Adding prospects to the Campaign', 'bit-integrations')}</option>
       </select>
       <br />
-      {(loading.account || loading.pipeline) && (
+      {(loading.campaign || loading.pipeline) && (
         <Loader style={{
           display: 'flex',
           justifyContent: 'center',
@@ -70,27 +73,27 @@ export default function WoodpeckerIntegLayout({ formFields, handleInput, woodpec
         }}
         />
       )}
-      {woodpeckerConf.actionName === 'opportunities' && woodpeckerConf?.accounts
+      {woodpeckerConf.actionName === 'adding_prospects_to_the_campaign' && woodpeckerConf?.campaigns && !loading.campaign
         && (
           <>
             <br />
             <div className="flx">
-              <b className="wdt-200 d-in-b">{__('Select Account:', 'bit-integrations')}</b>
+              <b className="wdt-200 d-in-b">{__('Select Campaign:', 'bit-integrations')}</b>
               <MultiSelect
-                options={woodpeckerConf?.accounts.map(account => ({ label: account.name, value: account.id.toString() }))}
+                options={woodpeckerConf?.campaigns.map(campaign => ({ label: campaign.name, value: campaign.id.toString() }))}
                 className="msl-wrp-options dropdown-custom-width"
-                defaultValue={woodpeckerConf?.selectedAccount}
-                onChange={val => setChanges(val, 'selectedAccount')}
-                disabled={loading.account}
+                defaultValue={woodpeckerConf?.selectedCampaign}
+                onChange={val => setChanges(val, 'selectedCampaign')}
+                disabled={loading.campaign}
                 singleSelect
                 closeOnSelect
               />
               <button
-                onClick={() => getallAccounts(woodpeckerConf, setWoodpeckerConf, loading, setLoading)}
+                onClick={() => getAllCampaign(woodpeckerConf, setWoodpeckerConf, loading, setLoading)}
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
-                style={{ '--tooltip-txt': `'${__('Refresh Stages', 'bit-integrations')}'` }}
+                style={{ '--tooltip-txt': `'${__('Refresh Campaigns', 'bit-integrations')}'` }}
                 type="button"
-                disabled={loading.account}
+                disabled={loading.campaign}
               >
                 &#x21BB;
               </button>

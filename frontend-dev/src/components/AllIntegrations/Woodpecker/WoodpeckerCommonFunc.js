@@ -24,22 +24,22 @@ export const generateMappedField = (woodpeckerConf) => {
     );
   return requiredFlds.length > 0
     ? requiredFlds.map((field) => ({
-        formField: "",
-        woodpeckerFormField: field.key,
-      }))
+      formField: "",
+      woodpeckerFormField: field.key,
+    }))
     : [{ formField: "", woodpeckerFormField: "" }];
 };
 
 export const checkMappedFields = (woodpeckerConf) => {
   const mappedFields = woodpeckerConf?.field_map
     ? woodpeckerConf.field_map.filter(
-        (mappedField) =>
-          !mappedField.formField ||
-          !mappedField.woodpeckerFormField ||
-          (mappedField.formField === "custom" && !mappedField.customValue) ||
-          (mappedField.woodpeckerFormField === "customFieldKey" &&
-            !mappedField.customFieldKey)
-      )
+      (mappedField) =>
+        !mappedField.formField ||
+        !mappedField.woodpeckerFormField ||
+        (mappedField.formField === "custom" && !mappedField.customValue) ||
+        (mappedField.woodpeckerFormField === "customFieldKey" &&
+          !mappedField.customFieldKey)
+    )
     : [];
   if (mappedFields.length > 0) {
     return false;
@@ -127,26 +127,26 @@ export const woodpeckerFields = (
     .catch(() => setIsLoading(false));
 };
 
-export const getAllTags = (woodpeckerConf, setWoodpeckerConf, setLoading) => {
-  setLoading({ ...setLoading, tags: true });
+export const getAllCampaign = (woodpeckerConf, setWoodpeckerConf, loading, setLoading) => {
+  setLoading({ ...loading, campaign: true });
   const requestParams = {
     api_key: woodpeckerConf.api_key,
   };
 
-  bitsFetch(requestParams, "Woodpecker_fetch_all_tags").then((result) => {
+  bitsFetch(requestParams, "woodpecker_fetch_all_campaigns").then((result) => {
     if (result && result.success) {
       setWoodpeckerConf((prevConf) => {
         const draftConf = { ...prevConf };
-        draftConf.tags = result.data;
+        draftConf.campaigns = result.data;
         return draftConf;
       });
 
-      toast.success(__("Tags fetched successfully", "bit-integrations"));
-      setLoading({ ...setLoading, tags: false });
+      toast.success(__("Campaigns fetched successfully", "bit-integrations"));
+      setLoading({ ...loading, campaign: false });
       return;
     }
-    setLoading({ ...setLoading, tags: false });
-    toast.error(__("Tags fetching failed", "bit-integrations"));
+    setLoading({ ...loading, campaign: false });
+    toast.error(__("Campaigns fetching failed", "bit-integrations"));
   });
 };
 
