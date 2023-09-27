@@ -23,12 +23,8 @@ export default function WoodpeckerIntegLayout({ formFields, handleInput, woodpec
           if (draftConf.actionName === "adding_prospects_to_the_campaign") {
             getAllCampaign(draftConf, setWoodpeckerConf, loading, setLoading)
           }
-        } else if (draftConf.actionName === "contacts") {
-          draftConf.woodpeckerAllFields = draftConf.contactFields
-        } else if (draftConf.actionName === "opportunities") {
-          draftConf.woodpeckerAllFields = draftConf.opportunitiyFields
-          getallAccounts(draftConf, setWoodpeckerConf, loading, setLoading)
-          getallPipelines(draftConf, setWoodpeckerConf, loading, setLoading)
+        } else {
+          draftConf.woodpeckerAllFields = draftConf.companyFields
         }
         draftConf.field_map = generateMappedField(draftConf);
       } else {
@@ -61,9 +57,10 @@ export default function WoodpeckerIntegLayout({ formFields, handleInput, woodpec
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="adding_prospects_to_the_prospects_list" data-action_name="Adding prospects to the Prospects list">{__('Adding prospects to the Prospects list', 'bit-integrations')}</option>
         <option value="adding_prospects_to_the_campaign" data-action_name="Adding prospects to the Campaign">{__('Adding prospects to the Campaign', 'bit-integrations')}</option>
+        <option value="create_company" data-action_name="Create Company">{__('Create Company', 'bit-integrations')}</option>
       </select>
       <br />
-      {(loading.campaign || loading.pipeline) && (
+      {loading.campaign && (
         <Loader style={{
           display: 'flex',
           justifyContent: 'center',
@@ -97,51 +94,6 @@ export default function WoodpeckerIntegLayout({ formFields, handleInput, woodpec
               >
                 &#x21BB;
               </button>
-            </div>
-          </>
-        )}
-      {woodpeckerConf.actionName === 'opportunities' && woodpeckerConf?.pipelines
-        && (
-          <>
-            <br />
-            <div className="flx">
-              <b className="wdt-200 d-in-b">{__('Select Pipeline:', 'bit-integrations')}</b>
-              <MultiSelect
-                options={woodpeckerConf?.pipelines.map(pipeline => ({ label: pipeline.name, value: pipeline.id.toString() }))}
-                className="msl-wrp-options dropdown-custom-width"
-                defaultValue={woodpeckerConf?.selectedPipeline}
-                onChange={val => setChanges(val, 'selectedPipeline')}
-                disabled={loading.pipeline}
-                singleSelect
-                closeOnSelect
-              />
-              <button
-                onClick={() => getallPipelines(woodpeckerConf, setWoodpeckerConf, loading, setLoading)}
-                className="icn-btn sh-sm ml-2 mr-2 tooltip"
-                style={{ '--tooltip-txt': `'${__('Refresh Pipelines', 'bit-integrations')}'` }}
-                type="button"
-                disabled={loading.pipeline}
-              >
-                &#x21BB;
-              </button>
-            </div>
-          </>
-        )}
-      {woodpeckerConf.actionName === 'opportunities' && woodpeckerConf?.stages
-        && (
-          <>
-            <br />
-            <div className="flx">
-              <b className="wdt-200 d-in-b">{__('Select Stage:', 'bit-integrations')}</b>
-              <MultiSelect
-                options={woodpeckerConf?.stages.map(stage => ({ label: stage.name, value: stage.id.toString() }))}
-                className="msl-wrp-options dropdown-custom-width"
-                defaultValue={woodpeckerConf?.selectedStage}
-                onChange={val => setChanges(val, 'selectedStage')}
-                disabled={loading.stage}
-                singleSelect
-                closeOnSelect
-              />
             </div>
           </>
         )}

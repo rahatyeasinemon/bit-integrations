@@ -32,32 +32,6 @@ class RecordApiHelper
         ];
     }
 
-    private function setData($finalData)
-    {
-        $formData = [];
-        $customfields = [];
-        $addressKeys = ['city', 'country', 'region', 'state_region', 'street', 'zip', '_dirty'];
-        foreach ($finalData as $key => $value) {
-            if (array_search($key, $addressKeys) !== false) {
-                $formData['address'][$key] = $value;
-            } elseif (strpos($key, 'custom_field_') !== false) {
-                $custom_key = explode('custom_field_', $key);
-                $customfields[$custom_key[1]] = $value;
-            } else {
-                $formData[$key] = $value;
-            }
-        }
-
-        if (isset($this->integrationDetails->selectedTags) && !empty($this->integrationDetails->selectedTags)) {
-            $formData['tags'] = explode(',', $this->integrationDetails->selectedTags);
-        }
-        if (!empty($customfields)) {
-            $formData['custom'] = (object) $customfields;
-        }
-
-        return $formData;
-    }
-
     public function addProspects($finalData, $actionName, $actions)
     {
         if (empty($finalData['email'])) {
@@ -80,49 +54,22 @@ class RecordApiHelper
             $this->typeName = 'Prospects created into Campaign List';
         }
 
-        $requestData['update'] = $actions->update ? true : false;
-        $requestData['prospects'] = [(object) $finalData];
-        // var_dump($actionName);
-        // die;
-        $this->type     = 'Prospects';
+        $requestData['update']      = $actions->update ? true : false;
+        $requestData['prospects']   = [(object) $finalData];
+        $this->type                 = 'Prospects';
         return HttpHelper::post($apiEndpoint, json_encode($requestData), $this->defaultHeader);
     }
 
-    public function addContact($finalData)
-    {
-        if (empty($finalData['firstname'])) {
-            return ['success' => false, 'message' => 'Required field First Name is empty', 'code' => 400];
-        }
-        if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email Address is empty', 'code' => 400];
-        }
-
-        $this->type     = 'Contact';
-        $this->typeName = 'Contact created';
-        $formData       = $this->setData($finalData);
-        $apiEndpoint    = $this->apiUrl . "/contacts";
-        return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
-    }
-
-    public function addOpprtunity($finalData)
+    public function addCompany($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required Opportunity Name is empty', 'code' => 400];
-        } elseif (!isset($this->integrationDetails->selectedAccount) || empty($this->integrationDetails->selectedAccount)) {
-            return ['success' => false, 'message' => 'Required Account field is empty', 'code' => 400];
-        } elseif (!isset($this->integrationDetails->selectedPipeline) || empty($this->integrationDetails->selectedPipeline)) {
-            return ['success' => false, 'message' => 'Required Pipeline field is empty', 'code' => 400];
-        } elseif (!isset($this->integrationDetails->selectedStage) || empty($this->integrationDetails->selectedStage)) {
-            return ['success' => false, 'message' => 'Required Stage field is empty', 'code' => 400];
+            return ['success' => false, 'message' => 'Required field Company Name is empty', 'code' => 400];
         }
 
-        $this->type             = 'Opportunity';
-        $this->typeName         = 'Opportunity created';
-        $formData               = $this->setData($finalData);
-        $formData['account']    = $this->integrationDetails->selectedAccount;
-        $formData['stage']      = $this->integrationDetails->selectedStage;
-        $apiEndpoint            = $this->apiUrl . "/opportunities";
-        return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
+        $this->type     = 'Company';
+        $this->typeName = 'Company created';
+        $apiEndpoint    = $this->apiUrl . "/agency/companies/add";
+        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -141,10 +88,8 @@ class RecordApiHelper
         $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         if ($actionName === "adding_prospects_to_the_prospects_list" || $actionName === "adding_prospects_to_the_campaign") {
             $apiResponse = $this->addProspects($finalData, $actionName, $actions);
-        } elseif ($actionName === "contacts") {
-            $apiResponse = $this->addContact($finalData);
-        } elseif ($actionName === "opportunities") {
-            $apiResponse = $this->addOpprtunity($finalData);
+        } else {
+            $apiResponse = $this->addCompany($finalData);
         }
 
         if (isset($apiResponse->status) && $apiResponse->status->status === "ERROR") {

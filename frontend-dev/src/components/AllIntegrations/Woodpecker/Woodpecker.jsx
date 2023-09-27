@@ -57,28 +57,8 @@ function Woodpecker({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'snippet15', label: 'snippet15', required: false },
   ]
 
-  const contactFields = [
-    { key: 'firstname', label: 'First Name', required: true },
-    { key: 'Prefix', label: 'Prefix', required: false },
-    { key: 'middle', label: 'Middle Name', required: false },
-    { key: 'lastname', label: 'Last Name', required: false },
-    { key: 'email', label: 'Email Address', required: true },
-    { key: 'suffix', label: 'Suffix', required: false },
-    { key: 'phone_number', label: 'Phone Number', required: false },
-    { key: 'role', label: 'Role', required: false },
-    { key: 'organisation', label: 'Organisation', required: false },
-    { key: 'street', label: 'Street', required: false },
-    { key: 'zip', label: 'Zip/Postal Code', required: false },
-    { key: 'city', label: 'City', required: false },
-    { key: 'region', label: 'State/Region', required: false },
-    { key: 'country', label: 'Country', required: false },
-  ]
-
-  const opportunitiyFields = [
-    { key: 'name', label: 'Opportunity name', required: true },
-    { key: 'value', label: 'Value', required: false },
-    { key: 'start_date', label: 'Start date', required: false },
-    { key: 'close_date', label: 'Close date', required: false },
+  const companyFields = [
+    { key: 'name', label: 'Company Name', required: true }
   ]
 
   const [woodpeckerConf, setWoodpeckerConf] = useState({
@@ -91,8 +71,7 @@ function Woodpecker({ formFields, setFlow, flow, allIntegURL }) {
     actionName: '',
     actionId: '',
     prospectsFields,
-    contactFields,
-    opportunitiyFields,
+    companyFields,
     actions: {},
   })
 
