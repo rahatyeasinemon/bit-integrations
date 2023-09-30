@@ -86,21 +86,7 @@ export default function MoxieCRMFieldMap({ i, formFields, field, moxiecrmConf, s
                 ))
               )
             }
-            {(moxiecrmConf.actionName === 'client' || moxiecrmConf.actionName === 'contact' || moxiecrmConf.actionName === 'opportunity')
-              && <option value="customFieldKey">{__('Custom Field', 'bit-integrations')}</option>}
           </select>
-          {field.moxiecrmFormField === 'customFieldKey'
-            && (
-              <CustomField
-                field={field}
-                index={i}
-                conf={moxiecrmConf}
-                setConf={setMoxieCRMConf}
-                fieldValue="customFieldKey"
-                fieldLabel="Custom Field Key"
-                className="ml-2"
-              />
-            )}
         </div>
         {
           i >= requiredFields.length && (
