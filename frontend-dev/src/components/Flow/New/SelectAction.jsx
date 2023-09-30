@@ -150,7 +150,7 @@ export default function SelectAction() {
     { type: 'Salesflare' },
     { type: 'AcademyLms' },
     { type: 'MoxieCRM' },
-    { type: 'WP Fusion' },
+    { type: 'WPFusion' },
     { type: 'Woodpecker' },
   ]
 

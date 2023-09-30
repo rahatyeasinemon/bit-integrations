@@ -117,10 +117,10 @@ class RecordApiHelper
         }
 
         if ($this->integrationDetails->actions->client) {
-            $requestParams['client_id'] = ($this->integrationDetails->selectedClient);
+            $requestParams['clientName'] = ($this->integrationDetails->selectedClient);
         }
         if (!empty($this->integrationDetails->actions->pipelineStage)) {
-            $requestParams['pipeline_stage_id'] =  ($this->integrationDetails->selectedPipelineStage);
+            $requestParams['stageName'] =  ($this->integrationDetails->selectedPipelineStage);
         }
 
         $this->type     = 'Opportunity';
