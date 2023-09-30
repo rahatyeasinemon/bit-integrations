@@ -156,7 +156,7 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
             : (
               <div className="flx flx-between mt-2">
                 <MultiSelect
-                  options={moxiecrmConf?.pipelineStages?.map(pipelineStage => ({ label: pipelineStage.name, value: pipelineStage.id }))}
+                  options={moxiecrmConf?.pipelineStages?.map(pipelineStage => ({ label: pipelineStage.name, value: pipelineStage.name }))}
                   className="msl-wrp-options"
                   defaultValue={moxiecrmConf?.selectedPipelineStage}
                   onChange={val => setChanges(val, 'selectedPipelineStage')}
