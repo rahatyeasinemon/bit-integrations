@@ -375,6 +375,9 @@ Users can get and send data to [JetEngine](https://crocoblock.com/plugins/jeteng
 
     WS Form LITE is the user-friendly WordPress plugin that simplifies contact form creation with its intuitive drag-and-drop builder. With WS Form LITE, you can effortlessly design and manage multiple contact forms, enhancing user interactions and data collection throughout your WordPress site using WS Form LITE's versatile features and user-friendly interface. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/ws-form-integrations/)|[**Website**](https://wsform.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKmyPCIy1-JR9tfZYhzRr38)|[**Free**](https://wordpress.org/plugins/ws-form/)]
 63. [**WP Webhooks – Create powerful automation workflows directly within WordPress :**](https://docs.bit-integrations.bitapps.pro/trigger/webhook) “WP Webhooks – Create powerful automation workflows directly within WordPress” is open source software. The following people have contributed to this plugin.
+64. [**Academy LMS – eLearning and online course solution for WordPress :**](https://academylms.net/) Academy LMS, the ultimate next-generation, fastest WordPress LMS plugin, will improve your online learning experience. Its seamless integration with any WordPress site allows you to easily create and sell engaging online courses. With a user-friendly interface and lightning-fast performance, you can transform your website into a professional e-learning platform in no time.
+
+    Academy LMS is a powerful eLearning platform that empowers you to create and manage online courses with ease. With Academy LMS, you can deliver engaging content, track student progress, and build a thriving online learning community. [[**Website**](https://academylms.net/)|[**Free**](https://wordpress.org/plugins/academy/)]
 
 ### ✔ Available Actions are:
 
@@ -765,6 +768,18 @@ Users can get and send data to [JetEngine](https://crocoblock.com/plugins/jeteng
 133. [**OneHash - All-in-One CRM, ERP, and Business Solution :**](https://www.onehash.ai/)Boost your business with OneHash, a powerful all-in-one software offering CRM, ERP, and more. Affordable and scalable for sustainable growth.
 
       OneHash is a comprehensive business management platform designed to simplify your workflows. With OneHash, you can manage various aspects of your business, including accounting, sales, and project management, all in one integrated solution. Streamline your operations with OneHash and experience a more efficient way to run your business. [[**Website**](https://www.onehash.ai/)]
+134. [**Academy LMS – eLearning and online course solution for WordPress :**](https://academylms.net/) Academy LMS, the ultimate next-generation, fastest WordPress LMS plugin, will improve your online learning experience. Its seamless integration with any WordPress site allows you to easily create and sell engaging online courses. With a user-friendly interface and lightning-fast performance, you can transform your website into a professional e-learning platform in no time.
+
+      Academy LMS is a powerful eLearning platform that empowers you to create and manage online courses with ease. With Academy LMS, you can deliver engaging content, track student progress, and build a thriving online learning community. [[**Website**](https://academylms.net/)|[**Free**](https://wordpress.org/plugins/academy/)]
+135. [**Woodpecker - Tools for Cold Email, Sales & Agency Outreach :**](https://woodpecker.co/hello-again/) Woodpecker is a cold email software that molds to your needs. Whether you're a salesperson, an agency founder, or an individual cold emailer – Woodpecker's ...
+
+      Woodpecker is a versatile email outreach and follow-up automation tool designed to boost your email marketing efforts. With Woodpecker, you can personalize and automate your email campaigns, helping you engage prospects and drive conversions. [[**Website**](https://woodpecker.co/hello-again/)]
+136. [**Moxie - Built for freelancers :**](https://www.withmoxie.com/) A CRM built to keep freelancers organized with customizable automations and a forecast more accurate than the weatherman. Workshops With Moxie. Taught by ...
+
+      Moxie CRM is a comprehensive customer relationship management software that empowers businesses to enhance their customer interactions and streamline operations. Moxie CRM helps organizations manage leads, track customer interactions, and improve overall customer engagement, making it an essential tool for boosting productivity and customer satisfaction. [[**Website**](https://www.withmoxie.com/)]
+137. [**WP Fusion - Marketing automation for WordPress :**](https://wpfusion.com/) WP Fusion Lite synchronizes your WordPress users with leading CRMs and marketing automation systems, keeps user profiles in sync with CRM contact records, and lets you protect site content based on CRM tags.
+
+      WP Fusion is a versatile WordPress plugin that seamlessly connects your website with various CRM and marketing automation platforms, enabling you to automate and personalize your marketing efforts effortlessly. WP Fusion offers a wide range of features, making it an ideal choice for businesses looking to integrate, sync, and manage customer data across multiple platforms efficiently. [[**Website**](https://wpfusion.com/)|[**Free**](https://wordpress.org/plugins/wp-fusion-lite/)]
 
 
 ## ⚡ Key Features:
