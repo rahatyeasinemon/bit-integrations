@@ -3,7 +3,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import MoxieCRMActions from './MoxieCRMActions'
-import { getCustomFields } from './MoxieCRMCommonFunc'
+// import { getCustomFields } from './MoxieCRMCommonFunc'
 import MoxieCRMFieldMap from './MoxieCRMFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
@@ -17,10 +17,7 @@ export default function MoxieCRMIntegLayout({ formFields, handleInput, moxiecrmC
     const { name } = e.target
     if (e.target.value !== '') {
       newConf[name] = e.target.value
-      getCustomFields(newConf, setMoxieCRMConf, setLoading)
-      if (e.target.value === 'opportunity') {
-        getAllCRMPeoples(newConf, setMoxieCRMConf, setLoading)
-      }
+      // getCustomFields(newConf, setMoxieCRMConf, setLoading)
     } else {
       delete newConf[name]
     }
@@ -78,7 +75,7 @@ export default function MoxieCRMIntegLayout({ formFields, handleInput, moxiecrmC
             <b className="wdt-100">
               {__('Field Map', 'bit-integrations')}
             </b>
-            <button
+            {/* <button
               onClick={() => getCustomFields(moxiecrmConf, setMoxieCRMConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
               style={{ '--tooltip-txt': `'${__('Refresh Fields', 'bit-integrations')}'` }}
@@ -86,7 +83,7 @@ export default function MoxieCRMIntegLayout({ formFields, handleInput, moxiecrmC
               disabled={loading.CRMPipelines}
             >
               &#x21BB;
-            </button>
+            </button> */}
           </div>
 
           <br />
