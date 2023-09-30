@@ -32,8 +32,9 @@ export default function MoxieCRMAuthorization({ moxiecrmConf, setMoxieCRMConf, s
   <h4>Get api secret key</h4>
   <ul>
       <li>First go to your Moxie dashboard.</li>
-      <li>Then click Settings from Navbar.</li>
-      <li>Click "Integrations", Then click "API Keys"</li>
+      <li>Then click Workspace Settings from bottom left corner.</li>
+      <li>Click "Connneted Apps", Then click "Integrations"</li>
+      <li>Select "Custom Integrations"</li>
   </ul>`
 
   return (
@@ -44,9 +45,9 @@ export default function MoxieCRMAuthorization({ moxiecrmConf, setMoxieCRMConf, s
       <div className="mt-3"><b>{__('Your API Url:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_url" value={moxiecrmConf.api_url} type="text" placeholder={__('Your Client...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_url}</div>
-      {/* <small className="d-blk mt-3">
-        {__('Example: {name}.moxiecrm.com', 'bit-integrations')}
-      </small> */}
+      <small className="d-blk mt-3">
+        {__('Example: {name}.withmoxie.com', 'bit-integrations')}
+      </small>
       <div className="mt-3"><b>{__('API Key:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={moxiecrmConf.api_key} type="text" placeholder={__('API Token...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>

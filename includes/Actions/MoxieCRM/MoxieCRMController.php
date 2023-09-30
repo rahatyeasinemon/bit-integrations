@@ -44,37 +44,37 @@ class MoxieCRMController
         }
     }
 
-    public function getCustomFields($fieldsRequestParams)
-    {
-        if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
-        }
+    // public function getCustomFields($fieldsRequestParams)
+    // {
+    //     if (empty($fieldsRequestParams->api_key)) {
+    //         wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+    //     }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $action      = $fieldsRequestParams->action;
-        $apiUrl    = $fieldsRequestParams->api_url;
+    //     $apiKey      = $fieldsRequestParams->api_key;
+    //     $action      = $fieldsRequestParams->action;
+    //     $apiUrl    = $fieldsRequestParams->api_url;
 
-        $apiEndpoint = $this->apiEndpoint . "/custom_field_definitions";
-        $headers = [
-            "X-API-KEY"  => $apiKey,
-            "Content-Type"      => "application/json"
-        ];
+    //     $apiEndpoint = $this->apiEndpoint . "/custom_field_definitions";
+    //     $headers = [
+    //         "X-API-KEY"  => $apiKey,
+    //         "Content-Type"      => "application/json"
+    //     ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
-        if (isset($response)) {
-            foreach ($response as $customField) {
-                if (in_array($action, $customField->available_on)) {
-                    $customFields[] = [
-                        'key' => $customField->id,
-                        'label' => $customField->name,
-                    ];
-                }
-            }
-            wp_send_json_success($customFields, 200);
-        } else {
-            wp_send_json_error('Custom field fetching failed', 400);
-        }
-    }
+    //     $response = HttpHelper::get($apiEndpoint, null, $headers);
+    //     if (isset($response)) {
+    //         foreach ($response as $customField) {
+    //             if (in_array($action, $customField->available_on)) {
+    //                 $customFields[] = [
+    //                     'key' => $customField->id,
+    //                     'label' => $customField->name,
+    //                 ];
+    //             }
+    //         }
+    //         wp_send_json_success($customFields, 200);
+    //     } else {
+    //         wp_send_json_error('Custom field fetching failed', 400);
+    //     }
+    // }
 
     public function getAllOpportunities($fieldsRequestParams)
     {
