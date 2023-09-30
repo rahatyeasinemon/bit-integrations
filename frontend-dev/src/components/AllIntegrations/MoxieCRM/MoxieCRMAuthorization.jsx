@@ -40,7 +40,7 @@ export default function MoxieCRMAuthorization({ moxiecrmConf, setMoxieCRMConf, s
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       <div className="mt-3">
-        <api_url>{__('Integration Name:', 'bit-integrations')}</api_url>
+        <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={moxiecrmConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

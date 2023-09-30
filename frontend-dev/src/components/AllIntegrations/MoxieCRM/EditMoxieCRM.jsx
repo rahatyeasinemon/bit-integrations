@@ -31,7 +31,7 @@ function EditMoxieCRM({ allIntegURL }) {
       return
     }
 
-    saveActionConf({ flow, allIntegURL, conf: moxiecrmConf, navigate, edit: 1, setLoading, setSnackbar })
+    saveActionConf({ flow, allIntegURL, conf: moxiecrmConf, navigate, edit: 1, setIsLoading, setSnackbar })
   }
 
   return (
