@@ -40,17 +40,15 @@ class RecordApiHelper
         }
 
         $staticFieldsKeys = ['name', 'address1', 'address2', 'city', 'locality', 'postal', 'country', 'website',  'phone','leadSource','hourlyAmount','currency','notes','firstName','lastName','email'];
-
+        $contacts = [];
         foreach ($finalData as $key => $value) {
-            if (in_array($key, $staticFieldsKeys)) {
-                $requestParams[$key] = $value;
+            if ($key == "firstName" || $key == "lastName" || $key == "email") {
+                $contacts[$key] =   $value ;
             } else {
-                $requestParams['customValues'][] = (object) [
-                    'Custom Field'   => $value,
-                    'custom_field_definition_id' => $key
-                ];
+                $requestParams[$key] = $value;
             }
         }
+        $requestParams['contacts'][] = $contacts;
 
         if ($this->integrationDetails->recordType) {
             $requestParams['clientType'] = $this->integrationDetails->recordType;
@@ -59,9 +57,10 @@ class RecordApiHelper
         $this->type     = 'Client';
         $this->typeName = 'Client created';
 
-        $apiEndpoint = 'https://'. $this->apiUrl . "/api/public/action/clients/create";
+        $apiEndpoint = 'https://' . $this->apiUrl . "/api/public/action/clients/create";
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+
     }
 
     public function addContact($finalData)
@@ -90,7 +89,7 @@ class RecordApiHelper
         $this->type     = 'Contact';
         $this->typeName = 'Contact created';
 
-        $apiEndpoint = 'https://'. $this->apiUrl . "/api/public/action/contacts/create";
+        $apiEndpoint = 'https://' . $this->apiUrl . "/api/public/action/contacts/create";
 
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
@@ -127,7 +126,7 @@ class RecordApiHelper
         $this->type     = 'Opportunity';
         $this->typeName = 'Opportunity created';
 
-        $apiEndpoint = 'https://'. $this->apiUrl . "/api/public/action/opportunities/create";
+        $apiEndpoint = 'https://' . $this->apiUrl . "/api/public/action/opportunities/create";
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }

@@ -128,6 +128,45 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
             )
         }
       </ConfirmModal>
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt={__('Ok', 'bit-integrations')}
+        show={actionMdl.show === 'pipelineStage'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title={__('PipelineStages', 'bit-integrations')}
+      >
+        <div className="btcd-hr mt-2 mb-2" />
+        <div className="mt-2">
+          {__('Select PipelineStage', 'bit-integrations')}
+        </div>
+        {
+          loading.pipelineStages ? (
+            <Loader style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 45,
+              transform: 'scale(0.5)',
+            }}
+            />
+          )
+            : (
+              <div className="flx flx-between mt-2">
+                <MultiSelect
+                  options={moxiecrmConf?.pipelineStages?.map(pipelineStage => ({ label: pipelineStage.name, value: pipelineStage.id }))}
+                  className="msl-wrp-options"
+                  defaultValue={moxiecrmConf?.selectedPipelineStage}
+                  onChange={val => setChanges(val, 'selectedPipelineStage')}
+                  singleSelect
+                />
+                <button onClick={() => getAllPipelineStages(moxiecrmConf, setMoxieCRMConf, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh PipelineStages', 'bit-integrations')}'` }} type="button">&#x21BB;</button>
+              </div>
+            )
+        }
+      </ConfirmModal>
     </div>
   )
 }
