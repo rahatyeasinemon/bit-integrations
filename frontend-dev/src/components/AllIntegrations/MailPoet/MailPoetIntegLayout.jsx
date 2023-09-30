@@ -2,7 +2,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
-import { refreshMailpoetHeader } from './MailPoetCommonFunc'
+import { refreshMailpoetHeader, refreshNewsLetter } from './MailPoetCommonFunc'
 import MailPoetFieldMap from './MailPoetFieldMap'
 
 export default function MailPoetIntegLayout({ formID, formFields, mailPoetConf, setMailPoetConf, isLoading, setIsLoading, setSnackbar }) {
@@ -16,6 +16,7 @@ export default function MailPoetIntegLayout({ formID, formFields, mailPoetConf, 
     }
     setMailPoetConf({ ...newConf })
   }
+
   return (
     <>
       <br />
@@ -27,7 +28,7 @@ export default function MailPoetIntegLayout({ formID, formFields, mailPoetConf, 
           options={mailPoetConf?.default?.newsletterList && Object.keys(mailPoetConf.default.newsletterList).map(newsletter => ({ label: mailPoetConf.default.newsletterList[newsletter].newsletterName, value: mailPoetConf.default.newsletterList[newsletter].newsletterId }))}
           onChange={val => lists(val)}
         />
-        <button onClick={() => lists(formID, mailPoetConf, setMailPoetConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MailPoet List', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshNewsLetter(formID, mailPoetConf, setMailPoetConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MailPoet List', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       {isLoading && (
         <Loader style={{
