@@ -166,7 +166,7 @@ class RecordApiHelper
             $apiResponse = $this->addOpportunity($finalData);
         }
 
-        if ($apiResponse->data->id || $apiResponse->status === 'success') {
+        if (isset($apiResponse->id) || $apiResponse->status === 'success') {
             $res = [$this->typeName . ' successfully'];
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
         } else {
