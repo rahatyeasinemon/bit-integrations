@@ -5,10 +5,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { companyHubAuthentication } from './CompanyHubCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function CompanyHubAuthorization({ companyHubConf, setCompanyHubConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ sub_domain: '', api_key: '' })
+  const { companyHub } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -40,6 +43,19 @@ export default function CompanyHubAuthorization({ companyHubConf, setCompanyHubC
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {companyHub?.youTubeLink && (
+        <TutorialLink
+          title={companyHub?.title}
+          youTubeLink={companyHub?.youTubeLink}
+        />
+      )}
+      {companyHub?.docLink && (
+        <TutorialLink
+          title={companyHub?.title}
+          docLink={companyHub?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={companyHubConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

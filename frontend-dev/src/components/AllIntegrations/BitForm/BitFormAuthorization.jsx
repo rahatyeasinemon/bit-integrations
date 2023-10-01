@@ -4,9 +4,12 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { fetchAllForm, handleAuthorize } from './BitFormCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function BitFormAuthorization({ formID, bitFormConf, setBitFormConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
+  const { bitForm } = tutorialLinks
   const [error, setError] = useState({ dataCenter: '', api_key: '' })
   const nextPage = () => {
     setTimeout(() => {
@@ -28,6 +31,19 @@ export default function BitFormAuthorization({ formID, bitFormConf, setBitFormCo
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {bitForm?.youTubeLink && (
+        <TutorialLink
+          title={bitForm?.title}
+          youTubeLink={bitForm?.youTubeLink}
+        />
+      )}
+      {bitForm?.docLink && (
+        <TutorialLink
+          title={bitForm?.title}
+          docLink={bitForm?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={bitFormConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

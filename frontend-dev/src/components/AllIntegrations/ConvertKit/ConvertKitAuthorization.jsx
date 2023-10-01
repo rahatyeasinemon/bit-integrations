@@ -5,9 +5,11 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { refreshConvertKitForm } from './ConvertKitCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ConvertKitAuthorization({ formID, convertKitConf, setConvertKitConf, step, setstep, setSnackbar, isInfo, isLoading, setIsLoading }) {
-
+  const { convertKit } = tutorialLinks
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_secret: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
@@ -62,6 +64,19 @@ export default function ConvertKitAuthorization({ formID, convertKitConf, setCon
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {convertKit?.youTubeLink && (
+        <TutorialLink
+          title={convertKit?.title}
+          youTubeLink={convertKit?.youTubeLink}
+        />
+      )}
+      {convertKit?.docLink && (
+        <TutorialLink
+          title={convertKit?.title}
+          docLink={convertKit?.docLink}
+        />
+      )}
+
       <div className="mt-3 wdt-200"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={convertKitConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>

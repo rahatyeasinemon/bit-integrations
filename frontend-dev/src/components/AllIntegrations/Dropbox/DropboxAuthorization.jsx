@@ -3,10 +3,13 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { getAllDropboxFolders, handleAuthorize } from './DropboxCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function DropboxAuthorization({ flowID, dropboxConf, setDropboxConf, step, setStep, isLoading, setIsLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
+  const { dropbox } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -39,6 +42,19 @@ export default function DropboxAuthorization({ flowID, dropboxConf, setDropboxCo
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {dropbox?.youTubeLink && (
+        <TutorialLink
+          title={dropbox?.title}
+          youTubeLink={dropbox?.youTubeLink}
+        />
+      )}
+      {dropbox?.docLink && (
+        <TutorialLink
+          title={dropbox?.title}
+          docLink={dropbox?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={dropboxConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

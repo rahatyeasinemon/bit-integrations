@@ -4,8 +4,11 @@ import { deepCopy } from '../../../Utils/Helpers'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function AcademyLmsAuthorization({ academyLmsConf, setAcademyLmsConf, step, setStep, setSnackbar }) {
+  const { academyLms } = tutorialLinks
   const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
@@ -37,6 +40,19 @@ export default function AcademyLmsAuthorization({ academyLmsConf, setAcademyLmsC
         height: step === 1 && 'auto',
       }}
     >
+      {academyLms?.youTubeLink && (
+        <TutorialLink
+          title={academyLms?.title}
+          youTubeLink={academyLms?.youTubeLink}
+        />
+      )}
+      {academyLms?.docLink && (
+        <TutorialLink
+          title={academyLms?.title}
+          docLink={academyLms?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

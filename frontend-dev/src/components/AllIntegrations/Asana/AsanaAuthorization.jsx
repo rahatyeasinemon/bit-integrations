@@ -4,10 +4,13 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { asanaAuthentication } from './AsanaCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function AsanaAuthorization({ asanaConf, setAsanaConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ api_key: '' })
+  const { asana } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -29,6 +32,19 @@ export default function AsanaAuthorization({ asanaConf, setAsanaConf, step, setS
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {asana?.youTubeLink && (
+        <TutorialLink
+          title={asana?.title}
+          youTubeLink={asana?.youTubeLink}
+        />
+      )}
+      {asana?.docLink && (
+        <TutorialLink
+          title={asana?.title}
+          docLink={asana?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={asanaConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

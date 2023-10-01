@@ -5,9 +5,12 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import CopyText from '../../Utilities/CopyText'
 import { handleConstantContactAuthorize } from './ConstantContactCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ConstantContactAuthorization({ constantContactConf, setConstantContactConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
+  const { constantContact } = tutorialLinks
   const [error, setError] = useState({
     dataCenter: '',
     clientId: '',
@@ -51,6 +54,19 @@ export default function ConstantContactAuthorization({ constantContactConf, setC
         ...{ height: step === 1 && 'auto' },
       }}
     >
+      {constantContact?.youTubeLink && (
+        <TutorialLink
+          title={constantContact?.title}
+          youTubeLink={constantContact?.youTubeLink}
+        />
+      )}
+      {constantContact?.docLink && (
+        <TutorialLink
+          title={constantContact?.title}
+          docLink={constantContact?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

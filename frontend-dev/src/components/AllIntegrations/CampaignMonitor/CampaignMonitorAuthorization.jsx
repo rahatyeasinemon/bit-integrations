@@ -6,11 +6,14 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { refreshCampaignMonitorLists } from './CampaignMonitorCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function CampaignMonitorAuthorization({ campaignMonitorConf, setCampaignMonitorConf, step, setstep, setSnackbar, isInfo, isLoading, setIsLoading }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { campaignMonitor } = tutorialLinks
 
   const handleAuthorize = () => {
     const newConf = { ...campaignMonitorConf }
@@ -75,6 +78,19 @@ export default function CampaignMonitorAuthorization({ campaignMonitorConf, setC
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {campaignMonitor?.youTubeLink && (
+        <TutorialLink
+          title={campaignMonitor?.title}
+          youTubeLink={campaignMonitor?.youTubeLink}
+        />
+      )}
+      {campaignMonitor?.docLink && (
+        <TutorialLink
+          title={campaignMonitor?.title}
+          docLink={campaignMonitor?.docLink}
+        />
+      )}
+
       <div className="mt-3 wdt-200"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={campaignMonitorConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>

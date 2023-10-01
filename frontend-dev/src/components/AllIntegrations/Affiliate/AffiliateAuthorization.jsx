@@ -4,6 +4,8 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function AffiliateAuthorization({ formID,
   affiliateConf,
@@ -15,6 +17,7 @@ export default function AffiliateAuthorization({ formID,
   setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { affiliate } = tutorialLinks
 
   const authorizeHandler = () => {
     setIsLoading('auth')
@@ -42,6 +45,20 @@ export default function AffiliateAuthorization({ formID,
         height: step === 1 && 'auto',
       }}
     >
+
+      {affiliate?.youTubeLink && (
+        <TutorialLink
+          title={affiliate?.title}
+          youTubeLink={affiliate?.youTubeLink}
+        />
+      )}
+      {affiliate?.docLink && (
+        <TutorialLink
+          title={affiliate?.title}
+          docLink={affiliate?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

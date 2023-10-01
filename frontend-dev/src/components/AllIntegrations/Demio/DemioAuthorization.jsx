@@ -5,9 +5,12 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { demioAuthentication, getAllEvents } from './DemioCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function DemioAuthorization({ demioConf, setDemioConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
+  const { demio } = tutorialLinks
   const [error, setError] = useState({ api_key: '', api_secret: '' })
 
   const nextPage = () => {
@@ -41,6 +44,19 @@ export default function DemioAuthorization({ demioConf, setDemioConf, step, setS
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {demio?.youTubeLink && (
+        <TutorialLink
+          title={demio?.title}
+          youTubeLink={demio?.youTubeLink}
+        />
+      )}
+      {demio?.docLink && (
+        <TutorialLink
+          title={demio?.title}
+          docLink={demio?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={demioConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

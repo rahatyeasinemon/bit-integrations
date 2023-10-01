@@ -5115,3 +5115,32 @@ _:-ms-fullscreen,
     }
   }
 }
+
+.tutoriallink {
+  display: inline-flex;
+  background     : #04ff0005;
+  color          : green;
+  align-items: center;
+  border         : 1px solid #008228;
+  border-radius: 8px;
+  font-size: 14px;
+  text-decoration: underline;
+  margin-top: 16px;
+}
+
+.tutoriallink:hover {
+  text-decoration: wavy underline !important;
+}
+
+.tutoriallink a {
+  color: green;
+}
+
+.youtube {
+  background: #ff000005;
+  border    : 1px solid #FF3D00;
+}
+
+.youtube a {
+  color: #000;
+}

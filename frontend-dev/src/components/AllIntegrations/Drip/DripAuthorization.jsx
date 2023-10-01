@@ -5,9 +5,11 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { refreshDripCampaign } from './DripCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function DripAuthorization({ formID, dripConf, setDripConf, step, setstep, setSnackbar, isInfo, isLoading, setIsLoading }) {
-
+  const { drip } = tutorialLinks
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_token: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
@@ -64,6 +66,19 @@ export default function DripAuthorization({ formID, dripConf, setDripConf, step,
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {drip?.youTubeLink && (
+        <TutorialLink
+          title={drip?.title}
+          youTubeLink={drip?.youTubeLink}
+        />
+      )}
+      {drip?.docLink && (
+        <TutorialLink
+          title={drip?.title}
+          docLink={drip?.docLink}
+        />
+      )}
+
       <div className="mt-3 wdt-200"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={dripConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>

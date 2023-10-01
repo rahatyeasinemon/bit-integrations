@@ -4,6 +4,8 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
+import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function BuddyBossAuthorization({ formID,
   buddyBossConf,
@@ -16,6 +18,7 @@ export default function BuddyBossAuthorization({ formID,
   const [isAuthorized, setisAuthorized] = useState(false)
   // const [isLoading, setIsLoading] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { buddyBoss } = tutorialLinks
 
   const authorizeHandler = () => {
     setIsLoading('auth')
@@ -43,6 +46,19 @@ export default function BuddyBossAuthorization({ formID,
         height: step === 1 && 'auto',
       }}
     >
+      {buddyBoss?.youTubeLink && (
+        <TutorialLink
+          title={buddyBoss?.title}
+          youTubeLink={buddyBoss?.youTubeLink}
+        />
+      )}
+      {buddyBoss?.docLink && (
+        <TutorialLink
+          title={buddyBoss?.title}
+          docLink={buddyBoss?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

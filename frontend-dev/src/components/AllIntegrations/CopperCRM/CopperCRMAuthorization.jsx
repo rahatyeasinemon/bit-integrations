@@ -5,10 +5,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { coppercrmAuthentication } from './CopperCRMCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function CopperCRMAuthorization({ coppercrmConf, setCopperCRMConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ api_key: '', api_email: '' })
+  const { coppercrm } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -38,6 +41,19 @@ export default function CopperCRMAuthorization({ coppercrmConf, setCopperCRMConf
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {coppercrm?.youTubeLink && (
+        <TutorialLink
+          title={coppercrm?.title}
+          youTubeLink={coppercrm?.youTubeLink}
+        />
+      )}
+      {coppercrm?.docLink && (
+        <TutorialLink
+          title={coppercrm?.title}
+          docLink={coppercrm?.docLink}
+        />
+      )}
+
       <div className="mt-3"><bapi_email>{__('Integration Name:', 'bit-integrations')}</bapi_email></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={coppercrmConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

@@ -4,10 +4,13 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { airtableAuthentication } from './AirtableCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function AirtableAuthorization({ airtableConf, setAirtableConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', auth_token: '' })
+  const { airtable } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -29,6 +32,19 @@ export default function AirtableAuthorization({ airtableConf, setAirtableConf, s
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {airtable?.youTubeLink && (
+        <TutorialLink
+          title={airtable?.title}
+          youTubeLink={airtable?.youTubeLink}
+        />
+      )}
+      {airtable?.docLink && (
+        <TutorialLink
+          title={airtable?.title}
+          docLink={airtable?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={airtableConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div className="mt-3"><b>{__('Personal access token:', 'bit-integrations')}</b></div>

@@ -5,8 +5,11 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { refreshActiveCampaingHeader } from './ActiveCampaignCommonFunc'
+import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function ActiveCampaignAuthorization({ formID, activeCampaingConf, setActiveCampaingConf, step, setstep, setSnackbar, isInfo, isLoading, setIsLoading }) {
+  const { activeCampaign } = tutorialLinks
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
@@ -63,6 +66,19 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {activeCampaign?.youTubeLink && (
+        <TutorialLink
+          title={activeCampaign?.title}
+          youTubeLink={activeCampaign?.youTubeLink}
+        />
+      )}
+      {activeCampaign?.docLink && (
+        <TutorialLink
+          title={activeCampaign?.title}
+          docLink={activeCampaign?.docLink}
+        />
+      )}
+
       <div className="mt-3 wdt-200"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={activeCampaingConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>

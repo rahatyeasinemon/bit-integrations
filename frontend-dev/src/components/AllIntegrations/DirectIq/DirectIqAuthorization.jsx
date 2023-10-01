@@ -5,9 +5,11 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { refreshDirectIqList } from './DirectIqCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function DirectIqAuthorization({ formID, directIqConf, setDirectIqConf, step, setstep, setSnackbar, isInfo, isLoading, setIsLoading }) {
-
+  const { directIq } = tutorialLinks
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', client_secret: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
@@ -64,6 +66,19 @@ export default function DirectIqAuthorization({ formID, directIqConf, setDirectI
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {directIq?.youTubeLink && (
+        <TutorialLink
+          title={directIq?.title}
+          youTubeLink={directIq?.youTubeLink}
+        />
+      )}
+      {directIq?.docLink && (
+        <TutorialLink
+          title={directIq?.title}
+          docLink={directIq?.docLink}
+        />
+      )}
+
       <div className="mt-3 wdt-200"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={directIqConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
