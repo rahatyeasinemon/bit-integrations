@@ -24,35 +24,45 @@ export default function ChangelogToggle() {
             </button>
             <Modal sm show={show} setModal={setShow} >
                 <div className='changelog'>
-                    <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4>
+                    {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
-                        <h3>{__(`What\'s New in ${btcbi.isPro ? '(1.4.1)' : '(1.4.3)'}?`)}</h3>
-                        <small>06 September 2023</small>
+                        <h3>{__(`What\'s New in ${btcbi.isPro ? '(1.4.2)' : '(1.5.0)'}?`)}</h3>
+                        <small>02 October 2023</small>
                     </div>
                     <div className='changelog-content'>
-                        {/* <h4>New Integration</h4> */}
-                        {/* <p>New Integration</p> */}
-                        {/* <span className='new-integration'><b>New Integrations</b></span> */}
+                        {/* <h4>New Integration</h4>
+                        <p>New Integration</p> */}
+                        <span className='new-integration' style={{ background: "cornflowerblue" }}><b>New Triggers</b></span>
 
-                        {/* <div className='integration-list'>
+                        <div className='integration-list'>
                             <ul>
-                                <li>Perfex CRM</li>
-                                <li>OneHash CRM</li>
-                                <li>Salesflare CRM</li>
+                                <li>BitForm</li>
+                                <li>Academy LMS</li>
                             </ul>
-                        </div> */}
+                        </div>
+
+                        <span className='new-integration'><b>New Integrations</b></span>
+
+                        <div className='integration-list'>
+                            <ul>
+                                <li>Academy LMS</li>
+                                <li>Moxie CRM</li>
+                                <li>Woodpecker</li>
+                                <li>WP Fusion</li>
+                            </ul>
+                        </div>
 
                         <span className='fixes'><b>Fixed</b></span>
 
                         <div className='fixes-list'>
                             <ul>
-                                <li>FluentSupport business inbox issue fixed</li>
-                                <li>Brevo(Sendinblue) integration edit & data submit issue fixed</li>
-                                <li>Make(Integromat) integration edit & data submit issue fixed</li>
-                                <li>Sarbacane(Mailify) integration edit & data submit issue fixed</li>
-                                <li>Elementor fields fetching issue fixed</li>
-                                <li>ZohoCRM pro modules & sub modules fetching issue fixed</li>
-                                <li>Custom field blank screen issue fixed</li>
+                                <li>CopperCRM email field mapping & success message issue fixed</li>
+                                <li>Groundhogg Tag id issue fixed</li>
+                                <li>Insightly authorization & next button issue fixed</li>
+                                <li>SuiteDash custom field issue fixed</li>
+                                <li>HookServices false array issue fixed</li>
+                                <li>PropovoiceCRM LogHandler & loader issue fixed</li>
+                                <li>Mail Poet new list fetching issue fixed</li>
                             </ul>
                         </div>
                     </div>
