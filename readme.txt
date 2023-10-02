@@ -70,17 +70,17 @@ The most popular forms are [Bit Form](https://wordpress.org/plugins/bit-form/), 
 
 ### ⭐ Customer Relation Management (CRM) Automation:
 
-Integrations with the most popular 17+ CRM like [Salesmate](https://www.salesmate.io/), [Zendesk](https://www.zendesk.com/), [ClinchPad](https://www.clinchpad.com/), [Salesforce](https://www.salesforce.com/), [Copper CRM](https://www.copper.com/), [Zoho CRM](https://www.zoho.com/crm/), [HubSpot](https://www.hubspot.com/), [Agile CRM](https://www.agilecrm.com/), [Capsule CRM](https://capsulecrm.com/), [FluentCRM](https://wordpress.org/plugins/fluent-crm/), [Keap](https://keap.com/), [Pipedrive](https://www.pipedrive.com/), [Integrately](https://integrately.com/), [Insightly](https://www.insightly.com/), [Autonami CRM](https://wordpress.org/plugins/wp-marketing-automations/), [CompanyHub](https://companyhub.com/), [Flowlu](https://www.flowlu.com/) and more.
+Integrations with the most popular 17+ CRM like [Salesmate](https://www.salesmate.io/), [Zendesk](https://www.zendesk.com/), [ClinchPad](https://www.clinchpad.com/), [Salesforce](https://www.salesforce.com/), [Copper CRM](https://www.copper.com/), [Zoho CRM](https://www.zoho.com/crm/), [HubSpot](https://www.hubspot.com/), [Agile CRM](https://www.agilecrm.com/), [Capsule CRM](https://capsulecrm.com/), [FluentCRM](https://wordpress.org/plugins/fluent-crm/), [Keap](https://keap.com/), [Pipedrive](https://www.pipedrive.com/), [Integrately](https://integrately.com/), [Insightly](https://www.insightly.com/), [Autonami CRM](https://wordpress.org/plugins/wp-marketing-automations/), [CompanyHub](https://companyhub.com/), [Flowlu](https://www.flowlu.com/),[Moxie](https://www.withmoxie.com/) and more.
 
 ### ⭐ Learning Management System (LMS) Automation:
 
-5+ LMS like [LearnDash](https://www.learndash.com/), [LifterLMS](https://wordpress.org/plugins/lifterlms/), MasterStudy LMS, Thrive Apprentice, [Tutor LMS ](https://wordpress.org/plugins/tutor/), [WP Courseware](https://flyplugins.com/wp-courseware/), and more.
+5+ LMS like [LearnDash](https://www.learndash.com/), [LifterLMS](https://wordpress.org/plugins/lifterlms/), MasterStudy LMS, Thrive Apprentice, [Tutor LMS ](https://wordpress.org/plugins/tutor/), [WP Courseware](https://flyplugins.com/wp-courseware/), [Academy LMS](https://academylms.net/) and more.
 Users can send data when like course create/update/delete, lesson create/update/delete, quiz create/update/delete, topic create/update/delete, student enroll/unEnroll, student complete course, and more.
 
 ### ⭐ Email Marketing Automation:
 
 You can send data from 40+ popular email marketing software like
-[Sarbacane(Mailify)](https://www.mailify.com/), [Lemlist](https://www.lemlist.com/), [ActiveCampaign](https://www.activecampaign.com/), [Acumbamail](https://acumbamail.com/), [Benchmark](https://www.benchmarkemail.com/), [ConvertKit](https://convertkit.com/), [DirectIQ](https://www.directiq.com/), [Elastic Email](https://elasticemail.com/), [Encharge](https://encharge.io/), [EmailOctopus](https://emailoctopus.com/), [FluentCRM](https://wordpress.org/plugins/fluent-crm/), [Freshsales](https://www.freshworks.com/crm/sales/), [GetGist](https://getgist.com/), [Groundhogg](https://wordpress.org/plugins/groundhogg/), [GetResponse](https://www.getresponse.com/), [Klaviyo](https://www.klaviyo.com/), [Kirim.Email](https://kirim.email/), [MailBluster](https://mailbluster.com/), [Mailrelay](https://mailrelay.com/), [MailerLite](https://www.mailerlite.com/), [Mailchimp](https://mailchimp.com/), [MailPoet](https://wordpress.org/plugins/mailpoet/), [Mailjet](https://www.mailjet.com/), [Mautic](https://www.mautic.org/), [Moosend](https://moosend.com/), [Mailercloud](https://www.mailercloud.com/), [MailUp](https://mailup.com/), [Omnisend](https://www.omnisend.com/), [Rapidmail](https://www.rapidmail.com/), [Sales Plus](https://salesplus.ie/), [Salesforce](https://www.salesforce.com/), [SendinBlue(Brevo)](https://www.sendinblue.com/), [Sendy Widget](https://sendy.co/), [SendFox](https://sendfox.com/), [Selzy](https://selzy.com/), [Smaily](https://smaily.com/), [SendGrid](https://sendgrid.com/), [SureCart](https://surecart.com/), [SendPulse](https://sendpulse.com/), [Vbout ](https://www.vbout.com/), [Demio](https://www.demio.com/) .
+[Sarbacane(Mailify)](https://www.mailify.com/), [Lemlist](https://www.lemlist.com/), [ActiveCampaign](https://www.activecampaign.com/), [Acumbamail](https://acumbamail.com/), [Benchmark](https://www.benchmarkemail.com/), [ConvertKit](https://convertkit.com/), [DirectIQ](https://www.directiq.com/), [Elastic Email](https://elasticemail.com/), [Encharge](https://encharge.io/), [EmailOctopus](https://emailoctopus.com/), [FluentCRM](https://wordpress.org/plugins/fluent-crm/), [Freshsales](https://www.freshworks.com/crm/sales/), [GetGist](https://getgist.com/), [Groundhogg](https://wordpress.org/plugins/groundhogg/), [GetResponse](https://www.getresponse.com/), [Klaviyo](https://www.klaviyo.com/), [Kirim.Email](https://kirim.email/), [MailBluster](https://mailbluster.com/), [Mailrelay](https://mailrelay.com/), [MailerLite](https://www.mailerlite.com/), [Mailchimp](https://mailchimp.com/), [MailPoet](https://wordpress.org/plugins/mailpoet/), [Mailjet](https://www.mailjet.com/), [Mautic](https://www.mautic.org/), [Moosend](https://moosend.com/), [Mailercloud](https://www.mailercloud.com/), [MailUp](https://mailup.com/), [Omnisend](https://www.omnisend.com/), [Rapidmail](https://www.rapidmail.com/), [Sales Plus](https://salesplus.ie/), [Salesforce](https://www.salesforce.com/), [SendinBlue(Brevo)](https://www.sendinblue.com/), [Sendy Widget](https://sendy.co/), [SendFox](https://sendfox.com/), [Selzy](https://selzy.com/), [Smaily](https://smaily.com/), [SendGrid](https://sendgrid.com/), [SureCart](https://surecart.com/), [SendPulse](https://sendpulse.com/), [Vbout ](https://www.vbout.com/), [Demio](https://www.demio.com/),[Woodpecker](https://woodpecker.co/) .
 
 ### ⭐ Incoming and Outgoing Webhooks :
 
@@ -174,7 +174,7 @@ When any trigger is fired, you can send data to 3 social media like [WhatsApp](h
 
 ### ⭐ Data & Workflow Automation:
 
-15+ Data & Workflow Automation Integrately, Integromat(make), IFTTT, N8N, Webhooks, Zapier, FlowMattic, AutomatorWP, Uncanny Automator, Thrive Automator, WP Webhooks, Advanced Form Integration, Sperse.io, Albato, SureTriggers and more.
+15+ Data & Workflow Automation Integrately, Integromat(make), IFTTT, N8N, Webhooks, Zapier, FlowMattic, AutomatorWP, Uncanny Automator, Thrive Automator, WP Webhooks, Advanced Form Integration, Sperse.io, Albato, SureTriggers,WP Fusion and more.
 
 ### ⭐ Cloud Storage & File Sharing Platform Integration:
 
@@ -1421,6 +1421,27 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 6. All integration list
 
 == Changelog ==
+
+= 1.5.0  =
+*Release Date - *2nd October 2023\*
+
+- **New Triggers :**
+  - Academy LMS: eLearning and online course solution for WordPress
+  - BitForm: Easiest Multi Step Contact Form, Payment Form, Calculator Form Builder Plugin for WordPress
+- **New Actions :**
+  - Woodpecker: Tools for Cold Email, Sales & Agency Outreach
+  - Academy LMS: eLearning and online course solution for WordPress
+  - Moxie CRM: Built for freelancers
+  - WP Fusion: Marketing automation for WordPress
+- **Fixes :**
+  - CopperCRM email field mapping & success message issue fixed
+  - Groundhogg tag id issue fixed
+  - Insightly authorization & next button issue fixed
+  - SuiteDash custom field issue fixed
+  - HookServices false array issue fixed
+  - PropovoiceCRM logHandler & loader issue fixed
+  - Mail Poet new list fetching issue fixed
+  - Woocommerse order create issue fixed
 
 = 1.4.3  =
 *Release Date - *6th September 2023\*
