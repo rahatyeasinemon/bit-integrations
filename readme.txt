@@ -4,7 +4,7 @@ Tags: automation,integration,connector,workflow automation,automator,Zapier,Plat
 Requires at least: 5.1
 Tested up to: 6.3
 Requires PHP: 7.4
-Stable tag: 1.4.3
+Stable tag: 1.5.0
 License: GPLv2 or later
 
 Automation Plugin for WordPress; Integration of 60+ Triggers and 130+ Actions.The #1 highest no-code platform Automator plugin in WordPress.

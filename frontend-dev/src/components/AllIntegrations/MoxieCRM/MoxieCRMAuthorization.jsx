@@ -55,9 +55,7 @@ export default function MoxieCRMAuthorization({ moxiecrmConf, setMoxieCRMConf, s
         />
       )}
 
-      <div className="mt-3">
-        <b>{__('Integration Name:', 'bit-integrations')}</b>
-      </div>
+      <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={moxiecrmConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 
       <div className="mt-3"><b>{__('Your API Url:', 'bit-integrations')}</b></div>
