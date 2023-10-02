@@ -57,12 +57,13 @@ export default function ChangelogToggle() {
                         <div className='fixes-list'>
                             <ul>
                                 <li>CopperCRM email field mapping & success message issue fixed</li>
-                                <li>Groundhogg Tag id issue fixed</li>
+                                <li>Groundhogg tag id issue fixed</li>
                                 <li>Insightly authorization & next button issue fixed</li>
                                 <li>SuiteDash custom field issue fixed</li>
                                 <li>HookServices false array issue fixed</li>
-                                <li>PropovoiceCRM LogHandler & loader issue fixed</li>
+                                <li>PropovoiceCRM logHandler & loader issue fixed</li>
                                 <li>Mail Poet new list fetching issue fixed</li>
+                                <li>Woocommerse order create issue fixed</li>
                             </ul>
                         </div>
                     </div>
