@@ -7,12 +7,15 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 import { refreshModules } from './ZohoBiginCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoBiginAuthorization({ formID, biginConf, setBiginConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const btcbi = useRecoilValue($btcbi)
   const scopes = 'ZohoBigin.settings.modules.READ,ZohoBigin.settings.fields.READ,ZohoBigin.settings.tags.READ,ZohoBigin.users.READ,ZohoBigin.modules.ALL'
+  const { zohoBigin } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -33,6 +36,19 @@ export default function ZohoBiginAuthorization({ formID, biginConf, setBiginConf
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {zohoBigin?.youTubeLink && (
+        <TutorialLink
+          title={zohoBigin?.title}
+          youTubeLink={zohoBigin?.youTubeLink}
+        />
+      )}
+      {zohoBigin?.docLink && (
+        <TutorialLink
+          title={zohoBigin?.title}
+          docLink={zohoBigin?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={biginConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

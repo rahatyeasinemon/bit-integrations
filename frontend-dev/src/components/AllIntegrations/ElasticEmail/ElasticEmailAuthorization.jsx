@@ -6,12 +6,15 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { getAllList } from './ElasticEmailCommonFunc'
+import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function ElasticEmailAuthorization({ elasticEmailConf, setElasticEmailConf, step, setstep, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const { elasticEmail } = tutorialLinks
 
   const handleAuthorize = () => {
     const newConf = { ...elasticEmailConf }
@@ -52,6 +55,19 @@ export default function ElasticEmailAuthorization({ elasticEmailConf, setElastic
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {elasticEmail?.youTubeLink && (
+        <TutorialLink
+          title={elasticEmail?.title}
+          youTubeLink={elasticEmail?.youTubeLink}
+        />
+      )}
+      {elasticEmail?.docLink && (
+        <TutorialLink
+          title={elasticEmail?.title}
+          docLink={elasticEmail?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={elasticEmailConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>

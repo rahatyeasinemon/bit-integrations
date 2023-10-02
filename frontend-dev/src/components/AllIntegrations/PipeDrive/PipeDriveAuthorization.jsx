@@ -4,10 +4,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { handleAuthorize } from './PipeDriveCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function PipeDriveAuthorization({ pipeDriveConf, setPipeDriveConf, step, setstep, isLoading, setIsLoading, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
+  const { pipeDrive } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -41,6 +44,19 @@ export default function PipeDriveAuthorization({ pipeDriveConf, setPipeDriveConf
         ...{ height: step === 1 && 'auto' },
       }}
     >
+      {pipeDrive?.youTubeLink && (
+        <TutorialLink
+          title={pipeDrive?.title}
+          youTubeLink={pipeDrive?.youTubeLink}
+        />
+      )}
+      {pipeDrive?.docLink && (
+        <TutorialLink
+          title={pipeDrive?.title}
+          docLink={pipeDrive?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

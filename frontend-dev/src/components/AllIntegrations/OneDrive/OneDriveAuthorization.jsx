@@ -6,11 +6,14 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { getAllOneDriveFolders, handleAuthorize } from './OneDriveCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function OneDriveAuthorization({ flowID, oneDriveConf, setOneDriveConf, step, setStep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
   const btcbi = useRecoilValue($btcbi)
+  const { oneDrive } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -32,6 +35,19 @@ export default function OneDriveAuthorization({ flowID, oneDriveConf, setOneDriv
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {oneDrive?.youTubeLink && (
+        <TutorialLink
+          title={oneDrive?.title}
+          youTubeLink={oneDrive?.youTubeLink}
+        />
+      )}
+      {oneDrive?.docLink && (
+        <TutorialLink
+          title={oneDrive?.title}
+          docLink={oneDrive?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={oneDriveConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

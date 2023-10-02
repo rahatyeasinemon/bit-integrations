@@ -6,6 +6,8 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 // import { getAllList } from './ElasticEmailCommonFunc'
 
 export default function SendyAuthorization({ sendyConf, setSendyConf, step, setstep, isInfo }) {
@@ -13,6 +15,7 @@ export default function SendyAuthorization({ sendyConf, setSendyConf, step, sets
   const [error, setError] = useState({ name: '', api_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const { sendy } = tutorialLinks
 
   const handleAuthorize = () => {
     const newConf = { ...sendyConf }
@@ -64,6 +67,19 @@ export default function SendyAuthorization({ sendyConf, setSendyConf, step, sets
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {sendy?.youTubeLink && (
+        <TutorialLink
+          title={sendy?.title}
+          youTubeLink={sendy?.youTubeLink}
+        />
+      )}
+      {sendy?.docLink && (
+        <TutorialLink
+          title={sendy?.title}
+          docLink={sendy?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sendyConf?.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>

@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize } from './FluentSupportCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function FluentSupportAuthorization({ formID,
   fluentSupportConf,
@@ -15,6 +17,7 @@ export default function FluentSupportAuthorization({ formID,
   isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ api_key: '' })
+  const { fluentSupport } = tutorialLinks
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
@@ -39,6 +42,19 @@ export default function FluentSupportAuthorization({ formID,
         ...{ height: step === 1 && 'auto' },
       }}
     >
+      {fluentSupport?.youTubeLink && (
+        <TutorialLink
+          title={fluentSupport?.title}
+          youTubeLink={fluentSupport?.youTubeLink}
+        />
+      )}
+      {fluentSupport?.docLink && (
+        <TutorialLink
+          title={fluentSupport?.title}
+          docLink={fluentSupport?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

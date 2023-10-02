@@ -4,10 +4,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { fetchCustomFields, getresponseAuthentication } from './GetResponseCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function GetResponseAuthorization({ getResponseConf, setGetResponseConf, step, setstep, loading, setLoading, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', auth_token: '' })
+  const { getResponse } = tutorialLinks
 
   useEffect(() => {
     isAuthorized && fetchCustomFields(getResponseConf, setGetResponseConf, setLoading, 'default')
@@ -42,6 +45,19 @@ export default function GetResponseAuthorization({ getResponseConf, setGetRespon
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {getResponse?.youTubeLink && (
+        <TutorialLink
+          title={getResponse?.title}
+          youTubeLink={getResponse?.youTubeLink}
+        />
+      )}
+      {getResponse?.docLink && (
+        <TutorialLink
+          title={getResponse?.title}
+          docLink={getResponse?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={getResponseConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

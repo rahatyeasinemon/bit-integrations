@@ -11,6 +11,8 @@ import { postFields } from '../../../Utils/StaticData/postField'
 import LoaderSm from '../../Loaders/LoaderSm'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import ConditionalLogic from '../../ConditionalLogic'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 function Pods({ formFields, setFlow, flow, allIntegURL }) {
   const [podFields, setPodsFields] = useState([])
@@ -19,6 +21,7 @@ function Pods({ formFields, setFlow, flow, allIntegURL }) {
   const [postTypes, setPostTypes] = useState([])
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
+  const { podLinks } = tutorialLinks
 
   const [podsConf, setPodsConf] = useState({
     name: 'Pods',
@@ -121,6 +124,18 @@ function Pods({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
+      {podLinks?.youTubeLink && (
+        <TutorialLink
+          title={podLinks?.title}
+          youTubeLink={podLinks?.youTubeLink}
+        />
+      )}
+      {podLinks?.docLink && (
+        <TutorialLink
+          title={podLinks?.title}
+          docLink={podLinks?.docLink}
+        />
+      )}
 
       <div className="mt-3"><b>{__('Integration Name ', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={podsConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />

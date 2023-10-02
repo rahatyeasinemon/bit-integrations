@@ -5,10 +5,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { smailyAuthentication } from './SmailyCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function SmailyAuthorization({ smailyConf, setSmailyConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', subdomain: '', api_user_name: '', api_user_password: '' })
+  const { smaily } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -38,6 +41,19 @@ export default function SmailyAuthorization({ smailyConf, setSmailyConf, step, s
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {smaily?.youTubeLink && (
+        <TutorialLink
+          title={smaily?.title}
+          youTubeLink={smaily?.youTubeLink}
+        />
+      )}
+      {smaily?.docLink && (
+        <TutorialLink
+          title={smaily?.title}
+          docLink={smaily?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={smailyConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>

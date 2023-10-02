@@ -4,6 +4,8 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function LearnDashAuthorization({ formID,
   learnDashConf,
@@ -16,6 +18,7 @@ export default function LearnDashAuthorization({ formID,
   const [isAuthorized, setisAuthorized] = useState(false)
   // const [isLoading, setIsLoading] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { learnDash } = tutorialLinks
 
   const authorizeHandler = () => {
     setIsLoading('auth')
@@ -43,6 +46,19 @@ export default function LearnDashAuthorization({ formID,
         height: step === 1 && 'auto',
       }}
     >
+      {learnDash?.youTubeLink && (
+        <TutorialLink
+          title={learnDash?.title}
+          youTubeLink={learnDash?.youTubeLink}
+        />
+      )}
+      {learnDash?.docLink && (
+        <TutorialLink
+          title={learnDash?.title}
+          docLink={learnDash?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

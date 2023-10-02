@@ -6,10 +6,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { oneHashCRMAuthentication } from './OneHashCRMCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function OneHashCRMAuthorization({ oneHashCRMConf, setOneHashCRMConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ api_token: '' })
+  const { oneHashCRM } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -51,6 +54,19 @@ export default function OneHashCRMAuthorization({ oneHashCRMConf, setOneHashCRMC
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {oneHashCRM?.youTubeLink && (
+        <TutorialLink
+          title={oneHashCRM?.title}
+          youTubeLink={oneHashCRM?.youTubeLink}
+        />
+      )}
+      {oneHashCRM?.docLink && (
+        <TutorialLink
+          title={oneHashCRM?.title}
+          docLink={oneHashCRM?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={oneHashCRMConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

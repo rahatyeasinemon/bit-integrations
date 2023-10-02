@@ -7,12 +7,15 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 import { refreshModules } from './ZohoRecruitCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoRecruitAuthorization({ formID, recruitConf, setRecruitConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const btcbi = useRecoilValue($btcbi)
   const scopes = 'ZohoRecruit.users.ALL,ZohoRecruit.modules.all'
+  const { zohoRecruit } = tutorialLinks
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
@@ -32,6 +35,19 @@ export default function ZohoRecruitAuthorization({ formID, recruitConf, setRecru
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {zohoRecruit?.youTubeLink && (
+        <TutorialLink
+          title={zohoRecruit?.title}
+          youTubeLink={zohoRecruit?.youTubeLink}
+        />
+      )}
+      {zohoRecruit?.docLink && (
+        <TutorialLink
+          title={zohoRecruit?.title}
+          docLink={zohoRecruit?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={recruitConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

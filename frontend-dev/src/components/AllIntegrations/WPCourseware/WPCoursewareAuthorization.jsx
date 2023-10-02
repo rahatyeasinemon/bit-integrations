@@ -4,6 +4,8 @@ import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function WPCoursewareAuthorization({ formID, wpCoursewareConf, setWPCoursewareConf, step, nextPage, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
@@ -11,6 +13,8 @@ export default function WPCoursewareAuthorization({ formID, wpCoursewareConf, se
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isMounted, setIsMounted] = useState(true)
+  const { wpCourseware } = tutorialLinks
+
   useEffect(() => () => {
     setIsMounted(false)
   }, [])
@@ -41,6 +45,19 @@ export default function WPCoursewareAuthorization({ formID, wpCoursewareConf, se
   return (
     <>
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+        {wpCourseware?.youTubeLink && (
+          <TutorialLink
+            title={wpCourseware?.title}
+            youTubeLink={wpCourseware?.youTubeLink}
+          />
+        )}
+        {wpCourseware?.docLink && (
+          <TutorialLink
+            title={wpCourseware?.title}
+            docLink={wpCourseware?.docLink}
+          />
+        )}
+
         <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
         <input className="btcd-paper-inp w-5 mt-1" onChange={handleInput} name="name" value={wpCoursewareConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

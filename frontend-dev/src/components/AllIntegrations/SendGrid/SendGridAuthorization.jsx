@@ -4,10 +4,13 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { sendGridAuthentication } from './SendGridCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function SendGridAuthorization({ sendGridConf, setSendGridConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', secretKey: '' })
+  const { sendGrid } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -29,6 +32,19 @@ export default function SendGridAuthorization({ sendGridConf, setSendGridConf, s
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {sendGrid?.youTubeLink && (
+        <TutorialLink
+          title={sendGrid?.title}
+          youTubeLink={sendGrid?.youTubeLink}
+        />
+      )}
+      {sendGrid?.docLink && (
+        <TutorialLink
+          title={sendGrid?.title}
+          docLink={sendGrid?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sendGridConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

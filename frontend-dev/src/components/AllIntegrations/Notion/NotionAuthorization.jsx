@@ -8,11 +8,14 @@ import Input from '../../Utilities/Input'
 import Note from '../../Utilities/Note'
 import StepPage from '../../Utilities/StepPage'
 import { getAllDatabaseLists, handleAuthorize, handleInput } from './NotionCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 function NotionAuthorization({ notionConf, setNotionConf, step, setStep, isInfo, loading, setLoading }) {
   const btcbi = useRecoilValue($btcbi)
   const [authorized, setAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
+  const { notion } = tutorialLinks
   const nextPage = async () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
@@ -46,6 +49,18 @@ function NotionAuthorization({ notionConf, setNotionConf, step, setStep, isInfo,
       stepNo={1}
       style={{ width: 900, height: 'auto' }}
     >
+      {notion?.youTubeLink && (
+        <TutorialLink
+          title={notion?.title}
+          youTubeLink={notion?.youTubeLink}
+        />
+      )}
+      {notion?.docLink && (
+        <TutorialLink
+          title={notion?.title}
+          docLink={notion?.docLink}
+        />
+      )}
 
       <div className="mt-2">
 

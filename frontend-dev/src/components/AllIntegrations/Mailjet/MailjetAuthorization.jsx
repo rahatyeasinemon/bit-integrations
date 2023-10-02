@@ -4,10 +4,13 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { mailjetAuthentication } from './MailjetCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function MailjetAuthorization({ mailjetConf, setMailjetConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', secretKey: '' })
+  const { mailjet } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -29,6 +32,19 @@ export default function MailjetAuthorization({ mailjetConf, setMailjetConf, step
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {mailjet?.youTubeLink && (
+        <TutorialLink
+          title={mailjet?.title}
+          youTubeLink={mailjet?.youTubeLink}
+        />
+      )}
+      {mailjet?.docLink && (
+        <TutorialLink
+          title={mailjet?.title}
+          docLink={mailjet?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={mailjetConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

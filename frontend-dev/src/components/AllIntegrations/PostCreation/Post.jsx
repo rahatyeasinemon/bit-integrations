@@ -12,6 +12,8 @@ import FieldMap from './FieldMap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 function Post({ formFields, setFlow, flow, allIntegURL }) {
   const [users, setUsers] = useState([])
@@ -23,6 +25,7 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
   const [acf, setAcf] = useState({ fields: [], files: [] })
   const [mb, setMb] = useState({ fields: [], files: [] })
+  const { postCreation } = tutorialLinks
 
   const [postConf, setPostConf] = useState({
     name: 'Post Creation',
@@ -139,6 +142,19 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
+      {postCreation?.youTubeLink && (
+        <TutorialLink
+          title={postCreation?.title}
+          youTubeLink={postCreation?.youTubeLink}
+        />
+      )}
+      {postCreation?.docLink && (
+        <TutorialLink
+          title={postCreation?.title}
+          docLink={postCreation?.docLink}
+        />
+      )}
+
       <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
 

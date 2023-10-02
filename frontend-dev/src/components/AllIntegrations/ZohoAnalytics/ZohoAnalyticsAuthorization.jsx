@@ -5,10 +5,13 @@ import CopyText from '../../Utilities/CopyText'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
 import BackIcn from '../../../Icons/BackIcn'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setAnalyticsConf, step, setStep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })
+  const { analytics } = tutorialLinks
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
@@ -32,6 +35,19 @@ export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setA
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {analytics?.youTubeLink && (
+        <TutorialLink
+          title={analytics?.title}
+          youTubeLink={analytics?.youTubeLink}
+        />
+      )}
+      {analytics?.docLink && (
+        <TutorialLink
+          title={analytics?.title}
+          docLink={analytics?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={analyticsConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

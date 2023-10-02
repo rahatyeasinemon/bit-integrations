@@ -4,10 +4,13 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { insightlyAuthentication } from './InsightlyCommonFunc'
+import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function InsightlyAuthorization({ insightlyConf, setInsightlyConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ api_key: '', api_url: '' })
+  const { insightly } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -29,6 +32,19 @@ export default function InsightlyAuthorization({ insightlyConf, setInsightlyConf
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {insightly?.youTubeLink && (
+        <TutorialLink
+          title={insightly?.title}
+          youTubeLink={insightly?.youTubeLink}
+        />
+      )}
+      {insightly?.docLink && (
+        <TutorialLink
+          title={insightly?.title}
+          docLink={insightly?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={insightlyConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

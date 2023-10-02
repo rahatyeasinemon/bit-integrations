@@ -5,10 +5,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { moxiecrmAuthentication } from './MoxieCRMCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function MoxieCRMAuthorization({ moxiecrmConf, setMoxieCRMConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ api_key: '', api_url: '' })
+  const { moxiecrm } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -39,6 +42,19 @@ export default function MoxieCRMAuthorization({ moxiecrmConf, setMoxieCRMConf, s
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {moxiecrm?.youTubeLink && (
+        <TutorialLink
+          title={moxiecrm?.title}
+          youTubeLink={moxiecrm?.youTubeLink}
+        />
+      )}
+      {moxiecrm?.docLink && (
+        <TutorialLink
+          title={moxiecrm?.title}
+          docLink={moxiecrm?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

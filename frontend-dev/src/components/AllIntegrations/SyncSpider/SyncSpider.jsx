@@ -7,6 +7,8 @@ import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import WebHooksIntegration from '../IntegrationHelpers/WebHook/WebHooksIntegration'
 import WebHooksStepTwo from '../IntegrationHelpers/WebHook/WebHooksStepTwo'
+import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 function SyncSpider({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -14,6 +16,7 @@ function SyncSpider({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [isLoading, setIsLoading] = useState(false)
+  const { syncSpiderLinks } = tutorialLinks
   const [syncSpider, setSyncSpider] = useState({
     name: 'SyncSpider Web Hooks',
     type: 'SyncSpider',
@@ -29,6 +32,19 @@ function SyncSpider({ formFields, setFlow, flow, allIntegURL }) {
 
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 1100 }, ...{ height: step === 1 && 'auto' } }}>
+        {syncSpiderLinks?.youTubeLink && (
+          <TutorialLink
+            title={syncSpiderLinks?.title}
+            youTubeLink={syncSpiderLinks?.youTubeLink}
+          />
+        )}
+        {syncSpiderLinks?.docLink && (
+          <TutorialLink
+            title={syncSpiderLinks?.title}
+            docLink={syncSpiderLinks?.docLink}
+          />
+        )}
+
         <WebHooksIntegration
           formID={formID}
           formFields={formFields}

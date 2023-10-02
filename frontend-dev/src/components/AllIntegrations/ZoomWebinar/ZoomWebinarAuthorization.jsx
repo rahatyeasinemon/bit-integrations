@@ -7,11 +7,14 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import Note from '../../Utilities/Note'
 import { handleAuthorize, zoomAllWebinar } from './ZoomCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZoomWebinarAuthorization({ formID, zoomWebinarConf, setZoomWebinarConf, step, setStep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
   const btcbi = useRecoilValue($btcbi)
+  const { zoomWebinar } = tutorialLinks
 
   const handleInput = e => {
     const newConf = { ...zoomWebinarConf }
@@ -42,6 +45,19 @@ export default function ZoomWebinarAuthorization({ formID, zoomWebinarConf, setZ
   `
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
+      {zoomWebinar?.youTubeLink && (
+        <TutorialLink
+          title={zoomWebinar?.title}
+          youTubeLink={zoomWebinar?.youTubeLink}
+        />
+      )}
+      {zoomWebinar?.docLink && (
+        <TutorialLink
+          title={zoomWebinar?.title}
+          docLink={zoomWebinar?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={zoomWebinarConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

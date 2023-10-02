@@ -6,10 +6,13 @@ import Input from '../../Utilities/Input'
 import Note from '../../Utilities/Note'
 import StepPage from '../../Utilities/StepPage'
 import { getAllLists, handleAuthorize, handleInput } from './MailercloudCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 function MailercloudAuthorization({ mailercloudConf, setMailercloudConf, step, setStep, isInfo, loading, setLoading }) {
   const [authorized, setAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', authKey: '' })
+  const { mailercloud } = tutorialLinks
 
   const nextPage = async () => {
     setTimeout(() => {
@@ -40,6 +43,18 @@ function MailercloudAuthorization({ mailercloudConf, setMailercloudConf, step, s
       stepNo={1}
       style={{ width: 900, height: 'auto' }}
     >
+      {mailercloud?.youTubeLink && (
+        <TutorialLink
+          title={mailercloud?.title}
+          youTubeLink={mailercloud?.youTubeLink}
+        />
+      )}
+      {mailercloud?.docLink && (
+        <TutorialLink
+          title={mailercloud?.title}
+          docLink={mailercloud?.docLink}
+        />
+      )}
 
       <div className="mt-2">
 

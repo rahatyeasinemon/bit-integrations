@@ -6,12 +6,15 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { refreshSendPulseList } from './SendPulseCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function SendPulseAuthorization({ formID, sendPulseConf, setSendPulseConf, step, setstep, setSnackbar, isInfo, isLoading, setIsLoading }) {
 
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', client_secret: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { sendPulse } = tutorialLinks
 
   const handleAuthorize = () => {
     const newConf = { ...sendPulseConf }
@@ -72,6 +75,19 @@ export default function SendPulseAuthorization({ formID, sendPulseConf, setSendP
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {sendPulse?.youTubeLink && (
+        <TutorialLink
+          title={sendPulse?.title}
+          youTubeLink={sendPulse?.youTubeLink}
+        />
+      )}
+      {sendPulse?.docLink && (
+        <TutorialLink
+          title={sendPulse?.title}
+          docLink={sendPulse?.docLink}
+        />
+      )}
+
       <div className="mt-3 wdt-200"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sendPulseConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>

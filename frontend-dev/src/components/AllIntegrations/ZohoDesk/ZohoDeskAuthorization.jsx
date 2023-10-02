@@ -7,12 +7,15 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 import { refreshOrganizations } from './ZohoDeskCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoDeskAuthorization({ formID, deskConf, setDeskConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const scopes = 'Desk.settings.READ,Desk.basic.READ,Desk.search.READ,Desk.contacts.READ,Desk.contacts.CREATE,Desk.contacts.UPDATE,Desk.tickets.CREATE,Desk.tickets.UPDATE'
   const btcbi = useRecoilValue($btcbi)
+  const { zohoDesk } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -33,6 +36,19 @@ export default function ZohoDeskAuthorization({ formID, deskConf, setDeskConf, s
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {zohoDesk?.youTubeLink && (
+        <TutorialLink
+          title={zohoDesk?.title}
+          youTubeLink={zohoDesk?.youTubeLink}
+        />
+      )}
+      {zohoDesk?.docLink && (
+        <TutorialLink
+          title={zohoDesk?.title}
+          docLink={zohoDesk?.docLink}
+        />
+      )}
+
       <div className="wdt-200 d-in-b mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={deskConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

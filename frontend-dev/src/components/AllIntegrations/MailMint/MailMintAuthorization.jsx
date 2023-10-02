@@ -5,6 +5,8 @@ import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { getAllList, getAllTags, mailMintRefreshFields } from './MailMintCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function MailMintAuthorization({ formID,
   mailMintConf,
@@ -16,6 +18,7 @@ export default function MailMintAuthorization({ formID,
   setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { mailMint } = tutorialLinks
 
   const authorizeHandler = () => {
     setIsLoading('auth')
@@ -46,6 +49,19 @@ export default function MailMintAuthorization({ formID,
         height: step === 1 && 'auto',
       }}
     >
+      {mailMint?.youTubeLink && (
+        <TutorialLink
+          title={mailMint?.title}
+          youTubeLink={mailMint?.youTubeLink}
+        />
+      )}
+      {mailMint?.docLink && (
+        <TutorialLink
+          title={mailMint?.title}
+          docLink={mailMint?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

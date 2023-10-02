@@ -4,10 +4,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { handleMauticAuthorize, getAllFields } from './MauticCommonFunc'
+import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function MauticAuthorization({ mauticConf, setMauticConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ baseUrl: '', clientId: '', clientSecret: '' })
+  const { mautic } = tutorialLinks
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
@@ -27,6 +30,19 @@ export default function MauticAuthorization({ mauticConf, setMauticConf, step, s
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {mautic?.youTubeLink && (
+        <TutorialLink
+          title={mautic?.title}
+          youTubeLink={mautic?.youTubeLink}
+        />
+      )}
+      {mautic?.docLink && (
+        <TutorialLink
+          title={mautic?.title}
+          docLink={mautic?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={mauticConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

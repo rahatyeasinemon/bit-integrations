@@ -6,11 +6,14 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { getAllGoogleDriveFolders, handleAuthorize } from './GoogleDriveCommonFunc'
+import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function GoogleDriveAuthorization({ flowID, googleDriveConf, setGoogleDriveConf, step, setStep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
   const btcbi = useRecoilValue($btcbi)
+  const { googleDrive } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -32,6 +35,19 @@ export default function GoogleDriveAuthorization({ flowID, googleDriveConf, setG
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {googleDrive?.youTubeLink && (
+        <TutorialLink
+          title={googleDrive?.title}
+          youTubeLink={googleDrive?.youTubeLink}
+        />
+      )}
+      {googleDrive?.docLink && (
+        <TutorialLink
+          title={googleDrive?.title}
+          docLink={googleDrive?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={googleDriveConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

@@ -5,10 +5,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { getAllFields, nimbleAuthentication } from './NimbleCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function NimbleAuthorization({ nimbleConf, setNimbleConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ api_key: '' })
+  const { nimble } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -40,6 +43,19 @@ export default function NimbleAuthorization({ nimbleConf, setNimbleConf, step, s
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {nimble?.youTubeLink && (
+        <TutorialLink
+          title={nimble?.title}
+          youTubeLink={nimble?.youTubeLink}
+        />
+      )}
+      {nimble?.docLink && (
+        <TutorialLink
+          title={nimble?.title}
+          docLink={nimble?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={nimbleConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

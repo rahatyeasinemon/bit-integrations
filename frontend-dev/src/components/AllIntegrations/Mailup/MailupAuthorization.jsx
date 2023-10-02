@@ -4,10 +4,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { handleMailupAuthorize, fetchAllList } from './MailupCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function MailupAuthorization({ formID, mailupConf, setMailupConf, step, setStep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '' })
+  const { mailup } = tutorialLinks
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
@@ -27,6 +30,19 @@ export default function MailupAuthorization({ formID, mailupConf, setMailupConf,
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {mailup?.youTubeLink && (
+        <TutorialLink
+          title={mailup?.title}
+          youTubeLink={mailup?.youTubeLink}
+        />
+      )}
+      {mailup?.docLink && (
+        <TutorialLink
+          title={mailup?.title}
+          docLink={mailup?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={mailupConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

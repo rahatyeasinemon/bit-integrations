@@ -5,10 +5,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { gravitecAuthentication } from './GravitecCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function GravitecAuthorization({ gravitecConf, setGravitecConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ site_url: '', app_key: '', app_secret: '' })
+  const { gravitec } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -39,6 +42,19 @@ export default function GravitecAuthorization({ gravitecConf, setGravitecConf, s
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {gravitec?.youTubeLink && (
+        <TutorialLink
+          title={gravitec?.title}
+          youTubeLink={gravitec?.youTubeLink}
+        />
+      )}
+      {gravitec?.docLink && (
+        <TutorialLink
+          title={gravitec?.title}
+          docLink={gravitec?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={gravitecConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

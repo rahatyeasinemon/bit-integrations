@@ -15,6 +15,8 @@ import TinyMCE from '../../Utilities/TinyMCE'
 import EditFormInteg from '../EditFormInteg'
 import EditWebhookInteg from '../EditWebhookInteg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 function Mail({ allIntegURL, isInfo, edit, isLearnDash = false, learnDashConf }) {
   const [flow, setFlow] = useRecoilState($newFlow)
@@ -24,6 +26,7 @@ function Mail({ allIntegURL, isInfo, edit, isLearnDash = false, learnDashConf })
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const [snack, setSnackbar] = useState({ show: false })
+  const { mailLinks } = tutorialLinks
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
@@ -171,6 +174,19 @@ function Mail({ allIntegURL, isInfo, edit, isLearnDash = false, learnDashConf })
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
+      {mailLinks?.youTubeLink && (
+        <TutorialLink
+          title={mailLinks?.title}
+          youTubeLink={mailLinks?.youTubeLink}
+        />
+      )}
+      {mailLinks?.docLink && (
+        <TutorialLink
+          title={mailLinks?.title}
+          docLink={mailLinks?.docLink}
+        />
+      )}
+
       <span className="f-m wdt-200 d-in-b">{__('Integration Name', 'bit-integration')}</span>
       <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => setEmailSetting('name', e.target.value)} name="name" value={conf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

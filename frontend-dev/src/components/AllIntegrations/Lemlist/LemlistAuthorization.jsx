@@ -6,11 +6,14 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { refreshLemlistCampaign } from './LemlistCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function LemlistAuthorization({ lemlistConf, setLemlistConf, step, setstep, setSnackbar, isInfo, isLoading, setIsLoading }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { lemlist } = tutorialLinks
 
   const handleAuthorize = () => {
     const newConf = { ...lemlistConf }
@@ -73,6 +76,19 @@ export default function LemlistAuthorization({ lemlistConf, setLemlistConf, step
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {lemlist?.youTubeLink && (
+        <TutorialLink
+          title={lemlist?.title}
+          youTubeLink={lemlist?.youTubeLink}
+        />
+      )}
+      {lemlist?.docLink && (
+        <TutorialLink
+          title={lemlist?.title}
+          docLink={lemlist?.docLink}
+        />
+      )}
+
       <div className="mt-3 wdt-200"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={lemlistConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>

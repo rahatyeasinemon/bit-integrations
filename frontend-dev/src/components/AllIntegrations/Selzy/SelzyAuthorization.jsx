@@ -6,10 +6,13 @@ import Input from '../../Utilities/Input'
 import Note from '../../Utilities/Note'
 import StepPage from '../../Utilities/StepPage'
 import { getAllTags, handleAuthorize, handleInput } from './SelzyCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 function SelzyAuthorization({ selzyConf, setSelzyConf, step, setStep, loading, setLoading, isInfo }) {
   const [authorized, setAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', authKey: '' })
+  const { selzy } = tutorialLinks
 
   const nextPage = async () => {
     setTimeout(() => {
@@ -40,6 +43,18 @@ function SelzyAuthorization({ selzyConf, setSelzyConf, step, setStep, loading, s
       stepNo={1}
       style={{ width: 900, height: 'auto' }}
     >
+      {selzy?.youTubeLink && (
+        <TutorialLink
+          title={selzy?.title}
+          youTubeLink={selzy?.youTubeLink}
+        />
+      )}
+      {selzy?.docLink && (
+        <TutorialLink
+          title={selzy?.title}
+          docLink={selzy?.docLink}
+        />
+      )}
 
       <div className="mt-2">
         {/* SelzyAuthorization */}

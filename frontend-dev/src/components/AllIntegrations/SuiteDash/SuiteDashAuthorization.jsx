@@ -6,10 +6,13 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import { suiteDashAuthentication } from './SuiteDashCommonFunc'
 import Note from '../../Utilities/Note'
 import { toast } from 'react-hot-toast'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function SuiteDashAuthorization({ suiteDashConf, setSuiteDashConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ session_token: '' })
+  const { suiteDash } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -41,6 +44,19 @@ export default function SuiteDashAuthorization({ suiteDashConf, setSuiteDashConf
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {suiteDash?.youTubeLink && (
+        <TutorialLink
+          title={suiteDash?.title}
+          youTubeLink={suiteDash?.youTubeLink}
+        />
+      )}
+      {suiteDash?.docLink && (
+        <TutorialLink
+          title={suiteDash?.title}
+          docLink={suiteDash?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={suiteDashConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

@@ -6,10 +6,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { perfexCRMAuthentication } from './PerfexCRMCommonFunc'
+import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function PerfexCRMAuthorization({ perfexCRMConf, setPerfexCRMConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ api_token: '' })
+  const { perfexCRM } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -52,6 +55,19 @@ export default function PerfexCRMAuthorization({ perfexCRMConf, setPerfexCRMConf
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {perfexCRM?.youTubeLink && (
+        <TutorialLink
+          title={perfexCRM?.title}
+          youTubeLink={perfexCRM?.youTubeLink}
+        />
+      )}
+      {perfexCRM?.docLink && (
+        <TutorialLink
+          title={perfexCRM?.title}
+          docLink={perfexCRM?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={perfexCRMConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

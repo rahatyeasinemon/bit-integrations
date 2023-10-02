@@ -6,7 +6,7 @@ const tutorialLinks = {
   },
   bitForm: {
     title: "How to Setup Bit Form integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/watch?v=Kdu3f8wLsrk&list=PL7c6CDwwm-AIJN9QZGc3jORO9Z6Rjp0O6&pp=iAQB",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/bit-form-integrations/",
   },
   autonami: {
@@ -16,7 +16,7 @@ const tutorialLinks = {
   },
   acumbamail: {
     title: "How to Setup Acumbamail integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJwT-RmvZ4iuAqhIdG9nZ2S",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/acumbamail-integrations/https://bitapps.pro/docs/bit-integrations/actions/acumbamail-integrations/",
   },
   antsAndApps: {
@@ -76,7 +76,7 @@ const tutorialLinks = {
   },
   clinchPad: {
     title: "How to Setup ClinchPad integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/watch?v=O5fkHW9SucA&list=PL7c6CDwwm-AINXnJjI8oIdygKgE4U5jlg&pp=iAQB",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/clinchpad-integrations/",
   },
   clickup: {
@@ -114,7 +114,7 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJ9CS13FDnTgPfbhjMG2x1O",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/emailoctopus-integrations/",
   },
-  fluentCRM: {
+  fluentCrm: {
     title: "How to Setup FluentCRM integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJy5hZGqcKBmtxO-9TSNlmy",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/fluentcrm-integrations/",
@@ -129,17 +129,17 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKSOvPOxvQ73003RJqjyzmq",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/freshdesk-integrations/",
   },
-  freshsales: {
+  freshSales: {
     title: "How to Setup Freshsales integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJpdtINh80Pq8YQXdp0Wvsi",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/freshsales-integrations/",
   },
-  getGist: {
+  getgist: {
     title: "How to Setup GetGist integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALmJUyTlrw7KyKeWSwa0-9_",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/getgist-integrations/",
   },
-  googleSheets: {
+  googleSheet: {
     title: "How to Setup Google Sheets integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKuQdXT_tF6D9xEYIF2U5EF",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/google-sheets-integrations/",
@@ -179,30 +179,30 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJd_oKE5n438PSWLUg35I2v",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/givewp-integrations/",
   },
-  hubSpot: {
+  hubspot: {
     title: "How to Setup HubSpot integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AIWk0CnBaZfO9DxZnguDBRQ",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/hubspot-integrations/",
   },
-  integrately: {
+  integratelyLinks: {
     title: "How to Setup Integrately integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AInYjAN6svcuBDHJolbCkIZ",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/integrately-integrations/",
   },
-  make: {
-    title: "How to Setup Make integration",
-    youTubeLink: "",
-    docLink: "",
+  integromatLinks: {
+    title: "How to Setup Make(Integromat) integration",
+    youTubeLink: "https://www.youtube.com/watch?v=jnAnGnwXuk8&list=PL7c6CDwwm-AL8HfPs26xjhzc_7ysFYrCu&pp=iAQB",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/make-integrations/",
   },
   iFTTT: {
     title: "How to Setup IFTTT integration",
     youTubeLink: "",
-    docLink: "",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/ifttt-integrations/",
   },
   insightly: {
     title: "How to Setup Insightly integration",
     youTubeLink: "",
-    docLink: "",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/insightly-integrations/",
   },
   keap: {
     title: "How to Setup Keap integration",
@@ -214,7 +214,7 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AIH42QKENrstP5MpfIieHtz",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/klaviyo-integrations/",
   },
-  konnectzIT: {
+  konnectzITLinks: {
     title: "How to Setup KonnectzIT integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJWYHqcUzFwVsiCy_2uUxml",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/konnectzit-integrations/",
@@ -229,12 +229,12 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALIfOiZvP_7IGF8ASejyNWD",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/learndash-integrations/",
   },
-  lifterLMS: {
+  lifterLms: {
     title: "How to Setup LifterLMS integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJRGUfkF0prpGOOonGktABQ",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/lifterlms-integrations/",
   },
-  mail: {
+  mailLinks: {
     title: "How to Setup Mail integration",
     youTubeLink: "",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/mail-integrations/",
@@ -249,8 +249,8 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKizqbIH_kWIGoPaoRUmY0j",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/mailbluster-integrations/",
   },
-  mailrelay: {
-    title: "How to Setup Mailrelay integration",
+  mailRelay: {
+    title: "How to Setup MailRelay integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AL4Qq3LwifB5Q0FMc9jbCBh",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/mailrelay-integrations/",
   },
@@ -260,7 +260,7 @@ const tutorialLinks = {
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/mailerlite-integrations/",
   },
   mailchimp: {
-    title: "How to Setup Mailchimp integration",
+    title: "How to Setup Mail chimp integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALUaeqiK9GwBSxVkAod1PzP",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/mailchimp-integrations/",
   },
@@ -289,12 +289,12 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AIqOr2OMJT8FNh9QPVm2NQ6",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/mailercloud-integrations/",
   },
-  memberPress: {
+  memberpress: {
     title: "How to Setup MemberPress integration",
     youTubeLink: "",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/memberpress-integrations/",
   },
-  mailUp: {
+  mailup: {
     title: "How to Setup MailUp integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKZoTOsege0sBuR1kPqnUhI",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/mailup-integrations/",
@@ -309,54 +309,54 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AI-HlfXA-3V-mMcJ_g8L6gl",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/notion-integrations/",
   },
-  n8n: {
+  n8nLinks: {
     title: "How to Setup n8n.io integration",
     youTubeLink: "",
-    docLink: "",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/n8n-integrations/",
   },
   oneDrive: {
     title: "How to Setup OneDrive integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKmwv84LP85aQDa2HdM9cPc",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/onedrive-integrations/",
   },
-  omnisend: {
+  omniSend: {
     title: "How to Setup Omnisend integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJtfMscjcjlQWfurvh2jy2J",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/omnisend-integrations/",
   },
-  pabbly: {
+  pabblyLinks: {
     title: "How to Setup Pabbly integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKWWLROSA7sPf75a4TfNKKg",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/pabbly-integrations/",
   },
-  paidMembershipsPro: {
+  paidMembershipPro: {
     title: "How to Setup Paid Memberships Pro integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJIZ020K3uZyVFDr00u-O6K",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/paid-membership-pro-integrations/",
   },
-  pODS: {
+  podLinks: {
     title: "How to Setup PODS integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AIQn0ojE2M_eUdCXWsgLPSR",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/pods-integrations/",
   },
   postCreation: {
     title: "How to Setup Post Creation integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AIXE9-3U0gaFuqscE32OHcz",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/post-creation-integrations/",
   },
   pCloud: {
     title: "How to Setup pCloud integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKN8YP9ZiA2Nr2YJkPsQL8x",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/pcloud-integrations/",
   },
-  propovoiceCRM: {
+  propovoiceCrm: {
     title: "How to Setup Propovoice CRM integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALypdI2_549Vquqwc5qdDUE",
     docLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALypdI2_549Vquqwc5qdDUE",
   },
-  pipedrive: {
+  pipeDrive: {
     title: "How to Setup Pipedrive integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJLGkXGJ16QyDTCr-e2bGVw",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/pipedrive-integrations/",
   },
   rapidmail: {
@@ -366,7 +366,7 @@ const tutorialLinks = {
   },
   registration: {
     title: "How to Setup Registration integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJq1l8SeKisLk60ewQRreg1",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/registration-integrations/",
   },
   restrictContent: {
@@ -376,20 +376,20 @@ const tutorialLinks = {
   },
   salesflare: {
     title: "How to Setup Salesflare integration",
-    youTubeLink: "",
-    docLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKwi-Ux8XGZEhvhQx8cFEb6",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/salesflare-integrations/",
   },
   salesforce: {
     title: "How to Setup Salesforce integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJHfZhVPrQ4KLQMNbVNgcnv",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/salesforce-integrations/",
   },
-  sliceWP: {
+  sliceWp: {
     title: "How to Setup SliceWP integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALhoOseAyoCeffUOwCssDeQ",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/slicewp-integrations/",
   },
-  brevo: {
+  sendinBlue: {
     title: "How to Setup Brevo (Sendinblue) integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALjCKxsaR8FfT73Qv8mDEQ6",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/brevo-integrations/",
@@ -404,9 +404,9 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKhQzTDGUWR6OAVj-uN1-Ep",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/sendfox-integrations/",
   },
-  syncSpider: {
+  syncSpiderLinks: {
     title: "How to Setup SyncSpider integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJLuqpik9F0pBPhvWlYAHpK",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/syncspider-integrations/",
   },
   slack: {
@@ -426,7 +426,7 @@ const tutorialLinks = {
   },
   sendGrid: {
     title: "How to Setup SendGrid integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/watch?v=lIFhcRZX8XQ&list=PL7c6CDwwm-AI1QPJIx4YUwpQLVbTvw1KO&pp=iAQB",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/sendgrid-integrations/",
   },
   sureCart: {
@@ -444,7 +444,7 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKWf-FAvcCGFqgAzroUvrX5",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/telegram-integrations/",
   },
-  tutorLMS: {
+  tutorlms: {
     title: "How to Setup Tutor LMS integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKtLYQYbqcV6W_SYpVH9dJV",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/tutor-lms-integrations/",
@@ -459,19 +459,19 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AIdj2m4zjTUt6FaX8lWHeAf",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/twilio-integrations/",
   },
-  vBOUT: {
+  vbout: {
     title: "How to Setup VBOUT integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKFBZEeN02rhG3lNCiy76yn",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/vbout-integrations/",
   },
-  webHooks: {
+  webHooksLinks: {
     title: "How to Setup Web Hooks integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AK9UTFZUC--v1aCMNms6QUr",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/web-hooks-integrations/",
   },
   whatsApp: {
     title: "How to Setup WhatsApp integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALDwFtK0cqQODIFuvy-l8d5",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/whatsapp-integrations/",
   },
   wooCommerce: {
@@ -479,17 +479,17 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AIjBabvB9-BmttQmFQGVd7_",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/woocommerce-integrations/",
   },
-  wPCourseware: {
+  wpCourseware: {
     title: "How to Setup WP Courseware integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALe76SC4ClrJItKDznTPUmv",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/wp-courseware-integrations/",
   },
-  wishList: {
+  wishlist: {
     title: "How to Setup WishList integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AIsdIcLNYtPXJGnTZ_UmWvT",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/wishlist-integrations/",
   },
-  zapier: {
+  zapierLinks: {
     title: "How to Setup Zapier integration",
     youTubeLink: "",
     docLink: "",
@@ -506,7 +506,7 @@ const tutorialLinks = {
   },
   zohoCampaigns: {
     title: "How to Setup Zoho Campaigns integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJ4eDSJRgyqAwztfgPkwuJ9",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/zoho-campaigns-integrations/",
   },
   zohoSheet: {
@@ -519,13 +519,13 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AIbT5j2wupZ1O3USH8gDilg",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/zoho-desk-integrations/",
   },
-  zohoFlow: {
+  zohoFlowLinks: {
     title: "How to Setup Zoho Flow integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKT6gxT00O3YFk2GGYvQtMX",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/zoho-flow-integrations/",
   },
-  zohoMarketing: {
-    title: "How to Setup Zoho Marketing integration",
+  zohoMarketingHub: {
+    title: "How to Setup Zoho Marketing Automation(Zoho Marketing Hub) integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKgaz3bG1iFFBYg2JuFpgVJ",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/zoho-marketing-automation-integrations/",
   },
@@ -539,130 +539,130 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALsihVZKhQuq5QGINgro4DB",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/zoom-meeting-integrations/",
   },
-  zoomWebinars: {
+  zoomWebinar: {
     title: "How to Setup ZoomWebinars integration",
     youTubeLink: "",
-    docLink: "",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/zoom-webinar-integrations/",
   },
   zendesk: {
     title: "How to Setup Zendesk integration",
-    youTubeLink: "",
-    docLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJ8stxvQkVOyDb6V5qXa1jl",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/zendesk-integrations/",
   },
   mailify: {
     title: "How to Setup Mailify (Sarbacane) integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJjJSkugTCNWW_mfwnFK02i",
-    docLink: "",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/sarbacane-integrations/",
   },
   lemlist: {
     title: "How to Setup Lemlist integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALlqBRAtTILihQLCYtJi2X3",
-    docLink: "",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/lemlist-integrations/",
   },
-  salesmateCRM: {
+  salesmate: {
     title: "How to Setup Salesmate CRM integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJehgjc-7kcMyoPLOSLDxoc",
-    docLink: "",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/salesmate-integrations/",
   },
   lionDesk: {
     title: "How to Setup LionDesk integration",
-    youTubeLink: "",
-    docLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AINznAWh8pm4ps1W3IZKEvW",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/liondesk-integrations/",
   },
   campaignMonitor: {
     title: "How to Setup Campaign Monitor integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AI4e7TX6ynAYEB2aXsbERha",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/campaign-monitor-integrations/",
   },
   suiteDash: {
     title: "How to Setup SuiteDash integration",
-    youTubeLink: "",
-    docLink: "",
+    youTubeLink: "https://www.youtube.com/watch?v=avISvvG_2jo&list=PL7c6CDwwm-AJ591_txDeKg0Uj3oyxBpPp&pp=iAQB",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/suitedash-integrations/",
   },
   companyHub: {
     title: "How to Setup CompanyHub integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AIEjYIb_TTxc7tdQmKiBGQY",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/companyhub-integrations/",
   },
   demio: {
     title: "How to Setup Demio integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALQ0v5wAXYpQe22QTz2KsKI",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/demio-integrations/",
   },
   flowlu: {
     title: "How to Setup Flowlu integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKSV9O2566RvZOXlbN1e_Gi",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/flowlu-integrations/",
   },
-  flowMattic: {
+  flowMatticLinks: {
     title: "How to Setup FlowMattic integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJc8D4KWd06kDyrWJJO3RNr",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/flowmattic-integrations/",
   },
   automatorWP: {
     title: "How to Setup AutomatorWP integration",
-    youTubeLink: "",
-    docLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALcrPCvnGNIXaJT04rkSExM",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/automatorwp-integrations/",
   },
-  uncannyAutomator: {
+  uncannyAutomatorLinks: {
     title: "How to Setup Uncanny Automator integration",
-    youTubeLink: "",
-    docLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJ7t5vNXCfq0OFf-NnXtMZ1",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/uncanny-automator-integrations/",
   },
-  thriveAutomator: {
+  thriveAutomatorLinks: {
     title: "How to Setup Thrive Automator integration",
-    youTubeLink: "",
-    docLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALstSgzji6-5kfB9vClJiQp",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/thrive-automator-integrations/",
   },
-  wPWebhooks: {
+  wPWebhooksLinks: {
     title: "How to Setup WP Webhooks integration",
-    youTubeLink: "",
-    docLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALIvVjEM3v2yfP4iQkAJZ1p",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/wp-webhooks-integrations/",
   },
   afi: {
     title: "How to Setup Advanced Form Integration integration",
-    youTubeLink: "",
-    docLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AIgxCkAnAZPWfTFGC4GUvip",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/advanced-form-integration/",
   },
   sperse: {
     title: "How to Setup Sperse IO integration",
-    youTubeLink: "",
-    docLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALVkDySzW0OuD5FUjO4dVcW",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/sperse-io-integrations/",
   },
   albato: {
     title: "How to Setup Albato integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKaWl2mxMlCk5GmbZaGXFKZ",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/albato-integrations/",
   },
-  sureTriggers: {
+  sureTriggersLinks: {
     title: "How to Setup SureTriggers integration",
-    youTubeLink: "",
-    docLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJe5mkdWh-6cn6BXMyRPyXB",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/suretriggers-integrations/",
   },
   gravitec: {
     title: "How to Setup Gravitec integration",
-    youTubeLink: "",
-    docLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKGDLxtmmbbbtYyHHiugYZ0",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/gravitec-integrations/",
   },
-  nimbleCRM: {
+  nimble: {
     title: "How to Setup NimbleCRM integration",
-    youTubeLink: "",
-    docLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AL3lpTc3L2y9Vs-I7hcSSdf",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/nimble-integrations/",
   },
   perfexCRM: {
     title: "How to Setup Perfex CRM integration",
-    youTubeLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AITU5v8hwOQecdVxOzblSWp",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/perfex-crm-integrations/",
   },
   livestorm: {
     title: "How to Setup Livestorm integration",
-    youTubeLink: "",
-    docLink: "",
+    youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AJ_HyGJl8MzNODTp96nWlad",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/livestorm-integrations/",
   },
-  oneHash: {
-    title: "How to Setup oneHash integration",
+  oneHashCRM: {
+    title: "How to Setup oneHashCRM integration",
     youTubeLink: "",
-    docLink: "",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/onehash-crm-integrations/",
   },
   academyLms: {
     title: "How to Setup Academy LMS integration",
@@ -672,22 +672,22 @@ const tutorialLinks = {
   woodpecker: {
     title: "How to Setup Woodpecker integration",
     youTubeLink: "",
-    docLink: "",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/woodpecker-integrations/",
   },
-  moxieCRM: {
+  moxiecrm: {
     title: "How to Setup MoxieCRM integration",
     youTubeLink: "",
-    docLink: "",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/moxie-integrations/",
   },
-  wPFusion: {
+  wpFusionLinks: {
     title: "How to Setup WP Fusion integration",
     youTubeLink: "",
-    docLink: "",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/wp-fusion-integrations/",
   },
   affiliate: {
     title: "How to Setup AffiliateWP integration",
     youTubeLink: "",
-    docLink: "",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/affiliatewp-integrations/",
   }
 };
 export default tutorialLinks;

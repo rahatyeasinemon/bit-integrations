@@ -4,6 +4,8 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
+import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function MasterStudyLmsAuthorization({ formID,
   msLmsConf,
@@ -15,6 +17,7 @@ export default function MasterStudyLmsAuthorization({ formID,
   setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { masterStudyLMS } = tutorialLinks
 
   const authorizeHandler = () => {
     setIsLoading('auth')
@@ -42,6 +45,19 @@ export default function MasterStudyLmsAuthorization({ formID,
         height: step === 1 && 'auto',
       }}
     >
+      {masterStudyLMS?.youTubeLink && (
+        <TutorialLink
+          title={masterStudyLMS?.title}
+          youTubeLink={masterStudyLMS?.youTubeLink}
+        />
+      )}
+      {masterStudyLMS?.docLink && (
+        <TutorialLink
+          title={masterStudyLMS?.title}
+          docLink={masterStudyLMS?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

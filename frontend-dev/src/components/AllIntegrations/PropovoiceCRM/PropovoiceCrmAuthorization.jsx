@@ -4,6 +4,8 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function PropovoiceCrmAuthorization({ formID,
   propovoiceCrmConf,
@@ -15,6 +17,7 @@ export default function PropovoiceCrmAuthorization({ formID,
   setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { propovoiceCrm } = tutorialLinks
 
   const authorizeHandler = () => {
     setIsLoading('auth')
@@ -42,6 +45,19 @@ export default function PropovoiceCrmAuthorization({ formID,
         height: step === 1 && 'auto',
       }}
     >
+      {propovoiceCrm?.youTubeLink && (
+        <TutorialLink
+          title={propovoiceCrm?.title}
+          youTubeLink={propovoiceCrm?.youTubeLink}
+        />
+      )}
+      {propovoiceCrm?.docLink && (
+        <TutorialLink
+          title={propovoiceCrm?.title}
+          docLink={propovoiceCrm?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

@@ -3,6 +3,8 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize } from './SlackCommonFunc'
 import Note from '../../Utilities/Note'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function SlackAuthorization({ formID,
   slackConf,
@@ -16,6 +18,7 @@ export default function SlackAuthorization({ formID,
   isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ accessToken: '' })
+  const { slack } = tutorialLinks
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
@@ -48,6 +51,19 @@ export default function SlackAuthorization({ formID,
         ...{ height: step === 1 && 'auto' },
       }}
     >
+      {slack?.youTubeLink && (
+        <TutorialLink
+          title={slack?.title}
+          youTubeLink={slack?.youTubeLink}
+        />
+      )}
+      {slack?.docLink && (
+        <TutorialLink
+          title={slack?.title}
+          docLink={slack?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

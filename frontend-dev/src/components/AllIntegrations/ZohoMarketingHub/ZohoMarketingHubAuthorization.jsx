@@ -7,12 +7,15 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { handleAuthorize } from '../IntegrationHelpers/IntegrationHelpers'
 import { refreshLists } from './ZohoMarketingHubCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoMarketingAuthorization({ formID, marketingHubConf, setMarketingHubConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const btcbi = useRecoilValue($btcbi)
   const scopes = 'ZohoMarketingHub.lead.READ,ZohoMarketingHub.lead.CREATE,ZohoMarketingHub.lead.UPDATE'
+  const { zohoMarketingHub } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -33,6 +36,19 @@ export default function ZohoMarketingAuthorization({ formID, marketingHubConf, s
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {zohoMarketingHub?.youTubeLink && (
+        <TutorialLink
+          title={zohoMarketingHub?.title}
+          youTubeLink={zohoMarketingHub?.youTubeLink}
+        />
+      )}
+      {zohoMarketingHub?.docLink && (
+        <TutorialLink
+          title={zohoMarketingHub?.title}
+          docLink={zohoMarketingHub?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={marketingHubConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

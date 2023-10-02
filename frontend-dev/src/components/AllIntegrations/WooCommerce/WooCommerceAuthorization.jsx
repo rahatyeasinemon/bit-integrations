@@ -4,11 +4,14 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, step, setStep, setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { wooCommerce } = tutorialLinks
 
   const authorizeHandler = () => {
     setIsLoading('auth')
@@ -37,6 +40,19 @@ export default function WooCommerceAuthorization({ formID, wcConf, setWcConf, st
         height: step === 1 && 'auto',
       }}
     >
+      {wooCommerce?.youTubeLink && (
+        <TutorialLink
+          title={wooCommerce?.title}
+          youTubeLink={wooCommerce?.youTubeLink}
+        />
+      )}
+      {wooCommerce?.docLink && (
+        <TutorialLink
+          title={wooCommerce?.title}
+          docLink={wooCommerce?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

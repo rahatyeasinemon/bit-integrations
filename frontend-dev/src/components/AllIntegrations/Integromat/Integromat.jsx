@@ -7,6 +7,8 @@ import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import WebHooksIntegration from '../IntegrationHelpers/WebHook/WebHooksIntegration'
 import WebHooksStepTwo from '../IntegrationHelpers/WebHook/WebHooksStepTwo'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 function Integromat({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -14,6 +16,7 @@ function Integromat({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [isLoading, setIsLoading] = useState(false)
+  const { integromatLinks } = tutorialLinks
   const [integromat, setIntegromat] = useState({
     name: 'Make(Integromat) Web Hooks',
     type: 'Make(Integromat)',
@@ -29,6 +32,19 @@ function Integromat({ formFields, setFlow, flow, allIntegURL }) {
 
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 1100 }, ...{ height: step === 1 && 'auto' } }}>
+        {integromatLinks?.youTubeLink && (
+          <TutorialLink
+            title={integromatLinks?.title}
+            youTubeLink={integromatLinks?.youTubeLink}
+          />
+        )}
+        {integromatLinks?.docLink && (
+          <TutorialLink
+            title={integromatLinks?.title}
+            docLink={integromatLinks?.docLink}
+          />
+        )}
+
         <WebHooksIntegration
           formID={formID}
           formFields={formFields}

@@ -5,10 +5,13 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { handleAuthorize } from './VboutCommonFunc'
 import { getAllLists } from './VboutCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function VboutAuthorization({ vboutConf, setVboutConf, step, setstep, loading, setLoading, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', auth_token: '' })
+  const { vbout } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -40,6 +43,19 @@ export default function VboutAuthorization({ vboutConf, setVboutConf, step, sets
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {vbout?.youTubeLink && (
+        <TutorialLink
+          title={vbout?.title}
+          youTubeLink={vbout?.youTubeLink}
+        />
+      )}
+      {vbout?.docLink && (
+        <TutorialLink
+          title={vbout?.title}
+          docLink={vbout?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={vboutConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

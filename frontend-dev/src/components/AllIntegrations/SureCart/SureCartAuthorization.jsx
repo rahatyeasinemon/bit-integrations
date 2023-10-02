@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize } from './SureCartCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function SureCartAuthorization({ formID,
   sureCartConf,
@@ -15,6 +17,7 @@ export default function SureCartAuthorization({ formID,
   isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ api_key: '' })
+  const { sureCart } = tutorialLinks
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
@@ -39,6 +42,19 @@ export default function SureCartAuthorization({ formID,
         ...{ height: step === 1 && 'auto' },
       }}
     >
+      {sureCart?.youTubeLink && (
+        <TutorialLink
+          title={sureCart?.title}
+          youTubeLink={sureCart?.youTubeLink}
+        />
+      )}
+      {sureCart?.docLink && (
+        <TutorialLink
+          title={sureCart?.title}
+          docLink={sureCart?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

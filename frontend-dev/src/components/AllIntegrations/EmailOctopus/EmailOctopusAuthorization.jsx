@@ -4,10 +4,13 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { emailOctopusAuthentication } from './EmailOctopusCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function EmailOctopusAuthorization({ emailOctopusConf, setEmailOctopusConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', auth_token: '' })
+  const { emailOctopus } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -29,6 +32,19 @@ export default function EmailOctopusAuthorization({ emailOctopusConf, setEmailOc
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {emailOctopus?.youTubeLink && (
+        <TutorialLink
+          title={emailOctopus?.title}
+          youTubeLink={emailOctopus?.youTubeLink}
+        />
+      )}
+      {emailOctopus?.docLink && (
+        <TutorialLink
+          title={emailOctopus?.title}
+          docLink={emailOctopus?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={emailOctopusConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div className="mt-3"><b>{__('API Key:', 'bit-integrations')}</b></div>

@@ -6,11 +6,14 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { handleAuthorize, refreshSpreadsheets } from './GoogleSheetCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function GoogleSheetAuthorization({ formID, sheetConf, setSheetConf, step, setstep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
   const btcbi = useRecoilValue($btcbi)
+  const { googleSheet } = tutorialLinks
 
   const handleInput = e => {
     const newConf = { ...sheetConf }
@@ -29,6 +32,19 @@ export default function GoogleSheetAuthorization({ formID, sheetConf, setSheetCo
   }
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {googleSheet?.youTubeLink && (
+        <TutorialLink
+          title={googleSheet?.title}
+          youTubeLink={googleSheet?.youTubeLink}
+        />
+      )}
+      {googleSheet?.docLink && (
+        <TutorialLink
+          title={googleSheet?.title}
+          docLink={googleSheet?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sheetConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

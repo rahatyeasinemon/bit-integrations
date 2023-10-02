@@ -7,10 +7,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { hubspotAuthorization } from './HubspotCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function HubspotAuthorization({ hubspotConf, setHubspotConf, step, setstep, isInfo, loading, setLoading }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
+  const { hubspot } = tutorialLinks
 
   const handleInput = e => {
     const newConf = { ...hubspotConf }
@@ -40,6 +43,19 @@ export default function HubspotAuthorization({ hubspotConf, setHubspotConf, step
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {hubspot?.youTubeLink && (
+        <TutorialLink
+          title={hubspot?.title}
+          youTubeLink={hubspot?.youTubeLink}
+        />
+      )}
+      {hubspot?.docLink && (
+        <TutorialLink
+          title={hubspot?.title}
+          docLink={hubspot?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={hubspotConf?.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

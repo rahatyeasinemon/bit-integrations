@@ -4,12 +4,15 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { refreshLists } from './SendinBlueCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSendinBlueConf, step, setstep, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const { sendinBlue } = tutorialLinks
 
   const handleAuthorize = () => {
     const newConf = { ...sendinBlueConf }
@@ -51,6 +54,19 @@ export default function SendinBlueAuthorization({ formID, sendinBlueConf, setSen
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {sendinBlue?.youTubeLink && (
+        <TutorialLink
+          title={sendinBlue?.title}
+          youTubeLink={sendinBlue?.youTubeLink}
+        />
+      )}
+      {sendinBlue?.docLink && (
+        <TutorialLink
+          title={sendinBlue?.title}
+          docLink={sendinBlue?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sendinBlueConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>

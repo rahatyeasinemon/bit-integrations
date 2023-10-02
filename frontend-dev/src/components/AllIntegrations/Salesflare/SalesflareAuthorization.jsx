@@ -5,10 +5,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { salesflareAuthentication } from './SalesflareCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function SalesflareAuthorization({ salesflareConf, setSalesflareConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ api_token: '' })
+  const { salesflare } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -38,6 +41,19 @@ export default function SalesflareAuthorization({ salesflareConf, setSalesflareC
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {salesflare?.youTubeLink && (
+        <TutorialLink
+          title={salesflare?.title}
+          youTubeLink={salesflare?.youTubeLink}
+        />
+      )}
+      {salesflare?.docLink && (
+        <TutorialLink
+          title={salesflare?.title}
+          docLink={salesflare?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={salesflareConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

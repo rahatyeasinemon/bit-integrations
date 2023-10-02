@@ -4,10 +4,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { mailerliteRefreshFields } from './MailerLiteCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function MailerLiteAuthorization({ mailerLiteConf, setMailerLiteConf, step, setstep, loading, setLoading, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', auth_token: '' })
+  const { mailerLite } = tutorialLinks
 
   const url = (mailerLiteConf.version === 'v2') ? 'https://dashboard.mailerlite.com/integrations/api' : 'https://app.mailerlite.com/integrations/api/'
 
@@ -38,6 +41,19 @@ export default function MailerLiteAuthorization({ mailerLiteConf, setMailerLiteC
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {mailerLite?.youTubeLink && (
+        <TutorialLink
+          title={mailerLite?.title}
+          youTubeLink={mailerLite?.youTubeLink}
+        />
+      )}
+      {mailerLite?.docLink && (
+        <TutorialLink
+          title={mailerLite?.title}
+          docLink={mailerLite?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={mailerLiteConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

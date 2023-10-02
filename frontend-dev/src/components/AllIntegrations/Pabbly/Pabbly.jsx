@@ -7,6 +7,8 @@ import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import WebHooksIntegration from '../IntegrationHelpers/WebHook/WebHooksIntegration'
 import WebHooksStepTwo from '../IntegrationHelpers/WebHook/WebHooksStepTwo'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 function Pabbly({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -14,6 +16,7 @@ function Pabbly({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [isLoading, setIsLoading] = useState(false)
+  const { pabblyLinks } = tutorialLinks
   const [pabbly, setPabbly] = useState({
     name: 'Pabbly Web Hooks',
     type: 'Pabbly',
@@ -29,6 +32,19 @@ function Pabbly({ formFields, setFlow, flow, allIntegURL }) {
 
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 1100 }, ...{ height: step === 1 && 'auto' } }}>
+        {pabblyLinks?.youTubeLink && (
+          <TutorialLink
+            title={pabblyLinks?.title}
+            youTubeLink={pabblyLinks?.youTubeLink}
+          />
+        )}
+        {pabblyLinks?.docLink && (
+          <TutorialLink
+            title={pabblyLinks?.title}
+            docLink={pabblyLinks?.docLink}
+          />
+        )}
+
         <WebHooksIntegration
           formID={formID}
           formFields={formFields}

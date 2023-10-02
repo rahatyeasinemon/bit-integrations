@@ -4,10 +4,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { mailBlusterAuthentication } from './MailBlusterCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function MailBlusterAuthorization({ mailBlusterConf, setMailBlusterConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', auth_token: '' })
+  const { mailBluster } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -38,6 +41,19 @@ export default function MailBlusterAuthorization({ mailBlusterConf, setMailBlust
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {mailBluster?.youTubeLink && (
+        <TutorialLink
+          title={mailBluster?.title}
+          youTubeLink={mailBluster?.youTubeLink}
+        />
+      )}
+      {mailBluster?.docLink && (
+        <TutorialLink
+          title={mailBluster?.title}
+          docLink={mailBluster?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={mailBlusterConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

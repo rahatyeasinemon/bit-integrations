@@ -6,11 +6,14 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { getAllGoogleCalendarLists, handleAuthorize } from './GoogleCalendarCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function GoogleCalendarAuthorization({ flowID, googleCalendarConf, setGoogleCalendarConf, step, setStep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
   const btcbi = useRecoilValue($btcbi)
+  const { googleCalendar } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -32,6 +35,19 @@ export default function GoogleCalendarAuthorization({ flowID, googleCalendarConf
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {googleCalendar?.youTubeLink && (
+        <TutorialLink
+          title={googleCalendar?.title}
+          youTubeLink={googleCalendar?.youTubeLink}
+        />
+      )}
+      {googleCalendar?.docLink && (
+        <TutorialLink
+          title={googleCalendar?.title}
+          docLink={googleCalendar?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={googleCalendarConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

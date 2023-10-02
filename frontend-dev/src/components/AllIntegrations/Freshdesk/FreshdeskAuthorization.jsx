@@ -3,6 +3,8 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize } from './FreshdeskCommonFunc'
 import Note from '../../Utilities/Note'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function FreshdeskAuthorization({ formID,
   freshdeskConf,
@@ -16,6 +18,7 @@ export default function FreshdeskAuthorization({ formID,
   isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ api_key: '' })
+  const { freshdesk } = tutorialLinks
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
@@ -46,6 +49,19 @@ export default function FreshdeskAuthorization({ formID,
         ...{ height: step === 1 && 'auto' },
       }}
     >
+      {freshdesk?.youTubeLink && (
+        <TutorialLink
+          title={freshdesk?.title}
+          youTubeLink={freshdesk?.youTubeLink}
+        />
+      )}
+      {freshdesk?.docLink && (
+        <TutorialLink
+          title={freshdesk?.title}
+          docLink={freshdesk?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

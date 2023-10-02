@@ -4,6 +4,8 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function GamiPressAuthorization({ formID,
   gamiPressConf,
@@ -15,6 +17,7 @@ export default function GamiPressAuthorization({ formID,
   setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { gamiPress } = tutorialLinks
 
   const authorizeHandler = () => {
     setIsLoading('auth')
@@ -42,6 +45,19 @@ export default function GamiPressAuthorization({ formID,
         height: step === 1 && 'auto',
       }}
     >
+      {gamiPress?.youTubeLink && (
+        <TutorialLink
+          title={gamiPress?.title}
+          youTubeLink={gamiPress?.youTubeLink}
+        />
+      )}
+      {gamiPress?.docLink && (
+        <TutorialLink
+          title={gamiPress?.title}
+          docLink={gamiPress?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

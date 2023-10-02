@@ -15,6 +15,8 @@ import ConditionalLogic from '../../ConditionalLogic'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import CheckBox from '../../Utilities/CheckBox'
 import Note from '../../Utilities/Note'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function Registration({ formFields, setFlow, flow, allIntegURL }) {
   const { formID } = useParams()
@@ -22,6 +24,7 @@ export default function Registration({ formFields, setFlow, flow, allIntegURL })
   const [roles, setRoles] = useState([])
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
+  const { registration } = tutorialLinks
 
   const [userConf, setUserConf] = useState({
     name: 'User Registration',
@@ -104,6 +107,19 @@ export default function Registration({ formFields, setFlow, flow, allIntegURL })
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
+      {registration?.youTubeLink && (
+        <TutorialLink
+          title={registration?.title}
+          youTubeLink={registration?.youTubeLink}
+        />
+      )}
+      {registration?.docLink && (
+        <TutorialLink
+          title={registration?.title}
+          docLink={registration?.docLink}
+        />
+      )}
+
       <div className="font-w-m mt-3">{__('Action type', 'bit-integrations')}</div>
       <div>
         <CheckBox radio name="action_type" onChange={actionHandler} checked={userConf?.action_type === 'new_user'} value="new_user" title={__('New User Create', 'bit-integrations')} />

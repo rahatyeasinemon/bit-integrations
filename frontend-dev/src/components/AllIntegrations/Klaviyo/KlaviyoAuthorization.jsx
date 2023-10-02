@@ -3,10 +3,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { handleAuthorize } from './KlaviyoCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 function KlaviyoAuthorization({ klaviyoConf, setKlaviyoConf, step, setStep, isInfo, loading, setLoading }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', authKey: '' })
+  const { klaviyo } = tutorialLinks
 
   const handleInput = (e) => {
     const newConf = { ...klaviyoConf }
@@ -37,6 +40,18 @@ function KlaviyoAuthorization({ klaviyoConf, setKlaviyoConf, step, setStep, isIn
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {klaviyo?.youTubeLink && (
+        <TutorialLink
+          title={klaviyo?.title}
+          youTubeLink={klaviyo?.youTubeLink}
+        />
+      )}
+      {klaviyo?.docLink && (
+        <TutorialLink
+          title={klaviyo?.title}
+          docLink={klaviyo?.docLink}
+        />
+      )}
 
       <div className="mt-2">
         <div className="my-1"><b>{__('Integration Name:', 'bit-integrations')}</b></div>

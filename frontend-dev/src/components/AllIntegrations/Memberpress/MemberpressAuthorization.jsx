@@ -5,6 +5,8 @@ import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { getAllMemberShip, paymentGateway } from './MemberpressCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function MemberpressAuthorization({ formID,
   memberpressConf,
@@ -17,6 +19,7 @@ export default function MemberpressAuthorization({ formID,
   const [isAuthorized, setisAuthorized] = useState(false)
   // const [isLoading, setIsLoading] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { memberpress } = tutorialLinks
 
   const authorizeHandler = () => {
     setIsLoading('auth')
@@ -46,6 +49,19 @@ export default function MemberpressAuthorization({ formID,
         height: step === 1 && 'auto',
       }}
     >
+      {memberpress?.youTubeLink && (
+        <TutorialLink
+          title={memberpress?.title}
+          youTubeLink={memberpress?.youTubeLink}
+        />
+      )}
+      {memberpress?.docLink && (
+        <TutorialLink
+          title={memberpress?.title}
+          docLink={memberpress?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

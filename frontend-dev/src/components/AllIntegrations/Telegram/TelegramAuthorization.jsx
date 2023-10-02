@@ -4,12 +4,15 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { refreshGetUpdates } from './TelegramCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function TelegramAuthorization({ formID, telegramConf, setTelegramConf, step, setstep, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', bot_api_key: '', apiError: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const { telegram } = tutorialLinks
 
   const handleAuthorize = () => {
     const newConf = { ...telegramConf }
@@ -56,6 +59,19 @@ export default function TelegramAuthorization({ formID, telegramConf, setTelegra
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {telegram?.youTubeLink && (
+        <TutorialLink
+          title={telegram?.title}
+          youTubeLink={telegram?.youTubeLink}
+        />
+      )}
+      {telegram?.docLink && (
+        <TutorialLink
+          title={telegram?.title}
+          docLink={telegram?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={telegramConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px', marginTop: '5px' }}>{error.name}</div>

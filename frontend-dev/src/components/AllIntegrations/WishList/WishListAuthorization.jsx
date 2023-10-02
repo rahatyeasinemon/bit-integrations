@@ -4,10 +4,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { handleAuthorize } from './WishListCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function WishListAuthorization({ wishlistConf, setWishlistConf, step, setstep, isLoading, setIsLoading, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ baseUrl: '', apiKey: '' })
+  const { wishlist } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -34,6 +37,19 @@ export default function WishListAuthorization({ wishlistConf, setWishlistConf, s
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {wishlist?.youTubeLink && (
+        <TutorialLink
+          title={wishlist?.title}
+          youTubeLink={wishlist?.youTubeLink}
+        />
+      )}
+      {wishlist?.docLink && (
+        <TutorialLink
+          title={wishlist?.title}
+          docLink={wishlist?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={wishlistConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

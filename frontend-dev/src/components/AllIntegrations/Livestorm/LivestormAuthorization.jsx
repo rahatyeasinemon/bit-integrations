@@ -5,10 +5,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { getAllEvents, livestormAuthentication } from './LivestormCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function LivestormAuthorization({ livestormConf, setLivestormConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ api_key: '' })
+  const { livestorm } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -41,6 +44,19 @@ export default function LivestormAuthorization({ livestormConf, setLivestormConf
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {livestorm?.youTubeLink && (
+        <TutorialLink
+          title={livestorm?.title}
+          youTubeLink={livestorm?.youTubeLink}
+        />
+      )}
+      {livestorm?.docLink && (
+        <TutorialLink
+          title={livestorm?.title}
+          docLink={livestorm?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={livestormConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

@@ -7,11 +7,14 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { $btcbi } from '../../../GlobalStates'
 import { handleAuthorization } from './ZohoSheetCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function ZohoSheetAuthorization({ zohoSheetConf, setZohoSheetConf, step, setStep, loading, setLoading, isInfo, setSnackbar, redirectLocation }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const btcbi = useRecoilValue($btcbi)
+  const { zohoSheet } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -33,6 +36,19 @@ export default function ZohoSheetAuthorization({ zohoSheetConf, setZohoSheetConf
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {zohoSheet?.youTubeLink && (
+        <TutorialLink
+          title={zohoSheet?.title}
+          youTubeLink={zohoSheet?.youTubeLink}
+        />
+      )}
+      {zohoSheet?.docLink && (
+        <TutorialLink
+          title={zohoSheet?.title}
+          docLink={zohoSheet?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={zohoSheetConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

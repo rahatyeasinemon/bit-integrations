@@ -8,11 +8,14 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import Note from '../../Utilities/Note'
 import { handleAuthorize } from './LionDeskCommonFunc'
+import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function LionDeskAuthorization({ lionDeskConf, setLionDeskConf, step, setStep, setSnackbar, isLoading, setIsLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ session_token: '' })
   const btcbi = useRecoilValue($btcbi)
+  const { lionDesk } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -43,6 +46,19 @@ export default function LionDeskAuthorization({ lionDeskConf, setLionDeskConf, s
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {lionDesk?.youTubeLink && (
+        <TutorialLink
+          title={lionDesk?.title}
+          youTubeLink={lionDesk?.youTubeLink}
+        />
+      )}
+      {lionDesk?.docLink && (
+        <TutorialLink
+          title={lionDesk?.title}
+          docLink={lionDesk?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={lionDeskConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

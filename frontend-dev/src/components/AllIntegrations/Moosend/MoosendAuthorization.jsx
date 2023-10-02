@@ -6,10 +6,13 @@ import Input from '../../Utilities/Input'
 import Note from '../../Utilities/Note'
 import StepPage from '../../Utilities/StepPage'
 import { getAllLists, handleAuthorize, handleInput } from './MoosendCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 function MoosendAuthorization({ moosendConf, setMoosendConf, step, setStep, loading, setLoading, isInfo }) {
   const [authorized, setAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', authKey: '' })
+  const { moosend } = tutorialLinks
 
   const nextPage = async () => {
     setTimeout(() => {
@@ -40,6 +43,18 @@ function MoosendAuthorization({ moosendConf, setMoosendConf, step, setStep, load
       stepNo={1}
       style={{ width: 900, height: 'auto' }}
     >
+      {moosend?.youTubeLink && (
+        <TutorialLink
+          title={moosend?.title}
+          youTubeLink={moosend?.youTubeLink}
+        />
+      )}
+      {moosend?.docLink && (
+        <TutorialLink
+          title={moosend?.title}
+          docLink={moosend?.docLink}
+        />
+      )}
 
       <div className="mt-2">
 

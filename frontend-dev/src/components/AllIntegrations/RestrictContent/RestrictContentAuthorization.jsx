@@ -5,11 +5,14 @@ import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { getAllLevels } from './RestrictContentCommonFunc'
+import TutorialLink from '../../Utilities/TutorialLink'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 export default function RestrictContentAuthorization({ formID, restrictConf, setRestrictConf, step, setStep, setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { restrictContent } = tutorialLinks
 
   const authorizeHandler = () => {
     setIsLoading('auth')
@@ -45,6 +48,19 @@ export default function RestrictContentAuthorization({ formID, restrictConf, set
         height: step === 1 && 'auto',
       }}
     >
+      {restrictContent?.youTubeLink && (
+        <TutorialLink
+          title={restrictContent?.title}
+          youTubeLink={restrictContent?.youTubeLink}
+        />
+      )}
+      {restrictContent?.docLink && (
+        <TutorialLink
+          title={restrictContent?.title}
+          docLink={restrictContent?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

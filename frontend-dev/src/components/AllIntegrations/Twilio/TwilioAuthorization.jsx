@@ -3,10 +3,13 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { handleAuthorize } from './TwilioCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function TwilioAuthorization({ twilioConf, setTwilioConf, step, setstep, isLoading, setIsLoading, setSnackbar, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ username: '', password: '' })
+  const { twilio } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -26,6 +29,19 @@ export default function TwilioAuthorization({ twilioConf, setTwilioConf, step, s
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {twilio?.youTubeLink && (
+        <TutorialLink
+          title={twilio?.title}
+          youTubeLink={twilio?.youTubeLink}
+        />
+      )}
+      {twilio?.docLink && (
+        <TutorialLink
+          title={twilio?.title}
+          docLink={twilio?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={twilioConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

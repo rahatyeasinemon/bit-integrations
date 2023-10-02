@@ -4,6 +4,8 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function LifterLmsAuthorization({ formID,
   lifterLmsConf,
@@ -15,6 +17,7 @@ export default function LifterLmsAuthorization({ formID,
   setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { lifterLms } = tutorialLinks
 
   const authorizeHandler = () => {
     setIsLoading('auth')
@@ -42,6 +45,19 @@ export default function LifterLmsAuthorization({ formID,
         height: step === 1 && 'auto',
       }}
     >
+      {lifterLms?.youTubeLink && (
+        <TutorialLink
+          title={lifterLms?.title}
+          youTubeLink={lifterLms?.youTubeLink}
+        />
+      )}
+      {lifterLms?.docLink && (
+        <TutorialLink
+          title={lifterLms?.title}
+          docLink={lifterLms?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

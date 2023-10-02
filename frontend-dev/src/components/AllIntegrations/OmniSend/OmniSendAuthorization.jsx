@@ -4,6 +4,8 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { handleOmniSendAuthorize } from './OmniSendCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function OmniSendAuthorization({ omniSendConf,
   setOmniSendConf,
@@ -15,6 +17,7 @@ export default function OmniSendAuthorization({ omniSendConf,
   isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
+  const { omniSend } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -48,6 +51,19 @@ export default function OmniSendAuthorization({ omniSendConf,
         ...{ height: step === 1 && 'auto' },
       }}
     >
+      {omniSend?.youTubeLink && (
+        <TutorialLink
+          title={omniSend?.title}
+          youTubeLink={omniSend?.youTubeLink}
+        />
+      )}
+      {omniSend?.docLink && (
+        <TutorialLink
+          title={omniSend?.title}
+          docLink={omniSend?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

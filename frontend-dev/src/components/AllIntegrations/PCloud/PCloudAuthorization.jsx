@@ -7,11 +7,14 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { getAllPCloudFolders, handleAuthorization } from './PCloudCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function PCloudAuthorization({ flowID, pCloudConf, setPCloudConf, step, setStep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
   const btcbi = useRecoilValue($btcbi)
+  const { pCloud } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -33,6 +36,19 @@ export default function PCloudAuthorization({ flowID, pCloudConf, setPCloudConf,
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {pCloud?.youTubeLink && (
+        <TutorialLink
+          title={pCloud?.title}
+          youTubeLink={pCloud?.youTubeLink}
+        />
+      )}
+      {pCloud?.docLink && (
+        <TutorialLink
+          title={pCloud?.title}
+          docLink={pCloud?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={pCloudConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

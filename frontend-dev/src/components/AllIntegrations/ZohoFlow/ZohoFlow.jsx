@@ -7,6 +7,8 @@ import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import WebHooksLayouts from '../IntegrationHelpers/WebHook/WebHooksIntegration'
 import WebHooksStepTwo from '../IntegrationHelpers/WebHook/WebHooksStepTwo'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 function ZohoFlow({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -14,6 +16,7 @@ function ZohoFlow({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [isLoading, setIsLoading] = useState(false)
+  const { zohoFlowLinks } = tutorialLinks
   const [zohoFlow, setZohoFlow] = useState({
     name: 'Zoho Flow Web Hooks',
     type: 'Zoho Flow',
@@ -29,6 +32,19 @@ function ZohoFlow({ formFields, setFlow, flow, allIntegURL }) {
 
       {/* STEP 1 */}
       <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+        {zohoFlowLinks?.youTubeLink && (
+          <TutorialLink
+            title={zohoFlowLinks?.title}
+            youTubeLink={zohoFlowLinks?.youTubeLink}
+          />
+        )}
+        {zohoFlowLinks?.docLink && (
+          <TutorialLink
+            title={zohoFlowLinks?.title}
+            docLink={zohoFlowLinks?.docLink}
+          />
+        )}
+
         <WebHooksLayouts
           formID={formID}
           formFields={formFields}

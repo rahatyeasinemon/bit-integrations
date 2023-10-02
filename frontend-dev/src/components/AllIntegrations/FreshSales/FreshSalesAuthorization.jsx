@@ -4,10 +4,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { handleAuthorize } from './FreshSalesCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function FreshSalesAuthorization({ freshSalesConf, setFreshSalesConf, step, setstep, isLoading, setIsLoading, isInfo }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
+  const { freshSales } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -41,6 +44,19 @@ export default function FreshSalesAuthorization({ freshSalesConf, setFreshSalesC
         ...{ height: step === 1 && 'auto' },
       }}
     >
+      {freshSales?.youTubeLink && (
+        <TutorialLink
+          title={freshSales?.title}
+          youTubeLink={freshSales?.youTubeLink}
+        />
+      )}
+      {freshSales?.docLink && (
+        <TutorialLink
+          title={freshSales?.title}
+          docLink={freshSales?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Bundle Alias(Your Account URL):', 'bit-integrations')}</b>
       </div>

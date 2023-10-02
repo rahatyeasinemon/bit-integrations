@@ -4,6 +4,8 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function SliceWpAuthorization({ formID,
   sliceWpConf,
@@ -15,6 +17,7 @@ export default function SliceWpAuthorization({ formID,
   setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { sliceWp } = tutorialLinks
 
   const authorizeHandler = () => {
     setIsLoading('auth')
@@ -42,6 +45,19 @@ export default function SliceWpAuthorization({ formID,
         height: step === 1 && 'auto',
       }}
     >
+      {sliceWp?.youTubeLink && (
+        <TutorialLink
+          title={sliceWp?.title}
+          youTubeLink={sliceWp?.youTubeLink}
+        />
+      )}
+      {sliceWp?.docLink && (
+        <TutorialLink
+          title={sliceWp?.title}
+          docLink={sliceWp?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>

@@ -5,10 +5,13 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
 import { woodpeckerAuthentication } from './WoodpeckerCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function WoodpeckerAuthorization({ woodpeckerConf, setWoodpeckerConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ api_token: '' })
+  const { woodpecker } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -38,6 +41,19 @@ export default function WoodpeckerAuthorization({ woodpeckerConf, setWoodpeckerC
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {woodpecker?.youTubeLink && (
+        <TutorialLink
+          title={woodpecker?.title}
+          youTubeLink={woodpecker?.youTubeLink}
+        />
+      )}
+      {woodpecker?.docLink && (
+        <TutorialLink
+          title={woodpecker?.title}
+          docLink={woodpecker?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={woodpeckerConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

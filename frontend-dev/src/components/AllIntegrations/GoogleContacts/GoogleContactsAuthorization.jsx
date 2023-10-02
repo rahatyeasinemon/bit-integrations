@@ -6,11 +6,14 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { handleAuthorize } from './GoogleContactsCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function GoogleContactsAuthorization({ flowID, googleContactsConf, setGoogleContactsConf, step, setStep, isLoading, setIsLoading, setSnackbar, redirectLocation, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
   const btcbi = useRecoilValue($btcbi)
+  const { googleContacts } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
@@ -31,6 +34,19 @@ export default function GoogleContactsAuthorization({ flowID, googleContactsConf
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {googleContacts?.youTubeLink && (
+        <TutorialLink
+          title={googleContacts?.title}
+          youTubeLink={googleContacts?.youTubeLink}
+        />
+      )}
+      {googleContacts?.docLink && (
+        <TutorialLink
+          title={googleContacts?.title}
+          docLink={googleContacts?.docLink}
+        />
+      )}
+
       <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={googleContactsConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
 

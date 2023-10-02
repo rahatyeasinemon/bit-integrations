@@ -4,6 +4,8 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function GiveWpAuthorization({ formID,
   giveWpConf,
@@ -15,6 +17,7 @@ export default function GiveWpAuthorization({ formID,
   setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const { giveWp } = tutorialLinks
 
   const authorizeHandler = () => {
     setIsLoading('auth')
@@ -42,6 +45,19 @@ export default function GiveWpAuthorization({ formID,
         height: step === 1 && 'auto',
       }}
     >
+      {giveWp?.youTubeLink && (
+        <TutorialLink
+          title={giveWp?.title}
+          youTubeLink={giveWp?.youTubeLink}
+        />
+      )}
+      {giveWp?.docLink && (
+        <TutorialLink
+          title={giveWp?.title}
+          docLink={giveWp?.docLink}
+        />
+      )}
+
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>
