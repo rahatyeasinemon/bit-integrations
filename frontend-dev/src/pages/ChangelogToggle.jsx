@@ -56,6 +56,7 @@ export default function ChangelogToggle() {
 
                         <div className='fixes-list'>
                             <ul>
+                                <li>Loading time Optimized. <span className='pro'>Pro</span></li>
                                 <li>CopperCRM email field mapping & success message issue fixed</li>
                                 <li>Groundhogg Tag id issue fixed</li>
                                 <li>Insightly authorization & next button issue fixed</li>
