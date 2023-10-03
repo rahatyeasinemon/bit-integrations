@@ -52,7 +52,7 @@ final class HubspotController
         if (isset($apiResponse->results) && !empty($apiResponse->results)) {
             foreach ($apiResponse->results as $field) {
                 if ($requestParams->type == 'contact') {
-                    if ($field->formField === true) {
+                    if ($field->formField === true && $field->type != 'radio' && $field->type != 'enumeration') {
                         $fields[] = [
                             'key'      => $field->name,
                             'label'    => $field->label,
