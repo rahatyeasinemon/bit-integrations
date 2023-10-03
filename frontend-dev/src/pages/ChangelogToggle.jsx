@@ -27,7 +27,7 @@ export default function ChangelogToggle() {
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
                         <h3>{__(`What\'s New in ${btcbi.isPro ? '(1.4.2)' : '(1.5.0)'}?`)}</h3>
-                        <small>02 October 2023</small>
+                        <small>03 October 2023</small>
                     </div>
                     <div className='changelog-content'>
                         {/* <h4>New Integration</h4>

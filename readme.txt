@@ -1423,7 +1423,7 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 == Changelog ==
 
 = 1.5.0  =
-*Release Date - *2nd October 2023\*
+*Release Date - *3rd October 2023\*
 
 - **New Triggers :**
   - Academy LMS: eLearning and online course solution for WordPress
