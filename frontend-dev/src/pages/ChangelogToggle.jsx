@@ -14,7 +14,7 @@ export default function ChangelogToggle() {
     return (
         <div className="changelog-toggle">
             <button
-                title={__('What\'s New')}
+                title={('What\'s New')}
                 type="button"
                 className="changelog-btn"
                 onClick={() => setShow(true)}
