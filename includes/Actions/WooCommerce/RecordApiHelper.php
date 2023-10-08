@@ -39,33 +39,33 @@ class RecordApiHelper
                 }
             }
         }
-        $existUser = get_user_by('email', $fieldDataCustomer['user_email']);
-        if (in_array('customer', (array) $existUser->roles)) {
-            return $existUser->ID;
+        // $existUser = get_user_by('email', $fieldDataCustomer['user_email']);
+        // if (in_array('customer', (array) $existUser->roles)) {
+        //     return $existUser->ID;
+        // } else {
+        $user_fields = ['user_pass', 'user_login', 'user_nicename', 'user_url', 'user_email', 'display_name', 'nickname', 'first_name', 'last_name', 'description', 'locale'];
+
+        $user_inputs = array_intersect_key($fieldDataCustomer, array_flip($user_fields));
+        $meta_inputs = array_diff_key($fieldDataCustomer, array_flip($user_fields));
+
+        $fieldData = $user_inputs;
+        $fieldData['role'] = 'customer';
+
+        $user_id = wp_insert_user($fieldData);
+
+        if (is_wp_error($user_id) || !$user_id) {
+            $response = is_wp_error($user_id) ? $user_id->get_error_message() : 'error';
+            return LogHandler::save($this->_integrationID, ['type' => 'customer', 'type_name' => 'create'], 'error', $response);
         } else {
-            $user_fields = ['user_pass', 'user_login', 'user_nicename', 'user_url', 'user_email', 'display_name', 'nickname', 'first_name', 'last_name', 'description', 'locale'];
-
-            $user_inputs = array_intersect_key($fieldDataCustomer, array_flip($user_fields));
-            $meta_inputs = array_diff_key($fieldDataCustomer, array_flip($user_fields));
-
-            $fieldData = $user_inputs;
-            $fieldData['role'] = 'customer';
-
-            $user_id = wp_insert_user($fieldData);
-
-            if (is_wp_error($user_id) || !$user_id) {
-                $response = is_wp_error($user_id) ? $user_id->get_error_message() : 'error';
-                return LogHandler::save($this->_integrationID, ['type' => 'customer', 'type_name' => 'create'], 'error', $response);
-            } else {
-                do_action('woocommerce_update_customer', $user_id);
-                LogHandler::save($this->_integrationID, ['type' => 'customer', 'type_name' => 'create'], 'success', $user_id);
-            }
-
-            foreach ($meta_inputs as $metaKey => $metaValue) {
-                update_user_meta($user_id, $metaKey, $metaValue);
-            }
-            return $user_id;
+            do_action('woocommerce_update_customer', $user_id);
+            LogHandler::save($this->_integrationID, ['type' => 'customer', 'type_name' => 'create'], 'success', $user_id);
         }
+
+        foreach ($meta_inputs as $metaKey => $metaValue) {
+            update_user_meta($user_id, $metaKey, $metaValue);
+        }
+        return $user_id;
+        // }
     }
 
     public function findCustomer($fieldMapCustomer, $required, $module, $fieldValues)
