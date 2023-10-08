@@ -10,11 +10,11 @@ import Modal from '../components/Utilities/Modal'
 export default function ChangelogToggle() {
     const btcbi = useRecoilValue($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-
+    const version = btcbi.isPro ? '1.4.2' : '1.5.0'
     return (
         <div className="changelog-toggle">
             <button
-                title={__('What\'s New')}
+                title={('What\'s New')}
                 type="button"
                 className="changelog-btn"
                 onClick={() => setShow(true)}
@@ -26,8 +26,8 @@ export default function ChangelogToggle() {
                 <div className='changelog'>
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
-                        <h3>{__(`What\'s New in ${btcbi.isPro ? '(1.4.2)' : '(1.5.0)'}?`)}</h3>
-                        <small>02 October 2023</small>
+                        <h3>What's New in {version}?</h3>
+                        <small>03 October 2023</small>
                     </div>
                     <div className='changelog-content'>
                         {/* <h4>New Integration</h4>
