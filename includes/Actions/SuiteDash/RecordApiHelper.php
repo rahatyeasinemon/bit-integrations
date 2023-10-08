@@ -52,17 +52,15 @@ class RecordApiHelper
         }
 
         $contactData = ['role' => $this->integrationDetails->selectedRole];
+        $customField = [];
+        $addressField = [];
         foreach ($finalData as $key => $value) {
             if (stripos($key, "address-") === false && stripos($key, "custom-") === false) {
                 $contactData[$key] = $value;
             } elseif (stripos($key, "address-") > -1) {
-                $contactData["address"] = (object)[
-                    str_replace('address-', '', $key) => $value
-                ];
+                $addressField[str_replace('address-', '', $key)] = $value;
             } elseif (stripos($key, "custom-") > -1) {
-                $contactData["custom_fields"] = (object)[
-                    str_replace('custom-', '', $key) => $value
-                ];
+                $customField[str_replace('custom-', '', $key)] = $value;
             }
         }
 
@@ -71,6 +69,12 @@ class RecordApiHelper
                 "name"                         => $this->integrationDetails->selectedCompany,
                 "create_company_if_not_exists" => true
             ];
+        }
+        if (count($customField)) {
+            $contactData["custom_fields"] = (object) $customField;
+        }
+        if (count($addressField)) {
+            $contactData["address"] = (object) $addressField;
         }
 
         $apiEndpoint = $this->apiUrl . "/contact";
