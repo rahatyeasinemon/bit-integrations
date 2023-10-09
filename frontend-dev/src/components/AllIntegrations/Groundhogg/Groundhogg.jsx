@@ -81,6 +81,14 @@ function Groundhogg({ formFields, setFlow, flow, allIntegURL }) {
       setSnackbar({ show: true, msg: 'Please map fields to continue.' })
       return
     }
+    if (groundhoggConf.mainAction === '2' && groundhoggConf?.emailAddress === '') {
+      setSnackbar({ show: true, msg: 'Please select Email field to continue.' })
+      return
+    }
+    if (groundhoggConf.mainAction === '2' && groundhoggConf?.addTagToUser === '') {
+      setSnackbar({ show: true, msg: 'Please select All Tags field to continue.' })
+      return
+    }
     if (groundhoggConf.listId !== '') {
       setstep(3)
     }
