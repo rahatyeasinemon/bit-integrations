@@ -1,6 +1,6 @@
 === Automation Plugin for WordPress : Best no-code Automator & Integration tool to Automate 200+ Platforms - Bit Integrations ===
 Contributors: bitpressadmin
-Tags: automation,integration,connector,workflow automation,automator,Zapier,Platform integrations,Wp WebHooks,Pabbly,Integrately
+Tags: automation,integration,connector,automator,Zapier,webhook,workflow,Platform integrations,Wp WebHooks,Pabbly,Integrately
 Requires at least: 5.1
 Tested up to: 6.3
 Requires PHP: 7.4
