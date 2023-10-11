@@ -4,7 +4,8 @@ import { $btcbi } from '../../../GlobalStates'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import { __ } from '../../../Utils/i18nwrap'
 import CustomField from './CustomField'
-import { addFieldMap, delFieldMap, handleFieldMapping } from './IntegrationHelpers'
+import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from './IntegrationHelpers'
+import TagifyInput from '../../Utilities/TagifyInput'
 
 export default function GravitecFieldMap({ i, formFields, field, gravitecConf, setGravitecConf }) {
   const requiredFields = gravitecConf?.notificationFields && gravitecConf?.notificationFields.filter(fld => fld.required === true) || []
@@ -41,15 +42,7 @@ export default function GravitecFieldMap({ i, formFields, field, gravitecConf, s
           </select>
 
           {field.formField === 'custom' && (
-            <CustomField
-              field={field}
-              index={i}
-              conf={gravitecConf}
-              setConf={setGravitecConf}
-              fieldValue="customValue"
-              fieldLabel="Custom Value"
-              className="mr-2"
-            />
+            <TagifyInput onChange={e => handleCustomValue(e, i, gravitecConf, setGravitecConf)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue || ''} placeholder={__('Custom Value', 'bit-integrations')} formFields={formFields} />
           )}
 
           <select className="btcd-paper-inp" disabled={i < requiredFields.length} name="gravitecFormField" value={i < requiredFields.length ? (requiredFields[i].key || '') : (field.gravitecFormField || '')} onChange={(ev) => handleFieldMapping(ev, i, gravitecConf, setGravitecConf)}>
