@@ -38,27 +38,28 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field task name is empty', 'code' => 400];
         }
         $staticFieldsKeys = ['name', 'due_at', "due_on", 'notes'];
-
+        $customFields = [];
         foreach ($finalData as $key => $value) {
             if (in_array($key, $staticFieldsKeys)) {
                 $requestParams[$key] = $value;
             } else {
-                $requestParams['custom_fields'][] = (object) [
-                    $key   => $value,
-                ];
+                $customFields[$key] = $value;
             }
         }
 
         if (!empty($this->integrationDetails->selectedProject)) {
-            $requestParams['projects'][] =($this->integrationDetails->selectedProject);
+            $requestParams['projects'][] = ($this->integrationDetails->selectedProject);
+        }
+        if (count($customFields)) {
+            $requestParams['custom_fields'] = $customFields;
         }
 
         $this->type     = 'Task';
         $this->typeName = 'Task created';
 
-        $apiEndpoint = $this->apiUrl."tasks";
+        $apiEndpoint = $this->apiUrl . "tasks";
 
-        $response = HttpHelper::post($apiEndpoint, json_encode(['data'=>$requestParams]), $this->defaultHeader);
+        $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $requestParams]), $this->defaultHeader);
         if (!isset($this->integrationDetails->selectedSections)) {
             return $response;
         } else {
@@ -70,9 +71,9 @@ class RecordApiHelper
 
     public function addTaskToSection($taskId, $sectionId)
     {
-        $apiEndpoint = $this->apiUrl."sections/".$sectionId."/addTask";
+        $apiEndpoint = $this->apiUrl . "sections/" . $sectionId . "/addTask";
         $requestParams['task'] = $taskId;
-        $response = HttpHelper::post($apiEndpoint, json_encode(['data'=>$requestParams]), $this->defaultHeader);
+        $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $requestParams]), $this->defaultHeader);
         return $response;
     }
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -105,7 +106,7 @@ class RecordApiHelper
             $apiResponse = $this->addTask($finalData);
         }
 
-        if ($apiResponse->data->id || $apiResponse->status === 'success') {
+        if ($apiResponse->data || $apiResponse->status === 'success') {
             $res = [$this->typeName . ' successfully'];
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
         } else {
