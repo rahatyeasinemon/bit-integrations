@@ -1,8 +1,11 @@
 <?php
+
 namespace BitCode\FI\Core\Util;
 
-final class Common {
-    public static function replaceFieldWithValue($dataToReplaceField, $fieldValues) {
+final class Common
+{
+    public static function replaceFieldWithValue($dataToReplaceField, $fieldValues)
+    {
         if (empty($dataToReplaceField)) {
             return $dataToReplaceField;
         }
@@ -30,7 +33,8 @@ final class Common {
 
      * @return boolean
      */
-    public static function isEmpty($val) {
+    public static function isEmpty($val)
+    {
         if (empty($val) && !in_array($val, ['0', 0, 0.0], true)) {
             return true;
         }
@@ -38,7 +42,8 @@ final class Common {
         return false;
     }
 
-    private static function replaceFieldWithValueHelper($stringToReplaceField, $fieldValues) {
+    private static function replaceFieldWithValueHelper($stringToReplaceField, $fieldValues)
+    {
 
         if (empty($stringToReplaceField)) {
             return $stringToReplaceField;
@@ -51,13 +56,15 @@ final class Common {
             $smartTagValue = SmartTags::getSmartTagValue($fieldName, true);
             if (isset($fieldValues[$fieldName]) && !self::isEmpty($fieldValues[$fieldName])) {
                 $stringToReplaceField = !is_array($fieldValues[$fieldName]) ? str_replace($value, $fieldValues[$fieldName], $stringToReplaceField) :
-                wp_json_encode($fieldValues[$fieldName]);
+                    str_replace($value, wp_json_encode($fieldValues[$fieldName]), $stringToReplaceField);
             } elseif (!empty($smartTagValue)) {
                 $stringToReplaceField = str_replace($value, $smartTagValue, $stringToReplaceField);
             } else {
                 $stringToReplaceField = str_replace($value, '', $stringToReplaceField);
             }
+            // error_log(print_r($stringToReplaceField, true));
         }
+        // die;
         return $stringToReplaceField;
     }
 
@@ -68,7 +75,8 @@ final class Common {
      *
      * @return String | Array
      */
-    public static function filePath($file) {
+    public static function filePath($file)
+    {
         $upDir = wp_upload_dir();
         $fileBaseURL = $upDir['baseurl'];
         $fileBasePath = $upDir['basedir'];
@@ -91,7 +99,8 @@ final class Common {
      *
      * @return boolean
      */
-    public static function checkCondition($condition, $data) {
+    public static function checkCondition($condition, $data)
+    {
         if (is_array($condition)) {
             foreach ($condition as $sskey => $ssvalue) {
                 if (!is_string($ssvalue)) {
@@ -101,16 +110,16 @@ final class Common {
                     }
                     if ($sskey - 1 >= 0 && is_string($condition[$sskey - 1])) {
                         switch (strtolower($condition[$sskey - 1])) {
-                        case 'or':
-                            $conditionSatus = $conditionSatus || $isCondition;
-                            break;
+                            case 'or':
+                                $conditionSatus = $conditionSatus || $isCondition;
+                                break;
 
-                        case 'and':
-                            $conditionSatus = $conditionSatus && $isCondition;
-                            break;
+                            case 'and':
+                                $conditionSatus = $conditionSatus && $isCondition;
+                                break;
 
-                        default:
-                            break;
+                            default:
+                                break;
                         }
                     }
                 }
@@ -129,143 +138,143 @@ final class Common {
                 $isArr = false;
             }
             switch ($condition->logic) {
-            case 'equal':
-                if ($isArr) {
-                    if (count($valueToCheck) !== count($fieldValue)) {
+                case 'equal':
+                    if ($isArr) {
+                        if (count($valueToCheck) !== count($fieldValue)) {
+                            return false;
+                        }
+                        $checker = 0;
+                        foreach ($valueToCheck as $key => $value) {
+                            if (!empty($fieldValue) && \in_array($value, $fieldValue)) {
+                                $checker = $checker + 1;
+                            }
+                        }
+                        if ($checker === count($valueToCheck) && count($valueToCheck) === count($fieldValue)) {
+                            return true;
+                        }
                         return false;
                     }
-                    $checker = 0;
-                    foreach ($valueToCheck as $key => $value) {
-                        if (!empty($fieldValue) && \in_array($value, $fieldValue)) {
-                            $checker = $checker + 1;
+                    return $fieldValue === $valueToCheck;
+
+                case 'not_equal':
+                    if ($isArr) {
+                        $valueToCheckLenght = count($valueToCheck);
+                        if ($valueToCheckLenght !== count($fieldValue)) {
+                            return true;
                         }
-                    }
-                    if ($checker === count($valueToCheck) && count($valueToCheck) === count($fieldValue)) {
-                        return true;
-                    }
-                    return false;
-                }
-                return $fieldValue === $valueToCheck;
-
-            case 'not_equal':
-                if ($isArr) {
-                    $valueToCheckLenght = count($valueToCheck);
-                    if ($valueToCheckLenght !== count($fieldValue)) {
-                        return true;
-                    }
-                    $checker = 0;
-                    foreach ($valueToCheck as $key => $value) {
-                        if (!in_array($value, $fieldValue)) {
-                            $checker += 1;
+                        $checker = 0;
+                        foreach ($valueToCheck as $key => $value) {
+                            if (!in_array($value, $fieldValue)) {
+                                $checker += 1;
+                            }
                         }
+                        return $valueToCheckLenght === $checker;
                     }
-                    return $valueToCheckLenght === $checker;
-                }
-                return $fieldValue !== $valueToCheck;
+                    return $fieldValue !== $valueToCheck;
 
-            case 'null':
-                return empty($data[$condition->field]);
+                case 'null':
+                    return empty($data[$condition->field]);
 
-            case 'not_null':
-                return !empty($data[$condition->field]);
+                case 'not_null':
+                    return !empty($data[$condition->field]);
 
-            case 'contain':
-                if (empty($fieldValue)) {
-                    return false;
-                }
-                if ($isArr) {
-                    $checker = 0;
-                    foreach ($valueToCheck as $key => $value) {
-                        if (\in_array($value, $fieldValue)) {
-                            $checker = $checker + 1;
+                case 'contain':
+                    if (empty($fieldValue)) {
+                        return false;
+                    }
+                    if ($isArr) {
+                        $checker = 0;
+                        foreach ($valueToCheck as $key => $value) {
+                            if (\in_array($value, $fieldValue)) {
+                                $checker = $checker + 1;
+                            }
                         }
-                    }
-                    if ($checker > 0) {
-                        return true;
-                    }
-                    return false;
-                }
-                return stripos($fieldValue, $valueToCheck) !== false;
-
-            case 'contain_all':
-                if (empty($fieldValue)) {
-                    return false;
-                }
-                if ($isArr) {
-                    $checker = 0;
-                    foreach ($valueToCheck as $key => $value) {
-                        if (\in_array($value, $fieldValue)) {
-                            $checker = $checker + 1;
+                        if ($checker > 0) {
+                            return true;
                         }
+                        return false;
                     }
-                    if ($checker >= count($valueToCheck)) {
-                        return true;
-                    }
-                    return false;
-                }
-                return stripos($fieldValue, $valueToCheck) !== false;
+                    return stripos($fieldValue, $valueToCheck) !== false;
 
-            case 'not_contain':
-                if (empty($fieldValue)) {
-                    return false;
-                }
-                if ($isArr) {
-                    $checker = 0;
-                    foreach ($valueToCheck as $key => $value) {
-                        if (!in_array($value, $fieldValue)) {
-                            $checker = $checker + 1;
+                case 'contain_all':
+                    if (empty($fieldValue)) {
+                        return false;
+                    }
+                    if ($isArr) {
+                        $checker = 0;
+                        foreach ($valueToCheck as $key => $value) {
+                            if (\in_array($value, $fieldValue)) {
+                                $checker = $checker + 1;
+                            }
                         }
+                        if ($checker >= count($valueToCheck)) {
+                            return true;
+                        }
+                        return false;
                     }
-                    if ($checker === count($valueToCheck)) {
-                        return true;
+                    return stripos($fieldValue, $valueToCheck) !== false;
+
+                case 'not_contain':
+                    if (empty($fieldValue)) {
+                        return false;
                     }
-                    return false;
-                }
-                return stripos($fieldValue, $valueToCheck) === false;
+                    if ($isArr) {
+                        $checker = 0;
+                        foreach ($valueToCheck as $key => $value) {
+                            if (!in_array($value, $fieldValue)) {
+                                $checker = $checker + 1;
+                            }
+                        }
+                        if ($checker === count($valueToCheck)) {
+                            return true;
+                        }
+                        return false;
+                    }
+                    return stripos($fieldValue, $valueToCheck) === false;
 
-            case 'greater':
-                if (empty($fieldValue)) {
-                    return false;
-                }
-                return $data[$condition->field] > $condition->val;
+                case 'greater':
+                    if (empty($fieldValue)) {
+                        return false;
+                    }
+                    return $data[$condition->field] > $condition->val;
 
-            case 'less':
-                if (empty($fieldValue)) {
-                    return false;
-                }
-                return $fieldValue < $valueToCheck;
+                case 'less':
+                    if (empty($fieldValue)) {
+                        return false;
+                    }
+                    return $fieldValue < $valueToCheck;
 
-            case 'greater_or_equal':
-                if (empty($fieldValue)) {
-                    return false;
-                }
-                return $fieldValue >= $valueToCheck;
+                case 'greater_or_equal':
+                    if (empty($fieldValue)) {
+                        return false;
+                    }
+                    return $fieldValue >= $valueToCheck;
 
-            case 'less_or_equal':
-                if (empty($fieldValue)) {
-                    return false;
-                }
-                return $fieldValue <= $valueToCheck;
+                case 'less_or_equal':
+                    if (empty($fieldValue)) {
+                        return false;
+                    }
+                    return $fieldValue <= $valueToCheck;
 
-            case 'start_with':
-                if (empty($fieldValue)) {
-                    return false;
-                }
-                return stripos($fieldValue, $valueToCheck) === 0;
+                case 'start_with':
+                    if (empty($fieldValue)) {
+                        return false;
+                    }
+                    return stripos($fieldValue, $valueToCheck) === 0;
 
-            case 'end_with':
-                if (empty($fieldValue)) {
-                    return false;
-                }
-                $fieldValue = $fieldValue;
-                $fieldValueLength = strlen($fieldValue);
-                $compareValue = strtolower($valueToCheck);
-                $compareValueLength = strlen($valueToCheck);
-                $fieldValueEnds = strtolower(substr($fieldValue, $fieldValueLength - $compareValueLength, $fieldValueLength));
-                return $compareValue === $fieldValueEnds;
+                case 'end_with':
+                    if (empty($fieldValue)) {
+                        return false;
+                    }
+                    $fieldValue = $fieldValue;
+                    $fieldValueLength = strlen($fieldValue);
+                    $compareValue = strtolower($valueToCheck);
+                    $compareValueLength = strlen($valueToCheck);
+                    $fieldValueEnds = strtolower(substr($fieldValue, $fieldValueLength - $compareValueLength, $fieldValueLength));
+                    return $compareValue === $fieldValueEnds;
 
-            default:
-                return false;
+                default:
+                    return false;
             }
         }
     }
