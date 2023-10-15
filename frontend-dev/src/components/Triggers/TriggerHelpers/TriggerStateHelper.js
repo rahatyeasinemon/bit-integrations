@@ -381,8 +381,8 @@ export const wooCommerceStateIH = (tmpConf, flowData) => {
   return tmpConf
 }
 
-export const groundhoggStateIH = (tmpConf, flowData) => {
-  if (flowData.formID === '2' || flowData.formID === '3') {
+export const groundhoggStateIH = (tmpConf, flowData, formID) => {
+  if (formID === '2' || formID === '3') {
     tmpConf.selectedTag = flowData.selectedTag
   }
   return tmpConf

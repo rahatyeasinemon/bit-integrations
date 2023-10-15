@@ -25,6 +25,8 @@ import TriggerMultiOption from '../Triggers/TriggerMultiOption'
 import { getAllMasterStudyLmsCourse, getAllMasterStudyLmsLesson } from '../Triggers/TriggerHelpers/MasterStudyLmsHelper/MasterStudyLmsCommonFunction.js'
 import { getAllThriveApprenticeCourse, getAllThriveApprenticeLesson, getAllThriveApprenticeModule } from '../Triggers/TriggerHelpers/ThriveApprenticeHelper/ThriveApprenticeCommonFunction'
 import { getAllUMrole } from '../Triggers/TriggerHelpers/UltimateMemberHelper/UltimatedMemberCommonFunction'
+import { getAllGroundhoggTags } from '../Triggers/TriggerHelpers/GroundhoggHelper/GroundhoggCommonFunction'
+import { create } from 'mutative'
 
 function EditFormInteg({ setSnackbar, className = '' }) {
   const [forms, setForms] = useState([])
@@ -33,10 +35,15 @@ function EditFormInteg({ setSnackbar, className = '' }) {
   const setFormFields = useSetRecoilState($formFields)
   const setFlowData = (val, type) => {
     // const tmpFlow = deepCopy(flow)
-    const tmpFlow = { ...flow }
-    tmpFlow.flow_details[type] = val
-    setFlow({ ...tmpFlow })
+    // const tmpFlow = { ...flow }
+    // tmpFlow.flow_details[type] = val
+    // console.log(tmpFlow.flow_details)
+    // setFlow({ ...tmpFlow })
+    setFlow(prevFlow => create(prevFlow, (draftFlow) => {
+      draftFlow.flow_details[type] = val
+    }))
   }
+  // console.log(flow.flow_details)
   const handle = (e) => {
     const tmpInteg = { ...flow }
     const { name, value } = e.target
@@ -212,6 +219,11 @@ function EditFormInteg({ setSnackbar, className = '' }) {
         getAllMasterStudyLmsLesson(data, setFlow)
       }
     }
+    if (trigger === 'Groundhogg') {
+      if ([2, 3].includes(Number(data.triggered_entity_id))) {
+        getAllGroundhoggTags(data, setFlow)
+      }
+    }
     if (trigger === 'ThriveApprentice') {
       if ([1].includes(Number(data.triggered_entity_id))) {
         getAllThriveApprenticeCourse(data, setFlow)
@@ -253,7 +265,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
           ))}
         </select>
       </div>
-      <TriggerMultiOption flow={flow} setFlowData={setFlowData} edit />
+      <TriggerMultiOption flow={flow} setFlowData={setFlowData} edit={true} />
     </>
   )
 }

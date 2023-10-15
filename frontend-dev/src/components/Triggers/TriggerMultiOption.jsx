@@ -26,7 +26,7 @@ const TriggerMultiOption = ({ flow, setFlowData, edit = false }) => (
   <div>
     {flow?.triggered_entity === 'TutorLms' && <TutorLmsHelper flow={flow} setFlowData={setFlowData} />}
     {flow?.triggered_entity === 'WC' && <WooCommerceHelper flow={flow} setFlowData={setFlowData} edit={edit} />}
-    {flow?.triggered_entity === 'Groundhogg' && <GroundhoggHelper flow={flow} setFlowData={setFlowData} />}
+    {flow?.triggered_entity === 'Groundhogg' && <GroundhoggHelper flow={flow} setFlowData={setFlowData} edit={edit} />}
     {flow?.triggered_entity === 'RestrictContent' && <RestrictContentHelper flow={flow} setFlowData={setFlowData} edit={edit} />}
     {flow?.triggered_entity === 'WPCourseware' && <WPCoursewareHelper flow={flow} setFlowData={setFlowData} />}
     {flow?.triggered_entity === 'FluentCrm' && <FluentCrmHelper flow={flow} setFlowData={setFlowData} edit={edit} />}

@@ -247,4 +247,22 @@ final class GroundhoggController
         }
         return $forms;
     }
+
+    public static function getAllTags()
+    {
+        $tags = new Tags();
+        $allTag = [];
+        $allTag[] = [
+            'tag_id' => 'any',
+            'tag_name' => 'Any Tag',
+        ];
+
+        foreach ($tags->get_tags() as $val) {
+            $allTag[] = [
+                'tag_id' => $val->tag_id,
+                'tag_name' => $val->tag_name,
+            ];
+        }
+        wp_send_json_success($allTag);
+    }
 }
