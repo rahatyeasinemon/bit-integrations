@@ -3,6 +3,7 @@
 /**
  * BuddyBoss Record Api
  */
+
 namespace BitCode\FI\Actions\BuddyBoss;
 
 use BitCode\FI\Core\Util\Common;
@@ -78,8 +79,12 @@ class RecordApiHelper
     {
         $user_id = get_current_user_id();
         if (function_exists('groups_join_group')) {
-            groups_join_group($groupId, $user_id);
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'add-user-to-group']), 'success', json_encode('Successfully add user to group'));
+            $response = groups_join_group($groupId, $user_id);
+            if ($response) {
+                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'add-user-to-group']), 'success', json_encode('Successfully add user to group'));
+            } else {
+                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'add-user-to-group']), 'error', json_encode('Unauthorized user'));
+            }
         } else {
             LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'add-user-to-group']), 'error', json_encode('Failed to add user to group'));
         }
@@ -104,7 +109,7 @@ class RecordApiHelper
             'follower_id' => $user_id,
             'leader_id' => $friendId,
         ];
-        
+
 
         if ($user_id === $friendId) {
             LogHandler::save(self::$integrationID, json_encode(['type' => 'friend', 'type_name' => 'follow-user']), 'error', json_encode('A user can not follow itself. '));
@@ -136,12 +141,12 @@ class RecordApiHelper
             'topic_author' => $user_id,
         ];
 
-        if (! empty($forum_id)) {
+        if (!empty($forum_id)) {
             if (bbp_is_forum_category($forum_id)) {
                 LogHandler::save(self::$integrationID, json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', json_encode('Sorry, This forum is a category. No discussions can be created in this forum. '));
                 return;
             } else {
-                if (bbp_is_forum_closed($forum_id) && ! current_user_can('edit_forum', $forum_id)) {
+                if (bbp_is_forum_closed($forum_id) && !current_user_can('edit_forum', $forum_id)) {
                     LogHandler::save(self::$integrationID, json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', json_encode('Sorry, This forum has been closed to new discussions. '));
                     return;
                 }
@@ -150,7 +155,7 @@ class RecordApiHelper
                 $group_ids = array();
                 if (function_exists('bbp_get_forum_group_ids')) {
                     $group_ids = bbp_get_forum_group_ids($forum_id);
-                    if (! empty($group_ids)) {
+                    if (!empty($group_ids)) {
                         foreach ($group_ids as $group_id) {
                             if (groups_is_user_member($user_id, $group_id)) {
                                 $is_member = true;
@@ -160,18 +165,18 @@ class RecordApiHelper
                     }
                 }
 
-                if (bbp_is_forum_private($forum_id) && ! bbp_is_user_keymaster()) {
+                if (bbp_is_forum_private($forum_id) && !bbp_is_user_keymaster()) {
                     if (
-                        (empty($group_ids) && ! current_user_can('read_private_forums'))
-                        || (! empty($group_ids) && ! $is_member)
+                        (empty($group_ids) && !current_user_can('read_private_forums'))
+                        || (!empty($group_ids) && !$is_member)
                     ) {
                         LogHandler::save(self::$integrationID, json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', json_encode('Sorry, This forum is private and you do not have the capability to read or create new discussions in it. '));
                         return;
                     }
-                } elseif (bbp_is_forum_hidden($forum_id) && ! bbp_is_user_keymaster()) {
+                } elseif (bbp_is_forum_hidden($forum_id) && !bbp_is_user_keymaster()) {
                     if (
-                        (empty($group_ids) && ! current_user_can('read_hidden_forums'))
-                        || (! empty($group_ids) && ! $is_member)
+                        (empty($group_ids) && !current_user_can('read_hidden_forums'))
+                        || (!empty($group_ids) && !$is_member)
                     ) {
                         LogHandler::save(self::$integrationID, json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', json_encode('Sorry, This forum is hidden and you do not have the capability to read or create new discussions in it.'));
                         return;
@@ -180,7 +185,7 @@ class RecordApiHelper
             }
         }
 
-        if (! bbp_check_for_duplicate(
+        if (!bbp_check_for_duplicate(
             array(
                 'post_type'      => bbp_get_topic_post_type(),
                 'post_author'    => $user_id,
@@ -193,7 +198,7 @@ class RecordApiHelper
 
 
 
-        if (! bbp_check_for_blacklist(null, $user_id, do_shortcode($finalData['topic_title']), do_shortcode($finalData['topic_content']))) {
+        if (!bbp_check_for_blacklist(null, $user_id, do_shortcode($finalData['topic_title']), do_shortcode($finalData['topic_content']))) {
             LogHandler::save(self::$integrationID, json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', json_encode('Sorry, Your discussion cannot be created at this time.'));
             return;
         }
@@ -242,7 +247,7 @@ class RecordApiHelper
 
             if (true === $subscribed && empty($topic->bbp_topic_subscription)) {
                 bbp_remove_user_subscription($author_id, $topic_id);
-            } elseif (false === $subscribed && ! empty($topic->bbp_topic_subscription)) {
+            } elseif (false === $subscribed && !empty($topic->bbp_topic_subscription)) {
                 bbp_add_user_subscription($author_id, $topic_id);
             }
         }
@@ -263,7 +268,7 @@ class RecordApiHelper
 
         if ($group_id === "any") {
             $all_user_groups = groups_get_user_groups($user_id);
-            if (! empty($all_user_groups['groups'])) {
+            if (!empty($all_user_groups['groups'])) {
                 foreach ($all_user_groups['groups'] as $group) {
                     $result = groups_leave_group($group, $user_id);
                 }
@@ -294,10 +299,11 @@ class RecordApiHelper
         ];
 
         if (function_exists('groups_get_group_members')) {
-            $members = groups_get_group_members([ 'group_id'       => $group_id,
-                                                   'per_page'       => 999999,
-                                                   'type'           => 'last_joined',
-                                                   'exclude_banned' => true
+            $members = groups_get_group_members([
+                'group_id'       => $group_id,
+                'per_page'       => 999999,
+                'type'           => 'last_joined',
+                'exclude_banned' => true
             ]);
 
             if (isset($members['members'])) {
@@ -337,10 +343,10 @@ class RecordApiHelper
             'message_content' => do_shortcode($finalData['message_content']),
             'message_subject' => do_shortcode($finalData['message_subject']),
         ];
-        
+
 
         if (function_exists('groups_get_group_members')) {
-            $members = groups_get_group_members([ 'group_id' => $group_id, 'per_page' => -1, 'type' => 'last_joined', 'exclude_banned' => true ]);
+            $members = groups_get_group_members(['group_id' => $group_id, 'per_page' => -1, 'type' => 'last_joined', 'exclude_banned' => true]);
 
             if (isset($members['members'])) {
                 foreach ($members['members'] as $member) {
@@ -384,10 +390,10 @@ class RecordApiHelper
             'message_content' => do_shortcode($finalData['message_content']),
             'message_subject' => do_shortcode($finalData['message_subject']),
         ];
-        
+
         $msg = [
             'sender_id'  => $data['sender_id'],
-            'recipients' => [ $user_id ],
+            'recipients' => [$user_id],
             'subject'    => $data['message_subject'],
             'content'    => $data['message_content'],
             'error_type' => 'wp_error',
@@ -438,11 +444,11 @@ class RecordApiHelper
             if (is_wp_error($notification_id)) {
                 return false;
             } else {
-                if (! empty($data['notification_link'])) {
+                if (!empty($data['notification_link'])) {
                     $notification_content = '<a href="' . esc_attr(esc_url($data['notification_link'])) . '" title="' . esc_attr(wp_strip_all_tags($data['notification_content'])) . '">' . ($data['notification_content']) . '</a>';
                 }
 
-                
+
                 bp_notifications_update_meta($notification_id, 'uo_notification_content', $notification_content);
                 bp_notifications_update_meta($notification_id, 'uo_notification_link', $data['notification_link']);
                 return true;
@@ -490,7 +496,7 @@ class RecordApiHelper
         $user_id = get_current_user_id();
         $forum_ids = explode(',', $forumId);
 
-        if (! empty($forum_ids)) {
+        if (!empty($forum_ids)) {
             foreach ($forum_ids as $forum_id) {
                 $is_subscription = bbp_is_user_subscribed($user_id, (int)$forum_id);
                 $success         = false;
@@ -528,7 +534,7 @@ class RecordApiHelper
 
         if ('any' === $group_id) {
             global $wpdb;
-            $statuses   = [ 'public', 'private', 'hidden' ];
+            $statuses   = ['public', 'private', 'hidden'];
             $in_str_arr = array_fill(0, count($statuses), '%s');
             $in_str     = join(',', $in_str_arr);
             $group_qry  = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}bp_groups WHERE status IN ($in_str)", $statuses);
@@ -536,7 +542,7 @@ class RecordApiHelper
             if ($results) {
                 foreach ($results as $result) {
                     $hide_sitewide = false;
-                    if (in_array($result->status, [ 'private', 'hidden' ], true)) {
+                    if (in_array($result->status, ['private', 'hidden'], true)) {
                         $hide_sitewide = true;
                     }
                     $activity = bp_activity_add([
@@ -552,7 +558,7 @@ class RecordApiHelper
                     if (is_wp_error($activity)) {
                         break;
                     }
-                    if (! $activity) {
+                    if (!$activity) {
                         break;
                     }
                 }
@@ -564,7 +570,7 @@ class RecordApiHelper
             if ($results) {
                 foreach ($results as $result) {
                     $hide_sitewide = false;
-                    if (in_array($result->status, [ 'private', 'hidden' ], true)) {
+                    if (in_array($result->status, ['private', 'hidden'], true)) {
                         $hide_sitewide = true;
                     }
                     $activity = bp_activity_add([
@@ -580,7 +586,7 @@ class RecordApiHelper
                     if (is_wp_error($activity)) {
                         break;
                     }
-                    if (! $activity) {
+                    if (!$activity) {
                         break;
                     }
                 }
@@ -589,7 +595,7 @@ class RecordApiHelper
         if (is_wp_error($activity)) {
             $error_message = $activity->get_error_message();
             return $error_message;
-        } elseif (! $activity) {
+        } elseif (!$activity) {
             return $error_message = 'There is an error on posting stream.';
         } else {
             return $activity;
@@ -616,7 +622,7 @@ class RecordApiHelper
 
         return $activity;
     }
-    
+
     public static function postActivityUsersStream($friendId, $finalData)
     {
         $data = [
@@ -625,7 +631,7 @@ class RecordApiHelper
             'action_content' => $finalData['activity_content'],
         ];
 
-        
+
         $activity = bp_activity_add([
             'action'        => $data['action'],
             'content'       => $data['action_content'],
@@ -651,22 +657,22 @@ class RecordApiHelper
             'reply_to' => 0,
         ];
 
-        if (! bbp_get_topic($topic_id)) {
+        if (!bbp_get_topic($topic_id)) {
             LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode("Sorry, Discussion does not exist."));
             return;
         }
 
-        if (! bbp_get_forum($forum_id)) {
+        if (!bbp_get_forum($forum_id)) {
             LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode("Sorry, Forum does not exist."));
             return;
         }
-        if (! empty($forum_id)) {
+        if (!empty($forum_id)) {
             if (bbp_is_forum_category($forum_id)) {
                 LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode("Sorry, This forum is a category. No discussions can be created in this forum."));
 
                 return;
             } else {
-                if (bbp_is_forum_closed($forum_id) && ! current_user_can('edit_forum', $forum_id)) {
+                if (bbp_is_forum_closed($forum_id) && !current_user_can('edit_forum', $forum_id)) {
                     LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode("Sorry, This forum has been closed to new discussions."));
                     return;
                 }
@@ -675,7 +681,7 @@ class RecordApiHelper
                 $group_ids = array();
                 if (function_exists('bbp_get_forum_group_ids')) {
                     $group_ids = bbp_get_forum_group_ids($forum_id);
-                    if (! empty($group_ids)) {
+                    if (!empty($group_ids)) {
                         foreach ($group_ids as $group_id) {
                             if (groups_is_user_member($reply_author, $group_id)) {
                                 $is_member = true;
@@ -685,19 +691,19 @@ class RecordApiHelper
                     }
                 }
 
-                if (bbp_is_forum_private($forum_id) && ! bbp_is_user_keymaster()) {
+                if (bbp_is_forum_private($forum_id) && !bbp_is_user_keymaster()) {
                     if (
-                        (empty($group_ids) && ! current_user_can('read_private_forums'))
-                        || (! empty($group_ids) && ! $is_member)
+                        (empty($group_ids) && !current_user_can('read_private_forums'))
+                        || (!empty($group_ids) && !$is_member)
                     ) {
                         LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode("Sorry, This forum is private and you do not have the capability to read or create new discussions in it."));
 
                         return;
                     }
-                } elseif (bbp_is_forum_hidden($forum_id) && ! bbp_is_user_keymaster()) {
+                } elseif (bbp_is_forum_hidden($forum_id) && !bbp_is_user_keymaster()) {
                     if (
-                        (empty($group_ids) && ! current_user_can('read_hidden_forums'))
-                        || (! empty($group_ids) && ! $is_member)
+                        (empty($group_ids) && !current_user_can('read_hidden_forums'))
+                        || (!empty($group_ids) && !$is_member)
                     ) {
                         LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode("Sorry, This forum is hidden and you do not have the capability to read or create new discussions in it."));
 
@@ -709,7 +715,7 @@ class RecordApiHelper
 
         $reply_content = apply_filters('bbp_new_reply_pre_content', $data['reply_content']);
 
-        if (! bbp_check_for_duplicate(
+        if (!bbp_check_for_duplicate(
             array(
                 'post_type'      => bbp_get_reply_post_type(),
                 'post_author'    => $data['reply_author'],
@@ -723,27 +729,27 @@ class RecordApiHelper
         }
 
 
-        if (bbp_is_topic_closed($topic_id) && ! current_user_can('moderate')) {
+        if (bbp_is_topic_closed($topic_id) && !current_user_can('moderate')) {
             LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode("Sorry, Discussion is closed."));
 
             return;
         }
 
-        if (! bbp_check_for_blacklist($data['anonymous_data'], $data['reply_author'], $data['reply_title'], $reply_content)) {
+        if (!bbp_check_for_blacklist($data['anonymous_data'], $data['reply_author'], $data['reply_title'], $reply_content)) {
             LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode("Sorry, Your reply cannot be created at this time."));
 
             return;
         }
 
 
-        if (! bbp_check_for_moderation($data['anonymous_data'], $data['reply_author'], $data['reply_title'], $reply_content)) {
+        if (!bbp_check_for_moderation($data['anonymous_data'], $data['reply_author'], $data['reply_title'], $reply_content)) {
             $reply_status = bbp_get_pending_status_id();
         } else {
             $reply_status = bbp_get_public_status_id();
         }
 
 
-        if (bbp_is_topic_closed($topic_id) && ! current_user_can('moderate')) {
+        if (bbp_is_topic_closed($topic_id) && !current_user_can('moderate')) {
             LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode("Sorry, Discussion is closed."));
 
             return;
@@ -819,10 +825,10 @@ class RecordApiHelper
             }
             return true;
         }
-       
+
         return false;
     }
-   
+
 
     public function execute(
         $mainAction,
