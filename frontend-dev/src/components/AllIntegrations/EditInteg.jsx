@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, memo, Suspense, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { $actionConf, $formFields, $newFlow } from '../../GlobalStates'
@@ -221,7 +221,7 @@ export default function EditInteg({ allIntegURL }) {
     </div>
   )
 }
-const IntegType = ({ allIntegURL, flow }) => {
+const IntegType = memo(({ allIntegURL, flow }) => {
   switch (flow?.flow_details?.type) {
     case 'Zoho CRM':
       return <EditZohoCRM allIntegURL={allIntegURL} />
@@ -504,4 +504,4 @@ const IntegType = ({ allIntegURL, flow }) => {
     default:
       return <Loader style={loaderStyle} />
   }
-}
+})

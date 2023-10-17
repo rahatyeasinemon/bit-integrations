@@ -3,16 +3,19 @@
 import toast from 'react-hot-toast'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
+import { create } from 'mutative'
 
 export const handleInput = (e, mailjetConf, setMailjetConf) => {
-  const newConf = { ...mailjetConf }
-  const { name } = e.target
-  if (e.target.value !== '') {
-    newConf[name] = e.target.value
-  } else {
-    delete newConf[name]
-  }
-  setMailjetConf({ ...newConf })
+  const newConf = create(mailjetConf, draftConf => {
+    const { name } = e.target
+    if (e.target.value !== '') {
+      draftConf[name] = e.target.value
+    } else {
+      delete draftConf[name]
+    }
+  })
+
+  setMailjetConf(newConf)
 }
 
 export const generateMappedField = (mailjetConf) => {

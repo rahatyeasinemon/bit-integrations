@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\Post;
 
 use BitCode\FI\Flow\Flow;
@@ -95,7 +96,7 @@ final class PostController
 
     public static function createPost($postId, $newPostData, $update)
     {
-     
+
         $postCreateFlow = Flow::exists('Post', 1);
         $currentURL = home_url($_SERVER['REQUEST_URI']);
 
@@ -112,13 +113,13 @@ final class PostController
 
             if ($newPostData->post_status !== 'auto-draft') {
                 if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $newPostData->post_type) {
-                    if ( has_post_thumbnail( $postId ) ) {
-                        $featured_image_url = get_the_post_thumbnail_url( $postId, 'full' );
+                    if (has_post_thumbnail($postId)) {
+                        $featured_image_url = get_the_post_thumbnail_url($postId, 'full');
                         $newPostData->featured_image = $featured_image_url;
                     }
-                    if ($currentURL == home_url('wp-admin/post-new.php') && !$update) {
+                    if (!$update) {
                         Flow::execute('Post', 1, (array) $newPostData, $postCreateFlow);
-                    } elseif (!$update) {
+                    } else {
                         Flow::execute('Post', 1, (array) $newPostData, $postCreateFlow);
                     }
                 }
@@ -192,8 +193,8 @@ final class PostController
             }
 
             if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $updatedPostData->post_type) {
-                if ( has_post_thumbnail( $postId ) ) {
-                    $featured_image_url = get_the_post_thumbnail_url( $postId, 'full' );
+                if (has_post_thumbnail($postId)) {
+                    $featured_image_url = get_the_post_thumbnail_url($postId, 'full');
                     $updatedPostData->featured_image = $featured_image_url;
                 }
                 Flow::execute('Post', 2, (array) $updatedPostData, $postUpdateFlow);

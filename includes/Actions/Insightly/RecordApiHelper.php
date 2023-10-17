@@ -56,7 +56,7 @@ class RecordApiHelper
         $this->typeName = 'Organisation created';
 
 
-        $apiEndpoint = "https://api.".$this->apiUrl."/v3.1/Organisations";
+        $apiEndpoint = "https://api." . $this->apiUrl . "/v3.1/Organisations";
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -87,7 +87,7 @@ class RecordApiHelper
         $this->type     = 'Contact';
         $this->typeName = 'Contact created';
 
-        $apiEndpoint = "https://api.".$this->apiUrl."/v3.1/Contacts";
+        $apiEndpoint = "https://api." . $this->apiUrl . "/v3.1/Contacts";
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -125,7 +125,7 @@ class RecordApiHelper
         $this->type     = 'Opportunity';
         $this->typeName = 'Opportunity created';
 
-        $apiEndpoint = "https://api.".$this->apiUrl."/v3.1/Opportunities";
+        $apiEndpoint = "https://api." . $this->apiUrl . "/v3.1/Opportunities";
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -164,7 +164,7 @@ class RecordApiHelper
         $this->typeName = 'Opportunity created';
 
 
-        $apiEndpoint = "https://api.".$this->apiUrl."/v3.1/Opportunities";
+        $apiEndpoint = "https://api." . $this->apiUrl . "/v3.1/Opportunities";
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -195,7 +195,7 @@ class RecordApiHelper
         $this->typeName = 'Task created';
 
 
-        $apiEndpoint = "https://api.".$this->apiUrl."/v3.1/Tasks";
+        $apiEndpoint = "https://api." . $this->apiUrl . "/v3.1/Tasks";
 
         return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -231,8 +231,7 @@ class RecordApiHelper
         $this->type     = 'Lead';
         $this->typeName = 'Lead created';
 
-
-        $apiEndpoint = "https://api.".$this->apiUrl."/v3.1/Leads";
+        $apiEndpoint = "https://api." . $this->apiUrl . "/v3.1/Leads";
 
         return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -275,7 +274,7 @@ class RecordApiHelper
             $apiResponse = $this->addLead($finalData);
         }
 
-        if ($apiResponse->data->id || $apiResponse->status === 'success') {
+        if ($apiResponse->CONTACT_ID || $apiResponse->status === 'success') {
             $res = [$this->typeName . ' successfully'];
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
         } else {

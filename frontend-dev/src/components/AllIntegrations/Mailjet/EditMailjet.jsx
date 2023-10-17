@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 
-import { useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
@@ -41,7 +41,7 @@ function EditMailjet({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, mailjetConf, setMailjetConf)} name="name" value={mailjetConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, mailjetConf, setMailjetConf)} name="name" defaultValue={mailjetConf.name || ''} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
       </div>
       <br />
       {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
