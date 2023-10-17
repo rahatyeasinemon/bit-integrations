@@ -10,7 +10,7 @@ import Modal from '../components/Utilities/Modal'
 export default function ChangelogToggle() {
     const btcbi = useRecoilValue($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const version = btcbi.isPro ? '1.4.2' : '1.5.0'
+    const version = btcbi.isPro ? '1.4.2' : '1.5.1'
     return (
         <div className="changelog-toggle">
             <button
@@ -27,12 +27,12 @@ export default function ChangelogToggle() {
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
                         <h3>What's New in {version}?</h3>
-                        <small>03 October 2023</small>
+                        <small>18th October 2023</small>
                     </div>
                     <div className='changelog-content'>
                         {/* <h4>New Integration</h4>
                         <p>New Integration</p> */}
-                        <span className='new-integration' style={{ background: "cornflowerblue" }}><b>New Triggers</b></span>
+                        {/* <span className='new-integration' style={{ background: "cornflowerblue" }}><b>New Triggers</b></span>
 
                         <div className='integration-list'>
                             <ul>
@@ -50,20 +50,25 @@ export default function ChangelogToggle() {
                                 <li>Woodpecker</li>
                                 <li>WP Fusion</li>
                             </ul>
-                        </div>
+                        </div> */}
 
                         <span className='fixes'><b>Fixed</b></span>
 
                         <div className='fixes-list'>
                             <ul>
-                                <li>Loading time Optimized. <span className='pro'>Pro</span></li>
-                                <li>CopperCRM email field mapping & success message issue fixed</li>
-                                <li>Groundhogg Tag id issue fixed</li>
-                                <li>Insightly authorization & next button issue fixed</li>
-                                <li>SuiteDash custom field issue fixed</li>
-                                <li>HookServices false array issue fixed</li>
-                                <li>PropovoiceCRM LogHandler & loader issue fixed</li>
-                                <li>Mail Poet new list fetching issue fixed</li>
+                                <li>Post create isssue fixed</li>
+                                <li>Woo-commerce multiple user create issue fixed</li>
+                                <li>Insightly log data issue fixed</li>
+                                <li>Mailjet integration name edit issue fixed</li>
+                                <li>Suitedash custom field & address field blank issue fixed</li>
+                                <li>Groundhogg email field issue fixed</li>
+                                <li>Asana custom field & logHandler message issue fixed</li>
+                                <li>Gravitec Custom field "#" issue fixed</li>
+                                <li>Airtable select box issue fixed</li>
+                                <li>TinyMCE loading issue fixed</li>
+                                <li>Telegram checkbox, selectbox, datetime data sending issue fixed</li>
+                                <li>Groundhog trigger edit, add tag & remove tag issue fixed</li>
+                                <li>BuddyBoss logHandler message issue fixed</li>
                             </ul>
                         </div>
                     </div>

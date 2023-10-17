@@ -2,9 +2,9 @@
 Contributors: bitpressadmin
 Tags: automation,integration,connector,automator,Zapier,webhook,workflow,Platform integrations,Wp WebHooks,Pabbly,Integrately
 Requires at least: 5.1
-Tested up to: 6.3
-Requires PHP: 7.4
-Stable tag: 1.5.0
+Tested up to: 6.3.2
+Requires PHP: 7.0
+Stable tag: 1.5.1
 License: GPLv2 or later
 
 Automation Plugin for WordPress; Integration of 60+ Triggers and 130+ Actions.The #1 highest no-code platform Automator plugin in WordPress.
@@ -42,11 +42,16 @@ Mak says about Bit Integrations in his youtube channel
 
 https://youtu.be/UhTu6LCmh8A
 
+
 ## ♻ How does this plugin work?
 
 This plugin acts as a bridge between platforms, using Triggers and Actions. Triggers capture data, like form submissions (Contact Form 7, WP Forms, etc.), while Actions send it to CRM, Email Marketing Software, Project Management Tools, Data Collection Tools, and other WordPress plugins.
 For example, a contact form (Bit Form, WP Forms, etc.)
 is submitted, and you want to send data in your CRM, Email Marketing Software, Project Management Tools, Data Collection Tools, and Other WordPress plugins.
+
+"WP Simple Hacks - Wordpress tips and tricks" youtube channels thoughts about Bit Integrations
+
+https://youtu.be/tLNOuvPdhcY?si=2zWd4yTMYHZUpD7n
 
 Bit Integrations review in SaaS Master youtube channel
 
@@ -186,7 +191,100 @@ When any trigger is fired, you can send data to 3 social media like [WhatsApp](h
 
 ### ⭐ Other:
 
-Users can get and send data to [JetEngine](https://crocoblock.com/plugins/jetengine/), [RafflePress](https://wordpress.org/plugins/rafflepress/),
+Users can get and send data to [JetEngine](https://crocoblock.com/plugins/jetengine/), [RafflePress](https://wordpress.org/plugins/rafflepress/)
+
+
+== ❣ What our customer say about Bit Integrations : ==
+
+[` 💠 Best of class`](https://wordpress.org/support/topic/best-of-class-with-few-glitches/)
+
+I have tested a lot of integrators/automators, like AutomatorWP, Uncanny Automator, Thrive Automator and SureTriggers … what can I say:
+Bit Integrations integrates with the widest range of plugins & services among all ⭐
+
+-by @saschinger
+
+[` 💠 Bit Integrations is an affordable alternative to Pabbly Connect and Zapier`](https://wordpress.org/support/topic/bit-integrations-is-an-affordable-alternative-to-pabbly-and-zapier/)
+
+Bit Integrations is an easy-to-install and easy-to-use automation plug-in that handles many functions that we would normally have to pay large monthly or annual fees (for Pabbly Connect or Zapier). Check out their list of integrations and see if it can save you dollars too!
+
+-by @barrynthdegreegroupnet
+
+[` 💠 Great support team`](https://wordpress.org/support/topic/great-support-team-130/)
+
+Not only is this plugin extremely useful, but the support team behind the scenes responds very quickly to the needs of the customers. For example, I said via the chat that I couldn’t solve something and it was solved within 15 minutes. They took over my screen and I could follow everything live.
+This purchase is one of the best I’ve made this year!
+
+-by @jaymiguel
+
+[` 💠 A Game Changer for My WordPress automation`](https://wordpress.org/support/topic/a-game-changer-for-my-wordpress-automation/)
+
+“I’ve been using Bit Integrations for a few months now, and it’s been a game changer for my business. The wide range of integrations available has allowed me to connect Bit with a variety of external tools and services, making it much easier to automate my workflows and streamline my work processes
+
+-by @angelitos
+
+[` 💠 Zapier-like Integrations, No Fees Required!`](https://wordpress.org/support/topic/zapier-like-integrations-without-the-fees/)
+
+The rich WordPress ecosystem can be integrated without paying the high cost of Zapier.
+
+-by @peterode
+
+[` 💠 Zapier for WordPress Made Easy!`](https://wordpress.org/support/topic/zapier-for-wordpress/)
+
+I’ve been using the pro version to automate many tasks from Gravity Forms, Restrict Content Pro and FluentCRM. Easy to set up and runs on your own site.
+
+-by @onedogsolutions
+
+[` 💠 Great connector plugin`](https://wordpress.org/support/topic/great-connector-plugin/)
+
+Everything works great here.
+No instructions needed – everything is intuitive.
+And the plugin is getting more and more powerful every day because the developer cares about providing new integrations.
+I’m impressed.
+
+-by @pijag
+
+[` 💠 Efficient and User-friendly Automation Plugin`](https://wordpress.org/support/topic/efficient-and-user-friendly-automation-plugin/)
+
+I’ve recently started using this Bit Integrations – Automation Plugin for WordPress and it has already had a significant positive impact on my workflow. The plugin is easy to install and navigate, making task automation straightforward and hassle-free.
+The customization options are exceptional, allowing me to automate specific tasks based on my unique needs. Despite its powerful capabilities, the plugin operates seamlessly in the background without affecting my site’s performance.
+The customer support is prompt and professional, further enhancing the overall user experience. For anyone looking to streamline their WordPress management, I highly recommend this Automation Plugin. It’s a reliable tool that saves time and improves efficiency.
+
+-by @kenvn
+
+
+[` 💠 Great Product and Great Support!!`](https://wordpress.org/support/topic/great-product-and-great-support-54/)
+Tech Support for Bit Integrations just helped me resolve a difficulty I was having getting started. The process of setting up an integration couldn’t be simpler but my Formidable Form wasn’t updating my WooCommerce Product. It turned out that I was doing the Formidable Form update in the Dashboard rather than in Preview mode. Support couldn’t have been nicer about working through discovering the problem.
+Not only am I a fan of the support, I’ve become a big fan of the integration product. What could be better, transparent synching of my Formidable Form with WooCommerce with absolutely minimal resource usage, just when I need to add or modify a Product. Perfect!
+
+-by @jamesmarnell
+
+[` 💠 Finally, a Simple Integration Solution for All Your Needs`](https://wordpress.org/support/topic/finally-an-simple-integration-for-all-my-needs/)
+
+If you have wondered that there was simple plugin that will integrate with all your plugins, you should look no further. This is a perfect solution for all your needs. And it comes with unlimited active integrations. The best user case is to collect data from your inbuilt/third party form plugin and send it to mailchimp and google sheets. These guys are genius, Thanks for this plugin.
+
+-by @jeeve1
+
+[` 💠 Brilliant and Easy to use`](https://wordpress.org/support/topic/brilliant-and-easy-to-use-14/)
+
+This plugins works very well. The are always releasing updates and new integrations. The plugin is easy to use and works brilliantly!
+
+-by @marcelobacchi
+
+[` 💠 Pure Automation at Play!`](https://wordpress.org/support/topic/pure-automation-at-play/)
+
+This is an amazing plugin. The premium version allows you to automate close to 100+ popular apps in the market. The library is growing and the developers are active adding integrations every month.
+With incoming and outgoing webhooks, you can literally automate a lot of stuff. This can totally replace Zapier and other automation tools inside WordPress as conditional logic is also included.
+My typical use-case: Adding WooCommerce orders to Gsheets and then sending the lead info to ActiveCampaign along with tags.
+
+-by @vaishakdamu
+
+[` 💠 It Works Like Magic`](https://wordpress.org/support/topic/works-like-magic-59/)
+
+I’ve been using the free version for sometime and switched to the pro version last month, this solves all issues I was facing making apps talk to each other. Thank you guys for making this plugin.
+
+-by @tavusion
+
+### 💥 In the free version, you can create one integration, while the pro version offers unlimited integration capabilities.
 
 ### ✔ Available Triggers are:
 
@@ -800,19 +898,6 @@ Free version allows you to use all available actions and triggers,
 but you are limited to one active integration.
 With the pro version, you have the ability to create **Unlimited active integrations** Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations/).
 
-== ❣ What our customer say about Bit Integrations : ==
-
-💠 `Unlock Zapier-like Integrations, No Fees Required!`
-💠 `Zapier for WordPress Made Easy!`
-💠 `Effortless Integrations that Simply Work`
-💠 `Complete Simplicity, Unmatched Power`
-💠 `Finally, a Simple Integration Solution for All Your Needs`
-💠 `Brilliantly Easy to Use and Implement`
-💠 `Power and Simplicity Combined in One Plugin`
-💠 `It Works Like Magic - Seamless Integration Achieved!`
-💠 `An Amazing Plugin That Truly Delivers!`
-💠 `Simplicity and Efficiency Combined!`
-💠 `Discover the Awesomeness of Bit Integrations`
 
 ### 💥 Don't worry, we give you some video tutorials with use cases to help you get started with the plugin.
 
@@ -1421,6 +1506,24 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 6. All integration list
 
 == Changelog ==
+
+= 1.5.1  =
+*Release Date - *18th October 2023\*
+
+- **Fixes :**
+  - Post create isssue fixed.
+  - Woo-commerce multiple user create issue fixed
+  - Insightly log data issue fixed.
+  - Mailjet integration name edit issue fixed.
+  - Suitedash custom field & address field blank issue fixed
+  - Groundhogg email field issue fixed
+  - Asana custom field & logHandler message issue fixed
+  - Gravitec Custom field "#" issue fixed
+  - Airtable select box issue fixed
+  - TinyMCE loading issue fixed
+  - Telegram checkbox, selectbox, datetime data sending issue fixed
+  - Groundhog trigger edit, add tag & remove tag issue fixed
+  - BuddyBoss logHandler message issue fixed
 
 = 1.5.0  =
 *Release Date - *3rd October 2023\*
