@@ -42,24 +42,29 @@ final class GroundhoggController
         }
     }
 
+    protected static function setTagNames($tag_ids)
+    {
+        $tags       = new Tags();
+        $tag_list   = [];
+        foreach ($tag_ids as $tag_id) {
+            $tag_list[] = $tags->get_tag($tag_id)->tag_name;
+        }
+        return implode(',', $tag_list);
+    }
+
     public static function handle_groundhogg_submit($a, $fieldValues)
     {
-        $form_id = 1;
         global $wp_rest_server;
-        $request = $wp_rest_server->get_raw_data();
-        $data = json_decode($request);
-        $meta = $data->meta;
-        $fieldValues['primary_phone'] = $meta->primary_phone;
-        $fieldValues['mobile_phone'] = $meta->mobile_phone;
+        $form_id    = 1;
+        $request    = $wp_rest_server->get_raw_data();
+        $data       = json_decode($request);
+        $meta       = $data->meta;
+
+        $fieldValues['primary_phone']   = $meta->primary_phone;
+        $fieldValues['mobile_phone']    = $meta->mobile_phone;
 
         if (isset($data->tags)) {
-            $tags = new Tags();
-
-            $tag_list = [];
-            foreach ($data->tags as $tag_id) {
-                $tag_list[] = $tags->get_tag($tag_id)->tag_name;
-            }
-            $fieldValues['tags'] = implode(',', $tag_list);
+            $fieldValues['tags'] = self::setTagNames($data->tags);
         }
 
         $flows = Flow::exists('Groundhogg', $form_id);
@@ -73,12 +78,15 @@ final class GroundhoggController
 
     public static function tagApplied($a, $b)
     {
-        $data = $a['data'];
-        $data['tags'] = json_encode($a['tags']);
-        $form_id = 2;
-        $flows = Flow::exists('Groundhogg', $form_id);
-        $getSelected = $flows[0]->flow_details;
-        $enCode = json_decode($getSelected);
+        $data           = $a['data'];
+        $form_id        = 2;
+        $flows          = Flow::exists('Groundhogg', $form_id);
+        $getSelected    = $flows[0]->flow_details;
+        $enCode         = json_decode($getSelected);
+
+        if (isset($a['tags'])) {
+            $data['tags'] = self::setTagNames($a['tags']);
+        }
         if (!$flows) {
             return;
         }
@@ -92,11 +100,15 @@ final class GroundhoggController
 
     public static function tagRemove($a, $b)
     {
-        $data = $a['data'];
-        $form_id = 3;
-        $flows = Flow::exists('Groundhogg', $form_id);
-        $getSelected = $flows[0]->flow_details;
-        $enCode = json_decode($getSelected);
+        $data           = $a['data'];
+        $form_id        = 3;
+        $flows          = Flow::exists('Groundhogg', $form_id);
+        $getSelected    = $flows[0]->flow_details;
+        $enCode         = json_decode($getSelected);
+
+        if (isset($a['tags'])) {
+            $data['tags'] = self::setTagNames($a['tags']);
+        }
         if (!$flows) {
             return;
         }
@@ -234,5 +246,23 @@ final class GroundhoggController
             }
         }
         return $forms;
+    }
+
+    public static function getAllTags()
+    {
+        $tags = new Tags();
+        $allTag = [];
+        $allTag[] = [
+            'tag_id' => 'any',
+            'tag_name' => 'Any Tag',
+        ];
+
+        foreach ($tags->get_tags() as $val) {
+            $allTag[] = [
+                'tag_id' => $val->tag_id,
+                'tag_name' => $val->tag_name,
+            ];
+        }
+        wp_send_json_success($allTag);
     }
 }

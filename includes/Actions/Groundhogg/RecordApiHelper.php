@@ -92,7 +92,7 @@ class RecordApiHelper
         if (isset($noteData)) {
             $noteData[0]['object_id'] = $response->contact->ID;
             $apiEndpoint = $integrationDetails->domainName . '/index.php?rest_route=/gh/v4/notes/';
-            return $response = HttpHelper::post($apiEndpoint, json_encode(['data'=>$noteData]), $authorizationHeader);
+            return $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $noteData]), $authorizationHeader);
         } else {
             return $response;
         }
@@ -192,7 +192,6 @@ class RecordApiHelper
                 $this->checkExitsTagsOrCreate($integrationDetails, $finalReorganizedTags);
             }
             $apiResponseContact = $this->createContact($finalData, $integrationDetails);
-
         }
         // 2 = add tag to contact
         if ($mainAction === '2') {
@@ -227,17 +226,19 @@ class RecordApiHelper
             }
         }
 
-        if ($apiResponseContact->status === 'success') {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'add-contact']), 'success', $apiResponseContact);
-        } else {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', $apiResponseContact);
+        if ($mainAction === '1') {
+            if ($apiResponseContact->status === 'success') {
+                LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'add-contact']), 'success', $apiResponseContact);
+            } else {
+                LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', $apiResponseContact);
+            }
         }
-
-        if (!empty($apiResponseSuccess)) {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-tags-contact']), 'success', $apiResponseSuccess);
-        }
-        if (!empty($apiResponseError)) {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-tags-contact']), 'error', $apiResponseError);
+        if ($mainAction === '2') {
+            if (!empty($apiResponseSuccess)) {
+                LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-tags-contact']), 'success', $apiResponseSuccess);
+            } elseif (!empty($apiResponseError)) {
+                LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-tags-contact']), 'error', $apiResponseError);
+            }
         }
         return $apiResponse;
     }

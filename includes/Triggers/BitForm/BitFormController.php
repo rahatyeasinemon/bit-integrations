@@ -8,7 +8,7 @@ final class BitFormController
 {
     private static function isPluginActive()
     {
-        return is_plugin_active('bitform/bitforms.php');
+        return class_exists("BitCode\\BitForm\\Plugin");
     }
 
     public static function info()
@@ -67,7 +67,7 @@ final class BitFormController
 
     public static function fields($form_id)
     {
-        if (!is_plugin_active('bitform/bitforms.php')) {
+        if (!self::isPluginActive()) {
             return [];
         }
 

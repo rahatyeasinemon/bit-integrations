@@ -172,18 +172,63 @@ export const dateTimeFormatter = (dateStr, format) => {
   return formattedDate
 }
 
-export const loadScript = (src, type) => new Promise((resolve) => {
+// export const loadScript = (src, type) => new Promise((resolve) => {
+//   const script = document.createElement('script')
+//   script.src = src
+//   script.onload = () => {
+//     resolve(true)
+//   }
+//   script.onerror = () => {
+//     resolve(false)
+//   }
+//   script.id = type
+//   document.body.appendChild(script)
+// })
+export const loadScript = ({ src, integrity, id, scriptInGrid = false, attr = {}, callback = null }) => new Promise((resolve) => {
   const script = document.createElement('script')
   script.src = src
+  if (integrity) {
+    script.integrity = integrity
+    script.crossOrigin = 'anonymous'
+  }
+  script.id = id
+  if (attr) {
+    Object.entries(attr).forEach(([key, val]) => {
+      script.setAttribute(key, val)
+    })
+  }
   script.onload = () => {
     resolve(true)
+    if (callback) callback()
   }
   script.onerror = () => {
     resolve(false)
   }
-  script.id = type
-  document.body.appendChild(script)
+
+  removeScript(id, scriptInGrid)
+
+  let bodyElm = document.body
+
+  if (scriptInGrid) {
+    bodyElm = document.getElementById('bit-grid-layout')?.contentWindow?.document.body
+  }
+
+  bodyElm.appendChild(script)
 })
+
+export const removeScript = (id, scriptInGrid = false) => {
+  let bodyElm = document.body
+
+  if (scriptInGrid) {
+    bodyElm = document.getElementById('bit-grid-layout')?.contentWindow?.document.body
+  }
+
+  const alreadyExistScriptElm = bodyElm ? bodyElm.querySelector(`#${id}`) : null
+
+  if (alreadyExistScriptElm) {
+    bodyElm.removeChild(alreadyExistScriptElm)
+  }
+}
 
 const cipher = salt => {
   const textToChars = text => text.split('').map(c => c.charCodeAt(0))

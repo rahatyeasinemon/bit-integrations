@@ -9,3 +9,4 @@ use BitCode\FI\Triggers\Groundhogg\GroundhoggController;
 
 Route::get('groundhogg/get', [GroundhoggController::class, 'getAll']);
 Route::post('groundhogg/get/form', [GroundhoggController::class, 'getFormFields']);
+Route::get('groundhogg/get/tags', [GroundhoggController::class, 'getAllTags']);

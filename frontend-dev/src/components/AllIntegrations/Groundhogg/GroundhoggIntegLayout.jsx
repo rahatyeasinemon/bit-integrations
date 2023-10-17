@@ -43,14 +43,14 @@ export default function GroundhoggIntegLayout({ formFields, handleInput, groundh
   }
 
   const organizedTags = (groundhoggConf?.default?.tags || []).map(({ tag_name }) => ({ label: tag_name, value: `ground-${tag_name}` }))
+  const allFormFields = formFields.map(itm => ({ label: itm.label, value: itm.name }))
 
   const options = [
     { type: 'group', title: 'Groundhogg Tags', childs: organizedTags },
-    { type: 'group', title: 'Form Fields', childs: formFields.map(fld => ({ label: fld.label, value: fld.name })) },
+    { type: 'group', title: 'Form Fields', childs: allFormFields },
     { type: 'group', title: 'Special Tags', childs: SmartTagField?.map(fld => ({ label: fld.label, value: fld.name })) },
   ]
 
-  const allEmailFields = formFields.filter(itm => (itm.type === 'email')).map(itm => ({ label: itm.label, value: itm.name }))
 
   return (
     <>
@@ -68,15 +68,17 @@ export default function GroundhoggIntegLayout({ formFields, handleInput, groundh
       </select>
       <br />
       <br />
-      { groundhoggConf.mainAction === '2' && (
+      {groundhoggConf.mainAction === '2' && (
         <div className="d-flx">
 
           <b className="wdt-200 d-in-b mt-3 mt-i-3">{__('Email:', 'bit-integrations')}</b>
           <MultiSelect
-            options={allEmailFields.map((item) => ({ label: item.label, value: item.value }))}
+            options={allFormFields}
             className="btcd-paper-drpdwn w-5"
             defaultValue={groundhoggConf.emailAddress}
             onChange={val => onEmailHandler(val)}
+            singleSelect
+            closeOnSelect
           />
         </div>
       )}

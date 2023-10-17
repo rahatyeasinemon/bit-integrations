@@ -352,7 +352,7 @@ const tutorialLinks = {
   propovoiceCrm: {
     title: "How to Setup Propovoice CRM integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALypdI2_549Vquqwc5qdDUE",
-    docLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-ALypdI2_549Vquqwc5qdDUE",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/propovoice-crm-integrations/",
   },
   pipeDrive: {
     title: "How to Setup Pipedrive integration",

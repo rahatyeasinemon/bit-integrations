@@ -48,7 +48,7 @@ export const saveIntegConfig = async (flow, setFlow, allIntegURL, confTmp, navig
     tmpConf = wooCommerceStateIH(tmpConf, dataFlow)
   } else if (flow.triggered_entity === 'Groundhogg') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
-    tmpConf = groundhoggStateIH(tmpConf, dataFlow)
+    tmpConf = groundhoggStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (flow.triggered_entity === 'RestrictContent') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = RestrictContentStateIH(tmpConf, dataFlow)
@@ -166,7 +166,7 @@ export const saveActionConf = async ({ flow, setFlow, allIntegURL, conf, navigat
     tmpConf = wooCommerceStateIH(tmpConf, dataFlow)
   } else if (flow.triggered_entity === 'Groundhogg') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
-    tmpConf = groundhoggStateIH(tmpConf, dataFlow)
+    tmpConf = groundhoggStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (flow.triggered_entity === 'RestrictContent') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = RestrictContentStateIH(tmpConf, dataFlow)

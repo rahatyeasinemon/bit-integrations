@@ -36,7 +36,7 @@ class RecordApiHelper
     public function execute($integrationDetails, $fieldValues)
     {
         $msg = Common::replaceFieldWithValue($integrationDetails->body, $fieldValues);
-        $messagesBody = str_replace(['<p>', '</p>'], ' ', $msg);
+        $messagesBody = str_replace(['<p>', '</p>', '&nbsp;'], ' ', $msg);
 
         if (!empty($integrationDetails->actions->attachments)) {
             foreach ($fieldValues as $fieldKey => $fieldValue) {
