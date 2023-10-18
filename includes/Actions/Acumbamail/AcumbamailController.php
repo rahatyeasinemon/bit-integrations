@@ -66,10 +66,7 @@ class AcumbamailController
         $response = HttpHelper::post($apiEndpoints, $requestParams);
 
         if ($response == 'Unauthorized' || $response == 'This endpoint is not available for non-paying customers' || $response == 'Your auth token has expired check /apidoc/ for the new one') {
-            wp_send_json_error(
-                'The token is invalid',
-                400
-            );
+            wp_send_json_error($response, 400);
         } else {
             wp_send_json_success($response, 200);
         }

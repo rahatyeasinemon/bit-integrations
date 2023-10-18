@@ -146,7 +146,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
         return
       }
       setIsLoading(false)
-      toast.error(__('Authorized failed', 'bit-integrations'))
+      toast.error(__(result.data, 'bit-integrations'))
     })
 }
 
