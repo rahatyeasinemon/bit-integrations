@@ -492,7 +492,7 @@ const tutorialLinks = {
   zapierLinks: {
     title: "How to Setup Zapier integration",
     youTubeLink: "",
-    docLink: "",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/zapier-integrations/",
   },
   zohoBigin: {
     title: "How to Setup Zoho Bigin integration",
