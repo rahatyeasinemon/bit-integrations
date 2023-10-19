@@ -83,7 +83,7 @@ class AcumbamailController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'getFields/';
+        $apiEndpoints = $this->baseUrl . 'getListFields/';
 
         $requestParams = [
             'auth_token' => $refreshFieldsRequestParams->auth_token,
@@ -91,19 +91,15 @@ class AcumbamailController
         ];
 
         $response = HttpHelper::post($apiEndpoints, $requestParams);
+        // error_log(print_r($response, true));
+        // die;
         $formattedResponse = [];
-        foreach ($response as $key => $value) {
-            if ($key === 'email') {
-                $formattedResponse[$key] = [
-                    $key => $value,
-                    'required' => true,
-                ];
-            } else {
-                $formattedResponse[$key] = [
-                    $key => $value,
-                    'required' => false,
-                ];
-            }
+        foreach ($response->fields as $value) {
+            $formattedResponse[$value->name] = [
+                "key"       => $value->tag,
+                "label"     => $value->label,
+                'required'  => $value->type === 'email' ? true : false,
+            ];
         }
 
         if ($response !== 'Unauthorized') {

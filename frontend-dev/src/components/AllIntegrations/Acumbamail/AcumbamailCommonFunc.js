@@ -44,7 +44,7 @@ export const refreshFields = (formID, acumbamailConf, setAcumbamailConf, setIsLo
             newConf.default.allFields[listId] = {}
           }
           newConf.default.allFields[listId].fields = result.data
-          newConf.default.allFields[listId].required = ['email']
+          newConf.default.allFields[listId].required = ['EMAIL']
 
           setAcumbamailConf({ ...newConf })
           setIsLoading(false)

@@ -34,7 +34,7 @@ function Acumbamail({ formFields, setFlow, flow, allIntegURL }) {
     listId: '',
     auth_token: process.env.NODE_ENV === 'development' ? 'sPz60EL4hoaRHJVYFSpV' : '',
     field_map: [
-      { formField: '', acumbamailFormField: 'email' },
+      { formField: '', acumbamailFormField: 'EMAIL' },
     ],
     addSubsCriberFields,
     allActions,

@@ -44,9 +44,8 @@ export default function AcumbamailFieldMap({ i, formFields, field, acumbamailCon
           {
             isRequiredFld && requiredFlds.map((listField, indx) => (
               (
-                <option key={`mchimp-${indx * 2}`} value={listField[0]}>
-                  {listField[0]}
-
+                <option key={`mchimp-${indx * 2}`} value={listField[1].key}>
+                  {listField[1].label}
                 </option>
               )
             ))
@@ -54,8 +53,8 @@ export default function AcumbamailFieldMap({ i, formFields, field, acumbamailCon
           {
             !isRequiredFld && nonRequiredFlds.map((listField, indx) => (
               (
-                <option key={`mchimp-${indx * 2}`} value={listField[0]}>
-                  {listField[0]}
+                <option key={`mchimp-${indx * 2}`} value={listField[1].key}>
+                  {listField[1].label}
 
                 </option>
               )
