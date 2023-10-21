@@ -37,7 +37,7 @@ final class ForminatorController
             wp_send_json_error(__('Forminator is not installed or activated', 'bit-integrations'));
         }
 
-        $forms = \Forminator_API::get_forms();
+        $forms = \Forminator_API::get_forms(null, 1, 100);
         $all_forms = [];
 
         if ($forms) {
@@ -92,11 +92,11 @@ final class ForminatorController
                         }
                         if (($key == 'fname' || $key == 'lname' || $key == 'mname' || $key == 'prefix') && $val) {
                             if ($key == 'fname') {
-                                $names['first-name-'.$index] = 'First Name-'.$index;
+                                $names['first-name-' . $index] = 'First Name-' . $index;
                             } elseif ($key == 'lname') {
-                                $names['last-name-'.$index] = 'Last Name-'.$index;
+                                $names['last-name-' . $index] = 'Last Name-' . $index;
                             } elseif ($key == 'mname') {
-                                $names['middle-name-'.$index] = 'Middle Name-'.$index;
+                                $names['middle-name-' . $index] = 'Middle Name-' . $index;
                             } elseif ($key == 'prefix') {
                                 $names['prefix'] = 'Name Prefix';
                             }
@@ -132,9 +132,9 @@ final class ForminatorController
                                     $index = substr($value, $last_dash_position + 1);
                                 }
                                 $fields[] = [
-                                    'name' => $key.'-'.$index,
+                                    'name' => $key . '-' . $index,
                                     'type' => 'text',
-                                    'label' => $address[$key].'-'.$index,
+                                    'label' => $address[$key] . '-' . $index,
                                 ];
                             }
                         }
@@ -151,7 +151,7 @@ final class ForminatorController
                     $fields[] = [
                         'name' => $field->slug,
                         'type' => $type,
-                        'label' => $field->field_label.'-'.$index,
+                        'label' => $field->field_label . '-' . $index,
                     ];
                 }
             }
@@ -173,13 +173,13 @@ final class ForminatorController
                 if (is_array($fldDetail['value'])) {
                     if (array_key_exists('file', $fldDetail['value'])) {
                         $data[$fldDetail['name']] = [$fldDetail['value']['file']['file_path']];
-                    } elseif (explode("-", $fldDetail['name'])[0]== 'name') {
+                    } elseif (explode("-", $fldDetail['name'])[0] == 'name') {
                         if ($fldDetail['name']) {
                             $last_dash_position = strrpos($fldDetail['name'], "-");
                             $index = substr($fldDetail['name'], $last_dash_position + 1);
                         }
                         foreach ($fldDetail['value'] as $nameKey => $nameVal) {
-                            $data[$nameKey.'-'.$index] = $nameVal;
+                            $data[$nameKey . '-' . $index] = $nameVal;
                         }
                     } elseif (explode("-", $fldDetail['name'])[0] == 'address') {
                         if ($fldDetail['name']) {
@@ -187,7 +187,7 @@ final class ForminatorController
                             $index = substr($fldDetail['name'], $last_dash_position + 1);
                         }
                         foreach ($fldDetail['value'] as $nameKey => $nameVal) {
-                            $data[$nameKey.'-'.$index] = $nameVal;
+                            $data[$nameKey . '-' . $index] = $nameVal;
                         }
                     } else {
                         $val = $fldDetail['value'];
@@ -202,7 +202,6 @@ final class ForminatorController
                         } else {
                             $data[$fldDetail['name']] = $fldDetail['value'];
                         }
-
                     }
                 } else {
                     if (strtotime($fldDetail['value'])) {
