@@ -5,6 +5,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/GoogleIntegrationHelpers'
+import TagifyInput from '../../Utilities/TagifyInput'
 
 export default function GoogleSheetFieldMap({ i, formFields, field, sheetConf, setSheetConf }) {
   const btcbi = useRecoilValue($btcbi)
@@ -18,8 +19,8 @@ export default function GoogleSheetFieldMap({ i, formFields, field, sheetConf, s
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           <optgroup label="Form Fields">
             {
-              formFields.map(f => ( <option key={`ff-zhcrm-${f.name}`} value={f.name}>{f.label}</option>)
-            )}
+              formFields.map(f => (<option key={`ff-zhcrm-${f.name}`} value={f.name}>{f.label}</option>)
+              )}
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
 
@@ -32,8 +33,9 @@ export default function GoogleSheetFieldMap({ i, formFields, field, sheetConf, s
           </optgroup>
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i, sheetConf, setSheetConf)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bit-integrations')} />}
-
+        {field.formField === 'custom' && (
+          <TagifyInput onChange={e => handleCustomValue(e, i, sheetConf, setSheetConf)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue || ''} placeholder={__('Custom Value', 'bit-integrations')} formFields={formFields} />
+        )}
         <select className="btcd-paper-inp" name="googleSheetField" value={field.googleSheetField || ''} onChange={(ev) => handleFieldMapping(ev, i, sheetConf, setSheetConf)}>
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {
