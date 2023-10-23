@@ -109,14 +109,14 @@ final class ElementorController
 
     public static function handle_elementor_submit($record)
     {
-        $form_id = $record->get_form_settings('id');
-
-        $flows = Flow::exists('Elementor', $form_id);
+        $post_id    = $record->get_form_settings('form_post_id');
+        $formData   = json_decode(get_post_meta($post_id, '__elementor_forms_snapshot', true))[0];
+        $flows      = Flow::exists('Elementor', $$formData->id);
         if (!$flows) {
             return;
         }
 
-        $data = [];
+        $data   = [];
         $fields = $record->get('fields');
         foreach ($fields as $field) {
             $data[$field['id']] = $field['raw_value'];
