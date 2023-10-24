@@ -216,6 +216,9 @@ final class PostController
             if (isset($post->post_content)) {
                 $post->post_content = trim(strip_tags($post->post_content));
             }
+            if (has_post_thumbnail($post->id)) {
+                $post->featured_image = get_the_post_thumbnail_url($post->id, 'full');
+            }
 
             if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $post->post_type && $newStatus != $oldStatus) {
                 Flow::execute('Post', 6, (array) $post, $statusChangeTrigger);
