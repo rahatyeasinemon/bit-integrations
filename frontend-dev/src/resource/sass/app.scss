@@ -1328,10 +1328,11 @@ input[type="checkbox"].disabled:checked:before {
 
   & img {
     display: block;
-    max-height: 160px;
+    max-height: 90px;
     max-width: 160px;
     transform: scale(0.8);
     padding-top: 20px;
+    margin: 0 auto 5px;
   }
 }
 

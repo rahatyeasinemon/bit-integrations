@@ -31,7 +31,7 @@ function DocSupport() {
             role="button"
             tabIndex="0"
             className="btcd-inte-card product-sm mr-4 mt-3"
-            style={{ width: '200px', height: '200px' }}
+            style={{ width: '200px', height: 'max-content', textAlign: 'center' }}
           >
 
             <img loading="lazy" src={product.image} alt={product.slug} />
@@ -39,7 +39,7 @@ function DocSupport() {
               {product.name}
             </div>
             <br />
-            <div className="flx flx-center ml-2">
+            <div className="flx flx-center ml-2" style={{ minHeight: '50px' }}>
               <span>{product.description}</span>
             </div>
             <div className="flx flx-center">
