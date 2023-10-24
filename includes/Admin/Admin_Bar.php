@@ -159,7 +159,7 @@ class Admin_Bar
     public function RemoveAdminNotices()
     {
         global $plugin_page;
-        if (is_string($plugin_page) && strpos($plugin_page, 'bit-integrations') === false) {
+        if (!$plugin_page || strpos($plugin_page, 'bit-integrations') === false) {
             return;
         }
         remove_all_actions('admin_notices');
