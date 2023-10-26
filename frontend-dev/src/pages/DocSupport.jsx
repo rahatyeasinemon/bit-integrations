@@ -34,7 +34,7 @@ function DocSupport() {
             style={{ width: '200px', height: 'max-content', textAlign: 'center' }}
           >
 
-            <img loading="lazy" src={product.image} alt={product.slug} />
+            <img loading="lazy" src={product.image} alt={product.slug} style={{ maxHeight: '90px' }} />
             <div className="txt-center px-2 f15">
               {product.name}
             </div>
