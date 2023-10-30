@@ -2,9 +2,9 @@
 Contributors: bitpressadmin
 Tags: automation,integration,connector,automator,Zapier,webhook,workflow,Platform integrations,Wp WebHooks,Pabbly,Integrately
 Requires at least: 5.1
-Tested up to: 6.3.2
+Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 License: GPLv2 or later
 
 Automation Plugin for WordPress; Integration of 60+ Triggers and 130+ Actions.The #1 highest no-code platform Automator plugin in WordPress.
@@ -1506,6 +1506,19 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 6. All integration list
 
 == Changelog ==
+
+= 1.5.2  =
+*Release Date - *30th October 2023\*
+
+- **Fixes :**
+  - Acumbamail data submission issue fixed
+  - Elementor global form data submission issue fixed
+  - Forminator forms limitation issue fixed
+  - Google Sheets custom form-field issue fixed
+  - Post trigger feature image issue fixed
+  - Beaver Builder custom dashboard issue fixed
+  - Doc & support page product design breaking issue fixed
+  - Custom Action validation issue fixed
 
 = 1.5.1  =
 *Release Date - *18th October 2023\*
