@@ -6,8 +6,9 @@
 
 namespace BitCode\FI\Actions\GoogleSheet;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -62,7 +63,7 @@ class RecordApiHelper
         foreach ($fieldMap as $fieldKey => $fieldPair) {
             if (!empty($fieldPair->googleSheetField)) {
                 if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
-                    $fieldData[$fieldPair->googleSheetField] = $fieldPair->customValue;
+                    $fieldData[$fieldPair->googleSheetField] = Common::replaceFieldWithValue($fieldPair->customValue, $fieldValues);
                 } else {
                     $fieldData[$fieldPair->googleSheetField] = isset($fieldValues[$fieldPair->formField]) && is_array($fieldValues[$fieldPair->formField]) ? $this->formatArrayObject($fieldValues[$fieldPair->formField]) : $fieldValues[$fieldPair->formField];
                 }
@@ -82,7 +83,6 @@ class RecordApiHelper
         $data['range'] = "{$worksheetName}!$headerRow";
         $data['majorDimension'] = "{$header}";
         $data['values'][] = $values;
-
 
         $recordApiResponse = $this->insertRecord($spreadsheetId, $worksheetName, $header, $headerRow, wp_json_encode($data));
         $type = 'insert';
