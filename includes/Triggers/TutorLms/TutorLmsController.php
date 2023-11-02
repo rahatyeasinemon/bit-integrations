@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\TutorLms;
 
 use BitCode\FI\Flow\Flow;
@@ -236,6 +237,21 @@ final class TutorLmsController
                 'Student Name' => (object) [
                     'fieldKey' => 'student_name',
                     'fieldName' => 'Student Name',
+                    'required' => false
+                ],
+                'Student First Name' => (object) [
+                    'fieldKey' => 'student_first_name',
+                    'fieldName' => 'Student First Name',
+                    'required' => false
+                ],
+                'Student last Name' => (object) [
+                    'fieldKey' => 'student_last_name',
+                    'fieldName' => 'Student Last Name',
+                    'required' => false
+                ],
+                'Student Email' => (object) [
+                    'fieldKey' => 'student_email',
+                    'fieldName' => 'Student Email',
                     'required' => false
                 ],
                 'Maximum Student' => (object) [
@@ -555,16 +571,19 @@ final class TutorLmsController
             return;
         }
 
-        $author_id = get_post_field('post_author', $course_id);
-        $author_name = get_the_author_meta('display_name', $author_id);
-
-        $student_id = get_post_field('post_author', $enrollment_id);
-        $student_name = get_the_author_meta('display_name', $student_id);
+        $author_id      = get_post_field('post_author', $course_id);
+        $author_name    = get_the_author_meta('display_name', $author_id);
+        $student_id     = get_post_field('post_author', $enrollment_id);
+        $userData       = get_userdata($student_id);
         $result_student = [];
-        if ($student_id && $student_name) {
+
+        if ($student_id && $userData) {
             $result_student = [
-                'student_id' => $student_id,
-                'student_name' => $student_name,
+                'student_id'            => $student_id,
+                'student_name'          => $userData->display_name,
+                'student_first_name'    => $userData->user_firstname,
+                'student_last_name'     => $userData->user_lastname,
+                'student_email'         => $userData->user_email,
             ];
         }
 
