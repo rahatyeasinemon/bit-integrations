@@ -1490,11 +1490,11 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 
 == Installation ==
 
-1. Download the plugin.
+1. Download the automation plugin.
 2. From the WordPress Admin Panel, click on Plugins => Add New.
 3. Click on Upload, so you can directly upload your plugin zip file.
 4. Use the browse button to select the plugin zip file that was downloaded, and then click on Install Now.
-5. Once installed, click “Activate”.
+5. Once installed the integration plugin, click “Activate”.
 
 == Screenshots ==
 
