@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\Tripetto;
 
 use BitCode\FI\Flow\Flow;
@@ -90,6 +91,7 @@ final class TripettoController
                 'label' => $field->name,
             ];
         }
+
         return $fields;
     }
 
@@ -107,10 +109,19 @@ final class TripettoController
         $data = $wpdb->get_results($query);
 
         $data = json_decode($data[0]->definition);
-        $clusterData = $data->clusters;
-        foreach ($clusterData as $singleCluster) {
-            self::getAllDripperFormFields($singleCluster);
+
+        if (isset($data->clusters)) {
+            $clusterData = $data->clusters;
+            foreach ($clusterData as $singleCluster) {
+                self::getAllDripperFormFields($singleCluster);
+            }
+        } else {
+            $sectionData = $data->sections;
+            foreach ($sectionData as $singleSection) {
+                self::getAllSectionFormFields($singleSection);
+            }
         }
+
         return self::$allIndividualFormFields;
     }
 
@@ -129,6 +140,25 @@ final class TripettoController
             if ($key === 'branches') {
                 foreach ($cluster[0]->clusters as $innerClusters) {
                     self::getAllDripperFormFields($innerClusters);
+                }
+            }
+        }
+    }
+    public static function getAllSectionFormFields($sectionData)
+    {
+        foreach ($sectionData as $key => $section) {
+            if ($key === 'nodes') {
+                foreach ($section as $field) {
+                    self::$allIndividualFormFields[] = (object)[
+                        'id' => $field->id,
+                        'name' => $field->name,
+                        'type' => $field->slots[0]->type ? $field->slots[0]->type : 'text',
+                    ];
+                }
+            }
+            if ($key === 'branches') {
+                foreach ($section[0]->sections as $innerSections) {
+                    self::getAllSectionFormFields($innerSections);
                 }
             }
         }
