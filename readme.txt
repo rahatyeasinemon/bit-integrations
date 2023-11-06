@@ -4,7 +4,7 @@ Tags: automation,integration,connector,automator,Zapier,webhook,workflow,Platfor
 Requires at least: 5.1
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.5.2
+Stable tag: 1.5.3
 License: GPLv2 or later
 
 Automation Plugin for WordPress; Integration of 60+ Triggers and 130+ Actions.The #1 highest no-code platform Automator plugin in WordPress.
@@ -1506,6 +1506,17 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 6. All integration list
 
 == Changelog ==
+
+= 1.5.3  =
+*Release Date - *5th November 2023\*
+
+- **Fixes :**
+  - Woocommerce multiple image upload issue fixed
+  - Moosend list limitation issue fixed
+  - Metform hooks issue fixed
+  - TutorLms first_name, last_name & email field added in course enroll
+  - GoogleSheets custom data sending issue fixed
+  - Tripetto form issue fixed
 
 = 1.5.2  =
 *Release Date - *30th October 2023\*

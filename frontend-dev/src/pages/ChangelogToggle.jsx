@@ -10,7 +10,7 @@ import Modal from '../components/Utilities/Modal'
 export default function ChangelogToggle() {
     const btcbi = useRecoilValue($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const version = btcbi.isPro ? '1.4.2' : '1.5.2'
+    const version = btcbi.isPro ? '1.4.2' : '1.5.3'
     return (
         <div className="changelog-toggle">
             <button
@@ -27,7 +27,7 @@ export default function ChangelogToggle() {
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
                         <h3>What's New in {version}?</h3>
-                        <small>30th October 2023</small>
+                        <small>5th November 2023</small>
                     </div>
                     <div className='changelog-content'>
                         {/* <h4>New Integration</h4>
@@ -56,15 +56,12 @@ export default function ChangelogToggle() {
 
                         <div className='fixes-list'>
                             <ul>
-                                <li>Acumbamail data submission issue fixed</li>
-                                <li>Elementor global form data submission issue fixed</li>
-                                <li>Forminator forms limitation issue fixed</li>
-                                <li>Google Sheets custom form-field issue fixed</li>
-                                <li>Post trigger feature image issue fixed</li>
-                                <li>Beaver Builder custom dashboard issue fixed</li>
-                                <li>Doc & support page product design breaking issue fixed</li>
-                                <li>Custom Action validation issue fixed</li>
-
+                                <li>Woocommerce multiple image upload issue fixed</li>
+                                <li>Moosend list limitation issue fixed</li>
+                                <li>Metform hooks issue fixed</li>
+                                <li>TutorLms first_name, last_name & email field added in course enroll</li>
+                                <li>GoogleSheets custom data sending issue fixed</li>
+                                <li>Tripetto form issue fixed</li>
                             </ul>
                         </div>
                     </div>
