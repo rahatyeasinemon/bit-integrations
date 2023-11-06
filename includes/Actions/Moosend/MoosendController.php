@@ -29,12 +29,12 @@ class MoosendController
         400
       );
     }
-    $apiEndpoints = $this->baseUrl .'lists.json?apikey='. $requestParams->authKey ;
+    $apiEndpoints = $this->baseUrl . 'lists/1/1000.json?apikey=' . $requestParams->authKey;
     $headers = [
       'Content-Type' => 'application/json',
       'Accept' => 'application/json',
     ];
-    $response = HttpHelper::get($apiEndpoints, null,$headers);
+    $response = HttpHelper::get($apiEndpoints, null, $headers);
     if ($response->Error !== null) {
       wp_send_json_error(
         __(
@@ -58,24 +58,23 @@ class MoosendController
     $field_map = $integrationDetails->field_map;
 
     if (
-       empty($field_map)
-        || empty($authKey)
+      empty($field_map)
+      || empty($authKey)
     ) {
-        return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for moosend api', 'bit-integrations'));
+      return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for moosend api', 'bit-integrations'));
     }
     $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
     $moosendApiResponse = $recordApiHelper->execute(
-        $listId,
-        $method,
-        $fieldValues,
-        $field_map,
-        $authKey
+      $listId,
+      $method,
+      $fieldValues,
+      $field_map,
+      $authKey
     );
 
     if (is_wp_error($moosendApiResponse)) {
-        return $moosendApiResponse;
+      return $moosendApiResponse;
     }
     return $moosendApiResponse;
   }
-
 }

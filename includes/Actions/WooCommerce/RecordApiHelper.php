@@ -589,11 +589,21 @@ class RecordApiHelper
                             $uplaodFiles = json_decode($fieldValues[$uploadField->formField]);
                         }
                         if (is_array($uplaodFiles)) {
-                            foreach ($uplaodFiles as $singleFile) {
-                                $url = $singleFile;
-                                $attach_id = $this->attach_product_attachments($product_id, $flag, $url, $singleFile);
-                                if ($flag === 1 && $attach_id) {
-                                    $attach_ids .= ',' . $attach_id;
+                            foreach ($uplaodFiles as $file) {
+                                if (is_array($file)) {
+                                    foreach ($file as $singleFile) {
+                                        $url = $singleFile;
+                                        $attach_id = $this->attach_product_attachments($product_id, $flag, $url, $singleFile);
+                                        if ($flag === 1 && $attach_id) {
+                                            $attach_ids .= ',' . $attach_id;
+                                        }
+                                    }
+                                } else {
+                                    $url = $file;
+                                    $attach_id = $this->attach_product_attachments($product_id, $flag, $url, $file);
+                                    if ($flag === 1 && $attach_id) {
+                                        $attach_ids .= ',' . $attach_id;
+                                    }
                                 }
                             }
                         } else {

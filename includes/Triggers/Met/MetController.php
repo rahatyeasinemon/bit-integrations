@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\Met;
 
 use BitCode\FI\Flow\Flow;
@@ -120,9 +121,18 @@ final class MetController
         return $fields;
     }
 
-    public static function handle_metform_submit($form_setting, $form_data, $email_name)
+    public static function handle_metform_pro_submit($form_setting, $form_data, $email_name)
     {
-        $form_id = $form_data['id'];
+        self::handle_submit_data($form_data['id'], $form_data);
+    }
+
+    public static function handle_metform_submit($form_id, $form_data, $form_settings)
+    {
+        self::handle_submit_data($form_id, $form_data);
+    }
+
+    private static function handle_submit_data($form_id, $form_data)
+    {
         if (!$form_id) {
             return;
         }
