@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\Brizy;
 
 use BitCode\FI\Core\Util\Common;
@@ -76,18 +77,21 @@ final class BrizyController
             wp_send_json_error(__('Brizy Pro is not installed or activated', 'bit-integrations'));
         }
         //Brizy get form list
-        $posts = self::getBrizyPosts();
+        $posts      = self::getBrizyPosts();
+        $all_forms  = [];
 
-        $all_forms = [];
-        if (!empty($posts) && is_array($posts)) {
-            foreach ($posts as $post) {
-                $forms = self::parseContentGetForms($post->post_content, $post->post_title);
+        foreach ($posts as $forms) {
+            $index          = 0;
+            $post_meta      = get_post_meta($forms->ID, 'brizy');
+            $tamplate_form  = json_decode(base64_decode($post_meta[0]['brizy-post']['editor_data']));
 
-                foreach ($forms as $form) {
+            if (isset($tamplate_form->items)) {
+                foreach ($tamplate_form->items as $form) {
+                    $index += 1;
                     $all_forms[] = (object)[
-                        'id' => $form->uniqueId,
-                        'title' => $form->title,
-                        'post_id' => $post->ID,
+                        'id'                => self::get_tamplate_form_id($form->value->items),
+                        'title'             => $forms->post_title . '->' . $index,
+                        'post_id'           => $forms->ID,
                     ];
                 }
             }
@@ -120,12 +124,10 @@ final class BrizyController
             return;
         }
 
-        $postContent = get_post_field('post_content', $data->postId);
-        if (empty($postContent)) {
-            return;
-        }
-
-        $formFields = self::parseContentGetFormFields($postContent, $data->id);
+        $post_meta      = get_post_meta($data->postId, 'brizy');
+        $tamplate_form  = json_decode(base64_decode($post_meta[0]['brizy-post']['editor_data']));
+        $formData       = self::get_tamplate_form_data_by_id($tamplate_form->items, $data->id);
+        $formFields     = self::get_tamplate_form_data($formData);
 
         $fields = [];
         foreach ($formFields as $field) {
@@ -135,111 +137,93 @@ final class BrizyController
             }
 
             $fields[] = [
-                'name' => $field->field_id,
-                'type' => $type,
+                'name'  => $field->field_id,
+                'type'  => $type,
                 'label' => $field->field_title,
             ];
         }
         return $fields;
     }
 
-    public static function parseContentGetFormFields($content, $formUniqueId)
+    public static function get_tamplate_form_id($items)
     {
-        $formStart = 0;
-        $formFields = [];
-        $contentArray = explode('><', $content);
-        foreach ($contentArray as $line) {
-            $lineArray = explode(' ', $line);
-
-            if ($lineArray[0] == 'form') {
-                $regularExpressionUniqueId = '/data-form-id\s*=\s*"([^"]+)"/';
-                preg_match($regularExpressionUniqueId, $line, $uniqueId);
-                if ($uniqueId[1] != $formUniqueId) {
-                    continue;
+        if (is_array($items)) {
+            foreach ($items as $item) {
+                if (isset($item->type) && $item->type !== "Form2") {
+                    return self::get_tamplate_form_id($item->value->items);
+                } else {
+                    return $item->value->_id;
                 }
-                $formStart = 1;
             }
-
-            if ($formStart && ($lineArray[0] == 'input' || $lineArray[0] == 'textarea' || $lineArray[0] == 'select' || $lineArray[0] == 'number' || $lineArray[0] == 'checkbox' || $lineArray[0] == 'radio' || $lineArray[0] == 'hidden' || $lineArray[0] == 'file' || $lineArray[0] == 'date' || $lineArray[0] == 'time' || $lineArray[0] == 'tel' || $lineArray[0] == 'password' || $lineArray[0] == 'url')) {
-                $regularExpressionUniqueId = '/name\s*=\s*"([^"]+)"/';
-                preg_match($regularExpressionUniqueId, $line, $fieldId);
-                $regularExpressionUniqueId = '/type\s*=\s*"([^"]+)"/';
-                preg_match($regularExpressionUniqueId, $line, $fieldType);
-                $regularExpressionUniqueId = '/data-label\s*=\s*"([^"]+)"/';
-                preg_match($regularExpressionUniqueId, $line, $fieldTitle);
-                $formFields[] = (object)[
-                    'field_id' => strtolower($fieldId[1]),
-                    'field_type' => strtolower(isset($fieldType[1]) ? $fieldType[1] : 'text'),
-                    'field_title' => isset($fieldTitle[1]) ? $fieldTitle[1] : $fieldId[1],
-                ];
-            }
-
-            if ($lineArray[0] == '/form') {
-                $formStart = 0;
+        } else {
+            if (isset($items->type) && $items->type !== 'form2') {
+                return self::get_tamplate_form_id($items->value->items);
+            } else {
+                return $items->value->_id;
             }
         }
-        $uniqueArry = [];
-
-        foreach ($formFields as $val) {
-            if (!in_array($val, $uniqueArry)) {
-                $uniqueArry[] = $val;
-            }
-        }
-
-        return $uniqueArry;
     }
 
-    public static function getAllFormsFromPostMeta($post)
+    public static function get_tamplate_form_data_by_id($items, $form_id)
     {
-        $forms = [];
-        foreach ($post as $widget) {
-            foreach ($widget->elements as $elements) {
-                foreach ($elements->post_content as $element) {
-                    if (isset($element->widgetType) && $element->widgetType == 'form') {
-                        $forms[] = $element;
+        if (is_array($items)) {
+            foreach ($items as $item) {
+                if (isset($item->type) && $item->type !== "Form2") {
+                    return self::get_tamplate_form_data_by_id($item->value->items, $form_id);
+                } else {
+                    if ($item->value->_id == $form_id) {
+                        return $item;
                     }
                 }
             }
+        } else {
+            if (isset($items->type) && $items->type !== 'form2') {
+                return self::get_tamplate_form_data_by_id($items->value->items, $form_id);
+            } else {
+                if ($items->value->_id == $form_id) {
+                    return $items;
+                }
+            }
         }
-        return $forms;
+    }
+
+    public static function get_tamplate_form_data($items)
+    {
+        $field_data = [];
+        if (is_array($items)) {
+            foreach ($items as $item) {
+                if (isset($item->value->items)) {
+                    return self::get_tamplate_form_data($item->value->items);
+                } else {
+                    $field_data[] = (object) [
+                        "field_id"      => $item->value->_id,
+                        "field_type"    => strtolower($item->value->type),
+                        "field_title"   => $item->value->label,
+                    ];
+                }
+            }
+        } else {
+            if (isset($items->value->items)) {
+                return self::get_tamplate_form_data($items->value->items);
+            } else {
+                $field_data[] = (object) [
+                    "field_id"      => $items->value->_id,
+                    "field_type"    => strtolower($items->value->type),
+                    "field_title"   => $items->value->label,
+                ];
+            }
+        }
+        return $field_data;
     }
 
     private static function getBrizyPosts()
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title, post_content FROM $wpdb->posts
+        $query = "SELECT ID, post_title, post_content, post_type FROM $wpdb->posts
         LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
-        WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'page' OR $wpdb->posts.post_type = 'post') AND $wpdb->postmeta.meta_key = 'brizy'";
+        WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'page' OR $wpdb->posts.post_type = 'post' OR $wpdb->posts.post_type = 'editor-template') AND $wpdb->postmeta.meta_key = 'brizy'";
 
         return $wpdb->get_results($query);
-    }
-
-    public static function parseContentGetForms($content, $post_title)
-    {
-        $forms = [];
-        $number = 0;
-        $contentArray = explode('><', $content);
-        foreach ($contentArray as $line) {
-            $lineArray = explode(' ', $line);
-            if ($lineArray[0] == 'form') {
-                $regularExpressionUniqueId = '/data-form-id\s*=\s*"([^"]+)"/';
-                preg_match($regularExpressionUniqueId, $line, $uniqueId);
-
-                // $regularExpressionTitle = '/title\s*=\s*"([^"]+)"/';
-                // preg_match($regularExpressionTitle, $line, $title);
-
-                $number += 1;
-
-                if (empty($uniqueId[1])) {
-                    continue;
-                }
-                $forms[] = (object)[
-                    'uniqueId' => $uniqueId[1],
-                    'title' => $post_title . '->' . $number,
-                ];
-            }
-        }
-        return $forms;
     }
 }
