@@ -7,7 +7,7 @@ Requires PHP: 7.0
 Stable tag: 1.5.3
 License: GPLv2 or later
 
-Automation Plugin for WordPress; Integration of 60+ Triggers and 130+ Actions.The #1 highest no-code platform Automator plugin in WordPress.
+Automation Plugin for WordPress; Integration of 60+ Triggers and 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress.
 
 == Description ==
 
@@ -1492,9 +1492,10 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 
 1. Download the automation plugin.
 2. From the WordPress Admin Panel, click on Plugins => Add New.
-3. Click on Upload, so you can directly upload your plugin zip file.
+3. For Uploading the automator plugin click on upload, so you can directly upload your plugin zip file.
 4. Use the browse button to select the plugin zip file that was downloaded, and then click on Install Now.
 5. Once installed the integration plugin, click “Activate”.
+6. Now you can you use the integration plugin where you can automate forminator ,wpforms data with a lot of platforms as like as Zapier and also can use the features of wp webhooks as both trigger and action. 
 
 == Screenshots ==
 

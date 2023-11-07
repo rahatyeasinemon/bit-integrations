@@ -20,6 +20,7 @@ import './resource/icons/style.css'
 import { __ } from './Utils/i18nwrap'
 import { $btcbi } from './GlobalStates'
 import ChangelogToggle from './pages/ChangelogToggle'
+import CashbackModal from './pages/CashbackModal'
 
 const AllIntegrations = lazy(() => import('./pages/AllIntegrations'))
 const Error404 = lazy(() => import('./pages/Error404'))
@@ -97,6 +98,7 @@ function App() {
 
             </nav>
             <div className="flx flx-center" style={{ marginLeft: 'auto' }}>
+              <CashbackModal />
               <ChangelogToggle />
             </div>
           </div>
