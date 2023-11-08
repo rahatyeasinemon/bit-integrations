@@ -2,12 +2,12 @@
 Contributors: bitpressadmin
 Tags: automation,integration,connector,automator,Zapier,webhook,workflow,Platform integrations,Wp WebHooks,Pabbly,Integrately
 Requires at least: 5.1
-Tested up to: 6.3.2
+Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.5.1
+Stable tag: 1.5.3
 License: GPLv2 or later
 
-Automation Plugin for WordPress; Integration of 60+ Triggers and 130+ Actions.The #1 highest no-code platform Automator plugin in WordPress.
+Automation Plugin for WordPress; Integration of 60+ Triggers and 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress.
 
 == Description ==
 
@@ -1490,11 +1490,12 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 
 == Installation ==
 
-1. Download the plugin.
+1. Download the automation plugin.
 2. From the WordPress Admin Panel, click on Plugins => Add New.
-3. Click on Upload, so you can directly upload your plugin zip file.
+3. For Uploading the automator plugin click on upload, so you can directly upload your plugin zip file.
 4. Use the browse button to select the plugin zip file that was downloaded, and then click on Install Now.
-5. Once installed, click “Activate”.
+5. Once installed the integration plugin, click “Activate”.
+6. Now you can you use the integration plugin where you can automate forminator ,wpforms data with a lot of platforms as like as Zapier and also can use the features of wp webhooks as both trigger and action. 
 
 == Screenshots ==
 
@@ -1506,6 +1507,30 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 6. All integration list
 
 == Changelog ==
+
+= 1.5.3  =
+*Release Date - *5th November 2023\*
+
+- **Fixes :**
+  - Woocommerce multiple image upload issue fixed
+  - Moosend list limitation issue fixed
+  - Metform hooks issue fixed
+  - TutorLms first_name, last_name & email field added in course enroll
+  - GoogleSheets custom data sending issue fixed
+  - Tripetto form issue fixed
+
+= 1.5.2  =
+*Release Date - *30th October 2023\*
+
+- **Fixes :**
+  - Acumbamail data submission issue fixed
+  - Elementor global form data submission issue fixed
+  - Forminator forms limitation issue fixed
+  - Google Sheets custom form-field issue fixed
+  - Post trigger feature image issue fixed
+  - Beaver Builder custom dashboard issue fixed
+  - Doc & support page product design breaking issue fixed
+  - Custom Action validation issue fixed
 
 = 1.5.1  =
 *Release Date - *18th October 2023\*

@@ -38,7 +38,7 @@ export default defineConfig(({ mode }) => ({
           arrowFunctions: true,
           // objectShorthand: true
         },
-        chunkFileNames: () => `bi-${hash()}-${chunkCount++}.js`,
+        chunkFileNames: () => `bi.${hash()}.${chunkCount++}.js`,
         assetFileNames: (fInfo) => {
           const pathArr = fInfo.name.split('/')
           const fileName = pathArr[pathArr.length - 1]
@@ -50,7 +50,7 @@ export default defineConfig(({ mode }) => ({
             return 'logo.svg'
           }
 
-          return `bi-${hash()}-${chunkCount++}.[ext]`
+          return `${fileName}.${hash()}.${chunkCount++}.[ext]`
         },
       },
     },
