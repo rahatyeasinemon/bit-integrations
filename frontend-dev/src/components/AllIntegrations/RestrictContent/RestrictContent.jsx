@@ -33,7 +33,7 @@ function RestrictContent({ formFields, setFlow, flow, allIntegURL }) {
         { key: 'country', label: 'Country', required: false },
     ]
 
-    const levelFields = [{ key: 'exp_date', label: 'Expiry Date', required: true }]
+    // const levelFields = [{ key: 'exp_date', label: 'Expiry Date', required: true }]
 
     const actionLists = [
         { key: 'add-member-level', label: 'Add the user to a level' }, // Add the user to a level
@@ -44,9 +44,10 @@ function RestrictContent({ formFields, setFlow, flow, allIntegURL }) {
         name: 'Restrict Content',
         type: 'RestrictContent',
         field_map: [{ formField: '', restrictField: '' }],
+        exp_date: '',
         memberFields,
         actionLists,
-        levelFields,
+        // levelFields,
         actions: {},
     })
 
@@ -55,10 +56,10 @@ function RestrictContent({ formFields, setFlow, flow, allIntegURL }) {
         const resp = saveActionConf({ flow, setFlow, allIntegURL, conf: restrictConf, navigate, setIsLoading, setSnackbar })
     }
     const nextPage = (pageNo) => {
-        if (!checkMappedFields(restrictConf)) {
-            toast.error('Please map mandatory fields')
-            return
-        }
+        // if (!checkMappedFields(restrictConf)) {
+        //     toast.error('Please map mandatory fields')
+        //     return
+        // }
         restrictConf.field_map.length > 0 && setStep(pageNo)
     }
 

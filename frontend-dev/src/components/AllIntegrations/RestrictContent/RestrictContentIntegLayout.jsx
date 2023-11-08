@@ -3,6 +3,7 @@ import { __ } from "../../../Utils/i18nwrap";
 import { addFieldMap } from "./IntegrationHelpers";
 import { getAllLevels } from "./RestrictContentCommonFunc";
 import RestrictContentFieldMap from "./RestrictContentFieldMap";
+import Cooltip from '../../Utilities/Cooltip'
 
 export default function RestrictContentIntegLayout({ formFields, handleInput, restrictConf, setRestrictConf, isLoading, setIsLoading, setSnackbar }) {
     const handleInputAction = (e) => {
@@ -57,6 +58,19 @@ export default function RestrictContentIntegLayout({ formFields, handleInput, re
                     </button>
                 </>
             )}
+            <br />
+            <br />
+            {restrictConf.actionName === 'add-member-level' &&
+                <div className="flx">
+                    <b className="wdt-200 d-in-b">{__('Expiry Date:', 'bit-integrations')}</b>
+                    <input className="btcd-paper-inp w-5 mt-1" onChange={handleInput} name="exp_date" value={restrictConf.exp_date || ''} type="date" placeholder={__('Expiry Date', 'bit-integrations')} />
+                    <Cooltip width={250} icnSize={17} className="ml-2">
+                        <div className="txt-body">
+                            Leave it empty for never-expired
+                        </div>
+                    </Cooltip>
+                </div>
+            }
             {/* {restrictConf?.actionName && restrictConf.actionName === 'add-member-level'
         && (
           <>
@@ -72,7 +86,7 @@ export default function RestrictContentIntegLayout({ formFields, handleInput, re
             <button onClick={() => getAllMembers(restrictConf, setRestrictConf, setIsLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Fetch All Members', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
           </>
         )} */}
-            <br />
+            {/* <br />
             {restrictConf.actionName === 'add-member-level' &&
                 <>
                     <div className="mt-5">
@@ -103,7 +117,7 @@ export default function RestrictContentIntegLayout({ formFields, handleInput, re
                         setSnackbar={setSnackbar}
                     />
                 ))}
-            { restrictConf?.actionName === "add-member-level" && <div className="txt-center btcbi-field-map-button mt-2">
+            {restrictConf?.actionName === "add-member-level" && <div className="txt-center btcbi-field-map-button mt-2">
                 <button
                     onClick={() => addFieldMap(restrictConf.field_map.length, restrictConf, setRestrictConf, false)}
                     className="icn-btn sh-sm"
@@ -113,7 +127,7 @@ export default function RestrictContentIntegLayout({ formFields, handleInput, re
                 </button>
             </div>}
             <br />
-            <br />
+            <br /> */}
         </>
     );
 }

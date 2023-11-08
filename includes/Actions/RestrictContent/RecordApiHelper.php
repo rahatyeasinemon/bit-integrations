@@ -3,6 +3,7 @@
 /**
  * RestrictContent Record Api
  */
+
 namespace BitCode\FI\Actions\RestrictContent;
 
 use BitCode\FI\Log\LogHandler;
@@ -42,9 +43,9 @@ class RecordApiHelper
 
     public function insertMember($data)
     {
-        $levelId = $this->integrationDetails->level_id;
-        $actionName = $this->action;
-        $expiry_date = $data['exp_date'];
+        $levelId        = $this->integrationDetails->level_id;
+        $actionName     = $this->action;
+        $expiry_date    = $this->integrationDetails->exp_date;
 
         $level_ids = rcp_get_membership_levels(
             [
