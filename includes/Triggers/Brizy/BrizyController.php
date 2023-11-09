@@ -80,19 +80,14 @@ final class BrizyController
         $posts      = self::getBrizyPosts();
         $all_forms  = [];
 
-        foreach ($posts as $forms) {
+        foreach ($posts as $post) {
             $index          = 0;
-            $post_meta      = get_post_meta($forms->ID, 'brizy');
+            $post_meta      = get_post_meta($post->ID, 'brizy');
             $tamplate_form  = json_decode(base64_decode($post_meta[0]['brizy-post']['editor_data']));
 
             if (isset($tamplate_form->items)) {
                 foreach ($tamplate_form->items as $form) {
-                    $index += 1;
-                    $all_forms[] = (object)[
-                        'id'                => self::get_tamplate_form_id($form->value->items),
-                        'title'             => $forms->post_title . '->' . $index,
-                        'post_id'           => $forms->ID,
-                    ];
+                    self::get_tamplate_form_id($form->value->items, $all_forms, $post->ID, $post->post_title, $index);
                 }
             }
         }
@@ -145,22 +140,33 @@ final class BrizyController
         return $fields;
     }
 
-    public static function get_tamplate_form_id($items)
+    public static function get_tamplate_form_id($items, &$all_forms, $post_id, $post_title, &$index)
     {
         if (is_array($items)) {
             foreach ($items as $item) {
-                if (isset($item->type) && $item->type !== "Form2") {
-                    return self::get_tamplate_form_id($item->value->items);
-                } else {
-                    return $item->value->_id;
-                }
+                self::get_form_id($item, $all_forms, $post_id, $post_title, $index);
             }
         } else {
-            if (isset($items->type) && $items->type !== 'form2') {
-                return self::get_tamplate_form_id($items->value->items);
-            } else {
-                return $items->value->_id;
-            }
+            self::get_form_id($items, $all_forms, $post_id, $post_title, $index);
+        }
+    }
+
+    public static function get_form_id($item, &$all_forms, $post_id, $post_title, &$index)
+    {
+        if (
+            isset($item->type)
+            && $item->type !== "Form2"
+            && isset($item->value->items)
+            && is_array($item->value->items)
+        ) {
+            self::get_tamplate_form_id($item->value->items, $all_forms, $post_id, $post_title, $index);
+        } elseif (isset($item->type) && $item->type == "Form2") {
+            $index++;
+            $all_forms[] = (object)[
+                'id'        => $item->value->_id,
+                'title'     => $post_title . '->' . $index,
+                'post_id'   => $post_id,
+            ];
         }
     }
 
@@ -168,21 +174,29 @@ final class BrizyController
     {
         if (is_array($items)) {
             foreach ($items as $item) {
-                if (isset($item->type) && $item->type !== "Form2") {
-                    return self::get_tamplate_form_data_by_id($item->value->items, $form_id);
-                } else {
-                    if ($item->value->_id == $form_id) {
-                        return $item;
-                    }
+                $data = self::get_form_data($item, $form_id);
+                if (!empty($data)) {
+                    return $data;
                 }
             }
         } else {
-            if (isset($items->type) && $items->type !== 'form2') {
-                return self::get_tamplate_form_data_by_id($items->value->items, $form_id);
-            } else {
-                if ($items->value->_id == $form_id) {
-                    return $items;
-                }
+            $data = self::get_form_data($items, $form_id);
+            if (!empty($data)) {
+                return $data;
+            }
+        }
+    }
+
+    public static function get_form_data($item, $form_id)
+    {
+        if (isset($item->type) && $item->type !== "Form2" && isset($item->value->items) && is_array($item->value->items)) {
+            $data =  self::get_tamplate_form_data_by_id($item->value->items, $form_id);
+            if (!empty($data)) {
+                return $data;
+            }
+        } else {
+            if ($item->value->_id == $form_id) {
+                return $item;
             }
         }
     }
