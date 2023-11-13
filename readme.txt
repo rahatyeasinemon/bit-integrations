@@ -1,4 +1,4 @@
-=== Automation Plugin for WordPress : Best no-code Automator & Integration tool to Automate 200+ Platforms - Bit Integrations ===
+=== Zapier for WordPress Automation & Integrate: Webhook Automator, Integrator and connector for 200+ applications no-code automate - Bit Integrations  ===
 Contributors: bitpressadmin
 Tags: automation,integration,connector,automator,Zapier,webhook,workflow,Platform integrations,Wp WebHooks,Pabbly,Integrately
 Requires at least: 5.1
@@ -1509,7 +1509,7 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 == Changelog ==
 
 = 1.5.3  =
-*Release Date - *5th November 2023\*
+*Release Date - *7th November 2023\*
 
 - **Fixes :**
   - Woocommerce multiple image upload issue fixed
