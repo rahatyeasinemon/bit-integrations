@@ -68,7 +68,7 @@ class MailRelayController
 
         $domain       = $fieldsRequestParams->domain;
         $baseUrl      = "https://{$domain}.ipzmarketing.com/api/v1/";
-        $apiEndpoints = $baseUrl . 'groups';
+        $apiEndpoints = $baseUrl . 'groups?page=1&&per_page=1000';
         $apiKey       = $fieldsRequestParams->auth_token;
         $header       = [
             'X-AUTH-TOKEN' => $apiKey
