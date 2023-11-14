@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\Formidable;
 
 use BitCode\FI\Core\Util\Common;
@@ -102,7 +103,7 @@ final class FormidableController
                     ];
                 }
                 continue;
-            } elseif ($val->type === 'divider') {
+            } elseif ($val->type === 'divider' || $val->type === 'end_divider') {
                 $formName = $val->name;
                 $fldKey = $val->field_key;
                 $cnt = 0;
@@ -121,7 +122,7 @@ final class FormidableController
                 continue;
             }
             if (in_array($val->field_key, $visistedKey)) {
-                continue;
+                // continue;
             }
             $field[] = (object) [
                 'name'     => $val->field_key,
@@ -129,6 +130,7 @@ final class FormidableController
                 'type'     => $val->type
             ];
         }
+
         return $field;
     }
 
@@ -184,6 +186,7 @@ final class FormidableController
 
             $form_fields[$key] = $val;
         }
+
         return $form_fields;
     }
 
