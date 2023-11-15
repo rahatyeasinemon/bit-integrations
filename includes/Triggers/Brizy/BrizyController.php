@@ -101,17 +101,9 @@ final class BrizyController
             //         ];
             //     }
             // }
-            $forms = self::parseContentGetForms($form_content, $post->post_title);
-
-            foreach ($forms as $form) {
-                $all_forms[] = (object)[
-                    'id' => $form->uniqueId,
-                    'title' => $form->title,
-                    'post_id' => $post->ID,
-                ];
-            }
+            self::parseContentGetForms($form_content, $post->post_title, $post->ID, $all_forms);
         }
-        wp_send_json_success($all_forms);
+        wp_send_json_success(array_values($all_forms));
     }
 
     public function getFormFields($data)
@@ -263,9 +255,8 @@ final class BrizyController
         return $wpdb->get_results($query);
     }
 
-    public static function parseContentGetForms($content, $post_title)
+    public static function parseContentGetForms($content, $post_title, $post_id, &$all_forms)
     {
-        $forms = [];
         $number = 0;
         $contentArray = explode('><', $content);
         foreach ($contentArray as $line) {
@@ -286,19 +277,20 @@ final class BrizyController
                     if (empty($uniqueId[1])) {
                         continue;
                     }
-                    $forms[] = (object)[
-                        'uniqueId' => $uniqueId[1],
-                        'title' => $post_title . '->' . $number,
+                    $all_forms[$uniqueId[1]] = (object)[
+                        'id' => $uniqueId[1],
+                        'title' => isset($all_forms[$uniqueId[1]]->title) ? "Multiple page/form->{$uniqueId[1]}" : $post_title . '->' . $number,
+                        'post_id' => $post_id,
                     ];
                     continue;
                 }
-                $forms[] = (object)[
-                    'uniqueId' => $uniqueId[1],
-                    'title' => $post_title . '->' . $number,
+                $all_forms[$uniqueId[1]] = (object)[
+                    'id' => $uniqueId[1],
+                    'title' => isset($all_forms[$uniqueId[1]]->title) ? "Multiple page/form->{$uniqueId[1]}" : $post_title . '->' . $number,
+                    'post_id' => $post_id,
                 ];
             }
         }
-        return $forms;
     }
 
     public static function parseContentGetFormFields($content, $formUniqueId)
