@@ -277,16 +277,39 @@ final class BrizyController
                     if (empty($uniqueId[1])) {
                         continue;
                     }
+                    if (isset($all_forms[$uniqueId[1]]->title)) {
+                        // check if title is starts with global form to concat
+                        if (str_starts_with($all_forms[$uniqueId[1]]->title, 'Global Form:')) {
+                            $title = strlen($all_forms[$uniqueId[1]]->title) > 40 ? substr($all_forms[$uniqueId[1]]->title, 0, 40) . '...' : "{$all_forms[$uniqueId[1]]->title}, {$post_title}->{$number}";
+                        } else {
+                            $title = 'Global Form: ';
+                            $title .= strlen($all_forms[$uniqueId[1]]->title) > 40 ? substr($all_forms[$uniqueId[1]]->title, 0, 40) . '...' : "{$all_forms[$uniqueId[1]]->title}, {$post_title}->{$number}";
+                        }
+                    } else {
+                        $title = $post_title . '->' . $number;
+                    }
+
                     $all_forms[$uniqueId[1]] = (object)[
                         'id' => $uniqueId[1],
-                        'title' => isset($all_forms[$uniqueId[1]]->title) ? "Multiple page/form->{$uniqueId[1]}" : $post_title . '->' . $number,
+                        'title' => $title,
                         'post_id' => $post_id,
                     ];
                     continue;
                 }
+                if (isset($all_forms[$uniqueId[1]]->title)) {
+                    // check if title is starts with global form to concat
+                    if (str_starts_with($all_forms[$uniqueId[1]]->title, 'Global Form:')) {
+                        $title = strlen($all_forms[$uniqueId[1]]->title) > 40 ? substr($all_forms[$uniqueId[1]]->title, 0, 40) . '...' : "{$all_forms[$uniqueId[1]]->title}, {$post_title}->{$number}";
+                    } else {
+                        $title = 'Global Form: ';
+                        $title .= strlen($all_forms[$uniqueId[1]]->title) > 40 ? substr($all_forms[$uniqueId[1]]->title, 0, 40) . '...' : "{$all_forms[$uniqueId[1]]->title}, {$post_title}->{$number}";
+                    }
+                } else {
+                    $title = $post_title . '->' . $number;
+                }
                 $all_forms[$uniqueId[1]] = (object)[
                     'id' => $uniqueId[1],
-                    'title' => isset($all_forms[$uniqueId[1]]->title) ? "Multiple page/form->{$uniqueId[1]}" : $post_title . '->' . $number,
+                    'title' => $title,
                     'post_id' => $post_id,
                 ];
             }
