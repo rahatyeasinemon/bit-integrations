@@ -109,9 +109,8 @@ final class ElementorController
 
     public static function handle_elementor_submit($record)
     {
-        $post_id    = $record->get_form_settings('form_post_id');
-        $formData   = json_decode(get_post_meta($post_id, '__elementor_forms_snapshot', true))[0];
-        $flows      = Flow::exists('Elementor', $formData->id);
+        $form_id    = $record->get_form_settings('id');
+        $flows      = Flow::exists('Elementor', $form_id);
         if (!$flows) {
             return;
         }
@@ -122,6 +121,6 @@ final class ElementorController
             $data[$field['id']] = $field['raw_value'];
         }
 
-        Flow::execute('Elementor', $formData->id, $data, $flows);
+        Flow::execute('Elementor', $form_id, $data, $flows);
     }
 }
