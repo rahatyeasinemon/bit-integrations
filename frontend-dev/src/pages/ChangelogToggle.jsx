@@ -10,7 +10,7 @@ import Modal from '../components/Utilities/Modal'
 export default function ChangelogToggle() {
     const btcbi = useRecoilValue($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const version = btcbi.isPro ? '1.4.2' : '1.5.3'
+    const version = btcbi.isPro ? '1.4.3' : '1.5.4'
     return (
         <div className="changelog-toggle">
             <button
@@ -27,7 +27,7 @@ export default function ChangelogToggle() {
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
                         <h3>What's New in {version}?</h3>
-                        <small>5th November 2023</small>
+                        <small>20th November 2023</small>
                     </div>
                     <div className='changelog-content'>
                         {/* <h4>New Integration</h4>
@@ -56,12 +56,13 @@ export default function ChangelogToggle() {
 
                         <div className='fixes-list'>
                             <ul>
-                                <li>Woocommerce multiple image upload issue fixed</li>
-                                <li>Moosend list limitation issue fixed</li>
-                                <li>Metform hooks issue fixed</li>
-                                <li>TutorLms first_name, last_name & email field added in course enroll</li>
-                                <li>GoogleSheets custom data sending issue fixed</li>
-                                <li>Tripetto form issue fixed</li>
+                                <li>Brizy global footer form issue fixed</li>
+                                <li>Restrict Content expiry date issue fixed</li>
+                                <li>Mailrelay group fetching limitation issue fixed</li>
+                                <li>Mailjet fields limitation issue fixed</li>
+                                <li>Elementor trigger issue fixed </li>
+                                <li>Elementor form with Airtable integrations issue fixed</li>
+                                <li>Formidable section fields issue fixed</li>
                             </ul>
                         </div>
                     </div>

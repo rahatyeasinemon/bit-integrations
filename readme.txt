@@ -4,7 +4,7 @@ Tags: automation,integration,connector,automator,Zapier,webhook,workflow,Platfor
 Requires at least: 5.1
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 License: GPLv2 or later
 
 Automation Plugin for WordPress; Integration of 60+ Triggers and 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress.
@@ -1507,6 +1507,18 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 6. All integration list
 
 == Changelog ==
+
+= 1.5.4  =
+*Release Date - *20th November 2023\*
+
+- **Fixes :**
+  - Brizy global footer form issue fixed
+  - Restrict Content expiry date issue fixed
+  - Mailrelay group fetching limitation issue fixed
+  - Mailjet fields limitation issue fixed
+  - Elementor trigger issue fixed 
+  - Elementor form with Airtable integrations issue fixed
+  - Formidable section fields issue fixed
 
 = 1.5.3  =
 *Release Date - *7th November 2023\*
