@@ -23,7 +23,7 @@ export default function CashbackModal() {
             >
                 Get $10 Cashback
             </button>
-            <Modal sm show={show} setModal={() => setShow(false)} >
+            <Modal sm show={show} setModal={() => setShow(false)} noPadding={true}>
                 <div>
                     <div id='title-wrapper'>
                         <h3 className="title">
