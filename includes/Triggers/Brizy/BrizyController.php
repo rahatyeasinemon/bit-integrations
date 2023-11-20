@@ -83,15 +83,27 @@ final class BrizyController
         foreach ($posts as $post) {
             $index          = 0;
             $post_meta      = get_post_meta($post->ID, 'brizy');
-            $tamplate_form  = json_decode(base64_decode($post_meta[0]['brizy-post']['editor_data']));
+            // $tamplate_form  = json_decode(base64_decode($post_meta[0]['brizy-post']['editor_data']));
+            $form_content   = base64_decode($post_meta[0]['brizy-post']['compiled_html']);
 
-            if (isset($tamplate_form->items)) {
-                foreach ($tamplate_form->items as $form) {
-                    self::get_tamplate_form_id($form->value->items, $all_forms, $post->ID, $post->post_title, $index);
-                }
-            }
+            // if (!isset($tamplate_form->items) && !empty($tamplate_form->items)) {
+            //     foreach ($tamplate_form->items as $form) {
+            //         self::get_tamplate_form_id($form->value->items, $all_forms, $post->ID, $post->post_title, $index);
+            //     }
+            // } else {
+            //     $forms = self::parseContentGetForms($form_content, $post->post_title);
+
+            //     foreach ($forms as $form) {
+            //         $all_forms[] = (object)[
+            //             'id' => $form->uniqueId,
+            //             'title' => $form->title,
+            //             'post_id' => $post->ID,
+            //         ];
+            //     }
+            // }
+            self::parseContentGetForms($form_content, $post->post_title, $post->ID, $all_forms);
         }
-        wp_send_json_success($all_forms);
+        wp_send_json_success(array_values($all_forms));
     }
 
     public function getFormFields($data)
@@ -120,11 +132,13 @@ final class BrizyController
         }
 
         $post_meta      = get_post_meta($data->postId, 'brizy');
-        $tamplate_form  = json_decode(base64_decode($post_meta[0]['brizy-post']['editor_data']));
-        $formData       = self::get_tamplate_form_data_by_id($tamplate_form->items, $data->id);
-        $formFields     = self::get_tamplate_form_data($formData);
+        // $tamplate_form  = json_decode(base64_decode($post_meta[0]['brizy-post']['editor_data']));
+        // $formData       = self::get_tamplate_form_data_by_id($tamplate_form->items, $data->id);
+        // $formFields     = self::get_tamplate_form_data($formData);
 
-        $fields = [];
+        $form_content   = base64_decode($post_meta[0]['brizy-post']['compiled_html']);
+        $formFields     = self::parseContentGetFormFields($form_content, $data->id);
+        $fields         = [];
         foreach ($formFields as $field) {
             $type = $field->field_type;
             if ($type === 'upload') {
@@ -239,5 +253,117 @@ final class BrizyController
         WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'page' OR $wpdb->posts.post_type = 'post' OR $wpdb->posts.post_type = 'editor-template') AND $wpdb->postmeta.meta_key = 'brizy'";
 
         return $wpdb->get_results($query);
+    }
+
+    public static function parseContentGetForms($content, $post_title, $post_id, &$all_forms)
+    {
+        $number = 0;
+        $contentArray = explode('><', $content);
+        foreach ($contentArray as $line) {
+            $lineArray = explode(' ', $line);
+            if ($lineArray[0] == 'form') {
+                $regularExpressionUniqueId = '/data-form-id\s*=\s*"([^"]+)"/';
+                preg_match($regularExpressionUniqueId, $line, $uniqueId);
+
+                // $regularExpressionTitle = '/title\s*=\s*"([^"]+)"/';
+                // preg_match($regularExpressionTitle, $line, $title);
+
+                $number += 1;
+
+                if (empty($uniqueId[1])) {
+                    $regularExpressionUniqueId = '/data-brz-form-id\s*=\s*"([^"]+)"/';
+                    preg_match($regularExpressionUniqueId, $line, $uniqueId);
+
+                    if (empty($uniqueId[1])) {
+                        continue;
+                    }
+                    if (isset($all_forms[$uniqueId[1]]->title)) {
+                        // check if title is starts with global form to concat
+                        if (str_starts_with($all_forms[$uniqueId[1]]->title, 'Global Form:')) {
+                            $title = strlen($all_forms[$uniqueId[1]]->title) > 40 ? substr($all_forms[$uniqueId[1]]->title, 0, 40) . '...' : "{$all_forms[$uniqueId[1]]->title}, {$post_title}->{$number}";
+                        } else {
+                            $title = 'Global Form: ';
+                            $title .= strlen($all_forms[$uniqueId[1]]->title) > 40 ? substr($all_forms[$uniqueId[1]]->title, 0, 40) . '...' : "{$all_forms[$uniqueId[1]]->title}, {$post_title}->{$number}";
+                        }
+                    } else {
+                        $title = $post_title . '->' . $number;
+                    }
+
+                    $all_forms[$uniqueId[1]] = (object)[
+                        'id' => $uniqueId[1],
+                        'title' => $title,
+                        'post_id' => $post_id,
+                    ];
+                    continue;
+                }
+                if (isset($all_forms[$uniqueId[1]]->title)) {
+                    // check if title is starts with global form to concat
+                    if (str_starts_with($all_forms[$uniqueId[1]]->title, 'Global Form:')) {
+                        $title = strlen($all_forms[$uniqueId[1]]->title) > 40 ? substr($all_forms[$uniqueId[1]]->title, 0, 40) . '...' : "{$all_forms[$uniqueId[1]]->title}, {$post_title}->{$number}";
+                    } else {
+                        $title = 'Global Form: ';
+                        $title .= strlen($all_forms[$uniqueId[1]]->title) > 40 ? substr($all_forms[$uniqueId[1]]->title, 0, 40) . '...' : "{$all_forms[$uniqueId[1]]->title}, {$post_title}->{$number}";
+                    }
+                } else {
+                    $title = $post_title . '->' . $number;
+                }
+                $all_forms[$uniqueId[1]] = (object)[
+                    'id' => $uniqueId[1],
+                    'title' => $title,
+                    'post_id' => $post_id,
+                ];
+            }
+        }
+    }
+
+    public static function parseContentGetFormFields($content, $formUniqueId)
+    {
+        $formStart = 0;
+        $formFields = [];
+        $contentArray = explode('><', $content);
+        foreach ($contentArray as $line) {
+            $lineArray = explode(' ', $line);
+
+            if ($lineArray[0] == 'form') {
+                $regularExpressionUniqueId = '/data-form-id\s*=\s*"([^"]+)"/';
+                preg_match($regularExpressionUniqueId, $line, $uniqueId);
+                if ($uniqueId[1] != $formUniqueId) {
+                    $regularExpressionUniqueId = '/data-brz-form-id\s*=\s*"([^"]+)"/';
+                    preg_match($regularExpressionUniqueId, $line, $uniqueId);
+
+                    if ($uniqueId[1] != $formUniqueId) {
+                        continue;
+                    }
+                }
+                $formStart = 1;
+            }
+
+            if ($formStart && ($lineArray[0] == 'input' || $lineArray[0] == 'textarea' || $lineArray[0] == 'select' || $lineArray[0] == 'number' || $lineArray[0] == 'checkbox' || $lineArray[0] == 'radio' || $lineArray[0] == 'hidden' || $lineArray[0] == 'file' || $lineArray[0] == 'date' || $lineArray[0] == 'time' || $lineArray[0] == 'tel' || $lineArray[0] == 'password' || $lineArray[0] == 'url')) {
+                $regularExpressionUniqueId = '/name\s*=\s*"([^"]+)"/';
+                preg_match($regularExpressionUniqueId, $line, $fieldId);
+                $regularExpressionUniqueId = '/type\s*=\s*"([^"]+)"/';
+                preg_match($regularExpressionUniqueId, $line, $fieldType);
+                $regularExpressionUniqueId = '/data-label\s*=\s*"([^"]+)"/';
+                preg_match($regularExpressionUniqueId, $line, $fieldTitle);
+                $formFields[] = (object)[
+                    'field_id' => strtolower($fieldId[1]),
+                    'field_type' => strtolower(isset($fieldType[1]) ? $fieldType[1] : 'text'),
+                    'field_title' => isset($fieldTitle[1]) ? $fieldTitle[1] : $fieldId[1],
+                ];
+            }
+
+            if ($lineArray[0] == '/form') {
+                $formStart = 0;
+            }
+        }
+        $uniqueArry = [];
+
+        foreach ($formFields as $val) {
+            if (!in_array($val, $uniqueArry)) {
+                $uniqueArry[] = $val;
+            }
+        }
+
+        return $uniqueArry;
     }
 }
