@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\WooCommerce;
 
-use BitCode\FI\Log\LogHandler;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert.
@@ -375,18 +375,17 @@ class RecordApiHelper
         }
 
         if ($module === 'order') {
+            // Order created : https://gist.github.com/stormwild/7f914183fc18458f6ab78e055538dcf0
             $triggerEntity      = $fieldValues['bit-integrator%trigger_data%']['triggered_entity'];
-            $fieldDataCustomer  = [];
             $fieldMapCustomer   = $integrationDetails->customer->field_map;
             $find_customer_id   = $this->findCustomer($fieldMapCustomer, $required, $module, $fieldValues);
+            $fieldMapLine       = $integrationDetails->line_item->field_map;
 
             if (!empty($find_customer_id)) {
                 $customer_id = $find_customer_id;
             } else {
                 $customer_id = $this->createCustomer($fieldMapCustomer, $required, $module, $fieldValues);
             }
-
-            // Order created : https://gist.github.com/stormwild/7f914183fc18458f6ab78e055538dcf0
 
             $billingAddress = [
                 'first_name'    => isset($fieldData['billing_first_name']) ? $fieldData['billing_first_name'] : '',
@@ -401,7 +400,6 @@ class RecordApiHelper
                 'email'         => isset($fieldData['billing_email']) ? $fieldData['billing_email'] : '',
                 'phone'         => isset($fieldData['billing_phone']) ? $fieldData['billing_phone'] : '',
             ];
-
             $shippingAddress = [
                 'first_name'    => isset($fieldData['shipping_first_name']) ? $fieldData['shipping_first_name'] : '',
                 'last_name'     => isset($fieldData['shipping_last_name']) ? $fieldData['shipping_last_name'] : '',
@@ -414,99 +412,35 @@ class RecordApiHelper
                 'country'       => isset($fieldData['shipping_country']) ? $fieldData['shipping_country'] : '',
             ];
 
-            $fieldMapLine   = $integrationDetails->line_item->field_map;
-            $order          = \wc_create_order(['customer_id' => $customer_id]);
-
             if ($triggerEntity === 'FF') {
-                $lineItemsFld = $fieldValues['repeater_field'];
+                $lineItemsFld       = $fieldValues['repeater_field'];
+                $fieldDataLineTemp  = [];
+                $fieldDataLine      = [];
 
-                $fieldDataLineTemp = [];
-                $fieldDataLine = [];
-                // repeater_field:0-2 => repeater_field key
                 if (!empty($lineItemsFld)) {
                     foreach ($lineItemsFld as $key => $lineItem) {
-                        // foreach ($fieldMapLine as $fieldPair) {
-                        //     if (!empty($fieldPair->wcField) && !empty($fieldPair->formField)) {
-                        //         if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
-                        //             $fieldDataLineTemp[$fieldPair->wcField] = $fieldPair->customValue;
-                        //         } else {
-                        //             $fldDigit = preg_replace('/[^0-9.]+/', '', $fieldPair->formField);
-                        //             $formFld = 'repeater_field:' . $key . '-' . $fldDigit;
-                        //             $fieldDataLineTemp[$fieldPair->wcField] = $fieldValues[$formFld];
-                        //         }
-
-                        //         if (in_array($fieldPair->wcField, $required) && empty($fieldValues[$fieldPair->formField])) {
-                        //             $error = new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('%s is required for woocommerce %s', 'bit-integrations'), $fieldPair->wcField, $module));
-                        //             LogHandler::save($this->_integrationID, ['type' => $module, 'type_name' => 'create'], 'validation', $error);
-                        //             return $error;
-                        //         }
-                        //     }
-                        // }
                         $this->setFieldDataLine($fieldDataLineTemp, $fieldMapLine, $required, $fieldValues, $module, !empty($lineItemsFld), $key);
                         $fieldDataLine[$key] = (object) $fieldDataLineTemp;
                     }
                 } else {
-                    // foreach ($fieldMapLine as $fieldPair) {
-                    //     if (!empty($fieldPair->wcField) && !empty($fieldPair->formField)) {
-                    //         if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
-                    //             $fieldDataLineTemp[$fieldPair->wcField] = $fieldPair->customValue;
-                    //         } else {
-                    //             // $fldDigit = preg_replace('/[^0-9.]+/', '', $fieldPair->formField);
-                    //             // $formFld = 'repeater_field:' . $key . '-' . $fldDigit;
-                    //             $fieldDataLineTemp[$fieldPair->wcField] = $fieldValues[$fieldPair->formField];
-                    //         }
-
-                    //         if (in_array($fieldPair->wcField, $required) && empty($fieldValues[$fieldPair->formField])) {
-                    //             $error = new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('%s is required for woocommerce %s', 'bit-integrations'), $fieldPair->wcField, $module));
-                    //             LogHandler::save($this->_integrationID, ['type' => $module, 'type_name' => 'create'], 'validation', $error);
-                    //             return $error;
-                    //         }
-                    //     }
-                    // }
                     $this->setFieldDataLine($fieldDataLineTemp, $fieldMapLine, $required, $fieldValues, $module, false);
                     $fieldDataLine[0] = (object) $fieldDataLineTemp;
                 }
 
-
-                // foreach ($fieldDataLine as $key => $lineItem) {
-                //     $product_id = wc_get_product_id_by_sku($lineItem->sku);
-                //     error_log(print_r(['lineItem' => $lineItem, 'product_id' => $product_id, 'fieldDataLine' => $fieldDataLine, 'lineItemsFld' => $lineItemsFld, 'fieldValues' => $fieldValues, 'fieldMapLine' => $fieldMapLine], true));
-                //     exit;
-                //     if (!$product_id) {
-                //         $error = new \WP_Error('wrong product sku', wp_sprintf(__('%s is not valid product sku', 'bit-integrations'), $lineItem->sku));
-                //         LogHandler::save($this->_integrationID, ['type' => $module, 'type_name' => 'create'], 'validation', $error);
-
-                //         return $error;
-                //     }
-                //     $product = wc_get_product($product_id);
-                //     $order->add_product($product, (int) $lineItem->quantity);
-                // }
-
-                $result = $this->product_added_to_order($fieldDataLine, $order, $module);
-                if (is_wp_error($result)) {
-                    return $result;
+                $order = $this->product_added_to_order($fieldDataLine, $module, $customer_id);
+                if (is_wp_error($order)) {
+                    return $order;
                 }
             } elseif ($triggerEntity === 'Formidable') {
-                $lineTmpLength = strpos($fieldMapLine[0]->formField, '_');
-                $lineItemKey = substr($fieldMapLine[0]->formField, 0, $lineTmpLength);
+                $lineTmpLength      = strpos($fieldMapLine[0]->formField, '_');
+                $lineItemKey        = substr($fieldMapLine[0]->formField, 0, $lineTmpLength);
+                $lineItemsFld       = $fieldValues[$lineItemKey];
+                $fieldDataLineTemp  = [];
+                $fieldDataLine      = [];
+                $lineItemCnt        = 0;
 
-                $lineItemsFld = $fieldValues[$lineItemKey];
-                $fieldDataLineTemp = [];
-                $fieldDataLine = [];
-                $lineItemCnt = 0;
                 if (!empty($lineItemsFld)) {
                     foreach ($lineItemsFld as $key => $lineItem) {
-                        // foreach ($fieldMapLine as $fieldPair) {
-                        //     if (!empty($fieldPair->wcField) && !empty($fieldPair->formField)) {
-                        //         if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
-                        //             $fieldDataLineTemp[$fieldPair->wcField] = $fieldPair->customValue;
-                        //         } else {
-                        //             $fldDigit = substr($fieldPair->formField, $lineTmpLength + 1, strlen($fieldPair->formField));
-                        //             $formFld = $lineItemKey . '_' . $fldDigit . '_' . $key;
-                        //             $fieldDataLineTemp[$fieldPair->wcField] = $fieldValues[$formFld];
-                        //         }
-                        //     }
-                        // }
                         $this->setFieldDataLine($fieldDataLineTemp, $fieldMapLine, [], $fieldValues, null, false, $key, !empty($lineItemsFld), $lineItemKey, $lineTmpLength);
                         $fieldDataLine[$lineItemCnt] = (object) $fieldDataLineTemp;
                         ++$lineItemCnt;
@@ -516,83 +450,41 @@ class RecordApiHelper
                     $fieldDataLine[0] = (object) $fieldDataLineTemp;
                 }
 
-                // foreach ($fieldDataLine as $key => $lineItem) {
-                //     $product_id = wc_get_product_id_by_sku($lineItem->sku);
-
-                //     if (!$product_id) {
-                //         $error = new \WP_Error('wrong product sku', wp_sprintf(__('%s is not valid product sku', 'bit-integrations'), $lineItem->sku));
-                //         LogHandler::save($this->_integrationID, ['type' => $module, 'type_name' => 'create'], 'validation', $error);
-                //     }
-
-                //     if ($product_id) {
-                //         $product = wc_get_product($product_id);
-                //         $order->add_product($product, (int) $lineItem->quantity);
-                //     }
-                // }
-                $result = $this->product_added_to_order($fieldDataLine, $order, $module);
-                if (is_wp_error($result)) {
-                    return $result;
+                $order = $this->product_added_to_order($fieldDataLine, $module, $customer_id);
+                if (is_wp_error($order)) {
+                    return $order;
                 }
             } elseif ($triggerEntity === 'NF') {
-                $lineTmpLength = stripos($fieldMapLine[0]->formField, '.');
-                $lineItemKey = substr($fieldMapLine[0]->formField, 0, $lineTmpLength);
-
-                $lineItemsFld = $fieldValues[$lineItemKey];
-                $fieldDataLineTemp = [];
-                $fieldDataLine = [];
-                // $lineItemCnt = 0;
+                $lineTmpLength      = stripos($fieldMapLine[0]->formField, '.');
+                $lineItemKey        = substr($fieldMapLine[0]->formField, 0, $lineTmpLength);
+                $lineItemsFld       = $fieldValues[$lineItemKey];
+                $fieldDataLineTemp  = [];
+                $fieldDataLine      = [];
 
                 if (!empty($lineItemsFld)) {
                     foreach ($lineItemsFld as $key => $lineItem) {
-                        // foreach ($fieldMapLine as $fieldPair) {
-                        //     if (!empty($fieldPair->wcField) && !empty($fieldPair->formField)) {
-                        //         if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
-                        //             $fieldDataLineTemp[$fieldPair->wcField] = $fieldPair->customValue;
-                        //         } else {
-                        //             $formFld = $fieldPair->formField . '_' . $key;
-                        //             $fieldDataLineTemp[$fieldPair->wcField] = $fieldValues[$formFld];
-                        //         }
-                        //     }
-                        // }
-
                         $this->setFieldDataLine($fieldDataLineTemp, $fieldMapLine, [], $fieldValues, null, false, $key, false, !empty($lineItemsFld));
                         $fieldDataLine[$key] = (object) $fieldDataLineTemp;
-                        // $lineItemCnt++;
                     }
                 } else {
                     $this->setFieldDataLine($fieldDataLineTemp, $fieldMapLine, [], $fieldValues, null);
                     $fieldDataLine[0] = (object) $fieldDataLineTemp;
                 }
 
-                // foreach ($fieldDataLine as $key => $lineItem) {
-                //     $product_id = wc_get_product_id_by_sku($lineItem->sku);
-                //     error_log(print_r($product_id, true));
-                //     die;
-                //     if (!$product_id) {
-                //         $error = new \WP_Error('wrong product sku', wp_sprintf(__('%s is not valid product sku', 'bit-integrations'), $lineItem->sku));
-                //         LogHandler::save($this->_integrationID, ['type' => $module, 'type_name' => 'create'], 'validation', $error);
-                //     }
-
-                //     if ($product_id) {
-                //         $product = wc_get_product($product_id);
-                //         $order->add_product($product, (int) $lineItem->quantity);
-                //     }
-                // }
-                $result = $this->product_added_to_order($fieldDataLine, $order, $module);
-                if (is_wp_error($result)) {
-                    return $result;
+                $order = $this->product_added_to_order($fieldDataLine, $module, $customer_id);
+                if (is_wp_error($order)) {
+                    return $order;
                 }
             } else {
                 $this->setFieldDataLine($fieldDataLineTemp, $fieldMapLine, [], $fieldValues, null);
-                $fieldDataLine[0] = (object) $fieldDataLineTemp;
-                $result = $this->product_added_to_order($fieldDataLine, $order, $module);
+                $fieldDataLine[0]   = (object) $fieldDataLineTemp;
+                $order              = $this->product_added_to_order($fieldDataLine, $module, $customer_id);
 
-                if (is_wp_error($result)) {
-                    return $result;
+                if (is_wp_error($order)) {
+                    return $order;
                 }
             }
-            error_log(print_r($result, true));
-            die;
+
             $order->set_address($billingAddress, 'billing');
             $order->set_address($shippingAddress, 'shipping');
             $order->set_customer_note($fieldData['customer_note']);
@@ -600,8 +492,6 @@ class RecordApiHelper
             if (isset($fieldData['coupon_code'])) {
                 $order->apply_coupon($fieldData['coupon_code']);
             }
-            // error_log(print_r($order, true));
-            // die;
 
             $order->calculate_totals();
             $order->save();
@@ -731,7 +621,7 @@ class RecordApiHelper
         }
     }
 
-    private function product_added_to_order($fieldDataLine, &$order, $module)
+    private function product_added_to_order($fieldDataLine, $module, $customer_id)
     {
         foreach ($fieldDataLine as $lineItem) {
             $product_id = wc_get_product_id_by_sku($lineItem->sku);
@@ -742,8 +632,10 @@ class RecordApiHelper
                 return $error;
             }
 
-            $product = wc_get_product($product_id);
+            $order      = \wc_create_order(['customer_id' => $customer_id]);
+            $product    = wc_get_product($product_id);
             $order->add_product($product, (int) $lineItem->quantity);
+            return $order;
         }
     }
 
