@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\MailPoet;
 
-use \MailPoet\API\MP\v1\APIException;
 use BitCode\FI\Log\LogHandler;
+use \MailPoet\API\MP\v1\APIException;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -25,18 +25,27 @@ class RecordApiHelper
     public function insertRecord($subscriber, $lists)
     {
         $mailpoet_api = \MailPoet\API\API::MP('v1');
-        
+
         try {
-            $response = $mailpoet_api->addSubscriber($subscriber, $lists);
+            // try to find if user is already a subscriber
+            $existing_subscriber = \MailPoet\Models\Subscriber::findOne($subscriber['email']);
+            if (!$existing_subscriber) {
+                $response       = $mailpoet_api->addSubscriber($subscriber, $lists);
+                $subscriber_id  = $response['id'];
+            } else {
+                $response       = $mailpoet_api->subscribeToLists($existing_subscriber->id, $lists);
+                $subscriber_id  = $existing_subscriber->id;
+            }
+
             $response = [
-            'success'=> true,
-            'id' => $response['id']
+                'success'   => true,
+                'id'        => $subscriber_id
             ];
-        } catch (APIException $e) {
+        } catch (\MailPoet\API\MP\v1\APIException $e) {
             $response = [
-            'success'=> false,
-            'code' => $e->getCode(),
-            'message' => $e->getMessage()
+                'success' => false,
+                'code' => $e->getCode(),
+                'message' => $e->getMessage()
             ];
         }
         return $response;
@@ -61,9 +70,9 @@ class RecordApiHelper
 
         $recordApiResponse = $this->insertRecord($fieldData, $lists);
         if ($recordApiResponse['success']) {
-            LogHandler::save($this->_integrationID , ['type' =>  'record', 'type_name' => 'insert'], 'success', $recordApiResponse);
+            LogHandler::save($this->_integrationID, ['type' =>  'record', 'type_name' => 'insert'], 'success', $recordApiResponse);
         } else {
-            LogHandler::save($this->_integrationID , ['type' =>  'record', 'type_name' => 'insert'], 'error', $recordApiResponse);
+            LogHandler::save($this->_integrationID, ['type' =>  'record', 'type_name' => 'insert'], 'error', $recordApiResponse);
         }
 
         return $recordApiResponse;
