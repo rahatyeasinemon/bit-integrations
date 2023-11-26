@@ -6,6 +6,7 @@ import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import BuddyBossActions from './BuddyBossActions'
 import { getAllBuddyBossGroup, getAllForum, getAllTopic, getAllUser } from './BuddyBossCommonFunc'
 import BuddyBossFieldMap from './BuddyBossFieldMap'
+import Note from '../../Utilities/Note'
 
 export default function BuddyBossIntegLayout({ formFields, handleInput, buddyBossConf, setBuddyBossConf, isLoading, setIsLoading, setSnackbar, allIntegURL, isInfo, edit }) {
   useEffect(() => {
@@ -96,7 +97,7 @@ export default function BuddyBossIntegLayout({ formFields, handleInput, buddyBos
       </select>
       <br />
       <br />
-      { ['2', '6', '8', '9', '14'].includes(buddyBossConf?.mainAction) && (
+      {['2', '6', '8', '9', '14'].includes(buddyBossConf?.mainAction) && (
         <>
           <br />
           <div className="flx mt-4">
@@ -113,7 +114,7 @@ export default function BuddyBossIntegLayout({ formFields, handleInput, buddyBos
         </>
       )}
 
-      { ['3', '4', '7', '8', '9', '10', '12', '14', '15', '16'].includes(buddyBossConf?.mainAction) && (
+      {['3', '4', '7', '8', '9', '10', '12', '14', '15', '16'].includes(buddyBossConf?.mainAction) && (
         <>
           <br />
           <div className="flx mt-4">
@@ -130,7 +131,7 @@ export default function BuddyBossIntegLayout({ formFields, handleInput, buddyBos
         </>
       )}
 
-      { ['5', '13', '17'].includes(buddyBossConf?.mainAction) && (
+      {['5', '13', '17'].includes(buddyBossConf?.mainAction) && (
         <>
           <br />
           <div className="flx mt-4">
@@ -146,7 +147,7 @@ export default function BuddyBossIntegLayout({ formFields, handleInput, buddyBos
           </div>
         </>
       )}
-      { buddyBossConf?.forumId !== undefined && ['17'].includes(buddyBossConf?.mainAction) && (
+      {buddyBossConf?.forumId !== undefined && ['17'].includes(buddyBossConf?.mainAction) && (
         <>
           <br />
           <div className="flx mt-4">
@@ -163,7 +164,7 @@ export default function BuddyBossIntegLayout({ formFields, handleInput, buddyBos
         </>
       )}
 
-      { ['18'].includes(buddyBossConf?.mainAction) && (
+      {['18'].includes(buddyBossConf?.mainAction) && (
         <>
           <br />
           <div className="flx mt-4">
@@ -218,10 +219,10 @@ export default function BuddyBossIntegLayout({ formFields, handleInput, buddyBos
             ))}
             <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(buddyBossConf.field_map.length, buddyBossConf, setBuddyBossConf)} className="icn-btn sh-sm" type="button">+</button></div>
           </>
-        ) }
+        )}
         <br />
         <br />
-        { buddyBossConf.mainAction === '1' && (
+        {buddyBossConf.mainAction === '1' && (
           <>
             <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
             <div className="btcd-hr mt-1" />
@@ -234,6 +235,9 @@ export default function BuddyBossIntegLayout({ formFields, handleInput, buddyBos
         )}
       </>
       <br />
+      <Note
+        note="Some integrations will only work for logged-in users."
+      />
     </>
   )
 }

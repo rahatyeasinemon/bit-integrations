@@ -6,6 +6,7 @@ import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import MemberpressActions from './MemberpressActions'
 import { getAllMemberShip } from './MemberpressCommonFunc'
 import MemberpressFieldMap from './MemberpressFieldMap'
+import Note from '../../Utilities/Note'
 
 export default function MemberpressIntegLayout({ formFields, handleInput, memberpressConf, setMemberpressConf, isLoading, setIsLoading, setSnackbar, allIntegURL, isInfo, edit }) {
   const changeHandler = (val, name) => {
@@ -36,7 +37,7 @@ export default function MemberpressIntegLayout({ formFields, handleInput, member
       </select>
       <br />
       <br />
-      { ['1', '2'].includes(memberpressConf?.mainAction) && (
+      {['1', '2'].includes(memberpressConf?.mainAction) && (
         <>
           <br />
           <div className="flx mt-4">
@@ -89,10 +90,10 @@ export default function MemberpressIntegLayout({ formFields, handleInput, member
             ))}
             <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(memberpressConf.field_map.length, memberpressConf, setMemberpressConf)} className="icn-btn sh-sm" type="button">+</button></div>
           </>
-        ) }
+        )}
         <br />
         <br />
-        { memberpressConf.mainAction === '1' && (
+        {memberpressConf.mainAction === '1' && (
           <>
             <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
             <div className="btcd-hr mt-1" />
@@ -105,6 +106,9 @@ export default function MemberpressIntegLayout({ formFields, handleInput, member
         )}
       </>
       <br />
+      <Note
+        note="Some integrations will only work for logged-in users."
+      />
     </>
   )
 }

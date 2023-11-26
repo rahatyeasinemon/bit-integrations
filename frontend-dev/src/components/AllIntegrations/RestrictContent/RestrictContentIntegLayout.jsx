@@ -4,6 +4,7 @@ import { addFieldMap } from "./IntegrationHelpers";
 import { getAllLevels } from "./RestrictContentCommonFunc";
 import RestrictContentFieldMap from "./RestrictContentFieldMap";
 import Cooltip from '../../Utilities/Cooltip'
+import Note from "../../Utilities/Note";
 
 export default function RestrictContentIntegLayout({ formFields, handleInput, restrictConf, setRestrictConf, isLoading, setIsLoading, setSnackbar }) {
     const handleInputAction = (e) => {
@@ -71,6 +72,11 @@ export default function RestrictContentIntegLayout({ formFields, handleInput, re
                     </Cooltip>
                 </div>
             }
+            <br />
+            <br />
+            <Note
+                note="This integration will only work for logged-in users."
+            />
             {/* {restrictConf?.actionName && restrictConf.actionName === 'add-member-level'
         && (
           <>
