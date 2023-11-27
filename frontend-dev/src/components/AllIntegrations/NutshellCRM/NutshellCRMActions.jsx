@@ -22,7 +22,7 @@ export default function NutshellCRMActions({ nutshellCRMConf, setNutshellCRMConf
     } else if (type === 'leadSource') {
       if (e.target?.checked) {
         newConf.actions.leadSource = true
-        newConf.leadSources = ['Advertisement', 'Campaign', 'Cold Calling', "Customer's Vendor", 'Exhibition', 'Existing Cutomer', 'Mass Mailing', 'Reference', 'Supplier Reference', 'Walk In']
+        newConf.leadSources = ['Advertisement', 'Campaign', 'Cold Calling', "People's Vendor", 'Exhibition', 'Existing Cutomer', 'Mass Mailing', 'Reference', 'Supplier Reference', 'Walk In']
       } else {
         delete newConf.actions.leadSource
       }

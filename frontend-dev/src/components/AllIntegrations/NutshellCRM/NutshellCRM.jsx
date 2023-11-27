@@ -21,13 +21,16 @@ function NutshellCRM({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
 
-  const customerFields = [
-    { key: 'customer_name', label: 'Full Name', required: true },
-    { key: 'mobile_no', label: 'Mobile Number', required: false },
-    { key: 'email_id', label: 'Email Address', required: false },
-    { key: 'primary_address', label: 'Primary Address', required: false },
-    { key: 'customer_primary_contact', label: 'customer Primary Contact', required: false },
-    { key: 'customer_primary_address', label: 'customer Primary Address', required: false }
+  const peopleFields = [
+    { key: 'first_name', label: 'First Name', required: true },
+    { key: 'email', label: 'Email Address', required: true },
+    { key: 'last_name', label: 'Last Name', required: false },
+    { key: 'phone', label: 'Phone Number', required: false },
+    { key: 'address_1', label: 'Address 1', required: false },
+    { key: 'city', label: 'City', required: false },
+    { key: 'state', label: 'State', required: false },
+    { key: 'postalCode', label: 'Postal Code', required: false },
+    { key: 'country', label: 'Country', required: false },
   ]
 
   const contactFields = [
@@ -76,7 +79,7 @@ function NutshellCRM({ formFields, setFlow, flow, allIntegURL }) {
     ],
     actionName: '',
     actionId: '',
-    customerFields,
+    peopleFields,
     contactFields,
     leadFields,
     actions: {},
@@ -105,10 +108,6 @@ function NutshellCRM({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (nutshellCRMConf.actionName === 'customer' && !nutshellCRMConf.selectedCustomerType) {
-      toast.error('Please select Customer Type')
-      return
-    }
     if (nutshellCRMConf.actionName === 'lead' && !nutshellCRMConf.selectedLeadStatus) {
       toast.error('Please select Lead Status')
       return

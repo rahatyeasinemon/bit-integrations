@@ -17,8 +17,8 @@ export default function NutshellCRMIntegLayout({ formFields, handleInput, nutshe
       if (e.target.value !== '') {
         draftConf.actionName = e.target.value
 
-        if (draftConf.actionName === "customer") {
-          draftConf.nutshellCRMFields = draftConf.customerFields
+        if (draftConf.actionName === "people") {
+          draftConf.nutshellCRMFields = draftConf.peopleFields
         } else if (draftConf.actionName === "contact") {
           draftConf.nutshellCRMFields = draftConf.contactFields
         } else if (draftConf.actionName === "lead") {
@@ -48,7 +48,7 @@ export default function NutshellCRMIntegLayout({ formFields, handleInput, nutshe
       <select onChange={handleActionInput} name="actionName" value={nutshellCRMConf.actionName} className="btcd-paper-inp w-5">
         <option value="">{__('Select an action', 'bit-integrations')}</option>
         <option value="lead" data-action_name="lead">{__('Create Lead', 'bit-integrations')}</option>
-        <option value="customer" data-action_name="customer">{__('Create Customer', 'bit-integrations')}</option>
+        <option value="people" data-action_name="people">{__('Create People', 'bit-integrations')}</option>
         <option value="contact" data-action_name="contact">{__('Create Contact', 'bit-integrations')}</option>
       </select>
       <br />
@@ -63,24 +63,6 @@ export default function NutshellCRMIntegLayout({ formFields, handleInput, nutshe
                 className="msl-wrp-options dropdown-custom-width"
                 defaultValue={nutshellCRMConf?.selectedLeadStatus}
                 onChange={val => setChanges(val, 'selectedLeadStatus')}
-                disabled={isLoading}
-                singleSelect
-                closeOnSelect
-              />
-            </div>
-          </>
-        )}
-      {nutshellCRMConf.actionName === 'customer'
-        && (
-          <>
-            <br />
-            <div className="flx">
-              <b className="wdt-200 d-in-b">{__('Customer Type:', 'bit-integrations')}</b>
-              <MultiSelect
-                options={['Company', 'Individual']?.map(type => ({ label: type, value: type }))}
-                className="msl-wrp-options dropdown-custom-width"
-                defaultValue={nutshellCRMConf?.selectedCustomerType}
-                onChange={val => setChanges(val, 'selectedCustomerType')}
                 disabled={isLoading}
                 singleSelect
                 closeOnSelect

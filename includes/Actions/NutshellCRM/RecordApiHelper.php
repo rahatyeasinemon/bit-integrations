@@ -27,26 +27,58 @@ class RecordApiHelper
         $this->integrationId      = $integId;
         $this->apiUrl             = "https://app.nutshell.com/api/v1/json";
         $this->defaultHeader      = [
-            "Authorization" => "token {$userName}:$apiToken",
-            "Content-type"  => "application/json",
+                "Authorization" => 'Basic ' . base64_encode("$userName:$apiToken"),
+                "Content-type"  => "application/json",
         ];
     }
 
-    public function addCustomer($finalData)
+    public function addPeople($finalData)
     {
-        if (empty($finalData['customer_name'])) {
+        if (empty($finalData['first_name'] || $finalData['email'])) {
             return ['success' => false, 'message' => 'Required field Full Name is empty', 'code' => 400];
-        } elseif (!isset($this->integrationDetails->selectedCustomerType) || empty($this->integrationDetails->selectedCustomerType)) {
-            return ['success' => false, 'message' => 'Required field Customer Type is empty', 'code' => 400];
         }
 
-        $finalData['customer_type']     = $this->integrationDetails->selectedCustomerType;
-        $finalData['customer_group']    = "All Customer Groups";
-        $finalData['territory']         = "All Territories";
-        $this->type                     = 'Customer';
-        $this->typeName                 = 'Customer created';
-        $apiEndpoint                    = $this->apiUrl . "/Customer";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        $staticFieldsKeys = ['first_name','email','last_name','phone','address_1','city','state','postalCode','country',];
+
+        foreach ($finalData as $key => $value) {
+            if (in_array($key, $staticFieldsKeys)) {
+                if (($key == 'address_1' || $key == 'city' || $key == 'state' || $key == 'postalCode' || $key == 'country')) {
+
+                    $requestParams['address'][$key] =   $value;
+                } elseif ($key == 'first_name') {
+                    $requestParams['name']['givenName'] =   $value;
+                } elseif ($key == 'last_name') {
+                    $requestParams['name']['familyName'] =   $value;
+                } else {
+                    $requestParams[$key] = $value;
+                }
+            } else {
+                $requestParams['customFields'][] = (object) [
+                    $key   => $value,
+                ];
+            }
+        }
+
+
+
+
+        $this->type                     = 'People';
+        $this->typeName                 = 'People created';
+
+        $body = [
+            'method'    => 'newContact',
+            'id'        => 'randomstring',
+            'params'    => (object) [
+                'contact' => $requestParams
+            ]
+        ];
+
+        $apiEndpoint                    = $this->apiUrl;
+
+        // return
+        $response = HttpHelper::post($apiEndpoint, json_encode($body), $this->defaultHeader);
+        var_dump($response);
+        die;
     }
 
     public function addContact($finalData)
@@ -137,8 +169,8 @@ class RecordApiHelper
     public function execute($fieldValues, $fieldMap, $actionName)
     {
         $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        if ($actionName === "customer") {
-            $apiResponse = $this->addCustomer($finalData);
+        if ($actionName === "people") {
+            $apiResponse = $this->addPeople($finalData);
         } elseif ($actionName === "contact") {
             $apiResponse = $this->addContact($finalData);
         } elseif ($actionName === "lead") {

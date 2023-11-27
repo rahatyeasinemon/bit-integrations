@@ -31,10 +31,6 @@ function EditNutshellCRM({ allIntegURL }) {
       return
     }
 
-    if (nutshellCRMConf.actionName === 'customer' && !nutshellCRMConf.selectedCustomerType) {
-      toast.error('Please select Customer Type')
-      return
-    }
     if (nutshellCRMConf.actionName === 'lead' && !nutshellCRMConf.selectedLeadStatus) {
       toast.error('Please select Lead Status')
       return
