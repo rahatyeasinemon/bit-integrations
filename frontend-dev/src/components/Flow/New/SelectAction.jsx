@@ -152,6 +152,7 @@ export default function SelectAction() {
     { type: 'MoxieCRM' },
     { type: 'WPFusion' },
     { type: 'Woodpecker' },
+    { type: 'NutshellCRM' },
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(sortByField(integs, 'type', 'ASC') || integs)

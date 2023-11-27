@@ -147,6 +147,7 @@ const AcademyLms = lazy(() => import('./AcademyLms/AcademyLms'))
 const MoxieCRM = lazy(() => import('./MoxieCRM/MoxieCRM'))
 const WPFusion = lazy(() => import('./WPFusion/WPFusion'))
 const Woodpecker = lazy(() => import('./Woodpecker/Woodpecker'))
+const NutshellCRM = lazy(() => import('./NutshellCRM/NutshellCRM'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
@@ -435,6 +436,8 @@ export default function NewInteg({ allIntegURL }) {
         return <WPFusion allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'Woodpecker':
         return <Woodpecker allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
+      case 'NutshellCRM':
+        return <NutshellCRM allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       default:
         return <></>
     }
