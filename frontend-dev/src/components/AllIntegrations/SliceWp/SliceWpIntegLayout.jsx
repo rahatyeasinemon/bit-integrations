@@ -6,6 +6,7 @@ import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import SliceWpActions from './SliceWpActions'
 import { } from './SliceWpCommonFunc'
 import SliceWpFieldMap from './SliceWpFieldMap'
+import Note from '../../Utilities/Note'
 
 export default function SliceWpIntegLayout({ formFields, handleInput, sliceWpConf, setSliceWpConf, isLoading, setIsLoading, setSnackbar, allIntegURL, isInfo, edit }) {
   return (
@@ -58,10 +59,10 @@ export default function SliceWpIntegLayout({ formFields, handleInput, sliceWpCon
             ))}
             <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(sliceWpConf.field_map.length, sliceWpConf, setSliceWpConf)} className="icn-btn sh-sm" type="button">+</button></div>
           </>
-        ) }
+        )}
         <br />
         <br />
-        { sliceWpConf.mainAction === '1' && (
+        {sliceWpConf.mainAction === '1' && (
           <>
             <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
             <div className="btcd-hr mt-1" />
@@ -74,6 +75,9 @@ export default function SliceWpIntegLayout({ formFields, handleInput, sliceWpCon
         )}
       </>
       <br />
+      <Note
+        note="Some integrations will only work for logged-in users."
+      />
     </>
   )
 }

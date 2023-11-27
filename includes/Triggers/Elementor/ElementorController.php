@@ -45,11 +45,11 @@ final class ElementorController
         }
 
         $forms = ElementorHelper::all_forms();
-
         foreach ($forms as $form) {
             $all_forms[] = (object)[
-                'id' => $form['id'],
-                'title' => $form['title']
+                'id'        => $form['id'] . $form['post_id'],
+                'title'     => $form['title'],
+                'post_id'   => $form['post_id']
             ];
         }
         wp_send_json_success($all_forms);
@@ -64,7 +64,6 @@ final class ElementorController
         if (empty($data->id)) {
             wp_send_json_error(__('Form doesn\'t exists', 'bit-integrations'));
         }
-
         $fields = self::fields($data);
         if (empty($fields)) {
             wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));
@@ -81,11 +80,12 @@ final class ElementorController
             wp_send_json_error(__('Form doesn\'t exists', 'bit-integrations'));
         }
         $form_id = $data->id;
+        $post_id = $data->postId;
         $fields = [];
         $allFormsDetails = ElementorHelper::all_elementor_forms();
 
         foreach ($allFormsDetails as $form) {
-            if ($form['id'] == $form_id) {
+            if ($form['id'] == substr($form_id, 0, -strlen($post_id)) &&  $form['post_id'] == $post_id) {
                 foreach ($form['form_fields'] as $field) {
                     $type = isset($field->field_type) ? $field->field_type : 'text';
                     if ($type === 'upload') {
@@ -109,8 +109,19 @@ final class ElementorController
 
     public static function handle_elementor_submit($record)
     {
-        $form_id    = $record->get_form_settings('id');
-        $flows      = Flow::exists('Elementor', $form_id);
+        global $wpdb;
+        $flows = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT * FROM wp_btcbi_flow
+                WHERE triggered_entity = %s 
+                AND triggered_entity_id = %s
+                OR triggered_entity_id = %s",
+                'Elementor',
+                $record->get_form_settings('id'),
+                $record->get_form_settings('id') . $record->get_form_settings('form_post_id')
+            )
+        );
+
         if (!$flows) {
             return;
         }
@@ -121,6 +132,6 @@ final class ElementorController
             $data[$field['id']] = $field['raw_value'];
         }
 
-        Flow::execute('Elementor', $form_id, $data, $flows);
+        Flow::execute('Elementor', $flows[0]->triggered_entity_id, $data, $flows);
     }
 }

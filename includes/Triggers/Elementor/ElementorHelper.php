@@ -30,7 +30,7 @@ class ElementorHelper
         global $wpdb;
         $post_metas = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT pm.meta_value
+                "SELECT pm.post_id, pm.meta_value
 FROM $wpdb->postmeta pm
     LEFT JOIN $wpdb->posts p
         ON p.ID = pm.post_id
@@ -51,9 +51,10 @@ WHERE p.post_type IS NOT NULL
                 if (!empty($inner_forms)) {
                     foreach ($inner_forms as $form) {
                         $AllForms[] = [
-                            'id' => $form->id,
-                            'title' => $form->settings->form_name,
-                            'form_fields' => $form->settings->form_fields
+                            'id'            => $form->id,
+                            'post_id'       => $post_meta->post_id,
+                            'title'         => $form->settings->form_name,
+                            'form_fields'   => $form->settings->form_fields
                         ];
                     }
                 }

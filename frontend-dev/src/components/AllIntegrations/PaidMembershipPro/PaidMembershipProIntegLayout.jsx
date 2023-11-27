@@ -2,6 +2,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { getAllPaidMemberShipProLevel } from './PaidMembershipProCommonFunc'
+import Note from '../../Utilities/Note'
 
 export default function PaidMembershipProIntegLayout({ formFields, handleInput, paidMembershipProConf, setPaidMembershipProConf, isLoading, setIsLoading, setSnackbar, allIntegURL, isInfo, edit }) {
   const changeHandler = (val, name) => {
@@ -31,7 +32,7 @@ export default function PaidMembershipProIntegLayout({ formFields, handleInput, 
         }
       </select>
       <br />
-      { ['1', '2'].includes(paidMembershipProConf?.mainAction) && (
+      {['1', '2'].includes(paidMembershipProConf?.mainAction) && (
         <>
           <br />
           <div className="flx mt-4">
@@ -61,6 +62,9 @@ export default function PaidMembershipProIntegLayout({ formFields, handleInput, 
         />
       )}
       <br />
+      <Note
+        note="This integration will only work for logged-in users."
+      />
     </>
   )
 }

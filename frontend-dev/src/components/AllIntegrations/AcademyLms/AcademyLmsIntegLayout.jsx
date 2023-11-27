@@ -3,6 +3,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { getAllCourses, getAllLesson } from './AcademyLmsCommonFunc'
+import Note from '../../Utilities/Note'
 
 export default function AcademyLmsIntegLayout({ academyLmsConf, setAcademyLmsConf, isLoading, setIsLoading }) {
   const action = [
@@ -120,6 +121,9 @@ export default function AcademyLmsIntegLayout({ academyLmsConf, setAcademyLmsCon
           />
         )
       }
+      <Note
+        note="This integration will only work for logged-in users."
+      />
     </>
   )
 }

@@ -3,6 +3,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { getAllCourses, getAllLesson } from './TutorLmsCommonFunc'
+import Note from '../../Utilities/Note'
 
 export default function TutorLmsIntegLayout({ tutorlmsConf, setTutorlmsConf, isLoading, setIsLoading }) {
   const action = [
@@ -121,6 +122,9 @@ export default function TutorLmsIntegLayout({ tutorlmsConf, setTutorlmsConf, isL
           />
         )
       }
+      <Note
+        note="This integration will only work for logged-in users."
+      />
     </>
   )
 }

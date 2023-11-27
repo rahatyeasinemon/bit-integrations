@@ -36,7 +36,7 @@ export default function AffiliateIntegLayout({ formFields, handleInput, affiliat
       </select>
       <br />
       <br />
-      { affiliateConf?.mainAction === '1' && (
+      {affiliateConf?.mainAction === '1' && (
         <>
           <br />
           <div className="flx mt-4">
@@ -98,6 +98,9 @@ export default function AffiliateIntegLayout({ formFields, handleInput, affiliat
         />
       </>
       <br />
+      <Note
+        note="Some integrations will only work for logged-in users."
+      />
     </>
   )
 }

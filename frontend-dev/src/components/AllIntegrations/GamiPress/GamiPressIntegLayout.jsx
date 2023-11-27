@@ -5,6 +5,7 @@ import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import { fetchAllAchievementByType, fetchAllAchievementType, fetchAllPointType, fetchAllRankByType, fetchAllRankType } from './GamiPressCommonFunc'
 import GamiPressFieldMap from './GamiPressFieldMap'
+import Note from '../../Utilities/Note'
 
 export default function GamiPressIntegLayout({ formFields, handleInput, gamiPressConf, setGamiPressConf, isLoading, setIsLoading, setSnackbar, allIntegURL, isInfo, edit }) {
   useEffect(() => {
@@ -48,7 +49,7 @@ export default function GamiPressIntegLayout({ formFields, handleInput, gamiPres
       </select>
       <br />
       <br />
-      { ['1', '4'].includes(gamiPressConf.mainAction) && (
+      {['1', '4'].includes(gamiPressConf.mainAction) && (
         <>
           <div className="flx mt-4">
             <b className="wdt-200 d-in-b">{__('Select Rank Type: ', 'bit-integrations')}</b>
@@ -77,7 +78,7 @@ export default function GamiPressIntegLayout({ formFields, handleInput, gamiPres
         </>
       )}
 
-      { ['2', '5'].includes(gamiPressConf.mainAction) && (
+      {['2', '5'].includes(gamiPressConf.mainAction) && (
         <>
           <div className="flx mt-4">
             <b className="wdt-200 d-in-b">{__('Select Achievement Type: ', 'bit-integrations')}</b>
@@ -105,7 +106,7 @@ export default function GamiPressIntegLayout({ formFields, handleInput, gamiPres
           </div>
         </>
       )}
-      { ['3', '6'].includes(gamiPressConf.mainAction) && (
+      {['3', '6'].includes(gamiPressConf.mainAction) && (
         <div className="flx mt-4">
           <b className="wdt-200 d-in-b">{__('Enter Point: ', 'bit-integrations')}</b>
           <MultiSelect
@@ -132,7 +133,7 @@ export default function GamiPressIntegLayout({ formFields, handleInput, gamiPres
         />
       )}
 
-      { ['3', '6'].includes(gamiPressConf.mainAction)
+      {['3', '6'].includes(gamiPressConf.mainAction)
         && (
           <>
             <div className="mt-4">
@@ -161,6 +162,9 @@ export default function GamiPressIntegLayout({ formFields, handleInput, gamiPres
           </>
         )}
       <br />
+      <Note
+        note="Some integrations will only work for logged-in users."
+      />
     </>
   )
 }

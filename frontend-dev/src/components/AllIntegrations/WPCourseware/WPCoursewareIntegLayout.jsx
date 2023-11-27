@@ -2,6 +2,7 @@
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
 import { getWPCoursewareCourses } from './WPCoursewareCommonFunc'
+import Note from '../../Utilities/Note'
 
 export default function WPCoursewareIntegLayout({ wpCoursewareConf, setWPCoursewareConf, isLoading, setIsLoading, setSnackbar }) {
   const inputHandler = ({ target: { name, value } }) => {
@@ -50,6 +51,11 @@ export default function WPCoursewareIntegLayout({ wpCoursewareConf, setWPCoursew
           <button onClick={() => getWPCoursewareCourses(wpCoursewareConf, setWPCoursewareConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh WP Courseware Courses', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
         </div>
       )}
+      <br />
+      <br />
+      <Note
+        note="This integration will only work for logged-in users."
+      />
     </>
   )
 }
