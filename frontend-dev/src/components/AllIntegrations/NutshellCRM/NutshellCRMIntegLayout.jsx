@@ -19,11 +19,11 @@ export default function NutshellCRMIntegLayout({ formFields, handleInput, nutshe
 
         if (draftConf.actionName === "people") {
           draftConf.nutshellCRMFields = draftConf.peopleFields
-        } else if (draftConf.actionName === "contact") {
-          draftConf.nutshellCRMFields = draftConf.contactFields
+        } else if (draftConf.actionName === "company") {
+          draftConf.nutshellCRMFields = draftConf.companyFields
         } else if (draftConf.actionName === "lead") {
           draftConf.nutshellCRMFields = draftConf.leadFields
-          draftConf.leadStatus = ['Lead', 'Open', 'Replied', 'Opportunity', 'Quotation', 'Lost Quotation', 'Interested', 'Converted', 'Do Not Contact']
+          draftConf.leadStatus = ['Lead', 'Open', 'Replied', 'Opportunity', 'Quotation', 'Lost Quotation', 'Interested', 'Converted', 'Do Not Company']
         }
         draftConf.field_map = generateMappedField(draftConf)
 
@@ -47,9 +47,9 @@ export default function NutshellCRMIntegLayout({ formFields, handleInput, nutshe
       <b className="wdt-200 d-in-b">{__('Select Action:', 'bit-integrations')}</b>
       <select onChange={handleActionInput} name="actionName" value={nutshellCRMConf.actionName} className="btcd-paper-inp w-5">
         <option value="">{__('Select an action', 'bit-integrations')}</option>
-        <option value="lead" data-action_name="lead">{__('Create Lead', 'bit-integrations')}</option>
+        <option value="company" data-action_name="company">{__('Create Company', 'bit-integrations')}</option>
         <option value="people" data-action_name="people">{__('Create People', 'bit-integrations')}</option>
-        <option value="contact" data-action_name="contact">{__('Create Contact', 'bit-integrations')}</option>
+        <option value="lead" data-action_name="lead">{__('Create Lead', 'bit-integrations')}</option>
       </select>
       <br />
       {nutshellCRMConf.actionName === 'lead'

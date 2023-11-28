@@ -59,9 +59,6 @@ class RecordApiHelper
             }
         }
 
-
-
-
         $this->type                     = 'People';
         $this->typeName                 = 'People created';
 
@@ -69,53 +66,61 @@ class RecordApiHelper
             'method'    => 'newContact',
             'id'        => 'randomstring',
             'params'    => (object) [
-                'contact' => $requestParams
+                'company' => $requestParams
             ]
         ];
 
         $apiEndpoint                    = $this->apiUrl;
 
-        // return
-        $response = HttpHelper::post($apiEndpoint, json_encode($body), $this->defaultHeader);
-        var_dump($response);
-        die;
+        return HttpHelper::post($apiEndpoint, json_encode($body), $this->defaultHeader);
     }
 
-    public function addContact($finalData)
+    public function addCompany($finalData)
     {
-        if (empty($finalData['first_name'])) {
-            return ['success' => false, 'message' => 'Required field First Name is empty', 'code' => 400];
+        if (empty($finalData['name'])) {
+            return ['success' => false, 'message' => 'Required field Full Name is empty', 'code' => 400];
         }
 
-        if (isset($this->integrationDetails->selectedContactStatus) && !empty($this->integrationDetails->selectedContactStatus)) {
-            $finalData['status'] = ($this->integrationDetails->selectedContactStatus);
+        $staticFieldsKeys = ['name','url','phone','address_1','city','state','postalCode','country',];
+
+        foreach ($finalData as $key => $value) {
+            if (in_array($key, $staticFieldsKeys)) {
+                if (($key == 'address_1' || $key == 'city' || $key == 'state' || $key == 'postalCode' || $key == 'country')) {
+                    $requestParams['address'][$key] =   $value;
+                } else {
+                    $requestParams[$key] = $value;
+                }
+            } else {
+                $requestParams['customFields'][] = (object) [
+                    $key   => $value,
+                ];
+            }
         }
 
-        if (isset($finalData['email_id'])) {
-            $finalData["email_ids"] = [
-                (object) [
-                    "email_id"      => $finalData['email_id'],
-                    "is_primary"    => true
-                ]
+        if ($this->integrationDetails->actions->Contact) {
+            $requestParams['contacts'][] = (object)[
+                "id" => ($this->integrationDetails->selectedContact)
             ];
         }
-        if (isset($finalData['phone'])) {
-            $finalData["phone_nos"][] = (object) [
-                "phone"             => $finalData['phone'],
-                "is_primary_phone"  => true
-            ];
-        }
-        if (isset($finalData['mobile_no'])) {
-            $finalData["phone_nos"][] = (object) [
-                "phone"                 => $finalData['mobile_no'],
-                "is_primary_mobile_no"  => true
-            ];
+        if ($this->integrationDetails->actions->CompanyType) {
+            $requestParams['accountTypeId'] = ($this->integrationDetails->selectedCompanyType);
         }
 
-        $this->type                         = 'Contact';
-        $this->typeName                     = 'Contact created';
-        $apiEndpoint                        = $this->apiUrl . "/Contact";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        $this->type                     = 'People';
+        $this->typeName                 = 'People created';
+
+        $body = [
+            'method'    => 'newAccount',
+            'id'        => 'randomstring',
+            'params'    => (object) [
+                'account' => $requestParams
+            ]
+        ];
+
+        $apiEndpoint                    = $this->apiUrl;
+
+        return HttpHelper::post($apiEndpoint, json_encode($body), $this->defaultHeader);
+
     }
 
     public function addLead($finalData)
@@ -171,8 +176,8 @@ class RecordApiHelper
         $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         if ($actionName === "people") {
             $apiResponse = $this->addPeople($finalData);
-        } elseif ($actionName === "contact") {
-            $apiResponse = $this->addContact($finalData);
+        } elseif ($actionName === "company") {
+            $apiResponse = $this->addCompany($finalData);
         } elseif ($actionName === "lead") {
             $apiResponse = $this->addLead($finalData);
         }

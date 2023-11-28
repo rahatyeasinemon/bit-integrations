@@ -60,6 +60,69 @@ class NutshellCRMController
         }
     }
 
+    public function getContacts($fieldsRequestParams)
+    {
+        if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+
+        $userName       = $fieldsRequestParams->user_name;
+        $apiToken       = $fieldsRequestParams->api_token;
+        $apiEndpoint    = $this->setApiEndpoint();
+        $headers        = $this->setHeaders($userName, $apiToken);
+        $body = [
+            'method'    => 'findContacts',
+            'id'        => 'randomstring',
+        ];
+
+        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        // var_dump($response->result);
+        // die;
+
+        if (isset($response->result)) {
+            foreach ($response->result as $contact) {
+                $contacts[] = [
+                    'id'   => (string) $contact->id,
+                    'name' => $contact->name
+                ];
+            }
+            wp_send_json_success($contacts, 200);
+        } else {
+            wp_send_json_error('Contacts fetching failed', 400);
+        }
+    }
+
+    public function getCompanyTypes($fieldsRequestParams)
+    {
+        if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+
+        $userName       = $fieldsRequestParams->user_name;
+        $apiToken       = $fieldsRequestParams->api_token;
+        $apiEndpoint    = $this->setApiEndpoint();
+        $headers        = $this->setHeaders($userName, $apiToken);
+        $body = [
+            'method'    => 'findAccountTypes',
+            'id'        => 'randomstring',
+        ];
+
+        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+
+
+        if (isset($response->result)) {
+            foreach ($response->result as $companyType) {
+                $companyTypes[] = [
+                    'id'   => (string) $companyType->id,
+                    'name' => $companyType->name
+                ];
+            }
+            wp_send_json_success($companyTypes, 200);
+        } else {
+            wp_send_json_error('CompanyTypes fetching failed', 400);
+        }
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;

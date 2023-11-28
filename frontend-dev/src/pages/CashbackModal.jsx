@@ -50,6 +50,11 @@ export default function CashbackModal() {
                             &nbsp;
                             for your time & effort.
                         </p>
+                        <p><b>Suggestions on how you may write the review:</b>
+                        </p>
+                        <p>1. What features do you like most in Bit Integrations? <br />
+                            2. Which software did you previously used for these features?
+                        </p>
                     </div>
                 </div>
                 <div className="footer-wrapper">

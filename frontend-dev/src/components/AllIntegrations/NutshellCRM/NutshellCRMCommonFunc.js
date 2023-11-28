@@ -91,3 +91,54 @@ export const nutshellCRMAuthentication = (
     );
   });
 };
+
+
+export const getAllContacts = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, contacts: true });
+
+  const requestParams = {
+    user_name: confTmp.user_name,
+    api_token: confTmp.api_token,
+  };
+
+  bitsFetch(requestParams, "nutshellcrm_fetch_all_contacts").then((result) => {
+    if (result && result.success) {
+      const newConf = { ...confTmp };
+      if (result.data) {
+        newConf.contacts = result.data;
+      }
+      setConf(newConf);
+      setLoading({ ...setLoading, contacts: false });
+
+      toast.success(__("Contacts fetched successfully", "bit-integrations"));
+      return;
+    }
+    setLoading({ ...setLoading, contacts: false });
+    toast.error(__("Contacts fetching failed", "bit-integrations"));
+  });
+};
+
+export const getAllCompanyTypes = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, companyTypes: true });
+
+  const requestParams = {
+    user_name: confTmp.user_name,
+    api_token: confTmp.api_token,
+  };
+
+  bitsFetch(requestParams, "nutshellcrm_fetch_all_companytypes").then((result) => {
+    if (result && result.success) {
+      const newConf = { ...confTmp };
+      if (result.data) {
+        newConf.companyTypes = result.data;
+      }
+      setConf(newConf);
+      setLoading({ ...setLoading, companyTypes: false });
+
+      toast.success(__("CompanyTypes fetched successfully", "bit-integrations"));
+      return;
+    }
+    setLoading({ ...setLoading, companyTypes: false });
+    toast.error(__("CompanyTypes fetching failed", "bit-integrations"));
+  });
+};

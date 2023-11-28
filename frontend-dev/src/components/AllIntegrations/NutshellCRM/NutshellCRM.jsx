@@ -33,17 +33,15 @@ function NutshellCRM({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'country', label: 'Country', required: false },
   ]
 
-  const contactFields = [
-    { key: 'first_name', label: 'First Name', required: true },
-    { key: 'middle_name', label: 'Middle Name', required: false },
-    { key: 'last_name', label: 'Last Name', required: false },
-    { key: 'email_id', label: 'Email Address', required: false },
-    { key: 'designation', label: 'Designation', required: false },
+  const companyFields = [
+    { key: 'name', label: 'Name', required: true },
+    { key: 'url', label: 'URL', required: false },
     { key: 'phone', label: 'Phone Number', required: false },
-    { key: 'mobile_no', label: 'Mobile Number', required: false },
-    { key: 'gender', label: 'Gender', required: false },
-    { key: 'department', label: 'Department', required: false },
-    { key: 'company_name', label: 'Company Name', required: false },
+    { key: 'address_1', label: 'Address 1', required: false },
+    { key: 'city', label: 'City', required: false },
+    { key: 'state', label: 'State', required: false },
+    { key: 'postalCode', label: 'Postal Code', required: false },
+    { key: 'country', label: 'Country', required: false },
   ]
 
   const leadFields = [
@@ -80,7 +78,7 @@ function NutshellCRM({ formFields, setFlow, flow, allIntegURL }) {
     actionName: '',
     actionId: '',
     peopleFields,
-    contactFields,
+    companyFields,
     leadFields,
     actions: {},
   })

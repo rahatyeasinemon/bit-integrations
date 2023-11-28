@@ -37,9 +37,9 @@ export default function NutshellCRMAuthorization({ nutshellCRMConf, setNutshellC
   const ActiveInstructions = `
             <h4>Get API Token</h4>
             <ul>
-                <li>Go to your Nutshell CRM's user dashboard and click the profile buttom from Right top corner</li>
-                <li>Then select "My Settings"</li>
-                <li>Then go to "API Access → Generates Keys"</li>
+                <li>Go to your Nutshell CRM's user dashboard </li>
+                <li>Then select "Settings"</li>
+                <li>Then go to "API Keys → Add API Key"</li>
             </ul>`
 
   return (
