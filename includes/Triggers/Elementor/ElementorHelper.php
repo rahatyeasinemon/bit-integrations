@@ -9,7 +9,7 @@ class ElementorHelper
         $block_is_on_page = array();
         if (!empty($elements)) {
             foreach ($elements as $element) {
-                if ('widget' === $element->elType && 'form' === $element->widgetType) {
+                if ('widget' === $element->elType && ('form' === $element->widgetType || 'global' === $element->widgetType)) {
                     $block_is_on_page[] = $element;
                 }
                 if (!empty($element->elements)) {
@@ -30,7 +30,7 @@ class ElementorHelper
         global $wpdb;
         $post_metas = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT pm.post_id, pm.meta_value
+                "SELECT pm.post_id, pm.meta_value, p.post_title
 FROM $wpdb->postmeta pm
     LEFT JOIN $wpdb->posts p
         ON p.ID = pm.post_id
@@ -52,8 +52,8 @@ WHERE p.post_type IS NOT NULL
                     foreach ($inner_forms as $form) {
                         $AllForms[] = [
                             'id'            => $form->id,
-                            'post_id'       => $post_meta->post_id,
-                            'title'         => $form->settings->form_name,
+                            'post_id'       => isset($form->templateID) ? $form->templateID : $post_meta->post_id,
+                            'title'         => "{$form->settings->form_name} ({$post_meta->post_title})->{$post_meta->post_id}",
                             'form_fields'   => $form->settings->form_fields
                         ];
                     }
