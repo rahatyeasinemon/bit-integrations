@@ -6,7 +6,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { __ } from '../../../Utils/i18nwrap'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
-import { getAllCompanyTypes, getAllContacts } from './NutshellCRMCommonFunc'
+import { getAllCompanies, getAllCompanyTypes, getAllContacts, getAllProducts, getAllSources, getAllTags } from './NutshellCRMCommonFunc'
 import Loader from '../../Loaders/Loader'
 
 export default function NutshellCRMActions({ nutshellCRMConf, setNutshellCRMConf, loading, setLoading }) {
@@ -14,54 +14,12 @@ export default function NutshellCRMActions({ nutshellCRMConf, setNutshellCRMConf
 
   const actionHandler = (e, type) => {
     const newConf = { ...nutshellCRMConf }
-    if (type === 'organizationLead') {
+    if (type === 'priority') {
       if (e.target?.checked) {
-        newConf.actions.organizationLead = true
+        newConf.actions.Priority = true
       } else {
         setActionMdl({ show: false })
-        delete newConf.actions.organizationLead
-      }
-    } else if (type === 'leadSource') {
-      if (e.target?.checked) {
-        newConf.actions.leadSource = true
-        newConf.leadSources = ['Advertisement', 'Campaign', 'Cold Calling', "People's Vendor", 'Exhibition', 'Existing Cutomer', 'Mass Mailing', 'Reference', 'Supplier Reference', 'Walk In']
-      } else {
-        delete newConf.actions.leadSource
-      }
-    } else if (type === 'LeadAddressType') {
-      if (e.target?.checked) {
-        newConf.actions.LeadAddressType = true
-        newConf.LeadAddressTypes = ['Billing', 'Shipping', 'Office', "Personal", 'Plant', 'Postal', 'Shop', 'SubsiDiary', 'Warehouse', 'Current', 'Permanent', 'Other']
-      } else {
-        delete newConf.actions.LeadAddressType
-      }
-    } else if (type === 'LeadType') {
-      if (e.target?.checked) {
-        newConf.actions.LeadType = true
-        newConf.LeadTypes = ['Client', 'Channel Partner', 'Consultant']
-      } else {
-        delete newConf.actions.LeadType
-      }
-    } else if (type === 'RequestType') {
-      if (e.target?.checked) {
-        newConf.actions.RequestType = true
-        newConf.RequestTypes = ['Product Enquiry', 'Request For Information', 'Suggestions', 'Other']
-      } else {
-        delete newConf.actions.RequestType
-      }
-    } else if (type === 'MarketSegment') {
-      if (e.target?.checked) {
-        newConf.actions.MarketSegment = true
-        newConf.MarketSegments = ['Lower Income', 'Middle Income', 'Upper Income']
-      } else {
-        delete newConf.actions.MarketSegment
-      }
-    } else if (type === 'CompanyStatus') {
-      if (e.target?.checked) {
-        newConf.actions.CompanyStatus = true
-        newConf.CompanyStatus = ['Passive', 'Open', 'Replied']
-      } else {
-        delete newConf.actions.CompanyStatus
+        delete newConf.actions.Priority
       }
     } else if (type === 'Contact') {
       if (e.target?.checked) {
@@ -70,6 +28,38 @@ export default function NutshellCRMActions({ nutshellCRMConf, setNutshellCRMConf
 
       } else {
         delete newConf.actions.Contact
+      }
+    } else if (type === 'Product') {
+      if (e.target?.checked) {
+        getAllProducts(nutshellCRMConf, setNutshellCRMConf, setLoading)
+        newConf.actions.Product = true
+
+      } else {
+        delete newConf.actions.Contact
+      }
+    } else if (type === 'Source') {
+      if (e.target?.checked) {
+        getAllSources(nutshellCRMConf, setNutshellCRMConf, setLoading)
+        newConf.actions.Source = true
+
+      } else {
+        delete newConf.actions.Contact
+      }
+    } else if (type === 'Tag') {
+      if (e.target?.checked) {
+        getAllTags(nutshellCRMConf, setNutshellCRMConf, setLoading)
+        newConf.actions.Tag = true
+
+      } else {
+        delete newConf.actions.Contact
+      }
+    } else if (type === 'Company') {
+      if (e.target?.checked) {
+        getAllCompanies(nutshellCRMConf, setNutshellCRMConf, setLoading)
+        newConf.actions.Company = true
+
+      } else {
+        delete newConf.actions.Company
       }
     } else if (type === 'CompanyType') {
       if (e.target?.checked) {
@@ -97,14 +87,12 @@ export default function NutshellCRMActions({ nutshellCRMConf, setNutshellCRMConf
 
   return (
     <div className="pos-rel d-flx flx-wrp">
-      {nutshellCRMConf.actionName === 'lead' && <TableCheckBox checked={nutshellCRMConf.actions?.organizationLead || false} onChange={(e) => actionHandler(e, 'organizationLead')} className="wdt-200 mt-4 mr-2" value="organizationLead" title={__('Lead is an Organization', 'bit-integrations')} subTitle={__('Lead is an Organization', 'bit-integrations')} />}
-      {nutshellCRMConf.actionName === 'lead' && <TableCheckBox checked={nutshellCRMConf?.selectedLeadSource || false} onChange={(e) => actionHandler(e, 'leadSource')} className="wdt-200 mt-4 mr-2" value="leadSource" title={__('Add Source', 'bit - integrations')} subTitle={__('Add Source')} />}
-      {nutshellCRMConf.actionName === 'lead' && <TableCheckBox checked={nutshellCRMConf?.selectedLeadAddressType || false} onChange={(e) => actionHandler(e, 'LeadAddressType')} className="wdt-200 mt-4 mr-2" value="LeadAddressType" title={__('Add Address Type', 'bit - integrations')} subTitle={__('Add Address Type')} />}
-      {nutshellCRMConf.actionName === 'lead' && <TableCheckBox checked={nutshellCRMConf?.selectedLeadType || false} onChange={(e) => actionHandler(e, 'LeadType')} className="wdt-200 mt-4 mr-2" value="LeadType" title={__('Add Lead Type', 'bit - integrations')} subTitle={__('Add Lead Type')} />}
-      {nutshellCRMConf.actionName === 'lead' && <TableCheckBox checked={nutshellCRMConf?.selectedRequestType || false} onChange={(e) => actionHandler(e, 'RequestType')} className="wdt-200 mt-4 mr-2" value="RequestType" title={__('Add Request Type', 'bit - integrations')} subTitle={__('Add Request Type')} />}
-      {nutshellCRMConf.actionName === 'lead' && <TableCheckBox checked={nutshellCRMConf?.selectedMarketSegment || false} onChange={(e) => actionHandler(e, 'MarketSegment')} className="wdt-200 mt-4 mr-2" value="MarketSegment" title={__('Add Market Segment', 'bit - integrations')} subTitle={__('Add Market Segment')} />}
-      {/* {nutshellCRMConf.actionName === 'company' && <TableCheckBox checked={nutshellCRMConf?.selectedCompanyStatus || false} onChange={(e) => actionHandler(e, 'CompanyStatus')} className="wdt-200 mt-4 mr-2" value="CompanyStatus" title={__('Add Status', 'bit - integrations')} subTitle={__('Add Status')} />} */}
-      {nutshellCRMConf.actionName === 'company' && <TableCheckBox checked={nutshellCRMConf?.selectedContact || false} onChange={(e) => actionHandler(e, 'Contact')} className="wdt-200 mt-4 mr-2" value="Contact" title={__('Add Contact', 'bit - integrations')} subTitle={__('Add Contact')} />}
+      {nutshellCRMConf.actionName === 'lead' && <TableCheckBox checked={nutshellCRMConf.actions?.Priority || false} onChange={(e) => actionHandler(e, 'priority')} className="wdt-200 mt-4 mr-2" value="priority" title={__('Priority', 'bit-integrations')} subTitle={__('Priority', 'bit-integrations')} />}
+      {(nutshellCRMConf.actionName === 'lead' || nutshellCRMConf.actionName === 'people') && <TableCheckBox checked={nutshellCRMConf?.selectedCompany || false} onChange={(e) => actionHandler(e, 'Company')} className="wdt-200 mt-4 mr-2" value="Company" title={__('Add Company', 'bit - integrations')} subTitle={__('Add Company')} />}
+      {nutshellCRMConf.actionName === 'lead' && <TableCheckBox checked={nutshellCRMConf?.selectedProduct || false} onChange={(e) => actionHandler(e, 'Product')} className="wdt-200 mt-4 mr-2" value="Product" title={__('Add Product', 'bit - integrations')} subTitle={__('Add Product')} />}
+      {nutshellCRMConf.actionName === 'lead' && <TableCheckBox checked={nutshellCRMConf?.selectedSource || false} onChange={(e) => actionHandler(e, 'Source')} className="wdt-200 mt-4 mr-2" value="Source" title={__('Add Source', 'bit - integrations')} subTitle={__('Add Source')} />}
+      {nutshellCRMConf.actionName === 'lead' && <TableCheckBox checked={nutshellCRMConf?.selectedTag || false} onChange={(e) => actionHandler(e, 'Tag')} className="wdt-200 mt-4 mr-2" value="Tag" title={__('Add Tag', 'bit - integrations')} subTitle={__('Add Tag')} />}
+      {(nutshellCRMConf.actionName === 'company' || nutshellCRMConf.actionName === 'lead') && <TableCheckBox checked={nutshellCRMConf?.selectedContact || false} onChange={(e) => actionHandler(e, 'Contact')} className="wdt-200 mt-4 mr-2" value="Contact" title={__('Add Contact', 'bit - integrations')} subTitle={__('Add Contact')} />}
       {nutshellCRMConf.actionName === 'company' && <TableCheckBox checked={nutshellCRMConf?.selectedCompanyType || false} onChange={(e) => actionHandler(e, 'CompanyType')} className="wdt-200 mt-4 mr-2" value="CompanyType" title={__('Add CompanyType', 'bit - integrations')} subTitle={__('Add CompanyType')} />}
 
       <ConfirmModal
@@ -112,165 +100,36 @@ export default function NutshellCRMActions({ nutshellCRMConf, setNutshellCRMConf
         mainMdlCls="o-v"
         btnClass="blue"
         btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'leadSource'}
+        show={actionMdl.show === 'Company'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Add Source', 'bit-integrations')}
+        title={__('Add Company', 'bit-integrations')}
       >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">
-          {__('Select Source', 'bit-integrations')}
+          {__('Select Company', 'bit-integrations')}
         </div>
 
-        <div className="flx flx-between mt-2">
-          <MultiSelect
-            options={nutshellCRMConf?.leadSources?.map(source => ({ label: source, value: source }))}
-            className="msl-wrp-options"
-            defaultValue={nutshellCRMConf?.selectedLeadSource}
-            onChange={val => setChanges(val, 'selectedLeadSource')}
-            singleSelect
-            closeOnSelect
+        {loading.companies ? (
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 45,
+            transform: 'scale(0.5)',
+          }}
           />
-        </div>
-      </ConfirmModal>
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'LeadAddressType'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Add Address Type', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Address Type', 'bit-integrations')}
-        </div>
-
-        <div className="flx flx-between mt-2">
-          <MultiSelect
-            options={nutshellCRMConf?.LeadAddressTypes?.map(type => ({ label: type, value: type }))}
-            className="msl-wrp-options"
-            defaultValue={nutshellCRMConf?.selectedLeadAddressType}
-            onChange={val => setChanges(val, 'selectedLeadAddressType')}
-            singleSelect
-            closeOnSelect
-          />
-        </div>
-      </ConfirmModal>
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'LeadType'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Add Lead Type', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Lead Type', 'bit-integrations')}
-        </div>
-
-
-        <div className="flx flx-between mt-2">
-          <MultiSelect
-            options={nutshellCRMConf?.LeadTypes?.map(type => ({ label: type, value: type }))}
-            className="msl-wrp-options"
-            defaultValue={nutshellCRMConf?.selectedLeadType}
-            onChange={val => setChanges(val, 'selectedLeadType')}
-            singleSelect
-            closeOnSelect
-          />
-        </div>
-      </ConfirmModal>
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'RequestType'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Add Request Type', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Request Type', 'bit-integrations')}
-        </div>
-
-
-        <div className="flx flx-between mt-2">
-          <MultiSelect
-            options={nutshellCRMConf?.RequestTypes?.map(type => ({ label: type, value: type }))}
-            className="msl-wrp-options"
-            defaultValue={nutshellCRMConf?.selectedRequestType}
-            onChange={val => setChanges(val, 'selectedRequestType')}
-            singleSelect
-            closeOnSelect
-          />
-        </div>
-      </ConfirmModal>
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'MarketSegment'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Add Market Segment', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Market Segment', 'bit-integrations')}
-        </div>
-
-
-        <div className="flx flx-between mt-2">
-          <MultiSelect
-            options={nutshellCRMConf?.MarketSegments?.map(segment => ({ label: segment, value: segment }))}
-            className="msl-wrp-options"
-            defaultValue={nutshellCRMConf?.selectedMarketSegment}
-            onChange={val => setChanges(val, 'selectedMarketSegment')}
-            singleSelect
-            closeOnSelect
-          />
-        </div>
-      </ConfirmModal>
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'CompanyStatus'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Add Industry', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
-          {__('Select Industry', 'bit-integrations')}
-        </div>
-
-
-        <div className="flx flx-between mt-2">
-          <MultiSelect
-            options={nutshellCRMConf?.CompanyStatus?.map(status => ({ label: status, value: status }))}
-            className="msl-wrp-options"
-            defaultValue={nutshellCRMConf?.selectedCompanyStatus}
-            onChange={val => setChanges(val, 'selectedCompanyStatus')}
-            singleSelect
-            closeOnSelect
-          />
-        </div>
+        )
+          : (<div className="flx flx-between mt-2">
+            <MultiSelect
+              options={nutshellCRMConf?.companies?.map(company => ({ label: company.name, value: company.id }))}
+              className="msl-wrp-options"
+              defaultValue={nutshellCRMConf?.selectedCompany}
+              onChange={val => setChanges(val, 'selectedCompany')}
+              singleSelect
+              closeOnSelect
+            />
+          </div>)}
       </ConfirmModal>
 
       <ConfirmModal
@@ -304,6 +163,117 @@ export default function NutshellCRMActions({ nutshellCRMConf, setNutshellCRMConf
               className="msl-wrp-options"
               defaultValue={nutshellCRMConf?.selectedContact}
               onChange={val => setChanges(val, 'selectedContact')}
+              singleSelect
+              closeOnSelect
+            />
+          </div>)}
+      </ConfirmModal>
+
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt={__('Ok', 'bit-integrations')}
+        show={actionMdl.show === 'Product'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title={__('Add Product', 'bit-integrations')}
+      >
+        <div className="btcd-hr mt-2 mb-2" />
+        <div className="mt-2">
+          {__('Select Product', 'bit-integrations')}
+        </div>
+
+        {loading.products ? (
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 45,
+            transform: 'scale(0.5)',
+          }}
+          />
+        )
+          : (<div className="flx flx-between mt-2">
+            <MultiSelect
+              options={nutshellCRMConf?.products?.map(product => ({ label: product.name, value: product.id }))}
+              className="msl-wrp-options"
+              defaultValue={nutshellCRMConf?.selectedProduct}
+              onChange={val => setChanges(val, 'selectedProduct')}
+              singleSelect
+              closeOnSelect
+            />
+          </div>)}
+      </ConfirmModal>
+
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt={__('Ok', 'bit-integrations')}
+        show={actionMdl.show === 'Source'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title={__('Add Source', 'bit-integrations')}
+      >
+        <div className="btcd-hr mt-2 mb-2" />
+        <div className="mt-2">
+          {__('Select Source', 'bit-integrations')}
+        </div>
+
+        {loading.sources ? (
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 45,
+            transform: 'scale(0.5)',
+          }}
+          />
+        )
+          : (<div className="flx flx-between mt-2">
+            <MultiSelect
+              options={nutshellCRMConf?.sources?.map(source => ({ label: source.name, value: source.id }))}
+              className="msl-wrp-options"
+              defaultValue={nutshellCRMConf?.selectedSource}
+              onChange={val => setChanges(val, 'selectedSource')}
+              singleSelect
+              closeOnSelect
+            />
+          </div>)}
+      </ConfirmModal>
+
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt={__('Ok', 'bit-integrations')}
+        show={actionMdl.show === 'Tag'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title={__('Add Tag', 'bit-integrations')}
+      >
+        <div className="btcd-hr mt-2 mb-2" />
+        <div className="mt-2">
+          {__('Select Tag', 'bit-integrations')}
+        </div>
+
+        {loading.tags ? (
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 45,
+            transform: 'scale(0.5)',
+          }}
+          />
+        )
+          : (<div className="flx flx-between mt-2">
+            <MultiSelect
+              options={nutshellCRMConf?.tags?.map(tag => ({ label: tag.name, value: tag.name }))}
+              className="msl-wrp-options"
+              defaultValue={nutshellCRMConf?.selectedTag}
+              onChange={val => setChanges(val, 'selectedTag')}
               singleSelect
               closeOnSelect
             />

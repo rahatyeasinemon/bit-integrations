@@ -31,11 +31,6 @@ function EditNutshellCRM({ allIntegURL }) {
       return
     }
 
-    if (nutshellCRMConf.actionName === 'lead' && !nutshellCRMConf.selectedLeadStatus) {
-      toast.error('Please select Lead Status')
-      return
-    }
-
     saveActionConf({ flow, allIntegURL, conf: nutshellCRMConf, navigate, edit: 1, setIsLoading, setSnackbar })
   }
 

@@ -60,6 +60,38 @@ class NutshellCRMController
         }
     }
 
+    public function getCompanies($fieldsRequestParams)
+    {
+        if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+
+        $userName       = $fieldsRequestParams->user_name;
+        $apiToken       = $fieldsRequestParams->api_token;
+        $apiEndpoint    = $this->setApiEndpoint();
+        $headers        = $this->setHeaders($userName, $apiToken);
+        $body = [
+            'method'    => 'findAccounts',
+            'id'        => 'randomstring',
+        ];
+
+        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        // var_dump($response->result);
+        // die;
+
+        if (isset($response->result)) {
+            foreach ($response->result as $company) {
+                $companies[] = [
+                    'id'   => (string) $company->id,
+                    'name' => $company->name
+                ];
+            }
+            wp_send_json_success($companies, 200);
+        } else {
+            wp_send_json_error('Contacts fetching failed', 400);
+        }
+    }
+
     public function getContacts($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
@@ -89,6 +121,102 @@ class NutshellCRMController
             wp_send_json_success($contacts, 200);
         } else {
             wp_send_json_error('Contacts fetching failed', 400);
+        }
+    }
+
+    public function getProducts($fieldsRequestParams)
+    {
+        if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+
+        $userName       = $fieldsRequestParams->user_name;
+        $apiToken       = $fieldsRequestParams->api_token;
+        $apiEndpoint    = $this->setApiEndpoint();
+        $headers        = $this->setHeaders($userName, $apiToken);
+        $body = [
+            'method'    => 'findProducts',
+            'id'        => 'randomstring',
+        ];
+
+        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        // var_dump($response->result);
+        // die;
+
+        if (isset($response->result)) {
+            foreach ($response->result as $product) {
+                $products[] = [
+                    'id'   => (string) $product->id,
+                    'name' => $product->name
+                ];
+            }
+            wp_send_json_success($products, 200);
+        } else {
+            wp_send_json_error('Products fetching failed', 400);
+        }
+    }
+
+    public function getSources($fieldsRequestParams)
+    {
+        if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+
+        $userName       = $fieldsRequestParams->user_name;
+        $apiToken       = $fieldsRequestParams->api_token;
+        $apiEndpoint    = $this->setApiEndpoint();
+        $headers        = $this->setHeaders($userName, $apiToken);
+        $body = [
+            'method'    => 'findSources',
+            'id'        => 'randomstring',
+        ];
+
+        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        // var_dump($response->result);
+        // die;
+
+        if (isset($response->result)) {
+            foreach ($response->result as $source) {
+                $sources[] = [
+                    'id'   => (string) $source->id,
+                    'name' => $source->name
+                ];
+            }
+            wp_send_json_success($sources, 200);
+        } else {
+            wp_send_json_error('Sources fetching failed', 400);
+        }
+    }
+
+    public function getTags($fieldsRequestParams)
+    {
+        if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+
+        $userName       = $fieldsRequestParams->user_name;
+        $apiToken       = $fieldsRequestParams->api_token;
+        $apiEndpoint    = $this->setApiEndpoint();
+        $headers        = $this->setHeaders($userName, $apiToken);
+        $body = [
+            'method'    => 'findTags',
+            'id'        => 'randomstring',
+        ];
+
+        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        // var_dump($response->result);
+        // die;
+
+        if (isset($response->result)) {
+            foreach ($response->result->Leads as $tag) {
+                $tags[] = [
+                    'id'   => (string) $tag,
+                    'name' => $tag
+                ];
+            }
+            wp_send_json_success($tags, 200);
+        } else {
+            wp_send_json_error('Tags fetching failed', 400);
         }
     }
 

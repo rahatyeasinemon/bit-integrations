@@ -45,26 +45,9 @@ function NutshellCRM({ formFields, setFlow, flow, allIntegURL }) {
   ]
 
   const leadFields = [
-    { key: 'lead_name', label: 'Person Name', required: true },
-    { key: 'company_name', label: 'Organization Name', required: true },
-    { key: 'email_id', label: 'Email Address', required: false },
-    { key: 'title', label: 'Title', required: false },
-    { key: 'phone', label: 'Phone Number', required: false },
-    { key: 'mobile_no', label: 'Mobile Number', required: false },
-    { key: 'fax', label: 'Fax', required: false },
-    { key: 'designation', label: 'Designation', required: false },
-    { key: 'gender', label: 'Gender', required: false },
-    { key: 'campaign_name', label: 'Campaign Name', required: false },
-    { key: 'website', label: 'Website', required: false },
-    { key: 'notes', label: 'Notes', required: false },
-    { key: 'address_title', label: 'Address Title', required: false },
-    { key: 'address_line1', label: 'Address Line 1', required: false },
-    { key: 'address_line2', label: 'Address Line 2', required: false },
-    { key: 'city', label: 'City', required: false },
-    { key: 'county', label: 'County', required: false },
-    { key: 'state', label: 'State', required: false },
-    { key: 'pincode', label: 'Postal Code', required: false },
-    { key: 'country', label: 'Country', required: false },
+    { key: 'description', label: 'Lead Description', required: true },
+    { key: 'dueTime', label: 'Due Time', required: false },
+    { key: 'confidence', label: 'Confidence', required: false },
   ]
 
   const [nutshellCRMConf, setNutshellCRMConf] = useState({
@@ -103,11 +86,6 @@ function NutshellCRM({ formFields, setFlow, flow, allIntegURL }) {
 
     if (!checkMappedFields(nutshellCRMConf)) {
       toast.error('Please map mandatory fields')
-      return
-    }
-
-    if (nutshellCRMConf.actionName === 'lead' && !nutshellCRMConf.selectedLeadStatus) {
-      toast.error('Please select Lead Status')
       return
     }
 

@@ -52,24 +52,6 @@ export default function NutshellCRMIntegLayout({ formFields, handleInput, nutshe
         <option value="lead" data-action_name="lead">{__('Create Lead', 'bit-integrations')}</option>
       </select>
       <br />
-      {nutshellCRMConf.actionName === 'lead'
-        && (
-          <>
-            <br />
-            <div className="flx">
-              <b className="wdt-200 d-in-b">{__('Lead Status:', 'bit-integrations')}</b>
-              <MultiSelect
-                options={nutshellCRMConf?.leadStatus.map(status => ({ label: status, value: status }))}
-                className="msl-wrp-options dropdown-custom-width"
-                defaultValue={nutshellCRMConf?.selectedLeadStatus}
-                onChange={val => setChanges(val, 'selectedLeadStatus')}
-                disabled={isLoading}
-                singleSelect
-                closeOnSelect
-              />
-            </div>
-          </>
-        )}
 
       {isLoading && (
         <Loader style={{

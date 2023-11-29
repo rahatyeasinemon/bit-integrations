@@ -93,6 +93,31 @@ export const nutshellCRMAuthentication = (
 };
 
 
+export const getAllCompanies = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, companies: true });
+
+  const requestParams = {
+    user_name: confTmp.user_name,
+    api_token: confTmp.api_token,
+  };
+
+  bitsFetch(requestParams, "nutshellcrm_fetch_all_companies").then((result) => {
+    if (result && result.success) {
+      const newConf = { ...confTmp };
+      if (result.data) {
+        newConf.companies = result.data;
+      }
+      setConf(newConf);
+      setLoading({ ...setLoading, companies: false });
+
+      toast.success(__("Companies fetched successfully", "bit-integrations"));
+      return;
+    }
+    setLoading({ ...setLoading, companies: false });
+    toast.error(__("Companies fetching failed", "bit-integrations"));
+  });
+};
+
 export const getAllContacts = (confTmp, setConf, setLoading) => {
   setLoading({ ...setLoading, contacts: true });
 
@@ -115,6 +140,80 @@ export const getAllContacts = (confTmp, setConf, setLoading) => {
     }
     setLoading({ ...setLoading, contacts: false });
     toast.error(__("Contacts fetching failed", "bit-integrations"));
+  });
+};
+
+export const getAllSources = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, sources: true });
+
+  const requestParams = {
+    user_name: confTmp.user_name,
+    api_token: confTmp.api_token,
+  };
+
+  bitsFetch(requestParams, "nutshellcrm_fetch_all_sources").then((result) => {
+    if (result && result.success) {
+      const newConf = { ...confTmp };
+      if (result.data) {
+        newConf.sources = result.data;
+      }
+      setConf(newConf);
+      setLoading({ ...setLoading, sources: false });
+
+      toast.success(__("Sources fetched successfully", "bit-integrations"));
+      return;
+    }
+    setLoading({ ...setLoading, sources: false });
+    toast.error(__("Sources fetching failed", "bit-integrations"));
+  });
+};
+export const getAllTags = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, tags: true });
+
+  const requestParams = {
+    user_name: confTmp.user_name,
+    api_token: confTmp.api_token,
+  };
+
+  bitsFetch(requestParams, "nutshellcrm_fetch_all_tags").then((result) => {
+    if (result && result.success) {
+      const newConf = { ...confTmp };
+      if (result.data) {
+        newConf.tags = result.data;
+      }
+      setConf(newConf);
+      setLoading({ ...setLoading, tags: false });
+
+      toast.success(__("Tags fetched successfully", "bit-integrations"));
+      return;
+    }
+    setLoading({ ...setLoading, tags: false });
+    toast.error(__("Tags fetching failed", "bit-integrations"));
+  });
+};
+
+export const getAllProducts = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, products: true });
+
+  const requestParams = {
+    user_name: confTmp.user_name,
+    api_token: confTmp.api_token,
+  };
+
+  bitsFetch(requestParams, "nutshellcrm_fetch_all_products").then((result) => {
+    if (result && result.success) {
+      const newConf = { ...confTmp };
+      if (result.data) {
+        newConf.products = result.data;
+      }
+      setConf(newConf);
+      setLoading({ ...setLoading, products: false });
+
+      toast.success(__("Products fetched successfully", "bit-integrations"));
+      return;
+    }
+    setLoading({ ...setLoading, products: false });
+    toast.error(__("Products fetching failed", "bit-integrations"));
   });
 };
 

@@ -35,7 +35,7 @@ class RecordApiHelper
     public function addPeople($finalData)
     {
         if (empty($finalData['first_name'] || $finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Full Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => 'Required field First Name or Email is empty', 'code' => 400];
         }
 
         $staticFieldsKeys = ['first_name','email','last_name','phone','address_1','city','state','postalCode','country',];
@@ -57,6 +57,12 @@ class RecordApiHelper
                     $key   => $value,
                 ];
             }
+        }
+
+        if ($this->integrationDetails->actions->Company) {
+            $requestParams['accounts'][] = (object)[
+                "id" => ($this->integrationDetails->selectedCompany)
+            ];
         }
 
         $this->type                     = 'People';
@@ -106,8 +112,8 @@ class RecordApiHelper
             $requestParams['accountTypeId'] = ($this->integrationDetails->selectedCompanyType);
         }
 
-        $this->type                     = 'People';
-        $this->typeName                 = 'People created';
+        $this->type                     = 'Company';
+        $this->typeName                 = 'Company created';
 
         $body = [
             'method'    => 'newAccount',
@@ -125,39 +131,66 @@ class RecordApiHelper
 
     public function addLead($finalData)
     {
-        if (empty($finalData['lead_name'])) {
-            return ['success' => false, 'message' => 'Required Person Name is empty', 'code' => 400];
-        } elseif (empty($finalData['company_name'])) {
-            return ['success' => false, 'message' => 'Required Organization Name is empty', 'code' => 400];
-        } elseif (!isset($this->integrationDetails->selectedLeadStatus) || empty($this->integrationDetails->selectedLeadStatus)) {
-            return ['success' => false, 'message' => 'Required Lead Status is empty', 'code' => 400];
+        if (empty($finalData['description'])) {
+            return ['success' => false, 'message' => 'Required field Description is empty', 'code' => 400];
         }
 
-        if (isset($this->integrationDetails->selectedLeadSource) && !empty($this->integrationDetails->selectedLeadSource)) {
-            $finalData['source'] = ($this->integrationDetails->selectedLeadSource);
-        }
-        if (isset($this->integrationDetails->actions->organizationLead) && !empty($this->integrationDetails->actions->organizationLead)) {
-            $finalData['organization_lead'] = $this->integrationDetails->actions->organizationLead;
-        }
-        if (isset($this->integrationDetails->selectedLeadAddressType) && !empty($this->integrationDetails->selectedLeadAddressType)) {
-            $finalData['address_type'] = $this->integrationDetails->selectedLeadAddressType;
-        }
-        if (isset($this->integrationDetails->selectedLeadType) && !empty($this->integrationDetails->selectedLeadType)) {
-            $finalData['type'] = $this->integrationDetails->selectedLeadType;
-        }
-        if (isset($this->integrationDetails->selectedRequestType) && !empty($this->integrationDetails->selectedRequestType)) {
-            $finalData['request_type'] = $this->integrationDetails->selectedRequestType;
-        }
-        if (isset($this->integrationDetails->selectedMarketSegment) && !empty($this->integrationDetails->selectedMarketSegment)) {
-            $finalData['market_segment'] = $this->integrationDetails->selectedMarketSegment;
+        $staticFieldsKeys = ['description','dueTime','confidence'];
+
+        foreach ($finalData as $key => $value) {
+            if (in_array($key, $staticFieldsKeys)) {
+                $requestParams[$key] = $value;
+
+            } else {
+                $requestParams['customFields'][] = (object) [
+                    $key   => $value,
+                ];
+            }
         }
 
-        $finalData['status']    = $this->integrationDetails->selectedLeadStatus;
-        $finalData['territory'] = "All Territories";
-        $this->type             = 'Lead';
-        $this->typeName         = 'Lead created';
-        $apiEndpoint            = $this->apiUrl . "/Lead";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        if ($this->integrationDetails->actions->Contact) {
+            $requestParams['contacts'][] = (object)[
+                "id" => ($this->integrationDetails->selectedContact)
+            ];
+        }
+        if ($this->integrationDetails->actions->Company) {
+            $requestParams['accounts'][] = (object)[
+                "id" => ($this->integrationDetails->selectedCompany)
+            ];
+        }
+        if ($this->integrationDetails->actions->Product) {
+            $requestParams['products'][] = (object)[
+                "id" => ($this->integrationDetails->selectedProduct)
+            ];
+        }
+        if ($this->integrationDetails->actions->Source) {
+            $requestParams['sources'][] = (object)[
+                "id" => ($this->integrationDetails->selectedSource)
+            ];
+        }
+        if ($this->integrationDetails->actions->Tag) {
+            $requestParams['tags'][] = ($this->integrationDetails->selectedTag);
+
+        }
+
+        if ($this->integrationDetails->actions->Priority) {
+            $requestParams['priority'] = (int)($this->integrationDetails->actions->Priority);
+        }
+
+        $this->type                     = 'Lead';
+        $this->typeName                 = 'Lead created';
+
+        $body = [
+            'method'    => 'newLead',
+            'id'        => 'randomstring',
+            'params'    => (object) [
+                'lead' => $requestParams
+            ]
+        ];
+
+        $apiEndpoint                    = $this->apiUrl;
+
+        return HttpHelper::post($apiEndpoint, json_encode($body), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
