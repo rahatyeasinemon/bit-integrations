@@ -228,6 +228,81 @@ export const getAllContactList = (formID, salesforceConf, setSalesforceConf, set
   })
 }
 
+export const getAllCustomFields = (formID, actionName, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar) => {
+  setIsLoading(true)
+  const customFieldRequestParams = {
+    formID,
+    actionName,
+    clientId: salesforceConf.clientId,
+    clientSecret: salesforceConf.clientSecret,
+    tokenDetails: salesforceConf.tokenDetails,
+  }
+  const loadPostTypes = bitsFetch(customFieldRequestParams, 'selesforce_custom_field')
+    .then(result => {
+      if (result && result.success) {
+        setSalesforceConf((prevConf) => {
+          const draftConf = prevConf;
+          draftConf.field_map = [{ formField: "", salesmateFormField: "" }];
+          if (result.data) {
+            if (actionName === 'contact-create') {
+              draftConf.contactFields = draftConf.contactFields;
+              draftConf.contactFields = [
+                ...draftConf.contactFields,
+                ...result.data,
+              ];
+            } else if (actionName === 'lead-create') {
+              draftConf.leadFields = [
+                ...draftConf.leadFields,
+                ...result.data,
+              ];
+            } else if (actionName === 'account-create') {
+              draftConf.accountFields = [
+                ...draftConf.accountFields,
+                ...result.data,
+              ];
+            } else if (actionName === 'campaign-create') {
+              draftConf.campaignFields = [
+                ...draftConf.campaignFields,
+                ...result.data,
+              ];
+            } else if (actionName === 'add-campaign-member') {
+              draftConf.campaignMemberStatus = [
+                ...draftConf.campaignMemberStatus,
+                ...result.data,
+              ];
+            } else if (actionName === 'opportunity-create') {
+              draftConf.opportunityFields = [
+                ...draftConf.opportunityFields,
+                ...result.data,
+              ];
+            } else if (actionName === 'event-create') {
+              draftConf.eventFields = [
+                ...draftConf.eventFields,
+                ...result.data,
+              ];
+            } else if (actionName === 'case-create') {
+              draftConf.caseFields = [
+                ...draftConf.caseFields,
+                ...result.data,
+              ];
+            }
+          }
+          draftConf.field_map = generateMappedField(draftConf);
+          return draftConf;
+        });
+        setIsLoading(false)
+        return 'Contact list refresh successfully.'
+      }
+      setIsLoading(false)
+      // return 'Contact list refresh failed. please try again'
+    })
+  toast.promise(loadPostTypes, {
+    success: data => data,
+    error: __('Error Occurred', 'bit-integrations'),
+    loading: __('Loading Contact list...'),
+  })
+}
+
 // export const getAllAccountList = (formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar) => {
 //   setIsLoading(true)
 //   const campaignRequestParams = {
@@ -342,7 +417,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
   }
 
   setIsLoading(true)
-  const apiEndpoint = `https://login.salesforce.com/services/oauth2/authorize?response_type=code&client_id=${confTmp.clientId}&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
+  const apiEndpoint = `https://login.salesforce.com/services/oauth2/authorize?response_type=code&client_id=${confTmp.clientId}&prompt=login%20consent&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
   const authWindow = window.open(apiEndpoint, 'salesforce', 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
@@ -355,6 +430,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
         grantTokenResponse = JSON.parse(bitformsZoho)
         localStorage.removeItem('__salesforce')
       }
+      console.log(grantTokenResponse)
       if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {
         const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
         setSnackbar({ show: true, msg: `${__('Authorization failed', 'bit-integrations')} ${errorCause}. ${__('please try again', 'bit-integrations')}` })
