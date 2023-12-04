@@ -245,43 +245,42 @@ export const getAllCustomFields = (formID, actionName, salesforceConf, setSalesf
           draftConf.field_map = [{ formField: "", salesmateFormField: "" }];
           if (result.data) {
             if (actionName === 'contact-create') {
-              draftConf.contactFields = draftConf.contactFields;
-              draftConf.contactFields = [
+              draftConf['selesforceFields'] = [
                 ...draftConf.contactFields,
                 ...result.data,
               ];
             } else if (actionName === 'lead-create') {
-              draftConf.leadFields = [
+              draftConf['selesforceFields'] = [
                 ...draftConf.leadFields,
                 ...result.data,
               ];
             } else if (actionName === 'account-create') {
-              draftConf.accountFields = [
+              draftConf['selesforceFields'] = [
                 ...draftConf.accountFields,
                 ...result.data,
               ];
             } else if (actionName === 'campaign-create') {
-              draftConf.campaignFields = [
+              draftConf['selesforceFields'] = [
                 ...draftConf.campaignFields,
                 ...result.data,
               ];
             } else if (actionName === 'add-campaign-member') {
-              draftConf.campaignMemberStatus = [
+              draftConf['selesforceFields'] = [
                 ...draftConf.campaignMemberStatus,
                 ...result.data,
               ];
             } else if (actionName === 'opportunity-create') {
-              draftConf.opportunityFields = [
+              draftConf['selesforceFields'] = [
                 ...draftConf.opportunityFields,
                 ...result.data,
               ];
             } else if (actionName === 'event-create') {
-              draftConf.eventFields = [
+              draftConf['selesforceFields'] = [
                 ...draftConf.eventFields,
                 ...result.data,
               ];
             } else if (actionName === 'case-create') {
-              draftConf.caseFields = [
+              draftConf['selesforceFields'] = [
                 ...draftConf.caseFields,
                 ...result.data,
               ];
@@ -299,7 +298,7 @@ export const getAllCustomFields = (formID, actionName, salesforceConf, setSalesf
   toast.promise(loadPostTypes, {
     success: data => data,
     error: __('Error Occurred', 'bit-integrations'),
-    loading: __('Loading Contact list...'),
+    loading: __(`Loading ${actionName} list...`),
   })
 }
 
@@ -387,23 +386,24 @@ export const checkMappedFields = (salesforceConf) => {
 }
 export const generateMappedField = (salesforceConf, actionName) => {
   let fields = []
-  if (actionName === 'contact-create') {
-    fields = salesforceConf?.contactFields
-  } else if (actionName === 'lead-create') {
-    fields = salesforceConf?.leadFields
-  } else if (actionName === 'account-create') {
-    fields = salesforceConf?.accountFields
-  } else if (actionName === 'campaign-create') {
-    fields = salesforceConf?.campaignFields
-  } else if (actionName === 'add-campaign-member') {
-    fields = salesforceConf?.campaignMemberFields
-  } else if (actionName === 'opportunity-create') {
-    fields = salesforceConf?.opportunityFields
-  } else if (actionName === 'event-create') {
-    fields = salesforceConf?.eventFields
-  } else if (actionName === 'case-create') {
-    fields = salesforceConf?.caseFields
-  }
+  // if (actionName === 'contact-create') {
+  //   fields = salesforceConf?.contactFields
+  // } else if (actionName === 'lead-create') {
+  //   fields = salesforceConf?.leadFields
+  // } else if (actionName === 'account-create') {
+  //   fields = salesforceConf?.accountFields
+  // } else if (actionName === 'campaign-create') {
+  //   fields = salesforceConf?.campaignFields
+  // } else if (actionName === 'add-campaign-member') {
+  //   fields = salesforceConf?.campaignMemberFields
+  // } else if (actionName === 'opportunity-create') {
+  //   fields = salesforceConf?.opportunityFields
+  // } else if (actionName === 'event-create') {
+  //   fields = salesforceConf?.eventFields
+  // } else if (actionName === 'case-create') {
+  //   fields = salesforceConf?.caseFields
+  // }
+  fields = salesforceConf?.selesforceFields
   const requiredFlds = fields.filter(fld => fld.required === true)
   return requiredFlds.length > 0 ? requiredFlds.map(field => ({ formField: '', selesforceField: field.key })) : [{ formField: '', selesforceField: '' }]
 }

@@ -34,37 +34,32 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
     { label: 'Create Case', value: 'case-create' },
   ]
 
-  const getFields = (actionName = '') => {
-    const actName = actionName || salesforceConf?.actionName
-    let selesforceFields = []
-    if (actName === 'contact-create') {
-      selesforceFields = salesforceConf?.contactFields || []
-    } else if (actName === 'lead-create') {
-      selesforceFields = salesforceConf?.leadFields || []
-    } else if (actName === 'account-create') {
-      selesforceFields = salesforceConf?.accountFields || []
-    } else if (actName === 'campaign-create') {
-      selesforceFields = salesforceConf?.campaignFields || []
-    } else if (actName === 'add-campaign-member') {
-      selesforceFields = salesforceConf?.campaignMemberFields || []
-    } else if (actName === 'opportunity-create') {
-      selesforceFields = salesforceConf?.opportunityFields || []
-    } else if (actName === 'event-create') {
-      selesforceFields = salesforceConf?.eventFields || []
-    } else if (actName === 'case-create') {
-      selesforceFields = salesforceConf?.caseFields || []
-    }
-    return selesforceFields
-  }
   const handleInputP = (e) => {
     const newConf = { ...salesforceConf }
     const { name, value } = e.target
     if (e.target.value !== '') {
       newConf[name] = value
+      const actName = value
+      if (actName === 'contact-create') {
+        getAllCustomFields(formID, 'contact-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else if (actName === 'lead-create') {
+        getAllCustomFields(formID, 'lead-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else if (actName === 'account-create') {
+        getAllCustomFields(formID, 'account-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else if (actName === 'campaign-create') {
+        getAllCustomFields(formID, 'campaign-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else if (actName === 'add-campaign-member') {
+        getAllCustomFields(formID, 'add-campaign-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else if (actName === 'opportunity-create') {
+        getAllCustomFields(formID, 'opportunity-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else if (actName === 'event-create') {
+        getAllCustomFields(formID, 'event-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else if (actName === 'case-create') {
+        getAllCustomFields(formID, 'case-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      }
     } else {
       delete newConf[name]
     }
-    newConf.field_map = getFields(value).filter(fld => fld.required).map(fld => ({ formField: '', selesforceField: fld.key }))
     setSalesforceConf(newConf)
   }
   const changeHandler = (val, status) => {
@@ -203,8 +198,19 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
         </>
       )}
 
+      {isLoading && (
+        <Loader style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 100,
+          transform: 'scale(0.7)',
+        }}
+        />
+      )}
+
       {['contact-create', 'lead-create', 'account-create', 'campaign-create', 'opportunity-create', 'event-create', 'case-create'].includes(salesforceConf?.actionName)
-        && (
+        && !isLoading && (
           <>
             <br />
             <div className="mt-5">
@@ -239,7 +245,7 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
                 setSalesforceConf={setSalesforceConf}
                 setSnackbar={setSnackbar}
                 actionName={salesforceConf?.actionName}
-                selesforceFields={getFields()}
+                selesforceFields={salesforceConf?.selesforceFields}
               />
             ))}
             <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(salesforceConf.field_map.length, salesforceConf, setSalesforceConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
