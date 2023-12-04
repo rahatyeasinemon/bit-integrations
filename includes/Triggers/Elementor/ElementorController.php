@@ -113,9 +113,11 @@ final class ElementorController
         $flows = $wpdb->get_results(
             $wpdb->prepare(
                 "SELECT * FROM wp_btcbi_flow
-                WHERE triggered_entity = %s 
-                AND triggered_entity_id = %s
-                OR triggered_entity_id = %s",
+                WHERE status = %s 
+                AND triggered_entity = %s 
+                AND (triggered_entity_id = %s
+                OR triggered_entity_id = %s)",
+                '1',
                 'Elementor',
                 $record->get_form_settings('id'),
                 $record->get_form_settings('id') . $record->get_form_settings('form_post_id')
