@@ -1,13 +1,13 @@
 === Zapier for WordPress Automation & Integrate: Webhook Automator, Integrator and connector for 200+ applications no-code automate - Bit Integrations  ===
 Contributors: bitpressadmin
-Tags: automation,integration,connector,automator,Zapier,webhook,workflow,Platform integrations,Wp WebHooks,Pabbly,Integrately
+Tags: automation,integration,connector,automator,Zapier,webhook,API,Hook,Pabbly,Integrately,automate
 Requires at least: 5.1
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.5.4
+Stable tag: 1.5.5
 License: GPLv2 or later
 
-Automation Plugin for WordPress; Integration of 60+ Triggers and 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress.
+Automation Plugin for WordPress like Zapier; Integration of 60+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
 
 == Description ==
 
@@ -878,7 +878,9 @@ I’ve been using the free version for sometime and switched to the pro version 
 137. [**WP Fusion - Marketing automation for WordPress :**](https://wpfusion.com/) WP Fusion Lite synchronizes your WordPress users with leading CRMs and marketing automation systems, keeps user profiles in sync with CRM contact records, and lets you protect site content based on CRM tags.
 
       WP Fusion is a versatile WordPress plugin that seamlessly connects your website with various CRM and marketing automation platforms, enabling you to automate and personalize your marketing efforts effortlessly. WP Fusion offers a wide range of features, making it an ideal choice for businesses looking to integrate, sync, and manage customer data across multiple platforms efficiently. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/wp-fusion-integrations/)|[**Website**](https://wpfusion.com/)|[**Free**](https://wordpress.org/plugins/wp-fusion-lite/)]
+138. [**Nutshell CRM: Simple Pipeline & Contact Management:**](https://www.nutshell.com/?home) Nutshell provides an all-in-one growth software featuring CRM, email marketing, and contact management to help sales teams close more deals.
 
+      Nutshell CRM streamlines your sales processes with its intuitive interface and powerful features, allowing businesses to manage contacts, track leads, and close deals efficiently. With Nutshell CRM, teams can collaborate seamlessly, making it an ideal solution for businesses seeking a user-friendly CRM platform. Documentation[**Website**](https://www.nutshell.com/?home)
 
 ## ⚡ Key Features:
 
@@ -1197,71 +1199,70 @@ With the pro version, you have the ability to create **Unlimited active integrat
 
 ### 21. [**Forminator Integration**](https://bitapps.pro/docs/bit-integrations/trigger/forminator/)
 
-### 22. [**Forminator Integration**](https://bitapps.pro/docs/bit-integrations/trigger/forminator/)
+### 22. [**GamiPress Integration**](https://bitapps.pro/docs/bit-integrations/trigger/gamipress/)
 
-### 23. [**GamiPress Integration**](https://bitapps.pro/docs/bit-integrations/trigger/gamipress/)
+### 23. [**GiveWP Integration**](https://bitapps.pro/docs/bit-integrations/trigger/givewp/)
 
-### 24. [**GiveWP Integration**](https://bitapps.pro/docs/bit-integrations/trigger/givewp/)
+### 24. [**Gravity Forms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/gravity-forms/)
 
-### 25. [**Gravity Forms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/gravity-forms/)
+### 25. [**Groundhogg Integration**](https://bitapps.pro/docs/bit-integrations/trigger/groundhogg/)
 
-### 26. [**Groundhogg Integration**](https://bitapps.pro/docs/bit-integrations/trigger/groundhogg/)
+### 26. [**Happy Forms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/happy-forms/)
 
-### 27. [**Happy Forms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/happy-forms/)
+### 27. [**JetFormBuilder Integration**](https://bitapps.pro/docs/bit-integrations/trigger/jetformbuilder/)
 
-### 28. [**JetFormBuilder Integration**](https://bitapps.pro/docs/bit-integrations/trigger/jetformbuilder/)
+### 28. [**Kadence Blocks Integration**](https://bitapps.pro/docs/bit-integrations/trigger/kadence-blocks-form/)
 
-### 29. [**Kadence Blocks Integration**](https://bitapps.pro/docs/bit-integrations/trigger/kadence-blocks-form/)
+### 29. [**LearnDash LMS Integration**](https://bitapps.pro/docs/bit-integrations/trigger/learndash-lms/)
 
-### 31. [**LearnDash LMS Integration**](https://bitapps.pro/docs/bit-integrations/trigger/learndash-lms/)
+### 31. [**LifterLMS Integration**](https://bitapps.pro/docs/bit-integrations/trigger/lifterlms/)
 
-### 32. [**LifterLMS Integration**](https://bitapps.pro/docs/bit-integrations/trigger/lifterlms/)
+### 32. [**MB Frontend Submission Integration**](https://bitapps.pro/docs/bit-integrations/trigger/mb-frontend-submission/)
 
-### 33. [**MB Frontend Submission Integration**](https://bitapps.pro/docs/bit-integrations/trigger/mb-frontend-submission/)
+### 33. [**Memberpress Integration**](https://bitapps.pro/docs/bit-integrations/trigger/memberpress/)
 
-### 34. [**Memberpress Integration**](https://bitapps.pro/docs/bit-integrations/trigger/memberpress/)
+### 34. [**MetForm Integration**](https://bitapps.pro/docs/bit-integrations/trigger/metform/)
 
-### 35. [**MetForm Integration**](https://bitapps.pro/docs/bit-integrations/trigger/metform/)
+### 35. [**Ninja Form Integration**](https://bitapps.pro/docs/bit-integrations/trigger/ninja-forms/)
 
-### 36. [**Ninja Form Integration**](https://bitapps.pro/docs/bit-integrations/trigger/ninja-forms/)
+### 36. [**Paid Membership Pro Integration**](https://bitapps.pro/docs/bit-integrations/trigger/paid-membership-pro/)
 
-### 37. [**Paid Membership Pro Integration**](https://bitapps.pro/docs/bit-integrations/trigger/paid-membership-pro/)
+### 37. [**Piotnet Addon For Elementor Integration**](https://bitapps.pro/docs/bit-integrations/trigger/piotnet-addon-for-elementor/)
 
-### 38. [**Piotnet Addon For Elementor Integration**](https://bitapps.pro/docs/bit-integrations/trigger/piotnet-addon-for-elementor/)
+### 38. [**Piotnet Forms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/piotnet-forms/)
 
-### 39. [**Piotnet Forms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/piotnet-forms/)
+### 39. [**Rafflepress Integration**](https://bitapps.pro/docs/bit-integrations/trigger/rafflepress/)
 
-### 40. [**Rafflepress Integration**](https://bitapps.pro/docs/bit-integrations/trigger/rafflepress/)
+### 40. [**Restrict Content Integration**](https://bitapps.pro/docs/bit-integrations/trigger/restrict-content/)
 
-### 41. [**Restrict Content Integration**](https://bitapps.pro/docs/bit-integrations/trigger/restrict-content/)
+### 41. [**SliceWP Integration**](https://bitapps.pro/docs/bit-integrations/trigger/SliceWP/)
 
-### 42. [**SliceWP Integration**](https://bitapps.pro/docs/bit-integrations/trigger/SliceWP/)
+### 42. [**Solid Affiliate Integration**](https://bitapps.pro/docs/bit-integrations/trigger/solid-affiliate/)
 
-### 43. [**Solid Affiliate Integration**](https://bitapps.pro/docs/bit-integrations/trigger/solid-affiliate/)
+### 43. [**StudioCart Integration**](https://bitapps.pro/docs/bit-integrations/trigger/studiocart/)
 
-### 44. [**StudioCart Integration**](https://bitapps.pro/docs/bit-integrations/trigger/studiocart/)
+### 44. [**SureCart Integration**](https://bitapps.pro/docs/bit-integrations/trigger/surecart/)
 
-### 45. [**SureCart Integration**](https://bitapps.pro/docs/bit-integrations/trigger/surecart/)
+### 45. [**Tripetto Integration**](https://bitapps.pro/docs/bit-integrations/trigger/tripetto/)
 
-### 46. [**Tripetto Integration**](https://bitapps.pro/docs/bit-integrations/trigger/tripetto/)
+### 46. [**Tutor LMS Integration**](https://bitapps.pro/docs/bit-integrations/trigger/tutor-lms/)
 
-### 47. [**Tutor LMS Integration**](https://bitapps.pro/docs/bit-integrations/trigger/tutor-lms/)
+### 47. [**User Registration Integration**](https://bitapps.pro/docs/bit-integrations/trigger/user-registration/)
 
-### 48. [**User Registration Integration**](https://bitapps.pro/docs/bit-integrations/trigger/user-registration/)
+### 48. [**weforms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/WeForms/)
 
-### 49. [**weforms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/WeForms/)
+### 49. [**Webhook Integration**](https://bitapps.pro/docs/bit-integrations/trigger/webhook/)
 
-### 50. [**Webhook Integration**](https://bitapps.pro/docs/bit-integrations/trigger/webhook/)
+### 50. [**Woocommerce Integration**](https://bitapps.pro/docs/bit-integrations/trigger/woocommerce/)
 
-### 51. [**Woocommerce Integration**](https://bitapps.pro/docs/bit-integrations/trigger/woocommerce/)
+### 51. [**WP Courseware Integration**](https://bitapps.pro/docs/bit-integrations/trigger/wp-courseware/)
 
-### 52. [**WP Courseware Integration**](https://bitapps.pro/docs/bit-integrations/trigger/wp-courseware/)
+### 52. [**WPForms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/wpforms/)
 
-### 53. [**WPForms Integration**](https://bitapps.pro/docs/bit-integrations/trigger/wpforms/)
+### 53. [**WP Post Integration**](https://bitapps.pro/docs/bit-integrations/trigger/wp-post/)
 
-### 54. [**WP Post Integration**](https://bitapps.pro/docs/bit-integrations/trigger/wp-post/)
+### 54. [**WS Form Integration**](https://bitapps.pro/docs/bit-integrations/trigger/ws-form/)
 
-### 55. [**WS Form Integration**](https://bitapps.pro/docs/bit-integrations/trigger/ws-form/)
 
 ### 💥 Don't worry, we give you some [**Action's**](https://bitapps.pro/docs/bit-integrations/actions/) documentation with use cases to help you get started with the plugin.
 
@@ -1458,9 +1459,9 @@ With the pro version, you have the ability to create **Unlimited active integrat
 ## FAQ
 
 = 1. What is Bit Integrations? =
-Bit Integrations is a wordpress plugin that allows you to connect your WordPress site with over 178 popular platforms, such as CRMs, marketing tools, and more.
+Bit Integrations is a wordpress plugin that allows you to connect your WordPress site with over 200 popular platforms, such as CRMs, marketing tools, and more.
 = 2. What kind of tasks does Bit Integrations automate?=
-Bit Integrations provide automated solutions for form submissions, data transfer between platforms, and more. With the integration of over 178 popular platforms, users can effortlessly manage their connections to their WordPress site in one place.
+Bit Integrations provide automated solutions for form submissions, data transfer between platforms, and more. With the integration of over 200 popular platforms, users can effortlessly manage their connections to their WordPress site in one place.
 = 3. Is Bit integrations easy to use?=
 Yes, Bit integrations easy to use without require coding knowledge and without read documentation.
 = 4. Bit Integrations support Multisite?=
@@ -1474,7 +1475,7 @@ Yes, you can send data when user complete course/lesson , create course etc.
 = 8. Can I automate with WooCommerce, WooCommerce subscription, WooCommerce booking, Studiocart and Easy Digital Downloads?=
 Yes, you can send data when user complete order, create order, create subscription, create booking etc.
 = 9. Do I need coding skills to use Bit Integrations?=
-No, you don't need any coding skills to use Bit Integrations. You can easily connect your WordPress site with over 178 popular platforms, such as CRMs, marketing tools, and more.
+No, you don't need any coding skills to use Bit Integrations. You can easily connect your WordPress site with over 200 popular platforms, such as CRMs, marketing tools, and more.
 = 10. Can I automate with WhatsApp?=
 Yes, you can automate with WhatsApp.
 = 11. Best WordPress Automation Tools and Plugins Compared (2023)?=
@@ -1482,11 +1483,13 @@ Yes, Bit Integrations is one of the best WordPress Automation Tools and Plugins 
 = 12. Can I automate with Google Sheets, Google Calendar, Google Drive, Google Contact?=
 Yes, you can automate with Google Sheets, Google Calendar, Google Drive, Google Contact.
 = 13. What users say about Bit Integrations?=
-Bit Integrations is self hosted Zapier with chepest price. You can automate with over 178 popular platforms, such as CRMs, marketing tools, and more.
+Bit Integrations is self hosted Zapier with chepest price. You can automate with over 200 popular platforms, such as CRMs, marketing tools, and more.
 = 14. Can I automate WordPress?=
-Yes, you can automate WordPress with 60+ trigger and 100+ actions.
+Yes, you can automate WordPress with 60+ trigger and 140+ actions.
 = 15. Can Bit Integrations connect plugins with external services like Zapier, Pabbly, N8N?=
 Yes, you can connect plugins with external services like Zapier, Pabbly, N8N with webhook.
+= 16. Does Bit Integrations works as like as Zapier in Wordpress?=
+Yes, It sends data to other platforms from wordpress site. Suppose someone submitted a forminator form, if he sets up an integration with forminator form to google sheet, it will send those data to the sheet.
 
 == Installation ==
 
@@ -1507,6 +1510,19 @@ Yes, you can connect plugins with external services like Zapier, Pabbly, N8N wit
 6. All integration list
 
 == Changelog ==
+
+= 1.5.5  =
+*Release Date - *4th December 2023\*
+
+- **New Actions :**
+  - Nutshell CRM: Simple Pipeline & Contact Management
+
+- **Fixes :**
+  - Woocommerce order create refatored
+  - MailPoet existing subscriber issue fixed
+  - Elementor duplicate page form issue fixed 
+  - WooCommerce change custom order status issue fixed
+  - Salesforce custom field issue fixed
 
 = 1.5.4  =
 *Release Date - *20th November 2023\*

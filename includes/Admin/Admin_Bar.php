@@ -86,7 +86,7 @@ class Admin_Bar
         if (!defined('BITAPPS_DEV')) {
             $build_hash = file_get_contents(BTCBI_PLUGIN_DIR_PATH . '/build-hash.txt');
             wp_enqueue_script('index-BTCBI-MODULE', BTCBI_ASSET_URI . "/main-{$build_hash}.js", [], null);
-            wp_enqueue_style('bf-css', BTCBI_ASSET_URI . "/main-{$build_hash}.css");
+            // wp_enqueue_style('bf-css', BTCBI_ASSET_URI . "/main-{$build_hash}.css");
         }
 
         if (wp_script_is('wp-i18n')) {
@@ -112,7 +112,7 @@ class Admin_Bar
         // );
         global $wp_rewrite;
         $api = [
-            'base' => get_rest_url()  . 'bit-integrations/v1',
+            'base' => get_rest_url() . 'bit-integrations/v1',
             'separator' => $wp_rewrite->permalink_structure ? '?' : '&'
         ];
 
