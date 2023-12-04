@@ -146,6 +146,7 @@ const EditAcademyLms = lazy(() => import('./AcademyLms/EditAcademyLms'))
 const EditMoxieCRM = lazy(() => import('./MoxieCRM/EditMoxieCRM'))
 const EditWPFusion = lazy(() => import('./WPFusion/EditWPFusion'))
 const EditWoodpecker = lazy(() => import('./Woodpecker/EditWoodpecker'))
+const EditNutshellCRM = lazy(() => import('./NutshellCRM/EditNutshellCRM'))
 
 const loaderStyle = {
   display: 'flex',
@@ -501,6 +502,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditWPFusion allIntegURL={allIntegURL} />
     case 'Woodpecker':
       return <EditWoodpecker allIntegURL={allIntegURL} />
+    case 'NutshellCRM':
+      return <EditNutshellCRM allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }
