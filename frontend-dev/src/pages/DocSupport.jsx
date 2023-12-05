@@ -11,15 +11,53 @@ import Loader from '../components/Loaders/Loader'
 
 function DocSupport() {
   const [snack, setSnackbar] = useState({ show: false })
-  const [products, setProducts] = useState([])
+  // const [products, setProducts] = useState([])
 
-  useEffect(() => {
-    fetch('https://raw.githubusercontent.com/Bit-Apps-Pro/products/main/lists.json')
-      .then(res => res.json())
-      .then(data => {
-        setProducts(data.product)
-      })
-  }, [])
+  // useEffect(() => {
+  //   fetch('https://raw.githubusercontent.com/Bit-Apps-Pro/products/main/lists.json')
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       setProducts(data.product)
+  //     })
+  // }, [])
+
+  const products = [
+    {
+      "name": "Bit Form",
+      "description": "WordPress Drag & Drop Contact Form, Payment Form Builder.",
+      "slug": "bit-form",
+      "url": "https://wordpress.org/plugins/bit-form/",
+      "image": "https://plugins.svn.wordpress.org/bit-form/assets/icon-256x256.gif"
+    },
+    {
+      "name": "Bit Integrations",
+      "description": "Integrations for wordpress.",
+      "slug": "bit-integrations",
+      "url": "https://wordpress.org/plugins/bit-integrations/",
+      "image": "https://ps.w.org/bit-integrations/assets/icon.svg"
+    },
+    {
+      "name": "Bit Assist",
+      "description": "Connect your all support assistant in a single button.",
+      "slug": "bit-assist",
+      "url": "https://wordpress.org/plugins/bit-assist/",
+      "image": "https://ps.w.org/bit-assist/assets/icon.svg"
+    },
+    {
+      "name": "Bit File Manager",
+      "description": "100% free file manager for WordPress.",
+      "slug": "file-manager",
+      "url": "https://wordpress.org/plugins/file-manager/",
+      "image": "https://ps.w.org/file-manager/assets/icon-128x128.png"
+    },
+    {
+      "name": "Bit SMTP",
+      "description": "Best SMTP plugin for WordPress.",
+      "slug": "bit-smtp",
+      "url": "https://wordpress.org/plugins/bit-smtp/",
+      "image": "https://plugins.svn.wordpress.org/bit-smtp/assets/icon-128x128.gif"
+    }
+  ]
 
   return (
     <div className="btcd-f-settings">

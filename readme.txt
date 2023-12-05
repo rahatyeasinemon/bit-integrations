@@ -1512,7 +1512,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 == Changelog ==
 
 = 1.5.5  =
-*Release Date - *4th December 2023\*
+*Release Date - *5th December 2023\*
 
 - **New Actions :**
   - Nutshell CRM: Simple Pipeline & Contact Management
