@@ -7,6 +7,10 @@ import MessagesCircle from '../resource/img/supportIcon/MessengerIcon'
 import ReviewStarIcn from '../resource/img/supportIcon/ReviewStarIcon'
 import YoutubeIcn from '../resource/img/supportIcon/YoutubeIcon'
 import { __ } from '../Utils/i18nwrap'
+import bitForm from '../resource/img/products/bitForm.gif'
+import bitAssist from '../resource/img/products/bitAssist.svg'
+import bitFileManager from '../resource/img/products/bitFileManager.png'
+import bitSmtp from '../resource/img/products/bitSmtp.gif'
 import Loader from '../components/Loaders/Loader'
 
 function DocSupport() {
@@ -27,7 +31,7 @@ function DocSupport() {
       "description": "WordPress Drag & Drop Contact Form, Payment Form Builder.",
       "slug": "bit-form",
       "url": "https://wordpress.org/plugins/bit-form/",
-      "image": "https://plugins.svn.wordpress.org/bit-form/assets/icon-256x256.gif"
+      "image": bitForm
     },
     {
       "name": "Bit Integrations",
@@ -41,21 +45,21 @@ function DocSupport() {
       "description": "Connect your all support assistant in a single button.",
       "slug": "bit-assist",
       "url": "https://wordpress.org/plugins/bit-assist/",
-      "image": "https://ps.w.org/bit-assist/assets/icon.svg"
+      "image": bitAssist
     },
     {
       "name": "Bit File Manager",
       "description": "100% free file manager for WordPress.",
       "slug": "file-manager",
       "url": "https://wordpress.org/plugins/file-manager/",
-      "image": "https://ps.w.org/file-manager/assets/icon-128x128.png"
+      "image": bitFileManager
     },
     {
       "name": "Bit SMTP",
       "description": "Best SMTP plugin for WordPress.",
       "slug": "bit-smtp",
       "url": "https://wordpress.org/plugins/bit-smtp/",
-      "image": "https://plugins.svn.wordpress.org/bit-smtp/assets/icon-128x128.gif"
+      "image": bitSmtp
     }
   ]
 
