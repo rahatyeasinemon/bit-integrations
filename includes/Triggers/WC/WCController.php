@@ -35,8 +35,10 @@ final class WCController
         if (!class_exists('WooCommerce')) {
             wp_send_json_error(__('WooCommerce is not installed or activated', 'bit-integrations'));
         }
-        $types = ['Customer-Create', 'Customer-Edit', 'Customer-Delete', 'Product-Create', 'Product-Edit', 'Product-Delete', 'Order-Create', 'Order-Edit', 'Order-Delete', 'Order-Specific-Product', 'Order-Status-Change-Specific-Status', 'User-Subscribes-Product', 'User-Cancel-Subscription-Product', 'Expired-Subscription-Product', 'Subscription-Product-Status-Change', 'Subscription-Trial-Period-End', 'Order-Specific-Category', 'Booking-Created', 'User reviews a product',
-            'User purchases a variable product with selected variation'];
+        $types = [
+            'Customer-Create', 'Customer-Edit', 'Customer-Delete', 'Product-Create', 'Product-Edit', 'Product-Delete', 'Order-Create', 'Order-Edit', 'Order-Delete', 'Order-Specific-Product', 'Order-Status-Change-Specific-Status', 'User-Subscribes-Product', 'User-Cancel-Subscription-Product', 'Expired-Subscription-Product', 'Subscription-Product-Status-Change', 'Subscription-Trial-Period-End', 'Order-Specific-Category', 'Booking-Created', 'User reviews a product',
+            'User purchases a variable product with selected variation'
+        ];
         $wc_action = [];
         foreach ($types as $index => $type) {
             $wc_action[] = (object)[
@@ -92,7 +94,7 @@ final class WCController
         if ($data->id == 17) {
             $orderby = 'name';
             $order = 'asc';
-            $hide_empty = false ;
+            $hide_empty = false;
             $cat_args = [
                 'orderby' => $orderby,
                 'order' => $order,
@@ -1226,7 +1228,7 @@ final class WCController
         $data = self::accessOrderData($order);
         $triggerd = [8, 9, 11, 12, 13, 14, 15, 16];
 
-        for ($i = 7 ; $i <= 17 ; $i++) {
+        for ($i = 7; $i <= 17; $i++) {
             if (in_array($i, $triggerd)) {
                 continue;
             }
@@ -1347,26 +1349,27 @@ final class WCController
 
         $flows = Flow::exists('WC', 11);
 
-        if(empty($flows)){
+        if (empty($flows)) {
             return false;
         }
 
-        foreach ($flows as $flow){
+        foreach ($flows as $flow) {
             $flowsDetailData = $flow->flow_details;
             $flowsDetail = json_decode($flowsDetailData);
             $selectedOrderStatus = $flowsDetail->selectedOrderStatus;
-            
+
             if ($selectedOrderStatus === 'wc-on-hold') {
                 $spilited = explode('-', $selectedOrderStatus);
                 $selectedStatus = "$spilited[1]-$spilited[2]";
             } else {
-                $selectedStatus = explode('-', $selectedOrderStatus)[1];
+                // $selectedStatus = explode('-', $selectedOrderStatus)[1];
+                $selectedStatus = str_replace('wc-', '', $selectedOrderStatus);
             }
-    
+
             // ltrim($selectedOrderStatus, 'wc-')
             if ($to_status === $selectedStatus) {
                 $order = wc_get_order($order_id);
-    
+
                 if ($order == false) {
                     return false;
                 }
@@ -1374,13 +1377,13 @@ final class WCController
                 if ($type != 'order' && $type != 'shop_order') {
                     return false; // not an order
                 }
-    
+
                 $post_status = get_post_status($order_id);
                 $post_type = get_post_type($order_id);
                 if ($post_status === 'trash' || $post_type !== 'shop_order') {
                     return false;
                 }
-    
+
                 $data = self::accessOrderData($order);
                 if (!empty($order_id)) {
                     Flow::execute('WC', 11, $data, [$flow]);
@@ -1426,7 +1429,7 @@ final class WCController
     {
         $flows = Flow::exists('WC', 12);
 
-        if(empty($flows)){
+        if (empty($flows)) {
             return false;
         }
 
@@ -1881,7 +1884,7 @@ final class WCController
     {
         $orderby = 'name';
         $order = 'asc';
-        $hide_empty = false ;
+        $hide_empty = false;
         $cat_args = [
             'orderby' => $orderby,
             'order' => $order,

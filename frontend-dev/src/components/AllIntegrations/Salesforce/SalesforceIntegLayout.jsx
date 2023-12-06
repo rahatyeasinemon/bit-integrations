@@ -3,7 +3,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
-import { getAllAccountList, getAllCampaignList, getAllContactList, getAllLeadList } from './SalesforceCommonFunc'
+import { getAllAccountList, getAllCampaignList, getAllContactList, getAllCustomFields, getAllLeadList } from './SalesforceCommonFunc'
 import SelesforceFieldMap from './SalesforceFieldMap'
 import { taskSubject, taskPriority, taskStatus } from './SalesforceDataStore'
 import SalesforceActions from './SalesforceActions'
@@ -34,37 +34,32 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
     { label: 'Create Case', value: 'case-create' },
   ]
 
-  const getFields = (actionName = '') => {
-    const actName = actionName || salesforceConf?.actionName
-    let selesforceFields = []
-    if (actName === 'contact-create') {
-      selesforceFields = salesforceConf?.contactFields || []
-    } else if (actName === 'lead-create') {
-      selesforceFields = salesforceConf?.leadFields || []
-    } else if (actName === 'account-create') {
-      selesforceFields = salesforceConf?.accountFields || []
-    } else if (actName === 'campaign-create') {
-      selesforceFields = salesforceConf?.campaignFields || []
-    } else if (actName === 'add-campaign-member') {
-      selesforceFields = salesforceConf?.campaignMemberFields || []
-    } else if (actName === 'opportunity-create') {
-      selesforceFields = salesforceConf?.opportunityFields || []
-    } else if (actName === 'event-create') {
-      selesforceFields = salesforceConf?.eventFields || []
-    } else if (actName === 'case-create') {
-      selesforceFields = salesforceConf?.caseFields || []
-    }
-    return selesforceFields
-  }
   const handleInputP = (e) => {
     const newConf = { ...salesforceConf }
     const { name, value } = e.target
     if (e.target.value !== '') {
       newConf[name] = value
+      const actName = value
+      if (actName === 'contact-create') {
+        getAllCustomFields(formID, 'contact-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else if (actName === 'lead-create') {
+        getAllCustomFields(formID, 'lead-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else if (actName === 'account-create') {
+        getAllCustomFields(formID, 'account-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else if (actName === 'campaign-create') {
+        getAllCustomFields(formID, 'campaign-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else if (actName === 'add-campaign-member') {
+        getAllCustomFields(formID, 'add-campaign-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else if (actName === 'opportunity-create') {
+        getAllCustomFields(formID, 'opportunity-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else if (actName === 'event-create') {
+        getAllCustomFields(formID, 'event-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else if (actName === 'case-create') {
+        getAllCustomFields(formID, 'case-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      }
     } else {
       delete newConf[name]
     }
-    newConf.field_map = getFields(value).filter(fld => fld.required).map(fld => ({ formField: '', selesforceField: fld.key }))
     setSalesforceConf(newConf)
   }
   const changeHandler = (val, status) => {
@@ -93,7 +88,7 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
       <br />
 
       {/* Campaign */}
-      { ['add-campaign-member'].includes(salesforceConf.actionName) && (
+      {['add-campaign-member'].includes(salesforceConf.actionName) && (
         <>
           <div className="flx mt-4">
             <b className="wdt-200 d-in-b">{__('Select Campaign: ', 'bit-integrations')}</b>
@@ -112,7 +107,7 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
       )}
 
       {/* Lead */}
-      { ['add-campaign-member'].includes(salesforceConf.actionName) && (
+      {['add-campaign-member'].includes(salesforceConf.actionName) && (
         <div className="flx mt-4">
           <b className="wdt-200 d-in-b">{__('Select Lead: ', 'bit-integrations')}</b>
           <MultiSelect
@@ -127,7 +122,7 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
       )}
 
       {/* Contact */}
-      { ['add-campaign-member', 'task-create'].includes(salesforceConf.actionName) && (
+      {['add-campaign-member', 'task-create'].includes(salesforceConf.actionName) && (
         <div className="flx mt-4">
           <b className="wdt-200 d-in-b">{__('Select Contact: ', 'bit-integrations')}</b>
           <MultiSelect
@@ -142,7 +137,7 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
       )}
 
       {/* Account */}
-      { ['add-campaign-member', 'task-create'].includes(salesforceConf.actionName) && (
+      {['add-campaign-member', 'task-create'].includes(salesforceConf.actionName) && (
         <div className="flx mt-4">
           <b className="wdt-200 d-in-b">{__('Select Account: ', 'bit-integrations')}</b>
           <MultiSelect
@@ -155,7 +150,7 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
           <button onClick={() => getAllAccountList(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Fetch Account lists', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
         </div>
       )}
-      { ['add-campaign-member'].includes(salesforceConf.actionName) && (
+      {['add-campaign-member'].includes(salesforceConf.actionName) && (
         <div className="flx mt-4">
           <b className="wdt-200 d-in-b">{__('Select Status: ', 'bit-integrations')}</b>
           <MultiSelect
@@ -168,7 +163,7 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
 
         </div>
       )}
-      { ['task-create'].includes(salesforceConf.actionName) && (
+      {['task-create'].includes(salesforceConf.actionName) && (
         <>
           <div className="flx mt-4">
             <b className="wdt-200 d-in-b">{__('Select Subject: ', 'bit-integrations')}</b>
@@ -203,46 +198,73 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
         </>
       )}
 
-      { ['contact-create', 'lead-create', 'account-create', 'campaign-create', 'opportunity-create', 'event-create', 'case-create'].includes(salesforceConf?.actionName)
-      && (
-        <>
-          <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bit-integrations')}</b></div>
-          <div className="btcd-hr mt-1" />
-          <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-            <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
-            <div className="txt-dp"><b>{__('Salesforce Fields', 'bit-integrations')}</b></div>
-          </div>
+      {isLoading && (
+        <Loader style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 100,
+          transform: 'scale(0.7)',
+        }}
+        />
+      )}
 
-          {salesforceConf?.field_map.map((itm, i) => (
-            <SelesforceFieldMap
-              key={`rp-m-${i + 9}`}
-              i={i}
-              field={itm}
+      {['contact-create', 'lead-create', 'account-create', 'campaign-create', 'opportunity-create', 'event-create', 'case-create'].includes(salesforceConf?.actionName)
+        && !isLoading && (
+          <>
+            <br />
+            <div className="mt-5">
+              <b className="wdt-100">
+                {__('Field Map', 'bit-integrations')}
+              </b>
+              <button
+                onClick={() => getAllCustomFields(formID, salesforceConf?.actionName, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)}
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': `'${__('Refresh Custom Fields', 'bit-integrations')}'` }}
+                type="button"
+                disabled={isLoading}
+              >
+                &#x21BB;
+              </button>
+            </div>
+
+            <br />
+            <div className="btcd-hr mt-1" />
+            <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
+              <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
+              <div className="txt-dp"><b>{__('Salesforce Fields', 'bit-integrations')}</b></div>
+            </div>
+
+            {salesforceConf?.field_map.map((itm, i) => (
+              <SelesforceFieldMap
+                key={`rp-m-${i + 9}`}
+                i={i}
+                field={itm}
+                salesforceConf={salesforceConf}
+                formFields={formFields}
+                setSalesforceConf={setSalesforceConf}
+                setSnackbar={setSnackbar}
+                actionName={salesforceConf?.actionName}
+                selesforceFields={salesforceConf?.selesforceFields}
+              />
+            ))}
+            <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(salesforceConf.field_map.length, salesforceConf, setSalesforceConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
+          </>
+        )}
+      <br />
+      <br />
+      {['opportunity-create', 'event-create', 'case-create'].includes(salesforceConf?.actionName)
+        && (
+          <>
+            <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
+            <div className="btcd-hr mt-1" />
+            <SalesforceActions
               salesforceConf={salesforceConf}
-              formFields={formFields}
               setSalesforceConf={setSalesforceConf}
-              setSnackbar={setSnackbar}
-              actionName={salesforceConf?.actionName}
-              selesforceFields={getFields()}
+              formFields={formFields}
             />
-          ))}
-          <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(salesforceConf.field_map.length, salesforceConf, setSalesforceConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
-        </>
-      )}
-      <br />
-      <br />
-      { ['opportunity-create', 'event-create', 'case-create'].includes(salesforceConf?.actionName)
-      && (
-        <>
-          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
-          <div className="btcd-hr mt-1" />
-          <SalesforceActions
-            salesforceConf={salesforceConf}
-            setSalesforceConf={setSalesforceConf}
-            formFields={formFields}
-          />
-        </>
-      )}
+          </>
+        )}
 
     </>
   )

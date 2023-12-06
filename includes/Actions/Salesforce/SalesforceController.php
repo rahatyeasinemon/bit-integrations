@@ -3,20 +3,21 @@
 /**
  * Selesforce Integration
  */
+
 namespace BitCode\FI\Actions\Salesforce;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
 use WP_Error;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class SalesforceController
 {
     private $_integrationID;
 
-    public function __construct($integrationID)
-    {
-        $this->_integrationID = $integrationID;
-    }
+    // public function __construct($integrationID)
+    // {
+    //     $this->_integrationID = $integrationID;
+    // }
 
     public static function generateTokens($requestsParams)
     {
@@ -54,6 +55,88 @@ class SalesforceController
         }
         $apiResponse->generates_on = \time();
         wp_send_json_success($apiResponse, 200);
+    }
+
+    public function customFields($customFieldRequestParams)
+    {
+        if (
+            empty($customFieldRequestParams->tokenDetails)
+            || empty($customFieldRequestParams->actionName)
+            || empty($customFieldRequestParams->clientId)
+            || empty($customFieldRequestParams->clientSecret)
+        ) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+        $response = [];
+        if ((intval($customFieldRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+            $response['tokenDetails'] = self::refreshAccessToken($customFieldRequestParams);
+        }
+
+
+        switch ($customFieldRequestParams->actionName) {
+            case 'contact-create':
+                $action = "Contact";
+                break;
+            case 'lead-create':
+                $action = "Lead";
+                break;
+            case 'account-create':
+                $action = "Account";
+                break;
+            case 'campaign-create':
+            case 'add-campaign-member':
+                $action = "Campaign";
+                break;
+            case 'opportunity-create':
+                $action = "Opportunity";
+                break;
+            case 'event-create':
+                $action = "Event";
+                break;
+            case 'case-create':
+                $action = "Case";
+                break;
+
+            default:
+                $action = '';
+                break;
+        }
+
+        $apiEndpoint                            = "{$customFieldRequestParams->tokenDetails->instance_url}/services/data/v37.0/sobjects/{$action}/describe";
+        $authorizationHeader['Authorization']   = "Bearer {$customFieldRequestParams->tokenDetails->access_token}";
+        $authorizationHeader['Content-Type']    = 'application/json';
+        $apiResponse                            = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+
+        if (!property_exists($apiResponse, 'fields')) {
+            wp_send_json_error('Custom fields not found!', 400);
+        }
+
+        $customFields = array_filter($apiResponse->fields, function ($field) {
+            if ($field->custom) return true;
+        });
+
+        $fieldMap = [];
+        foreach ($customFields as $field) {
+            array_push(
+                $fieldMap,
+                (object) [
+                    'key'       => $field->name,
+                    'label'     => $field->label,
+                    'required'  => false
+                ]
+            );
+        }
+
+        if (!empty($response['tokenDetails'])) {
+            self::saveRefreshedToken($customFieldRequestParams->flowID, $response['tokenDetails'], $response['organizations']);
+        }
+        wp_send_json_success($fieldMap, 200);
     }
 
     public static function selesforceCampaignList($campaignRequestParams)
@@ -264,6 +347,7 @@ class SalesforceController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
+        $this->_integrationID = $integrationData->id;
         $tokenDetails = $integrationDetails->tokenDetails;
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;

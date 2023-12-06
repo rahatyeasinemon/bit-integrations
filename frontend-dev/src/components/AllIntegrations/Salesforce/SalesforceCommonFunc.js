@@ -228,6 +228,80 @@ export const getAllContactList = (formID, salesforceConf, setSalesforceConf, set
   })
 }
 
+export const getAllCustomFields = (formID, actionName, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar) => {
+  setIsLoading(true)
+  const customFieldRequestParams = {
+    formID,
+    actionName,
+    clientId: salesforceConf.clientId,
+    clientSecret: salesforceConf.clientSecret,
+    tokenDetails: salesforceConf.tokenDetails,
+  }
+  const loadPostTypes = bitsFetch(customFieldRequestParams, 'selesforce_custom_field')
+    .then(result => {
+      if (result && result.success) {
+        setSalesforceConf((prevConf) => {
+          const draftConf = prevConf;
+          draftConf.field_map = [{ formField: "", salesmateFormField: "" }];
+          if (result.data) {
+            if (actionName === 'contact-create') {
+              draftConf['selesforceFields'] = [
+                ...draftConf.contactFields,
+                ...result.data,
+              ];
+            } else if (actionName === 'lead-create') {
+              draftConf['selesforceFields'] = [
+                ...draftConf.leadFields,
+                ...result.data,
+              ];
+            } else if (actionName === 'account-create') {
+              draftConf['selesforceFields'] = [
+                ...draftConf.accountFields,
+                ...result.data,
+              ];
+            } else if (actionName === 'campaign-create') {
+              draftConf['selesforceFields'] = [
+                ...draftConf.campaignFields,
+                ...result.data,
+              ];
+            } else if (actionName === 'add-campaign-member') {
+              draftConf['selesforceFields'] = [
+                ...draftConf.campaignMemberStatus,
+                ...result.data,
+              ];
+            } else if (actionName === 'opportunity-create') {
+              draftConf['selesforceFields'] = [
+                ...draftConf.opportunityFields,
+                ...result.data,
+              ];
+            } else if (actionName === 'event-create') {
+              draftConf['selesforceFields'] = [
+                ...draftConf.eventFields,
+                ...result.data,
+              ];
+            } else if (actionName === 'case-create') {
+              draftConf['selesforceFields'] = [
+                ...draftConf.caseFields,
+                ...result.data,
+              ];
+            }
+          }
+          draftConf.field_map = generateMappedField(draftConf);
+          return draftConf;
+        });
+        setIsLoading(false)
+        return 'Contact list refresh successfully.'
+      }
+      setIsLoading(false)
+      // return 'Contact list refresh failed. please try again'
+    })
+  toast.promise(loadPostTypes, {
+    success: data => data,
+    error: __('Error Occurred', 'bit-integrations'),
+    loading: __(`Loading ${actionName} list...`),
+  })
+}
+
 // export const getAllAccountList = (formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar) => {
 //   setIsLoading(true)
 //   const campaignRequestParams = {
@@ -312,23 +386,24 @@ export const checkMappedFields = (salesforceConf) => {
 }
 export const generateMappedField = (salesforceConf, actionName) => {
   let fields = []
-  if (actionName === 'contact-create') {
-    fields = salesforceConf?.contactFields
-  } else if (actionName === 'lead-create') {
-    fields = salesforceConf?.leadFields
-  } else if (actionName === 'account-create') {
-    fields = salesforceConf?.accountFields
-  } else if (actionName === 'campaign-create') {
-    fields = salesforceConf?.campaignFields
-  } else if (actionName === 'add-campaign-member') {
-    fields = salesforceConf?.campaignMemberFields
-  } else if (actionName === 'opportunity-create') {
-    fields = salesforceConf?.opportunityFields
-  } else if (actionName === 'event-create') {
-    fields = salesforceConf?.eventFields
-  } else if (actionName === 'case-create') {
-    fields = salesforceConf?.caseFields
-  }
+  // if (actionName === 'contact-create') {
+  //   fields = salesforceConf?.contactFields
+  // } else if (actionName === 'lead-create') {
+  //   fields = salesforceConf?.leadFields
+  // } else if (actionName === 'account-create') {
+  //   fields = salesforceConf?.accountFields
+  // } else if (actionName === 'campaign-create') {
+  //   fields = salesforceConf?.campaignFields
+  // } else if (actionName === 'add-campaign-member') {
+  //   fields = salesforceConf?.campaignMemberFields
+  // } else if (actionName === 'opportunity-create') {
+  //   fields = salesforceConf?.opportunityFields
+  // } else if (actionName === 'event-create') {
+  //   fields = salesforceConf?.eventFields
+  // } else if (actionName === 'case-create') {
+  //   fields = salesforceConf?.caseFields
+  // }
+  fields = salesforceConf?.selesforceFields
   const requiredFlds = fields.filter(fld => fld.required === true)
   return requiredFlds.length > 0 ? requiredFlds.map(field => ({ formField: '', selesforceField: field.key })) : [{ formField: '', selesforceField: '' }]
 }
@@ -342,7 +417,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
   }
 
   setIsLoading(true)
-  const apiEndpoint = `https://login.salesforce.com/services/oauth2/authorize?response_type=code&client_id=${confTmp.clientId}&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
+  const apiEndpoint = `https://login.salesforce.com/services/oauth2/authorize?response_type=code&client_id=${confTmp.clientId}&prompt=login%20consent&redirect_uri=${encodeURIComponent(window.location.href)}/redirect`
   const authWindow = window.open(apiEndpoint, 'salesforce', 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
@@ -355,6 +430,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
         grantTokenResponse = JSON.parse(bitformsZoho)
         localStorage.removeItem('__salesforce')
       }
+      console.log(grantTokenResponse)
       if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {
         const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
         setSnackbar({ show: true, msg: `${__('Authorization failed', 'bit-integrations')} ${errorCause}. ${__('please try again', 'bit-integrations')}` })
