@@ -72,13 +72,14 @@ class RecordApiHelper
             'method'    => 'newContact',
             'id'        => 'randomstring',
             'params'    => (object) [
-                'company' => $requestParams
+                'contact' => $requestParams
             ]
         ];
 
         $apiEndpoint                    = $this->apiUrl;
 
         return HttpHelper::post($apiEndpoint, json_encode($body), $this->defaultHeader);
+
     }
 
     public function addCompany($finalData)
