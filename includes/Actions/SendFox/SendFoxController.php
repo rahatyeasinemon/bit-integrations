@@ -3,6 +3,7 @@
 /**
  * SendFox Integration
  */
+
 namespace BitCode\FI\Actions\SendFox;
 
 use WP_Error;
@@ -52,7 +53,7 @@ class SendFoxController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'lists';
+        $apiEndpoints = $this->baseUrl . 'lists?page=1&limit=1000';
 
         $requestParams = [
             'Authorization' => "Bearer {$requestParams->access_token}",
@@ -82,7 +83,7 @@ class SendFoxController
         if (
             // empty($listId)||
             // empty($fieldMap)||
-             empty($access_token)
+            empty($access_token)
         ) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for SendFox api', 'bit-integrations'));
         }
