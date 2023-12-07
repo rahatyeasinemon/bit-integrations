@@ -113,8 +113,8 @@ class SalesforceController
         $authorizationHeader['Content-Type']    = 'application/json';
         $apiResponse                            = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 
-        if (!property_exists($apiResponse, 'fields')) {
-            wp_send_json_error('Custom fields not found!', 400);
+        if (!property_exists((object) $apiResponse, 'fields')) {
+            wp_send_json_error($apiResponse, 400);
         }
 
         $customFields = array_filter($apiResponse->fields, function ($field) {
