@@ -13,12 +13,15 @@ import WebhookDataTable from '../Utilities/WebhookDataTable'
 import EyeIcn from '../Utilities/EyeIcn'
 import EyeOffIcn from '../Utilities/EyeOffIcn'
 import Note from '../Utilities/Note'
+import ReactJson from '@microlink/react-json-view'
+import JsonViewer from '../Utilities/JsonViewer'
 
 const CaptureAction = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
   const setFlowStep = useSetRecoilState($flowStep)
   const setFields = useSetRecoilState($formFields)
   const [hookID, setHookID] = useState('')
+  const [primaryKey, setPrimaryKey] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
   const { api } = useRecoilValue($btcbi)
@@ -36,6 +39,7 @@ const CaptureAction = () => {
     setNewFlow(tmpNewFlow)
     setFlowStep(2)
   }
+
   useEffect(() => {
     if (newFlow.triggerDetail?.data?.length > 0 && newFlow.triggerDetail?.hook_id) {
       setHookID(newFlow.triggerDetail?.hook_id)
@@ -51,6 +55,7 @@ const CaptureAction = () => {
       )
     }
     return () => {
+      setFields()
       bitsFetch({ hook_id: window.hook_id }, 'capture_action/test/remove').then(
         (resp) => {
           delete window.hook_id
@@ -59,9 +64,11 @@ const CaptureAction = () => {
       )
     }
   }, [])
+  console.log(newFlow?.triggerDetail?.data)
 
   const handleFetch = () => {
     setIsLoading(true)
+    window.hook_id = hookID
     intervalRef.current = setInterval(() => {
       bitsFetch({ hook_id: hookID }, 'capture_action/test').then((resp) => {
         if (resp.success) {
@@ -93,7 +100,8 @@ const CaptureAction = () => {
           }
 
           tmpNewFlow.triggerDetail.tmp = resp.data.captureAction
-          tmpNewFlow.triggerDetail.data = convertedData
+          // tmpNewFlow.triggerDetail.data = convertedData
+          tmpNewFlow.triggerDetail.data = resp.data.captureAction
           tmpNewFlow.triggerDetail.hook_id = hookID
           setNewFlow(tmpNewFlow)
           setIsLoading(false)
@@ -127,7 +135,25 @@ const CaptureAction = () => {
         readOnly
       /> */}
       <input className="btcd-paper-inp w-100 mt-1" onChange={e => setHookID(e.target.value)} name="hook" value={hookID} type="text" placeholder={__('Enter Hook...', 'bit-integrations')} disabled={newFlow?.triggerData?.fields || isLoading || false} />
-
+      <br />
+      <br />
+      {newFlow?.triggerDetail?.data &&
+        <>
+          <b className="wdt-200 d-in-b">{__('Select Form Id:', 'bit-integrations')}</b>
+          <select onChange={(e) => setPrimaryKey(e.target.value)} name="primaryKey" value={primaryKey} className="btcd-paper-inp mt-1">
+            <option value="">{__('Select Key', 'bit-integrations')}</option>
+            {
+              newFlow?.triggerDetail?.data && newFlow?.triggerDetail?.data.map(({ name, label }) => (
+                <option key={name} value={label}>
+                  {label}
+                </option>
+              ))
+            }
+          </select>
+        </>
+      }
+      <br />
+      <br />
       <div className="flx flx-between">
         <button
           onClick={handleFetch}
@@ -166,13 +192,17 @@ const CaptureAction = () => {
           </button>
         )}
       </div>
-      {showResponse && (
+      {/* {showResponse && (
         <WebhookDataTable
           data={newFlow?.triggerDetail?.data}
           flow={newFlow}
           setFlow={setNewFlow}
         />
-      )}
+      )} */}
+      <JsonViewer
+        data={newFlow?.triggerDetail?.data}
+        onChange={(e) => console.log(e)}
+      />
       <button
         onClick={setTriggerData}
         className="btn btcd-btn-lg green sh-sm flx"

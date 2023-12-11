@@ -53,10 +53,10 @@ class CaptureActionController
             wp_send_json_error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
-        if (has_action($data->hook_id)) {
-            add_action($data->hook_id, [self::class, 'captureActionHandler'], 10, PHP_INT_MAX);
-            // die;
-        }
+        // if (has_action($data->hook_id)) {
+        //     add_action($data->hook_id, [self::class, 'captureActionHandler'], 10, PHP_INT_MAX);
+        //     // die;
+        // }
 
         // add_action('forminator_custom_form_submit_before_set_fields', [self::class, 'public static function captureActionHandler'], 10, PHP_INT_MAX);
 
@@ -72,18 +72,23 @@ class CaptureActionController
 
     public static function captureActionHandler(...$args)
     {
-        // error_log(print_r("ashdk", true));
-        error_log(print_r(current_action(), true));
-        error_log(print_r($args, true));
-        // error_log((print_r(implode(', ', $args))));
-        // return "Intercepted hook: with arguments: " . implode(', ', $args) . "<br>";
+        // error_log(print_r($args, true));
+        // die;
+        $formatedData = self::testDataFormat($args);
+        if (get_option('btcbi_capture_action_test_' . current_action()) !== false) {
+            update_option('btcbi_capture_action_test_' . current_action(), $args);
+        }
+
+        // if ($flows = Flow::exists($this->captureActionIntegrationsList, $hook_id)) {
+        //     Flow::execute('CaptureAction', $hook_id, $formatedData, $flows);
+        // }
+        return rest_ensure_response(['status' => 'success']);
     }
 
     public function removeTestData($data)
     {
         $missing_field = null;
-
-        if (!property_exists($data, 'hook_id') || (property_exists($data, 'hook_id') && !wp_is_uuid($data->hook_id))) {
+        if (!property_exists($data, 'hook_id') && !empty($data->hook_id)) {
             $missing_field = is_null($missing_field) ? 'CaptureAction ID' : $missing_field . ', CaptureAction ID';
         }
         if (!is_null($missing_field)) {
@@ -104,8 +109,8 @@ class CaptureActionController
     public static function makeNonNestedRecursive(array &$out, $key, array $in)
     {
         foreach ($in as $k => $v) {
-            if (is_array($v)) {
-                self::makeNonNestedRecursive($out, $key . $k . '_', $v);
+            if (is_array($v) || is_object($v)) {
+                self::makeNonNestedRecursive($out, $key . $k . '_', (array) $v);
             } else {
                 $out[$key . $k] = $v;
             }
@@ -129,9 +134,9 @@ class CaptureActionController
         foreach ($data as $k => $v) {
             $rootAraVal = [];
             $flatAra = [];
-            if (is_array($v)) {
+            if (is_array($v) || is_object($v)) {
                 $rootAraVal[$k] = json_encode($v);
-                $flatAra = self::makeNonNested([$k => $v]);
+                $flatAra = self::makeNonNested([$k => (array) $v]);
                 $rootAraVal = array_merge($flatAra, $rootAraVal);
             } else {
                 $rootAraVal[$k] = $v;
