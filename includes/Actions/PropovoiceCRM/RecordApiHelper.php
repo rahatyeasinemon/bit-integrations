@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\PropovoiceCRM;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -50,7 +50,7 @@ class RecordApiHelper
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $apiResponse = null;
         if ($mainAction == '1') {
-            $tags = explode(',', $integrationDetails->tags);
+            $tags = is_array($integrationDetails->tags) ? $integrationDetails->tags : explode(',', $integrationDetails->tags);
             $label = $integrationDetails->label;
             $finalData['tags'] = $tags;
             $finalData['level_id'] = $label;
