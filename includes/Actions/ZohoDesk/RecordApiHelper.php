@@ -5,8 +5,8 @@
 namespace BitCode\FI\Actions\ZohoDesk;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -41,7 +41,7 @@ class RecordApiHelper
 
     public function searchContact($dataCenter, $email)
     {
-        
+
         $searchContactEndpoint = "https://desk.zoho.{$dataCenter}/api/v1/contacts/search?limit=1&email={$email}";
 
         return HttpHelper::get($searchContactEndpoint, null, $this->_defaultHeader);
@@ -69,8 +69,7 @@ class RecordApiHelper
                 return LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => "ticket-create"], 'error', $error);
             }
         }
-        if(isset($fieldData['dueDate']))
-        {
+        if (isset($fieldData['dueDate'])) {
             $originalDate = $fieldData['dueDate'];
             $date = new \DateTime($originalDate);
             $ans = $date->format("Y-m-d\TH:i:s.n\Z");
@@ -101,8 +100,7 @@ class RecordApiHelper
             $contactApiResponse = $this->createContact($dataCenter, wp_json_encode($contactData));
             if (isset($contactApiResponse->errorCode)) {
                 return LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => "contact-create"], 'error', $contactApiResponse);
-            } 
-            else {
+            } else {
                 LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => "contact-create"], 'success', $contactApiResponse);
             }
 
@@ -138,7 +136,6 @@ class RecordApiHelper
             $responseType = 'success';
             $attachmentApiResponses = [];
             $attachments = explode(",", $actions->attachments);
-
             foreach ($attachments as $fileField) {
                 if (isset($fieldValues[$fileField]) && !empty($fieldValues[$fileField])) {
                     $fileFound = 1;

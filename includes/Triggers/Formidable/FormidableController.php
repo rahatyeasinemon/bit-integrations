@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Triggers\Formidable;
 
-use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Flow\Flow;
+use BitCode\FI\Core\Util\Common;
 
 final class FormidableController
 {
@@ -145,6 +145,7 @@ final class FormidableController
             $key = $field->field_key;
 
             $val = (isset($field_values[$field->id]) ? $field_values[$field->id]->get_saved_value() : '');
+
             if (is_array($val)) {
                 if ($field->type === 'name') {
                     if (array_key_exists('first', $val) || array_key_exists('middle', $val) || array_key_exists('last', $val)) {
@@ -152,7 +153,7 @@ final class FormidableController
                         $form_fields['middle-name'] = isset($val['middle']) ? $val['middle'] : '';
                         $form_fields['last-name'] = isset($val['last']) ? $val['last'] : '';
                     }
-                } elseif ($field->type == 'checkbox') {
+                } elseif ($field->type == 'checkbox' || $field->type == 'file') {
                     $form_fields[$key] = $val;
                 } elseif ($field->type == 'address') {
                     $addressKey = $field->field_key;
@@ -212,11 +213,18 @@ final class FormidableController
 
             foreach ($form_data as $key => $val) {
                 if (in_array($key, $fileFlds)) {
-                    $tmpData = wp_get_attachment_url($form_data[$key]);
-                    $form_data[$key] = Common::filePath($tmpData);
+                    if (is_array($val)) {
+                        foreach ($val as $fileKey => $file) {
+                            $tmpData = wp_get_attachment_url($form_data[$key][$fileKey]);
+                            $form_data[$key][$fileKey] = Common::filePath($tmpData);
+                        }
+                    } else {
+                        $tmpData = wp_get_attachment_url($form_data[$key]);
+                        $form_data[$key] = Common::filePath($tmpData);
+                    }
                 }
             }
-
+            error_log(print_r($form_data, true));
             if (!empty($form_id) && $flows = Flow::exists('Formidable', $form_id)) {
                 Flow::execute('Formidable', $form_id, $form_data, $flows);
             }
