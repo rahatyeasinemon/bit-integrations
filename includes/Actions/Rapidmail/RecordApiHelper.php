@@ -4,11 +4,11 @@
 
 namespace BitCode\FI\Actions\Rapidmail;
 
-use BitCode\FI\Core\Util\Common;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -29,11 +29,12 @@ class RecordApiHelper
         ];
     }
 
-    public function insertRecipientRecord($data)
+    public function insertRecipientRecord($data, $send_activationmail)
     {
-        $insertRecordEndpoint = self::$apiBaseUri . '/recipients';
-        $data = \is_string($data) ? $data : \json_encode((object)$data);
-        $response = HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        $send_activationmail    = $send_activationmail ? 'yes' : 'no';
+        $insertRecordEndpoint   = self::$apiBaseUri . "/recipients?send_activationmail={$send_activationmail}";
+        $data                   = \is_string($data) ? $data : \json_encode((object)$data);
+        $response               = HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
         return $response;
     }
 
@@ -57,7 +58,7 @@ class RecordApiHelper
     public function executeRecordApi($integId, $defaultConf, $recipientLists, $fieldValues, $fieldMap, $actions, $isRelated = false)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $apiResponse = $this->insertRecipientRecord($finalData);
+        $apiResponse = $this->insertRecipientRecord($finalData, $actions->send_activationmail);
 
 
         if (!isset($apiResponse->id)) {

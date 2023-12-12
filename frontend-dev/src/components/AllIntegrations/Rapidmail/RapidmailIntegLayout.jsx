@@ -3,6 +3,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import { addFieldMap } from './IntegrationHelpers'
 import { getAllRecipient } from './RapidmailCommonFunc'
 import RapidmailFieldMap from './RapidmailFieldMap'
+import RapidmailActions from './RapidmailActions'
 
 export default function RapidmailIntegLayout({ formFields, handleInput, rapidmailConf, setRapidmailConf, isLoading, setIsLoading, setSnackbar }) {
   return (
@@ -42,7 +43,12 @@ export default function RapidmailIntegLayout({ formFields, handleInput, rapidmai
       <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(rapidmailConf.field_map.length, rapidmailConf, setRapidmailConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
       <br />
       <br />
-
+      <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
+      <div className="btcd-hr mt-1" />
+      <RapidmailActions
+        rapidmailConf={rapidmailConf}
+        setRapidmailConf={setRapidmailConf}
+      />
     </>
   )
 }
