@@ -153,6 +153,7 @@ export default function SelectAction() {
     { type: 'WPFusion' },
     { type: 'Woodpecker' },
     { type: 'NutshellCRM' },
+    { type: 'SystemIO' },
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(sortByField(integs, 'type', 'ASC') || integs)
