@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Convert Kit Record Api
+ * SystemIO Record Api
  */
 
 namespace BitCode\FI\Actions\SystemIO;
@@ -10,165 +10,91 @@ use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
 
 /**
- * Provide functionality for Record insert,update, exist
+ * Provide functionality for Record insert, upsert
  */
 class RecordApiHelper
 {
-    private $_defaultHeader;
-    private $_integrationID;
-    private $_apiEndpoint;
+    private $integrationDetails;
+    private $integrationId;
+    private $apiUrl;
+    private $defaultHeader;
+    private $type;
+    private $typeName;
 
-
-    public function __construct($api_secret, $integId)
+    public function __construct($integrationDetails, $integId, $apiKey)
     {
-        // wp_send_json_success($tokenDetails);
-        $this->_defaultHeader = $api_secret;
-        $this->_apiEndpoint = 'https://api.systemIO.com/v3';
-        $this->_integrationID = $integId;
-    }
-
-    // for adding a subscriber
-    public function storeOrModifyRecord($method, $formId, $data)
-    {
-        $query = [
-            'api_secret' => $this->_defaultHeader,
-            'email' => $data->email,
-            'first_name' => $data->firstName,
+        $this->integrationDetails = $integrationDetails;
+        $this->integrationId      = $integId;
+        $this->apiUrl             = "https://api.systeme.io/api";
+        $this->defaultHeader      = [
+            "x-api-key"       => $apiKey,
+            "Content-Type"  => "application/json"
         ];
-
-        foreach ($data as $key => $value) {
-            $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
-            $array_keys = array_keys($query);
-            if (!(in_array($key, $array_keys))) {
-                $query['fields'] = [
-                     $key => $value,
-                ];
-            }
-        }
-
-        $queries = http_build_query($query);
-
-        $insertRecordEndpoint = "{$this->_apiEndpoint}/forms/{$formId}/{$method}?{$queries}";
-
-        $res = HttpHelper::post($insertRecordEndpoint, null);
-        return $res;
     }
 
-    //for updating subscribers data through email id.
-    public function updateRecord($id, $data, $existSubscriber)
+    public function addContact($finalData)
     {
-        $subscriberData = $data;
+        $this->type     = 'Add People to Contacts';
+        $this->typeName = 'Add People to Contacts';
 
-        foreach ($subscriberData as $key => $value) {
-            if ($value === '') {
-                $subscriberData->$key = $existSubscriber->subscribers[0]->$key;
-            }
+        if (empty($finalData['email'])) {
+            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
         }
 
-        $query = [
-            'api_secret' => $this->_defaultHeader,
-            'email_address' => $data->email,
-            'first_name' => $data->firstName,
-        ];
+        $apiEndpoint = $this->apiUrl . "/contacts";
+        var_dump($finalData);
+        die;
 
-        foreach ($data as $key => $value) {
-            $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
-            $array_keys = array_keys($query);
-            if (!(in_array($key, $array_keys))) {
-                $query['fields'] = [
-                     $key => $value,
-                ];
-            }
-        }
+        $response = HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
 
-        $queries = http_build_query($query);
-
-        $updateRecordEndpoint = "{$this->_apiEndpoint}/subscribers/{$id}?" . $queries;
-
-        return  HttpHelper::request($updateRecordEndpoint, 'PUT', null);
-    }
-
-    //add tag to a subscriber
-    public function addTagToSubscriber($email, $tags)
-    {
-        $queries = http_build_query([
-            'api_secret' => $this->_defaultHeader,
-            'email' => $email,
-        ]);
-        foreach ($tags as $tagId) {
-            $searchEndPoint = "{$this->_apiEndpoint}/tags/{$tagId}/subscribe?{$queries}";
-
-            HttpHelper::post($searchEndPoint, null);
-        }
-    }
-
-    //Check if a subscriber exists through email.
-    private function existSubscriber($email)
-    {
-        $queries = http_build_query([
-            'api_secret' => $this->_defaultHeader,
-            'email_address' => $email,
-        ]);
-        $searchEndPoint = "{$this->_apiEndpoint}/subscribers?{$queries}";
-
-        return HttpHelper::get($searchEndPoint, null);
-    }
-
-
-    public function execute($fieldValues, $fieldMap, $actions, $formId, $tags)
-    {
-        $fieldData = [];
-        $customFields = [];
-
-        foreach ($fieldMap as $fieldKey => $fieldPair) {
-            if (!empty($fieldPair->systemIOField)) {
-                if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue) && !is_numeric($fieldPair->systemIOField)) {
-                    $fieldData[$fieldPair->systemIOField] = $fieldPair->customValue;
-                } elseif (is_numeric($fieldPair->systemIOField) && $fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
-                    array_push($customFields, ['field' => (int) $fieldPair->systemIOField, 'value' => $fieldPair->customValue]);
-                } elseif (is_numeric($fieldPair->systemIOField)) {
-                    array_push($customFields, ['field' => (int) $fieldPair->systemIOField, 'value' => $fieldValues[$fieldPair->formField]]);
-                } else {
-                    $fieldData[$fieldPair->systemIOField] = $fieldValues[$fieldPair->formField];
-                }
-            }
-        }
-
-        if (!empty($customFields)) {
-            $fieldData['fieldValues'] = $customFields;
-        }
-        $systemIO = (object) $fieldData;
-
-        $existSubscriber = $this->existSubscriber($systemIO->email);
-
-        if ((count($existSubscriber->subscribers)) !== 1) {
-            $recordApiResponse = $this->storeOrModifyRecord('subscribe', $formId, $systemIO);
-            if (isset($tags) && (count($tags)) > 0 && $recordApiResponse) {
-                $this->addTagToSubscriber($systemIO->email, $tags);
-            }
-            $type = 'insert';
+        if (isset($this->integrationDetails->selectedTag) || !empty($this->integrationDetails->selectedTag)) {
+            $this->addTag($response->id, $this->integrationDetails->selectedTag);
         } else {
-            if ($actions->update == 'true') {
-                $this->updateRecord($existSubscriber->subscribers[0]->id, $systemIO, $existSubscriber);
-                $type = 'update';
-            } else {
-                LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', 'Email address already exists in the system');
-
-                wp_send_json_error(
-                    __(
-                        $this->_errorMessage,
-                        'bit-integrations'
-                    ),
-                    400
-                );
-            }
+            return $response;
         }
 
-        if (($recordApiResponse && isset($recordApiResponse->errors)) || isset($this->_errorMessage)) {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', $recordApiResponse->errors);
+
+    }
+
+    public function addTag($contactId, $tag)
+    {
+        if (empty($contactId)) {
+            return ['success' => false, 'message' => 'Contact is not created', 'code' => 400];
+        }
+        if (empty($tag)) {
+            return ['success' => false, 'message' => 'Required field tag is empty', 'code' => 400];
+        }
+
+        $apiEndpoint = $this->apiUrl . "/" . $contactId . "/tags";
+
+        $data['tagId'] = $tag;
+
+        return $response = HttpHelper::post($apiEndpoint, json_encode($data), $this->defaultHeader);
+
+    }
+
+    public function generateReqDataFromFieldMap($data, $fieldMap)
+    {
+        $dataFinal = [];
+        foreach ($fieldMap as $value) {
+            $triggerValue = $value->formField;
+            $actionValue  = $value->systemIOFormField;
+            $dataFinal[$actionValue] = ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue];
+        }
+        return $dataFinal;
+    }
+
+    public function execute($fieldValues, $fieldMap, $actionName)
+    {
+        $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        $apiResponse = $this->addContact($finalData);
+
+        if (!isset($apiResponse->errors)) {
+            $res = [$this->typeName . '  successfully'];
+            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
         } else {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', $recordApiResponse);
+            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
         }
-        return $recordApiResponse;
+        return $apiResponse;
     }
 }

@@ -7,7 +7,5 @@ if (!defined('ABSPATH')) {
 use BitCode\FI\Actions\SystemIO\SystemIOController;
 use BitCode\FI\Core\Util\Route;
 
-Route::post('systemIO_authorize', [SystemIOController::class, 'systemIOAuthorize']);
-Route::post('systemIO_headers', [SystemIOController::class, 'systemIOHeaders']);
-Route::post('systemIO_forms', [SystemIOController::class, 'systemIOForms']);
-Route::post('systemIO_tags', [SystemIOController::class, 'systemIOTags']);
+Route::post('systemIO_authentication', [SystemIOController::class, 'authentication']);
+Route::post('systemIO_fetch_all_tags', [SystemIOController::class, 'getAllTags']);

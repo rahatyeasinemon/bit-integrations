@@ -1,42 +1,28 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable no-unused-expressions */
 import { useState } from 'react'
-import BackIcn from '../../../Icons/BackIcn'
-import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
-import { refreshSystemIOForm } from './SystemIOCommonFunc'
+import { systemIOAuthentication, getAllTags } from './SystemIOCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 
-export default function SystemIOAuthorization({ formID, systemIOConf, setSystemIOConf, step, setstep, setSnackbar, isInfo, isLoading, setIsLoading }) {
+export default function SystemIOAuthorization({ systemIOConf, setSystemIOConf, step, setStep, loading, setLoading, isInfo }) {
+  const [isAuthorized, setIsAuthorized] = useState(false)
   const { systemIO } = tutorialLinks
-  const [isAuthorized, setisAuthorized] = useState(false)
-  const [error, setError] = useState({ name: '', api_secret: '' })
-  const [showAuthMsg, setShowAuthMsg] = useState(false)
+  const [error, setError] = useState({ api_key: '' })
 
-  const handleAuthorize = () => {
-    const newConf = { ...systemIOConf }
-    if (!newConf.name || !newConf.api_secret) {
-      setError({
-        name: !newConf.name ? __('Integration name cann\'t be empty', 'bit-integrations') : '',
-        api_secret: !newConf.api_secret ? __('Access API Secret Key cann\'t be empty', 'bit-integrations') : '',
-      })
-      return
-    }
-    setIsLoading('auth')
-    const data = {
-      api_secret: newConf.api_secret,
-    }
-    bitsFetch(data, 'systemIO_authorize')
-      .then(result => {
-        if (result?.success) {
-          setisAuthorized(true)
-          setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
-        }
-        setShowAuthMsg(true)
-        setIsLoading(false)
-      })
+  const nextPage = () => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
+
+    !systemIOConf?.default
+    setStep(2)
+    getAllTags(systemIOConf, setSystemIOConf, setLoading)
   }
+
   const handleInput = e => {
     const newConf = { ...systemIOConf }
     const rmError = { ...error }
@@ -46,20 +32,14 @@ export default function SystemIOAuthorization({ formID, systemIOConf, setSystemI
     setSystemIOConf(newConf)
   }
 
-  const nextPage = () => {
-    setTimeout(() => {
-      document.getElementById('btcd-settings-wrp').scrollTop = 0
-    }, 300)
-
-    refreshSystemIOForm(systemIOConf, setSystemIOConf, setIsLoading, setSnackbar)
-    setstep(2)
-  }
-
   const ActiveInstructions = `
-            <h4>Get api secret key</h4>
+            <h4>To Get API Key & API Secret</h4>
             <ul>
                 <li>First go to your SystemIO dashboard.</li>
-                <li>Click "Settings", Then click "Advanced"</li>
+                <li>Click go to "Settings" from Right Top corner</li>
+                <li>Then Click "API" from the "Settings Menu"</li>
+                <li>Then Click "Generate Api Secret"</li>
+                <li>Then copy "API Authorization Credentials"</li>
             </ul>`
 
   return (
@@ -77,53 +57,36 @@ export default function SystemIOAuthorization({ formID, systemIOConf, setSystemI
         />
       )}
 
-      <div className="mt-3 wdt-200"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
+      <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={systemIOConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
-      <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
 
-      <div className="mt-3 wdt-200"><b>{__('Access API Secret Key:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_secret" value={systemIOConf.api_secret} type="text" placeholder={__('Access API Secret Key...', 'bit-integrations')} disabled={isInfo} />
-      <div style={{ color: 'red', fontSize: '15px' }}>{error.api_secret}</div>
+      <div className="mt-3"><b>{__('API Key:', 'bit-integrations')}</b></div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_key" value={systemIOConf.api_key} type="text" placeholder={__('API Key...', 'bit-integrations')} disabled={isInfo} />
+      <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
 
       <small className="d-blk mt-3">
-        {__('To Get API Secret Key, Please Visit', 'bit-integrations')}
+        {__('To Get API Key & API Secret, Please Visit', 'bit-integrations')}
         &nbsp;
-        <a className="btcd-link" href="https://app.systemIO.com/account_settings/advanced_settings" target="_blank" rel="noreferrer">{__('SystemIO API Token', 'bit-integrations')}</a>
+        <a className="btcd-link" href='https://my.systemIO.com/manage/settings/api-details' target='_blank'>{__('SystemIO API Key & Secret', 'bit-integrations')}</a>
       </small>
       <br />
       <br />
 
-      {isLoading === 'auth' && (
-        <div className="flx mt-5">
-          <LoaderSm size={25} clr="#022217" className="mr-2" />
-          Checking API Secret Key!!!
-        </div>
-      )}
-
-      {(showAuthMsg && !isAuthorized && !isLoading) && (
-        <div className="flx mt-5" style={{ color: 'red' }}>
-          <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
-            &times;
-          </span>
-          Sorry, API Secret key is invalid
-        </div>
-      )}
       {!isInfo && (
-        <>
-          <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized || isLoading}>
+        <div>
+          <button onClick={() => systemIOAuthentication(systemIOConf, setSystemIOConf, setError, setIsAuthorized, loading, setLoading)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized || loading.auth}>
             {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
-            {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
+            {loading.auth && <LoaderSm size="20" clr="#022217" className="ml-2" />}
           </button>
           <br />
-          <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
+          <button onClick={nextPage} className="btn ml-auto btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
             {__('Next', 'bit-integrations')}
-            <BackIcn className="ml-1 rev-icn" />
+            <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
-        </>
+        </div>
       )}
-      <Note
-        note={ActiveInstructions}
-      />
+      <Note note={ActiveInstructions} />
     </div>
   )
 }
+

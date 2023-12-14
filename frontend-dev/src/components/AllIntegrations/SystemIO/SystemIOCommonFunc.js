@@ -1,172 +1,112 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
-import bitsFetch from '../../../Utils/bitsFetch'
+/* eslint-disable no-console */
+/* eslint-disable no-else-return */
+import toast from "react-hot-toast";
+import bitsFetch from "../../../Utils/bitsFetch";
+import { __ } from "../../../Utils/i18nwrap";
 
-export const handleInput = (e, systemIOConf, setSystemIOConf) => {
-  const newConf = { ...systemIOConf }
-  newConf.name = e.target.value
-  setSystemIOConf({ ...newConf })
-}
-
-export const refreshSystemIOForm = (
-  systemIOConf,
-  setSystemIOConf,
-  setIsLoading,
-  setSnackbar,
-) => {
-  const refreshFormsRequestParams = {
-    api_secret: systemIOConf.api_secret,
+export const handleInput = (e, salesmateConf, setSalesmateConf) => {
+  const newConf = { ...salesmateConf };
+  const { name } = e.target;
+  if (e.target.value !== "") {
+    newConf[name] = e.target.value;
+  } else {
+    delete newConf[name];
   }
-  bitsFetch(refreshFormsRequestParams, 'systemIO_forms')
-    .then((result) => {
-      if (result && result.success) {
-        const newConf = { ...systemIOConf }
-        if (result.data.systemIOForms) {
-          if (!newConf.default) {
-            newConf.default = {}
-          }
-          newConf.default.systemIOForms = result.data.systemIOForms
-          setSnackbar({
-            show: true,
-            msg: __('Convert Kit forms refreshed', 'bit-integrations'),
-          })
-        } else {
-          setSnackbar({
-            show: true,
-            msg: __(
-              'No Convert Kit forms found. Try changing the header row number or try again',
-              'bit-integrations',
-            ),
-          })
-        }
+  setSalesmateConf({ ...newConf });
+};
 
-        setSystemIOConf({ ...newConf })
-      } else {
-        setSnackbar({
-          show: true,
-          msg: __(
-            'Convert Kit forms refresh failed. please try again',
-            'bit-integrations',
-          ),
-        })
-      }
-      setIsLoading(false)
-    })
-    .catch(() => setIsLoading(false))
-}
-// refreshSystemIOTags
-export const refreshSystemIOTags = (
-  systemIOConf,
-  setSystemIOConf,
-  setIsLoading,
-  setSnackbar,
-) => {
-  const refreshFormsRequestParams = {
-    api_secret: systemIOConf.api_secret,
-  }
-  bitsFetch(refreshFormsRequestParams, 'systemIO_tags')
-    .then((result) => {
-      if (result && result.success) {
-        const newConf = { ...systemIOConf }
-        if (result.data.systemIOTags) {
-          if (!newConf.default) {
-            newConf.default = {}
-          }
-          newConf.default.systemIOTags = result.data.systemIOTags
-          setSnackbar({
-            show: true,
-            msg: __('Convert Kit tags refreshed', 'bit-integrations'),
-          })
-        } else {
-          setSnackbar({
-            show: true,
-            msg: __(
-              'No Convert Kit tags found. Try changing the header row number or try again',
-              'bit-integrations',
-            ),
-          })
-        }
-
-        setSystemIOConf({ ...newConf })
-      } else {
-        setSnackbar({
-          show: true,
-          msg: __(
-            'Convert Kit tags refresh failed. please try again',
-            'bit-integrations',
-          ),
-        })
-      }
-      setIsLoading(false)
-    })
-    .catch(() => setIsLoading(false))
-}
-// refreshMappedFields
-export const refreshSystemIOHeader = (
-  systemIOConf,
-  setSystemIOConf,
-  setIsLoading,
-  setSnackbar,
-) => {
-  const refreshFormsRequestParams = {
-    api_secret: systemIOConf.api_secret,
-  }
-  bitsFetch(refreshFormsRequestParams, 'systemIO_headers')
-    .then((result) => {
-      if (result && result.success) {
-        const newConf = { ...systemIOConf }
-        if (result.data.systemIOField) {
-          if (!newConf.default) {
-            newConf.default = {}
-          }
-          newConf.default.fields = result.data.systemIOField
-          const { fields } = newConf.default
-          newConf.field_map = Object.values(fields)
-            .filter((f) => f.required)
-            .map((f) => ({
-              formField: '',
-              systemIOField: f.fieldId,
-              required: true,
-            }))
-          setSnackbar({
-            show: true,
-            msg: __('Convert Kit fields refreshed', 'bit-integrations'),
-          })
-        } else {
-          setSnackbar({
-            show: true,
-            msg: __(
-              'No Convert Kit fields found. Try changing the header row number or try again',
-              'bit-integrations',
-            ),
-          })
-        }
-
-        setSystemIOConf({ ...newConf })
-      } else {
-        setSnackbar({
-          show: true,
-          msg: __(
-            'Convert Kit fields refresh failed. please try again',
-            'bit-integrations',
-          ),
-        })
-      }
-      setIsLoading(false)
-    })
-    .catch(() => setIsLoading(false))
-}
+export const generateMappedField = (systemIOFields) => {
+  const requiredFlds = systemIOFields.filter((fld) => fld.required === true);
+  return requiredFlds.length > 0
+    ? requiredFlds.map((field) => ({
+        formField: "",
+        systemIOFormField: field.key,
+      }))
+    : [{ formField: "", systemIOFormField: "" }];
+};
 
 export const checkMappedFields = (systemIOConf) => {
   const mappedFields = systemIOConf?.field_map
     ? systemIOConf.field_map.filter(
-      (mappedField) => !mappedField.formField
-          && mappedField.systemIOField
-          && mappedField.required,
-    )
-    : []
+        (mappedField) =>
+          !mappedField.formField ||
+          !mappedField.systemIOFormField ||
+          (mappedField.formField === "custom" && !mappedField.customValue) ||
+          (mappedField.systemIOFormField === "customFieldKey" &&
+            !mappedField.customFieldKey)
+      )
+    : [];
   if (mappedFields.length > 0) {
-    return false
+    return false;
   }
-  return true
-}
+  return true;
+};
+
+export const systemIOAuthentication = (
+  confTmp,
+  setConf,
+  setError,
+  setIsAuthorized,
+  loading,
+  setLoading
+) => {
+  if (!confTmp.api_key ) {
+    setError({
+      api_key: !confTmp.api_key
+        ? __("API Key can't be empty", "bit-integrations")
+        : "",
+    });
+    return;
+  }
+
+  setError({});
+  setLoading({ ...loading, auth: true });
+
+  const requestParams = {
+    api_key: confTmp.api_key,
+  };
+
+  bitsFetch(requestParams, "systemIO_authentication").then((result) => {
+    if (result && result.success) {
+      setIsAuthorized(true);
+      setLoading({ ...loading, auth: false });
+      toast.success(__("Authorized successfully", "bit-integrations"));
+      return;
+    }
+    setLoading({ ...loading, auth: false });
+    toast.error(
+      __(
+        "Authorized failed, Please enter valid Sub Domain & API Key",
+        "bit-integrations"
+      )
+    );
+  });
+};
+
+export const getAllTags = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, tag: true });
+
+  const requestParams = {
+    api_key: confTmp.api_key,
+  };
+
+  bitsFetch(requestParams, "systemIO_fetch_all_tags").then((result) => {
+    if (result && result.success) {
+      if (result.data) {
+        setConf((prevConf) => {
+          prevConf.tags = result.data;
+          return prevConf;
+        });
+
+        setLoading({ ...setLoading, tag: false });
+        toast.success(__("Tags fetched successfully", "bit-integrations"));
+        return;
+      }
+      setLoading({ ...setLoading, tag: false });
+      toast.error(__("Tags Not Found!", "bit-integrations"));
+      return;
+    }
+    setLoading({ ...setLoading, tag: false });
+    toast.error(__("Tags fetching failed", "bit-integrations"));
+  });
+};

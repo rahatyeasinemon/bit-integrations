@@ -1,27 +1,40 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import SnackMsg from '../../Utilities/SnackMsg'
-import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkWebhookIntegrationsExist, saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
-import { handleInput } from './SystemIOCommonFunc'
-import SystemIOIntegLayout from './SystemIOIntegLayout'
-import EditFormInteg from '../EditFormInteg'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
+import { __ } from '../../../Utils/i18nwrap'
+import SnackMsg from '../../Utilities/SnackMsg'
+import EditFormInteg from '../EditFormInteg'
 import EditWebhookInteg from '../EditWebhookInteg'
+import { checkWebhookIntegrationsExist, saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
+import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import { checkMappedFields, handleInput } from './SystemIOCommonFunc'
+import SystemIOIntegLayout from './SystemIOIntegLayout'
 
 function EditSystemIO({ allIntegURL }) {
   const navigate = useNavigate()
-  const { id, formID } = useParams()
-
-  const [systemIOConf, setSystemIOConf] = useRecoilState($actionConf)
   const [flow, setFlow] = useRecoilState($newFlow)
-  const formFields = useRecoilValue($formFields)
+  const [systemIOConf, setSystemIOConf] = useRecoilState($actionConf)
   const [isLoading, setIsLoading] = useState(false)
+  const [loading, setLoading] = useState({})
   const [snack, setSnackbar] = useState({ show: false })
+  const formField = useRecoilValue($formFields)
+
+  const saveConfig = () => {
+    if (!checkMappedFields(systemIOConf)) {
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
+      return
+    }
+    if (!systemIOConf.selectedTag) {
+      toast.error('Please select a Tag')
+      return
+    }
+    saveActionConf({ flow, allIntegURL, conf: systemIOConf, navigate, edit: 1, setIsLoading, setSnackbar })
+  }
 
   return (
     <div style={{ width: 900 }}>
@@ -35,23 +48,24 @@ function EditSystemIO({ allIntegURL }) {
       {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
       {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
       <SystemIOIntegLayout
-        formID={formID}
-        formFields={formFields}
+        formID={flow.triggered_entity_id}
+        formFields={formField}
         systemIOConf={systemIOConf}
         setSystemIOConf={setSystemIOConf}
-        isLoading={isLoading}
+        loading={loading}
+        setLoading={setLoading}
         setIsLoading={setIsLoading}
         setSnackbar={setSnackbar}
       />
 
       <IntegrationStepThree
         edit
-        saveConfig={() => saveActionConf({ flow, setFlow, allIntegURL, navigate, conf: systemIOConf, edit: 1, setIsLoading, setSnackbar })}
-        disabled={systemIOConf.field_map.length < 1}
+        saveConfig={saveConfig}
+        disabled={!checkMappedFields(systemIOConf)}
         isLoading={isLoading}
         dataConf={systemIOConf}
         setDataConf={setSystemIOConf}
-        formFields={formFields}
+        formFields={formField}
       />
       <br />
     </div>
