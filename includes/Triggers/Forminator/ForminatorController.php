@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Triggers\Forminator;
 
-use BitCode\FI\Flow\Flow;
 use DateTime;
+use BitCode\FI\Flow\Flow;
 
 final class ForminatorController
 {
@@ -78,8 +78,8 @@ final class ForminatorController
         if (empty($fieldDetails)) {
             return $fieldDetails;
         }
-        $fields = [];
 
+        $fields = [];
         foreach ($fieldDetails as $field) {
             if (!empty($field->slug) && $field->type !== 'submit') {
                 if (property_exists($field, 'raw') && array_key_exists('multiple_name', $field->raw) && $field->raw['multiple_name'] && $field->raw['type'] == 'name') {
@@ -127,9 +127,13 @@ final class ForminatorController
                                 if ($key != 'street_address' && $key != 'address_line') {
                                     $key = substr($key, 8);
                                 }
-                                if ($key == 'element_id' && $value) {
-                                    $last_dash_position = strrpos($value, "-");
-                                    $index = substr($value, $last_dash_position + 1);
+                                // if ($key == 'element_id' && $value) {
+                                //     $last_dash_position = strrpos($value, "-");
+                                //     $index = substr($value, $last_dash_position + 1);
+                                // }
+                                if ($field->slug) {
+                                    $last_dash_position = strrpos($field->slug, "-");
+                                    $index = substr($field->slug, $last_dash_position + 1);
                                 }
                                 $fields[] = [
                                     'name' => $key . '-' . $index,
