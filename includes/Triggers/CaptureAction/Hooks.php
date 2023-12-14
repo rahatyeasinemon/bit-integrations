@@ -19,5 +19,4 @@ $post_metas = $wpdb->get_results(
     )
 );
 
-$action_hook = str_replace('btcbi_capture_action_test_', '', $post_metas[0]->option_name);
-Hooks::add($action_hook, [CaptureActionController::class, 'captureActionHandler'], 10, PHP_INT_MAX);
+Hooks::add(str_replace('btcbi_capture_action_test_', '', $post_metas[0]->option_name), [CaptureActionController::class, 'captureActionHandler'], 10, PHP_INT_MAX);

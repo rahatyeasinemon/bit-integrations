@@ -1,6 +1,6 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable no-console */
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $btcbi, $flowStep, $formFields, $newFlow } from '../../GlobalStates'
@@ -15,6 +15,9 @@ import EyeOffIcn from '../Utilities/EyeOffIcn'
 import Note from '../Utilities/Note'
 import ReactJson from '@microlink/react-json-view'
 import JsonViewer from '../Utilities/JsonViewer'
+import TagifyInput from '../Utilities/TagifyInput'
+import { create } from 'mutative'
+import CloseIcn from '../../Icons/CloseIcn'
 
 const CaptureAction = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
@@ -22,6 +25,7 @@ const CaptureAction = () => {
   const setFields = useSetRecoilState($formFields)
   const [hookID, setHookID] = useState('')
   const [primaryKey, setPrimaryKey] = useState('')
+  const [selectedFields, setSelectedFields] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
   const { api } = useRecoilValue($btcbi)
@@ -39,6 +43,24 @@ const CaptureAction = () => {
     setNewFlow(tmpNewFlow)
     setFlowStep(2)
   }
+
+  const setSelectedFieldsData = (value, index = null) => {
+    setSelectedFields(prevFields => create(prevFields, (draftFields) => {
+      if (index !== null) {
+        draftFields[index] = value
+        return
+      }
+      value.namespace.push(value.name)
+      draftFields.push(JSON.stringify(value.namespace))
+    }))
+  }
+
+  const removeSelectedField = index => {
+    setSelectedFields(prevFields => create(prevFields, (draftFields) => {
+      draftFields.splice(index, 1)
+    }))
+  }
+  console.log(selectedFields)
 
   useEffect(() => {
     if (newFlow.triggerDetail?.data?.length > 0 && newFlow.triggerDetail?.hook_id) {
@@ -67,6 +89,12 @@ const CaptureAction = () => {
   console.log(newFlow?.triggerDetail?.data)
 
   const handleFetch = () => {
+    if (isLoading) {
+      clearInterval(intervalRef.current)
+      setIsLoading(false)
+      return
+    }
+
     setIsLoading(true)
     window.hook_id = hookID
     intervalRef.current = setInterval(() => {
@@ -135,9 +163,9 @@ const CaptureAction = () => {
         readOnly
       /> */}
       <input className="btcd-paper-inp w-100 mt-1" onChange={e => setHookID(e.target.value)} name="hook" value={hookID} type="text" placeholder={__('Enter Hook...', 'bit-integrations')} disabled={newFlow?.triggerData?.fields || isLoading || false} />
-      <br />
-      <br />
-      {newFlow?.triggerDetail?.data &&
+      {/* <br />
+      <br /> */}
+      {/* {newFlow?.triggerDetail?.data &&
         <>
           <b className="wdt-200 d-in-b">{__('Select Form Id:', 'bit-integrations')}</b>
           <select onChange={(e) => setPrimaryKey(e.target.value)} name="primaryKey" value={primaryKey} className="btcd-paper-inp mt-1">
@@ -150,18 +178,41 @@ const CaptureAction = () => {
               ))
             }
           </select>
+          <br />
+          <br />
         </>
-      }
-      <br />
-      <br />
+      } */}
+      <div className="mt-3">
+        <b>{__('Selected Fields:', 'bit-integrations')}</b>
+      </div>
+      <div className="bg-white rounded border my-1 table-webhook-div p-2" style={{ minHeight: '100px', maxHeight: '14rem' }}>
+        {selectedFields.map((field, index) => <div key={index} style={{ position: "relative" }}>
+          <input key={index} className="btcd-paper-inp w-100 m-1" type='text' onChange={e => setSelectedFieldsData(e.target.value, index)} value={field.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')} disabled={newFlow?.triggerData?.fields || isLoading || false} />
+          <button
+            className="btn btcd-btn-lg sh-sm"
+            onClick={() => removeSelectedField(index)}
+            style={
+              {
+                position: 'absolute',
+                top: -5,
+                right: -5,
+                color: '#ff4646',
+                padding: '2px'
+              }
+            }
+          >
+            <CloseIcn size={12} />
+          </button>
+        </div>)}
+      </div>
       <div className="flx flx-between">
         <button
           onClick={handleFetch}
-          className="btn btcd-btn-lg green sh-sm flx"
+          className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'green'}`}
           type="button"
           disabled={!hookID}
         >
-          {newFlow.triggerDetail?.data
+          {isLoading ? __('Stop', 'bit-integrations') : newFlow.triggerDetail?.data
             ? __('Fetched ✔', 'bit-integrations')
             : __('Fetch', 'bit-integrations')}
           {isLoading && (
@@ -199,10 +250,20 @@ const CaptureAction = () => {
           setFlow={setNewFlow}
         />
       )} */}
-      <JsonViewer
-        data={newFlow?.triggerDetail?.data}
-        onChange={(e) => console.log(e)}
-      />
+
+      {
+        showResponse && (
+          <>
+            <div className="mt-3">
+              <b>{__('Select Fields:', 'bit-integrations')}</b>
+            </div>
+            <JsonViewer
+              data={newFlow?.triggerDetail?.data}
+              onChange={(value) => setSelectedFieldsData(value)}
+            />
+          </>
+        )
+      }
       <button
         onClick={setTriggerData}
         className="btn btcd-btn-lg green sh-sm flx"
@@ -212,7 +273,7 @@ const CaptureAction = () => {
         Set Action
       </button>
       {/* <Note note={info} /> */}
-    </div>
+    </div >
   )
 }
 export default CaptureAction
