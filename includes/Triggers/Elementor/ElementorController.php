@@ -112,7 +112,7 @@ final class ElementorController
         global $wpdb;
         $flows = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT * FROM wp_btcbi_flow
+                "SELECT * FROM {$wpdb->prefix}btcbi_flow
                 WHERE status = %s 
                 AND triggered_entity = %s 
                 AND (triggered_entity_id = %s
