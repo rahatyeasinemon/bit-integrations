@@ -37,9 +37,9 @@ export default function SystemIOAuthorization({ systemIOConf, setSystemIOConf, s
             <ul>
                 <li>First go to your SystemIO dashboard.</li>
                 <li>Click go to "Settings" from Right Top corner</li>
-                <li>Then Click "API" from the "Settings Menu"</li>
-                <li>Then Click "Generate Api Secret"</li>
-                <li>Then copy "API Authorization Credentials"</li>
+                <li>Then Click "Public API Keys" from the "Settings Menu"</li>
+                <li>Then Click "Create Api key"</li>
+                <li>Then copy "API Token"</li>
             </ul>`
 
   return (
@@ -67,7 +67,7 @@ export default function SystemIOAuthorization({ systemIOConf, setSystemIOConf, s
       <small className="d-blk mt-3">
         {__('To Get API Key & API Secret, Please Visit', 'bit-integrations')}
         &nbsp;
-        <a className="btcd-link" href='https://my.systemIO.com/manage/settings/api-details' target='_blank'>{__('SystemIO API Key & Secret', 'bit-integrations')}</a>
+        <a className="btcd-link" href='https://systeme.io/dashboard/profile/public-api-settings' target='_blank'>{__('SystemIO API Key & Secret', 'bit-integrations')}</a>
       </small>
       <br />
       <br />

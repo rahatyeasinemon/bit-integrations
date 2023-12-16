@@ -22,7 +22,6 @@ function SystemIO({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const systemIOFields = [
-    { label: 'First Name', key: 'name', required: true },
     { label: 'Email Address', key: 'email', required: true },
     { label: 'Last Name', key: 'last_name', required: false },
     { label: 'Phone Number', key: 'phone_number', required: false },

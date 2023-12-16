@@ -42,8 +42,6 @@ class RecordApiHelper
         }
 
         $apiEndpoint = $this->apiUrl . "/contacts";
-        var_dump($finalData);
-        die;
 
         $response = HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
 
@@ -65,10 +63,9 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field tag is empty', 'code' => 400];
         }
 
-        $apiEndpoint = $this->apiUrl . "/" . $contactId . "/tags";
+        $apiEndpoint = $this->apiUrl . "/contacts/" . $contactId . "/tags";
 
-        $data['tagId'] = $tag;
-
+        $data['tagId'] = (int)$tag;
         return $response = HttpHelper::post($apiEndpoint, json_encode($data), $this->defaultHeader);
 
     }
