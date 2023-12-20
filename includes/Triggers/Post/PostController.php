@@ -96,7 +96,6 @@ final class PostController
 
     public static function createPost($postId, $newPostData, $update)
     {
-
         $postCreateFlow = Flow::exists('Post', 1);
         $currentURL = home_url($_SERVER['REQUEST_URI']);
 
@@ -109,6 +108,7 @@ final class PostController
 
             if (isset($newPostData->post_content)) {
                 $newPostData->post_content = trim(strip_tags($newPostData->post_content));
+                $newPostData->post_permalink = get_permalink($newPostData);
             }
 
             if ($newPostData->post_status !== 'auto-draft') {
@@ -159,6 +159,7 @@ final class PostController
 
             if (isset($deletedPost->post_content)) {
                 $deletedPost->post_content = trim(strip_tags($deletedPost->post_content));
+                $deletedPost->post_permalink = get_permalink($deletedPost);
             }
 
             if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $deletedPost->post_type) {
@@ -190,6 +191,7 @@ final class PostController
             }
             if (isset($updatedPostData->post_content)) {
                 $updatedPostData->post_content = trim(strip_tags($updatedPostData->post_content));
+                $updatedPostData->post_permalink = get_permalink($updatedPostData);
             }
 
             if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $updatedPostData->post_type) {
@@ -215,6 +217,7 @@ final class PostController
 
             if (isset($post->post_content)) {
                 $post->post_content = trim(strip_tags($post->post_content));
+                $post->post_permalink = get_permalink($post);
             }
             if (has_post_thumbnail($post->id)) {
                 $post->featured_image = get_the_post_thumbnail_url($post->id, 'full');
@@ -266,6 +269,7 @@ final class PostController
     {
         $postUpdateFlow = Flow::exists('Post', 9);
         $postData = get_post($trashPostId);
+        $postData['post_permalink'] = get_permalink($postData);
 
         if ($postUpdateFlow) {
             $flowDetails = $postUpdateFlow[0]->flow_details;
