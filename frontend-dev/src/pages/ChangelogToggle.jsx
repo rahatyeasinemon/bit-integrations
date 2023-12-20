@@ -10,7 +10,7 @@ import Modal from '../components/Utilities/Modal'
 export default function ChangelogToggle() {
     const btcbi = useRecoilValue($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const version = btcbi.isPro ? '1.4.3' : '1.5.5'
+    const version = btcbi.isPro ? '1.4.3' : '1.5.6'
     return (
         <div className="changelog-toggle">
             <button
@@ -27,7 +27,7 @@ export default function ChangelogToggle() {
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
                         <h3>What's New in {version}?</h3>
-                        <small>5th December 2023</small>
+                        <small>20th December 2023</small>
                     </div>
                     <div className='changelog-content'>
                         <h4>New Integration</h4>
@@ -45,7 +45,7 @@ export default function ChangelogToggle() {
 
                         <div className='integration-list'>
                             <ul>
-                                <li>Nutshell CRM</li>
+                                <li>System.io</li>
                             </ul>
                         </div>
 
@@ -53,11 +53,16 @@ export default function ChangelogToggle() {
 
                         <div className='fixes-list'>
                             <ul>
-                                <li>Woocommerce order create refatored</li>
-                                <li>MailPoet existing subscriber issue fixed</li>
-                                <li>Elementor duplicate page form issue fixed </li>
-                                <li>WooCommerce change custom order status issue fixed</li>
-                                <li>Salesforce custom field issue fixed</li>
+                                <li>SendFox lists limitation issue fixed</li>
+                                <li>Rapidemail Double opt-in issue fixed</li>
+                                <li>Formidable multiiple file upload issue fixed</li>
+                                <li>PropovoiceCRM tags issue fixed</li>
+                                <li>Affiliate blank page issue fixed</li>
+                                <li>FluentCRM custom field issue fixed</li>
+                                <li>Forminator multiple address issue fixed </li>
+                                <li>Mailchimp update record issue fixed</li>
+                                <li>Elementor integration issue fixed</li>
+                                <li>Hubspot custom field issue fixed</li>
                             </ul>
                         </div>
                     </div>

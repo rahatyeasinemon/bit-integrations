@@ -4,7 +4,7 @@ Tags: automation,integration,connector,automator,Zapier,webhook,API,Hook,Pabbly,
 Requires at least: 5.1
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.5.5
+Stable tag: 1.5.6
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 60+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -1721,11 +1721,29 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 
 == Changelog ==
 
+= 1.5.6  =
+*Release Date - *20th December 2023\*
+
+- **New Actions :**
+  - Systeme.io - The only tool you need to launch your online business -  Systeme.io Integration & Automation
+
+- **Fixes :**
+  - SendFox lists limitation issue fixed
+  - Rapidemail Double opt-in issue fixed
+  - Formidable multiiple file upload issue fixed
+  - PropovoiceCRM tags issue fixed
+  - Affiliate blank page issue fixed
+  - FluentCRM custom field issue fixed
+  - Forminator multiple address issue fixed 
+  - Mailchimp update record issue fixed
+  - Elementor integration issue fixed
+  - Hubspot custom field issue fixed
+
 = 1.5.5  =
 *Release Date - *5th December 2023\*
 
 - **New Actions :**
-  - Nutshell CRM: Simple Pipeline & Contact Management
+  - Nutshell CRM: Simple Pipeline & Contact Management - Nutshell CRM Integration & Automation
 
 - **Fixes :**
   - Woocommerce order create refatored
