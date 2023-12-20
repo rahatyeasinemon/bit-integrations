@@ -16,17 +16,17 @@ export default function SalesforceFieldMap({ i, formFields, field, salesforceCon
   //   newConf.field_map = tmp
   //   setSalesforceConf(newConf)
   // }
-  useEffect(() => {
-    if (salesforceConf?.field_map?.length === 1 && field.selesforceField === '') {
-      const newConf = { ...salesforceConf }
-      const tmp = generateMappedField(newConf, actionName)
-      newConf.field_map = tmp
-      setSalesforceConf(newConf)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (salesforceConf?.field_map?.length === 1 && field.selesforceField === '') {
+  //     const newConf = { ...salesforceConf }
+  //     const tmp = generateMappedField(newConf, actionName)
+  //     newConf.field_map = tmp
+  //     setSalesforceConf(newConf)
+  //   }
+  // }, [])
 
-  const requiredFlds = selesforceFields.filter(fld => fld.required === true) || []
-  const nonRequiredFlds = selesforceFields.filter(fld => fld.required === false) || []
+  const requiredFlds = selesforceFields && selesforceFields.filter(fld => fld.required === true) || []
+  const nonRequiredFlds = selesforceFields && selesforceFields.filter(fld => fld.required === false) || []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi

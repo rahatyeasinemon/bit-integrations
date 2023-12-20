@@ -7,11 +7,11 @@
 
 namespace BitCode\FI\Actions\Rapidmail;
 
+use stdClass;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Actions\Rapidmail\RecordApiHelper as RapidmailRecordApiHelper;
-use BitCode\FI\Log\LogHandler;
-use stdClass;
 
 
 final class RapidmailController
@@ -50,7 +50,7 @@ final class RapidmailController
 
 
         $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
-        if(!(property_exists($apiResponse,'_embedded') && property_exists($apiResponse->_embedded, 'apiusers'))) {
+        if (!(property_exists($apiResponse, '_embedded') && property_exists($apiResponse->_embedded, 'apiusers'))) {
             wp_send_json_error(
                 // empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 'Unauthorize',
@@ -60,7 +60,6 @@ final class RapidmailController
             $apiResponse->generates_on = \time();
             wp_send_json_success($apiResponse, 200);
         }
-       
     }
     /**
      * Process request for getting recipientlists from rapidmail
@@ -126,7 +125,7 @@ final class RapidmailController
         $apiResponse = HttpHelper::get($recipientApiEndpoint, null, $header);
         $tempRecipient = $apiResponse->_embedded->recipientlists;
         $data = [];
-        
+
         foreach ($tempRecipient as $list) {
             $data[] = (object) [
                 'id' => $list->id,
@@ -145,6 +144,7 @@ final class RapidmailController
         $username = $integrationDetails->username;
         $password = $integrationDetails->password;
         $recipientLists = $defaultDataConf->recipientlists;
+        $actions = $integrationDetails->actions;
 
         if (
             empty($username)
@@ -160,7 +160,7 @@ final class RapidmailController
             LogHandler::save($this->_integrationID, 'record', 'validation', $error);
             return $error;
         }
-        $actions = $integrationDetails->actions;
+
         $recordApiHelper = new RapidmailRecordApiHelper($integrationDetails, $username, $password);
         $rapidmailResponse = $recordApiHelper->executeRecordApi(
             $this->_integrationID,

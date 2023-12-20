@@ -47,7 +47,9 @@ function Rapidmail({ formFields, setFlow, flow, allIntegURL }) {
       { formField: '', rapidmailFormField: '' },
     ],
     recipientsFields,
-    actions: {},
+    actions: {
+      send_activationmail: false
+    },
   })
 
   const saveConfig = () => {

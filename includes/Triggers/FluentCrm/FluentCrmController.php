@@ -2,12 +2,12 @@
 
 namespace BitCode\FI\Triggers\FluentCrm;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Flow\FlowController;
 use DateTime;
+use BitCode\FI\Flow\Flow;
 use FluentCrm\App\Models\Tag;
 use FluentCrm\App\Models\Lists;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Flow\FlowController;
 use FluentCrm\App\Models\Subscriber;
 use FluentCrm\App\Models\CustomContactField;
 
@@ -100,8 +100,8 @@ final class FluentCrmController
             $responseData['status'] = array_merge($status, $fluentCrmStatus);
         }
 
-        
-        
+
+
         $responseData['fields'] = $fields;
         wp_send_json_success($responseData);
     }
@@ -298,7 +298,7 @@ final class FluentCrmController
                 ];
             }
         }
-        
+
         foreach ((new CustomContactField)->getGlobalFields()['fields'] as $field) {
             $fieldOptions[] = [
                 'name'         => $field['slug'],
@@ -424,16 +424,17 @@ final class FluentCrmController
             return;
         }
 
-        $email = $subscriber->email;
-        $data = self::getContactData($email);
+        $email  = $subscriber->email;
+        $data   = self::getContactData($email);
 
         Flow::execute('FluentCrm', 'fluentcrm-6', $data, $flows);
     }
 
     public static function getContactData($email)
     {
-        $contactApi = \FluentCrmApi('contacts');
-        $contact = $contactApi->getContact($email);
+        $contactApi     = \FluentCrmApi('contacts');
+        $contact        = $contactApi->getContact($email);
+        $customFields   = $contact->custom_fields();
 
         $data = [
             "prefix" => $contact->prefix,
@@ -454,6 +455,11 @@ final class FluentCrmController
             "date_of_birth" => $contact->date_of_birth,
         ];
 
+        if (!empty($customFields)) {
+            foreach ($customFields as $key => $value) {
+                $data[$key] = $value;
+            }
+        }
         $tags = $contact->tags;
         $fluentCrmTags = [];
         foreach ($tags as $tag) {
@@ -493,7 +499,8 @@ final class FluentCrmController
         return $filteredFlows;
     }
 
-    public static function getFluentCrmTags(){
+    public static function getFluentCrmTags()
+    {
         $tags[] = [
             'tag_id' => "any",
             'tag_title' => "Any Tag",
@@ -502,10 +509,10 @@ final class FluentCrmController
 
         $tags = array_merge($tags, $fluentCrmTags);
         wp_send_json_success($tags);
-
     }
 
-    public static function getFluentCrmList(){
+    public static function getFluentCrmList()
+    {
         $lists[] = [
             'list_id' => "any",
             'list_title' => "Any List",
@@ -514,18 +521,17 @@ final class FluentCrmController
 
         $lists = array_merge($lists, $fluentCrmLists);
         wp_send_json_success($lists);
-        
     }
-    
-    public static function getFluentCrmStatus(){
+
+    public static function getFluentCrmStatus()
+    {
         $status[] = [
             'status_id' => "any",
             'status_title' => "Any status",
         ];
         $fluentCrmStatus = self::fluentCrmStatus();
-        
+
         $status = array_merge($status, $fluentCrmStatus);
         wp_send_json_success($status);
-
     }
 }

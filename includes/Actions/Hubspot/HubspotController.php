@@ -3,9 +3,9 @@
 namespace BitCode\FI\Actions\Hubspot;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 final class HubspotController
 {
@@ -51,32 +51,27 @@ final class HubspotController
 
         if (isset($apiResponse->results) && !empty($apiResponse->results)) {
             foreach ($apiResponse->results as $field) {
-                if ($requestParams->type == 'contact') {
-                    if ($field->formField === true && $field->type != 'radio' && $field->type != 'enumeration') {
-                        $fields[] = [
-                            'key'      => $field->name,
-                            'label'    => $field->label,
-                            'required' => $field->name == 'email' ? true : false
-                        ];
-                    }
-                } elseif ($requestParams->type == 'deal') {
-                    if ($field->type != 'enumeration' && $field->fieldType != 'calculation_equation') {
-                        $fields[] = [
-                            'key'      => $field->name,
-                            'label'    => $field->label,
-                            'required' => $field->name == 'dealname' ? true : false
-                        ];
-                    }
-                } elseif ($requestParams->type == 'ticket') {
-                    if ($field->formField === true && $field->type != 'enumeration') {
-                        $fields[] = [
-                            'key'      => $field->name,
-                            'label'    => $field->label,
-                            'required' => $field->name == 'subject' ? true : false
-                        ];
-                    }
+                if ($requestParams->type == 'contact' && $field->formField === true) {
+                    $fields[] = [
+                        'key'      => $field->name,
+                        'label'    => $field->label,
+                        'required' => $field->name == 'email' ? true : false
+                    ];
+                } elseif ($requestParams->type == 'deal' && $field->formField === true) {
+                    $fields[] = [
+                        'key'      => $field->name,
+                        'label'    => $field->label,
+                        'required' => $field->name == 'dealname' ? true : false
+                    ];
+                } elseif ($requestParams->type == 'ticket' && $field->formField === true) {
+                    $fields[] = [
+                        'key'      => $field->name,
+                        'label'    => $field->label,
+                        'required' => $field->name == 'subject' ? true : false
+                    ];
                 }
             }
+
             wp_send_json_success($fields, 200);
         } else {
             wp_send_json_error('fields fetching failed', 400);

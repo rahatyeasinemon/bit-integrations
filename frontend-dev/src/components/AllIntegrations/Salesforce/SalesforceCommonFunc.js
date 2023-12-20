@@ -239,61 +239,60 @@ export const getAllCustomFields = (formID, actionName, salesforceConf, setSalesf
   }
   const loadPostTypes = bitsFetch(customFieldRequestParams, 'selesforce_custom_field')
     .then(result => {
-      if (result && result.success) {
-        setSalesforceConf((prevConf) => {
-          const draftConf = prevConf;
-          draftConf.field_map = [{ formField: "", salesmateFormField: "" }];
-          if (result.data) {
-            if (actionName === 'contact-create') {
-              draftConf['selesforceFields'] = [
-                ...draftConf.contactFields,
-                ...result.data,
-              ];
-            } else if (actionName === 'lead-create') {
-              draftConf['selesforceFields'] = [
-                ...draftConf.leadFields,
-                ...result.data,
-              ];
-            } else if (actionName === 'account-create') {
-              draftConf['selesforceFields'] = [
-                ...draftConf.accountFields,
-                ...result.data,
-              ];
-            } else if (actionName === 'campaign-create') {
-              draftConf['selesforceFields'] = [
-                ...draftConf.campaignFields,
-                ...result.data,
-              ];
-            } else if (actionName === 'add-campaign-member') {
-              draftConf['selesforceFields'] = [
-                ...draftConf.campaignMemberStatus,
-                ...result.data,
-              ];
-            } else if (actionName === 'opportunity-create') {
-              draftConf['selesforceFields'] = [
-                ...draftConf.opportunityFields,
-                ...result.data,
-              ];
-            } else if (actionName === 'event-create') {
-              draftConf['selesforceFields'] = [
-                ...draftConf.eventFields,
-                ...result.data,
-              ];
-            } else if (actionName === 'case-create') {
-              draftConf['selesforceFields'] = [
-                ...draftConf.caseFields,
-                ...result.data,
-              ];
-            }
+      const customFields = result && result.success ? result?.data : []
+      const returnMsg = result && result.success ? 'Custom field refresh successfully.' : result?.data[0]?.message ? 'Custom field: ' + result?.data[0]?.message : 'Custom field refresh failed. please try again'
+
+      setSalesforceConf((prevConf) => {
+        const draftConf = prevConf;
+        draftConf.field_map = [{ formField: "", salesmateFormField: "" }];
+        if (result?.data) {
+          if (actionName === 'contact-create') {
+            draftConf['selesforceFields'] = [
+              ...draftConf.contactFields,
+              ...customFields
+            ];
+          } else if (actionName === 'lead-create') {
+            draftConf['selesforceFields'] = [
+              ...draftConf.leadFields,
+              ...customFields
+            ];
+          } else if (actionName === 'account-create') {
+            draftConf['selesforceFields'] = [
+              ...draftConf.accountFields,
+              ...customFields
+            ];
+          } else if (actionName === 'campaign-create') {
+            draftConf['selesforceFields'] = [
+              ...draftConf.campaignFields,
+              ...customFields
+            ];
+          } else if (actionName === 'add-campaign-member') {
+            draftConf['selesforceFields'] = [
+              ...draftConf.campaignMemberStatus,
+              ...customFields
+            ];
+          } else if (actionName === 'opportunity-create') {
+            draftConf['selesforceFields'] = [
+              ...draftConf.opportunityFields,
+              ...customFields
+            ];
+          } else if (actionName === 'event-create') {
+            draftConf['selesforceFields'] = [
+              ...draftConf.eventFields,
+              ...customFields
+            ];
+          } else if (actionName === 'case-create') {
+            draftConf['selesforceFields'] = [
+              ...draftConf.caseFields,
+              ...customFields
+            ];
           }
-          draftConf.field_map = generateMappedField(draftConf);
-          return draftConf;
-        });
-        setIsLoading(false)
-        return 'Contact list refresh successfully.'
-      }
+        }
+        draftConf.field_map = generateMappedField(draftConf);
+        return draftConf;
+      });
       setIsLoading(false)
-      // return 'Contact list refresh failed. please try again'
+      return returnMsg
     })
   toast.promise(loadPostTypes, {
     success: data => data,
@@ -403,7 +402,7 @@ export const generateMappedField = (salesforceConf, actionName) => {
   // } else if (actionName === 'case-create') {
   //   fields = salesforceConf?.caseFields
   // }
-  fields = salesforceConf?.selesforceFields
+  fields = salesforceConf?.selesforceFields || []
   const requiredFlds = fields.filter(fld => fld.required === true)
   return requiredFlds.length > 0 ? requiredFlds.map(field => ({ formField: '', selesforceField: field.key })) : [{ formField: '', selesforceField: '' }]
 }

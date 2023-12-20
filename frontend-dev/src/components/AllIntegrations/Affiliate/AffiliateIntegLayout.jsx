@@ -6,6 +6,7 @@ import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import AffiliateActions from './AffiliateActions'
 import { getAllAffiliate } from './AffiliateCommonFunc'
 import AffiliateFieldMap from './AffiliateFieldMap'
+import Note from '../../Utilities/Note'
 
 export default function AffiliateIntegLayout({ formFields, handleInput, affiliateConf, setAffiliateConf, isLoading, setIsLoading, setSnackbar, allIntegURL, isInfo, edit }) {
   useEffect(() => {
