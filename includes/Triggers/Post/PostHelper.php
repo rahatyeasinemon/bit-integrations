@@ -1,5 +1,7 @@
 <?php
+
 namespace BitCode\FI\Triggers\Post;
+
 use WP_Query;
 
 
@@ -147,6 +149,11 @@ final class PostHelper
                 'type' => 'file',
                 'label' => 'Featured Image',
             ],
+            [
+                'name' => 'post_permalink',
+                'type' => 'text',
+                'label' => 'Post Permalink',
+            ],
         ];
         return $postFields;
     }
@@ -169,12 +176,13 @@ final class PostHelper
         return $lists;
     }
 
-    public static function getPostTitles(){
-        
-        $query = new WP_Query( array(
-            'post_type'		=> 'post',
-             'nopaging'      => true,
-        ) );
+    public static function getPostTitles()
+    {
+
+        $query = new WP_Query(array(
+            'post_type'        => 'post',
+            'nopaging'      => true,
+        ));
 
         $posts = $query->get_posts();
 
@@ -184,7 +192,7 @@ final class PostHelper
             $postTitles[$key]['id'] = $post->ID;
             $postTitles[$key]['title'] = $post->post_title;
         }
-        
+
         return $postTitles;
-     }
+    }
 }
