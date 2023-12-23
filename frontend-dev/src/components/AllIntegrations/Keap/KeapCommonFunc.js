@@ -1,6 +1,5 @@
 import { __, sprintf } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
-import { deepCopy } from '../../../Utils/Helpers'
 
 export const handleInput = (e, keapConf, setKeapConf, formID, setIsLoading, setSnackbar, isNew, error, setError) => {
   let newConf = { ...keapConf }
@@ -10,172 +9,7 @@ export const handleInput = (e, keapConf, setKeapConf, formID, setIsLoading, setS
     setError({ ...rmError })
   }
   newConf[e.target.name] = e.target.value
-  switch (e.target.name) {
-    case 'spreadsheetId':
-      newConf = spreadSheetChange(newConf, formID, setKeapConf, setIsLoading, setSnackbar)
-      break
-    case 'worksheetName':
-      newConf = worksheetChange(newConf, formID, setKeapConf, setIsLoading, setSnackbar)
-      break
-    default:
-      break
-  }
   setKeapConf({ ...newConf })
-}
-
-export const spreadSheetChange = (keapConf, formID, setKeapConf, setIsLoading, setSnackbar) => {
-  const newConf = deepCopy(keapConf)
-  newConf.worksheetName = ''
-  newConf.headerRow = 'A1'
-  newConf.field_map = [{ formField: '', googleSheetField: '' }]
-
-  if (!newConf?.default?.worksheets?.[keapConf.spreadsheetId]) {
-    refreshWorksheets(formID, newConf, setKeapConf, setIsLoading, setSnackbar)
-  } else if (Object.keys(newConf?.default?.worksheets?.[keapConf.spreadsheetId]).length === 1) {
-    newConf.worksheetName = newConf?.default?.worksheets?.[keapConf.spreadsheetId][0].properties.title
-
-    if (!newConf?.default?.worksheets?.headers?.[newConf.worksheetName]) {
-      refreshWorksheetHeaders(formID, newConf, setKeapConf, setIsLoading, setSnackbar)
-    }
-  }
-
-  return newConf
-}
-
-export const worksheetChange = (keapConf, formID, setKeapConf, setIsLoading, setSnackbar) => {
-  const newConf = { ...keapConf }
-  newConf.headerRow = 'A1'
-  newConf.field_map = [{ formField: '', googleSheetField: '' }]
-
-  if (!newConf?.default?.worksheets?.headers?.[keapConf.worksheetName]) {
-    refreshWorksheetHeaders(formID, newConf, setKeapConf, setIsLoading, setSnackbar)
-  }
-
-  return newConf
-}
-
-export const refreshSpreadsheets = (formID, keapConf, setKeapConf, setIsLoading, setSnackbar) => {
-  setIsLoading(true)
-  const refreshModulesRequestParams = {
-    formID,
-    id: keapConf.id,
-    clientId: keapConf.clientId,
-    clientSecret: keapConf.clientSecret,
-    tokenDetails: keapConf.tokenDetails,
-    ownerEmail: keapConf.ownerEmail,
-  }
-  bitsFetch(refreshModulesRequestParams, 'gsheet_refresh_spreadsheets')
-    .then(result => {
-      if (result && result.success) {
-        const newConf = { ...keapConf }
-        if (!newConf.default) {
-          newConf.default = {}
-        }
-        if (result.data.spreadsheets) {
-          newConf.default.spreadsheets = result.data.spreadsheets
-        }
-        if (result.data.tokenDetails) {
-          newConf.tokenDetails = result.data.tokenDetails
-        }
-        setSnackbar({ show: true, msg: __('Keap refreshed', 'bit-integrations') })
-        setKeapConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: sprintf(__('Keap refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
-      } else {
-        setSnackbar({ show: true, msg: __('Keap refresh failed. please try again', 'bit-integrations') })
-      }
-      setIsLoading(false)
-    })
-    .catch(() => setIsLoading(false))
-}
-
-export const refreshWorksheets = (formID, keapConf, setKeapConf, setIsLoading, setSnackbar) => {
-  const { spreadsheetId } = keapConf
-  if (!spreadsheetId) {
-    return
-  }
-  setIsLoading(true)
-  const refreshSpreadsheetsRequestParams = {
-    formID,
-    spreadsheetId,
-    clientId: keapConf.clientId,
-    clientSecret: keapConf.clientSecret,
-    tokenDetails: keapConf.tokenDetails,
-  }
-  bitsFetch(refreshSpreadsheetsRequestParams, 'gsheet_refresh_worksheets')
-    .then(result => {
-      if (result && result.success) {
-        const newConf = { ...keapConf }
-        if (result.data.worksheets) {
-          if (!newConf.default.worksheets) {
-            newConf.default.worksheets = {}
-          }
-          newConf.default.worksheets[spreadsheetId] = result.data.worksheets
-        }
-
-        if (result.data.tokenDetails) {
-          newConf.tokenDetails = result.data.tokenDetails
-        }
-        setSnackbar({ show: true, msg: __('Worksheets refreshed', 'bit-integrations') })
-        setKeapConf({ ...newConf })
-      } else {
-        setSnackbar({ show: true, msg: __('Worksheets refresh failed. please try again', 'bit-integrations') })
-      }
-      setIsLoading(false)
-    })
-    .catch(() => setIsLoading(false))
-}
-
-export const refreshWorksheetHeaders = (formID, keapConf, setKeapConf, setIsLoading, setSnackbar) => {
-  const { spreadsheetId, worksheetName, header, headerRow } = keapConf
-  if (!spreadsheetId && !worksheetName && !header && !headerRow) {
-    return
-  }
-
-  setIsLoading(true)
-  const refreshWorksheetHeadersRequestParams = {
-    formID,
-    spreadsheetId,
-    worksheetName,
-    header,
-    headerRow,
-    clientId: keapConf.clientId,
-    clientSecret: keapConf.clientSecret,
-    tokenDetails: keapConf.tokenDetails,
-  }
-  bitsFetch(refreshWorksheetHeadersRequestParams, 'gsheet_refresh_worksheet_headers')
-    .then(result => {
-      if (result && result.success) {
-        const newConf = { ...keapConf }
-        if (result.data.worksheet_headers?.length > 0) {
-          if (!newConf.default.headers) {
-            newConf.default.headers = {}
-          }
-          if (!newConf.default.headers[spreadsheetId]) {
-            newConf.default.headers[spreadsheetId] = {}
-          }
-          if (!newConf.default.headers[spreadsheetId][worksheetName]) {
-            newConf.default.headers[spreadsheetId][worksheetName] = {}
-          }
-          newConf.default.headers[spreadsheetId][worksheetName][headerRow] = result.data.worksheet_headers
-          if (result.data.tokenDetails) {
-            newConf.tokenDetails = result.data.tokenDetails
-          }
-          setSnackbar({ show: true, msg: __('Worksheet Headers refreshed', 'bit-integrations') })
-        } else {
-          setSnackbar({ show: true, msg: __('No Worksheet headers found. Try changing the header row number or try again', 'bit-integrations') })
-        }
-
-        if (result.data.tokenDetails) {
-          newConf.tokenDetails = result.data.tokenDetails
-        }
-        setKeapConf({ ...newConf })
-      } else {
-        setSnackbar({ show: true, msg: __('Worksheet Headers refresh failed. please try again', 'bit-integrations') })
-      }
-      setIsLoading(false)
-    })
-    .catch(() => setIsLoading(false))
 }
 
 export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setIsLoading, setSnackbar) => {
@@ -248,4 +82,32 @@ export const checkMappedFields = (keapConf) => {
 export const generateMappedField = (keapConf) => {
   const requiredFlds = keapConf?.contactFields.filter(fld => fld.required === true)
   return requiredFlds.length > 0 ? requiredFlds.map(field => ({ formField: '', keapField: field.key })) : [{ formField: '', keapField: '' }]
+}
+
+export const getAllTags = (confTmp, setConf, setLoading) => {
+
+  setLoading({ ...setLoading, tags: true })
+
+  const requestParams = {
+    clientId: confTmp.clientId,
+    clientSecret: confTmp.clientSecret,
+    tokenDetails: confTmp.tokenDetails 
+  }
+  
+  bitsFetch(requestParams, 'keap_fetch_all_tags')
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...confTmp }
+        if (result.data) {
+          newConf.tags = result.data
+        }
+        setConf(newConf)
+        setLoading(false)
+
+        setSnackbar({ show: true, msg: __('Tag Fetched Successfully', 'bit-integrations') })
+        return
+      }
+      setLoading({ ...setLoading, tags: false })
+      setSnackbar({ show: true, msg: __('Tag Couldn\'t Fetched Successfully', 'bit-integrations') })
+    })
 }

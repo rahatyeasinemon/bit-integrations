@@ -5,7 +5,7 @@ import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
-import { handleAuthorize, refreshSpreadsheets } from './KeapCommonFunc'
+import { handleAuthorize } from './KeapCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 
@@ -28,7 +28,6 @@ export default function KeapAuthorization({ formID, keapConf, setKeapConf, step,
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
     setstep(2)
-    refreshSpreadsheets(formID, keapConf, setKeapConf, setIsLoading, setSnackbar)
   }
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>

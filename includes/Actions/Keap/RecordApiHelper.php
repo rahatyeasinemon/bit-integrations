@@ -30,11 +30,31 @@ class RecordApiHelper
     public function insertCard($data)
     {
         $data = \is_string($data) ? $data : \json_encode((object)$data);
-        // $data = json_encode($data);
+
         $header["Authorization"] = "Bearer {$this->_tokenDetails->access_token}";
         $header["Content-Type"] = "application/json";
-        $insertRecordEndpoint = 'https://api.infusionsoft.com/crm/rest/v1/contacts';
+        $insertRecordEndpoint = 'https://api.infusionsoft.com/crm/rest/v1/contact';
         return HttpHelper::post($insertRecordEndpoint, $data, $header);
+
+    }
+
+    public function insertTag($contactId, $tags)
+    {
+        $tagIds = explode(',', $tags);
+        $allTagIds = [];
+        foreach ($tagIds as $tag) {
+            $allTagIds[] = (int)$tag;
+        }
+
+        $data['tagIds'] = $allTagIds;
+
+        $header["Authorization"] = "Bearer {$this->_tokenDetails->access_token}";
+        $header["Content-Type"] = "application/json";
+        $insertTagEndpoint = 'https://api.infusionsoft.com/crm/rest/v1/contacts/' . $contactId . '/tags';
+
+        return $response = HttpHelper::post($insertTagEndpoint, json_encode($data), $header);
+
+
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -55,7 +75,7 @@ class RecordApiHelper
             $actionValue = $value->keapField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!is_null($data[$triggerValue])) {
                 if ($actionValue === 'billing_country_code') {
                     $billing_address = $billing_address + ["country_code" => $data[$triggerValue]];
                 } elseif ($actionValue === 'billing_locality') {
@@ -106,12 +126,17 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute( $defaultConf, $fieldValues, $fieldMap, $actions)
+    public function execute($defaultConf, $fieldValues, $fieldMap, $actions)
     {
         $fieldData = [];
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $apiResponse = $this->insertCard($finalData);
-        if (property_exists($apiResponse, 'errors')) {
+
+        if ($defaultConf->actions->tags || isset($apiResponse->id)) {
+            $tagResponse = $this->insertTag($apiResponse->id, $defaultConf->selectedTags);
+        }
+
+        if (!(isset($apiResponse->id))) {
             LogHandler::save($this->_integrationID, ['type' =>  'contact', 'type_name' => 'add-contact'], 'error', $apiResponse);
         } else {
             LogHandler::save($this->_integrationID, ['type' =>  'record', 'type_name' => 'add-contact'], 'success', $apiResponse);
