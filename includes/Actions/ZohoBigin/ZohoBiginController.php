@@ -3,12 +3,13 @@
 /**
  * ZohoBigin Integration
  */
+
 namespace BitCode\FI\Actions\ZohoBigin;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -115,6 +116,60 @@ class ZohoBiginController
         } else {
             wp_send_json_error(
                 empty($modulesMetaResponse->error) ? 'Unknown' : $modulesMetaResponse->error,
+                400
+            );
+        }
+        if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
+            self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
+        }
+        wp_send_json_success($response, 200);
+    }
+
+    /**
+     * Process ajax request for refresh bigin modules
+     *
+     * @param Object $queryParams Params to refresh  modules
+     *
+     * @return JSON bigin module data
+     */
+    public static function refreshPLayouts($queryParams)
+    {
+        if (
+            empty($queryParams->tokenDetails)
+            || empty($queryParams->dataCenter)
+            || empty($queryParams->clientId)
+            || empty($queryParams->clientSecret)
+        ) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+        $response = [];
+        if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+            $response['tokenDetails'] = self::_refreshAccessToken($queryParams);
+        }
+        $layoutsMetaApiEndpoint = "https://www.zohoapis.{$queryParams->dataCenter}/bigin/v2/settings/layouts?module=Deals";
+        $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
+        $layoutsMetaResponse = HttpHelper::get($layoutsMetaApiEndpoint, null, $authorizationHeader);
+        // wp_send_json_success($layoutsMetaResponse, 200);
+        if (!is_wp_error($layoutsMetaResponse) && (empty($layoutsMetaResponse->status) || (!empty($layoutsMetaResponse->status) && $layoutsMetaResponse->status !== 'error'))) {
+            $retriveLayoutsData = $layoutsMetaResponse->layouts;
+            $allLayouts = [];
+            foreach ($retriveLayoutsData as $layout) {
+                $allLayouts[] = (object) [
+                    'display_label' => $layout->display_label,
+                    'name' => $layout->name
+                ];
+            }
+            uksort($allLayouts, 'strnatcasecmp');
+            $response['pLayouts'] = $allLayouts;
+        } else {
+            wp_send_json_error(
+                empty($layoutsMetaResponse->error) ? 'Unknown' : $layoutsMetaResponse->error,
                 400
             );
         }
@@ -387,7 +442,8 @@ class ZohoBiginController
      */
     protected static function _refreshAccessToken($apiData)
     {
-        if (!is_object($apiData) ||
+        if (
+            !is_object($apiData) ||
             empty($apiData->dataCenter)
             || empty($apiData->clientId)
             || empty($apiData->clientSecret)
@@ -491,7 +547,8 @@ class ZohoBiginController
             $fieldMap,
             $actions,
             $required,
-            $fileMap
+            // $fileMap,
+            $integrationDetails
         );
         if (is_wp_error($zBiginApiResponse)) {
             return $zBiginApiResponse;

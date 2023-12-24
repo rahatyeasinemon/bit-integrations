@@ -41,6 +41,14 @@ function ZohoBigin({ allIntegURL }) {
   }, [])
 
   const nextPage = () => {
+    if (!checkMappedFields(biginConf)) {
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
+      return
+    }
+    if (!biginConf?.pLayout) {
+      setSnackbar({ show: true, msg: __('Please select a layout', 'bit-integrations') })
+      return
+    }
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
