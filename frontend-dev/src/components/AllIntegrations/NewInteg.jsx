@@ -149,6 +149,7 @@ const WPFusion = lazy(() => import('./WPFusion/WPFusion'))
 const Woodpecker = lazy(() => import('./Woodpecker/Woodpecker'))
 const NutshellCRM = lazy(() => import('./NutshellCRM/NutshellCRM'))
 const SystemIO = lazy(() => import('./SystemIO/SystemIO'))
+const Discord = lazy(() => import('./Discord/Discord'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
@@ -441,6 +442,8 @@ export default function NewInteg({ allIntegURL }) {
         return <NutshellCRM allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'SystemIO':
         return <SystemIO allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
+      case 'Discord':
+        return <Discord allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       default:
         return <></>
     }
