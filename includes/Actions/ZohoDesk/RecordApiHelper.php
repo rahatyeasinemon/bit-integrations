@@ -54,10 +54,14 @@ class RecordApiHelper
         foreach ($fieldMap as $fieldKey => $fieldPair) {
             if (!empty($fieldPair->zohoFormField)) {
                 if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
-                    $fieldData[$fieldPair->zohoFormField] = $fieldPair->customValue;
+                    if (strtok($fieldPair->zohoFormField, "_") === 'cf') {
+                        $customFieldData[$fieldPair->zohoFormField] = $fieldPair->customValue;
+                    } else {
+                        $fieldData[$fieldPair->zohoFormField] = $fieldPair->customValue;
+                    }
                 } else {
                     if (strtok($fieldPair->zohoFormField, "_") === 'cf') {
-                        $customFieldData[$fieldPair->zohoFormField] = $fieldValues[$fieldPair->formField];
+                        $customFieldData[$fieldPair->zohoFormField] = is_array($fieldValues[$fieldPair->formField]) ? implode(',', $fieldValues[$fieldPair->formField]) : $fieldValues[$fieldPair->formField];
                     } else {
                         $fieldData[$fieldPair->zohoFormField] = $fieldValues[$fieldPair->formField];
                     }
