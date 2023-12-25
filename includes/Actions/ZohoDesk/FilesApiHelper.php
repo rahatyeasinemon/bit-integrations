@@ -1,7 +1,9 @@
 <?php
+
 /**
  * ZohoDesk Files Api
  */
+
 namespace BitCode\FI\Actions\ZohoDesk;
 
 use BitCode\FI\Core\Util\HttpHelper;
@@ -30,7 +32,7 @@ final class FilesApiHelper
         $this->_defaultHeader['content-type'] = "multipart/form-data; boundary=" . $this->_payloadBoundary;
         $this->_apiDomain = \urldecode($tokenDetails->api_domain);
     }
-    
+
     /**
      * Helps to execute upload files api
      *
@@ -55,8 +57,11 @@ final class FilesApiHelper
                     $payload .= "\r\n";
                     $payload .= file_get_contents("{$fileName}");
                     $payload .= "\r\n";
+                    $payload .= '--' . $this->_payloadBoundary . '--';
                 }
+                $uploadResponse =  HttpHelper::post($uploadFileEndpoint, $payload, $this->_defaultHeader);
             }
+            return $uploadResponse;
         } elseif (file_exists("{$files}")) {
             $payload .= '--' . $this->_payloadBoundary;
             $payload .= "\r\n";
@@ -70,8 +75,6 @@ final class FilesApiHelper
             return false;
         }
         $payload .= '--' . $this->_payloadBoundary . '--';
-        
-        $uploadResponse = HttpHelper::post($uploadFileEndpoint, $payload, $this->_defaultHeader);
-        return $uploadResponse;
+        return HttpHelper::post($uploadFileEndpoint, $payload, $this->_defaultHeader);
     }
 }
