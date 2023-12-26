@@ -1078,9 +1078,13 @@ final class WCController
 
     private static function acfGetFieldGroups()
     {
-        return array_filter(acf_get_field_groups(), function ($group) {
-            return $group["active"] && isset($group["location"][0][0]["value"]) && $group["location"][0][0]["value"] == "product";
-        });
+        if (class_exists('ACF')) {
+            return array_filter(acf_get_field_groups(), function ($group) {
+                return $group["active"] && isset($group["location"][0][0]["value"]) && $group["location"][0][0]["value"] == "product";
+            });
+        } else {
+            return [];
+        }
     }
 
     public static function product_update($post_id)
