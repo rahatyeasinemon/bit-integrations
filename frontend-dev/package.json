@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@bumaga/tabs": "^0.2.0",
+    "@gamingklex/react-tree-list": "^0.6.3",
     "@microlink/react-json-view": "^1.23.0",
     "@monaco-editor/react": "^4.5.2",
     "@tinymce/tinymce-react": "^3.14.0",

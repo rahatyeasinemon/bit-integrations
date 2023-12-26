@@ -60,7 +60,7 @@ const CaptureAction = () => {
       draftFields.splice(index, 1)
     }))
   }
-  console.log(selectedFields)
+  // console.log(selectedFields)
 
   useEffect(() => {
     if (newFlow.triggerDetail?.data?.length > 0 && newFlow.triggerDetail?.hook_id) {
@@ -86,7 +86,7 @@ const CaptureAction = () => {
       )
     }
   }, [])
-  console.log(newFlow?.triggerDetail?.data)
+  // console.log(newFlow?.triggerDetail?.data)
 
   const handleFetch = () => {
     if (isLoading) {
