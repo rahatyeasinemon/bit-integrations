@@ -291,6 +291,19 @@ final class WCController
                     'fieldName' => 'Product URL'
                 ],
             ];
+
+            $acfFieldGroups = self::acfGetFieldGroups();
+            foreach ($acfFieldGroups as $group) {
+                $acfFields = acf_get_fields($group["ID"]);
+
+                foreach ($acfFields as $field) {
+                    $fields[$field['label']] = (object) [
+                        'fieldKey'  => $field['_name'],
+                        'fieldName' => $field['label']
+                    ];
+                }
+            }
+
             $fields = array_merge($fields, $metabox['meta_fields']);
 
             $uploadFields = [
@@ -1047,11 +1060,27 @@ final class WCController
 
     public static function product_create($post_id)
     {
-        $productData = wc_get_product($post_id);
-        $data = self::accessProductData($productData);
+        $productData    = wc_get_product($post_id);
+        $data           = self::accessProductData($productData);
+        $acfFieldGroups = self::acfGetFieldGroups();
+
+        foreach ($acfFieldGroups as $group) {
+            $acfFields = acf_get_fields($group["ID"]);
+
+            foreach ($acfFields as $field) {
+                $data[$field['_name']] = get_post_meta($post_id, $field['_name'])[0];
+            }
+        }
         if (!empty($post_id) && $flows = Flow::exists('WC', 4)) {
             Flow::execute('WC', 4, $data, $flows);
         }
+    }
+
+    private static function acfGetFieldGroups()
+    {
+        return array_filter(acf_get_field_groups(), function ($group) {
+            return $group["active"] && isset($group["location"][0][0]["value"]) && $group["location"][0][0]["value"] == "product";
+        });
     }
 
     public static function product_update($post_id)
