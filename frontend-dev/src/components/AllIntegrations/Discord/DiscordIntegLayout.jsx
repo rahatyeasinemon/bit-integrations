@@ -5,11 +5,13 @@ import CheckBox from '../../Utilities/CheckBox'
 import Loader from '../../Loaders/Loader'
 import TinyMCE from '../../Utilities/TinyMCE'
 import DiscordActions from './DiscordActions'
+import { getAllChannels, getAllServers } from './DiscordCommonFunc'
+import { useEffect } from 'react'
 
 export default function DiscordIntegLayout({ formFields,
   discordConf,
   setDiscordConf,
-  isLoading }) {
+  isLoading, setIsLoading }) {
   const { id } = useParams()
   const handleInput = (e) => {
     const newConf = { ...discordConf }
@@ -17,6 +19,17 @@ export default function DiscordIntegLayout({ formFields,
     setDiscordConf(newConf)
   }
 
+
+  const setChanges = (val, name) => {
+    const newConf = { ...discordConf }
+    newConf[name] = val
+
+    if (name === 'selectedServer' && (newConf.selectedServer !== '' || newConf.selectedServer !== null) && val) {
+      newConf.selectedChannel = ''
+      getAllChannels(newConf, setDiscordConf, setIsLoading)
+    }
+    setDiscordConf({ ...newConf })
+  }
   const setMessageBody = (val) => {
     const newConf = { ...discordConf }
     newConf.body = val
@@ -30,57 +43,55 @@ export default function DiscordIntegLayout({ formFields,
     newConf.parse_mode = e.target.value
     setDiscordConf(newConf)
   }
-
   return (
     <>
       <br />
       <div className="flx">
-        <b className="wdt-200 d-in-b">
-          {__('Servers List: ', 'bit-integrations')}
-        </b>
-        <select
-          onChange={handleInput}
-          name="server_id"
-          value={discordConf.server_id}
-          className="btcd-paper-inp w-5"
+        <b className="wdt-200 d-in-b">{__('Select Servers:', 'bit-integrations')}</b>
+        <MultiSelect
+          options={discordConf?.servers?.map(Server => ({ label: Server.name, value: Server.id }))}
+          className="msl-wrp-options dropdown-custom-width"
+          defaultValue={discordConf?.selectedServer}
+          onChange={val => setChanges(val, 'selectedServer')}
+          disabled={isLoading.Servers}
+          singleSelect
+        />
+        <button
+          onClick={() => getAllServers(discordConf, setDiscordConf, setIsLoading)}
+          className="icn-btn sh-sm ml-2 mr-2 tooltip"
+          style={{ '--tooltip-txt': `'${__('Refresh Server List', 'bit-integrations')}'` }}
+          type="button"
+          disabled={isLoading.servers}
         >
-          <option value="">
-            {__('Select Server List', 'bit-integrations')}
-          </option>
-          {
-            discordConf?.tokenDetails?.servers
-            && discordConf?.tokenDetails?.servers.map(({ id, name }) => (
-              <option key={id} value={id}>
-                {name}
-              </option>
-            ))
-          }
-        </select>
+          &#x21BB;
+        </button>
       </div>
       <br />
-      <div className="flx">
-        <b className="wdt-200 d-in-b">
-          {__('Channels List: ', 'bit-integrations')}
-        </b>
-        <select
-          onChange={handleInput}
-          name="channel_id"
-          value={discordConf.channel_id}
-          className="btcd-paper-inp w-5"
-        >
-          <option value="">
-            {__('Select Channel List', 'bit-integrations')}
-          </option>
-          {
-            discordConf?.tokenDetails?.channels
-            && discordConf?.tokenDetails?.channels.map(({ id, name }) => (
-              <option key={id} value={id}>
-                {name}
-              </option>
-            ))
-          }
-        </select>
-      </div>
+      {discordConf?.selectedServer && (
+        <>
+          <div className="flx">
+            <b className="wdt-200 d-in-b">{__('Select Channels:', 'bit-integrations')}</b>
+            <MultiSelect
+              options={discordConf?.channels?.map(Channel => ({ label: Channel.name, value: Channel.id }))}
+              className="msl-wrp-options dropdown-custom-width"
+              defaultValue={discordConf?.selectedChannel}
+              onChange={val => setChanges(val, 'selectedChannel')}
+              disabled={isLoading.Channels}
+              singleSelect
+            />
+            <button
+              onClick={() => getAllChannels(discordConf, setDiscordConf, setIsLoading)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh Channel List', 'bit-integrations')}'` }}
+              type="button"
+              disabled={isLoading.channels}
+            >
+              &#x21BB;
+            </button>
+          </div>
+        </>
+      )}
+
       {isLoading && (
         <Loader
           style={{
@@ -92,7 +103,7 @@ export default function DiscordIntegLayout({ formFields,
           }}
         />
       )}
-      {discordConf?.channel_id && (
+      {discordConf?.selectedChannel && discordConf?.selectedServer && (
         <>
           <div className="flx mt-4">
             <b className="wdt-200 d-in-b mr-16">

@@ -50,7 +50,7 @@ final class FilesApiHelper
                 CURLOPT_POSTFIELDS => $data,
                 CURLOPT_HTTPHEADER => [
                     'Content-Type: multipart/form-data',
-                    "Authorization: Bearer {$_accessToken}"
+                    "Authorization: Bot {$_accessToken}"
                 ]
 
             ]

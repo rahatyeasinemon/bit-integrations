@@ -8,5 +8,6 @@ use BitCode\FI\Actions\Discord\DiscordController;
 use BitCode\FI\Core\Util\Route;
 
 //Discord
-Route::post('discord_authorization_and_fetch_servers', [DiscordController::class, 'checkAuthorizationAndFetchServers']);
-Route::post('discord_authorization_and_fetch_channels', [DiscordController::class, 'checkAuthorizationAndFetchChannels']);
+Route::post('handle_authorize', [DiscordController::class, 'handleAuthorize']);
+Route::post('discord_fetch_servers', [DiscordController::class, 'fetchServers']);
+Route::post('discord_fetch_channels', [DiscordController::class, 'fetchChannels']);

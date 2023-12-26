@@ -23,7 +23,37 @@ class DiscordController
      *
      * @return JSON discord api response and status
      */
-    public static function checkAuthorizationAndFetchServers($tokenRequestParams)
+    public static function handleAuthorize($tokenRequestParams)
+    {
+        if (
+            empty($tokenRequestParams->accessToken)
+        ) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+        $header = [
+            'Authorization' => 'Bot ' . $tokenRequestParams->accessToken,
+        ];
+        $apiEndpoint = self::APIENDPOINT . '/users/@me';
+
+        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+
+        if (!isset($apiResponse->id)) {
+            wp_send_json_error(
+                empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
+                400
+            );
+        }
+        wp_send_json_success($apiResponse, 200);
+    }
+
+
+    public static function fetchServers($tokenRequestParams)
     {
         if (
             empty($tokenRequestParams->accessToken)
@@ -43,21 +73,24 @@ class DiscordController
 
         $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
 
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
-                empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
-                400
-            );
+        if (count($apiResponse) > 0) {
+            foreach ($apiResponse as $server) {
+                $servers[] = [
+                    'id'   => (string) $server->id,
+                    'name' => $server->name
+                ];
+            }
+            wp_send_json_success($servers, 200);
+        } else {
+            wp_send_json_error('Servers fetching failed', 400);
         }
-        // $apiResponse->generates_on = \time();
-        // var_dump($apiResponse);
-        // die;
-        wp_send_json_success($apiResponse, 200);
     }
-    public static function checkAuthorizationAndFetchChannels($tokenRequestParams)
+
+
+    public static function fetchChannels($tokenRequestParams)
     {
         if (
-            empty($tokenRequestParams->accessToken)
+            empty($tokenRequestParams->accessToken) || empty($tokenRequestParams->serverId)
         ) {
             wp_send_json_error(
                 __(
@@ -68,33 +101,37 @@ class DiscordController
             );
         }
         $header = [
-            'Authorization' => 'Bearer ' . $tokenRequestParams->accessToken,
-            'Accept' => '*/*',
-            'verify' => false
+            'Authorization' => 'Bot ' . $tokenRequestParams->accessToken,
         ];
-        $apiEndpoint = self::APIENDPOINT . '/conversations.list';
+        $apiEndpoint = self::APIENDPOINT . '/guilds/' . $tokenRequestParams->serverId . '/channels';
 
-        $apiResponse = HttpHelper::post($apiEndpoint, null, $header);
+        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
 
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
-                empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
-                400
-            );
+        if (count($apiResponse) > 0) {
+            foreach ($apiResponse as $channel) {
+                $channels[] = [
+                    'id'   => (string) $channel->id,
+                    'name' => $channel->name
+                ];
+            }
+            wp_send_json_success($channels, 200);
+        } else {
+            wp_send_json_error('Channels fetching failed', 400);
         }
-        $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
     }
+
 
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
+        // var_dump($integrationDetails);
+        // die;
         $integrationId = $integrationData->id;
 
         $access_token = $integrationDetails->accessToken;
         $parse_mode = $integrationDetails->parse_mode;
-        $server_id = $integrationDetails->server_id;
-        $channel_id = $integrationDetails->channel_id;
+        $server_id = $integrationDetails->selectedServer;
+        $channel_id = $integrationDetails->selectedChannel;
         $body = $integrationDetails->body;
 
         if (

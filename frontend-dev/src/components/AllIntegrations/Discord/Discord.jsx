@@ -22,6 +22,7 @@ function Discord({ formFields, setFlow, flow, allIntegURL }) {
   const [discordConf, setDiscordConf] = useState({
     name: 'Discord',
     type: 'Discord',
+    accessToken: process.env.NODE_ENV === 'development' ? 'MTE4ODA1NTc5ODQzNDI1NDg2MA.G-UPBS.pKp3KXIsxsWleLojlW1oToI0Y9-IfuIqWi9oJk' : '',
     parse_mode: 'HTML',
     field_map: [{ formField: '', discordFormField: '' }],
     server_id: '',
@@ -35,7 +36,7 @@ function Discord({ formFields, setFlow, flow, allIntegURL }) {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
     if (val === 3) {
-      if (discordConf.name !== '' && discordConf.server_id) {
+      if (discordConf.name !== '' && discordConf.selectedChannel && discordConf.selectedServer) {
         setstep(val)
       }
     }
@@ -84,7 +85,7 @@ function Discord({ formFields, setFlow, flow, allIntegURL }) {
 
         <button
           onClick={() => nextPage(3)}
-          disabled={discordConf.channel_id === ''}
+          disabled={discordConf.selectedChannel === '' || discordConf.selectedServer === ''}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >

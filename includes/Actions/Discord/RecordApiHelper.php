@@ -22,21 +22,27 @@ class RecordApiHelper
 
     public function __construct($apiEndPoint, $access_token, $integId)
     {
-        $this->_defaultHeader['Content-Type'] = 'multipart/form-data';
+        $this->_defaultHeader['Content-Type'] = 'application/x-www-form-urlencoded';
         $this->_integrationID = $integId;
         $this->_apiEndPoint = $apiEndPoint;
         $this->_accessToken = $access_token;
     }
 
-    public function sendMessages($data)
+    public function sendMessages($data, $channel_id)
     {
         $header = [
-            'Authorization' => 'Bearer ' . $this->_accessToken,
-            'Accept' => '*/*',
-            'verify' => false
+            'Authorization' => 'Bot ' . $this->_accessToken,
+            'Accept' => 'application/json',
+            // 'verify' => false
         ];
-        $insertRecordEndpoint = $this->_apiEndPoint . '/chat.postMessage';
-        return HttpHelper::post($insertRecordEndpoint, $data, $header);
+        // var_dump($data, $header);
+        // die;
+
+        $insertRecordEndpoint = $this->_apiEndPoint . '/channels/' . $channel_id . '/messages';
+        // return
+        $response = HttpHelper::post($insertRecordEndpoint, $data, $header);
+        var_dump($response);
+        die;
     }
 
     public function execute($integrationDetails, $fieldValues)
@@ -57,9 +63,7 @@ class RecordApiHelper
                     (is_array($file))
                 )) {
                 $data = [
-                    'servers' => $integrationDetails->server_id,
-                    'channels' => $integrationDetails->channel_id,
-                    'initial_comment' => $messagesBody,
+                    'content' => $messagesBody,
                     'parse_mode' => $integrationDetails->parse_mode,
                     'file' => is_array($file) ? $file[0] : $file
                 ];
@@ -68,23 +72,19 @@ class RecordApiHelper
                 $recordApiResponse = $sendPhotoApiHelper->uploadFiles($this->_apiEndPoint, $data, $this->_accessToken);
             } else {
                 $data = [
-                    'server' => $integrationDetails->server_id,
-                    'channel' => $integrationDetails->channel_id,
-                    'text' => $messagesBody,
+                    'content' => $messagesBody,
                     'parse_mode' => $integrationDetails->parse_mode
                 ];
-                $recordApiResponse = $this->sendMessages($data);
+                $recordApiResponse = $this->sendMessages($data, $integrationDetails->selectedChannel);
             }
 
             $type = 'insert';
         } else {
             $data = [
-                'server' => $integrationDetails->server_id,
-                'channel' => $integrationDetails->channel_id,
-                'text' => $messagesBody,
+                'content' => $messagesBody,
                 'parse_mode' => $integrationDetails->parse_mode
             ];
-            $recordApiResponse = $this->sendMessages($data);
+            $recordApiResponse = $this->sendMessages($data, $integrationDetails->selectedChannel);
             $type = 'insert';
         }
 

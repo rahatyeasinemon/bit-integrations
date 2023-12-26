@@ -46,7 +46,7 @@ function EditDiscord({ allIntegURL }) {
       <IntegrationStepThree
         edit
         saveConfig={() => saveActionConf({ flow, allIntegURL, conf: discordConf, navigate, edit: 1, setIsLoading, setSnackbar })}
-        disabled={discordConf.channel_id === '' || discordConf.server_id === '' || isLoading}
+        disabled={discordConf.selectedChannel === '' || discordConf.selectedServer === '' || isLoading}
         isLoading={isLoading}
         dataConf={discordConf}
         setDataConf={setDiscordConf}

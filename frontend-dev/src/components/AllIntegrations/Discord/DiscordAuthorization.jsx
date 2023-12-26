@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
-import { handleAuthorize } from './DiscordCommonFunc'
+import { getAllServers, handleAuthorize } from './DiscordCommonFunc'
 import Note from '../../Utilities/Note'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
@@ -20,6 +20,7 @@ export default function DiscordAuthorization({ formID,
   const [error, setError] = useState({ accessToken: '' })
   const { discord } = tutorialLinks
   const nextPage = () => {
+    getAllServers(discordConf, setDiscordConf, setIsLoading)
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
