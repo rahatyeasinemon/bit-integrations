@@ -18,6 +18,7 @@ import JsonViewer from '../Utilities/JsonViewer'
 import TagifyInput from '../Utilities/TagifyInput'
 import { create } from 'mutative'
 import CloseIcn from '../../Icons/CloseIcn'
+import TreeViewer from '../Utilities/TreeViewer'
 
 const CaptureAction = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
@@ -102,30 +103,30 @@ const CaptureAction = () => {
         if (resp.success) {
           clearInterval(intervalRef.current)
           const tmpNewFlow = { ...newFlow }
-          const data = resp.data.captureAction
+          // const data = resp.data.captureAction
 
-          let convertedData = Object.entries(data).reduce(
-            (outObj, item) => {
-              const [name, obj] = item
-              if (typeof obj === 'object' && obj !== null && obj !== undefined) {
-                const objArr = Object.entries(obj)
-                const inObj = objArr.reduce((out, [n, v]) => {
-                  const propName = `${name}_${n}`
+          // let convertedData = Object.entries(data).reduce(
+          //   (outObj, item) => {
+          //     const [name, obj] = item
+          //     if (typeof obj === 'object' && obj !== null && obj !== undefined) {
+          //       const objArr = Object.entries(obj)
+          //       const inObj = objArr.reduce((out, [n, v]) => {
+          //         const propName = `${name}_${n}`
 
-                  return { ...out, [propName]: v }
-                }, {})
-                return { ...outObj, ...inObj }
-              }
-              return data
-            },
-            {},
-          )
+          //         return { ...out, [propName]: v }
+          //       }, {})
+          //       return { ...outObj, ...inObj }
+          //     }
+          //     return data
+          //   },
+          //   {},
+          // )
 
-          if (typeof resp.data.captureAction === 'object') {
-            convertedData = Object.keys(convertedData).map(fld => (
-              { name: fld, label: `${convertedData[fld]}-${fld}`, type: 'text' }
-            ))
-          }
+          // if (typeof resp.data.captureAction === 'object') {
+          //   convertedData = Object.keys(convertedData).map(fld => (
+          //     { name: fld, label: `${convertedData[fld]}-${fld}`, type: 'text' }
+          //   ))
+          // }
 
           tmpNewFlow.triggerDetail.tmp = resp.data.captureAction
           // tmpNewFlow.triggerDetail.data = convertedData
@@ -257,10 +258,11 @@ const CaptureAction = () => {
             <div className="mt-3">
               <b>{__('Select Fields:', 'bit-integrations')}</b>
             </div>
-            <JsonViewer
+            {/* <JsonViewer
               data={newFlow?.triggerDetail?.data}
               onChange={(value) => setSelectedFieldsData(value)}
-            />
+            /> */}
+            <TreeViewer data={newFlow?.triggerDetail?.data} />
           </>
         )
       }

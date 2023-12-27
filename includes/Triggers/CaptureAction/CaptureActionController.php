@@ -72,7 +72,7 @@ class CaptureActionController
 
     public static function captureActionHandler(...$args)
     {
-        // error_log(print_r($args, true));
+        // error_log(print_r(json_encode($args), true));
         // die;
         $formatedData = self::testDataFormat($args);
         if (get_option('btcbi_capture_action_test_' . current_action()) !== false) {
