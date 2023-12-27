@@ -22,7 +22,8 @@ class RecordApiHelper
 
     public function __construct($apiEndPoint, $access_token, $integId)
     {
-        $this->_defaultHeader['Content-Type'] = 'application/x-www-form-urlencoded';
+        $this->_defaultHeader['Content-Type'] = 'multipart/form-data';
+        $this->_defaultHeader['Content-Disposition'] = 'form-data';
         $this->_integrationID = $integId;
         $this->_apiEndPoint = $apiEndPoint;
         $this->_accessToken = $access_token;
@@ -33,16 +34,11 @@ class RecordApiHelper
         $header = [
             'Authorization' => 'Bot ' . $this->_accessToken,
             'Accept' => 'application/json',
-            // 'verify' => false
         ];
-        // var_dump($data, $header);
-        // die;
 
         $insertRecordEndpoint = $this->_apiEndPoint . '/channels/' . $channel_id . '/messages';
-        // return
-        $response = HttpHelper::post($insertRecordEndpoint, $data, $header);
-        var_dump($response);
-        die;
+        return HttpHelper::post($insertRecordEndpoint, $data, $header);
+
     }
 
     public function execute($integrationDetails, $fieldValues)
@@ -50,6 +46,7 @@ class RecordApiHelper
         $msg = Common::replaceFieldWithValue($integrationDetails->body, $fieldValues);
         $messagesBody = str_replace(['<p>', '</p>'], ' ', $msg);
 
+        $recordApiResponse = '';
         if (!empty($integrationDetails->actions->attachments)) {
             foreach ($fieldValues as $fieldKey => $fieldValue) {
                 if ($integrationDetails->actions->attachments === $fieldKey) {
@@ -69,7 +66,7 @@ class RecordApiHelper
                 ];
 
                 $sendPhotoApiHelper = new FilesApiHelper($this->_accessToken);
-                $recordApiResponse = $sendPhotoApiHelper->uploadFiles($this->_apiEndPoint, $data, $this->_accessToken);
+                $recordApiResponse = $sendPhotoApiHelper->uploadFiles($this->_apiEndPoint, $data, $this->_accessToken, $integrationDetails->selectedChannel);
             } else {
                 $data = [
                     'content' => $messagesBody,
@@ -77,13 +74,16 @@ class RecordApiHelper
                 ];
                 $recordApiResponse = $this->sendMessages($data, $integrationDetails->selectedChannel);
             }
-
             $type = 'insert';
+
         } else {
             $data = [
                 'content' => $messagesBody,
                 'parse_mode' => $integrationDetails->parse_mode
             ];
+
+            var_dump('record', $data);
+            die;
             $recordApiResponse = $this->sendMessages($data, $integrationDetails->selectedChannel);
             $type = 'insert';
         }

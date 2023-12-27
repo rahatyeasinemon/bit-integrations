@@ -28,9 +28,9 @@ final class FilesApiHelper
      *
      * @return Array $uploadResponse discord API response
      */
-    public function uploadFiles($apiEndPoint, $data, $_accessToken)
+    public function uploadFiles($apiEndPoint, $data, $_accessToken, $channel_id)
     {
-        $uploadFileEndpoint = $apiEndPoint . '/files.upload';
+        $uploadFileEndpoint = $apiEndPoint . '/channels/' . $channel_id . '/messages';
         $data['file'] = new \CURLFILE("{$data['file'][0]}");
         $curl = curl_init();
         curl_setopt_array(

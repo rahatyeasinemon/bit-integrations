@@ -124,8 +124,7 @@ class DiscordController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-        // var_dump($integrationDetails);
-        // die;
+
         $integrationId = $integrationData->id;
 
         $access_token = $integrationDetails->accessToken;
