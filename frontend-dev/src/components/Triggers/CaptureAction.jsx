@@ -18,7 +18,7 @@ import JsonViewer from '../Utilities/JsonViewer'
 import TagifyInput from '../Utilities/TagifyInput'
 import { create } from 'mutative'
 import CloseIcn from '../../Icons/CloseIcn'
-import TreeViewer from '../Utilities/TreeViewer'
+import TreeViewer from '../Utilities/treeViewer/TreeViewer'
 
 const CaptureAction = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
@@ -262,10 +262,11 @@ const CaptureAction = () => {
               data={newFlow?.triggerDetail?.data}
               onChange={(value) => setSelectedFieldsData(value)}
             /> */}
-            <TreeViewer data={newFlow?.triggerDetail?.data} />
+            {/* <TreeViewer data={newFlow?.triggerDetail?.data} /> */}
           </>
         )
       }
+      <TreeViewer data={newFlow?.triggerDetail?.data} />
       <button
         onClick={setTriggerData}
         className="btn btcd-btn-lg green sh-sm flx"
