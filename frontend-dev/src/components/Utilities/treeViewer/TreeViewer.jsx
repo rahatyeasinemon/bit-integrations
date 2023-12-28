@@ -1,37 +1,47 @@
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import TreeView, { flattenTree } from "react-accessible-treeview";
 import { FaSquare, FaCheckSquare, FaMinusSquare } from "react-icons/fa";
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from "react-icons/io";
 import cx from "classnames";
 import "./style.css";
 
-export default function TreeViewer({ data = [], draggable = false }) {
+function TreeViewer({ data = [], onChange }) {
     // const formatedData = useMemo(() => flattenTree(processData(data)), [data])
     const formatedData = dummyData
     console.log(JSON.stringify(formatedData))
 
-    const [selectedIds, setSelectedIds] = useState([]);
+    // const [selectedIds, setSelectedIds] = useState([]);
 
-    const onKeyDown = (e) => {
-        if (e.key === "Enter") {
-            getAndSetIds();
+    // const onKeyDown = (e) => {
+    //     if (e.key === "Enter") {
+    //         getAndSetIds();
+    //     }
+    // };
+
+    // const getAndSetIds = () => {
+    //     setSelectedIds(
+    //         document
+    //             .querySelector("#txtIdsToSelect")
+    //             .value.split(",")
+    //             .filter(val => !!val.trim())
+    //             .map((x) => {
+    //                 if (isNaN(parseInt(x.trim()))) {
+    //                     return x;
+    //                 }
+    //                 return parseInt(x.trim());
+    //             })
+    //     );
+    // };
+
+    const setChange = ({ element, isSelected }) => {
+        const connector = findAddress(formatedData, element, '')
+        console.log(isSelected)
+        if (isSelected) {
+            onChange(connector)
+        } else {
+            onChange(connector, true)
         }
-    };
-
-    const getAndSetIds = () => {
-        setSelectedIds(
-            document
-                .querySelector("#txtIdsToSelect")
-                .value.split(",")
-                .filter(val => !!val.trim())
-                .map((x) => {
-                    if (isNaN(parseInt(x.trim()))) {
-                        return x;
-                    }
-                    return parseInt(x.trim());
-                })
-        );
-    };
+    }
 
     return (
         <div className="bg-white max-h-96 rounded border py-3 table-webhook-div">
@@ -39,13 +49,13 @@ export default function TreeViewer({ data = [], draggable = false }) {
                 data={formatedData}
                 aria-label="Checkbox tree"
                 multiSelect
-                selectedIds={selectedIds}
+                // selectedIds={selectedIds}
                 defaultExpandedIds={[1]}
                 propagateSelect
                 propagateSelectUpwards
                 togglableSelect
                 // onSelect={(props) => console.log('onSelect callback: ', props)}
-                onNodeSelect={(props) => console.log('onNodeSelect callback: ', props)}
+                onNodeSelect={setChange}
                 nodeRenderer={({
                     element,
                     isBranch,
@@ -87,6 +97,8 @@ export default function TreeViewer({ data = [], draggable = false }) {
         </div>
     );
 }
+
+export default memo(TreeViewer)
 
 const processData = (data, index = "") => {
     // Handle non-object (including null) and non-array data
@@ -134,6 +146,18 @@ const CheckBoxIcon = ({ variant, ...rest }) => {
             return null
     }
 };
+
+const findAddress = (orgData, element, connector) => {
+    const { id, name, parent } = element
+    connector = name.substring(0, name.indexOf(' (')) + (connector ? '.' + connector : '')
+
+    if (parent) {
+        const parantElement = orgData.find(data => data?.id === parent)
+        connector = findAddress(orgData, parantElement, connector)
+    }
+
+    return connector
+}
 
 const dummyData = flattenTree(processData([
     {

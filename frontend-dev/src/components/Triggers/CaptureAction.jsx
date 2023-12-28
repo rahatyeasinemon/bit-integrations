@@ -45,14 +45,22 @@ const CaptureAction = () => {
     setFlowStep(2)
   }
 
-  const setSelectedFieldsData = (value, index = null) => {
-    setSelectedFields(prevFields => create(prevFields, (draftFields) => {
-      if (index !== null) {
-        draftFields[index] = value
-        return
+  const setSelectedFieldsData = (value = null, remove = false, index = null) => {
+    if (remove) {
+      index = index ? index : selectedFields.indexOf(value)
+
+      if (index !== -1) {
+        removeSelectedField(index)
       }
-      value.namespace.push(value.name)
-      draftFields.push(JSON.stringify(value.namespace))
+
+      return
+    }
+    addSelectedField(value)
+  }
+
+  const addSelectedField = value => {
+    setSelectedFields(prevFields => create(prevFields, (draftFields) => {
+      draftFields.push(value)
     }))
   }
 
@@ -61,7 +69,6 @@ const CaptureAction = () => {
       draftFields.splice(index, 1)
     }))
   }
-  // console.log(selectedFields)
 
   useEffect(() => {
     if (newFlow.triggerDetail?.data?.length > 0 && newFlow.triggerDetail?.hook_id) {
@@ -266,7 +273,7 @@ const CaptureAction = () => {
           </>
         )
       }
-      <TreeViewer data={newFlow?.triggerDetail?.data} />
+      <TreeViewer data={newFlow?.triggerDetail?.data} onChange={setSelectedFieldsData} />
       <button
         onClick={setTriggerData}
         className="btn btcd-btn-lg green sh-sm flx"
