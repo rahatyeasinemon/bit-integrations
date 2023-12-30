@@ -6,8 +6,8 @@ import cx from "classnames";
 import "./style.css";
 
 function TreeViewer({ data = [], onChange }) {
-    // const formatedData = useMemo(() => flattenTree(processData(data)), [data])
-    const formatedData = flattenTree(processData(dummyData))
+    const formatedData = useMemo(() => flattenTree(processData(data)), [data])
+    // const formatedData = flattenTree(processData(dummyData))
     // console.log(JSON.stringify(formatedData))
 
     // const [selectedIds, setSelectedIds] = useState([]);
@@ -36,7 +36,6 @@ function TreeViewer({ data = [], onChange }) {
     const setChange = ({ element, isSelected }) => {
         const connector = findAddress(formatedData, element, '')
         if (isSelected) {
-            // console.log('value', extractValueFromPath(dummyData, connector))
             onChange(connector)
         } else {
             onChange(connector, true)

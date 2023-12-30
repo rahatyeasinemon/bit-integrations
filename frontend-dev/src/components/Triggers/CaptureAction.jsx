@@ -37,10 +37,10 @@ const CaptureAction = () => {
     const tmpNewFlow = { ...newFlow }
     tmpNewFlow.triggerData = {
       formID: hookID,
-      fields: tmpNewFlow.triggerDetail.data,
+      fields: selectedFields.map(field => ({ label: field, name: field })),
     }
     tmpNewFlow.triggered_entity_id = hookID
-    setFields(tmpNewFlow.triggerDetail.data)
+    setFields(selectedFields)
     setNewFlow(tmpNewFlow)
     setFlowStep(2)
   }
@@ -110,38 +110,14 @@ const CaptureAction = () => {
         if (resp.success) {
           clearInterval(intervalRef.current)
           const tmpNewFlow = { ...newFlow }
-          // const data = resp.data.captureAction
-
-          // let convertedData = Object.entries(data).reduce(
-          //   (outObj, item) => {
-          //     const [name, obj] = item
-          //     if (typeof obj === 'object' && obj !== null && obj !== undefined) {
-          //       const objArr = Object.entries(obj)
-          //       const inObj = objArr.reduce((out, [n, v]) => {
-          //         const propName = `${name}_${n}`
-
-          //         return { ...out, [propName]: v }
-          //       }, {})
-          //       return { ...outObj, ...inObj }
-          //     }
-          //     return data
-          //   },
-          //   {},
-          // )
-
-          // if (typeof resp.data.captureAction === 'object') {
-          //   convertedData = Object.keys(convertedData).map(fld => (
-          //     { name: fld, label: `${convertedData[fld]}-${fld}`, type: 'text' }
-          //   ))
-          // }
 
           tmpNewFlow.triggerDetail.tmp = resp.data.captureAction
-          // tmpNewFlow.triggerDetail.data = convertedData
           tmpNewFlow.triggerDetail.data = resp.data.captureAction
           tmpNewFlow.triggerDetail.hook_id = hookID
           setNewFlow(tmpNewFlow)
           setIsLoading(false)
           setShowResponse(true)
+          setSelectedFields([])
           bitsFetch(
             { hook_id: window.hook_id, reset: true },
             'capture_action/test/remove',
@@ -164,12 +140,6 @@ const CaptureAction = () => {
       <div className="mt-3">
         <b>{__('Hook:', 'bit-integrations')}</b>
       </div>
-      {/* <CopyText
-        value={`${api.base}/callback/${hookID}`}
-        className="field-key-cpy w-10 ml-0"
-        setSnackbar={setSnackbar}
-        readOnly
-      /> */}
       <input className="btcd-paper-inp w-100 mt-1" onChange={e => setHookID(e.target.value)} name="hook" value={hookID} type="text" placeholder={__('Enter Hook...', 'bit-integrations')} disabled={newFlow?.triggerData?.fields || isLoading || false} />
       {/* <br />
       <br /> */}
@@ -251,13 +221,6 @@ const CaptureAction = () => {
           </button>
         )}
       </div>
-      {/* {showResponse && (
-        <WebhookDataTable
-          data={newFlow?.triggerDetail?.data}
-          flow={newFlow}
-          setFlow={setNewFlow}
-        />
-      )} */}
 
       {
         showResponse && (
@@ -265,20 +228,15 @@ const CaptureAction = () => {
             <div className="mt-3">
               <b>{__('Select Fields:', 'bit-integrations')}</b>
             </div>
-            {/* <JsonViewer
-              data={newFlow?.triggerDetail?.data}
-              onChange={(value) => setSelectedFieldsData(value)}
-            /> */}
-            {/* <TreeViewer data={newFlow?.triggerDetail?.data} /> */}
+            <TreeViewer data={newFlow?.triggerDetail?.data} onChange={setSelectedFieldsData} />
           </>
         )
       }
-      <TreeViewer data={newFlow?.triggerDetail?.data} onChange={setSelectedFieldsData} />
       <button
         onClick={setTriggerData}
         className="btn btcd-btn-lg green sh-sm flx"
         type="button"
-        disabled={!newFlow.triggerDetail?.data}
+        disabled={!selectedFields.length}
       >
         Set Action
       </button>
