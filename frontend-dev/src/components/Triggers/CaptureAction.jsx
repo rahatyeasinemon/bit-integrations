@@ -52,13 +52,13 @@ const CaptureAction = () => {
       if (index !== -1) {
         removeSelectedField(index)
       }
-
       return
     }
     addSelectedField(value)
   }
 
   const addSelectedField = value => {
+    // console.log('value', extractValue(newFlow?.triggerDetail?.data, value))
     setSelectedFields(prevFields => create(prevFields, (draftFields) => {
       draftFields.push(value)
     }))
@@ -288,3 +288,35 @@ const CaptureAction = () => {
 }
 export default CaptureAction
 
+function extractValueFromPath(json, path) {
+  // Split the path only if it's not already an array
+  const parts = Array.isArray(path) ? path : path.split('.')
+
+  // Base case: if there are no more parts left, return the current JSON part
+  if (parts.length === 0) {
+    return json
+  }
+
+  // Take the first part of the path
+  const currentPart = parts.shift()
+
+  // If the current JSON part is an array, currentPart should be an index
+  if (Array.isArray(json)) {
+    const index = parseInt(currentPart, 10)
+    if (isNaN(index) || index >= json.length) {
+      return 'Index out of bounds or invalid'
+    }
+    return extractValueFromPath(json[index], parts)
+  }
+
+  // If the current JSON part is an object, currentPart should be a key
+  if (json && typeof json === 'object') {
+    if (!(currentPart in json)) {
+      return 'Invalid path'
+    }
+    return extractValueFromPath(json[currentPart], parts)
+  }
+
+  // If we reach here, it means the path is invalid
+  return 'Invalid path'
+}

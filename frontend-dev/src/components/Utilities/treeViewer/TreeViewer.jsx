@@ -1,14 +1,14 @@
 import { memo, useMemo, useState } from "react";
 import TreeView, { flattenTree } from "react-accessible-treeview";
-import { FaSquare, FaCheckSquare, FaMinusSquare } from "react-icons/fa";
+import { FaRegCheckSquare, FaRegSquare, FaRegMinusSquare } from "react-icons/fa";
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from "react-icons/io";
 import cx from "classnames";
 import "./style.css";
 
 function TreeViewer({ data = [], onChange }) {
     // const formatedData = useMemo(() => flattenTree(processData(data)), [data])
-    const formatedData = dummyData
-    console.log(JSON.stringify(formatedData))
+    const formatedData = flattenTree(processData(dummyData))
+    // console.log(JSON.stringify(formatedData))
 
     // const [selectedIds, setSelectedIds] = useState([]);
 
@@ -35,8 +35,8 @@ function TreeViewer({ data = [], onChange }) {
 
     const setChange = ({ element, isSelected }) => {
         const connector = findAddress(formatedData, element, '')
-        console.log(isSelected)
         if (isSelected) {
+            // console.log('value', extractValueFromPath(dummyData, connector))
             onChange(connector)
         } else {
             onChange(connector, true)
@@ -44,7 +44,7 @@ function TreeViewer({ data = [], onChange }) {
     }
 
     return (
-        <div className="bg-white max-h-96 rounded border py-3 table-webhook-div">
+        <div className="bg-white max-h-96 rounded border py-3 table-webhook-div shadow">
             <TreeView
                 data={formatedData}
                 aria-label="Checkbox tree"
@@ -137,11 +137,11 @@ const ArrowIcon = ({ isOpen, className }) => {
 const CheckBoxIcon = ({ variant, ...rest }) => {
     switch (variant) {
         case "all":
-            return <FaCheckSquare {...rest} />
+            return <FaRegCheckSquare {...rest} />
         case "none":
-            return <FaSquare {...rest} />
+            return <FaRegSquare {...rest} />
         case "some":
-            return <FaMinusSquare {...rest} />
+            return <FaRegMinusSquare   {...rest} />
         default:
             return null
     }
@@ -159,7 +159,7 @@ const findAddress = (orgData, element, connector) => {
     return connector
 }
 
-const dummyData = flattenTree(processData([
+const dummyData = [
     {
         "entry_id": 791,
         "entry_type": "custom-forms",
@@ -481,4 +481,4 @@ const dummyData = flattenTree(processData([
             "value": "127.0.0.1"
         }
     ]
-]))
+]
