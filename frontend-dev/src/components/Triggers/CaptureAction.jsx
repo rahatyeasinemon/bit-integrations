@@ -19,13 +19,17 @@ import TagifyInput from '../Utilities/TagifyInput'
 import { create } from 'mutative'
 import CloseIcn from '../../Icons/CloseIcn'
 import TreeViewer from '../Utilities/treeViewer/TreeViewer'
+import toast from 'react-hot-toast'
+import ConfirmModal from '../Utilities/ConfirmModal'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
 
 const CaptureAction = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
   const setFlowStep = useSetRecoilState($flowStep)
   const setFields = useSetRecoilState($formFields)
   const [hookID, setHookID] = useState('')
-  const [primaryKey, setPrimaryKey] = useState('')
+  const [primaryKey, setPrimaryKey] = useState()
+  const [primaryKeyModal, setPrimaryKeyModal] = useState(false)
   const [selectedFields, setSelectedFields] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
@@ -34,10 +38,20 @@ const CaptureAction = () => {
   const intervalRef = useRef(null)
 
   const setTriggerData = () => {
+    if (!selectedFields.length) {
+      toast.error('Please Select fields')
+      return
+    }
+    if (!primaryKey) {
+      toast.error('Please Select a Primary Key')
+      return
+    }
+
     const tmpNewFlow = { ...newFlow }
     tmpNewFlow.triggerData = {
       formID: hookID,
-      fields: selectedFields.map(field => ({ label: field, name: field })),
+      primaryKey: primaryKey,
+      fields: selectedFields.map(field => ({ label: field, name: field }))
     }
     tmpNewFlow.triggered_entity_id = hookID
     setFields(selectedFields)
@@ -131,6 +145,13 @@ const CaptureAction = () => {
     setShowResponse((prevState) => !prevState)
   }
 
+  const primaryKeySet = (val) => {
+    setPrimaryKey(!val ? undefined : {
+      key: val,
+      value: extractValueFromPath(newFlow.triggerDetail?.data, val)
+    })
+  }
+
   // const info = `You can test any kind of captureAction using <a href="https://captureAction.is/" target="_blank" rel="noreferrer">captureAction.is</a>`
 
 
@@ -160,29 +181,33 @@ const CaptureAction = () => {
           <br />
         </>
       } */}
-      <div className="mt-3">
-        <b>{__('Selected Fields:', 'bit-integrations')}</b>
-      </div>
-      <div className="bg-white rounded border my-1 table-webhook-div p-2" style={{ minHeight: '100px', maxHeight: '14rem' }}>
-        {selectedFields.map((field, index) => <div key={index} style={{ position: "relative" }}>
-          <input key={index} className="btcd-paper-inp w-100 m-1" type='text' onChange={e => setSelectedFieldsData(e.target.value, index)} value={field.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')} disabled={newFlow?.triggerData?.fields || isLoading || false} />
-          <button
-            className="btn btcd-btn-lg sh-sm"
-            onClick={() => removeSelectedField(index)}
-            style={
-              {
-                position: 'absolute',
-                top: -5,
-                right: -5,
-                color: '#ff4646',
-                padding: '2px'
-              }
-            }
-          >
-            <CloseIcn size={12} />
-          </button>
-        </div>)}
-      </div>
+      {newFlow.triggerDetail?.data &&
+        <>
+          <div className="my-3">
+            <b>{__('Selected Fields:', 'bit-integrations')}</b>
+          </div>
+          <div className="bg-white rounded border my-1 table-webhook-div p-2" style={{ minHeight: '100px', maxHeight: '14rem' }}>
+            {selectedFields.map((field, index) => <div key={index} style={{ position: "relative" }}>
+              <input key={index} className="btcd-paper-inp w-100 m-1" type='text' onChange={e => setSelectedFieldsData(e.target.value, index)} value={field.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')} disabled={newFlow?.triggerData?.fields || isLoading || false} />
+              <button
+                className="btn btcd-btn-lg sh-sm"
+                onClick={() => removeSelectedField(index)}
+                style={
+                  {
+                    position: 'absolute',
+                    top: -5,
+                    right: -5,
+                    color: '#ff4646',
+                    padding: '2px'
+                  }
+                }
+              >
+                <CloseIcn size={12} />
+              </button>
+            </div>)}
+          </div>
+        </>
+      }
       <div className="flx flx-between">
         <button
           onClick={handleFetch}
@@ -197,30 +222,44 @@ const CaptureAction = () => {
             <LoaderSm size="20" clr="#022217" className="ml-2" />
           )}
         </button>
-        {newFlow.triggerDetail?.data && (
+        {selectedFields.length > 0 &&
           <button
-            onClick={showResponseTable}
-            className="btn btcd-btn-lg sh-sm flx"
+            onClick={() => setPrimaryKeyModal(true)}
+            className={`btn btcd-btn-lg sh-sm flx ${selectedFields.length && 'green'}`}
+            type="button"
+            disabled={!selectedFields.length}
           >
-            <span className="txt-captureAction-resbtn font-inter-500">
-              {showResponse ? 'Hide Response' : 'View Response'}
-            </span>
-            {!showResponse ? (
-              <EyeIcn
-                width="20"
-                height="20"
-                strokeColor="#000000"
-              />
-            ) : (
-              <EyeOffIcn
-                width="20"
-                height="20"
-                strokeColor="#000000"
-              />
-            )}
+            {primaryKey
+              ? __('Primary Key ✔', 'bit-integrations')
+              : __('Primary Key', 'bit-integrations')}
           </button>
-        )}
+        }
       </div>
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt={__('Ok', 'bit-integrations')}
+        show={primaryKeyModal}
+        close={() => setPrimaryKeyModal(false)}
+        action={() => setPrimaryKeyModal(false)}
+        title={__('Primary Key', 'bit-integrations')}
+      >
+        <div className="btcd-hr mt-2 mb-2" />
+        <div className="mt-2">
+          {__('Select Primary Key', 'bit-integrations')}
+        </div>
+        <div className="flx flx-between mt-2">
+          <MultiSelect
+            options={selectedFields.map(field => ({ label: field, value: field }))}
+            className="msl-wrp-options"
+            defaultValue={primaryKey?.key}
+            onChange={primaryKeySet}
+            singleSelect
+            closeOnSelect
+          />
+        </div>
+      </ConfirmModal>
 
       {
         showResponse && (
@@ -232,14 +271,41 @@ const CaptureAction = () => {
           </>
         )
       }
-      <button
-        onClick={setTriggerData}
-        className="btn btcd-btn-lg green sh-sm flx"
-        type="button"
-        disabled={!selectedFields.length}
-      >
-        Set Action
-      </button>
+      {newFlow.triggerDetail?.data &&
+        <div className="flx flx-between">
+          {newFlow.triggerDetail?.data && (
+            <button
+              onClick={showResponseTable}
+              className="btn btcd-btn-lg sh-sm flx"
+            >
+              <span className="txt-captureAction-resbtn font-inter-500">
+                {showResponse ? 'Hide Response' : 'View Response'}
+              </span>
+              {!showResponse ? (
+                <EyeIcn
+                  width="20"
+                  height="20"
+                  strokeColor="#000000"
+                />
+              ) : (
+                <EyeOffIcn
+                  width="20"
+                  height="20"
+                  strokeColor="#000000"
+                />
+              )}
+            </button>
+          )}
+          <button
+            onClick={setTriggerData}
+            className="btn btcd-btn-lg green sh-sm flx"
+            type="button"
+            disabled={!selectedFields.length || !primaryKey}
+          >
+            Set Action
+          </button>
+        </div>
+      }
       {/* <Note note={info} /> */}
     </div >
   )
@@ -247,34 +313,31 @@ const CaptureAction = () => {
 export default CaptureAction
 
 function extractValueFromPath(json, path) {
-  // Split the path only if it's not already an array
   const parts = Array.isArray(path) ? path : path.split('.')
-
-  // Base case: if there are no more parts left, return the current JSON part
   if (parts.length === 0) {
     return json
   }
 
-  // Take the first part of the path
   const currentPart = parts.shift()
-
-  // If the current JSON part is an array, currentPart should be an index
   if (Array.isArray(json)) {
     const index = parseInt(currentPart, 10)
     if (isNaN(index) || index >= json.length) {
-      return 'Index out of bounds or invalid'
+      toast.error('Index out of bounds or invalid')
+      return
     }
+
     return extractValueFromPath(json[index], parts)
   }
 
-  // If the current JSON part is an object, currentPart should be a key
   if (json && typeof json === 'object') {
     if (!(currentPart in json)) {
-      return 'Invalid path'
+      toast.error('Invalid path')
+      retrun
     }
+
     return extractValueFromPath(json[currentPart], parts)
   }
 
-  // If we reach here, it means the path is invalid
-  return 'Invalid path'
+  toast.error('Invalid path')
+  return
 }
