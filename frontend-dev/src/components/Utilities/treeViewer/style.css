@@ -1,0 +1,84 @@
+.tree {
+  margin-left: 30px;
+}
+
+.arrow {
+  height: 18px !important;
+  width: 18px !important;
+  margin-left: -20px !important;
+  bottom: 2px !important;
+}
+
+.tree-node .name {
+  margin-left: 10px;
+}
+
+.tree-node-group.tree-node-group--expanded {
+  margin-top: 10px;
+}
+
+.checkbox {
+  font-size: 16px;
+  user-select: none;
+  min-height: 320px;
+  padding: 20px;
+  box-sizing: content-box;
+}
+
+.checkbox-icon {
+  cursor: pointer;
+}
+
+.tree-node__branch {
+  position: relative;
+  cursor: pointer;
+}
+
+.checkbox .tree,
+.checkbox .tree-node,
+.checkbox .tree-node-group {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.checkbox .tree-branch-wrapper,
+.checkbox .tree-node__leaf {
+  outline: none;
+}
+
+.checkbox .tree-node {
+  cursor: pointer;
+}
+
+.checkbox .tree-node .name:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.checkbox .tree-node--focused .name {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.checkbox .tree-node {
+  display: inline-block;
+}
+
+.checkbox .checkbox-icon {
+  margin: 0 5px;
+  vertical-align: middle;
+}
+
+.checkbox button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.checkbox .arrow {
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.checkbox .arrow--open {
+  transform: rotate(90deg);
+}

@@ -67,6 +67,12 @@ a:hover {
   line-height: 1;
 }
 
+.shadow {
+  box-shadow: 3px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 3px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 3px 2px 8px 0px rgba(0, 0, 0, 0.1);
+}
+
 // WP OVERRIDE START
 
 #wpcontent {

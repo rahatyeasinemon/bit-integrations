@@ -224,7 +224,6 @@ final class FormidableController
                     }
                 }
             }
-            error_log(print_r($form_data, true));
             if (!empty($form_id) && $flows = Flow::exists('Formidable', $form_id)) {
                 Flow::execute('Formidable', $form_id, $form_data, $flows);
             }

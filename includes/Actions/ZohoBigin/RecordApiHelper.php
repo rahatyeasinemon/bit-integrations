@@ -7,12 +7,12 @@
 namespace BitCode\FI\Actions\ZohoBigin;
 
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Actions\ZohoBigin\FilesApiHelper;
 use BitCode\FI\Core\Util\FieldValueHandler;
+use BitCode\FI\Actions\ZohoBigin\FilesApiHelper;
 use BitCode\FI\Core\Util\ApiResponse as UtilApiResponse;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -43,7 +43,7 @@ class RecordApiHelper
         return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
     }
 
-    public function execute($defaultConf, $module, $fieldValues, $fieldMap, $actions, $required)
+    public function execute($defaultConf, $module, $fieldValues, $fieldMap, $actions, $required, $integrationDetails)
     {
         $fieldData = [];
         foreach ($fieldMap as $fieldKey => $fieldPair) {
@@ -60,6 +60,9 @@ class RecordApiHelper
                     return $error;
                 }
             }
+        }
+        if ($module === 'Deals') {
+            $fieldData['Pipeline'] = $integrationDetails->pLayout;
         }
 
         $requestParams['data'][] =  (object) $fieldData;
@@ -155,39 +158,39 @@ class RecordApiHelper
         }
 
         switch ($formatSpecs->data_type) {
-        case 'AutoNumber':
-            $apiFormat = 'integer';
-            break;
+            case 'AutoNumber':
+                $apiFormat = 'integer';
+                break;
 
-        case 'Text':
-        case 'Pick list':
-        case 'Lookup':
-        case 'Email':
-        case 'Website':
-        case 'Currency':
-        case 'TextArea':
-            $apiFormat = 'string';
-            break;
+            case 'Text':
+            case 'Pick list':
+            case 'Lookup':
+            case 'Email':
+            case 'Website':
+            case 'Currency':
+            case 'TextArea':
+                $apiFormat = 'string';
+                break;
 
-        case 'Date':
-            $apiFormat = 'date';
-            break;
+            case 'Date':
+                $apiFormat = 'date';
+                break;
 
-        case 'DateTime':
-            $apiFormat = 'datetime';
-            break;
+            case 'DateTime':
+                $apiFormat = 'datetime';
+                break;
 
-        case 'Double':
-            $apiFormat = 'double';
-            break;
+            case 'Double':
+                $apiFormat = 'double';
+                break;
 
-        case 'Boolean':
-            $apiFormat = 'boolean';
-            break;
+            case 'Boolean':
+                $apiFormat = 'boolean';
+                break;
 
-        default:
-            $apiFormat = $formatSpecs->data_type;
-            break;
+            default:
+                $apiFormat = $formatSpecs->data_type;
+                break;
         }
 
         $formatedValue = '';
@@ -207,21 +210,21 @@ class RecordApiHelper
                 $stringyfiedValue = !is_string($value) ? json_encode($value) : $value;
 
                 switch ($apiFormat) {
-                case 'double':
-                    $formatedValue = (float) $stringyfiedValue;
-                    break;
+                    case 'double':
+                        $formatedValue = (float) $stringyfiedValue;
+                        break;
 
-                case 'boolean':
-                    $formatedValue = (bool) $stringyfiedValue;
-                    break;
+                    case 'boolean':
+                        $formatedValue = (bool) $stringyfiedValue;
+                        break;
 
-                case 'integer':
-                    $formatedValue = (int) $stringyfiedValue;
-                    break;
+                    case 'integer':
+                        $formatedValue = (int) $stringyfiedValue;
+                        break;
 
-                default:
-                    $formatedValue = $stringyfiedValue;
-                    break;
+                    default:
+                        $formatedValue = $stringyfiedValue;
+                        break;
                 }
             }
         }
