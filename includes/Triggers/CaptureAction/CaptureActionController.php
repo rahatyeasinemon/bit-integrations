@@ -73,41 +73,52 @@ class CaptureActionController
     public static function handle(...$args)
     {
         if ($flows = Flow::exists('CaptureAction', current_action())) {
-            $fieldKeys = [];
-            foreach (json_decode($flows[0]->flow_details)->body->data as $field) {
-                $fieldKeys[] = $field->key;
-            }
-            $formatedData = [];
-            foreach ($fieldKeys as $key) {
-                $formatedData[$key] = self::extractValueFromPath($args, $key);
-            }
+            foreach ($flows as $flow) {
+                $flowDetails = json_decode($flow->flow_details);
 
-            Flow::execute('CaptureAction', current_action(), $formatedData, $flows);
+                if (!isset($flowDetails->primaryKey)) {
+                    continue;
+                }
+
+                $primaryKeyValue = self::extractValueFromPath($args, $flowDetails->primaryKey->key);
+                if ($flowDetails->primaryKey->value === $primaryKeyValue) {
+                    $fieldKeys = array_map(function ($field) use ($args) {
+                        return $field->key;
+                    }, $flowDetails->body->data);
+
+                    $formatedData = [];
+                    foreach ($fieldKeys as $key) {
+                        $formatedData[$key] = self::extractValueFromPath($args, $key);
+                    }
+
+                    Flow::execute('CaptureAction', current_action(), $formatedData, array($flow));
+                }
+            }
         }
 
         return rest_ensure_response(['status' => 'success']);
     }
 
-    private static function extractValueFromPath($json, $path)
+    private static function extractValueFromPath($data, $path)
     {
         $parts = is_array($path) ? $path : explode('.', $path);
         if (count($parts) === 0) {
-            return $json;
+            return $data;
         }
 
         $currentPart = array_shift($parts);
-        if (is_array($json)) {
-            if (!isset($json[$currentPart])) {
+        if (is_array($data)) {
+            if (!isset($data[$currentPart])) {
                 wp_send_json_error(new WP_Error('capture Action', __('Index out of bounds or invalid', 'bit-integrations')));
             }
-            return self::extractValueFromPath($json[$currentPart], $parts);
+            return self::extractValueFromPath($data[$currentPart], $parts);
         }
 
-        if (is_object($json)) {
-            if (!property_exists($json, $currentPart)) {
+        if (is_object($data)) {
+            if (!property_exists($data, $currentPart)) {
                 wp_send_json_error(new WP_Error('capture Action', __('Invalid path', 'bit-integrations')));
             }
-            return self::extractValueFromPath($json->$currentPart, $parts);
+            return self::extractValueFromPath($data->$currentPart, $parts);
         }
 
         wp_send_json_error(new WP_Error('capture Action', __('Invalid path', 'bit-integrations')));
