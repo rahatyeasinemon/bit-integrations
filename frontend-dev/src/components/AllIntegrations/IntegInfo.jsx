@@ -137,6 +137,7 @@ const WPFusionAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/We
 const WoodpeckerAuthorization = lazy(() => import('./Woodpecker/WoodpeckerAuthorization'))
 const NutshellCRMAuthorization = lazy(() => import('./NutshellCRM/NutshellCRMAuthorization'))
 const SystemIOAuthorization = lazy(() => import('./SystemIO/SystemIOAuthorization'))
+const DiscordAuthorization = lazy(() => import('./Discord/DiscordAuthorization'))
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -426,6 +427,8 @@ export default function IntegInfo() {
         return <NutshellCRMAuthorization nutshellCRMConf={integrationConf} step={1} isInfo />
       case 'SystemIO':
         return <SystemIOAuthorization systemIOConf={integrationConf} step={1} isInfo />
+      case 'Discord':
+        return <DiscordAuthorization discordConf={integrationConf} step={1} isInfo />
       default:
         return <></>
     }

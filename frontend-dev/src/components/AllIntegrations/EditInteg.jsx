@@ -148,6 +148,7 @@ const EditWPFusion = lazy(() => import('./WPFusion/EditWPFusion'))
 const EditWoodpecker = lazy(() => import('./Woodpecker/EditWoodpecker'))
 const EditNutshellCRM = lazy(() => import('./NutshellCRM/EditNutshellCRM'))
 const EditSystemIO = lazy(() => import('./SystemIO/EditSystemIO'))
+const EditDiscord = lazy(() => import('./Discord/EditDiscord'))
 
 const loaderStyle = {
   display: 'flex',
@@ -507,6 +508,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditNutshellCRM allIntegURL={allIntegURL} />
     case 'SystemIO':
       return <EditSystemIO allIntegURL={allIntegURL} />
+    case 'Discord':
+      return <EditDiscord allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }

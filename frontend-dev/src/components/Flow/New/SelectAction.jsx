@@ -154,6 +154,7 @@ export default function SelectAction() {
     { type: 'Woodpecker' },
     { type: 'NutshellCRM' },
     { type: 'SystemIO' },
+    { type: 'Discord' },
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(sortByField(integs, 'type', 'ASC') || integs)
