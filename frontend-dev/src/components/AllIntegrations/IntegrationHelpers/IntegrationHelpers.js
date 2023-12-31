@@ -107,6 +107,13 @@ export const saveIntegConfig = async (flow, setFlow, allIntegURL, confTmp, navig
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = UltimateMemberStateIH(tmpConf, dataFlow)
   }
+  // else if (flow.triggered_entity === 'CaptureAction') {
+  //   if (flow?.triggerData?.formID) {
+  //     flow.triggerData.formID = `btcbi_capture_action_${flow.triggerData.formID}`
+  //   } else {
+  //     flow.triggered_entity_id = `btcbi_capture_action_${flow.triggered_entity_id}`
+  //   }
+  // }
 
   const data = {
     name: confTmp.name,
