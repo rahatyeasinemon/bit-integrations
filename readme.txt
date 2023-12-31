@@ -1728,7 +1728,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 == Changelog ==
 
 = 1.5.7  =
-*Release Date - *31st December 2023\*
+*Release Date - *1st January 2024\*
 
 - **New Actions :**
   - Discord | Your Place to Talk and Hang Out -  Discord Integration & Automation

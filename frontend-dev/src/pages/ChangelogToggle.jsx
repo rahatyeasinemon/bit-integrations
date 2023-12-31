@@ -10,7 +10,7 @@ import Modal from '../components/Utilities/Modal'
 export default function ChangelogToggle() {
     const btcbi = useRecoilValue($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const version = btcbi.isPro ? '1.4.3' : '1.5.6'
+    const version = btcbi.isPro ? '1.4.3' : '1.5.7'
     return (
         <div className="changelog-toggle">
             <button
@@ -27,10 +27,10 @@ export default function ChangelogToggle() {
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
                         <h3>What's New in {version}?</h3>
-                        <small>20th December 2023</small>
+                        <small>1st January 2023</small>
                     </div>
                     <div className='changelog-content'>
-                        <h4>New Integration</h4>
+                        {/* <h4>New Integration</h4> */}
                         {/* <p>New Integration</p> */}
                         {/* <span className='new-integration' style={{ background: "cornflowerblue" }}><b>New Triggers</b></span>
 
@@ -45,7 +45,15 @@ export default function ChangelogToggle() {
 
                         <div className='integration-list'>
                             <ul>
-                                <li>System.io</li>
+                                <li>Discord</li>
+                            </ul>
+                        </div>
+
+                        <span className='new-feature'><b>New Features</b></span>
+
+                        <div className='feature-list'>
+                            <ul>
+                                <li>WooCommerce: Custom Field: ACF field</li>
                             </ul>
                         </div>
 
@@ -53,16 +61,8 @@ export default function ChangelogToggle() {
 
                         <div className='fixes-list'>
                             <ul>
-                                <li>SendFox lists limitation issue fixed</li>
-                                <li>Rapidemail Double opt-in issue fixed</li>
-                                <li>Formidable multiiple file upload issue fixed</li>
-                                <li>PropovoiceCRM tags issue fixed</li>
-                                <li>Affiliate blank page issue fixed</li>
-                                <li>FluentCRM custom field issue fixed</li>
-                                <li>Forminator multiple address issue fixed </li>
-                                <li>Mailchimp update record issue fixed</li>
-                                <li>Elementor integration issue fixed</li>
-                                <li>Hubspot custom field issue fixed</li>
+                                <li>Zoho Bigin: Fixed Pipeline module </li>
+                                <li>Zoho Desk: Fixed Custom multi-select field and multiple attachment store</li>
                             </ul>
                         </div>
                     </div>
