@@ -28,6 +28,10 @@ function EditZohoBigin({ allIntegURL }) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
       return
     }
+    if (!biginConf?.pLayout) {
+      setSnackbar({ show: true, msg: __('Please select a layout', 'bit-integrations') })
+      return
+    }
     saveActionConf({ flow, setFlow, allIntegURL, conf: biginConf, navigate, edit: 1, setIsLoading, setSnackbar })
   }
 

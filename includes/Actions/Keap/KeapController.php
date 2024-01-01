@@ -23,12 +23,63 @@ class KeapController
     }
 
 
+    public static function refreshTagListAjaxHelper($queryParams)
+    {
+        // var_dump($queryParams->tokenDetails);
+        // die;
+        if (
+            empty($queryParams->clientId)
+            || empty($queryParams->clientSecret)
+            || empty($queryParams->tokenDetails)
+        ) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+        $response = [];
+        if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+            $response['tokenDetails'] = static::refreshAccessToken($queryParams);
+        }
+
+        $apiEndpoint = 'https://api.infusionsoft.com/crm/rest/v1/tags';
+        $authorizationHeader["Content-Type"] = 'application/x-www-form-urlencoded';
+
+        $tokenDetails = empty($response['tokenDetails']) ? $queryParams->tokenDetails : $response['tokenDetails'];
+
+        $authorizationHeader["Authorization"] = 'Bearer ' . $tokenDetails->access_token;
+
+        $tagListApiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $tags   = [];
+
+
+        if (isset($tagListApiResponse->error)) {
+            wp_send_json_error('Tags fetch failed', 400);
+        } else {
+            foreach ($tagListApiResponse->tags as $tag) {
+                $tags[] = [
+                    'id'   => (string) $tag->id,
+                    'name' => $tag->name
+                ];
+            }
+            wp_send_json_success($tags, 200);
+        }
+        if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
+            static::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
+        }
+        wp_send_json_success($response, 200);
+    }
+
+
     /**
      * Process ajax request for generate_token
      *
      * @param Object $requestsParams Params for generate token
      *
-     * @return JSON zoho crm api response and status
+     * @return JSON Keap api response and status
      */
     public static function generateTokens($requestsParams)
     {
@@ -137,8 +188,8 @@ class KeapController
         // $tags = $integrationDetails->tags;
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;
-        $defaultDataConf = $integrationDetails->default;
         // $addressFields = $integrationDetails->address_field;
+
 
         if (
             empty($tokenDetails)
@@ -165,7 +216,7 @@ class KeapController
 
         $recordApiHelper = new RecordApiHelper($tokenDetails, $this->_integrationID);
         $keapApiResponse = $recordApiHelper->execute(
-            $defaultDataConf,
+            $integrationDetails,
             $fieldValues,
             $fieldMap,
             $actions

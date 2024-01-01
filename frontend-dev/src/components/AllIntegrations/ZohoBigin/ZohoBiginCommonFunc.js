@@ -101,6 +101,41 @@ export const refreshModules = (formID, biginConf, setBiginConf, setIsLoading, se
     .catch(() => setIsLoading(false))
 }
 
+export const refreshPipelinesLayout = (formID, biginConf, setBiginConf, setIsLoading, setSnackbar) => {
+  setIsLoading(true)
+  const refreshLayoutRequestParams = {
+    formID,
+    id: biginConf.id,
+    dataCenter: biginConf.dataCenter,
+    clientId: biginConf.clientId,
+    clientSecret: biginConf.clientSecret,
+    tokenDetails: biginConf.tokenDetails,
+  }
+  bitsFetch(refreshLayoutRequestParams, 'zbigin_refresh_playouts')
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...biginConf }
+        if (!newConf.default) {
+          newConf.default = {}
+        }
+        if (result.data.pLayouts) {
+          newConf.default.pLayouts = result.data.pLayouts
+        }
+        if (result.data.tokenDetails) {
+          newConf.tokenDetails = result.data.tokenDetails
+        }
+        setBiginConf({ ...newConf })
+        setSnackbar({ show: true, msg: __('Pipeline Layouts refreshed', 'bit-integrations') })
+      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+        setSnackbar({ show: true, msg: sprintf(__('Pipeline Layouts refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
+      } else {
+        setSnackbar({ show: true, msg: __('Pipeline Layouts refresh failed. please try again', 'bit-integrations') })
+      }
+      setIsLoading(false)
+    })
+    .catch(() => setIsLoading(false))
+}
+
 export const refreshRelatedList = (formID, biginConf, setBiginConf, setIsLoading, setSnackbar) => {
   if (!biginConf.module) {
     return

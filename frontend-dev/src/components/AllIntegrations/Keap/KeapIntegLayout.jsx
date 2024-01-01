@@ -1,5 +1,6 @@
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
+import KeapActions from './KeapActions'
 import KeapFieldMap from './KeapFieldMap'
 import { addFieldMap } from './KeapIntegrationHelpers'
 
@@ -49,6 +50,15 @@ export default function KeapIntegLayout({ formID, formFields, handleInput, keapC
         <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(keapConf.field_map.length, keapConf, setKeapConf)} className="icn-btn sh-sm" type="button">+</button></div>
         <br />
         <br />
+        <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
+        <div className="btcd-hr mt-1" />
+        <KeapActions
+          keapConf={keapConf}
+          setKeapConf={setKeapConf}
+          formFields={formFields}
+          loading={isLoading}
+          setLoading={setIsLoading}
+        />
         {/* {keapConf.actions?.address && (
           <>
             <div className="mt-4">

@@ -67,6 +67,12 @@ a:hover {
   line-height: 1;
 }
 
+.shadow {
+  box-shadow: 3px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 3px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 3px 2px 8px 0px rgba(0, 0, 0, 0.1);
+}
+
 // WP OVERRIDE START
 
 #wpcontent {
@@ -5067,6 +5073,16 @@ _:-ms-fullscreen,
         text-align: center;
         border-radius: 5px;
       }
+
+      .new-feature {
+        background-color: #1ab981a3;
+        color: white;
+        padding: 4px 8px;
+        text-align: center;
+        border-radius: 5px;
+      }
+
+
 
       .integration-list {
         margin: 0px 0px 25px 0px;

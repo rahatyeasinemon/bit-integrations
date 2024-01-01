@@ -41,8 +41,8 @@ function Keap({ formFields, setFlow, flow, allIntegURL }) {
   const [keapConf, setKeapConf] = useState({
     name: 'Keap',
     type: 'Keap',
-    clientId: process.env.NODE_ENV === 'development' ? 'VXudW9p65crIfFP9esgV0pI4IRsazdUc' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? 'AxmCRZvArKwqmEYZ' : '',
+    clientId: process.env.NODE_ENV === 'development' ? 'xsx2T9lBWoevR3GxkAqGwBqoqWMEcG4FRuVYyb1GUEzYzYHH' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? 'w3jPmmAS7h9CzxSknz6aS0MfRkZckAar8dgIOMr9BGDjFjvrWEEcAm2onVwrq4fp' : '',
     keapId: '',
     field_map: [
       { formField: '', keapField: '' },

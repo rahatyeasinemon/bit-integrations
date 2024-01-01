@@ -14,7 +14,7 @@ export default function ZohoBiginAuthorization({ formID, biginConf, setBiginConf
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })
   const btcbi = useRecoilValue($btcbi)
-  const scopes = 'ZohoBigin.settings.modules.READ,ZohoBigin.settings.fields.READ,ZohoBigin.settings.tags.READ,ZohoBigin.users.READ,ZohoBigin.modules.ALL'
+  const scopes = 'ZohoBigin.settings.modules.READ,ZohoBigin.settings.fields.READ,ZohoBigin.settings.tags.READ,ZohoBigin.users.READ,ZohoBigin.modules.ALL,ZohoBigin.settings.layouts.READ'
   const { zohoBigin } = tutorialLinks
 
   const nextPage = () => {
