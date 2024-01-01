@@ -289,3 +289,33 @@ export const sortObj = (obj) => Object.keys(obj).sort().reduce((result, key) => 
   result[key] = obj[key]
   return result
 }, {})
+
+export const extractValueFromPath = (json, path) => {
+  const parts = Array.isArray(path) ? path : path.split('.')
+  if (parts.length === 0) {
+    return json
+  }
+
+  const currentPart = parts.shift()
+  if (Array.isArray(json)) {
+    const index = parseInt(currentPart, 10)
+    if (isNaN(index) || index >= json.length) {
+      toast.error('Index out of bounds or invalid')
+      return
+    }
+
+    return extractValueFromPath(json[index], parts)
+  }
+
+  if (json && typeof json === 'object') {
+    if (!(currentPart in json)) {
+      toast.error('Invalid path')
+      retrun
+    }
+
+    return extractValueFromPath(json[currentPart], parts)
+  }
+
+  toast.error('Invalid path')
+  return
+}

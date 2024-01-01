@@ -1,33 +1,33 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable no-console */
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { create } from 'mutative'
+import { useEffect, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $btcbi, $flowStep, $formFields, $newFlow } from '../../GlobalStates'
+import CloseIcn from '../../Icons/CloseIcn'
+import { extractValueFromPath } from '../../Utils/Helpers'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
-import CopyText from '../Utilities/CopyText'
-import SnackMsg from '../Utilities/SnackMsg'
-import WebhookDataTable from '../Utilities/WebhookDataTable'
+import ConfirmModal from '../Utilities/ConfirmModal'
 import EyeIcn from '../Utilities/EyeIcn'
 import EyeOffIcn from '../Utilities/EyeOffIcn'
-import Note from '../Utilities/Note'
-import ReactJson from '@microlink/react-json-view'
-import JsonViewer from '../Utilities/JsonViewer'
-import TagifyInput from '../Utilities/TagifyInput'
-import { create } from 'mutative'
-import CloseIcn from '../../Icons/CloseIcn'
+import SnackMsg from '../Utilities/SnackMsg'
 import TreeViewer from '../Utilities/treeViewer/TreeViewer'
-import toast from 'react-hot-toast'
-import ConfirmModal from '../Utilities/ConfirmModal'
-import MultiSelect from 'react-multiple-select-dropdown-lite'
+import hooklist from '../../Utils/StaticData/hooklist'
+import GetLogo from '../../Utils/GetLogo'
+import Note from '../Utilities/Note'
 
 const CaptureAction = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
   const setFlowStep = useSetRecoilState($flowStep)
   const setFields = useSetRecoilState($formFields)
   const [hookID, setHookID] = useState('')
+  const [selectedHook, setSelectedHook] = useState('')
+  const [customHook, setCustomHook] = useState(false)
   const [primaryKey, setPrimaryKey] = useState()
   const [primaryKeyModal, setPrimaryKeyModal] = useState(false)
   const [selectedFields, setSelectedFields] = useState([])
@@ -72,7 +72,6 @@ const CaptureAction = () => {
   }
 
   const addSelectedField = value => {
-    // console.log('value', extractValue(newFlow?.triggerDetail?.data, value))
     setSelectedFields(prevFields => create(prevFields, (draftFields) => {
       draftFields.push(value)
     }))
@@ -108,7 +107,6 @@ const CaptureAction = () => {
       )
     }
   }, [])
-  // console.log(newFlow?.triggerDetail?.data)
 
   const handleFetch = () => {
     if (isLoading) {
@@ -152,7 +150,23 @@ const CaptureAction = () => {
     })
   }
 
-  // const info = `You can test any kind of captureAction using <a href="https://captureAction.is/" target="_blank" rel="noreferrer">captureAction.is</a>`
+  const setHook = (val, name) => {
+    if (name === 'custom') {
+      setHookID(val)
+    }
+    if (name === 'hook') {
+      setSelectedHook(val)
+      if (val !== 'custom') {
+        setHookID(val)
+        setCustomHook(false)
+        return
+      }
+      setHookID('')
+      setCustomHook(true)
+    }
+  }
+
+  // const info = 'For custom Hook by pressing enter or comma (,)'
 
 
   return (
@@ -161,26 +175,25 @@ const CaptureAction = () => {
       <div className="mt-3">
         <b>{__('Hook:', 'bit-integrations')}</b>
       </div>
-      <input className="btcd-paper-inp w-100 mt-1" onChange={e => setHookID(e.target.value)} name="hook" value={hookID} type="text" placeholder={__('Enter Hook...', 'bit-integrations')} disabled={newFlow?.triggerData?.fields || isLoading || false} />
-      {/* <br />
-      <br /> */}
-      {/* {newFlow?.triggerDetail?.data &&
+      <div className="flx mt-2">
+        <MultiSelect
+          style={{ width: '100%' }}
+          options={hooklist.map(hook => ({ label: hookLabel(hook.label), title: hookLabel(hook.label), value: hook.value }))}
+          className="msl-wrp-options"
+          defaultValue={selectedHook}
+          onChange={(val => setHook(val, 'hook'))}
+          singleSelect
+          closeOnSelect
+        />
+      </div>
+      {customHook && (
         <>
-          <b className="wdt-200 d-in-b">{__('Select Form Id:', 'bit-integrations')}</b>
-          <select onChange={(e) => setPrimaryKey(e.target.value)} name="primaryKey" value={primaryKey} className="btcd-paper-inp mt-1">
-            <option value="">{__('Select Key', 'bit-integrations')}</option>
-            {
-              newFlow?.triggerDetail?.data && newFlow?.triggerDetail?.data.map(({ name, label }) => (
-                <option key={name} value={label}>
-                  {label}
-                </option>
-              ))
-            }
-          </select>
-          <br />
-          <br />
+          <div className="mt-3">
+            <b>{__('Custom Hook:', 'bit-integrations')}</b>
+          </div>
+          <input className="btcd-paper-inp w-100 mt-1" onChange={e => setHookID(e.target.value, 'custom')} name="custom" value={hookID} type="text" placeholder={__('Enter Hook...', 'bit-integrations')} disabled={newFlow?.triggerData?.fields || isLoading || false} />
         </>
-      } */}
+      )}
       {newFlow.triggerDetail?.data &&
         <>
           <div className="my-3">
@@ -312,32 +325,8 @@ const CaptureAction = () => {
 }
 export default CaptureAction
 
-function extractValueFromPath(json, path) {
-  const parts = Array.isArray(path) ? path : path.split('.')
-  if (parts.length === 0) {
-    return json
-  }
-
-  const currentPart = parts.shift()
-  if (Array.isArray(json)) {
-    const index = parseInt(currentPart, 10)
-    if (isNaN(index) || index >= json.length) {
-      toast.error('Index out of bounds or invalid')
-      return
-    }
-
-    return extractValueFromPath(json[index], parts)
-  }
-
-  if (json && typeof json === 'object') {
-    if (!(currentPart in json)) {
-      toast.error('Invalid path')
-      retrun
-    }
-
-    return extractValueFromPath(json[currentPart], parts)
-  }
-
-  toast.error('Invalid path')
-  return
-}
+const hookLabel = (label) => (
+  <div className='flx' style={{ alignItems: 'center' }}>
+    <GetLogo name={label} style={{ width: '25px' }} extension="webp" /> <span>&nbsp; {label}</span>
+  </div>
+)
