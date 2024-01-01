@@ -82,8 +82,6 @@ class RecordApiHelper
                 'parse_mode' => $integrationDetails->parse_mode
             ];
 
-            var_dump('record', $data);
-            die;
             $recordApiResponse = $this->sendMessages($data, $integrationDetails->selectedChannel);
             $type = 'insert';
         }

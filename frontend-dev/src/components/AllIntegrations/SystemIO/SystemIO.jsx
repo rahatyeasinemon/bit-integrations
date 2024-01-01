@@ -23,12 +23,6 @@ function SystemIO({ formFields, setFlow, flow, allIntegURL }) {
 
   const systemIOFields = [
     { label: 'Email Address', key: 'email', required: true },
-    { label: 'Last Name', key: 'last_name', required: false },
-    { label: 'Phone Number', key: 'phone_number', required: false },
-    { label: 'Company', key: 'company', required: false },
-    { label: 'Website', key: 'website', required: false },
-    { label: 'GDPR', key: 'gdpr', required: false },
-    { label: 'Tag Registration page URL', key: 'ref_url', required: false },
   ]
 
   const [systemIOConf, setSystemIOConf] = useState({

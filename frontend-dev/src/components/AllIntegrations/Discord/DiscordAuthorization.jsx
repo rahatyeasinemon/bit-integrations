@@ -40,8 +40,12 @@ export default function DiscordAuthorization({ formID,
             <h4>Get Access Token few step</h4>
             <ul>
                 <li>First create app.</li>
-                <li>Add an OAuth Scope <b>'channels:read, channels:write, chat:write, files:read, files:write'</b>.</li>
-                <li>Generate Access Token clicking <b> 'install to Workspace'</b>.</li>
+                <li>Click on OAuth2.</li>
+                <li>Select <b>bot</b> from scopes.</li>
+                <li>Select permissions from <b>Bot Permissions</b>.</li>
+                <li>Then copy the <b>generated url</b> and paste it in the browser and hit enter.</li>
+                <li>Then click on <b>Bot</b>  from left navbar and copy the <b>Access token</b>.</li>
+                
             </ul>`
 
   return (
@@ -83,7 +87,7 @@ export default function DiscordAuthorization({ formID,
         {' '}
         <a
           className="btcd-link"
-          href="https://api.discord.com/apps?new_app=1/"
+          href="https://discord.com/developers/applications"
           target="_blank"
           rel="noreferrer"
         >
