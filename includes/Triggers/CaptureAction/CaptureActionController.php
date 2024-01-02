@@ -3,10 +3,7 @@
 namespace BitCode\FI\Triggers\CaptureAction;
 
 use WP_Error;
-use WP_REST_Request;
 use BitCode\FI\Flow\Flow;
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Core\Util\Helper;
 
 class CaptureActionController
 {

@@ -5,10 +5,12 @@ import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $btcbi, $flowStep, $formFields, $newFlow } from '../../GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $flowStep, $formFields, $newFlow } from '../../GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
+import GetLogo from '../../Utils/GetLogo'
 import { extractValueFromPath } from '../../Utils/Helpers'
+import hooklist from '../../Utils/StaticData/hooklist'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
@@ -17,9 +19,6 @@ import EyeIcn from '../Utilities/EyeIcn'
 import EyeOffIcn from '../Utilities/EyeOffIcn'
 import SnackMsg from '../Utilities/SnackMsg'
 import TreeViewer from '../Utilities/treeViewer/TreeViewer'
-import hooklist from '../../Utils/StaticData/hooklist'
-import GetLogo from '../../Utils/GetLogo'
-import Note from '../Utilities/Note'
 
 const CaptureAction = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
@@ -33,7 +32,6 @@ const CaptureAction = () => {
   const [selectedFields, setSelectedFields] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
-  const { api } = useRecoilValue($btcbi)
   const [showResponse, setShowResponse] = useState(false)
   const intervalRef = useRef(null)
 
@@ -87,16 +85,8 @@ const CaptureAction = () => {
     if (newFlow.triggerDetail?.data?.length > 0 && newFlow.triggerDetail?.hook_id) {
       setHookID(newFlow.triggerDetail?.hook_id)
       window.hook_id = newFlow.triggerDetail?.hook_id
-    } else {
-      bitsFetch({ hook_id: hookID }, 'capture_action/new', null, 'get').then(
-        (resp) => {
-          if (resp.success) {
-            setHookID(resp.data.hook_id)
-            window.hook_id = resp.data.hook_id
-          }
-        },
-      )
     }
+
     return () => {
       setFields()
       bitsFetch({ hook_id: window.hook_id }, 'capture_action/test/remove').then(
@@ -178,7 +168,7 @@ const CaptureAction = () => {
       <div className="flx mt-2">
         <MultiSelect
           style={{ width: '100%' }}
-          options={hooklist.map(hook => ({ label: hookLabel(hook.label), title: hookLabel(hook.label), value: hook.value }))}
+          options={hooklist.map(hook => ({ label: hookLabel(hook.logo, hook.label), title: hookLabel(hook.logo, hook.label), value: hook.value }))}
           className="msl-wrp-options"
           defaultValue={selectedHook}
           onChange={(val => setHook(val, 'hook'))}
@@ -325,8 +315,8 @@ const CaptureAction = () => {
 }
 export default CaptureAction
 
-const hookLabel = (label) => (
+const hookLabel = (logo, label) => (
   <div className='flx' style={{ alignItems: 'center' }}>
-    <GetLogo name={label} style={{ width: '25px' }} extension="webp" /> <span>&nbsp; {label}</span>
+    <GetLogo name={logo} style={{ width: '25px' }} extension="webp" /> <span>&nbsp; {label}</span>
   </div>
 )
