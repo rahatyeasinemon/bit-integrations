@@ -79,11 +79,19 @@ class CaptureActionController
 
                 $primaryKeyValue = self::extractValueFromPath($args, $flowDetails->primaryKey->key);
                 if ($flowDetails->primaryKey->value === $primaryKeyValue) {
-                    $fieldKeys = array_map(function ($field) use ($args) {
-                        return $field->key;
-                    }, $flowDetails->body->data);
+                    $fieldKeys      = [];
+                    $formatedData   = [];
 
-                    $formatedData = [];
+                    if ($flowDetails->body->data && is_array($flowDetails->body->data)) {
+                        $fieldKeys = array_map(function ($field) use ($args) {
+                            return $field->key;
+                        }, $flowDetails->body->data);
+                    } elseif (isset($flowDetails->field_map) && is_array($flowDetails->field_map)) {
+                        $fieldKeys = array_map(function ($field) use ($args) {
+                            return $field->formField;
+                        }, $flowDetails->field_map);
+                    }
+
                     foreach ($fieldKeys as $key) {
                         $formatedData[$key] = self::extractValueFromPath($args, $key);
                     }
