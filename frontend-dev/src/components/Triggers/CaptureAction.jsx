@@ -146,7 +146,7 @@ const CaptureAction = () => {
 
     if (isCustom || (isHook && val === 'custom')) {
       setHookID(isCustom ? val : '');
-      setCustomHook(isHook);
+      setCustomHook(isHook || isCustom);
     }
 
     if (isHook) {
@@ -175,7 +175,7 @@ const CaptureAction = () => {
       <div className="flx mt-2">
         <MultiSelect
           style={{ width: '100%' }}
-          options={hooklist.map(hook => ({ label: hookLabel(hook.logo, hook.label), title: hookLabel(hook.logo, hook.label), value: hook.value }))}
+          options={hooklist.map(hook => ({ label: hook.label, value: hook.value }))}
           className="msl-wrp-options"
           defaultValue={selectedHook}
           onChange={(val => setHook(val, 'hook'))}
@@ -189,7 +189,7 @@ const CaptureAction = () => {
           <div className="mt-3">
             <b>{__('Custom Hook:', 'bit-integrations')}</b>
           </div>
-          <input className="btcd-paper-inp w-100 mt-1" onChange={e => setHookID(e.target.value, 'custom')} name="custom" value={hookID} type="text" placeholder={__('Enter Hook...', 'bit-integrations')} disabled={newFlow?.triggerData?.fields || isLoading || false} />
+          <input className="btcd-paper-inp w-100 mt-1" onChange={e => setHook(e.target.value, 'custom')} name="custom" value={hookID} type="text" placeholder={__('Enter Hook...', 'bit-integrations')} disabled={isLoading} />
         </>
       )}
       {newFlow.triggerDetail?.data &&
@@ -199,7 +199,7 @@ const CaptureAction = () => {
           </div>
           <div className="bg-white rounded border my-1 table-webhook-div p-2" style={{ minHeight: '40px', maxHeight: '14rem' }}>
             {selectedFields.map((field, index) => <div key={index} style={{ position: "relative" }}>
-              <input key={index} className="btcd-paper-inp w-100 m-1" type='text' onChange={e => setSelectedFieldsData(e.target.value, index)} value={field.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')} disabled={newFlow?.triggerData?.fields || isLoading || false} />
+              <input key={index} className="btcd-paper-inp w-100 m-1" type='text' onChange={e => setSelectedFieldsData(e.target.value, index)} value={field.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')} disabled={isLoading} />
               <button
                 className="btn btcd-btn-lg sh-sm"
                 onClick={() => removeSelectedField(index)}

@@ -1,6 +1,9 @@
 const hooklist = [
     { label: 'Bit Form', value: 'bitform_submit_success', logo: 'Bit Form' },
     { label: 'Forminator', value: 'forminator_custom_form_submit_before_set_fields', logo: 'Forminator' },
+    { label: 'Fluent CRM (Add Contact)', value: 'fluentcrm_contact_created', logo: 'Fluent CRM' },
+    { label: 'Fluent CRM (Contact added to lists)', value: 'fluentcrm_contact_added_to_lists', logo: 'Fluent CRM' },
+    { label: 'Fluent CRM (Contact removed from lists)', value: 'fluentcrm_contact_removed_from_lists', logo: 'Fluent CRM' },
     { label: 'Custom Hook', value: 'custom', logo: '' },
 ]
 
