@@ -85,10 +85,9 @@ class RecordApiHelper
             $recordApiResponse = $this->sendMessages($data, $integrationDetails->selectedChannel);
             $type = 'insert';
         }
-
         $recordApiResponse = is_string($recordApiResponse) ? json_decode($recordApiResponse) : $recordApiResponse;
 
-        if ($recordApiResponse && $recordApiResponse->ok) {
+        if (isset($recordApiResponse->id)) {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', $recordApiResponse);
         } else {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', $recordApiResponse);

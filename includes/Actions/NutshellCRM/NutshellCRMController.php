@@ -76,8 +76,6 @@ class NutshellCRMController
         ];
 
         $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
-        // var_dump($response->result);
-        // die;
 
         if (isset($response->result)) {
             foreach ($response->result as $company) {
@@ -108,8 +106,6 @@ class NutshellCRMController
         ];
 
         $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
-        // var_dump($response->result);
-        // die;
 
         if (isset($response->result)) {
             foreach ($response->result as $contact) {
@@ -140,8 +136,6 @@ class NutshellCRMController
         ];
 
         $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
-        // var_dump($response->result);
-        // die;
 
         if (isset($response->result)) {
             foreach ($response->result as $product) {
@@ -172,8 +166,6 @@ class NutshellCRMController
         ];
 
         $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
-        // var_dump($response->result);
-        // die;
 
         if (isset($response->result)) {
             foreach ($response->result as $source) {
@@ -204,8 +196,6 @@ class NutshellCRMController
         ];
 
         $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
-        // var_dump($response->result);
-        // die;
 
         if (isset($response->result)) {
             foreach ($response->result->Leads as $tag) {
@@ -236,7 +226,6 @@ class NutshellCRMController
         ];
 
         $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
-
 
         if (isset($response->result)) {
             foreach ($response->result as $companyType) {
