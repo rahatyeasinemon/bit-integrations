@@ -82,7 +82,7 @@ const CaptureAction = () => {
   }
 
   useEffect(() => {
-    if (newFlow.triggerDetail?.data?.length > 0 && newFlow.triggerDetail?.hook_id) {
+    if (newFlow.triggerDetail?.data?.length > 0 && newFlow.triggerDetail?.hook_id !== '') {
       setHookID(newFlow.triggerDetail?.hook_id)
       window.hook_id = newFlow.triggerDetail?.hook_id
     }
@@ -141,23 +141,30 @@ const CaptureAction = () => {
   }
 
   const setHook = (val, name) => {
-    if (name === 'custom') {
-      setHookID(val)
+    const isCustom = name === 'custom';
+    const isHook = name === 'hook';
+
+    if (isCustom || (isHook && val === 'custom')) {
+      setHookID(isCustom ? val : '');
+      setCustomHook(isHook);
     }
-    if (name === 'hook') {
-      setSelectedHook(val)
+
+    if (isHook) {
+      setSelectedHook(val);
       if (val !== 'custom') {
-        setHookID(val)
-        setCustomHook(false)
-        return
+        setHookID(val);
+        setCustomHook(false);
       }
-      setHookID('')
-      setCustomHook(true)
+    }
+
+    if (isCustom || isHook) {
+      setSelectedFields([])
+      setNewFlow(prevFlow => create(prevFlow, (draftFlow => {
+        delete draftFlow?.triggerDetail?.tmp
+        delete draftFlow?.triggerDetail?.data
+      })))
     }
   }
-
-  // const info = 'For custom Hook by pressing enter or comma (,)'
-
 
   return (
     <div className="trigger-custom-width">
@@ -174,6 +181,7 @@ const CaptureAction = () => {
           onChange={(val => setHook(val, 'hook'))}
           singleSelect
           closeOnSelect
+          disabled={isLoading}
         />
       </div>
       {customHook && (
@@ -189,7 +197,7 @@ const CaptureAction = () => {
           <div className="my-3">
             <b>{__('Selected Fields:', 'bit-integrations')}</b>
           </div>
-          <div className="bg-white rounded border my-1 table-webhook-div p-2" style={{ minHeight: '100px', maxHeight: '14rem' }}>
+          <div className="bg-white rounded border my-1 table-webhook-div p-2" style={{ minHeight: '40px', maxHeight: '14rem' }}>
             {selectedFields.map((field, index) => <div key={index} style={{ position: "relative" }}>
               <input key={index} className="btcd-paper-inp w-100 m-1" type='text' onChange={e => setSelectedFieldsData(e.target.value, index)} value={field.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')} disabled={newFlow?.triggerData?.fields || isLoading || false} />
               <button
@@ -233,8 +241,8 @@ const CaptureAction = () => {
             disabled={!selectedFields.length}
           >
             {primaryKey
-              ? __('Primary Key ✔', 'bit-integrations')
-              : __('Primary Key', 'bit-integrations')}
+              ? __('Unique Key ✔', 'bit-integrations')
+              : __('Unique Key', 'bit-integrations')}
           </button>
         }
       </div>
@@ -264,41 +272,37 @@ const CaptureAction = () => {
         </div>
       </ConfirmModal>
 
-      {
-        showResponse && (
-          <>
-            <div className="mt-3">
-              <b>{__('Select Fields:', 'bit-integrations')}</b>
-            </div>
-            <TreeViewer data={newFlow?.triggerDetail?.data} onChange={setSelectedFieldsData} />
-          </>
-        )
-      }
+      {newFlow.triggerDetail?.data && showResponse && (
+        <>
+          <div className="mt-3">
+            <b>{__('Select Fields:', 'bit-integrations')}</b>
+          </div>
+          <TreeViewer data={newFlow?.triggerDetail?.data} onChange={setSelectedFieldsData} />
+        </>
+      )}
       {newFlow.triggerDetail?.data &&
         <div className="flx flx-between">
-          {newFlow.triggerDetail?.data && (
-            <button
-              onClick={showResponseTable}
-              className="btn btcd-btn-lg sh-sm flx"
-            >
-              <span className="txt-captureAction-resbtn font-inter-500">
-                {showResponse ? 'Hide Response' : 'View Response'}
-              </span>
-              {!showResponse ? (
-                <EyeIcn
-                  width="20"
-                  height="20"
-                  strokeColor="#000000"
-                />
-              ) : (
-                <EyeOffIcn
-                  width="20"
-                  height="20"
-                  strokeColor="#000000"
-                />
-              )}
-            </button>
-          )}
+          <button
+            onClick={showResponseTable}
+            className="btn btcd-btn-lg sh-sm flx"
+          >
+            <span className="txt-captureAction-resbtn font-inter-500">
+              {showResponse ? 'Hide Response' : 'View Response'}
+            </span>
+            {!showResponse ? (
+              <EyeIcn
+                width="20"
+                height="20"
+                strokeColor="#000000"
+              />
+            ) : (
+              <EyeOffIcn
+                width="20"
+                height="20"
+                strokeColor="#000000"
+              />
+            )}
+          </button>
           <button
             onClick={setTriggerData}
             className="btn btcd-btn-lg green sh-sm flx"
@@ -309,7 +313,6 @@ const CaptureAction = () => {
           </button>
         </div>
       }
-      {/* <Note note={info} /> */}
     </div >
   )
 }
