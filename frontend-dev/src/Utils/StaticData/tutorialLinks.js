@@ -99,6 +99,11 @@ const tutorialLinks = {
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AI9ZIECQakOnGjj8mKggEEl",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/directiq-integrations/",
   },
+  discord: {
+    title: "How to Setup Discord integration",
+    // youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AI9ZIECQakOnGjj8mKggEEl",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/discord-integrations/",
+  },
   elasticEmail: {
     title: "How to Setup Elastic Email integration",
     youTubeLink: "https://www.youtube.com/playlist?list=PL7c6CDwwm-AKGk8q9MzrgeZvIqoP0yrWS",

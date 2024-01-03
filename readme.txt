@@ -209,6 +209,8 @@ https://youtu.be/eFuficjF_F4
 * [**Omnisend**](https://www.omnisend.com/)
 * [**OneDrive**](https://www.microsoft.com/en-us/microsoft-365/onedrive/online-cloud-storage)
 * [**OneHash**](https://www.onehash.ai/)
+* [**OneHash**](https://www.onehash.ai/)
+* [**OptinMonster**](https://optinmonster.com/)
 * [**Pabbly**](https://www.pabbly.com/)
 * [**Paid Memberships Pro**](https://wordpress.org/plugins/paid-memberships-pro/)
 * [**Perfex CRM**](https://www.perfexcrm.com/)
@@ -1075,7 +1077,7 @@ I’ve been using the free version for sometime and switched to the pro version 
       Perfex CRM is a versatile customer relationship management software that streamlines your business operations. With Perfex CRM, you can efficiently manage contacts, projects, invoices, and more, all within a unified and user-friendly platform. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/perfex-crm-integrations/)|[**Website**](https://www.perfexcrm.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AITU5v8hwOQecdVxOzblSWp)]
 * [**OneHash - All-in-One CRM, ERP, and Business Solution :**](https://www.onehash.ai/)Boost your business with OneHash, a powerful all-in-one software offering CRM, ERP, and more. Affordable and scalable for sustainable growth.
 
-      OneHash is a comprehensive business management platform designed to simplify your workflows. With OneHash, you can manage various aspects of your business, including accounting, sales, and project management, all in one integrated solution. Streamline your operations with OneHash and experience a more efficient way to run your business. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/onehash-crm-integrations/)|[**Website**](https://www.onehash.ai/)]
+      OneHash is a comprehensive business management platform designed to simplify your workflows. With One Hash, you can manage various aspects of your business, including accounting, sales, and project management, all in one integrated solution. Streamline your operations with One Hash and experience a more efficient way to run your business. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/onehash-crm-integrations/)|[**Website**](https://www.onehash.ai/)]
 * [**Academy LMS – eLearning and online course solution for WordPress :**](https://academylms.net/) Academy LMS, the ultimate next-generation, fastest WordPress LMS plugin, will improve your online learning experience. Its seamless integration with any WordPress site allows you to easily create and sell engaging online courses. With a user-friendly interface and lightning-fast performance, you can transform your website into a professional e-learning platform in no time.
 
       Academy LMS is a powerful eLearning platform that empowers you to create and manage online courses with ease. With Academy LMS, you can deliver engaging content, track student progress, and build a thriving online learning community. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/academy-lms-integrations/)|[**Website**](https://academylms.net/)|[**Free**](https://wordpress.org/plugins/academy/)]
@@ -1097,6 +1099,9 @@ I’ve been using the free version for sometime and switched to the pro version 
 * [**Discord | Your Place to Talk and Hang Out:**](https://discord.com/) where you can belong to a school club, a gaming group, or a worldwide art community. Where just you and a handful of friends can spend time together.
 
       Discord is a popular communication platform, offering text, voice, and video channels for community interaction. Users join servers on Discord to engage in discussions, gaming, and more, utilizing Discord's robust features. [**Website**](https://discord.com/)
+* [**OptinMonster - Most Powerful Lead Generation Software for:**](https://optinmonster.com/) OptinMonster is the most powerful lead generation software for marketing agencies, bloggers, eCommerce websites, and all small businesses.
+
+      Optin Monster is a powerful lead generation software, designed to convert website visitors into subscribers and customers. Utilizing Optin Monster's tools, businesses can create effective and personalized opt-in forms and campaigns. [**Website**](https://optinmonster.com/)
 
 ### ⚡ Key Features:
 
@@ -1732,6 +1737,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 
 - **New Actions :**
   - Discord | Your Place to Talk and Hang Out -  Discord Integration & Automation
+  - OptinMonster - Most Powerful Lead Generation Software
 
 - **New Features :**
   - WooCommerce: Custom Field: ACF field
