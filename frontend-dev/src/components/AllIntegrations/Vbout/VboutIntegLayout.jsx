@@ -67,19 +67,33 @@ export default function VboutIntegLayout({ handleInput, formFields, vboutConf, s
         }}
         />
       )}
-      <b className="wdt-200 d-in-b">{__('Contact Status:', 'bit-integrations')}</b>
-      <select onChange={(e) => handleInput(e, vboutConf, setVboutConf)} name="contact_status" value={vboutConf.contact_status} className="btcd-paper-inp w-5">
-        <option value="">{__('Select Status', 'bit-integrations')}</option>
-        {
-          ContactStatus.map(status => (
-            <option key={status.value} value={status.value}>
-              {status.label}
-            </option>
-          ))
-        }
-      </select>
+      {vboutConf?.list_id && !loading.field && (
+        <>
+          <b className="wdt-200 d-in-b">{__('Contact Status:', 'bit-integrations')}</b>
+          <select onChange={(e) => handleInput(e, vboutConf, setVboutConf)} name="contact_status" value={vboutConf.contact_status} className="btcd-paper-inp w-5">
+            <option value="">{__('Select Status', 'bit-integrations')}</option>
+            {
+              ContactStatus.map(status => (
+                <option key={status.value} value={status.value}>
+                  {status.label}
+                </option>
+              ))
+            }
+          </select>
+        </>
+      )}
+      {loading.field && (
+        <Loader style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: 100,
+          transform: 'scale(0.7)',
+        }}
+        />
+      )}
 
-      {(vboutConf?.list_id && vboutConf?.contact_status)
+      {(vboutConf?.list_id && vboutConf?.contact_status && !loading.field)
         && (
           <>
             <div className="mt-5">
@@ -90,16 +104,6 @@ export default function VboutIntegLayout({ handleInput, formFields, vboutConf, s
 
             </div>
             <br />
-            {loading.field && (
-              <Loader style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 100,
-                transform: 'scale(0.7)',
-              }}
-              />
-            )}
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
               <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
@@ -122,7 +126,7 @@ export default function VboutIntegLayout({ handleInput, formFields, vboutConf, s
             <br />
           </>
         )}
-      {vboutConf?.list_id
+      {vboutConf?.list_id && vboutConf?.contact_status
         && (
           <>
             <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>

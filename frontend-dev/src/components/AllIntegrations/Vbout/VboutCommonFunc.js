@@ -2,16 +2,17 @@
 import toast from 'react-hot-toast'
 import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
+import { create } from 'mutative'
 
 export const handleInput = (e, vboutConf, setVboutConf) => {
-  const newConf = { ...vboutConf }
-  const { name } = e.target
-  if (e.target.value !== '') {
-    newConf[name] = e.target.value
-  } else {
-    delete newConf[name]
-  }
-  setVboutConf({ ...newConf })
+  setVboutConf(prevConf => create(prevConf, (draftConfig) => {
+    const { name } = e.target
+    if (e.target.value !== '') {
+      draftConfig[name] = e.target.value
+    } else {
+      delete draftConfig[name]
+    }
+  }))
 }
 
 
@@ -28,7 +29,7 @@ export const checkMappedFields = (vboutConf) => {
   }
   return true
 }
-export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized,loading, setLoading) => {
+export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, loading, setLoading) => {
   if (!confTmp.auth_token) {
     setError({ auth_token: !confTmp.auth_token ? __('Api Key can\'t be empty', 'bit-integrations') : '' })
     return
@@ -54,7 +55,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized,load
 }
 
 
-export const VboutRefreshFields = (confTmp, setConf,loading, setLoading) => {
+export const VboutRefreshFields = (confTmp, setConf, loading, setLoading) => {
   setLoading({ ...loading, field: true })
 
   const requestParams = { auth_token: confTmp.auth_token, list_id: confTmp.list_id }
@@ -66,6 +67,7 @@ export const VboutRefreshFields = (confTmp, setConf,loading, setLoading) => {
         if (result.data) {
           newConf.VboutFields = result.data
         }
+        newConf['field_map'] = generateMappedField(newConf)
         setConf(newConf)
         setLoading({ ...loading, field: false })
         toast.success(__('Fields refresh successfully', 'bit-integrations'))
@@ -76,7 +78,7 @@ export const VboutRefreshFields = (confTmp, setConf,loading, setLoading) => {
     })
 }
 
-export const getAllLists = (confTmp, setConf,loading, setLoading,) => {
+export const getAllLists = (confTmp, setConf, loading, setLoading,) => {
   setLoading({ ...loading, list: true })
 
   const requestParams = { auth_token: confTmp.auth_token }
