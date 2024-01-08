@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Convert Kit Record Api
+ * ZagoMail Record Api
  */
 
 namespace BitCode\FI\Actions\ZagoMail;
@@ -28,7 +28,7 @@ class RecordApiHelper
     }
 
     // for adding a subscriber
-    public function storeOrModifyRecord($method, $formId, $data)
+    public function storeOrModifyRecord($method, $listId, $data)
     {
         $query = [
             'api_secret' => $this->_defaultHeader,
@@ -48,7 +48,7 @@ class RecordApiHelper
 
         $queries = http_build_query($query);
 
-        $insertRecordEndpoint = "{$this->_apiEndpoint}/forms/{$formId}/{$method}?{$queries}";
+        $insertRecordEndpoint = "{$this->_apiEndpoint}/lists/{$listId}/{$method}?{$queries}";
 
         $res = HttpHelper::post($insertRecordEndpoint, null);
         return $res;
@@ -115,21 +115,21 @@ class RecordApiHelper
     }
 
 
-    public function execute($fieldValues, $fieldMap, $actions, $formId, $tags)
+    public function execute($fieldValues, $fieldMap, $actions, $listId, $tags)
     {
         $fieldData = [];
         $customFields = [];
 
         foreach ($fieldMap as $fieldKey => $fieldPair) {
             if (!empty($fieldPair->zagoMailField)) {
-                if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue) && !is_numeric($fieldPair->zagoMailField)) {
+                if ($fieldPair->listField === 'custom' && isset($fieldPair->customValue) && !is_numeric($fieldPair->zagoMailField)) {
                     $fieldData[$fieldPair->zagoMailField] = $fieldPair->customValue;
-                } elseif (is_numeric($fieldPair->zagoMailField) && $fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
+                } elseif (is_numeric($fieldPair->zagoMailField) && $fieldPair->listField === 'custom' && isset($fieldPair->customValue)) {
                     array_push($customFields, ['field' => (int) $fieldPair->zagoMailField, 'value' => $fieldPair->customValue]);
                 } elseif (is_numeric($fieldPair->zagoMailField)) {
-                    array_push($customFields, ['field' => (int) $fieldPair->zagoMailField, 'value' => $fieldValues[$fieldPair->formField]]);
+                    array_push($customFields, ['field' => (int) $fieldPair->zagoMailField, 'value' => $fieldValues[$fieldPair->listField]]);
                 } else {
-                    $fieldData[$fieldPair->zagoMailField] = $fieldValues[$fieldPair->formField];
+                    $fieldData[$fieldPair->zagoMailField] = $fieldValues[$fieldPair->listField];
                 }
             }
         }
@@ -142,7 +142,7 @@ class RecordApiHelper
         $existSubscriber = $this->existSubscriber($zagoMail->email);
 
         if ((count($existSubscriber->subscribers)) !== 1) {
-            $recordApiResponse = $this->storeOrModifyRecord('subscribe', $formId, $zagoMail);
+            $recordApiResponse = $this->storeOrModifyRecord('subscribe', $listId, $zagoMail);
             if (isset($tags) && (count($tags)) > 0 && $recordApiResponse) {
                 $this->addTagToSubscriber($zagoMail->email, $tags);
             }

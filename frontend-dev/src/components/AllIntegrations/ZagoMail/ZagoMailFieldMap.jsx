@@ -47,7 +47,7 @@ export default function ZagoMailFieldMap({ i, formFields, field, zagoMailConf, s
       <div className="flx integ-fld-wrp">
         <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i)}>
           <option value="">{__('Select Field', 'bit-integrations')}</option>
-          <optgroup label="Form Fields">
+          <optgroup label="List Fields">
             {
 
               formFields?.map(f => (

@@ -5,7 +5,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ZagoMailActions from './ZagoMailActions'
-import { refreshZagoMailHeader, refreshZagoMailForm, refreshZagoMailTags } from './ZagoMailCommonFunc'
+import { refreshZagoMailHeader, refreshZagoMailList, refreshZagoMailTags } from './ZagoMailCommonFunc'
 import ZagoMailFieldMap from './ZagoMailFieldMap'
 
 export default function ZagoMailIntegLayout({ formID, formFields, zagoMailConf, setZagoMailConf, isLoading, setIsLoading, setSnackbar }) {
@@ -21,50 +21,39 @@ export default function ZagoMailIntegLayout({ formID, formFields, zagoMailConf, 
   }
 
   const handleInput = (e) => {
-    const formid = e.target.value
+    const listid = e.target.value
     const newConf = { ...zagoMailConf }
-    if (formid) {
-      newConf.formId = formid
+    if (listid) {
+      newConf.listId = listid
     } else {
-      delete newConf.formId
+      delete newConf.listId
     }
     refreshZagoMailHeader(newConf, setZagoMailConf, setIsLoading, setSnackbar)
   }
 
-  const zagoMailForms = zagoMailConf?.default?.zagoMailForms
+  const zagoMailLists = zagoMailConf?.default?.zagoMailLists
 
   useEffect(() => {
-    zagoMailForms && refreshZagoMailTags(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)
+    zagoMailLists && refreshZagoMailTags(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [zagoMailForms])
+  }, [zagoMailLists])
 
   return (
     <>
       <br />
-      <b className="wdt-200 d-in-b">{__('Form:', 'bit-integrations')}</b>
-      <select value={zagoMailConf?.formId} name="formId" id="" className="btcd-paper-inp w-5" onChange={handleInput}>
-        <option value="">{__('Select Form', 'bit-integrations')}</option>
+      <b className="wdt-200 d-in-b">{__('List:', 'bit-integrations')}</b>
+      <select value={zagoMailConf?.listId} name="listId" id="" className="btcd-paper-inp w-5" onChange={handleInput}>
+        <option value="">{__('Select List', 'bit-integrations')}</option>
         {
-          zagoMailConf?.default?.zagoMailForms && Object.keys(zagoMailConf.default.zagoMailForms).map(formname => (
-            <option key={`${formname + 1}`} value={zagoMailConf.default.zagoMailForms[formname].formId}>
-              {zagoMailConf.default.zagoMailForms[formname].formName}
+          zagoMailConf?.default?.zagoMailLists && Object.keys(zagoMailConf.default.zagoMailLists).map(listname => (
+            <option key={`${listname + 1}`} value={zagoMailConf.default.zagoMailLists[listname].listId}>
+              {zagoMailConf.default.zagoMailLists[listname].listName}
             </option>
           ))
         }
       </select>
-      <button onClick={() => refreshZagoMailForm(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh ZagoMail form"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => refreshZagoMailList(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh ZagoMail list"' }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
-      <br />
-      <div className="d-flx">
-        <b style={{ marginTop: '15px' }} className="wdt-200 d-in-b">{__('Tags: ', 'bit-integrations')}</b>
-        <MultiSelect
-          defaultValue={zagoMailConf?.tagIds?.toString()}
-          className="btcd-paper-drpdwn w-5"
-          options={zagoMailConf?.default?.zagoMailTags && Object.keys(zagoMailConf.default.zagoMailTags).map(tag => ({ label: zagoMailConf.default.zagoMailTags[tag].tagName, value: zagoMailConf.default.zagoMailTags[tag].tagId.toString() }))}
-          onChange={val => setTags(val)}
-        />
-        <button onClick={() => refreshZagoMailTags(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ZagoMail Tags', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
-      </div>
       <br />
       {isLoading && (
         <Loader style={{
@@ -72,7 +61,7 @@ export default function ZagoMailIntegLayout({ formID, formFields, zagoMailConf, 
           justifyContent: 'center',
           alignItems: 'center',
           height: 100,
-          transform: 'scale(0.7)',
+          translist: 'scale(0.7)',
         }}
         />
       )}
@@ -83,11 +72,11 @@ export default function ZagoMailIntegLayout({ formID, formFields, zagoMailConf, 
       </div>
       {
 
-        (zagoMailConf?.formId || zagoMailConf?.default?.fields) && (
+        (zagoMailConf?.listId || zagoMailConf?.default?.fields) && (
           <>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-              <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
+              <div className="txt-dp"><b>{__('List Fields', 'bit-integrations')}</b></div>
               <div className="txt-dp"><b>{__('ZagoMail Fields', 'bit-integrations')}</b></div>
             </div>
 

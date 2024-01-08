@@ -4,7 +4,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
-import { refreshZagoMailForm } from './ZagoMailCommonFunc'
+import { refreshZagoMailList } from './ZagoMailCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 
@@ -51,7 +51,7 @@ export default function ZagoMailAuthorization({ formID, zagoMailConf, setZagoMai
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
 
-    refreshZagoMailForm(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)
+    refreshZagoMailList(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)
     setstep(2)
   }
 

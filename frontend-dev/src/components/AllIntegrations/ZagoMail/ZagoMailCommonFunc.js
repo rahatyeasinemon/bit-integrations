@@ -8,33 +8,34 @@ export const handleInput = (e, zagoMailConf, setZagoMailConf) => {
   setZagoMailConf({ ...newConf })
 }
 
-export const refreshZagoMailForm = (
+export const refreshZagoMailList = (
   zagoMailConf,
   setZagoMailConf,
   setIsLoading,
   setSnackbar,
 ) => {
-  const refreshFormsRequestParams = {
+  setIsLoading(true)
+  const refreshListsRequestParams = {
     api_secret: zagoMailConf.api_secret,
   }
-  bitsFetch(refreshFormsRequestParams, 'zagoMail_forms')
+  bitsFetch(refreshListsRequestParams, 'zagoMail_lists')
     .then((result) => {
       if (result && result.success) {
         const newConf = { ...zagoMailConf }
-        if (result.data.zagoMailForms) {
+        if (result.data.zagoMailLists) {
           if (!newConf.default) {
             newConf.default = {}
           }
-          newConf.default.zagoMailForms = result.data.zagoMailForms
+          newConf.default.zagoMailLists = result.data.zagoMailLists
           setSnackbar({
             show: true,
-            msg: __('Convert Kit forms refreshed', 'bit-integrations'),
+            msg: __('ZagoMail lists refreshed', 'bit-integrations'),
           })
         } else {
           setSnackbar({
             show: true,
             msg: __(
-              'No Convert Kit forms found. Try changing the header row number or try again',
+              'No ZagoMail lists found. Try changing the header row number or try again',
               'bit-integrations',
             ),
           })
@@ -45,7 +46,7 @@ export const refreshZagoMailForm = (
         setSnackbar({
           show: true,
           msg: __(
-            'Convert Kit forms refresh failed. please try again',
+            'ZagoMail lists refresh failed. please try again',
             'bit-integrations',
           ),
         })
@@ -61,10 +62,10 @@ export const refreshZagoMailTags = (
   setIsLoading,
   setSnackbar,
 ) => {
-  const refreshFormsRequestParams = {
+  const refreshListsRequestParams = {
     api_secret: zagoMailConf.api_secret,
   }
-  bitsFetch(refreshFormsRequestParams, 'zagoMail_tags')
+  bitsFetch(refreshListsRequestParams, 'zagoMail_tags')
     .then((result) => {
       if (result && result.success) {
         const newConf = { ...zagoMailConf }
@@ -75,13 +76,13 @@ export const refreshZagoMailTags = (
           newConf.default.zagoMailTags = result.data.zagoMailTags
           setSnackbar({
             show: true,
-            msg: __('Convert Kit tags refreshed', 'bit-integrations'),
+            msg: __('ZagoMail tags refreshed', 'bit-integrations'),
           })
         } else {
           setSnackbar({
             show: true,
             msg: __(
-              'No Convert Kit tags found. Try changing the header row number or try again',
+              'No ZagoMail tags found. Try changing the header row number or try again',
               'bit-integrations',
             ),
           })
@@ -92,7 +93,7 @@ export const refreshZagoMailTags = (
         setSnackbar({
           show: true,
           msg: __(
-            'Convert Kit tags refresh failed. please try again',
+            'ZagoMail tags refresh failed. please try again',
             'bit-integrations',
           ),
         })
@@ -108,10 +109,10 @@ export const refreshZagoMailHeader = (
   setIsLoading,
   setSnackbar,
 ) => {
-  const refreshFormsRequestParams = {
+  const refreshListsRequestParams = {
     api_secret: zagoMailConf.api_secret,
   }
-  bitsFetch(refreshFormsRequestParams, 'zagoMail_headers')
+  bitsFetch(refreshListsRequestParams, 'zagoMail_headers')
     .then((result) => {
       if (result && result.success) {
         const newConf = { ...zagoMailConf }
@@ -130,13 +131,13 @@ export const refreshZagoMailHeader = (
             }))
           setSnackbar({
             show: true,
-            msg: __('Convert Kit fields refreshed', 'bit-integrations'),
+            msg: __('ZagoMail fields refreshed', 'bit-integrations'),
           })
         } else {
           setSnackbar({
             show: true,
             msg: __(
-              'No Convert Kit fields found. Try changing the header row number or try again',
+              'No ZagoMail fields found. Try changing the header row number or try again',
               'bit-integrations',
             ),
           })
@@ -147,7 +148,7 @@ export const refreshZagoMailHeader = (
         setSnackbar({
           show: true,
           msg: __(
-            'Convert Kit fields refresh failed. please try again',
+            'ZagoMail fields refresh failed. please try again',
             'bit-integrations',
           ),
         })

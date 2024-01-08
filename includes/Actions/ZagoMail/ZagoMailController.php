@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Convert Kit Integration
+ * ZagoMail Integration
  */
 
 namespace BitCode\FI\Actions\ZagoMail;
@@ -37,7 +37,7 @@ class ZagoMailController
      *
      * @param $requestsParams Params to authorize
      *
-     * @return JSON Convert Kit api response and status
+     * @return JSON ZagoMail api response and status
      */
     public static function zagoMailAuthorize($requestsParams)
     {
@@ -74,13 +74,13 @@ class ZagoMailController
 
 
     /**
-     * Process ajax request for refresh Forms
+     * Process ajax request for refresh Lists
      *
-     * @param $queryParams Params to fetch form
+     * @param $queryParams Params to fetch list
      *
-     * @return JSON convert kit forms data
+     * @return JSON convert kit lists data
      */
-    public static function zagoMailForms($queryParams)
+    public static function zagoMailLists($queryParams)
     {
         if (empty($queryParams->api_secret)
         ) {
@@ -97,20 +97,28 @@ class ZagoMailController
         //     "publicKey"
         // ]
 
+        $body = [
+            'publicKey' => $queryParams->api_secret
+        ];
+
+        $header["Content-Type"] = "application/json";
+
         $apiEndpoint = self::_apiEndpoint('lists/all-lists');
-        $zagoMailResponse = HttpHelper::get($apiEndpoint, null);
 
-        $forms = [];
+        $zagoMailResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
+
+
+        $lists = [];
         if (!is_wp_error($zagoMailResponse)) {
-            $allForms = $zagoMailResponse->forms;
+            $allLists = $zagoMailResponse->data;
 
-            foreach ($allForms as $form) {
-                $forms[$form->name] = (object) [
-                    'formId' => $form->id,
-                    'formName' => $form->name,
+            foreach ($allLists->records as $list) {
+                $lists[$list->general->name] = (object) [
+                    'listId' => $list->general->list_uid,
+                    'listName' => $list->general->name,
                 ];
             }
-            $response['zagoMailForms'] = $forms;
+            $response['zagoMailLists'] = $lists;
             wp_send_json_success($response);
         }
     }
@@ -118,7 +126,7 @@ class ZagoMailController
     /**
      * Process ajax request for refresh Tags
      *
-     * @param $queryParams Params to fetch form
+     * @param $queryParams Params to fetch list
      *
      * @return JSON convert kit tags data
      */
@@ -191,8 +199,7 @@ class ZagoMailController
                     'required' =>  false
                 ];
             }
-            $fields['FirstName'] = (object) ['fieldId' => 'firstName', 'fieldName' => 'First Name', 'required' => false];
-            $fields['Email'] = (object) ['fieldId' => 'email', 'fieldName' => 'Email', 'required' => true];
+
 
             $response['zagoMailField'] = $fields;
             wp_send_json_success($response);
@@ -206,7 +213,7 @@ class ZagoMailController
         $api_secret = $integrationDetails->api_secret;
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;
-        $formId = $integrationDetails->formId;
+        $listId = $integrationDetails->listId;
         $tags = $integrationDetails->tagIds;
 
         if (empty($api_secret)
@@ -220,7 +227,7 @@ class ZagoMailController
             $fieldValues,
             $fieldMap,
             $actions,
-            $formId,
+            $listId,
             $tags
         );
 
