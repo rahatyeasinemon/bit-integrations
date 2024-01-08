@@ -150,6 +150,7 @@ const Woodpecker = lazy(() => import('./Woodpecker/Woodpecker'))
 const NutshellCRM = lazy(() => import('./NutshellCRM/NutshellCRM'))
 const SystemIO = lazy(() => import('./SystemIO/SystemIO'))
 const Discord = lazy(() => import('./Discord/Discord'))
+const ZagoMail = lazy(() => import('./ZagoMail/ZagoMail'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
@@ -444,6 +445,8 @@ export default function NewInteg({ allIntegURL }) {
         return <SystemIO allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'Discord':
         return <Discord allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
+      case 'ZagoMail':
+        return <ZagoMail allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       default:
         return <></>
     }

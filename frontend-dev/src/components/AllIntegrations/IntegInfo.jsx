@@ -138,6 +138,7 @@ const WoodpeckerAuthorization = lazy(() => import('./Woodpecker/WoodpeckerAuthor
 const NutshellCRMAuthorization = lazy(() => import('./NutshellCRM/NutshellCRMAuthorization'))
 const SystemIOAuthorization = lazy(() => import('./SystemIO/SystemIOAuthorization'))
 const DiscordAuthorization = lazy(() => import('./Discord/DiscordAuthorization'))
+const ZagoMailAuthorization = lazy(() => import('./ZagoMail/ZagoMailAuthorization'))
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -429,6 +430,8 @@ export default function IntegInfo() {
         return <SystemIOAuthorization systemIOConf={integrationConf} step={1} isInfo />
       case 'Discord':
         return <DiscordAuthorization discordConf={integrationConf} step={1} isInfo />
+      case 'ZagoMail':
+        return <ZagoMailAuthorization zagoMailConf={integrationConf} step={1} isInfo />
       default:
         return <></>
     }

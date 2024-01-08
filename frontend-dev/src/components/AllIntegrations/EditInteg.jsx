@@ -149,6 +149,7 @@ const EditWoodpecker = lazy(() => import('./Woodpecker/EditWoodpecker'))
 const EditNutshellCRM = lazy(() => import('./NutshellCRM/EditNutshellCRM'))
 const EditSystemIO = lazy(() => import('./SystemIO/EditSystemIO'))
 const EditDiscord = lazy(() => import('./Discord/EditDiscord'))
+const EditZagoMail = lazy(() => import('./ZagoMail/EditZagoMail'))
 
 const loaderStyle = {
   display: 'flex',
@@ -510,6 +511,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditSystemIO allIntegURL={allIntegURL} />
     case 'Discord':
       return <EditDiscord allIntegURL={allIntegURL} />
+    case 'ZagoMail':
+      return <EditZagoMail allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }

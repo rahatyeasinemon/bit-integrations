@@ -155,6 +155,7 @@ export default function SelectAction() {
     { type: 'NutshellCRM' },
     { type: 'SystemIO' },
     { type: 'Discord' },
+    { type: 'ZagoMail' },
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(sortByField(integs, 'type', 'ASC') || integs)
