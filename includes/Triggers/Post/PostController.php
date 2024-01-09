@@ -269,7 +269,7 @@ final class PostController
     {
         $postUpdateFlow = Flow::exists('Post', 9);
         $postData = get_post($trashPostId);
-        $postData['post_permalink'] = get_permalink($postData);
+        $postData->post_permalink = get_permalink($postData);
 
         if ($postUpdateFlow) {
             $flowDetails = $postUpdateFlow[0]->flow_details;
