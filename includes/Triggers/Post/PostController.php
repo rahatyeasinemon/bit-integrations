@@ -278,7 +278,7 @@ final class PostController
                 $flowDetails = json_decode($postUpdateFlow[0]->flow_details);
             }
             $postData = (array)$postData;
-            if (isset($flowDetails->selectedPostId) && $flowDetails->selectedPostId == 'any-post' || $flowDetails->selectedPostId == $postData['ID']) {
+            if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $postData['ID']) {
                 Flow::execute('Post', 9, (array) $postData, $postUpdateFlow);
             }
         }
