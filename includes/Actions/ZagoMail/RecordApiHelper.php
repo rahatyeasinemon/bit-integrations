@@ -19,10 +19,10 @@ class RecordApiHelper
     private $_apiEndpoint;
 
 
-    public function __construct($api_secret, $integId)
+    public function __construct($api_public_key, $integId)
     {
         // wp_send_json_success($tokenDetails);
-        $this->_defaultHeader = $api_secret;
+        $this->_defaultHeader = $api_public_key;
         $this->_apiEndpoint = 'https://api.zagoMail.com/v3';
         $this->_integrationID = $integId;
     }
@@ -31,7 +31,7 @@ class RecordApiHelper
     public function storeOrModifyRecord($method, $listId, $data)
     {
         $query = [
-            'api_secret' => $this->_defaultHeader,
+            'api_public_key' => $this->_defaultHeader,
             'email' => $data->email,
             'first_name' => $data->firstName,
         ];
@@ -66,7 +66,7 @@ class RecordApiHelper
         }
 
         $query = [
-            'api_secret' => $this->_defaultHeader,
+            'api_public_key' => $this->_defaultHeader,
             'email_address' => $data->email,
             'first_name' => $data->firstName,
         ];
@@ -92,7 +92,7 @@ class RecordApiHelper
     public function addTagToSubscriber($email, $tags)
     {
         $queries = http_build_query([
-            'api_secret' => $this->_defaultHeader,
+            'api_public_key' => $this->_defaultHeader,
             'email' => $email,
         ]);
         foreach ($tags as $tagId) {
@@ -106,7 +106,7 @@ class RecordApiHelper
     private function existSubscriber($email)
     {
         $queries = http_build_query([
-            'api_secret' => $this->_defaultHeader,
+            'api_public_key' => $this->_defaultHeader,
             'email_address' => $email,
         ]);
         $searchEndPoint = "{$this->_apiEndpoint}/subscribers?{$queries}";

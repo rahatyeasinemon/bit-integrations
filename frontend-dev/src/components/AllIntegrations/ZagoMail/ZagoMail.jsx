@@ -21,7 +21,7 @@ function ZagoMail({ formFields, setFlow, flow, allIntegURL }) {
   const [zagoMailConf, setZagoMailConf] = useState({
     name: 'ZagoMail',
     type: 'ZagoMail',
-    api_secret: process.env.NODE_ENV === 'development' ? 'f6a347f07b4e7b4c434504a69b1a9f98b896cefd' : '',
+    api_public_key: process.env.NODE_ENV === 'development' ? 'f6a347f07b4e7b4c434504a69b1a9f98b896cefd' : '',
     field_map: [
       { formField: '', zagoMailField: '' },
     ],

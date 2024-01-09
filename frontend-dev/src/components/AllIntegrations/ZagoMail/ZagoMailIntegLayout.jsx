@@ -1,11 +1,10 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
-import { useEffect } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ZagoMailActions from './ZagoMailActions'
-import { refreshZagoMailHeader, refreshZagoMailList, refreshZagoMailTags } from './ZagoMailCommonFunc'
+import { refreshZagoMailFields, refreshZagoMailList, refreshZagoMailTags } from './ZagoMailCommonFunc'
 import ZagoMailFieldMap from './ZagoMailFieldMap'
 
 export default function ZagoMailIntegLayout({ formID, formFields, zagoMailConf, setZagoMailConf, isLoading, setIsLoading, setSnackbar }) {
@@ -28,15 +27,16 @@ export default function ZagoMailIntegLayout({ formID, formFields, zagoMailConf, 
     } else {
       delete newConf.listId
     }
-    refreshZagoMailHeader(newConf, setZagoMailConf, setIsLoading, setSnackbar)
+    refreshZagoMailFields(newConf, setZagoMailConf, setIsLoading, setSnackbar)
+    setZagoMailConf({ ...newConf })
   }
 
   const zagoMailLists = zagoMailConf?.default?.zagoMailLists
 
-  useEffect(() => {
-    zagoMailLists && refreshZagoMailTags(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [zagoMailLists])
+  // useEffect(() => {
+  //   zagoMailLists && refreshZagoMailTags(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [zagoMailLists])
 
   return (
     <>
@@ -68,7 +68,7 @@ export default function ZagoMailIntegLayout({ formID, formFields, zagoMailConf, 
 
       <div className="mt-4">
         <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
-        <button onClick={() => refreshZagoMailHeader(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ZagoMail Field', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshZagoMailFields(zagoMailConf, setZagoMailConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ZagoMail Field', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       {
 

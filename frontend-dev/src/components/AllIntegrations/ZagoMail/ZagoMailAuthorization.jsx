@@ -11,21 +11,21 @@ import TutorialLink from '../../Utilities/TutorialLink'
 export default function ZagoMailAuthorization({ formID, zagoMailConf, setZagoMailConf, step, setstep, setSnackbar, isInfo, isLoading, setIsLoading }) {
   const { zagoMail } = tutorialLinks
   const [isAuthorized, setisAuthorized] = useState(false)
-  const [error, setError] = useState({ name: '', api_secret: '' })
+  const [error, setError] = useState({ name: '', api_public_key: '' })
   const [showAuthMsg, setShowAuthMsg] = useState(false)
 
   const handleAuthorize = () => {
     const newConf = { ...zagoMailConf }
-    if (!newConf.name || !newConf.api_secret) {
+    if (!newConf.name || !newConf.api_public_key) {
       setError({
         name: !newConf.name ? __('Integration name cann\'t be empty', 'bit-integrations') : '',
-        api_secret: !newConf.api_secret ? __('Access API Secret Key cann\'t be empty', 'bit-integrations') : '',
+        api_public_key: !newConf.api_public_key ? __('Access API Public Key Key cann\'t be empty', 'bit-integrations') : '',
       })
       return
     }
     setIsLoading('auth')
     const data = {
-      api_secret: newConf.api_secret,
+      api_public_key: newConf.api_public_key,
     }
     bitsFetch(data, 'zagoMail_authorize')
       .then(result => {
@@ -81,12 +81,12 @@ export default function ZagoMailAuthorization({ formID, zagoMailConf, setZagoMai
       <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={zagoMailConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
 
-      <div className="mt-3 wdt-200"><b>{__('Access API Secret Key:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_secret" value={zagoMailConf.api_secret} type="text" placeholder={__('Access API Secret Key...', 'bit-integrations')} disabled={isInfo} />
-      <div style={{ color: 'red', fontSize: '15px' }}>{error.api_secret}</div>
+      <div className="mt-3 wdt-200"><b>{__('Access API Public Key Key:', 'bit-integrations')}</b></div>
+      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_public_key" value={zagoMailConf.api_public_key} type="text" placeholder={__('Access API Public Key Key...', 'bit-integrations')} disabled={isInfo} />
+      <div style={{ color: 'red', fontSize: '15px' }}>{error.api_public_key}</div>
 
       <small className="d-blk mt-3">
-        {__('To Get API Secret Key, Please Visit', 'bit-integrations')}
+        {__('To Get API Public Key Key, Please Visit', 'bit-integrations')}
         &nbsp;
         <a className="btcd-link" href="https://app.zagoMail.com/account_settings/advanced_settings" target="_blank" rel="noreferrer">{__('ZagoMail API Token', 'bit-integrations')}</a>
       </small>
@@ -96,7 +96,7 @@ export default function ZagoMailAuthorization({ formID, zagoMailConf, setZagoMai
       {isLoading === 'auth' && (
         <div className="flx mt-5">
           <LoaderSm size={25} clr="#022217" className="mr-2" />
-          Checking API Secret Key!!!
+          Checking API Public Key Key!!!
         </div>
       )}
 
@@ -105,7 +105,7 @@ export default function ZagoMailAuthorization({ formID, zagoMailConf, setZagoMai
           <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
             &times;
           </span>
-          Sorry, API Secret key is invalid
+          Sorry, API Public Key key is invalid
         </div>
       )}
       {!isInfo && (

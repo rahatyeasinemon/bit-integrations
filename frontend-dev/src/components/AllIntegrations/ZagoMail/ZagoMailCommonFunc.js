@@ -16,7 +16,7 @@ export const refreshZagoMailList = (
 ) => {
   setIsLoading(true)
   const refreshListsRequestParams = {
-    api_secret: zagoMailConf.api_secret,
+    api_public_key: zagoMailConf.api_public_key,
   }
   bitsFetch(refreshListsRequestParams, 'zagoMail_lists')
     .then((result) => {
@@ -63,7 +63,7 @@ export const refreshZagoMailTags = (
   setSnackbar,
 ) => {
   const refreshListsRequestParams = {
-    api_secret: zagoMailConf.api_secret,
+    api_public_key: zagoMailConf.api_public_key,
   }
   bitsFetch(refreshListsRequestParams, 'zagoMail_tags')
     .then((result) => {
@@ -103,16 +103,18 @@ export const refreshZagoMailTags = (
     .catch(() => setIsLoading(false))
 }
 // refreshMappedFields
-export const refreshZagoMailHeader = (
+export const refreshZagoMailFields = (
   zagoMailConf,
   setZagoMailConf,
   setIsLoading,
   setSnackbar,
 ) => {
   const refreshListsRequestParams = {
-    api_secret: zagoMailConf.api_secret,
+    api_public_key: zagoMailConf.api_public_key,
+    listId: zagoMailConf.listId,
   }
-  bitsFetch(refreshListsRequestParams, 'zagoMail_headers')
+  // console.log('zagoMailConf', zagoMailConf)
+  bitsFetch(refreshListsRequestParams, 'zagoMail_refresh_fields')
     .then((result) => {
       if (result && result.success) {
         const newConf = { ...zagoMailConf }
