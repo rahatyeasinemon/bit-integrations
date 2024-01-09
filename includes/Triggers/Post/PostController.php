@@ -112,7 +112,7 @@ final class PostController
             }
 
             if ($newPostData->post_status !== 'auto-draft') {
-                if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $newPostData->post_type) {
+                if ((isset($flowDetails->selectedPostType) && $newPostData->post_type !== 'revision') && ($flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $newPostData->post_type)) {
                     if (has_post_thumbnail($postId)) {
                         $featured_image_url = get_the_post_thumbnail_url($postId, 'full');
                         $newPostData->featured_image = $featured_image_url;
