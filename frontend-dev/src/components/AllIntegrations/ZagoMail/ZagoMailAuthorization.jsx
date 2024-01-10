@@ -19,7 +19,7 @@ export default function ZagoMailAuthorization({ formID, zagoMailConf, setZagoMai
     if (!newConf.name || !newConf.api_public_key) {
       setError({
         name: !newConf.name ? __('Integration name cann\'t be empty', 'bit-integrations') : '',
-        api_public_key: !newConf.api_public_key ? __('Access API Public Key Key cann\'t be empty', 'bit-integrations') : '',
+        api_public_key: !newConf.api_public_key ? __('API Public Key cann\'t be empty', 'bit-integrations') : '',
       })
       return
     }
@@ -56,10 +56,11 @@ export default function ZagoMailAuthorization({ formID, zagoMailConf, setZagoMai
   }
 
   const ActiveInstructions = `
-            <h4>Get api secret key</h4>
+            <h4>Get API Public Key</h4>
             <ul>
                 <li>First go to your ZagoMail dashboard.</li>
-                <li>Click "Settings", Then click "Advanced"</li>
+                <li>Click on the top top right corner</li>
+                <li>Then click on API</li>
             </ul>`
 
   return (
@@ -88,7 +89,7 @@ export default function ZagoMailAuthorization({ formID, zagoMailConf, setZagoMai
       <small className="d-blk mt-3">
         {__('To Get API Public Key Key, Please Visit', 'bit-integrations')}
         &nbsp;
-        <a className="btcd-link" href="https://app.zagoMail.com/account_settings/advanced_settings" target="_blank" rel="noreferrer">{__('ZagoMail API Token', 'bit-integrations')}</a>
+        <a className="btcd-link" href="https://app.zagomail.com/user/api-keys/index" target="_blank" rel="noreferrer">{__('ZagoMail API Token', 'bit-integrations')}</a>
       </small>
       <br />
       <br />

@@ -133,23 +133,28 @@ class ZagoMailController
                 400
             );
         }
+        $body = [
+            'publicKey' => $queryParams->api_public_key
+        ];
 
-        $apiEndpoint = self::_apiEndpoint('tags', $queryParams->api_public_key);
+        $header["Content-Type"] = "application/json";
 
-        $zagoMailResponse = HttpHelper::get($apiEndpoint, null);
+        $apiEndpoint = self::_apiEndpoint('tags/get-tags');
+
+        $zagoMailResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
+
 
         $tags = [];
-        if (!is_wp_error($zagoMailResponse)) {
+        if ($zagoMailResponse->status == 'success') {
             $allTags = $zagoMailResponse->tags;
 
-            foreach ($allTags as $key => $tag) {
-                $tags[$key] = (object) [
-                    'tagId' => $tag->id,
-                    'tagName' => $tag->name,
+            foreach ($allTags as $tag) {
+                $tags[] = [
+                    'tagId' => $tag->ztag_id,
+                    'tagName' => $tag->ztag_name,
                 ];
             }
             $response['zagoMailTags'] = $tags;
-
             wp_send_json_success($response);
         }
     }
@@ -204,12 +209,11 @@ class ZagoMailController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-
         $api_public_key = $integrationDetails->api_public_key;
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;
         $listId = $integrationDetails->listId;
-        $tags = $integrationDetails->tagIds;
+        $tags = explode(',', $integrationDetails->selectedTags);
 
         if (empty($api_public_key)
             || empty($fieldMap)

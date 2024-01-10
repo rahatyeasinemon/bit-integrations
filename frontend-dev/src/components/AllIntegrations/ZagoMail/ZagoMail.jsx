@@ -25,7 +25,11 @@ function ZagoMail({ formFields, setFlow, flow, allIntegURL }) {
     field_map: [
       { formField: '', zagoMailField: '' },
     ],
+    // lists: [],
+    selectedList: '',
     actions: {},
+    // tags: [],
+    selectedTags: [],
   })
 
   const nextPage = (val) => {
@@ -38,8 +42,8 @@ function ZagoMail({ formFields, setFlow, flow, allIntegURL }) {
         setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
         return
       }
-      if (!zagoMailConf?.formId) {
-        setSnackbar({ show: true, msg: 'Please select form to continue.' })
+      if (!zagoMailConf?.listId) {
+        setSnackbar({ show: true, msg: 'Please select list to continue.' })
         return
       }
       if (zagoMailConf.name !== '' && zagoMailConf.field_map.length > 0) {
@@ -77,7 +81,7 @@ function ZagoMail({ formFields, setFlow, flow, allIntegURL }) {
         />
         <button
           onClick={() => nextPage(3)}
-          disabled={!zagoMailConf?.formId || zagoMailConf.field_map.length < 1}
+          disabled={!zagoMailConf?.listId || zagoMailConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >

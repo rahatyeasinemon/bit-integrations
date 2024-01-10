@@ -62,6 +62,7 @@ export const refreshZagoMailTags = (
   setIsLoading,
   setSnackbar,
 ) => {
+  setIsLoading( {tags : true})
   const refreshListsRequestParams = {
     api_public_key: zagoMailConf.api_public_key,
   }
@@ -70,10 +71,11 @@ export const refreshZagoMailTags = (
       if (result && result.success) {
         const newConf = { ...zagoMailConf }
         if (result.data.zagoMailTags) {
-          if (!newConf.default) {
-            newConf.default = {}
+          if (!newConf.tags) {
+            newConf.tags = {}
           }
-          newConf.default.zagoMailTags = result.data.zagoMailTags
+          newConf.tags = result.data.zagoMailTags
+          setZagoMailConf({ ...newConf })
           setSnackbar({
             show: true,
             msg: __('ZagoMail tags refreshed', 'bit-integrations'),
@@ -88,7 +90,7 @@ export const refreshZagoMailTags = (
           })
         }
 
-        setZagoMailConf({ ...newConf })
+        // console.log('newConf', newConf)
       } else {
         setSnackbar({
           show: true,
@@ -109,6 +111,7 @@ export const refreshZagoMailFields = (
   setIsLoading,
   setSnackbar,
 ) => {
+  setIsLoading(true)
   const refreshListsRequestParams = {
     api_public_key: zagoMailConf.api_public_key,
     listId: zagoMailConf.listId,

@@ -17,139 +17,103 @@ class RecordApiHelper
     private $_defaultHeader;
     private $_integrationID;
     private $_apiEndpoint;
+    private $_apiPublicKey;
 
 
     public function __construct($api_public_key, $integId)
     {
-        // wp_send_json_success($tokenDetails);
-        $this->_defaultHeader = $api_public_key;
-        $this->_apiEndpoint = 'https://api.zagoMail.com/v3';
+        $this->_apiPublicKey = $api_public_key;
+        $this->_defaultHeader["Content-Type"] = "application/json";
+        $this->_apiEndpoint = 'https://api.zagomail.com/';
         $this->_integrationID = $integId;
     }
 
     // for adding a subscriber
-    public function storeOrModifyRecord($method, $listId, $data)
+    public function storeOrModifyRecord($listId, $data)
     {
-        $query = [
-            'api_public_key' => $this->_defaultHeader,
-            'email' => $data->email,
-            'first_name' => $data->firstName,
-        ];
+        $requestParams['publicKey']    =  $this->_apiPublicKey;
 
         foreach ($data as $key => $value) {
-            $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
-            $array_keys = array_keys($query);
-            if (!(in_array($key, $array_keys))) {
-                $query['fields'] = [
-                     $key => $value,
-                ];
-            }
+            $requestParams[$key] = $value;
         }
 
-        $queries = http_build_query($query);
+        $insertRecordEndpoint = "{$this->_apiEndpoint}lists/subscriber-create?list_uid={$listId}";
 
-        $insertRecordEndpoint = "{$this->_apiEndpoint}/lists/{$listId}/{$method}?{$queries}";
+        $res = HttpHelper::post($insertRecordEndpoint, json_encode($requestParams), $this->_defaultHeader);
 
-        $res = HttpHelper::post($insertRecordEndpoint, null);
         return $res;
     }
 
     //for updating subscribers data through email id.
-    public function updateRecord($id, $data, $existSubscriber)
+    public function updateRecord($subscriberId, $listId, $data)
     {
-        $subscriberData = $data;
-
-        foreach ($subscriberData as $key => $value) {
-            if ($value === '') {
-                $subscriberData->$key = $existSubscriber->subscribers[0]->$key;
-            }
-        }
-
-        $query = [
-            'api_public_key' => $this->_defaultHeader,
-            'email_address' => $data->email,
-            'first_name' => $data->firstName,
-        ];
+        $requestParams['publicKey']    =  $this->_apiPublicKey;
 
         foreach ($data as $key => $value) {
-            $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
-            $array_keys = array_keys($query);
-            if (!(in_array($key, $array_keys))) {
-                $query['fields'] = [
-                     $key => $value,
-                ];
-            }
+            $requestParams[$key] = $value;
         }
 
-        $queries = http_build_query($query);
+        $insertRecordEndpoint = "{$this->_apiEndpoint}lists/subscriber-update?list_uid={$listId}&subscriber_uid={$subscriberId}";
 
-        $updateRecordEndpoint = "{$this->_apiEndpoint}/subscribers/{$id}?" . $queries;
+        $res = HttpHelper::post($insertRecordEndpoint, json_encode($requestParams), $this->_defaultHeader);
 
-        return  HttpHelper::request($updateRecordEndpoint, 'PUT', null);
+        return $res;
     }
 
     //add tag to a subscriber
-    public function addTagToSubscriber($email, $tags)
+    public function addTagToSubscriber($subscriberId, $listId, $tags)
     {
-        $queries = http_build_query([
-            'api_public_key' => $this->_defaultHeader,
-            'email' => $email,
-        ]);
-        foreach ($tags as $tagId) {
-            $searchEndPoint = "{$this->_apiEndpoint}/tags/{$tagId}/subscribe?{$queries}";
+        $requestParams['publicKey']    =  $this->_apiPublicKey;
 
-            HttpHelper::post($searchEndPoint, null);
+        foreach ($tags as $tagId) {
+            $tagEndPoint = "{$this->_apiEndpoint}lists/add-tag?ztag_id={$tagId}&subscriber_uid={$subscriberId}&list_uid={$listId}";
+
+            HttpHelper::post($tagEndPoint, $requestParams, $this->_defaultHeader);
         }
     }
 
     //Check if a subscriber exists through email.
-    private function existSubscriber($email)
+    private function existSubscriber($email, $listId)
     {
-        $queries = http_build_query([
-            'api_public_key' => $this->_defaultHeader,
-            'email_address' => $email,
-        ]);
-        $searchEndPoint = "{$this->_apiEndpoint}/subscribers?{$queries}";
 
-        return HttpHelper::get($searchEndPoint, null);
+        $body = [
+            'publicKey' => $this->_apiPublicKey,
+            'email' => $email,
+        ];
+
+        $searchEndPoint = "{$this->_apiEndpoint}lists/search-by-email?list_uid={$listId}";
+
+        return $res = HttpHelper::post($searchEndPoint, json_encode($body), $this->_defaultHeader);
+    }
+
+    public function generateReqDataFromFieldMap($data, $fieldMap)
+    {
+        $dataFinal = [];
+
+        foreach ($fieldMap as $key => $value) {
+            $triggerValue = $value->formField;
+            $actionValue = $value->zagoMailField;
+            if ($triggerValue === 'custom') {
+                $dataFinal[$actionValue] = $value->customValue;
+            } elseif (!is_null($data[$triggerValue])) {
+                $dataFinal[$actionValue] = $data[$triggerValue];
+            }
+        }
+        return $dataFinal;
     }
 
 
     public function execute($fieldValues, $fieldMap, $actions, $listId, $tags)
     {
-        $fieldData = [];
-        $customFields = [];
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
 
-        foreach ($fieldMap as $fieldKey => $fieldPair) {
-            if (!empty($fieldPair->zagoMailField)) {
-                if ($fieldPair->listField === 'custom' && isset($fieldPair->customValue) && !is_numeric($fieldPair->zagoMailField)) {
-                    $fieldData[$fieldPair->zagoMailField] = $fieldPair->customValue;
-                } elseif (is_numeric($fieldPair->zagoMailField) && $fieldPair->listField === 'custom' && isset($fieldPair->customValue)) {
-                    array_push($customFields, ['field' => (int) $fieldPair->zagoMailField, 'value' => $fieldPair->customValue]);
-                } elseif (is_numeric($fieldPair->zagoMailField)) {
-                    array_push($customFields, ['field' => (int) $fieldPair->zagoMailField, 'value' => $fieldValues[$fieldPair->listField]]);
-                } else {
-                    $fieldData[$fieldPair->zagoMailField] = $fieldValues[$fieldPair->listField];
-                }
-            }
-        }
+        $zagoMail = (object) $finalData;
 
-        if (!empty($customFields)) {
-            $fieldData['fieldValues'] = $customFields;
-        }
-        $zagoMail = (object) $fieldData;
+        $existSubscriber = $this->existSubscriber($zagoMail->EMAIL, $listId);
 
-        $existSubscriber = $this->existSubscriber($zagoMail->email);
-
-        if ((count($existSubscriber->subscribers)) !== 1) {
-            $recordApiResponse = $this->storeOrModifyRecord('subscribe', $listId, $zagoMail);
-            if (isset($tags) && (count($tags)) > 0 && $recordApiResponse) {
-                $this->addTagToSubscriber($zagoMail->email, $tags);
-            }
-            $type = 'insert';
-        } else {
+        if ($existSubscriber->status !== 'error' && $actions->update) {
             if ($actions->update == 'true') {
-                $this->updateRecord($existSubscriber->subscribers[0]->id, $zagoMail, $existSubscriber);
+                $recordApiResponse = $this->updateRecord($existSubscriber->data->subscriber_uid, $listId, $zagoMail);
                 $type = 'update';
             } else {
                 LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', 'Email address already exists in the system');
@@ -162,9 +126,16 @@ class RecordApiHelper
                     400
                 );
             }
+        } else {
+            $recordApiResponse = $this->storeOrModifyRecord($listId, $zagoMail);
+            if (isset($tags) && (count($tags)) > 0 && $recordApiResponse) {
+                $this->addTagToSubscriber($existSubscriber->data->subscriber_uid, $listId, $tags);
+            }
+            $type = 'insert';
+
         }
 
-        if (($recordApiResponse && isset($recordApiResponse->errors)) || isset($this->_errorMessage)) {
+        if ($recordApiResponse->status !== 'success') {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', $recordApiResponse->errors);
         } else {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', $recordApiResponse);

@@ -98,6 +98,8 @@ export default function ZagoMailIntegLayout({ formID, formFields, zagoMailConf, 
             <ZagoMailActions
               zagoMailConf={zagoMailConf}
               setZagoMailConf={setZagoMailConf}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
             />
           </>
         )
