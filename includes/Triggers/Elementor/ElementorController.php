@@ -131,7 +131,11 @@ final class ElementorController
         $data   = [];
         $fields = $record->get('fields');
         foreach ($fields as $field) {
-            $data[$field['id']] = $field['raw_value'];
+            if ($field['type'] == 'upload') {
+                $data[$field['id']] = explode(',', $field['raw_value']);
+            } else {
+                $data[$field['id']] = $field['raw_value'];
+            }
         }
 
         Flow::execute('Elementor', $flows[0]->triggered_entity_id, $data, $flows);
