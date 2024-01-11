@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\GiveWp;
 
 final class GiveWpHelper
@@ -85,7 +86,7 @@ final class GiveWpHelper
                 ],
 
             ];
-        } elseif($id == 2){
+        } elseif ($id == 2) {
             $fields = [
                 'Subscription ID' => (object) [
                     'fieldKey' => 'subscription_id',
@@ -109,7 +110,7 @@ final class GiveWpHelper
                 ],
             ];
             return  array_merge($fields, self::userInfoField());
-        } elseif($id == 3){
+        } elseif ($id == 3) {
             $fields = [
                 'give_form_id' => (object) [
                     'fieldKey' => 'give_form_id',
@@ -137,7 +138,8 @@ final class GiveWpHelper
         }
         return [];
     }
-    public static function userInfoField(){
+    public static function userInfoField()
+    {
         return [
             'First Name' => (object) [
                 'fieldKey' => 'first_name',
@@ -165,11 +167,13 @@ final class GiveWpHelper
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title FROM $wpdb->posts
+        return $recurringForms = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
         LEFT JOIN {$wpdb->prefix}give_formmeta ON ($wpdb->posts.ID = {$wpdb->prefix}give_formmeta.form_id)
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'give_forms' AND {$wpdb->prefix}give_formmeta.meta_key = '_give_recurring'";
-        return $recurringForms = $wpdb->get_results($query);
-
+        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'give_forms' AND {$wpdb->prefix}give_formmeta.meta_key = '_give_recurring'"
+            )
+        );
     }
 
     public static function getUserInfo($user_id)

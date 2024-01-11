@@ -1476,20 +1476,23 @@ final class WCController
     public static function getAllSubscriptions()
     {
         global $wpdb;
-        $q = "
-			SELECT posts.ID, posts.post_title FROM $wpdb->posts as posts
-			LEFT JOIN $wpdb->term_relationships as rel ON (posts.ID = rel.object_id)
-			WHERE rel.term_taxonomy_id IN (SELECT term_id FROM $wpdb->terms WHERE slug IN ('subscription','variable-subscription'))
-			AND posts.post_type = 'product'
-			AND posts.post_status = 'publish'
-			UNION ALL
-			SELECT ID, post_title FROM $wpdb->posts
-			WHERE post_type = 'shop_subscription'
-			AND post_status = 'publish'
-			ORDER BY post_title
-		";
 
-        $allSubscriptions = $wpdb->get_results($q);
+        $allSubscriptions = $wpdb->get_results(
+            $wpdb->prepare(
+                "
+                    SELECT posts.ID, posts.post_title FROM $wpdb->posts as posts
+                    LEFT JOIN $wpdb->term_relationships as rel ON (posts.ID = rel.object_id)
+                    WHERE rel.term_taxonomy_id IN (SELECT term_id FROM $wpdb->terms WHERE slug IN ('subscription','variable-subscription'))
+                    AND posts.post_type = 'product'
+                    AND posts.post_status = 'publish'
+                    UNION ALL
+                    SELECT ID, post_title FROM $wpdb->posts
+                    WHERE post_type = 'shop_subscription'
+                    AND post_status = 'publish'
+                    ORDER BY post_title
+                "
+            )
+        );
 
         $subscriptions[] = [
             'id' => 'any',

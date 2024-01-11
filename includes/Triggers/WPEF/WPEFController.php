@@ -1,10 +1,11 @@
 <?php
+
 namespace BitCode\FI\Triggers\WPEF;
 
+use wpdb;
+use BitCode\FI\Flow\Flow;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Flow\Flow;
-use wpdb;
 
 final class WPEFController
 {
@@ -12,7 +13,7 @@ final class WPEFController
     {
         //
     }
-    
+
     public static function info()
     {
         $plugin_path = 'wp-fsqm-pro/ipt_fsqm.php';
@@ -41,7 +42,7 @@ final class WPEFController
         global $ipt_fsqm_info;
         return class_exists('IPT_FSQM_Loader') && is_array($ipt_fsqm_info);
     }
-    
+
     public function getAll()
     {
         if (!self::isActive()) {
@@ -68,7 +69,7 @@ final class WPEFController
             wp_send_json_error(__('eForm  is not installed or activated', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
-        
+
         if (empty($fields)) {
             wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
@@ -82,21 +83,20 @@ final class WPEFController
     {
         global $wpdb, $ipt_fsqm_info;
         if (is_null($form_id)) {
-            $query = "SELECT * FROM {$ipt_fsqm_info['form_table']} ORDER BY id DESC";
+            return $wpdb->get_results($wpdb->prepare("SELECT * FROM {$ipt_fsqm_info['form_table']} ORDER BY id DESC"));
         } else {
-            $query = "SELECT * FROM {$ipt_fsqm_info['form_table']} WHERE id = {$form_id} ORDER BY id DESC";
+            return $wpdb->get_results($wpdb->prepare("SELECT * FROM {$ipt_fsqm_info['form_table']} WHERE id = %d ORDER BY id DESC", $form_id));
         }
-        return $wpdb->get_results($query);
     }
     public static function fields($form_id)
     {
         $formData = self::forms($form_id);
-       
+
         if (empty($formData) || is_wp_error($formData)) {
             return [];
         }
         $formData = $formData[0];
-        
+
         return array_merge(
             self::processFields($formData->pinfo),
             self::processFields($formData->freetype),
@@ -125,7 +125,7 @@ final class WPEFController
         }
         return $processed;
     }
-    
+
     public static function processAddressField($field, $index)
     {
         $processed = [];
@@ -145,37 +145,37 @@ final class WPEFController
     private static function fieldType($type)
     {
         switch ($type) {
-        case 'p_name':
-        case 'f_name':
-        case 'l_name':
-        case 'keypad':
-        case 'gps':
-        case 'feedback_small':
-            return 'text';
-        case 'p_phone':
-        case 'phone':
-            return 'tel';
-        case 'email':
-        case 'p_email':
-            return 'email';
-        case 'select':
-        case 'repeatable':
-            return 'select';
-        case 'guestblog':
-        case 'feedback_large':
-            return 'textarea';
-        case 'radio':
-        case 'likedislike':
-            return 'radio';
-        case 'checkbox':
-        case 's_checkbox':
-            return 'checkbox';
-        case 'signature':
-        case 'upload':
-            return 'file';
-        
-        default:
-            return 'text';
+            case 'p_name':
+            case 'f_name':
+            case 'l_name':
+            case 'keypad':
+            case 'gps':
+            case 'feedback_small':
+                return 'text';
+            case 'p_phone':
+            case 'phone':
+                return 'tel';
+            case 'email':
+            case 'p_email':
+                return 'email';
+            case 'select':
+            case 'repeatable':
+                return 'select';
+            case 'guestblog':
+            case 'feedback_large':
+                return 'textarea';
+            case 'radio':
+            case 'likedislike':
+                return 'radio';
+            case 'checkbox':
+            case 's_checkbox':
+                return 'checkbox';
+            case 'signature':
+            case 'upload':
+                return 'file';
+
+            default:
+                return 'text';
         }
     }
 
@@ -214,7 +214,6 @@ final class WPEFController
                     $processedValues["{$field['m_type']}.$index"] =   $field['order'];
                 }
             }
-            
         }
 
         return $processedValues;
@@ -235,7 +234,7 @@ final class WPEFController
         $elementValueHelper = new \IPT_EForm_Form_Elements_Values($data->data_id, $data->form_id);
         $elementValueHelper->reassign($data->data_id, $data);
         foreach ($field['id'] as $value) {
-            $fileInfo = $elementValueHelper->value_upload( $data->{$field['m_type']}[$index], $field, 'json', 'label', $value );
+            $fileInfo = $elementValueHelper->value_upload($data->{$field['m_type']}[$index], $field, 'json', 'label', $value);
             foreach ($fileInfo as $f) {
                 if (isset($f['guid'])) {
                     $processedValue[] = Common::filePath($f['guid']);
@@ -261,20 +260,20 @@ final class WPEFController
         } else {
             $date_format = 'd-m-Y';
         }
-        
+
         if ($f_time_format == 'HH:mm:ss') {
             $time_format = 'H:i:s';
         } else {
             $time_format = 'h:i:s A';
         }
-        
+
         $date_time_format = "$date_format $time_format";
         $processedValue = $dateTimeHelper->getFormated($field['value'], $date_time_format, wp_timezone(), 'Y-m-d\TH:i', null);
         return $processedValue;
     }
     public static function handleSubmission($data)
     {
-        if (! ($data instanceof \IPT_FSQM_Form_Elements_Data)) {
+        if (!($data instanceof \IPT_FSQM_Form_Elements_Data)) {
             return;
         }
         $form_id = $data->form_id;
@@ -283,7 +282,7 @@ final class WPEFController
             self::processValues($data, 'freetype'),
             self::processValues($data, 'mcq')
         );
-        
+
 
         if (!empty($form_id) && $flows = Flow::exists('WPEF', $form_id)) {
             Flow::execute('WPEF', $form_id, $entry, $flows);

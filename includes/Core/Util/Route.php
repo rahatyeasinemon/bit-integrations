@@ -46,16 +46,16 @@ final class Route
 
     public static function action()
     {
-        // var_dump('action');
-        // die;
+        $action = sanitize_text_field($_REQUEST['action']);
+        $requestMethod = in_array($_SERVER['REQUEST_METHOD'], ['GET', 'POST']);
         if (
-            isset(static::$_invokeable[sanitize_text_field($_REQUEST['action'])][$_SERVER['REQUEST_METHOD'] . '_ignore_token'])
+            isset(static::$_invokeable[$action][$requestMethod . '_ignore_token'])
             || isset($_REQUEST['_ajax_nonce']) && wp_verify_nonce(sanitize_text_field($_REQUEST['_ajax_nonce']), 'btcbi_nonce')
         ) {
-            $invokeable = static::$_invokeable[sanitize_text_field($_REQUEST['action'])][$_SERVER['REQUEST_METHOD']];
+            $invokeable = static::$_invokeable[$action][$requestMethod];
             unset($_POST['_ajax_nonce'], $_POST['action'], $_GET['_ajax_nonce'], $_GET['action']);
             if (method_exists($invokeable[0], $invokeable[1])) {
-                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if ($requestMethod == 'POST') {
                     if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'form-data') === false && strpos($_SERVER['CONTENT_TYPE'], 'x-www-form-urlencoded') === false) {
                         $inputJSON = file_get_contents('php://input');
                         $data = is_string($inputJSON) ? \json_decode($inputJSON) : $inputJSON;

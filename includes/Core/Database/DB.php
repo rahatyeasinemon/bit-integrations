@@ -84,7 +84,7 @@ final class DB
         ];
 
         foreach ($options as $key => $option) {
-            $wpdb->query("UPDATE `{$wpdb->prefix}options` SET `option_name` = '$option' WHERE `option_name`='$key'");
+            $wpdb->query($wpdb->prepare("UPDATE `{$wpdb->prefix}options` SET `option_name` = %s WHERE `option_name` = %s", $option, $key));
         }
     }
 }

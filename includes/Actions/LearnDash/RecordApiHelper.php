@@ -3,12 +3,13 @@
 /**
  * trello Record Api
  */
+
 namespace BitCode\FI\Actions\LearnDash;
 
-use BitCode\FI\Actions\Mail\MailController;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
 use LDLMS_DB;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Actions\Mail\MailController;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -453,8 +454,8 @@ class RecordApiHelper
                             $pro_quiz_stat_ref_table = $wpdb->prefix . 'wp_pro_quiz_statistic_ref';
                         }
 
-                        $wpdb->query("DELETE FROM {$pro_quiz_stat_table} WHERE statistic_ref_id = {$statistic_ref_id}");
-                        $wpdb->query("DELETE FROM {$pro_quiz_stat_ref_table} WHERE statistic_ref_id = {$statistic_ref_id}");
+                        $wpdb->query($wpdb->prepare("DELETE FROM {$pro_quiz_stat_table} WHERE statistic_ref_id = %d", $statistic_ref_id));
+                        $wpdb->query($wpdb->prepare("DELETE FROM {$pro_quiz_stat_ref_table} WHERE statistic_ref_id = %d", $statistic_ref_id));
                     }
                 }
             }
@@ -616,12 +617,12 @@ class RecordApiHelper
         delete_user_meta($user_id, 'course_completed_' . $course_id);
         delete_user_meta($user_id, 'learndash_course_expired_' . $course_id);
 
-        $activity_ids = $wpdb->get_results('SELECT activity_id FROM ' . $wpdb->prefix . 'learndash_user_activity WHERE course_id = ' . $course_id . ' AND user_id = ' . $user_id);
+        $activity_ids = $wpdb->get_results($wpdb->prepare("SELECT activity_id FROM ' . $wpdb->prefix . 'learndash_user_activity WHERE course_id = %d AND user_id = %d", $course_id, $user_id));
 
         if ($activity_ids) {
             foreach ($activity_ids as $activity_id) {
-                $wpdb->query("DELETE FROM  {$wpdb->prefix}learndash_user_activity_meta WHERE activity_id = {$activity_id->activity_id}");
-                $wpdb->query("DELETE FROM {$wpdb->prefix}learndash_user_activity WHERE activity_id = {$activity_id->activity_id}");
+                $wpdb->query($wpdb->prepare("DELETE FROM  {$wpdb->prefix}learndash_user_activity_meta WHERE activity_id = %d", $activity_id->activity_id));
+                $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->prefix}learndash_user_activity WHERE activity_id = %d", $activity_id->activity_id));
             }
         }
     }
@@ -732,11 +733,11 @@ class RecordApiHelper
     public static function delete_assignments()
     {
         global $wpdb;
-        $assignments = self::getAssignmentList() ;
+        $assignments = self::getAssignmentList();
         if ($assignments) {
             foreach ($assignments as $assignment) {
-                $wpdb->query("DELETE FROM {$wpdb->posts} WHERE ID = {$assignment}");
-                $wpdb->query("DELETE FROM {$wpdb->postmeta} WHERE post_id = {$assignment}");
+                $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->posts} WHERE ID = %d", $assignment));
+                $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->postmeta} WHERE post_id = %d", $assignment));
             }
         }
     }

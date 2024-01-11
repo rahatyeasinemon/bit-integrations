@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\Themify;
 
 use BitCode\FI\Flow\Flow;
@@ -147,11 +148,14 @@ final class ThemifyController
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
-        WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'post' OR $wpdb->posts.post_type = 'page') AND $wpdb->postmeta.meta_key = '_themify_builder_settings_json'";
 
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+        LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
+        WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'post' OR $wpdb->posts.post_type = 'page') AND $wpdb->postmeta.meta_key = '_themify_builder_settings_json'"
+            )
+        );
     }
 
     private static function getThemifyPostMeta(int $form_id)

@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\PaidMembershipPro;
 
 use BitCode\FI\Flow\Flow;
@@ -110,8 +111,7 @@ final class PaidMembershipProController
             return;
         }
         global $wpdb;
-        $qry = "SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = $level_id";
-        $levels = $wpdb->get_results($qry);
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $level_id));
         $userData = self::getUserInfo($user_id);
         $finalData = array_merge($userData, (array)$levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 1);
@@ -128,8 +128,7 @@ final class PaidMembershipProController
             return;
         }
         global $wpdb;
-        $qry = "SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = $cancel_level";
-        $levels = $wpdb->get_results($qry);
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $cancel_level));
         $userData = self::getUserInfo($user_id);
         $finalData = array_merge($userData, (array)$levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 2);
@@ -148,8 +147,7 @@ final class PaidMembershipProController
         $membership_id = $membership->id;
 
         global $wpdb;
-        $qry = "SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = $membership_id";
-        $levels = $wpdb->get_results($qry);
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $membership_id));
         $userData = self::getUserInfo($user_id);
         $finalData = array_merge($userData, (array)$levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 3);
@@ -163,8 +161,7 @@ final class PaidMembershipProController
     public static function expiry_membership_level($user_id, $membership_id)
     {
         global $wpdb;
-        $qry = "SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = $membership_id";
-        $levels = $wpdb->get_results($qry);
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $membership_id));
         $userData = self::getUserInfo($user_id);
         $finalData = array_merge($userData, (array)$levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 4);
@@ -178,8 +175,7 @@ final class PaidMembershipProController
     public static function all_memberships($label = null, $option_code = 'PMPMEMBERSHIP')
     {
         global $wpdb;
-        $qry = "SELECT * FROM $wpdb->pmpro_membership_levels ORDER BY id ASC";
-        $levels = $wpdb->get_results($qry);
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels ORDER BY id ASC"));
         $allLevels = [];
         if ($levels) {
             foreach ($levels as $level) {

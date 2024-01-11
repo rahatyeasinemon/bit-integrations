@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Triggers\Brizy;
 
-use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Flow\Flow;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 
 final class BrizyController
 {
@@ -248,11 +248,17 @@ final class BrizyController
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title, post_content, post_type FROM $wpdb->posts
-        LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
-        WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'page' OR $wpdb->posts.post_type = 'post' OR $wpdb->posts.post_type = 'editor-template') AND $wpdb->postmeta.meta_key = 'brizy'";
-
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title, post_content, post_type FROM $wpdb->posts
+                    LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
+                        WHERE $wpdb->posts.post_status = 'publish' 
+                            AND ($wpdb->posts.post_type = 'page' 
+                                OR $wpdb->posts.post_type = 'post' 
+                                OR $wpdb->posts.post_type = 'editor-template') 
+                            AND $wpdb->postmeta.meta_key = 'brizy'"
+            )
+        );
     }
 
     public static function parseContentGetForms($content, $post_title, $post_id, &$all_forms)

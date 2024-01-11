@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\ARMember;
 
 class ARMemberHelper
@@ -44,7 +45,7 @@ class ARMemberHelper
 
         if ($id == '101' || $id == '101_2' || $id == '101_3') {
             $fields = $userFields;
-        } elseif($id == '4' || $id == '5' || $id == '6'){
+        } elseif ($id == '4' || $id == '5' || $id == '6') {
             $fields = [
                 'User Id' => (object) [
                     'fieldKey' => 'user_id',
@@ -70,7 +71,7 @@ class ARMemberHelper
                     'fieldKey' => 'arm_subscription_plan_id',
                     'fieldName' => 'Subscription Plan ID'
                 ],
-                'Access Type' =>(object)[
+                'Access Type' => (object)[
                     'fieldKey' => 'access_type',
                     'fieldName' => 'Access Type'
                 ],
@@ -94,7 +95,7 @@ class ARMemberHelper
                     'fieldKey' => 'arm_subscription_plan_role',
                     'fieldName' => 'Subscription Plan Role'
                 ]
-                ];
+            ];
         }
 
         foreach ($fields as $field) {
@@ -106,7 +107,7 @@ class ARMemberHelper
         }
         if ($id == '101' || $id == '101_2' || $id == '101_3') {
             $registerFormFields = self::getRegisterFormFields();
-            if($id == '101_3'){
+            if ($id == '101_3') {
                 $registerFormFields = array_merge($registerFormFields, [
                     [
                         'name' => 'gender',
@@ -117,10 +118,11 @@ class ARMemberHelper
                         'name' => 'arm_user_plan',
                         'type' => 'text',
                         'label' => 'ARMember User Plan'
-                    ]]);
+                    ]
+                ]);
             }
             return $fieldsNew = array_merge($fieldsNew, $registerFormFields);
-        } 
+        }
         return $fieldsNew;
     }
 
@@ -129,8 +131,10 @@ class ARMemberHelper
         $form_id = 101;
         global $wpdb, $ARMember;
 
-        $qry_str = "SELECT arm_form_field_option FROM wp_arm_form_field WHERE arm_form_field_form_id = $form_id";
-        $all_raw_fields = $wpdb->get_results($qry_str, ARRAY_A);
+        $all_raw_fields = $wpdb->get_results(
+            $wpdb->prepare("SELECT arm_form_field_option FROM wp_arm_form_field WHERE arm_form_field_form_id = %d", $form_id),
+            ARRAY_A
+        );
         $allFields = [];
         foreach ($all_raw_fields as $singleFields) {
             $individualFields = [];
@@ -140,7 +144,7 @@ class ARMemberHelper
                     $individualFields[$key === 'meta_key' ? 'name' : $key] = $exField;
                 }
             }
-            if($individualFields['name'] != 'user_pass' && $individualFields['name'] != '' ){
+            if ($individualFields['name'] != 'user_pass' && $individualFields['name'] != '') {
                 $allFields[] = $individualFields;
             }
         }
@@ -166,21 +170,22 @@ class ARMemberHelper
         return $user;
     }
 
-    public static function getInfoPlan($plan_id){
+    public static function getInfoPlan($plan_id)
+    {
         global $wpdb;
         $table_name = $wpdb->prefix . 'arm_subscription_plans';
-        $plan = $wpdb->get_row("SELECT * FROM $table_name WHERE `arm_subscription_plan_id` = $plan_id");
-        if(empty($plan)){
+        $plan = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE `arm_subscription_plan_id` = %d", $plan_id));
+        if (empty($plan)) {
             return;
         }
         $fieldWithValue = [];
-        $neededKeys = ['arm_subscription_plan_id','arm_subscription_plan_name', 'arm_subscription_plan_options', 'arm_subscription_plan_description', 'arm_subscription_plan_amount', 'arm_subscription_plan_amount', 'arm_subscription_plan_role'];
+        $neededKeys = ['arm_subscription_plan_id', 'arm_subscription_plan_name', 'arm_subscription_plan_options', 'arm_subscription_plan_description', 'arm_subscription_plan_amount', 'arm_subscription_plan_amount', 'arm_subscription_plan_role'];
         foreach ($plan as $key => $value) {
-            if(in_array($key, $neededKeys)){
-                if($key == 'arm_subscription_plan_options'){
+            if (in_array($key, $neededKeys)) {
+                if ($key == 'arm_subscription_plan_options') {
                     $value = maybe_unserialize($value);
-                    foreach($value as $k => $v){
-                        $fieldWithValue[$k] = $v;        
+                    foreach ($value as $k => $v) {
+                        $fieldWithValue[$k] = $v;
                     }
                 } else {
                     $fieldWithValue[$key] = $value;
@@ -190,24 +195,26 @@ class ARMemberHelper
         return $fieldWithValue;
     }
 
-    public static function armember_user_info($user_id){
+    public static function armember_user_info($user_id)
+    {
         global $wpdb;
         $table_name = $wpdb->prefix . 'arm_members';
-        $userInfo = $wpdb->get_row("SELECT * FROM $table_name WHERE `arm_user_id` = $user_id");
-        if(empty($userInfo)){
+        $userInfo = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE `arm_user_id` = %d", $user_id));
+        if (empty($userInfo)) {
             return;
         }
 
-        $mapedFields = ['arm_user_nicename','arm_user_email','arm_display_name'];
+        $mapedFields = ['arm_user_nicename', 'arm_user_email', 'arm_display_name'];
         foreach ($userInfo as $key => $value) {
-            if(in_array($key, $mapedFields)){
+            if (in_array($key, $mapedFields)) {
                 $armUserInfo[$key] = $value;
             }
         }
         return $armUserInfo;
     }
 
-    public static function userAndPlanData($user_id, $plan_id){
+    public static function userAndPlanData($user_id, $plan_id)
+    {
         $userInfo = self::armember_user_info($user_id);
         $finalData['user_id'] = $user_id;
         $finalData['arm_user_nicename'] = $userInfo['arm_user_nicename'];

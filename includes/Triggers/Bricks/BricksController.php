@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\Bricks;
 
 use BitCode\FI\Flow\Flow;
@@ -161,18 +162,35 @@ final class BricksController
     private static function getBricksPosts()
     {
         global $wpdb;
-
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
-        WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'post' OR $wpdb->posts.post_type = 'page' OR $wpdb->posts.post_type = 'bricks_template' ) AND ($wpdb->postmeta.meta_key = '_bricks_page_content_2' OR $wpdb->postmeta.meta_key = '_bricks_page_footer_2' OR $wpdb->postmeta.meta_key = '_bricks_page_header_2')";
-
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
+                 WHERE $wpdb->posts.post_status = 'publish' 
+                    AND ($wpdb->posts.post_type = 'post' 
+                        OR $wpdb->posts.post_type = 'page' 
+                        OR $wpdb->posts.post_type = 'bricks_template' ) 
+                    AND ($wpdb->postmeta.meta_key = '_bricks_page_content_2' 
+                        OR $wpdb->postmeta.meta_key = '_bricks_page_footer_2' 
+                        OR $wpdb->postmeta.meta_key = '_bricks_page_header_2')"
+            )
+        );
     }
 
     private static function getBricksPostMeta(int $form_id)
     {
         global $wpdb;
-        $postMeta = $wpdb->get_results("SELECT meta_value FROM $wpdb->postmeta WHERE post_id=$form_id AND (meta_key='_bricks_page_content_2' OR meta_key = '_bricks_page_footer_2' OR meta_key = '_bricks_page_header_2') LIMIT 1");
+        $postMeta = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT meta_value FROM $wpdb->postmeta 
+                    WHERE post_id = %d 
+                        AND (meta_key='_bricks_page_content_2' 
+                            OR meta_key = '_bricks_page_footer_2' 
+                            OR meta_key = '_bricks_page_header_2') 
+                        LIMIT 1",
+                $form_id
+            )
+        );
         return maybe_unserialize($postMeta[0]->meta_value);
     }
 }

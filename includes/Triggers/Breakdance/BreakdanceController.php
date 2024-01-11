@@ -233,18 +233,28 @@ final class BreakdanceController
     private static function getBreakdancePosts()
     {
         global $wpdb;
-
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
-        WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'post' OR $wpdb->posts.post_type = 'page' OR $wpdb->posts.post_type = 'breakdance_footer') AND $wpdb->postmeta.meta_key = 'breakdance_data'";
-
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                    LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
+                        WHERE $wpdb->posts.post_status = 'publish' 
+                            AND ($wpdb->posts.post_type = 'post' 
+                                OR $wpdb->posts.post_type = 'page' 
+                                OR $wpdb->posts.post_type = 'breakdance_footer') 
+                            AND $wpdb->postmeta.meta_key = 'breakdance_data'"
+            )
+        );
     }
 
     private static function getBreackdancePostMeta(int $form_id)
     {
         global $wpdb;
-        $postMeta = $wpdb->get_results("SELECT meta_value FROM $wpdb->postmeta WHERE post_id=$form_id AND meta_key='breakdance_data' LIMIT 1");
+        $postMeta = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT meta_value FROM $wpdb->postmeta WHERE post_id = %d AND meta_key='breakdance_data' LIMIT 1",
+                $form_id
+            )
+        );
         return json_decode($postMeta[0]->meta_value);
     }
 }

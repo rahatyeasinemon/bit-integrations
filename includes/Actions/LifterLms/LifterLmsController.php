@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Actions\LifterLms;
 
 use WP_Error;
@@ -68,9 +69,8 @@ class LifterLmsController
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'course' ORDER BY post_title";
-        $allCourse = $wpdb->get_results($query);
+        $allCourse = $wpdb->get_results($wpdb->prepare("SELECT ID, post_title FROM $wpdb->posts
+        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'course' ORDER BY post_title"));
 
         return $allCourse;
     }
@@ -79,9 +79,8 @@ class LifterLmsController
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_membership' ORDER BY post_title";
-        $allMembership = $wpdb->get_results($query);
+        $allMembership = $wpdb->get_results($wpdb->prepare("SELECT ID, post_title FROM $wpdb->posts
+        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_membership' ORDER BY post_title"));
 
         return $allMembership;
     }

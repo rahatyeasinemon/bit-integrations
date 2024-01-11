@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\MasterStudyLms;
 
 class MasterStudyLmsHelper
@@ -169,27 +170,39 @@ class MasterStudyLmsHelper
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title,post_content FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-courses' AND $wpdb->posts.ID = $courseId";
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title,post_content FROM $wpdb->posts
+                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-courses' AND $wpdb->posts.ID = %d",
+                $courseId
+            )
+        );
     }
 
     public static function getQuizDetails($quiz_id)
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title,post_content FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-quizzes' AND $wpdb->posts.ID = $quiz_id";
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title,post_content FROM $wpdb->posts
+                 WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-quizzes' AND $wpdb->posts.ID = %d",
+                $quiz_id
+            )
+        );
     }
 
     public static function getLessonDetail($lessonId)
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title,post_content FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-lessons' AND $wpdb->posts.ID = $lessonId";
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title,post_content FROM $wpdb->posts
+        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-lessons' AND $wpdb->posts.ID = %d",
+                $lessonId
+            )
+        );
     }
 
     public static function getAllLesson()

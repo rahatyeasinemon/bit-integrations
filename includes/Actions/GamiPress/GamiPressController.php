@@ -77,7 +77,7 @@ class GamiPressController
 
         global $wpdb;
         $ranks = $wpdb->get_results(
-            "SELECT ID, post_name, post_title, post_type FROM wp_posts where post_type like '{$selectRankType}' AND post_status = 'publish'"
+            $wpdb->prepare("SELECT ID, post_name, post_title, post_type FROM wp_posts where post_type like %s AND post_status = 'publish'", $selectRankType)
         );
 
         wp_send_json_success($ranks);
@@ -87,7 +87,7 @@ class GamiPressController
     {
         global $wpdb;
         return $wpdb->get_results(
-            "SELECT ID, post_name, post_title, post_type FROM $wpdb->posts WHERE post_type LIKE 'achievement-type' AND post_status = 'publish' ORDER BY post_title ASC"
+            $wpdb->prepare("SELECT ID, post_name, post_title, post_type FROM $wpdb->posts WHERE post_type LIKE 'achievement-type' AND post_status = 'publish' ORDER BY post_title ASC")
         );
     }
 
@@ -97,9 +97,9 @@ class GamiPressController
 
         global $wpdb;
         $awards = $wpdb->get_results(
-            "SELECT ID, post_name, post_title, post_type FROM wp_posts where post_type like '{$selectAchievementType}' AND post_status = 'publish'"
+            $wpdb->prepare("SELECT ID, post_name, post_title, post_type FROM wp_posts where post_type like %s AND post_status = 'publish'", $selectAchievementType)
         );
-        array_unshift($awards, ['ID'=>'Any' , 'post_name'=>'any_achievement', 'post_title'=>'Any Achievement']);
+        array_unshift($awards, ['ID' => 'Any', 'post_name' => 'any_achievement', 'post_title' => 'Any Achievement']);
         wp_send_json_success($awards);
     }
 
@@ -107,7 +107,7 @@ class GamiPressController
     {
         global $wpdb;
         $points = $wpdb->get_results(
-            "SELECT ID, post_name, post_title, post_type FROM $wpdb->posts WHERE post_type LIKE 'points-type' AND post_status = 'publish' ORDER BY post_title ASC"
+            $wpdb->prepare("SELECT ID, post_name, post_title, post_type FROM $wpdb->posts WHERE post_type LIKE 'points-type' AND post_status = 'publish' ORDER BY post_title ASC")
         );
         wp_send_json_success($points);
     }

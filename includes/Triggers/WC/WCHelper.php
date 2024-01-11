@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\WC;
 
 class WCHelper
@@ -134,9 +135,13 @@ class WCHelper
 
     public static function getReviewRating($comment_ID)
     {
-        global $wpdb ;
-        $query = "SELECT meta_value FROM {$wpdb->prefix}commentmeta WHERE comment_id = $comment_ID AND meta_key = 'rating'";
-        $rating = $wpdb->get_results($query);
+        global $wpdb;
+        $rating = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT meta_value FROM {$wpdb->prefix}commentmeta WHERE comment_id = %d AND meta_key = 'rating'",
+                $comment_ID
+            )
+        );
         return $rating[0]->meta_value;
     }
 
