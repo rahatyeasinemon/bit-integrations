@@ -106,9 +106,7 @@ export const saveIntegConfig = async (flow, setFlow, allIntegURL, confTmp, navig
   } else if (flow.triggered_entity === 'UltimateMember') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = UltimateMemberStateIH(tmpConf, dataFlow)
-  } else if (flow.triggered_entity === 'CaptureAction') {
-    tmpConf['primaryKey'] = flow.triggerData.primaryKey
-  }
+  } 
 
   const data = {
     name: confTmp.name,
@@ -217,9 +215,7 @@ export const saveActionConf = async ({ flow, setFlow, allIntegURL, conf, navigat
   } else if (flow.triggered_entity === 'UltimateMember') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = UltimateMemberStateIH(tmpConf, dataFlow)
-  } else if (flow.triggered_entity === 'CaptureAction') {
-    tmpConf['primaryKey'] = flow.triggerData.primaryKey
-  }
+  } 
 
   const data = {
     name: conf.name,
