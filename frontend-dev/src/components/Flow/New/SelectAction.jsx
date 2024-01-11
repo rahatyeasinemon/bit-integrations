@@ -153,7 +153,7 @@ export default function SelectAction() {
     { type: 'WPFusion' },
     { type: 'Woodpecker' },
     { type: 'NutshellCRM' },
-    { type: 'SystemIO' },
+    { type: 'SystemeIO' },
     { type: 'Discord' },
     { type: 'ZagoMail' },
   ]

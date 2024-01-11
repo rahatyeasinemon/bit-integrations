@@ -12,28 +12,28 @@ import EditFormInteg from '../EditFormInteg'
 import EditWebhookInteg from '../EditWebhookInteg'
 import { checkWebhookIntegrationsExist, saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, handleInput } from './SystemIOCommonFunc'
-import SystemIOIntegLayout from './SystemIOIntegLayout'
+import { checkMappedFields, handleInput } from './SystemeIOCommonFunc'
+import SystemeIOIntegLayout from './SystemeIOIntegLayout'
 
-function EditSystemIO({ allIntegURL }) {
+function EditSystemeIO({ allIntegURL }) {
   const navigate = useNavigate()
   const [flow, setFlow] = useRecoilState($newFlow)
-  const [systemIOConf, setSystemIOConf] = useRecoilState($actionConf)
+  const [systemeIOConf, setSystemeIOConf] = useRecoilState($actionConf)
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({})
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)
 
   const saveConfig = () => {
-    if (!checkMappedFields(systemIOConf)) {
+    if (!checkMappedFields(systemeIOConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
       return
     }
-    if (!systemIOConf.selectedTag) {
+    if (!systemeIOConf.selectedTag) {
       toast.error('Please select a Tag')
       return
     }
-    saveActionConf({ flow, allIntegURL, conf: systemIOConf, navigate, edit: 1, setIsLoading, setSnackbar })
+    saveActionConf({ flow, allIntegURL, conf: systemeIOConf, navigate, edit: 1, setIsLoading, setSnackbar })
   }
 
   return (
@@ -42,16 +42,16 @@ function EditSystemIO({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, systemIOConf, setSystemIOConf)} name="name" value={systemIOConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, systemeIOConf, setSystemeIOConf)} name="name" value={systemeIOConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
       </div>
       <br />
       {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
       {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
-      <SystemIOIntegLayout
+      <SystemeIOIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        systemIOConf={systemIOConf}
-        setSystemIOConf={setSystemIOConf}
+        systemeIOConf={systemeIOConf}
+        setSystemeIOConf={setSystemeIOConf}
         loading={loading}
         setLoading={setLoading}
         setIsLoading={setIsLoading}
@@ -61,10 +61,10 @@ function EditSystemIO({ allIntegURL }) {
       <IntegrationStepThree
         edit
         saveConfig={saveConfig}
-        disabled={!checkMappedFields(systemIOConf)}
+        disabled={!checkMappedFields(systemeIOConf)}
         isLoading={isLoading}
-        dataConf={systemIOConf}
-        setDataConf={setSystemIOConf}
+        dataConf={systemeIOConf}
+        setDataConf={setSystemeIOConf}
         formFields={formField}
       />
       <br />
@@ -72,4 +72,4 @@ function EditSystemIO({ allIntegURL }) {
   )
 }
 
-export default EditSystemIO
+export default EditSystemeIO

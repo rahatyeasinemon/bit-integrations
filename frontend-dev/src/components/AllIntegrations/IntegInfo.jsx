@@ -136,7 +136,7 @@ const MoxieCRMAuthorization = lazy(() => import('./MoxieCRM/MoxieCRMAuthorizatio
 const WPFusionAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
 const WoodpeckerAuthorization = lazy(() => import('./Woodpecker/WoodpeckerAuthorization'))
 const NutshellCRMAuthorization = lazy(() => import('./NutshellCRM/NutshellCRMAuthorization'))
-const SystemIOAuthorization = lazy(() => import('./SystemIO/SystemIOAuthorization'))
+const SystemeIOAuthorization = lazy(() => import('./SystemeIO/SystemeIOAuthorization'))
 const DiscordAuthorization = lazy(() => import('./Discord/DiscordAuthorization'))
 const ZagoMailAuthorization = lazy(() => import('./ZagoMail/ZagoMailAuthorization'))
 
@@ -426,8 +426,8 @@ export default function IntegInfo() {
         return <WoodpeckerAuthorization woodpeckerConf={integrationConf} step={1} isInfo />
       case 'NutshellCRM':
         return <NutshellCRMAuthorization nutshellCRMConf={integrationConf} step={1} isInfo />
-      case 'SystemIO':
-        return <SystemIOAuthorization systemIOConf={integrationConf} step={1} isInfo />
+      case 'SystemeIO':
+        return <SystemeIOAuthorization systemeIOConf={integrationConf} step={1} isInfo />
       case 'Discord':
         return <DiscordAuthorization discordConf={integrationConf} step={1} isInfo />
       case 'ZagoMail':

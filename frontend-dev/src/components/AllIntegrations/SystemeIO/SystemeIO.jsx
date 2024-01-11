@@ -9,11 +9,11 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import SystemIOAuthorization from './SystemIOAuthorization'
-import { checkMappedFields, generateMappedField } from './SystemIOCommonFunc'
-import SystemIOIntegLayout from './SystemIOIntegLayout'
+import SystemeIOAuthorization from './SystemeIOAuthorization'
+import { checkMappedFields, generateMappedField } from './SystemeIOCommonFunc'
+import SystemeIOIntegLayout from './SystemeIOIntegLayout'
 
-function SystemIO({ formFields, setFlow, flow, allIntegURL }) {
+function SystemeIO({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({})
@@ -21,23 +21,23 @@ function SystemIO({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
 
-  const systemIOFields = [
+  const systemeIOFields = [
     { label: 'Email Address', key: 'email', required: true },
   ]
 
-  const [systemIOConf, setSystemIOConf] = useState({
-    name: 'SystemIO',
-    type: 'SystemIO',
+  const [systemeIOConf, setSystemeIOConf] = useState({
+    name: 'SystemeIO',
+    type: 'SystemeIO',
     api_key: process.env.NODE_ENV === 'development' ? '649rpkoa4945nrj36ilr4jswz2f1k6mzc50f22y527jvnlihb73s3td555h3u28i' : '',
-    field_map: generateMappedField(systemIOFields),
+    field_map: generateMappedField(systemeIOFields),
     actionName: 'registerPeopletoWabinar',
-    systemIOFields,
+    systemeIOFields,
     actions: {},
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, systemIOConf, navigate, '', '', setIsLoading)
+    const resp = saveIntegConfig(flow, setFlow, allIntegURL, systemeIOConf, navigate, '', '', setIsLoading)
     resp.then(res => {
       if (res.success) {
         toast.success(res.data?.msg)
@@ -53,17 +53,17 @@ function SystemIO({ formFields, setFlow, flow, allIntegURL }) {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
 
-    if (!checkMappedFields(systemIOConf)) {
+    if (!checkMappedFields(systemeIOConf)) {
       toast.error('Please map mandatory fields')
       return
     }
 
-    if (!systemIOConf.selectedTag) {
+    if (!systemeIOConf.selectedTag) {
       toast.error('Please select a Tag')
       return
     }
 
-    systemIOConf.field_map.length > 0 && setStep(pageNo)
+    systemeIOConf.field_map.length > 0 && setStep(pageNo)
   }
 
   return (
@@ -74,9 +74,9 @@ function SystemIO({ formFields, setFlow, flow, allIntegURL }) {
       </div>
 
       {/* STEP 1 */}
-      <SystemIOAuthorization
-        systemIOConf={systemIOConf}
-        setSystemIOConf={setSystemIOConf}
+      <SystemeIOAuthorization
+        systemeIOConf={systemeIOConf}
+        setSystemeIOConf={setSystemeIOConf}
         step={step}
         setStep={setStep}
         loading={loading}
@@ -87,10 +87,10 @@ function SystemIO({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 2 */}
       <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
 
-        <SystemIOIntegLayout
+        <SystemeIOIntegLayout
           formFields={formFields}
-          systemIOConf={systemIOConf}
-          setSystemIOConf={setSystemIOConf}
+          systemeIOConf={systemeIOConf}
+          setSystemeIOConf={setSystemeIOConf}
           loading={loading}
           setLoading={setLoading}
           isLoading={isLoading}
@@ -98,10 +98,10 @@ function SystemIO({ formFields, setFlow, flow, allIntegURL }) {
           setSnackbar={setSnackbar}
         />
 
-        {systemIOConf?.actionName && (
+        {systemeIOConf?.actionName && (
           <button
             onClick={() => nextPage(3)}
-            disabled={!(checkMappedFields(systemIOConf))}
+            disabled={!(checkMappedFields(systemeIOConf))}
             className="btn f-right btcd-btn-lg green sh-sm flx"
             type="button"
           >
@@ -114,13 +114,13 @@ function SystemIO({ formFields, setFlow, flow, allIntegURL }) {
       </div>
 
       {/* STEP 3 */}
-      {systemIOConf?.actionName && (
+      {systemeIOConf?.actionName && (
         <IntegrationStepThree
           step={step}
           saveConfig={() => saveConfig()}
           isLoading={isLoading}
-          dataConf={systemIOConf}
-          setDataConf={setSystemIOConf}
+          dataConf={systemeIOConf}
+          setDataConf={setSystemeIOConf}
           formFields={formFields}
         />
       )}
@@ -128,4 +128,4 @@ function SystemIO({ formFields, setFlow, flow, allIntegURL }) {
   )
 }
 
-export default SystemIO
+export default SystemeIO

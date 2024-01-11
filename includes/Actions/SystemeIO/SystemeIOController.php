@@ -1,18 +1,18 @@
 <?php
 
 /**
- * SystemIO Integration
+ * SystemeIO Integration
  */
 
-namespace BitCode\FI\Actions\SystemIO;
+namespace BitCode\FI\Actions\SystemeIO;
 
 use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
 
 /**
- * Provide functionality for SystemIO integration
+ * Provide functionality for SystemeIO integration
  */
-class SystemIOController
+class SystemeIOController
 {
     protected $_defaultHeader;
     protected $_apiEndpoint;
@@ -84,15 +84,15 @@ class SystemIOController
         $actionName         = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($actionName) || empty($apiKey)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for SystemIO api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for SystemeIO api', 'bit-integrations'));
         }
 
         $recordApiHelper    = new RecordApiHelper($integrationDetails, $integId, $apiKey);
-        $systemIOApiResponse   = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
+        $systemeIOApiResponse   = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
 
-        if (is_wp_error($systemIOApiResponse)) {
-            return $systemIOApiResponse;
+        if (is_wp_error($systemeIOApiResponse)) {
+            return $systemeIOApiResponse;
         }
-        return $systemIOApiResponse;
+        return $systemeIOApiResponse;
     }
 }

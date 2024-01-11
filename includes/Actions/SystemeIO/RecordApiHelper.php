@@ -1,10 +1,10 @@
 <?php
 
 /**
- * SystemIO Record Api
+ * SystemeIO Record Api
  */
 
-namespace BitCode\FI\Actions\SystemIO;
+namespace BitCode\FI\Actions\SystemeIO;
 
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
@@ -65,7 +65,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . "/contacts/" . $contactId . "/tags";
 
-        $data['tagId'] = (int)$tag;
+        $data['tagId'] = (int) $tag;
         return $response = HttpHelper::post($apiEndpoint, json_encode($data), $this->defaultHeader);
 
     }
@@ -75,7 +75,7 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->systemIOFormField;
+            $actionValue  = $value->systemeIOFormField;
             $dataFinal[$actionValue] = ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue];
         }
         return $dataFinal;

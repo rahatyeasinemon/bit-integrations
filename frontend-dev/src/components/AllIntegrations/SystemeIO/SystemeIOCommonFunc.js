@@ -15,24 +15,24 @@ export const handleInput = (e, salesmateConf, setSalesmateConf) => {
   setSalesmateConf({ ...newConf });
 };
 
-export const generateMappedField = (systemIOFields) => {
-  const requiredFlds = systemIOFields.filter((fld) => fld.required === true);
+export const generateMappedField = (systemeIOFields) => {
+  const requiredFlds = systemeIOFields.filter((fld) => fld.required === true);
   return requiredFlds.length > 0
     ? requiredFlds.map((field) => ({
         formField: "",
-        systemIOFormField: field.key,
+        systemeIOFormField: field.key,
       }))
-    : [{ formField: "", systemIOFormField: "" }];
+    : [{ formField: "", systemeIOFormField: "" }];
 };
 
-export const checkMappedFields = (systemIOConf) => {
-  const mappedFields = systemIOConf?.field_map
-    ? systemIOConf.field_map.filter(
+export const checkMappedFields = (systemeIOConf) => {
+  const mappedFields = systemeIOConf?.field_map
+    ? systemeIOConf.field_map.filter(
         (mappedField) =>
           !mappedField.formField ||
-          !mappedField.systemIOFormField ||
+          !mappedField.systemeIOFormField ||
           (mappedField.formField === "custom" && !mappedField.customValue) ||
-          (mappedField.systemIOFormField === "customFieldKey" &&
+          (mappedField.systemeIOFormField === "customFieldKey" &&
             !mappedField.customFieldKey)
       )
     : [];
@@ -42,7 +42,7 @@ export const checkMappedFields = (systemIOConf) => {
   return true;
 };
 
-export const systemIOAuthentication = (
+export const systemeIOAuthentication = (
   confTmp,
   setConf,
   setError,
@@ -66,7 +66,7 @@ export const systemIOAuthentication = (
     api_key: confTmp.api_key,
   };
 
-  bitsFetch(requestParams, "systemIO_authentication").then((result) => {
+  bitsFetch(requestParams, "systemeIO_authentication").then((result) => {
     if (result && result.success) {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
@@ -90,7 +90,7 @@ export const getAllTags = (confTmp, setConf, setLoading) => {
     api_key: confTmp.api_key,
   };
 
-  bitsFetch(requestParams, "systemIO_fetch_all_tags").then((result) => {
+  bitsFetch(requestParams, "systemeIO_fetch_all_tags").then((result) => {
     if (result && result.success) {
       if (result.data) {
         setConf((prevConf) => {

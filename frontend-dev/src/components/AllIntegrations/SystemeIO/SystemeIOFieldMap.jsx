@@ -6,9 +6,9 @@ import { __ } from '../../../Utils/i18nwrap'
 import CustomField from './CustomField'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './IntegrationHelpers'
 
-export default function SystemIOFieldMap({ i, formFields, field, systemIOConf, setSystemIOConf }) {
-  const requiredFields = systemIOConf?.systemIOFields && systemIOConf.systemIOFields.filter(fld => fld.required === true) || []
-  const allNonRequiredFields = systemIOConf?.systemIOFields && systemIOConf.systemIOFields.filter(fld => fld.required === false) || []
+export default function SystemeIOFieldMap({ i, formFields, field, systemeIOConf, setSystemeIOConf }) {
+  const requiredFields = systemeIOConf?.systemeIOFields && systemeIOConf.systemeIOFields.filter(fld => fld.required === true) || []
+  const allNonRequiredFields = systemeIOConf?.systemeIOFields && systemeIOConf.systemeIOFields.filter(fld => fld.required === false) || []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
@@ -19,7 +19,7 @@ export default function SystemIOFieldMap({ i, formFields, field, systemIOConf, s
     >
       <div className="pos-rel flx">
         <div className="flx integ-fld-wrp">
-          <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, systemIOConf, setSystemIOConf)}>
+          <select className="btcd-paper-inp mr-2" name="formField" value={field.formField || ''} onChange={(ev) => handleFieldMapping(ev, i, systemeIOConf, setSystemeIOConf)}>
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label="Form Fields">
               {
@@ -44,15 +44,15 @@ export default function SystemIOFieldMap({ i, formFields, field, systemIOConf, s
             <CustomField
               field={field}
               index={i}
-              conf={systemIOConf}
-              setConf={setSystemIOConf}
+              conf={systemeIOConf}
+              setConf={setSystemeIOConf}
               fieldValue="customValue"
               fieldLabel="Custom Value"
               className="mr-2"
             />
           )}
 
-          <select className="btcd-paper-inp" disabled={i < requiredFields.length} name="systemIOFormField" value={i < requiredFields.length ? (requiredFields[i].key || '') : (field.systemIOFormField || '')} onChange={(ev) => handleFieldMapping(ev, i, systemIOConf, setSystemIOConf)}>
+          <select className="btcd-paper-inp" disabled={i < requiredFields.length} name="systemeIOFormField" value={i < requiredFields.length ? (requiredFields[i].key || '') : (field.systemeIOFormField || '')} onChange={(ev) => handleFieldMapping(ev, i, systemeIOConf, setSystemeIOConf)}>
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {
               i < requiredFields.length ? (
@@ -73,13 +73,13 @@ export default function SystemIOFieldMap({ i, formFields, field, systemIOConf, s
           i >= requiredFields.length && (
             <>
               <button
-                onClick={() => addFieldMap(i, systemIOConf, setSystemIOConf)}
+                onClick={() => addFieldMap(i, systemeIOConf, setSystemeIOConf)}
                 className="icn-btn sh-sm ml-2 mr-1"
                 type="button"
               >
                 +
               </button>
-              <button onClick={() => delFieldMap(i, systemIOConf, setSystemIOConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
+              <button onClick={() => delFieldMap(i, systemeIOConf, setSystemeIOConf)} className="icn-btn sh-sm ml-1" type="button" aria-label="btn">
                 <span className="btcd-icn icn-trash-2" />
               </button>
             </>

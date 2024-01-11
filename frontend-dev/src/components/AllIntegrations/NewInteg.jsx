@@ -148,7 +148,7 @@ const MoxieCRM = lazy(() => import('./MoxieCRM/MoxieCRM'))
 const WPFusion = lazy(() => import('./WPFusion/WPFusion'))
 const Woodpecker = lazy(() => import('./Woodpecker/Woodpecker'))
 const NutshellCRM = lazy(() => import('./NutshellCRM/NutshellCRM'))
-const SystemIO = lazy(() => import('./SystemIO/SystemIO'))
+const SystemeIO = lazy(() => import('./SystemeIO/SystemeIO'))
 const Discord = lazy(() => import('./Discord/Discord'))
 const ZagoMail = lazy(() => import('./ZagoMail/ZagoMail'))
 
@@ -441,8 +441,8 @@ export default function NewInteg({ allIntegURL }) {
         return <Woodpecker allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'NutshellCRM':
         return <NutshellCRM allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
-      case 'SystemIO':
-        return <SystemIO allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
+      case 'SystemeIO':
+        return <SystemeIO allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'Discord':
         return <Discord allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'ZagoMail':

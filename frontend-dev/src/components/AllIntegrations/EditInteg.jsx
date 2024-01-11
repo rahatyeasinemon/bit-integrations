@@ -147,7 +147,7 @@ const EditMoxieCRM = lazy(() => import('./MoxieCRM/EditMoxieCRM'))
 const EditWPFusion = lazy(() => import('./WPFusion/EditWPFusion'))
 const EditWoodpecker = lazy(() => import('./Woodpecker/EditWoodpecker'))
 const EditNutshellCRM = lazy(() => import('./NutshellCRM/EditNutshellCRM'))
-const EditSystemIO = lazy(() => import('./SystemIO/EditSystemIO'))
+const EditSystemeIO = lazy(() => import('./SystemeIO/EditSystemeIO'))
 const EditDiscord = lazy(() => import('./Discord/EditDiscord'))
 const EditZagoMail = lazy(() => import('./ZagoMail/EditZagoMail'))
 
@@ -507,8 +507,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditWoodpecker allIntegURL={allIntegURL} />
     case 'NutshellCRM':
       return <EditNutshellCRM allIntegURL={allIntegURL} />
-    case 'SystemIO':
-      return <EditSystemIO allIntegURL={allIntegURL} />
+    case 'SystemeIO':
+      return <EditSystemeIO allIntegURL={allIntegURL} />
     case 'Discord':
       return <EditDiscord allIntegURL={allIntegURL} />
     case 'ZagoMail':

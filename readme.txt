@@ -239,7 +239,7 @@ https://youtu.be/eFuficjF_F4
 * [**SureCart**](https://wordpress.org/plugins/surecart/)
 * [**SuiteDash**](https://suitedash.com/)
 * [**SureTriggers**](https://wordpress.org/plugins/suretriggers/)
-* [**SystemIO**](https://systeme.io/home)
+* [**SystemeIO**](https://systeme.io/home)
 * [**Telegram**](https://telegram.org/)
 * [**Thrive Automator**](https://wordpress.org/plugins/thrive-automator/)
 * [**Tutor LMS**](https://wordpress.org/plugins/tutor/)
