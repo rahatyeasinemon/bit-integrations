@@ -3,6 +3,7 @@
 /**
  * Affiliate Integration
  */
+
 namespace BitCode\FI\Actions\Affiliate;
 
 use WP_Error;
@@ -46,7 +47,9 @@ class AffiliateController
         global $wpdb;
         $query = "select affiliate_Id from {$wpdb->prefix}affiliate_wp_affiliates";
 
-        $affiliatesIds = $wpdb->get_results($query);
+        $affiliatesIds = $wpdb->get_results(
+            $wpdb->prepare("SELECT affiliate_Id FROM {$wpdb->prefix}affiliate_wp_affiliates")
+        );
 
         foreach ($affiliatesIds as  $val) {
             $affiliates[] = [

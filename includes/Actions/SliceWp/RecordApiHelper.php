@@ -1,8 +1,9 @@
 <?php
+
 namespace BitCode\FI\Actions\SliceWp;
 
-use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 
 class RecordApiHelper
 {
@@ -58,8 +59,7 @@ class RecordApiHelper
     public function slicewp_get_user_affiliate_id($user_id)
     {
         global $wpdb;
-        $query = "SELECT id FROM {$wpdb->prefix}slicewp_affiliates WHERE {$wpdb->prefix}slicewp_affiliates.user_id = $user_id";
-        $affiliate = $wpdb->get_results($query);
+        $affiliate = $wpdb->get_results($wpdb->prepare("SELECT id FROM {$wpdb->prefix}slicewp_affiliates WHERE {$wpdb->prefix}slicewp_affiliates.user_id = %d", $user_id));
         return $affiliate[0]->id;
     }
 
@@ -76,7 +76,7 @@ class RecordApiHelper
             $statusId = $integrationDetails->statusId;
             $typeId = $integrationDetails->typeId;
             $response = $this->addCommissionToUser($finalData, $statusId, $typeId);
-            if ($response && gettype($response) === 'integer'){
+            if ($response && gettype($response) === 'integer') {
                 LogHandler::save(self::$integrationID, json_encode(['type' => 'add commission', 'type_name' => 'add-commission-to-user']), 'success', json_encode($response));
             } else {
                 LogHandler::save(self::$integrationID, json_encode(['type' => 'add commission', 'type_name' => 'add-commission-to-user']), 'error', json_encode("Failed to add commission"));

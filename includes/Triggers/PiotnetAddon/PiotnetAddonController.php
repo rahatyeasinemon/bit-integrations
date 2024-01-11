@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Triggers\PiotnetAddon;
 
-use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Flow\Flow;
+use BitCode\FI\Core\Util\Common;
 
 final class PiotnetAddonController
 {
@@ -135,14 +135,14 @@ final class PiotnetAddonController
                     if (!empty($singleField->settings->field_id)) {
                         $field_id = $singleField->settings->field_id;
                     } else {
-                        $field_id = str_replace(['0','1','2','3','4','5','6','7','8','9'], ['a','b','c','d','e','f','g','h','i','j'], $singleField->id);
+                        $field_id = str_replace(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], $singleField->id);
                     }
 
                     $fields[] = [
-                    'name' => $field_id,
-                    'type' => $type,
-                    'label' => $singleField->settings->field_label,
-                ];
+                        'name' => $field_id,
+                        'type' => $type,
+                        'label' => $singleField->settings->field_label,
+                    ];
                 }
             }
         }
@@ -170,11 +170,14 @@ final class PiotnetAddonController
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
-        WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'post' OR $wpdb->posts.post_type = 'page' OR $wpdb->posts.post_type = 'elementor_library') AND $wpdb->postmeta.meta_key = '_elementor_data'";
 
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
+                WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'post' OR $wpdb->posts.post_type = 'page' OR $wpdb->posts.post_type = 'elementor_library') AND $wpdb->postmeta.meta_key = '_elementor_data'"
+            )
+        );
     }
 
     private static function getElementorPostMeta(int $form_id)

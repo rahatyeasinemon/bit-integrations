@@ -9,13 +9,6 @@ import TagifyInput from '../../Utilities/TagifyInput'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function VboutFieldMap({ i, formFields, field, vboutConf, setVboutConf }) {
-  if (vboutConf?.field_map?.length === 1 && field.VboutFormField === '') {
-    const newConf = { ...vboutConf }
-    const tmp = generateMappedField(newConf)
-    newConf.field_map = tmp
-    setVboutConf(newConf)
-  }
-
   const requiredFlds = vboutConf?.VboutFields.filter(fld => fld.required === true) || []
   const nonRequiredFlds = vboutConf?.VboutFields.filter(fld => fld.required === false) || []
   const btcbi = useRecoilValue($btcbi)

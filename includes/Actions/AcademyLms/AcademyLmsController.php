@@ -186,18 +186,18 @@ class AcademyLmsController
         $course_id = $selectedCourse[0];
         $complete_topics = "academy_course_{$course_id}_completed_topics";
 
-        $wpdb->query("DELETE from {$wpdb->postmeta} WHERE post_id = '{$course_id}' AND meta_key = 'academy_course_curriculum' ");
-        $wpdb->query("DELETE from {$wpdb->usermeta} WHERE user_id = '{$user_id}' AND meta_key = '{$complete_topics}' ");
-        $wpdb->query("DELETE from {$wpdb->posts} WHERE post_author = '{$user_id}' AND post_parent = '{$course_id}' AND post_type = 'academy_enrolled' ");
+        $wpdb->query($wpdb->prepare("DELETE from {$wpdb->postmeta} WHERE post_id = %d AND meta_key = %s", $course_id, 'academy_course_curriculum'));
+        $wpdb->query($wpdb->prepare("DELETE from {$wpdb->usermeta} WHERE user_id = %d AND meta_key = %s", $user_id, $complete_topics));
+        $wpdb->query($wpdb->prepare("DELETE from {$wpdb->posts} WHERE post_author = %d AND post_parent = %d AND post_type = %s ", $user_id, $course_id, 'academy_enrolled'));
 
-        $QuizIds = $wpdb->get_col("select quiz_id from {$wpdb->prefix}academy_quiz_attempts where user_id = '14' AND course_id = '{$course_id}' ");
+        $QuizIds = $wpdb->get_col($wpdb->prepare("select quiz_id from {$wpdb->prefix}academy_quiz_attempts where user_id = '14' AND course_id = %d ", $course_id));
 
         if (!empty($QuizIds)) {
             $QuizIds = "'" . implode("','", $QuizIds) . "'";
-            $wpdb->query("DELETE from {$wpdb->prefix}academy_quiz_attempts WHERE user_id = '{$user_id}' AND course_id = '{$course_id}' ");
-            $wpdb->query("DELETE from {$wpdb->prefix}academy_quiz_attempt_answers WHERE user_id = '{$user_id}' AND quiz_id in ({$QuizIds}) ");
+            $wpdb->query($wpdb->prepare("DELETE from {$wpdb->prefix}academy_quiz_attempts WHERE user_id = %d AND course_id = %d", $user_id, $course_id));
+            $wpdb->query($wpdb->prepare("DELETE from {$wpdb->prefix}academy_quiz_attempt_answers WHERE user_id = %d AND quiz_id in (%s) ", $user_id, $QuizIds));
         }
-        $wpdb->query(" DELETE from {$wpdb->comments} WHERE comment_agent = 'academy' AND comment_type = 'course_completed' AND comment_post_ID = {$course_id} AND user_id = {$user_id}");
+        $wpdb->query($wpdb->prepare("DELETE from {$wpdb->comments} WHERE comment_agent = 'academy' AND comment_type = 'course_completed' AND comment_post_ID = %d AND user_id = %d", $course_id, $user_id));
         return "Course progress reseted";
     }
 

@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Notion;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record create a page (create item)
@@ -93,14 +93,32 @@ class RecordApiHelper
       case 'status':
         return ['name' => $value];
       case 'files':
+        $files  = [];
+
         if (is_array($value)) {
-          wp_send_json_error(__('Please Provide a public URL of the file instead of file attachment', 'bit-integrations'), 400);
+          foreach ($value as $file) {
+            $files[] = self::setFile($file);
+          }
+        } else {
+          $files[] = self::setFile($value);
         }
 
-        return [['name' => 'media', "type" => "external", "external" => ["url" => $value]]];
+        return $files;
       default:
         return $value;
     }
+  }
+
+  private static function setFile($file)
+  {
+    $dir    = wp_upload_dir();
+    return [
+      'name'      => 'media',
+      "type"      => "external",
+      "external"  => [
+        "url" => trim(str_replace($dir['basedir'], $dir['baseurl'], $file))
+      ]
+    ];
   }
 
   public function execute(

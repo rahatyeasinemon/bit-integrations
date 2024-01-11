@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\Divi;
 
 use BitCode\FI\Flow\Flow;
@@ -199,9 +200,12 @@ final class DiviController
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title, post_content FROM $wpdb->posts
-        LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
-        WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'post' OR $wpdb->posts.post_type = 'page' OR $wpdb->posts.post_type = 'et_footer_layout' OR $wpdb->posts.post_type = 'et_header_layout' OR $wpdb->posts.post_type ='et_body_layout') AND $wpdb->postmeta.meta_key = '_et_pb_ab_current_shortcode'";
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title, post_content FROM $wpdb->posts
+                    LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
+                        WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'post' OR $wpdb->posts.post_type = 'page' OR $wpdb->posts.post_type = 'et_footer_layout' OR $wpdb->posts.post_type = 'et_header_layout' OR $wpdb->posts.post_type ='et_body_layout') AND $wpdb->postmeta.meta_key = '_et_pb_ab_current_shortcode'"
+            )
+        );
     }
 }

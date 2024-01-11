@@ -6,6 +6,7 @@
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import LoaderSm from '../../Loaders/LoaderSm'
+import Note from '../../Utilities/Note'
 import { addFieldMap } from '../GlobalIntegrationHelper'
 import { getAllDatabaseLists, getFieldsProperties } from './NotionCommonFunc'
 import NotionFieldMap from './NotionFieldMap'
@@ -32,6 +33,13 @@ function NotionIntegLayout({ notionConf, setNotionConf, formFields, loading, set
 
     setNotionConf(newConf)
   }
+
+  const note = `
+    <b>Files & Media</b>
+    <p>The Notion API does not yet support uploading files to Notion.</p>
+    <p>Please Provide a public URL of the file instead of file attachment.</p>
+  `
+
   return (
     <div className="mt-2">
 
@@ -96,6 +104,7 @@ function NotionIntegLayout({ notionConf, setNotionConf, formFields, loading, set
         }}
         />
       )}
+      <Note note={note} />
     </div>
   )
 }

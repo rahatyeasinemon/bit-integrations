@@ -292,7 +292,7 @@ final class WCController
                 ],
             ];
 
-            $acfFieldGroups = self::acfGetFieldGroups();
+            $acfFieldGroups = self::acfGetFieldGroups(['product']);
             foreach ($acfFieldGroups as $group) {
                 $acfFields = acf_get_fields($group["ID"]);
 
@@ -679,6 +679,18 @@ final class WCController
                     'fieldName' => 'order_received_url'
                 ],
             ];
+            $acfFieldGroups = self::acfGetFieldGroups(['product', 'shop_order']);
+            foreach ($acfFieldGroups as $group) {
+                $acfFields = acf_get_fields($group["ID"]);
+
+                foreach ($acfFields as $field) {
+                    $fields[$field['label']] = (object) [
+                        'fieldKey'  => $field['_name'],
+                        'fieldName' => $field['label']
+                    ];
+                }
+            }
+
             if ($id == 10) {
                 $fieldProduct = [
                     'product_id' => (object) [
@@ -1062,7 +1074,7 @@ final class WCController
     {
         $productData    = wc_get_product($post_id);
         $data           = self::accessProductData($productData);
-        $acfFieldGroups = self::acfGetFieldGroups();
+        $acfFieldGroups = self::acfGetFieldGroups(['product']);
 
         foreach ($acfFieldGroups as $group) {
             $acfFields = acf_get_fields($group["ID"]);
@@ -1076,11 +1088,11 @@ final class WCController
         }
     }
 
-    private static function acfGetFieldGroups()
+    private static function acfGetFieldGroups($type = [])
     {
         if (class_exists('ACF')) {
-            return array_filter(acf_get_field_groups(), function ($group) {
-                return $group["active"] && isset($group["location"][0][0]["value"]) && $group["location"][0][0]["value"] == "product";
+            return array_filter(acf_get_field_groups(), function ($group) use ($type) {
+                return $group["active"] && isset($group["location"][0][0]["value"]) && is_array($type) && in_array($group["location"][0][0]["value"], $type);
             });
         } else {
             return [];
@@ -1089,8 +1101,17 @@ final class WCController
 
     public static function product_update($post_id)
     {
-        $productData = wc_get_product($post_id);
-        $data = self::accessProductData($productData);
+        $productData    = wc_get_product($post_id);
+        $data           = self::accessProductData($productData);
+        $acfFieldGroups = self::acfGetFieldGroups(['product']);
+
+        foreach ($acfFieldGroups as $group) {
+            $acfFields = acf_get_fields($group["ID"]);
+
+            foreach ($acfFields as $field) {
+                $data[$field['_name']] = get_post_meta($post_id, $field['_name'])[0];
+            }
+        }
         if (!empty($post_id) && $flows = Flow::exists('WC', 5)) {
             Flow::execute('WC', 5, $data, $flows);
         }
@@ -1260,6 +1281,15 @@ final class WCController
         $order = wc_get_order($order_id);
         $data = self::accessOrderData($order);
         $triggerd = [8, 9, 11, 12, 13, 14, 15, 16];
+        $acfFieldGroups = self::acfGetFieldGroups(['product', 'shop_order']);
+
+        foreach ($acfFieldGroups as $group) {
+            $acfFields = acf_get_fields($group["ID"]);
+
+            foreach ($acfFields as $field) {
+                $data[$field['_name']] = get_post_meta($order_id, $field['_name'])[0];
+            }
+        }
 
         for ($i = 7; $i <= 17; $i++) {
             if (in_array($i, $triggerd)) {
@@ -1357,6 +1387,15 @@ final class WCController
         }
 
         $data = self::accessOrderData($order);
+        $acfFieldGroups = self::acfGetFieldGroups(['product', 'shop_order']);
+
+        foreach ($acfFieldGroups as $group) {
+            $acfFields = acf_get_fields($group["ID"]);
+
+            foreach ($acfFields as $field) {
+                $data[$field['_name']] = get_post_meta($order_id, $field['_name'])[0];
+            }
+        }
         if (!empty($order_id) && $flows = Flow::exists('WC', 8)) {
             Flow::execute('WC', 8, $data, $flows);
         }
@@ -1418,6 +1457,15 @@ final class WCController
                 }
 
                 $data = self::accessOrderData($order);
+                $acfFieldGroups = self::acfGetFieldGroups(['product', 'shop_order']);
+
+                foreach ($acfFieldGroups as $group) {
+                    $acfFields = acf_get_fields($group["ID"]);
+
+                    foreach ($acfFields as $field) {
+                        $data[$field['_name']] = get_post_meta($order_id, $field['_name'])[0];
+                    }
+                }
                 if (!empty($order_id)) {
                     Flow::execute('WC', 11, $data, [$flow]);
                 }
@@ -1428,20 +1476,23 @@ final class WCController
     public static function getAllSubscriptions()
     {
         global $wpdb;
-        $q = "
-			SELECT posts.ID, posts.post_title FROM $wpdb->posts as posts
-			LEFT JOIN $wpdb->term_relationships as rel ON (posts.ID = rel.object_id)
-			WHERE rel.term_taxonomy_id IN (SELECT term_id FROM $wpdb->terms WHERE slug IN ('subscription','variable-subscription'))
-			AND posts.post_type = 'product'
-			AND posts.post_status = 'publish'
-			UNION ALL
-			SELECT ID, post_title FROM $wpdb->posts
-			WHERE post_type = 'shop_subscription'
-			AND post_status = 'publish'
-			ORDER BY post_title
-		";
 
-        $allSubscriptions = $wpdb->get_results($q);
+        $allSubscriptions = $wpdb->get_results(
+            $wpdb->prepare(
+                "
+                    SELECT posts.ID, posts.post_title FROM $wpdb->posts as posts
+                    LEFT JOIN $wpdb->term_relationships as rel ON (posts.ID = rel.object_id)
+                    WHERE rel.term_taxonomy_id IN (SELECT term_id FROM $wpdb->terms WHERE slug IN ('subscription','variable-subscription'))
+                    AND posts.post_type = 'product'
+                    AND posts.post_status = 'publish'
+                    UNION ALL
+                    SELECT ID, post_title FROM $wpdb->posts
+                    WHERE post_type = 'shop_subscription'
+                    AND post_status = 'publish'
+                    ORDER BY post_title
+                "
+            )
+        );
 
         $subscriptions[] = [
             'id' => 'any',

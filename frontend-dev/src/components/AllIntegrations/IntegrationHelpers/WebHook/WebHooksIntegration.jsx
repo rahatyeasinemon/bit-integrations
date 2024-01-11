@@ -72,7 +72,7 @@ export default function WebHooksIntegration({ formFields, webHooks, setWebHooks,
     setStep(2)
   }
 
-  const info = `You can test any kind of webhook using <a href="https://webhook.is/" target="_blank" rel="noreferrer">webhook.is</a>`
+  const info = `You can test any kind of webhook using <a href="https://app.webhook.is/test" target="_blank" rel="noreferrer">app.webhook.is</a>`
 
   return (
     <div style={{ ...{ width: isInfo && 900 } }}>
@@ -158,7 +158,7 @@ export default function WebHooksIntegration({ formFields, webHooks, setWebHooks,
         </button>
       )}
 
-      <Note note={info}  />
+      <Note note={info} />
     </div>
   )
 }

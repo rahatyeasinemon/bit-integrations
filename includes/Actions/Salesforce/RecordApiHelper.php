@@ -2,17 +2,17 @@
 
 namespace BitCode\FI\Actions\Salesforce;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Core\Util\DateTimeHelper;
 
 /**
  * Provide functionality for Record insert,upsert
  */
 class RecordApiHelper
 {
-    private $_defaultHeader ;
+    private $_defaultHeader;
     private $_apiDomain;
     private $_integrationID;
 
@@ -132,7 +132,7 @@ class RecordApiHelper
         if ($actionName === 'contact-create') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $insertContactResponse = $this->insertContact($finalData);
-            if (property_exists($insertContactResponse, 'id')) {
+            if (is_object($insertContactResponse) && property_exists($insertContactResponse, 'id')) {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => $actionName, 'type_name' => 'Contact-create']), 'success', wp_json_encode("Created contact id is : $insertContactResponse->id"));
             } else {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Contact', 'type_name' => 'Contact-create']), 'error', wp_json_encode($insertContactResponse));
@@ -141,7 +141,7 @@ class RecordApiHelper
         if ($actionName === 'lead-create') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $insertLeadResponse = $this->insertLead($finalData);
-            if (property_exists($insertLeadResponse, 'id')) {
+            if (is_object($insertLeadResponse) && property_exists($insertLeadResponse, 'id')) {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => $actionName, 'type_name' => 'Lead-create']), 'success', wp_json_encode("Created lead id is : $insertLeadResponse->id"));
             } else {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Lead', 'type_name' => 'Lead-create']), 'error', wp_json_encode($insertLeadResponse));
@@ -150,7 +150,7 @@ class RecordApiHelper
         if ($actionName === 'account-create') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $createAccountResponse = $this->createAccount($finalData);
-            if (property_exists($createAccountResponse, 'id')) {
+            if (is_object($createAccountResponse) && property_exists($createAccountResponse, 'id')) {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Account', 'type_name' => 'Account-create']), 'success', wp_json_encode("Created account id is : $createAccountResponse->id"));
             } else {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Account', 'type_name' => 'Account-create']), 'error', wp_json_encode($createAccountResponse));
@@ -159,7 +159,7 @@ class RecordApiHelper
         if ($actionName === 'campaign-create') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $insertCampaignResponse = $this->createCampaign($finalData);
-            if (property_exists($insertCampaignResponse, 'id')) {
+            if (is_object($insertCampaignResponse) && property_exists($insertCampaignResponse, 'id')) {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Campaign', 'type_name' => 'Campaign-create']), 'success', wp_json_encode("Created campaign id is : $insertCampaignResponse->id"));
             } else {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Campaign', 'type_name' => 'Campaign-create']), 'error', wp_json_encode($insertCampaignResponse));
@@ -171,7 +171,7 @@ class RecordApiHelper
             $contactId = empty($integrationDetails->contactId) ? null : $integrationDetails->contactId;
             $statusId = empty($integrationDetails->statusId) ? null : $integrationDetails->statusId;
             $insertCampaignMember = $this->insertCampaignMember($campaignId, $leadId, $contactId, $statusId);
-            if (property_exists($insertCampaignMember, 'id')) {
+            if (is_object($insertCampaignMember) && property_exists($insertCampaignMember, 'id')) {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'CampaignMember', 'type_name' => 'CampaignMember-create']), 'success', wp_json_encode("Created campaign member id is : $insertCampaignMember->id"));
             } else {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'CampaignMember', 'type_name' => 'CampaignMember-create']), 'error', wp_json_encode($insertCampaignMember));
@@ -184,7 +184,7 @@ class RecordApiHelper
             $priorityId = $integrationDetails->priorityId;
             $statusId = empty($integrationDetails->statusId) ? null : $integrationDetails->statusId;
             $apiResponse = $this->createTask($contactId, $accountId, $subjectId, $priorityId, $statusId);
-            if (property_exists($apiResponse, 'id')) {
+            if (is_object($apiResponse) && property_exists($apiResponse, 'id')) {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Task', 'type_name' => 'Task-create']), 'success', wp_json_encode("Created task id is : $apiResponse->id"));
             } else {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Task', 'type_name' => 'Task-create']), 'error', wp_json_encode($apiResponse));
@@ -198,7 +198,7 @@ class RecordApiHelper
             $campaignId = empty($integrationDetails->actions->campaignId) ? null : $integrationDetails->actions->campaignId;
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $opportunityResponse = $this->createOpportunity($finalData, $opportunityTypeId, $opportunityStageId, $opportunityLeadSourceId, $accountId, $campaignId);
-            if (property_exists($opportunityResponse, 'id')) {
+            if (is_object($opportunityResponse) && property_exists($opportunityResponse, 'id')) {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Opportunity', 'type_name' => 'Opportunity-create']), 'success', wp_json_encode("Created opportunity id is : $opportunityResponse->id"));
             } else {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Opportunity', 'type_name' => 'Opportunity-create']), 'error', wp_json_encode($opportunityResponse));
@@ -210,7 +210,7 @@ class RecordApiHelper
             $eventSubjectId = empty($integrationDetails->actions->eventSubjectId) ? null : $integrationDetails->actions->eventSubjectId;
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $createEventResponse = $this->createEvent($finalData, $contactId, $accountId, $eventSubjectId);
-            if (property_exists($createEventResponse, 'id')) {
+            if (is_object($createEventResponse) && property_exists($createEventResponse, 'id')) {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Event', 'type_name' => 'Event-create']), 'success', wp_json_encode("Created event id is : $createEventResponse->id"));
             } else {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Event', 'type_name' => 'Event-create']), 'error', wp_json_encode($createEventResponse));
@@ -226,7 +226,7 @@ class RecordApiHelper
             $slaViolationId = empty($integrationDetails->actions->slaViolationId) ? null : $integrationDetails->actions->slaViolationId;
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $createCaseResponse = $this->createCase($finalData, $contactId, $accountId, $caseStatusId, $caseOriginId, $casePriorityId, $potentialLiabilityId, $slaViolationId);
-            if (property_exists($createCaseResponse, 'id')) {
+            if (is_object($createCaseResponse) && property_exists($createCaseResponse, 'id')) {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Case', 'type_name' => 'Case-create']), 'success', wp_json_encode("Created case id is : $createCaseResponse->id"));
             } else {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Case', 'type_name' => 'Case-create']), 'error', wp_json_encode($createCaseResponse));

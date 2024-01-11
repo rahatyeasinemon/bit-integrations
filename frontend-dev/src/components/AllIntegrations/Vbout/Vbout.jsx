@@ -32,6 +32,7 @@ function Vbout({ formFields, setFlow, flow, allIntegURL }) {
     ],
     VboutFields: [],
     list_id: '',
+    contact_status: '',
     actions: {},
   })
   const saveConfig = () => {

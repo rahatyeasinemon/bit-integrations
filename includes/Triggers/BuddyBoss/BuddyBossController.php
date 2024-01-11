@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\BuddyBoss;
 
 use BitCode\FI\Flow\Flow;
@@ -48,7 +49,8 @@ final class BuddyBossController
             wp_send_json_error(__('BuddyBoss is not installed or activated', 'bit-integrations'));
         }
 
-        $types = ['A user accepts a friend request',
+        $types = [
+            'A user accepts a friend request',
             'A user sends a friend request',
             'A user creates a topic in a forum',
             'A user replies to a topic in a forum',
@@ -59,13 +61,15 @@ final class BuddyBossController
 
         ];
         if (is_plugin_active('buddyboss-platform-pro/buddyboss-platform-pro.php')) {
-            $types = array_merge($types, ['A user joins in a public group Pro',
+            $types = array_merge($types, [
+                'A user joins in a public group Pro',
                 'A user joins in a private group Pro',
                 'A user leaves/removed from a group Pro',
                 'A user makes a post to the ativity stream of a group Pro',
                 'A user request to access a private group Pro',
                 'A user\'s email invitation results in a new member activation Pro',
-                'A user\'s email invitation results in a new member registration Pro']);
+                'A user\'s email invitation results in a new member registration Pro'
+            ]);
         }
         $buddyboss_action = [];
         foreach ($types as $index => $type) {
@@ -488,9 +492,17 @@ final class BuddyBossController
     {
         global $wpdb;
         if ($status == '') {
-            $group = $wpdb->get_results("select id,name,description from {$wpdb->prefix}bp_groups where id = $group_id");
+            $group = $wpdb->get_results(
+                $wpdb->prepare("select id,name,description from {$wpdb->prefix}bp_groups where id = %d", $group_id)
+            );
         } else {
-            $group = $wpdb->get_results("select id,name,description from {$wpdb->prefix}bp_groups where id = $group_id and status = '$status'");
+            $group = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT id,name,description FROM {$wpdb->prefix}bp_groups WHERE id = %d AND status = %s",
+                    $group_id,
+                    $status
+                )
+            );
         }
 
         if (count($group)) {
@@ -893,10 +905,10 @@ final class BuddyBossController
         // ];
 
         $fields = self::fields(7);
-        for($i = 0; $i < count($fields); $i++) {
-            $current_user[$fields[$i]['name']] = $new_values[$i+1]['value'];
+        for ($i = 0; $i < count($fields); $i++) {
+            $current_user[$fields[$i]['name']] = $new_values[$i + 1]['value'];
         }
-        
+
         Flow::execute('BuddyBoss', 7, $current_user, $flows);
     }
 

@@ -76,7 +76,6 @@ final class PiotnetAddonFormController
                     'id' => $post->ID,
                     'title' => $post->post_title,
                 ];
-
             }
         }
         wp_send_json_success($piotnetForms);
@@ -123,14 +122,14 @@ final class PiotnetAddonFormController
                     if (!empty($singleField->settings->field_id)) {
                         $field_id = $singleField->settings->field_id;
                     } else {
-                        $field_id = str_replace(['0','1','2','3','4','5','6','7','8','9'], ['a','b','c','d','e','f','g','h','i','j'], $singleField->id);
+                        $field_id = str_replace(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'], $singleField->id);
                     }
 
                     $fields[] = [
-                    'name' => $field_id,
-                    'type' => $type,
-                    'label' => $singleField->settings->field_label,
-                ];
+                        'name' => $field_id,
+                        'type' => $type,
+                        'label' => $singleField->settings->field_label,
+                    ];
                 }
             }
         }
@@ -158,17 +157,20 @@ final class PiotnetAddonFormController
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'pafe-forms' AND $wpdb->postmeta.meta_key = '_elementor_data'";
 
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
+                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'pafe-forms' AND $wpdb->postmeta.meta_key = '_elementor_data'"
+            )
+        );
     }
 
     private static function getElementorPostMeta(int $form_id)
     {
         global $wpdb;
-        $postMeta = $wpdb->get_results("SELECT meta_value FROM $wpdb->postmeta WHERE post_id=$form_id AND meta_key='_elementor_data' LIMIT 1");
+        $postMeta = $wpdb->get_results($wpdb->prepare("SELECT meta_value FROM $wpdb->postmeta WHERE post_id=%d AND meta_key='_elementor_data' LIMIT 1", $form_id));
         return json_decode($postMeta[0]->meta_value);
     }
 }

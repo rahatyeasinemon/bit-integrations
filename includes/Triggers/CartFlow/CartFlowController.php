@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\CartFlow;
 
 use BitCode\FI\Flow\Flow;
@@ -139,18 +140,24 @@ final class CartFlowController
     private static function getCartFlowPosts()
     {
         global $wpdb;
-
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
-        WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'cartflows_step') AND $wpdb->postmeta.meta_key = 'wcf_fields_billing'";
-
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
+                WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'cartflows_step') AND $wpdb->postmeta.meta_key = 'wcf_fields_billing'"
+            )
+        );
     }
 
     private static function getCartFlowPostMeta(int $form_id)
     {
         global $wpdb;
-        $postMeta = $wpdb->get_results("SELECT meta_value FROM $wpdb->postmeta WHERE post_id=$form_id AND meta_key='wcf_fields_billing' LIMIT 1");
+        $postMeta = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT meta_value FROM $wpdb->postmeta WHERE post_id=%d AND meta_key='wcf_fields_billing' LIMIT 1",
+                $form_id
+            )
+        );
         return unserialize($postMeta[0]->meta_value);
     }
 

@@ -1,9 +1,10 @@
 <?php
+
 namespace BitCode\FI\Triggers\ARForm;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Flow\Flow;
 use DateTime;
+use BitCode\FI\Flow\Flow;
+use BitCode\FI\Core\Util\Common;
 
 final class ARFormController
 {

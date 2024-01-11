@@ -1,10 +1,11 @@
 <?php
+
 namespace BitCode\FI\Triggers\Breakdance;
 
-use BitCode\FI\Triggers\Breakdance\BreakdanceSubmitData;
 use BitCode\FI\Flow\Flow;
 use Breakdance\Forms\Actions\Action;
 use Breakdance\Forms\Actions\ActionProvider;
+use BitCode\FI\Triggers\Breakdance\BreakdanceSubmitData;
 
 final class BreakdanceController
 {
@@ -201,6 +202,7 @@ final class BreakdanceController
     public static function extractAllForms($data, $postId)
     {
         $newForm = [];
+        $allForm = [];
         foreach ($data as $keys => $element) {
             if ($keys === 'id') {
                 $form_id = "{$element}-{$postId}";
@@ -211,7 +213,7 @@ final class BreakdanceController
                 && $element->type === 'EssentialElements\\FormBuilder'
             ) {
                 $newForm = $element->properties->content->form;
-                self::$bAllForm[] = array_merge((array)$newForm, ['form_id' => $form_id]);
+                $allForm[] = array_merge((array)$newForm, ['form_id' => $form_id]);
             }
             if ($keys == 'children') {
                 if (is_array($element) && !empty($element)) {
@@ -225,24 +227,34 @@ final class BreakdanceController
                 }
             }
         }
-        return self::$bAllForm;
+        return $allForm;
     }
 
     private static function getBreakdancePosts()
     {
         global $wpdb;
-
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
-        WHERE $wpdb->posts.post_status = 'publish' AND ($wpdb->posts.post_type = 'post' OR $wpdb->posts.post_type = 'page') AND $wpdb->postmeta.meta_key = 'breakdance_data'";
-
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                    LEFT JOIN $wpdb->postmeta ON ($wpdb->posts.ID = $wpdb->postmeta.post_id)
+                        WHERE $wpdb->posts.post_status = 'publish' 
+                            AND ($wpdb->posts.post_type = 'post' 
+                                OR $wpdb->posts.post_type = 'page' 
+                                OR $wpdb->posts.post_type = 'breakdance_footer') 
+                            AND $wpdb->postmeta.meta_key = 'breakdance_data'"
+            )
+        );
     }
 
     private static function getBreackdancePostMeta(int $form_id)
     {
         global $wpdb;
-        $postMeta = $wpdb->get_results("SELECT meta_value FROM $wpdb->postmeta WHERE post_id=$form_id AND meta_key='breakdance_data' LIMIT 1");
+        $postMeta = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT meta_value FROM $wpdb->postmeta WHERE post_id = %d AND meta_key='breakdance_data' LIMIT 1",
+                $form_id
+            )
+        );
         return json_decode($postMeta[0]->meta_value);
     }
 }

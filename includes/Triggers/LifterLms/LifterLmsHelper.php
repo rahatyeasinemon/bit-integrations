@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\LifterLms;
 
 class LifterLmsHelper
@@ -120,72 +121,100 @@ class LifterLmsHelper
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_quiz' ORDER BY post_title";
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                    WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_quiz' ORDER BY post_title"
+            )
+        );
     }
 
     public static function getAllLesson()
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'lesson' ORDER BY post_title";
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                    WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'lesson' ORDER BY post_title"
+            )
+        );
     }
 
     public static function getQuizDetail($quizId)
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_quiz' AND $wpdb->posts.ID = $quizId";
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_quiz' AND $wpdb->posts.ID = %d",
+                $quizId
+            )
+        );
     }
 
     public static function getLessonDetail($lessonId)
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'lesson' AND $wpdb->posts.ID = $lessonId";
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'lesson' AND $wpdb->posts.ID = %d",
+                $lessonId
+            )
+        );
     }
 
     public static function getAllCourse()
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'course' ORDER BY post_title";
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'course' ORDER BY post_title"
+            )
+        );
     }
 
     public static function getCourseDetail($courseId)
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'course' AND $wpdb->posts.ID = $courseId";
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'course' AND $wpdb->posts.ID = %d",
+                $courseId
+            )
+        );
     }
 
     public static function getAllMembership()
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_membership' ORDER BY post_title";
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_membership' ORDER BY post_title"
+            )
+        );
     }
 
     public static function getMembershipDetail($membershipId)
     {
         global $wpdb;
 
-        $query = "SELECT ID, post_title FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_membership' AND $wpdb->posts.ID = $membershipId";
-        return $wpdb->get_results($query);
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_membership' AND $wpdb->posts.ID = %d",
+                $membershipId
+            )
+        );
     }
 
     public static function getUserInfo($user_id)

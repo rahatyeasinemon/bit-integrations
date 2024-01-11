@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\BuddyBoss;
 
-use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -537,8 +537,7 @@ class RecordApiHelper
             $statuses   = ['public', 'private', 'hidden'];
             $in_str_arr = array_fill(0, count($statuses), '%s');
             $in_str     = join(',', $in_str_arr);
-            $group_qry  = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}bp_groups WHERE status IN ($in_str)", $statuses);
-            $results    = $wpdb->get_results($group_qry);
+            $results    = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}bp_groups WHERE status IN (%s)", $in_str));
             if ($results) {
                 foreach ($results as $result) {
                     $hide_sitewide = false;
@@ -565,8 +564,7 @@ class RecordApiHelper
             }
         } else {
             global $wpdb;
-            $group_qry = "SELECT * FROM {$wpdb->prefix}bp_groups WHERE id = {$group_id}";
-            $results   = $wpdb->get_results($group_qry);
+            $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}bp_groups WHERE id = %d", $group_id));
             if ($results) {
                 foreach ($results as $result) {
                     $hide_sitewide = false;

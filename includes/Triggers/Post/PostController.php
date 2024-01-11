@@ -112,7 +112,7 @@ final class PostController
             }
 
             if ($newPostData->post_status !== 'auto-draft') {
-                if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $newPostData->post_type) {
+                if ((isset($flowDetails->selectedPostType) && $newPostData->post_type !== 'revision') && ($flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $newPostData->post_type)) {
                     if (has_post_thumbnail($postId)) {
                         $featured_image_url = get_the_post_thumbnail_url($postId, 'full');
                         $newPostData->featured_image = $featured_image_url;
@@ -269,7 +269,7 @@ final class PostController
     {
         $postUpdateFlow = Flow::exists('Post', 9);
         $postData = get_post($trashPostId);
-        $postData['post_permalink'] = get_permalink($postData);
+        $postData->post_permalink = get_permalink($postData);
 
         if ($postUpdateFlow) {
             $flowDetails = $postUpdateFlow[0]->flow_details;
@@ -278,7 +278,7 @@ final class PostController
                 $flowDetails = json_decode($postUpdateFlow[0]->flow_details);
             }
             $postData = (array)$postData;
-            if (isset($flowDetails->selectedPostId) && $flowDetails->selectedPostId == 'any-post' || $flowDetails->selectedPostId == $postData['ID']) {
+            if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $postData['ID']) {
                 Flow::execute('Post', 9, (array) $postData, $postUpdateFlow);
             }
         }

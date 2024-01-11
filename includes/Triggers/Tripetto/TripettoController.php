@@ -98,15 +98,13 @@ final class TripettoController
     public static function isTripettoForm()
     {
         global $wpdb;
-        $query = "SELECT id, name FROM {$wpdb->prefix}tripetto_forms";
-        return $wpdb->get_results($query);
+        return $wpdb->get_results($wpdb->prepare("SELECT id, name FROM {$wpdb->prefix}tripetto_forms"));
     }
 
     public static function getAllFormFields($form_id)
     {
         global $wpdb;
-        $query = "SELECT definition FROM {$wpdb->prefix}tripetto_forms WHERE id = $form_id";
-        $data = $wpdb->get_results($query);
+        $data = $wpdb->get_results($wpdb->prepare("SELECT definition FROM {$wpdb->prefix}tripetto_forms WHERE id = %d", $form_id));
 
         $data = json_decode($data[0]->definition);
 
@@ -167,8 +165,7 @@ final class TripettoController
     public static function uploadFilePath($reference)
     {
         global $wpdb;
-        $query = "SELECT path FROM {$wpdb->prefix}tripetto_attachments WHERE reference = '$reference';";
-        $data = $wpdb->get_results($query);
+        $data = $wpdb->get_results($wpdb->prepare("SELECT path FROM {$wpdb->prefix}tripetto_attachments WHERE reference = %s", $reference));
         return $data[0]->path;
     }
 

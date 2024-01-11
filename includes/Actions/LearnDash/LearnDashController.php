@@ -3,6 +3,7 @@
 /**
  * LearnDesh Integration
  */
+
 namespace BitCode\FI\Actions\LearnDash;
 
 use WP_Error;

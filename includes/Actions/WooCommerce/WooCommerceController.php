@@ -3,12 +3,13 @@
 /**
  * WooCommerce Integration
  */
+
 namespace BitCode\FI\Actions\WooCommerce;
 
 use WP_Error;
 use WC_Data_Store;
-use BitCode\FI\Actions\WooCommerce\RecordApiHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Actions\WooCommerce\RecordApiHelper;
 
 class WooCommerceController
 {
@@ -769,7 +770,7 @@ class WooCommerceController
     public static function allSubscriptionsProducts()
     {
         global $wpdb;
-        $q = "
+        $allSubscriptions = $wpdb->get_results($wpdb->prepare("
         	SELECT posts.ID, posts.post_title FROM $wpdb->posts as posts
         	LEFT JOIN $wpdb->term_relationships as rel ON (posts.ID = rel.object_id)
         	WHERE rel.term_taxonomy_id IN (SELECT term_id FROM $wpdb->terms WHERE slug IN ('subscription','variable-subscription'))
@@ -780,9 +781,7 @@ class WooCommerceController
         	WHERE post_type = 'shop_subscription'
         	AND post_status = 'publish'
         	ORDER BY post_title
-        ";
-
-        $allSubscriptions = $wpdb->get_results($q);
+        "));
 
         $subscriptions[] = [
             'product_id' => 'any',
