@@ -1,13 +1,13 @@
-=== Zapier for WordPress Automation, Uncanny Integrate, Webhook WP Automator, Thrive Integrator, Sure Connector for 200+ platforms to automate – Form Integration  ===
+=== Best no-code Automator & Integration tool to Automate 200+ Platforms - Bit Integrations ===
 Contributors: bitpressadmin
 Tags: automation,integration,connector,automator,Zapier,webhook,API,Hook,Pabbly,Integrately,automate
 Requires at least: 5.1
-Tested up to: 6.4
+Tested up to: 6.4.2
 Requires PHP: 7.0
-Stable tag: 1.5.7
+Stable tag: 1.5.8
 License: GPLv2 or later
 
-Automation Plugin for WordPress like Zapier; Integration of 60+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
+Automation Plugin for WordPress; Integration of 60+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
 
 == Description ==
 
@@ -136,7 +136,6 @@ https://youtu.be/eFuficjF_F4
 * [**Albato**](https://albato.net/)
 * [**Ants and Apps**](https://antsandapps.com/)
 * [**Asana**](https://asana.com/)
-* [**AutomatorWP**](https://wordpress.org/plugins/automatorwp/)
 * [**Autonami**](https://wordpress.org/plugins/wp-marketing-automations/)
 * [**BuddyBoss**](https://www.buddyboss.com/)
 * [**Benchmark**](https://www.benchmarkemail.com/)
@@ -145,7 +144,7 @@ https://youtu.be/eFuficjF_F4
 * [**Constant Contact**](https://www.constantcontact.com/)
 * [**ConvertKit**](https://convertkit.com/)
 * [**Custom Action**]()
-* [****Custom Api :**]()
+* [**Custom Api :**]()
 * [**Capsule CRM**](https://capsulecrm.com/)
 * [**ClinchPad**](https://clinchpad.com/)
 * [**ClickUp**](https://clickup.com/)
@@ -241,11 +240,9 @@ https://youtu.be/eFuficjF_F4
 * [**SureTriggers**](https://wordpress.org/plugins/suretriggers/)
 * [**SystemeIO**](https://systeme.io/home)
 * [**Telegram**](https://telegram.org/)
-* [**Thrive Automator**](https://wordpress.org/plugins/thrive-automator/)
 * [**Tutor LMS**](https://wordpress.org/plugins/tutor/)
 * [**Trello**](https://trello.com/)
 * [**Twilio**](https://www.twilio.com/en-us)
-* [**Uncanny Automator**](https://wordpress.org/plugins/uncanny-automator/)
 * [**VBOUT**](https://www.vbout.com/)
 * [**Webhooks**]()
 * [**WhatsApp**](https://www.whatsapp.com/)
@@ -390,8 +387,6 @@ When any trigger is fired, you can send data to 3 social media like [WhatsApp](h
 
 ### ⭐ Data & Workflow Automation:
 
-15+ Data & Workflow Automation Integrately, Integromat(make), IFTTT, N8N, Webhooks, Zapier, FlowMattic, AutomatorWP, Uncanny Automator, Thrive Automator, WP Webhooks, Advanced Form Integration, Sperse.io, Albato, SureTriggers,WP Fusion and more.
-
 ### ⭐ Cloud Storage & File Sharing Platform Integration:
 
 3+ Cloud Storage & File Sharing Platform Integration Dropbox, Google Drive, OneDrive
@@ -406,13 +401,6 @@ Users can get and send data to [JetEngine](https://crocoblock.com/plugins/jeteng
 
 
 == ❣ What our customer say about Bit Integrations : ==
-
-[` 💠 Best of class`](https://wordpress.org/support/topic/best-of-class-with-few-glitches/)
-
-I have tested a lot of integrators/automators, like AutomatorWP, Uncanny Automator, Thrive Automator and SureTriggers … what can I say:
-Bit Integrations integrates with the widest range of plugins & services among all ⭐
-
--by @saschinger
 
 [` 💠 Bit Integrations is an affordable alternative to Pabbly Connect and Zapier`](https://wordpress.org/support/topic/bit-integrations-is-an-affordable-alternative-to-pabbly-and-zapier/)
 
@@ -1036,33 +1024,7 @@ I’ve been using the free version for sometime and switched to the pro version 
 * [**Flowlu - Business Management Software :**](https://www.flowlu.com/) Flowlu is a comprehensive business management platform that streamlines operations, manages projects, tracks finances, and collaborates with teams - all ... 
 
       Flowlu is an all-in-one business management software that combines project management, CRM, finance, and collaboration tools in a single platform. With Flowlu, businesses can streamline their operations, improve team collaboration, and enhance project and financial management, making Flowlu a versatile solution for organizations looking to optimize their workflows with Flowlu's comprehensive features and integrated tools. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/flowlu-integrations/)|[**Website**](https://www.flowlu.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKSV9O2566RvZOXlbN1e_Gi)]
-* [**FlowMattic - Must-have WordPress Automation Plugin :**](https://flowmattic.com/) FlowMattic is helping to automate most of the manual tasks in online business. Not only this but it's also helping to get the reminders for important tasks.
 
-      FlowMattic is a workflow automation platform that simplifies complex business processes, increases productivity, and optimizes efficiency. With FlowMattic, organizations can create, automate, and streamline workflows to achieve greater operational agility and effectiveness, making FlowMattic an essential tool for businesses seeking to enhance their workflow management with FlowMattic's intuitive features and customizable solutions. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/flowmattic-integrations/)|[**Website**](https://flowmattic.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJc8D4KWd06kDyrWJJO3RNr)]
-* [**AutomatorWP – The most flexible and powerful no-code automation plugin for WordPress :**](https://automatorwp.com/) AutomatorWP is a free plugin that connects your WordPress plugins and puts them to work together. Save time and money automating tasks with no code!  
-
-      AutomatorWP is a powerful automation tool for WordPress that enables users to easily create automated workflows and connect various plugins and services. With AutomatorWP, you can save time and effort by automating repetitive tasks, enhancing your WordPress site's functionality, and creating seamless interactions between different plugins, making AutomatorWP an indispensable resource for simplifying and optimizing your WordPress workflows with AutomatorWP's user-friendly interface and extensive integrations. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/automatorwp-integrations/)|[**Website**](https://automatorwp.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALcrPCvnGNIXaJT04rkSExM)|[**Free**](https://wordpress.org/plugins/automatorwp/)]
-* [**Uncanny Automator – Automate everything with the #1 no-code Automation tool for WordPress :**](https://automatorplugin.com/) Uncanny Automator is the easiest and most powerful way to automate your WordPress site with no code. Build automations in minutes that connect your ...
-
-      Uncanny Automator is a versatile WordPress automation plugin that empowers users to automate complex tasks and integrations between various plugins and platforms. With UncannyAutomator, you can effortlessly streamline your WordPress processes, enhance user experiences, and create dynamic connections across your digital ecosystem, making UncannyAutomator an indispensable tool for simplifying and optimizing your WordPress workflows with Uncanny Automator's robust functionality and wide-ranging compatibility. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/uncanny-automator-integrations/)|[**Website**](https://automatorplugin.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJ7t5vNXCfq0OFf-NnXtMZ1)|[**Free**](https://wordpress.org/plugins/uncanny-automator/)]
-* [**Create Smart Automations To Connect Your Favorite Tools - Thrive Automator :**](https://thrivethemes.com/automator/) Thrive Automator is a FREE plugin that lets you create powerful automations by connecting your favorite tools with your WordPress website. 
-
-      Thrive Automator is a dynamic WordPress automation plugin that revolutionizes your website's functionality, offering endless possibilities for workflow automation and seamless integrations. With ThriveAutomator, you can effortlessly connect your favorite plugins, enhance user engagement, and streamline your WordPress processes, making it the go-to solution for simplifying and optimizing your site's operations using ThriveAutomator's extensive capabilities. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/thrive-automator-integrations/)|[**Website**](https://thrivethemes.com/automator/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALstSgzji6-5kfB9vClJiQp)|[**Free**](https://wordpress.org/plugins/thrive-automator/)]
-* [**WP Webhooks – Create powerful automation workflows directly within WordPress :**](https://wp-webhooks.com) Put your website on autopilot by automating manual tasks to leverage your time and ressources for what's really important to your project or business. WP ...
-
-      WP Webhooks is the ultimate WordPress plugin for adding custom webhooks to your site, allowing you to trigger external actions and automate tasks effortlessly. With WPWebhooks, you can seamlessly connect your WordPress website to external services, synchronize data, and enhance your site's functionality using webhooks throughout your WordPress environment. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/wp-webhooks-integrations/)|[**Website**](https://wp-webhooks.com)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALIvVjEM3v2yfP4iQkAJZ1p)|[**Free**](https://wordpress.org/plugins/wp-webhooks/)]
-* [**Advanced Form Integration – Connect WooCommerce and Contact Form 7 to Google Sheets and other platforms :**](https://advancedformintegration.com/) Send WooCommerce order data & Contact Form 7 submissions to many other platforms.
-
-      Advanced Form Integration is a powerful WordPress plugin that simplifies the process of integrating forms with external systems and services. With AdvancedFormIntegration, you can effortlessly connect your WordPress forms to various applications, enabling seamless data transfer and automation for a more efficient website workflow. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/advanced-form-integration/)|[**Website**](https://advancedformintegration.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIgxCkAnAZPWfTFGC4GUvip)|[**Free**](https://wordpress.org/plugins/advanced-form-integration/)]
-* [**Sperse IO – App Integration Platform :**](https://sperse.io/) Sperse IO is a Platform and WP Plugin to connect your apps!
-
-      Sperse IO is a versatile data integration platform that streamlines data connections between your favorite apps and services. With Sperse IO, you can automate data transfers, synchronize information, and enhance your workflows across various platforms effortlessly. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/sperse-io-integrations/)|[**Website**](https://sperse.io/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-ALVkDySzW0OuD5FUjO4dVcW)|[**Free**](https://es.wordpress.org/plugins/automate-hub-free-by-sperse-io/)]
-* [**Albato — a single no-code platform for all automations :**](https://albato.com/) Zapier is the king/queen of automation tools, but Albato takes this to another level. Albato enables users to integrate any app with an open API or webhook. 
-
-      Albato is a powerful integration platform that seamlessly connects your favorite apps and automates workflows. With Albato, you can effortlessly streamline data exchanges and enhance productivity across multiple applications. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/albato-integrations/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKaWl2mxMlCk5GmbZaGXFKZ)|[**Website**](https://albato.com/)]
-* [**SureTriggers – Connect All Your Plugins, Apps, Tools & Automate Everything! :**](https://suretriggers.com/) SureTriggers is an integration platform that automates processes between different websites, applications, and WordPress plugins. It helps you create powerful ...
-
-      SureTriggers is a versatile automation tool designed to trigger actions across various apps and platforms. With SureTriggers, you can set up complex workflows that efficiently automate tasks and data transfers, simplifying your daily processes. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/suretriggers-integrations/)|[**Website**](https://suretriggers.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AJe5mkdWh-6cn6BXMyRPyXB)|[**Free**](https://wordpress.org/plugins/suretriggers/)]
 * [**Gravitec.net – Web Push Notifications :**](https://gravitec.net/) Easy-to-use and smart push notifications for your website. Increase subscriptions and repeat visits with minimal effort.
 
       Gravitec is a powerful marketing automation platform that helps businesses engage, nurture, and convert leads effectively. With Gravitec, you can create targeted campaigns, analyze user behavior, and optimize your marketing efforts for better results. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/actions/gravitec-integrations/)|[**Website**](https://gravitec.net/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AKGDLxtmmbbbtYyHHiugYZ0)|[**Free**](https://wordpress.org/plugins/gravitec-net-web-push-notifications/)]
@@ -1719,7 +1681,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 3. For Uploading the automator plugin click on upload, so you can directly upload your plugin zip file.
 4. Use the browse button to select the plugin zip file that was downloaded, and then click on Install Now.
 5. Once installed the integration plugin, click “Activate”.
-6. Now you can you use the integration plugin where you can automate forminator ,wpforms data with a lot of platforms as like as Zapier and also can use the features of wp webhooks as both trigger and action. 
+6. Now you can you use the integration plugin where you can automate any form data with lot of platforms. 
 
 == Screenshots ==
 
@@ -1731,6 +1693,24 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 1.5.8  =
+*Release Date - *1st January 2024\*
+
+- **New Actions :**
+  - Zagomail - Email marketing & Automation -  Zagomail Integration & Automation
+
+- **New Features :**
+  - WooCommerce: Order Module: ACF field 
+
+- **Fixes :**
+  - Nutshell Crm: timeline response error
+  - Salesforce: fetal error issue
+  - Post: postTrashed  WP_Post object  handling issue
+  - Post: createPost module double data sending issue
+  - Breakdance: footer form & duplicate form issue
+  - Elementor: File upload issue
+  - Notion: file attachment issue
 
 = 1.5.7  =
 *Release Date - *1st January 2024\*
