@@ -10,22 +10,22 @@ function Settings() {
   const [appConf, setAppConf] = useState({})
   const [snack, setSnackbar] = useState({ show: false })
 
-  // useEffect(() => {
-  //   const loadFetch = bitsFetch({}, 'get/config', null, 'GET')
-  //     .then(res => {
-  //       if ('success' in res && res.success) {
-  //         setAppConf(res.data)
-  //       }
-  //       if (res?.success) return 'Successfully fetched'
-  //       return 'Error'
-  //     })
+  useEffect(() => {
+    const loadFetch = bitsFetch({}, 'get/config', null, 'GET')
+      .then(res => {
+        if ('success' in res && res.success) {
+          setAppConf(res.data)
+        }
+        if (res?.success) return 'Successfully fetched'
+        return 'Error'
+      })
 
-  //   toast.promise(loadFetch, {
-  //     success: data => data,
-  //     error: __('Error Occurred', 'bit-integrations'),
-  //     loading: __('Fetching...'),
-  //   })
-  // }, [])
+    toast.promise(loadFetch, {
+      success: data => data,
+      error: __('Error Occurred', 'bit-integrations'),
+      loading: __('Fetching...'),
+    })
+  }, [])
 
   const updatePluginConfig = (name) => {
     const config = { ...appConf }
@@ -68,7 +68,7 @@ function Settings() {
     setAppConf(config)
     debouncedUpdatePluginConfig(name)
   }
-
+  console.log('appConf', appConf)
   return (
     <div className="btcd-f-settings">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />

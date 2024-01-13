@@ -1695,7 +1695,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 == Changelog ==
 
 = 1.5.8  =
-*Release Date - *1st January 2024\*
+*Release Date - *11th January 2024\*
 
 - **New Actions :**
   - Zagomail - Email marketing & Automation -  Zagomail Integration & Automation
