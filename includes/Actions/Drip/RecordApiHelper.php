@@ -30,7 +30,6 @@ class RecordApiHelper
     public function storeOrModifyRecord($method, $campaignId, $data, $account_id)
     {
         $insertRecordEndpoint = "{$this->_apiEndpoint}/{$account_id}/{$method}";
-        var_dump($insertRecordEndpoint, json_encode(['subscribers'=>$data]), $this->_defaultHeader);
 
         $res = HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
         return $res;

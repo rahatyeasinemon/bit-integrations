@@ -68,7 +68,7 @@ class RecordApiHelper
         foreach ($tags as $tagId) {
             $tagEndPoint = "{$this->_apiEndpoint}lists/add-tag?ztag_id={$tagId}&subscriber_uid={$subscriberId}&list_uid={$listId}";
 
-            HttpHelper::post($tagEndPoint, $requestParams, $this->_defaultHeader);
+            $res = HttpHelper::post($tagEndPoint, json_encode($requestParams), $this->_defaultHeader);
         }
     }
 
@@ -128,13 +128,12 @@ class RecordApiHelper
             }
         } else {
             $recordApiResponse = $this->storeOrModifyRecord($listId, $zagoMail);
-            if (isset($tags) && (count($tags)) > 0 && $recordApiResponse) {
-                $this->addTagToSubscriber($existSubscriber->data->subscriber_uid, $listId, $tags);
+            if (isset($tags) && (count($tags)) > 0 && $recordApiResponse->status !== 'error') {
+                $this->addTagToSubscriber($recordApiResponse->data->record->subscriber_uid, $listId, $tags);
             }
             $type = 'insert';
 
         }
-
         if ($recordApiResponse->status !== 'success') {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', $recordApiResponse->errors);
         } else {

@@ -68,7 +68,6 @@ function Settings() {
     setAppConf(config)
     debouncedUpdatePluginConfig(name)
   }
-  console.log('appConf', appConf)
   return (
     <div className="btcd-f-settings">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
