@@ -40,9 +40,13 @@ final class LogHandler
         if (isset($data->offset)) {
             $offset = $data->offset;
         }
+        if (isset($data->pageSize)) {
+            $limit = $data->pageSize;
+        }
         if (isset($data->limit)) {
             $limit = $data->limit;
         }
+
         $result = $logModel->get('*', ['flow_id' => $data->id], $limit, $offset, 'id', 'desc');
         if (is_wp_error($result)) {
             wp_send_json_success(
