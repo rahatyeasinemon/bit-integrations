@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { __ } from '../../../Utils/i18nwrap'
+import { create } from 'mutative'
 
 export const addFieldMap = (i, confTmp, setConf) => {
   const newConf = { ...confTmp }
@@ -25,11 +26,10 @@ export const handleFieldMapping = (event, index, conftTmp, setConf) => {
   //   newConf.field_map[index].customValue = ''
   // }
 
-  setConf(prevConf => {
-    prevConf.field_map[index][event.target.name] = event.target.value
+  setConf(prevConf => create(prevConf, (draftconf) => {
+    draftconf.field_map[index][event.target.name] = event.target.value
     if (event.target.value === 'custom') {
-      prevConf.field_map[index].customValue = ''
+      draftconf.field_map[index].customValue = ''
     }
-    return prevConf
-  })
+  }))
 }
