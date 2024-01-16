@@ -3,6 +3,7 @@
 namespace BitCode\FI\Actions\MailMint;
 
 use WP_Error;
+use Mint\MRM\Constants;
 use Mint\MRM\DataBase\Models\ContactGroupModel;
 
 class MailMintController
@@ -25,6 +26,22 @@ class MailMintController
 
     public static function allCustomFields()
     {
+        if (class_exists('Mint\MRM\DataBase\Models\ContactGroupModel')) {
+            $allFields  = [];
+            $fields     = get_option('mint_contact_primary_fields', Constants::$primary_contact_fields);
+
+            foreach ($fields as $module) {
+                foreach ($module as $field) {
+                    $allFields[] = (object) [
+                        'key'       => $field['slug'],
+                        'label'     => $field['title'],
+                        'required'  => $field['slug'] == 'email' ? true : false
+                    ];
+                }
+            }
+            wp_send_json_success($allFields, 200);
+        }
+        wp_send_json_error(__('Mail Mint must be activated!', 'bit-integrations'));
     }
 
     public static function getAllList()

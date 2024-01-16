@@ -26,7 +26,7 @@ export const mailMintRefreshFields = (mailMintConf, setMailMintConf, setIsLoadin
             newConf.default = {}
           }
           if (result.data) {
-            newConf.default.allCustomFields = result.data
+            newConf.mailMintContactFields = result.data
           }
           return newConf
         })

@@ -16,19 +16,19 @@ export default function MailMintIntegLayout({ formFields, handleInput, mailMintC
       } else {
         delete newConf[name]
       }
-    } else if(name === 'selectedTags') {
+    } else if (name === 'selectedTags') {
       if (val !== '') {
         newConf[name] = val
       } else {
         delete newConf[name]
       }
-    } else if(name === 'selectedSubStatus') {
+    } else if (name === 'selectedSubStatus') {
       if (val !== '') {
         newConf[name] = val
       } else {
         delete newConf[name]
       }
-    } 
+    }
     setMailMintConf({ ...newConf })
   }
 
@@ -97,9 +97,6 @@ export default function MailMintIntegLayout({ formFields, handleInput, mailMintC
         />
       </div>
       <br />
-      {/* <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bit-integrations')}
-      <button onClick={() => mailMintRefreshFields(mailMintConf, setMailMintConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Fields"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-      </b></div> */}
       {isLoading && (
         <Loader style={{
           display: 'flex',
@@ -114,6 +111,7 @@ export default function MailMintIntegLayout({ formFields, handleInput, mailMintC
       <>
         <div className="mt-4">
           <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
+          <button onClick={() => mailMintRefreshFields(mailMintConf, setMailMintConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Fields"' }} type="button" disabled={isLoading}>&#x21BB;</button>
         </div>
         <div className="btcd-hr mt-1" />
         <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
@@ -133,8 +131,8 @@ export default function MailMintIntegLayout({ formFields, handleInput, mailMintC
         <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(mailMintConf.field_map.length, mailMintConf, setMailMintConf)} className="icn-btn sh-sm" type="button">+</button></div>
       </>
       <div className="pos-rel d-flx w-8">
-      <TableCheckBox checked={mailMintConf.update || false} onChange={(e) => updateHandler(e, 'selectedUpdate')} className="wdt-200 mt-4 mr-2" value="selectedUpdate" title={__('Update Contact', 'bit-integrations')} subTitle={__('Update contact if contact already exist?', 'bit-integrations')} />
-    </div>
+        <TableCheckBox checked={mailMintConf.update || false} onChange={(e) => updateHandler(e, 'selectedUpdate')} className="wdt-200 mt-4 mr-2" value="selectedUpdate" title={__('Update Contact', 'bit-integrations')} subTitle={__('Update contact if contact already exist?', 'bit-integrations')} />
+      </div>
       <br />
     </>
   )
