@@ -104,8 +104,6 @@ class FreshSalesController
             }
         }
 
-        error_log(print_r($response, true));
-        die;
         if (isset($response) && $response) {
             wp_send_json_success($formattedResponse, 200);
         } else {
