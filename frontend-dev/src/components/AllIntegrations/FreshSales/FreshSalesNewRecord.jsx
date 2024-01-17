@@ -90,8 +90,6 @@ export default function FreshSalesNewRecord({ tab, settab, formFields, freshSale
 
           </>
         )}
-      <br />
-      <br />
 
       {(freshSalesConf.moduleData.module !== '' && freshSalesConf.default.modules[freshSalesConf.moduleData.module]?.required)
         && !['Account', 'Product', 'Contact'].includes(freshSalesConf.moduleData.module) && (
@@ -112,8 +110,6 @@ export default function FreshSalesNewRecord({ tab, settab, formFields, freshSale
             <br />
           </>
         )}
-      <br />
-      <br />
 
       {(freshSalesConf.moduleData.module && freshSalesConf.default?.modules?.[freshSalesConf.moduleData.module]?.fields)
         && (
