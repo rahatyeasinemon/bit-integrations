@@ -1,18 +1,18 @@
 <?php
 
-namespace BitCode\FI\Triggers\CaptureAction;
+namespace BitCode\FI\Triggers\ActionHook;
 
 use WP_Error;
 use BitCode\FI\Flow\Flow;
 
-class CaptureActionController
+class ActionHookController
 {
     public static function info()
     {
         return [
-            'name' => 'CaptureAction',
+            'name' => 'ActionHook',
             'title' => 'Get callback data through an URL',
-            'type' => 'capture_action',
+            'type' => 'action_hook',
             'is_active' => true
         ];
     }
@@ -22,26 +22,26 @@ class CaptureActionController
         $missing_field = null;
 
         if (!property_exists($data, 'hook_id')) {
-            $missing_field = is_null($missing_field) ? 'CaptureAction ID' : $missing_field . ', CaptureAction ID';
+            $missing_field = is_null($missing_field) ? 'ActionHook ID' : $missing_field . ', ActionHook ID';
         }
         if (!is_null($missing_field)) {
             wp_send_json_error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
-        $testData = get_option('btcbi_capture_action_test_' . $data->hook_id);
+        $testData = get_option('btcbi_action_hook_test_' . $data->hook_id);
         if ($testData === false) {
-            update_option('btcbi_capture_action_test_' . $data->hook_id, []);
+            update_option('btcbi_action_hook_test_' . $data->hook_id, []);
         }
         if (!$testData || empty($testData)) {
-            wp_send_json_error(new WP_Error('captureAction_test', __('CaptureAction data is empty', 'bit-integrations')));
+            wp_send_json_error(new WP_Error('actionHook_test', __('ActionHook data is empty', 'bit-integrations')));
         }
-        wp_send_json_success(['captureAction' => $testData]);
+        wp_send_json_success(['actionHook' => $testData]);
     }
 
-    public static function captureActionHandler(...$args)
+    public static function actionHookHandler(...$args)
     {
-        if (get_option('btcbi_capture_action_test_' . current_action()) !== false) {
-            update_option('btcbi_capture_action_test_' . current_action(), $args);
+        if (get_option('btcbi_action_hook_test_' . current_action()) !== false) {
+            update_option('btcbi_action_hook_test_' . current_action(), $args);
         }
         return rest_ensure_response(['status' => 'success']);
     }
@@ -50,26 +50,26 @@ class CaptureActionController
     {
         $missing_field = null;
         if (!property_exists($data, 'hook_id') && !empty($data->hook_id)) {
-            $missing_field = is_null($missing_field) ? 'CaptureAction ID' : $missing_field . ', CaptureAction ID';
+            $missing_field = is_null($missing_field) ? 'ActionHook ID' : $missing_field . ', ActionHook ID';
         }
         if (!is_null($missing_field)) {
             wp_send_json_error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
         if (property_exists($data, 'reset') && $data->reset) {
-            $testData = update_option('btcbi_capture_action_test_' . $data->hook_id, []);
+            $testData = update_option('btcbi_action_hook_test_' . $data->hook_id, []);
         } else {
-            $testData = delete_option('btcbi_capture_action_test_' . $data->hook_id);
+            $testData = delete_option('btcbi_action_hook_test_' . $data->hook_id);
         }
         if (!$testData) {
-            wp_send_json_error(new WP_Error('captureAction_test', __('Failed to remove test data', 'bit-integrations')));
+            wp_send_json_error(new WP_Error('actionHook_test', __('Failed to remove test data', 'bit-integrations')));
         }
-        wp_send_json_success(__('CaptureAction test data removed successfully', 'bit-integrations'));
+        wp_send_json_success(__('ActionHook test data removed successfully', 'bit-integrations'));
     }
 
     public static function handle(...$args)
     {
-        if ($flows = Flow::exists('CaptureAction', current_action())) {
+        if ($flows = Flow::exists('ActionHook', current_action())) {
             foreach ($flows as $flow) {
                 $flowDetails = json_decode($flow->flow_details);
 
@@ -96,7 +96,7 @@ class CaptureActionController
                         $formatedData[$key] = self::extractValueFromPath($args, $key);
                     }
 
-                    Flow::execute('CaptureAction', current_action(), $formatedData, array($flow));
+                    Flow::execute('ActionHook', current_action(), $formatedData, array($flow));
                 }
             }
         }

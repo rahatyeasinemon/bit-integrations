@@ -1,7 +1,7 @@
 import { __ } from '../../Utils/i18nwrap'
 import Modal from './Modal'
 
-function ConfirmModal({ close, action, mainMdlCls, show, btnTxt, body, btn2Txt, btn2Action, btnClass, title, className, children, warning }) {
+function ConfirmModal({ close, action, mainMdlCls, style, cssTransStyle, show, btnTxt, body, btn2Txt, btn2Action, btnClass, title, className, children, warning }) {
   return (
     <Modal
       sm
@@ -10,6 +10,8 @@ function ConfirmModal({ close, action, mainMdlCls, show, btnTxt, body, btn2Txt, 
       className={mainMdlCls}
       title={title || 'Confirmation'}
       warning={warning || false}
+      style={style}
+      cssTransStyle={cssTransStyle}
     >
       <div className={`txt-center atn-btns flx flx-center ${className || 'flx-col'}`}>
         <div className={`content ${!className && 'confirm-content'}`}>

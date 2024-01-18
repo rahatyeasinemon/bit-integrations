@@ -61,7 +61,7 @@ class HookService
             $activeTrigger = [];
         }
         $activeTrigger[] = 'CustomTrigger';
-        $activeTrigger[] = 'CaptureAction';
+        $activeTrigger[] = 'ActionHook';
         if (empty($activeTrigger) || !is_array($activeTrigger)) {
             return;
         }

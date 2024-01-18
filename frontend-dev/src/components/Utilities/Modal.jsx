@@ -1,7 +1,7 @@
 import { CSSTransition } from 'react-transition-group'
 import CloseIcn from '../../Icons/CloseIcn'
 
-export default function Modal({ show, setModal, sm, lg, style, className, title, warning, hdrActn, children, subTitle, noPadding }) {
+export default function Modal({ show, setModal, sm, lg, style, cssTransStyle, className, title, warning, hdrActn, children, subTitle, noPadding }) {
   const handleClickOutside = e => {
     if (e.target.classList.contains('btcd-modal-wrp')) {
       setModal(false)
@@ -14,6 +14,7 @@ export default function Modal({ show, setModal, sm, lg, style, className, title,
       timeout={500}
       classNames="btc-mdl-trn"
       unmountOnExit
+      style={cssTransStyle}
     >
       <div
         role="button"
