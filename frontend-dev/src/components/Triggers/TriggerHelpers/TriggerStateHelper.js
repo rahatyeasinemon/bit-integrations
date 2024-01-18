@@ -633,6 +633,14 @@ export const UltimateMemberStateIH = (tmpConf, flowData) => {
   return tmpConf
 }
 
+export const ARMemberStateIH = (tmpConf, flowData) => {
+  if (flowData?.formID && Array.isArray(flowData?.fields)) {
+    tmpConf.fields = flowData.fields
+  }
+
+  return tmpConf
+}
+
 
 export const academylmsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   if (val === '2') {

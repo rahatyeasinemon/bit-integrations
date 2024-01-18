@@ -5,7 +5,7 @@ import { $actionConf, $flowStep, $newFlow } from '../../../GlobalStates'
 import { webhookIntegrations } from '../../../Utils/StaticData/webhookIntegrations'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
-import { EDDStateIH, GamiPressStateIH, GiveWpStateIH, LifterLmsStateIH, MasterStudyLmsStateIH, PaidMembershipProStateIH, RestrictContentStateIH, SliceWpStateIH, SureCartStateIH, ThriveApprenticeStateIH, UltimateMemberStateIH, affiliateStateIH, buddybossStateIH, fluentCrmStateIH, groundhoggStateIH, jetEngineStateIH, learndashStateIH, memberpressStateIH, postStateIH, tutorlmsStateIH, wooCommerceStateIH, wpCoursewareStateIH } from '../../Triggers/TriggerHelpers/TriggerStateHelper'
+import { ARMemberStateIH, EDDStateIH, GamiPressStateIH, GiveWpStateIH, LifterLmsStateIH, MasterStudyLmsStateIH, PaidMembershipProStateIH, RestrictContentStateIH, SliceWpStateIH, SureCartStateIH, ThriveApprenticeStateIH, UltimateMemberStateIH, affiliateStateIH, buddybossStateIH, fluentCrmStateIH, groundhoggStateIH, jetEngineStateIH, learndashStateIH, memberpressStateIH, postStateIH, tutorlmsStateIH, wooCommerceStateIH, wpCoursewareStateIH } from '../../Triggers/TriggerHelpers/TriggerStateHelper'
 
 export const checkWebhookIntegrationsExist = (entity) => {
   const integrations = webhookIntegrations
@@ -106,6 +106,9 @@ export const saveIntegConfig = async (flow, setFlow, allIntegURL, confTmp, navig
   } else if (flow.triggered_entity === 'UltimateMember') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = UltimateMemberStateIH(tmpConf, dataFlow)
+  } else if (flow.triggered_entity === 'ARMember') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = ARMemberStateIH(tmpConf, dataFlow)
   } else if (flow.triggered_entity === 'CaptureAction') {
     tmpConf['primaryKey'] = flow.triggerData.primaryKey
   }
@@ -217,6 +220,9 @@ export const saveActionConf = async ({ flow, setFlow, allIntegURL, conf, navigat
   } else if (flow.triggered_entity === 'UltimateMember') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = UltimateMemberStateIH(tmpConf, dataFlow)
+  } else if (flow.triggered_entity === 'ARMember') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = ARMemberStateIH(tmpConf, dataFlow)
   } else if (flow.triggered_entity === 'CaptureAction') {
     tmpConf['primaryKey'] = flow.triggerData.primaryKey
   }
