@@ -54,7 +54,7 @@ class ZoomWebinarController
             wp_send_json_error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
         }
 
-        $response['allMeeting'] = $apiResponse->meetings;
+        $response['allWebinar'] = $apiResponse->webinars;
         wp_send_json_success($response, 200);
     }
 
@@ -124,7 +124,7 @@ class ZoomWebinarController
     {
         $integrationDetails = $integrationData->flow_details;
         $integId = $integrationData->id;
-        $meetingId = $integrationDetails->id;
+        $webinarId = $integrationDetails->id;
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;
         $defaultDataConf = $integrationDetails->default;
@@ -135,7 +135,7 @@ class ZoomWebinarController
             self::saveRefreshedToken($this->integrationID, $tokenDetails);
         }
         if (
-            empty($meetingId)
+            empty($webinarId)
             || empty($fieldMap)
             || empty($defaultDataConf)
         ) {
@@ -143,7 +143,7 @@ class ZoomWebinarController
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $zoomApiResponse = $recordApiHelper->execute(
-            $meetingId,
+            $webinarId,
             $defaultDataConf,
             $fieldValues,
             $fieldMap,

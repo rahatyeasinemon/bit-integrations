@@ -46,10 +46,10 @@ export default function ZoomActions({ zoomWebinarConf, setZoomWebinarConf, formF
   return (
     <div className="d-flx wdt-200">
       <div className="pos-rel d-flx flx-col w-8 mr-8">
-        <TableCheckBox checked={zoomWebinarConf?.actions?.createRegistrant || false} onChange={(e) => actionHandler(e, 'createRegistrant')} className={`wdt-200 mt-4 mr-2 ${zoomWebinarConf.actions?.deleteRegistrant ? 'input-disable' : ''}`} value="createRegistrant" title={__('Create Registrant', 'bit-integrations')} subTitle={__('Create a meeting registrant', 'bit-integrations')} />
+        <TableCheckBox checked={zoomWebinarConf?.actions?.createRegistrant || false} onChange={(e) => actionHandler(e, 'createRegistrant')} className={`wdt-200 mt-4 mr-2 ${zoomWebinarConf.actions?.deleteRegistrant ? 'input-disable' : ''}`} value="createRegistrant" title={__('Create Registrant', 'bit-integrations')} subTitle={__('Create a webinar registrant', 'bit-integrations')} />
       </div>
       <div className="pos-rel d-flx flx-col w-8 mr-8">
-        <TableCheckBox checked={zoomWebinarConf?.actions?.deleteRegistrant || false} onChange={(e) => actionHandler(e, 'deleteRegistrant')} className={`wdt-200 mt-4 mr-2 ${zoomWebinarConf.actions?.createRegistrant ? 'input-disable' : ''}`} value="deleteRegistrant" title={__('Delete Registrant', 'bit-integrations')} subTitle={__('Delete Meeting registrant using email', 'bit-integrations')} />
+        <TableCheckBox checked={zoomWebinarConf?.actions?.deleteRegistrant || false} onChange={(e) => actionHandler(e, 'deleteRegistrant')} className={`wdt-200 mt-4 mr-2 ${zoomWebinarConf.actions?.createRegistrant ? 'input-disable' : ''}`} value="deleteRegistrant" title={__('Delete Registrant', 'bit-integrations')} subTitle={__('Delete Webinar registrant using email', 'bit-integrations')} />
       </div>
       <div className="pos-rel d-flx flx-col w-8 mr-8">
         <TableCheckBox checked={zoomWebinarConf?.actions?.createUser || false} onChange={(e) => actionHandler(e, 'createUser')} className={`wdt-200 mt-4 mr-2 ${zoomWebinarConf.actions?.deleteUser ? 'input-disable' : ''}`} value="createUser" title={__('Create User', 'bit-integrations')} subTitle={__('Create User to your account', 'bit-integrations')} />

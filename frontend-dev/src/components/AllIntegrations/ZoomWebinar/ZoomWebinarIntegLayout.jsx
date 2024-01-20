@@ -8,11 +8,11 @@ export default function ZoomWebinarIntegLayout({ formFields, handleInput, zoomWe
   return (
     <>
       <br />
-      <b className="wdt-200 d-in-b">{__('All Meetings:', 'bit-integrations')}</b>
+      <b className="wdt-200 d-in-b">{__('All Webinars:', 'bit-integrations')}</b>
       <select onChange={handleInput} name="id" value={zoomWebinarConf.id} className="btcd-paper-inp w-5">
         <option value="">{__('Select Webinar', 'bit-integrations')}</option>
         {
-          zoomWebinarConf?.default?.allMeeting && zoomWebinarConf.default.allMeeting.map(({ id, topic }) => (
+          zoomWebinarConf?.default?.allWebinar && zoomWebinarConf.default.allWebinar.map(({ id, topic }) => (
             <option key={id} value={id}>
               {topic}
             </option>
