@@ -39,20 +39,19 @@ class RecordApiHelper
 
     public function formatArrayObject($values)
     {
-        return json_encode($values);
-        // $isMatched = false;
-        // $tmpFields = $values;
-        // foreach ($tmpFields as $key => $value) {
-        //     if (is_array($value) || is_object($value)) {
-        //         $isMatched = true;
-        //         break;
-        //     }
-        // }
-        // if ($isMatched) {
-        //     return json_encode($values);
-        // } else {
-        //     return implode(',', $values);
-        // }
+        $isMatched = false;
+        $tmpFields = $values;
+        foreach ($tmpFields as $key => $value) {
+            if (is_array($value) || is_object($value)) {
+                $isMatched = true;
+                break;
+            }
+        }
+        if ($isMatched) {
+            return json_encode($values);
+        } else {
+            return implode(',', $values);
+        }
     }
 
     public function execute($spreadsheetId, $worksheetName, $headerRow, $header, $actions, $defaultConf, $fieldValues, $fieldMap)

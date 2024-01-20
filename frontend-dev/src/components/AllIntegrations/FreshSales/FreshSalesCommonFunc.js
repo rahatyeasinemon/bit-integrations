@@ -60,7 +60,7 @@ export const handleTabChange = (recordTab, settab) => {
 
 export const moduleChange = (recordTab, formID, freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar) => {
   const newConf = { ...freshSalesConf }
-  
+
   if (!newConf.relatedlists[recordTab - 1]) newConf.relatedlists[recordTab - 1] = {}
   const module = recordTab === 0 ? newConf.moduleData.module : newConf.relatedlists[recordTab - 1].module
 
@@ -68,7 +68,7 @@ export const moduleChange = (recordTab, formID, freshSalesConf, setFreshSalesCon
     newConf.actions = {}
     newConf.field_map = [{ formField: '', freshSalesFormField: '' }]
     newConf.relatedlists = []
-    if ([ 'Contact'].includes(module)) {
+    if (['Contact'].includes(module)) {
       !newConf.default.views && accountRefreshViews(newConf, setFreshSalesConf, setIsLoading, setSnackbar)
     }
     if (['Deal'].includes(module)) {
@@ -77,7 +77,7 @@ export const moduleChange = (recordTab, formID, freshSalesConf, setFreshSalesCon
 
     if (!newConf.default.modules?.[module]?.fields && module !== '' && module !== undefined) {
       setTimeout(() => {
-         refreshFields(module, newConf, setFreshSalesConf, recordTab)
+        refreshFields(module, newConf, setFreshSalesConf, recordTab)
       }, 1000)
     } else {
       newConf.field_map = newConf.default.modules?.[module]?.requiredFields ? generateMappedField(recordTab, newConf) : [{ formField: '', freshSalesFormField: '' }]
@@ -107,10 +107,10 @@ export const accountViewChange = (recordTab, formID, freshSalesConf, setFreshSal
     newConf.field_map = [{ formField: '', freshSalesFormField: '' }]
     newConf.relatedlists = []
     if (['Deal', 'Contact'].includes(view)) {
-       refreshAccounts(newConf, setFreshSalesConf, setIsLoading, setSnackbar)
-       if (!newConf.default.modules?.[view]?.fields && view !== '' && view !== undefined) {
+      refreshAccounts(newConf, setFreshSalesConf, setIsLoading, setSnackbar)
+      if (!newConf.default.modules?.[view]?.fields && view !== '' && view !== undefined) {
         setTimeout(() => {
-           refreshFields(view, newConf, setFreshSalesConf, recordTab)
+          refreshFields(view, newConf, setFreshSalesConf, recordTab)
         }, 1000)
       } else {
         newConf.field_map = newConf.default.modules?.[view]?.requiredFields ? generateMappedField(recordTab, newConf) : [{ formField: '', freshSalesFormField: '' }]
@@ -142,7 +142,7 @@ export const contactViewChange = (recordTab, formID, freshSalesConf, setFreshSal
       !newConf.default.contacts && refreshContacts(newConf, setFreshSalesConf, setIsLoading, setSnackbar)
       if (!newConf.default.modules?.[view]?.fields && view !== '' && view !== undefined) {
         setTimeout(() => {
-           refreshFields(view, newConf, setFreshSalesConf, recordTab)
+          refreshFields(view, newConf, setFreshSalesConf, recordTab)
         }, 1000)
       } else {
         newConf.field_map = newConf.default.modules?.[view]?.requiredFields ? generateMappedField(recordTab, newConf) : [{ formField: '', freshSalesFormField: '' }]
@@ -163,7 +163,7 @@ export const contactViewChange = (recordTab, formID, freshSalesConf, setFreshSal
 }
 
 export const refreshFields = (module, freshSalesConf, setFreshSalesConf, recordTab) => {
-  const requestParams = { api_key: freshSalesConf.api_key,  bundle_alias: freshSalesConf.bundle_alias , module}
+  const requestParams = { api_key: freshSalesConf.api_key, bundle_alias: freshSalesConf.bundle_alias, module }
   bitsFetch(requestParams, 'FreshSales_refresh_fields')
     .then(result => {
       if (result && result.success) {
@@ -184,7 +184,7 @@ export const refreshFields = (module, freshSalesConf, setFreshSalesConf, recordT
 
 export const accountRefreshViews = (freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
-  const requestParams = { api_key: freshSalesConf.api_key,  bundle_alias: freshSalesConf.bundle_alias , module: 'filters' , type: 'sales_accounts' }
+  const requestParams = { api_key: freshSalesConf.api_key, bundle_alias: freshSalesConf.bundle_alias, module: 'filters', type: 'sales_accounts' }
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
@@ -208,7 +208,7 @@ export const accountRefreshViews = (freshSalesConf, setFreshSalesConf, setIsLoad
 
 export const contactRefreshViews = (freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
-  const requestParams = { api_key: freshSalesConf.api_key,  bundle_alias: freshSalesConf.bundle_alias , module: 'filters' , type: 'contacts' }
+  const requestParams = { api_key: freshSalesConf.api_key, bundle_alias: freshSalesConf.bundle_alias, module: 'filters', type: 'contacts' }
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
@@ -232,7 +232,7 @@ export const contactRefreshViews = (freshSalesConf, setFreshSalesConf, setIsLoad
 
 export const refreshAccounts = (freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
-  const requestParams = { api_key: freshSalesConf.api_key,  bundle_alias: freshSalesConf.bundle_alias , account_view_id: freshSalesConf.moduleData.account_view_id ,contact_view_id: freshSalesConf.moduleData.contact_view_id  ,module: 'sales_accounts' }
+  const requestParams = { api_key: freshSalesConf.api_key, bundle_alias: freshSalesConf.bundle_alias, account_view_id: freshSalesConf.moduleData.account_view_id, contact_view_id: freshSalesConf.moduleData.contact_view_id, module: 'sales_accounts' }
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
@@ -256,7 +256,7 @@ export const refreshAccounts = (freshSalesConf, setFreshSalesConf, setIsLoading,
 
 export const refreshContacts = (freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
-  const requestParams = { api_key: freshSalesConf.api_key,  bundle_alias: freshSalesConf.bundle_alias , contact_view_id: freshSalesConf.moduleData.contact_view_id , account_view_id: freshSalesConf.moduleData.account_view_id   , module: 'contacts' }
+  const requestParams = { api_key: freshSalesConf.api_key, bundle_alias: freshSalesConf.bundle_alias, contact_view_id: freshSalesConf.moduleData.contact_view_id, account_view_id: freshSalesConf.moduleData.account_view_id, module: 'contacts' }
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
@@ -280,7 +280,7 @@ export const refreshContacts = (freshSalesConf, setFreshSalesConf, setIsLoading,
 
 export const getAllOwners = (freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
-  const requestParams = { api_key: freshSalesConf.api_key,  bundle_alias: freshSalesConf.bundle_alias , module: 'users' }
+  const requestParams = { api_key: freshSalesConf.api_key, bundle_alias: freshSalesConf.bundle_alias, module: 'users' }
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
@@ -304,7 +304,7 @@ export const getAllOwners = (freshSalesConf, setFreshSalesConf, setIsLoading, se
 
 export const getAllLeadLabels = (freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
-  const requestParams = { api_key: freshSalesConf.api_key,  bundle_alias: freshSalesConf.bundle_alias , module: 'leadLabels' }
+  const requestParams = { api_key: freshSalesConf.api_key, bundle_alias: freshSalesConf.bundle_alias, module: 'leadLabels' }
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
@@ -327,7 +327,7 @@ export const getAllLeadLabels = (freshSalesConf, setFreshSalesConf, setIsLoading
 }
 export const getAllCurrencies = (freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
-  const requestParams = { api_key: freshSalesConf.api_key,  bundle_alias: freshSalesConf.bundle_alias , module: 'currencies' }
+  const requestParams = { api_key: freshSalesConf.api_key, bundle_alias: freshSalesConf.bundle_alias, module: 'currencies' }
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
@@ -351,7 +351,7 @@ export const getAllCurrencies = (freshSalesConf, setFreshSalesConf, setIsLoading
 
 export const getDealStages = (freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
-  const requestParams = { api_key: freshSalesConf.api_key,  bundle_alias: freshSalesConf.bundle_alias , module: 'stages' }
+  const requestParams = { api_key: freshSalesConf.api_key, bundle_alias: freshSalesConf.bundle_alias, module: 'stages' }
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
@@ -416,10 +416,10 @@ export const handleAuthorize = (
   setisAuthorized,
   setIsLoading,
 ) => {
-  if ( !confTmp.bundle_alias || !confTmp.api_key ) {
+  if (!confTmp.bundle_alias || !confTmp.api_key) {
     setError({
-      bundle_alias: !confTmp.bundle_alias ? __('Bundle Alias (Account URL) can\'t be empty', 'bit-integrations') 
-      : '',
+      bundle_alias: !confTmp.bundle_alias ? __('Bundle Alias (Account URL) can\'t be empty', 'bit-integrations')
+        : '',
       api_key: !confTmp.api_key
         ? __("Api Key can't be empty", 'bit-integrations') : '',
     })
@@ -427,9 +427,9 @@ export const handleAuthorize = (
   }
   setError({})
   setIsLoading(true)
-  const requestParams = { api_key: confTmp.api_key,  bundle_alias: confTmp.bundle_alias , module: 'filters' }
+  const requestParams = { api_key: confTmp.api_key, bundle_alias: confTmp.bundle_alias, module: 'filters' }
 
-  bitsFetch(requestParams, 'FreshSales_fetch_meta_data').then((result) => {
+  bitsFetch(requestParams, 'FreshSales_authorization').then((result) => {
     if (result && result.success) {
       setisAuthorized(true)
       setIsLoading(false)

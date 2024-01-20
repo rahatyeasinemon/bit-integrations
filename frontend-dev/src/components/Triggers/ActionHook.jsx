@@ -20,7 +20,7 @@ import EyeOffIcn from '../Utilities/EyeOffIcn'
 import SnackMsg from '../Utilities/SnackMsg'
 import TreeViewer from '../Utilities/treeViewer/TreeViewer'
 
-const CaptureAction = () => {
+const ActionHook = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
   const setFlowStep = useSetRecoilState($flowStep)
   const setFields = useSetRecoilState($formFields)
@@ -89,7 +89,7 @@ const CaptureAction = () => {
 
     return () => {
       setFields()
-      bitsFetch({ hook_id: window.hook_id }, 'capture_action/test/remove').then(
+      bitsFetch({ hook_id: window.hook_id }, 'action_hook/test/remove').then(
         (resp) => {
           delete window.hook_id
           intervalRef.current && clearInterval(intervalRef.current)
@@ -108,13 +108,13 @@ const CaptureAction = () => {
     setIsLoading(true)
     window.hook_id = hookID
     intervalRef.current = setInterval(() => {
-      bitsFetch({ hook_id: hookID }, 'capture_action/test').then((resp) => {
+      bitsFetch({ hook_id: hookID }, 'action_hook/test').then((resp) => {
         if (resp.success) {
           clearInterval(intervalRef.current)
           const tmpNewFlow = { ...newFlow }
 
-          tmpNewFlow.triggerDetail.tmp = resp.data.captureAction
-          tmpNewFlow.triggerDetail.data = resp.data.captureAction
+          tmpNewFlow.triggerDetail.tmp = resp.data.actionHook
+          tmpNewFlow.triggerDetail.data = resp.data.actionHook
           tmpNewFlow.triggerDetail.hook_id = hookID
           setNewFlow(tmpNewFlow)
           setIsLoading(false)
@@ -122,7 +122,7 @@ const CaptureAction = () => {
           setSelectedFields([])
           bitsFetch(
             { hook_id: window.hook_id, reset: true },
-            'capture_action/test/remove',
+            'action_hook/test/remove',
           )
         }
       })
@@ -255,6 +255,7 @@ const CaptureAction = () => {
         close={() => setPrimaryKeyModal(false)}
         action={() => setPrimaryKeyModal(false)}
         title={__('Primary Key', 'bit-integrations')}
+        cssTransStyle={{ zIndex: 99999 }}
       >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">
@@ -272,21 +273,24 @@ const CaptureAction = () => {
         </div>
       </ConfirmModal>
 
-      {newFlow.triggerDetail?.data && showResponse && (
-        <>
-          <div className="mt-3">
-            <b>{__('Select Fields:', 'bit-integrations')}</b>
-          </div>
-          <TreeViewer data={newFlow?.triggerDetail?.data} onChange={setSelectedFieldsData} />
-        </>
-      )}
-      {newFlow.triggerDetail?.data &&
+      {
+        newFlow.triggerDetail?.data && showResponse && (
+          <>
+            <div className="mt-3">
+              <b>{__('Select Fields:', 'bit-integrations')}</b>
+            </div>
+            <TreeViewer data={newFlow?.triggerDetail?.data} onChange={setSelectedFieldsData} />
+          </>
+        )
+      }
+      {
+        newFlow.triggerDetail?.data &&
         <div className="flx flx-between">
           <button
             onClick={showResponseTable}
             className="btn btcd-btn-lg sh-sm flx"
           >
-            <span className="txt-captureAction-resbtn font-inter-500">
+            <span className="txt-actionHook-resbtn font-inter-500">
               {showResponse ? 'Hide Response' : 'View Response'}
             </span>
             {!showResponse ? (
@@ -316,7 +320,7 @@ const CaptureAction = () => {
     </div >
   )
 }
-export default CaptureAction
+export default ActionHook
 
 const hookLabel = (logo, label) => (
   <div className='flx' style={{ alignItems: 'center' }}>

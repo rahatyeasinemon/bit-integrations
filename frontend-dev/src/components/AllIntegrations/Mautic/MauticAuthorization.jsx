@@ -63,7 +63,7 @@ export default function MauticAuthorization({ mauticConf, setMauticConf, step, s
       <div style={{ color: 'red' }}>{error.baseUrl}</div>
 
       <small className="d-blk mt-3">
-        {__('Example: mautic.com', 'bit-integrations')}
+        {__('Example: https://mautic.bit-integration.pro', 'bit-integrations')}
       </small>
 
       <div className="mt-3"><b>{__('Client id:', 'bit-integrations')}</b></div>

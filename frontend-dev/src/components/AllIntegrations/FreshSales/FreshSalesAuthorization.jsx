@@ -94,7 +94,7 @@ export default function FreshSalesAuthorization({ freshSalesConf, setFreshSalesC
           &nbsp;
           <a
             className="btcd-link"
-            href="https://www.myfreshworks.com/crm/sales/personal-settings/api-settings"
+            href={`https://${freshSalesConf.bundle_alias}/personal-settings/api-settings`}
             target="_blank"
             rel="noreferrer"
           >

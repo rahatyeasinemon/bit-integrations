@@ -208,7 +208,7 @@ final class ForminatorController
                         }
                     }
                 } else {
-                    if (strtotime($fldDetail['value'])) {
+                    if (self::isValidDate($fldDetail['value'])) {
                         $dateTmp = new DateTime($fldDetail['value']);
                         $dateFinal = date_format($dateTmp, 'Y-m-d');
                         $data[$fldDetail['name']] = $dateFinal;
@@ -222,5 +222,11 @@ final class ForminatorController
                 Flow::execute('Forminator', $form_id, $data, $flows);
             }
         }
+    }
+
+    public static function isValidDate($date, $format = 'd/m/Y')
+    {
+        $dateTime = DateTime::createFromFormat($format, $date);
+        return $dateTime && $dateTime->format($format) === $date;
     }
 }
