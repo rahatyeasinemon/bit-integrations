@@ -10,17 +10,19 @@ import CustomFuncEditor from './CustomFuncEditor'
 import { checkFunctionValidity } from './CustomFunctionHelper'
 import TutorialLink from '../../Utilities/TutorialLink'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import LoaderSm from '../../Loaders/LoaderSm'
 
 const CustomAction = ({ formFields, setFlow, flow, allIntegURL }) => {
   const navigate = useNavigate()
   const [step, setStep] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
+  const [loading, setLoading] = useState({})
   const [snack, setSnackbar] = useState({ show: false })
   const randomFileName = uuid()
   const { customAction } = tutorialLinks
 
   const [customActionConf, setCustomActionConf] = useState({
-    name: 'CustomAction',
+    name: 'Custom Action',
     type: 'CustomAction',
     randomFileName,
     defaultValue: `<?php if (!defined('ABSPATH')) {exit;} 
@@ -45,6 +47,12 @@ const CustomAction = ({ formFields, setFlow, flow, allIntegURL }) => {
     setStep(2)
   }
 
+  const handleInput = e => {
+    const newConf = { ...customActionConf }
+    newConf[e.target.name] = e.target.value
+    setCustomActionConf(newConf)
+  }
+
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -64,19 +72,23 @@ const CustomAction = ({ formFields, setFlow, flow, allIntegURL }) => {
           />
         )}
 
-        <h1>custom action</h1>
+        <div className='d-flx my-3'>
+          <div className="wdt-200 d-in-b mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
+          <input className="btcd-paper-inp mt-1" onChange={handleInput} name="name" value={customActionConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        </div>
         <CustomFuncEditor
           customActionConf={customActionConf}
           setCustomActionConf={setCustomActionConf}
           formFields={formFields}
         />
         <button
-          onClick={() => checkFunctionValidity(customActionConf, setCustomActionConf, setIsLoading)}
+          onClick={() => checkFunctionValidity(customActionConf, setCustomActionConf, setLoading)}
           disabled={!customActionConf.value}
           className="btn f-left btcd-btn-lg green sh-sm flx mt-5"
           type="button"
         >
-          {__('Validated ', 'bit-integrations')}
+          {customActionConf?.isValid ? __('Validated ✔', 'bit-integrations') : __('Validated', 'bit-integrations')}
+          {loading?.validate && <LoaderSm size="20" clr="#022217" className="ml-2" />}
         </button>
         <button
           onClick={() => nextPage(2)}
