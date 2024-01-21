@@ -26,13 +26,12 @@ export default function FreshSalesNewRecord({ tab, settab, formFields, freshSale
         }}
         />
       )}
-      <br />
-      <br />
-
 
       {(freshSalesConf.moduleData.module !== '' && freshSalesConf.default.modules[freshSalesConf.moduleData.module]?.required)
         && !['Account', 'Product', 'Deal'].includes(freshSalesConf.moduleData.module) && (
           <>
+            <br />
+            <br />
             <b className="wdt-200 d-in-b">{__('Account View:', 'bit-integrations')}</b>
             <select onChange={handleInput} name="account_view_id" value={freshSalesConf.moduleData?.account_view_id || ''} className="btcd-paper-inp w-5">
               <option value="">{__('Select Account View', 'bit-integrations')}</option>
@@ -75,6 +74,8 @@ export default function FreshSalesNewRecord({ tab, settab, formFields, freshSale
       {(freshSalesConf.moduleData.module !== '' && freshSalesConf.default.modules[freshSalesConf.moduleData.module]?.required)
         && !['Account', 'Product', 'Contact'].includes(freshSalesConf.moduleData.module) && (
           <>
+            <br />
+            <br />
             <b className="wdt-200 d-in-b">{__('Contact View:', 'bit-integrations')}</b>
             <select onChange={handleInput} name="contact_view_id" value={freshSalesConf.moduleData?.contact_view_id || ''} className="btcd-paper-inp w-5">
               <option value="">{__('Select Contact View', 'bit-integrations')}</option>
@@ -90,12 +91,12 @@ export default function FreshSalesNewRecord({ tab, settab, formFields, freshSale
 
           </>
         )}
-      <br />
-      <br />
 
       {(freshSalesConf.moduleData.module !== '' && freshSalesConf.default.modules[freshSalesConf.moduleData.module]?.required)
         && !['Account', 'Product', 'Contact'].includes(freshSalesConf.moduleData.module) && (
           <>
+            <br />
+            <br />
             <b className="wdt-200 d-in-b">{__('Contact:', 'bit-integrations')}</b>
             <select onChange={handleInput} name="contact_id" value={freshSalesConf.moduleData?.contact_id || ''} className="btcd-paper-inp w-5">
               <option value="">{__('Select Contact', 'bit-integrations')}</option>
@@ -112,8 +113,6 @@ export default function FreshSalesNewRecord({ tab, settab, formFields, freshSale
             <br />
           </>
         )}
-      <br />
-      <br />
 
       {(freshSalesConf.moduleData.module && freshSalesConf.default?.modules?.[freshSalesConf.moduleData.module]?.fields)
         && (

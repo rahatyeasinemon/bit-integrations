@@ -24,14 +24,14 @@ class RecordApiHelper
         $this->_integrationID = $integId;
     }
 
-    public function deleteWebinarRegistrant($meetingId, $finalData, $tokenDetails)
+    public function deleteWebinarRegistrant($webinarId, $finalData, $tokenDetails)
     {
         $header = [
             'Authorization' => 'Bearer ' . $tokenDetails->access_token,
             'Content-Type' => 'application/json'
         ];
-        // $endPoint = "https://api.zoom.us/v2/meetings/{$meetingId}/registrants";
-        $endPoint = "https://api.zoom.us/v2/webinars/{$meetingId}/registrants";
+        // $endPoint = "https://api.zoom.us/v2/webinars/{$webinarId}/registrants";
+        $endPoint = "https://api.zoom.us/v2/webinars/{$webinarId}/registrants";
 
         $getRegistrants = HttpHelper::get($endPoint, null, $header);
 
@@ -50,20 +50,20 @@ class RecordApiHelper
                 'Content-Type' => 'application/json'
             ];
             // https://api.zoom.us/v2/webinars/{webinarId}/registrants/{registrantId}
-            $endPointDelete = "https://api.zoom.us/v2/webinars/{$meetingId}/registrants/{$registrantId}";
-            
+            $endPointDelete = "https://api.zoom.us/v2/webinars/{$webinarId}/registrants/{$registrantId}";
+
             HttpHelper::request($endPointDelete, 'DELETE', null, $headerDel);
         }
     }
 
-    public function createWebinarRegistrant($meetingId, $data, $tokenDetails)
+    public function createWebinarRegistrant($webinarId, $data, $tokenDetails)
     {
-        $data = \is_string($data) ? $data : \json_encode((object)$data);
+        $data = \is_string($data) ? $data : \json_encode((object) $data);
         $header["Authorization"] = "Bearer " . $tokenDetails->access_token;
         $header["Content-Type"] = "application/json";
         // https://api.zoom.us/v2/webinars/{webinarId}/registrants
-        $createMeetingRegistrantEndpoint = 'https://api.zoom.us/v2/webinars/' . $meetingId . '/registrants';
-        return HttpHelper::post($createMeetingRegistrantEndpoint, $data, $header);
+        $createWebinarRegistrantEndpoint = 'https://api.zoom.us/v2/webinars/' . $webinarId . '/registrants';
+        return $res = HttpHelper::post($createWebinarRegistrantEndpoint, $data, $header);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -74,15 +74,16 @@ class RecordApiHelper
             $actionValue = $value->zoomField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
         return $dataFinal;
     }
 
-    public function createUser($meetingId, $finalData, $tokenDetails){
-        
+    public function createUser($webinarId, $finalData, $tokenDetails)
+    {
+
         $dataCreateUser = [
             "action" => "create",
             "user_info" => [
@@ -92,16 +93,17 @@ class RecordApiHelper
                 "type" => 1
             ]
         ];
-        $data = \is_string($dataCreateUser) ? $dataCreateUser : \json_encode((object)$dataCreateUser);
+        $data = \is_string($dataCreateUser) ? $dataCreateUser : \json_encode((object) $dataCreateUser);
         $header["Authorization"] = "Bearer " . $tokenDetails->access_token;
         $header["Content-Type"] = "application/json";
         $createUserEndpoint = 'https://api.zoom.us/v2/users';
-        return HttpHelper::post($createUserEndpoint, $data, $header);
+        return $res = HttpHelper::post($createUserEndpoint, $data, $header);
 
     }
 
-    public function deleteUser($finalData, $tokenDetails){
-        
+    public function deleteUser($finalData, $tokenDetails)
+    {
+
         $header = [
             'Authorization' => 'Bearer ' . $tokenDetails->access_token,
             'Content-Type' => 'application/json'
@@ -126,9 +128,9 @@ class RecordApiHelper
             HttpHelper::request($endPointDelete, 'DELETE', null, $headerDel);
         }
     }
-    
+
     public function execute(
-        $meetingId,
+        $webinarId,
         $defaultDataConf,
         $fieldValues,
         $fieldMap,
@@ -139,25 +141,25 @@ class RecordApiHelper
         $fieldData = [];
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $apiResponse = null;
-        if ($selectedAction === 'Delete User'){
+        if ($selectedAction === 'Delete User') {
             $this->deleteUser($finalData, $tokenDetails);
             $apiResponse = 'User deleted successfully';
         }
 
         // Delete registrant if email is present in the form
-        if($selectedAction === 'Delete Attendee'){
-            $this->deleteWebinarRegistrant($meetingId, $finalData, $tokenDetails);
+        if($selectedAction === 'Delete Attendee') {
+            $this->deleteWebinarRegistrant($webinarId, $finalData, $tokenDetails);
             $apiResponse = 'Attendee deleted successfully';
         }
 
-        // Create user  
+        // Create user
         if ($selectedAction === 'Create User') {
-            $apiResponse = $this->createUser($meetingId, $finalData, $tokenDetails);
+            $apiResponse = $this->createUser($webinarId, $finalData, $tokenDetails);
         }
 
         // api response show but it was shown when registance created
-        if($selectedAction === 'Create Attendee'){
-            $apiResponse = $this->createWebinarRegistrant($meetingId, $finalData, $tokenDetails);
+        if($selectedAction === 'Create Attendee') {
+            $apiResponse = $this->createWebinarRegistrant($webinarId, $finalData, $tokenDetails);
         }
         if (property_exists($apiResponse, 'errors')) {
             LogHandler::save($this->_integrationID, ['type' =>  'contact', 'type_name' => 'add-contact'], 'error', $apiResponse);

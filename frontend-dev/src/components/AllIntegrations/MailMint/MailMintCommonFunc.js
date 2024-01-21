@@ -8,6 +8,7 @@ export const handleInput = (e, mailMintConf, setMailMintConf, setIsLoading, setS
   const { name } = e.target
   if (e.target.value !== '') {
     newConf[name] = e.target.value
+    mailMintRefreshFields(newConf, setMailMintConf, setIsLoading, setSnackbar)
   } else {
     delete newConf[name]
   }
@@ -26,7 +27,7 @@ export const mailMintRefreshFields = (mailMintConf, setMailMintConf, setIsLoadin
             newConf.default = {}
           }
           if (result.data) {
-            newConf.default.allCustomFields = result.data
+            newConf.mailMintContactFields = result.data
           }
           return newConf
         })

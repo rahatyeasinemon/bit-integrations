@@ -7,7 +7,7 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveActionConf, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput } from './ZohoBiginCommonFunc'
+import { checkMappedFields, handleInput } from './ZohoBiginCommonFunc'
 import ZohoBiginIntegLayout from './ZohoBiginIntegLayout'
 import ZohoBiginAuthorization from './ZohoBiginAuthorization'
 import BackIcn from '../../../Icons/BackIcn'
@@ -45,7 +45,7 @@ function ZohoBigin({ allIntegURL }) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
       return
     }
-    if (!biginConf?.pLayout) {
+    if (biginConf?.module === 'Deals' && !biginConf?.pLayout) {
       setSnackbar({ show: true, msg: __('Please select a layout', 'bit-integrations') })
       return
     }

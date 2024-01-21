@@ -22,7 +22,7 @@ function Mautic({ formFields, setFlow, flow, allIntegURL }) {
     type: 'Mautic',
     clientId: process.env.NODE_ENV === 'development' ? '1_30g9s9iz2ugw40og8gwcoow0sskksgwgkw4kk8gw0os0w44kk0' : '',
     clientSecret: process.env.NODE_ENV === 'development' ? '61ie9cvvhcw0oo4osgc0sssg4s04osws8kgggsoskss4k4w8c4' : '',
-    baseUrl: process.env.NODE_ENV === 'development' ? 'mautic.test' : '',
+    baseUrl: process.env.NODE_ENV === 'development' ? 'https://mautic.dev.bitcode.pro' : '',
     field_map: [
       { formField: '', mauticField: '' },
     ],

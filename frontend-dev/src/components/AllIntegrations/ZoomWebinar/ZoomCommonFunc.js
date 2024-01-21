@@ -14,7 +14,7 @@ export const handleInput = (e, zoomWebinarConf, setZoomWebinarConf, formID, setI
 }
 export const zoomAllWebinar = (formID, zoomWebinarConf, setZoomWebinarConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
-  const fetchMeetingModulesRequestParams = {
+  const fetchWebinarModulesRequestParams = {
     formID,
     clientId: zoomWebinarConf.clientId,
     accessToken: zoomWebinarConf.tokenDetails.access_token,
@@ -22,25 +22,25 @@ export const zoomAllWebinar = (formID, zoomWebinarConf, setZoomWebinarConf, setI
     refreshToken: zoomWebinarConf.tokenDetails.refresh_token,
     tokenDetails: zoomWebinarConf.tokenDetails,
   }
-  bitsFetch(fetchMeetingModulesRequestParams, 'zoom_webinar_fetch_all_webinar')
+  bitsFetch(fetchWebinarModulesRequestParams, 'zoom_webinar_fetch_all_webinar')
     .then(result => {
       if (result && result.success) {
         const newConf = { ...zoomWebinarConf }
         if (!newConf.default) {
           newConf.default = {}
         }
-        if (result.data.allMeeting) {
-          newConf.default.allMeeting = result.data.allMeeting
+        if (result.data.allWebinar) {
+          newConf.default.allWebinar = result.data.allWebinar
         }
         // if (result.data.tokenDetails) {
         //   newConf.tokenDetails = result.data.tokenDetails
         // }
-        setSnackbar({ show: true, msg: __('Meeting list refreshed', 'bit-integrations') })
+        setSnackbar({ show: true, msg: __('Webinar list refreshed', 'bit-integrations') })
         setZoomWebinarConf({ ...newConf })
       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: sprintf(__('All Meeting list refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
+        setSnackbar({ show: true, msg: sprintf(__('All Webinar list refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
-        setSnackbar({ show: true, msg: __('All Meeting list failed. please try again', 'bit-integrations') })
+        setSnackbar({ show: true, msg: __('All Webinar list failed. please try again', 'bit-integrations') })
       }
       setIsLoading(false)
     })

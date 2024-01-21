@@ -88,7 +88,7 @@ class AirtableController
         ];
 
         $response      = HttpHelper::get($apiEndpoint, null, $header);
-        $acceptedTypes = ['singleLineText', 'multilineText', 'singleSelect', 'multipleSelects', 'date', 'phoneNumber', 'email', 'url', 'number', 'currency', 'percent', 'duration', 'rating', 'barcode'];
+        $acceptedTypes = ['singleLineText', 'multilineText', 'singleSelect', 'multipleSelects', 'multipleAttachments', 'date', 'phoneNumber', 'email', 'url', 'number', 'currency', 'percent', 'duration', 'rating', 'barcode'];
 
         if (isset($response->tables)) {
             foreach ($response->tables as $table) {

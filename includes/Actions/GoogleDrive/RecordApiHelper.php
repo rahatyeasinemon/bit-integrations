@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\GoogleDrive;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class RecordApiHelper
 {
@@ -53,7 +53,7 @@ class RecordApiHelper
             if ($filePath == '') continue;
 
             if (is_array($filePath)) {
-                return $this->handleAllFiles($filePath, $actions, $folder);
+                $this->handleAllFiles($filePath, $actions, $folder);
             } else {
                 $response = $this->uploadFile($folder, $filePath);
                 $this->storeInState($response);
@@ -85,7 +85,7 @@ class RecordApiHelper
         $folderWithFile = [];
         foreach ($fieldMap as $value) {
             if (!is_null($fieldValues[$value->formField])) {
-                $folderWithFile[$value->googleDriveFormField] = $fieldValues[$value->formField];
+                $folderWithFile[$value->googleDriveFormField][] = $fieldValues[$value->formField];
             }
         }
         $this->handleAllFiles($folderWithFile, $actions);

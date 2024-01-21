@@ -679,7 +679,7 @@ final class WCController
                     'fieldName' => 'order_received_url'
                 ],
             ];
-            $acfFieldGroups = self::acfGetFieldGroups(['product', 'shop_order']);
+            $acfFieldGroups = self::acfGetFieldGroups(['shop_order']);
             foreach ($acfFieldGroups as $group) {
                 $acfFields = acf_get_fields($group["ID"]);
 
@@ -1266,7 +1266,15 @@ final class WCController
                 'product_sku' => $productSku,
                 'product_unit_price' => $product_unit_price,
             ];
-            // $line_items_all+=$line_items;
+            $acfFieldGroups = self::acfGetFieldGroups(['product']);
+
+            foreach ($acfFieldGroups as $group) {
+                $acfFields = acf_get_fields($group["ID"]);
+
+                foreach ($acfFields as $field) {
+                    $line_items_all['line_items'][$field['_name']] = get_post_meta($product_id, $field['_name'])[0];
+                }
+            }
         }
         $data += $line_items_all;
         return $data;
@@ -1281,7 +1289,7 @@ final class WCController
         $order = wc_get_order($order_id);
         $data = self::accessOrderData($order);
         $triggerd = [8, 9, 11, 12, 13, 14, 15, 16];
-        $acfFieldGroups = self::acfGetFieldGroups(['product', 'shop_order']);
+        $acfFieldGroups = self::acfGetFieldGroups(['shop_order']);
 
         foreach ($acfFieldGroups as $group) {
             $acfFields = acf_get_fields($group["ID"]);
