@@ -10,7 +10,7 @@ class ActionHookController
     public static function info()
     {
         return [
-            'name' => 'ActionHook',
+            'name' => 'Action Hook',
             'title' => 'Get callback data through an URL',
             'type' => 'action_hook',
             'is_active' => true
