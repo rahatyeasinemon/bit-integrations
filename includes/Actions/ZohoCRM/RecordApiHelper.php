@@ -6,12 +6,12 @@
 
 namespace BitCode\FI\Actions\ZohoCRM;
 
-use BitCode\FI\Actions\ZohoCRM\FilesApiHelper;
-use BitCode\FI\Actions\ZohoCRM\TagApiHelper;
-use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Core\Util\DateTimeHelper;
+use BitCode\FI\Actions\ZohoCRM\TagApiHelper;
+use BitCode\FI\Actions\ZohoCRM\FilesApiHelper;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -83,10 +83,13 @@ class RecordApiHelper
                 }
             }
         }
+
+        // error_log(print_r(['fieldValues' => $fieldValues, 'fieldMap' => $fieldMap, 'fieldData' => $fieldData], true));
+        // die;
         foreach ($fileMap as $fileKey => $filePair) {
             if (!empty($filePair->zohoFormField)) {
                 if (($defaultConf->layouts->{$module}->{$layout}->fileUploadFields->{$filePair->zohoFormField}->data_type === 'fileupload'
-                    || $defaultConf->layouts->{$module}->{$layout}->fileUploadFields->{$filePair->zohoFormField}->data_type === 'imageupload')
+                        || $defaultConf->layouts->{$module}->{$layout}->fileUploadFields->{$filePair->zohoFormField}->data_type === 'imageupload')
                     && !empty($fieldValues[$filePair->formField])
                 ) {
                     $files = $fieldValues[$filePair->formField];
@@ -182,7 +185,8 @@ class RecordApiHelper
         } else {
             LogHandler::save($integId, wp_json_encode(['type' => 'record', 'type_name' => $module]), 'success', wp_json_encode($recordApiResponse));
         }
-        if (!empty($recordApiResponse->data)
+        if (
+            !empty($recordApiResponse->data)
             && !empty($recordApiResponse->data[0]->code)
             && $recordApiResponse->data[0]->code === 'SUCCESS'
             && !empty($recordApiResponse->data[0]->details->id)
@@ -278,47 +282,21 @@ class RecordApiHelper
             } elseif ($apiFormat === 'string' && $formatSpecs->data_type !== 'datetime' && $formatSpecs->data_type !== 'date') {
                 $formatedValue = is_array($value) || is_object($value) ? implode(",", (array)$value) : html_entity_decode($value);
             } elseif ($formatSpecs->data_type === 'datetime') {
-                if (is_array($value)) {
-                    if (isset($value['date'])) {
-                        $value = $value['date'];
-                        $date_format = 'm/d/Y';
-                    } elseif (isset($value['time'])) {
-                        $value = $value['time'];
-                        $date_format = 'H:i A';
-                    } elseif (isset($value['time']) && isset($value['date'])) {
-                        $value = isset($value['date']) . ' ' . $value['time'];
-                        $date_format = 'm/d/Y H:i A';
-                    } else {
-                        $value = '0000-00-00T00:00';
-                        $date_format = 'Y-m-d\TH:i';
-                    }
-                } else {
-                    $date_format = 'Y-m-d\TH:i';
-                }
+                $getDateFormat  = self::setDateFormat($value);
+                $date_format    = $getDateFormat['date_format'];
+                $value          = $getDateFormat['value'];
+
                 $dateTimeHelper = new DateTimeHelper();
-                $formatedValue = $dateTimeHelper->getFormated($value, $date_format, wp_timezone(), 'Y-m-d\TH:i:sP', null);
-                $formatedValue = !$formatedValue ? null : $formatedValue;
+                $formatedValue  = $dateTimeHelper->getFormated($value, $date_format, wp_timezone(), 'Y-m-d\TH:i:sP', null);
+                $formatedValue  = !$formatedValue ? null : $formatedValue;
             } elseif ($formatSpecs->data_type === 'date') {
-                if (is_array($value)) {
-                    if (isset($value['date'])) {
-                        $value = $value['date'];
-                        $date_format = 'm/d/Y';
-                    } elseif (isset($value['time'])) {
-                        $value = $value['time'];
-                        $date_format = 'H:i A';
-                    } elseif (isset($value['time']) && isset($value['date'])) {
-                        $value = isset($value['date']) . ' ' . $value['time'];
-                        $date_format = 'm/d/Y H:i A';
-                    } else {
-                        $value = '0000-00-00T00:00';
-                        $date_format = 'Y-m-d\TH:i';
-                    }
-                } else {
-                    $date_format = 'Y-m-d\TH:i';
-                }
+                $getDateFormat  = self::setDateFormat($value);
+                $date_format    = $getDateFormat['date_format'];
+                $value          = $getDateFormat['value'];
+
                 $dateTimeHelper = new DateTimeHelper();
-                $formatedValue = $dateTimeHelper->getFormated($value, $date_format, wp_timezone(), 'Y-m-d', null);
-                $formatedValue = !$formatedValue ? null : $formatedValue;
+                $formatedValue  = $dateTimeHelper->getFormated($value, $date_format, wp_timezone(), 'Y-m-d', null);
+                $formatedValue  = !$formatedValue ? null : $formatedValue;
             } else {
                 $stringyfieldValue = is_array($value) || is_object($value) ? implode(",", (array)$value) : $value;
 
@@ -350,5 +328,29 @@ class RecordApiHelper
         }
 
         return $formatedValue;
+    }
+
+    private static function setDateFormat($value)
+    {
+        if (is_array($value)) {
+            if (isset($value['time']) && isset($value['date'])) {
+                $value = isset($value['date']) . ' ' . $value['time'];
+                $date_format = 'm/d/Y H:i A';
+            } elseif (isset($value['date'])) {
+                $value = $value['date'];
+                $date_format = 'm/d/Y';
+            } elseif (isset($value['time'])) {
+                $value = $value['time'];
+                $date_format = 'H:i A';
+            } else {
+                $value = '0000-00-00T00:00';
+                $date_format = 'Y-m-d\TH:i';
+            }
+        } else {
+            $date_format = 'Y-m-d\TH:i';
+        }
+
+        $value = date($date_format, strtotime($value));
+        return ['value' => $value, 'date_format' => $date_format];
     }
 }
