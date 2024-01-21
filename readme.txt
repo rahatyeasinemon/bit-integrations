@@ -1,10 +1,10 @@
 === Best no-code Automator & Integration tool to Automate 200+ Platforms - Bit Integrations ===
 Contributors: bitpressadmin
-Tags: automation,integration,connector,automator,Zapier,webhook,API,Hook,Pabbly,Integrately,automate
+Tags: automation,integration,connector,automator,Zapier,webhook,WordPress form,API,Hook,Pabbly,Integrately,automate
 Requires at least: 5.1
 Tested up to: 6.4.2
 Requires PHP: 7.0
-Stable tag: 1.5.8
+Stable tag: 1.5.9
 License: GPLv2 or later
 
 Automation Plugin for WordPress; Integration of 60+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -1729,6 +1729,29 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 1.5.9  =
+*Release Date - *21th January 2024\*
+
+- **New Actions :**
+  - Action Hook
+
+- **New Features :**
+  - MailMint: Contact Fields
+  - Airtable: Attachment field
+
+- **Fixes :**
+  - Zoom webinar: list fetch issue fixed
+  - Integration Timeline: Log pagination
+  - Mautic: Authorization
+  - MailMint: contact status & select field mapping
+  - ARMember: edit integration form fields
+  - ZohoBigin: CheckMapped field
+  - Forminator: year field submit
+  - FreshSales: authorization & integration
+  - WooCommerce: order-create: product acf field 
+  - Google Drive: single folder multiple file upload
+  - Goggle Sheet: checkbox array data
 
 = 1.5.8  =
 *Release Date - *11th January 2024\*
