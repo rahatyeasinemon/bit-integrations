@@ -3,11 +3,12 @@
 /**
  * CustomApi Integration
  */
+
 namespace BitCode\FI\Actions\CustomApi;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for webhooks
@@ -20,7 +21,7 @@ class CustomApiController
         $details = $integrationDetails->flow_details;
         $type = $details->type;
         $integId = isset($integrationDetails->id) ? $integrationDetails->id : '';
-        $method = isset($details->method) ? $details->method : 'get';
+        $method = isset($details->actionMethod) ? $details->actionMethod : 'get';
         $url = isset($details->url) ? self::urlParserWrapper($details->url, $fieldValues) : false;
         $payload = self::processPayload($details, $fieldValues);
         $headers = self::processHeaders($details, $fieldValues);
@@ -33,9 +34,10 @@ class CustomApiController
             }
         } elseif ($details->authType === 'bearer') {
             $headers = array_merge($headers, [$details->key => $details->token]);
-        } elseif ($details->authType === 'basic'){
+        } elseif ($details->authType === 'basic') {
             $headers = array_merge($headers, [$details->key => 'Basic ' . base64_encode("$details->username:$details->password")]);
         }
+        error_log(print_r([$url, $payload, $headers, $method, $details], true));
         if ($url) {
             switch (strtoupper($method)) {
                 case 'GET':
@@ -101,7 +103,9 @@ class CustomApiController
 
         $params = Common::replaceFieldWithValue($params, $fieldValues);
         $params = http_build_query($params);
-        $cleanURL .= "?$params";
+        if (!empty($params)) {
+            $cleanURL .= "?$params";
+        }
 
         return $cleanURL;
     }
