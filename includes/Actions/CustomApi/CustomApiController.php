@@ -37,7 +37,7 @@ class CustomApiController
         } elseif ($details->authType === 'basic') {
             $headers = array_merge($headers, [$details->key => 'Basic ' . base64_encode("$details->username:$details->password")]);
         }
-        error_log(print_r([$url, $payload, $headers, $method, $details], true));
+
         if ($url) {
             switch (strtoupper($method)) {
                 case 'GET':
