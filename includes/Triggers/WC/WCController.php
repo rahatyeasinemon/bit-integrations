@@ -1253,7 +1253,7 @@ final class WCController
             $label = 'line_items_';
             $productSku = $product->get_sku();
             $count++;
-            $line_items_all['line_items'][] = (object)[
+            $itemData = [
                 'product_id' => $product_id,
                 'variation_id' => $variation_id,
                 'product_name' => $product_name,
@@ -1272,9 +1272,11 @@ final class WCController
                 $acfFields = acf_get_fields($group["ID"]);
 
                 foreach ($acfFields as $field) {
-                    $line_items_all['line_items'][$field['_name']] = get_post_meta($product_id, $field['_name'])[0];
+                    $itemData[$field['_name']] = get_post_meta($product_id, $field['_name'])[0];
                 }
             }
+
+            $line_items_all['line_items'][] = (object) $itemData;
         }
         $data += $line_items_all;
         return $data;
