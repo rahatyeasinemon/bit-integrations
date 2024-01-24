@@ -114,7 +114,7 @@ class RecordApiHelper
         $tagFormat = $this->tagFormat($selectedTags);
 
         $finalData['_locale'] = 'user';
-        $finalData['status'] = [$selectedSubStatus];
+        $finalData['status'] = $selectedSubStatus;
         $finalData['created_by'] = get_current_user_id();
 
         if (class_exists('Mint\MRM\DataStores\ContactData') && class_exists('Mint\MRM\DataBase\Models\ContactModel')) {
