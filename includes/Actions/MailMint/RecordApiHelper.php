@@ -29,6 +29,8 @@ class RecordApiHelper
             $actionValue = $value->mailMintFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
+            } elseif (str_contains($actionValue, 'custom_meta_field_')) {
+                $dataFinal['meta_fields'][str_replace('custom_meta_field_', '', $actionValue)] = $data[$triggerValue];
             } elseif (!is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }

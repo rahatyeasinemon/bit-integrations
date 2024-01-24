@@ -35,13 +35,13 @@ class MailMintController
             $customFields   = $wpdb->get_results($wpdb->prepare('SELECT title, slug, type, group_id FROM %1s ', $fields_table), ARRAY_A);
 
             if (!empty($customFields)) {
-                $primaryFields['custom'] = $customFields;
+                $primaryFields['other'] = array_merge($primaryFields['other'], $customFields);
             }
 
-            foreach ($primaryFields as $module) {
+            foreach ($primaryFields as $moduleKey => $module) {
                 foreach ($module as $field) {
                     $allFields[] = (object) [
-                        'key'       => $field['slug'],
+                        'key'       => $moduleKey !== 'other' ? $field['slug'] : 'custom_meta_field_' . $field['slug'],
                         'label'     => $field['title'],
                         'required'  => $field['slug'] == 'email' ? true : false
                     ];
