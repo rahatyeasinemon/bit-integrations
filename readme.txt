@@ -1,4 +1,4 @@
-=== Best no-code Automator & Integration tool to Automate 200+ Platforms - Bit Integrations ===
+=== Webhook Automator & Form Integration to Automate 200+ Platforms – Bit Integrations ===
 Contributors: bitpressadmin
 Tags: automation,integration,connector,automator,Zapier,webhook,WordPress form,API,Hook,Pabbly,Integrately,automate
 Requires at least: 5.1

@@ -12,6 +12,7 @@ import CustomTrigger from '../../Triggers/CustomTrigger'
 import FormPlugin from '../../Triggers/FormPlugin'
 import Webhook from '../../Triggers/Webhook'
 import ActionHook from '../../Triggers/ActionHook'
+import FormHook from '../../Triggers/FormHook'
 import GetLogo from '../../../Utils/GetLogo'
 
 export default function SelectTrigger() {
@@ -107,6 +108,7 @@ export default function SelectTrigger() {
               {newFlow.triggerDetail?.type === 'webhook' && flowStep === 1 && <Webhook />}
               {newFlow.triggerDetail?.type === 'custom_trigger' && flowStep === 1 && <CustomTrigger />}
               {newFlow.triggerDetail?.type === 'action_hook' && flowStep === 1 && <ActionHook />}
+              {newFlow.triggerDetail?.type === 'form_hook' && flowStep === 1 && <FormHook />}
             </div>
           </>
         ) : (
