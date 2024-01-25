@@ -7,6 +7,7 @@ import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ActiveCampaignActions from './ActiveCampaignActions'
 import { refreshActiveCampaingAccounts, refreshActiveCampaingHeader, refreshActiveCampaingList, refreshActiveCampaingTags } from './ActiveCampaignCommonFunc'
 import ActiveCampaignFieldMap from './ActiveCampaignFieldMap'
+import { create } from 'mutative'
 
 export default function ActiveCampaignIntegLayout({ formID, formFields, activeCampaingConf, setActiveCampaingConf, isLoading, setIsLoading, setSnackbar }) {
   const setTags = (val) => {
@@ -17,6 +18,22 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
       delete newConf.tagIds
     }
     setActiveCampaingConf({ ...newConf })
+  }
+  const setAccount = val => {
+    console.log(val)
+    setActiveCampaingConf(prevConf => create(prevConf, draftConf => {
+      if (val) {
+        draftConf.selectedAccount = val
+      } else {
+        delete draftConf.selectedAccount
+      }
+    }))
+  }
+
+  const setJobTitle = val => {
+    setActiveCampaingConf(prevConf => create(prevConf, draftConf => {
+      draftConf['job_title'] = val
+    }))
   }
 
   const handleInput = (e) => {
@@ -38,7 +55,6 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
     activeCampaignLists && refreshActiveCampaingTags(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeCampaignLists])
-
 
   return (
     <>
@@ -68,18 +84,31 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
         <button onClick={() => refreshActiveCampaingTags(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Activecapmaign Tags', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       <br />
-      <br />
-      <div className="d-flx">
-        <b style={{ marginTop: '15px' }} className="wdt-200 d-in-b">{__('Account: ', 'bit-integrations')}</b>
-        <MultiSelect
-          defaultValue={activeCampaingConf?.selectedAccount}
-          className="btcd-paper-drpdwn w-5"
-          options={activeCampaingConf?.accounts && activeCampaingConf.accounts.map(account => ({ label: account.name, value: account.id }))}
-          onChange={handleInput}
-        />
-        <button onClick={() => refreshActiveCampaingAccounts(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Activecapmaign Tags', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
-      </div>
-      <br />
+      {activeCampaingConf?.accounts &&
+        <>
+          <div className="d-flx">
+            <b style={{ marginTop: '15px' }} className="wdt-200 d-in-b">{__('Account: ', 'bit-integrations')}</b>
+            <MultiSelect
+              defaultValue={activeCampaingConf?.selectedAccount}
+              className="btcd-paper-drpdwn w-5"
+              options={activeCampaingConf?.accounts && activeCampaingConf.accounts.map(account => ({ label: account.name, value: account.id }))}
+              onChange={setAccount}
+              singleSelect
+            />
+            <button onClick={() => refreshActiveCampaingAccounts(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Activecapmaign Tags', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+          </div>
+          <br />
+        </>
+      }
+      {activeCampaingConf?.selectedAccount &&
+        <>
+          <div className="d-flx">
+            <b style={{ marginTop: '15px' }} className="wdt-200 d-in-b">{__('Job Title:', 'bit-integrations')}</b>
+            <input className="btcd-paper-inp w-5 mt-1" onChange={e => setJobTitle(e.target.value)} name="job_title" value={activeCampaingConf.job_title} type="text" placeholder={__('Job Title...', 'bit-integrations')} />
+          </div>
+          <br />
+        </>
+      }
       {isLoading && (
         <Loader style={{
           display: 'flex',
