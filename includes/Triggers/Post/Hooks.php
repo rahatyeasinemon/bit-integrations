@@ -7,7 +7,8 @@ if (!defined('ABSPATH')) {
 use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Triggers\Post\PostController;
 
-Hooks::add('save_post', [PostController::class, 'createPost'], 10, 3);
+// Hooks::add('save_post', [PostController::class, 'createPost'], 10, 3);
+Hooks::add('wp_after_insert_post', [PostController::class, 'createPost'], 10, 4);
 Hooks::add('comment_post', [PostController::class, 'postComment'], 10, 3);
 Hooks::add('post_updated', [PostController::class, 'postUpdated'], 10, 2);
 Hooks::filter('the_content', [PostController::class, 'viewPost'], 10, 1);
