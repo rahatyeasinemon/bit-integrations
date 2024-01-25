@@ -3,6 +3,7 @@
 /**
  * Active Campaign Integration
  */
+
 namespace BitCode\FI\Actions\ActiveCampaign;
 
 use WP_Error;
@@ -35,7 +36,8 @@ class ActiveCampaignController
      */
     public static function activeCampaignAuthorize($requestsParams)
     {
-        if (empty($requestsParams->api_key)
+        if (
+            empty($requestsParams->api_key)
             || empty($requestsParams->api_url)
         ) {
             wp_send_json_error(
@@ -70,7 +72,8 @@ class ActiveCampaignController
      */
     public static function activeCampaignLists($queryParams)
     {
-        if (empty($queryParams->api_key)
+        if (
+            empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
             wp_send_json_error(
@@ -104,9 +107,51 @@ class ActiveCampaignController
         }
     }
 
+    /**
+     * Process ajax request for refresh lists
+     *
+     * @param $queryParams Params to fetch list
+     *
+     * @return JSON active campaign list data
+     */
+    public static function activeCampaignAccounts($queryParams)
+    {
+        if (
+            empty($queryParams->api_key)
+            || empty($queryParams->api_url)
+        ) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+
+        $apiEndpoint = self::_apiEndpoint($queryParams->api_url, 'accounts');
+        $authorizationHeader['Api-Token'] = $queryParams->api_key;
+        $aCampaignResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+
+        $lists = [];
+        if (!is_wp_error($aCampaignResponse) && isset($aCampaignResponse->accounts)) {
+            // $allLists = $aCampaignResponse->lists;
+
+            // foreach ($allLists as $list) {
+            //     $lists[$list->name] = (object) [
+            //         'listId' => $list->id,
+            //         'listName' => $list->name,
+            //     ];
+            // }
+            // $response['activeCampaignLists'] = $lists;
+            wp_send_json_success($aCampaignResponse->accounts);
+        }
+    }
+
     public static function activeCampaignTags($queryParams)
     {
-        if (empty($queryParams->api_key)
+        if (
+            empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
             wp_send_json_error(
@@ -119,53 +164,54 @@ class ActiveCampaignController
         }
 
 
-		$offset         = 0;
-		$limit          = 100;
-		$has_items      = true;
-		$available_tags = array();
-		while ( $has_items ) {
+        $offset         = 0;
+        $limit          = 100;
+        $has_items      = true;
+        $available_tags = array();
+        while ($has_items) {
 
-			$tagResponse = wp_safe_remote_get(
-				$queryParams->api_url . '/api/3/tags?limit=' . $limit . '&offset=' . $offset,
-				array(
-					'headers' => array(
-						'Api-token' => $queryParams->api_key,
-					),
-				)
-			);
+            $tagResponse = wp_safe_remote_get(
+                $queryParams->api_url . '/api/3/tags?limit=' . $limit . '&offset=' . $offset,
+                array(
+                    'headers' => array(
+                        'Api-token' => $queryParams->api_key,
+                    ),
+                )
+            );
 
-			$tagResponse = json_decode( wp_remote_retrieve_body( $tagResponse ) );
+            $tagResponse = json_decode(wp_remote_retrieve_body($tagResponse));
 
-			if ( isset( $tagResponse->tags ) ) {
+            if (isset($tagResponse->tags)) {
 
-				foreach ( $tagResponse->tags as $tag ) {
-					$available_tags[ $tag->id ] = $tag->tag;
-				}
-			}
+                foreach ($tagResponse->tags as $tag) {
+                    $available_tags[$tag->id] = $tag->tag;
+                }
+            }
 
-			if ( empty( $tagResponse->tags ) || count( $tagResponse->tags ) < $limit ) {
-				$has_items = false;
-			}
+            if (empty($tagResponse->tags) || count($tagResponse->tags) < $limit) {
+                $has_items = false;
+            }
 
-			$offset += $limit;
-		}
+            $offset += $limit;
+        }
 
-		asort( $available_tags );
-		$tag_items = array();
+        asort($available_tags);
+        $tag_items = array();
 
-		foreach ( $available_tags as $key => $value ) {
-			$tag_items[] = array(
-				'tagId' => "$key",
-				'tagName'  => $value,
-			);
-		}
+        foreach ($available_tags as $key => $value) {
+            $tag_items[] = array(
+                'tagId' => "$key",
+                'tagName'  => $value,
+            );
+        }
         $response['activeCampaignTags'] = $tag_items;
         wp_send_json_success($response);
     }
 
     public static function activeCampaignHeaders($queryParams)
     {
-        if (empty($queryParams->api_key)
+        if (
+            empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
             wp_send_json_error(
@@ -214,7 +260,8 @@ class ActiveCampaignController
         $listId = $integrationDetails->listId;
         $tags = $integrationDetails->tagIds;
 
-        if (empty($api_key)
+        if (
+            empty($api_key)
             || empty($api_url)
             || empty($fieldMap)
         ) {

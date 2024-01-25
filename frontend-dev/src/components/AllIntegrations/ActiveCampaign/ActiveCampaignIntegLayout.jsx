@@ -5,7 +5,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import ActiveCampaignActions from './ActiveCampaignActions'
-import { refreshActiveCampaingHeader, refreshActiveCampaingList, refreshActiveCampaingTags } from './ActiveCampaignCommonFunc'
+import { refreshActiveCampaingAccounts, refreshActiveCampaingHeader, refreshActiveCampaingList, refreshActiveCampaingTags } from './ActiveCampaignCommonFunc'
 import ActiveCampaignFieldMap from './ActiveCampaignFieldMap'
 
 export default function ActiveCampaignIntegLayout({ formID, formFields, activeCampaingConf, setActiveCampaingConf, isLoading, setIsLoading, setSnackbar }) {
@@ -24,10 +24,12 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
     const newConf = { ...activeCampaingConf }
     if (listid) {
       newConf.listId = listid
+      refreshActiveCampaingHeader(newConf, setActiveCampaingConf, setIsLoading, setSnackbar)
+      refreshActiveCampaingAccounts(newConf, setActiveCampaingConf, setIsLoading, setSnackbar)
     } else {
       delete newConf.listId
     }
-    refreshActiveCampaingHeader(newConf, setActiveCampaingConf, setIsLoading, setSnackbar)
+    setActiveCampaingConf({ ...newConf })
   }
 
   const activeCampaignLists = activeCampaingConf?.default?.activeCampaignLists
@@ -64,6 +66,18 @@ export default function ActiveCampaignIntegLayout({ formID, formFields, activeCa
           onChange={val => setTags(val)}
         />
         <button onClick={() => refreshActiveCampaingTags(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Activecapmaign Tags', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+      </div>
+      <br />
+      <br />
+      <div className="d-flx">
+        <b style={{ marginTop: '15px' }} className="wdt-200 d-in-b">{__('Account: ', 'bit-integrations')}</b>
+        <MultiSelect
+          defaultValue={activeCampaingConf?.selectedAccount}
+          className="btcd-paper-drpdwn w-5"
+          options={activeCampaingConf?.accounts && activeCampaingConf.accounts.map(account => ({ label: account.name, value: account.id }))}
+          onChange={handleInput}
+        />
+        <button onClick={() => refreshActiveCampaingAccounts(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Activecapmaign Tags', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       <br />
       {isLoading && (
