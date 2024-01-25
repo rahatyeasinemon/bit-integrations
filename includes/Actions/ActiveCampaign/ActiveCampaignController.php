@@ -269,6 +269,7 @@ class ActiveCampaignController
         }
         $recordApiHelper = new RecordApiHelper($api_key, $api_url, $this->_integrationID);
         $activeCampaignApiResponse = $recordApiHelper->execute(
+            $integrationDetails,
             $fieldValues,
             $fieldMap,
             $actions,
