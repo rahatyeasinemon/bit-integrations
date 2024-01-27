@@ -9,11 +9,6 @@ export default function FlowBuilder() {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
   const [flowStep, setFlowStep] = useRecoilState($flowStep)
 
-  useEffect(() => {
-    setFlowStep(1)
-    setNewFlow({})
-  }, [])
-
   return (
     <div className="btcd-s-wrp" style={{ height: '82vh' }}>
       <div className="flx flx-center flx-col">
