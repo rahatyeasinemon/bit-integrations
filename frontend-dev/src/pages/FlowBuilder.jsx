@@ -1,13 +1,12 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { $flowStep, $newFlow } from '../GlobalStates'
 import SelectAction from '../components/Flow/New/SelectAction'
 import SelectTrigger from '../components/Flow/New/SelectTrigger'
-import { useEffect } from 'react'
 
 export default function FlowBuilder() {
-  const [newFlow, setNewFlow] = useRecoilState($newFlow)
-  const [flowStep, setFlowStep] = useRecoilState($flowStep)
+  const newFlow = useRecoilValue($newFlow)
+  const flowStep = useRecoilValue($flowStep)
 
   return (
     <div className="btcd-s-wrp" style={{ height: '82vh' }}>
