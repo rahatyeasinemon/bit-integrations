@@ -109,9 +109,10 @@ export const saveIntegConfig = async (flow, setFlow, allIntegURL, confTmp, navig
   } else if (flow.triggered_entity === 'ARMember') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = ARMemberStateIH(tmpConf, dataFlow)
-  } else if (flow.triggered_entity === 'ActionHook') {
+  } else if (flow.triggered_entity === 'ActionHook' || flow.triggered_entity === 'FormHook') {
     tmpConf['primaryKey'] = flow.triggerData.primaryKey
   }
+  console.log(tmpConf)
 
   const data = {
     name: confTmp.name,
@@ -223,9 +224,10 @@ export const saveActionConf = async ({ flow, setFlow, allIntegURL, conf, navigat
   } else if (flow.triggered_entity === 'ARMember') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = ARMemberStateIH(tmpConf, dataFlow)
-  } else if (flow.triggered_entity === 'ActionHook') {
+  } else if (flow.triggered_entity === 'ActionHook' || flow.triggered_entity === 'FormHook') {
     tmpConf['primaryKey'] = flow.triggerData.primaryKey
   }
+  console.log(tmpConf)
 
   const data = {
     name: conf.name,

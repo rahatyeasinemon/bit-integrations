@@ -62,6 +62,7 @@ class HookService
         }
         $activeTrigger[] = 'CustomTrigger';
         $activeTrigger[] = 'ActionHook';
+        $activeTrigger[] = 'FormHook';
         if (empty($activeTrigger) || !is_array($activeTrigger)) {
             return;
         }

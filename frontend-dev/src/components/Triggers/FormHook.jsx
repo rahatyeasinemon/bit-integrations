@@ -24,9 +24,6 @@ const FormHook = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
   const setFlowStep = useSetRecoilState($flowStep)
   const setFields = useSetRecoilState($formFields)
-  const [hookID, setHookID] = useState('')
-  const [selectedHook, setSelectedHook] = useState('custom')
-  const [customHook, setCustomHook] = useState(true)
   const [primaryKey, setPrimaryKey] = useState()
   const [primaryKeyModal, setPrimaryKeyModal] = useState(false)
   const [selectedFields, setSelectedFields] = useState([])
@@ -47,16 +44,39 @@ const FormHook = () => {
 
     const tmpNewFlow = { ...newFlow }
     tmpNewFlow.triggerData = {
-      formID: hookID,
       primaryKey: primaryKey,
       fields: selectedFields.map(field => ({ label: field, name: field }))
     }
-    tmpNewFlow.triggered_entity_id = hookID
+    tmpNewFlow.triggered_entity_id = 'uagb_form_success'
     setFields(selectedFields)
     setNewFlow(tmpNewFlow)
     setFlowStep(2)
   }
 
+
+  const setSelectedFieldsData = (value = null, remove = false, index = null) => {
+    if (remove) {
+      index = index ? index : selectedFields.indexOf(value)
+
+      if (index !== -1) {
+        removeSelectedField(index)
+      }
+      return
+    }
+    addSelectedField(value)
+  }
+
+  const addSelectedField = value => {
+    setSelectedFields(prevFields => create(prevFields, (draftFields) => {
+      draftFields.push(value)
+    }))
+  }
+
+  const removeSelectedField = index => {
+    setSelectedFields(prevFields => create(prevFields, (draftFields) => {
+      draftFields.splice(index, 1)
+    }))
+  }
 
   const handleFetch = () => {
     if (isLoading) {
@@ -64,23 +84,21 @@ const FormHook = () => {
       setIsLoading(false)
       return
     }
-
     setIsLoading(true)
     intervalRef.current = setInterval(() => {
-      bitsFetch('form_hook/test').then((resp) => {
+      bitsFetch(null, 'form_hook/get').then((resp) => {
         if (resp.success) {
           clearInterval(intervalRef.current)
           const tmpNewFlow = { ...newFlow }
 
           tmpNewFlow.triggerDetail.tmp = resp.data.formHook
           tmpNewFlow.triggerDetail.data = resp.data.formHook
-          // tmpNewFlow.triggerDetail.hook_id = hookID
           setNewFlow(tmpNewFlow)
           setIsLoading(false)
           setShowResponse(true)
           setSelectedFields([])
           bitsFetch(
-            { hook_id: window.hook_id, reset: true },
+            { reset: true },
             'form_hook/test/remove',
           )
         }
@@ -129,12 +147,11 @@ const FormHook = () => {
           </div>
         </>
       }
-      <div className="flx flx-between">
+      <div className="flx flx-around">
         <button
           onClick={handleFetch}
           className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'green'}`}
           type="button"
-          disabled={!hookID}
         >
           {isLoading ? __('Stop', 'bit-integrations') : newFlow.triggerDetail?.data
             ? __('Fetched ✔', 'bit-integrations')

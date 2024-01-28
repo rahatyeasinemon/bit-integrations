@@ -7,30 +7,22 @@ use BitCode\FI\Flow\Flow;
 
 class FormHookController
 {
-    public static function info()
+    // public static function info()
+    // {
+    //     return [
+    //         'name' => 'Form Hook',
+    //         'title' => 'Get callback data through an URL',
+    //         'type' => 'form_hook',
+    //         'is_active' => true
+    //     ];
+    // }
+
+    public function getTestData()
     {
-        return [
-            'name' => 'Form Hook',
-            'title' => 'Get callback data through an URL',
-            'type' => 'form_hook',
-            'is_active' => true
-        ];
-    }
+        $testData = get_option('btcbi_form_hook_test_uagb_form_success');
 
-    public function getTestData($data)
-    {
-        $missing_field = null;
-
-        if (!property_exists($data, 'hook_id')) {
-            $missing_field = is_null($missing_field) ? 'FormHook ID' : $missing_field . ', FormHook ID';
-        }
-        if (!is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
-        }
-
-        $testData = get_option('btcbi_form_hook_test_' . $data->hook_id);
         if ($testData === false) {
-            update_option('btcbi_form_hook_test_' . $data->hook_id, []);
+            update_option('btcbi_form_hook_test_uagb_form_success', []);
         }
         if (!$testData || empty($testData)) {
             wp_send_json_error(new WP_Error('formHook_test', __('FormHook data is empty', 'bit-integrations')));
@@ -40,15 +32,13 @@ class FormHookController
 
     public static function formHookHandler(...$args)
     {
-        if (get_option('btcbi_form_hook_test_' . current_action()) !== false) {
-            update_option('btcbi_form_hook_test_' . current_action(), $args);
+        if (get_option('btcbi_form_hook_test_uagb_form_success') !== false) {
+            update_option('btcbi_form_hook_test_uagb_form_success', $args);
         }
-        return rest_ensure_response(['status' => 'success']);
-    }
 
-    public static function handle(...$args)
-    {
-        if ($flows = Flow::exists('FormHook', current_action())) {
+        $flows = Flow::exists('FormHook', 'uagb_form_success');
+
+        if ($flows = Flow::exists('FormHook', 'uagb_form_success')) {
             foreach ($flows as $flow) {
                 $flowDetails = json_decode($flow->flow_details);
 
@@ -93,18 +83,18 @@ class FormHookController
         $currentPart = array_shift($parts);
         if (is_array($data)) {
             if (!isset($data[$currentPart])) {
-                wp_send_json_error(new WP_Error('capture Action', __('Index out of bounds or invalid', 'bit-integrations')));
+                wp_send_json_error(new WP_Error('Action Hook', __('Index out of bounds or invalid', 'bit-integrations')));
             }
             return self::extractValueFromPath($data[$currentPart], $parts);
         }
 
         if (is_object($data)) {
             if (!property_exists($data, $currentPart)) {
-                wp_send_json_error(new WP_Error('capture Action', __('Invalid path', 'bit-integrations')));
+                wp_send_json_error(new WP_Error('Action Hook', __('Invalid path', 'bit-integrations')));
             }
             return self::extractValueFromPath($data->$currentPart, $parts);
         }
 
-        wp_send_json_error(new WP_Error('capture Action', __('Invalid path', 'bit-integrations')));
+        wp_send_json_error(new WP_Error('Action Hook', __('Invalid path', 'bit-integrations')));
     }
 }
