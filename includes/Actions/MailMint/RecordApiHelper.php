@@ -24,15 +24,28 @@ class RecordApiHelper
     {
         $dataFinal = [];
 
-        foreach ($fieldMap as $key => $value) {
-            $triggerValue = $value->formField;
-            $actionValue = $value->mailMintFormField;
+        foreach ($fieldMap as $value) {
+            $triggerValue               = $value->formField;
+            $actionValue                = $value->mailMintFormField;
+            $isDataTriggerValueSet      = isset($data[$triggerValue]);
+            $containsCustomMetaField    = str_contains($actionValue, 'custom_meta_field_');
+
+            if ($containsCustomMetaField) {
+                $customFieldKey = str_replace('custom_meta_field_', '', $actionValue);
+            }
+
             if ($triggerValue === 'custom') {
-                $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (str_contains($actionValue, 'custom_meta_field_')) {
-                $dataFinal['meta_fields'][str_replace('custom_meta_field_', '', $actionValue)] = $data[$triggerValue];
-            } elseif (!is_null($data[$triggerValue])) {
-                $dataFinal[$actionValue] = $data[$triggerValue];
+                if ($containsCustomMetaField) {
+                    $dataFinal['meta_fields'][$customFieldKey] = Common::replaceFieldWithValue($value->customValue, $data);
+                } else {
+                    $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
+                }
+            } elseif ($isDataTriggerValueSet) {
+                if ($containsCustomMetaField) {
+                    $dataFinal['meta_fields'][$customFieldKey] = $data[$triggerValue];
+                } else {
+                    $dataFinal[$actionValue] = $data[$triggerValue];
+                }
             }
         }
         return $dataFinal;
