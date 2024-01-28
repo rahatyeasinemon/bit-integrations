@@ -12,6 +12,7 @@ import WebhookDataTable from '../Utilities/WebhookDataTable'
 import EyeIcn from '../Utilities/EyeIcn'
 import EyeOffIcn from '../Utilities/EyeOffIcn'
 import CopyTextTrigger from '../Utilities/CopyTextTrigger'
+import Note from '../Utilities/Note'
 
 const CustomTrigger = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
@@ -117,6 +118,14 @@ const CustomTrigger = () => {
     setShowResponse((prevState) => !prevState)
   }
 
+  const info = `<h4>Setup Custom Trigger</h4>
+            <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/custom-trigger-integrations" target="_blank" rel="noreferrer">${__('Details on Documentation', 'bit-integrations')}</a>
+            <ul>
+                <li>Copy <b>do action hook</b> & past in your form submiting function</li>
+                <li>Click on the <b>Fetch</b> button & Submit your <b>Form</b> to get the form data</li>
+            </ul>
+  `
+
   return (
     <div className="trigger-custom-width">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -128,8 +137,8 @@ const CustomTrigger = () => {
         className="flx mt-2"
         setSnackbar={setSnackbar}
         readOnly
-        
-        
+
+
       />
       <div className="flx flx-between">
         <button
@@ -184,6 +193,7 @@ const CustomTrigger = () => {
       >
         Set Action
       </button>
+      <Note note={info} />
     </div>
   )
 }
