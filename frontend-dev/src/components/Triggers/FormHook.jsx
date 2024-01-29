@@ -47,7 +47,8 @@ const FormHook = () => {
       primaryKey: primaryKey,
       fields: selectedFields.map(field => ({ label: field, name: field }))
     }
-    tmpNewFlow.triggered_entity_id = 'uagb_form_success'
+    tmpNewFlow['primaryKey'] = primaryKey
+    tmpNewFlow.triggered_entity_id = 'FormHook'
     setFields(selectedFields)
     setNewFlow(tmpNewFlow)
     setFlowStep(2)

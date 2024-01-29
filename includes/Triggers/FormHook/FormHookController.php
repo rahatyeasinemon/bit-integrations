@@ -7,6 +7,10 @@ use BitCode\FI\Flow\Flow;
 
 class FormHookController
 {
+    protected static $formHookIntegrationsList = [
+        'Webhook',
+        'Spectra',
+    ];
     // public static function info()
     // {
     //     return [
@@ -35,13 +39,10 @@ class FormHookController
         if (get_option('btcbi_form_hook_test_uagb_form_success') !== false) {
             update_option('btcbi_form_hook_test_uagb_form_success', $args);
         }
+        if ($flows = Flow::exists(self::$formHookIntegrationsList, 'FormHook')) {
 
-        $flows = Flow::exists('FormHook', 'uagb_form_success');
-
-        if ($flows = Flow::exists('FormHook', 'uagb_form_success')) {
             foreach ($flows as $flow) {
                 $flowDetails = json_decode($flow->flow_details);
-
                 if (!isset($flowDetails->primaryKey)) {
                     continue;
                 }
@@ -64,7 +65,8 @@ class FormHookController
                     foreach ($fieldKeys as $key) {
                         $formatedData[$key] = self::extractValueFromPath($args, $key);
                     }
-
+                    // var_dump('fdasjkwfhd');
+                    // die;
                     Flow::execute('FormHook', current_action(), $formatedData, array($flow));
                 }
             }

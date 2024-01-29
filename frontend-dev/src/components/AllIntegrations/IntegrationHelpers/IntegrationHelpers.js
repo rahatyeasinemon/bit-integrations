@@ -34,6 +34,7 @@ export const saveIntegConfig = async (flow, setFlow, allIntegURL, confTmp, navig
    * This is a temporary fix
    * Have to move this to a better place
    */
+
   if (flow.triggered_entity === 'Elementor' || flow.triggered_entity === 'Divi' || flow.triggered_entity === 'Bricks' || flow.triggered_entity === 'Brizy' || flow.triggered_entity === 'Breakdance' || flow.triggered_entity === 'CartFlow') {
     if (edit) {
       tmpConf.postId = flow?.flow_details?.postId ?? null
@@ -109,10 +110,11 @@ export const saveIntegConfig = async (flow, setFlow, allIntegURL, confTmp, navig
   } else if (flow.triggered_entity === 'ARMember') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = ARMemberStateIH(tmpConf, dataFlow)
-  } else if (flow.triggered_entity === 'ActionHook' || flow.triggered_entity === 'FormHook') {
+  } else if (flow.triggered_entity === 'ActionHook' || flow.triggered_entity === 'FormHook' || flow.triggered_entity_id === 'FormHook') {
     tmpConf['primaryKey'] = flow.triggerData.primaryKey
   }
-  console.log(tmpConf)
+  console.log('flow1',flow)
+  console.log('tmpConf1',tmpConf)
 
   const data = {
     name: confTmp.name,
@@ -227,7 +229,8 @@ export const saveActionConf = async ({ flow, setFlow, allIntegURL, conf, navigat
   } else if (flow.triggered_entity === 'ActionHook' || flow.triggered_entity === 'FormHook') {
     tmpConf['primaryKey'] = flow.triggerData.primaryKey
   }
-  console.log(tmpConf)
+  console.log('flow2',flow)
+  console.log('tmpConf2',tmpConf)
 
   const data = {
     name: conf.name,
