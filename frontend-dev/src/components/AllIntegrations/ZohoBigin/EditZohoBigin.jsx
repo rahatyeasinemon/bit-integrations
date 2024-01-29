@@ -28,7 +28,7 @@ function EditZohoBigin({ allIntegURL }) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
       return
     }
-    if (!biginConf?.pLayout) {
+    if (biginConf?.module === 'Deals' && !biginConf?.pLayout) {
       setSnackbar({ show: true, msg: __('Please select a layout', 'bit-integrations') })
       return
     }
