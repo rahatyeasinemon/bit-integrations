@@ -114,20 +114,24 @@ class CustomApiController
     {
         $headers = isset($details->headers) ? self::processKeyValue((array) $details->headers, $fieldValues) : [];
         if (isset($details->body->type)) {
-            $headers['Content-Type'] = $details->body->type;
+            $headers['Content-Type'] = $details->body->type === 'raw' ? 'application/json' : $details->body->type;
         }
         return $headers;
     }
 
     private static function processPayload($details, $fieldValues)
     {
+        if ($details->body->type === 'raw' && isset($details->body->raw)) {
+            return Common::replaceFieldWithValue(sanitize_text_field(json_encode($details->body->raw)), $fieldValues);
+        }
+
         $payload = [];
         if (isset($details->body->data)) {
             $fieldValues = self::pushMissingFields($fieldValues, $details->body->data);
             $payload = self::processKeyValue($details->body->data, $fieldValues);
         }
 
-        if (isset($details->body->type) && $details->body->type === 'application/json') {
+        if (isset($details->body->type) && ($details->body->type === 'application/json' || $details->body->type === 'raw')) {
             $payload = json_encode((object) $payload, JSON_PRETTY_PRINT);
         }
         return $payload;
