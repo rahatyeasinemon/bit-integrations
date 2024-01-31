@@ -5,6 +5,8 @@ import TrashIcn from '../../../../Icons/TrashIcn'
 import { __ } from '../../../../Utils/i18nwrap'
 import Button from '../../../Utilities/Button'
 import TableCheckBox from '../../../Utilities/TableCheckBox'
+import JsonEditor from '../../../Utilities/jsonEditor/JsonEditor'
+import { create } from 'mutative'
 
 function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
   useEffect(() => {
@@ -29,7 +31,7 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
   }
   const addParam = () => {
     const tmpConf = { ...webHooks }
-    if (!tmpConf.body.data) {
+    if (!tmpConf.body.data || !Array.isArray(tmpConf.body.data)) {
       tmpConf.body.data = []
     }
     tmpConf.body.data.push({})
@@ -43,6 +45,10 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
   const handleContentType = (e) => {
     const tmpConf = { ...webHooks }
     tmpConf.body.type = e.target.value
+
+    if (e.target.value !== 'raw') {
+      tmpConf.body.data = tmpConf?.body?.send_all_data ? getFormatedData() : []
+    }
     setWebHooks(tmpConf)
   }
   const getFormatedData = () => {
@@ -66,6 +72,11 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
     }
     setWebHooks({ ...newConf })
   }
+  const setJsonCustomBody = data => {
+    setWebHooks(prevConf => create(prevConf, draftConf => {
+      draftConf.body.raw = JSON.parse(data)
+    }))
+  }
 
   return (
     <div className="mt-2">
@@ -76,40 +87,44 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
         <option value="application/json">application/json</option>
         <option value="multipart/form-data">multipart/form-data</option>
         <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
+        <option value="raw">raw (JSON)</option>
       </select>
-      <div className="btcd-param-t-wrp mt-1">
-        <div className="btcd-param-t">
-          <div className="tr">
-            <div className="td">{__('Key', 'bit-integrations')}</div>
-            <div className="td">{__('Value', 'bit-integrations')}</div>
-          </div>
-          {webHooks.body?.data?.map((itm, childindx) => (
-            <div className="tr" key={`fu-1${childindx * 3}`}>
-              <div className="td">
-                <input className="btcd-paper-inp p-i-sm" onChange={e => handlePayload(e, childindx)} name="key" type="text" value={itm.key} disabled={isInfo} />
-              </div>
-              <div className="td">
-                <input className="btcd-paper-inp p-i-sm" onChange={e => handlePayload(e, childindx)} name="value" type="text" value={itm.value} disabled={isInfo} />
-              </div>
-              {!isInfo && (
-                <div className="flx p-atn">
-                  <Button onClick={() => delParam(childindx)} icn><TrashIcn size={16} /></Button>
-                  <MultiSelect
-                    options={formFields.map(f => ({ label: f.label, value: `\${${f.name}}` }))}
-                    className="btcd-paper-drpdwn wdt-200 ml-2"
-                    singleSelect
-                    onChange={val => setFromField(val, childindx)}
-                    defaultValue={itm.value}
-                  />
-                </div>
-              )}
+      {webHooks.body.type === 'raw' ?
+        <JsonEditor data={webHooks?.body?.raw || webHooks.body?.data} onChange={setJsonCustomBody} formFields={formFields} />
+        : <div className="btcd-param-t-wrp mt-1">
+          <div className="btcd-param-t">
+            <div className="tr">
+              <div className="td">{__('Key', 'bit-integrations')}</div>
+              <div className="td">{__('Value', 'bit-integrations')}</div>
             </div>
-          ))}
-          {!isInfo && (
-            <Button onClick={() => addParam(webHooks, setWebHooks)} className="add-pram" icn><CloseIcn size="14" className="icn-rotate-45" /></Button>
-          )}
+            {Array.isArray(webHooks.body?.data) && webHooks.body?.data?.map((itm, childindx) => (
+              <div className="tr" key={`fu-1${childindx * 3}`}>
+                <div className="td">
+                  <input className="btcd-paper-inp p-i-sm" onChange={e => handlePayload(e, childindx)} name="key" type="text" value={itm.key} disabled={isInfo} />
+                </div>
+                <div className="td">
+                  <input className="btcd-paper-inp p-i-sm" onChange={e => handlePayload(e, childindx)} name="value" type="text" value={itm.value} disabled={isInfo} />
+                </div>
+                {!isInfo && (
+                  <div className="flx p-atn">
+                    <Button onClick={() => delParam(childindx)} icn><TrashIcn size={16} /></Button>
+                    <MultiSelect
+                      options={formFields.map(f => ({ label: f.label, value: `\${${f.name}}` }))}
+                      className="btcd-paper-drpdwn wdt-200 ml-2"
+                      singleSelect
+                      onChange={val => setFromField(val, childindx)}
+                      defaultValue={itm.value}
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+            {!isInfo && (
+              <Button onClick={() => addParam(webHooks, setWebHooks)} className="add-pram" icn><CloseIcn size="14" className="icn-rotate-45" /></Button>
+            )}
+          </div>
         </div>
-      </div>
+      }
     </div>
   )
 }
