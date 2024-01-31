@@ -17,7 +17,6 @@ function JsonEditor({ data = {}, onChange, formFields = [] }) {
     }
 
     const handleEditorValidation = (markers) => {
-        console.log(markers)
         markers.forEach((marker) => toast.error(marker.message))
     }
 
@@ -25,8 +24,6 @@ function JsonEditor({ data = {}, onChange, formFields = [] }) {
         const editor = editorRef.current
         if (editor) {
             const position = editor.getPosition()
-            // const stringToPaste = field
-
             editor.executeEdits("", [
                 {
                     range: new monaco.Range(position.lineNumber, position.column, position.lineNumber, position.column),

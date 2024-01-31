@@ -89,7 +89,7 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
         <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
         <option value="raw">raw (JSON)</option>
       </select>
-      {webHooks.body.type === 'raw' ?
+      {webHooks?.body?.type === 'raw' ?
         <JsonEditor data={webHooks?.body?.raw || webHooks.body?.data} onChange={setJsonCustomBody} formFields={formFields} />
         : <div className="btcd-param-t-wrp mt-1">
           <div className="btcd-param-t">
