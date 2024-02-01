@@ -43,7 +43,7 @@ function JsonEditor({ data = {}, onChange, formFields = [] }) {
                 height="300px"
                 width="60%"
                 defaultLanguage="json"
-                defaultValue={JSON.stringify(data)}
+                defaultValue={typeof data === 'object' ? JSON.stringify(data) : data}
                 theme="vs-dark"
                 onValidate={handleEditorValidation}
                 onMount={handleEditorDidMount}

@@ -3,11 +3,12 @@
 /**
  * WebHooks Integration
  */
+
 namespace BitCode\FI\Actions\WebHooks;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for webhooks
@@ -36,8 +37,8 @@ class WebHooksController
         $method = isset($details->method) ? $details->method : 'get';
         $url = isset($details->url) ? self::urlParserWrapper($details->url, $fieldValues) : false;
         $boundary = wp_generate_password(24);
-        $payload = self::processPayload($details, $fieldValues,$boundary);
-        $headers = self::processHeaders($details, $fieldValues,$boundary);
+        $payload = self::processPayload($details, $fieldValues, $boundary);
+        $headers = self::processHeaders($details, $fieldValues, $boundary);
         if ($url) {
             switch (strtoupper($method)) {
                 case 'GET':
@@ -108,43 +109,46 @@ class WebHooksController
         return $cleanURL;
     }
 
-    private static function processHeaders($details, $fieldValues, $boundary=null)
+    private static function processHeaders($details, $fieldValues, $boundary = null)
     {
         $headers = isset($details->headers) ? self::processKeyValue((array) $details->headers, $fieldValues) : [];
         if (isset($details->body->type)) {
-            if('multipart/form-data' === $details->body->type){
+            if ('multipart/form-data' === $details->body->type) {
                 $headers['Content-Type'] = 'multipart/form-data; boundary=' . $boundary;
-            }else{
-                $headers['Content-Type'] = $details->body->type;
+            } else {
+                $headers['Content-Type'] = $details->body->type === 'raw' ? 'application/json' : $details->body->type;
             }
         }
         return $headers;
     }
 
-    private static function processPayload($details, $fieldValues,$boundary)
+    private static function processPayload($details, $fieldValues, $boundary)
     {
+        if ($details->body->type === 'raw' && isset($details->body->raw)) {
+            return Common::replaceFieldWithValue(sanitize_text_field($details->body->raw), $fieldValues);
+        }
+
         $payload = [];
         if (isset($details->body->data)) {
             $fieldValues = self::pushMissingFields($fieldValues, $details->body->data);
             $payload = self::processKeyValue($details->body->data, $fieldValues);
         }
-        if (isset($details->body->type) && $details->body->type === 'application/json') {
+        if (isset($details->body->type) && $details->body->type === 'application/json' || $details->body->type === 'raw') {
             $payload = json_encode((object) $payload, JSON_PRETTY_PRINT);
-        }elseif('multipart/form-data' === $details->body->type){
-            if(!empty($payload)){
-                $payloadString='';
-                foreach ($payload as $key=>$value) {
+        } elseif ('multipart/form-data' === $details->body->type) {
+            if (!empty($payload)) {
+                $payloadString = '';
+                foreach ($payload as $key => $value) {
                     $payloadString .= '--' . $boundary;
                     $payloadString .= "\r\n";
                     $payloadString .= 'Content-Disposition: form-data; name="' . $key .
-                      '"' . "\r\n\r\n";
+                        '"' . "\r\n\r\n";
                     $payloadString .= $value;
                     $payloadString .= "\r\n";
-                  }
-                  $payloadString .= '--' . $boundary . '--';
-                  return $payloadString;
+                }
+                $payloadString .= '--' . $boundary . '--';
+                return $payloadString;
             }
-          
         }
         return $payload;
     }
