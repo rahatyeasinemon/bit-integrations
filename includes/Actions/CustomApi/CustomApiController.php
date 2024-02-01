@@ -122,7 +122,7 @@ class CustomApiController
     private static function processPayload($details, $fieldValues)
     {
         if ($details->body->type === 'raw' && isset($details->body->raw)) {
-            return Common::replaceFieldWithValue(sanitize_text_field(json_encode($details->body->raw)), $fieldValues);
+            return Common::replaceFieldWithValue(sanitize_text_field($details->body->raw), $fieldValues);
         }
 
         $payload = [];

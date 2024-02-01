@@ -74,7 +74,7 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
   }
   const setJsonCustomBody = data => {
     setWebHooks(prevConf => create(prevConf, draftConf => {
-      draftConf.body.raw = JSON.parse(data)
+      draftConf.body.raw = data
     }))
   }
 
