@@ -3,6 +3,7 @@ import { memo, useRef } from "react";
 import toast from "react-hot-toast";
 import { __ } from '../../../Utils/i18nwrap';
 import "./style.scss"
+import { useAsyncDebounce } from "react-table";
 
 function JsonEditor({ data = {}, onChange, formFields = [] }) {
     const editorRef = useRef(null)
@@ -17,11 +18,12 @@ function JsonEditor({ data = {}, onChange, formFields = [] }) {
         editorRef.current.getAction('editor.action.formatDocument').run()
     }
 
-    const handleEditorValidation = (markers) => {
+    const handleEditorValidation = useAsyncDebounce((markers) => {
         markers.forEach((marker) => toast.error(marker.message))
-    }
+    }, 1000)
 
     const handlePasteFormField = (field) => {
+        if (!field) return
         const editor = editorRef.current
         if (editor) {
             const position = editor.getPosition()
