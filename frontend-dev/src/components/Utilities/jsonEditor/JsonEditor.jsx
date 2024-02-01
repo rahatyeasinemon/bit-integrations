@@ -2,6 +2,7 @@ import Editor, { useMonaco } from "@monaco-editor/react";
 import { memo, useRef } from "react";
 import toast from "react-hot-toast";
 import { __ } from '../../../Utils/i18nwrap';
+import "./style.scss"
 
 function JsonEditor({ data = {}, onChange, formFields = [] }) {
     const editorRef = useRef(null)
@@ -27,7 +28,7 @@ function JsonEditor({ data = {}, onChange, formFields = [] }) {
             editor.executeEdits("", [
                 {
                     range: new monaco.Range(position.lineNumber, position.column, position.lineNumber, position.column),
-                    text: field,
+                    text: `"input_key": ${field},`,
                     forceMoveMarkers: true,
                 },
             ])
@@ -35,24 +36,10 @@ function JsonEditor({ data = {}, onChange, formFields = [] }) {
     }
 
     return (
-        <div className="bg-white rounded border w-6 my-3 py-3 table-webhook-div shadow">
-            <div className="d-flx" style={{ justifyContent: 'space-between' }}>
-                <div className="flx p-atn w-6">
-                    <select className="btcd-paper-inp w-6" onChange={(e) => handlePasteFormField(e.target.value)}>
-                        <option value="">{__('Form Fields', 'bit-integrations')}</option>
-                        {formFields.map((field, key) => <option key={key} value={`"\${${field.name}}"`}>{field.label}</option>)}
-                    </select>
-                </div>
-                <button
-                    onClick={prettify}
-                    className="btn btcd-btn-lg green sh-sm flx"
-                    type="button"
-                >
-                    {__('{ } Prettify', 'bit-integrations')}
-                </button>
-            </div>
+        <div className="json-editor my-3 py-3">
             <Editor
                 height="300px"
+                width="60%"
                 defaultLanguage="json"
                 defaultValue={JSON.stringify(data)}
                 theme="vs-dark"
@@ -60,6 +47,19 @@ function JsonEditor({ data = {}, onChange, formFields = [] }) {
                 onMount={handleEditorDidMount}
                 onChange={onChange}
             />
+            <div className="form-fields flx p-atn">
+                <select className="btcd-paper-inp" onChange={(e) => handlePasteFormField(e.target.value)}>
+                    <option value="">{__('Form Fields', 'bit-integrations')}</option>
+                    {formFields.map((field, key) => <option key={key} value={`"\${${field.name}}"`}>{field.label}</option>)}
+                </select>
+            </div>
+            <button
+                onClick={prettify}
+                className="prettier-btn btn btcd-btn-sm sh-sm flx"
+                type="button"
+            >
+                {__('{ } Prettify', 'bit-integrations')}
+            </button>
         </div>
     );
 }
