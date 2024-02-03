@@ -68,8 +68,8 @@ class SpectraController
                             return $field->formField;
                         }, $flowDetails->field_map);
                     }
-                    var_dump($args);
-                    die;
+                    // var_dump($args);
+                    // die;
 
                     foreach ($fieldKeys as $key) {
                         $formatedData[$key] = self::extractValueFromPath($args, $key);
@@ -90,20 +90,21 @@ class SpectraController
         }
 
         $currentPart = array_shift($parts);
+
         if (is_array($data)) {
             if (!isset($data[$currentPart])) {
-                wp_send_json_error(new WP_Error('Action Hook', __('Index out of bounds or invalid', 'bit-integrations')));
+                wp_send_json_error(new WP_Error('Spectra', __('Index out of bounds or invalid', 'bit-integrations')));
             }
             return self::extractValueFromPath($data[$currentPart], $parts);
         }
 
         if (is_object($data)) {
             if (!property_exists($data, $currentPart)) {
-                wp_send_json_error(new WP_Error('Action Hook', __('Invalid path', 'bit-integrations')));
+                wp_send_json_error(new WP_Error('Spectra', __('Invalid path', 'bit-integrations')));
             }
             return self::extractValueFromPath($data->$currentPart, $parts);
         }
 
-        wp_send_json_error(new WP_Error('Action Hook', __('Invalid path', 'bit-integrations')));
+        wp_send_json_error(new WP_Error('Spectra', __('Invalid path', 'bit-integrations')));
     }
 }
