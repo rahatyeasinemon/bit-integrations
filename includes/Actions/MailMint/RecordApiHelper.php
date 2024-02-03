@@ -24,13 +24,28 @@ class RecordApiHelper
     {
         $dataFinal = [];
 
-        foreach ($fieldMap as $key => $value) {
-            $triggerValue = $value->formField;
-            $actionValue = $value->mailMintFormField;
+        foreach ($fieldMap as $value) {
+            $triggerValue               = $value->formField;
+            $actionValue                = $value->mailMintFormField;
+            $isDataTriggerValueSet      = isset($data[$triggerValue]);
+            $containsCustomMetaField    = str_contains($actionValue, 'custom_meta_field_');
+
+            if ($containsCustomMetaField) {
+                $customFieldKey = str_replace('custom_meta_field_', '', $actionValue);
+            }
+
             if ($triggerValue === 'custom') {
-                $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
-                $dataFinal[$actionValue] = $data[$triggerValue];
+                if ($containsCustomMetaField) {
+                    $dataFinal['meta_fields'][$customFieldKey] = Common::replaceFieldWithValue($value->customValue, $data);
+                } else {
+                    $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
+                }
+            } elseif ($isDataTriggerValueSet) {
+                if ($containsCustomMetaField) {
+                    $dataFinal['meta_fields'][$customFieldKey] = $data[$triggerValue];
+                } else {
+                    $dataFinal[$actionValue] = $data[$triggerValue];
+                }
             }
         }
         return $dataFinal;
@@ -114,7 +129,7 @@ class RecordApiHelper
         $tagFormat = $this->tagFormat($selectedTags);
 
         $finalData['_locale'] = 'user';
-        $finalData['status'] = [$selectedSubStatus];
+        $finalData['status'] = $selectedSubStatus;
         $finalData['created_by'] = get_current_user_id();
 
         if (class_exists('Mint\MRM\DataStores\ContactData') && class_exists('Mint\MRM\DataBase\Models\ContactModel')) {

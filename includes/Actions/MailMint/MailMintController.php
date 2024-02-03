@@ -5,6 +5,7 @@ namespace BitCode\FI\Actions\MailMint;
 use WP_Error;
 use Mint\MRM\Constants;
 use Mint\MRM\DataBase\Models\ContactGroupModel;
+use Mint\MRM\DataBase\Tables\CustomFieldSchema;
 
 class MailMintController
 {
@@ -27,13 +28,20 @@ class MailMintController
     public static function allCustomFields()
     {
         if (class_exists('Mint\MRM\DataBase\Models\ContactGroupModel')) {
-            $allFields  = [];
-            $fields     = get_option('mint_contact_primary_fields', Constants::$primary_contact_fields);
+            global $wpdb;
+            $allFields      = [];
+            $fields_table   = $wpdb->prefix . CustomFieldSchema::$table_name;
+            $primaryFields  = get_option('mint_contact_primary_fields', Constants::$primary_contact_fields);
+            $customFields   = $wpdb->get_results($wpdb->prepare('SELECT title, slug, type, group_id FROM %1s ', $fields_table), ARRAY_A);
 
-            foreach ($fields as $module) {
+            if (!empty($customFields)) {
+                $primaryFields['other'] = array_merge($primaryFields['other'], $customFields);
+            }
+
+            foreach ($primaryFields as $moduleKey => $module) {
                 foreach ($module as $field) {
                     $allFields[] = (object) [
-                        'key'       => $field['slug'],
+                        'key'       => $moduleKey !== 'other' ? $field['slug'] : 'custom_meta_field_' . $field['slug'],
                         'label'     => $field['title'],
                         'required'  => $field['slug'] == 'email' ? true : false
                     ];

@@ -4,7 +4,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
-import { refreshActiveCampaingHeader } from './ActiveCampaignCommonFunc'
+import { refreshActiveCampaingHeader, refreshActiveCampaingList } from './ActiveCampaignCommonFunc'
 import TutorialLink from '../../Utilities/TutorialLink'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
@@ -54,6 +54,7 @@ export default function ActiveCampaignAuthorization({ formID, activeCampaingConf
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
     refreshActiveCampaingHeader(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)
+    refreshActiveCampaingList(activeCampaingConf, setActiveCampaingConf, setIsLoading, setSnackbar)
     setstep(2)
   }
 

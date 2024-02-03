@@ -36,8 +36,7 @@ class ConvertKitController
      */
     public static function convertKitAuthorize($requestsParams)
     {
-        if (empty($requestsParams->api_secret)
-        ) {
+        if (empty($requestsParams->api_secret)) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -47,12 +46,12 @@ class ConvertKitController
             );
         }
 
-        $apiEndpoint = self::_apiEndpoint('accounts', $requestsParams->api_secret);
+        $apiEndpoint = self::_apiEndpoint('account', $requestsParams->api_secret);
         $apiResponse = HttpHelper::get($apiEndpoint, null);
 
-        if (is_wp_error($apiResponse) || empty($apiResponse)) {
+        if (is_wp_error($apiResponse) || empty($apiResponse) || !empty($apiResponse->error) || empty($apiResponse->primary_email_address)) {
             wp_send_json_error(
-                empty($apiResponse) ? 'Unknown' : $apiResponse,
+                !empty($apiResponse->error) ? $apiResponse->message : 'Unknown',
                 400
             );
         }
@@ -70,8 +69,7 @@ class ConvertKitController
      */
     public static function convertKitForms($queryParams)
     {
-        if (empty($queryParams->api_secret)
-        ) {
+        if (empty($queryParams->api_secret)) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -108,8 +106,7 @@ class ConvertKitController
      */
     public static function convertKitTags($queryParams)
     {
-        if (empty($queryParams->api_secret)
-        ) {
+        if (empty($queryParams->api_secret)) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -127,7 +124,7 @@ class ConvertKitController
         if (!is_wp_error($convertKitResponse)) {
             $allTags = $convertKitResponse->tags;
 
-            foreach ($allTags as $key=>$tag) {
+            foreach ($allTags as $key => $tag) {
                 $tags[$key] = (object) [
                     'tagId' => $tag->id,
                     'tagName' => $tag->name,
@@ -148,8 +145,7 @@ class ConvertKitController
      */
     public static function convertKitHeaders($queryParams)
     {
-        if (empty($queryParams->api_secret)
-        ) {
+        if (empty($queryParams->api_secret)) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -193,7 +189,8 @@ class ConvertKitController
         $formId = $integrationDetails->formId;
         $tags = $integrationDetails->tagIds;
 
-        if (empty($api_secret)
+        if (
+            empty($api_secret)
             || empty($fieldMap)
         ) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Sendinblue api', 'bit-integrations'));

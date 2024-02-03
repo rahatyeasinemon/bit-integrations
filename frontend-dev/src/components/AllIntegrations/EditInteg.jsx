@@ -7,6 +7,7 @@ import useFetch from '../../hooks/useFetch'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 import SnackMsg from '../Utilities/SnackMsg'
+import EditCustomApi from './CustomApi/EditCustomApi'
 
 const EditOmniSend = lazy(() => import('./OmniSend/EditOmniSend'))
 const EditSliceWp = lazy(() => import('./SliceWp/EditSliceWp'))
@@ -446,7 +447,7 @@ const IntegType = memo(({ allIntegURL, flow }) => {
     case 'CopperCRM':
       return <EditCopperCRM allIntegURL={allIntegURL} />
     case 'CustomApi':
-      return <EditWebHooks allIntegURL={allIntegURL} />
+      return <EditCustomApi allIntegURL={allIntegURL} />
     case 'Drip':
       return <EditDrip allIntegURL={allIntegURL} />
     case 'Mailify': case 'Sarbacane(Mailify)':

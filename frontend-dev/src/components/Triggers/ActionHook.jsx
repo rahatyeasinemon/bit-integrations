@@ -19,6 +19,7 @@ import EyeIcn from '../Utilities/EyeIcn'
 import EyeOffIcn from '../Utilities/EyeOffIcn'
 import SnackMsg from '../Utilities/SnackMsg'
 import TreeViewer from '../Utilities/treeViewer/TreeViewer'
+import Note from '../Utilities/Note'
 
 const ActionHook = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
@@ -166,6 +167,12 @@ const ActionHook = () => {
     }
   }
 
+  const info = `<h4>Setup Action Hook</h4>
+            <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/action-hook-integrations" target="_blank" rel="noreferrer">${__('Details on Documentation', 'bit-integrations')}</a>
+            <ul>
+                <li>Click on the <b>Fetch</b> button & Submit your <b>Form</b> to get the form data</li>
+            </ul>`
+
   return (
     <div className="trigger-custom-width">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -242,7 +249,7 @@ const ActionHook = () => {
           >
             {primaryKey
               ? __('Unique Key ✔', 'bit-integrations')
-              : __('Unique Key', 'bit-integrations')}
+              : __('Set Unique Key', 'bit-integrations')}
           </button>
         }
       </div>
@@ -254,12 +261,12 @@ const ActionHook = () => {
         show={primaryKeyModal}
         close={() => setPrimaryKeyModal(false)}
         action={() => setPrimaryKeyModal(false)}
-        title={__('Primary Key', 'bit-integrations')}
+        title={__('Unique Key', 'bit-integrations')}
         cssTransStyle={{ zIndex: 99999 }}
       >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">
-          {__('Select Primary Key', 'bit-integrations')}
+          {__('Select Unique Key', 'bit-integrations')}
         </div>
         <div className="flx flx-between mt-2">
           <MultiSelect
@@ -317,6 +324,7 @@ const ActionHook = () => {
           </button>
         </div>
       }
+      <Note note={info} />
     </div >
   )
 }

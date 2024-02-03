@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { $flowStep, $newFlow } from '../GlobalStates'
 import SelectAction from '../components/Flow/New/SelectAction'
 import SelectTrigger from '../components/Flow/New/SelectTrigger'
@@ -10,8 +10,10 @@ export default function FlowBuilder() {
   const [flowStep, setFlowStep] = useRecoilState($flowStep)
 
   useEffect(() => {
-    setFlowStep(1)
-    setNewFlow({})
+    if (!newFlow?.triggered_entity && !newFlow?.triggerData) {
+      setFlowStep(1)
+      setNewFlow({})
+    }
   }, [])
 
   return (

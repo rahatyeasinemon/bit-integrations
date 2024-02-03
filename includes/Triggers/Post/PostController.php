@@ -94,10 +94,13 @@ final class PostController
         wp_send_json_success($responseData);
     }
 
-    public static function createPost($postId, $newPostData, $update)
+    public static function createPost($postId, $newPostData, $update, $beforePostData)
     {
+        if ('publish' !== $newPostData->post_status || 'revision' === $newPostData->post_type || (!empty($beforePostData->post_status) && 'publish' === $beforePostData->post_status)) {
+            return false;
+        }
+
         $postCreateFlow = Flow::exists('Post', 1);
-        $currentURL = home_url($_SERVER['REQUEST_URI']);
 
         if ($postCreateFlow) {
             $flowDetails = $postCreateFlow[0]->flow_details;
@@ -111,17 +114,15 @@ final class PostController
                 $newPostData->post_permalink = get_permalink($newPostData);
             }
 
-            if ($newPostData->post_status !== 'auto-draft') {
-                if ((isset($flowDetails->selectedPostType) && $newPostData->post_type !== 'revision') && ($flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $newPostData->post_type)) {
-                    if (has_post_thumbnail($postId)) {
-                        $featured_image_url = get_the_post_thumbnail_url($postId, 'full');
-                        $newPostData->featured_image = $featured_image_url;
-                    }
-                    if (!$update) {
-                        Flow::execute('Post', 1, (array) $newPostData, $postCreateFlow);
-                    } else {
-                        Flow::execute('Post', 1, (array) $newPostData, $postCreateFlow);
-                    }
+            if (isset($flowDetails->selectedPostType) && ($flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $newPostData->post_type)) {
+                if (has_post_thumbnail($postId)) {
+                    $featured_image_url = get_the_post_thumbnail_url($postId, 'full');
+                    $newPostData->featured_image = $featured_image_url;
+                }
+                if (!$update) {
+                    Flow::execute('Post', 1, (array) $newPostData, $postCreateFlow);
+                } else {
+                    Flow::execute('Post', 1, (array) $newPostData, $postCreateFlow);
                 }
             }
         }

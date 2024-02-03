@@ -1253,7 +1253,7 @@ final class WCController
             $label = 'line_items_';
             $productSku = $product->get_sku();
             $count++;
-            $line_items_all['line_items'][] = (object)[
+            $itemData = [
                 'product_id' => $product_id,
                 'variation_id' => $variation_id,
                 'product_name' => $product_name,
@@ -1272,9 +1272,11 @@ final class WCController
                 $acfFields = acf_get_fields($group["ID"]);
 
                 foreach ($acfFields as $field) {
-                    $line_items_all['line_items'][$field['_name']] = get_post_meta($product_id, $field['_name'])[0];
+                    $itemData[$field['_name']] = get_post_meta($product_id, $field['_name'])[0];
                 }
             }
+
+            $line_items_all['line_items'][] = (object) $itemData;
         }
         $data += $line_items_all;
         return $data;
@@ -1295,7 +1297,8 @@ final class WCController
             $acfFields = acf_get_fields($group["ID"]);
 
             foreach ($acfFields as $field) {
-                $data[$field['_name']] = get_post_meta($order_id, $field['_name'])[0];
+                $meta                   = get_post_meta($order_id, $field['_name']);
+                $data[$field['_name']]  = is_array($meta) && !empty($meta) ? $meta[0] : $meta;
             }
         }
 
@@ -1790,7 +1793,7 @@ final class WCController
     public static function handle_variable_product_order($order_id, $importType)
     {
         $flows = Flow::exists('WC', 20);
-        if (!$flows && !is_plugin_active('woocommerce/woocommerce.php')) {
+        if (!$flows || !is_plugin_active('woocommerce/woocommerce.php')) {
             return false;
         }
 
