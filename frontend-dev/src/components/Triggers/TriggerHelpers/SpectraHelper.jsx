@@ -19,6 +19,7 @@ import EyeIcn from '../../Utilities/EyeIcn'
 import EyeOffIcn from '../../Utilities/EyeOffIcn'
 import SnackMsg from '../../Utilities/SnackMsg'
 import TreeViewer from '../../Utilities/treeViewer/TreeViewer'
+import Note from '../../Utilities/Note'
 
 const SpectraHelper = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
@@ -133,7 +134,11 @@ const SpectraHelper = () => {
       )
     }
   }, [])
-
+  const info = `<h4>Setup Spectra</h4>
+            <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/action-hook-integrations" target="_blank" rel="noreferrer">${__('More Details on Documentation', 'bit-integrations')}</a>
+            <ul>
+                <li>Click on the <b>Fetch</b> button then Submit your <b>Form</b> to get the form data</li>
+            </ul>`
   return (
     <div className="trigger-custom-width">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -261,6 +266,9 @@ const SpectraHelper = () => {
           </button>
         </div>
       }
+      <div className='flx flx-center'>
+        <Note note={info} />
+      </div>
     </div >
   )
 }

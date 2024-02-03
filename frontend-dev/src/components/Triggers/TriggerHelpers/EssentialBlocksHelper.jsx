@@ -19,6 +19,7 @@ import EyeIcn from '../../Utilities/EyeIcn'
 import EyeOffIcn from '../../Utilities/EyeOffIcn'
 import SnackMsg from '../../Utilities/SnackMsg'
 import TreeViewer from '../../Utilities/treeViewer/TreeViewer'
+import Note from '../../Utilities/Note'
 
 const EssentialBlocksHelper = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
@@ -118,11 +119,6 @@ const EssentialBlocksHelper = () => {
     })
   }
   useEffect(() => {
-    // if (newFlow.triggerDetail?.data?.length > 0 && newFlow.triggerDetail?.hook_id !== '') {
-    //   setHookID(newFlow.triggerDetail?.hook_id)
-    //   window.hook_id = newFlow.triggerDetail?.hook_id
-    // }
-
     return () => {
       setFields()
       bitsFetch({ hook_id: window.hook_id }, 'essential_blocks/test/remove').then(
@@ -133,6 +129,11 @@ const EssentialBlocksHelper = () => {
       )
     }
   }, [])
+  const info = `<h4>Setup Essential Blocks</h4>
+            <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/action-hook-integrations" target="_blank" rel="noreferrer">${__('More Details on Documentation', 'bit-integrations')}</a>
+            <ul>
+                <li>Click on the <b>Fetch</b> button then Submit your <b>Form</b> to get the form data</li>
+            </ul>`
 
   return (
     <div className="trigger-custom-width">
@@ -261,6 +262,9 @@ const EssentialBlocksHelper = () => {
           </button>
         </div>
       }
+      <div className='flx flx-center'>
+        <Note note={info} />
+      </div>
     </div >
   )
 }
