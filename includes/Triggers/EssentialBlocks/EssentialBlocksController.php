@@ -1,45 +1,52 @@
 <?php
 
-namespace BitCode\FI\Triggers\FormHook;
+namespace BitCode\FI\Triggers\EssentialBlocks;
 
 use WP_Error;
 use BitCode\FI\Flow\Flow;
 
-class FormHookController
+class EssentialBlocksController
 {
-    protected static $formHookIntegrationsList = [
-        'Webhook',
-        'Spectra',
-    ];
-    // public static function info()
-    // {
-    //     return [
-    //         'name' => 'Form Hook',
-    //         'title' => 'Get callback data through an URL',
-    //         'type' => 'form_hook',
-    //         'is_active' => true
-    //     ];
-    // }
+    public static function info()
+    {
+        return [
+            'name' => 'Essential Blocks',
+            'title' => 'Get callback data through an URL',
+            'type' => 'essentialBlocks',
+            'is_active' => true
+        ];
+    }
 
     public function getTestData()
     {
-        $testData = get_option('btcbi_form_hook_test_uagb_form_success');
+        $testData = get_option('btcbi_test_eb_form_submit_before_email');
 
         if ($testData === false) {
-            update_option('btcbi_form_hook_test_uagb_form_success', []);
+            update_option('btcbi_test_eb_form_submit_before_email', []);
         }
         if (!$testData || empty($testData)) {
-            wp_send_json_error(new WP_Error('formHook_test', __('FormHook data is empty', 'bit-integrations')));
+            wp_send_json_error(new WP_Error('essentialBlocks_test', __('EssentialBlocks data is empty', 'bit-integrations')));
         }
-        wp_send_json_success(['formHook' => $testData]);
+        wp_send_json_success(['essentialBlocks' => $testData]);
     }
 
-    public static function formHookHandler(...$args)
+
+    public function removeTestData($data)
     {
-        if (get_option('btcbi_form_hook_test_uagb_form_success') !== false) {
-            update_option('btcbi_form_hook_test_uagb_form_success', $args);
+        $testData = delete_option('btcbi_test_eb_form_submit_before_email');
+
+        if (!$testData) {
+            wp_send_json_error(new WP_Error('essential_blocks_test', __('Failed to remove test data', 'bit-integrations')));
         }
-        if ($flows = Flow::exists(self::$formHookIntegrationsList, 'FormHook')) {
+        wp_send_json_success(__('essential_blocks test data removed successfully', 'bit-integrations'));
+    }
+    public static function essentialBlocksHandler(...$args)
+    {
+        if (get_option('btcbi_test_eb_form_submit_before_email') !== false) {
+            update_option('btcbi_test_eb_form_submit_before_email', $args);
+        }
+
+        if ($flows = Flow::exists('EssentialBlocks', current_action())) {
 
             foreach ($flows as $flow) {
                 $flowDetails = json_decode($flow->flow_details);
@@ -65,9 +72,7 @@ class FormHookController
                     foreach ($fieldKeys as $key) {
                         $formatedData[$key] = self::extractValueFromPath($args, $key);
                     }
-                    // var_dump('fdasjkwfhd');
-                    // die;
-                    Flow::execute('FormHook', current_action(), $formatedData, array($flow));
+                    Flow::execute('EssentialBlocks', current_action(), $formatedData, array($flow));
                 }
             }
         }

@@ -6,21 +6,21 @@ import toast from 'react-hot-toast'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $flowStep, $formFields, $newFlow } from '../../GlobalStates'
-import CloseIcn from '../../Icons/CloseIcn'
-import GetLogo from '../../Utils/GetLogo'
-import { extractValueFromPath } from '../../Utils/Helpers'
-import hooklist from '../../Utils/StaticData/hooklist'
-import bitsFetch from '../../Utils/bitsFetch'
-import { __ } from '../../Utils/i18nwrap'
-import LoaderSm from '../Loaders/LoaderSm'
-import ConfirmModal from '../Utilities/ConfirmModal'
-import EyeIcn from '../Utilities/EyeIcn'
-import EyeOffIcn from '../Utilities/EyeOffIcn'
-import SnackMsg from '../Utilities/SnackMsg'
-import TreeViewer from '../Utilities/treeViewer/TreeViewer'
+import { $flowStep, $formFields, $newFlow } from '../../../GlobalStates'
+import CloseIcn from '../../../Icons/CloseIcn'
+import GetLogo from '../../../Utils/GetLogo'
+import { extractValueFromPath } from '../../../Utils/Helpers'
+import hooklist from '../../../Utils/StaticData/hooklist'
+import bitsFetch from '../../../Utils/bitsFetch'
+import { __ } from '../../../Utils/i18nwrap'
+import LoaderSm from '../../Loaders/LoaderSm'
+import ConfirmModal from '../../Utilities/ConfirmModal'
+import EyeIcn from '../../Utilities/EyeIcn'
+import EyeOffIcn from '../../Utilities/EyeOffIcn'
+import SnackMsg from '../../Utilities/SnackMsg'
+import TreeViewer from '../../Utilities/treeViewer/TreeViewer'
 
-const FormHook = () => {
+const EssentialBlocksHelper = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
   const setFlowStep = useSetRecoilState($flowStep)
   const setFields = useSetRecoilState($formFields)
@@ -48,7 +48,7 @@ const FormHook = () => {
       fields: selectedFields.map(field => ({ label: field, name: field }))
     }
     tmpNewFlow['primaryKey'] = primaryKey
-    tmpNewFlow.triggered_entity_id = 'FormHook'
+    tmpNewFlow.triggered_entity_id = 'eb_form_submit_before_email'
     setFields(selectedFields)
     setNewFlow(tmpNewFlow)
     setFlowStep(2)
@@ -87,20 +87,20 @@ const FormHook = () => {
     }
     setIsLoading(true)
     intervalRef.current = setInterval(() => {
-      bitsFetch(null, 'form_hook/get').then((resp) => {
+      bitsFetch(null, 'essential_blocks/get').then((resp) => {
         if (resp.success) {
           clearInterval(intervalRef.current)
           const tmpNewFlow = { ...newFlow }
 
-          tmpNewFlow.triggerDetail.tmp = resp.data.formHook
-          tmpNewFlow.triggerDetail.data = resp.data.formHook
+          tmpNewFlow.triggerDetail.tmp = resp.data.essentialBlocks
+          tmpNewFlow.triggerDetail.data = resp.data.essentialBlocks
           setNewFlow(tmpNewFlow)
           setIsLoading(false)
           setShowResponse(true)
           setSelectedFields([])
           bitsFetch(
             { reset: true },
-            'form_hook/test/remove',
+            'essential_blocks/test/remove',
           )
         }
       })
@@ -117,6 +117,22 @@ const FormHook = () => {
       value: extractValueFromPath(newFlow.triggerDetail?.data, val)
     })
   }
+  useEffect(() => {
+    // if (newFlow.triggerDetail?.data?.length > 0 && newFlow.triggerDetail?.hook_id !== '') {
+    //   setHookID(newFlow.triggerDetail?.hook_id)
+    //   window.hook_id = newFlow.triggerDetail?.hook_id
+    // }
+
+    return () => {
+      setFields()
+      bitsFetch({ hook_id: window.hook_id }, 'essential_blocks/test/remove').then(
+        (resp) => {
+          delete window.hook_id
+          intervalRef.current && clearInterval(intervalRef.current)
+        },
+      )
+    }
+  }, [])
 
   return (
     <div className="trigger-custom-width">
@@ -218,7 +234,7 @@ const FormHook = () => {
             onClick={showResponseTable}
             className="btn btcd-btn-lg sh-sm flx"
           >
-            <span className="txt-formHook-resbtn font-inter-500">
+            <span className="txt-essentialBlocks-resbtn font-inter-500">
               {showResponse ? 'Hide Response' : 'View Response'}
             </span>
             {!showResponse ? (
@@ -248,4 +264,4 @@ const FormHook = () => {
     </div >
   )
 }
-export default FormHook
+export default EssentialBlocksHelper

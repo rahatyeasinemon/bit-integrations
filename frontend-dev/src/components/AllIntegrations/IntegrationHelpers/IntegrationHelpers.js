@@ -110,7 +110,7 @@ export const saveIntegConfig = async (flow, setFlow, allIntegURL, confTmp, navig
   } else if (flow.triggered_entity === 'ARMember') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = ARMemberStateIH(tmpConf, dataFlow)
-  } else if (flow.triggered_entity === 'ActionHook' || flow.triggered_entity === 'FormHook' || flow.triggered_entity_id === 'FormHook') {
+  } else if (flow.triggered_entity === 'ActionHook' || flow.triggered_entity === 'Spectra'  || flow.triggered_entity === 'EssentialBlocks') {
     tmpConf['primaryKey'] = flow.triggerData.primaryKey
   }
   console.log('flow1',flow)
@@ -226,7 +226,7 @@ export const saveActionConf = async ({ flow, setFlow, allIntegURL, conf, navigat
   } else if (flow.triggered_entity === 'ARMember') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = ARMemberStateIH(tmpConf, dataFlow)
-  } else if (flow.triggered_entity === 'ActionHook' || flow.triggered_entity === 'FormHook') {
+  } else if (flow.triggered_entity === 'ActionHook' || flow.triggered_entity === 'Spectra'  || flow.triggered_entity === 'EssentialBlocks') {
     tmpConf['primaryKey'] = flow.triggerData.primaryKey
   }
   console.log('flow2',flow)

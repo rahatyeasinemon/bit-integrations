@@ -62,7 +62,8 @@ class HookService
         }
         $activeTrigger[] = 'CustomTrigger';
         $activeTrigger[] = 'ActionHook';
-        $activeTrigger[] = 'FormHook';
+        $activeTrigger[] = 'Spectra';
+        $activeTrigger[] = 'EssentialBlocks';
         if (empty($activeTrigger) || !is_array($activeTrigger)) {
             return;
         }

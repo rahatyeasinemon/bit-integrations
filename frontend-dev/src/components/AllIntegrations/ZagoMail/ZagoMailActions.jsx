@@ -41,7 +41,6 @@ export default function ZagoMailActions({ zagoMailConf, setZagoMailConf, isLoadi
     newConf.selectedTags = val
     setZagoMailConf({ ...newConf })
   }
-  console.log('zagoMailConf', zagoMailConf)
   return (
     <div className="pos-rel d-flx w-8">
       <TableCheckBox checked={zagoMailConf?.selectedTags.length || false} onChange={(e) => actionHandler(e, 'tag')} className="wdt-200 mt-4 mr-2" value="tags" title={__('Add Tags', 'bit - integrations')} subTitle={__('Selects tags for contact')} />
