@@ -4,7 +4,7 @@ import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 import TagifyInput from '../../Utilities/TagifyInput'
-import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
+import { create } from 'mutative'
 
 export default function WooCommerceFieldMap({ i, formFields, field, wcConf, setWcConf, uploadFields, module }) {
   const isRequired = field.required === true
@@ -50,6 +50,12 @@ export default function WooCommerceFieldMap({ i, formFields, field, wcConf, setW
   //   setWcConf(newConf)
   // }
 
+  const handleCustomValue = (event, index) => {
+    setWcConf(prevConf => create(prevConf, draftConf => {
+      draftConf[module].field_map[index].customValue = event
+    }))
+  }
+
   return (
     <div
       className="flx mt-2 mb-2 btcbi-field-map"
@@ -65,7 +71,7 @@ export default function WooCommerceFieldMap({ i, formFields, field, wcConf, setW
           {!uploadFields && <option value="custom">{__('Custom...', 'bit-integrations')}</option>}
         </select>
 
-        {field.formField === 'custom' && <TagifyInput onChange={e => handleCustomValue(e, i, wcConf, setWcConf)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bit-integrations')} formFields={formFields} />}
+        {field.formField === 'custom' && <TagifyInput onChange={(e) => handleCustomValue(e, i)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bit-integrations')} formFields={formFields} />}
 
         <select className="btcd-paper-inp" name="wcField" value={field.wcField || ''} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
           <option value="">{__('Select Field', 'bit-integrations')}</option>

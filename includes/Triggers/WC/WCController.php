@@ -1297,7 +1297,8 @@ final class WCController
             $acfFields = acf_get_fields($group["ID"]);
 
             foreach ($acfFields as $field) {
-                $data[$field['_name']] = get_post_meta($order_id, $field['_name'])[0];
+                $meta                   = get_post_meta($order_id, $field['_name']);
+                $data[$field['_name']]  = is_array($meta) ? $meta[0] : $meta;
             }
         }
 
