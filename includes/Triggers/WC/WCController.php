@@ -1298,7 +1298,7 @@ final class WCController
 
             foreach ($acfFields as $field) {
                 $meta                   = get_post_meta($order_id, $field['_name']);
-                $data[$field['_name']]  = is_array($meta) ? $meta[0] : $meta;
+                $data[$field['_name']]  = is_array($meta) && !empty($meta) ? $meta[0] : $meta;
             }
         }
 
@@ -1793,7 +1793,7 @@ final class WCController
     public static function handle_variable_product_order($order_id, $importType)
     {
         $flows = Flow::exists('WC', 20);
-        if (!$flows && !is_plugin_active('woocommerce/woocommerce.php')) {
+        if (!$flows || !is_plugin_active('woocommerce/woocommerce.php')) {
             return false;
         }
 
