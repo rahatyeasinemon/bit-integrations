@@ -4,8 +4,14 @@ import toast from "react-hot-toast";
 import { __ } from '../../../Utils/i18nwrap';
 import "./style.scss"
 import { useAsyncDebounce } from "react-table";
+import MultiSelect from 'react-multiple-select-dropdown-lite'
+import { useRecoilValue } from "recoil";
+import { $btcbi } from "../../../GlobalStates";
+import { SmartTagField } from "../../../Utils/StaticData/SmartTagField";
 
 function JsonEditor({ data = {}, onChange, formFields = [] }) {
+    const btcbi = useRecoilValue($btcbi)
+    const { isPro } = btcbi
     const editorRef = useRef(null)
     const monaco = useMonaco()
 
@@ -50,9 +56,24 @@ function JsonEditor({ data = {}, onChange, formFields = [] }) {
                 onChange={onChange}
             />
             <div className="form-fields flx p-atn">
-                <select className="btcd-paper-inp" onChange={(e) => handlePasteFormField(e.target.value)}>
-                    <option value="">{__('Form Fields', 'bit-integrations')}</option>
-                    {formFields.map((field, key) => <option key={key} value={`"\${${field.name}}"`}>{field.label}</option>)}
+                <select className="btcd-paper-inp mr-2" name="formField" value={''} onChange={(ev) => handlePasteFormField(ev.target.value)}>
+                    <option value="">{__('Select Field', 'bit-integrations')}</option>
+                    <optgroup label="Form Fields">
+                        {
+                            formFields?.map(f => (
+                                <option key={`ff-rm-${f.name}`} value={`"\${${f.name}}"`}>
+                                    {f.label}
+                                </option>
+                            ))
+                        }
+                    </optgroup>
+                    <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+                        {isPro && SmartTagField?.map(f => (
+                            <option key={`ff-rm-${f.name}`} value={`"\${${f.name}}"`}>
+                                {f.label}
+                            </option>
+                        ))}
+                    </optgroup>
                 </select>
             </div>
             <button
