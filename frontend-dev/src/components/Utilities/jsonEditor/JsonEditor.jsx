@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { __ } from '../../../Utils/i18nwrap';
 import "./style.scss"
 import { useAsyncDebounce } from "react-table";
+import MultiSelect from 'react-multiple-select-dropdown-lite'
 
 function JsonEditor({ data = {}, onChange, formFields = [] }) {
     const editorRef = useRef(null)
@@ -50,10 +51,13 @@ function JsonEditor({ data = {}, onChange, formFields = [] }) {
                 onChange={onChange}
             />
             <div className="form-fields flx p-atn">
-                <select className="btcd-paper-inp" onChange={(e) => handlePasteFormField(e.target.value)}>
-                    <option value="">{__('Form Fields', 'bit-integrations')}</option>
-                    {formFields.map((field, key) => <option key={key} value={`"\${${field.name}}"`}>{field.label}</option>)}
-                </select>
+                <MultiSelect
+                    options={formFields.map(f => ({ label: f.label, value: `"\${${f.name}}"` }))}
+                    className="btcd-paper-drpdwn wdt-200 ml-2"
+                    singleSelect
+                    onChange={val => handlePasteFormField(val)}
+                    defaultValue={''}
+                />
             </div>
             <button
                 onClick={prettify}
