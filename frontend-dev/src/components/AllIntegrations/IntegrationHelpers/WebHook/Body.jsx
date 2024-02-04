@@ -7,8 +7,14 @@ import Button from '../../../Utilities/Button'
 import TableCheckBox from '../../../Utilities/TableCheckBox'
 import JsonEditor from '../../../Utilities/jsonEditor/JsonEditor'
 import { create } from 'mutative'
+import { useRecoilValue } from 'recoil'
+import { $btcbi } from '../../../../GlobalStates'
+import { SmartTagField } from '../../../../Utils/StaticData/SmartTagField'
 
 function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
+  const btcbi = useRecoilValue($btcbi)
+  const { isPro } = btcbi
+
   useEffect(() => {
     const tmpConf = { ...webHooks }
     if (!tmpConf.body) {
@@ -108,13 +114,25 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
                 {!isInfo && (
                   <div className="flx p-atn">
                     <Button onClick={() => delParam(childindx)} icn><TrashIcn size={16} /></Button>
-                    <MultiSelect
-                      options={formFields.map(f => ({ label: f.label, value: `\${${f.name}}` }))}
-                      className="btcd-paper-drpdwn wdt-200 ml-2"
-                      singleSelect
-                      onChange={val => setFromField(val, childindx)}
-                      defaultValue={itm.value}
-                    />
+                    <select className="btcd-paper-inp mr-2" name="formField" value={itm.value || ''} onChange={(ev) => setFromField(ev.target.value, childindx)}>
+                      <option value="">{__('Select Field', 'bit-integrations')}</option>
+                      <optgroup label="Form Fields">
+                        {
+                          formFields?.map(f => (
+                            <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`}>
+                              {f.label}
+                            </option>
+                          ))
+                        }
+                      </optgroup>
+                      <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+                        {isPro && SmartTagField?.map(f => (
+                          <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`}>
+                            {f.label}
+                          </option>
+                        ))}
+                      </optgroup>
+                    </select>
                   </div>
                 )}
               </div>
@@ -125,7 +143,7 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
           </div>
         </div>
       }
-    </div>
+    </div >
   )
 }
 
