@@ -680,6 +680,7 @@ final class WCController
                 ],
             ];
             $acfFieldGroups = self::acfGetFieldGroups(['shop_order']);
+            $checkoutFields = WC()->checkout()->get_checkout_fields();
             foreach ($acfFieldGroups as $group) {
                 $acfFields = acf_get_fields($group["ID"]);
 
@@ -688,6 +689,16 @@ final class WCController
                         'fieldKey'  => $field['_name'],
                         'fieldName' => $field['label']
                     ];
+                }
+            }
+            foreach ($checkoutFields as $group) {
+                foreach ($group as $field) {
+                    if (!empty($field['custom']) && $field['custom']) {
+                        $fields[$field['name']] = (object) [
+                            'fieldKey'  => $field['name'],
+                            'fieldName' => $field['label']
+                        ];
+                    }
                 }
             }
 
@@ -1282,7 +1293,7 @@ final class WCController
         return $data;
     }
 
-    public static function handle_order_create($order_id, $abc)
+    public static function handle_order_create($order_id, $fields)
     {
         if (!is_plugin_active('woocommerce/woocommerce.php')) {
             return false;
@@ -1292,6 +1303,7 @@ final class WCController
         $data = self::accessOrderData($order);
         $triggerd = [8, 9, 11, 12, 13, 14, 15, 16];
         $acfFieldGroups = self::acfGetFieldGroups(['shop_order']);
+        $checkoutFields = WC()->checkout()->get_checkout_fields();
 
         foreach ($acfFieldGroups as $group) {
             $acfFields = acf_get_fields($group["ID"]);
@@ -1299,6 +1311,13 @@ final class WCController
             foreach ($acfFields as $field) {
                 $meta                   = get_post_meta($order_id, $field['_name']);
                 $data[$field['_name']]  = is_array($meta) && !empty($meta) ? $meta[0] : $meta;
+            }
+        }
+        foreach ($checkoutFields as $group) {
+            foreach ($group as $field) {
+                if (!empty($field['custom']) && $field['custom']) {
+                    $data[$field['name']] = $fields[$field['name']];
+                }
             }
         }
 
