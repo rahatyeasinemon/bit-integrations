@@ -13,6 +13,8 @@ import FormPlugin from '../../Triggers/FormPlugin'
 import Webhook from '../../Triggers/Webhook'
 import ActionHook from '../../Triggers/ActionHook'
 import GetLogo from '../../../Utils/GetLogo'
+import EssentialBlocksHelper from '../../Triggers/TriggerHelpers/EssentialBlocksHelper'
+import SpectraHelper from '../../Triggers/TriggerHelpers/SpectraHelper'
 
 export default function SelectTrigger() {
   const { isPro } = useRecoilValue($btcbi)
@@ -90,6 +92,7 @@ export default function SelectTrigger() {
     )
   }
 
+  console.log('newFlow.triggered_entity', newFlow.triggered_entity)
   return (
     <>
       {newFlow.triggered_entity
@@ -107,6 +110,8 @@ export default function SelectTrigger() {
               {newFlow.triggerDetail?.type === 'webhook' && flowStep === 1 && <Webhook />}
               {newFlow.triggerDetail?.type === 'custom_trigger' && flowStep === 1 && <CustomTrigger />}
               {newFlow.triggerDetail?.type === 'action_hook' && flowStep === 1 && <ActionHook />}
+              {newFlow.triggerDetail?.type === 'spectra' && flowStep === 1 && <SpectraHelper />}
+              {newFlow.triggerDetail?.type === 'essentialBlocks' && flowStep === 1 && <EssentialBlocksHelper />}
             </div>
           </>
         ) : (

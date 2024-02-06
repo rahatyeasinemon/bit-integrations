@@ -5115,6 +5115,14 @@ _:-ms-fullscreen,
           list-style-type: decimal;
         }
       }
+
+      .feature-list {
+        margin: 0px 0px 35px 0px;
+
+        &>ul {
+          list-style-type: disc;
+        }
+      }
     }
 
     .footer {

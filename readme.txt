@@ -1,10 +1,10 @@
-=== Best no-code Automator & Integration tool to Automate 200+ Platforms - Bit Integrations ===
+=== Webhook Automator & Form Integration to Automate 200+ Platforms – Bit Integrations ===
 Contributors: bitpressadmin
 Tags: automation,integration,connector,automator,Zapier,webhook,WordPress form,API,Hook,Pabbly,Integrately,automate
 Requires at least: 5.1
 Tested up to: 6.4.2
 Requires PHP: 7.0
-Stable tag: 1.5.9
+Stable tag: 1.6.0
 License: GPLv2 or later
 
 Automation Plugin for WordPress; Integration of 60+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -80,6 +80,7 @@ https://youtu.be/eFuficjF_F4
 * [**Elementor**](https://wordpress.org/plugins/elementor/)
 * [**Easy Digital Downloads**](https://wordpress.org/plugins/easy-digital-downloads/)
 * [**eForm**](https://eform.live/)
+* [**Essential Blocks**](https://wordpress.org/plugins/essential-blocks/)
 * [**Fluent Forms**](https://wordpress.org/plugins/fluentform/)
 * [**FluentCRM**](https://wordpress.org/plugins/fluent-crm/)
 * [**Fluent Support**](https://wordpress.org/plugins/fluent-support/)
@@ -111,6 +112,7 @@ https://youtu.be/eFuficjF_F4
 * [**Studiocart**](https://wordpress.org/plugins/studiocart/)
 * [**SliceWP Affiliate**](https://wordpress.org/plugins/slicewp/)
 * [**Solid Affiliate**](https://solidaffiliate.com/)
+* [**Spectra**](https://wordpress.org/plugins/ultimate-addons-for-gutenberg/)
 * [**SureCart**](https://wordpress.org/plugins/surecart/)
 * [**Tripetto**](https://wordpress.org/plugins/tripetto/)
 * [**Tutor LMS**](https://wordpress.org/plugins/tutor/)
@@ -552,6 +554,9 @@ I’ve been using the free version for sometime and switched to the pro version 
 * [**eForm - Ultimate WordPress Form Builder Solution :**](https://eform.live/) eForm is an advanced and flexible WordPress form builder for quizzes, surveys, data collection, payment estimation and user feedback of all kinds. 
 
     eForm is the ultimate solution for WordPress form building, offering a wide range of features and customization options. With eForm, you can effortlessly create and manage multiple forms, making it a versatile tool for collecting data, feedback, and user interactions using the powerful eForm platform.[[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/eform-integrations/)|[**Website**](https://eform.live/)]
+* [**Essential Blocks – Page Builder Gutenberg Blocks, Patterns & Templates :**](https://wordpress.org/plugins/essential-blocks/) eForm is an advanced and flexible WordPress form builder for quizzes, surveys, data collection, payment estimation and user feedback of all kinds. 
+
+    Essential Blocks is a comprehensive suite of tools designed for optimizing website design. Through EssentialBlocks array of customizable options, web developers gain flexibility and creativity in their projects.[[**Website**](https://essential-blocks.com/)|[**Free**](https://wordpress.org/plugins/essential-blocks/)]
 * [**Contact Form Plugin – Fastest Contact Form Builder Plugin for WordPress by Fluent Forms :**](https://fluentforms.com/) Fluent Forms is the ultimate user-friendly, customizable drag-and-drop WordPress Contact Form Plugin that offers you all the premium features, plus many more ... 
 
     Fluent Forms is the fastest contact form builder plugin for WordPress, designed for streamlined form creation and management. With FluentForms, you can easily integrate multiple contact forms across your website, harnessing its speed and efficiency to enhance user communication through FluentForms' user-friendly interface.[[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/fluent-forms-integrations/)|[**Website**](https://fluentforms.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIyB8ezuQkv5T-_8T7MaTV7)|[**Free**](https://wordpress.org/trigger/fluentform/)]
@@ -639,6 +644,9 @@ I’ve been using the free version for sometime and switched to the pro version 
 
 
     Ultimate Member is the comprehensive WordPress plugin for user profiles, registration, login, member directories, content restriction, and membership management. With Ultimate Member, you can effortlessly create a thriving online community, offering tailored user experiences and managing memberships throughout your WordPress site using Ultimate Member's versatile features. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/ultimate-member-integrations/)|[**Website**](https://ultimatemember.com/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIQZ6_LkYASRj5zBJnNWDne)|[**Free**](https://wordpress.org/plugins/ultimate-member/)]
+* [**Spectra – WordPress Gutenberg Blocks :**](https://wordpress.org/plugins/ultimate-addons-for-gutenberg/) Spectra provides a wide range of unique and creative blocks on top of the default WordPress page editor, enabling you to build and design pages or posts without ... 
+
+    Spectra is a versatile tool that enhances productivity in diverse workflows. With Spectra's adaptable features, users experience increased efficiency in task management and data analysis. [[**Website**](https://www.studiocart.co/)|[**Free**](https://wordpress.org/plugins/ultimate-addons-for-gutenberg/)]
 * [**eCommerce Shopping Cart and Funnel Builder – Studiocart :**](https://www.studiocart.co/) Studiocart is a simple, powerful plugin that has everything you need to sell digital products, programs, events, or services from your own website ... 
 
     Studiocart is the all-in-one solution for eCommerce shopping cart management and funnel building within WordPress. With Studiocart, you can streamline the shopping experience, create  sales funnels, and maximize conversions, making Studiocart an essential tool for businesses seeking to optimize their online sales processes using Studiocart's powerful capabilities. [[**Documentation**](https://bitapps.pro/docs/bit-integrations/trigger/studiocart-integrations/)|[**Website**](https://www.studiocart.co/)|[**Tutorial**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIzdZmtu18zJZwQFSZohEqq)|[**Free**](https://wordpress.org/plugins/studiocart/)]
@@ -1729,6 +1737,28 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 1.6.0  =
+*Release Date - *5th February 2024\*
+
+- **New Triggers :**
+  - Spectra
+  - Essential Blocks
+
+- **New Features :**
+  - Mail Mint: Custom Field
+  - Active Campaign: Account feature
+  - WebHook: General Smart Codes Fields & Custom JSON Schema Editor (Raw)
+  - Custom Api: General Smart Codes Fields & Custom JSON Schema Editor (Raw)
+
+- **Fixes :**
+  - ZohoCRM: Fixed DateTime 
+  - Custom Api: Fixed HTTP method
+  - Mail Mint: FIxed update contact status
+  - Post: Create a new post : Fixed multiple data sending issue
+  - ConvertKit: Fixed authorization
+  - Zoho Bigin: integration update validation
+  - WooCommerce: custom field mapping
 
 = 1.5.9  =
 *Release Date - *21th January 2024\*

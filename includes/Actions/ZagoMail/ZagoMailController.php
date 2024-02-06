@@ -213,7 +213,9 @@ class ZagoMailController
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;
         $listId = $integrationDetails->listId;
-        $tags = explode(',', $integrationDetails->selectedTags);
+        if (count($integrationDetails->selectedTags) > 0) {
+            $tags = explode(',', $integrationDetails->selectedTags);
+        }
 
         if (empty($api_public_key)
             || empty($fieldMap)
