@@ -99,13 +99,13 @@ final class BreakdanceController
         $all_forms = [];
         if ($posts) {
             foreach ($posts as $post) {
-                $postMeta = self::getBreackdancePostMeta($post->ID);
-                $forms = self::getAllFormsFromPostMeta($postMeta, $post->ID);
+                $postMeta   = self::getBreackdancePostMeta($post->ID);
+                $forms      = self::getAllFormsFromPostMeta($postMeta, $post->ID);
                 foreach ($forms as $form) {
                     $all_forms[] = (object)[
-                        'id' => "{$form['form_id']}",
-                        'title' => $form['form_name'],
-                        'post_id' => $post->ID,
+                        'id'        => "{$form['form_id']}",
+                        'title'     => $form['form_name'],
+                        'post_id'   => $post->ID,
                     ];
                 }
             }
@@ -154,44 +154,30 @@ final class BreakdanceController
         return $fields;
     }
 
-    // public static function getAllFormsFromPostMeta($postMeta, $postId)
-    // {
-    //     $forms = [];
-
-    //     foreach ($postMeta as $widget) {
-    //         $widget = json_decode($widget);
-    //         if (property_exists($widget, 'root')) {
-    //             $formDatas = !empty($widget->root->children[0]->children) ? $widget->root->children[0]->children : [];
-    //             if (empty($formDatas)) {
-    //                 return;
-    //             }
-    //             foreach ($formDatas as $data) {
-    //                 $forms = self::extractAllForms($data, $postId);
-    //             }
-    //         }
-    //     }
-    //     return $forms;
-    // }
-
     public static function getAllFormsFromPostMeta($postMeta, $postId)
     {
         $forms = [];
 
         foreach ($postMeta as $widget) {
-            $widget = json_decode($widget);
+            $widget = is_string($widget) ? json_decode($widget) : $widget;
+            $widget = (object) $widget;
+
             if (property_exists($widget, 'root')) {
-                $rootData = $widget->root->children;
+                $rootData = $widget->root->children ?? $widget->root['children'];
                 if (empty($rootData)) {
                     return;
                 }
 
                 foreach ($rootData as $everySection) {
-                    $formDatas = !empty($everySection->children) ? $everySection->children : [];
+                    $formDatas = is_array($everySection) ? $everySection['children'] ?? [] : $everySection->children ?? [];
                     if (empty($formDatas)) {
                         return;
                     }
                     foreach ($formDatas as $data) {
-                        $forms = self::extractAllForms($data, $postId);
+                        $form = self::extractAllForms($data, $postId);
+                        if (!empty($form)) {
+                            $forms = $form;
+                        }
                     }
                 }
             }
@@ -207,20 +193,25 @@ final class BreakdanceController
             if ($keys === 'id') {
                 $form_id = "{$element}-{$postId}";
             }
+            if ($keys === 'data' && is_array($element)) {
+                $element = (object) $element;
+            }
+
             if (
                 is_object($element)
                 && property_exists($element, 'type')
                 && $element->type === 'EssentialElements\\FormBuilder'
             ) {
-                $newForm = $element->properties->content->form;
+                $newForm = $element->properties->content->form ?? $element->properties['content']['form'];
                 $allForm[] = array_merge((array)$newForm, ['form_id' => $form_id]);
             }
             if ($keys == 'children') {
                 if (is_array($element) && !empty($element)) {
                     foreach ($element as $secondLayer) {
+                        $secondLayer = is_array($secondLayer) ? (object) $secondLayer : $secondLayer;
                         if (property_exists($secondLayer, 'children')) {
                             foreach ($secondLayer->children as $sKeys => $sValue) {
-                                self::extractAllForms($sValue, $postId);
+                                $allForm = self::extractAllForms($sValue, $postId);
                             }
                         }
                     }
