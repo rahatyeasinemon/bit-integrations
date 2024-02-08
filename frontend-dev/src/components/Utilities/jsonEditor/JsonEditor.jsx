@@ -8,8 +8,13 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useRecoilValue } from "recoil";
 import { $btcbi } from "../../../GlobalStates";
 import { SmartTagField } from "../../../Utils/StaticData/SmartTagField";
+import Note from '../../Utilities/Note'
 
-function JsonEditor({ data = {}, onChange, formFields = [] }) {
+const emptyJson = `{ 
+    // write here your custom field map 
+  }`
+
+function JsonEditor({ data = emptyJson, onChange, formFields = [] }) {
     const btcbi = useRecoilValue($btcbi)
     const { isPro } = btcbi
     const editorRef = useRef(null)
@@ -43,6 +48,12 @@ function JsonEditor({ data = {}, onChange, formFields = [] }) {
         }
     }
 
+    const info = `<h4>Custom Json Raw Code Setup</h4>
+    <ul>
+        <li>Remove "// write here your custom field map" & Write your code between { and }.</li>
+        <li>Remove Trailing Comma from last property of object</li>
+    </ul>`
+
     return (
         <div className="json-editor my-3 py-3">
             <Editor
@@ -55,7 +66,7 @@ function JsonEditor({ data = {}, onChange, formFields = [] }) {
                 onMount={handleEditorDidMount}
                 onChange={onChange}
             />
-            <div className="form-fields flx p-atn">
+            <div className="form-fields p-atn">
                 <select className="btcd-paper-inp mr-2" name="formField" value={''} onChange={(ev) => handlePasteFormField(ev.target.value)}>
                     <option value="">{__('Select Field', 'bit-integrations')}</option>
                     <optgroup label="Form Fields">
@@ -75,6 +86,7 @@ function JsonEditor({ data = {}, onChange, formFields = [] }) {
                         ))}
                     </optgroup>
                 </select>
+                <Note note={info} />
             </div>
             <button
                 onClick={prettify}

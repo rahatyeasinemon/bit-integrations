@@ -19,6 +19,9 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
     const tmpConf = { ...webHooks }
     if (!tmpConf.body) {
       tmpConf.body = { type: '', data: [] }
+      tmpConf.body['raw'] = `{ 
+        // write here your custom field map 
+      }`
       setWebHooks(tmpConf)
     }
     setTab(3)
