@@ -41,7 +41,7 @@ function JsonEditor({ data = emptyJson, onChange, formFields = [] }) {
             editor.executeEdits("", [
                 {
                     range: new monaco.Range(position.lineNumber, position.column, position.lineNumber, position.column),
-                    text: `"input_key": ${field},`,
+                    text: `"${field}": "\${${field}}",`,
                     forceMoveMarkers: true,
                 },
             ])
@@ -50,8 +50,8 @@ function JsonEditor({ data = emptyJson, onChange, formFields = [] }) {
 
     const info = `<h4>Custom Json Raw Code Setup</h4>
     <ul>
-        <li>Remove "// write here your custom field map" & Write your code between { and }.</li>
-        <li>Remove Trailing Comma from last property of object</li>
+        <li>Remove "// write here your custom field map" & Write your code between {  } or [  ].</li>
+        <li>Remove trailing comma from last property of object which is underlined by red color</li>
     </ul>`
 
     return (
@@ -72,7 +72,7 @@ function JsonEditor({ data = emptyJson, onChange, formFields = [] }) {
                     <optgroup label="Form Fields">
                         {
                             formFields?.map(f => (
-                                <option key={`ff-rm-${f.name}`} value={`"\${${f.name}}"`}>
+                                <option key={`ff-rm-${f.name}`} value={f.name}>
                                     {f.label}
                                 </option>
                             ))
