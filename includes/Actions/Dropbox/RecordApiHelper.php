@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\Dropbox;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class RecordApiHelper
 {
@@ -22,14 +22,14 @@ class RecordApiHelper
     {
         if ($filePath === '') return false;
 
-        $body = file_get_contents($filePath);
+        $body = file_get_contents(trim($filePath));
         if (!$body) return new WP_Error(423, 'Can\'t open file!');
 
         $apiEndPoint = $this->contentBaseUri . '/2/files/upload';
         $headers = [
             'Authorization'   => 'Bearer ' . $this->token,
             'Content-Type'    => 'application/octet-stream',
-            'Dropbox-API-Arg' => json_encode(['path' => $folder . '/' . basename($filePath), 'mode' => 'add', 'autorename' => true, 'mute' => true, 'strict_conflict' => false]),
+            'Dropbox-API-Arg' => json_encode(['path' => $folder . '/' . trim(basename($filePath)), 'mode' => 'add', 'autorename' => true, 'mute' => true, 'strict_conflict' => false]),
         ];
         return HttpHelper::post($apiEndPoint, $body, $headers);
     }
