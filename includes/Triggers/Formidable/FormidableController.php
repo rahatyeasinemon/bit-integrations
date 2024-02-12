@@ -154,7 +154,7 @@ final class FormidableController
                         $form_fields['last-name'] = isset($val['last']) ? $val['last'] : '';
                     }
                 } elseif ($field->type == 'checkbox' || $field->type == 'file') {
-                    $form_fields[$key] = $val;
+                    $form_fields[$key] = $field->type == 'checkbox' && is_array($val) && count($val) == 1 ? $val[0] : $val;
                 } elseif ($field->type == 'address') {
                     $addressKey = $field->field_key;
                     foreach ($val as $k => $value) {
@@ -204,7 +204,8 @@ final class FormidableController
 
         $form_data = self::getFieldsValues($form, $entry_id);
         $post_id = url_to_postid($_SERVER['HTTP_REFERER']);
-
+        error_log(print_r($form_data, true));
+        // die;
         if (!empty($form->id)) {
             $data = [];
             if ($post_id) {
