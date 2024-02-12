@@ -3,10 +3,10 @@
 /**
  * Restrict Content Integration
  */
-namespace BitCode\FI\Actions\RestrictContent;
+namespace BitCode\BTCBI\Actions\RestrictContent;
 
 use WP_Error;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for RestricContent integration

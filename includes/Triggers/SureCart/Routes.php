@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\SureCart\SureCartController;
+use BitCode\BTCBI\Core\Util\Route;
+use BitCode\BTCBI\Triggers\SureCart\SureCartController;
 
 Route::get('surecart/get', [SureCartController::class, 'getAll']);
 Route::post('surecart/get/form', [SureCartController::class, 'get_a_form']);

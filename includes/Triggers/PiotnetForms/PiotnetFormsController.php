@@ -1,8 +1,8 @@
 <?php
-namespace BitCode\FI\Triggers\PiotnetForms;
+namespace BitCode\BTCBI\Triggers\PiotnetForms;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Flow\Flow;
 
 final class PiotnetFormsController
 {

@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\Woodpecker\WoodpeckerController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\Woodpecker\WoodpeckerController;
+use BitCode\BTCBI\Core\Util\Route;
 
 
 Route::post('woodpecker_authentication', [WoodpeckerController::class, 'authentication']);

@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\CF7;
+namespace BitCode\BTCBI\Triggers\CF7;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class CF7Controller
 {

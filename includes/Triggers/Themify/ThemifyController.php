@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\Themify;
+namespace BitCode\BTCBI\Triggers\Themify;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class ThemifyController
 {

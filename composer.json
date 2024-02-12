@@ -4,7 +4,7 @@
     "license": "gpl-2",
     "autoload": {
         "psr-4": {
-            "BitCode\\FI\\": "includes/"
+            "BitCode\\BTCBI\\": "includes/"
         }
     },
     "require-dev": {

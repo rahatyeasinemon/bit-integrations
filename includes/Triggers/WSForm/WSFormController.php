@@ -1,7 +1,7 @@
 <?php
-namespace BitCode\FI\Triggers\WSForm;
+namespace BitCode\BTCBI\Triggers\WSForm;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class WSFormController
 {

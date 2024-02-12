@@ -3,8 +3,8 @@ if ( !defined( 'ABSPATH' ) ) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Triggers\Registration\RegistrationController;
+use BitCode\BTCBI\Core\Util\Hooks;
+use BitCode\BTCBI\Triggers\Registration\RegistrationController;
 
 //* User Register HOOK*//
 Hooks::add( 'user_register', [RegistrationController::class, 'userCreate'], 10, 2 );

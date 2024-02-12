@@ -4,8 +4,8 @@
  * KonnectzIT Integration
  *
  */
-namespace BitCode\FI\Actions\KonnectzIT;
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+namespace BitCode\BTCBI\Actions\KonnectzIT;
+use BitCode\BTCBI\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for KonnectzITHandler

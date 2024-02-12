@@ -1,9 +1,9 @@
 <?php
-namespace BitCode\FI\Actions\SureCart;
+namespace BitCode\BTCBI\Actions\SureCart;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\SureCart\RecordApiHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Actions\SureCart\RecordApiHelper;
 
 class SureCartController
 {

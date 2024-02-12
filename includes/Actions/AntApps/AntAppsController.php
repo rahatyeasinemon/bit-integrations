@@ -5,9 +5,9 @@
  *
  */
 
-namespace BitCode\FI\Actions\AntApps;
+namespace BitCode\BTCBI\Actions\AntApps;
 
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+use BitCode\BTCBI\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for Ant&Apps

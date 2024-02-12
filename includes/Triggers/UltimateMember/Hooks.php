@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Triggers\UltimateMember\UltimateMemberController;
+use BitCode\BTCBI\Core\Util\Hooks;
+use BitCode\BTCBI\Triggers\UltimateMember\UltimateMemberController;
 
 
 Hooks::add('um_user_login', [UltimateMemberController::class, 'handleUserLogViaForm'], 9, 1);

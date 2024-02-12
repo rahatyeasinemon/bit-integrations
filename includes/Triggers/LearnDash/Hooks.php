@@ -3,8 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Triggers\LearnDash\LearnDashController;
+use BitCode\BTCBI\Core\Util\Hooks;
+use BitCode\BTCBI\Triggers\LearnDash\LearnDashController;
 
 Hooks::add('learndash_update_course_access', [LearnDashController::class, 'handle_course_enroll'], 10, 4);
 Hooks::add('learndash_course_completed', [LearnDashController::class, 'handle_course_completed'], 10, 1);

@@ -4,12 +4,12 @@
  * trello Record Api
  */
 
-namespace BitCode\FI\Actions\LearnDash;
+namespace BitCode\BTCBI\Actions\LearnDash;
 
 use LDLMS_DB;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Actions\Mail\MailController;
+use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Actions\Mail\MailController;
 
 /**
  * Provide functionality for Record insert, upsert

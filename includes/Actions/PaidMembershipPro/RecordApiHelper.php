@@ -1,8 +1,8 @@
 <?php
-namespace BitCode\FI\Actions\PaidMembershipPro;
+namespace BitCode\BTCBI\Actions\PaidMembershipPro;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Log\LogHandler;
 
 class RecordApiHelper
 {

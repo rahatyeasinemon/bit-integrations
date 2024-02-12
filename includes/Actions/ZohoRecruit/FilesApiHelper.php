@@ -4,9 +4,9 @@
  * ZohoRecruit Files Api
  */
 
-namespace BitCode\FI\Actions\ZohoRecruit;
+namespace BitCode\BTCBI\Actions\ZohoRecruit;
 
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Upload files

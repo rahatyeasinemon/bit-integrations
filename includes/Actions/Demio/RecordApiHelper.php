@@ -4,10 +4,10 @@
  * Demio Record Api
  */
 
-namespace BitCode\FI\Actions\Demio;
+namespace BitCode\BTCBI\Actions\Demio;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert

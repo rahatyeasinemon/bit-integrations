@@ -1,5 +1,5 @@
 <?php
-namespace BitCode\FI\Triggers\BuddyBoss;
+namespace BitCode\BTCBI\Triggers\BuddyBoss;
 
 class BuddyBossHelper
 {

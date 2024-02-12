@@ -3,8 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\GetResponse\GetResponseController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\GetResponse\GetResponseController;
+use BitCode\BTCBI\Core\Util\Route;
 
 Route::post('getresponse_fetch_all_tags', [GetResponseController::class, 'fetchAllTags']);
 Route::post('getresponse_authentication', [GetResponseController::class, 'authentication']);

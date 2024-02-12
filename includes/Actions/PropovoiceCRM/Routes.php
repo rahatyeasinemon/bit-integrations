@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\PropovoiceCRM\PropovoiceCRMController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\PropovoiceCRM\PropovoiceCRMController;
+use BitCode\BTCBI\Core\Util\Route;
 
 Route::post('propovoice_authorize', [PropovoiceCRMController::class, 'authorizePropovoiceCrm']);
 Route::post('propovoice_crm_lead_tags', [PropovoiceCRMController::class, 'leadTags']);

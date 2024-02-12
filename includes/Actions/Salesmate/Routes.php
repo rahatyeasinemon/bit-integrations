@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\Salesmate\SalesmateController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\Salesmate\SalesmateController;
+use BitCode\BTCBI\Core\Util\Route;
 
 
 Route::post('salesmate_authentication', [SalesmateController::class, 'authentication']);

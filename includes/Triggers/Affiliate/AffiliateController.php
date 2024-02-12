@@ -1,7 +1,7 @@
 <?php
-namespace BitCode\FI\Triggers\Affiliate;
+namespace BitCode\BTCBI\Triggers\Affiliate;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class AffiliateController
 {

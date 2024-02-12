@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\PerfexCRM\PerfexCRMController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\PerfexCRM\PerfexCRMController;
+use BitCode\BTCBI\Core\Util\Route;
 
 
 Route::post('perfexcrm_authentication', [PerfexCRMController::class, 'authentication']);

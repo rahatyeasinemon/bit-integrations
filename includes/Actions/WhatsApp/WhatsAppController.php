@@ -3,10 +3,10 @@
 /**
  * WhatsApp Integration
  */
-namespace BitCode\FI\Actions\WhatsApp;
+namespace BitCode\BTCBI\Actions\WhatsApp;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Trello integration

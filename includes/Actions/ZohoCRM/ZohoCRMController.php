@@ -4,16 +4,16 @@
  * ZohoCrm Integration
  */
 
-namespace BitCode\FI\Actions\ZohoCRM;
+namespace BitCode\BTCBI\Actions\ZohoCRM;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\ZohoCRM\TagApiHelper;
-use BitCode\FI\Actions\ZohoCRM\MetaDataApiHelper;
-use BitCode\FI\Actions\ZohoCRM\RecordApiHelper;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Plugin;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Actions\ZohoCRM\TagApiHelper;
+use BitCode\BTCBI\Actions\ZohoCRM\MetaDataApiHelper;
+use BitCode\BTCBI\Actions\ZohoCRM\RecordApiHelper;
+use BitCode\BTCBI\Flow\FlowController;
+use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Plugin;
 use stdClass;
 
 /**

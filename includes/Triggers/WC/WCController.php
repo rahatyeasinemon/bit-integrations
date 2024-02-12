@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\WC;
+namespace BitCode\BTCBI\Triggers\WC;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class WCController
 {

@@ -4,10 +4,10 @@
  * SendFox Integration
  */
 
-namespace BitCode\FI\Actions\SendFox;
+namespace BitCode\BTCBI\Actions\SendFox;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 class SendFoxController
 {

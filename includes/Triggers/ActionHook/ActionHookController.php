@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Triggers\ActionHook;
+namespace BitCode\BTCBI\Triggers\ActionHook;
 
 use WP_Error;
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 class ActionHookController
 {

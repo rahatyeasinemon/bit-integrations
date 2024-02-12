@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\FI\Actions\CustomAction;
+namespace BitCode\BTCBI\Actions\CustomAction;
 
-use BitCode\FI\Core\Util\Common;
+use BitCode\BTCBI\Core\Util\Common;
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 class CustomActionController
 {

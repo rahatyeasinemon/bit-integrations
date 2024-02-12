@@ -4,11 +4,11 @@
  * Selzy Record Api
  */
 
-namespace BitCode\FI\Actions\Selzy;
+namespace BitCode\BTCBI\Actions\Selzy;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record Subscribe , Unsubscribe

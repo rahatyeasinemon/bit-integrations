@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Triggers\Webhook;
+namespace BitCode\BTCBI\Triggers\Webhook;
 
-use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Core\Util\Helper;
+use BitCode\BTCBI\Flow\Flow;
 use WP_Error;
 use WP_REST_Request;
 

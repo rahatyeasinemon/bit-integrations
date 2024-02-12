@@ -1,5 +1,5 @@
 <?php
-namespace BitCode\FI\Triggers\SureCart;
+namespace BitCode\BTCBI\Triggers\SureCart;
 
 final class SureCartHelper
 {

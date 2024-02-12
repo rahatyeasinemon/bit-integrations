@@ -4,11 +4,11 @@
  * ZohoRecruit Record Api
  */
 
-namespace BitCode\FI\Actions\GoogleSheet;
+namespace BitCode\BTCBI\Actions\GoogleSheet;
 
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,upsert

@@ -1,9 +1,9 @@
 <?php
-namespace BitCode\FI\Actions\SureCart;
+namespace BitCode\BTCBI\Actions\SureCart;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 class RecordApiHelper
 {

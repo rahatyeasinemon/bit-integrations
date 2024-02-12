@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\NF;
+namespace BitCode\BTCBI\Triggers\NF;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class NFController
 {

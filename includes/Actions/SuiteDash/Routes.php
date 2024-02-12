@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\SuiteDash\SuiteDashController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\SuiteDash\SuiteDashController;
+use BitCode\BTCBI\Core\Util\Route;
 
 
 Route::post('suite_dash_authentication', [SuiteDashController::class, 'authentication']);

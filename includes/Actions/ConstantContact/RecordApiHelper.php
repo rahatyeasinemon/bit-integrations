@@ -3,11 +3,11 @@
 /**
  * ConstantContact    Record Api
  */
-namespace BitCode\FI\Actions\ConstantContact;
+namespace BitCode\BTCBI\Actions\ConstantContact;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 use Requests;
 
 /**

@@ -3,8 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\ZohoAnalytics\ZohoAnalyticsController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\ZohoAnalytics\ZohoAnalyticsController;
+use BitCode\BTCBI\Core\Util\Route;
 
 Route::post('zanalytics_generate_token', [ZohoAnalyticsController::class, 'generateTokens']);
 Route::post('zanalytics_refresh_workspaces', [ZohoAnalyticsController::class, 'refreshWorkspacesAjaxHelper']);

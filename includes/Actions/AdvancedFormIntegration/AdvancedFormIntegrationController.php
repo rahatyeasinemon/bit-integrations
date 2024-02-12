@@ -5,9 +5,9 @@
  *
  */
 
-namespace BitCode\FI\Actions\AdvancedFormIntegration;
+namespace BitCode\BTCBI\Actions\AdvancedFormIntegration;
 
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+use BitCode\BTCBI\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for AdvancedFormIntegrationHandler

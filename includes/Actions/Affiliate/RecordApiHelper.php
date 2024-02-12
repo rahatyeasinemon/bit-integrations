@@ -3,11 +3,11 @@
 /**
  * trello Record Api
  */
-namespace BitCode\FI\Actions\Affiliate;
+namespace BitCode\BTCBI\Actions\Affiliate;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert

@@ -4,12 +4,12 @@
  * HubSpot Record Api
  */
 
-namespace BitCode\FI\Actions\Hubspot;
+namespace BitCode\BTCBI\Actions\Hubspot;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Core\Util\DateTimeHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert

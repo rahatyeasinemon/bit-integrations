@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\FI\Actions\Hubspot;
+namespace BitCode\BTCBI\Actions\Hubspot;
 
 use WP_Error;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Flow\FlowController;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 final class HubspotController
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Admin;
+namespace BitCode\BTCBI\Admin;
 
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Core\Util\Route;
 class AdminAjax
 {
     public function register()

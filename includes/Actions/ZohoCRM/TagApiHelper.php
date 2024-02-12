@@ -2,10 +2,10 @@
 /**
  * ZohoCrm Tag Api Helper
  */
-namespace BitCode\FI\Actions\ZohoCRM;
+namespace BitCode\BTCBI\Actions\ZohoCRM;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Tags in Zoho CRM

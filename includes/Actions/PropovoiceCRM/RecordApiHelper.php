@@ -1,10 +1,10 @@
 <?php
 
-namespace BitCode\FI\Actions\PropovoiceCRM;
+namespace BitCode\BTCBI\Actions\PropovoiceCRM;
 
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert

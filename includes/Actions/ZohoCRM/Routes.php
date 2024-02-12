@@ -3,8 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\ZohoCRM\ZohoCRMController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\ZohoCRM\ZohoCRMController;
+use BitCode\BTCBI\Core\Util\Route;
 
     Route::post('zcrm_get_users', [ZohoCRMController::class, 'refreshUsersAjaxHelper']);
     Route::post('zcrm_get_tags', [ZohoCRMController::class, 'refreshTagListAjaxHelper']);

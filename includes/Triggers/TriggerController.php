@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers;
+namespace BitCode\BTCBI\Triggers;
 
-use BitCode\FI\Plugin;
+use BitCode\BTCBI\Plugin;
 use FilesystemIterator;
 
 final class TriggerController

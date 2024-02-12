@@ -1,7 +1,7 @@
 <?php
-namespace BitCode\FI\Triggers\MasterStudyLms;
+namespace BitCode\BTCBI\Triggers\MasterStudyLms;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class MasterStudyLmsController
 {

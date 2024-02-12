@@ -4,16 +4,16 @@
  * ZohoRecruit Record Api
  */
 
-namespace BitCode\FI\Actions\ZohoRecruit;
+namespace BitCode\BTCBI\Actions\ZohoRecruit;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Core\Util\FieldValueHandler;
-use BitCode\FI\Core\Util\ApiResponse as UtilApiResponse;
-use BitCode\FI\Actions\ZohoRecruit\FilesApiHelper;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\DateTimeHelper;
+use BitCode\BTCBI\Core\Util\FieldValueHandler;
+use BitCode\BTCBI\Core\Util\ApiResponse as UtilApiResponse;
+use BitCode\BTCBI\Actions\ZohoRecruit\FilesApiHelper;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert

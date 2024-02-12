@@ -1,7 +1,7 @@
 <?php
-namespace BitCode\FI\Triggers\Memberpress;
+namespace BitCode\BTCBI\Triggers\Memberpress;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class MemberpressController
 {

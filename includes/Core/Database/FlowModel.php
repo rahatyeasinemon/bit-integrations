@@ -2,12 +2,12 @@
 /**
  * Provides Base Model Class
  */
-namespace BitCode\FI\Core\Database;
+namespace BitCode\BTCBI\Core\Database;
 
 /**
  * Undocumented class
  */
-use BitCode\FI\Core\Database\Model;
+use BitCode\BTCBI\Core\Database\Model;
 
 class FlowModel extends Model
 {

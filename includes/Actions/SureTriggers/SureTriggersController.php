@@ -5,9 +5,9 @@
  *
  */
 
-namespace BitCode\FI\Actions\SureTriggers;
+namespace BitCode\BTCBI\Actions\SureTriggers;
 
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+use BitCode\BTCBI\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for SureTriggersHandler

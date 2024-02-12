@@ -1,7 +1,7 @@
 <?php
-namespace BitCode\FI\Triggers\Rafflepress;
+namespace BitCode\BTCBI\Triggers\Rafflepress;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class RafflepressController
 {

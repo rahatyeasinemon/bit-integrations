@@ -4,7 +4,7 @@
  * Telegram Files Api
  */
 
-namespace BitCode\FI\Actions\Telegram;
+namespace BitCode\BTCBI\Actions\Telegram;
 
 /**
  * Provide functionality for Upload files

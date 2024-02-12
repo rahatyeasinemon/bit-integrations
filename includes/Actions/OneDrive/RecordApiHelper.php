@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Actions\OneDrive;
+namespace BitCode\BTCBI\Actions\OneDrive;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 class RecordApiHelper
 {

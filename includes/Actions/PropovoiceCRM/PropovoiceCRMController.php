@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\FI\Actions\PropovoiceCRM;
+namespace BitCode\BTCBI\Actions\PropovoiceCRM;
 
 use WP_Error;
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\PropovoiceCRM\RecordApiHelper;
+use BitCode\BTCBI\Core\Util\IpTool;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Actions\PropovoiceCRM\RecordApiHelper;
 
 class PropovoiceCRMController
 {

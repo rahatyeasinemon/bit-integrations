@@ -1,7 +1,7 @@
 <?php
-namespace BitCode\FI\Triggers\SolidAffiliate;
+namespace BitCode\BTCBI\Triggers\SolidAffiliate;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class SolidAffiliateController
 {

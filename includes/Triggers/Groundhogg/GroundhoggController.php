@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\Groundhogg;
+namespace BitCode\BTCBI\Triggers\Groundhogg;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 use Groundhogg\DB\Tags;
 
 final class GroundhoggController

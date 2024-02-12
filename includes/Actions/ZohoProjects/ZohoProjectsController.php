@@ -3,10 +3,10 @@
 /**
  * ZohoProjects Integration
  */
-namespace BitCode\FI\Actions\ZohoProjects;
+namespace BitCode\BTCBI\Actions\ZohoProjects;
 
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\IpTool;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration

@@ -1,7 +1,7 @@
 <?php
-namespace BitCode\FI\Triggers\SliceWp;
+namespace BitCode\BTCBI\Triggers\SliceWp;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class SliceWpController
 {

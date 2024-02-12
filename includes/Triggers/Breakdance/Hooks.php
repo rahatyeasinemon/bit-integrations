@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Triggers\Breakdance\BreakdanceController;
+use BitCode\BTCBI\Core\Util\Hooks;
+use BitCode\BTCBI\Triggers\Breakdance\BreakdanceController;
 
 // BreakdanceController::addAction();

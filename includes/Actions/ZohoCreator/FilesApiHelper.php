@@ -4,9 +4,9 @@
  * ZohoCreator Files Api
  */
 
-namespace BitCode\FI\Actions\ZohoCreator;
+namespace BitCode\BTCBI\Actions\ZohoCreator;
 
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Upload files

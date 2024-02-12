@@ -3,8 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\RestrictContent\RestrictContentController;
+use BitCode\BTCBI\Core\Util\Route;
+use BitCode\BTCBI\Triggers\RestrictContent\RestrictContentController;
 
 Route::get('restrictcontent/get', [RestrictContentController::class, 'getAll']);
 Route::post('restrictcontent/get/form', [RestrictContentController::class, 'get_a_form']);

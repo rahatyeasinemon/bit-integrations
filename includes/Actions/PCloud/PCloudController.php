@@ -1,10 +1,10 @@
 <?php
 
-namespace BitCode\FI\Actions\PCloud;
+namespace BitCode\BTCBI\Actions\PCloud;
 
-use BitCode\FI\Actions\PCloud\RecordApiHelper as PCloudRecordApiHelper;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Actions\PCloud\RecordApiHelper as PCloudRecordApiHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 use WP_Error;
 
 class PCloudController

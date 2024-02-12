@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\BuddyBoss;
+namespace BitCode\BTCBI\Triggers\BuddyBoss;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class BuddyBossController
 {

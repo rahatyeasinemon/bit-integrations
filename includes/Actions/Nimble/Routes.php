@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\Nimble\NimbleController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\Nimble\NimbleController;
+use BitCode\BTCBI\Core\Util\Route;
 
 
 Route::post('nimble_authentication', [NimbleController::class, 'authentication']);

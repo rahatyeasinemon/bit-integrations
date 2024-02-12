@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\WPFunnels;
+namespace BitCode\BTCBI\Triggers\WPFunnels;
 
-use BitCode\FI\Triggers\Webhook\WebhookController;
+use BitCode\BTCBI\Triggers\Webhook\WebhookController;
 
 final class WPFunnelsController extends WebhookController
 {

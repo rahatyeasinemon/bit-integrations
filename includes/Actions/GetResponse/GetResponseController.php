@@ -4,10 +4,10 @@
  * GetResponse Integration
  */
 
-namespace BitCode\FI\Actions\GetResponse;
+namespace BitCode\BTCBI\Actions\GetResponse;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for GetResponse integration

@@ -4,12 +4,12 @@
  * WooCommerce Integration
  */
 
-namespace BitCode\FI\Actions\WooCommerce;
+namespace BitCode\BTCBI\Actions\WooCommerce;
 
 use WP_Error;
 use WC_Data_Store;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Actions\WooCommerce\RecordApiHelper;
+use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Actions\WooCommerce\RecordApiHelper;
 
 class WooCommerceController
 {

@@ -2,11 +2,11 @@
 
 
 
-namespace BitCode\FI\Actions\WishList;
+namespace BitCode\BTCBI\Actions\WishList;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Core\Util\DateTimeHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert

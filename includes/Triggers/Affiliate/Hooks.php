@@ -3,8 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Triggers\Affiliate\AffiliateController;
+use BitCode\BTCBI\Core\Util\Hooks;
+use BitCode\BTCBI\Triggers\Affiliate\AffiliateController;
 
 Hooks::add('affwp_set_affiliate_status', [AffiliateController::class, 'newAffiliateApproved'], 10, 3);
 // Hooks::add('affwp_register_user', [AffiliateController::class, 'newAffiliatAwaitingApproval'], 15, 3);

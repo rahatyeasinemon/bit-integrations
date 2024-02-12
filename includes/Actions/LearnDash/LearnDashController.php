@@ -4,7 +4,7 @@
  * LearnDesh Integration
  */
 
-namespace BitCode\FI\Actions\LearnDash;
+namespace BitCode\BTCBI\Actions\LearnDash;
 
 use WP_Error;
 

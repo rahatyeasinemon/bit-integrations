@@ -1,8 +1,8 @@
 <?php
-namespace BitCode\FI\Actions\ZoomWebinar;
+namespace BitCode\BTCBI\Actions\ZoomWebinar;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Flow\FlowController;
 use WP_Error;
 
 class ZoomWebinarController

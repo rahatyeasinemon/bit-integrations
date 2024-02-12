@@ -4,10 +4,10 @@
  * EmailOctopus Integration
  */
 
-namespace BitCode\FI\Actions\EmailOctopus;
+namespace BitCode\BTCBI\Actions\EmailOctopus;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for EmailOctopus integration

@@ -4,12 +4,12 @@
  * Telegram Record Api
  */
 
-namespace BitCode\FI\Actions\Telegram;
+namespace BitCode\BTCBI\Actions\Telegram;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\Telegram\FilesApiHelper;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Actions\Telegram\FilesApiHelper;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert

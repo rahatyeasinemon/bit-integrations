@@ -4,11 +4,11 @@
  * Drip Integration
  */
 
-namespace BitCode\FI\Actions\Drip;
+namespace BitCode\BTCBI\Actions\Drip;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\Drip\RecordApiHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Actions\Drip\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration

@@ -1,8 +1,8 @@
 <?php
-namespace BitCode\FI\Triggers\Registration;
+namespace BitCode\BTCBI\Triggers\Registration;
 
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Core\Util\Hooks;
+use BitCode\BTCBI\Flow\Flow;
 
 final class RegistrationController
 {

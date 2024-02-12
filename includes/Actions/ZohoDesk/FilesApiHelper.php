@@ -4,9 +4,9 @@
  * ZohoDesk Files Api
  */
 
-namespace BitCode\FI\Actions\ZohoDesk;
+namespace BitCode\BTCBI\Actions\ZohoDesk;
 
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Upload files

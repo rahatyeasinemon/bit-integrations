@@ -3,8 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Triggers\MetaBox\MetaBoxController;
-use BitCode\FI\Core\Util\Hooks;
+use BitCode\BTCBI\Triggers\MetaBox\MetaBoxController;
+use BitCode\BTCBI\Core\Util\Hooks;
 
         
 //* METABOX SUBMITTED ACTION HOOK*//

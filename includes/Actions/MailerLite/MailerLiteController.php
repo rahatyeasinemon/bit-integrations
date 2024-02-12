@@ -4,10 +4,10 @@
  * MailerLite Integration
  */
 
-namespace BitCode\FI\Actions\MailerLite;
+namespace BitCode\BTCBI\Actions\MailerLite;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for MailerLite integration

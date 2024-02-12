@@ -5,9 +5,9 @@
  *
  */
 
-namespace BitCode\FI\Actions\WPWebhooks;
+namespace BitCode\BTCBI\Actions\WPWebhooks;
 
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+use BitCode\BTCBI\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for WPWebhooksHandler

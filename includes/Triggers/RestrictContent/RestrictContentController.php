@@ -1,7 +1,7 @@
 <?php
-namespace BitCode\FI\Triggers\RestrictContent;
+namespace BitCode\BTCBI\Triggers\RestrictContent;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class RestrictContentController
 {

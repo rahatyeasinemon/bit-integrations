@@ -5,13 +5,13 @@
  *
  */
 
-namespace BitCode\FI\Actions\Rapidmail;
+namespace BitCode\BTCBI\Actions\Rapidmail;
 
 use stdClass;
 use WP_Error;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\Rapidmail\RecordApiHelper as RapidmailRecordApiHelper;
+use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Actions\Rapidmail\RecordApiHelper as RapidmailRecordApiHelper;
 
 
 final class RapidmailController

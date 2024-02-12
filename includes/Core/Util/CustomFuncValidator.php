@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\FI\Core\Util;
+namespace BitCode\BTCBI\Core\Util;
 
 class CustomFuncValidator
 {

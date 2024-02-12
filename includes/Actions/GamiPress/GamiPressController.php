@@ -4,7 +4,7 @@
  * LearnDesh Integration
  */
 
-namespace BitCode\FI\Actions\GamiPress;
+namespace BitCode\BTCBI\Actions\GamiPress;
 
 use WP_Error;
 

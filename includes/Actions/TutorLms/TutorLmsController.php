@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Actions\TutorLms;
+namespace BitCode\BTCBI\Actions\TutorLms;
 
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Tutor LMS integration

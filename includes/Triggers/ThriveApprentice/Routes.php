@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\ThriveApprentice\ThriveApprenticeController;
+use BitCode\BTCBI\Core\Util\Route;
+use BitCode\BTCBI\Triggers\ThriveApprentice\ThriveApprenticeController;
 
 Route::get('thriveapprentice/get', [ThriveApprenticeController::class, 'getAll']);
 Route::post('thriveapprentice/get/form', [ThriveApprenticeController::class, 'get_a_form']);

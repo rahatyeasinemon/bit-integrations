@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\WooCommerce\WooCommerceController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\WooCommerce\WooCommerceController;
+use BitCode\BTCBI\Core\Util\Route;
 
 Route::post('wc_authorize', [WooCommerceController::class, 'authorizeWC']);
 Route::post('wc_refresh_fields', [WooCommerceController::class, 'refreshFields']);

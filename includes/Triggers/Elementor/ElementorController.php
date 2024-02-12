@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\Elementor;
+namespace BitCode\BTCBI\Triggers\Elementor;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class ElementorController
 {

@@ -1,10 +1,10 @@
 <?php
-namespace BitCode\FI\Actions\GoogleCalendar;
+namespace BitCode\BTCBI\Actions\GoogleCalendar;
 
-use BitCode\FI\Actions\GoogleCalendar\RecordApiHelper as GoogleCalendarRecordApiHelper;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Actions\GoogleCalendar\RecordApiHelper as GoogleCalendarRecordApiHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Flow\FlowController;
+use BitCode\BTCBI\Log\LogHandler;
 use WP_Error;
 
 class GoogleCalendarController

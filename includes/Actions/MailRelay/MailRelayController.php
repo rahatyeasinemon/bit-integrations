@@ -4,10 +4,10 @@
  * MailRelay Integration
  */
 
-namespace BitCode\FI\Actions\MailRelay;
+namespace BitCode\BTCBI\Actions\MailRelay;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for MailRelay integration

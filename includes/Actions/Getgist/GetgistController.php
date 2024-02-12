@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\FI\Actions\Getgist;
+namespace BitCode\BTCBI\Actions\Getgist;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
-use BitCode\FI\Actions\Getgist\RecordApiHelper;
+use BitCode\BTCBI\Actions\Getgist\RecordApiHelper;
 
 
 class GetgistController

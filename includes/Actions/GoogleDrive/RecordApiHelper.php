@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Actions\GoogleDrive;
+namespace BitCode\BTCBI\Actions\GoogleDrive;
 
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 class RecordApiHelper
 {

@@ -1,7 +1,7 @@
 <?php
 
-namespace BitCode\FI\Core\Util;
-use BitCode\FI\Core\Util\IpTool;
+namespace BitCode\BTCBI\Core\Util;
+use BitCode\BTCBI\Core\Util\IpTool;
 
 /**
  * handling Special mail-tags

@@ -4,10 +4,10 @@
  * ClinchPad Integration
  */
 
-namespace BitCode\FI\Actions\ClinchPad;
+namespace BitCode\BTCBI\Actions\ClinchPad;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ClinchPad integration

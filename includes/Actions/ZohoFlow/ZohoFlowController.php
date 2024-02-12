@@ -5,9 +5,9 @@
  *
  */
 
-namespace BitCode\FI\Actions\ZohoFlow;
+namespace BitCode\BTCBI\Actions\ZohoFlow;
 
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+use BitCode\BTCBI\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for ZohoFlowHandler

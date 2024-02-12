@@ -4,11 +4,11 @@
  * Moosend Integration
  */
 
-namespace BitCode\FI\Actions\Moosend;
+namespace BitCode\BTCBI\Actions\Moosend;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\Moosend\RecordApiHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Actions\Moosend\RecordApiHelper;
 
 /**
  * Provide functionality for Moosend integration

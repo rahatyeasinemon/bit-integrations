@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\BitForm;
+namespace BitCode\BTCBI\Triggers\BitForm;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class BitFormController
 {

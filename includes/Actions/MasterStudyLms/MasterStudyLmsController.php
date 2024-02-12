@@ -1,5 +1,5 @@
 <?php
-namespace BitCode\FI\Actions\MasterStudyLms;
+namespace BitCode\BTCBI\Actions\MasterStudyLms;
 
 use WP_Error;
 

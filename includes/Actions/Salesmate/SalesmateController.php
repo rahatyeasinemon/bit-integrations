@@ -4,10 +4,10 @@
  * Salesmate Integration
  */
 
-namespace BitCode\FI\Actions\Salesmate;
+namespace BitCode\BTCBI\Actions\Salesmate;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Salesmate integration

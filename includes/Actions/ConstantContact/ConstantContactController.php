@@ -3,12 +3,12 @@
 /**
  * Constant Contact Integration
  */
-namespace BitCode\FI\Actions\ConstantContact;
+namespace BitCode\BTCBI\Actions\ConstantContact;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Flow\FlowController;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Constant Contact integration

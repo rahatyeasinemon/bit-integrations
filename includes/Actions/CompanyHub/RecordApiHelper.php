@@ -4,10 +4,10 @@
  * CompanyHub Record Api
  */
 
-namespace BitCode\FI\Actions\CompanyHub;
+namespace BitCode\BTCBI\Actions\CompanyHub;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert

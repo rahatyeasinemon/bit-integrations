@@ -4,10 +4,10 @@
  * CompanyHub Integration
  */
 
-namespace BitCode\FI\Actions\CompanyHub;
+namespace BitCode\BTCBI\Actions\CompanyHub;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for CompanyHub integration

@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\WeForms;
+namespace BitCode\BTCBI\Triggers\WeForms;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 use DateTime;
 
 final class WeFormsController

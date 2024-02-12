@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\TutorLms;
+namespace BitCode\BTCBI\Triggers\TutorLms;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class TutorLmsController
 {

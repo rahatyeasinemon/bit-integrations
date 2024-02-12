@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\FI\Triggers\Post;
+namespace BitCode\BTCBI\Triggers\Post;
 
 use WP_Query;
 

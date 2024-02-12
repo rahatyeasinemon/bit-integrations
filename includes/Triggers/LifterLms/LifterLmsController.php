@@ -1,7 +1,7 @@
 <?php
-namespace BitCode\FI\Triggers\LifterLms;
+namespace BitCode\BTCBI\Triggers\LifterLms;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class LifterLmsController
 {

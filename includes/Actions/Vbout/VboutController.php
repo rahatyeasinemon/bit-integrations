@@ -3,10 +3,10 @@
 /**
  * Vbout Integration
  */
-namespace BitCode\FI\Actions\Vbout;
+namespace BitCode\BTCBI\Actions\Vbout;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
     
 /**
  * Provide functionality for Vbout integration

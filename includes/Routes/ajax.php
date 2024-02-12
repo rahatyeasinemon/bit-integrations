@@ -6,12 +6,12 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\controller\PostController;
-use BitCode\FI\controller\UserController;
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Triggers\TriggerController;
+use BitCode\BTCBI\controller\PostController;
+use BitCode\BTCBI\controller\UserController;
+use BitCode\BTCBI\Core\Util\Route;
+use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Triggers\TriggerController;
 
 Route::post('log/get', [LogHandler::class, 'get']);
 Route::post('log/delete', [LogHandler::class, 'delete']);

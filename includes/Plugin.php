@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\FI;
+namespace BitCode\BTCBI;
 
 /**
  * Main class for the plugin.
@@ -8,16 +8,16 @@ namespace BitCode\FI;
  * @since 1.0.0-alpha
  */
 
-use BitCode\FI\Core\Database\DB;
-use BitCode\FI\Admin\Admin_Bar;
-use BitCode\FI\Core\Util\Request;
-use BitCode\FI\Core\Util\Activation;
-use BitCode\FI\Core\Util\Deactivation;
-use BitCode\FI\Core\Util\UnInstallation;
-use BitCode\FI\Core\Hooks\HookService;
-use BitCode\FI\Core\Util\Capabilities;
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Database\DB;
+use BitCode\BTCBI\Admin\Admin_Bar;
+use BitCode\BTCBI\Core\Util\Request;
+use BitCode\BTCBI\Core\Util\Activation;
+use BitCode\BTCBI\Core\Util\Deactivation;
+use BitCode\BTCBI\Core\Util\UnInstallation;
+use BitCode\BTCBI\Core\Hooks\HookService;
+use BitCode\BTCBI\Core\Util\Capabilities;
+use BitCode\BTCBI\Core\Util\Hooks;
+use BitCode\BTCBI\Log\LogHandler;
 
 final class Plugin
 {

@@ -3,10 +3,10 @@
 /**
  * MailChimp Integration
  */
-namespace BitCode\FI\Actions\MailChimp;
+namespace BitCode\BTCBI\Actions\MailChimp;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 
 /**

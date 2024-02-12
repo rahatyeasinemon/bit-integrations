@@ -4,11 +4,11 @@
  * DirectIQ Integration
  */
 
-namespace BitCode\FI\Actions\DirectIq;
+namespace BitCode\BTCBI\Actions\DirectIq;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\DirectIq\RecordApiHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Actions\DirectIq\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration

@@ -4,10 +4,10 @@
  * Livestorm Integration
  */
 
-namespace BitCode\FI\Actions\Livestorm;
+namespace BitCode\BTCBI\Actions\Livestorm;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Livestorm integration

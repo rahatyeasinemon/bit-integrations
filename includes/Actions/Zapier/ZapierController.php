@@ -5,8 +5,8 @@
  *
  */
 
-namespace BitCode\FI\Actions\Zapier;
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+namespace BitCode\BTCBI\Actions\Zapier;
+use BitCode\BTCBI\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for ZapierHandler

@@ -1,10 +1,10 @@
 <?php
 
-namespace BitCode\FI\Actions\Registration;
+namespace BitCode\BTCBI\Actions\Registration;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Log\LogHandler;
 
 final class RegistrationController
 {

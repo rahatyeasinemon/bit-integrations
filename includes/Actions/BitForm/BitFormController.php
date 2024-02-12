@@ -4,11 +4,11 @@
  * BitForm Integration
  */
 
-namespace BitCode\FI\Actions\BitForm;
+namespace BitCode\BTCBI\Actions\BitForm;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\BitForm\RecordApiHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Actions\BitForm\RecordApiHelper;
 
 
 /**

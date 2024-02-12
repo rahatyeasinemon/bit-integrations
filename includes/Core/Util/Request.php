@@ -1,5 +1,5 @@
 <?php
-namespace BitCode\FI\Core\Util;
+namespace BitCode\BTCBI\Core\Util;
 
 final class Request
 {

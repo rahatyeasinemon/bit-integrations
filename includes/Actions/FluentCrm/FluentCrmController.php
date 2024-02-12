@@ -4,11 +4,11 @@
  * Fluent CRM Integration
  */
 
-namespace BitCode\FI\Actions\FluentCrm;
+namespace BitCode\BTCBI\Actions\FluentCrm;
 
 use WP_Error;
 
-use BitCode\FI\Actions\FluentCrm\RecordApiHelper;
+use BitCode\BTCBI\Actions\FluentCrm\RecordApiHelper;
 use FluentCrm\App\Models\Lists;
 use FluentCrm\App\Models\Tag;
 use FluentCrm\App\Models\Subscriber;

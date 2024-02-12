@@ -1,5 +1,5 @@
 <?php
-namespace BitCode\FI\Triggers\SolidAffiliate;
+namespace BitCode\BTCBI\Triggers\SolidAffiliate;
 
 final class SolidAffiliateHelper
 {

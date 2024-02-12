@@ -4,14 +4,14 @@
  * ZohoCrm Record Api
  */
 
-namespace BitCode\FI\Actions\ZohoCRM;
+namespace BitCode\BTCBI\Actions\ZohoCRM;
 
 use WP_Error;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Actions\ZohoCRM\TagApiHelper;
-use BitCode\FI\Actions\ZohoCRM\FilesApiHelper;
+use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\DateTimeHelper;
+use BitCode\BTCBI\Actions\ZohoCRM\TagApiHelper;
+use BitCode\BTCBI\Actions\ZohoCRM\FilesApiHelper;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -191,7 +191,7 @@ class RecordApiHelper
             && $recordApiResponse->data[0]->code === 'SUCCESS'
             && !empty($recordApiResponse->data[0]->details->id)
         ) {
-            if (!empty($actions->tag_rec) && class_exists('BitCode\FI\Actions\ZohoCRM\TagApiHelper')) {
+            if (!empty($actions->tag_rec) && class_exists('BitCode\BTCBI\Actions\ZohoCRM\TagApiHelper')) {
                 $tags = '';
                 $tag_rec = \explode(",", $actions->tag_rec);
                 foreach ($tag_rec as $tag) {

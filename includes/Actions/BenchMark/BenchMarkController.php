@@ -4,11 +4,11 @@
  * Benchmark Integration
  */
 
-namespace BitCode\FI\Actions\BenchMark;
+namespace BitCode\BTCBI\Actions\BenchMark;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\BenchMark\RecordApiHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Actions\BenchMark\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration

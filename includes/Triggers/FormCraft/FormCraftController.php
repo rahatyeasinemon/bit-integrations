@@ -1,7 +1,7 @@
 <?php
-namespace BitCode\FI\Triggers\FormCraft;
+namespace BitCode\BTCBI\Triggers\FormCraft;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class FormCraftController
 {

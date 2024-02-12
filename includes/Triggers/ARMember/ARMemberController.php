@@ -1,8 +1,8 @@
 <?php
-namespace BitCode\FI\Triggers\ARMember;
+namespace BitCode\BTCBI\Triggers\ARMember;
 
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Triggers\ARMember\ARMemberHelper;
+use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Triggers\ARMember\ARMemberHelper;
 
 final class ARMemberController
 {

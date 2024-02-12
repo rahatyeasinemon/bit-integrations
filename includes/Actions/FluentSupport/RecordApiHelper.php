@@ -4,10 +4,10 @@
  * Freshdesk Record Api
  */
 
-namespace BitCode\FI\Actions\FluentSupport;
+namespace BitCode\BTCBI\Actions\FluentSupport;
 
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\Common;
+use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
 use FluentSupport\App\Models\Ticket;
 use FluentSupport\App\Models\Customer;
 use FluentSupport\App\Services\Helper;

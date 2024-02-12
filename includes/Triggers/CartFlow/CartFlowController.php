@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\CartFlow;
+namespace BitCode\BTCBI\Triggers\CartFlow;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class CartFlowController
 {

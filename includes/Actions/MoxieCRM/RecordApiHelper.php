@@ -4,10 +4,10 @@
  * MoxieCRM Record Api
  */
 
-namespace BitCode\FI\Actions\MoxieCRM;
+namespace BitCode\BTCBI\Actions\MoxieCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert

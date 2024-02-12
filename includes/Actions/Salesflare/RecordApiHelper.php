@@ -4,10 +4,10 @@
  * Salesflare Record Api
  */
 
-namespace BitCode\FI\Actions\Salesflare;
+namespace BitCode\BTCBI\Actions\Salesflare;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert

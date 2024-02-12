@@ -4,13 +4,13 @@
  * Encharge Integration
  */
 
-namespace BitCode\FI\Actions\Encharge;
+namespace BitCode\BTCBI\Actions\Encharge;
 
 use WP_Error;
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\IpTool;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
-use BitCode\FI\Actions\Encharge\RecordApiHelper;
+use BitCode\BTCBI\Actions\Encharge\RecordApiHelper;
 
 /**
  * Provide functionality for Encharge integration

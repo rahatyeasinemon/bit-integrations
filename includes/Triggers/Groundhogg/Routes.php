@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\Groundhogg\GroundhoggController;
+use BitCode\BTCBI\Core\Util\Route;
+use BitCode\BTCBI\Triggers\Groundhogg\GroundhoggController;
 
 Route::get('groundhogg/get', [GroundhoggController::class, 'getAll']);
 Route::post('groundhogg/get/form', [GroundhoggController::class, 'getFormFields']);

@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\MasterStudyLms\MasterStudyLmsController;
+use BitCode\BTCBI\Core\Util\Route;
+use BitCode\BTCBI\Triggers\MasterStudyLms\MasterStudyLmsController;
 
 Route::get('masterstudylms/get', [MasterStudyLmsController::class, 'getAll']);
 Route::post('masterstudylms/get/form', [MasterStudyLmsController::class, 'get_a_form']);

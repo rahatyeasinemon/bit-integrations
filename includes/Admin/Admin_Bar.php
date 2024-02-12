@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\FI\Admin;
+namespace BitCode\BTCBI\Admin;
 
-use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Core\Util\Capabilities;
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Plugin;
+use BitCode\BTCBI\Core\Util\DateTimeHelper;
+use BitCode\BTCBI\Core\Util\Capabilities;
+use BitCode\BTCBI\Core\Util\Hooks;
+use BitCode\BTCBI\Plugin;
 
 /**
  * The admin menu and page handler class

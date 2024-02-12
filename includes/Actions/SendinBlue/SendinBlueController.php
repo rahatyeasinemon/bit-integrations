@@ -4,12 +4,12 @@
  * ZohoSheet Integration
  */
 
-namespace BitCode\FI\Actions\SendinBlue;
+namespace BitCode\BTCBI\Actions\SendinBlue;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
-use BitCode\FI\Actions\SendinBlue\RecordApiHelper;
+use BitCode\BTCBI\Actions\SendinBlue\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration

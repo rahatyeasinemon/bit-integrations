@@ -1,7 +1,7 @@
 <?php
-namespace BitCode\FI\Triggers\GiveWp;
+namespace BitCode\BTCBI\Triggers\GiveWp;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class GiveWpController
 {

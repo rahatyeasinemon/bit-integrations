@@ -3,10 +3,10 @@
 /**
  * ZohoDesk Integration
  */
-namespace BitCode\FI\Actions\ZohoDesk;
+namespace BitCode\BTCBI\Actions\ZohoDesk;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Flow\FlowController;
 use WP_Error;
 
 /**

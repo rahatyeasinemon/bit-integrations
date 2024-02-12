@@ -1,5 +1,5 @@
 <?php
-namespace BitCode\FI\Triggers\EDD;
+namespace BitCode\BTCBI\Triggers\EDD;
 
 class EDDHelper
 {

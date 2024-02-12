@@ -4,10 +4,10 @@
  * Asana Integration
  */
 
-namespace BitCode\FI\Actions\Asana;
+namespace BitCode\BTCBI\Actions\Asana;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Asana integration

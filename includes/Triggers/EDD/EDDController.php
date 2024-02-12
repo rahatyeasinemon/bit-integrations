@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\EDD;
+namespace BitCode\BTCBI\Triggers\EDD;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class EDDController
 {

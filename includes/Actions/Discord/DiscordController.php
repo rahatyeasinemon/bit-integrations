@@ -4,10 +4,10 @@
  * discord Integration
  */
 
-namespace BitCode\FI\Actions\Discord;
+namespace BitCode\BTCBI\Actions\Discord;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for discord integration

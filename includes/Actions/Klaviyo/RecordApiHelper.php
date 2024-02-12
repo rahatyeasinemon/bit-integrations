@@ -4,12 +4,12 @@
  * Klaviyo    Record Api
  */
 
-namespace BitCode\FI\Actions\Klaviyo;
+namespace BitCode\BTCBI\Actions\Klaviyo;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Core\Util\Helper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record Add Member

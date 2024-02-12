@@ -1,10 +1,10 @@
 <?php
 
-namespace BitCode\FI\Actions\Mautic;
+namespace BitCode\BTCBI\Actions\Mautic;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 
 class RecordApiHelper

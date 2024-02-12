@@ -3,8 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Triggers\WPCourseware\WPCoursewareController;
+use BitCode\BTCBI\Core\Util\Hooks;
+use BitCode\BTCBI\Triggers\WPCourseware\WPCoursewareController;
 
 Hooks::add('wpcw_enroll_user', [WPCoursewareController::class, 'userEnrolledCourse'], 10, 2);
 Hooks::add('wpcw_user_completed_course', [WPCoursewareController::class, 'courseCompleted'], 10, 3);

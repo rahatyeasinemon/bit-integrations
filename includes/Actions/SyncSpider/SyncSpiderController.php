@@ -4,8 +4,8 @@
  * SyncSpider Integration
  *
  */
-namespace BitCode\FI\Actions\SyncSpider;
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+namespace BitCode\BTCBI\Actions\SyncSpider;
+use BitCode\BTCBI\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for SyncSpider

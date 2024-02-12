@@ -4,10 +4,10 @@
  * CopperCRM Record Api
  */
 
-namespace BitCode\FI\Actions\CopperCRM;
+namespace BitCode\BTCBI\Actions\CopperCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert

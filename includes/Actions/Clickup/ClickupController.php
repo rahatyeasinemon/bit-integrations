@@ -4,10 +4,10 @@
  * Clickup Integration
  */
 
-namespace BitCode\FI\Actions\Clickup;
+namespace BitCode\BTCBI\Actions\Clickup;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Clickup integration

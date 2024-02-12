@@ -5,16 +5,16 @@
  * @package bit-integrations
  */
 
-namespace BitCode\FI\Flow;
+namespace BitCode\BTCBI\Flow;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\CustomFuncValidator;
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\SmartTags;
-use BitCode\FI\Core\Util\StoreInCache;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Plugin;
-use BitCode\FI\Triggers\TriggerController;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Core\Util\CustomFuncValidator;
+use BitCode\BTCBI\Core\Util\IpTool;
+use BitCode\BTCBI\Core\Util\SmartTags;
+use BitCode\BTCBI\Core\Util\StoreInCache;
+use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Plugin;
+use BitCode\BTCBI\Triggers\TriggerController;
 use WP_Error;
 
 /**
@@ -32,8 +32,8 @@ final class Flow
      */
     protected static function isActionExists($name)
     {
-        if (class_exists("BitCode\\FI\\Actions\\{$name}\\{$name}Controller")) {
-            return "BitCode\\FI\\Actions\\{$name}\\{$name}Controller";
+        if (class_exists("BitCode\\BTCBI\\Actions\\{$name}\\{$name}Controller")) {
+            return "BitCode\\BTCBI\\Actions\\{$name}\\{$name}Controller";
         } else {
             return false;
         }
@@ -48,8 +48,8 @@ final class Flow
      */
     protected static function isTriggerExists($name)
     {
-        if (class_exists("BitCode\\FI\\Triggers\\{$name}\\{$name}Controller")) {
-            return "BitCode\\FI\\Triggers\\{$name}\\{$name}Controller";
+        if (class_exists("BitCode\\BTCBI\\Triggers\\{$name}\\{$name}Controller")) {
+            return "BitCode\\BTCBI\\Triggers\\{$name}\\{$name}Controller";
         } else {
             return false;
         }

@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Actions\Autonami;
+namespace BitCode\BTCBI\Actions\Autonami;
 
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Log\LogHandler;
 use BWF_Contacts;
 use BWFCRM_Contact;
 

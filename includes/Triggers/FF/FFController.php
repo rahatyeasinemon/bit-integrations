@@ -1,9 +1,9 @@
 <?php
-namespace BitCode\FI\Triggers\FF;
+namespace BitCode\BTCBI\Triggers\FF;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Core\Util\DateTimeHelper;
+use BitCode\BTCBI\Flow\Flow;
 use FluentForm\App\Modules\Form\FormFieldsParser;
 
 final class FFController

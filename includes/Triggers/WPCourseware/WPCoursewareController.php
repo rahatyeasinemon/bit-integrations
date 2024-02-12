@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\WPCourseware;
+namespace BitCode\BTCBI\Triggers\WPCourseware;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class WPCoursewareController
 {

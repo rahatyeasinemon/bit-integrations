@@ -4,10 +4,10 @@
  * Demio Integration
  */
 
-namespace BitCode\FI\Actions\Demio;
+namespace BitCode\BTCBI\Actions\Demio;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Demio integration

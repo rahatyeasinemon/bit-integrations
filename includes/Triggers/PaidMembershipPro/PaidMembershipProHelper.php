@@ -1,5 +1,5 @@
 <?php
-namespace BitCode\FI\Triggers\PaidMembershipPro;
+namespace BitCode\BTCBI\Triggers\PaidMembershipPro;
 
 final class PaidMembershipProHelper
 {

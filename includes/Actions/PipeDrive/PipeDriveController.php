@@ -3,11 +3,11 @@
 /**
  * PipeDrive Integration
  */
-namespace BitCode\FI\Actions\PipeDrive;
+namespace BitCode\BTCBI\Actions\PipeDrive;
 
-use BitCode\FI\Actions\PipeDrive\RecordApiHelper;
+use BitCode\BTCBI\Actions\PipeDrive\RecordApiHelper;
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for PipeDrive integration

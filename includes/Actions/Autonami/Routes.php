@@ -3,8 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\Autonami\AutonamiController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\Autonami\AutonamiController;
+use BitCode\BTCBI\Core\Util\Route;
 
 Route::post('autonami_authorize', [AutonamiController::class, 'autonamiAuthorize']);
 Route::post('autonami_lists_and_tags', [AutonamiController::class, 'autonamiListsAndTags']);

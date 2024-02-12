@@ -3,8 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\Airtable\AirtableController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\Airtable\AirtableController;
+use BitCode\BTCBI\Core\Util\Route;
 
 Route::post('airtable_authentication', [AirtableController::class, 'authentication']);
 Route::post('airtable_fetch_all_tables', [AirtableController::class, 'getAllTables']);

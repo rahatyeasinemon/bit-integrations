@@ -4,10 +4,10 @@
  * CopperCRM Integration
  */
 
-namespace BitCode\FI\Actions\CopperCRM;
+namespace BitCode\BTCBI\Actions\CopperCRM;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for CopperCRM integration

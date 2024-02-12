@@ -4,12 +4,12 @@
  * ZohoSheet Integration
  */
 
-namespace BitCode\FI\Actions\ElasticEmail;
+namespace BitCode\BTCBI\Actions\ElasticEmail;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
-use BitCode\FI\Actions\ElasticEmail\RecordApiHelper;
+use BitCode\BTCBI\Actions\ElasticEmail\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration

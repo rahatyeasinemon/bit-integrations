@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Actions\CampaignMonitor;
+namespace BitCode\BTCBI\Actions\CampaignMonitor;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 class RecordApiHelper
 {

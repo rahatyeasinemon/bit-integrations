@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\FI\Actions\WishList;
+namespace BitCode\BTCBI\Actions\WishList;
 
 /**
  * wlmapiclass

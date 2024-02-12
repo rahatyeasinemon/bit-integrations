@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\Livestorm\LivestormController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\Livestorm\LivestormController;
+use BitCode\BTCBI\Core\Util\Route;
 
 
 Route::post('livestorm_authentication', [LivestormController::class, 'authentication']);

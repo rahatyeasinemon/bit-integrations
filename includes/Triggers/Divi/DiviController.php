@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\Divi;
+namespace BitCode\BTCBI\Triggers\Divi;
 
-use BitCode\FI\Flow\Flow;
+use BitCode\BTCBI\Flow\Flow;
 
 final class DiviController
 {

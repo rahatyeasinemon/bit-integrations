@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\Demio\DemioController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\Demio\DemioController;
+use BitCode\BTCBI\Core\Util\Route;
 
 
 Route::post('demio_authentication', [DemioController::class, 'authentication']);

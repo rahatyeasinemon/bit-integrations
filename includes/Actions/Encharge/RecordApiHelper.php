@@ -4,10 +4,10 @@
  * Encharge Record Api
  */
 
-namespace BitCode\FI\Actions\Encharge;
+namespace BitCode\BTCBI\Actions\Encharge;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert

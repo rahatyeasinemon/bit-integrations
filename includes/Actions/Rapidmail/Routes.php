@@ -3,8 +3,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\Rapidmail\RapidmailController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\Rapidmail\RapidmailController;
+use BitCode\BTCBI\Core\Util\Route;
 
     //Rapidmail
     Route::post('rapidmail_authorization', [RapidmailController::class, 'checkAuthorization']);

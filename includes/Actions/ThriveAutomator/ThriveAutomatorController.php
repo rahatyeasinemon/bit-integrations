@@ -5,9 +5,9 @@
  *
  */
 
-namespace BitCode\FI\Actions\ThriveAutomator;
+namespace BitCode\BTCBI\Actions\ThriveAutomator;
 
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+use BitCode\BTCBI\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for ThriveAutomatorHandler

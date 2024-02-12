@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\GoogleContacts\GoogleContactsController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\GoogleContacts\GoogleContactsController;
+use BitCode\BTCBI\Core\Util\Route;
 
 Route::post('googleContacts_authorization', [GoogleContactsController::class, 'authorization']);

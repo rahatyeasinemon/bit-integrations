@@ -4,10 +4,10 @@
  * Convert Kit Record Api
  */
 
-namespace BitCode\FI\Actions\ConvertKit;
+namespace BitCode\BTCBI\Actions\ConvertKit;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,update, exist

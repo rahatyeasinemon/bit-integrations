@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\EDD\EDDController;
+use BitCode\BTCBI\Core\Util\Route;
+use BitCode\BTCBI\Triggers\EDD\EDDController;
 
 Route::get('edd/get', [EDDController::class, 'getAll']);
 Route::post('edd/get/form', [EDDController::class, 'get_a_form']);

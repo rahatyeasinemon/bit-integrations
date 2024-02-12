@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\Flowlu\FlowluController;
-use BitCode\FI\Core\Util\Route;
+use BitCode\BTCBI\Actions\Flowlu\FlowluController;
+use BitCode\BTCBI\Core\Util\Route;
 
 
 Route::post('flowlu_authentication', [FlowluController::class, 'authentication']);

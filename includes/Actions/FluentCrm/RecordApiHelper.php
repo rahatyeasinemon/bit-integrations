@@ -4,9 +4,9 @@
  * Fluent CRM Record Api
  */
 
-namespace BitCode\FI\Actions\FluentCrm;
+namespace BitCode\BTCBI\Actions\FluentCrm;
 
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Log\LogHandler;
 use FluentCrm\App\Models\Subscriber;
 use FluentCrm\Includes\Helpers\Arr;
 

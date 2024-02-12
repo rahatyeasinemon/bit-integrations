@@ -1,8 +1,8 @@
 <?php
-namespace BitCode\FI\Actions\Zoom;
+namespace BitCode\BTCBI\Actions\Zoom;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Flow\FlowController;
 use WP_Error;
 
 class ZoomController

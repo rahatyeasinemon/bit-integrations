@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\GamiPress\GamiPressController;
+use BitCode\BTCBI\Core\Util\Route;
+use BitCode\BTCBI\Triggers\GamiPress\GamiPressController;
 
 Route::get('gamipress/get', [GamiPressController::class, 'getAll']);
 Route::post('gamipress/get/form', [GamiPressController::class, 'get_a_form']);

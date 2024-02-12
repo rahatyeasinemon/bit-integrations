@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\FI\Actions\Mailify;
+namespace BitCode\BTCBI\Actions\Mailify;
 
 use WP_Error;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Actions\Mailify\RecordApiHelper;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Flow\FlowController;
+use BitCode\BTCBI\Actions\Mailify\RecordApiHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
 
 class MailifyController
 {

@@ -1,5 +1,5 @@
 <?php
-namespace BitCode\FI\Actions\GiveWp;
+namespace BitCode\BTCBI\Actions\GiveWp;
 
 use WP_Error;
 

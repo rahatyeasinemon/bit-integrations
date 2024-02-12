@@ -4,10 +4,10 @@
  * Benchmark Record Api
  */
 
-namespace BitCode\FI\Actions\BenchMark;
+namespace BitCode\BTCBI\Actions\BenchMark;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,update, exist

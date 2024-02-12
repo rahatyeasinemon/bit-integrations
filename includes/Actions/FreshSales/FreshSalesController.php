@@ -4,11 +4,11 @@
  * FreshSales Integration
  */
 
-namespace BitCode\FI\Actions\FreshSales;
+namespace BitCode\BTCBI\Actions\FreshSales;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\FreshSales\RecordApiHelper;
+use BitCode\BTCBI\Core\Util\HttpHelper;
+use BitCode\BTCBI\Actions\FreshSales\RecordApiHelper;
 
 /**
  * Provide functionality for FreshSales integration

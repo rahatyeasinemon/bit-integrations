@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Actions\WPCourseware;
+namespace BitCode\BTCBI\Actions\WPCourseware;
 
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Log\LogHandler;
 
 class RecordApiHelper
 {

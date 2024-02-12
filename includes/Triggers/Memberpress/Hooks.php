@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Triggers\Memberpress\MemberpressController;
+use BitCode\BTCBI\Core\Util\Hooks;
+use BitCode\BTCBI\Triggers\Memberpress\MemberpressController;
 
 Hooks::add('mepr-event-transaction-completed', [MemberpressController::class, 'oneTimeMembershipSubscribe'], 10, 1);
 Hooks::add('mepr-event-transaction-completed', [MemberpressController::class, 'recurringMembershipSubscribe'], 10, 1);

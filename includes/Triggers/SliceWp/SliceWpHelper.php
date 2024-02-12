@@ -1,5 +1,5 @@
 <?php
-namespace BitCode\FI\Triggers\SliceWp;
+namespace BitCode\BTCBI\Triggers\SliceWp;
 
 final class SliceWpHelper
 {

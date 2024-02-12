@@ -1,8 +1,8 @@
 <?php
-namespace BitCode\FI\Actions\Memberpress;
+namespace BitCode\BTCBI\Actions\Memberpress;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
+use BitCode\BTCBI\Core\Util\Common;
+use BitCode\BTCBI\Log\LogHandler;
 use MeprTransaction;
 use MeprUser;
 use MeprUtils;
