@@ -204,8 +204,7 @@ final class FormidableController
 
         $form_data = self::getFieldsValues($form, $entry_id);
         $post_id = url_to_postid($_SERVER['HTTP_REFERER']);
-        error_log(print_r($form_data, true));
-        // die;
+
         if (!empty($form->id)) {
             $data = [];
             if ($post_id) {
