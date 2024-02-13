@@ -6,10 +6,10 @@
 
 namespace BitCode\FI\Actions\Telegram;
 
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Actions\Telegram\FilesApiHelper;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -50,7 +50,7 @@ class RecordApiHelper
                 && ((is_array($file) && is_readable($file[0][0]))
                     || (is_string($file) && is_readable($file)))
             ) {
-                if (is_array($file) && count($file[0]) > 1) {
+                if (is_array($file[0]) && count($file[0]) > 1) {
                     $data = [
                         'chat_id' => $integrationDetails->chat_id,
                         'caption' => $messagesBody,
