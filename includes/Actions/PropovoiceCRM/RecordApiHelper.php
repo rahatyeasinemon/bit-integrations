@@ -5,6 +5,7 @@ namespace BitCode\FI\Actions\PropovoiceCRM;
 use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Actions\PropovoiceCRM\FilesApiHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -37,6 +38,12 @@ class RecordApiHelper
 
     public function createLead($finalData)
     {
+        if ($finalData['img']) {
+            $imgUpload          = new FilesApiHelper();
+            $upload             = $imgUpload->uploadFile($finalData['img'][0]);
+            $finalData['img']   = $upload['id'];
+        }
+
         $propovoiceLeadInstance = new \Ndpv\Model\Lead();
         return $propovoiceLeadInstance->create($finalData);
     }
@@ -50,10 +57,10 @@ class RecordApiHelper
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $apiResponse = null;
         if ($mainAction == '1') {
-            $tags = is_array($integrationDetails->tags) ? $integrationDetails->tags : explode(',', $integrationDetails->tags);
-            $label = $integrationDetails->label;
-            $finalData['tags'] = $tags;
-            $finalData['level_id'] = $label;
+            // $tags = is_array($integrationDetails->tags) ? $integrationDetails->tags : explode(',', $integrationDetails->tags);
+            // $label = $integrationDetails->label;
+            // $finalData['tags'] = $tags;
+            // $finalData['level_id'] = $label;
             $apiResponse = $this->createLead($finalData);
 
             if (!$apiResponse) {

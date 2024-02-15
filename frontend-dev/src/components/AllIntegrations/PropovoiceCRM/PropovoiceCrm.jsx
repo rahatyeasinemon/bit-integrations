@@ -22,13 +22,20 @@ function PropovoiceCrm({ formFields, setFlow, flow, allIntegURL }) {
   const leadFields = [
     { key: 'first_name', label: 'First Name', required: true },
     { key: 'email', label: 'Email', required: true },
-    { key: 'org_name', label: 'Org Name', required: false },
+    { key: 'mobile', label: 'Mobile', required: false },
+    { key: 'org_name', label: 'Organization Name', required: false },
     { key: 'person_id', label: 'Person Id ', required: false },
-    { key: 'org_id', label: 'Org Id', required: false },
+    { key: 'org_id', label: 'Organization Id', required: false },
     { key: 'budget', label: 'Budget', required: false },
     { key: 'currency', label: 'Currency', required: false },
-    { key: 'desc', label: 'Desc', required: false },
     { key: 'note', label: 'Note', required: false },
+    { key: 'country', label: 'Country', required: false },
+    { key: 'region', label: 'State / Province / Region', required: false },
+    { key: 'address', label: 'Address', required: false },
+    { key: 'city', label: 'City', required: false },
+    { key: 'zip', label: 'ZIP Code', required: false },
+    { key: 'desc', label: 'Description', required: false },
+    { key: 'img', label: 'Contact Image', required: false },
   ]
 
   const allActions = [
