@@ -297,10 +297,9 @@ export default function PipeDriveActions({ pipeDriveConf, setPipeDriveConf, tab,
             <div className="flx flx-between mt-2">
               <MultiSelect
                 className="msl-wrp-options"
-                defaultValue={getLabelById(pipeDriveConf.default?.leadLabels, pipeDriveConf.moduleData?.lead_label)}
+                defaultValue={pipeDriveConf.moduleData?.lead_label}
                 options={pipeDriveConf.default?.leadLabels?.map(label => ({ label: label.label, value: label.value }))}
                 onChange={val => setChanges(val, 'lead_label')}
-                customValue
               />
               <button
                 onClick={() => getAllLeadLabels(pipeDriveConf, setPipeDriveConf, setIsLoading, setSnackbar)}
