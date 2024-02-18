@@ -678,6 +678,10 @@ final class WCController
                     'fieldKey' => 'order_received_url',
                     'fieldName' => 'order_received_url'
                 ],
+                'Customer Note' => (object) [
+                    'fieldKey' => 'customer_note',
+                    'fieldName' => 'Customer Note'
+                ],
             ];
             $acfFieldGroups = self::acfGetFieldGroups(['shop_order']);
             $checkoutFields = WC()->checkout()->get_checkout_fields();
@@ -1245,6 +1249,7 @@ final class WCController
             'payment_method_title' => $order->get_payment_method_title(),
             'status' => $order->get_status(),
             'checkout_order_received_url' => $order->get_checkout_order_received_url(),
+            'customer_note' => $order->get_customer_note()
         ];
         $line_items = [];
         $line_items_all = [];
