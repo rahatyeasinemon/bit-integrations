@@ -168,7 +168,9 @@ const ActionHook = () => {
   }
 
   const info = `<h4>Setup Action Hook</h4>
-            <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/action-hook-integrations" target="_blank" rel="noreferrer">${__('Details on Documentation', 'bit-integrations')}</a>
+  <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger-hooks" target="_blank" rel="noreferrer">${__('Bit Integrations Trigger Hooks', 'bit-integrations')}</a>
+  <br />
+  <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/action-hook-integrations" target="_blank" rel="noreferrer">${__('Details on Documentation', 'bit-integrations')}</a>
             <ul>
                 <li>Click on the <b>Fetch</b> button & Submit your <b>Form</b> to get the form data</li>
             </ul>`
