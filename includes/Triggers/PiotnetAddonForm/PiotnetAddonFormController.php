@@ -142,15 +142,20 @@ final class PiotnetAddonFormController
     {
         $piotNetFields = [];
         foreach ($postMeta as $widget) {
-            foreach ($widget->elements as $elements) {
-                foreach ($elements->elements as $element) {
-                    if (isset($element->widgetType) && $element->widgetType == 'pafe-form-builder-field') {
-                        $piotNetFields[] =  $element;
-                    }
-                }
-            }
+            self::getFields($widget->elements, $piotNetFields);
         }
         return $piotNetFields;
+    }
+
+    private static function getFields($widget, &$piotNetFields)
+    {
+        foreach ($widget as $elements) {
+            if (!empty($elements->elements)) {
+                self::getFields($elements->elements, $piotNetFields);
+            } elseif (isset($elements->widgetType) && $elements->widgetType == 'pafe-form-builder-field') {
+                $piotNetFields[] =  $elements;
+            }
+        }
     }
 
     private static function getElementorPosts()
