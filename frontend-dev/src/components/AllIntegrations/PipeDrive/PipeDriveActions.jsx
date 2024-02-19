@@ -96,8 +96,10 @@ export default function PipeDriveActions({ pipeDriveConf, setPipeDriveConf, tab,
       delete newConf.relatedlists[tab - 1].moduleData[type]
       delete newConf.relatedlists[tab - 1].actions[type]
     }
+    console.log('val: ', newConf.moduleData.visible_to)
     setPipeDriveConf({ ...newConf })
   }
+  console.log('vis: ', pipeDriveConf.moduleData.visible_to)
 
   const ActivitiesTypes = [
     {
@@ -543,7 +545,6 @@ export default function PipeDriveActions({ pipeDriveConf, setPipeDriveConf, tab,
                 defaultValue={getLabelById(pipeDriveConf.default?.persons, tab === 0 ? pipeDriveConf.moduleData?.activities_participants : pipeDriveConf.relatedlists[tab - 1].moduleData?.activities_participants)}
                 options={pipeDriveConf.default?.persons?.map(item => ({ label: item.label, value: item.value }))}
                 onChange={val => setChanges(val, 'activities_participants')}
-                customValue
               />
             </div>
           )}
