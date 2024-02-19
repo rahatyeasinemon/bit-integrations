@@ -96,10 +96,8 @@ export default function PipeDriveActions({ pipeDriveConf, setPipeDriveConf, tab,
       delete newConf.relatedlists[tab - 1].moduleData[type]
       delete newConf.relatedlists[tab - 1].actions[type]
     }
-    console.log('val: ', newConf.moduleData.visible_to)
     setPipeDriveConf({ ...newConf })
   }
-  console.log('vis: ', pipeDriveConf.moduleData.visible_to)
 
   const ActivitiesTypes = [
     {
