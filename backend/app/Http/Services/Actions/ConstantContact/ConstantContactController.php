@@ -9,7 +9,7 @@ namespace BitCode\BTCBI\Http\Services\Actions\ConstantContact;
 use WP_Error;
 use BitCode\BTCBI\Util\HttpHelper;
 use BitCode\BTCBI\Flow\FlowController;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Constant Contact integration

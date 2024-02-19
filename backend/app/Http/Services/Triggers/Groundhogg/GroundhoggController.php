@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Groundhogg;
+namespace BitCode\BTCBI\Http\Services\Triggers\Groundhogg;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 use Groundhogg\DB\Tags;
 
 final class GroundhoggController
@@ -128,7 +128,7 @@ final class GroundhoggController
         $types = ['Contact-Create', 'Add-Tag-To-Contact', 'Remove-Tag-From-Contact'];
         $groundhogg_action = [];
         foreach ($types as $index => $type) {
-            $groundhogg_action[] = (object)[
+            $groundhogg_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];

@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\CartFlow;
+namespace BitCode\BTCBI\Http\Services\Triggers\CartFlow;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class CartFlowController
 {
@@ -54,7 +54,7 @@ final class CartFlowController
         }
         $finalData['order_products'] = self::accessOrderData($order);
         $finalData['order_id'] = $order_id;
-        $chekoutPageId = (int)$metaData['_wcf_checkout_id'][0];
+        $chekoutPageId = (int) $metaData['_wcf_checkout_id'][0];
 
         if (!empty($order_id) && $flows = Flow::exists('CartFlow', $chekoutPageId)) {
             Flow::execute('CartFlow', $chekoutPageId, $finalData, $flows);
@@ -72,7 +72,7 @@ final class CartFlowController
         $all_forms = [];
         if ($posts) {
             foreach ($posts as $form) {
-                $all_forms[] = (object)[
+                $all_forms[] = (object) [
                     'id' => $form->ID,
                     'title' => $form->post_title,
                     'post_id' => $form->ID,
@@ -178,7 +178,7 @@ final class CartFlowController
             $taxstat = $item->get_tax_status();
             $label = 'line_items_';
             $count++;
-            $line_items_all['line_items'][] = (object)[
+            $line_items_all['line_items'][] = (object) [
                 'product_id' => $product_id,
                 'variation_id' => $variation_id,
                 'product_name' => $product_name,

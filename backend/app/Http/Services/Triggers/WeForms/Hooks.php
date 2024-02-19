@@ -5,6 +5,6 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\WeForms\WeFormsController;
+use BitCode\BTCBI\Http\Services\Triggers\WeForms\WeFormsController;
 
 Hooks::add('weforms_entry_submission', [WeFormsController::class, 'handle_weforms_submit'], 10, 4);

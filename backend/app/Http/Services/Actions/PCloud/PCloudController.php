@@ -4,7 +4,7 @@ namespace BitCode\BTCBI\Http\Services\Actions\PCloud;
 
 use BitCode\BTCBI\Http\Services\Actions\PCloud\RecordApiHelper as PCloudRecordApiHelper;
 use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
 
 class PCloudController

@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\LearnDash;
+namespace BitCode\BTCBI\Http\Services\Triggers\LearnDash;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class LearnDashController
 {
@@ -56,7 +56,7 @@ final class LearnDashController
         ];
         $learndash_action = [];
         foreach ($types as $index => $type) {
-            $learndash_action[] = (object)[
+            $learndash_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];

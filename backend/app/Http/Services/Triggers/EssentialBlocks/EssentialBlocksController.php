@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\EssentialBlocks;
+namespace BitCode\BTCBI\Http\Services\Triggers\EssentialBlocks;
 
 use WP_Error;
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 class EssentialBlocksController
 {

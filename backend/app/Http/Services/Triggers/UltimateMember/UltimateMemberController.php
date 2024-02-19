@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\UltimateMember;
+namespace BitCode\BTCBI\Http\Services\Triggers\UltimateMember;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class UltimateMemberController
 {
@@ -48,14 +48,14 @@ final class UltimateMemberController
         $registrationForms = UltimateMemberHelper::getAllLoginAndRegistrationForm('register');
 
         $types = array_merge([
-            [ 'id' =>'roleSpecificChange',
+            [ 'id' => 'roleSpecificChange',
              'title' => 'User\'s role changes to a specific role'],
-             [ 'id' =>'roleChange',
+             [ 'id' => 'roleChange',
              'title' => 'User\'s role change'],
         ], $loginForms, $registrationForms);
         $ultimateMember_action = [];
         foreach ($types as $type) {
-            $ultimateMember_action[] = (object)[
+            $ultimateMember_action[] = (object) [
                 'id' => $type['id'],
                 'title' => $type['title'],
             ];
@@ -87,11 +87,11 @@ final class UltimateMemberController
 
     public static function handleUserLogViaForm($um_args)
     {
-        
-        if ( !isset( $um_args['form_id']) || !function_exists( 'um_user') ) {
-        	return;
+
+        if (!isset($um_args['form_id']) || !function_exists('um_user')) {
+            return;
         }
-        $user_id = um_user( 'ID' );
+        $user_id = um_user('ID');
         $form_id = $um_args['form_id'];
         $flows = Flow::exists('UltimateMember', $form_id);
         if (empty($flows)) {
@@ -147,7 +147,8 @@ final class UltimateMemberController
         }
     }
 
-    public static function getUMrole(){
+    public static function getUMrole()
+    {
         $roles = UltimateMemberHelper::getRoles();
         wp_send_json_success($roles);
     }

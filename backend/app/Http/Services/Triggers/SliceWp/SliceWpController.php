@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\SliceWp;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\SliceWp;
+
+use BitCode\BTCBI\Model\Flow;
 
 final class SliceWpController
 {
@@ -47,7 +48,7 @@ final class SliceWpController
 
         $affiliate_action = [];
         foreach ($types as $index => $type) {
-            $affiliate_action[] = (object)[
+            $affiliate_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];

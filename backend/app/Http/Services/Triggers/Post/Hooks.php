@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\Post\PostController;
+use BitCode\BTCBI\Http\Services\Triggers\Post\PostController;
 
 // Hooks::add('save_post', [PostController::class, 'createPost'], 10, 3);
 Hooks::add('wp_after_insert_post', [PostController::class, 'createPost'], 10, 4);

@@ -2,7 +2,7 @@
 
 namespace BitCode\BTCBI\Http\Services\Actions\TutorLms;
 
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Tutor LMS integration

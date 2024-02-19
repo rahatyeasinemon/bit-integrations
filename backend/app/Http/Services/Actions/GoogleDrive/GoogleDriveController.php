@@ -5,7 +5,7 @@ namespace BitCode\BTCBI\Http\Services\Actions\GoogleDrive;
 use BitCode\BTCBI\Http\Services\Actions\GoogleDrive\RecordApiHelper as GoogleDriveRecordApiHelper;
 use BitCode\BTCBI\Util\HttpHelper;
 use BitCode\BTCBI\Flow\FlowController;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
 
 class GoogleDriveController

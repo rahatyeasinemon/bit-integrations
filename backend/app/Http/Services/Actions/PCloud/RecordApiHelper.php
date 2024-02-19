@@ -2,7 +2,7 @@
 
 namespace BitCode\BTCBI\Http\Services\Actions\PCloud;
 
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use CURLFile;
 
 class RecordApiHelper

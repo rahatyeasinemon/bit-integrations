@@ -10,8 +10,8 @@ namespace BitCode\BTCBI\Http\Services\Actions\PostCreation;
 
 use BitCode\BTCBI\Util\Common;
 use BitCode\BTCBI\Util\Helper;
-use BitCode\BTCBI\Flow\Flow;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Model\Flow;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 final class PostCreationController
 {

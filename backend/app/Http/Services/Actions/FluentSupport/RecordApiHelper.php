@@ -6,7 +6,7 @@
 
 namespace BitCode\BTCBI\Http\Services\Actions\FluentSupport;
 
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BitCode\BTCBI\Util\Common;
 use FluentSupport\App\Models\Ticket;
 use FluentSupport\App\Models\Customer;

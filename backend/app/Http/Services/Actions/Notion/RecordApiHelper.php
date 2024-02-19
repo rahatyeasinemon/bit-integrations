@@ -6,7 +6,7 @@
 
 namespace BitCode\BTCBI\Http\Services\Actions\Notion;
 
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BitCode\BTCBI\Util\Common;
 use BitCode\BTCBI\Util\HttpHelper;
 

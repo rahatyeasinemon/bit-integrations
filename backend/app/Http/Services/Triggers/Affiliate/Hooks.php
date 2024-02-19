@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\Affiliate\AffiliateController;
+use BitCode\BTCBI\Http\Services\Triggers\Affiliate\AffiliateController;
 
 Hooks::add('affwp_set_affiliate_status', [AffiliateController::class, 'newAffiliateApproved'], 10, 3);
 // Hooks::add('affwp_register_user', [AffiliateController::class, 'newAffiliatAwaitingApproval'], 15, 3);

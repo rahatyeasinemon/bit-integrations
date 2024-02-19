@@ -12,7 +12,7 @@ use BitCode\BTCBI\Util\HttpHelper;
 use BitCode\BTCBI\Http\Services\Actions\ZohoCampaigns\RecordApiHelper;
 use BitCode\BTCBI\Util\ApiResponse as UtilApiResponse;
 use BitCode\BTCBI\Flow\FlowController;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
 
 /**

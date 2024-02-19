@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\StudioCart;
+namespace BitCode\BTCBI\Http\Services\Triggers\StudioCart;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class StudioCartController
 {
@@ -72,7 +72,7 @@ final class StudioCartController
 
         $sc_actions = [];
         foreach (self::$actions as $action) {
-            $sc_actions[] = (object)[
+            $sc_actions[] = (object) [
                 'id' => $action['id'],
                 'title' => $action['title'],
             ];

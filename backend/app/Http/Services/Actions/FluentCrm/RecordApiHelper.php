@@ -6,7 +6,7 @@
 
 namespace BitCode\BTCBI\Http\Services\Actions\FluentCrm;
 
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use FluentCrm\App\Models\Subscriber;
 use FluentCrm\Includes\Helpers\Arr;
 

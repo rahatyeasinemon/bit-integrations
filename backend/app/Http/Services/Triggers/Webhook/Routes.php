@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\Webhook\WebhookController;
+use BitCode\BTCBI\Http\Services\Triggers\Webhook\WebhookController;
 
 Route::get('webhook/new', [WebhookController::class, 'getNewHook']);
 Route::post('webhook/test', [WebhookController::class, 'getTestData']);

@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\Kadence;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\Kadence;
+
+use BitCode\BTCBI\Model\Flow;
 
 final class KadenceController
 {
@@ -74,7 +75,7 @@ final class KadenceController
                 foreach ($content as $form) {
                     $parent_id = $form->postID;
                     $unique_id = $form->uniqueID;
-                    $all_forms[] = (object)[
+                    $all_forms[] = (object) [
                         'id' => $form_id . '_' . $unique_id,
                         'title' => $form_title . '_' . $unique_id,
                         'parent_id' => $parent_id,
@@ -135,7 +136,7 @@ final class KadenceController
                         $regularExpressionDataType = '/data-type\s*=\s*"([^"]+)"/';
                         preg_match($regularExpressionDataType, $value1, $fieldDataType);
 
-                        $formFields[] = (object)[
+                        $formFields[] = (object) [
                             'name' => $fieldName[1],
                             'type' => strtolower(isset($fieldDataType[1]) ? $fieldDataType[1] : 'text'),
                             'label' => isset($fieldDataLabel[1]) ? $fieldDataLabel[1] : $fieldId[1],

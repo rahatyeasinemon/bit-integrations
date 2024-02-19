@@ -8,7 +8,7 @@ namespace BitCode\BTCBI\Http\Services\Actions\ZohoMarketingHub;
 
 use WP_Error;
 use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert

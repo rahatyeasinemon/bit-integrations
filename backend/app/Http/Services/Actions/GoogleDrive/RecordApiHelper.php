@@ -2,7 +2,7 @@
 
 namespace BitCode\BTCBI\Http\Services\Actions\GoogleDrive;
 
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BitCode\BTCBI\Util\HttpHelper;
 
 class RecordApiHelper

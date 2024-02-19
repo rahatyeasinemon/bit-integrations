@@ -7,7 +7,7 @@
 namespace BitCode\BTCBI\Http\Services\Actions\GamiPress;
 
 use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert

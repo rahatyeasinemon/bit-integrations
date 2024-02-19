@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Forminator;
+namespace BitCode\BTCBI\Http\Services\Triggers\Forminator;
 
 use DateTime;
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class ForminatorController
 {
@@ -42,7 +42,7 @@ final class ForminatorController
 
         if ($forms) {
             foreach ($forms as $form) {
-                $all_forms[] = (object)[
+                $all_forms[] = (object) [
                     'id' => $form->id,
                     'title' => $form->name,
                 ];

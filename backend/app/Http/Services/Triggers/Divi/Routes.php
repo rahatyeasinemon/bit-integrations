@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\Divi\DiviController;
+use BitCode\BTCBI\Http\Services\Triggers\Divi\DiviController;
 
 Route::get('divi/get', [DiviController::class, 'getAllForms']);
 Route::post('divi/get/form', [DiviController::class, 'getFormFields']);

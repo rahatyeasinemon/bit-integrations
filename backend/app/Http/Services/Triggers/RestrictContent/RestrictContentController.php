@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\RestrictContent;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\RestrictContent;
+
+use BitCode\BTCBI\Model\Flow;
 
 final class RestrictContentController
 {
@@ -51,7 +52,7 @@ final class RestrictContentController
         ];
         $restrictContent_action = [];
         foreach ($types as $index => $type) {
-            $restrictContent_action[] = (object)[
+            $restrictContent_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];
@@ -210,7 +211,7 @@ final class RestrictContentController
         }
         $membership = rcp_get_membership($membership_id);
         $membership_level = rcp_get_membership_level($membership->get_object_id());
-        $level_id = (string)$membership_level->get_id();
+        $level_id = (string) $membership_level->get_id();
 
         if ($level_id == $flowDetails->selectedMembership || 'any' == $flowDetails->selectedMembership) {
             $organizedData = [];

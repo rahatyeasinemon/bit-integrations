@@ -9,8 +9,8 @@ namespace BitCode\BTCBI\Http\Services\Actions\Pods;
 
 use BitCode\BTCBI\Util\Common;
 use BitCode\BTCBI\Util\Helper;
-use BitCode\BTCBI\Flow\Flow;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Model\Flow;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for POD integration

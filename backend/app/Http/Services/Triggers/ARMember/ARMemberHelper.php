@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\ARMember;
+namespace BitCode\BTCBI\Http\Services\Triggers\ARMember;
 
 class ARMemberHelper
 {
@@ -71,7 +71,7 @@ class ARMemberHelper
                     'fieldKey' => 'arm_subscription_plan_id',
                     'fieldName' => 'Subscription Plan ID'
                 ],
-                'Access Type' => (object)[
+                'Access Type' => (object) [
                     'fieldKey' => 'access_type',
                     'fieldName' => 'Access Type'
                 ],
@@ -91,7 +91,7 @@ class ARMemberHelper
                     'fieldKey' => 'arm_subscription_plan_description',
                     'fieldName' => 'Subscription Plan Description'
                 ],
-                'Subscription Plan Role' => (object)[
+                'Subscription Plan Role' => (object) [
                     'fieldKey' => 'arm_subscription_plan_role',
                     'fieldName' => 'Subscription Plan Role'
                 ]

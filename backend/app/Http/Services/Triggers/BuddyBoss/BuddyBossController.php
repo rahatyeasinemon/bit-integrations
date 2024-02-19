@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\BuddyBoss;
+namespace BitCode\BTCBI\Http\Services\Triggers\BuddyBoss;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class BuddyBossController
 {
@@ -73,7 +73,7 @@ final class BuddyBossController
         }
         $buddyboss_action = [];
         foreach ($types as $index => $type) {
-            $buddyboss_action[] = (object)[
+            $buddyboss_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];

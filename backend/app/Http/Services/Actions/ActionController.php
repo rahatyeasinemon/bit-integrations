@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Actions;
+namespace BitCode\BTCBI\Http\Services\Actions;
 
 use FilesystemIterator;
 use WP_Error;

@@ -2,7 +2,7 @@
 
 namespace BitCode\BTCBI\Http\Services\Actions\PropovoiceCRM;
 
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BitCode\BTCBI\Util\Common;
 use BitCode\BTCBI\Util\HttpHelper;
 

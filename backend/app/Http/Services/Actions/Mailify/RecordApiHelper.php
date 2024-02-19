@@ -3,7 +3,7 @@
 namespace BitCode\BTCBI\Http\Services\Actions\Mailify;
 
 use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 class RecordApiHelper
 {

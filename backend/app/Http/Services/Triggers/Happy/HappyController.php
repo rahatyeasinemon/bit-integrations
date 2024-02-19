@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Happy;
+namespace BitCode\BTCBI\Http\Services\Triggers\Happy;
 
 use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 use DateTime;
 
 final class HappyController

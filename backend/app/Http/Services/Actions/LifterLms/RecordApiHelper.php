@@ -3,7 +3,7 @@
 namespace BitCode\BTCBI\Http\Services\Actions\LifterLms;
 
 use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
 use LLMS_Course;
 use LLMS_Section;

@@ -13,7 +13,7 @@ use BitCode\BTCBI\Util\FieldValueHandler;
 use BitCode\BTCBI\Util\ApiResponse as UtilApiResponse;
 use BitCode\BTCBI\Http\Services\Actions\ZohoRecruit\FilesApiHelper;
 use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert

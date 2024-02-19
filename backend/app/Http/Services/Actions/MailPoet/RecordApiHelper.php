@@ -6,7 +6,7 @@
 
 namespace BitCode\BTCBI\Http\Services\Actions\MailPoet;
 
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use MailPoet\API\MP\v1\APIException;
 
 /**

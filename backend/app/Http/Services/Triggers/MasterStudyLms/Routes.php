@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\MasterStudyLms\MasterStudyLmsController;
+use BitCode\BTCBI\Http\Services\Triggers\MasterStudyLms\MasterStudyLmsController;
 
 Route::get('masterstudylms/get', [MasterStudyLmsController::class, 'getAll']);
 Route::post('masterstudylms/get/form', [MasterStudyLmsController::class, 'get_a_form']);

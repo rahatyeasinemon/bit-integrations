@@ -9,7 +9,7 @@ namespace BitCode\BTCBI\Http\Services\Actions\Klaviyo;
 use BitCode\BTCBI\Util\Common;
 use BitCode\BTCBI\Util\Helper;
 use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Record Add Member

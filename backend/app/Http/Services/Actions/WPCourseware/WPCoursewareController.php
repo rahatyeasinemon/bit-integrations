@@ -3,7 +3,7 @@
 namespace BitCode\BTCBI\Http\Services\Actions\WPCourseware;
 
 use BitCode\BTCBI\Util\Helper;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
 
 class WPCoursewareController

@@ -2,8 +2,8 @@
 
 namespace BitCode\BTCBI\Core\Hooks;
 
+use BitCode\BTCBI\Routes\AdminAjax;
 use FilesystemIterator;
-use BitCode\BTCBI\Admin\AdminAjax;
 use BitCode\BTCBI\Util\Hooks;
 use BitCode\BTCBI\Util\Request;
 use BitCode\BTCBI\Util\StoreInCache;

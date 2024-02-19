@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\PiotnetAddon\PiotnetAddonController;
+use BitCode\BTCBI\Http\Services\Triggers\PiotnetAddon\PiotnetAddonController;
 
 Route::get('piotnetaddon/get', [PiotnetAddonController::class, 'getAllForms']);
 Route::post('piotnetaddon/get/form', [PiotnetAddonController::class, 'getFormFields']);

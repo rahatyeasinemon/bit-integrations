@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\LifterLms;
+namespace BitCode\BTCBI\Http\Services\Triggers\LifterLms;
 
 class LifterLmsHelper
 {

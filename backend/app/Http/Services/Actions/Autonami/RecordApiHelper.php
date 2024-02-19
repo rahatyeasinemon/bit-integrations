@@ -2,7 +2,7 @@
 
 namespace BitCode\BTCBI\Http\Services\Actions\Autonami;
 
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BWF_Contacts;
 use BWFCRM_Contact;
 

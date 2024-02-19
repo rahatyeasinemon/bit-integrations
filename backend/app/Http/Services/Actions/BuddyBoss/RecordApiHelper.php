@@ -6,7 +6,7 @@
 
 namespace BitCode\BTCBI\Http\Services\Actions\BuddyBoss;
 
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BitCode\BTCBI\Util\Common;
 
 /**

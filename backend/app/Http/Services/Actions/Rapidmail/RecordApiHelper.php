@@ -3,7 +3,7 @@
 namespace BitCode\BTCBI\Http\Services\Actions\Rapidmail;
 
 use WP_Error;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BitCode\BTCBI\Util\Common;
 use BitCode\BTCBI\Util\HttpHelper;
 use BitCode\BTCBI\Util\DateTimeHelper;

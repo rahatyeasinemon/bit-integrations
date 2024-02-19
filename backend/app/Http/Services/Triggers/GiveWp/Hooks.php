@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\GiveWp\GiveWpController;
+use BitCode\BTCBI\Http\Services\Triggers\GiveWp\GiveWpController;
 
 Hooks::add('give_update_payment_status', [GiveWpController::class, 'handleUserDonation'], 10, 3);
 Hooks::add('give_subscription_cancelled', [GiveWpController::class, 'handleSubscriptionDonationCancel'], 10, 2);

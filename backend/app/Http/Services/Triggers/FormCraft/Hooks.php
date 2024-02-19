@@ -5,6 +5,6 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\FormCraft\FormCraftController;
+use BitCode\BTCBI\Http\Services\Triggers\FormCraft\FormCraftController;
 
 Hooks::add('formcraft_after_save', [FormCraftController::class, 'handle_formcraft_submit'], 10, 4);

@@ -17,7 +17,7 @@ use BitCode\BTCBI\Util\UnInstallation;
 use BitCode\BTCBI\Core\Hooks\HookService;
 use BitCode\BTCBI\Util\Capabilities;
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 final class Plugin
 {

@@ -7,7 +7,7 @@
 namespace BitCode\BTCBI\Http\Services\Actions\RestrictContent;
 
 use WP_Error;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for RestricContent integration

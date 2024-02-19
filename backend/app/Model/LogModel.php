@@ -7,7 +7,7 @@ namespace BitCode\BTCBI\Model;
 /**
  * Undocumented class
  */
-use BitCode\BTCBI\Core\Database\Model;
+use BitCode\BTCBI\Model\Model;
 
 class LogModel extends Model
 {

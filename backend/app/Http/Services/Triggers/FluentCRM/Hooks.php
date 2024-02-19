@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\FluentCrm\FluentCrmController;
+use BitCode\BTCBI\Http\Services\Triggers\FluentCrm\FluentCrmController;
 
 Hooks::add('fluentcrm_contact_added_to_tags', [FluentCrmController::class, 'handle_add_tag'], 20, 2);
 Hooks::add('fluentcrm_contact_removed_from_tags', [FluentCrmController::class, 'handle_remove_tag'], 20, 2);

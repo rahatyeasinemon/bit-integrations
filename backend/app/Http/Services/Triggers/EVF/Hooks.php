@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\EVF\EVFController;
+use BitCode\BTCBI\Http\Services\Triggers\EVF\EVFController;
 
 // Hooks::add('ipt_fsqm_hook_save_insert', [EVFController::class, 'handleSubmission'], 10, 1);
 Hooks::add('everest_forms_complete_entry_save', [EVFController::class, 'handleSubmission'], 10, 5);

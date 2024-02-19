@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\FluentCrm;
+namespace BitCode\BTCBI\Http\Services\Triggers\FluentCrm;
 
 use DateTime;
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 use FluentCrm\App\Models\Tag;
 use FluentCrm\App\Models\Lists;
 use BitCode\BTCBI\Util\Common;

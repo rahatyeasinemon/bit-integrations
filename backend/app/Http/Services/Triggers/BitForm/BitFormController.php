@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\BitForm;
+namespace BitCode\BTCBI\Http\Services\Triggers\BitForm;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class BitFormController
 {
@@ -43,7 +43,7 @@ final class BitFormController
         $forms = \BitCode\BitForm\API\BitForm_Public\BitForm_Public::getForms();
         $all_forms = [];
         foreach ($forms as $form) {
-            $all_forms[] = (object)[
+            $all_forms[] = (object) [
                 'id' => $form->id,
                 'title' => $form->form_name
             ];

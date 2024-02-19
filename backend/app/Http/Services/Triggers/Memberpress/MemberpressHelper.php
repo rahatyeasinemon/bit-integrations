@@ -1,20 +1,21 @@
 <?php
-namespace BitCode\BTCBI\Triggers\Memberpress;
+
+namespace BitCode\BTCBI\Http\Services\Triggers\Memberpress;
 
 final class MemberpressHelper
 {
     public static function getOneTimeField()
     {
         return [
-            'ID' => (object)[
+            'ID' => (object) [
                 'fieldKey' => 'ID',
                 'fieldName' => 'Membership ID',
             ],
-            'post_title' => (object)[
+            'post_title' => (object) [
                 'fieldKey' => 'post_title',
                 'fieldName' => 'Membership Name',
             ],
-            'post_content' => (object)[
+            'post_content' => (object) [
                 'fieldKey' => 'post_content',
                 'fieldName' => 'Membership Description',
             ],
@@ -24,35 +25,35 @@ final class MemberpressHelper
     public static function getMembershipCancelField()
     {
         return [
-            'id' => (object)[
+            'id' => (object) [
                 'fieldKey' => 'id',
                 'fieldName' => 'Subscription ID',
             ],
-            'subscr_id' => (object)[
+            'subscr_id' => (object) [
                 'fieldKey' => 'subscr_id',
                 'fieldName' => 'Subscription ID',
             ],
-            'gateway' => (object)[
+            'gateway' => (object) [
                 'fieldKey' => 'gateway',
                 'fieldName' => 'Subscription Gateway',
             ],
-            'user_id' => (object)[
+            'user_id' => (object) [
                 'fieldKey' => 'user_id',
                 'fieldName' => 'User ID',
             ],
-            'product_id' => (object)[
+            'product_id' => (object) [
                 'fieldKey' => 'product_id',
                 'fieldName' => 'Product ID',
             ],
-            'price' => (object)[
+            'price' => (object) [
                 'fieldKey' => 'price',
                 'fieldName' => 'Price',
             ],
-            'period_type' => (object)[
+            'period_type' => (object) [
                 'fieldKey' => 'period_type',
                 'fieldName' => 'Period Type',
             ],
-            'trial_amount' => (object)[
+            'trial_amount' => (object) [
                 'fieldKey' => 'trial_amount',
                 'fieldName' => 'Trial Amount',
             ],
@@ -62,55 +63,55 @@ final class MemberpressHelper
     public static function getRecurringField()
     {
         return [
-            'affiliate_id' => (object)[
+            'affiliate_id' => (object) [
                 'fieldKey' => 'affiliate_id',
                 'fieldName' => 'Affiliate ID',
             ],
-            'order_amount' => (object)[
+            'order_amount' => (object) [
                 'fieldKey' => 'order_amount',
                 'fieldName' => 'Order Amount',
             ],
-            'commission_amount' => (object)[
+            'commission_amount' => (object) [
                 'fieldKey' => 'commission_amount',
                 'fieldName' => 'Commission Amount',
             ],
-            'referral_source' => (object)[
+            'referral_source' => (object) [
                 'fieldKey' => 'referral_source',
                 'fieldName' => 'Referral Source',
             ],
-            'visit_id' => (object)[
+            'visit_id' => (object) [
                 'fieldKey' => 'visit_id',
                 'fieldName' => 'Visit ID',
             ],
-            'coupon_id' => (object)[
+            'coupon_id' => (object) [
                 'fieldKey' => 'coupon_id',
                 'fieldName' => 'Coupon ID',
             ],
-            'customer_id' => (object)[
+            'customer_id' => (object) [
                 'fieldKey' => 'customer_id',
                 'fieldName' => 'Customer ID',
             ],
-            'referral_type' => (object)[
+            'referral_type' => (object) [
                 'fieldKey' => 'referral_type',
                 'fieldName' => 'Referral Type',
             ],
-            'description' => (object)[
+            'description' => (object) [
                 'fieldKey' => 'description',
                 'fieldName' => 'Description',
             ],
-            'order_source' => (object)[
+            'order_source' => (object) [
                 'fieldKey' => 'order_source',
                 'fieldName' => 'Order Source',
             ],
-            'order_id' => (object)[
+            'order_id' => (object) [
                 'fieldKey' => 'order_id',
                 'fieldName' => 'Order ID',
             ],
-            'payout_id' => (object)[
+            'payout_id' => (object) [
                 'fieldKey' => 'payout_id',
                 'fieldName' => 'Payout ID',
             ],
-            'status' => (object)[
+            'status' => (object) [
                 'fieldKey' => 'status',
                 'fieldName' => 'Status',
             ],

@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\EVF\EVFController;
+use BitCode\BTCBI\Http\Services\Triggers\EVF\EVFController;
 
 Route::get('evf/get', [EVFController::class, 'getAll']);
 Route::post('evf/get/form', [EVFController::class, 'getAForm']);

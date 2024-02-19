@@ -10,7 +10,7 @@ use WP_Error;
 use BitCode\BTCBI\Util\HttpHelper;
 use BitCode\BTCBI\Util\FieldValueHandler;
 use BitCode\BTCBI\Util\ApiResponse as UtilApiResponse;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert

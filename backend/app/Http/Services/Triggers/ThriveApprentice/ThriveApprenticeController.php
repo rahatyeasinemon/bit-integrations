@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\ThriveApprentice;
+namespace BitCode\BTCBI\Http\Services\Triggers\ThriveApprentice;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class ThriveApprenticeController
 {
@@ -52,7 +52,7 @@ final class ThriveApprenticeController
 
         $thriveapprentice_action = [];
         foreach ($types as $index => $type) {
-            $thriveapprentice_action[] = (object)[
+            $thriveapprentice_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];

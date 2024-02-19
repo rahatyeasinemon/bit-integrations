@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Tripetto;
+namespace BitCode\BTCBI\Http\Services\Triggers\Tripetto;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class TripettoController
 {
@@ -52,7 +52,7 @@ final class TripettoController
         $all_forms = [];
         if ($forms) {
             foreach ($forms as $form) {
-                $all_forms[] = (object)[
+                $all_forms[] = (object) [
                     'id' => $form->id,
                     'title' => $form->name,
                 ];
@@ -128,7 +128,7 @@ final class TripettoController
         foreach ($clusterData as $key => $cluster) {
             if ($key === 'nodes') {
                 foreach ($cluster as $field) {
-                    self::$allIndividualFormFields[] = (object)[
+                    self::$allIndividualFormFields[] = (object) [
                         'id' => $field->id,
                         'name' => $field->name,
                         'type' => $field->slots[0]->type ? $field->slots[0]->type : 'text',
@@ -147,7 +147,7 @@ final class TripettoController
         foreach ($sectionData as $key => $section) {
             if ($key === 'nodes') {
                 foreach ($section as $field) {
-                    self::$allIndividualFormFields[] = (object)[
+                    self::$allIndividualFormFields[] = (object) [
                         'id' => $field->id,
                         'name' => $field->name,
                         'type' => $field->slots[0]->type ? $field->slots[0]->type : 'text',

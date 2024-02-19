@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\UltimateMember\UltimateMemberController;
+use BitCode\BTCBI\Http\Services\Triggers\UltimateMember\UltimateMemberController;
 
 Hooks::add('um_user_login', [UltimateMemberController::class, 'handleUserLogViaForm'], 9, 1);
 Hooks::add('um_registration_complete', [UltimateMemberController::class, 'handleUserRegisViaForm'], 10, 2);

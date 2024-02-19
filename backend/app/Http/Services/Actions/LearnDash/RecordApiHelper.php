@@ -7,7 +7,7 @@
 namespace BitCode\BTCBI\Http\Services\Actions\LearnDash;
 
 use LDLMS_DB;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BitCode\BTCBI\Util\Common;
 use BitCode\BTCBI\Http\Services\Actions\Mail\MailController;
 

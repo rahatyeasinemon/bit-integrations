@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\TutorLms;
+namespace BitCode\BTCBI\Http\Services\Triggers\TutorLms;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class TutorLmsController
 {
@@ -39,7 +39,7 @@ final class TutorLmsController
         $types = ['Course-Enroll', 'User attempts(submit) a quiz', 'Completed a lesson', 'Complete a course', 'User achieves a targeted percentage on a quiz'];
         $tutor_action = [];
         foreach ($types as $index => $type) {
-            $tutor_action[] = (object)[
+            $tutor_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];

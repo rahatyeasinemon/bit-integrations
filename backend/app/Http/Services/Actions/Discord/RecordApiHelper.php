@@ -8,7 +8,7 @@ namespace BitCode\BTCBI\Http\Services\Actions\Discord;
 
 use BitCode\BTCBI\Util\HttpHelper;
 use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert

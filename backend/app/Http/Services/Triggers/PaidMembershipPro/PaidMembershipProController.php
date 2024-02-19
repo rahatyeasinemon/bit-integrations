@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\PaidMembershipPro;
+namespace BitCode\BTCBI\Http\Services\Triggers\PaidMembershipPro;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class PaidMembershipProController
 {
@@ -48,7 +48,7 @@ final class PaidMembershipProController
 
         $affiliate_action = [];
         foreach ($types as $index => $type) {
-            $affiliate_action[] = (object)[
+            $affiliate_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];
@@ -113,7 +113,7 @@ final class PaidMembershipProController
         global $wpdb;
         $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $level_id));
         $userData = self::getUserInfo($user_id);
-        $finalData = array_merge($userData, (array)$levels[0]);
+        $finalData = array_merge($userData, (array) $levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 1);
         $flowDetails = json_decode($flows[0]->flow_details);
         $selectedMembershipLevel = !empty($flowDetails->selectedMembershipLevel) ? $flowDetails->selectedMembershipLevel : [];
@@ -130,7 +130,7 @@ final class PaidMembershipProController
         global $wpdb;
         $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $cancel_level));
         $userData = self::getUserInfo($user_id);
-        $finalData = array_merge($userData, (array)$levels[0]);
+        $finalData = array_merge($userData, (array) $levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 2);
         $flowDetails = json_decode($flows[0]->flow_details);
         $selectedMembershipLevel = !empty($flowDetails->selectedMembershipLevel) ? $flowDetails->selectedMembershipLevel : [];
@@ -149,7 +149,7 @@ final class PaidMembershipProController
         global $wpdb;
         $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $membership_id));
         $userData = self::getUserInfo($user_id);
-        $finalData = array_merge($userData, (array)$levels[0]);
+        $finalData = array_merge($userData, (array) $levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 3);
         $flowDetails = json_decode($flows[0]->flow_details);
         $selectedMembershipLevel = !empty($flowDetails->selectedMembershipLevel) ? $flowDetails->selectedMembershipLevel : [];
@@ -163,7 +163,7 @@ final class PaidMembershipProController
         global $wpdb;
         $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $membership_id));
         $userData = self::getUserInfo($user_id);
-        $finalData = array_merge($userData, (array)$levels[0]);
+        $finalData = array_merge($userData, (array) $levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 4);
         $flowDetails = json_decode($flows[0]->flow_details);
         $selectedMembershipLevel = !empty($flowDetails->selectedMembershipLevel) ? $flowDetails->selectedMembershipLevel : [];

@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\PaidMembershipPro\PaidMembershipProController;
+use BitCode\BTCBI\Http\Services\Triggers\PaidMembershipPro\PaidMembershipProController;
 
 Route::get('paidmembershippro/get', [PaidMembershipProController::class, 'getAll']);
 Route::post('paidmembershippro/get/form', [PaidMembershipProController::class, 'get_a_form']);

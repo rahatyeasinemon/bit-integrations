@@ -6,13 +6,13 @@
 
 namespace BitCode\BTCBI\Http\Services\Actions\ZohoCRM;
 
+use BitCode\BTCBI\Http\Controllers\FlowController;
 use WP_Error;
 use BitCode\BTCBI\Util\HttpHelper;
 use BitCode\BTCBI\Http\Services\Actions\ZohoCRM\TagApiHelper;
 use BitCode\BTCBI\Http\Services\Actions\ZohoCRM\MetaDataApiHelper;
 use BitCode\BTCBI\Http\Services\Actions\ZohoCRM\RecordApiHelper;
-use BitCode\BTCBI\Flow\FlowController;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BitCode\BTCBI\Plugin;
 use stdClass;
 

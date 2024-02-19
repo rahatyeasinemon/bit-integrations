@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Admin;
+namespace BitCode\BTCBI\Routes;
 
 use BitCode\BTCBI\Util\Route;
 

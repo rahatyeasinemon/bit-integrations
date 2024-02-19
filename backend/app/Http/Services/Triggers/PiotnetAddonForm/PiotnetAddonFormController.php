@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\PiotnetAddonForm;
+namespace BitCode\BTCBI\Http\Services\Triggers\PiotnetAddonForm;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class PiotnetAddonFormController
 {
@@ -72,7 +72,7 @@ final class PiotnetAddonFormController
         $piotnetForms = [];
         if ($posts) {
             foreach ($posts as $post) {
-                $piotnetForms[] = (object)[
+                $piotnetForms[] = (object) [
                     'id' => $post->ID,
                     'title' => $post->post_title,
                 ];

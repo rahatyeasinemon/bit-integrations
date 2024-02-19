@@ -1,8 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\AcademyLms;
+namespace BitCode\BTCBI\Http\Services\Triggers\AcademyLms;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
+
 // use Academy\Traits\Lessons;
 
 final class AcademyLmsController
@@ -51,7 +52,7 @@ final class AcademyLmsController
 
         $academy_action = [];
         foreach ($types as $index => $type) {
-            $academy_action[] = (object)[
+            $academy_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];

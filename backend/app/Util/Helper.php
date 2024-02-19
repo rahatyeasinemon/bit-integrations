@@ -2,7 +2,7 @@
 
 namespace BitCode\BTCBI\Util;
 
-use BitCode\BTCBI\Triggers\TriggerController;
+use BitCode\BTCBI\Http\Services\Triggers\TriggerController;
 
 /**
  * bit-integration helper class

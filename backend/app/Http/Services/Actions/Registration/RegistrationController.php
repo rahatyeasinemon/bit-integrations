@@ -3,8 +3,8 @@
 namespace BitCode\BTCBI\Http\Services\Actions\Registration;
 
 use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Flow\Flow;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Model\Flow;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 final class RegistrationController
 {

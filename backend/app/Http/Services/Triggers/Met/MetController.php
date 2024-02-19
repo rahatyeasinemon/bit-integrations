@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Met;
+namespace BitCode\BTCBI\Http\Services\Triggers\Met;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class MetController
 {
@@ -66,7 +66,7 @@ final class MetController
 
         if ($forms) {
             foreach ($forms as $form) {
-                $all_forms[] = (object)[
+                $all_forms[] = (object) [
                     'id' => $form->ID,
                     'title' => $form->post_title,
                 ];

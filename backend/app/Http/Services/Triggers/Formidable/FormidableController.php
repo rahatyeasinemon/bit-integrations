@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Formidable;
+namespace BitCode\BTCBI\Http\Services\Triggers\Formidable;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 use BitCode\BTCBI\Util\Common;
 
 final class FormidableController

@@ -4,7 +4,7 @@ namespace BitCode\BTCBI\Http\Services\Actions\WishList;
 
 use BitCode\BTCBI\Util\Common;
 use BitCode\BTCBI\Util\DateTimeHelper;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert

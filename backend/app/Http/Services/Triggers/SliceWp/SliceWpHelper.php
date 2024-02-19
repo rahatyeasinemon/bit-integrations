@@ -1,32 +1,33 @@
 <?php
-namespace BitCode\BTCBI\Triggers\SliceWp;
+
+namespace BitCode\BTCBI\Http\Services\Triggers\SliceWp;
 
 final class SliceWpHelper
 {
     public static function getSliceWpNewAffiliateField()
     {
         return [
-            'affiliate_id' => (object)[
+            'affiliate_id' => (object) [
                 'fieldKey' => 'affiliate_id',
                 'fieldName' => 'Affiliate ID',
             ],
-            'user_id' => (object)[
+            'user_id' => (object) [
                 'fieldKey' => 'user_id',
                 'fieldName' => 'User ID',
             ],
-            'payment_email' => (object)[
+            'payment_email' => (object) [
                 'fieldKey' => 'payment_email',
                 'fieldName' => 'Payment Email',
             ],
-            'website' => (object)[
+            'website' => (object) [
                 'fieldKey' => 'website',
                 'fieldName' => 'Website URL',
             ],
-            'date_created' => (object)[
+            'date_created' => (object) [
                 'fieldKey' => 'date_created',
                 'fieldName' => 'Date Created',
             ],
-            'status' => (object)[
+            'status' => (object) [
                 'fieldKey' => 'status',
                 'fieldName' => 'Status',
             ],
@@ -36,39 +37,39 @@ final class SliceWpHelper
     public static function getCommissionField()
     {
         return [
-            'commission_id' => (object)[
+            'commission_id' => (object) [
                 'fieldKey' => 'commission_id',
                 'fieldName' => 'Commission ID',
             ],
-            'affiliate_id' => (object)[
+            'affiliate_id' => (object) [
                 'fieldKey' => 'affiliate_id',
                 'fieldName' => 'Affiliate ID',
             ],
-            'date_created' => (object)[
+            'date_created' => (object) [
                 'fieldKey' => 'date_created',
                 'fieldName' => 'Date Created',
             ],
-            'amount' => (object)[
+            'amount' => (object) [
                 'fieldKey' => 'amount',
                 'fieldName' => 'Amount',
             ],
-            'reference' => (object)[
+            'reference' => (object) [
                 'fieldKey' => 'reference',
                 'fieldName' => 'Reference',
             ],
-            'origin' => (object)[
+            'origin' => (object) [
                 'fieldKey' => 'origin',
                 'fieldName' => 'Origin',
             ],
-            'type' => (object)[
+            'type' => (object) [
                 'fieldKey' => 'type',
                 'fieldName' => 'Type',
             ],
-            'status' => (object)[
+            'status' => (object) [
                 'fieldKey' => 'status',
                 'fieldName' => 'Status',
             ],
-            'currency' => (object)[
+            'currency' => (object) [
                 'fieldKey' => 'currency',
                 'fieldName' => 'Currency',
             ],

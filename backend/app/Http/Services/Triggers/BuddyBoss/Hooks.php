@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\BuddyBoss\BuddyBossController;
+use BitCode\BTCBI\Http\Services\Triggers\BuddyBoss\BuddyBossController;
 
 Hooks::add('friends_friendship_accepted', [BuddyBossController::class, 'handle_accept_friend_request'], 10, 4);
 Hooks::add('friends_friendship_requested', [BuddyBossController::class, 'handle_sends_friend_request'], 10, 4);

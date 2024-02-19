@@ -6,7 +6,7 @@
 
 namespace BitCode\BTCBI\Http\Services\Actions\RestrictContent;
 
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
 
 /**

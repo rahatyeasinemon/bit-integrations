@@ -1,13 +1,11 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Post;
+namespace BitCode\BTCBI\Http\Services\Triggers\Post;
 
 use WP_Query;
 
-
 final class PostHelper
 {
-
     public static function commentFields()
     {
         $commentFields = [

@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\ARForm;
+namespace BitCode\BTCBI\Http\Services\Triggers\ARForm;
 
+use BitCode\BTCBI\Model\Flow;
 use DateTime;
-use BitCode\BTCBI\Flow\Flow;
 use BitCode\BTCBI\Util\Common;
 
 final class ARFormController

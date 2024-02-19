@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Themify;
+namespace BitCode\BTCBI\Http\Services\Triggers\Themify;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class ThemifyController
 {
@@ -63,7 +63,7 @@ final class ThemifyController
                 if ($form_type === 'signup-form') {
                     $forms = self::getAllFormsFromPostMeta($postMeta);
                     foreach ($forms as $form) {
-                        $all_forms[] = (object)[
+                        $all_forms[] = (object) [
                             'id' => $form->id,
                             'title' => $form->title,
                             'post_id' => $post->ID,
@@ -131,7 +131,7 @@ final class ThemifyController
                 foreach ($singleWidget->modules as $element) {
                     foreach ($element->mod_settings as $key => $value) {
                         if ($key === 'mod_title') {
-                            $forms[] = (object)[
+                            $forms[] = (object) [
                                 'id' => $element->element_id,
                                 'title' => $value,
                                 'fields' => $element->mod_settings,

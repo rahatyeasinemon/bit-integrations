@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\WSForm;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\WSForm;
+
+use BitCode\BTCBI\Model\Flow;
 
 final class WSFormController
 {
@@ -94,7 +95,7 @@ final class WSFormController
         $all_forms = [];
         if ($forms) {
             foreach ($forms as $form) {
-                $all_forms[] = (object)[
+                $all_forms[] = (object) [
                     'id' => $form['id'],
                     'title' => $form['label'],
                 ];

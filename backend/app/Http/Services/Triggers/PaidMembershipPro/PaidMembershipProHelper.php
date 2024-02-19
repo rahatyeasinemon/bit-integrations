@@ -1,32 +1,33 @@
 <?php
-namespace BitCode\BTCBI\Triggers\PaidMembershipPro;
+
+namespace BitCode\BTCBI\Http\Services\Triggers\PaidMembershipPro;
 
 final class PaidMembershipProHelper
 {
     public static function getPaidMembershipProField()
     {
         return [
-            'id' => (object)[
+            'id' => (object) [
                 'fieldKey' => 'id',
                 'fieldName' => 'Membership ID',
             ],
-            'name' => (object)[
+            'name' => (object) [
                 'fieldKey' => 'name',
                 'fieldName' => 'Name',
             ],
-            'description' => (object)[
+            'description' => (object) [
                 'fieldKey' => 'description',
                 'fieldName' => 'Description',
             ],
-            'confirmation' => (object)[
+            'confirmation' => (object) [
                 'fieldKey' => 'confirmation',
                 'fieldName' => 'Confirmation',
             ],
-            'initial_payment' => (object)[
+            'initial_payment' => (object) [
                 'fieldKey' => 'initial_payment',
                 'fieldName' => 'Initial Payment',
             ],
-            'billing_amount' => (object)[
+            'billing_amount' => (object) [
                 'fieldKey' => 'billing_amount',
                 'fieldName' => 'Billing Amount',
             ],

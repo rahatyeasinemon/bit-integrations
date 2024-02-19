@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\WC;
+namespace BitCode\BTCBI\Http\Services\Triggers\WC;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class WCController
 {
@@ -41,7 +41,7 @@ final class WCController
         ];
         $wc_action = [];
         foreach ($types as $index => $type) {
-            $wc_action[] = (object)[
+            $wc_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];
@@ -88,7 +88,7 @@ final class WCController
             } else {
                 $allSubscriptionStatus = $anyStatus;
             }
-            $responseData['subscription_statuses'] = (array)$allSubscriptionStatus;
+            $responseData['subscription_statuses'] = (array) $allSubscriptionStatus;
         }
 
         if ($data->id == 17) {
@@ -107,7 +107,7 @@ final class WCController
             }
             foreach ($product_categories_list as $key => $category) {
                 $product_categories[] = [
-                    'term_id' => (string)$category->term_id,
+                    'term_id' => (string) $category->term_id,
                     'name' => $category->name,
                 ];
             }
@@ -1312,11 +1312,11 @@ final class WCController
                     $orderedProducts = $data['line_items'];
                     $differId = 1;
                     foreach ($orderedProducts as $orderedProduct) {
-                        foreach ((array)$orderedProduct as $keys => $value) {
+                        foreach ((array) $orderedProduct as $keys => $value) {
                             $newItem["{$differId}_{$keys}"] = $value;
                         }
                         $differId = $differId + 1;
-                        $data = array_merge($data, (array)$newItem);
+                        $data = array_merge($data, (array) $newItem);
                     }
                     Flow::execute('WC', 7, $data, $flows);
                 }
@@ -1331,9 +1331,9 @@ final class WCController
                         $triggerData = $data;
 
                         foreach ($orderedProducts as $orderedProduct) {
-                            if ((int)$selectedProductId == $orderedProduct->product_id) {
+                            if ((int) $selectedProductId == $orderedProduct->product_id) {
                                 $triggerData['line_items'] = [$orderedProduct];
-                                $triggerData = $triggerData + (array)$orderedProduct;
+                                $triggerData = $triggerData + (array) $orderedProduct;
                                 $flowData = [0 => $flow];
                                 Flow::execute('WC', 10, $triggerData, $flowData);
                                 break;
@@ -1353,7 +1353,7 @@ final class WCController
                     foreach ($orderedProducts as $orderedProduct) {
                         $productCategory = wc_get_product($orderedProduct->product_id);
                         $productInfo = $productCategory->get_category_ids();
-                        if (in_array((int)$selectedProductCategory, $productInfo)) {
+                        if (in_array((int) $selectedProductCategory, $productInfo)) {
                             array_push($filteredByCategory, $orderedProduct);
                         }
                     }
@@ -1554,7 +1554,7 @@ final class WCController
                     Flow::execute('WC', 12, $data, $flows);
                 }
             }
-            if ($product_id === (int)$selectedSubscription) {
+            if ($product_id === (int) $selectedSubscription) {
                 if (!empty($user_id) && $flows = Flow::exists('WC', 12)) {
                     Flow::execute('WC', 12, $data, $flows);
                 }
@@ -1591,7 +1591,7 @@ final class WCController
                     Flow::execute('WC', 13, $data, $flows);
                 }
             }
-            if ($product_id === (int)$selectedSubscription) {
+            if ($product_id === (int) $selectedSubscription) {
                 if (!empty($user_id) && $flows = Flow::exists('WC', 13)) {
                     Flow::execute('WC', 13, $data, $flows);
                 }
@@ -1628,7 +1628,7 @@ final class WCController
                     Flow::execute('WC', 14, $data, $flows);
                 }
             }
-            if ($product_id === (int)$selectedSubscription) {
+            if ($product_id === (int) $selectedSubscription) {
                 if (!empty($user_id) && $flows = Flow::exists('WC', 14)) {
                     Flow::execute('WC', 14, $data, $flows);
                 }
@@ -1674,7 +1674,7 @@ final class WCController
                     }
                 }
             }
-            if ($product_id === (int)$selectedSubscription) {
+            if ($product_id === (int) $selectedSubscription) {
                 if ($selectedSubscriptionStatus === 'any_status') {
                     if (!empty($user_id) && $flows = Flow::exists('WC', 15)) {
                         Flow::execute('WC', 15, $data, $flows);
@@ -1722,7 +1722,7 @@ final class WCController
                     Flow::execute('WC', 16, $data, $flows);
                 }
             }
-            if ($product_id === (int)$selectedSubscription) {
+            if ($product_id === (int) $selectedSubscription) {
                 if (!empty($user_id) && $flows = Flow::exists('WC', 16)) {
                     Flow::execute('WC', 16, $data, $flows);
                 }
@@ -1947,9 +1947,9 @@ final class WCController
         if (function_exists('wcs_get_subscription_statuses')) {
             $allSubscriptionStatus = wcs_get_subscription_statuses();
             $allSubscriptionStatus = array_merge($anyStatus, $allSubscriptionStatus);
-            $subscription_statuses = (array)$allSubscriptionStatus;
+            $subscription_statuses = (array) $allSubscriptionStatus;
         } else {
-            $subscription_statuses = (array)$anyStatus;
+            $subscription_statuses = (array) $anyStatus;
         }
         wp_send_json_success($subscription_statuses);
     }
@@ -1965,7 +1965,7 @@ final class WCController
             $productType = $product->get_type();
             $productSku = $product->get_sku();
 
-            $allProducts[] = (object)[
+            $allProducts[] = (object) [
                 'product_id' => $productId,
                 'product_title' => $productTitle,
                 'product_type' => $productType,
@@ -1992,7 +1992,7 @@ final class WCController
         }
         foreach ($product_categories_list as $key => $category) {
             $product_categories[] = [
-                'term_id' => (string)$category->term_id,
+                'term_id' => (string) $category->term_id,
                 'name' => $category->name,
             ];
         }

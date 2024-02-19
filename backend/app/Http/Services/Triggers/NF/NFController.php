@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\NF;
+namespace BitCode\BTCBI\Http\Services\Triggers\NF;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class NFController
 {
@@ -36,7 +36,7 @@ final class NFController
             $forms = \Ninja_Forms()->form()->get_forms();
             if ($forms) {
                 foreach ($forms as $form) {
-                    $all_forms[] = (object)[
+                    $all_forms[] = (object) [
                         'id'    => $form->get_id(),
                         'title' => $form->get_setting('title')
                     ];

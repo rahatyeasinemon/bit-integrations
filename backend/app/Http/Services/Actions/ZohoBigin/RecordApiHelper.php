@@ -7,7 +7,7 @@
 namespace BitCode\BTCBI\Http\Services\Actions\ZohoBigin;
 
 use WP_Error;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BitCode\BTCBI\Util\HttpHelper;
 use BitCode\BTCBI\Util\DateTimeHelper;
 use BitCode\BTCBI\Util\FieldValueHandler;

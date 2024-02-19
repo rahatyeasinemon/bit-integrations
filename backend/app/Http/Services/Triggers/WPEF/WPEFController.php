@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\WPEF;
+namespace BitCode\BTCBI\Http\Services\Triggers\WPEF;
 
 use wpdb;
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 use BitCode\BTCBI\Util\Common;
 use BitCode\BTCBI\Util\DateTimeHelper;
 

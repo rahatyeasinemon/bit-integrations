@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\JetEngine\JetEngineController;
+use BitCode\BTCBI\Http\Services\Triggers\JetEngine\JetEngineController;
 
 Route::get('jetengine/get', [JetEngineController::class, 'getAll']);
 Route::post('jetengine/get/form', [JetEngineController::class, 'get_a_form']);

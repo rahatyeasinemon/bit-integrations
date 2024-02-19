@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\EDD\EDDController;
+use BitCode\BTCBI\Http\Services\Triggers\EDD\EDDController;
 
 Route::get('edd/get', [EDDController::class, 'getAll']);
 Route::post('edd/get/form', [EDDController::class, 'get_a_form']);

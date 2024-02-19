@@ -8,7 +8,7 @@ namespace BitCode\BTCBI\Http\Services\Actions\WooCommerce;
 
 use WP_Error;
 use WC_Data_Store;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BitCode\BTCBI\Http\Services\Actions\WooCommerce\RecordApiHelper;
 
 class WooCommerceController

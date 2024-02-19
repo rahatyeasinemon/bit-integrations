@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\Affiliate;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\Affiliate;
+
+use BitCode\BTCBI\Model\Flow;
 
 final class AffiliateController
 {
@@ -45,10 +46,10 @@ final class AffiliateController
         }
 
         $types = ['A new affiliate is approved', 'A user becomes an affiliate','An affiliate makes a referral of a specific type','An affiliates referral of a specific type is rejected Pro','An affiliates referral of a specific type is paid Pro'];
-        
+
         $affiliate_action = [];
         foreach ($types as $index => $type) {
-            $affiliate_action[] = (object)[
+            $affiliate_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];
@@ -70,7 +71,7 @@ final class AffiliateController
             wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
-        
+
         $organizeType[] = [
             'type_id' => 'any',
             'type_name' => 'Any'
@@ -108,19 +109,19 @@ final class AffiliateController
                     'fieldKey' => 'status',
                     'fieldName' => 'Status',
                 ],
-                'flat_rate_basis' => (object)[
+                'flat_rate_basis' => (object) [
                     'fieldKey' => 'flat_rate_basis',
                     'fieldName' => 'Flat Rate Basis',
                 ],
-                'payment_email' => (object)[
+                'payment_email' => (object) [
                     'fieldKey' => 'payment_email',
                     'fieldName' => 'Payment Email',
                 ],
-                'rate_type' => (object)[
+                'rate_type' => (object) [
                     'fieldKey' => 'rate_type',
                     'fieldName' => 'Rate Type',
                 ],
-                'affiliate_note' => (object)[
+                'affiliate_note' => (object) [
                     'fieldKey' => 'affiliate_note',
                     'fieldName' => 'Affiliate Note',
                 ],
@@ -131,31 +132,31 @@ final class AffiliateController
             ];
         } elseif ($id == '4' || $id == '5') {
             $fields = [
-                'affiliate_id' => (object)[
+                'affiliate_id' => (object) [
                     'fieldKey' => 'affiliate_id',
                     'fieldName' => 'Affiliate ID',
                 ],
-                'affiliate_url' => (object)[
+                'affiliate_url' => (object) [
                     'fieldKey' => 'affiliate_url',
                     'fieldName' => 'Affiliate URL',
                 ],
-                'referral_description' => (object)[
+                'referral_description' => (object) [
                     'fieldKey' => 'referral_description',
                     'fieldName' => 'Referral Description',
                 ],
-                'amount' => (object)[
+                'amount' => (object) [
                     'fieldKey' => 'amount',
                     'fieldName' => 'Amount',
                 ],
-                'context' => (object)[
+                'context' => (object) [
                     'fieldKey' => 'context',
                     'fieldName' => 'Context',
                 ],
-                'campaign' => (object)[
+                'campaign' => (object) [
                     'fieldKey' => 'campaign',
                     'fieldName' => 'Campaign',
                 ],
-                'reference' => (object)[
+                'reference' => (object) [
                     'fieldKey' => 'reference',
                     'fieldName' => 'Reference',
                 ],
@@ -163,23 +164,23 @@ final class AffiliateController
                     'fieldKey' => 'status',
                     'fieldName' => 'Status',
                 ],
-                'flat_rate_basis' => (object)[
+                'flat_rate_basis' => (object) [
                     'fieldKey' => 'flat_rate_basis',
                     'fieldName' => 'Flat Rate Basis',
                 ],
-                'account_email' => (object)[
+                'account_email' => (object) [
                     'fieldKey' => 'account_email',
                     'fieldName' => 'Account Email',
                 ],
-                'payment_email' => (object)[
+                'payment_email' => (object) [
                     'fieldKey' => 'payment_email',
                     'fieldName' => 'Payment Email',
                 ],
-                'rate_type' => (object)[
+                'rate_type' => (object) [
                     'fieldKey' => 'rate_type',
                     'fieldName' => 'Rate Type',
                 ],
-                'affiliate_note' => (object)[
+                'affiliate_note' => (object) [
                     'fieldKey' => 'affiliate_note',
                     'fieldName' => 'Affiliate Note',
                 ],
@@ -190,57 +191,57 @@ final class AffiliateController
             ];
         } elseif ($id = '3') {
             $fields = [
-                'affiliate_id' => (object)[
+                'affiliate_id' => (object) [
                     'fieldKey' => 'affiliate_id',
                     'fieldName' => 'Affiliate ID',
                 ],
-                'affiliate_url' => (object)[
+                'affiliate_url' => (object) [
                     'fieldKey' => 'affiliate_url',
                     'fieldName' => 'Affiliate URL',
                 ],
-                'referral_description' => (object)[
+                'referral_description' => (object) [
                     'fieldKey' => 'referral_description',
                     'fieldName' => 'Referral Description',
                 ],
-                'amount' => (object)[
+                'amount' => (object) [
                     'fieldKey' => 'amount',
                     'fieldName' => 'Amount',
                 ],
-                'context' => (object)[
+                'context' => (object) [
                     'fieldKey' => 'context',
                     'fieldName' => 'Context',
                 ],
-                'campaign' => (object)[
+                'campaign' => (object) [
                     'fieldKey' => 'campaign',
                     'fieldName' => 'Campaign',
                 ],
-                'reference' => (object)[
+                'reference' => (object) [
                     'fieldKey' => 'reference',
                     'fieldName' => 'Reference',
                 ],
-                'flat_rate_basis' => (object)[
+                'flat_rate_basis' => (object) [
                     'fieldKey' => 'flat_rate_basis',
                     'fieldName' => 'Flat Rate Basis',
                 ],
-                'account_email' => (object)[
+                'account_email' => (object) [
                     'fieldKey' => 'account_email',
                     'fieldName' => 'Account Email',
                 ],
-                'payment_email' => (object)[
+                'payment_email' => (object) [
                     'fieldKey' => 'payment_email',
                     'fieldName' => 'Payment Email',
                 ],
-                'rate_type' => (object)[
+                'rate_type' => (object) [
                     'fieldKey' => 'rate_type',
                     'fieldName' => 'Rate Type',
                 ],
-                'affiliate_note' => (object)[
+                'affiliate_note' => (object) [
                     'fieldKey' => 'affiliate_note',
                     'fieldName' => 'Affiliate Note',
                 ],
             ];
         }
-        
+
 
         foreach ($fields as $field) {
             if ($field->fieldKey === 'payment_email') {
@@ -297,7 +298,7 @@ final class AffiliateController
         $affiliate = affwp_get_affiliate($affiliate_id);
 
         $user = get_user_by('id', $user_id);
-        
+
 
         $data = [
             'status' => $status,
@@ -332,7 +333,7 @@ final class AffiliateController
         $affiliate = affwp_get_affiliate($affiliate_id);
 
         $user = get_user_by('id', $user_id);
-        
+
 
         $data = [
             'status' => $status,
@@ -406,19 +407,19 @@ final class AffiliateController
         if (!$flows) {
             return;
         }
-        
-        
+
+
         if ((string) $new_status === (string) $old_status || 'rejected' !== (string) $new_status) {
             return $new_status;
         }
-       
+
         $referral      = affwp_get_referral($referral_id);
         $type          = $referral->type;
         $user_id       = affwp_get_affiliate_user_id($referral->affiliate_id);
         $user               = get_user_by('id', $user_id);
         $affiliate          = affwp_get_affiliate($referral->affiliate_id);
         $affiliateNote = maybe_serialize(affwp_get_affiliate_meta($affiliate->affiliate_id, 'notes', true));
-        
+
 
         foreach ($flows as $flow) {
             if (is_string($flow->flow_details)) {
@@ -459,26 +460,26 @@ final class AffiliateController
             Flow::execute('Affiliate', 4, $data, $flows);
         }
     }
-    
+
     public static function affiliatesReferralSpecificTypePaid($referral_id, $new_status, $old_status)
     {
         $flows = Flow::exists('Affiliate', 5);
         if (!$flows) {
             return;
         }
-        
-        
+
+
         if ((string) $new_status === (string) $old_status || 'paid' !== (string) $new_status) {
             return $new_status;
         }
-       
+
         $referral      = affwp_get_referral($referral_id);
         $type          = $referral->type;
         $user_id       = affwp_get_affiliate_user_id($referral->affiliate_id);
         $user               = get_user_by('id', $user_id);
         $affiliate          = affwp_get_affiliate($referral->affiliate_id);
         $affiliateNote = maybe_serialize(affwp_get_affiliate_meta($affiliate->affiliate_id, 'notes', true));
-      
+
 
         foreach ($flows as $flow) {
             if (is_string($flow->flow_details)) {

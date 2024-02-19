@@ -5,6 +5,6 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\Tripetto\TripettoController;
+use BitCode\BTCBI\Http\Services\Triggers\Tripetto\TripettoController;
 
 Hooks::add('tripetto_submit', [TripettoController::class, 'handleTripettoSubmit'], 10, 2);

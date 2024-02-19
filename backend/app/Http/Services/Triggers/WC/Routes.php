@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\WC\WCController;
+use BitCode\BTCBI\Http\Services\Triggers\WC\WCController;
 
 Route::get('wc/get', [WCController::class, 'getAll']);
 Route::post('wc/get/form', [WCController::class, 'get_trigger_field']);

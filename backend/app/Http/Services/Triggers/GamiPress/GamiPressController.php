@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\GamiPress;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\GamiPress;
+
+use BitCode\BTCBI\Model\Flow;
 
 final class GamiPressController
 {
@@ -52,7 +53,7 @@ final class GamiPressController
         ];
         $gamiPress_action = [];
         foreach ($types as $index => $type) {
-            $gamiPress_action[] = (object)[
+            $gamiPress_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];
@@ -457,7 +458,7 @@ final class GamiPressController
             'points_type' => $points_type,
         ];
         $data = array_merge($userData, $pointData);
-        if ($flowDetails->selectedPoint === (string)$total_points || $flowDetails->selectedPoint === '') {
+        if ($flowDetails->selectedPoint === (string) $total_points || $flowDetails->selectedPoint === '') {
             Flow::execute('GamiPress', 6, $data, $flows);
         }
     }

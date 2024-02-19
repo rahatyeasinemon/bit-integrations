@@ -5,7 +5,7 @@ namespace BitCode\BTCBI\Http\Services\Actions\OneDrive;
 use BitCode\BTCBI\Http\Services\Actions\OneDrive\RecordApiHelper as OneDriveRecordApiHelper;
 use BitCode\BTCBI\Util\HttpHelper;
 use BitCode\BTCBI\Flow\FlowController;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
 
 class OneDriveController

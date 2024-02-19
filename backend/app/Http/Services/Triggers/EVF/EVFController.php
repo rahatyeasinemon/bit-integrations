@@ -1,10 +1,10 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\EVF;
+namespace BitCode\BTCBI\Http\Services\Triggers\EVF;
 
 use BitCode\BTCBI\Util\Common;
 use BitCode\BTCBI\Util\DateTimeHelper;
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 use wpdb;
 
 final class EVFController

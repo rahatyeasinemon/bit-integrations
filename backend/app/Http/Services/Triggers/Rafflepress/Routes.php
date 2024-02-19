@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\Rafflepress\RafflepressController;
+use BitCode\BTCBI\Http\Services\Triggers\Rafflepress\RafflepressController;
 
 Route::get('rafflepress/get', [RafflepressController::class, 'getAll']);
 Route::post('rafflepress/get/form', [RafflepressController::class, 'get_a_form']);

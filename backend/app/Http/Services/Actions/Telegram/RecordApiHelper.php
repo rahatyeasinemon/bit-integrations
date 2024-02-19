@@ -9,7 +9,7 @@ namespace BitCode\BTCBI\Http\Services\Actions\Telegram;
 use BitCode\BTCBI\Util\HttpHelper;
 use BitCode\BTCBI\Http\Services\Actions\Telegram\FilesApiHelper;
 use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert

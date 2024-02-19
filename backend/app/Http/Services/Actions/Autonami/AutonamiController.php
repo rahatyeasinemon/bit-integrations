@@ -3,7 +3,7 @@
 namespace BitCode\BTCBI\Http\Services\Actions\Autonami;
 
 use BitCode\BTCBI\Util\Helper;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BWFCRM_Fields;
 use BWFCRM_Lists;
 use BWFCRM_Tag;

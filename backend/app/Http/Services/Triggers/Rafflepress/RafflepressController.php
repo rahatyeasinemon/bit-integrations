@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\Rafflepress;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\Rafflepress;
+
+use BitCode\BTCBI\Model\Flow;
 
 final class RafflepressController
 {
@@ -49,7 +50,7 @@ final class RafflepressController
 
         $affiliate_action = [];
         foreach ($types as $index => $type) {
-            $affiliate_action[] = (object)[
+            $affiliate_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];

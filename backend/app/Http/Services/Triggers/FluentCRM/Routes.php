@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\FluentCrm\FluentCrmController;
+use BitCode\BTCBI\Http\Services\Triggers\FluentCrm\FluentCrmController;
 
 Route::get('fluentcrm/get', [FluentCrmController::class, 'getAll']);
 Route::post('fluentcrm/get/form', [FluentCrmController::class, 'get_a_form']);

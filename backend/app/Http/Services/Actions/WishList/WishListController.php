@@ -9,7 +9,7 @@ namespace BitCode\BTCBI\Http\Services\Actions\WishList;
 
 use WP_Error;
 use BitCode\BTCBI\Http\Services\Actions\WishList\RecordApiHelper;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 include('wlmapiclass.php');
 

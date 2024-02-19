@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\CustomTrigger;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\CustomTrigger;
+
+use BitCode\BTCBI\Model\Flow;
 use WP_Error;
 
 class CustomTriggerController

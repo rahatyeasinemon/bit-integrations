@@ -5,7 +5,7 @@ namespace BitCode\BTCBI\Http\Services\Actions\GoogleCalendar;
 use BitCode\BTCBI\Http\Services\Actions\GoogleCalendar\RecordApiHelper as GoogleCalendarRecordApiHelper;
 use BitCode\BTCBI\Util\HttpHelper;
 use BitCode\BTCBI\Flow\FlowController;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
 
 class GoogleCalendarController

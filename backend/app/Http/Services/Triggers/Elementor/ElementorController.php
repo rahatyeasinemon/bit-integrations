@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Elementor;
+namespace BitCode\BTCBI\Http\Services\Triggers\Elementor;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class ElementorController
 {
@@ -46,7 +46,7 @@ final class ElementorController
 
         $forms = ElementorHelper::all_forms();
         foreach ($forms as $form) {
-            $all_forms[] = (object)[
+            $all_forms[] = (object) [
                 'id'        => $form['id'] . $form['post_id'],
                 'title'     => $form['title'],
                 'post_id'   => $form['post_id']

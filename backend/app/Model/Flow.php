@@ -12,9 +12,9 @@ use BitCode\BTCBI\Util\CustomFuncValidator;
 use BitCode\BTCBI\Util\IpTool;
 use BitCode\BTCBI\Util\SmartTags;
 use BitCode\BTCBI\Util\StoreInCache;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BitCode\BTCBI\Plugin;
-use BitCode\BTCBI\Triggers\TriggerController;
+use BitCode\BTCBI\Http\Services\Triggers\TriggerController;
 use WP_Error;
 
 /**

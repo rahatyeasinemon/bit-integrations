@@ -1,8 +1,9 @@
 <?php
-namespace BitCode\BTCBI\Triggers\JetEngine;
 
-use BitCode\BTCBI\Flow\Flow;
-use BitCode\BTCBI\Triggers\JetEngine\JetEngineHelper;
+namespace BitCode\BTCBI\Http\Services\Triggers\JetEngine;
+
+use BitCode\BTCBI\Model\Flow;
+use BitCode\BTCBI\Http\Services\Triggers\JetEngine\JetEngineHelper;
 
 final class JetEngineController
 {
@@ -80,7 +81,7 @@ final class JetEngineController
     public static function post_meta_data($meta_id, $post_id, $meta_key, $meta_value)
     {
         $postData = get_post($post_id);
-        $finalData = (array)$postData + ['meta_key' => $meta_key, 'meta_value' => $meta_value];
+        $finalData = (array) $postData + ['meta_key' => $meta_key, 'meta_value' => $meta_value];
         $postData = get_post($post_id);
         $user_id = get_current_user_id();
         $postCreateFlow = Flow::exists('JetEngine', 1);
@@ -106,7 +107,7 @@ final class JetEngineController
     public static function post_meta_value_check($meta_id, $post_id, $meta_key, $meta_value)
     {
         $postData = get_post($post_id);
-        $finalData = (array)$postData + ['meta_key' => $meta_key, 'meta_value' => $meta_value];
+        $finalData = (array) $postData + ['meta_key' => $meta_key, 'meta_value' => $meta_value];
         $postData = get_post($post_id);
         $user_id = get_current_user_id();
         $postCreateFlow = Flow::exists('JetEngine', 2);

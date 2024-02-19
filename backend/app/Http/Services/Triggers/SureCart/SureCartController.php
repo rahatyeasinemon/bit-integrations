@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\SureCart;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\SureCart;
+
+use BitCode\BTCBI\Model\Flow;
 use SureCart\Models\Product;
 
 final class SureCartController
@@ -48,7 +49,7 @@ final class SureCartController
 
         $affiliate_action = [];
         foreach ($types as $index => $type) {
-            $affiliate_action[] = (object)[
+            $affiliate_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];

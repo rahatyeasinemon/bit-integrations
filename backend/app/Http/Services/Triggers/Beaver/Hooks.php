@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\Beaver\BeaverController;
+use BitCode\BTCBI\Http\Services\Triggers\Beaver\BeaverController;
 
 Hooks::add('fl_module_contact_form_after_send', [BeaverController::class, 'beaver_contact_form_submitted'], 10, 6);
 Hooks::add('fl_builder_login_form_submission_complete', [BeaverController::class, 'beaver_login_form_submitted'], 10, 5);

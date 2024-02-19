@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\WPCourseware\WPCoursewareController;
+use BitCode\BTCBI\Http\Services\Triggers\WPCourseware\WPCoursewareController;
 
 Hooks::add('wpcw_enroll_user', [WPCoursewareController::class, 'userEnrolledCourse'], 10, 2);
 Hooks::add('wpcw_user_completed_course', [WPCoursewareController::class, 'courseCompleted'], 10, 3);

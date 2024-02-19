@@ -1,10 +1,10 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\WPF;
+namespace BitCode\BTCBI\Http\Services\Triggers\WPF;
 
 use BitCode\BTCBI\Util\Common;
 use BitCode\BTCBI\Util\DateTimeHelper;
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class WPFController
 {

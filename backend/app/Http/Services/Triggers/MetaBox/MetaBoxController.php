@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\MetaBox;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\MetaBox;
+
+use BitCode\BTCBI\Model\Flow;
 
 final class MetaBoxController
 {

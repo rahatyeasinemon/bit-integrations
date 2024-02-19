@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Breakdance;
+namespace BitCode\BTCBI\Http\Services\Triggers\Breakdance;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 use Breakdance\Forms\Actions\Action;
 
 if (class_exists('Breakdance\Forms\Actions\Action')) {

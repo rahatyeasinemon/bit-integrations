@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\MasterStudyLms;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\MasterStudyLms;
+
+use BitCode\BTCBI\Model\Flow;
 
 final class MasterStudyLmsController
 {
@@ -53,7 +54,7 @@ final class MasterStudyLmsController
 
         $MasterStudyLms_action = [];
         foreach ($types as $index => $type) {
-            $MasterStudyLms_action[] = (object)[
+            $MasterStudyLms_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];

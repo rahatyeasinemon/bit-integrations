@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\Memberpress;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\Memberpress;
+
+use BitCode\BTCBI\Model\Flow;
 
 final class MemberpressController
 {
@@ -48,7 +49,7 @@ final class MemberpressController
 
         $affiliate_action = [];
         foreach ($types as $index => $type) {
-            $affiliate_action[] = (object)[
+            $affiliate_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];
@@ -212,7 +213,7 @@ final class MemberpressController
 
         $postData = get_post($product_id);
         $userData = self::getUserInfo($user_id);
-        $finalData = array_merge((array)$postData, $userData);
+        $finalData = array_merge((array) $postData, $userData);
 
         if ($user_id && $flows = Flow::exists('Memberpress', 1)) {
             Flow::execute('Memberpress', 1, $finalData, $flows);
@@ -231,7 +232,7 @@ final class MemberpressController
 
         $postData = get_post($product_id);
         $userData = self::getUserInfo($user_id);
-        $finalData = array_merge((array)$postData, $userData);
+        $finalData = array_merge((array) $postData, $userData);
 
         if ($user_id && $flows = Flow::exists('Memberpress', 2)) {
             Flow::execute('Memberpress', 2, $finalData, $flows);
@@ -250,7 +251,7 @@ final class MemberpressController
         $product_id = $subscription->rec->product_id;
         $user_id = intval($subscription->rec->user_id);
         $userData = self::getUserInfo($user_id);
-        $finalData = array_merge((array)$subscription->rec, $userData);
+        $finalData = array_merge((array) $subscription->rec, $userData);
 
         $flows = Flow::exists('Memberpress', 3);
         if (!$flows) {
@@ -276,7 +277,7 @@ final class MemberpressController
         $product_id = $subscription->rec->product_id;
         $user_id = intval($subscription->rec->user_id);
         $userData = self::getUserInfo($user_id);
-        $finalData = array_merge((array)$subscription->rec, $userData);
+        $finalData = array_merge((array) $subscription->rec, $userData);
 
         $flows = Flow::exists('Memberpress', 5);
         if (!$flows) {
@@ -300,7 +301,7 @@ final class MemberpressController
 
         $postData = get_post($product_id);
         $userData = self::getUserInfo($user_id);
-        $finalData = array_merge((array)$postData, $userData);
+        $finalData = array_merge((array) $postData, $userData);
 
         $flows = Flow::exists('Memberpress', 4);
         if (!$flows) {

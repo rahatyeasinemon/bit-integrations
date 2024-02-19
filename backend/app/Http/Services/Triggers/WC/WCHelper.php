@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\WC;
+namespace BitCode\BTCBI\Http\Services\Triggers\WC;
 
 class WCHelper
 {
@@ -32,7 +32,7 @@ class WCHelper
             'product_category_ids' => $productData['category_ids'],
             'stock_status' => $productData['stock_status'],
             // 'product_tags' => $productData['tags'],
-            'image_url' => wp_get_attachment_image_url((int)$productData['image_id'], 'full'),
+            'image_url' => wp_get_attachment_image_url((int) $productData['image_id'], 'full'),
             'cost' => $productData['cost'],
             'display_cost' => $productData['display_cost'],
             'qty' => $productData['qty'],
@@ -118,7 +118,7 @@ class WCHelper
             $productType = $product->get_type();
             $productSku = $product->get_sku();
 
-            $allProducts[] = (object)[
+            $allProducts[] = (object) [
                 'product_id' => $productId,
                 'product_title' => $productTitle,
                 'product_type' => $productType,
@@ -154,7 +154,7 @@ class WCHelper
             $productId = $product->get_id();
             $productTitle = $product->get_title();
 
-            $allProducts[] = (object)[
+            $allProducts[] = (object) [
                 'product_id' => $productId,
                 'product_title' => $productTitle,
             ];
@@ -172,7 +172,7 @@ class WCHelper
     public static function getAllVariations($product_id)
     {
         if ($product_id === 'any') {
-            $allVariations[] = (object)[
+            $allVariations[] = (object) [
                 'variation_id' => 'any',
                 'variation_title' => 'Any Variation',
             ];
@@ -186,7 +186,7 @@ class WCHelper
                 $variationId = $variation['variation_id'];
                 $variationTitle = $variationType . ' ' . $variation['attributes']["attribute_$variationType"];
 
-                $allVariations[] = (object)[
+                $allVariations[] = (object) [
                     'variation_id' => $variationId,
                     'variation_title' => $variationTitle,
                 ];

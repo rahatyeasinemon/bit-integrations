@@ -5,6 +5,6 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\Elementor\ElementorController;
+use BitCode\BTCBI\Http\Services\Triggers\Elementor\ElementorController;
 
 Hooks::add('elementor_pro/forms/new_record', [ElementorController::class, 'handle_elementor_submit']);

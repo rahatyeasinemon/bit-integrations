@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Breakdance;
+namespace BitCode\BTCBI\Http\Services\Triggers\Breakdance;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 use Breakdance\Forms\Actions\Action;
 use Breakdance\Forms\Actions\ActionProvider;
-use BitCode\BTCBI\Triggers\Breakdance\BreakdanceSubmitData;
+use BitCode\BTCBI\Http\Services\Triggers\Breakdance\BreakdanceSubmitData;
 
 final class BreakdanceController
 {
@@ -102,7 +102,7 @@ final class BreakdanceController
                 $postMeta = self::getBreackdancePostMeta($post->ID);
                 $forms = self::getAllFormsFromPostMeta($postMeta, $post->ID);
                 foreach ($forms as $form) {
-                    $all_forms[] = (object)[
+                    $all_forms[] = (object) [
                         'id' => "{$form['form_id']}",
                         'title' => $form['form_name'],
                         'post_id' => $post->ID,
@@ -213,7 +213,7 @@ final class BreakdanceController
                 && $element->type === 'EssentialElements\\FormBuilder'
             ) {
                 $newForm = $element->properties->content->form;
-                $allForm[] = array_merge((array)$newForm, ['form_id' => $form_id]);
+                $allForm[] = array_merge((array) $newForm, ['form_id' => $form_id]);
             }
             if ($keys == 'children') {
                 if (is_array($element) && !empty($element)) {

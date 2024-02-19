@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\UltimateMember\UltimateMemberController;
+use BitCode\BTCBI\Http\Services\Triggers\UltimateMember\UltimateMemberController;
 
 Route::get('ultimatemember/get', [UltimateMemberController::class, 'getAll']);
 Route::post('ultimatemember/get/form', [UltimateMemberController::class, 'get_a_form']);

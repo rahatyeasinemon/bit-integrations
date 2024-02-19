@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\WeForms;
+namespace BitCode\BTCBI\Http\Services\Triggers\WeForms;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 use DateTime;
 
 final class WeFormsController
@@ -42,7 +42,7 @@ final class WeFormsController
 
         if ($forms) {
             foreach ($forms['forms'] as $form) {
-                $all_forms[] = (object)[
+                $all_forms[] = (object) [
                     'id' => $form->id,
                     'title' => $form->name,
                 ];
@@ -172,7 +172,7 @@ final class WeFormsController
             if ($isName) {
                 unset($submittedData[$key]);
                 $nameValues = explode('|', $value);
-                if (count($nameValues) ==2) {
+                if (count($nameValues) == 2) {
                     $nameOrganized = [
                         'first_name' => $nameValues[0],
                         'last_name' => $nameValues[1]

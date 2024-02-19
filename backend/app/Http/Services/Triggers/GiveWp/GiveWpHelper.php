@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\GiveWp;
+namespace BitCode\BTCBI\Http\Services\Triggers\GiveWp;
 
 final class GiveWpHelper
 {

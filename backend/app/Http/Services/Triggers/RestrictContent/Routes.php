@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\RestrictContent\RestrictContentController;
+use BitCode\BTCBI\Http\Services\Triggers\RestrictContent\RestrictContentController;
 
 Route::get('restrictcontent/get', [RestrictContentController::class, 'getAll']);
 Route::post('restrictcontent/get/form', [RestrictContentController::class, 'get_a_form']);

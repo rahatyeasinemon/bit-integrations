@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\LifterLms;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\LifterLms;
+
+use BitCode\BTCBI\Model\Flow;
 
 final class LifterLmsController
 {
@@ -56,7 +57,7 @@ final class LifterLmsController
 
         $lifterLms_action = [];
         foreach ($types as $index => $type) {
-            $lifterLms_action[] = (object)[
+            $lifterLms_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];

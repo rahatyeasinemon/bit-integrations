@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\Memberpress\MemberpressController;
+use BitCode\BTCBI\Http\Services\Triggers\Memberpress\MemberpressController;
 
 Route::get('memberpress/get', [MemberpressController::class, 'getAll']);
 Route::post('memberpress/get/form', [MemberpressController::class, 'get_a_form']);

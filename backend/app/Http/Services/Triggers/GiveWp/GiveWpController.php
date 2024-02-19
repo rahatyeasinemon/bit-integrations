@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\GiveWp;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\GiveWp;
+
+use BitCode\BTCBI\Model\Flow;
 
 final class GiveWpController
 {
@@ -47,7 +48,7 @@ final class GiveWpController
 
         $give_action = [];
         foreach ($types as $index => $type) {
-            $give_action[] = (object)[
+            $give_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];

@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\LearnDash\LearnDashController;
+use BitCode\BTCBI\Http\Services\Triggers\LearnDash\LearnDashController;
 
 Hooks::add('learndash_update_course_access', [LearnDashController::class, 'handle_course_enroll'], 10, 4);
 Hooks::add('learndash_course_completed', [LearnDashController::class, 'handle_course_completed'], 10, 1);

@@ -2,7 +2,7 @@
 
 namespace BitCode\BTCBI\Http\Services\Actions\MailMint;
 
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BitCode\BTCBI\Util\Common;
 use Mint\MRM\DataStores\ContactData;
 use Mint\MRM\DataBase\Models\ContactModel;

@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Divi;
+namespace BitCode\BTCBI\Http\Services\Triggers\Divi;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class DiviController
 {
@@ -75,7 +75,7 @@ final class DiviController
                 if (empty($uniqueId[1])) {
                     continue;
                 }
-                $forms[] = (object)[
+                $forms[] = (object) [
                     'uniqueId' => $uniqueId[1],
                     'title' => !empty($title[1]) ? $title[1] : 'Untitled (' . $uniqueId[1] . ')',
                 ];
@@ -99,7 +99,7 @@ final class DiviController
                 $formPostfix = 0;
 
                 foreach ($forms as $form) {
-                    $all_forms[] = (object)[
+                    $all_forms[] = (object) [
                         'id' => $form->uniqueId . '_' . $formPostfix,
                         'title' => $form->title,
                         'post_id' => $post->ID,
@@ -150,7 +150,7 @@ final class DiviController
                 preg_match($regularExpressionUniqueId, $line, $fieldType);
                 $regularExpressionUniqueId = '/field_title\s*=\s*"([^"]+)"/';
                 preg_match($regularExpressionUniqueId, $line, $fieldTitle);
-                $formFields["$uniqueId[1]" . '_' . $countdown][] = (object)[
+                $formFields["$uniqueId[1]" . '_' . $countdown][] = (object) [
                     'field_id' => strtolower($fieldId[1]),
                     'field_type' => strtolower(isset($fieldType[1]) ? $fieldType[1] : 'text'),
                     'field_title' => isset($fieldTitle[1]) ? $fieldTitle[1] : $fieldId[1],

@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\WPCourseware;
+namespace BitCode\BTCBI\Http\Services\Triggers\WPCourseware;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class WPCoursewareController
 {
@@ -81,7 +81,7 @@ final class WPCoursewareController
         if (!$flows) {
             return;
         }
-        
+
         $user = get_user_by('id', $userId);
         if (!$user) {
             return;
@@ -172,7 +172,7 @@ final class WPCoursewareController
 
         $wpcw_actions = [];
         foreach (self::$actions as $action) {
-            $wpcw_actions[] = (object)[
+            $wpcw_actions[] = (object) [
                 'id' => $action['id'],
                 'title' => $action['title'],
             ];
@@ -195,9 +195,9 @@ final class WPCoursewareController
 
         if ($data->id == 'userEnrolledCourse' || $data->id == 'courseCompleted') {
             $responseData['courses'] = $this->getWPCWCourses();
-        } else if ($data->id === 'moduleCompleted') {
+        } elseif ($data->id === 'moduleCompleted') {
             $responseData['modules'] = $this->getWPCWModules();
-        } else if ($data->id === 'unitCompleted') {
+        } elseif ($data->id === 'unitCompleted') {
             $responseData['units'] = $this->getWPCWUnits();
         }
 
@@ -210,9 +210,9 @@ final class WPCoursewareController
         $fieldDetails = [];
         if ($selectedAction == 'userEnrolledCourse' || $selectedAction == 'courseCompleted') {
             $fieldDetails = self::courseFields();
-        } else if ($selectedAction === 'moduleCompleted') {
+        } elseif ($selectedAction === 'moduleCompleted') {
             $fieldDetails = self::moduleCompletedFields();
-        } else if ($selectedAction === 'unitCompleted') {
+        } elseif ($selectedAction === 'unitCompleted') {
             $fieldDetails = self::unitCompletedFields();
         }
 
@@ -302,12 +302,12 @@ final class WPCoursewareController
     protected function getWPCWCourses()
     {
         $wpcwCourses = function_exists('wpcw_get_courses') ? wpcw_get_courses() : [];
-        $courses = [(object)[
+        $courses = [(object) [
             'label' => 'Any Course',
             'value' => 'any',
         ]];
         foreach ($wpcwCourses as $course) {
-            $courses[] = (object)[
+            $courses[] = (object) [
                 'label' => $course->course_title,
                 'value' => $course->course_id,
             ];
@@ -318,12 +318,12 @@ final class WPCoursewareController
     protected function getWPCWModules()
     {
         $wpcwModules = function_exists('wpcw_get_modules') ? wpcw_get_modules() : [];
-        $modules = [(object)[
+        $modules = [(object) [
             'label' => 'Any Module',
             'value' => 'any',
         ]];
         foreach ($wpcwModules as $module) {
-            $modules[] = (object)[
+            $modules[] = (object) [
                 'label' => $module->module_title,
                 'value' => $module->module_id,
             ];
@@ -334,13 +334,13 @@ final class WPCoursewareController
     protected function getWPCWUnits()
     {
         $wpcwUnits = function_exists('wpcw_get_units') ? wpcw_get_units() : [];
-        $units = [(object)[
+        $units = [(object) [
             'label' => 'Any Unit',
             'value' => 'any',
         ]];
         foreach ($wpcwUnits as $unit) {
             $postData = $unit->get_post_data();
-            $units[] = (object)[
+            $units[] = (object) [
                 'label' => $postData['post_title'],
                 'value' => $unit->unit_id,
             ];

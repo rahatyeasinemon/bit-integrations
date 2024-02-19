@@ -9,7 +9,7 @@ namespace BitCode\BTCBI\Http\Services\Actions\Twilio;
 
 use WP_Error;
 use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 final class TwilioController
 {

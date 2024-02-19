@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\FluentSupport;
+namespace BitCode\BTCBI\Http\Services\Triggers\FluentSupport;
 
-use BitCode\BTCBI\Triggers\Webhook\WebhookController;
+use BitCode\BTCBI\Http\Services\Triggers\Webhook\WebhookController;
 
 final class FluentSupportController extends WebhookController
 {

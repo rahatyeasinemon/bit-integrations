@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\JetForm;
+namespace BitCode\BTCBI\Http\Services\Triggers\JetForm;
 
-use BitCode\BTCBI\Triggers\Webhook\WebhookController;
+use BitCode\BTCBI\Http\Services\Triggers\Webhook\WebhookController;
 
 final class JetFormController extends WebhookController
 {

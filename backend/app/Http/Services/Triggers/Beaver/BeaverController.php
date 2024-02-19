@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Beaver;
+namespace BitCode\BTCBI\Http\Services\Triggers\Beaver;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class BeaverController
 {
@@ -116,11 +116,17 @@ final class BeaverController
 
     public function getFormFields($data)
     {
-        if (!is_plugin_active('bb-plugin/fl-builder.php')) wp_send_json_error(__('Beaver Builder is not installed or activated', 'bit-integrations'));
-        if (empty($data->id)) wp_send_json_error(__('Form doesn\'t exists', 'bit-integrations'));
+        if (!is_plugin_active('bb-plugin/fl-builder.php')) {
+            wp_send_json_error(__('Beaver Builder is not installed or activated', 'bit-integrations'));
+        }
+        if (empty($data->id)) {
+            wp_send_json_error(__('Form doesn\'t exists', 'bit-integrations'));
+        }
 
         $fields = self::fields($data->id);
-        if (empty($fields)) wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));
+        if (empty($fields)) {
+            wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));
+        }
 
         $responseData['fields'] = $fields;
         wp_send_json_success($responseData);
@@ -143,7 +149,7 @@ final class BeaverController
     public static function get_form_fields($form_id)
     {
         $loginForm = \FLBuilderModel::get_settings_form_defaults('login-form');
-        
+
         $form_fields = [
             'bb_contact_form' => [
                 ['id' => 'name', 'field_label' => 'Name', 'field_type' => 'text'],

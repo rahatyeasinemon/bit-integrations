@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Post;
+namespace BitCode\BTCBI\Http\Services\Triggers\Post;
 
-use BitCode\BTCBI\Flow\Flow;
-use BitCode\BTCBI\Triggers\Post\PostHelper;
+use BitCode\BTCBI\Model\Flow;
+use BitCode\BTCBI\Http\Services\Triggers\Post\PostHelper;
 
 final class PostController
 {
@@ -240,7 +240,7 @@ final class PostController
                 $flowDetails = json_decode($cmntTrigger[0]->flow_details);
             }
 
-            $cmntData = (array)$cmntData;
+            $cmntData = (array) $cmntData;
             if (isset($flowDetails->selectedPostId) && $flowDetails->selectedPostId == 'any-post' || $flowDetails->selectedPostId == $cmntData['comment_post_ID']) {
                 $cmntData['comment_id'] = $cmntId;
                 Flow::execute('Post', 7, (array) $cmntData, $cmntTrigger);
@@ -258,7 +258,7 @@ final class PostController
                 $flowDetails = json_decode($cmntTrigger[0]->flow_details);
             }
 
-            $cmntData = (array)$cmntData;
+            $cmntData = (array) $cmntData;
             if (isset($flowDetails->selectedPostId) && $flowDetails->selectedPostId == 'any-post' || $flowDetails->selectedPostId == $cmntData['comment_post_ID']) {
                 $cmntData['comment_id'] = $cmntId;
                 Flow::execute('Post', 8, (array) $cmntData, $cmntTrigger);
@@ -278,7 +278,7 @@ final class PostController
             if (is_string($postUpdateFlow[0]->flow_details)) {
                 $flowDetails = json_decode($postUpdateFlow[0]->flow_details);
             }
-            $postData = (array)$postData;
+            $postData = (array) $postData;
             if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $postData['ID']) {
                 Flow::execute('Post', 9, (array) $postData, $postUpdateFlow);
             }

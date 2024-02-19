@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\AcademyLms\AcademyLmsController;
+use BitCode\BTCBI\Http\Services\Triggers\AcademyLms\AcademyLmsController;
 
 Hooks::add('academy/course/after_enroll', [AcademyLmsController::class, 'handle_course_enroll'], 10, 2);
 Hooks::add('academy_quizzes/api/after_quiz_attempt_finished', [AcademyLmsController::class, 'handleQuizAttempt'], 10, 1);

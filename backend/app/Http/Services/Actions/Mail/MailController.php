@@ -3,7 +3,7 @@
 namespace BitCode\BTCBI\Http\Services\Actions\Mail;
 
 use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 final class MailController
 {

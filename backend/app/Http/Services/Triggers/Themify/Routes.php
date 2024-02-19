@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\Themify\ThemifyController;
+use BitCode\BTCBI\Http\Services\Triggers\Themify\ThemifyController;
 
 Route::get('themify/get', [ThemifyController::class, 'getAllForms']);
 Route::post('themify/get/form', [ThemifyController::class, 'getFormFields']);

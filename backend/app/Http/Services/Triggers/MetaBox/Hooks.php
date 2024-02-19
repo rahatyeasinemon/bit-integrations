@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Triggers\MetaBox\MetaBoxController;
+use BitCode\BTCBI\Http\Services\Triggers\MetaBox\MetaBoxController;
 use BitCode\BTCBI\Util\Hooks;
 
 //* METABOX SUBMITTED ACTION HOOK*//

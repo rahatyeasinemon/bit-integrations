@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\BTCBI\Triggers\FormCraft;
 
-use BitCode\BTCBI\Flow\Flow;
+namespace BitCode\BTCBI\Http\Services\Triggers\FormCraft;
+
+use BitCode\BTCBI\Model\Flow;
 
 final class FormCraftController
 {
@@ -41,7 +42,7 @@ final class FormCraftController
 
         if ($forms) {
             foreach ($forms as $form) {
-                $all_forms[] = (object)[
+                $all_forms[] = (object) [
                     'id' => $form->id,
                     'title' => $form->name,
                 ];

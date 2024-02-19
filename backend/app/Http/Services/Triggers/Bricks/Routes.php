@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Triggers\Bricks\BricksController;
+use BitCode\BTCBI\Http\Services\Triggers\Bricks\BricksController;
 
 Route::get('bricks/get', [BricksController::class, 'getAllForms']);
 Route::post('bricks/get/form', [BricksController::class, 'getFormFields']);

@@ -2,7 +2,7 @@
 
 namespace BitCode\BTCBI\Http\Services\Actions\WPCourseware;
 
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 
 class RecordApiHelper
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\UltimateMember;
+namespace BitCode\BTCBI\Http\Services\Triggers\UltimateMember;
 
 class UltimateMemberHelper
 {
@@ -45,7 +45,7 @@ class UltimateMemberHelper
 
         if ($id == 'roleChange' || $id == 'roleSpecificChange') {
             $fields = $userFields;
-            (array)$fields['Role'] = [
+            (array) $fields['Role'] = [
                 'name' => 'role',
                 'label' => 'Role'
             ];

@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\EDD;
+namespace BitCode\BTCBI\Http\Services\Triggers\EDD;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class EDDController
 {
@@ -52,7 +52,7 @@ final class EDDController
 
         $edd_action = [];
         foreach ($types as $index => $type) {
-            $edd_action[] = (object)[
+            $edd_action[] = (object) [
                 'id' => $index + 1,
                 'title' => $type,
             ];

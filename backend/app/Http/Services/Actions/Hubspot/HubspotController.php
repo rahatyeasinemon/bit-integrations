@@ -3,7 +3,7 @@
 namespace BitCode\BTCBI\Http\Services\Actions\Hubspot;
 
 use WP_Error;
-use BitCode\BTCBI\Log\LogHandler;
+use BitCode\BTCBI\Http\Services\Log\LogHandler;
 use BitCode\BTCBI\Flow\FlowController;
 use BitCode\BTCBI\Util\HttpHelper;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers\Bricks;
+namespace BitCode\BTCBI\Http\Services\Triggers\Bricks;
 
-use BitCode\BTCBI\Flow\Flow;
+use BitCode\BTCBI\Model\Flow;
 
 final class BricksController
 {

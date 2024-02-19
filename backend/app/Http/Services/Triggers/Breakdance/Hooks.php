@@ -5,6 +5,6 @@ if (!defined('ABSPATH')) {
 }
 
 use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Triggers\Breakdance\BreakdanceController;
+use BitCode\BTCBI\Http\Services\Triggers\Breakdance\BreakdanceController;
 
 // BreakdanceController::addAction();

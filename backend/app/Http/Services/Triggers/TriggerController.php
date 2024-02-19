@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Triggers;
+namespace BitCode\BTCBI\Http\Services\Triggers;
 
 use BitCode\BTCBI\Plugin;
 use FilesystemIterator;
@@ -23,10 +23,10 @@ final class TriggerController
         foreach ($dirs as $dirInfo) {
             if ($dirInfo->isDir()) {
                 $trigger = basename($dirInfo);
-                if (file_exists(__DIR__.'/'.$trigger)
-                    && file_exists(__DIR__.'/'.$trigger.'/'.$trigger.'Controller.php')
+                if (file_exists(__DIR__ . '/' . $trigger)
+                    && file_exists(__DIR__ . '/' . $trigger . '/' . $trigger . 'Controller.php')
                 ) {
-                    $trigger_controller = __NAMESPACE__. "\\{$trigger}\\{$trigger}Controller";
+                    $trigger_controller = __NAMESPACE__ . "\\{$trigger}\\{$trigger}Controller";
                     if (method_exists($trigger_controller, 'info')) {
                         $triggers[$trigger] = $trigger_controller::info();
                     }
@@ -40,10 +40,10 @@ final class TriggerController
     {
         $triggers = [];
         $trigger = basename($triggerName);
-        if (file_exists(__DIR__.'/'.$trigger)
-                && file_exists(__DIR__.'/'.$trigger.'/'.$trigger.'Controller.php')
+        if (file_exists(__DIR__ . '/' . $trigger)
+                && file_exists(__DIR__ . '/' . $trigger . '/' . $trigger . 'Controller.php')
         ) {
-            $trigger_controller = __NAMESPACE__. "\\{$trigger}\\{$trigger}Controller";
+            $trigger_controller = __NAMESPACE__ . "\\{$trigger}\\{$trigger}Controller";
             if (method_exists($trigger_controller, 'get_a_form')) {
                 $trigger = new $trigger_controller();
                 return $trigger::fields($data->id);
