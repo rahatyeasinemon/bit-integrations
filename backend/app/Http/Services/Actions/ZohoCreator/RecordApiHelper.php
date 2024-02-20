@@ -4,13 +4,13 @@
  * ZohoCreator Record Api
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\ZohoCreator;
+namespace BitApps\BTCBI\Http\Services\Actions\ZohoCreator;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Util\DateTimeHelper;
-use BitCode\BTCBI\Util\ApiResponse as UtilApiResponse;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\DateTimeHelper;
+use BitApps\BTCBI\Util\ApiResponse as UtilApiResponse;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert

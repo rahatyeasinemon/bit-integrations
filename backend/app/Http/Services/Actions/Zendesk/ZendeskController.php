@@ -4,10 +4,10 @@
  * Zendesk Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Zendesk;
+namespace BitApps\BTCBI\Http\Services\Actions\Zendesk;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\HttpHelper;
 
 /**
  * Provide functionality for Zendesk integration

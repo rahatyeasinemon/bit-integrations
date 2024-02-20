@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\GF;
+namespace BitApps\BTCBI\Http\Services\Triggers\GF;
 
-use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Model\Flow;
+use BitApps\BTCBI\Util\Common;
+use BitApps\BTCBI\Model\Flow;
 
 final class GFController
 {

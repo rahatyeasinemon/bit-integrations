@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Actions\GoogleDrive;
+namespace BitApps\BTCBI\Http\Services\Actions\GoogleDrive;
 
-use BitCode\BTCBI\Http\Services\Actions\GoogleDrive\RecordApiHelper as GoogleDriveRecordApiHelper;
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Flow\FlowController;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Http\Services\Actions\GoogleDrive\RecordApiHelper as GoogleDriveRecordApiHelper;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Http\Controllers\FlowController;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
 
 class GoogleDriveController

@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Http\Services\Triggers\LifterLms\LifterLmsController;
+use BitApps\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Triggers\LifterLms\LifterLmsController;
 
 Route::get('lifterlms/get', [LifterLmsController::class, 'getAll']);
 Route::post('lifterlms/get/form', [LifterLmsController::class, 'get_a_form']);

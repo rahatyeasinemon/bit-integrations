@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\UltimateMember;
+namespace BitApps\BTCBI\Http\Services\Triggers\UltimateMember;
 
-use BitCode\BTCBI\Model\Flow;
+use BitApps\BTCBI\Model\Flow;
 
 final class UltimateMemberController
 {

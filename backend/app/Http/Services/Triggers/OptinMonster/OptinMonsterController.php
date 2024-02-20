@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\OptinMonster;
+namespace BitApps\BTCBI\Http\Services\Triggers\OptinMonster;
 
-use BitCode\BTCBI\Http\Services\Triggers\Webhook\WebhookController;
+use BitApps\BTCBI\Http\Services\Triggers\Webhook\WebhookController;
 
 final class OptinMonsterController extends WebhookController
 {

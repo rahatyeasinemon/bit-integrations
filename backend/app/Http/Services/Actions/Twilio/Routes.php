@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\Twilio\TwilioController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\Twilio\TwilioController;
+use BitApps\BTCBI\Util\Route;
 
 //Twilio
 Route::post('twilio_authorization', [TwilioController::class, 'checkAuthorization']);

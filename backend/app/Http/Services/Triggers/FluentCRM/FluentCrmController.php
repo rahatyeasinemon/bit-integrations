@@ -1,13 +1,13 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\FluentCrm;
+namespace BitApps\BTCBI\Http\Services\Triggers\FluentCrm;
 
 use DateTime;
-use BitCode\BTCBI\Model\Flow;
+use BitApps\BTCBI\Model\Flow;
 use FluentCrm\App\Models\Tag;
 use FluentCrm\App\Models\Lists;
-use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Flow\FlowController;
+use BitApps\BTCBI\Util\Common;
+use BitApps\BTCBI\Http\Controllers\FlowController;
 use FluentCrm\App\Models\Subscriber;
 use FluentCrm\App\Models\CustomContactField;
 

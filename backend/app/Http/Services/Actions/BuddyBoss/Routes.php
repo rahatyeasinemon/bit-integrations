@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\BuddyBoss\BuddyBossController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\BuddyBoss\BuddyBossController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('buddyBoss_authorize', [BuddyBossController::class, 'authorizeBuddyBoss']);
 Route::post('fetch_all_group', [BuddyBossController::class, 'getAllGroups']);

@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\Selzy\SelzyController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\Selzy\SelzyController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('selzy_handle_authorize', [SelzyController::class, 'handleAuthorize']);
 Route::post('selzy_get_all_tags', [SelzyController::class, 'getAllTags']);

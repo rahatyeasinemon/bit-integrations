@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Http\Services\Actions\GoogleSheet\GoogleSheetController;
+use BitApps\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\GoogleSheet\GoogleSheetController;
 
 Route::post('gsheet_generate_token', [GoogleSheetController::class, 'generateTokens']);
 Route::post('gsheet_refresh_spreadsheets', [GoogleSheetController::class, 'refreshSpreadsheetsAjaxHelper']);

@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Http\Services\Triggers\LearnDash\LearnDashController;
+use BitApps\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Triggers\LearnDash\LearnDashController;
 
 Route::get('learndash/get', [LearnDashController::class, 'getAll']);
 Route::post('learndash/get/form', [LearnDashController::class, 'get_a_form']);

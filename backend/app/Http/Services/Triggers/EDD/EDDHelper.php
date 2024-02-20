@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\EDD;
+namespace BitApps\BTCBI\Http\Services\Triggers\EDD;
 
 class EDDHelper
 {

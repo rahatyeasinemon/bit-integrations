@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\MasterStudyLms\MasterStudyLmsController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\MasterStudyLms\MasterStudyLmsController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('MasterStudyLms_authorize', [MasterStudyLmsController::class, 'authorizeMasterStudyLms']);
 Route::post('mslms_fetch_all_course', [MasterStudyLmsController::class, 'getAllCourse']);

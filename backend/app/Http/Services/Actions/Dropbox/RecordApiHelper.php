@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Actions\Dropbox;
+namespace BitApps\BTCBI\Http\Services\Actions\Dropbox;
 
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
 
 class RecordApiHelper

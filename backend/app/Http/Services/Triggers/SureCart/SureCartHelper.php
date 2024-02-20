@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\SureCart;
+namespace BitApps\BTCBI\Http\Services\Triggers\SureCart;
 
 final class SureCartHelper
 {

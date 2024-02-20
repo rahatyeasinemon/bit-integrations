@@ -5,9 +5,9 @@
  *
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\WPFusion;
+namespace BitApps\BTCBI\Http\Services\Actions\WPFusion;
 
-use BitCode\BTCBI\Http\Services\Actions\WebHooks\WebHooksController;
+use BitApps\BTCBI\Http\Services\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for WPFusionHandler

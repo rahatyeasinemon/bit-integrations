@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\GiveWp;
+namespace BitApps\BTCBI\Http\Services\Triggers\GiveWp;
 
-use BitCode\BTCBI\Model\Flow;
+use BitApps\BTCBI\Model\Flow;
 
 final class GiveWpController
 {

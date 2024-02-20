@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\JetEngine;
+namespace BitApps\BTCBI\Http\Services\Triggers\JetEngine;
 
 use WP_Query;
 

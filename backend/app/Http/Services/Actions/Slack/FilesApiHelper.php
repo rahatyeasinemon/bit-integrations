@@ -4,7 +4,7 @@
  * Slack Files Api
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Slack;
+namespace BitApps\BTCBI\Http\Services\Actions\Slack;
 
 /**
  * Provide functionality for Upload files

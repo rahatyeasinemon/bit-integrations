@@ -4,10 +4,10 @@
  * SuiteDash Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\SuiteDash;
+namespace BitApps\BTCBI\Http\Services\Actions\SuiteDash;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\HttpHelper;
 
 /**
  * Provide functionality for SuiteDash integration

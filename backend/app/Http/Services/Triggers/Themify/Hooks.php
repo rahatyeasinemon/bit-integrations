@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Http\Services\Triggers\Themify\ThemifyController;
+use BitApps\BTCBI\Util\Hooks;
+use BitApps\BTCBI\Http\Services\Triggers\Themify\ThemifyController;
 
 // Hooks::add('wp_ajax_tb_signup_process', [ThemifyController::class, 'handle_themify_submit']);
 

@@ -4,11 +4,11 @@
  * PipeDrive Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\PipeDrive;
+namespace BitApps\BTCBI\Http\Services\Actions\PipeDrive;
 
-use BitCode\BTCBI\Http\Services\Actions\PipeDrive\RecordApiHelper;
+use BitApps\BTCBI\Http\Services\Actions\PipeDrive\RecordApiHelper;
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\HttpHelper;
 
 /**
  * Provide functionality for PipeDrive integration

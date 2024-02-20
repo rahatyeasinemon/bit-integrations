@@ -1,8 +1,8 @@
 <?php
 
-// namespace BitCode\BTCBI\Http\Services\Triggers\Typebot;
+// namespace BitApps\BTCBI\Http\Services\Triggers\Typebot;
 
-// use BitCode\BTCBI\Http\Services\Triggers\Webhook\WebhookController;
+// use BitApps\BTCBI\Http\Services\Triggers\Webhook\WebhookController;
 
 // final class TypebotController extends WebhookController
 // {

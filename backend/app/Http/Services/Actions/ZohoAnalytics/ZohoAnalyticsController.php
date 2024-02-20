@@ -4,13 +4,13 @@
  * ZohoAnalytics Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\ZohoAnalytics;
+namespace BitApps\BTCBI\Http\Services\Actions\ZohoAnalytics;
 
 use WP_Error;
-use BitCode\BTCBI\Util\IpTool;
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Util\ApiResponse as UtilApiResponse;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Util\IpTool;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\ApiResponse as UtilApiResponse;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for ZohoCrm integration

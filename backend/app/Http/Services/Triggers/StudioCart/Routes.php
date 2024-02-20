@@ -3,8 +3,8 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Http\Services\Triggers\StudioCart\StudioCartController;
+use BitApps\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Triggers\StudioCart\StudioCartController;
 
 Route::get('studiocart/get', [StudioCartController::class, 'getAll']);
 Route::post('studiocart/get/form', [StudioCartController::class, 'get_a_form']);

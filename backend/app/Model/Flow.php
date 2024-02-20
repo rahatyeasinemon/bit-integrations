@@ -5,16 +5,16 @@
  * @package bit-integrations
  */
 
-namespace BitCode\BTCBI\Model;
+namespace BitApps\BTCBI\Model;
 
-use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Util\CustomFuncValidator;
-use BitCode\BTCBI\Util\IpTool;
-use BitCode\BTCBI\Util\SmartTags;
-use BitCode\BTCBI\Util\StoreInCache;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
-use BitCode\BTCBI\Plugin;
-use BitCode\BTCBI\Http\Services\Triggers\TriggerController;
+use BitApps\BTCBI\Util\Common;
+use BitApps\BTCBI\Util\CustomFuncValidator;
+use BitApps\BTCBI\Util\IpTool;
+use BitApps\BTCBI\Util\SmartTags;
+use BitApps\BTCBI\Util\StoreInCache;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Plugin;
+use BitApps\BTCBI\Http\Services\Triggers\TriggerController;
 use WP_Error;
 
 /**
@@ -32,8 +32,8 @@ final class Flow
      */
     protected static function isActionExists($name)
     {
-        if (class_exists("BitCode\\BTCBI\\Actions\\{$name}\\{$name}Controller")) {
-            return "BitCode\\BTCBI\\Actions\\{$name}\\{$name}Controller";
+        if (class_exists("BitApps\\BTCBI\\Actions\\{$name}\\{$name}Controller")) {
+            return "BitApps\\BTCBI\\Actions\\{$name}\\{$name}Controller";
         } else {
             return false;
         }
@@ -48,8 +48,8 @@ final class Flow
      */
     protected static function isTriggerExists($name)
     {
-        if (class_exists("BitCode\\BTCBI\\Triggers\\{$name}\\{$name}Controller")) {
-            return "BitCode\\BTCBI\\Triggers\\{$name}\\{$name}Controller";
+        if (class_exists("BitApps\\BTCBI\\Triggers\\{$name}\\{$name}Controller")) {
+            return "BitApps\\BTCBI\\Triggers\\{$name}\\{$name}Controller";
         } else {
             return false;
         }

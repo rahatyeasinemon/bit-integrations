@@ -1,14 +1,14 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\BitForm;
+namespace BitApps\BTCBI\Http\Services\Triggers\BitForm;
 
-use BitCode\BTCBI\Model\Flow;
+use BitApps\BTCBI\Model\Flow;
 
 final class BitFormController
 {
     private static function isPluginActive()
     {
-        return class_exists("BitCode\\BitForm\\Plugin");
+        return class_exists("BitApps\\BitForm\\Plugin");
     }
 
     public static function info()
@@ -40,7 +40,7 @@ final class BitFormController
             wp_send_json_error(__('Bit Form is not installed or activated', 'bit-integrations'));
         }
 
-        $forms = \BitCode\BitForm\API\BitForm_Public\BitForm_Public::getForms();
+        $forms = \BitApps\BitForm\API\BitForm_Public\BitForm_Public::getForms();
         $all_forms = [];
         foreach ($forms as $form) {
             $all_forms[] = (object) [
@@ -71,7 +71,7 @@ final class BitFormController
             return [];
         }
 
-        $fieldDetails = \BitCode\BitForm\API\BitForm_Public\BitForm_Public::getFields($form_id);
+        $fieldDetails = \BitApps\BitForm\API\BitForm_Public\BitForm_Public::getFields($form_id);
         if (empty($fieldDetails)) {
             return [];
         }

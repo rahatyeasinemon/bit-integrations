@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Http\Services\Triggers\MasterStudyLms\MasterStudyLmsController;
+use BitApps\BTCBI\Util\Hooks;
+use BitApps\BTCBI\Http\Services\Triggers\MasterStudyLms\MasterStudyLmsController;
 
 Hooks::add('stm_lms_progress_updated', [MasterStudyLmsController::class, 'handleCourseComplete'], 10, 3);
 Hooks::add('course_enrolled', [MasterStudyLmsController::class, 'handleCourseEnroll'], 10, 2);

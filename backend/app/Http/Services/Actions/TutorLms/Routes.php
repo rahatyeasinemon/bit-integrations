@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\TutorLms\TutorLmsController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\TutorLms\TutorLmsController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('tutor_authorize', [TutorLmsController::class, 'TutorAuthorize']);
 Route::get('tutor_all_course', [TutorLmsController::class, 'getAllCourse']);

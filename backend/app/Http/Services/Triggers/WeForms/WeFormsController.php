@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\WeForms;
+namespace BitApps\BTCBI\Http\Services\Triggers\WeForms;
 
-use BitCode\BTCBI\Model\Flow;
+use BitApps\BTCBI\Model\Flow;
 use DateTime;
 
 final class WeFormsController

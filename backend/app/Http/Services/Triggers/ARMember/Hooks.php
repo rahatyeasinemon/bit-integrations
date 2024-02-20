@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Http\Services\Triggers\ARMember\ARMemberController;
+use BitApps\BTCBI\Util\Hooks;
+use BitApps\BTCBI\Http\Services\Triggers\ARMember\ARMemberController;
 
 Hooks::add('arm_after_add_new_user', [ARMemberController::class, 'handleRegisterForm'], 10, 2);
 Hooks::add('arm_member_update_meta', [ARMemberController::class, 'handleUpdateUserByForm'], 10, 2);

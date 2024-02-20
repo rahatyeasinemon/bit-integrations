@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Util;
+namespace BitApps\BTCBI\Util;
 
 /**
  * A wrapper class for actions and filters.

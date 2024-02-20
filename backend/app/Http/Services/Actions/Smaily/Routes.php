@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\Smaily\SmailyController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\Smaily\SmailyController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('smaily_authentication', [SmailyController::class, 'authentication']);

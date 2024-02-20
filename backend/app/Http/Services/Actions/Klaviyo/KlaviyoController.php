@@ -4,12 +4,12 @@
  * Klaviyo Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Klaviyo;
+namespace BitApps\BTCBI\Http\Services\Actions\Klaviyo;
 
-use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Util\Helper;
+use BitApps\BTCBI\Util\Common;
+use BitApps\BTCBI\Util\Helper;
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\HttpHelper;
 
 /**
  * Provide functionality for Klaviyo integration

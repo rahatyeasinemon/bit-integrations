@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\AcademyLms\AcademyLmsController;
+use BitApps\BTCBI\Http\Services\Actions\AcademyLms\AcademyLmsController;
 
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('academy_lms_authorize', [AcademyLmsController::class, 'Authorization']);
 Route::get('academy_lms_all_course', [AcademyLmsController::class, 'getAllCourse']);

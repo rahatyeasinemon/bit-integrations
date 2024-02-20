@@ -4,11 +4,11 @@
  * Selzy Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Selzy;
+namespace BitApps\BTCBI\Http\Services\Actions\Selzy;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Http\Services\Actions\Selzy\RecordApiHelper;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Http\Services\Actions\Selzy\RecordApiHelper;
 
 /**
  * Provide functionality for Selzy integration

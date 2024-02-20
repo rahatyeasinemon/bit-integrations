@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Util;
+namespace BitApps\BTCBI\Util;
 
-use BitCode\BTCBI\Http\Services\Triggers\TriggerController;
+use BitApps\BTCBI\Http\Services\Triggers\TriggerController;
 
 /**
  * bit-integration helper class

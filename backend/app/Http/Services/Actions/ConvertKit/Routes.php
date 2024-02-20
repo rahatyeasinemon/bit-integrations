@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\ConvertKit\ConvertKitController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\ConvertKit\ConvertKitController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('convertKit_authorize', [ConvertKitController::class, 'convertKitAuthorize']);
 Route::post('convertKit_headers', [ConvertKitController::class, 'convertKitHeaders']);

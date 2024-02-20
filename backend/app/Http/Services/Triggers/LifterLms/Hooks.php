@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Http\Services\Triggers\LifterLms\LifterLmsController;
+use BitApps\BTCBI\Util\Hooks;
+use BitApps\BTCBI\Http\Services\Triggers\LifterLms\LifterLmsController;
 
 Hooks::add('lifterlms_quiz_completed', [LifterLmsController::class, 'handleAttemptQuiz'], 10, 3);
 Hooks::add('lifterlms_quiz_passed', [LifterLmsController::class, 'handleQuizPass'], 10, 3);

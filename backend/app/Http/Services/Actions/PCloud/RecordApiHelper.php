@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Actions\PCloud;
+namespace BitApps\BTCBI\Http\Services\Actions\PCloud;
 
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use CURLFile;
 
 class RecordApiHelper

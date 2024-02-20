@@ -4,7 +4,7 @@
  * Slack Files Api
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Freshdesk;
+namespace BitApps\BTCBI\Http\Services\Actions\Freshdesk;
 
 /**
  * Provide functionality for Upload files

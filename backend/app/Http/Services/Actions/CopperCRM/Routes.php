@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\CopperCRM\CopperCRMController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\CopperCRM\CopperCRMController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('coppercrm_authentication', [CopperCRMController::class, 'authentication']);
 Route::post('coppercrm_fetch_custom_fields', [CopperCRMController::class, 'getCustomFields']);

@@ -4,10 +4,10 @@
  * Gravitec Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Gravitec;
+namespace BitApps\BTCBI\Http\Services\Actions\Gravitec;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\HttpHelper;
 
 /**
  * Provide functionality for Gravitec integration

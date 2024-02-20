@@ -4,10 +4,10 @@
  * PerfexCRM Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\PerfexCRM;
+namespace BitApps\BTCBI\Http\Services\Actions\PerfexCRM;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\HttpHelper;
 
 /**
  * Provide functionality for PerfexCRM integration

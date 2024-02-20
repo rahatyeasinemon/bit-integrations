@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\MasterStudyLms;
+namespace BitApps\BTCBI\Http\Services\Triggers\MasterStudyLms;
 
 class MasterStudyLmsHelper
 {

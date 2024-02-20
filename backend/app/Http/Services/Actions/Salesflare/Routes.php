@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\Salesflare\SalesflareController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\Salesflare\SalesflareController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('salesflare_authentication', [SalesflareController::class, 'authentication']);
 Route::post('Salesflare_custom_fields', [SalesflareController::class, 'customFields']);

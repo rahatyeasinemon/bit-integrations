@@ -4,13 +4,13 @@
  * ZohoSheet Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\GoogleSheet;
+namespace BitApps\BTCBI\Http\Services\Actions\GoogleSheet;
 
 use WP_Error;
-use BitCode\BTCBI\Util\IpTool;
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Http\Services\Actions\GoogleSheet\RecordApiHelper;
-use BitCode\BTCBI\Flow\FlowController;
+use BitApps\BTCBI\Util\IpTool;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Http\Services\Actions\GoogleSheet\RecordApiHelper;
+use BitApps\BTCBI\Http\Controllers\FlowController;
 
 /**
  * Provide functionality for ZohoCrm integration

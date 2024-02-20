@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI;
+namespace BitApps\BTCBI;
 
 /**
  * Main class for the plugin.
@@ -8,16 +8,16 @@ namespace BitCode\BTCBI;
  * @since 1.0.0-alpha
  */
 
-use BitCode\BTCBI\Core\Database\DB;
-use BitCode\BTCBI\Admin\Admin_Bar;
-use BitCode\BTCBI\Util\Request;
-use BitCode\BTCBI\Util\Activation;
-use BitCode\BTCBI\Util\Deactivation;
-use BitCode\BTCBI\Util\UnInstallation;
-use BitCode\BTCBI\Core\Hooks\HookService;
-use BitCode\BTCBI\Util\Capabilities;
-use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Util\Request;
+use BitApps\BTCBI\Util\Activation;
+use BitApps\BTCBI\Util\Deactivation;
+use BitApps\BTCBI\Util\UnInstallation;
+use BitApps\BTCBI\db\DB;
+use BitApps\BTCBI\Util\Capabilities;
+use BitApps\BTCBI\Util\Hooks;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Providers\Hooks\HookService;
+use BitApps\BTCBI\Views\Layout;
 
 final class Plugin
 {
@@ -61,7 +61,7 @@ final class Plugin
     {
         static::update_tables();
         if (Request::Check('admin')) {
-            (new Admin_Bar())->register();
+            (new Layout())->register();
         }
         new HookService();
     }

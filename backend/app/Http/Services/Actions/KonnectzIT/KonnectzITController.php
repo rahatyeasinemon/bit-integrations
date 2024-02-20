@@ -5,9 +5,9 @@
  *
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\KonnectzIT;
+namespace BitApps\BTCBI\Http\Services\Actions\KonnectzIT;
 
-use BitCode\BTCBI\Http\Services\Actions\WebHooks\WebHooksController;
+use BitApps\BTCBI\Http\Services\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for KonnectzITHandler

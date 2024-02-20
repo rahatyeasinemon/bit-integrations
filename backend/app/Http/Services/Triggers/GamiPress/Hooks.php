@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Http\Services\Triggers\GamiPress\GamiPressController;
+use BitApps\BTCBI\Util\Hooks;
+use BitApps\BTCBI\Http\Services\Triggers\GamiPress\GamiPressController;
 
 Hooks::add('gamipress_update_user_rank', [GamiPressController::class, 'handle_user_earn_rank'], 10, 5);
 Hooks::add('gamipress_award_achievement', [GamiPressController::class, 'handle_award_achievement'], 10, 5);

@@ -4,11 +4,11 @@
  * Active Campaign Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\ActiveCampaign;
+namespace BitApps\BTCBI\Http\Services\Actions\ActiveCampaign;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Http\Services\Actions\ActiveCampaign\RecordApiHelper;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Http\Services\Actions\ActiveCampaign\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration

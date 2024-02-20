@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Actions\MasterStudyLms;
+namespace BitApps\BTCBI\Http\Services\Actions\MasterStudyLms;
 
-use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Util\Common;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
 
 class RecordApiHelper

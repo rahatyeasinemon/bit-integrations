@@ -1,10 +1,10 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Actions\WishList;
+namespace BitApps\BTCBI\Http\Services\Actions\WishList;
 
-use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Util\DateTimeHelper;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Util\Common;
+use BitApps\BTCBI\Util\DateTimeHelper;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert

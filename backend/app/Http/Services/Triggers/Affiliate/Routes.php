@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Http\Services\Triggers\Affiliate\AffiliateController;
+use BitApps\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Triggers\Affiliate\AffiliateController;
 
 Route::get('affiliate/get', [AffiliateController::class, 'getAll']);
 Route::post('affiliate/get/form', [AffiliateController::class, 'get_a_form']);

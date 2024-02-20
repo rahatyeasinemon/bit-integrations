@@ -5,12 +5,12 @@
  * Added Pods Custom Fields
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Pods;
+namespace BitApps\BTCBI\Http\Services\Actions\Pods;
 
-use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Util\Helper;
-use BitCode\BTCBI\Model\Flow;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Util\Common;
+use BitApps\BTCBI\Util\Helper;
+use BitApps\BTCBI\Model\Flow;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for POD integration

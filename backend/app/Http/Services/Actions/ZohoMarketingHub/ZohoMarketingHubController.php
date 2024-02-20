@@ -4,13 +4,13 @@
  * ZohoMarketingHub Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\ZohoMarketingHub;
+namespace BitApps\BTCBI\Http\Services\Actions\ZohoMarketingHub;
 
-use BitCode\BTCBI\Util\IpTool;
-use BitCode\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\IpTool;
+use BitApps\BTCBI\Util\HttpHelper;
 
-use BitCode\BTCBI\Http\Services\Actions\ZohoMarketingHub\RecordApiHelper;
-use BitCode\BTCBI\Flow\FlowController;
+use BitApps\BTCBI\Http\Services\Actions\ZohoMarketingHub\RecordApiHelper;
+use BitApps\BTCBI\Http\Controllers\FlowController;
 use WP_Error;
 
 /**

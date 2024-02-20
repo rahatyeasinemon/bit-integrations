@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Log;
+namespace BitApps\BTCBI\Http\Services\Log;
 
-use BitCode\BTCBI\Model\LogModel;
+use BitApps\BTCBI\Model\LogModel;
 
 final class LogHandler
 {

@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\Acumbamail\AcumbamailController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\Acumbamail\AcumbamailController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('acumbamail_authorization_and_fetch_subscriber_list', [ AcumbamailController::class, 'acumbamailAuthAndFetchSubscriberList']);
 Route::post('acumbamail_fetch_all_list', [AcumbamailController::class, 'fetchAllLists']);

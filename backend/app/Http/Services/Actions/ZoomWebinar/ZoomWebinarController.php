@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Actions\ZoomWebinar;
+namespace BitApps\BTCBI\Http\Services\Actions\ZoomWebinar;
 
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Flow\FlowController;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Http\Controllers\FlowController;
 use WP_Error;
 
 class ZoomWebinarController

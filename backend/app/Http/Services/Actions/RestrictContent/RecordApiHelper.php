@@ -4,9 +4,9 @@
  * RestrictContent Record Api
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\RestrictContent;
+namespace BitApps\BTCBI\Http\Services\Actions\RestrictContent;
 
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
 
 /**

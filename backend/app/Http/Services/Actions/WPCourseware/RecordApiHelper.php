@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Actions\WPCourseware;
+namespace BitApps\BTCBI\Http\Services\Actions\WPCourseware;
 
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 class RecordApiHelper
 {

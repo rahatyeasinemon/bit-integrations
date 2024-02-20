@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\WPEF;
+namespace BitApps\BTCBI\Http\Services\Triggers\WPEF;
 
 use wpdb;
-use BitCode\BTCBI\Model\Flow;
-use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Util\DateTimeHelper;
+use BitApps\BTCBI\Model\Flow;
+use BitApps\BTCBI\Util\Common;
+use BitApps\BTCBI\Util\DateTimeHelper;
 
 final class WPEFController
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Actions\MailMint;
+namespace BitApps\BTCBI\Http\Services\Actions\MailMint;
 
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
-use BitCode\BTCBI\Util\Common;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Util\Common;
 use Mint\MRM\DataStores\ContactData;
 use Mint\MRM\DataBase\Models\ContactModel;
 use Mint\MRM\DataBase\Models\ContactGroupModel;

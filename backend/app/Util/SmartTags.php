@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Util;
+namespace BitApps\BTCBI\Util;
 
-use BitCode\BTCBI\Util\IpTool;
+use BitApps\BTCBI\Util\IpTool;
 
 /**
  * handling Special mail-tags

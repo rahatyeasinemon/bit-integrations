@@ -4,11 +4,11 @@
  * MailChimp Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Sendy;
+namespace BitApps\BTCBI\Http\Services\Actions\Sendy;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for MailChimp integration

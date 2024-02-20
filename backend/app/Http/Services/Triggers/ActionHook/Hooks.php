@@ -4,9 +4,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Flow\FlowController;
-use BitCode\BTCBI\Http\Services\Triggers\ActionHook\ActionHookController;
+use BitApps\BTCBI\Util\Hooks;
+use BitApps\BTCBI\Http\Controllers\FlowController;
+use BitApps\BTCBI\Http\Services\Triggers\ActionHook\ActionHookController;
 
 global $wpdb;
 $hook = $wpdb->get_results(

@@ -4,7 +4,7 @@
  * Provides Base Model Class
  */
 
-namespace BitCode\BTCBI\Model;
+namespace BitApps\BTCBI\Model;
 
 /**
  * Undocumented class

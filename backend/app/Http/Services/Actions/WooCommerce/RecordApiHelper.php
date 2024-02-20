@@ -4,10 +4,10 @@
  * WooCommerce Record Api.
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\WooCommerce;
+namespace BitApps\BTCBI\Http\Services\Actions\WooCommerce;
 
 use WP_Error;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert.

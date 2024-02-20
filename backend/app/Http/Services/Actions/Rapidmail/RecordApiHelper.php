@@ -1,12 +1,12 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Actions\Rapidmail;
+namespace BitApps\BTCBI\Http\Services\Actions\Rapidmail;
 
 use WP_Error;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
-use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Util\DateTimeHelper;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Util\Common;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\DateTimeHelper;
 
 /**
  * Provide functionality for Record insert,upsert

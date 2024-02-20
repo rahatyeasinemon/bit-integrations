@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Http\Services\Triggers\BuddyBoss\BuddyBossController;
+use BitApps\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Triggers\BuddyBoss\BuddyBossController;
 
 Route::get('buddyboss/get', [BuddyBossController::class, 'getAll']);
 Route::post('buddyboss/get/form', [BuddyBossController::class, 'get_a_form']);

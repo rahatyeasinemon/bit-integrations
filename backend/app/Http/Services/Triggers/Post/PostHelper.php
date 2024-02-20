@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\Post;
+namespace BitApps\BTCBI\Http\Services\Triggers\Post;
 
 use WP_Query;
 

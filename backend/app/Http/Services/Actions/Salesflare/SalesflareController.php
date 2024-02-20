@@ -4,10 +4,10 @@
  * Salesflare Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Salesflare;
+namespace BitApps\BTCBI\Http\Services\Actions\Salesflare;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\HttpHelper;
 
 /**
  * Provide functionality for Salesflare integration

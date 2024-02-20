@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\Livestorm\LivestormController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\Livestorm\LivestormController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('livestorm_authentication', [LivestormController::class, 'authentication']);
 Route::post('livestorm_fetch_all_events', [LivestormController::class, 'getAllEvents']);

@@ -3,13 +3,13 @@
  * Provides Base Model Class
  */
 
-namespace BitCode\BTCBI\Model;
+namespace BitApps\BTCBI\Model;
 
 /**
  * Undocumented class
  */
-// use BitCode\BTCBI\Model\Model;
-use BitCode\BTCBI\Model\Model;
+// use BitApps\BTCBI\Model\Model;
+use BitApps\BTCBI\Model\Model;
 
 class FlowModel extends Model
 {

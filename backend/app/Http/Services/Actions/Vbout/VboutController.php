@@ -4,10 +4,10 @@
  * Vbout Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Vbout;
+namespace BitApps\BTCBI\Http\Services\Actions\Vbout;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\HttpHelper;
 
 /**
  * Provide functionality for Vbout integration

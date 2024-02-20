@@ -4,10 +4,10 @@
  * Flowlu Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Flowlu;
+namespace BitApps\BTCBI\Http\Services\Actions\Flowlu;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\HttpHelper;
 
 /**
  * Provide functionality for Flowlu integration

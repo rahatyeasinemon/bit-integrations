@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\KaliForms;
+namespace BitApps\BTCBI\Http\Services\Triggers\KaliForms;
 
-use BitCode\BTCBI\Http\Services\Triggers\Webhook\WebhookController;
+use BitApps\BTCBI\Http\Services\Triggers\Webhook\WebhookController;
 
 final class KaliFormsController extends WebhookController
 {

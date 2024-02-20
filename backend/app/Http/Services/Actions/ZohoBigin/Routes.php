@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\ZohoBigin\ZohoBiginController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\ZohoBigin\ZohoBiginController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('zbigin_generate_token', [ZohoBiginController::class, 'generateTokens']);
 Route::post('zbigin_refresh_modules', [ZohoBiginController::class, 'refreshModules']);

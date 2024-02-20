@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Http\Services\Triggers\TutorLms\TutorLmsController;
+use BitApps\BTCBI\Util\Hooks;
+use BitApps\BTCBI\Http\Services\Triggers\TutorLms\TutorLmsController;
 
 Hooks::add('tutor_after_enroll', [TutorLmsController::class, 'handle_course_enroll'], 10, 2);
 Hooks::add('tutor_quiz/attempt_ended', [TutorLmsController::class, 'handleQuizAttempt'], 10, 1);

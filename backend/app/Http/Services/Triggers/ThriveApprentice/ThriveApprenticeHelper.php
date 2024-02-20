@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\ThriveApprentice;
+namespace BitApps\BTCBI\Http\Services\Triggers\ThriveApprentice;
 
 class ThriveApprenticeHelper
 {

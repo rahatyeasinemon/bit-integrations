@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Actions\Dropbox;
+namespace BitApps\BTCBI\Http\Services\Actions\Dropbox;
 
-use BitCode\BTCBI\Http\Services\Actions\Dropbox\RecordApiHelper as DropboxRecordApiHelper;
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Flow\FlowController;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Http\Services\Actions\Dropbox\RecordApiHelper as DropboxRecordApiHelper;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Http\Controllers\FlowController;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
 
 class DropboxController

@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\Getgist\GetgistController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\Getgist\GetgistController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('getgist_authorize', [GetgistController::class, 'getgistAuthorize']);

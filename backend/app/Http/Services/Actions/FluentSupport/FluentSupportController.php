@@ -4,15 +4,15 @@
  * Fluent Support Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\FluentSupport;
+namespace BitApps\BTCBI\Http\Services\Actions\FluentSupport;
 
 use WP_Error;
-use BitCode\BTCBI\Util\IpTool;
+use BitApps\BTCBI\Util\IpTool;
 use FluentSupport\App\Models\Agent;
 use FluentSupport\App\Models\MailBox;
 
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Http\Services\Actions\FluentSupport\RecordApiHelper;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Http\Services\Actions\FluentSupport\RecordApiHelper;
 
 /**
  * Provide functionality for Fluent Support integration

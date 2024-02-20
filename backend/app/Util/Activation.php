@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Util;
+namespace BitApps\BTCBI\Util;
 
-use BitCode\BTCBI\Core\Database\DB;
+use BitApps\BTCBI\db\DB;
 use WP_Site;
 
 /**

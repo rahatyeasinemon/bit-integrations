@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\GamiPress\GamiPressController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\GamiPress\GamiPressController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('gamiPress_authorize', [GamiPressController::class, 'authorizeGamiPress']);
 Route::post('gamiPress_fetch_all_rank_type', [GamiPressController::class, 'fetchAllRankType']);

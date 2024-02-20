@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Actions\Mail;
+namespace BitApps\BTCBI\Http\Services\Actions\Mail;
 
-use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Util\Common;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 final class MailController
 {

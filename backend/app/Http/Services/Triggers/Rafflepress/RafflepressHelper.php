@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\Rafflepress;
+namespace BitApps\BTCBI\Http\Services\Triggers\Rafflepress;
 
 final class RafflepressHelper
 {

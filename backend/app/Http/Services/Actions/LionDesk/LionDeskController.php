@@ -4,10 +4,10 @@
  * LionDesk Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\LionDesk;
+namespace BitApps\BTCBI\Http\Services\Actions\LionDesk;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\HttpHelper;
 
 /**
  * Provide functionality for LionDesk integration

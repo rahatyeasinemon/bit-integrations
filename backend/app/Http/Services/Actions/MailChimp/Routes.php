@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\MailChimp\MailChimpController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\MailChimp\MailChimpController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('mChimp_generate_token', [ MailChimpController::class, 'generateTokens']);
 Route::post('mChimp_refresh_audience', [ MailChimpController::class, 'refreshAudience']);

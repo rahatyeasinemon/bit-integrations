@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Http\Services\Triggers\Spectra\SpectraController;
+use BitApps\BTCBI\Util\Hooks;
+use BitApps\BTCBI\Http\Services\Triggers\Spectra\SpectraController;
 
 Hooks::add('uagb_form_success', [SpectraController::class, 'spectraHandler'], 10, PHP_INT_MAX);

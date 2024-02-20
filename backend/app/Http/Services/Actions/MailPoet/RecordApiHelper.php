@@ -4,9 +4,9 @@
  * ZohoRecruit Record Api
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\MailPoet;
+namespace BitApps\BTCBI\Http\Services\Actions\MailPoet;
 
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use MailPoet\API\MP\v1\APIException;
 
 /**

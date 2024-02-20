@@ -4,17 +4,17 @@
  * ZohoSheet Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\MailPoet;
+namespace BitApps\BTCBI\Http\Services\Actions\MailPoet;
 
 use WP_Error;
-use BitCode\BTCBI\Http\Services\Actions\MailPoet\RecordApiHelper;
+use BitApps\BTCBI\Http\Services\Actions\MailPoet\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
  */
 class MailPoetController
 {
-    //BitCode\BTCBI\Http\Services\Actions\MailPoet\MailPoetController
+    //BitApps\BTCBI\Http\Services\Actions\MailPoet\MailPoetController
 
 
 

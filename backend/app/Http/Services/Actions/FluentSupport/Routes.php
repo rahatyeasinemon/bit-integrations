@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\FluentSupport\FluentSupportController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\FluentSupport\FluentSupportController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('fluentSupport_authorization', [FluentSupportController::class, 'checkAuthorization']);
 Route::post('fluent_support_get_all_support_staff', [FluentSupportController::class, 'getAllSupportStaff']);

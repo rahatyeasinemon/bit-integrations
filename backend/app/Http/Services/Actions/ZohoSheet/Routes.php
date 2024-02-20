@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\ZohoSheet\ZohoSheetController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\ZohoSheet\ZohoSheetController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('zohoSheet_generate_token', [ZohoSheetController::class, 'generateTokens']);
 Route::post('zohoSheet_fetch_all_work_books', [ZohoSheetController::class, 'getAllWorkbooks']);

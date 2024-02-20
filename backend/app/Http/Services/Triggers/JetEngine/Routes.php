@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Http\Services\Triggers\JetEngine\JetEngineController;
+use BitApps\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Triggers\JetEngine\JetEngineController;
 
 Route::get('jetengine/get', [JetEngineController::class, 'getAll']);
 Route::post('jetengine/get/form', [JetEngineController::class, 'get_a_form']);

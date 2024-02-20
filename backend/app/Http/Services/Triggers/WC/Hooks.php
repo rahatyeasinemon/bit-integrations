@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Http\Services\Triggers\WC\WCController;
+use BitApps\BTCBI\Util\Hooks;
+use BitApps\BTCBI\Http\Services\Triggers\WC\WCController;
 
 Hooks::add('user_register', [WCController::class, 'handle_customer_create'], 10, 2);
 Hooks::add('profile_update', [WCController::class, 'handle_customer_update'], 10, 3);

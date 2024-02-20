@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\SolidAffiliate;
+namespace BitApps\BTCBI\Http\Services\Triggers\SolidAffiliate;
 
 final class SolidAffiliateHelper
 {

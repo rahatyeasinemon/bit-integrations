@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\ARMember;
+namespace BitApps\BTCBI\Http\Services\Triggers\ARMember;
 
 class ARMemberHelper
 {

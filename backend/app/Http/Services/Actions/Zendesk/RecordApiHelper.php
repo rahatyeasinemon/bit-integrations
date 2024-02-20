@@ -4,10 +4,10 @@
  * Zendesk Record Api
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Zendesk;
+namespace BitApps\BTCBI\Http\Services\Actions\Zendesk;
 
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert

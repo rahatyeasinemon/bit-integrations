@@ -4,15 +4,15 @@
  * ZohoBigin Record Api
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\ZohoBigin;
+namespace BitApps\BTCBI\Http\Services\Actions\ZohoBigin;
 
 use WP_Error;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Util\DateTimeHelper;
-use BitCode\BTCBI\Util\FieldValueHandler;
-use BitCode\BTCBI\Http\Services\Actions\ZohoBigin\FilesApiHelper;
-use BitCode\BTCBI\Util\ApiResponse as UtilApiResponse;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\DateTimeHelper;
+use BitApps\BTCBI\Util\FieldValueHandler;
+use BitApps\BTCBI\Http\Services\Actions\ZohoBigin\FilesApiHelper;
+use BitApps\BTCBI\Util\ApiResponse as UtilApiResponse;
 
 /**
  * Provide functionality for Record insert,upsert

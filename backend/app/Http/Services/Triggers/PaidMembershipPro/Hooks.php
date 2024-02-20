@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Http\Services\Triggers\PaidMembershipPro\PaidMembershipProController;
+use BitApps\BTCBI\Util\Hooks;
+use BitApps\BTCBI\Http\Services\Triggers\PaidMembershipPro\PaidMembershipProController;
 
 Hooks::add('pmpro_after_change_membership_level', [PaidMembershipProController::class, 'perches_membershhip_level_by_administator'], 10, 3);
 Hooks::add('pmpro_after_change_membership_level', [PaidMembershipProController::class, 'cancel_membershhip_level'], 10, 3);

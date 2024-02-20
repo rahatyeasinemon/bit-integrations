@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\Telegram\TelegramController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\Telegram\TelegramController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('telegram_authorize', [ TelegramController::class, 'telegramAuthorize']);
 Route::post('refresh_get_updates', [ TelegramController::class, 'refreshGetUpdates']);

@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\Mailercloud\MailercloudController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\Mailercloud\MailercloudController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('mailercloud_handle_authorize', [MailercloudController::class, 'handleAuthorize']);
 Route::post('mailercloud_get_all_lists', [MailercloudController::class, 'getAllLists']);

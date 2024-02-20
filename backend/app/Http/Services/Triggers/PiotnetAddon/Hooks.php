@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Http\Services\Triggers\PiotnetAddon\PiotnetAddonController;
+use BitApps\BTCBI\Util\Hooks;
+use BitApps\BTCBI\Http\Services\Triggers\PiotnetAddon\PiotnetAddonController;
 
 // for piotnet addon field
 // Hooks::add('pafe/form_builder/new_record', [PiotnetAddonController::class, 'handle_piotnet_submit']);

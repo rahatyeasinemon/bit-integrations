@@ -4,11 +4,11 @@
  * Mailercloud Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Mailercloud;
+namespace BitApps\BTCBI\Http\Services\Actions\Mailercloud;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Http\Services\Actions\Mailercloud\RecordApiHelper;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Http\Services\Actions\Mailercloud\RecordApiHelper;
 
 /**
  * Provide functionality for Mailercloud integration

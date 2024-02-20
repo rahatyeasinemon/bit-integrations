@@ -4,10 +4,10 @@
  * MoxieCRM Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\MoxieCRM;
+namespace BitApps\BTCBI\Http\Services\Actions\MoxieCRM;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Util\HttpHelper;
 
 /**
  * Provide functionality for MoxieCRM integration

@@ -4,7 +4,7 @@
  * Discord Files Api
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Discord;
+namespace BitApps\BTCBI\Http\Services\Actions\Discord;
 
 /**
  * Provide functionality for Upload files

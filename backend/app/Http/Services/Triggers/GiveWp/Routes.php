@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Http\Services\Triggers\GiveWp\GiveWpController;
+use BitApps\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Triggers\GiveWp\GiveWpController;
 
 Route::get('givewp/get', [GiveWpController::class, 'getAll']);
 Route::post('givewp/get/form', [GiveWpController::class, 'get_a_form']);

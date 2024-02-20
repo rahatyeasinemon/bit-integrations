@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\WishList\WishListController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\WishList\WishListController;
+use BitApps\BTCBI\Util\Route;
 
 //WishList
 Route::post('wishlist_authorization', [WishListController::class, 'checkAuthorization']);

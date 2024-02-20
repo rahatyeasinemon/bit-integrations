@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\Zendesk\ZendeskController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\Zendesk\ZendeskController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('zendesk_authentication', [ZendeskController::class, 'authentication']);
 Route::post('zendesk_fetch_custom_fields', [ZendeskController::class, 'getCustomFields']);

@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Http\Services\Triggers\Registration\RegistrationController;
+use BitApps\BTCBI\Util\Hooks;
+use BitApps\BTCBI\Http\Services\Triggers\Registration\RegistrationController;
 
 //* User Register HOOK*//
 Hooks::add('user_register', [RegistrationController::class, 'userCreate'], 10, 2);

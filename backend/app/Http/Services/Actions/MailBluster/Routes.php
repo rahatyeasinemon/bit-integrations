@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\MailBluster\MailBlusterController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\MailBluster\MailBlusterController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('mailBluster_authentication', [MailBlusterController::class, 'authentication']);

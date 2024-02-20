@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\Breakdance;
+namespace BitApps\BTCBI\Http\Services\Triggers\Breakdance;
 
-use BitCode\BTCBI\Model\Flow;
+use BitApps\BTCBI\Model\Flow;
 use Breakdance\Forms\Actions\Action;
 use Breakdance\Forms\Actions\ActionProvider;
-use BitCode\BTCBI\Http\Services\Triggers\Breakdance\BreakdanceSubmitData;
+use BitApps\BTCBI\Http\Services\Triggers\Breakdance\BreakdanceSubmitData;
 
 final class BreakdanceController
 {

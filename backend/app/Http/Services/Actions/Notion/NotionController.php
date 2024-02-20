@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Actions\Notion;
+namespace BitApps\BTCBI\Http\Services\Actions\Notion;
 
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Http\Services\Actions\Notion\RecordApiHelper;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Http\Services\Actions\Notion\RecordApiHelper;
 use WP_Error;
 
 class NotionController

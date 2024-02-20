@@ -4,11 +4,11 @@
  * Moosend Record Api
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Moosend;
+namespace BitApps\BTCBI\Http\Services\Actions\Moosend;
 
-use BitCode\BTCBI\Util\Common;
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Http\Services\Log\LogHandler;
+use BitApps\BTCBI\Util\Common;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
  * Provide functionality for Record Subscribe , Unsubscribe, Unsubscribe from list

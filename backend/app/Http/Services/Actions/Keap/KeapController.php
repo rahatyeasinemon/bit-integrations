@@ -4,11 +4,11 @@
  * Keap Integration
  */
 
-namespace BitCode\BTCBI\Http\Services\Actions\Keap;
+namespace BitApps\BTCBI\Http\Services\Actions\Keap;
 
 use WP_Error;
-use BitCode\BTCBI\Util\HttpHelper;
-use BitCode\BTCBI\Flow\FlowController;
+use BitApps\BTCBI\Util\HttpHelper;
+use BitApps\BTCBI\Http\Controllers\FlowController;
 
 /**
  * Provide functionality for keap integration

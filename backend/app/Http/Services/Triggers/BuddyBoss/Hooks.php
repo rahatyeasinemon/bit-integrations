@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Hooks;
-use BitCode\BTCBI\Http\Services\Triggers\BuddyBoss\BuddyBossController;
+use BitApps\BTCBI\Util\Hooks;
+use BitApps\BTCBI\Http\Services\Triggers\BuddyBoss\BuddyBossController;
 
 Hooks::add('friends_friendship_accepted', [BuddyBossController::class, 'handle_accept_friend_request'], 10, 4);
 Hooks::add('friends_friendship_requested', [BuddyBossController::class, 'handle_sends_friend_request'], 10, 4);

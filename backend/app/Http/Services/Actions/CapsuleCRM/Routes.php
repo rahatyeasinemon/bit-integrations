@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\CapsuleCRM\CapsuleCRMController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\CapsuleCRM\CapsuleCRMController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('capsulecrm_authentication', [CapsuleCRMController::class, 'authentication']);
 Route::post('capsulecrm_fetch_custom_fields', [CapsuleCRMController::class, 'getCustomFields']);

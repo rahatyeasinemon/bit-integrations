@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\Moosend\MoosendController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\Moosend\MoosendController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('moosend_handle_authorize', [MoosendController::class, 'handleAuthorize']);

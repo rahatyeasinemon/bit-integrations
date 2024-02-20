@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\Elementor;
+namespace BitApps\BTCBI\Http\Services\Triggers\Elementor;
 
 class ElementorHelper
 {

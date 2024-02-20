@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Util\Route;
-use BitCode\BTCBI\Http\Services\Actions\Salesforce\SalesforceController;
+use BitApps\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\Salesforce\SalesforceController;
 
 Route::post('selesforce_generate_token', [SalesforceController::class, 'generateTokens']);
 Route::post('selesforce_campaign_list', [SalesforceController::class, 'selesforceCampaignList']);

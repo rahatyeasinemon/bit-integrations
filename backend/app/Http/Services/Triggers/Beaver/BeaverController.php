@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\BTCBI\Http\Services\Triggers\Beaver;
+namespace BitApps\BTCBI\Http\Services\Triggers\Beaver;
 
-use BitCode\BTCBI\Model\Flow;
+use BitApps\BTCBI\Model\Flow;
 
 final class BeaverController
 {

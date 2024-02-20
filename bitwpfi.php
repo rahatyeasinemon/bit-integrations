@@ -28,7 +28,7 @@ $btcbi_db_version = '1.0';
 define('BTCBI_VERSION', '1.6.0');
 define('BTCBI_PLUGIN_MAIN_FILE', __FILE__);
 
-require_once plugin_dir_path(__FILE__) . 'includes/loader.php';
+require_once plugin_dir_path(__FILE__) . 'backend/bootstrap.php';
 function btcbi_activate_plugin($network_wide)
 {
     global $wp_version;

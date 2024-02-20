@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\BTCBI\Http\Services\Actions\DirectIq\DirectIqController;
-use BitCode\BTCBI\Util\Route;
+use BitApps\BTCBI\Http\Services\Actions\DirectIq\DirectIqController;
+use BitApps\BTCBI\Util\Route;
 
 Route::post('directIq_authorize', [DirectIqController::class, 'directIqAuthorize']);
 Route::post('directIq_headers', [DirectIqController::class, 'directIqHeaders']);
