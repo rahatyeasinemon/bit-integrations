@@ -52,11 +52,14 @@ class HookService
      */
     protected function loadTriggersHooks()
     {
+        echo('loadTriggersHooks');
+        die;
         $storeInCacheInstance = new StoreInCache();
         $activeTrigger = $storeInCacheInstance::getTransientData('activeCurrentTrigger');
         if (empty($activeTrigger)) {
             $activeTrigger = $storeInCacheInstance::getActiveFlow();
         }
+
         if (!$activeTrigger) {
             $activeTrigger = [];
         }
@@ -91,7 +94,7 @@ class HookService
      */
     private function _includeTriggerTaskHooks($task_name)
     {
-        $task_dir = BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR;
+        $task_dir = BTCBI_PLUGIN_BASEDIR . 'Http' . DIRECTORY_SEPARATOR . 'Services' . DIRECTORY_SEPARATOR;
         $task_path = $task_dir . 'Triggers' . DIRECTORY_SEPARATOR . $task_name . DIRECTORY_SEPARATOR;
         if (is_readable($task_path . 'Hooks.php')) {
             include $task_path . 'Hooks.php';
@@ -100,7 +103,7 @@ class HookService
 
     private function loadTriggersRoutes()
     {
-        $task_dir = BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR . 'Triggers';
+        $task_dir = BTCBI_PLUGIN_BASEDIR . 'Http' . DIRECTORY_SEPARATOR . 'Services' . DIRECTORY_SEPARATOR . 'Triggers';
         $dirs = new FilesystemIterator($task_dir);
         foreach ($dirs as $dirInfo) {
             if ($dirInfo->isDir()) {
@@ -115,6 +118,8 @@ class HookService
 
     private function _includeActionTaskHooks($task_name)
     {
+        echo('_includeActionTaskHooks');
+        die;
         $task_dir = BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR . $task_name;
         $dirs = new FilesystemIterator($task_dir);
         foreach ($dirs as $dirInfo) {

@@ -32,8 +32,8 @@ final class Flow
      */
     protected static function isActionExists($name)
     {
-        if (class_exists("BitApps\\BTCBI\\Actions\\{$name}\\{$name}Controller")) {
-            return "BitApps\\BTCBI\\Actions\\{$name}\\{$name}Controller";
+        if (class_exists("BitApps\\BTCBI\\Http\\Services\\Actions\\{$name}\\{$name}Controller")) {
+            return "BitApps\\BTCBI\\Http\\Services\\Actions\\{$name}\\{$name}Controller";
         } else {
             return false;
         }
@@ -48,8 +48,8 @@ final class Flow
      */
     protected static function isTriggerExists($name)
     {
-        if (class_exists("BitApps\\BTCBI\\Triggers\\{$name}\\{$name}Controller")) {
-            return "BitApps\\BTCBI\\Triggers\\{$name}\\{$name}Controller";
+        if (class_exists("BitApps\\BTCBI\\Http\\Services\\Triggers\\{$name}\\{$name}Controller")) {
+            return "BitApps\\BTCBI\\Http\\Services\\Triggers\\{$name}\\{$name}Controller";
         } else {
             return false;
         }
