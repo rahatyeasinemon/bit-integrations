@@ -20,7 +20,7 @@ class MailjetController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiEndpoints = 'https://api.mailjet.com/v3/REST/contactslist/';
+        $apiEndpoints = 'https://api.mailjet.com/v3/REST/contactslist?Limit=1000';
         $apiKey       = $fieldsRequestParams->apiKey;
         $secretKey    = $fieldsRequestParams->secretKey;
         $header       = [
