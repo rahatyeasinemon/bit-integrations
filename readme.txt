@@ -2,9 +2,9 @@
 Contributors: bitpressadmin
 Tags: automation,integration,connector,automator,Zapier,webhook,WordPress form,API,Hook,Pabbly,Integrately,automate
 Requires at least: 5.1
-Tested up to: 6.4.2
+Tested up to: 6.4.3
 Requires PHP: 7.0
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPLv2 or later
 
 Automation Plugin for WordPress; Integration of 60+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -1679,6 +1679,8 @@ With the pro version, you have the ability to create **Unlimited active integrat
 
 📧 [**Bit SMTP**](https://wordpress.org/plugins/bit-smtp/): The ultimate goal of Bit SMTP plugin to make your email deliverability more easy as well as secure.
 
+📧 [**Bit Social**](https://wordpress.org/plugins/bit-social/): With Bit Social you can Auto Post, Schedule & Share WordPress post to Facebook, LinkedIn, Twitter with Bit Social Auto Poster. Scheduling & Share post on social media easily.
+
 📧 [**Webhooks.is**](https://webhook.is/): Test your incoming and outgoing [**webhook**](https://webhook.is/difference-between-webhook-and-api) free.
 
 📢 **We are open for freelance work/custom development. [Connect](https://bitapps.pro/contact) with us for further information.**
@@ -1737,6 +1739,21 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 1.6.1  =
+*Release Date - *21th February 2024\*
+
+- **New Features :**
+  - WooCommerce: Order module checkout custom field & customer Note
+
+- **Fixes :**
+  - Formidable: Single checkbox
+  - Dropbox: Multiple file upload 
+  - Moosend: Phone number validation
+  - Telegram: Single file attachment upload
+  - PropovoiceCRM: Lead module fields 
+  - Piotnet Addon: Form fields
+  - Pipedrive: Multiple label
 
 = 1.6.0  =
 *Release Date - *5th February 2024\*
