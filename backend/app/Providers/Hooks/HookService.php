@@ -10,13 +10,22 @@ use BitApps\BTCBI\Util\StoreInCache;
 
 class HookService
 {
+    private $_servicesPath;
     public function __construct()
     {
+        $this->_servicesPath = BTCBI_PLUGIN_BASEDIR
+        . 'backend' . DIRECTORY_SEPARATOR
+        . 'app' . DIRECTORY_SEPARATOR
+        . 'Http' . DIRECTORY_SEPARATOR
+        . 'Services' . DIRECTORY_SEPARATOR;
+
+
         $this->loadTriggersHooks();
         $this->loadTriggersRoutes();
         $this->loadAppHooks();
         $this->loadActionsHooks();
         $this->loadAdminAjax();
+
         Hooks::add('rest_api_init', [$this, 'loadApi']);
     }
 
@@ -37,11 +46,14 @@ class HookService
      */
     protected function loadAppHooks()
     {
-        if (Request::Check('ajax') && is_readable(BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'ajax.php')) {
-            include BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'ajax.php';
+
+        // echo('loadAppHooks');
+        // die;
+        if (Request::Check('ajax') && is_readable(BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'ajax.php')) {
+            include BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'ajax.php';
         }
-        if (is_readable(BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR . 'hooks.php')) {
-            include BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR . 'hooks.php';
+        if (is_readable(BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'hooks.php')) {
+            include BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'hooks.php';
         }
     }
 
@@ -52,8 +64,6 @@ class HookService
      */
     protected function loadTriggersHooks()
     {
-        echo('loadTriggersHooks');
-        die;
         $storeInCacheInstance = new StoreInCache();
         $activeTrigger = $storeInCacheInstance::getTransientData('activeCurrentTrigger');
         if (empty($activeTrigger)) {
@@ -94,8 +104,10 @@ class HookService
      */
     private function _includeTriggerTaskHooks($task_name)
     {
-        $task_dir = BTCBI_PLUGIN_BASEDIR . 'Http' . DIRECTORY_SEPARATOR . 'Services' . DIRECTORY_SEPARATOR;
+        $task_dir = $this->_servicesPath;
+
         $task_path = $task_dir . 'Triggers' . DIRECTORY_SEPARATOR . $task_name . DIRECTORY_SEPARATOR;
+
         if (is_readable($task_path . 'Hooks.php')) {
             include $task_path . 'Hooks.php';
         }
@@ -103,7 +115,8 @@ class HookService
 
     private function loadTriggersRoutes()
     {
-        $task_dir = BTCBI_PLUGIN_BASEDIR . 'Http' . DIRECTORY_SEPARATOR . 'Services' . DIRECTORY_SEPARATOR . 'Triggers';
+        $task_dir = $this->_servicesPath
+        . 'Triggers';
         $dirs = new FilesystemIterator($task_dir);
         foreach ($dirs as $dirInfo) {
             if ($dirInfo->isDir()) {
@@ -118,14 +131,16 @@ class HookService
 
     private function _includeActionTaskHooks($task_name)
     {
-        echo('_includeActionTaskHooks');
-        die;
-        $task_dir = BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR . $task_name;
+        // error_log(print_r($task_name));
+        // error_log('sadjlkf-------------------------');
+        $task_dir = BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Http' . DIRECTORY_SEPARATOR . 'Services' . DIRECTORY_SEPARATOR . $task_name;
         $dirs = new FilesystemIterator($task_dir);
         foreach ($dirs as $dirInfo) {
             if ($dirInfo->isDir()) {
                 $task_name = basename($dirInfo);
                 $task_path = $task_dir . DIRECTORY_SEPARATOR . $task_name . DIRECTORY_SEPARATOR;
+
+                // error_log(print_r(is_readable($task_path . 'Routes.php')));
                 if (is_readable($task_path . 'Routes.php') && Request::Check('ajax') && Request::Check('admin')) {
                     include $task_path . 'Routes.php';
                 }
@@ -143,8 +158,8 @@ class HookService
      */
     public function loadApi()
     {
-        if (is_readable(BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'api.php')) {
-            include BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'api.php';
+        if (is_readable(BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'api.php')) {
+            include BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'api.php';
         }
     }
 }

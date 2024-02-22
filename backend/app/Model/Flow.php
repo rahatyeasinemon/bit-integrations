@@ -7,6 +7,7 @@
 
 namespace BitApps\BTCBI\Model;
 
+use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Util\CustomFuncValidator;
 use BitApps\BTCBI\Util\IpTool;

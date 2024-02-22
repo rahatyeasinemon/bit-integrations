@@ -153,7 +153,7 @@ class Layout
      */
     public function rootPage()
     {
-        include BTCBI_PLUGIN_BASEDIR . '/views/view-root.php';
+        include BTCBI_PLUGIN_BASEDIR . '/backend/app/Views/view-root.php';
     }
 
     public function RemoveAdminNotices()

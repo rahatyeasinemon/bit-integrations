@@ -2,7 +2,7 @@
 /**
  * @license GPL-2.0-or-later
  *
- * Modified on 20-February-2024 using Strauss.
+ * Modified on 22-February-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 
