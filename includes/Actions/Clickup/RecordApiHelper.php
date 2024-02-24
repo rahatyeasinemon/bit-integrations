@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Clickup;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -76,13 +76,24 @@ class RecordApiHelper
                 }
             } elseif (!is_null($data[$triggerValue])) {
                 if ($actionValue === 'fields') {
-                    $dataFinal[$value->customFieldKey] = $data[$triggerValue];
+                    $dataFinal[$value->customFieldKey] = self::formatPhoneNumber($data[$triggerValue]);
                 } else {
-                    $dataFinal[$actionValue] = $data[$triggerValue];
+                    $dataFinal[$actionValue] = self::formatPhoneNumber($data[$triggerValue]);
                 }
             }
         }
         return $dataFinal;
+    }
+
+    private static function formatPhoneNumber($field)
+    {
+        if (!preg_match('/^\+?[0-9\s\-\(\)]+$/', $field)) {
+            return $field;
+        }
+
+        $leadingPlus      = $field[0] === '+' ? '+' : '';
+        $cleanedNumber    = preg_replace('/[^\d]/', '', $field);
+        return $leadingPlus . trim($cleanedNumber);
     }
 
     public function execute($fieldValues, $fieldMap, $actionName)
