@@ -70,9 +70,9 @@ class RecordApiHelper
             $actionValue  = $value->clickupFormField;
             if ($triggerValue === 'custom') {
                 if ($actionValue === 'fields') {
-                    $dataFinal[$value->customFieldKey] = $value->customValue;
+                    $dataFinal[$value->customFieldKey] = self::formatPhoneNumber($value->customValue);
                 } else {
-                    $dataFinal[$actionValue] = $value->customValue;
+                    $dataFinal[$actionValue] = self::formatPhoneNumber($value->customValue);
                 }
             } elseif (!is_null($data[$triggerValue])) {
                 if ($actionValue === 'fields') {
