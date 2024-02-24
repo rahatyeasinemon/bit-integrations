@@ -2,7 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Triggers\Registration;
 
-use BitApps\BTCBI\Util\Hooks;
+use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
 use BitApps\BTCBI\Model\Flow;
 
 final class RegistrationController

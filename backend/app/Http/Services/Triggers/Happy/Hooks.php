@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitApps\BTCBI\Util\Hooks;
+use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
 use BitApps\BTCBI\Http\Services\Triggers\Happy\HappyController;
 
-Hooks::add('happyforms_submission_success', [HappyController::class, 'handle_happy_submit'], 10, 3);
+Hooks::addAction('happyforms_submission_success', [HappyController::class, 'handle_happy_submit'], 10, 3);

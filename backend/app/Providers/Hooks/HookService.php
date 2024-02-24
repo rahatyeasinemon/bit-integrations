@@ -4,7 +4,7 @@ namespace BitApps\BTCBI\Providers\Hooks;
 
 use BitApps\BTCBI\Routes\AdminAjax;
 use FilesystemIterator;
-use BitApps\BTCBI\Util\Hooks;
+use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
 use BitApps\BTCBI\Util\Request;
 use BitApps\BTCBI\Util\StoreInCache;
 
@@ -26,7 +26,7 @@ class HookService
         $this->loadActionsHooks();
         $this->loadAdminAjax();
 
-        Hooks::add('rest_api_init', [$this, 'loadApi']);
+        Hooks::addAction('rest_api_init', [$this, 'loadApi']);
     }
 
     /**

@@ -4,10 +4,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitApps\BTCBI\Util\Hooks;
+use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
 use BitApps\BTCBI\Http\Services\Triggers\UltimateMember\UltimateMemberController;
 
-Hooks::add('um_user_login', [UltimateMemberController::class, 'handleUserLogViaForm'], 9, 1);
-Hooks::add('um_registration_complete', [UltimateMemberController::class, 'handleUserRegisViaForm'], 10, 2);
-Hooks::add('set_user_role', [UltimateMemberController::class, 'handleUserRoleChange'], 10, 3);
-Hooks::add('set_user_role', [UltimateMemberController::class, 'handleUserSpecificRoleChange'], 10, 3);
+Hooks::addAction('um_user_login', [UltimateMemberController::class, 'handleUserLogViaForm'], 9, 1);
+Hooks::addAction('um_registration_complete', [UltimateMemberController::class, 'handleUserRegisViaForm'], 10, 2);
+Hooks::addAction('set_user_role', [UltimateMemberController::class, 'handleUserRoleChange'], 10, 3);
+Hooks::addAction('set_user_role', [UltimateMemberController::class, 'handleUserSpecificRoleChange'], 10, 3);

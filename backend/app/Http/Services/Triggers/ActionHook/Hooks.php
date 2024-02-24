@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitApps\BTCBI\Util\Hooks;
+use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Triggers\ActionHook\ActionHookController;
 
@@ -21,7 +21,7 @@ $hook = $wpdb->get_results(
 );
 
 if (!empty($hook) && isset($hook[0]->option_name)) {
-    Hooks::add(str_replace('btcbi_action_hook_test_', '', $hook[0]->option_name), [ActionHookController::class, 'actionHookHandler'], 10, PHP_INT_MAX);
+    Hooks::addAction(str_replace('btcbi_action_hook_test_', '', $hook[0]->option_name), [ActionHookController::class, 'actionHookHandler'], 10, PHP_INT_MAX);
 }
 
 $flowController = new FlowController();
@@ -36,7 +36,7 @@ $flows = $flowController->get(
 if (!is_wp_error($flows)) {
     foreach ($flows as  $flow) {
         if (isset($flow->triggered_entity_id)) {
-            Hooks::add($flow->triggered_entity_id, [ActionHookController::class, 'handle'], 10, PHP_INT_MAX);
+            Hooks::addAction($flow->triggered_entity_id, [ActionHookController::class, 'handle'], 10, PHP_INT_MAX);
         }
     }
 }

@@ -80,7 +80,6 @@ class WebHooksController
         $Path = isset($parsedURL['path']) ? $parsedURL['path'] : null;
         $Query = isset($parsedURL['query']) ? $parsedURL['query'] : null;
         $Pass = ($Pass || $Usr) ? "$Pass@" : null;
-
         $cleanURL = "$Scheme$Usr$Pass$Host$Port$Path";
         $params = [];
         foreach (explode('&', $Query) as $keyValue) {

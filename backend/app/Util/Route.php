@@ -2,6 +2,8 @@
 
 namespace BitApps\BTCBI\Util;
 
+use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
+
 final class Route
 {
     private static $_prefix = 'btcbi_';
@@ -37,10 +39,10 @@ final class Route
             static::$_invokeable[static::$_prefix . $hook][$method . '_ignore_token'] = true;
         }
         static::$_invokeable[static::$_prefix . $hook][$method] = $invokeable;
-        Hooks::add('wp_ajax_' . static::$_prefix . $hook, [__CLASS__, 'action']);
+        Hooks::addAction('wp_ajax_' . static::$_prefix . $hook, [__CLASS__, 'action']);
         if (static::$_no_auth) {
             static::$_no_auth = false;
-            Hooks::add('wp_ajax_nopriv_' . static::$_prefix . $hook, [__CLASS__, 'action']);
+            Hooks::addAction('wp_ajax_nopriv_' . static::$_prefix . $hook, [__CLASS__, 'action']);
         }
     }
 

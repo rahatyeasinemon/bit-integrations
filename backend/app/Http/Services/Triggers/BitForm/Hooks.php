@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitApps\BTCBI\Util\Hooks;
+use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
 use BitApps\BTCBI\Http\Services\Triggers\BitForm\BitFormController;
 
-Hooks::add('bitform_submit_success', [BitFormController::class, 'handle_bitform_submit'], 10, 3);
+Hooks::addAction('bitform_submit_success', [BitFormController::class, 'handle_bitform_submit'], 10, 3);

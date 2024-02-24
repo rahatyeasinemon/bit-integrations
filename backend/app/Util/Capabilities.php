@@ -11,6 +11,6 @@ final class Capabilities
 
     public static function Filter($cap, $default = 'manage_options')
     {
-        return static::Check(Hooks::apply($cap, $default));
+        return static::Check(Hooks::applyFilter($cap, $default));
     }
 }

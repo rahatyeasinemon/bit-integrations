@@ -14,10 +14,10 @@ use BitApps\BTCBI\Util\Deactivation;
 use BitApps\BTCBI\Util\UnInstallation;
 use BitApps\BTCBI\db\DB;
 use BitApps\BTCBI\Util\Capabilities;
-use BitApps\BTCBI\Util\Hooks;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Providers\Hooks\HookService;
 use BitApps\BTCBI\Views\Layout;
+use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
 
 final class Plugin
 {
@@ -39,7 +39,7 @@ final class Plugin
      */
     public function initialize()
     {
-        Hooks::add('plugins_loaded', [$this, 'init_plugin'], 12);
+        Hooks::addAction('plugins_loaded', [$this, 'init_plugin'], 12);
         (new Activation())->activate();
         (new Deactivation())->register();
         (new UnInstallation())->register();
@@ -47,9 +47,9 @@ final class Plugin
 
     public function init_plugin()
     {
-        Hooks::add('init', [$this, 'init_classes'], 8);
-        Hooks::add('init', [$this, 'integrationlogDelete'], 11);
-        Hooks::filter('plugin_action_links_' . plugin_basename(BTCBI_PLUGIN_MAIN_FILE), [$this, 'plugin_action_links']);
+        Hooks::addAction('init', [$this, 'init_classes'], 8);
+        Hooks::addAction('init', [$this, 'integrationlogDelete'], 11);
+        Hooks::addFilter('plugin_action_links_' . plugin_basename(BTCBI_PLUGIN_MAIN_FILE), [$this, 'plugin_action_links']);
     }
 
     /**
