@@ -2,6 +2,8 @@
 
 namespace BitApps\BTCBI\Util;
 
+use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
+
 final class Capabilities
 {
     public static function Check($cap, ...$args)

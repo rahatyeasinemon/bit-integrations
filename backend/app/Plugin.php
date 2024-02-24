@@ -13,12 +13,12 @@ use BitApps\BTCBI\Util\Activation;
 use BitApps\BTCBI\Util\Deactivation;
 use BitApps\BTCBI\Util\UnInstallation;
 use BitApps\BTCBI\db\DB;
-use BitApps\BTCBI\Util\Capabilities;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Providers\Hooks\HookService;
 use BitApps\BTCBI\Views\Layout;
 use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
 use BTCBI\Deps\BitApps\WPKit\Http\RequestType;
+use BTCBI\Deps\BitApps\WPKit\Utils\Capabilities;
 
 final class Plugin
 {
@@ -95,7 +95,7 @@ final class Plugin
 
     public static function update_tables()
     {
-        if (!Capabilities::Check('manage_options')) {
+        if (!Capabilities::check('manage_options')) {
             return;
         }
         global $btcbi_db_version;
