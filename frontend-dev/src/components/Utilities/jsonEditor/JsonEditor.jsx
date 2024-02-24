@@ -33,15 +33,20 @@ function JsonEditor({ data = emptyJson, onChange, formFields = [] }) {
         markers.forEach((marker) => toast.error(marker.message))
     }, 1000)
 
-    const handlePasteFormField = (field) => {
-        if (!field) return
+    const handlePasteFormField = (event) => {
+        if (!event?.target?.value) return
+
         const editor = editorRef.current
+        const value = event?.target?.value
+        const el = document.getElementsByName(event.target.name)
+        const label = el?.options ? el.options[el.selectedIndex].innerHTML : el[0].options[el[0].selectedIndex].innerHTML
+
         if (editor) {
             const position = editor.getPosition()
             editor.executeEdits("", [
                 {
                     range: new monaco.Range(position.lineNumber, position.column, position.lineNumber, position.column),
-                    text: `"${field}": "\${${field}}",`,
+                    text: `"${label}": "\${${value}}",`,
                     forceMoveMarkers: true,
                 },
             ])
@@ -67,7 +72,7 @@ function JsonEditor({ data = emptyJson, onChange, formFields = [] }) {
                 onChange={onChange}
             />
             <div className="form-fields p-atn">
-                <select className="btcd-paper-inp mr-2" name="formField" value={''} onChange={(ev) => handlePasteFormField(ev.target.value)}>
+                <select className="btcd-paper-inp mr-2" name="formField" value={''} onChange={(ev) => handlePasteFormField(ev)}>
                     <option value="">{__('Select Field', 'bit-integrations')}</option>
                     <optgroup label="Form Fields">
                         {
