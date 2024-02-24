@@ -8,7 +8,7 @@ namespace BitApps\BTCBI;
  * @since 1.0.0-alpha
  */
 
-use BitApps\BTCBI\Util\Request;
+
 use BitApps\BTCBI\Util\Activation;
 use BitApps\BTCBI\Util\Deactivation;
 use BitApps\BTCBI\Util\UnInstallation;
@@ -18,6 +18,7 @@ use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Providers\Hooks\HookService;
 use BitApps\BTCBI\Views\Layout;
 use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
+use BTCBI\Deps\BitApps\WPKit\Http\RequestType;
 
 final class Plugin
 {
@@ -60,7 +61,7 @@ final class Plugin
     public function init_classes()
     {
         static::update_tables();
-        if (Request::Check('admin')) {
+        if (RequestType::is('admin')) {
             (new Layout())->register();
         }
         new HookService();

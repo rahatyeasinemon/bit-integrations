@@ -5,8 +5,9 @@ namespace BitApps\BTCBI\Providers\Hooks;
 use BitApps\BTCBI\Routes\AdminAjax;
 use FilesystemIterator;
 use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
-use BitApps\BTCBI\Util\Request;
+
 use BitApps\BTCBI\Util\StoreInCache;
+use BTCBI\Deps\BitApps\WPKit\Http\RequestType;
 
 class HookService
 {
@@ -49,7 +50,7 @@ class HookService
 
         // echo('loadAppHooks');
         // die;
-        if (Request::Check('ajax') && is_readable(BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'ajax.php')) {
+        if (RequestType::is('ajax') && is_readable(BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'ajax.php')) {
             include BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'ajax.php';
         }
         if (is_readable(BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'hooks.php')) {
@@ -122,7 +123,7 @@ class HookService
             if ($dirInfo->isDir()) {
                 $task_name = basename($dirInfo);
                 $task_path = $task_dir . DIRECTORY_SEPARATOR . $task_name . DIRECTORY_SEPARATOR;
-                if (is_readable($task_path . 'Routes.php') && Request::Check('ajax') && Request::Check('admin')) {
+                if (is_readable($task_path . 'Routes.php') && RequestType::is('ajax') && RequestType::is('admin')) {
                     include $task_path . 'Routes.php';
                 }
             }
@@ -141,7 +142,7 @@ class HookService
                 $task_path = $task_dir . DIRECTORY_SEPARATOR . $task_name . DIRECTORY_SEPARATOR;
 
                 // error_log(print_r(is_readable($task_path . 'Routes.php')));
-                if (is_readable($task_path . 'Routes.php') && Request::Check('ajax') && Request::Check('admin')) {
+                if (is_readable($task_path . 'Routes.php') && RequestType::is('ajax') && RequestType::is('admin')) {
                     include $task_path . 'Routes.php';
                 }
                 if (is_readable($task_path . 'Hooks.php')) {
