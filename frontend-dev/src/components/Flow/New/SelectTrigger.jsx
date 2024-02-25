@@ -15,6 +15,7 @@ import ActionHook from '../../Triggers/ActionHook'
 import GetLogo from '../../../Utils/GetLogo'
 import EssentialBlocksHelper from '../../Triggers/TriggerHelpers/EssentialBlocksHelper'
 import SpectraHelper from '../../Triggers/TriggerHelpers/SpectraHelper'
+import CustomFormSubmission from '../../Triggers/CustomFormSubmission'
 
 export default function SelectTrigger() {
   const { isPro } = useRecoilValue($btcbi)
@@ -111,6 +112,7 @@ export default function SelectTrigger() {
               {newFlow.triggerDetail?.type === 'action_hook' && flowStep === 1 && <ActionHook />}
               {newFlow.triggerDetail?.type === 'spectra' && flowStep === 1 && <SpectraHelper />}
               {newFlow.triggerDetail?.type === 'essentialBlocks' && flowStep === 1 && <EssentialBlocksHelper />}
+              {newFlow.triggerDetail?.type === 'custom_form_submission' && flowStep === 1 && <CustomFormSubmission />}
             </div>
           </>
         ) : (
