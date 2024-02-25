@@ -2,10 +2,12 @@
 
 namespace BitCode\FI\Triggers\Breakdance;
 
+use WP_Error;
 use BitCode\FI\Flow\Flow;
 use Breakdance\Forms\Actions\Action;
 use Breakdance\Forms\Actions\ActionProvider;
 use BitCode\FI\Triggers\Breakdance\BreakdanceSubmitData;
+
 
 final class BreakdanceController
 {
@@ -20,19 +22,27 @@ final class BreakdanceController
             'title' => 'Breakdance is the platform web creators choose to build professional WordPress websites, grow their skills, and build their business. Start for free today!',
             'slug' => $plugin_path,
             'pro' => $plugin_path,
-            'type' => 'form',
+            'type' => 'custom_form_submission',
             'is_active' => is_plugin_active($plugin_path),
             'activation_url' => wp_nonce_url(self_admin_url('plugins.php?action=activate&amp;plugin=' . $plugin_path . '&amp;plugin_status=all&amp;paged=1&amp;s'), 'activate-plugin_' . $plugin_path),
             'install_url' => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
-            'list' => [
-                'action' => 'breakdance/get',
-                'method' => 'get',
-            ],
-            'fields' => [
-                'action' => 'breakdance/get/form',
+            // 'list' => [
+            //     'action' => 'breakdance/get',
+            //     'method' => 'get',
+            // ],
+            // 'fields' => [
+            //     'action' => 'breakdance/get/form',
+            //     'method' => 'post',
+            //     'data' => ['id']
+            // ],
+            'fetch' => [
+                'action' => 'breakdance/test',
                 'method' => 'post',
-                'data' => ['id']
             ],
+            'fetch_remove' => [
+                'action' => 'breakdance/test/remove',
+                'method' => 'post',
+            ]
         ];
     }
 
@@ -52,42 +62,71 @@ final class BreakdanceController
         }
     }
 
-    /**
-     * @return string
-     */
-    public static function name()
+    public function getTestData()
     {
-        return 'Bit Integrations';
+        $testData = get_option('breakdance_test');
+
+        if ($testData === false) {
+            update_option('breakdance_test', []);
+        }
+        if (!$testData || empty($testData)) {
+            wp_send_json_error(new WP_Error('breakdance_test', __('Breakdance data is empty', 'bit-integrations')));
+        }
+        wp_send_json_success(['breakdance' => $testData]);
     }
 
-    /**
-     * @return string
-     */
-    public static function slug()
+    public function removeTestData($data)
     {
-        return 'bit-integrations-pro';
-    }
-
-    /**
-     * @param FormData $form
-     * @param FormSettings $settings
-     * @param FormExtra $extra
-     * @return ActionSuccess|ActionError|array<array-key, ActionSuccess|ActionError>
-     */
-    public function run($form, $settings, $extra)
-    {
-        $reOrganizeId = "{$extra['formId']}-{$extra['postId']}";
-        $flows = Flow::exists('Breakdance', $reOrganizeId);
-        if (!$flows) {
-            return;
+        if (is_object($data) && property_exists($data, 'reset') && $data->reset) {
+            $testData = update_option('breakdance_test', []);
+        } else {
+            $testData = delete_option('breakdance_test');
         }
 
-        $data = $extra['fields'];
-
-        Flow::execute('Breakdance', $reOrganizeId, $data, $flows);
-
-        return ['type' => 'success'];
+        if (!$testData) {
+            wp_send_json_error(new WP_Error('breakdance_test', __('Failed to remove test data', 'bit-integrations')));
+        }
+        wp_send_json_success(__('breakdance test data removed successfully', 'bit-integrations'));
     }
+
+    // /**
+    //  * @return string
+    //  */
+    // public static function name()
+    // {
+    //     return 'Bit Integrations';
+    // }
+
+    // /**
+    //  * @return string
+    //  */
+    // public static function slug()
+    // {
+    //     return 'bit-integrations-pro';
+    // }
+
+    // /**
+    //  * @param FormData $form
+    //  * @param FormSettings $settings
+    //  * @param FormExtra $extra
+    //  * @return ActionSuccess|ActionError|array<array-key, ActionSuccess|ActionError>
+    //  */
+    // public function run($form, $settings, $extra)
+    // {
+    //     error_log(print_r(['name' => 'Controller', 'form' => $form, 'settings' => $settings, 'extra' => $extra], true));
+
+    //     $reOrganizeId = "{$extra['formId']}-{$extra['postId']}";
+    //     $flows = Flow::exists('Breakdance', $reOrganizeId);
+    //     if (!$flows) {
+    //         return;
+    //     }
+
+    //     $data = $extra['fields'];
+
+    //     Flow::execute('Breakdance', $reOrganizeId, $data, $flows);
+
+    //     return ['type' => 'success'];
+    // }
 
     public function getAllForms()
     {

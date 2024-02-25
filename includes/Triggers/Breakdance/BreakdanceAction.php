@@ -29,6 +29,8 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
          */
         public function run($form, $settings, $extra)
         {
+            error_log(print_r(['name' => 'Action', 'form' => $form, 'settings' => $settings, 'extra' => $extra], true));
+
             $reOrganizeId = "{$extra['formId']}-{$extra['postId']}";
             $flows = Flow::exists('Breakdance', $reOrganizeId);
             if (!$flows) {
