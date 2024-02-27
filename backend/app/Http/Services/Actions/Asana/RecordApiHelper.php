@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Asana;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -59,7 +59,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . "tasks";
 
-        $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $requestParams]), $this->defaultHeader);
+        $response = Http::request($apiEndpoint, 'Post', json_encode(['data' => $requestParams]), $this->defaultHeader);
         if (!isset($this->integrationDetails->selectedSections)) {
             return $response;
         } else {
@@ -73,7 +73,7 @@ class RecordApiHelper
     {
         $apiEndpoint = $this->apiUrl . "sections/" . $sectionId . "/addTask";
         $requestParams['task'] = $taskId;
-        $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $requestParams]), $this->defaultHeader);
+        $response = Http::request($apiEndpoint, 'Post', json_encode(['data' => $requestParams]), $this->defaultHeader);
         return $response;
     }
     public function generateReqDataFromFieldMap($data, $fieldMap)

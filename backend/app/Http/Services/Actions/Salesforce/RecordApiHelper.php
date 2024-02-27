@@ -4,7 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Salesforce;
 
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Util\DateTimeHelper;
 
 /**
@@ -42,25 +42,25 @@ class RecordApiHelper
     public function insertContact($finalData)
     {
         $apiEndpoint = $this->_apiDomain . '/services/data/v37.0/sobjects/Contact';
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->_defaultHeader);
     }
 
     public function insertLead($finalData)
     {
         $apiEndpoint = $this->_apiDomain . '/services/data/v37.0/sobjects/Lead';
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->_defaultHeader);
     }
 
     public function createAccount($finalData)
     {
         $apiEndpoint = $this->_apiDomain . '/services/data/v37.0/sobjects/Account';
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->_defaultHeader);
     }
 
     public function createCampaign($finalData)
     {
         $apiEndpoint = $this->_apiDomain . '/services/data/v37.0/sobjects/Campaign';
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->_defaultHeader);
     }
 
     public function insertCampaignMember($campaignId, $leadId, $contactId, $statusId)
@@ -72,7 +72,7 @@ class RecordApiHelper
             'ContactId' => $contactId,
             'Status' => $statusId
         ];
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->_defaultHeader);
     }
 
     public function createTask($contactId, $accountId, $subjectId, $priorityId, $statusId)
@@ -85,7 +85,7 @@ class RecordApiHelper
             'WhatId' => $accountId,
             'Status' => $statusId
         ];
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->_defaultHeader);
     }
 
     public function createOpportunity($finalData, $opportunityTypeId, $opportunityStageId, $opportunityLeadSourceId, $accountId, $campaignId)
@@ -96,7 +96,7 @@ class RecordApiHelper
         $finalData['Type'] = $opportunityTypeId;
         $finalData['StageName'] = $opportunityStageId;
         $finalData['LeadSource'] = $opportunityLeadSourceId;
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->_defaultHeader);
     }
 
     public function createEvent($finalData, $contactId, $accountId, $eventSubjectId)
@@ -105,7 +105,7 @@ class RecordApiHelper
         $finalData['WhoId'] = $contactId;
         $finalData['WhatId'] = $accountId;
         $finalData['Subject'] = $eventSubjectId;
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->_defaultHeader);
     }
 
     public function createCase($finalData, $contactId, $accountId, $caseStatusId, $caseOriginId, $casePriorityId, $potentialLiabilityId, $slaViolationId)
@@ -118,7 +118,7 @@ class RecordApiHelper
         $finalData['Priority'] = $casePriorityId;
         $finalData['PotentialLiability__c'] = $potentialLiabilityId;
         $finalData['SLAViolation__c'] = $slaViolationId;
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->_defaultHeader);
     }
 
     public function execute(

@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Demio;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Demio integration
@@ -43,7 +43,7 @@ class DemioController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key, $fieldsRequestParams->api_secret);
         $apiEndpoint  = $this->_apiEndpoint . "/ping";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if ($response->pong) {
             wp_send_json_success('Authentication successful', 200);
@@ -57,7 +57,7 @@ class DemioController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key, $fieldsRequestParams->api_secret);
         $apiEndpoint  = $this->_apiEndpoint . "/events";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->errors)) {
             $events = [];
@@ -81,7 +81,7 @@ class DemioController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key, $fieldsRequestParams->api_secret, $fieldsRequestParams->event_id);
         $apiEndpoint  = $this->_apiEndpoint . "/event/{$fieldsRequestParams->event_id}";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->errors)) {
             $sessions = [];

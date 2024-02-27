@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Dropbox;
 
 use BitApps\BTCBI\Http\Services\Actions\Dropbox\RecordApiHelper as DropboxRecordApiHelper;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
@@ -32,7 +32,7 @@ class DropboxController
         ];
 
         $apiEndpoint = self::$apiBaseUri . '/oauth2/token';
-        $apiResponse = HttpHelper::post($apiEndpoint, $body);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $body);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
@@ -87,7 +87,7 @@ class DropboxController
         $options = json_encode($options);
 
         $apiEndpoint = self::$apiBaseUri . '/2/files/list_folder';
-        $apiResponse = HttpHelper::post($apiEndpoint, $options, $headers);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $options, $headers);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }
@@ -123,7 +123,7 @@ class DropboxController
         ];
 
         $apiEndpoint = self::$apiBaseUri . '/oauth2/token';
-        $apiResponse = HttpHelper::post($apiEndpoint, $body);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $body);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

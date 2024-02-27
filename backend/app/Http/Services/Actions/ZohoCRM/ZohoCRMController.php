@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ZohoCRM;
 
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\ZohoCRM\TagApiHelper;
 use BitApps\BTCBI\Http\Services\Actions\ZohoCRM\MetaDataApiHelper;
 use BitApps\BTCBI\Http\Services\Actions\ZohoCRM\RecordApiHelper;
@@ -61,7 +61,7 @@ final class ZohoCRMController
             "redirect_uri" => \urldecode($requestsParams->redirectURI),
             "code" => $requestsParams->code
         );
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
@@ -122,7 +122,7 @@ final class ZohoCRMController
             $isBitFiLicActive = false;
         }
         if ($isBitFiLicActive) {
-            $modulesMetaResponse = HttpHelper::get($modulesMetaApiEndpoint, null, $authorizationHeader);
+            $modulesMetaResponse = Http::request($modulesMetaApiEndpoint, 'Get', null, $authorizationHeader);
             if (!is_wp_error($modulesMetaResponse) && (empty($modulesMetaResponse->status) || (!empty($modulesMetaResponse->status) && $modulesMetaResponse->status !== 'error'))) {
                 $retriveModuleData = $modulesMetaResponse->modules;
 
@@ -191,7 +191,7 @@ final class ZohoCRMController
         $layoutsMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/crm/v2.1/settings/layouts";
         $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $requiredParams['module'] = $queryParams->module;
-        $layoutsMetaResponse = HttpHelper::get($layoutsMetaApiEndpoint, $requiredParams, $authorizationHeader);
+        $layoutsMetaResponse = Http::request($layoutsMetaApiEndpoint, 'Get', $requiredParams, $authorizationHeader);
         if (!is_wp_error($layoutsMetaResponse) && (empty($layoutsMetaResponse->status) || (!empty($layoutsMetaResponse->status) && $layoutsMetaResponse->status !== 'error'))) {
             $retriveLayoutsData = $layoutsMetaResponse->layouts;
             $layouts = [];
@@ -315,7 +315,7 @@ final class ZohoCRMController
             "refresh_token" => $tokenDetails->refresh_token,
         );
 
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }
@@ -500,7 +500,7 @@ final class ZohoCRMController
             if ($usersResponse instanceof \stdClass && !empty($usersResponse->info->more_records) && $usersResponse->info->more_records) {
                 $requiredParams["page"] = intval($usersResponse->info->page) + 1;
             }
-            $usersResponse = HttpHelper::get($usersApiEndpoint, $requiredParams, $authorizationHeader);
+            $usersResponse = Http::request($usersApiEndpoint, 'Get', $requiredParams, $authorizationHeader);
         } while ($usersResponse == null || (!empty($usersResponse->info->more_records) && $usersResponse->info->more_records));
         if (empty($requiredParams) && !is_wp_error($usersResponse)) {
             $retrivedUsersData = $usersResponse->users;

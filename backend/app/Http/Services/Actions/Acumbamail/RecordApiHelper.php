@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Acumbamail;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -25,7 +25,7 @@ class RecordApiHelper
 
     public function addSubscriber($auth_token, $listId, $finalData, $doubleOptin)
     {
-        $apiEndpoints = 'https://acumbamail.com/api/1/addSubscriber/';
+        $apiEndpoint = 'https://acumbamail.com/api/1/addSubscriber/';
         $header = [
             'Content-Type' => 'application/x-www-form-urlencoded'
         ];
@@ -39,12 +39,12 @@ class RecordApiHelper
             'double_optin' => $doubleOptin ? 1 : 0,
 
         ];
-        return HttpHelper::post($apiEndpoints, $requestParams, $header);
+        return Http::request($apiEndpoint, 'Post', $requestParams, $header);
     }
 
     public function deleteSubscriber($auth_token, $listId, $finalData)
     {
-        $apiEndpoints = 'https://acumbamail.com/api/1/deleteSubscriber/';
+        $apiEndpoint = 'https://acumbamail.com/api/1/deleteSubscriber/';
 
         $header = [
             'Content-Type' => 'application/x-www-form-urlencoded'
@@ -56,7 +56,7 @@ class RecordApiHelper
             'email' => $finalData['email'],
         ];
 
-        return HttpHelper::post($apiEndpoints, $requestParams, $header);
+        return Http::request($apiEndpoint, 'Post', $requestParams, $header);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

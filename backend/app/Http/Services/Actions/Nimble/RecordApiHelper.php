@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Nimble;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -90,7 +90,7 @@ class RecordApiHelper
         ];
 
         $apiEndpoint = $this->apiUrl . "/contact";
-        return HttpHelper::post($apiEndpoint, json_encode($dataFinal), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($dataFinal), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

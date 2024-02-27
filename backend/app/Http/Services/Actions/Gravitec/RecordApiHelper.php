@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Gravitec;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -65,7 +65,7 @@ class RecordApiHelper
 
         $requestData['payload'] = (object) $payloadData;
         $apiEndpoint = "https://uapi.gravitec.net/api/v3/push";
-        return HttpHelper::post($apiEndpoint, json_encode($requestData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($requestData), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

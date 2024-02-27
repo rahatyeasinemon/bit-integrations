@@ -6,7 +6,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoCRM;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Tags in Zoho CRM
@@ -39,7 +39,7 @@ final class TagApiHelper
     {
         $getTagsEndpoint = "{$this->_apiDomain}/settings/tags";
 
-        $tagListResponse = HttpHelper::get($getTagsEndpoint, ['module' => $this->_module], $this->_defaultHeader);
+        $tagListResponse = Http::request($getTagsEndpoint, 'Get', ['module' => $this->_module], $this->_defaultHeader);
         if (is_wp_error($tagListResponse)) {
             return $tagListResponse;
         }
@@ -67,7 +67,7 @@ final class TagApiHelper
     {
         $addTagsEndpoint = "{$this->_apiDomain}/{$this->_module}/{$recordID}/actions/add_tags";
 
-        $addTagsResponse = HttpHelper::post($addTagsEndpoint, ['tag_names' => $tagNames], $this->_defaultHeader);
+        $addTagsResponse = Http::request($addTagsEndpoint, 'Post', ['tag_names' => $tagNames], $this->_defaultHeader);
 
         return $addTagsResponse;
     }

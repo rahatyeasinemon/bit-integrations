@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Smaily;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -45,7 +45,7 @@ class RecordApiHelper
         $requestParams['is_unsubscribed'] = $this->_integrationDetails->actions->unsubscribe ? 1 : 0;
         $this->_requestStoringTypes       = $this->isExist($apiEndpoint, $finalData['email']) ? 'updated' : 'created';
 
-        return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->_defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($requestParams), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -88,7 +88,7 @@ class RecordApiHelper
     public function isExist($apiEndpoint, $email)
     {
         $apiEndpoint = "$apiEndpoint?email=$email";
-        $response    = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response    = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         return isset($response->email) ? true : false;
     }

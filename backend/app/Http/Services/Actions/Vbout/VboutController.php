@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Vbout;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Vbout integration
@@ -27,9 +27,9 @@ class VboutController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'app/me.json?key=' . $requestParams->auth_token;
+        $apiEndpoint = $this->baseUrl . 'app/me.json?key=' . $requestParams->auth_token;
 
-        $response = HttpHelper::post($apiEndpoints, null);
+        $response = Http::request($apiEndpoint, 'Post', null);
         if ($response->response->header->status !== "ok") {
             wp_send_json_error(
                 __(
@@ -53,9 +53,9 @@ class VboutController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'emailmarketing/getlists.json?key=' . $requestParams->auth_token;
+        $apiEndpoint = $this->baseUrl . 'emailmarketing/getlists.json?key=' . $requestParams->auth_token;
 
-        $response = HttpHelper::post($apiEndpoints, null);
+        $response = Http::request($apiEndpoint, 'Post', null);
 
         $formattedResponse = [];
         if ($response->response->header->status !== "ok") {
@@ -88,9 +88,9 @@ class VboutController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'emailmarketing/getlist.json?key=' . $requestParams->auth_token . '&id=' . $requestParams->list_id;
+        $apiEndpoint = $this->baseUrl . 'emailmarketing/getlist.json?key=' . $requestParams->auth_token . '&id=' . $requestParams->list_id;
 
-        $response = HttpHelper::post($apiEndpoints, null);
+        $response = Http::request($apiEndpoint, 'Post', null);
 
         $formattedResponse = [];
         if ($response->response->header->status !== "ok") {

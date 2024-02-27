@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\BitForm;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -60,7 +60,7 @@ class RecordApiHelper
 
         $apiEndpoint = $domainName . '/wp-json/bitform/v1/entry/' . $formId;
 
-        return HttpHelper::post($apiEndpoint, $finalData, $authorizationHeader);
+        return Http::request($apiEndpoint, 'Post', $finalData, $authorizationHeader);
 
     }
 

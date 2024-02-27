@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\SystemeIO;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for SystemeIO integration
@@ -42,7 +42,7 @@ class SystemeIOController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key);
         $apiEndpoint  = $this->_apiEndpoint . "/contacts";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->items)) {
             wp_send_json_success('Authentication successful', 200);
@@ -56,7 +56,7 @@ class SystemeIOController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key);
         $apiEndpoint  = $this->_apiEndpoint . "/tags";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->errors)) {
             $tags = [];

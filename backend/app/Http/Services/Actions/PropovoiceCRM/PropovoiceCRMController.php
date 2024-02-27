@@ -4,7 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\PropovoiceCRM;
 
 use WP_Error;
 use BitApps\BTCBI\Util\IpTool;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\PropovoiceCRM\RecordApiHelper;
 
 class PropovoiceCRMController

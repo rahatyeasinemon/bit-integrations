@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoAnalytics;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Util\FieldValueHandler;
 use BitApps\BTCBI\Util\ApiResponse as UtilApiResponse;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
@@ -33,14 +33,14 @@ class RecordApiHelper
     public function insertRecord($workspace, $table, $ownerEmail, $dataCenter, $data)
     {
         $insertRecordEndpoint = "https://analyticsapi.zoho.{$dataCenter}/api/{$ownerEmail}/{$workspace}/{$table}?ZOHO_ACTION=ADDROW&ZOHO_OUTPUT_FORMAT=JSON&ZOHO_ERROR_FORMAT=JSON&ZOHO_API_VERSION=1.0";
-        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     public function updateRecord($workspace, $table, $ownerEmail, $dataCenter, $criteria, $data)
     {
         $updateRecordEndpoint = "https://analyticsapi.zoho.{$dataCenter}/api/{$ownerEmail}/{$workspace}/{$table}?ZOHO_ACTION=UPDATE&ZOHO_OUTPUT_FORMAT=JSON&ZOHO_ERROR_FORMAT=JSON&ZOHO_API_VERSION=1.0&ZOHO_CRITERIA={$criteria}";
 
-        return HttpHelper::post($updateRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($updateRecordEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     public function shareTable($dataCenter, $ownerEmail, $workspace, $table, $data)
@@ -49,7 +49,7 @@ class RecordApiHelper
 
         $shareTableEndpoint .= build_query($data);
 
-        return HttpHelper::post($shareTableEndpoint, null, $this->_defaultHeader);
+        return Http::request($shareTableEndpoint, 'Post', null, $this->_defaultHeader);
     }
 
     public function execute($workspace, $table, $ownerEmail, $dataCenter, $actions, $defaultConf, $fieldValues, $fieldMap)

@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\ClinchPad;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -57,7 +57,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . "/organizations";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        return $response = Http::request($apiEndpoint, 'Post', json_encode($requestParams), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -88,7 +88,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . "/contacts";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        return $response = Http::request($apiEndpoint, 'Post', json_encode($requestParams), $this->defaultHeader);
     }
 
     public function addLead($finalData)
@@ -124,7 +124,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . "/leads";
 
-        $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        $response = Http::request($apiEndpoint, 'Post', json_encode($requestParams), $this->defaultHeader);
         $this->addContactToLead($response->_id, $contactId);
     }
 
@@ -132,7 +132,7 @@ class RecordApiHelper
     {
         $apiEndpoint = $this->apiUrl . "/leads/{$leadId}/contacts/{$contactId}";
 
-        return $response = HttpHelper::post($apiEndpoint, $this->defaultHeader);
+        return $response = Http::request($apiEndpoint, 'Post', $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\MailChimp;
 
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -33,19 +33,19 @@ class RecordApiHelper
     public function insertRecord($listId, $data)
     {
         $insertRecordEndpoint = $this->_apiEndPoint() . "/lists/{$listId}/members";
-        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     public function updateRecord($listId, $contactId, $data)
     {
         $updateRecordEndpoint = $this->_apiEndPoint() . "/lists/{$listId}/members/{$contactId}";
-        return HttpHelper::request($updateRecordEndpoint, 'PUT', $data, $this->_defaultHeader);
+        return Http::request($updateRecordEndpoint, 'PUT', $data, $this->_defaultHeader);
     }
 
     public function existContact($listId, $queryParam)
     {
         $existSearchEnpoint = $this->_apiEndPoint() . "/search-members?query={$queryParam}&list_id={$listId}";
-        return HttpHelper::get($existSearchEnpoint, null, $this->_defaultHeader);
+        return Http::request($existSearchEnpoint, 'Get', null, $this->_defaultHeader);
     }
 
     public function execute($listId, $tags, $defaultConf, $fieldValues, $fieldMap, $actions, $addressFields)

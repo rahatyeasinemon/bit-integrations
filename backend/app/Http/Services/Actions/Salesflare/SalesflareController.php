@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Salesflare;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Salesflare integration
@@ -45,7 +45,7 @@ class SalesflareController
         $apiKey         = $fieldsRequestParams->api_key;
         $apiEndpoint    = $this->setApiEndpoint() . "/accounts";
         $headers        = $this->setHeaders($apiKey);
-        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+        $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->error)) {
             wp_send_json_success('Authentication successful', 200);
@@ -60,7 +60,7 @@ class SalesflareController
         $apiKey         = $fieldsRequestParams->api_key;
         $apiEndpoint    = $this->setApiEndpoint() . "/customfields/{$fieldsRequestParams->action_name}";
         $headers        = $this->setHeaders($apiKey);
-        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+        $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->error)) {
             $fieldMap = [];
@@ -87,7 +87,7 @@ class SalesflareController
         $apiKey         = $fieldsRequestParams->api_key;
         $apiEndpoint    = $this->setApiEndpoint() . "/tags";
         $headers        = $this->setHeaders($apiKey);
-        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+        $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->error)) {
             $tags = [];
@@ -107,7 +107,7 @@ class SalesflareController
         $apiKey         = $fieldsRequestParams->api_key;
         $apiEndpoint    = $this->setApiEndpoint() . "/accounts";
         $headers        = $this->setHeaders($apiKey);
-        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+        $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->error)) {
             $accounts = [];
@@ -133,7 +133,7 @@ class SalesflareController
         $apiKey         = $fieldsRequestParams->api_key;
         $apiEndpoint    = $this->setApiEndpoint() . "/pipelines";
         $headers        = $this->setHeaders($apiKey);
-        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+        $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->error)) {
             $pipelines = [];

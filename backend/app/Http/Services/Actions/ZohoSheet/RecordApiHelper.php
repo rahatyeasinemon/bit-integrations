@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoSheet;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 class RecordApiHelper
@@ -35,7 +35,7 @@ class RecordApiHelper
 
         $apiEndpoint = "https://sheet.zoho.{$this->dataCenter}/api/v2/{$this->workbook}?method=worksheet.records.add&worksheet_name={$this->worksheet}&header_row={$this->headerRow}&json_data={$data}";
 
-        return HttpHelper::post($apiEndpoint, null, $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', null, $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

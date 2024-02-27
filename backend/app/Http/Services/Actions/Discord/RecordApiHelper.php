@@ -6,9 +6,9 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Discord;
 
-use BitApps\BTCBI\Util\HttpHelper;
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -37,7 +37,8 @@ class RecordApiHelper
         ];
 
         $insertRecordEndpoint = $this->_apiEndPoint . '/channels/' . $channel_id . '/messages';
-        return HttpHelper::post($insertRecordEndpoint, $data, $header);
+
+        return Http::request($insertRecordEndpoint, 'Post', $data, $header);
 
     }
 

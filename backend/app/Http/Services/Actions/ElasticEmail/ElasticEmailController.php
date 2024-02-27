@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ElasticEmail;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 use BitApps\BTCBI\Http\Services\Actions\ElasticEmail\RecordApiHelper;
 
@@ -34,7 +34,7 @@ class ElasticEmailController
             'X-ElasticEmail-ApiKey' => $apiKey,
             'Accept' => '*/*',
         ];
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
         if (is_wp_error($apiResponse) || !is_null($apiResponse->Error)) {
             wp_send_json_error(
                 empty($apiResponse->code) ? 'Unknown' : $apiResponse->Error,
@@ -61,7 +61,7 @@ class ElasticEmailController
             'X-ElasticEmail-ApiKey' => $apiKey,
             'Accept' => '*/*',
         ];
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
         $data = [];
         foreach ($apiResponse as $list) {
             $data[] = (object) [

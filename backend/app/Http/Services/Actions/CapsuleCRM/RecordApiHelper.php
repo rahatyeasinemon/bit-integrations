@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\CapsuleCRM;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -86,7 +86,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . "/parties";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode(['party' => $requestParams]), $this->defaultHeader);
+        return $response = Http::request($apiEndpoint, 'Post', json_encode(['party' => $requestParams]), $this->defaultHeader);
     }
 
     public function addPerson($finalData)
@@ -145,7 +145,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . "/parties";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode(['party' => $requestParams]), $this->defaultHeader);
+        return $response = Http::request($apiEndpoint, 'Post', json_encode(['party' => $requestParams]), $this->defaultHeader);
     }
 
     public function addOpportunity($finalData)
@@ -199,7 +199,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . "/opportunities";
 
-        return  $response = HttpHelper::post($apiEndpoint, json_encode(['opportunity' => $requestParams]), $this->defaultHeader);
+        return  $response = Http::request($apiEndpoint, 'Post', json_encode(['opportunity' => $requestParams]), $this->defaultHeader);
     }
 
     public function addProject($finalData)
@@ -244,7 +244,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . "/kases";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode(['kase' => $requestParams]), $this->defaultHeader);
+        return $response = Http::request($apiEndpoint, 'Post', json_encode(['kase' => $requestParams]), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

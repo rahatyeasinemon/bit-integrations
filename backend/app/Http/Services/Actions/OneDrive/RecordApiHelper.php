@@ -2,7 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\OneDrive;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 class RecordApiHelper

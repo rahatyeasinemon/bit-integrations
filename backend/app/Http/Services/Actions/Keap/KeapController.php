@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Keap;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 
 /**
@@ -52,7 +52,7 @@ class KeapController
 
         $authorizationHeader["Authorization"] = 'Bearer ' . $tokenDetails->access_token;
 
-        $tagListApiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $tagListApiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
         $tags   = [];
 
 
@@ -107,7 +107,7 @@ class KeapController
             'grant_type' => 'authorization_code',
             'redirect_uri' => $requestsParams->redirectURI
         );
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams, $authorizationHeader);
 
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
@@ -143,7 +143,7 @@ class KeapController
             'grant_type' => "refresh_token",
             'refresh_token' => $requestsParams->tokenDetails->refresh_token,
         );
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams, $authorizationHeader);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

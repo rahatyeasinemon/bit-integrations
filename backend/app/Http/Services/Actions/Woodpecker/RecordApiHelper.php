@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Woodpecker;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -57,7 +57,7 @@ class RecordApiHelper
         $requestData['update']      = $actions->update ? true : false;
         $requestData['prospects']   = [(object) $finalData];
         $this->type                 = 'Prospects';
-        return HttpHelper::post($apiEndpoint, json_encode($requestData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($requestData), $this->defaultHeader);
     }
 
     public function addCompany($finalData)
@@ -69,7 +69,7 @@ class RecordApiHelper
         $this->type     = 'Company';
         $this->typeName = 'Company created';
         $apiEndpoint    = $this->apiUrl . "/agency/companies/add";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\ZagoMail;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -39,7 +39,7 @@ class RecordApiHelper
 
         $insertRecordEndpoint = "{$this->_apiEndpoint}lists/subscriber-create?list_uid={$listId}";
 
-        $res = HttpHelper::post($insertRecordEndpoint, json_encode($requestParams), $this->_defaultHeader);
+        $res = Http::request($insertRecordEndpoint, 'Post', json_encode($requestParams), $this->_defaultHeader);
 
         return $res;
     }
@@ -55,7 +55,7 @@ class RecordApiHelper
 
         $insertRecordEndpoint = "{$this->_apiEndpoint}lists/subscriber-update?list_uid={$listId}&subscriber_uid={$subscriberId}";
 
-        $res = HttpHelper::post($insertRecordEndpoint, json_encode($requestParams), $this->_defaultHeader);
+        $res = Http::request($insertRecordEndpoint, 'Post', json_encode($requestParams), $this->_defaultHeader);
 
         return $res;
     }
@@ -68,7 +68,7 @@ class RecordApiHelper
         foreach ($tags as $tagId) {
             $tagEndPoint = "{$this->_apiEndpoint}lists/add-tag?ztag_id={$tagId}&subscriber_uid={$subscriberId}&list_uid={$listId}";
 
-            $res = HttpHelper::post($tagEndPoint, json_encode($requestParams), $this->_defaultHeader);
+            $res = Http::request($tagEndPoint, 'Post', json_encode($requestParams), $this->_defaultHeader);
         }
     }
 
@@ -83,7 +83,7 @@ class RecordApiHelper
 
         $searchEndPoint = "{$this->_apiEndpoint}lists/search-by-email?list_uid={$listId}";
 
-        return $res = HttpHelper::post($searchEndPoint, json_encode($body), $this->_defaultHeader);
+        return $res = Http::request($searchEndPoint, 'Post', json_encode($body), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

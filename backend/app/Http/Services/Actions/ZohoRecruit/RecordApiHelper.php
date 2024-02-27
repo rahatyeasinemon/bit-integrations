@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoRecruit;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Util\DateTimeHelper;
 use BitApps\BTCBI\Util\FieldValueHandler;
 use BitApps\BTCBI\Util\ApiResponse as UtilApiResponse;
@@ -34,7 +34,7 @@ class RecordApiHelper
     public function insertRecord($module, $data)
     {
         $insertRecordEndpoint = "https://recruit.zoho.{$this->_dataCenter}/recruit/private/json/{$module}/addRecords";
-        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     public function execute($defaultConf, $module, $fieldValues, $fieldMap, $actions, $required, $fileMap)

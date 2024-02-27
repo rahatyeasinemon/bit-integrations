@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Selzy;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -73,16 +73,16 @@ class RecordApiHelper
           'Content-Type' => 'application/json'
         ];
 
-        return HttpHelper::post($apiEndpoint, null, $headers);
+        return Http::request($apiEndpoint, 'Post', null, $headers);
     }
 
     public function unsubscribe($authKey, $listIds, $formData)
     {
-        $apiEndpoints = "{$this->baseUrl}exclude?format=json&api_key={$authKey}&list_ids={$listIds}&contact_type=email&contact={$formData->email}";
+        $apiEndpoint = "{$this->baseUrl}exclude?format=json&api_key={$authKey}&list_ids={$listIds}&contact_type=email&contact={$formData->email}";
         $headers = [
           'Content-Type' => 'application/json'
         ];
-        return HttpHelper::post($apiEndpoints, null, $headers);
+        return Http::request($apiEndpoint, 'Post', null, $headers);
     }
 
     public function execute(

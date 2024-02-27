@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\PerfexCRM;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for PerfexCRM integration
@@ -46,7 +46,7 @@ class PerfexCRMController
         $apiToken      = $fieldsRequestParams->api_token;
         $apiEndpoint   = $this->setApiEndpoint() . "/staffs";
         $headers       = $this->setHeaders($apiToken);
-        $response      = HttpHelper::get($apiEndpoint, null, $headers);
+        $response      = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
             wp_send_json_error('Please enter valid API Token or Access Api URL', 400);
@@ -82,7 +82,7 @@ class PerfexCRMController
 
         $apiEndpoint    = $this->setApiEndpoint() . "/custom_fields/{$actionName}";
         $headers        = $this->setHeaders($apiToken);
-        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+        $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
             wp_send_json_error('Custom Fields fetching failed', 400);
@@ -109,7 +109,7 @@ class PerfexCRMController
         $apiToken       = $fieldsRequestParams->api_token;
         $apiEndpoint    = $this->setApiEndpoint() . "/customers";
         $headers        = $this->setHeaders($apiToken);
-        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+        $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
             wp_send_json_error('Customer fetching failed', 400);
@@ -135,7 +135,7 @@ class PerfexCRMController
         $apiToken       = $fieldsRequestParams->api_token;
         $apiEndpoint    = $this->setApiEndpoint() . "/leads";
         $headers        = $this->setHeaders($apiToken);
-        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+        $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
             wp_send_json_error('Lead fetching failed', 400);
@@ -161,7 +161,7 @@ class PerfexCRMController
         $apiToken       = $fieldsRequestParams->api_token;
         $apiEndpoint    = $this->setApiEndpoint() . "/staffs";
         $headers        = $this->setHeaders($apiToken);
-        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+        $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
             wp_send_json_error('Project Member fetching failed', 400);

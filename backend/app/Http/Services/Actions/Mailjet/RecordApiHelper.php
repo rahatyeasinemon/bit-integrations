@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Mailjet;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -31,7 +31,7 @@ class RecordApiHelper
 
     public function addSubscriber($selectedLists, $finalData)
     {
-        $apiEndpoints = 'https://api.mailjet.com/v3/REST/contact/managemanycontacts';
+        $apiEndpoint = 'https://api.mailjet.com/v3/REST/contact/managemanycontacts';
 
         if (empty($finalData['Email'])) {
             return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
@@ -66,7 +66,7 @@ class RecordApiHelper
         $requestParams['Contacts'][]    = (object) $contacts;
         $requestParams['ContactsLists'] = $contactsLists;
 
-        $response = HttpHelper::post($apiEndpoints, json_encode($requestParams), $this->_defaultHeader);
+        $response = Http::request($apiEndpoint, 'Post', json_encode($requestParams), $this->_defaultHeader);
         return $this->jobMonitoring($response);
     }
 
@@ -103,7 +103,7 @@ class RecordApiHelper
     {
         $jobId       = $response->Data[0]->JobID;
         $apiEndpoint = 'https://api.mailjet.com/v3/REST/contact/managemanycontacts/' . $jobId;
-        $response    = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response    = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         return $response->Data[0]->Error;
     }
@@ -112,7 +112,7 @@ class RecordApiHelper
     {
         $encodedEmail = urlencode($email);
         $apiEndpoint  = 'https://api.mailjet.com/v3/REST/contact/' . $encodedEmail;
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         return isset($response->Data) ? 'updated' : 'created';
     }

@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Airtable;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -58,7 +58,7 @@ class RecordApiHelper
             'fields' => (object) $fields
         ];
 
-        return HttpHelper::post($apiEndpoint, json_encode($data), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($data), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

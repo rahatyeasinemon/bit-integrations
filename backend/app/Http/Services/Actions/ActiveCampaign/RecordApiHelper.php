@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ActiveCampaign;
 
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Record insert,update, exist
@@ -30,7 +30,7 @@ class RecordApiHelper
     public function storeOrModifyRecord($method, $data)
     {
         $insertRecordEndpoint = "{$this->_apiEndpoint}/{$method}";
-        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     public function updateRecord($id, $data, $existContact)
@@ -43,13 +43,13 @@ class RecordApiHelper
         }
 
         $updateRecordEndpoint = "{$this->_apiEndpoint}/contacts/{$id}";
-        return HttpHelper::request($updateRecordEndpoint, 'PUT', json_encode($data), $this->_defaultHeader);
+        return Http::request($updateRecordEndpoint, 'PUT', json_encode($data), $this->_defaultHeader);
     }
 
     private function existContact($email)
     {
         $searchEndPoint = "{$this->_apiEndpoint}/contacts?email={$email}";
-        return HttpHelper::get($searchEndPoint, null, $this->_defaultHeader);
+        return Http::request($searchEndPoint, 'Get', null, $this->_defaultHeader);
     }
 
     public function execute($integrationDetails, $fieldValues, $fieldMap, $actions, $listId, $tags)

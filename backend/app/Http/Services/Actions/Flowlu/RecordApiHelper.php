@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Flowlu;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -49,7 +49,7 @@ class RecordApiHelper
         $this->type     = 'Account';
         $this->typeName = 'Account created';
         $apiEndpoint    = $this->apiUrl . "/module/crm/account/create?api_key={$apiKey}";
-        return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', $finalData, $this->defaultHeader);
     }
 
     public function addOpportunity($finalData, $apiKey)
@@ -75,7 +75,7 @@ class RecordApiHelper
         $this->type     = 'Opportunity';
         $this->typeName = 'Opportunity created';
         $apiEndpoint    = $this->apiUrl . "/module/crm/lead/create?api_key={$apiKey}";
-        return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', $finalData, $this->defaultHeader);
     }
 
     public function addProject($finalData, $apiKey)
@@ -106,7 +106,7 @@ class RecordApiHelper
         $this->type     = 'Project';
         $this->typeName = 'Project created';
         $apiEndpoint    = $this->apiUrl . "/module/st/projects/create?api_key={$apiKey}";
-        return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', $finalData, $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

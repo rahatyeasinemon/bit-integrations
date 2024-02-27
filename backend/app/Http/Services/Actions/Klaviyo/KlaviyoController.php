@@ -9,7 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Klaviyo;
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Util\Helper;
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Klaviyo integration
@@ -30,8 +30,8 @@ class KlaviyoController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'lists?api_key=' . $requestParams->authKey;
-        $response = HttpHelper::get($apiEndpoints, null);
+        $apiEndpoint = $this->baseUrl . 'lists?api_key=' . $requestParams->authKey;
+        $response = Http::request($apiEndpoint, 'Get', null);
         if ($response->message === "The API key specified is invalid.") {
             wp_send_json_error(
                 __(

@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Mailercloud;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Mailercloud\RecordApiHelper;
 
 /**
@@ -29,12 +29,12 @@ class MailercloudController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'client/plan' ;
+        $apiEndpoint = $this->baseUrl . 'client/plan' ;
         $headers = [
           'Content-Type' => 'application/json',
           'Authorization' => $requestParams->authKey
         ];
-        $response = HttpHelper::get($apiEndpoints, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if ($response->code === "invalid_api_key") {
             wp_send_json_error(
                 __(
@@ -58,7 +58,7 @@ class MailercloudController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'lists/search' ;
+        $apiEndpoint = $this->baseUrl . 'lists/search' ;
         $headers = [
           'Content-Type' => 'application/json',
           'Authorization' => $requestParams->authKey
@@ -67,7 +67,7 @@ class MailercloudController
             "limit" => 100,
             "page" => 1
         ];
-        $response = HttpHelper::post($apiEndpoints, json_encode($body), $headers);
+        $response = Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
 
         if ($response->code === "invalid_api_key") {
             wp_send_json_error(
@@ -93,7 +93,7 @@ class MailercloudController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'contact/property/search' ;
+        $apiEndpoint = $this->baseUrl . 'contact/property/search' ;
         $headers = [
           'Content-Type' => 'application/json',
           'Authorization' => $requestParams->authKey
@@ -102,7 +102,7 @@ class MailercloudController
             "limit" => 100,
             "page" => 1
         ];
-        $response = HttpHelper::post($apiEndpoints, json_encode($body), $headers);
+        $response = Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
 
         if ($response->code === "invalid_api_key") {
             wp_send_json_error(

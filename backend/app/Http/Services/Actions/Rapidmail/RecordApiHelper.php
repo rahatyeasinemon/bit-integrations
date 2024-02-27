@@ -5,7 +5,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Rapidmail;
 use WP_Error;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Util\DateTimeHelper;
 
 /**
@@ -32,7 +32,7 @@ class RecordApiHelper
         $send_activationmail    = $send_activationmail ? 'yes' : 'no';
         $insertRecordEndpoint   = self::$apiBaseUri . "/recipients?send_activationmail={$send_activationmail}";
         $data                   = \is_string($data) ? $data : \json_encode((object) $data);
-        $response               = HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        $response               = Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
         return $response;
     }
 

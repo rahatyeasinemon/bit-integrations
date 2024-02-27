@@ -2,7 +2,7 @@
 /**
  * @license GPL-2.0-or-later
  *
- * Modified on 22-February-2024 using Strauss.
+ * Modified on 27-February-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 
@@ -57,12 +57,11 @@ final class HttpClient
                 $url = $url . '?' . $query;
             }
 
-            $type    = strtoupper($method);
             $data    = $this->getPreparedPayload();
             $headers = $this->getHeaders();
             $options = $this->getOptions();
 
-            return $this->request($url, $type, $data, $headers, $options);
+            return $this->request($url, $method, $data, $headers, $options);
         }
 
         throw new BadMethodCallException($method . ' Method not found in ' . __CLASS__);
@@ -222,7 +221,7 @@ final class HttpClient
     public function request($url, $type, $data, $headers = null, $options = null)
     {
         $defaultOptions = [
-            'method'  => $type,
+            'method'  => strtoupper($type),
             'headers' => empty($headers) ? $this->getHeaders() : $headers,
             'body'    => $data,
             'timeout' => 30,

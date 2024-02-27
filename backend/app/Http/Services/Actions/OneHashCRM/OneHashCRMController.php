@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\OneHashCRM;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for OneHashCRM integration
@@ -47,7 +47,7 @@ class OneHashCRMController
         $apiSecret      = $fieldsRequestParams->api_secret;
         $apiEndpoint    = $this->setApiEndpoint() . "/Lead";
         $headers        = $this->setHeaders($apiKey, $apiSecret);
-        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+        $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->data)) {
             wp_send_json_success('Authentication successful', 200);

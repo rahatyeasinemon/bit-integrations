@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\CompanyHub;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for CompanyHub integration
@@ -42,7 +42,7 @@ class CompanyHubController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->sub_domain, $fieldsRequestParams->api_key);
         $apiEndpoint  = $this->_apiEndpoint . "/me";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->Success) && !$response->Success) {
             wp_send_json_success('Authentication successful', 200);
@@ -56,7 +56,7 @@ class CompanyHubController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->sub_domain, $fieldsRequestParams->api_key);
         $apiEndpoint  = $this->_apiEndpoint . "/tables/company";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->success)) {
             $companies = [];
@@ -80,7 +80,7 @@ class CompanyHubController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->sub_domain, $fieldsRequestParams->api_key);
         $apiEndpoint  = $this->_apiEndpoint . "/tables/contact";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->success)) {
             $contacts = [];

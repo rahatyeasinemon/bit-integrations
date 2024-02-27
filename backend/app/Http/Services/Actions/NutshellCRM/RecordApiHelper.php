@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\NutshellCRM;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -78,7 +78,7 @@ class RecordApiHelper
 
         $apiEndpoint                    = $this->apiUrl;
 
-        return HttpHelper::post($apiEndpoint, json_encode($body), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($body), $this->defaultHeader);
 
     }
 
@@ -126,7 +126,7 @@ class RecordApiHelper
 
         $apiEndpoint                    = $this->apiUrl;
 
-        return HttpHelper::post($apiEndpoint, json_encode($body), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($body), $this->defaultHeader);
 
     }
 
@@ -191,7 +191,7 @@ class RecordApiHelper
 
         $apiEndpoint                    = $this->apiUrl;
 
-        return HttpHelper::post($apiEndpoint, json_encode($body), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($body), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

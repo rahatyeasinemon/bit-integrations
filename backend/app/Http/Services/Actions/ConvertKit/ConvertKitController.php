@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ConvertKit;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\ConvertKit\RecordApiHelper;
 
 /**
@@ -47,7 +47,7 @@ class ConvertKitController
         }
 
         $apiEndpoint = self::_apiEndpoint('account', $requestsParams->api_secret);
-        $apiResponse = HttpHelper::get($apiEndpoint, null);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null);
 
         if (is_wp_error($apiResponse) || empty($apiResponse) || !empty($apiResponse->error) || empty($apiResponse->primary_email_address)) {
             wp_send_json_error(
@@ -80,7 +80,7 @@ class ConvertKitController
         }
 
         $apiEndpoint = self::_apiEndpoint('forms', $queryParams->api_secret);
-        $convertKitResponse = HttpHelper::get($apiEndpoint, null);
+        $convertKitResponse = Http::request($apiEndpoint, 'Get', null);
 
         $forms = [];
         if (!is_wp_error($convertKitResponse)) {
@@ -118,7 +118,7 @@ class ConvertKitController
 
         $apiEndpoint = self::_apiEndpoint('tags', $queryParams->api_secret);
 
-        $convertKitResponse = HttpHelper::get($apiEndpoint, null);
+        $convertKitResponse = Http::request($apiEndpoint, 'Get', null);
 
         $tags = [];
         if (!is_wp_error($convertKitResponse)) {
@@ -158,7 +158,7 @@ class ConvertKitController
 
         $apiEndpoint =  self::_apiEndpoint('custom_fields', $queryParams->api_secret);
 
-        $convertKitResponse = HttpHelper::get($apiEndpoint, null);
+        $convertKitResponse = Http::request($apiEndpoint, 'Get', null);
 
         $fields = [];
         if (!is_wp_error($convertKitResponse)) {

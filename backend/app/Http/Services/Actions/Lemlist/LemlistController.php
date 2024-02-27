@@ -5,7 +5,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Lemlist;
 use WP_Error;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Actions\Lemlist\RecordApiHelper;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 class LemlistController
 {
@@ -24,7 +24,7 @@ class LemlistController
 
         $apiEndpoint = "https://api.lemlist.com/api/team";
         $header["Authorization"] = 'Basic ' . base64_encode(":$requestParams->api_key");
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($response->_id)) {
             wp_send_json_error(
@@ -43,7 +43,7 @@ class LemlistController
 
         $header["Authorization"] = 'Basic ' . base64_encode(":$requestParams->api_key");
         $apiEndpoint = 'https://api.lemlist.com/api/campaigns';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
         $campaigns       = [];
 
         foreach ($apiResponse as $item) {

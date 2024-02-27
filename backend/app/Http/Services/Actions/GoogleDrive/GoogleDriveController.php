@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\GoogleDrive;
 
 use BitApps\BTCBI\Http\Services\Actions\GoogleDrive\RecordApiHelper as GoogleDriveRecordApiHelper;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
@@ -33,7 +33,7 @@ class GoogleDriveController
 
         $apiEndpoint = 'https://oauth2.googleapis.com/token';
         $header['Content-Type'] = 'application/x-www-form-urlencoded';
-        $apiResponse = HttpHelper::post($apiEndpoint, $body, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $body, $header);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
@@ -109,7 +109,7 @@ class GoogleDriveController
         ];
         // for only root folder: and 'root' in parents
         $apiEndpoint = "https://www.googleapis.com/drive/v3/files?q=mimeType='application/vnd.google-apps.folder' and trashed=false&fields=files(id,name,parents)";
-        $apiResponse = HttpHelper::get($apiEndpoint, [], $headers);
+        $apiResponse = Http::request($apiEndpoint, 'Get', [], $headers);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }
@@ -145,7 +145,7 @@ class GoogleDriveController
         ];
 
         $apiEndpoint = 'https://oauth2.googleapis.com/token';
-        $apiResponse = HttpHelper::post($apiEndpoint, $body);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $body);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

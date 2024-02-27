@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Freshdesk;
 
 use WP_Error;
 use BitApps\BTCBI\Util\IpTool;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 use BitApps\BTCBI\Http\Services\Actions\Freshdesk\RecordApiHelper;
 
@@ -47,7 +47,7 @@ class FreshdeskController
 
         $apiEndpoint = $tokenRequestParams->app_domain . '/api/v2/tickets';
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (is_wp_error($apiResponse) || empty($apiResponse[0]->id)) {
             wp_send_json_error(

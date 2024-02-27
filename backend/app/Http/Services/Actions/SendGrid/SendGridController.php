@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\SendGrid;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for SendGrid integration
@@ -20,13 +20,13 @@ class SendGridController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiEndpoints = 'https://api.sendgrid.com/v3/marketing/field_definitions';
+        $apiEndpoint = 'https://api.sendgrid.com/v3/marketing/field_definitions';
         $apiKey       = $fieldsRequestParams->apiKey;
         $header       = [
             'Authorization' => 'Bearer ' . $apiKey
         ];
 
-        $response = HttpHelper::get($apiEndpoints, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($response->errors)) {
             foreach ($response->custom_fields as $customField) {
@@ -48,13 +48,13 @@ class SendGridController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiEndpoints = 'https://api.sendgrid.com/v3/marketing/lists';
+        $apiEndpoint = 'https://api.sendgrid.com/v3/marketing/lists';
         $apiKey       = $fieldsRequestParams->apiKey;
         $header       = [
             'Authorization' => 'Bearer ' . $apiKey
         ];
 
-        $response = HttpHelper::get($apiEndpoints, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         foreach ($response->result as $list) {
             $lists[] = [

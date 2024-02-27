@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\OmniSend;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -33,7 +33,7 @@ class RecordApiHelper
         $smsStatus,
         $finalData
     ) {
-        $apiEndpoints = $this->baseUrl . 'contacts';
+        $apiEndpoint = $this->baseUrl . 'contacts';
         $splitChannels = [];
         if (!empty($channels)) {
             $splitChannels = explode(',', $channels);
@@ -70,7 +70,7 @@ class RecordApiHelper
             }
         }
 
-        $response = HttpHelper::post($apiEndpoints, json_encode($requestParams), $this->_defaultHeader);
+        $response = Http::request($apiEndpoint, 'Post', json_encode($requestParams), $this->_defaultHeader);
         return $response;
     }
 

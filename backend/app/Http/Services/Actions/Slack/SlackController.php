@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Slack;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for slack integration
@@ -43,7 +43,7 @@ class SlackController
         ];
         $apiEndpoint = self::APIENDPOINT . '/conversations.list';
 
-        $apiResponse = HttpHelper::post($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Post', null, $header);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(

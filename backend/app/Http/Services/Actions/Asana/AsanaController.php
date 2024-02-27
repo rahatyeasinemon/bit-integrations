@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Asana;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Asana integration
@@ -34,7 +34,7 @@ class AsanaController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->data)) {
             wp_send_json_success('Authentication successful', 200);
@@ -60,7 +60,7 @@ class AsanaController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if (isset($response->data)) {
             foreach ($response->data as $customField) {
                 $customFields[] = [
@@ -87,7 +87,7 @@ class AsanaController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->tasks)) {
             foreach ($response->tasks as $task) {
@@ -115,7 +115,7 @@ class AsanaController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!empty($response->data)) {
             foreach ($response->data as $project) {
@@ -143,7 +143,7 @@ class AsanaController
         $headers = [
             "Authorization" => 'Bearer ' . $apiKey,
         ];
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!empty($response->data)) {
             foreach ($response->data as $section) {

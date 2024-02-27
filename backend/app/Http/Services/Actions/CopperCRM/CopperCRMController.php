@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\CopperCRM;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for CopperCRM integration
@@ -38,7 +38,7 @@ class CopperCRMController
             "Content-Type"      => "application/json"
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->error)) {
             wp_send_json_success('Authentication successful', 200);
@@ -72,7 +72,7 @@ class CopperCRMController
             "Content-Type"      => "application/json"
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if (isset($response)) {
             foreach ($response as $customField) {
                 if (in_array($action, $customField->available_on)) {
@@ -100,7 +100,7 @@ class CopperCRMController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->opportunities)) {
             foreach ($response->opportunities as $opportunity) {
@@ -130,7 +130,7 @@ class CopperCRMController
             "Content-Type"      => "application/json"
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response)) {
             foreach ($response as $owner) {
@@ -160,7 +160,7 @@ class CopperCRMController
             "Content-Type"      => "application/json"
         ];
 
-        $response = HttpHelper::post($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Post', null, $headers);
 
         if (isset($response)) {
             foreach ($response as $company) {
@@ -191,7 +191,7 @@ class CopperCRMController
             "Content-Type"      => "application/json"
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response)) {
             foreach ($response as $pipelineStage) {
@@ -222,7 +222,7 @@ class CopperCRMController
             "Content-Type"      => "application/json"
         ];
 
-        $response = HttpHelper::post($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Post', null, $headers);
 
         if (!empty($response)) {
             foreach ($response as $people) {
@@ -253,7 +253,7 @@ class CopperCRMController
             "Content-Type"      => "application/json"
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!empty($response)) {
             foreach ($response as $pipeline) {

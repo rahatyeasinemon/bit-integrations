@@ -2,7 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\SendPulse;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 class RecordApiHelper
@@ -23,7 +23,7 @@ class RecordApiHelper
 
     public function addContact($selectedList, $finalData)
     {
-        $apiEndpoints = "https://api.sendpulse.com/addressbooks/{$selectedList}/emails";
+        $apiEndpoint = "https://api.sendpulse.com/addressbooks/{$selectedList}/emails";
 
         $body = '{
                     "emails":[{
@@ -35,7 +35,7 @@ class RecordApiHelper
                     }]
                 }';
 
-        $res =  HttpHelper::post($apiEndpoints, $body, $this->_defaultHeader);
+        $res =  Http::request($apiEndpoint, 'Post', $body, $this->_defaultHeader);
         return $res;
     }
 

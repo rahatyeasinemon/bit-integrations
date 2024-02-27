@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\SendinBlue;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 use BitApps\BTCBI\Http\Services\Actions\SendinBlue\RecordApiHelper;
 
@@ -39,7 +39,7 @@ class SendinBlueController
         $apiEndpoint = self::APIENDPOINT . '/account';
         $authorizationHeader["Accept"] = 'application/json';
         $authorizationHeader["api-key"] = $requestsParams->api_key;
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || $apiResponse->code === 'unauthorized') {
             wp_send_json_error(
@@ -71,7 +71,7 @@ class SendinBlueController
         $apiEndpoint = self::APIENDPOINT . '/contacts/lists';
         $authorizationHeader["Accept"] = 'application/json';
         $authorizationHeader["api-key"] = $requestsParams->api_key;
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         $allList = [];
         if (!is_wp_error($apiResponse) && empty($apiResponse->code)) {
@@ -109,7 +109,7 @@ class SendinBlueController
         $apiEndpoint = self::APIENDPOINT . '/smtp/templates';
         $authorizationHeader["Accept"] = 'application/json';
         $authorizationHeader["api-key"] = $requestsParams->api_key;
-        $sblueResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $sblueResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         $allList = [];
         if (!is_wp_error($sblueResponse) && $sblueResponse->templates) {
@@ -147,7 +147,7 @@ class SendinBlueController
         $apiEndpoint = self::APIENDPOINT . '/contacts/attributes';
         $authorizationHeader["Accept"] = 'application/json';
         $authorizationHeader["api-key"] = $queryParams->api_key;
-        $sblueResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $sblueResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
         $fields = [];
         if (!is_wp_error($sblueResponse)) {
             $allFields = $sblueResponse->attributes;

@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\MailBluster;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -29,7 +29,7 @@ class RecordApiHelper
 
     public function addLeadToBrand($selectedTags, $finalData, $subscribed)
     {
-        $apiEndpoints = $this->baseUrl . 'leads';
+        $apiEndpoint = $this->baseUrl . 'leads';
         $tags         = [];
 
         if (!empty($selectedTags)) {
@@ -73,7 +73,7 @@ class RecordApiHelper
             $requestParams['tags'] = $tags;
         }
 
-        $response = HttpHelper::post($apiEndpoints, $requestParams, $this->_defaultHeader);
+        $response = Http::request($apiEndpoint, 'Post', $requestParams, $this->_defaultHeader);
         return $response;
     }
 

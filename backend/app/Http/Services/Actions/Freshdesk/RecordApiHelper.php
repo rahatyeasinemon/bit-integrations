@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Freshdesk;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -50,7 +50,7 @@ class RecordApiHelper
             return $sendPhotoApiHelper->allUploadFiles($apiEndpoint, $data, $api_key);
         }
         $data = \json_encode($data);
-        $apiResponse = HttpHelper::post($apiEndpoint, $data, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $data, $header);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
@@ -114,7 +114,7 @@ class RecordApiHelper
             'Content-Type' => 'application/json'
         ];
         $apiEndpoint = $app_base_domamin . '/api/v2/contacts?email=' . $email;
-        return HttpHelper::get($apiEndpoint, null, $header);
+        return Http::request($apiEndpoint, 'Get', null, $header);
     }
 
     public function insertContact($app_base_domamin, $finalDataContact, $api_key, $avatar)
@@ -145,7 +145,7 @@ class RecordApiHelper
             return $sendPhotoApiHelper->uploadFiles($apiEndpoint, $data, $api_key);
         }
 
-        return HttpHelper::post($apiEndpoint, $data, $header);
+        return Http::request($apiEndpoint, 'Post', $data, $header);
     }
 
     public function updateContact($app_base_domamin, $finalDataContact, $api_key, $contactId)
@@ -170,7 +170,7 @@ class RecordApiHelper
         $data = \json_encode($finalDataContact);
         $apiEndpoint = $app_base_domamin . '/api/v2/contacts/' . $contactId;
 
-        return HttpHelper::request($apiEndpoint, 'PUT', $data, $header);
+        return Http::request($apiEndpoint, 'PUT', $data, $header);
     }
 
     public function execute(

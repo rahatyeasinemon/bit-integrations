@@ -2,7 +2,7 @@
 /**
  * @license GPL-2.0-or-later
  *
- * Modified on 22-February-2024 using Strauss.
+ * Modified on 27-February-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 
@@ -221,7 +221,7 @@ class Request extends Validator implements ArrayAccess, JsonSerializable
         if (!empty($params)) {
             $this->queryParams = $params;
         } elseif (isset($_GET)) {
-            $this->queryParams = $_GET;
+            $this->queryParams = wp_unslash($_GET);
         }
     }
 
@@ -250,7 +250,7 @@ class Request extends Validator implements ArrayAccess, JsonSerializable
             }
 
             if (!empty($_POST)) {
-                $this->body = (array) $this->body + (array) $_POST;
+                $this->body = (array) $this->body + (array) wp_unslash($_POST);
             }
         }
     }

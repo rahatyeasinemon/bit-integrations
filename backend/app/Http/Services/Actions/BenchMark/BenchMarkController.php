@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\BenchMark;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\BenchMark\RecordApiHelper;
 
 /**
@@ -50,7 +50,7 @@ class BenchMarkController
         $apiEndpoint = self::_apiEndpoint('Client/');
 
         $authorizationHeader['AuthToken'] = $requestsParams->api_secret;
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || empty($apiResponse)) {
             wp_send_json_error(
@@ -85,7 +85,7 @@ class BenchMarkController
         $apiEndpoint = self::_apiEndpoint('Contact/');
 
         $authorizationHeader['AuthToken'] = $queryParams->api_secret;
-        $benchMarkResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $benchMarkResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         $lists = [];
         if (!is_wp_error($benchMarkResponse)) {
@@ -128,7 +128,7 @@ class BenchMarkController
 
 
         $authorizationHeader['AuthToken'] = $queryParams->api_secret;
-        $benchMarkResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $benchMarkResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         $fields = [];
         if (!is_wp_error($benchMarkResponse)) {

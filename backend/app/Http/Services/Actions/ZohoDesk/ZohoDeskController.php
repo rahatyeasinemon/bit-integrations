@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoDesk;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use WP_Error;
 
@@ -53,7 +53,7 @@ class ZohoDeskController
             'redirect_uri' => \urldecode($requestsParams->redirectURI),
             'code' => $requestsParams->code
         ];
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
@@ -88,7 +88,7 @@ class ZohoDeskController
         $organizationsMetaApiEndpoint = "https://desk.zoho.{$queryParams->dataCenter}/api/v1/organizations";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $organizationsMetaResponse = HttpHelper::get($organizationsMetaApiEndpoint, null, $authorizationHeader);
+        $organizationsMetaResponse = Http::request($organizationsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!is_wp_error($organizationsMetaResponse)) {
             $allOrganizations = [];
@@ -155,7 +155,7 @@ class ZohoDeskController
 
         $authorizationHeader['orgId'] = "{$queryParams->orgId}";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $departmentsMetaResponse = HttpHelper::get($departmentsMetaApiEndpoint, null, $authorizationHeader);
+        $departmentsMetaResponse = Http::request($departmentsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!is_wp_error($departmentsMetaResponse)) {
             $allDepartments = [];
@@ -215,7 +215,7 @@ class ZohoDeskController
 
         $authorizationHeader['orgId'] = "{$queryParams->orgId}";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $fieldsMetaResponse = HttpHelper::get($fieldsMetaApiEndpoint, null, $authorizationHeader);
+        $fieldsMetaResponse = Http::request($fieldsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!is_wp_error($fieldsMetaResponse)) {
             $fields = $fieldsMetaResponse->data;
@@ -297,7 +297,7 @@ class ZohoDeskController
 
         $authorizationHeader['orgId'] = "{$queryParams->orgId}";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $ownersMetaResponse = HttpHelper::get($ownersMetaApiEndpoint, null, $authorizationHeader);
+        $ownersMetaResponse = Http::request($ownersMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!is_wp_error($ownersMetaResponse)) {
             $owners = $ownersMetaResponse->data;
@@ -356,7 +356,7 @@ class ZohoDeskController
 
         $authorizationHeader['orgId'] = "{$queryParams->orgId}";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $productsMetaResponse = HttpHelper::get($productsMetaApiEndpoint, null, $authorizationHeader);
+        $productsMetaResponse = Http::request($productsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!is_wp_error($productsMetaResponse)) {
             $products = $productsMetaResponse->data;
@@ -408,7 +408,7 @@ class ZohoDeskController
             'refresh_token' => $tokenDetails->refresh_token,
         ];
 
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

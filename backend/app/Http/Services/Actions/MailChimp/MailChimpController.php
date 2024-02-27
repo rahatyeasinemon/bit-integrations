@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\MailChimp;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for MailChimp integration
@@ -60,12 +60,12 @@ class MailChimpController
                 'redirect_uri' => $requestsParams->redirectURI,
                 'grant_type' => 'authorization_code'
             );
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams, $authorizationHeader);
 
         $metaDataEndPoint = 'https://login.mailchimp.com/oauth2/metadata';
 
         $authorizationHeader["Authorization"] = "Bearer {$apiResponse->access_token}";
-        $metaData = HttpHelper::post($metaDataEndPoint, null, $authorizationHeader);
+        $metaData = Http::request($metaDataEndPoint, 'Post', null, $authorizationHeader);
 
         $apiResponse->dc = $metaData->dc;
 
@@ -104,7 +104,7 @@ class MailChimpController
         $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . "/lists";
 
         $authorizationHeader["Authorization"] = "Bearer {$queryParams->tokenDetails->access_token}";
-        $audienceResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $audienceResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         $allList = [];
         if (!is_wp_error($audienceResponse) && empty($audienceResponse->response->error)) {
@@ -150,7 +150,7 @@ class MailChimpController
         }
         $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . "/lists/$queryParams->listId/merge-fields";
         $authorizationHeader["Authorization"] = "Bearer {$queryParams->tokenDetails->access_token}";
-        $mergeFieldResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $mergeFieldResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         $fields = [];
         if (!is_wp_error($mergeFieldResponse)) {
@@ -192,7 +192,7 @@ class MailChimpController
         }
         $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . "/lists/$queryParams->listId/segments?count=1000";
         $authorizationHeader["Authorization"] = "Bearer {$queryParams->tokenDetails->access_token}";
-        $tagsList = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $tagsList = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         $allList = [];
         foreach ($tagsList->segments as $tag) {

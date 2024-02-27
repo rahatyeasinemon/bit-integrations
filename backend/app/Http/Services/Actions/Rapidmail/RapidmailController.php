@@ -10,7 +10,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Rapidmail;
 use stdClass;
 use WP_Error;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Rapidmail\RecordApiHelper as RapidmailRecordApiHelper;
 
 final class RapidmailController
@@ -48,7 +48,7 @@ final class RapidmailController
         $apiEndpoint = self::$apiBaseUri . '/apiusers';
 
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
         if (!(property_exists($apiResponse, '_embedded') && property_exists($apiResponse->_embedded, 'apiusers'))) {
             wp_send_json_error(
                 // empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
@@ -87,7 +87,7 @@ final class RapidmailController
             'verify' => false
         ];
         $recipientApiEndpoint = self::$apiBaseUri . '/recipientlists';
-        $apiResponse = HttpHelper::get($recipientApiEndpoint, null, $header);
+        $apiResponse = Http::request($recipientApiEndpoint, 'Get', null, $header);
         $tempRecipient = $apiResponse->_embedded->recipientlists;
         $data = [];
 
@@ -121,7 +121,7 @@ final class RapidmailController
             'verify' => false
         ];
         $recipientApiEndpoint = self::$apiBaseUri . '/recipientlists';
-        $apiResponse = HttpHelper::get($recipientApiEndpoint, null, $header);
+        $apiResponse = Http::request($recipientApiEndpoint, 'Get', null, $header);
         $tempRecipient = $apiResponse->_embedded->recipientlists;
         $data = [];
 

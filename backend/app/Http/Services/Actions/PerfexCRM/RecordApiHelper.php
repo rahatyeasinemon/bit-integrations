@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\PerfexCRM;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -42,7 +42,7 @@ class RecordApiHelper
         $this->type     = 'Customer';
         $this->typeName = 'Customer created';
         $apiEndpoint = $this->apiUrl . "/customers";
-        return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', $finalData, $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -73,7 +73,7 @@ class RecordApiHelper
         $this->type     = 'Contact';
         $this->typeName = 'Contact created';
         $apiEndpoint = $this->apiUrl . "/contacts";
-        return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', $finalData, $this->defaultHeader);
     }
 
     public function addLead($finalData)
@@ -98,7 +98,7 @@ class RecordApiHelper
         $this->type     = 'Lead';
         $this->typeName = 'Lead created';
         $apiEndpoint = $this->apiUrl . "/leads";
-        return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', $finalData, $this->defaultHeader);
     }
 
     public function addProject($finalData)
@@ -135,7 +135,7 @@ class RecordApiHelper
         $this->type     = 'Project';
         $this->typeName = 'Project created';
         $apiEndpoint = $this->apiUrl . "/projects";
-        return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', $finalData, $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

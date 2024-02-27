@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\MailerLite;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for MailerLite integration
@@ -33,7 +33,7 @@ class MailerLiteController
         // die;
         if ('v2' === $refreshFieldsRequestParams->version) {
 
-            $apiEndpoints = self::$_baseUrlV2 . 'groups/';
+            $apiEndpoint = self::$_baseUrlV2 . 'groups/';
             $apiKey = $refreshFieldsRequestParams->auth_token;
             $header = array(
                 'Authorization: Bearer ' . $apiKey
@@ -41,7 +41,7 @@ class MailerLiteController
 
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => $apiEndpoints,
+                CURLOPT_URL => $apiEndpoint,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -65,13 +65,13 @@ class MailerLiteController
                     ];
             }
         } else {
-            $apiEndpoints = self::$_baseUrlV1 . 'groups/';
+            $apiEndpoint = self::$_baseUrlV1 . 'groups/';
 
             $header = [
               'X-Mailerlite-Apikey' => $refreshFieldsRequestParams->auth_token,
             ];
 
-            $response = HttpHelper::get($apiEndpoints, null, $header);
+            $response = Http::request($apiEndpoint, 'Get', null, $header);
             $formattedResponse = [];
 
             foreach ($response as $value) {
@@ -106,14 +106,14 @@ class MailerLiteController
         }
 
         if ('v2' === $refreshFieldsRequestParams->version) {
-            $apiEndpoints = self::$_baseUrlV2 . 'fields';
+            $apiEndpoint = self::$_baseUrlV2 . 'fields';
 
             $apiKey = $refreshFieldsRequestParams->auth_token;
             $header = [
             'Authorization' => "Bearer " . $apiKey,
             ];
 
-            $response = HttpHelper::get($apiEndpoints, null, $header);
+            $response = Http::request($apiEndpoint, 'Get', null, $header);
 
             $newResponse = [];
             foreach ($response->data as $value) {
@@ -146,14 +146,14 @@ class MailerLiteController
                 );
             }
         } else {
-            $apiEndpoints = self::$_baseUrlV1 . 'fields';
+            $apiEndpoint = self::$_baseUrlV1 . 'fields';
 
             $apiKey = $refreshFieldsRequestParams->auth_token;
             $header = [
               'X-Mailerlite-Apikey' => $apiKey,
             ];
 
-            $response = HttpHelper::get($apiEndpoints, null, $header);
+            $response = Http::request($apiEndpoint, 'Get', null, $header);
 
             $formattedResponse = [];
             foreach ($response as $value) {

@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\GoogleContacts;
 
 use BitApps\BTCBI\Http\Services\Actions\GoogleContacts\RecordApiHelper as GoogleContactsRecordApiHelper;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
@@ -33,7 +33,7 @@ class GoogleContactsController
 
         $apiEndpoint = 'https://oauth2.googleapis.com/token';
         $header['Content-Type'] = 'application/x-www-form-urlencoded';
-        $apiResponse = HttpHelper::post($apiEndpoint, $body, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $body, $header);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
@@ -78,7 +78,7 @@ class GoogleContactsController
         $body = [
             'minAccessRole' => 'writer',
         ];
-        $apiResponse = HttpHelper::get($apiEndpoint, $body, $headers);
+        $apiResponse = Http::request($apiEndpoint, 'Get', $body, $headers);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }
@@ -114,7 +114,7 @@ class GoogleContactsController
         ];
 
         $apiEndpoint = 'https://oauth2.googleapis.com/token';
-        $apiResponse = HttpHelper::post($apiEndpoint, $body);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $body);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

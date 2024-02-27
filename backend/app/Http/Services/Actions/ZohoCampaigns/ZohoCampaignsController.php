@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoCampaigns;
 
 use BitApps\BTCBI\Util\IpTool;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 use BitApps\BTCBI\Http\Services\Actions\ZohoCampaigns\RecordApiHelper;
 use BitApps\BTCBI\Util\ApiResponse as UtilApiResponse;
@@ -62,7 +62,7 @@ class ZohoCampaignsController
                 "redirect_uri" => \urldecode($requestsParams->redirectURI),
                 "code" => $requestsParams->code
             );
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
@@ -103,7 +103,7 @@ class ZohoCampaignsController
         $listsMetaApiEndpoint = "https://campaigns.zoho.{$queryParams->dataCenter}/api/v1.1/getmailinglists?resfmt=JSON&range=100";
 
         $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $listsMetaResponse = HttpHelper::get($listsMetaApiEndpoint, null, $authorizationHeader);
+        $listsMetaResponse = Http::request($listsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         $allLists = [];
         if (!is_wp_error($listsMetaResponse)) {
@@ -162,7 +162,7 @@ class ZohoCampaignsController
         $contactFieldsMetaApiEndpoint = "https://campaigns.zoho.{$queryParams->dataCenter}/api/v1.1/contact/allfields?type=json";
 
         $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $contactFieldsMetaResponse = HttpHelper::get($contactFieldsMetaApiEndpoint, null, $authorizationHeader);
+        $contactFieldsMetaResponse = Http::request($contactFieldsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
 
         if (!is_wp_error($contactFieldsMetaResponse)) {
@@ -219,7 +219,7 @@ class ZohoCampaignsController
             "refresh_token" => $tokenDetails->refresh_token,
         );
 
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

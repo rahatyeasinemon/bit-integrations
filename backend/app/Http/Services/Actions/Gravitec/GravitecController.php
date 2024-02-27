@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Gravitec;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Gravitec integration
@@ -35,7 +35,7 @@ class GravitecController
         ];
 
         $apiEndpoint  = "https://uapi.gravitec.net/api/v3/push";
-        $response     = HttpHelper::post($apiEndpoint, json_encode($data), $headers);
+        $response     = Http::request($apiEndpoint, 'Post', json_encode($data), $headers);
 
         if (isset($response->id)) {
             wp_send_json_success('Authentication successful', 200);

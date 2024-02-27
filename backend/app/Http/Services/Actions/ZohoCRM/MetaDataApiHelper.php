@@ -5,7 +5,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoCRM;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Tags in Zoho CRM
@@ -37,7 +37,7 @@ final class MetaDataApiHelper
     public function getAssignmentRules($module)
     {
         $getAssignmentRulesEndpoint = "{$this->_apiDomain}/automation/assignment_rules";
-        $getAssignmentRulesResponse = HttpHelper::get($getAssignmentRulesEndpoint, ['module' => $module], $this->_defaultHeader);
+        $getAssignmentRulesResponse = Http::request($getAssignmentRulesEndpoint, 'Get', ['module' => $module], $this->_defaultHeader);
         if (is_wp_error($getAssignmentRulesResponse)) {
             return $getAssignmentRulesResponse;
         }
@@ -61,7 +61,7 @@ final class MetaDataApiHelper
     public function getRelatedLists($module)
     {
         $getRelatedListsEndpoint = "{$this->_apiDomain}/related_lists";
-        $getRelatedListsResponse = HttpHelper::get($getRelatedListsEndpoint, ['module' => $module], $this->_defaultHeader);
+        $getRelatedListsResponse = Http::request($getRelatedListsEndpoint, 'Get', ['module' => $module], $this->_defaultHeader);
         if (is_wp_error($getRelatedListsResponse)) {
             return $getRelatedListsResponse;
         }

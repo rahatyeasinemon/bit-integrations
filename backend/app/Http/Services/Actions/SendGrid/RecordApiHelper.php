@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\SendGrid;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -31,7 +31,7 @@ class RecordApiHelper
 
     public function addContact($selectedLists, $finalData)
     {
-        $apiEndpoints = 'https://api.sendgrid.com/v3/marketing/contacts';
+        $apiEndpoint = 'https://api.sendgrid.com/v3/marketing/contacts';
 
         if (empty($finalData['email'])) {
             return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
@@ -63,7 +63,7 @@ class RecordApiHelper
 
         $requestParams['contacts'][] = (object) $contacts;
 
-        return HttpHelper::request($apiEndpoints, 'PUT', json_encode($requestParams), $this->_defaultHeader);
+        return Http::request($apiEndpoint, 'PUT', json_encode($requestParams), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -99,7 +99,7 @@ class RecordApiHelper
     {
         $apiEndpoint      = 'https://api.sendgrid.com/v3/marketing/contacts/search/emails';
         $emails['emails'] = (array) $email;
-        $response         = HttpHelper::post($apiEndpoint, json_encode($emails), $this->_defaultHeader);
+        $response         = Http::request($apiEndpoint, 'Post', json_encode($emails), $this->_defaultHeader);
 
         return empty($response) ? 'created' : 'updated';
     }

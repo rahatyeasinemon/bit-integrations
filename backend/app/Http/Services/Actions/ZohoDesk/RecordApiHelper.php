@@ -4,7 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ZohoDesk;
 
 use WP_Error;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -27,14 +27,14 @@ class RecordApiHelper
     public function insertRecord($dataCenter, $data)
     {
         $insertRecordEndpoint = "https://desk.zoho.{$dataCenter}/api/v1/tickets";
-        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     public function createContact($dataCenter, $data)
     {
         $getContactEndpoint = "https://desk.zoho.{$dataCenter}/api/v1/contacts";
 
-        return HttpHelper::post($getContactEndpoint, $data, $this->_defaultHeader);
+        return Http::request($getContactEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     public function searchContact($dataCenter, $email)
@@ -42,7 +42,7 @@ class RecordApiHelper
 
         $searchContactEndpoint = "https://desk.zoho.{$dataCenter}/api/v1/contacts/search?limit=1&email={$email}";
 
-        return HttpHelper::get($searchContactEndpoint, null, $this->_defaultHeader);
+        return Http::request($searchContactEndpoint, 'Get', null, $this->_defaultHeader);
     }
 
     public function execute($department, $dataCenter, $fieldValues, $fieldMap, $required, $actions)

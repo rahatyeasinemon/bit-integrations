@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\WhatsApp;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Trello integration
@@ -34,9 +34,9 @@ class WhatsAppController
     //     }
     //     $response = [];
     //     $apiEndpoint = $this->baseUrl . 'members/me?key=' . $queryParams->clientId . '&token=' . $queryParams->accessToken;
-    //     $getUserInfoResponse = HttpHelper::get($apiEndpoint, null);
+    //     $getUserInfoResponse = Http::request($apiEndpoint, 'Get', null);
     //     $apiEndpoint = $this->baseUrl . 'members/' . $getUserInfoResponse->username . '/boards?key=' . $queryParams->clientId . '&token=' . $queryParams->accessToken;
-    //     $allBoardResponse = HttpHelper::get($apiEndpoint, null);
+    //     $allBoardResponse = Http::request($apiEndpoint, 'Get', null);
 
     //     $allList = [];
     //     if (!is_wp_error($allBoardResponse) && empty($allBoardResponse->response->error)) {
@@ -75,7 +75,7 @@ class WhatsAppController
     //     $response = [];
 
     //     $apiEndpoint = $this->baseUrl . 'boards/' . $queryParams->boardId . '/lists?key=' . $queryParams->clientId . '&token=' . $queryParams->accessToken;
-    //     $getListsResponse = HttpHelper::get($apiEndpoint, null);
+    //     $getListsResponse = Http::request($apiEndpoint, 'Get', null);
 
     //     $allList = [];
     //     if (!is_wp_error($getListsResponse) && empty($getListsResponse->response->error)) {

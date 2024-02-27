@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\KirimEmail;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -50,7 +50,7 @@ class RecordApiHelper
 
         $data = array_merge($finalData, ['lists' => $listId]);
 
-        return HttpHelper::post($apiEndpoint, json_encode($data), $header);
+        return Http::request($apiEndpoint, 'Post', json_encode($data), $header);
     }
 
     public function deleteSubscriber($api_key, $userName, $listId, $finalData)
@@ -64,7 +64,7 @@ class RecordApiHelper
         ];
 
         $apiEndpoint = "https://api.kirim.email/v3/subscriber/email/{$finalData['email']}";
-        $apiRes = HttpHelper::get($apiEndpoint, null, $header);
+        $apiRes = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($apiRes->status) && $apiRes->status == 'success') {
             $subscriberId = $apiRes->data->id;
@@ -78,7 +78,7 @@ class RecordApiHelper
             'List-Id' => $listIdBySearchMail,
         ];
             $apiEndpointDelete = "https://api.kirim.email/v3/subscriber/{$subscriberId}";
-            return HttpHelper::request($apiEndpointDelete, 'DELETE', null, $header);
+            return Http::request($apiEndpointDelete, 'DELETE', null, $header);
         }
         return false;
     }

@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Woodpecker;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Woodpecker integration
@@ -45,7 +45,7 @@ class WoodpeckerController
         $apiKey         = $fieldsRequestParams->api_key;
         $apiEndpoint    = $this->setApiEndpoint() . "/campaign_list";
         $headers        = $this->setHeaders(base64_encode($apiKey));
-        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+        $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->status) && $response->status->status === "ERROR") {
             wp_send_json_error('Please enter valid API Key', 400);
@@ -60,7 +60,7 @@ class WoodpeckerController
         $apiKey         = $fieldsRequestParams->api_key;
         $apiEndpoint    = $this->setApiEndpoint() . "/campaign_list";
         $headers        = $this->setHeaders(base64_encode($apiKey));
-        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+        $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->status) && $response->status->status === "ERROR") {
             wp_send_json_error('Campaign not found!', 400);

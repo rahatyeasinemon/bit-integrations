@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Zendesk;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Zendesk integration
@@ -34,7 +34,7 @@ class ZendeskController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->data)) {
             wp_send_json_success('Authentication successful', 200);
@@ -65,7 +65,7 @@ class ZendeskController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if (isset($response->items)) {
             foreach ($response->items as $customField) {
                 $customFields[] = [
@@ -92,7 +92,7 @@ class ZendeskController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->leads)) {
             foreach ($response->leads as $lead) {
@@ -119,7 +119,7 @@ class ZendeskController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->items)) {
             foreach ($response->items as $parentOrganization) {
@@ -148,7 +148,7 @@ class ZendeskController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->teams)) {
             foreach ($response->teams as $team) {
@@ -176,7 +176,7 @@ class ZendeskController
         ];
 
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->currencies)) {
             foreach ($response->currencies as $currency) {
@@ -204,7 +204,7 @@ class ZendeskController
         ];
 
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->items)) {
             foreach ($response->items as $stage) {
@@ -231,7 +231,7 @@ class ZendeskController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!empty($response->items)) {
             foreach ($response->items as $company) {
@@ -260,7 +260,7 @@ class ZendeskController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!empty($response->items)) {
             foreach ($response->items as $contact) {
@@ -292,7 +292,7 @@ class ZendeskController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!empty($response->items)) {
             foreach ($response->items as $source) {

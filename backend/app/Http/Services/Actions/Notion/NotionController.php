@@ -2,7 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Notion;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Notion\RecordApiHelper;
 use WP_Error;
 
@@ -29,7 +29,7 @@ class NotionController
         $header["Content-Type"] = 'application/json';
         $header["Authorization"] =  'Basic ' . base64_encode("$clientId:$clientSecret");
 
-        $apiResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
+        $apiResponse = Http::request($apiEndpoint, 'Post', json_encode($body), $header);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
@@ -50,12 +50,12 @@ class NotionController
                 400
             );
         }
-        $apiEndpoints = "{$this->baseurl}search";
+        $apiEndpoint = "{$this->baseurl}search";
         $headers = [
           'Authorization' => "Bearer " . $requestParams->accessToken,
           'Notion-Version' => '2021-08-16'
         ];
-        $response = HttpHelper::post($apiEndpoints, null, $headers);
+        $response = Http::request($apiEndpoint, 'Post', null, $headers);
         if ($response->Error !== null) {
             wp_send_json_error(
                 __(
@@ -80,12 +80,12 @@ class NotionController
                 400
             );
         }
-        $apiEndpoints = "{$this->baseurl}databases/{$requestParams->databaseId}";
+        $apiEndpoint = "{$this->baseurl}databases/{$requestParams->databaseId}";
         $headers = [
           'Authorization' => "Bearer " . $requestParams->accessToken,
           'Notion-Version' => '2021-08-16'
         ];
-        $response = HttpHelper::get($apiEndpoints, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if ($response->Error !== null) {
             wp_send_json_error(
                 __(

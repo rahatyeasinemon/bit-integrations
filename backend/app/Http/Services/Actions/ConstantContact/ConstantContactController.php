@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ConstantContact;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
@@ -48,7 +48,7 @@ class ConstantContactController
             'grant_type'        => 'authorization_code'
         ];
 
-        $apiResponse = HttpHelper::post('https://authz.constantcontact.com/oauth2/default/v1/token', $requestParams, $authorizationHeader);
+        $apiResponse = Http::request('https://authz.constantcontact.com/oauth2/default/v1/token', 'Post', $requestParams, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
@@ -80,7 +80,7 @@ class ConstantContactController
         $credentials = base64_encode($auth);
         $authorizationHeader['Authorization'] = 'Basic ' . $credentials;
 
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
@@ -121,7 +121,7 @@ class ConstantContactController
         $apiEndpoint = 'https://api.cc.email/v3/contact_lists';
 
         $authorizationHeader['Authorization'] = "Bearer {$queryParams->tokenDetails->access_token}";
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         $allList = [];
         if (!is_wp_error($apiResponse) && empty($apiResponse->response->error)) {
@@ -177,7 +177,7 @@ class ConstantContactController
         $apiEndpoint = 'https://api.cc.email/v3/contact_tags';
 
         $authorizationHeader['Authorization'] = "Bearer {$queryParams->tokenDetails->access_token}";
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
         $allTag = [];
         if (!is_wp_error($apiResponse) && empty($apiResponse->response->error)) {
             $contactTags = $apiResponse->tags;
@@ -233,7 +233,7 @@ class ConstantContactController
         $apiEndpoint = 'https://api.cc.email/v3/contact_custom_fields';
 
         $authorizationHeader['Authorization'] = "Bearer {$queryParams->tokenDetails->access_token}";
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
         $allCFields = [];
         if (!is_wp_error($apiResponse) && empty($apiResponse->response->error)) {
             $customFields = $apiResponse->custom_fields;

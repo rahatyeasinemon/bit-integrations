@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Mailjet;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Mailjet integration
@@ -20,14 +20,14 @@ class MailjetController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiEndpoints = 'https://api.mailjet.com/v3/REST/contactslist/';
+        $apiEndpoint = 'https://api.mailjet.com/v3/REST/contactslist/';
         $apiKey       = $fieldsRequestParams->apiKey;
         $secretKey    = $fieldsRequestParams->secretKey;
         $header       = [
             'Authorization' => 'Basic ' . base64_encode("$apiKey:$secretKey")
         ];
 
-        $response = HttpHelper::get($apiEndpoints, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!empty($response)) {
             foreach ($response->Data as $list) {
@@ -48,14 +48,14 @@ class MailjetController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiEndpoints = 'https://api.mailjet.com/v3/REST/contactmetadata?Limit=1000';
+        $apiEndpoint = 'https://api.mailjet.com/v3/REST/contactmetadata?Limit=1000';
         $apiKey       = $fieldsRequestParams->apiKey;
         $secretKey    = $fieldsRequestParams->secretKey;
         $header       = [
             'Authorization' => 'Basic ' . base64_encode("$apiKey:$secretKey")
         ];
 
-        $response = HttpHelper::get($apiEndpoints, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         foreach ($response->Data as $customField) {
             $customFields[] = [

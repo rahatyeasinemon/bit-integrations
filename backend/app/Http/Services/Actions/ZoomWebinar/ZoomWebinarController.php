@@ -2,7 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\ZoomWebinar;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use WP_Error;
 
@@ -30,7 +30,7 @@ class ZoomWebinarController
         $apiEndpoint = 'https://zoom.us/oauth/token';
         $header['Content-Type'] = 'application/x-www-form-urlencoded';
         $header['Authorization'] = 'Basic ' . base64_encode("$requestParams->clientId:$requestParams->clientSecret");
-        $apiResponse = HttpHelper::post($apiEndpoint, $body, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $body, $header);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
@@ -49,7 +49,7 @@ class ZoomWebinarController
         ];
 
         $apiEndpoint = 'https://api.zoom.us/v2/users/me/webinars';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
@@ -93,7 +93,7 @@ class ZoomWebinarController
             'refresh_token' => $refresh_token,
         ];
         $apiEndpoint = 'https://zoom.us/oauth/token';
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams, $header);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;

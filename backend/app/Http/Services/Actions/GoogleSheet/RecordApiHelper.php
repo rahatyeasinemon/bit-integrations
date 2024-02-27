@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\GoogleSheet;
 
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -28,13 +28,13 @@ class RecordApiHelper
     public function insertRecord($spreadsheetsId, $worksheetName, $header, $headerRow, $data)
     {
         $insertRecordEndpoint = "https://sheets.googleapis.com/v4/spreadsheets/{$spreadsheetsId}/values/{$worksheetName}!{$headerRow}:append?valueInputOption=USER_ENTERED";
-        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     public function updateRecord($spreadsheetId, $worksheetInfo, $data)
     {
         $updateRecordEndpoing = "https://sheets.googleapis.com/v4/spreadsheets/{$spreadsheetId}/values/{$worksheetInfo}?valueInputOption=USER_ENTERED";
-        return HttpHelper::request($updateRecordEndpoing, 'put', $data, $this->_defaultHeader);
+        return Http::request($updateRecordEndpoing, 'put', $data, $this->_defaultHeader);
     }
 
     public function formatArrayObject($values)

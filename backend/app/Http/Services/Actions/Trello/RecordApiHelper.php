@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Trello;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -27,7 +27,7 @@ class RecordApiHelper
     public function insertCard($data)
     {
         $insertRecordEndpoint = 'https://api.trello.com/1/cards/?idList=' . $this->_integrationDetails->listId . '&key=' . $this->_integrationDetails->clientId . '&token=' . $this->_integrationDetails->accessToken;
-        return HttpHelper::post($insertRecordEndpoint, $data);
+        return Http::request($insertRecordEndpoint, 'Post', $data);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\LionDesk;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for LionDesk integration
@@ -68,7 +68,7 @@ class LionDeskController
             "redirect_uri"  => \urldecode($requestsParams->redirectURI),
             "code"          => $requestsParams->code
         );
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
@@ -106,7 +106,7 @@ class LionDeskController
             "grant_type"    => "refresh_token",
         );
 
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
@@ -130,7 +130,7 @@ class LionDeskController
         $access_token   = $fieldsRequestParams->token_details->access_token;
         $apiEndpoint    = $this->apiEndpoint . "/custom-fields";
         $headers        = $this->setHeaders($access_token);
-        $response       = HttpHelper::get($apiEndpoint, null, $headers);
+        $response       = Http::request($apiEndpoint, 'Get', null, $headers);
         if (isset($response)) {
             if (isset($response->data)) {
                 foreach ($response->data as $customField) {
@@ -160,7 +160,7 @@ class LionDeskController
         $access_token      = $fieldsRequestParams->token_details->access_token;
         $apiEndpoint       = $this->apiEndpoint . "/tags";
         $headers           = $this->setHeaders($access_token);
-        $response          = HttpHelper::get($apiEndpoint, null, $headers);
+        $response          = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response)) {
             if (isset($response->data)) {

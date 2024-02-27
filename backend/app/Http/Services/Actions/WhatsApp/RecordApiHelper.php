@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\WhatsApp;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -52,7 +52,7 @@ class RecordApiHelper
             ]
         ];
 
-        return HttpHelper::post($apiEndPoint, $data, $header);
+        return Http::request($apiEndPoint, 'Post', $data, $header);
     }
 
     public function sendMessageWithText(
@@ -82,7 +82,7 @@ class RecordApiHelper
             ]
         ];
 
-        return HttpHelper::post($apiEndPoint, $data, $header);
+        return Http::request($apiEndPoint, 'Post', $data, $header);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

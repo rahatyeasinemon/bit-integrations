@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Livestorm;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Livestorm integration
@@ -43,7 +43,7 @@ class LivestormController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key);
         $apiEndpoint  = $this->_apiEndpoint . "/ping";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!count((array) $response)) {
             wp_send_json_success('Authentication successful', 200);
@@ -59,7 +59,7 @@ class LivestormController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key);
         $apiEndpoint  = $this->_apiEndpoint . "/events";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->data)) {
             $data = [
@@ -99,7 +99,7 @@ class LivestormController
         $this->checkValidation($fieldsRequestParams, $fieldsRequestParams->event_id);
         $this->setHeaders($fieldsRequestParams->api_key);
         $apiEndpoint  = $this->_apiEndpoint . "/events/{$fieldsRequestParams->event_id}/sessions";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->data)) {
             $sessions = [];

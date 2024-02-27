@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Salesforce;
 
 use WP_Error;
 use BitApps\BTCBI\Http\Controllers\FlowController;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 class SalesforceController
 {
@@ -45,7 +45,7 @@ class SalesforceController
             'redirect_uri' => \urldecode($requestsParams->redirectURI),
             'format' => 'json',
         ];
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
@@ -111,7 +111,7 @@ class SalesforceController
         $apiEndpoint                            = "{$customFieldRequestParams->tokenDetails->instance_url}/services/data/v37.0/sobjects/{$action}/describe";
         $authorizationHeader['Authorization']   = "Bearer {$customFieldRequestParams->tokenDetails->access_token}";
         $authorizationHeader['Content-Type']    = 'application/json';
-        $apiResponse                            = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse                            = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!property_exists((object) $apiResponse, 'fields')) {
             wp_send_json_error($apiResponse, 400);
@@ -165,7 +165,7 @@ class SalesforceController
 
         $authorizationHeader['Authorization'] = "Bearer {$campaignRequestParams->tokenDetails->access_token}";
         $authorizationHeader['Content-Type'] = 'application/json';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (property_exists($apiResponse, 'objectDescribe')) {
             $response['allCampaignLists'] = $apiResponse->recentItems;
@@ -205,7 +205,7 @@ class SalesforceController
 
         $authorizationHeader['Authorization'] = "Bearer {$campaignRequestParams->tokenDetails->access_token}";
         $authorizationHeader['Content-Type'] = 'application/json';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (property_exists($apiResponse, 'recentItems')) {
             $response['leadLists'] = $apiResponse->recentItems;
@@ -244,7 +244,7 @@ class SalesforceController
         $apiEndpoint = "{$campaignRequestParams->tokenDetails->instance_url}/services/data/v37.0/sobjects/contact";
         $authorizationHeader['Authorization'] = "Bearer {$campaignRequestParams->tokenDetails->access_token}";
         $authorizationHeader['Content-Type'] = 'application/json';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (property_exists($apiResponse, 'recentItems')) {
             $response['contactLists'] = $apiResponse->recentItems;
@@ -283,7 +283,7 @@ class SalesforceController
         $apiEndpoint = "{$campaignRequestParams->tokenDetails->instance_url}/services/data/v37.0/sobjects/Account";
         $authorizationHeader['Authorization'] = "Bearer {$campaignRequestParams->tokenDetails->access_token}";
         $authorizationHeader['Content-Type'] = 'application/json';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (property_exists($apiResponse, 'recentItems')) {
             $response['accountLists'] = $apiResponse->recentItems;
@@ -320,7 +320,7 @@ class SalesforceController
             'refresh_token' => $tokenDetails->refresh_token
         ];
 
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

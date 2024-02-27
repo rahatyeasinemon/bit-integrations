@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\GetResponse;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -39,9 +39,9 @@ class RecordApiHelper
             );
         }
 
-        $apiEndpoints = $this->baseUrl . "contacts?query[email]=$email";
+        $apiEndpoint = $this->baseUrl . "contacts?query[email]=$email";
 
-        $response = HttpHelper::get($apiEndpoints, null, $this->_defaultHeader);
+        $response = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (empty($response)) {
             return false;
@@ -52,7 +52,7 @@ class RecordApiHelper
 
     public function addContactToCampaign($auth_token, $selectedTags, $finalData, $campaign)
     {
-        $apiEndpoints = $this->baseUrl . 'contacts';
+        $apiEndpoint = $this->baseUrl . 'contacts';
         $tags         = [];
 
         if (!empty($selectedTags)) {
@@ -90,10 +90,10 @@ class RecordApiHelper
 
         if ($isExist && !empty($this->_integrationDetails->actions->update)) {
             $contactId    = $isExist[0]->contactId;
-            $apiEndpoints = $this->baseUrl . "contacts/$contactId";
-            $response     = HttpHelper::post($apiEndpoints, $requestParams, $this->_defaultHeader);
+            $apiEndpoint = $this->baseUrl . "contacts/$contactId";
+            $response     = Http::request($apiEndpoint, 'Post', $requestParams, $this->_defaultHeader);
         } else {
-            $response = HttpHelper::post($apiEndpoints, $requestParams, $this->_defaultHeader);
+            $response = Http::request($apiEndpoint, 'Post', $requestParams, $this->_defaultHeader);
         }
         return $response;
     }

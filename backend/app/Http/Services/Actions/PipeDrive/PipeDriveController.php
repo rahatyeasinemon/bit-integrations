@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\PipeDrive;
 
 use BitApps\BTCBI\Http\Services\Actions\PipeDrive\RecordApiHelper;
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for PipeDrive integration
@@ -29,9 +29,9 @@ class PipeDriveController
             );
         }
 
-        $apiEndpoints = $this->baseUrl . $requestParams->type . '?api_token=' . $requestParams->api_key;
+        $apiEndpoint = $this->baseUrl . $requestParams->type . '?api_token=' . $requestParams->api_key;
 
-        $response = HttpHelper::get($apiEndpoints, null);
+        $response = Http::request($apiEndpoint, 'Get', null);
         $formattedResponse = [];
 
         foreach ($response->data as $value) {
@@ -101,9 +101,9 @@ class PipeDriveController
 
         ];
 
-        $apiEndpoints = $this->baseUrl . $requestModule . '?api_token=' . $requestParams->api_key;
+        $apiEndpoint = $this->baseUrl . $requestModule . '?api_token=' . $requestParams->api_key;
 
-        $response = HttpHelper::get($apiEndpoints, null);
+        $response = Http::request($apiEndpoint, 'Get', null);
         $formattedResponse = [];
 
         if (isset($response->success) && $response->success) {

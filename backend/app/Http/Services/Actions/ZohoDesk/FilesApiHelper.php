@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoDesk;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Upload files
@@ -59,7 +59,7 @@ final class FilesApiHelper
                     $payload .= "\r\n";
                     $payload .= '--' . $this->_payloadBoundary . '--';
                 }
-                $uploadResponse =  HttpHelper::post($uploadFileEndpoint, $payload, $this->_defaultHeader);
+                $uploadResponse =  Http::request($uploadFileEndpoint, 'Post', $payload, $this->_defaultHeader);
             }
             return $uploadResponse;
         } elseif (file_exists("{$files}")) {
@@ -75,6 +75,6 @@ final class FilesApiHelper
             return false;
         }
         $payload .= '--' . $this->_payloadBoundary . '--';
-        return HttpHelper::post($uploadFileEndpoint, $payload, $this->_defaultHeader);
+        return Http::request($uploadFileEndpoint, 'Post', $payload, $this->_defaultHeader);
     }
 }

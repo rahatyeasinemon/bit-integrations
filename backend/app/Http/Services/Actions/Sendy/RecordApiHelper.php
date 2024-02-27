@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Sendy;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -25,7 +25,7 @@ class RecordApiHelper
         $header['Content-Type'] = 'application/x-www-form-urlencoded';
         $insertRecordEndpoint = "$sendyUrl/subscribe";
         $data['boolean'] = 'true';
-        return HttpHelper::post($insertRecordEndpoint, $data, $header);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $header);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

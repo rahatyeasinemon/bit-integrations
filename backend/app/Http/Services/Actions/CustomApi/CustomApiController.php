@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\CustomApi;
 
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for webhooks
@@ -41,15 +41,15 @@ class CustomApiController
         if ($url) {
             switch (strtoupper($method)) {
                 case 'GET':
-                    $response = HttpHelper::get($url, $payload, $headers);
+                    $response = Http::request($url, 'Get', $payload, $headers);
                     break;
 
                 case 'POST':
-                    $response = HttpHelper::post($url, $payload, $headers);
+                    $response = Http::request($url, 'Post', $payload, $headers);
                     break;
 
                 default:
-                    $response = HttpHelper::request($url, $method, $payload, $headers);
+                    $response = Http::request($url, $method, $payload, $headers);
                     break;
             }
         }

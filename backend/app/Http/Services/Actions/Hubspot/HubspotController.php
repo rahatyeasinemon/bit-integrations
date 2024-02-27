@@ -5,7 +5,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Hubspot;
 use WP_Error;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Http\Controllers\FlowController;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 final class HubspotController
 {
@@ -27,7 +27,7 @@ final class HubspotController
             'authorization' => 'Bearer ' . $requestParams->api_key
         ];
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($apiResponse->results)) {
             wp_send_json_success('Authorization successfull', 200);
@@ -47,7 +47,7 @@ final class HubspotController
             'authorization' => 'Bearer ' . $requestParams->api_key
         ];
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($apiResponse->results) && !empty($apiResponse->results)) {
             foreach ($apiResponse->results as $field) {
@@ -89,7 +89,7 @@ final class HubspotController
             'authorization' => 'Bearer ' . $requestParams->api_key
         ];
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($apiResponse->results) && !empty($apiResponse->results)) {
             foreach ($apiResponse->results as $owner) {
@@ -115,7 +115,7 @@ final class HubspotController
             'authorization' => 'Bearer ' . $requestParams->api_key
         ];
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($apiResponse->results) && !empty($apiResponse->results)) {
             $pipelines = $apiResponse->results;
@@ -152,7 +152,7 @@ final class HubspotController
             'authorization' => 'Bearer ' . $requestParams->api_key
         ];
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($apiResponse->results) && !empty($apiResponse->results)) {
             foreach ($apiResponse->results as $contact) {
@@ -179,7 +179,7 @@ final class HubspotController
             'authorization' => 'Bearer ' . $requestParams->api_key
         ];
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($apiResponse->results) && !empty($apiResponse->results)) {
             foreach ($apiResponse->results as $company) {

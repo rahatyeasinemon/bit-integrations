@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ZoomWebinar;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -33,7 +33,7 @@ class RecordApiHelper
         // $endPoint = "https://api.zoom.us/v2/webinars/{$webinarId}/registrants";
         $endPoint = "https://api.zoom.us/v2/webinars/{$webinarId}/registrants";
 
-        $getRegistrants = HttpHelper::get($endPoint, null, $header);
+        $getRegistrants = Http::request($endPoint, 'Get', null, $header);
 
         // get registrant id using email from getRegistrants
         $registrantId = null;
@@ -52,7 +52,7 @@ class RecordApiHelper
             // https://api.zoom.us/v2/webinars/{webinarId}/registrants/{registrantId}
             $endPointDelete = "https://api.zoom.us/v2/webinars/{$webinarId}/registrants/{$registrantId}";
 
-            HttpHelper::request($endPointDelete, 'DELETE', null, $headerDel);
+            Http::request($endPointDelete, 'DELETE', null, $headerDel);
         }
     }
 
@@ -63,7 +63,7 @@ class RecordApiHelper
         $header["Content-Type"] = "application/json";
         // https://api.zoom.us/v2/webinars/{webinarId}/registrants
         $createWebinarRegistrantEndpoint = 'https://api.zoom.us/v2/webinars/' . $webinarId . '/registrants';
-        return $res = HttpHelper::post($createWebinarRegistrantEndpoint, $data, $header);
+        return $res = Http::request($createWebinarRegistrantEndpoint, 'Post', $data, $header);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -97,7 +97,7 @@ class RecordApiHelper
         $header["Authorization"] = "Bearer " . $tokenDetails->access_token;
         $header["Content-Type"] = "application/json";
         $createUserEndpoint = 'https://api.zoom.us/v2/users';
-        return $res = HttpHelper::post($createUserEndpoint, $data, $header);
+        return $res = Http::request($createUserEndpoint, 'Post', $data, $header);
 
     }
 
@@ -110,7 +110,7 @@ class RecordApiHelper
         ];
         $endPoint = "https://api.zoom.us/v2/users";
 
-        $getAllUsers = HttpHelper::get($endPoint, null, $header);
+        $getAllUsers = Http::request($endPoint, 'Get', null, $header);
         $userId = null;
         foreach ($getAllUsers->users as $user) {
             if ($user->email == $finalData['email']) {
@@ -125,7 +125,7 @@ class RecordApiHelper
                 'Content-Type' => 'application/json'
             ];
             $endPointDelete = "https://api.zoom.us/v2/users/{$userId}";
-            HttpHelper::request($endPointDelete, 'DELETE', null, $headerDel);
+            Http::request($endPointDelete, 'DELETE', null, $headerDel);
         }
     }
 

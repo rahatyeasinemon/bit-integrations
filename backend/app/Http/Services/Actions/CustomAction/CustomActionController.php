@@ -4,7 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\CustomAction;
 
 use BitApps\BTCBI\Util\Common;
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 class CustomActionController

@@ -2,7 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Mailify;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 class RecordApiHelper
@@ -25,14 +25,14 @@ class RecordApiHelper
     public function updateContact($id, $data, $existContact, $selectedList)
     {
         $contactData = $data;
-        $apiEndpoints = "https://mailifyapis.com/v1/lists/{$selectedList}/contacts/{$id}";
-        return  HttpHelper::request($apiEndpoints, 'PUT', json_encode($contactData), $this->_defaultHeader);
+        $apiEndpoint = "https://mailifyapis.com/v1/lists/{$selectedList}/contacts/{$id}";
+        return  Http::request($apiEndpoint, 'PUT', json_encode($contactData), $this->_defaultHeader);
     }
 
     public function addContact($selectedList, $finalData)
     {
-        $apiEndpoints = "https://mailifyapis.com/v1/lists/{$selectedList}/contacts";
-        $res =  HttpHelper::post($apiEndpoints, json_encode($finalData), $this->_defaultHeader);
+        $apiEndpoint = "https://mailifyapis.com/v1/lists/{$selectedList}/contacts";
+        $res =  Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->_defaultHeader);
         return $res;
     }
 
@@ -62,8 +62,8 @@ class RecordApiHelper
     //Check if a contact exists through email.
     private function existContact($selectedList, $email)
     {
-        $apiEndpoints = "https://mailifyapis.com/v1/lists/{$selectedList}/contacts?email={$email}";
-        return HttpHelper::get($apiEndpoints, null, $this->_defaultHeader);
+        $apiEndpoint = "https://mailifyapis.com/v1/lists/{$selectedList}/contacts?email={$email}";
+        return Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
     }
 
     public function execute($selectedList, $fieldValues, $fieldMap, $actions)

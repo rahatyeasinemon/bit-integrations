@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoProjects;
 
 use BitApps\BTCBI\Util\IpTool;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -52,7 +52,7 @@ class ZohoProjectsController
             'redirect_uri' => \urldecode($requestsParams->redirectURI),
             'code' => $requestsParams->code
         ];
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
@@ -87,7 +87,7 @@ class ZohoProjectsController
         $portalsMetaApiEndpoint = "https://projectsapi.zoho.{$queryParams->dataCenter}/restapi/portals/";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $portalsMetaResponse = HttpHelper::get($portalsMetaApiEndpoint, null, $authorizationHeader);
+        $portalsMetaResponse = Http::request($portalsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!is_wp_error($portalsMetaResponse)) {
             $allPortals = [];
@@ -139,7 +139,7 @@ class ZohoProjectsController
         $projectsMetaApiEndpoint = "https://projectsapi.zoho.{$queryParams->dataCenter}/restapi/portal/{$queryParams->portalId}/projects/?range=1000&status=active";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $projectsMetaResponse = HttpHelper::get($projectsMetaApiEndpoint, null, $authorizationHeader);
+        $projectsMetaResponse = Http::request($projectsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         // wp_send_json_success($projectsMetaResponse, 200);
 
@@ -194,7 +194,7 @@ class ZohoProjectsController
         $milestonesMetaApiEndpoint = "https://projectsapi.zoho.{$queryParams->dataCenter}/restapi/portal/{$queryParams->portalId}/projects/{$queryParams->projectId}/milestones/?range=1000";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $milestonesMetaResponse = HttpHelper::get($milestonesMetaApiEndpoint, null, $authorizationHeader);
+        $milestonesMetaResponse = Http::request($milestonesMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!is_wp_error($milestonesMetaResponse)) {
             $allMilestones = [];
@@ -252,7 +252,7 @@ class ZohoProjectsController
         }
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $tasklistsMetaResponse = HttpHelper::get($tasklistsMetaApiEndpoint, null, $authorizationHeader);
+        $tasklistsMetaResponse = Http::request($tasklistsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!is_wp_error($tasklistsMetaResponse)) {
             $allTasklists = [];
@@ -312,7 +312,7 @@ class ZohoProjectsController
         }
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $tasksMetaResponse = HttpHelper::get($tasksMetaApiEndpoint, null, $authorizationHeader);
+        $tasksMetaResponse = Http::request($tasksMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!is_wp_error($tasksMetaResponse)) {
             $allTasks = [];
@@ -443,7 +443,7 @@ class ZohoProjectsController
 
         $customFieldsMetaApiEndpoint = "https://projectsapi.zoho.{$dataCenter}/restapi/portal/{$portalId}/projects/customfields/";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$access_token}";
-        $customFieldsMetaResponse = HttpHelper::get($customFieldsMetaApiEndpoint, null, $authorizationHeader);
+        $customFieldsMetaResponse = Http::request($customFieldsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!is_wp_error($customFieldsMetaResponse)) {
             $fields = $customFieldsMetaResponse->project_custom_fields;
@@ -569,7 +569,7 @@ class ZohoProjectsController
         if ($projectId) {
             $customFieldsMetaApiEndpoint = "https://projectsapi.zoho.{$dataCenter}/restapi/portal/{$portalId}/projects/{$projectId}/tasklayouts";
             $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$access_token}";
-            $customFieldsMetaResponse = HttpHelper::get($customFieldsMetaApiEndpoint, null, $authorizationHeader);
+            $customFieldsMetaResponse = Http::request($customFieldsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
             if (!is_wp_error($customFieldsMetaResponse)) {
                 $sections = $customFieldsMetaResponse->section_details;
@@ -629,7 +629,7 @@ class ZohoProjectsController
             // Custom Fields
             $customFieldsMetaApiEndpoint = "https://projectsapi.zoho.{$dataCenter}/restapi/portal/{$portalId}/projects/{$projectId}/bugs/customfields/";
             $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$access_token}";
-            $customFieldsMetaResponse = HttpHelper::get($customFieldsMetaApiEndpoint, null, $authorizationHeader);
+            $customFieldsMetaResponse = Http::request($customFieldsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
             if (!is_wp_error($customFieldsMetaResponse)) {
                 $fields = $customFieldsMetaResponse->customfields;
@@ -651,7 +651,7 @@ class ZohoProjectsController
             // Default Fields
             $defaultFieldsMetaApiEndpoint = "https://projectsapi.zoho.{$dataCenter}/restapi/portal/{$portalId}/projects/{$projectId}/bugs/defaultfields/";
             $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$access_token}";
-            $defaultFieldsMetaResponse = HttpHelper::get($defaultFieldsMetaApiEndpoint, null, $authorizationHeader);
+            $defaultFieldsMetaResponse = Http::request($defaultFieldsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
             if (!is_wp_error($defaultFieldsMetaResponse)) {
                 $response['defaultfields'] = $defaultFieldsMetaResponse->defaultfields;
@@ -695,7 +695,7 @@ class ZohoProjectsController
         }
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $usersMetaResponse = HttpHelper::get($usersMetaApiEndpoint, null, $authorizationHeader);
+        $usersMetaResponse = Http::request($usersMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         // wp_send_json_success($usersMetaResponse, 200);
 
@@ -747,7 +747,7 @@ class ZohoProjectsController
         $taskLaysMetaApiEndpoint = "https://projectsapi.zoho.{$queryParams->dataCenter}/restapi/portal/{$queryParams->portalId}/tasklayouts";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $taskLaysMetaResponse = HttpHelper::get($taskLaysMetaApiEndpoint, null, $authorizationHeader);
+        $taskLaysMetaResponse = Http::request($taskLaysMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         // wp_send_json_success($taskLaysMetaResponse, 200);
 
@@ -798,7 +798,7 @@ class ZohoProjectsController
         $groupsMetaApiEndpoint = "https://projectsapi.zoho.{$queryParams->dataCenter}/restapi/portal/{$queryParams->portalId}/projects/groups";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $groupsMetaResponse = HttpHelper::get($groupsMetaApiEndpoint, null, $authorizationHeader);
+        $groupsMetaResponse = Http::request($groupsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         // wp_send_json_success($groupsMetaResponse, 200);
 
@@ -850,7 +850,7 @@ class ZohoProjectsController
         $tagsMetaApiEndpoint = "https://projectsapi.zoho.{$queryParams->dataCenter}/api/v3/portal/{$queryParams->portalId}/tags";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $tagsMetaResponse = HttpHelper::get($tagsMetaApiEndpoint, null, $authorizationHeader);
+        $tagsMetaResponse = Http::request($tagsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         // wp_send_json_success($tagsMetaResponse, 200);
 
@@ -900,7 +900,7 @@ class ZohoProjectsController
             'refresh_token' => $tokenDetails->refresh_token,
         ];
 
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

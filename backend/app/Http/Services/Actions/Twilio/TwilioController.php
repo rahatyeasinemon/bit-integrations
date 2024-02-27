@@ -8,7 +8,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Twilio;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 final class TwilioController
@@ -44,7 +44,7 @@ final class TwilioController
         ];
         $apiEndpoint = self::$apiBaseUri . '/Accounts';
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         $xml = simplexml_load_string($apiResponse);
         $json = json_encode($xml);

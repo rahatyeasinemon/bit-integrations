@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ElasticEmail;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 class RecordApiHelper
@@ -28,7 +28,7 @@ class RecordApiHelper
         ];
 
         $insertRecordEndpoint = "https://api.elasticemail.com/v4/contacts?$listName";
-        return HttpHelper::post($insertRecordEndpoint, $tmpData, $header);
+        return Http::request($insertRecordEndpoint, 'Post', $tmpData, $header);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

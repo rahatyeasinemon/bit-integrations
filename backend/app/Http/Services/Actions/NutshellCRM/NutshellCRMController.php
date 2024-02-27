@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\NutshellCRM;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for NutshellCRM integration
@@ -50,7 +50,7 @@ class NutshellCRMController
             'id'        => 'randomstring',
         ];
 
-        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response       = Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
 
 
         if (isset($response->result)) {
@@ -75,7 +75,7 @@ class NutshellCRMController
             'id'        => 'randomstring',
         ];
 
-        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response       = Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $company) {
@@ -105,7 +105,7 @@ class NutshellCRMController
             'id'        => 'randomstring',
         ];
 
-        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response       = Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $contact) {
@@ -135,7 +135,7 @@ class NutshellCRMController
             'id'        => 'randomstring',
         ];
 
-        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response       = Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $product) {
@@ -165,7 +165,7 @@ class NutshellCRMController
             'id'        => 'randomstring',
         ];
 
-        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response       = Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $source) {
@@ -195,7 +195,7 @@ class NutshellCRMController
             'id'        => 'randomstring',
         ];
 
-        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response       = Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result->Leads as $tag) {
@@ -225,7 +225,7 @@ class NutshellCRMController
             'id'        => 'randomstring',
         ];
 
-        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response       = Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $companyType) {

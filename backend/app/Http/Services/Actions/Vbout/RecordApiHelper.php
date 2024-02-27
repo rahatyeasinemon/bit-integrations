@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Vbout;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -30,19 +30,19 @@ class RecordApiHelper
 
     public function getContactByEmail($auth_token, $email, $listId)
     {
-        $apiEndpoints = $this->baseUrl . 'emailmarketing/getcontactbyemail?key=' . $auth_token . '&email=' . $email . '&list_id=' . $listId;
-        $response = HttpHelper::post($apiEndpoints, null);
+        $apiEndpoint = $this->baseUrl . 'emailmarketing/getcontactbyemail?key=' . $auth_token . '&email=' . $email . '&list_id=' . $listId;
+        $response = Http::request($apiEndpoint, 'Post', null);
         return $response;
     }
     public function editContact($auth_token)
     {
-        $apiEndpoints = $this->baseUrl . 'emailmarketing/editcontact?key=' . $auth_token;
-        return $apiEndpoints;
+        $apiEndpoint = $this->baseUrl . 'emailmarketing/editcontact?key=' . $auth_token;
+        return $apiEndpoint;
     }
 
     public function addContact($auth_token, $listId, $contactStatus, $finalData, $emailId)
     {
-        $apiEndpoints = $this->baseUrl . 'emailmarketing/addcontact?key=' . $auth_token;
+        $apiEndpoint = $this->baseUrl . 'emailmarketing/addcontact?key=' . $auth_token;
 
         $requestParams = [
             'email' => $finalData[$emailId],
@@ -63,10 +63,10 @@ class RecordApiHelper
         $exitContact = $this->getContactByEmail($auth_token, $finalData[$emailId], $listId);
         $response = [];
         if (isset($exitContact->response->data->contact->errorCode)) {
-            $response = HttpHelper::post($apiEndpoints, $requestParams);
+            $response = Http::request($apiEndpoint, 'Post', $requestParams);
         } elseif (!isset($exitContact->response->data->contact->errorCode) && !empty($this->_integrationDetails->actions->update)) {
             $requestParams['id'] = $exitContact->response->data->contact[0]->id;
-            $response = HttpHelper::post($this->editContact($auth_token), $requestParams);
+            $response = Http::request($this->editContact($auth_token), 'Post', $requestParams);
             $response->update = true;
         } else {
             return ['success' => false, 'message' => 'Your contact already exists in list!', 'code' => 400];

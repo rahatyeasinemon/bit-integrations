@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\AgiledCRM;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for AgiledCRM integration
@@ -29,7 +29,7 @@ class AgiledCRMController
             'Brand' => $brand
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($response->data[0]->id)) {
             wp_send_json_success('Authentication successful', 200);
@@ -51,7 +51,7 @@ class AgiledCRMController
             'Brand' => $brand
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($response->data[0]->id)) {
             foreach ($response->data as $owner) {
@@ -79,7 +79,7 @@ class AgiledCRMController
             'Brand' => $brand
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!empty($response->data)) {
             foreach ($response->data as $account) {
@@ -107,7 +107,7 @@ class AgiledCRMController
             'Brand' => $brand
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!empty($response->data)) {
             foreach ($response->data as $source) {
@@ -135,7 +135,7 @@ class AgiledCRMController
             'Brand' => $brand
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!empty($response->data)) {
             foreach ($response->data as $status) {
@@ -163,7 +163,7 @@ class AgiledCRMController
             'Brand' => $brand
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!empty($response->data)) {
             foreach ($response->data as $lifeCycleStage) {
@@ -191,7 +191,7 @@ class AgiledCRMController
             'Brand' => $brand
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!empty($response->data)) {
             foreach ($response->data as $pipeline) {
@@ -220,7 +220,7 @@ class AgiledCRMController
             'Brand' => $brand
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!empty($response->data)) {
             foreach ($response->data as $pipelineStage) {

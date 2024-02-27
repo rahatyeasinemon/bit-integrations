@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Drip;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -31,7 +31,7 @@ class RecordApiHelper
     {
         $insertRecordEndpoint = "{$this->_apiEndpoint}/{$account_id}/{$method}";
 
-        $res = HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        $res = Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
         return $res;
     }
 

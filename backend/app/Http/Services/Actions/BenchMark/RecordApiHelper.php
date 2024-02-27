@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\BenchMark;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -69,7 +69,7 @@ class RecordApiHelper
             }
         }';
 
-        return  HttpHelper::post($apiEndpoint, $body, $headers);
+        return  Http::request($apiEndpoint, 'Post', $body, $headers);
     }
 
     //for updating contacts data through email id.
@@ -120,7 +120,7 @@ class RecordApiHelper
 
         $updateRecordEndpoint = "https://clientapi.benchmarkemail.com/Contact/{$listId}/ContactDetails/{$id}";
 
-        return  HttpHelper::request($updateRecordEndpoint, 'PATCH', $body, $headers);
+        return  Http::request($updateRecordEndpoint, 'PATCH', $body, $headers);
     }
 
     //Check if a contact exists through email.
@@ -133,7 +133,7 @@ class RecordApiHelper
         $apiEndpoint = "https://clientapi.benchmarkemail.com/Contact/ContactDetails?" . $queries;
 
         $authorizationHeader['AuthToken'] = $this->_defaultHeader;
-        return HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        return Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
     }
 
 

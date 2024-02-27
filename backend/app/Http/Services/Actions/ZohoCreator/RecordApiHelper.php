@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoCreator;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Util\DateTimeHelper;
 use BitApps\BTCBI\Util\ApiResponse as UtilApiResponse;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
@@ -35,21 +35,21 @@ class RecordApiHelper
     {
         $insertRecordEndpoint = "https://creator.zoho.{$dataCenter}/api/v2/{$accountOwner}/{$applicationId}/form/{$formId}";
 
-        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     public function updateRecord($dataCenter, $accountOwner, $applicationId, $reportId, $data)
     {
         $insertRecordEndpoint = "https://creator.zoho.{$dataCenter}/api/v2/{$accountOwner}/{$applicationId}/report/{$reportId}";
 
-        return HttpHelper::request($insertRecordEndpoint, 'PATCH', $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'PATCH', $data, $this->_defaultHeader);
     }
 
     private function getAllReports($dataCenter, $accountOwner, $applicationId)
     {
         $getReportsEndpoint = "https://creator.zoho.{$dataCenter}/api/v2/{$accountOwner}/{$applicationId}/reports";
 
-        return HttpHelper::get($getReportsEndpoint, null, $this->_defaultHeader);
+        return Http::request($getReportsEndpoint, 'Get', null, $this->_defaultHeader);
     }
 
     private function testDate($date)

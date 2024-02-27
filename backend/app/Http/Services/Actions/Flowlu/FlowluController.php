@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Flowlu;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Flowlu integration
@@ -41,7 +41,7 @@ class FlowluController
         $this->comapnyName  = $fieldsRequestParams->company_name;
         $apiKey             = $fieldsRequestParams->api_key;
         $apiEndpoint        = $this->setApiEndpoint() . "/module/crm/account?api_key={$apiKey}";
-        $response           = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response           = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->error)) {
             wp_send_json_success('Authentication successful', 200);
@@ -73,7 +73,7 @@ class FlowluController
         $this->comapnyName  = $fieldsRequestParams->company_name;
         $apiKey             = $fieldsRequestParams->api_key;
         $apiEndpoint        = $this->setApiEndpoint() . "/module/{$action}?api_key={$apiKey}";
-        $response           = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response           = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->error)) {
             $fieldMap   = [];
@@ -93,7 +93,7 @@ class FlowluController
 
             if (isset($fieldsetId)) {
                 $customFieldEndpoint = $this->setApiEndpoint() . "/module/customfields/fields/list?api_key={$apiKey}";
-                $customFieldResponse = HttpHelper::get($customFieldEndpoint, null, $this->_defaultHeader);
+                $customFieldResponse = Http::request($customFieldEndpoint, 'Get', null, $this->_defaultHeader);
 
                 if (!isset($customFieldResponse->error)) {
                     foreach ($customFieldResponse->response->items as $field) {
@@ -123,7 +123,7 @@ class FlowluController
         $this->comapnyName  = $fieldsRequestParams->company_name;
         $apiKey             = $fieldsRequestParams->api_key;
         $apiEndpoint        = $this->setApiEndpoint() . "/module/crm/account_category/list?api_key={$apiKey}";
-        $response           = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response           = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->error)) {
             $accountCategories = [];
@@ -149,7 +149,7 @@ class FlowluController
         $this->comapnyName  = $fieldsRequestParams->company_name;
         $apiKey             = $fieldsRequestParams->api_key;
         $apiEndpoint        = $this->setApiEndpoint() . "/module/crm/industry/list?api_key={$apiKey}";
-        $response           = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response           = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->error)) {
             $industries = [];
@@ -175,7 +175,7 @@ class FlowluController
         $this->comapnyName  = $fieldsRequestParams->company_name;
         $apiKey             = $fieldsRequestParams->api_key;
         $apiEndpoint        = $this->setApiEndpoint() . "/module/crm/pipeline/list?api_key={$apiKey}";
-        $response           = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response           = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->error)) {
             $pipelines = [];
@@ -201,7 +201,7 @@ class FlowluController
         $this->comapnyName  = $fieldsRequestParams->company_name;
         $apiKey             = $fieldsRequestParams->api_key;
         $apiEndpoint        = $this->setApiEndpoint() . "/module/crm/pipeline_stage/list?api_key={$apiKey}";
-        $response           = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response           = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->error)) {
             $stages = [];
@@ -229,7 +229,7 @@ class FlowluController
         $this->comapnyName  = $fieldsRequestParams->company_name;
         $apiKey             = $fieldsRequestParams->api_key;
         $apiEndpoint        = $this->setApiEndpoint() . "/module/crm/source/list?api_key={$apiKey}";
-        $response           = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response           = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->error)) {
             $sources = [];
@@ -255,7 +255,7 @@ class FlowluController
         $this->comapnyName  = $fieldsRequestParams->company_name;
         $apiKey             = $fieldsRequestParams->api_key;
         $apiEndpoint        = $this->setApiEndpoint() . "/module/crm/account/list?api_key={$apiKey}";
-        $response           = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response           = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->error)) {
             $customers = [];
@@ -281,7 +281,7 @@ class FlowluController
         $this->comapnyName  = $fieldsRequestParams->company_name;
         $apiKey             = $fieldsRequestParams->api_key;
         $apiEndpoint        = $this->setApiEndpoint() . "/module/core/user/list?api_key={$apiKey}";
-        $response           = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response           = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->error)) {
             $managers = [];
@@ -306,7 +306,7 @@ class FlowluController
         $this->comapnyName  = $fieldsRequestParams->company_name;
         $apiKey             = $fieldsRequestParams->api_key;
         $apiEndpoint        = $this->setApiEndpoint() . "/module/st/stages/list?api_key={$apiKey}";
-        $response           = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response           = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->error)) {
             $stages = [];
@@ -331,7 +331,7 @@ class FlowluController
         $this->comapnyName  = $fieldsRequestParams->company_name;
         $apiKey             = $fieldsRequestParams->api_key;
         $apiEndpoint        = $this->setApiEndpoint() . "/module/st/portfolio/list?api_key={$apiKey}";
-        $response           = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response           = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->error)) {
             $portfolios = [];
@@ -356,7 +356,7 @@ class FlowluController
         $this->comapnyName  = $fieldsRequestParams->company_name;
         $apiKey             = $fieldsRequestParams->api_key;
         $apiEndpoint        = $this->setApiEndpoint() . "/module/crm/lead/list?api_key={$apiKey}";
-        $response           = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response           = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->error)) {
             $portfolios = [];

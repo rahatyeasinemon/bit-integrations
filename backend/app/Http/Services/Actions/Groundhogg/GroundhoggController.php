@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Groundhogg;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Groundhogg integration
@@ -35,7 +35,7 @@ class GroundhoggController
         ];
 
         $apiEndpoint = $requestParams->domainName . '/index.php?rest_route=/gh/v3/tags';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if ($apiResponse->status === 'success') {
             $apiResponse;
@@ -69,7 +69,7 @@ class GroundhoggController
         ];
         $apiEndpoint = $requestParams->domainName . '/index.php?rest_route=/gh/v4/contacts';
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if ($apiResponse->status === 'success') {
             $apiResponse;

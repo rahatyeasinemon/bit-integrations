@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoRecruit;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 
 /**
@@ -55,7 +55,7 @@ class ZohoRecruitController
             'redirect_uri' => \urldecode($requestsParams->redirectURI),
             'code' => $requestsParams->code
         ];
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
@@ -102,7 +102,7 @@ class ZohoRecruitController
         ];
         $modulesMetaApiEndpoint = "https://recruit.zoho.{$queryParams->dataCenter}/recruit/private/json/Info/getModules?authtoken={$queryParams->tokenDetails->access_token}&scope=ZohoRecruit.modules.all&version=2";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $modulesMetaResponse = HttpHelper::get($modulesMetaApiEndpoint, null, $authorizationHeader);
+        $modulesMetaResponse = Http::request($modulesMetaApiEndpoint, 'Get', null, $authorizationHeader);
         if (!is_wp_error($modulesMetaResponse) && (empty($modulesMetaResponse->status) || (!empty($modulesMetaResponse->status) && $modulesMetaResponse->status !== 'error'))) {
             $retriveModuleData = $modulesMetaResponse->response->result->row;
             $allModules = [
@@ -164,7 +164,7 @@ class ZohoRecruitController
         $notesMetaApiEndpoint = "https: //recruit.zoho.com/recruit/private/json/Notes/getNoteTypes?authtoken={$queryParams->tokenDetails->access_token}&scope=ZohoRecruit.modules.call.all&version=2";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $notesMetaResponse = HttpHelper::get($notesMetaApiEndpoint, null, $authorizationHeader);
+        $notesMetaResponse = Http::request($notesMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         // wp_send_json_success($notesMetaResponse, 200);
 
@@ -277,7 +277,7 @@ class ZohoRecruitController
         $fieldsMetaApiEndpoint = "https://recruit.zoho.{$queryParams->dataCenter}/recruit/private/json/{$queryParams->module}/getFields?authtoken={$queryParams->tokenDetails->access_token}&scope=recruitapi&version=2";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $requiredParams['module'] = $queryParams->module;
-        $fieldsMetaResponse = HttpHelper::get($fieldsMetaApiEndpoint, $requiredParams, $authorizationHeader);
+        $fieldsMetaResponse = Http::request($fieldsMetaApiEndpoint, 'Get', $requiredParams, $authorizationHeader);
 
         if (!is_wp_error($fieldsMetaResponse) && (empty($fieldsMetaResponse->status) || (!empty($fieldsMetaResponse->status) && $fieldsMetaResponse->status !== 'error'))) {
             $retriveFieldsData = $fieldsMetaResponse->{$queryParams->module}->section;
@@ -428,7 +428,7 @@ class ZohoRecruitController
             'refresh_token' => $tokenDetails->refresh_token,
         ];
 
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoCRM;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -61,7 +61,7 @@ final class FilesApiHelper
             return false;
         }
         $payload .= '--' . $this->_payloadBoundary . '--';
-        $uploadResponse = HttpHelper::post($uploadFileEndpoint, $payload, $this->_defaultHeader);
+        $uploadResponse = Http::request($uploadFileEndpoint, 'Post', $payload, $this->_defaultHeader);
         if (!$isAttachment) {
             $uploadedFiles = [];
             if (!empty($uploadResponse->data) && \is_array($uploadResponse->data)) {

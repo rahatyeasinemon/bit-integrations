@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\GoogleDrive;
 
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 class RecordApiHelper
 {
@@ -28,7 +28,7 @@ class RecordApiHelper
             "Authorization" => 'Bearer ' . $this->token,
             "Content-Type"  => 'multipart/related; boundary="' . $boundary . '"',
         ];
-        return HttpHelper::post($apiEndpoint, $this->getBody($folder, $filePath, $boundary), $headers);
+        return Http::request($apiEndpoint, 'Post', $this->getBody($folder, $filePath, $boundary), $headers);
     }
 
     protected function getBody($folder, $filePath, $boundary)

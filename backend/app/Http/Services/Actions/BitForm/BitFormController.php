@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\BitForm;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\BitForm\RecordApiHelper;
 
 /**
@@ -34,7 +34,7 @@ class BitFormController
         ];
 
         $apiEndpoint = $requestParams->app_domain . '/wp-json/bitform/v1/forms';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader, ['sslverify' => false]);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader, ['sslverify' => false]);
 
         if ($apiResponse->success) {
             $apiResponse;
@@ -66,7 +66,7 @@ class BitFormController
         ];
 
         $apiEndpoint = $requestParams->app_domain . '/wp-json/bitform/v1/forms';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader, ['sslverify' => false]);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader, ['sslverify' => false]);
 
         if ($apiResponse->success) {
             wp_send_json_success($apiResponse, 200);
@@ -99,7 +99,7 @@ class BitFormController
 
         $apiEndpoint = $requestParams->app_domain . '/wp-json/bitform/v1/fields/' . $requestParams->id;
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader, ['sslverify' => false]);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader, ['sslverify' => false]);
         if ($apiResponse->success) {
             wp_send_json_success($apiResponse->fields, 200);
         } else {
@@ -126,9 +126,9 @@ class BitFormController
         }
         $response = [];
         $apiEndpoint = $this->baseUrl . "members/me?key=" . $queryParams->clientId . '&token=' . $queryParams->accessToken;
-        $getUserInfoResponse = HttpHelper::get($apiEndpoint, null);
+        $getUserInfoResponse = Http::request($apiEndpoint, 'Get', null);
         $apiEndpoint = $this->baseUrl . 'members/' . $getUserInfoResponse->username . '/boards?key=' . $queryParams->clientId . '&token=' . $queryParams->accessToken;
-        $allBoardResponse = HttpHelper::get($apiEndpoint, null);
+        $allBoardResponse = Http::request($apiEndpoint, 'Get', null);
 
         $allList = [];
         if (!is_wp_error($allBoardResponse) && empty($allBoardResponse->response->error)) {
@@ -167,7 +167,7 @@ class BitFormController
         $response = [];
 
         $apiEndpoint = $this->baseUrl . "boards/" . $queryParams->boardId . "/lists?key=" . $queryParams->clientId . '&token=' . $queryParams->accessToken;
-        $getListsResponse = HttpHelper::get($apiEndpoint, null);
+        $getListsResponse = Http::request($apiEndpoint, 'Get', null);
 
         $allList = [];
         if (!is_wp_error($getListsResponse) && empty($getListsResponse->response->error)) {

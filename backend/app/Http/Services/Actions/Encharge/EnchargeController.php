@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Encharge;
 
 use WP_Error;
 use BitApps\BTCBI\Util\IpTool;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 use BitApps\BTCBI\Http\Services\Actions\Encharge\RecordApiHelper;
 
@@ -48,7 +48,7 @@ class EnchargeController
         $apiEndpoint = self::APIENDPOINT . 'accounts/info';
         $authorizationHeader["Accept"] = 'application/json';
         $authorizationHeader["X-Encharge-Token"] = $requestsParams->api_key;
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || isset($apiResponse->error)) {
             wp_send_json_error(
@@ -80,7 +80,7 @@ class EnchargeController
         $apiEndpoint = self::APIENDPOINT . 'fields';
         $authorizationHeader["Accept"] = 'application/json';
         $authorizationHeader["X-Encharge-Token"] = $queryParams->api_key;
-        $enChargeResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $enChargeResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
         $fields = [];
         if (!is_wp_error($enChargeResponse)) {
             $allFields = $enChargeResponse->items;

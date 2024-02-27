@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\OmniSend;
 
 use BitApps\BTCBI\Http\Services\Actions\OmniSend\RecordApiHelper;
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for OmniSend integration
@@ -30,13 +30,13 @@ class OmniSendController
             );
         }
 
-        $apiEndpoints = $this->baseUrl . 'contacts';
+        $apiEndpoint = $this->baseUrl . 'contacts';
 
         $header = [
             'X-API-KEY' => $requestParams->api_key,
         ];
 
-        $response = HttpHelper::get($apiEndpoints, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
         if (isset($response->contacts)) {
             wp_send_json_success('', 200);
         } else {

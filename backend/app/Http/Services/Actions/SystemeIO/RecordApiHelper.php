@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\SystemeIO;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -43,7 +43,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . "/contacts";
 
-        $response = HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        $response = Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->defaultHeader);
 
         if (isset($this->integrationDetails->selectedTag) || !empty($this->integrationDetails->selectedTag)) {
             $this->addTag($response->id, $this->integrationDetails->selectedTag);
@@ -66,7 +66,7 @@ class RecordApiHelper
         $apiEndpoint = $this->apiUrl . "/contacts/" . $contactId . "/tags";
 
         $data['tagId'] = (int) $tag;
-        return $response = HttpHelper::post($apiEndpoint, json_encode($data), $this->defaultHeader);
+        return $response = Http::request($apiEndpoint, 'Post', json_encode($data), $this->defaultHeader);
 
     }
 

@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Mailup;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 class RecordApiHelper
@@ -22,14 +22,14 @@ class RecordApiHelper
 
     public function addSubscriber($selectedList, $selectedGroups, $finalData)
     {
-        $apiEndpoints = "https://services.mailup.com/API/v1.1/Rest/ConsoleService.svc/Console/List/{$selectedList}/Recipient";
+        $apiEndpoint = "https://services.mailup.com/API/v1.1/Rest/ConsoleService.svc/Console/List/{$selectedList}/Recipient";
 
         if (!empty($selectedGroups)) {
-            $apiEndpoints = "https://services.mailup.com/API/v1.1/Rest/ConsoleService.svc/Console/Group/{$selectedGroups}/Recipient";
+            $apiEndpoint = "https://services.mailup.com/API/v1.1/Rest/ConsoleService.svc/Console/Group/{$selectedGroups}/Recipient";
         }
 
         if (!empty($this->_integrationDetails->actions->doubleOptIn)) {
-            $apiEndpoints = $apiEndpoints . '?ConfirmEmail=true';
+            $apiEndpoint = $apiEndpoint . '?ConfirmEmail=true';
         }
 
         if (empty($finalData['Email'])) {
@@ -53,7 +53,7 @@ class RecordApiHelper
         if (!empty($customFields)) {
             $requestParams['Fields'] = $customFields;
         }
-        return HttpHelper::post($apiEndpoints, json_encode($requestParams), $this->_defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($requestParams), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

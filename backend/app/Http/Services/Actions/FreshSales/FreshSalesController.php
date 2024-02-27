@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\FreshSales;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\FreshSales\RecordApiHelper;
 
 /**
@@ -27,9 +27,9 @@ class FreshSalesController
             );
         }
 
-        $apiEndpoints   = "https://" . $requestParams->bundle_alias . "/api/settings/sales_accounts/fields";
+        $apiEndpoint   = "https://" . $requestParams->bundle_alias . "/api/settings/sales_accounts/fields";
         $headers        = ["Authorization" => "Token token=" . $requestParams->api_key];
-        $response       = HttpHelper::get($apiEndpoints, null, $headers);
+        $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->fields)) {
             wp_send_json_success(__(
@@ -73,16 +73,16 @@ class FreshSalesController
 
 
         if ($requestParams->module == 'filters') {
-            $apiEndpoints =   "https://" . $requestParams->bundle_alias . "/api/" . $requestParams->type . "/" . $requestParams->module;
+            $apiEndpoint =   "https://" . $requestParams->bundle_alias . "/api/" . $requestParams->type . "/" . $requestParams->module;
         } else {
-            $apiEndpoints =   "https://" . $requestParams->bundle_alias . "/api/" . $requestParams->module . "/view/" . $viewId;
+            $apiEndpoint =   "https://" . $requestParams->bundle_alias . "/api/" . $requestParams->module . "/view/" . $viewId;
         }
 
         $headers = [
             "Authorization" => "Token token=" . $requestParams->api_key,
         ];
 
-        $response = HttpHelper::get($apiEndpoints, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         $formattedResponse = [];
 
@@ -180,11 +180,11 @@ class FreshSalesController
             ];
             wp_send_json_success($formattedResponse, 200);
         } else {
-            $apiEndpoints =   "https://" . $requestParams->bundle_alias . "/api/settings/" . $requestModule . "/fields";
+            $apiEndpoint =   "https://" . $requestParams->bundle_alias . "/api/settings/" . $requestModule . "/fields";
             $headers = [
                 "Authorization" => "Token token=" . $requestParams->api_key,
             ];
-            $response = HttpHelper::get($apiEndpoints, null, $headers);
+            $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
             if (isset($response) && $response) {
                 foreach ($response->fields as $value) {

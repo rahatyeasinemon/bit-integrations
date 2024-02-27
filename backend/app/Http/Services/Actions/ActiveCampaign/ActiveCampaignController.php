@@ -7,8 +7,8 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ActiveCampaign;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
 use BitApps\BTCBI\Http\Services\Actions\ActiveCampaign\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -51,7 +51,7 @@ class ActiveCampaignController
 
         $apiEndpoint = self::_apiEndpoint($requestsParams->api_url, 'accounts');
         $authorizationHeader['Api-Token'] = $requestsParams->api_key;
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || empty($apiResponse)) {
             wp_send_json_error(
@@ -90,7 +90,7 @@ class ActiveCampaignController
         $requestParams = [
             'limit' => 1000,
         ];
-        $aCampaignResponse = HttpHelper::get($apiEndpoint, $requestParams, $authorizationHeader);
+        $aCampaignResponse = Http::request($apiEndpoint, 'Get', $requestParams, $authorizationHeader);
 
         $lists = [];
         if (!is_wp_error($aCampaignResponse)) {
@@ -131,7 +131,7 @@ class ActiveCampaignController
 
         $apiEndpoint = self::_apiEndpoint($queryParams->api_url, 'accounts');
         $authorizationHeader['Api-Token'] = $queryParams->api_key;
-        $aCampaignResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $aCampaignResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         $lists = [];
         if (!is_wp_error($aCampaignResponse) && isset($aCampaignResponse->accounts)) {
@@ -229,7 +229,7 @@ class ActiveCampaignController
         $requestParams = [
             'limit' => 1000,
         ];
-        $aCampaignResponse = HttpHelper::get($apiEndpoint, $requestParams, $authorizationHeader);
+        $aCampaignResponse = Http::request($apiEndpoint, 'Get', $requestParams, $authorizationHeader);
 
         $fields = [];
         if (!is_wp_error($aCampaignResponse)) {
@@ -306,7 +306,7 @@ class ActiveCampaignController
 //     $requestParams = [
 //         'limit' => 1000,
 //     ];
-//     $aCampaignResponse = HttpHelper::get($apiEndpoint, $requestParams, $authorizationHeader);
+//     $aCampaignResponse = Http::request($apiEndpoint, 'Get', $requestParams, $authorizationHeader);
 
 //     $tags = [];
 //     if (!is_wp_error($aCampaignResponse)) {

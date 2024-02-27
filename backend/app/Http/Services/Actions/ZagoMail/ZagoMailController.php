@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ZagoMail;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\ZagoMail\RecordApiHelper;
 
 /**
@@ -55,7 +55,7 @@ class ZagoMailController
 
         $apiEndpoint = self::_apiEndpoint('lists/all-lists');
 
-        $apiResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
+        $apiResponse = Http::request($apiEndpoint, 'Post', json_encode($body), $header);
 
         if ($apiResponse->status == 'error' || $apiResponse->status !== 'success') {
             wp_send_json_error(
@@ -96,7 +96,7 @@ class ZagoMailController
 
         $apiEndpoint = self::_apiEndpoint('lists/all-lists');
 
-        $zagoMailResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
+        $zagoMailResponse = Http::request($apiEndpoint, 'Post', json_encode($body), $header);
 
 
         $lists = [];
@@ -141,7 +141,7 @@ class ZagoMailController
 
         $apiEndpoint = self::_apiEndpoint('tags/get-tags');
 
-        $zagoMailResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
+        $zagoMailResponse = Http::request($apiEndpoint, 'Post', json_encode($body), $header);
 
 
         $tags = [];
@@ -187,7 +187,7 @@ class ZagoMailController
 
         $apiEndpoint =  self::_apiEndpoint('lists/get-fields?list_uid=' . $queryParams->listId);
 
-        $zagoMailResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
+        $zagoMailResponse = Http::request($apiEndpoint, 'Post', json_encode($body), $header);
 
         $fields = [];
         if ($zagoMailResponse->status == 'success') {
@@ -213,6 +213,7 @@ class ZagoMailController
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;
         $listId = $integrationDetails->listId;
+
         if (count($integrationDetails->selectedTags) > 0) {
             $tags = explode(',', $integrationDetails->selectedTags);
         }

@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\GoogleContacts;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 class RecordApiHelper
@@ -73,7 +73,7 @@ class RecordApiHelper
             ],
         ];
 
-        return HttpHelper::post($apiEndpoint, json_encode($dataNew), $headers);
+        return Http::request($apiEndpoint, 'Post', json_encode($dataNew), $headers);
     }
 
     public function searchContact($data)
@@ -89,7 +89,7 @@ class RecordApiHelper
             'readMask' => 'emailAddresses',
         ];
 
-        return HttpHelper::get($apiEndpoint, $data, $headers);
+        return Http::request($apiEndpoint, 'Get', $data, $headers);
     }
 
     public function handleUpdateContact($data, $resourceName, $eTag)
@@ -120,7 +120,7 @@ class RecordApiHelper
             ],
         ];
 
-        return HttpHelper::request($apiEndpoint, 'PATCH', json_encode($dataNew), $headers);
+        return Http::request($apiEndpoint, 'PATCH', json_encode($dataNew), $headers);
     }
 
     public function handleUploadPhoto($imageLocation, $resourceName)
@@ -141,7 +141,7 @@ class RecordApiHelper
             'personFields' => 'addresses,biographies,emailAddresses,names,phoneNumbers'
         ];
 
-        return HttpHelper::request($apiEndpoint, 'PATCH', json_encode($dataNew), $headers);
+        return Http::request($apiEndpoint, 'PATCH', json_encode($dataNew), $headers);
     }
 
     public function executeRecordApi($integrationId, $fieldValues, $fieldMap, $actions, $mainAction)

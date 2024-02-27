@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Groundhogg;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -88,11 +88,11 @@ class RecordApiHelper
             ];
         }
 
-        $response = HttpHelper::post($apiEndpoint, $finalData, $authorizationHeader);
+        $response = Http::request($apiEndpoint, 'Post', $finalData, $authorizationHeader);
         if (isset($noteData)) {
             $noteData[0]['object_id'] = $response->contact->ID;
             $apiEndpoint = $integrationDetails->domainName . '/index.php?rest_route=/gh/v4/notes/';
-            return $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $noteData]), $authorizationHeader);
+            return $response = Http::request($apiEndpoint, 'Post', json_encode(['data' => $noteData]), $authorizationHeader);
         } else {
             return $response;
         }
@@ -116,7 +116,7 @@ class RecordApiHelper
         ];
 
         $apiEndpoint = $integrationDetails->domainName . '/index.php?rest_route=/gh/v3/tags';
-        return HttpHelper::post($apiEndpoint, $diffTags, $authorizationHeader);
+        return Http::request($apiEndpoint, 'Post', $diffTags, $authorizationHeader);
     }
 
     public static function checkExitsTagsOrCreate($integrationDetails, $finalReorganizedTags)
@@ -128,7 +128,7 @@ class RecordApiHelper
         $exitsTags = [];
 
         $apiEndpoint = $integrationDetails->domainName . '/index.php?rest_route=/gh/v3/tags';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationParams);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationParams);
         if ($apiResponse->status === 'success') {
             $tags = $apiResponse->tags;
             foreach ($tags as $tag) {
@@ -156,7 +156,7 @@ class RecordApiHelper
             'tags' => $addTagsToUser,
         ];
         $apiEndpoint = $integrationDetails->domainName . '/index.php?rest_route=/gh/v3/contacts/apply_tags';
-        return HttpHelper::request($apiEndpoint, 'PUT', $prePraperData, $authorizationParams);
+        return Http::request($apiEndpoint, 'PUT', $prePraperData, $authorizationParams);
     }
 
     public function execute(

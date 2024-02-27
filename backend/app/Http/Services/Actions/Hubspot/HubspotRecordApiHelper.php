@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Hubspot;
 
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Util\DateTimeHelper;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -32,7 +32,7 @@ class HubspotRecordApiHelper
         $finalData['properties'] = $data;
         $apiEndpoint             = 'https://api.hubapi.com/crm/v3/objects/contacts';
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->defaultHeader);
     }
 
     public function insertDeal($finalData)
@@ -55,7 +55,7 @@ class HubspotRecordApiHelper
 
         $apiEndpoint = 'https://api.hubapi.com/deals/v1/deal';
 
-        return HttpHelper::post($apiEndpoint, json_encode($data), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($data), $this->defaultHeader);
     }
 
     public function insertTicket($finalData)
@@ -63,7 +63,7 @@ class HubspotRecordApiHelper
         $data        = json_encode(['properties' => $finalData]);
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/tickets';
 
-        return HttpHelper::post($apiEndpoint, $data, $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', $data, $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap, $integrationDetails)

@@ -2,7 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Dropbox;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
 
@@ -35,7 +35,7 @@ class RecordApiHelper
             'Content-Type'    => 'application/octet-stream',
             'Dropbox-API-Arg' => json_encode(['path' => $folder . '/' . basename($filePath), 'mode' => 'add', 'autorename' => true, 'mute' => true, 'strict_conflict' => false]),
         ];
-        return HttpHelper::post($apiEndPoint, $body, $headers);
+        return Http::request($apiEndPoint, 'Post', $body, $headers);
     }
 
     public function handleAllFiles($folderWithFile, $actions, $folderKey = null)

@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\GetResponse;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for GetResponse integration
@@ -29,13 +29,13 @@ class GetResponseController
             );
         }
 
-        $apiEndpoints = $this->baseUrl . 'custom-fields';
+        $apiEndpoint = $this->baseUrl . 'custom-fields';
         $apiKey       = $requestParams->auth_token;
         $header       = [
             'X-Auth-Token' => 'api-key ' . $apiKey,
         ];
 
-        $response          = HttpHelper::get($apiEndpoints, null, $header);
+        $response          = Http::request($apiEndpoint, 'Get', null, $header);
         $formattedResponse = [];
 
         foreach ($response as $value) {
@@ -69,13 +69,13 @@ class GetResponseController
             );
         }
 
-        $apiEndpoints = $this->baseUrl . 'tags';
+        $apiEndpoint = $this->baseUrl . 'tags';
         $apiKey       = $requestParams->auth_token;
         $header       = [
             'X-Auth-Token' => 'api-key ' . $apiKey,
         ];
 
-        $response          = HttpHelper::get($apiEndpoints, null, $header);
+        $response          = Http::request($apiEndpoint, 'Get', null, $header);
         $formattedResponse = [];
 
         foreach ($response as $value) {
@@ -107,7 +107,7 @@ class GetResponseController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'campaigns';
+        $apiEndpoint = $this->baseUrl . 'campaigns';
 
         $apiKey = $refreshFieldsRequestParams->auth_token;
 
@@ -115,7 +115,7 @@ class GetResponseController
             'X-Auth-Token' => 'api-key ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoints, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         $campaigns = [];
 

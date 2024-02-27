@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ConstantContact;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use Requests;
 
@@ -35,7 +35,7 @@ class RecordApiHelper
         $source_type,
         $finalData
     ) {
-        $apiEndpoints = $this->baseUrl . 'contacts';
+        $apiEndpoint = $this->baseUrl . 'contacts';
         $splitListIds = [];
         $splitTagIds = [];
         if (!empty($listIds)) {
@@ -74,16 +74,16 @@ class RecordApiHelper
         }
         $requestParams['custom_fields'] = $customFields;
 
-        $apiResponse = HttpHelper::post($apiEndpoints, json_encode((object) $requestParams), $this->_defaultHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Post', json_encode((object) $requestParams), $this->_defaultHeader);
 
         if (gettype($apiResponse) === 'array' && isset($apiResponse[0]->error_key) && $apiResponse[0]->error_key === 'contacts.api.conflict') {
             $startIndx = strpos($apiResponse[0]->error_message, 'contact');
             $strLength = strlen($apiResponse[0]->error_message);
             $contactId = substr($apiResponse[0]->error_message, $startIndx + 8, $strLength);
-            $apiEndpoints = $this->baseUrl . 'contacts/' . $contactId;
+            $apiEndpoint = $this->baseUrl . 'contacts/' . $contactId;
             unset($requestParams['create_source']);
             $requestParams['update_source'] = $source_type;
-            $apiResponse = Requests::PUT($apiEndpoints, $this->_defaultHeader, json_encode((object) $requestParams));
+            $apiResponse = Requests::PUT($apiEndpoint, $this->_defaultHeader, json_encode((object) $requestParams));
         }
 
         return $apiResponse;

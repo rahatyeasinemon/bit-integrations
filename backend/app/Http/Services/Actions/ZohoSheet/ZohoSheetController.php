@@ -4,7 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ZohoSheet;
 
 use WP_Error;
 use BitApps\BTCBI\Http\Controllers\FlowController;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\ZohoSheet\RecordApiHelper;
 
 class ZohoSheetController
@@ -34,7 +34,7 @@ class ZohoSheetController
             'code'          => $requestParams->code
         ];
 
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
@@ -59,7 +59,7 @@ class ZohoSheetController
         ];
 
         $apiEndpoint = "https://sheet.zoho.{$requestParams->dataCenter}/api/v2/workbooks?method=workbook.list";
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($apiResponse->workbooks) && !empty($apiResponse->workbooks)) {
             foreach ($apiResponse->workbooks as $workbook) {
@@ -89,7 +89,7 @@ class ZohoSheetController
         ];
 
         $apiEndpoint = "https://sheet.zoho.{$requestParams->dataCenter}/api/v2/{$requestParams->workbook}?method=worksheet.list";
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($apiResponse->worksheet_names) && !empty($apiResponse->worksheet_names)) {
             foreach ($apiResponse->worksheet_names as $worksheet) {
@@ -120,7 +120,7 @@ class ZohoSheetController
         ];
 
         $apiEndpoint = "https://sheet.zoho.{$requestParams->dataCenter}/api/v2/{$requestParams->workbook}?method=worksheet.records.fetch&worksheet_name={$requestParams->worksheet}&count=1&header_row={$requestParams->headerRow}";
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($apiResponse->records)) {
             if (!empty($apiResponse->records)) {
@@ -169,7 +169,7 @@ class ZohoSheetController
         ];
 
         $apiEndpoint = "https://accounts.zoho.{$dataCenter}/oauth/v2/token";
-        $apiResponse = HttpHelper::post($apiEndpoint, $body);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $body);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

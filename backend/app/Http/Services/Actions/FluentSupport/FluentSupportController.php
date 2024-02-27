@@ -11,7 +11,7 @@ use BitApps\BTCBI\Util\IpTool;
 use FluentSupport\App\Models\Agent;
 use FluentSupport\App\Models\MailBox;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\FluentSupport\RecordApiHelper;
 
 /**

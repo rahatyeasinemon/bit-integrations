@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoCampaigns;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -31,7 +31,7 @@ class RecordApiHelper
     {
         $insertRecordEndpoint = "https://campaigns.zoho.{$dataCenter}/api/v1.1/json/listsubscribe?resfmt=JSON&listkey={$list}&contactinfo=" . urlencode($data);
 
-        return HttpHelper::post($insertRecordEndpoint, null, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Post', null, $this->_defaultHeader);
     }
 
     public function execute($list, $dataCenter, $fieldValues, $fieldMap, $required)

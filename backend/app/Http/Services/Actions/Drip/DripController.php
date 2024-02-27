@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Drip;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Drip\RecordApiHelper;
 
 /**
@@ -46,7 +46,7 @@ class DripController
 
         $apiEndpoint = "https://api.getdrip.com/v2/accounts";
 
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($response->accounts)) {
             wp_send_json_error(
@@ -82,7 +82,7 @@ class DripController
 
         $apiEndpoint = "https://api.getdrip.com/v2/{$accountId}/broadcasts";
 
-        $dripResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $dripResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         $campaigns = [];
         if (!is_wp_error($dripResponse->broadcasts)) {
@@ -126,7 +126,7 @@ class DripController
 
         $authorizationHeader['authorization'] = 'Basic ' . base64_encode(":$queryParams->api_token");
 
-        $dripResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $dripResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
 
         $customFields = [];

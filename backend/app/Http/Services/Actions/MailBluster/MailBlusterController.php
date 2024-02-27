@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\MailBluster;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for MailBluster integration
@@ -29,13 +29,13 @@ class MailBlusterController
             );
         }
 
-        $apiEndpoints = $this->baseUrl . 'fields';
+        $apiEndpoint = $this->baseUrl . 'fields';
         $apiKey       = $fieldsRequestParams->auth_token;
         $header       = [
             'Authorization' => $apiKey,
         ];
 
-        $response     = HttpHelper::get($apiEndpoints, null, $header);
+        $response     = Http::request($apiEndpoint, 'Get', null, $header);
         $customFields = [];
 
         foreach ($response->fields as $field) {

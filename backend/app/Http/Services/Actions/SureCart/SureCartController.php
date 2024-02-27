@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\SureCart;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\SureCart\RecordApiHelper;
 
 class SureCartController

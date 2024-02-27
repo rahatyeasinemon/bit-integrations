@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Airtable;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Airtable integration
@@ -28,7 +28,7 @@ class AirtableController
             'Authorization' => "Bearer {$apiKey}"
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($response->bases)) {
             foreach ($response->bases as $base) {
@@ -58,7 +58,7 @@ class AirtableController
             'Authorization' => "Bearer {$apiKey}"
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($response->tables)) {
             foreach ($response->tables as $table) {
@@ -87,7 +87,7 @@ class AirtableController
             'Authorization' => "Bearer {$apiKey}"
         ];
 
-        $response      = HttpHelper::get($apiEndpoint, null, $header);
+        $response      = Http::request($apiEndpoint, 'Get', null, $header);
         $acceptedTypes = ['singleLineText', 'multilineText', 'singleSelect', 'multipleSelects', 'multipleAttachments', 'date', 'phoneNumber', 'email', 'url', 'number', 'currency', 'percent', 'duration', 'rating', 'barcode'];
 
         if (isset($response->tables)) {

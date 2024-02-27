@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\SendFox;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 class SendFoxController
 {
@@ -24,14 +24,14 @@ class SendFoxController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'me';
+        $apiEndpoint = $this->baseUrl . 'me';
 
         $requestParams = [
             'Authorization' => "Bearer {$requestParams->access_token}",
             'Accept' => 'application/json',
         ];
 
-        $response = HttpHelper::get($apiEndpoints, null, $requestParams);
+        $response = Http::request($apiEndpoint, 'Get', null, $requestParams);
         if ($response->message !== 'Unauthenticated.') {
             wp_send_json_success($response, 200);
         } else {
@@ -53,14 +53,14 @@ class SendFoxController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'lists?page=1&limit=1000';
+        $apiEndpoint = $this->baseUrl . 'lists?page=1&limit=1000';
 
         $requestParams = [
             'Authorization' => "Bearer {$requestParams->access_token}",
             'Accept' => 'application/json',
         ];
 
-        $response = HttpHelper::get($apiEndpoints, null, $requestParams);
+        $response = Http::request($apiEndpoint, 'Get', null, $requestParams);
 
         if ($response->message !== 'Unauthenticated.') {
             wp_send_json_success($response, 200);

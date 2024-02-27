@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\DirectIq;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\DirectIq\RecordApiHelper;
 
 /**
@@ -102,7 +102,7 @@ class DirectIqController
         $apiEndpoint = "https://rest.directiq.com/contacts/lists/list";
 
         $authorizationHeader['authorization'] = 'Basic ' . base64_encode("$queryParams->client_id:$queryParams->client_secret");
-        $directIqResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $directIqResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         $lists = [];
         if (!is_wp_error($directIqResponse)) {
@@ -145,7 +145,7 @@ class DirectIqController
         $apiEndpoint = "https://rest.directiq.com/subscription/fields";
 
         $authorizationHeader['authorization'] = 'Basic ' . base64_encode("$queryParams->client_id:$queryParams->client_secret");
-        $directIqResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $directIqResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
 
         $fields = [];

@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\KirimEmail;
 
 use WP_Error;
 use BitApps\BTCBI\Util\IpTool;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\KirimEmail\RecordApiHelper;
 
 /**
@@ -45,7 +45,7 @@ class KirimEmailController
 
         $apiEndpoint = 'https://api.kirim.email/v3/list';
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (is_wp_error($apiResponse) || $apiResponse->code !== 200) {
             wp_send_json_error(
@@ -83,7 +83,7 @@ class KirimEmailController
 
         $apiEndpoint = 'https://api.kirim.email/v3/list';
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (is_wp_error($apiResponse) || $apiResponse->code !== 200) {
             wp_send_json_error(

@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\SuiteDash;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for SuiteDash integration
@@ -43,7 +43,7 @@ class SuiteDashController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->public_id, $fieldsRequestParams->secret_key);
         $apiEndpoint  = $this->_apiEndpoint . "/contacts";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->success) && $response->success) {
             wp_send_json_success('Authentication successful', 200);
@@ -57,7 +57,7 @@ class SuiteDashController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->public_id, $fieldsRequestParams->secret_key);
         $apiEndpoint  = $this->_apiEndpoint . "/contact/meta";
-        $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->success) && $response->success === false) {
             wp_send_json_error('Fields fetching failed', 400);
@@ -108,7 +108,7 @@ class SuiteDashController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->public_id, $fieldsRequestParams->secret_key);
         $apiEndpoint  = $this->_apiEndpoint . "/companies";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->success) && $response->success) {
             $companies = [];

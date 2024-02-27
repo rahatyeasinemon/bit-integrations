@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Nimble;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Nimble integration
@@ -70,7 +70,7 @@ class NimbleController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key);
         $apiEndpoint  = $this->_apiEndpoint . "/myself";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->user_id)) {
             wp_send_json_success('Authentication successful', 200);
@@ -84,7 +84,7 @@ class NimbleController
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key);
         $apiEndpoint  = $this->_apiEndpoint . "/contacts/fields";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->tabs)) {
             $unWantedFields = ["contact employment", '# of employees', 'rating', 'lead status', 'lead source', 'lead type', 'Description', 'Social', 'Files'];

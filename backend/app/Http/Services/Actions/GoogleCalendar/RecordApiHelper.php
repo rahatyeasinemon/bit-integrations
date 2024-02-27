@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\GoogleCalendar;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 class RecordApiHelper
@@ -26,7 +26,7 @@ class RecordApiHelper
             'Content-Type'  => 'application/json',
             'Authorization' => 'Bearer ' . $this->token,
         ];
-        return HttpHelper::post($apiEndpoint, json_encode($data), $headers);
+        return Http::request($apiEndpoint, 'Post', json_encode($data), $headers);
     }
 
     public function freeSlotCheck($startTime, $endTime)
@@ -44,7 +44,7 @@ class RecordApiHelper
                 'id' => $this->calendarId,
             ]],
         ];
-        return HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        return Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
     }
 
     public function handleInsert($fieldData, $reminderFieldMap, $actions)
@@ -103,7 +103,7 @@ class RecordApiHelper
                 }
             }
         }
-        $reminderFieldMap = [...array_filter($reminderFieldMap, fn($value) => !empty($value->method) && !empty($value->minutes))];
+        $reminderFieldMap = [...array_filter($reminderFieldMap, fn ($value) => !empty($value->method) && !empty($value->minutes))];
 
         $apiResponse = $this->handleInsert($fieldData, $reminderFieldMap, $actions);
 

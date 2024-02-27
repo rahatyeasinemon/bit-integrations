@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Keap;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -34,7 +34,7 @@ class RecordApiHelper
         $header["Authorization"] = "Bearer {$this->_tokenDetails->access_token}";
         $header["Content-Type"] = "application/json";
         $insertRecordEndpoint = 'https://api.infusionsoft.com/crm/rest/v1/contact';
-        return HttpHelper::post($insertRecordEndpoint, $data, $header);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $header);
 
     }
 
@@ -52,7 +52,7 @@ class RecordApiHelper
         $header["Content-Type"] = "application/json";
         $insertTagEndpoint = 'https://api.infusionsoft.com/crm/rest/v1/contacts/' . $contactId . '/tags';
 
-        return $response = HttpHelper::post($insertTagEndpoint, json_encode($data), $header);
+        return $response = Http::request($insertTagEndpoint, 'Post', json_encode($data), $header);
 
 
     }

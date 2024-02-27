@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Smaily;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Smaily integration
@@ -28,7 +28,7 @@ class SmailyController
             'Authorization' => 'Basic ' . base64_encode("$apiUserName:$apiUserPassword")
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($response[0]->id) && !empty($response)) {
             wp_send_json_success('authentication successful', 200);

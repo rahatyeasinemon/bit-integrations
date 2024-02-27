@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Salesflare;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -68,7 +68,7 @@ class RecordApiHelper
         $this->typeName = 'Account created';
         $formData       = $this->setData($finalData);
         $apiEndpoint    = $this->apiUrl . "/accounts";
-        return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($formData), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -84,7 +84,7 @@ class RecordApiHelper
         $this->typeName = 'Contact created';
         $formData       = $this->setData($finalData);
         $apiEndpoint    = $this->apiUrl . "/contacts";
-        return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($formData), $this->defaultHeader);
     }
 
     public function addOpprtunity($finalData)
@@ -105,7 +105,7 @@ class RecordApiHelper
         $formData['account']    = $this->integrationDetails->selectedAccount;
         $formData['stage']      = $this->integrationDetails->selectedStage;
         $apiEndpoint            = $this->apiUrl . "/opportunities";
-        return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($formData), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Telegram;
 
 use WP_Error;
 use BitApps\BTCBI\Util\IpTool;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 use BitApps\BTCBI\Http\Services\Actions\Telegram\RecordApiHelper;
 
@@ -46,7 +46,7 @@ class TelegramController
 
         $apiEndpoint = self::APIENDPOINT . $requestsParams->bot_api_key . '/getMe';
         $authorizationHeader["Accept"] = 'application/x-www-form-urlencoded';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || !$apiResponse->ok) {
             wp_send_json_error(
@@ -56,7 +56,7 @@ class TelegramController
         }
         $apiEndpoint = self::APIENDPOINT . $requestsParams->bot_api_key . '/getUpdates';
         $authorizationHeader["Accept"] = 'application/x-www-form-urlencoded';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
 
         if (is_wp_error($apiResponse) || !$apiResponse->ok) {
@@ -89,7 +89,7 @@ class TelegramController
         }
         $apiEndpoint = self::APIENDPOINT . $requestsParams->bot_api_key . '/getUpdates';
         $authorizationHeader["Accept"] = 'application/json';
-        $telegramResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $telegramResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         $allList = [];
         if (!is_wp_error($telegramResponse) && $telegramResponse->ok) {

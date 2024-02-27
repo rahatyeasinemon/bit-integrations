@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Acumbamail;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Trello integration
@@ -28,13 +28,13 @@ class AcumbamailController
             );
         }
 
-        $apiEndpoints = $this->baseUrl . 'getLists/';
+        $apiEndpoint = $this->baseUrl . 'getLists/';
 
         $requestParams = [
             'auth_token' => $requestParams->auth_token,
         ];
 
-        $response = HttpHelper::post($apiEndpoints, $requestParams);
+        $response = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if ($response !== 'Unauthorized') {
             wp_send_json_success($response, 200);
@@ -57,13 +57,13 @@ class AcumbamailController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'getSubscribers/';
+        $apiEndpoint = $this->baseUrl . 'getSubscribers/';
 
         $requestParams = [
             'auth_token' => $requestParams->auth_token,
         ];
 
-        $response = HttpHelper::post($apiEndpoints, $requestParams);
+        $response = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if ($response == 'Unauthorized' || $response == 'This endpoint is not available for non-paying customers' || $response == 'Your auth token has expired check /apidoc/ for the new one') {
             wp_send_json_error($response, 400);
@@ -83,14 +83,14 @@ class AcumbamailController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'getListFields/';
+        $apiEndpoint = $this->baseUrl . 'getListFields/';
 
         $requestParams = [
             'auth_token' => $refreshFieldsRequestParams->auth_token,
             'list_id' => $refreshFieldsRequestParams->list_id,
         ];
 
-        $response = HttpHelper::post($apiEndpoints, $requestParams);
+        $response = Http::request($apiEndpoint, 'Post', $requestParams);
         // error_log(print_r($response, true));
         // die;
         $formattedResponse = [];

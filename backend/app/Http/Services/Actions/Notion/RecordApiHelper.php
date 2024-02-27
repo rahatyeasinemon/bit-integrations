@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Notion;
 
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Record create a page (create item)
@@ -49,7 +49,7 @@ class RecordApiHelper
     }
     public function createItemInDatabase($databaseId, $tokenType, $accessToken, $data)
     {
-        $apiEndpoints = "{$this->baseUrl}pages";
+        $apiEndpoint = "{$this->baseUrl}pages";
         $headers = [
           'Authorization' => ucfirst($tokenType) . ' ' . $accessToken,
           'Content-Type' => 'application/json',
@@ -65,7 +65,7 @@ class RecordApiHelper
           'properties' => $data
         ];
 
-        return HttpHelper::post($apiEndpoints, json_encode($body), $headers);
+        return Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
     }
 
     public function valueFormat($type, $value)

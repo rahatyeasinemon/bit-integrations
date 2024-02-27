@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\DirectIq;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**

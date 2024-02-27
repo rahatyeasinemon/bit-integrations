@@ -9,7 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ZohoBigin;
 use WP_Error;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Http\Controllers\FlowController;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -57,7 +57,7 @@ class ZohoBiginController
             'redirect_uri' => \urldecode($requestsParams->redirectURI),
             'code' => $requestsParams->code
         ];
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
@@ -98,7 +98,7 @@ class ZohoBiginController
         }
         $modulesMetaApiEndpoint = "https://www.zohoapis.{$queryParams->dataCenter}/bigin/v1/settings/modules";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $modulesMetaResponse = HttpHelper::get($modulesMetaApiEndpoint, null, $authorizationHeader);
+        $modulesMetaResponse = Http::request($modulesMetaApiEndpoint, 'Get', null, $authorizationHeader);
         // wp_send_json_success($modulesMetaResponse, 200);
         if (!is_wp_error($modulesMetaResponse) && (empty($modulesMetaResponse->status) || (!empty($modulesMetaResponse->status) && $modulesMetaResponse->status !== 'error'))) {
             $retriveModuleData = $modulesMetaResponse->modules;
@@ -154,7 +154,7 @@ class ZohoBiginController
         }
         $layoutsMetaApiEndpoint = "https://www.zohoapis.{$queryParams->dataCenter}/bigin/v2/settings/layouts?module=Deals";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $layoutsMetaResponse = HttpHelper::get($layoutsMetaApiEndpoint, null, $authorizationHeader);
+        $layoutsMetaResponse = Http::request($layoutsMetaApiEndpoint, 'Get', null, $authorizationHeader);
         // wp_send_json_success($layoutsMetaResponse, 200);
         if (!is_wp_error($layoutsMetaResponse) && (empty($layoutsMetaResponse->status) || (!empty($layoutsMetaResponse->status) && $layoutsMetaResponse->status !== 'error'))) {
             $retriveLayoutsData = $layoutsMetaResponse->layouts;
@@ -223,7 +223,7 @@ class ZohoBiginController
         // $modulesMetaApiEndpoint = "https://www.zohoapis.{$queryParams->dataCenter}/bigin/v1/settings/related_lists";
         // $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         // $requiredParams['module'] = $queryParams->module;
-        // $modulesMetaResponse = HttpHelper::get($modulesMetaApiEndpoint, $queryParams, $authorizationHeader);
+        // $modulesMetaResponse = Http::request($modulesMetaApiEndpoint, 'Get', $queryParams, $authorizationHeader);
         // wp_send_json_success($modulesMetaResponse, 200);
         foreach ($allModules as $module) {
             if ($module->api_name !== $queryParams->module) {
@@ -274,7 +274,7 @@ class ZohoBiginController
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $requiredParams['module'] = $queryParams->module;
-        $fieldsMetaResponse = HttpHelper::get($fieldsMetaApiEndpoint, $requiredParams, $authorizationHeader);
+        $fieldsMetaResponse = Http::request($fieldsMetaApiEndpoint, 'Get', $requiredParams, $authorizationHeader);
 
         if (!is_wp_error($fieldsMetaResponse) && (empty($fieldsMetaResponse->status) || (!empty($fieldsMetaResponse->status) && $fieldsMetaResponse->status !== 'error'))) {
             $retriveFieldsData = $fieldsMetaResponse->fields;
@@ -354,7 +354,7 @@ class ZohoBiginController
 
         $tagsMetaApiEndpoint = "http://www.zohoapis.{$queryParams->dataCenter}/bigin/v1/settings/tags?module={$queryParams->module}";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $tagsMetaResponse = HttpHelper::get($tagsMetaApiEndpoint, null, $authorizationHeader);
+        $tagsMetaResponse = Http::request($tagsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!is_wp_error($tagsMetaResponse)) {
             $tags = $tagsMetaResponse->tags;
@@ -406,7 +406,7 @@ class ZohoBiginController
 
         $usersMetaApiEndpoint = "https://www.zohoapis.{$queryParams->dataCenter}/bigin/v1/users";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $usersMetaResponse = HttpHelper::get($usersMetaApiEndpoint, null, $authorizationHeader);
+        $usersMetaResponse = Http::request($usersMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!is_wp_error($usersMetaResponse)) {
             $users = $usersMetaResponse->users;
@@ -462,7 +462,7 @@ class ZohoBiginController
             'refresh_token' => $tokenDetails->refresh_token,
         ];
 
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

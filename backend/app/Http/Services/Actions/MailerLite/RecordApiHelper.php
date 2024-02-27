@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\MailerLite;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -51,9 +51,9 @@ class RecordApiHelper
             );
         }
 
-        $apiEndpoints = $this->_baseUrl . "subscribers/$email";
+        $apiEndpoint = $this->_baseUrl . "subscribers/$email";
 
-        $response = HttpHelper::get($apiEndpoints, null, $this->_defaultHeader);
+        $response = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
         if (property_exists($response, 'error') || 'Resource not found.' === $response->message) {
             return false;
         } else {
@@ -73,17 +73,17 @@ class RecordApiHelper
             );
         }
 
-        $apiEndpoints = $this->_baseUrl . 'settings/double_optin';
+        $apiEndpoint = $this->_baseUrl . 'settings/double_optin';
         $requestParams = [
             'enable' => true
         ];
 
-        HttpHelper::post($apiEndpoints, $requestParams, $this->_defaultHeader);
+        Http::request($apiEndpoint, 'Post', $requestParams, $this->_defaultHeader);
     }
 
     public function addSubscriber($auth_token, $groupIds, $type, $finalData)
     {
-        $apiEndpoints = $this->_baseUrl . 'subscribers';
+        $apiEndpoint = $this->_baseUrl . 'subscribers';
         $splitGroupIds = null;
         if (!empty($groupIds)) {
             $splitGroupIds = explode(',', $groupIds);
@@ -125,16 +125,16 @@ class RecordApiHelper
             if (!empty($groupIds)) {
                 if ('https://connect.mailerlite.com/api/' === $this->_baseUrl) {
                     $requestParams['groups'] = $splitGroupIds;
-                    $response = HttpHelper::post($apiEndpoints, $requestParams, $this->_defaultHeader);
+                    $response = Http::request($apiEndpoint, 'Post', $requestParams, $this->_defaultHeader);
                 } else {
                     for ($i = 0; $i < count($splitGroupIds); $i++) {
-                        $apiEndpoints = $this->_baseUrl . 'groups/' . $splitGroupIds[$i] . '/subscribers';
-                        $response = HttpHelper::post($apiEndpoints, $requestParams, $this->_defaultHeader);
+                        $apiEndpoint = $this->_baseUrl . 'groups/' . $splitGroupIds[$i] . '/subscribers';
+                        $response = Http::request($apiEndpoint, 'Post', $requestParams, $this->_defaultHeader);
                     };
                 }
                 return $response;
             }
-            $response = HttpHelper::post($apiEndpoints, $requestParams, $this->_defaultHeader);
+            $response = Http::request($apiEndpoint, 'Post', $requestParams, $this->_defaultHeader);
             $response->update = true;
         } elseif ($isExist && empty($this->_actions->update)) {
             return ['success' => false, 'message' => 'Subscriber already exist', 'code' => 400];
@@ -145,16 +145,16 @@ class RecordApiHelper
             if (!empty($groupIds)) {
                 if ('https://connect.mailerlite.com/api/' === $this->_baseUrl) {
                     $requestParams['groups'] = $splitGroupIds;
-                    $response = HttpHelper::post($apiEndpoints, $requestParams, $this->_defaultHeader);
+                    $response = Http::request($apiEndpoint, 'Post', $requestParams, $this->_defaultHeader);
                 } else {
                     for ($i = 0; $i < count($splitGroupIds); $i++) {
-                        $apiEndpoints = $this->_baseUrl . 'groups/' . $splitGroupIds[$i] . '/subscribers';
-                        $response = HttpHelper::post($apiEndpoints, $requestParams, $this->_defaultHeader);
+                        $apiEndpoint = $this->_baseUrl . 'groups/' . $splitGroupIds[$i] . '/subscribers';
+                        $response = Http::request($apiEndpoint, 'Post', $requestParams, $this->_defaultHeader);
                     };
                 }
                 return $response;
             }
-            $response = HttpHelper::post($apiEndpoints, $requestParams, $this->_defaultHeader);
+            $response = Http::request($apiEndpoint, 'Post', $requestParams, $this->_defaultHeader);
         }
         return $response;
     }

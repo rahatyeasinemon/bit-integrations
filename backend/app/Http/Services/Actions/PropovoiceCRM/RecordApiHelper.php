@@ -4,7 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\PropovoiceCRM;
 
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Record insert, upsert

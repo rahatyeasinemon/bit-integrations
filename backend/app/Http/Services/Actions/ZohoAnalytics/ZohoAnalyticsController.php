@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ZohoAnalytics;
 
 use WP_Error;
 use BitApps\BTCBI\Util\IpTool;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Util\ApiResponse as UtilApiResponse;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
@@ -56,7 +56,7 @@ class ZohoAnalyticsController
             'redirect_uri' => \urldecode($requestsParams->redirectURI),
             'code' => $requestsParams->code
         ];
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
@@ -97,7 +97,7 @@ class ZohoAnalyticsController
         $workspacesMetaApiEndpoint = "https://analyticsapi.zoho.{$queryParams->dataCenter}/api/{$queryParams->ownerEmail}?ZOHO_ACTION=MYWORKSPACELIST&ZOHO_OUTPUT_FORMAT=JSON&ZOHO_ERROR_FORMAT=JSON&ZOHO_API_VERSION=1.0";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $workspacesMetaResponse = HttpHelper::get($workspacesMetaApiEndpoint, null, $authorizationHeader);
+        $workspacesMetaResponse = Http::request($workspacesMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         $allWorkspaces = [];
         if (!is_wp_error($workspacesMetaResponse) && empty($workspacesMetaResponse->response->error)) {
@@ -143,7 +143,7 @@ class ZohoAnalyticsController
         $usersMetaApiEndpoint = "https://analyticsapi.zoho.{$queryParams->dataCenter}/api/{$queryParams->ownerEmail}?ZOHO_ACTION=GETUSERS&ZOHO_OUTPUT_FORMAT=JSON&ZOHO_ERROR_FORMAT=JSON&ZOHO_API_VERSION=1.0";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $usersMetaResponse = HttpHelper::get($usersMetaApiEndpoint, null, $authorizationHeader);
+        $usersMetaResponse = Http::request($usersMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         $allusers = [];
         if (!is_wp_error($usersMetaResponse) && empty($usersMetaResponse->response->error)) {
@@ -194,7 +194,7 @@ class ZohoAnalyticsController
         $tablesMetaApiEndpoint = "https://analyticsapi.zoho.{$queryParams->dataCenter}/api/{$queryParams->ownerEmail}/{$queryParams->workspace}?ZOHO_ACTION=VIEWLIST&ZOHO_OUTPUT_FORMAT=JSON&ZOHO_ERROR_FORMAT=JSON&ZOHO_API_VERSION=1.0";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $tablesMetaResponse = HttpHelper::get($tablesMetaApiEndpoint, null, $authorizationHeader);
+        $tablesMetaResponse = Http::request($tablesMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         $allTables = [];
         if (!is_wp_error($tablesMetaResponse)) {
@@ -249,7 +249,7 @@ class ZohoAnalyticsController
         $tableHeadersMetaApiEndpoint = "https://analyticsapi.zoho.{$queryParams->dataCenter}/api/{$queryParams->ownerEmail}/{$queryParams->workspace}/{$queryParams->table}?ZOHO_ACTION=EXPORT&ZOHO_OUTPUT_FORMAT=JSON&ZOHO_ERROR_FORMAT=JSON&ZOHO_API_VERSION=1.0";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $tableHeadersMetaResponse = HttpHelper::get($tableHeadersMetaApiEndpoint, null, $authorizationHeader);
+        $tableHeadersMetaResponse = Http::request($tableHeadersMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         if (gettype($tableHeadersMetaResponse) === 'string') {
             $tableHeadersMetaResponse = json_decode(preg_replace("/\\\'/", "'", $tableHeadersMetaResponse));
@@ -299,7 +299,7 @@ class ZohoAnalyticsController
             'refresh_token' => $tokenDetails->refresh_token,
         ];
 
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

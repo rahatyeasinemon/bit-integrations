@@ -2,7 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\CampaignMonitor;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 class RecordApiHelper
@@ -49,14 +49,14 @@ class RecordApiHelper
 
     public function updateSubscriber($email, $finalData, $selectedList)
     {
-        $apiEndpoints = $this->baseUrl . "/subscribers/{$selectedList}.json?email={$email}";
-        return  HttpHelper::request($apiEndpoints, 'PUT', $this->setSubscriberData($finalData), $this->_defaultHeader);
+        $apiEndpoint = $this->baseUrl . "/subscribers/{$selectedList}.json?email={$email}";
+        return  Http::request($apiEndpoint, 'PUT', $this->setSubscriberData($finalData), $this->_defaultHeader);
     }
 
     public function addSubscriber($selectedList, $finalData)
     {
-        $apiEndpoints = $this->baseUrl . "/subscribers/{$selectedList}.json";
-        return HttpHelper::post($apiEndpoints, $this->setSubscriberData($finalData), $this->_defaultHeader);
+        $apiEndpoint = $this->baseUrl . "/subscribers/{$selectedList}.json";
+        return Http::request($apiEndpoint, 'Post', $this->setSubscriberData($finalData), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -72,8 +72,8 @@ class RecordApiHelper
 
     private function existSubscriber($selectedList, $email)
     {
-        $apiEndpoints = $this->baseUrl . "/subscribers/{$selectedList}.json?email={$email}&includetrackingpreference=true";
-        return HttpHelper::get($apiEndpoints, null, $this->_defaultHeader);
+        $apiEndpoint = $this->baseUrl . "/subscribers/{$selectedList}.json?email={$email}&includetrackingpreference=true";
+        return Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
     }
 
     public function execute($selectedList, $fieldValues, $fieldMap, $actions)

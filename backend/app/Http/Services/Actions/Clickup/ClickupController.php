@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Clickup;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Clickup integration
@@ -34,7 +34,7 @@ class ClickupController
             "Authorization" => $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->user)) {
             wp_send_json_success('Authentication successful', 200);
@@ -60,7 +60,7 @@ class ClickupController
             "Authorization" => $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if (isset($response->fields)) {
             foreach ($response->fields as $customField) {
                 $customFields[] = [
@@ -88,7 +88,7 @@ class ClickupController
             "Authorization" => $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if (isset($response->tasks)) {
             foreach ($response->tasks as $task) {
                 $tasks[] = [
@@ -115,7 +115,7 @@ class ClickupController
             "Authorization" => $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
 
         if (!empty($response->teams)) {
@@ -144,7 +144,7 @@ class ClickupController
             "Authorization" => $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!empty($response->spaces)) {
             foreach ($response->spaces as $space) {
@@ -172,7 +172,7 @@ class ClickupController
             "Authorization" => $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
 
         if (!empty($response->folders)) {
@@ -202,7 +202,7 @@ class ClickupController
             "Authorization" => $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!empty($response->lists)) {
             foreach ($response->lists as $list) {
@@ -230,7 +230,7 @@ class ClickupController
             "Authorization" => $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if (!empty($response->tags)) {
             foreach ($response->tags as $tag) {
                 $tags[] = [

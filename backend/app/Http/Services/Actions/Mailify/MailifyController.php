@@ -5,7 +5,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Mailify;
 use WP_Error;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Actions\Mailify\RecordApiHelper;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 class MailifyController
 {
@@ -25,7 +25,7 @@ class MailifyController
         $apiEndpoint = "https://mailifyapis.com/v1/users";
         $header["Authorization"] = 'Basic ' . base64_encode("$requestParams->account_id:$requestParams->api_key");
 
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($response->users)) {
             wp_send_json_error(
@@ -57,7 +57,7 @@ class MailifyController
             'apiKey' => $requestParams->api_key,
         ];
 
-        $mailifyResponse = HttpHelper::get($apiEndpoint, null, $headers);
+        $mailifyResponse = Http::request($apiEndpoint, 'Get', null, $headers);
 
         $fields = [];
         if (!is_wp_error($mailifyResponse->fields)) {
@@ -89,7 +89,7 @@ class MailifyController
             'apiKey' => $requestParams->api_key,
         ];
         $apiEndpoint = 'https://mailifyapis.com/v1/lists';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $headers);
         $lists       = [];
 
         foreach ($apiResponse as $item) {

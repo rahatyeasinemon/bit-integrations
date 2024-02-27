@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\OneDrive;
 
 use BitApps\BTCBI\Http\Services\Actions\OneDrive\RecordApiHelper as OneDriveRecordApiHelper;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use WP_Error;
@@ -33,7 +33,7 @@ class OneDriveController
 
         $apiEndpoint = 'https://login.live.com/oauth20_token.srf';
         $header["Content-Type"] = 'application/x-www-form-urlencoded';
-        $apiResponse = HttpHelper::post($apiEndpoint, $body, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $body, $header);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
@@ -77,7 +77,7 @@ class OneDriveController
             'Authorization' => 'bearer ' . $token,
         ];
         $apiEndpoint = "https://api.onedrive.com/v1.0/drive/root/children";
-        $apiResponse = HttpHelper::get($apiEndpoint, [], $headers);
+        $apiResponse = Http::request($apiEndpoint, 'Get', [], $headers);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }
@@ -102,7 +102,7 @@ class OneDriveController
             'Authorization' => 'bearer ' . $queryParams->tokenDetails->access_token,
         ];
         $apiEndpoint = "https://api.onedrive.com/v1.0/drives/" . $ids[0] . '/items/' . $queryParams->folder . "/children";
-        $apiResponse = HttpHelper::get($apiEndpoint, [], $headers);
+        $apiResponse = Http::request($apiEndpoint, 'Get', [], $headers);
         $foldersOnly = $apiResponse->value;
         $data = [];
         if (is_array($foldersOnly)) {
@@ -145,7 +145,7 @@ class OneDriveController
         ];
 
         $apiEndpoint = "https://login.live.com/oauth20_token.srf";
-        $apiResponse = HttpHelper::post($apiEndpoint, $body);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $body);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

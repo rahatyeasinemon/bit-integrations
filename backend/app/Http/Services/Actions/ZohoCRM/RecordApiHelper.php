@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ZohoCRM;
 
 use WP_Error;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Util\DateTimeHelper;
 use BitApps\BTCBI\Http\Services\Actions\ZohoCRM\TagApiHelper;
 use BitApps\BTCBI\Http\Services\Actions\ZohoCRM\FilesApiHelper;
@@ -33,20 +33,20 @@ class RecordApiHelper
     {
         $insertRecordEndpoint = "{$this->_apiDomain}/{$module}/upsert";
         $data = \is_string($data) ? $data : \json_encode($data);
-        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     public function insertRecord($module, $data)
     {
         $insertRecordEndpoint = "{$this->_apiDomain}/{$module}";
         $data = \is_string($data) ? $data : \json_encode($data);
-        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     public function searchRecord($module, $searchCriteria)
     {
         $searchRecordEndpoint = "{$this->_apiDomain}/{$module}/search";
-        return HttpHelper::get($searchRecordEndpoint, ["criteria" => "({$searchCriteria})"], $this->_defaultHeader);
+        return Http::request($searchRecordEndpoint, 'Get', ["criteria" => "({$searchCriteria})"], $this->_defaultHeader);
     }
 
     public function execute($integId, $defaultConf, $module, $layout, $fieldValues, $fieldMap, $actions, $required, $fileMap = [], $isRelated = false)

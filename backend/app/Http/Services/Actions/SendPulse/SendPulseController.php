@@ -5,7 +5,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\SendPulse;
 use WP_Error;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Actions\SendPulse\RecordApiHelper;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 class SendPulseController
 {
@@ -30,7 +30,7 @@ class SendPulseController
 
         $apiEndpoint = 'https://api.sendpulse.com/oauth/access_token';
 
-        $apiResponse = HttpHelper::post($apiEndpoint, $body);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $body);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
@@ -63,7 +63,7 @@ class SendPulseController
             'Authorization' => 'Bearer ' . $token->access_token,
         ];
 
-        $sendPulseResponse = HttpHelper::get($apiEndpoint, null, $headers);
+        $sendPulseResponse = Http::request($apiEndpoint, 'Get', null, $headers);
 
         $fields = [];
         if (!is_wp_error($sendPulseResponse)) {
@@ -98,7 +98,7 @@ class SendPulseController
             'Authorization' => 'Bearer ' . $token->access_token,
         ];
         $apiEndpoint = 'https://api.sendpulse.com/addressbooks';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $headers);
         $lists       = [];
 
         foreach ($apiResponse as $item) {
@@ -144,7 +144,7 @@ class SendPulseController
         ];
 
         $apiEndpoint = 'https://api.sendpulse.com/oauth/access_token';
-        $apiResponse = HttpHelper::post($apiEndpoint, $body);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $body);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoProjects;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Util\FieldValueHandler;
 use BitApps\BTCBI\Util\ApiResponse as UtilApiResponse;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
@@ -38,7 +38,7 @@ class RecordApiHelper
 
         $createProjectEndpoint .= '?' . http_build_query($data);
 
-        return HttpHelper::post($createProjectEndpoint, null, $this->_defaultHeader);
+        return Http::request($createProjectEndpoint, 'Post', null, $this->_defaultHeader);
     }
 
     private function createMilestone($dataCenter, $portalId, $projectId, $data)
@@ -47,7 +47,7 @@ class RecordApiHelper
 
         $createMilestoneEndpoint .= '?' . http_build_query($data);
 
-        return HttpHelper::post($createMilestoneEndpoint, null, $this->_defaultHeader);
+        return Http::request($createMilestoneEndpoint, 'Post', null, $this->_defaultHeader);
     }
 
     private function createTasklist($dataCenter, $portalId, $projectId, $data)
@@ -56,7 +56,7 @@ class RecordApiHelper
 
         $createTasklistEndpoint .= '?' . http_build_query($data);
 
-        return HttpHelper::post($createTasklistEndpoint, null, $this->_defaultHeader);
+        return Http::request($createTasklistEndpoint, 'Post', null, $this->_defaultHeader);
     }
 
     private function createTask($dataCenter, $portalId, $projectId, $data)
@@ -65,7 +65,7 @@ class RecordApiHelper
 
         $createTaskEndpoint .= '?' . http_build_query($data);
 
-        return HttpHelper::post($createTaskEndpoint, null, $this->_defaultHeader);
+        return Http::request($createTaskEndpoint, 'Post', null, $this->_defaultHeader);
     }
 
     private function createSubTask($dataCenter, $portalId, $projectId, $taskId, $data)
@@ -74,7 +74,7 @@ class RecordApiHelper
 
         $createSubTaskEndpoint .= '?' . http_build_query($data);
 
-        return HttpHelper::post($createSubTaskEndpoint, null, $this->_defaultHeader);
+        return Http::request($createSubTaskEndpoint, 'Post', null, $this->_defaultHeader);
     }
 
     private function createIssue($dataCenter, $portalId, $projectId, $data)
@@ -83,14 +83,14 @@ class RecordApiHelper
 
         $createIssueEndpoint .= '?' . http_build_query($data);
 
-        return HttpHelper::post($createIssueEndpoint, null, $this->_defaultHeader);
+        return Http::request($createIssueEndpoint, 'Post', null, $this->_defaultHeader);
     }
 
     private function getAllTags($dataCenter, $portalId)
     {
         $tagsMetaApiEndpoint = "https://projectsapi.zoho.{$dataCenter}/api/v3/portal/{$portalId}/tags?range=10000";
 
-        return HttpHelper::get($tagsMetaApiEndpoint, null, $this->_defaultHeader);
+        return Http::request($tagsMetaApiEndpoint, 'Get', null, $this->_defaultHeader);
     }
 
     private function createTags($dataCenter, $portalId, $data)
@@ -99,7 +99,7 @@ class RecordApiHelper
 
         $createTagsEndpoint .= '?' . http_build_query($data);
 
-        return HttpHelper::post($createTagsEndpoint, null, $this->_defaultHeader);
+        return Http::request($createTagsEndpoint, 'Post', null, $this->_defaultHeader);
     }
 
     private function associateTags($dataCenter, $portalId, $projectId, $data)
@@ -108,7 +108,7 @@ class RecordApiHelper
 
         $associateTagEndpoint .= '?' . http_build_query($data);
 
-        return HttpHelper::post($associateTagEndpoint, null, $this->_defaultHeader);
+        return Http::request($associateTagEndpoint, 'Post', null, $this->_defaultHeader);
     }
 
     private function associateUsers($dataCenter, $portalId, $projectId, $data)
@@ -117,7 +117,7 @@ class RecordApiHelper
 
         $associateUsersEndpoint .= '?' . http_build_query($data);
 
-        return HttpHelper::post($associateUsersEndpoint, null, $this->_defaultHeader);
+        return Http::request($associateUsersEndpoint, 'Post', null, $this->_defaultHeader);
     }
 
     private function addBugFollower($dataCenter, $portalId, $projectId, $bugId, $data)
@@ -126,7 +126,7 @@ class RecordApiHelper
 
         $addBugFollowerEndpoint .= '?' . http_build_query($data);
 
-        return HttpHelper::post($addBugFollowerEndpoint, null, $this->_defaultHeader);
+        return Http::request($addBugFollowerEndpoint, 'Post', null, $this->_defaultHeader);
     }
 
     private function addTimeLog($dataCenter, $portalId, $projectId, $event, $eventId, $data)
@@ -135,7 +135,7 @@ class RecordApiHelper
 
         $addTimeLogEndpoint .= '?' . http_build_query($data);
 
-        return HttpHelper::post($addTimeLogEndpoint, null, $this->_defaultHeader);
+        return Http::request($addTimeLogEndpoint, 'Post', null, $this->_defaultHeader);
     }
 
     private function testDate($x)

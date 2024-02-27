@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Klaviyo;
 
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Util\Helper;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -28,12 +28,12 @@ class RecordApiHelper
 
     public function addMember($authKey, $listId, $data)
     {
-        $apiEndpoints = "{$this->baseUrl}list/{$listId}/members?api_key={$authKey}";
+        $apiEndpoint = "{$this->baseUrl}list/{$listId}/members?api_key={$authKey}";
         $headers = [
             'Content-Type' => 'application/json'
         ];
 
-        return HttpHelper::post($apiEndpoints, $data, $headers);
+        return Http::request($apiEndpoint, 'Post', $data, $headers);
     }
 
     public function generateReqDataFromFieldMap($data, $field_map)

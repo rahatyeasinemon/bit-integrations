@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Mautic;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 class RecordApiHelper
@@ -26,7 +26,7 @@ class RecordApiHelper
         $data = \is_string($data) ? $data : \json_encode((object) $data);
         $insertRecordEndpoint = "$this->_baseUrl/api/contacts/new";
         ;
-        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

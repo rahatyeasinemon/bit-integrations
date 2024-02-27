@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\MoxieCRM;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -59,7 +59,7 @@ class RecordApiHelper
 
         $apiEndpoint = 'https://' . $this->apiUrl . "/api/public/action/clients/create";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        return $response = Http::request($apiEndpoint, 'Post', json_encode($requestParams), $this->defaultHeader);
 
     }
 
@@ -92,7 +92,7 @@ class RecordApiHelper
         $apiEndpoint = 'https://' . $this->apiUrl . "/api/public/action/contacts/create";
 
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        return $response = Http::request($apiEndpoint, 'Post', json_encode($requestParams), $this->defaultHeader);
     }
 
     public function addOpportunity($finalData)
@@ -128,7 +128,7 @@ class RecordApiHelper
 
         $apiEndpoint = 'https://' . $this->apiUrl . "/api/public/action/opportunities/create";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        return $response = Http::request($apiEndpoint, 'Post', json_encode($requestParams), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

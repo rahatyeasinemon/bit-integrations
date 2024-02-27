@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\OneHashCRM;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -46,7 +46,7 @@ class RecordApiHelper
         $this->type                     = 'Customer';
         $this->typeName                 = 'Customer created';
         $apiEndpoint                    = $this->apiUrl . "/Customer";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -83,7 +83,7 @@ class RecordApiHelper
         $this->type                         = 'Contact';
         $this->typeName                     = 'Contact created';
         $apiEndpoint                        = $this->apiUrl . "/Contact";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->defaultHeader);
     }
 
     public function addLead($finalData)
@@ -120,7 +120,7 @@ class RecordApiHelper
         $this->type             = 'Lead';
         $this->typeName         = 'Lead created';
         $apiEndpoint            = $this->apiUrl . "/Lead";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

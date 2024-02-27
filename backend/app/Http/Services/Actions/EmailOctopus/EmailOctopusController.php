@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\EmailOctopus;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for EmailOctopus integration
@@ -24,7 +24,7 @@ class EmailOctopusController
 
         $apiKey      = $fieldsRequestParams->auth_token;
         $apiEndpoint = 'https://emailoctopus.com/api/1.6/lists?api_key=' . $apiKey;
-        $response    = HttpHelper::get($apiEndpoint, null, null);
+        $response    = Http::request($apiEndpoint, 'Get', null, null);
 
         if (!isset($response->error)) {
             foreach ($response->data as $list) {
@@ -48,7 +48,7 @@ class EmailOctopusController
         $apiKey      = $fieldsRequestParams->auth_token;
         $listId      = $fieldsRequestParams->listId;
         $apiEndpoint = 'https://emailoctopus.com/api/1.6/lists/' . $listId . '?api_key=' . $apiKey;
-        $response    = HttpHelper::get($apiEndpoint, null, null);
+        $response    = Http::request($apiEndpoint, 'Get', null, null);
 
         if (!isset($response->error)) {
             foreach ($response->fields as $field) {
@@ -73,7 +73,7 @@ class EmailOctopusController
         $apiKey      = $fieldsRequestParams->auth_token;
         $listId      = $fieldsRequestParams->listId;
         $apiEndpoint = 'https://emailoctopus.com/api/1.6/lists/' . $listId . '/tags?api_key=' . $apiKey;
-        $response    = HttpHelper::get($apiEndpoint, null, null);
+        $response    = Http::request($apiEndpoint, 'Get', null, null);
 
         foreach ($response->data as $tag) {
             $tags[] = [

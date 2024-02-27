@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\SendinBlue;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -42,20 +42,20 @@ class RecordApiHelper
 
         $data = wp_json_encode($data);
         $insertRecordEndpoint = "{$this->_apiEndPoint}/doubleOptinConfirmation";
-        $response = HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        $response = Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
         return $response;
     }
 
     public function insertRecord($data)
     {
         $insertRecordEndpoint = "{$this->_apiEndPoint}";
-        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     public function updateRecord($id, $data)
     {
         $updateRecordEndpoint = "{$this->_apiEndPoint}/{$id}";
-        return HttpHelper::request($updateRecordEndpoint, 'PUT', $data, $this->_defaultHeader);
+        return Http::request($updateRecordEndpoint, 'PUT', $data, $this->_defaultHeader);
     }
 
     public function execute($lists, $defaultDataConf, $fieldValues, $fieldMap, $actions, $integrationDetails)

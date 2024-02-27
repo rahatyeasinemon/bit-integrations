@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Selzy;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Selzy\RecordApiHelper;
 
 /**
@@ -29,8 +29,8 @@ class SelzyController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'getLists?format=json&api_key=' . $requestParams->authKey;
-        $response = HttpHelper::get($apiEndpoints, null);
+        $apiEndpoint = $this->baseUrl . 'getLists?format=json&api_key=' . $requestParams->authKey;
+        $response = Http::request($apiEndpoint, 'Get', null);
         if ($response->code === "invalid_api_key") {
             wp_send_json_error(
                 __(
@@ -54,8 +54,8 @@ class SelzyController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'getTags?format=json&api_key=' . $requestParams->authKey;
-        $response = HttpHelper::get($apiEndpoints, null);
+        $apiEndpoint = $this->baseUrl . 'getTags?format=json&api_key=' . $requestParams->authKey;
+        $response = Http::request($apiEndpoint, 'Get', null);
         if ($response->code === "invalid_api_key") {
             wp_send_json_error(
                 __(
@@ -76,7 +76,7 @@ class SelzyController
 
         $apiEndpoint = "https://api.selzy.com/en/api/getFields?format=json&api_key=$requestParams->authKey";
 
-        $response = HttpHelper::get($apiEndpoint, null);
+        $response = Http::request($apiEndpoint, 'Get', null);
 
         if ($response->code === "invalid_api_key") {
             wp_send_json_error(__('Invalid token', 'bit-integrations'), 400);

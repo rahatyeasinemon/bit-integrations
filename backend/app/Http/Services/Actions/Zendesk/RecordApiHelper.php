@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Zendesk;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -67,7 +67,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . "contacts";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $requestParams]), $this->defaultHeader);
+        return $response = Http::request($apiEndpoint, 'Post', json_encode(['data' => $requestParams]), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -98,7 +98,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . "contacts";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $requestParams]), $this->defaultHeader);
+        return $response = Http::request($apiEndpoint, 'Post', json_encode(['data' => $requestParams]), $this->defaultHeader);
     }
 
     public function addLead($finalData)
@@ -135,7 +135,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . "leads";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $requestParams]), $this->defaultHeader);
+        return $response = Http::request($apiEndpoint, 'Post', json_encode(['data' => $requestParams]), $this->defaultHeader);
     }
 
     public function addDeal($finalData)
@@ -171,7 +171,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . "deals ";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $requestParams]), $this->defaultHeader);
+        return $response = Http::request($apiEndpoint, 'Post', json_encode(['data' => $requestParams]), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

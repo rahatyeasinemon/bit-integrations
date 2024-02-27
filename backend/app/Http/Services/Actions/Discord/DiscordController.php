@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Discord;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for discord integration
@@ -41,7 +41,7 @@ class DiscordController
         ];
         $apiEndpoint = self::APIENDPOINT . '/users/@me';
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($apiResponse->id)) {
             wp_send_json_error(
@@ -71,7 +71,7 @@ class DiscordController
         ];
         $apiEndpoint = self::APIENDPOINT . '/users/@me/guilds';
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (count($apiResponse) > 0) {
             foreach ($apiResponse as $server) {
@@ -105,7 +105,7 @@ class DiscordController
         ];
         $apiEndpoint = self::APIENDPOINT . '/guilds/' . $tokenRequestParams->serverId . '/channels';
 
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (count($apiResponse) > 0) {
             foreach ($apiResponse as $channel) {

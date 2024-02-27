@@ -3,7 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Twilio;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -33,7 +33,7 @@ class RecordApiHelper
     {
         $data['From'] = $this->_from_num;
         $apiEndpoint = self::$apiBaseUri . "/Accounts/$this->_sid/Messages.json";
-        $response = HttpHelper::post($apiEndpoint, $data, $this->_defaultHeader);
+        $response = Http::request($apiEndpoint, 'Post', $data, $this->_defaultHeader);
         return $response;
     }
 

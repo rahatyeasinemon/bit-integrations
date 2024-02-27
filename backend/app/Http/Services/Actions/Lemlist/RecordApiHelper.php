@@ -2,7 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Lemlist;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 class RecordApiHelper
@@ -24,14 +24,14 @@ class RecordApiHelper
     public function updateLead($email, $data, $selectedCampaign)
     {
         $contactData = $data;
-        $apiEndpoints = "https://api.lemlist.com/api/campaigns/{$selectedCampaign}/leads/{$email}";
-        return  HttpHelper::request($apiEndpoints, 'PATCH', json_encode($contactData), $this->_defaultHeader);
+        $apiEndpoint = "https://api.lemlist.com/api/campaigns/{$selectedCampaign}/leads/{$email}";
+        return  Http::request($apiEndpoint, 'PATCH', json_encode($contactData), $this->_defaultHeader);
     }
 
     public function addLead($selectedCampaign, $finalData)
     {
-        $apiEndpoints = "https://api.lemlist.com/api/campaigns/{$selectedCampaign}/leads";
-        $res =  HttpHelper::post($apiEndpoints, json_encode($finalData), $this->_defaultHeader);
+        $apiEndpoint = "https://api.lemlist.com/api/campaigns/{$selectedCampaign}/leads";
+        $res =  Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->_defaultHeader);
         return $res;
     }
 
@@ -54,8 +54,8 @@ class RecordApiHelper
 
     private function existLead($selectedCampaign, $email)
     {
-        $apiEndpoints = "https://api.lemlist.com/api/leads/{$email}?campaignId={$selectedCampaign}";
-        return HttpHelper::get($apiEndpoints, null, $this->_defaultHeader);
+        $apiEndpoint = "https://api.lemlist.com/api/leads/{$email}?campaignId={$selectedCampaign}";
+        return Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
     }
 
     public function execute($selectedCampaign, $fieldValues, $fieldMap, $actions)

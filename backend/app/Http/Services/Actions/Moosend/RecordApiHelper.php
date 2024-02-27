@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Moosend;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -50,29 +50,29 @@ class RecordApiHelper
 
     public function subscribe($authKey, $listId, $formData)
     {
-        $apiEndpoints = "{$this->baseUrl}subscribers/{$listId}/subscribe.json?apikey={$authKey}";
+        $apiEndpoint = "{$this->baseUrl}subscribers/{$listId}/subscribe.json?apikey={$authKey}";
 
         $headers = [
           'Content-Type' => 'application/json'
         ];
 
-        return HttpHelper::post($apiEndpoints, json_encode($formData), $headers);
+        return Http::request($apiEndpoint, 'Post', json_encode($formData), $headers);
     }
     public function unsubscribe($authKey, $formData)
     {
-        $apiEndpoints = "{$this->baseUrl}subscribers/unsubscribe.json?apikey={$authKey}";
+        $apiEndpoint = "{$this->baseUrl}subscribers/unsubscribe.json?apikey={$authKey}";
         $headers = [
           'Content-Type' => 'application/json'
         ];
-        return HttpHelper::post($apiEndpoints, json_encode($formData), $headers);
+        return Http::request($apiEndpoint, 'Post', json_encode($formData), $headers);
     }
     public function unsubscribeFromList($authKey, $listId, $formData)
     {
-        $apiEndpoints = "{$this->baseUrl}subscribers/{$listId}/unsubscribe.json?apikey={$authKey}";
+        $apiEndpoint = "{$this->baseUrl}subscribers/{$listId}/unsubscribe.json?apikey={$authKey}";
         $headers = [
           'Content-Type' => 'application/json'
         ];
-        return HttpHelper::post($apiEndpoints, json_encode($formData), $headers);
+        return Http::request($apiEndpoint, 'Post', json_encode($formData), $headers);
     }
 
     public function execute(

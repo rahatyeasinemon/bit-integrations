@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\GoogleSheet;
 
 use WP_Error;
 use BitApps\BTCBI\Util\IpTool;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\GoogleSheet\RecordApiHelper;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 
@@ -69,7 +69,7 @@ class GoogleSheetController
             "redirect_uri" => \urldecode($requestsParams->redirectURI),
             "code" => urldecode($requestsParams->code)
         );
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
@@ -109,7 +109,7 @@ class GoogleSheetController
         $workSheets = "https://www.googleapis.com/drive/v3/files?q=mimeType%20%3D%20'application%2Fvnd.google-apps.spreadsheet'";
 
         $authorizationHeader["Authorization"] = "Bearer {$queryParams->tokenDetails->access_token}";
-        $workSheetResponse = HttpHelper::get($workSheets, null, $authorizationHeader);
+        $workSheetResponse = Http::request($workSheets, 'Get', null, $authorizationHeader);
 
         $allSpreadsheet = [];
         if (!is_wp_error($workSheetResponse) && empty($workSheetResponse->response->error)) {
@@ -163,7 +163,7 @@ class GoogleSheetController
         $worksheetsMetaApiEndpoint = "https://sheets.googleapis.com/v4/spreadsheets/$queryParams->spreadsheetId?&fields=sheets.properties";
 
         $authorizationHeader["Authorization"] = "Bearer {$queryParams->tokenDetails->access_token}";
-        $worksheetsMetaResponse = HttpHelper::get($worksheetsMetaApiEndpoint, null, $authorizationHeader);
+        $worksheetsMetaResponse = Http::request($worksheetsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!is_wp_error($worksheetsMetaResponse)) {
             $worksheets = $worksheetsMetaResponse->sheets;
@@ -222,7 +222,7 @@ class GoogleSheetController
         $worksheetHeadersMetaApiEndpoint = "https://sheets.googleapis.com/v4/spreadsheets/{$queryParams->spreadsheetId}/values/{$queryParams->worksheetName}!{$range}?majorDimension={$queryParams->header}";
 
         $authorizationHeader["Authorization"] = "Bearer {$queryParams->tokenDetails->access_token}";
-        $worksheetHeadersMetaResponse = HttpHelper::get($worksheetHeadersMetaApiEndpoint, null, $authorizationHeader);
+        $worksheetHeadersMetaResponse = Http::request($worksheetHeadersMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         // wp_send_json_success($worksheetHeadersMetaResponse, 200);
 
@@ -274,7 +274,7 @@ class GoogleSheetController
             "refresh_token" => $tokenDetails->refresh_token,
         );
 
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

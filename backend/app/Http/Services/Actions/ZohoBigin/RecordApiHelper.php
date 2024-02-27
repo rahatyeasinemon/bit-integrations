@@ -8,7 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ZohoBigin;
 
 use WP_Error;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Util\DateTimeHelper;
 use BitApps\BTCBI\Util\FieldValueHandler;
 use BitApps\BTCBI\Http\Services\Actions\ZohoBigin\FilesApiHelper;
@@ -34,13 +34,13 @@ class RecordApiHelper
     public function insertRecord($module, $data)
     {
         $insertRecordEndpoint = "{$this->_apiDomain}/bigin/v1/{$module}";
-        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     private function insertNote($module, $recordId, $data)
     {
         $insertRecordEndpoint = "{$this->_apiDomain}/bigin/v1/{$module}/{$recordId}/Notes";
-        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $this->_defaultHeader);
     }
 
     public function execute($defaultConf, $module, $fieldValues, $fieldMap, $actions, $required, $integrationDetails)

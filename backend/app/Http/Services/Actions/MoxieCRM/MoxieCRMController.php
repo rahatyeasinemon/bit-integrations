@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\MoxieCRM;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for MoxieCRM integration
@@ -35,7 +35,7 @@ class MoxieCRMController
             "Content-Type"      => "application/json"
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->error)) {
             wp_send_json_success('Authentication successful', 200);
@@ -60,7 +60,7 @@ class MoxieCRMController
     //         "Content-Type"      => "application/json"
     //     ];
 
-    //     $response = HttpHelper::get($apiEndpoint, null, $headers);
+    //     $response = Http::request($apiEndpoint, 'Get', null, $headers);
     //     if (isset($response)) {
     //         foreach ($response as $customField) {
     //             if (in_array($action, $customField->available_on)) {
@@ -88,7 +88,7 @@ class MoxieCRMController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->opportunities)) {
             foreach ($response->opportunities as $opportunity) {
@@ -117,7 +117,7 @@ class MoxieCRMController
         ];
 
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response)) {
             foreach ($response as $client) {
@@ -146,7 +146,7 @@ class MoxieCRMController
             "Content-Type"      => "application/json"
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response)) {
             foreach ($response as $pipelineStage) {
@@ -175,7 +175,7 @@ class MoxieCRMController
             "Content-Type"      => "application/json"
         ];
 
-        $response = HttpHelper::post($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Post', null, $headers);
 
         if (!empty($response)) {
             foreach ($response as $people) {
@@ -204,7 +204,7 @@ class MoxieCRMController
             "Content-Type"      => "application/json"
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!empty($response)) {
             foreach ($response as $pipeline) {

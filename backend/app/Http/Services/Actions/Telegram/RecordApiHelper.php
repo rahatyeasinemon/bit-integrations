@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Telegram;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Telegram\FilesApiHelper;
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
@@ -30,7 +30,7 @@ class RecordApiHelper
     public function sendMessages($data)
     {
         $insertRecordEndpoint = $this->_apiEndPoint . '/sendMessage';
-        return HttpHelper::get($insertRecordEndpoint, $data, $this->_defaultHeader);
+        return Http::request($insertRecordEndpoint, 'Get', $data, $this->_defaultHeader);
     }
 
     public function execute($integrationDetails, $fieldValues)

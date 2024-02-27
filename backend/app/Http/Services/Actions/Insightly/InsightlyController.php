@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Insightly;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Insightly integration
@@ -29,7 +29,7 @@ class InsightlyController
             "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (is_array($response) && isset($response[0]->USER_ID)) {
             wp_send_json_success('Authentication successful', 200);
@@ -52,7 +52,7 @@ class InsightlyController
             "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if (!empty($response)) {
             foreach ($response as $organisation) {
                 $organisations[] = [
@@ -88,7 +88,7 @@ class InsightlyController
             "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if (!empty($response)) {
             foreach ($response as $category) {
                 $categories[] = [
@@ -115,7 +115,7 @@ class InsightlyController
             'Brand' => $apiUrl
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!empty($response->data)) {
             foreach ($response->data as $status) {
@@ -143,7 +143,7 @@ class InsightlyController
             "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if (!empty($response)) {
             foreach ($response as $leadStatus) {
                 $leadStatuses[] = [
@@ -170,7 +170,7 @@ class InsightlyController
             "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if (!empty($response)) {
             foreach ($response as $leadSource) {
                 $leadSources[] = [
@@ -197,7 +197,7 @@ class InsightlyController
             "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!empty($response)) {
             foreach ($response as $pipeline) {
@@ -233,7 +233,7 @@ class InsightlyController
             "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if (!empty($response)) {
             foreach ($response as $pipelineStage) {
                 $pipelineStages[] = [

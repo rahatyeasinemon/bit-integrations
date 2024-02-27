@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Sendy;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -45,7 +45,7 @@ class SendyController
         $apiEndpoint = "{$sendy_url}/includes/helpers/integrations/zapier/triggers/dropdowns.php?api_key={$apiKey}&event=brands";
         $authorizationHeader['Accept'] = 'application/json';
         // $authorizationHeader["api-key"] = $requestsParams->api_key;
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
         if (is_wp_error($apiResponse) || $apiResponse->status === 'error' || !count($apiResponse)) {
             wp_send_json_error(
                 empty($apiResponse->code) ? 'Unknown' : $apiResponse->message,
@@ -78,7 +78,7 @@ class SendyController
             'api_key' => $apiKey
         ];
         // $authorizationHeader["api-key"] = $queryParams->api_key;
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestsParams, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestsParams, $authorizationHeader);
         $response = [];
         foreach ($apiResponse as $list) {
             $response[] = (object) [
@@ -113,7 +113,7 @@ class SendyController
             'api_key' => $apiKey,
             'brand_id' => $brand_id
         ];
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestsParams, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestsParams, $authorizationHeader);
 
         $response = [];
         foreach ($apiResponse as $list) {

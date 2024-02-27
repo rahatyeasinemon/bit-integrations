@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Moosend;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Moosend\RecordApiHelper;
 
 /**
@@ -29,12 +29,12 @@ class MoosendController
                 400
             );
         }
-        $apiEndpoints = $this->baseUrl . 'lists/1/1000.json?apikey=' . $requestParams->authKey;
+        $apiEndpoint = $this->baseUrl . 'lists/1/1000.json?apikey=' . $requestParams->authKey;
         $headers = [
           'Content-Type' => 'application/json',
           'Accept' => 'application/json',
         ];
-        $response = HttpHelper::get($apiEndpoints, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if ($response->Error !== null) {
             wp_send_json_error(
                 __(

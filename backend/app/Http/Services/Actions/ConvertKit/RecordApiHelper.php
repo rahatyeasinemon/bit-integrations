@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\ConvertKit;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -50,7 +50,7 @@ class RecordApiHelper
 
         $insertRecordEndpoint = "{$this->_apiEndpoint}/forms/{$formId}/{$method}?{$queries}";
 
-        $res = HttpHelper::post($insertRecordEndpoint, null);
+        $res = Http::request($insertRecordEndpoint, 'Post', null);
         return $res;
     }
 
@@ -85,7 +85,7 @@ class RecordApiHelper
 
         $updateRecordEndpoint = "{$this->_apiEndpoint}/subscribers/{$id}?" . $queries;
 
-        return  HttpHelper::request($updateRecordEndpoint, 'PUT', null);
+        return  Http::request($updateRecordEndpoint, 'PUT', null);
     }
 
     //add tag to a subscriber
@@ -98,7 +98,7 @@ class RecordApiHelper
         foreach ($tags as $tagId) {
             $searchEndPoint = "{$this->_apiEndpoint}/tags/{$tagId}/subscribe?{$queries}";
 
-            HttpHelper::post($searchEndPoint, null);
+            Http::request($searchEndPoint, 'Post', null);
         }
     }
 
@@ -111,7 +111,7 @@ class RecordApiHelper
         ]);
         $searchEndPoint = "{$this->_apiEndpoint}/subscribers?{$queries}";
 
-        return HttpHelper::get($searchEndPoint, null);
+        return Http::request($searchEndPoint, 'Get', null);
     }
 
 

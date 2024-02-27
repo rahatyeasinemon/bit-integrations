@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\MailRelay;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -32,7 +32,7 @@ class RecordApiHelper
     public function addSubscriber($selectedGroups, $finalData, $status)
     {
         $baseUrl      = "https://{$this->_domainName}.ipzmarketing.com/api/v1/";
-        $apiEndpoints = $baseUrl . 'subscribers';
+        $apiEndpoint = $baseUrl . 'subscribers';
         $groups       = [];
 
         if (!empty($selectedGroups)) {
@@ -73,13 +73,13 @@ class RecordApiHelper
         $apiRequestBody = json_encode($requestParams);
 
         if ($isSubscriberExist && !empty($this->_integrationDetails->actions->update)) {
-            $apiEndpoints = $baseUrl . 'subscribers/' . $isSubscriberExist;
+            $apiEndpoint = $baseUrl . 'subscribers/' . $isSubscriberExist;
             $this->_requestStoringTypes = 'updated';
-            return HttpHelper::request($apiEndpoints, 'PATCH', $apiRequestBody, $this->_defaultHeader);
+            return Http::request($apiEndpoint, 'PATCH', $apiRequestBody, $this->_defaultHeader);
         }
 
         $this->_requestStoringTypes = 'created';
-        return HttpHelper::post($apiEndpoints, $apiRequestBody, $this->_defaultHeader);
+        return Http::request($apiEndpoint, 'Post', $apiRequestBody, $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -115,8 +115,8 @@ class RecordApiHelper
     {
         $queryEndpoints = $baseUrl . 'subscribers?q%5Bemail_eq%5D=';
         $encodedEmail   = urlencode($email);
-        $apiEndpoints   = $queryEndpoints . $encodedEmail;
-        $response       = HttpHelper::get($apiEndpoints, null, $this->_defaultHeader);
+        $apiEndpoint   = $queryEndpoints . $encodedEmail;
+        $response       = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response[0]->id)) {
             return $response[0]->id;

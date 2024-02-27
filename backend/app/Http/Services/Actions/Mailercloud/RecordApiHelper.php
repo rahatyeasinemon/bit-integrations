@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Mailercloud;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -42,13 +42,13 @@ class RecordApiHelper
         }
 
 
-        $apiEndpoints = "{$this->baseUrl}contacts";
+        $apiEndpoint = "{$this->baseUrl}contacts";
         $headers = [
           'Content-Type' => 'application/json',
           'Authorization' => $authKey
         ];
 
-        return HttpHelper::post($apiEndpoints, json_encode($finalData), $headers);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $headers);
     }
 
     public function generateReqDataFromFieldMap($data, $field_map)

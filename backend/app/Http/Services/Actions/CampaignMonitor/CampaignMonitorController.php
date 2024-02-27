@@ -5,7 +5,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\CampaignMonitor;
 use WP_Error;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Actions\CampaignMonitor\RecordApiHelper;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 class CampaignMonitorController
 {
@@ -36,7 +36,7 @@ class CampaignMonitorController
         $this->checkValidation($requestParams->api_key, $requestParams->client_id);
         $apiEndpoint = $this->baseUrl . "/clients/{$requestParams->client_id}.json";
         $headers     = $this->setHeader($requestParams->api_key);
-        $response    = HttpHelper::get($apiEndpoint, null, $headers);
+        $response    = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->ApiKey)) {
             wp_send_json_error(
@@ -52,7 +52,7 @@ class CampaignMonitorController
         $this->checkValidation($requestParams->api_key, $requestParams->client_id);
         $headers     = $this->setHeader($requestParams->api_key);
         $apiEndpoint = $this->baseUrl . "/clients/{$requestParams->client_id}/lists.json";
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $headers);
         $lists       = [];
 
         foreach ($apiResponse as $item) {
@@ -74,7 +74,7 @@ class CampaignMonitorController
         $this->checkValidation($requestParams->api_key, $requestParams->client_id, $requestParams->listId);
         $headers     = $this->setHeader($requestParams->api_key);
         $apiEndpoint = $this->baseUrl . "/lists/{$requestParams->listId}/customfields.json";
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $headers);
         $fields       = [];
 
         foreach ($apiResponse as $field) {

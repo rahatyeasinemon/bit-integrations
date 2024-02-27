@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Salesmate;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -56,7 +56,7 @@ class RecordApiHelper
         $this->type     = 'Product';
         $this->typeName = 'Product created';
         $apiEndpoint = $this->apiUrl . "v1/products";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -78,7 +78,7 @@ class RecordApiHelper
         $this->type     = 'Contact';
         $this->typeName = 'Contact created';
         $apiEndpoint = $this->apiUrl . "contact/v4";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->defaultHeader);
     }
 
     public function addCompany($finalData)
@@ -102,7 +102,7 @@ class RecordApiHelper
         $this->type     = 'Company';
         $this->typeName = 'Company created';
         $apiEndpoint = $this->apiUrl . "company/v4";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->defaultHeader);
     }
 
     public function addDeal($finalData)
@@ -138,7 +138,7 @@ class RecordApiHelper
         $this->type     = 'Deal';
         $this->typeName = 'Deal created';
         $apiEndpoint = $this->apiUrl . "deal/v4";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ClinchPad;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for ClinchPad integration
@@ -34,7 +34,7 @@ class ClinchPadController
             "Authorization" => 'Basic ' . base64_encode("api-key:$apiKey")
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response)) {
             wp_send_json_success('Authentication successful', 200);
@@ -55,7 +55,7 @@ class ClinchPadController
             "Authorization" => 'Basic ' . base64_encode("api-key:$apiKey")
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response)) {
             foreach ($response as $parentOrganization) {
@@ -82,7 +82,7 @@ class ClinchPadController
             "Authorization" => 'Basic ' . base64_encode("api-key:$apiKey")
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!empty($response)) {
             foreach ($response as $pipeline) {
@@ -109,7 +109,7 @@ class ClinchPadController
             "Authorization" => 'Basic ' . base64_encode("api-key:$apiKey")
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!empty($response)) {
             foreach ($response as $contact) {

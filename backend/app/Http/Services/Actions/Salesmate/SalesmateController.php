@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Salesmate;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for Salesmate integration
@@ -78,7 +78,7 @@ class SalesmateController
         $apiEndpoint       = $this->setApiEndpoint() . "v1/users/active";
 
         $headers = $this->setHeaders($sessionToken);
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->Status) && $response->Status === "success") {
             wp_send_json_success('Authentication successful', 200);
@@ -96,7 +96,7 @@ class SalesmateController
         $apiEndpoint       = $this->setApiEndpoint() . "v1/modules/{$actionId}/fields";
 
         $headers  = $this->setHeaders($sessionToken);
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->Status) && $response->Status === "success") {
             $fieldMap = [];
@@ -128,7 +128,7 @@ class SalesmateController
         $apiEndpoint       = $this->setApiEndpoint() . "v1/tags";
 
         $headers  = $this->setHeaders($sessionToken);
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->Status) && $response->Status === "success") {
             foreach ($response->Data as $tag) {
@@ -150,7 +150,7 @@ class SalesmateController
         $apiEndpoint       = $this->setApiEndpoint() . "v3/lookups/active/currency";
 
         $headers  = $this->setHeaders($sessionToken);
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->Status) && $response->Status === "success") {
             foreach ($response->Data as $currency) {
@@ -172,7 +172,7 @@ class SalesmateController
         $apiEndpoint       = $this->setApiEndpoint() . "v3/apps/dealPipeline";
 
         $headers = $this->setHeaders($sessionToken);
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->Status) && $response->Status === "success") {
             foreach ($response->Data as $pipelines) {
@@ -196,7 +196,7 @@ class SalesmateController
         $body              = '{"displayingFields":["contact.id","contact.name","contact.email"],"filterQuery":{"group":{"operator":"AND","rules":[{"moduleName":"Contact","field":{"fieldName":"contact.isDeleted","displayName":"Show Deleted","type":"Boolean"},"data":"false","eventType":"Boolean"}]}},"sort":[{"fieldName":"contact.createdAt","order":"desc"},{"fieldName":"contact.id","order":"desc"}],"moduleId":1,"reportType":"get_data","getRecordsCount":true}';
 
         $headers = $this->setHeaders($sessionToken);
-        $response = HttpHelper::post($apiEndpoint, $body, $headers);
+        $response = Http::request($apiEndpoint, 'Post', $body, $headers);
 
         if (isset($response->Status) && $response->Status === "success") {
             foreach ($response->Data->data as $contact) {
@@ -221,7 +221,7 @@ class SalesmateController
         $body              = '{"displayingFields":["company.name","company.id"],"filterQuery":{"group":{"operator":"AND","rules":[{"condition":"IS_AFTER","moduleName":"Company","field":{"fieldName":"company.createdAt","displayName":"Created At","type":"DateTime"},"data":"Jan 01, 1970 05:30 AM","eventType":"DateTime"}]}},"sort":{"fieldName":"company.annualRevenue","order":"desc"},"moduleId":5,"reportType":"get_data","getRecordsCount":true}';
 
         $headers = $this->setHeaders($sessionToken);
-        $response = HttpHelper::post($apiEndpoint, $body, $headers);
+        $response = Http::request($apiEndpoint, 'Post', $body, $headers);
 
         if (isset($response->Status) && $response->Status === "success") {
             foreach ($response->Data->data as $contact) {
@@ -244,7 +244,7 @@ class SalesmateController
         $apiEndpoint       = $this->setApiEndpoint() . "v1/users/active";
 
         $headers = $this->setHeaders($sessionToken);
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->Status) && $response->Status === "success") {
             foreach ($response->Data as $owner) {

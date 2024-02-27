@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\MailRelay;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for MailRelay integration
@@ -30,13 +30,13 @@ class MailRelayController
 
         $domain       = $fieldsRequestParams->domain;
         $baseUrl      = "https://{$domain}.ipzmarketing.com/api/v1/";
-        $apiEndpoints = $baseUrl . 'custom_fields';
+        $apiEndpoint = $baseUrl . 'custom_fields';
         $apiKey       = $fieldsRequestParams->auth_token;
         $header       = [
             'X-AUTH-TOKEN' => $apiKey
         ];
 
-        $response     = HttpHelper::get($apiEndpoints, null, $header);
+        $response     = Http::request($apiEndpoint, 'Get', null, $header);
         $customFields = [];
 
         foreach ($response as $customField) {
@@ -68,13 +68,13 @@ class MailRelayController
 
         $domain       = $fieldsRequestParams->domain;
         $baseUrl      = "https://{$domain}.ipzmarketing.com/api/v1/";
-        $apiEndpoints = $baseUrl . 'groups?page=1&&per_page=1000';
+        $apiEndpoint = $baseUrl . 'groups?page=1&&per_page=1000';
         $apiKey       = $fieldsRequestParams->auth_token;
         $header       = [
             'X-AUTH-TOKEN' => $apiKey
         ];
 
-        $response = HttpHelper::get($apiEndpoints, null, $header);
+        $response = Http::request($apiEndpoint, 'Get', null, $header);
         $groups   = [];
 
         foreach ($response as $group) {

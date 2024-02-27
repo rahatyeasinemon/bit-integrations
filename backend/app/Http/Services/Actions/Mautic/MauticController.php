@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\Mautic;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for MailChimp integration
@@ -54,7 +54,7 @@ class MauticController
             'redirect_uri' => $requestsParams->redirectURI,
             'grant_type' => 'authorization_code'
         );
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams, $authorizationHeader);
         if (is_wp_error($apiResponse) || !empty($apiResponse->errors)) {
             wp_send_json_error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
@@ -83,7 +83,7 @@ class MauticController
             "client_secret" => $apiData->clientSecret,
             "refresh_token" => $tokenDetails->refresh_token,
         );
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }
@@ -120,7 +120,7 @@ class MauticController
 
         $apiEndpoint = "$mauticUrl/api/contacts/list/fields"; // "/api/fields/contact" this endpoint did not contain all of fields
         $authorizationHeader["Authorization"] = "Bearer {$tokenDetails->access_token}";
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
         $response = [];
         if (!is_wp_error($apiResponse)) {
             foreach ($apiResponse as $field) {
@@ -154,7 +154,7 @@ class MauticController
 
         $apiEndpoint = "$mauticUrl/api/tags";
         $authorizationHeader["Authorization"] = "Bearer {$tokenDetails->access_token}";
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
         $response = [];
         if (!is_wp_error($apiResponse)) {
             foreach ($apiResponse->tags as $field) {

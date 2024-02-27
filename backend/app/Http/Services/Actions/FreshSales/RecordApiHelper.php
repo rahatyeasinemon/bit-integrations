@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\FreshSales;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -55,16 +55,16 @@ class RecordApiHelper
         }
 
         if ($module === 'product') {
-            $apiEndpoints =   "https://" . $this->baseUrl . "/api/cpq/" . $module . "s" ;
+            $apiEndpoint =   "https://" . $this->baseUrl . "/api/cpq/" . $module . "s" ;
         } else {
-            $apiEndpoints =   "https://" . $this->baseUrl . "/api/" . $module . "s" ;
+            $apiEndpoint =   "https://" . $this->baseUrl . "/api/" . $module . "s" ;
         }
 
         $actions = $this->_integrationDetails->actions;
 
         $body = wp_json_encode([$module => $finalData]);
 
-        $response = HttpHelper::post($apiEndpoints, $body, $this->_defaultHeader);
+        $response = Http::request($apiEndpoint, 'Post', $body, $this->_defaultHeader);
 
         return $response;
     }
@@ -99,7 +99,7 @@ class RecordApiHelper
                 };
                 $finalData['participants'] = $allParticipants;
             }
-            $apiEndpoints = $this->baseUrl . $module . '?api_token=' . $this->_integrationDetails->api_key;
+            $apiEndpoint = $this->baseUrl . $module . '?api_token=' . $this->_integrationDetails->api_key;
 
             if ($parentModule === 'leads') {
                 $finalData['lead_id'] = $parendId;
@@ -107,7 +107,7 @@ class RecordApiHelper
                 $finalData['deal_id'] = (int) $parendId;
             }
 
-            $response = HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $this->_defaultHeader);
+            $response = Http::request($apiEndpoint, 'Post', wp_json_encode($finalData), $this->_defaultHeader);
             return $response;
         }
     }

@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\LionDesk;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -43,7 +43,7 @@ class RecordApiHelper
         $this->type     = 'Campaign';
         $this->typeName = 'Campaign created';
         $apiEndpoint = $this->apiUrl . "/campaigns";
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return Http::request($apiEndpoint, 'Post', json_encode($finalData), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -84,11 +84,11 @@ class RecordApiHelper
         $this->type     = 'Contact';
         $this->typeName = 'Contact created';
         $apiEndpoint = $this->apiUrl . "/contacts";
-        $apiResponse =  HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        $apiResponse =  Http::request($apiEndpoint, 'Post', json_encode($requestParams), $this->defaultHeader);
 
         if(isset($apiResponse->id) && count($address) > 0) {
             $apiEndpoint = $this->apiUrl . "/contacts/$apiResponse->id/addresses";
-            return HttpHelper::post($apiEndpoint, json_encode($address), $this->defaultHeader);
+            return Http::request($apiEndpoint, 'Post', json_encode($address), $this->defaultHeader);
         } else {
             return $apiResponse;
         }

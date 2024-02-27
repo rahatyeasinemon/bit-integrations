@@ -4,7 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Mailup;
 
 use WP_Error;
 use BitApps\BTCBI\Http\Controllers\FlowController;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Mailup\RecordApiHelper;
 
 class MailupController
@@ -34,7 +34,7 @@ class MailupController
         $apiEndpoint              = 'https://services.mailup.com/Authorization/OAuth/Token';
         $header['Content-Type']   = 'application/x-www-form-urlencoded';
         $header['Authorization']  = 'Basic ' . base64_encode("$requestParams->clientId:$requestParams->clientSecret");
-        $apiResponse              = HttpHelper::post($apiEndpoint, $body, $header);
+        $apiResponse              = Http::request($apiEndpoint, 'Post', $body, $header);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
@@ -54,7 +54,7 @@ class MailupController
             'Authorization' => 'Bearer ' . $token->access_token,
         ];
         $apiEndpoint = 'https://services.mailup.com/API/v1.1/Rest/ConsoleService.svc/Console/List';
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $headers);
         $lists       = [];
 
         foreach ($apiResponse->Items as $item) {
@@ -82,7 +82,7 @@ class MailupController
             'Authorization' => 'Bearer ' . $token->access_token,
         ];
         $apiEndpoint = "https://services.mailup.com/API/v1.1/Rest/ConsoleService.svc/Console/List/{$requestParams->listId}/Groups";
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
+        $apiResponse = Http::request($apiEndpoint, 'Get', null, $headers);
         $lists       = [];
 
         foreach ($apiResponse->Items as $item) {
@@ -128,7 +128,7 @@ class MailupController
         ];
 
         $apiEndpoint = 'https://services.mailup.com/Authorization/OAuth/Token';
-        $apiResponse = HttpHelper::post($apiEndpoint, $body);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $body);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

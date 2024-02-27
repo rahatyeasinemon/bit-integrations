@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\ZohoCreator;
 
 use BitApps\BTCBI\Util\IpTool;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -52,7 +52,7 @@ class ZohoCreatorController
             'redirect_uri' => \urldecode($requestsParams->redirectURI),
             'code' => $requestsParams->code
         ];
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
@@ -87,7 +87,7 @@ class ZohoCreatorController
         $applicationsMetaApiEndpoint = "https://creator.zoho.{$queryParams->dataCenter}/api/v2/applications";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $applicationsMetaResponse = HttpHelper::get($applicationsMetaApiEndpoint, null, $authorizationHeader);
+        $applicationsMetaResponse = Http::request($applicationsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         // wp_send_json_success($applicationsMetaResponse, 200);
 
@@ -150,7 +150,7 @@ class ZohoCreatorController
 
         // $authorizationHeader["orgId"] = "{$queryParams->orgId}";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $formsMetaResponse = HttpHelper::get($formsMetaApiEndpoint, null, $authorizationHeader);
+        $formsMetaResponse = Http::request($formsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         // wp_send_json_success($formsMetaResponse, 200);
 
@@ -211,7 +211,7 @@ class ZohoCreatorController
         $fieldsMetaApiEndpoint = "https://creator.zoho.{$queryParams->dataCenter}/api/v2/{$queryParams->accountOwner}/{$queryParams->applicationId}/form/{$queryParams->formId}/fields";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $fieldsMetaResponse = HttpHelper::get($fieldsMetaApiEndpoint, null, $authorizationHeader);
+        $fieldsMetaResponse = Http::request($fieldsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
         // wp_send_json_success($fieldsMetaResponse, 200);
 
@@ -318,7 +318,7 @@ class ZohoCreatorController
             'refresh_token' => $tokenDetails->refresh_token,
         ];
 
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }

@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\EmailOctopus;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -92,11 +92,11 @@ class RecordApiHelper
 
             $apiEndpoint = 'https://emailoctopus.com/api/1.6/lists/' . $selectedList . '/contacts/' . $isContactExist->id;
             $this->_requestStoringType = 'updated';
-            return HttpHelper::request($apiEndpoint, 'PUT', $data, null);
+            return Http::request($apiEndpoint, 'PUT', $data, null);
         }
 
         $this->_requestStoringType = 'created';
-        return HttpHelper::post($apiEndpoint, $data, null);
+        return Http::request($apiEndpoint, 'Post', $data, null);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -132,7 +132,7 @@ class RecordApiHelper
     {
         $md5encodedEmail = md5($EmailAddress);
         $apiEndpoint     = 'https://emailoctopus.com/api/1.6/lists/' . $listId . '/contacts/' . $md5encodedEmail . '?api_key=' . $this->_authToken;
-        $response        = HttpHelper::get($apiEndpoint, null, null);
+        $response        = Http::request($apiEndpoint, 'Get', null, null);
 
         if (isset($response->id)) {
             return $response;

@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\CapsuleCRM;
 
 use WP_Error;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 /**
  * Provide functionality for CapsuleCRM integration
@@ -34,7 +34,7 @@ class CapsuleCRMController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->users)) {
             wp_send_json_success('Authentication successful', 200);
@@ -63,7 +63,7 @@ class CapsuleCRMController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->definitions)) {
             foreach ($response->definitions as $customField) {
@@ -91,7 +91,7 @@ class CapsuleCRMController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->opportunities)) {
             foreach ($response->opportunities as $opportunity) {
@@ -118,7 +118,7 @@ class CapsuleCRMController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->users)) {
             foreach ($response->users as $owner) {
@@ -145,7 +145,7 @@ class CapsuleCRMController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->teams)) {
             foreach ($response->teams as $team) {
@@ -173,7 +173,7 @@ class CapsuleCRMController
         ];
 
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->currencies)) {
             foreach ($response->currencies as $currency) {
@@ -201,7 +201,7 @@ class CapsuleCRMController
         ];
 
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!empty($response->parties)) {
             foreach ($response->parties as $party) {
@@ -235,7 +235,7 @@ class CapsuleCRMController
             "Authorization" => 'Bearer ' . $apiKey,
         ];
 
-        $response = HttpHelper::get($apiEndpoint, null, $headers);
+        $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!empty($response->milestones)) {
             foreach ($response->milestones as $milestone) {

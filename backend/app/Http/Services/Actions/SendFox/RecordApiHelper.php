@@ -7,7 +7,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\SendFox;
 
 use BitApps\BTCBI\Util\Common;
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 /**
@@ -25,7 +25,7 @@ class RecordApiHelper
 
     public function addContact($access_token, $listId, $finalData)
     {
-        $apiEndpoints = 'https://api.sendfox.com/contacts';
+        $apiEndpoint = 'https://api.sendfox.com/contacts';
         $listId = explode(',', $listId);
         $header = [
             'Authorization' => "Bearer {$access_token}",
@@ -39,12 +39,12 @@ class RecordApiHelper
             'lists' => $listId,
         ];
 
-        return HttpHelper::post($apiEndpoints, $data, $header);
+        return Http::request($apiEndpoint, 'Post', $data, $header);
     }
 
     public function createContactList($access_token, $finalData)
     {
-        $apiEndpoints = 'https://api.sendfox.com/lists';
+        $apiEndpoint = 'https://api.sendfox.com/lists';
 
         $header = [
             'Authorization' => "Bearer {$access_token}",
@@ -55,7 +55,7 @@ class RecordApiHelper
             'name' => $finalData['name'],
         ];
 
-        return HttpHelper::post($apiEndpoints, $data, $header);
+        return Http::request($apiEndpoint, 'Post', $data, $header);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -108,7 +108,7 @@ class RecordApiHelper
 
     public function unsubscribeContact($access_token, $finalData)
     {
-        $apiEndpoints = 'https://api.sendfox.com/unsubscribe';
+        $apiEndpoint = 'https://api.sendfox.com/unsubscribe';
 
         $header = [
             'Authorization' => "Bearer {$access_token}",
@@ -118,7 +118,7 @@ class RecordApiHelper
         $data = [
             'email' => $finalData['email'],
         ];
-        return HttpHelper::request($apiEndpoints, 'PATCH', $data, $header);
+        return Http::request($apiEndpoint, 'PATCH', $data, $header);
     }
 
     public function execute(

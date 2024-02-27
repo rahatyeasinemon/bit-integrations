@@ -6,7 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Slack;
 
-use BitApps\BTCBI\Util\HttpHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
@@ -36,7 +36,7 @@ class RecordApiHelper
             'verify' => false
         ];
         $insertRecordEndpoint = $this->_apiEndPoint . '/chat.postMessage';
-        return HttpHelper::post($insertRecordEndpoint, $data, $header);
+        return Http::request($insertRecordEndpoint, 'Post', $data, $header);
     }
 
     public function execute($integrationDetails, $fieldValues)
