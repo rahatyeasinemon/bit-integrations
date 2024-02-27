@@ -35,6 +35,10 @@ function EditPerfexCRM({ allIntegURL }) {
       toast.error('Please select a Customer')
       return
     }
+    if (perfexCRMConf.actionName === 'lead' && (!perfexCRMConf.selectedLeadStatusId || !perfexCRMConf.selectedLeadSourceId)) {
+      toast.error('Lead Status Id and Lead Source Id are required!')
+      return
+    }
     if (perfexCRMConf.actionName === 'project') {
       if (!perfexCRMConf.selectedProjectStatus) {
         toast.error('Please select Project status')

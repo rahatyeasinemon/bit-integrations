@@ -54,6 +54,18 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
       } else {
         delete newConf.actions.contactedToday
       }
+    } else if (type === 'leadStatus') {
+      if (e.target?.checked) {
+        newConf.actions.leadStatus = true
+      } else {
+        delete newConf.actions.leadStatus
+      }
+    } else if (type === 'leadSource') {
+      if (e.target?.checked) {
+        newConf.actions.leadSource = true
+      } else {
+        delete newConf.actions.leadSource
+      }
     } else if (type === 'projectMembers') {
       if (e.target?.checked) {
         getAllStaffs(newConf, setPerfexCRMConf, loading, setLoading)
@@ -84,6 +96,8 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
       {perfexCRMConf.actionName === 'contact' && <TableCheckBox checked={perfexCRMConf.actions?.contactIsPrimary || false} onChange={(e) => actionHandler(e, 'contactIsPrimary')} className="wdt-200 mt-4 mr-2" value="contactIsPrimary" title={__('Is it Primary Contact?', 'bit-integrations')} subTitle={__('Is it Primary Contact?', 'bit-integrations')} />}
       {perfexCRMConf.actionName === 'lead' && <TableCheckBox checked={perfexCRMConf.actions?.leadIsPublic || false} onChange={(e) => actionHandler(e, 'leadIsPublic')} className="wdt-200 mt-4 mr-2" value="leadIsPublic" title={__('Public', 'bit-integrations')} subTitle={__('Is it Public?', 'bit-integrations')} />}
       {perfexCRMConf.actionName === 'lead' && <TableCheckBox checked={perfexCRMConf.actions?.contactedToday || false} onChange={(e) => actionHandler(e, 'contactedToday')} className="wdt-200 mt-4 mr-2" value="contactedToday" title={__('Contacted Today', 'bit-integrations')} subTitle={__('Contacted Today', 'bit-integrations')} />}
+      {perfexCRMConf.actionName === 'lead' && <TableCheckBox checked={perfexCRMConf.actions?.leadStatus || false} onChange={(e) => actionHandler(e, 'leadStatus')} className="wdt-200 mt-4 mr-2" value="leadStatus" title={__('Add Lead Status Id', 'bit-integrations')} subTitle={__('Add Lead Status Id', 'bit-integrations')} />}
+      {perfexCRMConf.actionName === 'lead' && <TableCheckBox checked={perfexCRMConf.actions?.leadSource || false} onChange={(e) => actionHandler(e, 'leadSource')} className="wdt-200 mt-4 mr-2" value="leadSource" title={__('Add Lead Source Id', 'bit-integrations')} subTitle={__('Add Lead Source Id', 'bit-integrations')} />}
       {perfexCRMConf.actionName === 'project' && <TableCheckBox checked={perfexCRMConf?.selectedProjectMembers || false} onChange={(e) => actionHandler(e, 'projectMembers')} className="wdt-200 mt-4 mr-2" value="projectMembers" title={__('Add Project Members', 'bit-integrations')} subTitle={__('Add Project Members', 'bit-integrations')} />}
 
       <ConfirmModal
@@ -110,6 +124,40 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
             singleSelect
             closeOnSelect
           />
+        </div>
+      </ConfirmModal>
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt={__('Ok', 'bit-integrations')}
+        show={actionMdl.show === 'leadStatus'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title={__('Add Lead Status Id', 'bit-integrations')}
+      >
+        <div className="btcd-hr mt-2 mb-2" />
+        <div className="flx">
+          <b className="wdt-200 d-in-b">{__('Lead Status Id:', 'bit-integrations')}</b>
+          <input className="btcd-paper-inp w-5 mt-1" onChange={e => setChanges(e.target.value, 'selectedLeadStatusId')} name="selectedLeadStatusId" value={perfexCRMConf?.selectedLeadStatusId || ''} type="number" placeholder={__('Lead Status Id...', 'bit-integrations')} />
+          <span className="icn-btn sh-sm ml-2 mr-2 tooltip info-view mt-1" style={{ '--tooltip-txt': `'${__('Go to PerfexCRM Admin area & select the following menu: "SETUP → Leads → Statuses".', 'bit-integrations')}'` }}>&#x21;</span>
+        </div>
+      </ConfirmModal>
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt={__('Ok', 'bit-integrations')}
+        show={actionMdl.show === 'leadSource'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title={__('Add Lead Source Id', 'bit-integrations')}
+      >
+        <div className="btcd-hr mt-2 mb-2" />
+        <div className="flx">
+          <b className="wdt-200 d-in-b">{__('Lead Source Id:', 'bit-integrations')}</b>
+          <input className="btcd-paper-inp w-5 mt-1" onChange={e => setChanges(e.target.value, 'selectedLeadSourceId')} name="selectedLeadSourceId" value={perfexCRMConf?.selectedLeadSourceId || ''} type="number" placeholder={__('Lead Source Id...', 'bit-integrations')} />
+          <span className="icn-btn sh-sm ml-2 mr-2 tooltip info-view mt-1" style={{ '--tooltip-txt': `'${__('Go to PerfexCRM Admin area & select the following menu: "SETUP → Leads → Sources".', 'bit-integrations')}'` }}>&#x21;</span>
         </div>
       </ConfirmModal>
 

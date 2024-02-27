@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\PerfexCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -80,10 +80,14 @@ class RecordApiHelper
     {
         if (empty($finalData['name'])) {
             return ['success' => false, 'message' => 'Required field name is empty', 'code' => 400];
+        } elseif (isset($this->integrationDetails->selectedLeadStatusId) && empty($this->integrationDetails->selectedLeadStatusId)) {
+            return ['success' => false, 'message' => 'Required field Lead Status Id is empty', 'code' => 400];
+        } elseif (isset($this->integrationDetails->selectedLeadSourceId) && empty($this->integrationDetails->selectedLeadSourceId)) {
+            return ['success' => false, 'message' => 'Required field Lead Source Id is empty', 'code' => 400];
         }
 
-        $finalData['status'] = 1;
-        $finalData['source'] = 1;
+        $finalData['status'] = $this->integrationDetails->selectedLeadStatusId;
+        $finalData['source'] = $this->integrationDetails->selectedLeadSourceId;
 
         if (isset($this->integrationDetails->selectedCustomer) && !empty($this->integrationDetails->selectedCustomer)) {
             $finalData['client_id'] = ($this->integrationDetails->selectedCustomer);

@@ -86,6 +86,8 @@ function PerfexCRM({ formFields, setFlow, flow, allIntegURL }) {
       { formField: '', perfexCRMFormField: '' },
     ],
     actionName: '',
+    selectedLeadSourceId: 1,
+    selectedLeadStatusId: 1,
     actionId: '',
     customerFields,
     contactFields,
@@ -119,6 +121,10 @@ function PerfexCRM({ formFields, setFlow, flow, allIntegURL }) {
 
     if (perfexCRMConf.actionName === 'contact' && !perfexCRMConf.selectedCustomer) {
       toast.error('Please select a Customer')
+      return
+    }
+    if (perfexCRMConf.actionName === 'lead' && (!perfexCRMConf.selectedLeadStatusId || !perfexCRMConf.selectedLeadSourceId)) {
+      toast.error('Lead Status Id and Lead Source Id are required!')
       return
     }
     if (perfexCRMConf.actionName === 'project') {
