@@ -46,7 +46,7 @@ class ZoomController
 
         $tokenDetails   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret);
         $header         = [
-            'Authorization' => 'Bearer ' . $requestParams->access_token,
+            'Authorization' => 'Bearer ' . $tokenDetails->access_token,
             'Content-Type' => 'application/json'
         ];
 
