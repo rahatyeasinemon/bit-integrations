@@ -18,16 +18,6 @@ function Zoom({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
-  const zoomFields = [
-    { key: 'first_name', label: 'First Name', required: true },
-    { key: 'last_name', label: 'Last Name', required: true },
-    { key: 'email', label: 'Email', required: true },
-    { key: 'city', label: 'City', required: false },
-    { key: 'country', label: 'Country', required: false },
-    { key: 'phone', label: 'Phone', required: false },
-    { key: 'job_title', label: 'Job Title', required: false },
-    { key: 'zip', label: 'Zip', required: false },
-  ]
   const [zoomConf, setZoomConf] = useState({
     name: 'Zoom',
     type: 'Zoom',
@@ -37,7 +27,7 @@ function Zoom({ formFields, setFlow, flow, allIntegURL }) {
     field_map: [
       { formField: '', zoomField: '' },
     ],
-    zoomFields,
+    zoomFields: [],
     allActions: [
       { value: 'Create Attendee', key: 1 },
       { value: 'Delete Attendee', key: 2 },
