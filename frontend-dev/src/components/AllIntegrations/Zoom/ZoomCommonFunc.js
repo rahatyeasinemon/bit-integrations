@@ -130,6 +130,7 @@ export const refreshFields = (
         setZoomConf((prevConf) =>
           create(prevConf, (draftConf) => {
             draftConf.zoomFields = result.data;
+            draftConf.field_map = generateMappedField(draftConf.zoomFields);
           })
         );
         setSnackbar({
@@ -273,10 +274,8 @@ export const checkMappedFields = (zoomConf) => {
   return true;
 };
 
-export const generateMappedField = (zoomConf) => {
-  const requiredFlds = zoomConf?.zoomFields.filter(
-    (fld) => fld.required === true
-  );
+export const generateMappedField = (zoomFields = []) => {
+  const requiredFlds = zoomFields?.filter((fld) => fld.required === true);
   return requiredFlds.length > 0
     ? requiredFlds.map((field) => ({ formField: "", zoomField: field.key }))
     : [{ formField: "", zoomField: "" }];

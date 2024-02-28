@@ -21,6 +21,7 @@ function EditZoom({ allIntegURL }) {
   const formFields = useRecoilValue($formFields)
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
+
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
