@@ -31,12 +31,14 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
         public function run($form, $settings, $extra)
         {
             error_log(print_r(['path' => BreakdanceHelper::setFields($extra, $form), 'name' => 'Action', 'form' => $form, 'settings' => $settings, 'extra' => $extra], true));
-            $formData = BreakdanceHelper::setFields($extra, $form);
+
+            $reOrganizeId   = "{$extra['formId']}-{$extra['postId']}";
+            $formData       = BreakdanceHelper::setFields($extra, $form);
+
             if (get_option('btcbi_breakdance_test') !== false) {
                 update_option('btcbi_breakdance_test', $formData);
             }
 
-            $reOrganizeId   = "{$extra['formId']}-{$extra['postId']}";
 
             global $wpdb;
             $flows = $wpdb->get_results(
@@ -51,16 +53,28 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
                 )
             );
 
-            // $flows          = Flow::exists('Breakdance', $reOrganizeId);
             if (!$flows) {
                 return;
             }
 
-            // $data           = $extra['fields'];
-            // $data['formId'] = $extra['formId'];
-            // $data['postId'] = $extra['postId'];
+            foreach ($flows as $flow) {
+                $flowDetails = json_decode($flow->flow_details);
 
-            Flow::execute('Breakdance', $reOrganizeId, $data, $flows);
+                if (isset($flowDetails->primaryKey)) {
+                    $data               = [];
+                    $primaryKeyValue    = BreakdanceHelper::extractValueFromPath($extra, $flowDetails->primaryKey->key);
+
+                    if ($flowDetails->primaryKey->value != $primaryKeyValue) continue;
+
+                    foreach ($formData as $field) {
+                        $data[$field['name']] = BreakdanceHelper::extractValueFromPath($extra, $field['name']);
+                    }
+
+                    Flow::execute('Breakdance', 'BreakdanceHook', $data, array($flow));
+                } elseif ($flow->triggered_entity_id == $reOrganizeId) {
+                    Flow::execute('Breakdance', $reOrganizeId, $extra['fields'], array($flow));
+                }
+            }
 
             return ['type' => 'success'];
         }
