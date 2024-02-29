@@ -4,6 +4,7 @@ namespace BitCode\FI\Triggers\Breakdance;
 
 use BitCode\FI\Flow\Flow;
 use Breakdance\Forms\Actions\Action;
+use BitCode\FI\Triggers\Breakdance\BreakdanceHelper;
 
 if (class_exists('Breakdance\Forms\Actions\Action')) {
     class BreakdanceAction extends Action
@@ -29,7 +30,7 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
          */
         public function run($form, $settings, $extra)
         {
-            error_log(print_r(['name' => 'Action', 'form' => $form, 'settings' => $settings, 'extra' => $extra], true));
+            error_log(print_r(['path' => BreakdanceHelper::setFields($extra, $form), 'name' => 'Action', 'form' => $form, 'settings' => $settings, 'extra' => $extra], true));
 
             $reOrganizeId = "{$extra['formId']}-{$extra['postId']}";
             $flows = Flow::exists('Breakdance', $reOrganizeId);
