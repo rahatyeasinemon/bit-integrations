@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\EDD;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class EDDController
 {
@@ -41,7 +42,7 @@ final class EDDController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Easy Digital Downloads is not installed or activated', 'bit-integrations'));
+            Response::error(__('Easy Digital Downloads is not installed or activated', 'bit-integrations'));
         }
 
         $types = [
@@ -57,21 +58,21 @@ final class EDDController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($edd_action);
+        Response::success($edd_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Easy Digital Downloads is not installed or activated', 'bit-integrations'));
+            Response::error(__('Easy Digital Downloads is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = EDDHelper::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         $id = $data->id;
@@ -82,7 +83,7 @@ final class EDDController
         }
 
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function handlePurchaseProduct($payment_id)
@@ -206,12 +207,12 @@ final class EDDController
     public static function getProduct()
     {
         $products = EDDHelper::allProducts();
-        wp_send_json_success($products);
+        Response::success($products);
     }
 
     public static function getDiscount()
     {
         $discounts = EDDHelper::allDiscount();
-        wp_send_json_success($discounts);
+        Response::success($discounts);
     }
 }

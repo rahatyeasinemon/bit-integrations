@@ -10,6 +10,7 @@ use WP_Error;
 use WC_Data_Store;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Http\Services\Actions\WooCommerce\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class WooCommerceController
 {
@@ -24,10 +25,10 @@ class WooCommerceController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (is_plugin_active('woocommerce/woocommerce.php')) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
 
-        wp_send_json_error(__('WooCommerce must be activated!', 'bit-integrations'));
+        Response::error(__('WooCommerce must be activated!', 'bit-integrations'));
     }
 
     public static function metaboxFields($module)
@@ -77,7 +78,7 @@ class WooCommerceController
     public static function refreshFields($queryParams)
     {
         if (empty($queryParams->module)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -679,7 +680,7 @@ class WooCommerceController
                 'required' => $requiredLine
             ];
 
-            wp_send_json_success([$responseOrder, $responseCustomer, $responseLine], 200);
+            Response::success([$responseOrder, $responseCustomer, $responseLine]);
         }
 
         if ($queryParams->module === 'changestatus') {
@@ -733,7 +734,7 @@ class WooCommerceController
                 'required' => $required
             ];
 
-            wp_send_json_success($response, 200);
+            Response::success($response);
         }
 
         uksort($fields, 'strnatcasecmp');
@@ -745,7 +746,7 @@ class WooCommerceController
             'required' => $required
         ];
 
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function searchProjects($queryParams)
@@ -764,7 +765,7 @@ class WooCommerceController
             }
         }
 
-        wp_send_json_success($products, 200);
+        Response::success($products);
     }
 
     public static function allSubscriptionsProducts()
@@ -794,7 +795,7 @@ class WooCommerceController
                 'product_name' => $val->post_title,
             ];
         }
-        wp_send_json_success($subscriptions, 200);
+        Response::success($subscriptions);
     }
 
     public function execute($integrationData, $fieldValues)

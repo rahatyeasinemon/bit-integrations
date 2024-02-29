@@ -6,6 +6,7 @@ use BitApps\BTCBI\Http\Services\Actions\OneDrive\RecordApiHelper as OneDriveReco
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 class OneDriveController
@@ -20,7 +21,7 @@ class OneDriveController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->clientId) || empty($requestParams->clientSecret) || empty($requestParams->code) || empty($requestParams->redirectURI)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $body = [
@@ -35,16 +36,16 @@ class OneDriveController
         $header["Content-Type"] = 'application/x-www-form-urlencoded';
         $apiResponse = Http::request($apiEndpoint, 'Post', $body, $header);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
+            Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     public static function getAllFolders($queryParams)
     {
         if (empty($queryParams->tokenDetails) || empty($queryParams->clientId) || empty($queryParams->clientSecret)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token = self::tokenExpiryCheck($queryParams->tokenDetails, $queryParams->clientId, $queryParams->clientSecret);
@@ -65,7 +66,7 @@ class OneDriveController
         }
         $response['oneDriveFoldersList'] = $data;
         $response['tokenDetails'] = $token;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
 
@@ -87,7 +88,7 @@ class OneDriveController
     public static function singleOneDriveFolderList($queryParams)
     {
         if (empty($queryParams->tokenDetails) || empty($queryParams->clientId) || empty($queryParams->clientSecret)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $ids = explode('!', $queryParams->folder);
@@ -114,7 +115,7 @@ class OneDriveController
         }
         $response['folders'] = $data;
         $response['tokenDetails'] = $token;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     private static function tokenExpiryCheck($token, $clientId, $clientSecret)

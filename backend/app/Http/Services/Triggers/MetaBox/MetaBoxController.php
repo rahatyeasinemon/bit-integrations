@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\MetaBox;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class MetaBoxController
 {
@@ -34,10 +35,10 @@ final class MetaBoxController
     public function getAll()
     {
         if (!function_exists('rwmb_meta')) {
-            wp_send_json_error(__('Meta Box is not installed or activated', 'bit-integrations'));
+            Response::error(__('Meta Box is not installed or activated', 'bit-integrations'));
         }
         if (!function_exists('mb_frontend_submission_load')) {
-            wp_send_json_error(__('MB Frontend Submission is not installed or activated', 'bit-integrations'));
+            Response::error(__('MB Frontend Submission is not installed or activated', 'bit-integrations'));
         }
 
         if (function_exists('rwmb_meta')) {
@@ -52,7 +53,7 @@ final class MetaBoxController
                 ];
             }
 
-            wp_send_json_success($all_forms);
+            Response::success($all_forms);
         }
     }
 
@@ -91,14 +92,14 @@ final class MetaBoxController
             $missing_field = 'Form ID';
         }
         if (!is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         if (empty($fields)) {
-            wp_send_json_error(__('Metabox doesn\'t exists any Field Group', 'bit-integrations'));
+            Response::error(__('Metabox doesn\'t exists any Field Group', 'bit-integrations'));
         }
 
         $responseData['fields'] = array_merge($this->postFields(), $fields);
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($form_id)

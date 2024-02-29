@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Freshdesk;
 use BitApps\BTCBI\Util\Common;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -30,7 +31,7 @@ class RecordApiHelper
             empty($data)
             || empty($api_key)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -52,7 +53,7 @@ class RecordApiHelper
         $data = \json_encode($data);
         $apiResponse = Http::request($apiEndpoint, 'Post', $data, $header);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -101,7 +102,7 @@ class RecordApiHelper
             empty($app_base_domamin)
             || empty($email) || empty($api_key)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -124,7 +125,7 @@ class RecordApiHelper
             empty($finalDataContact)
             || empty($api_key)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -155,7 +156,7 @@ class RecordApiHelper
             empty($finalDataContact)
             || empty($api_key) || empty($contactId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

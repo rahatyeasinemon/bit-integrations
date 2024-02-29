@@ -14,6 +14,7 @@ use BitApps\BTCBI\Http\Services\Actions\ZohoCRM\MetaDataApiHelper;
 use BitApps\BTCBI\Http\Services\Actions\ZohoCRM\RecordApiHelper;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Plugin;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use stdClass;
 
 /**
@@ -45,7 +46,7 @@ final class ZohoCRMController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -63,13 +64,13 @@ final class ZohoCRMController
         );
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
     /**
      * Process ajax request for refresh crm modules
@@ -86,7 +87,7 @@ final class ZohoCRMController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -100,7 +101,7 @@ final class ZohoCRMController
             if ($refreshedToken) {
                 $response['tokenDetails'] = $refreshedToken;
             } else {
-                wp_send_json_error(
+                Response::error(
                     __('Failed to refresh access token', 'bit-integrations'),
                     400
                 );
@@ -141,7 +142,7 @@ final class ZohoCRMController
                 }
                 uksort($allModules, 'strnatcasecmp');
             } else {
-                wp_send_json_error(
+                Response::error(
                     empty($modulesMetaResponse->message) ? 'Unknown' : $modulesMetaResponse->message,
                     400
                 );
@@ -158,7 +159,7 @@ final class ZohoCRMController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             ZohoCRMController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
     /**
      * Process ajax request for refresh crm layouts
@@ -176,7 +177,7 @@ final class ZohoCRMController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -275,7 +276,7 @@ final class ZohoCRMController
             uksort($layouts, 'strnatcasecmp');
             $response["layouts"] = $layouts;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $layoutsMetaResponse->status === 'error' ? $layoutsMetaResponse->message : 'Unknown',
                 400
             );
@@ -284,7 +285,7 @@ final class ZohoCRMController
             $response["queryModule"] = $queryParams->module;
             ZohoCRMController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -371,7 +372,7 @@ final class ZohoCRMController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -394,7 +395,7 @@ final class ZohoCRMController
             uksort($rules, 'strnatcasecmp');
             $response["assignmentRules"] = $rules;
         } else {
-            wp_send_json_error(
+            Response::error(
                 !empty($assignmentRulesResponse->status)
                     && $assignmentRulesResponse->status === 'error' ?
                     $assignmentRulesResponse->message : (empty($assignmentRulesResponse) ? __('Assignment rules is empty', 'bit-integrations') : 'Unknown'),
@@ -404,7 +405,7 @@ final class ZohoCRMController
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             static::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
     /**
      * Process ajax request to get realted lists of a Zoho CRM module
@@ -422,7 +423,7 @@ final class ZohoCRMController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -444,7 +445,7 @@ final class ZohoCRMController
             uksort($relatedListResponse, 'strnatcasecmp');
             $response["relatedLists"] = $relatedListResponse;
         } else {
-            wp_send_json_error(
+            Response::error(
                 is_object($relatedListResponse->status)
                     && !empty($relatedListResponse->status)
                     && $relatedListResponse->status === 'error' ?
@@ -455,7 +456,7 @@ final class ZohoCRMController
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             static::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
     /**
      * Process ajax request for refresh crm users
@@ -472,7 +473,7 @@ final class ZohoCRMController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -516,7 +517,7 @@ final class ZohoCRMController
             uksort($users, 'strnatcasecmp');
             $response["users"] = $users;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $usersResponse->status === 'error' ? $usersResponse->message : 'Unknown',
                 400
             );
@@ -524,7 +525,7 @@ final class ZohoCRMController
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             static::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
     /**
      * Process ajax request for refresh tags of a module
@@ -542,7 +543,7 @@ final class ZohoCRMController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -561,7 +562,7 @@ final class ZohoCRMController
             usort($tagListApiResponse, 'strnatcasecmp');
             $response["tags"] = $tagListApiResponse;
         } else {
-            wp_send_json_error(
+            Response::error(
                 is_wp_error($tagListApiResponse) ? $tagListApiResponse->get_error_message() : (empty($tagListApiResponse) ? __('Tag is empty', 'bit-integrations') : 'Unknown'),
                 empty($tagListApiResponse) ? 204 : 400
             );
@@ -569,7 +570,7 @@ final class ZohoCRMController
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             static::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function addRelatedList($zcrmApiResponse, $integID, $fieldValues, $integrationDetails, RecordApiHelper $recordApiHelper)

@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ZohoRecruit;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -38,7 +39,7 @@ class ZohoRecruitController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -58,13 +59,13 @@ class ZohoRecruitController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     /**
@@ -81,7 +82,7 @@ class ZohoRecruitController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -130,7 +131,7 @@ class ZohoRecruitController
             uksort($allModules, 'strnatcasecmp');
             $response['modules'] = $allModules;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($modulesMetaResponse->error) ? 'Unknown' : $modulesMetaResponse->error,
                 400
             );
@@ -138,7 +139,7 @@ class ZohoRecruitController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function refreshNoteTypes($queryParams)
@@ -148,7 +149,7 @@ class ZohoRecruitController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -166,7 +167,7 @@ class ZohoRecruitController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $notesMetaResponse = Http::request($notesMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // wp_send_json_success($notesMetaResponse, 200);
+        // Response::success($notesMetaResponse);
 
         if (!is_wp_error($notesMetaResponse) && (empty($notesMetaResponse->status) || (!empty($notesMetaResponse->status) && $notesMetaResponse->status !== 'error'))) {
             $retriveModuleData = $notesMetaResponse->response->result->Notes->row;
@@ -180,7 +181,7 @@ class ZohoRecruitController
             uksort($allNoteTypes, 'strnatcasecmp');
             $response['noteTypes'] = $allNoteTypes;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($notesMetaResponse->error) ? 'Unknown' : $notesMetaResponse->error,
                 400
             );
@@ -188,7 +189,7 @@ class ZohoRecruitController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['notetypes']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -204,7 +205,7 @@ class ZohoRecruitController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->module)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -246,7 +247,7 @@ class ZohoRecruitController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['related_modules']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -262,7 +263,7 @@ class ZohoRecruitController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -380,7 +381,7 @@ class ZohoRecruitController
             ];
             $response['fieldDetails'] = $fieldDetails;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $fieldsMetaResponse->status === 'error' ? $fieldsMetaResponse->message : 'Unknown',
                 400
             );
@@ -389,9 +390,9 @@ class ZohoRecruitController
             $response['queryModule'] = $queryParams->module;
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
         // } else {
-        //     wp_send_json_error(
+        //     Response::error(
         //         __(
         //             'Token expired',
         //             'bit-integrations'

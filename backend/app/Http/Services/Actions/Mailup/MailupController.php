@@ -6,6 +6,7 @@ use WP_Error;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Mailup\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class MailupController
 {
@@ -19,7 +20,7 @@ class MailupController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->clientId) || empty($requestParams->clientSecret) || empty($requestParams->code)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $authCode = explode('-', $requestParams->code)[0];
@@ -37,16 +38,16 @@ class MailupController
         $apiResponse              = Http::request($apiEndpoint, 'Post', $body, $header);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
+            Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     public static function getAllList($requestParams)
     {
         if (empty($requestParams->tokenDetails) || empty($requestParams->clientId) || empty($requestParams->clientSecret)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret);
@@ -65,16 +66,16 @@ class MailupController
         }
 
         if (property_exists($apiResponse, 'Items')) {
-            wp_send_json_success($lists, 200);
+            Response::success($lists);
         } else {
-            wp_send_json_error('List fetching failed', 400);
+            Response::error('List fetching failed', 400);
         }
     }
 
     public static function getAllGroup($requestParams)
     {
         if (empty($requestParams->tokenDetails) || empty($requestParams->clientId) || empty($requestParams->clientSecret) || empty($requestParams->listId)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret);
@@ -93,9 +94,9 @@ class MailupController
         }
 
         if (property_exists($apiResponse, 'Items')) {
-            wp_send_json_success($lists, 200);
+            Response::success($lists);
         } else {
-            wp_send_json_error('List fetching failed', 400);
+            Response::error('List fetching failed', 400);
         }
     }
 

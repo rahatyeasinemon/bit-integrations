@@ -2,12 +2,14 @@
 
 namespace BitApps\BTCBI\Http\Services\Triggers\ThriveApprentice;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
+
 class ThriveApprenticeHelper
 {
     public static function fields($id)
     {
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

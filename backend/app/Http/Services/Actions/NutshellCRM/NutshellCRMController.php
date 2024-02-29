@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\NutshellCRM;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for NutshellCRM integration
@@ -25,7 +26,7 @@ class NutshellCRMController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->user_name) || empty($fieldsRequestParams->api_token) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -54,16 +55,16 @@ class NutshellCRMController
 
 
         if (isset($response->result)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid User Name & Secret or Access Api URL', 400);
+            Response::error('Please enter valid User Name & Secret or Access Api URL', 400);
         }
     }
 
     public function getCompanies($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $userName       = $fieldsRequestParams->user_name;
@@ -84,16 +85,16 @@ class NutshellCRMController
                     'name' => $company->name
                 ];
             }
-            wp_send_json_success($companies, 200);
+            Response::success($companies);
         } else {
-            wp_send_json_error('Contacts fetching failed', 400);
+            Response::error('Contacts fetching failed', 400);
         }
     }
 
     public function getContacts($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $userName       = $fieldsRequestParams->user_name;
@@ -114,16 +115,16 @@ class NutshellCRMController
                     'name' => $contact->name
                 ];
             }
-            wp_send_json_success($contacts, 200);
+            Response::success($contacts);
         } else {
-            wp_send_json_error('Contacts fetching failed', 400);
+            Response::error('Contacts fetching failed', 400);
         }
     }
 
     public function getProducts($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $userName       = $fieldsRequestParams->user_name;
@@ -144,16 +145,16 @@ class NutshellCRMController
                     'name' => $product->name
                 ];
             }
-            wp_send_json_success($products, 200);
+            Response::success($products);
         } else {
-            wp_send_json_error('Products fetching failed', 400);
+            Response::error('Products fetching failed', 400);
         }
     }
 
     public function getSources($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $userName       = $fieldsRequestParams->user_name;
@@ -174,16 +175,16 @@ class NutshellCRMController
                     'name' => $source->name
                 ];
             }
-            wp_send_json_success($sources, 200);
+            Response::success($sources);
         } else {
-            wp_send_json_error('Sources fetching failed', 400);
+            Response::error('Sources fetching failed', 400);
         }
     }
 
     public function getTags($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $userName       = $fieldsRequestParams->user_name;
@@ -204,16 +205,16 @@ class NutshellCRMController
                     'name' => $tag
                 ];
             }
-            wp_send_json_success($tags, 200);
+            Response::success($tags);
         } else {
-            wp_send_json_error('Tags fetching failed', 400);
+            Response::error('Tags fetching failed', 400);
         }
     }
 
     public function getCompanyTypes($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $userName       = $fieldsRequestParams->user_name;
@@ -234,9 +235,9 @@ class NutshellCRMController
                     'name' => $companyType->name
                 ];
             }
-            wp_send_json_success($companyTypes, 200);
+            Response::success($companyTypes);
         } else {
-            wp_send_json_error('CompanyTypes fetching failed', 400);
+            Response::error('CompanyTypes fetching failed', 400);
         }
     }
 

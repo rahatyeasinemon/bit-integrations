@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Airtable;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Airtable integration
@@ -19,7 +20,7 @@ class AirtableController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -39,16 +40,16 @@ class AirtableController
                     ];
                 }
             }
-            wp_send_json_success($bases, 200);
+            Response::success($bases);
         } else {
-            wp_send_json_error('Authentication failed', 400);
+            Response::error('Authentication failed', 400);
         }
     }
 
     public function getAllTables($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->baseId)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -67,16 +68,16 @@ class AirtableController
                     'name' => $table->name,
                 ];
             }
-            wp_send_json_success($tables, 200);
+            Response::success($tables);
         } else {
-            wp_send_json_error('Tables fetching failed', 400);
+            Response::error('Tables fetching failed', 400);
         }
     }
 
     public function getAllFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->baseId) || empty($fieldsRequestParams->tableId)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -104,9 +105,9 @@ class AirtableController
                     }
                 }
             }
-            wp_send_json_success($fields, 200);
+            Response::success($fields);
         } else {
-            wp_send_json_error('Table fields fetching failed', 400);
+            Response::error('Table fields fetching failed', 400);
         }
     }
 

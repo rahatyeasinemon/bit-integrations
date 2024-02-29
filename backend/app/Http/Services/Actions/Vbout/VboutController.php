@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Vbout;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Vbout integration
@@ -19,7 +20,7 @@ class VboutController
     public function handleAuthorize($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -31,7 +32,7 @@ class VboutController
 
         $response = Http::request($apiEndpoint, 'Post', null);
         if ($response->response->header->status !== "ok") {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -39,13 +40,13 @@ class VboutController
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function fetchAllLists($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -59,7 +60,7 @@ class VboutController
 
         $formattedResponse = [];
         if ($response->response->header->status !== "ok") {
-            wp_send_json_error(
+            Response::error(
                 'The token is invalid',
                 400
             );
@@ -74,13 +75,13 @@ class VboutController
             }
         }
 
-        wp_send_json_success($formattedResponse, 200);
+        Response::success($formattedResponse);
     }
 
     public function vboutRefreshFields($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -94,7 +95,7 @@ class VboutController
 
         $formattedResponse = [];
         if ($response->response->header->status !== "ok") {
-            wp_send_json_error(
+            Response::error(
                 'The token is invalid',
                 400
             );
@@ -108,7 +109,7 @@ class VboutController
             }
         }
 
-        wp_send_json_success($formattedResponse, 200);
+        Response::success($formattedResponse);
     }
 
     public function execute($integrationData, $fieldValues)

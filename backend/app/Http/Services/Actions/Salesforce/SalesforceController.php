@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Salesforce;
 use WP_Error;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class SalesforceController
 {
@@ -27,7 +28,7 @@ class SalesforceController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -48,13 +49,13 @@ class SalesforceController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     public function customFields($customFieldRequestParams)
@@ -65,7 +66,7 @@ class SalesforceController
             || empty($customFieldRequestParams->clientId)
             || empty($customFieldRequestParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -114,7 +115,7 @@ class SalesforceController
         $apiResponse                            = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!property_exists((object) $apiResponse, 'fields')) {
-            wp_send_json_error($apiResponse, 400);
+            Response::error($apiResponse, 400);
         }
 
         $customFields = array_filter($apiResponse->fields, function ($field) {
@@ -138,7 +139,7 @@ class SalesforceController
         if (!empty($response['tokenDetails'])) {
             self::saveRefreshedToken($customFieldRequestParams->flowID, $response['tokenDetails'], $response['organizations']);
         }
-        wp_send_json_success($fieldMap, 200);
+        Response::success($fieldMap);
     }
 
     public static function selesforceCampaignList($campaignRequestParams)
@@ -148,7 +149,7 @@ class SalesforceController
             || empty($campaignRequestParams->clientId)
             || empty($campaignRequestParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -170,7 +171,7 @@ class SalesforceController
         if (property_exists($apiResponse, 'objectDescribe')) {
             $response['allCampaignLists'] = $apiResponse->recentItems;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->recentItems) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -178,7 +179,7 @@ class SalesforceController
         if (!empty($response['tokenDetails'])) {
             self::saveRefreshedToken($campaignRequestParams->flowID, $response['tokenDetails'], $response['organizations']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function selesforceLeadList($campaignRequestParams)
@@ -188,7 +189,7 @@ class SalesforceController
             || empty($campaignRequestParams->clientId)
             || empty($campaignRequestParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -210,7 +211,7 @@ class SalesforceController
         if (property_exists($apiResponse, 'recentItems')) {
             $response['leadLists'] = $apiResponse->recentItems;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->recentItems) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -218,7 +219,7 @@ class SalesforceController
         if (!empty($response['tokenDetails'])) {
             self::saveRefreshedToken($campaignRequestParams->flowID, $response['tokenDetails'], $response['organizations']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function selesforceContactList($campaignRequestParams)
@@ -228,7 +229,7 @@ class SalesforceController
             || empty($campaignRequestParams->clientId)
             || empty($campaignRequestParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -249,7 +250,7 @@ class SalesforceController
         if (property_exists($apiResponse, 'recentItems')) {
             $response['contactLists'] = $apiResponse->recentItems;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->recentItems) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -257,7 +258,7 @@ class SalesforceController
         if (!empty($response['tokenDetails'])) {
             self::saveRefreshedToken($campaignRequestParams->flowID, $response['tokenDetails'], $response['organizations']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function selesforceAccountList($campaignRequestParams)
@@ -267,7 +268,7 @@ class SalesforceController
             || empty($campaignRequestParams->clientId)
             || empty($campaignRequestParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -288,7 +289,7 @@ class SalesforceController
         if (property_exists($apiResponse, 'recentItems')) {
             $response['accountLists'] = $apiResponse->recentItems;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->recentItems) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -296,7 +297,7 @@ class SalesforceController
         if (!empty($response['tokenDetails'])) {
             self::saveRefreshedToken($campaignRequestParams->flowID, $response['tokenDetails']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     protected static function refreshAccessToken($apiData)

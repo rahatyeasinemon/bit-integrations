@@ -11,6 +11,7 @@ use BitApps\BTCBI\Util\IpTool;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\GoogleSheet\RecordApiHelper;
 use BitApps\BTCBI\Http\Controllers\FlowController;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -51,7 +52,7 @@ class GoogleSheetController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -72,13 +73,13 @@ class GoogleSheetController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
     /**
      * Process ajax request for refresh crm modules
@@ -93,7 +94,7 @@ class GoogleSheetController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -123,7 +124,7 @@ class GoogleSheetController
             uksort($allSpreadsheet, 'strnatcasecmp');
             $response['spreadsheets'] = $allSpreadsheet;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $workSheetResponse->response->error->message,
                 400
             );
@@ -131,7 +132,7 @@ class GoogleSheetController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             GoogleSheetController::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['$spreadsheets']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
     /**
      * Process ajax request for refesh crm layouts
@@ -147,7 +148,7 @@ class GoogleSheetController
             || empty($queryParams->clientSecret)
             || empty($queryParams->spreadsheetId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -168,9 +169,9 @@ class GoogleSheetController
         if (!is_wp_error($worksheetsMetaResponse)) {
             $worksheets = $worksheetsMetaResponse->sheets;
             $response['worksheets'] = $worksheets;
-            // wp_send_json_success($response, 200);
+            // Response::success($response);
         } else {
-            wp_send_json_error(
+            Response::error(
                 $worksheetsMetaResponse->status === 'error' ? $worksheetsMetaResponse->message : 'Unknown',
                 400
             );
@@ -179,7 +180,7 @@ class GoogleSheetController
             $response["queryWorkbook"] = $queryParams->workbook;
             GoogleSheetController::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -198,7 +199,7 @@ class GoogleSheetController
             || empty($queryParams->header)
             || empty($queryParams->headerRow)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -224,7 +225,7 @@ class GoogleSheetController
         $authorizationHeader["Authorization"] = "Bearer {$queryParams->tokenDetails->access_token}";
         $worksheetHeadersMetaResponse = Http::request($worksheetHeadersMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // wp_send_json_success($worksheetHeadersMetaResponse, 200);
+        // Response::success($worksheetHeadersMetaResponse);
 
 
         if (!is_wp_error($worksheetHeadersMetaResponse)) {
@@ -237,7 +238,7 @@ class GoogleSheetController
                 $response['worksheet_headers'] = $allHeaders;
             }
         } else {
-            wp_send_json_error(
+            Response::error(
                 $worksheetHeadersMetaResponse->status === 'error' ? $worksheetHeadersMetaResponse->message : 'Unknown',
                 400
             );
@@ -246,7 +247,7 @@ class GoogleSheetController
             $response["queryModule"] = $queryParams->module;
             GoogleSheetController::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -324,7 +325,7 @@ class GoogleSheetController
 
         $integrationDetails = $integrationData->flow_details;
 
-        //    wp_send_json_success($integrationDetails);
+        //    Response::success($integrationDetails);
 
         $tokenDetails = $integrationDetails->tokenDetails;
         $spreadsheetId = $integrationDetails->spreadsheetId;
@@ -334,7 +335,7 @@ class GoogleSheetController
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;
         $defaultDataConf = $integrationDetails->default;
-        // wp_send_json_success($fieldMap);
+        // Response::success($fieldMap);
         if (empty($tokenDetails)
             || empty($spreadsheetId)
             || empty($worksheetName)

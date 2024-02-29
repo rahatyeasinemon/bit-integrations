@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\OmniSend;
 use BitApps\BTCBI\Http\Services\Actions\OmniSend\RecordApiHelper;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for OmniSend integration
@@ -21,7 +22,7 @@ class OmniSendController
     public function authorization($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -38,9 +39,9 @@ class OmniSendController
 
         $response = Http::request($apiEndpoint, 'Get', null, $header);
         if (isset($response->contacts)) {
-            wp_send_json_success('', 200);
+            Response::success('');
         } else {
-            wp_send_json_error(
+            Response::error(
                 'The token is invalid',
                 400
             );

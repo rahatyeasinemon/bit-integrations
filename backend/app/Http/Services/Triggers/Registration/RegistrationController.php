@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\Registration;
 
 use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class RegistrationController
 {
@@ -37,7 +38,7 @@ final class RegistrationController
             ['id' => 5, 'title' => 'User delete account'],
         ];
 
-        wp_send_json_success($forms);
+        Response::success($forms);
     }
 
     public static function fields($triggerId)
@@ -109,7 +110,7 @@ final class RegistrationController
             'type' => 'password',
         ];
 
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function userCreate()

@@ -5,6 +5,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\SureCart;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\SureCart\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class SureCartController
 {
@@ -15,7 +16,7 @@ class SureCartController
         if (
             empty($tokenRequestParams->api_key) || empty($tokenRequestParams->auth_url)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -51,9 +52,9 @@ class SureCartController
         $request_body = wp_remote_retrieve_body($request);
         $request_data = json_decode($request_body);
         if ($request_data->code !== 'unauthorized') {
-            wp_send_json_success($request_body, 200);
+            Response::success($request_body);
         } else {
-            wp_send_json_error(
+            Response::error(
                 $request_data->message,
                 400
             );

@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\TutorLms;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class TutorLmsController
 {
@@ -33,7 +34,7 @@ final class TutorLmsController
     public function getAll()
     {
         if (!function_exists('tutor')) {
-            wp_send_json_error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
+            Response::error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['Course-Enroll', 'User attempts(submit) a quiz', 'Completed a lesson', 'Complete a course', 'User achieves a targeted percentage on a quiz'];
@@ -44,21 +45,21 @@ final class TutorLmsController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($tutor_action);
+        Response::success($tutor_action);
     }
 
     public function get_a_form($data)
     {
         if (!function_exists('tutor')) {
-            wp_send_json_error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
+            Response::error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         if ($data->id == 1) {
@@ -187,13 +188,13 @@ final class TutorLmsController
         }
 
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

@@ -6,6 +6,7 @@ use wpdb;
 use BitApps\BTCBI\Model\Flow;
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Util\DateTimeHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class WPEFController
 {
@@ -46,7 +47,7 @@ final class WPEFController
     public function getAll()
     {
         if (!self::isActive()) {
-            wp_send_json_error(__('eForm  is not installed or activated', 'bit-integrations'));
+            Response::error(__('eForm  is not installed or activated', 'bit-integrations'));
         }
         $all_forms = [];
         if (self::isActive()) {
@@ -66,16 +67,16 @@ final class WPEFController
     public function getAForm($data)
     {
         if (empty($data->id) || !(self::isActive())) {
-            wp_send_json_error(__('eForm  is not installed or activated', 'bit-integrations'));
+            Response::error(__('eForm  is not installed or activated', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
 

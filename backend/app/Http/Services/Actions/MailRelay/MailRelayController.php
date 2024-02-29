@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\MailRelay;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for MailRelay integration
@@ -19,7 +20,7 @@ class MailRelayController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) && empty($fieldsRequestParams->domain)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -48,16 +49,16 @@ class MailRelayController
         }
 
         if (isset($response->error) || isset($response->errors) || gettype($response) == "string") {
-            wp_send_json_error('Please enter valid Domain name & API key', 400);
+            Response::error('Please enter valid Domain name & API key', 400);
         } else {
-            wp_send_json_success($customFields, 200);
+            Response::success($customFields);
         }
     }
 
     public function getAllGroups($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) && empty($fieldsRequestParams->domain)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -85,9 +86,9 @@ class MailRelayController
         }
 
         if (isset($response->error)) {
-            wp_send_json_error('Groups fetch failed', 400);
+            Response::error('Groups fetch failed', 400);
         } else {
-            wp_send_json_success($groups, 200);
+            Response::success($groups);
         }
     }
 

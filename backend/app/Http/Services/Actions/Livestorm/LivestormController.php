@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Livestorm;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Livestorm integration
@@ -25,7 +26,7 @@ class LivestormController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -46,11 +47,11 @@ class LivestormController
         $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!count((array) $response)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } elseif (isset($response->errors) && $response->errors[0]->title === "Workspace blocked") {
-            wp_send_json_error($response->errors[0]->detail, 400);
+            Response::error($response->errors[0]->detail, 400);
         } else {
-            wp_send_json_error('Authorized failed, Please enter valid API Key', 400);
+            Response::error('Authorized failed, Please enter valid API Key', 400);
         }
     }
 
@@ -88,9 +89,9 @@ class LivestormController
                 }
             }
 
-            wp_send_json_success($data, 200);
+            Response::success($data);
         } else {
-            wp_send_json_error('Events fetching failed', 400);
+            Response::error('Events fetching failed', 400);
         }
     }
 
@@ -112,9 +113,9 @@ class LivestormController
                     ]
                 );
             }
-            wp_send_json_success($sessions, 200);
+            Response::success($sessions);
         } else {
-            wp_send_json_error('Session fetching failed', 400);
+            Response::error('Session fetching failed', 400);
         }
     }
 

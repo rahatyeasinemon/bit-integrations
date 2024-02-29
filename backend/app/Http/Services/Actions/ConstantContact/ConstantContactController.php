@@ -10,6 +10,7 @@ use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Constant Contact integration
@@ -25,7 +26,7 @@ class ConstantContactController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -51,13 +52,13 @@ class ConstantContactController
         $apiResponse = Http::request('https://authz.constantcontact.com/oauth2/default/v1/token', 'Post', $requestParams, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     protected static function _refreshAccessToken($apiData)
@@ -96,7 +97,7 @@ class ConstantContactController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -112,7 +113,7 @@ class ConstantContactController
             if ($refreshedToken) {
                 $response['tokenDetails'] = $refreshedToken;
             } else {
-                wp_send_json_error(
+                Response::error(
                     __('Failed to refresh access token', 'bit-integrations'),
                     400
                 );
@@ -136,7 +137,7 @@ class ConstantContactController
 
             $response['contactList'] = $allList;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $apiResponse->response->error->message,
                 400
             );
@@ -144,7 +145,7 @@ class ConstantContactController
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->integId)) {
             static::_saveRefreshedToken($queryParams->integId, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function refreshTags($queryParams)
@@ -153,7 +154,7 @@ class ConstantContactController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -168,7 +169,7 @@ class ConstantContactController
             if ($refreshedToken) {
                 $response['tokenDetails'] = $refreshedToken;
             } else {
-                wp_send_json_error(
+                Response::error(
                     __('Failed to refresh access token', 'bit-integrations'),
                     400
                 );
@@ -191,7 +192,7 @@ class ConstantContactController
 
             $response['contactTag'] = $allTag;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $apiResponse->response->error->message,
                 400
             );
@@ -200,7 +201,7 @@ class ConstantContactController
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->integId)) {
             static::_saveRefreshedToken($queryParams->integId, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function getCustomFields($queryParams)
@@ -209,7 +210,7 @@ class ConstantContactController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -224,7 +225,7 @@ class ConstantContactController
             if ($refreshedToken) {
                 $response['tokenDetails'] = $refreshedToken;
             } else {
-                wp_send_json_error(
+                Response::error(
                     __('Failed to refresh access token', 'bit-integrations'),
                     400
                 );
@@ -248,7 +249,7 @@ class ConstantContactController
 
             $response['customFields'] = $allCFields;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $apiResponse->response->error->message,
                 400
             );
@@ -257,7 +258,7 @@ class ConstantContactController
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->integId)) {
             static::_saveRefreshedToken($queryParams->integId, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     private static function _saveRefreshedToken($integrationID, $tokenDetails)

@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\MailerLite;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for MailerLite integration
@@ -21,7 +22,7 @@ class MailerLiteController
     public function fetchAllGroups($refreshFieldsRequestParams)
     {
         if (empty($refreshFieldsRequestParams->auth_token)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -84,9 +85,9 @@ class MailerLiteController
         }
 
         if ($response !== 'Unauthorized' || $response !== 'Unauthenticated.') {
-            wp_send_json_success($formattedResponse, 200);
+            Response::success($formattedResponse);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'The token is invalid',
                 400
             );
@@ -96,7 +97,7 @@ class MailerLiteController
     public function mailerliteRefreshFields($refreshFieldsRequestParams)
     {
         if (empty($refreshFieldsRequestParams->auth_token)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -135,9 +136,9 @@ class MailerLiteController
             $formattedResponse = array_merge($email, $newResponse);
 
             if (isset($response->data)) {
-                wp_send_json_success($formattedResponse, 200);
+                Response::success($formattedResponse);
             } elseif (isset($response->message) && 'Unauthenticated.' === $response->message) {
-                wp_send_json_error(
+                Response::error(
                     __(
                         'Invalid API Token',
                         'bit-integrations'
@@ -165,9 +166,9 @@ class MailerLiteController
             }
         }
         if (count($response) > 0) {
-            wp_send_json_success($formattedResponse, 200);
+            Response::success($formattedResponse);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'The token is invalid',
                 400
             );

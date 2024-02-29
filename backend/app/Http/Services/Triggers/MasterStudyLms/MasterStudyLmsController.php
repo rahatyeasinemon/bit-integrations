@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\MasterStudyLms;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class MasterStudyLmsController
 {
@@ -41,7 +42,7 @@ final class MasterStudyLmsController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('MasterStudy Lms is not installed or activated', 'bit-integrations'));
+            Response::error(__('MasterStudy Lms is not installed or activated', 'bit-integrations'));
         }
 
         $types = [
@@ -59,21 +60,21 @@ final class MasterStudyLmsController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($MasterStudyLms_action);
+        Response::success($MasterStudyLms_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('MasterStudy Lms is not installed or activated', 'bit-integrations'));
+            Response::error(__('MasterStudy Lms is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = MasterStudyLmsHelper::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
@@ -90,14 +91,14 @@ final class MasterStudyLmsController
                 'title' => 'Any Lesson'
             ]], MasterStudyLmsHelper::getAllLesson());
         }
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function getAllQuizByCourse($data)
     {
         $quizzes = MasterStudyLmsHelper::getAllQuiz($data->course_id);
         if (empty($quizzes)) {
-            wp_send_json_error(__('No quiz Found', 'bit-integrations'));
+            Response::error(__('No quiz Found', 'bit-integrations'));
         }
         foreach ($quizzes as $key => $value) {
             $allQuiz[] = [
@@ -106,7 +107,7 @@ final class MasterStudyLmsController
             ];
         }
         $allQuiz = array_merge([['id' => 'any', 'title' => 'Any Quiz']], $allQuiz);
-        wp_send_json_success($allQuiz);
+        Response::success($allQuiz);
     }
 
     public static function handleCourseComplete($course_id, $user_id, $progress)
@@ -277,7 +278,7 @@ final class MasterStudyLmsController
             'id' => 'any',
             'title' => 'Any Course'
         ]], $allCourse);
-        wp_send_json_success($allCourse);
+        Response::success($allCourse);
     }
 
     public static function getAllLessonEdit()
@@ -287,6 +288,6 @@ final class MasterStudyLmsController
             'id' => 'any',
             'title' => 'Any Lesson'
         ]], $allLesson);
-        wp_send_json_success($allLesson);
+        Response::success($allLesson);
     }
 }

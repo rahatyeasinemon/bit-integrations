@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Asana;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Asana integration
@@ -25,7 +26,7 @@ class AsanaController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -37,16 +38,16 @@ class AsanaController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->data)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            Response::error('Please enter valid API key', 400);
         }
     }
 
     public function getCustomFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -69,16 +70,16 @@ class AsanaController
                     'required' => false,
                 ];
             }
-            wp_send_json_success($customFields, 200);
+            Response::success($customFields);
         } else {
-            wp_send_json_error('Custom field fetching failed', 400);
+            Response::error('Custom field fetching failed', 400);
         }
     }
 
     public function getAllTasks($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -96,9 +97,9 @@ class AsanaController
                     'name' => $task->name
                 ];
             }
-            wp_send_json_success($tasks, 200);
+            Response::success($tasks);
         } else {
-            wp_send_json_error('Task fetching failed', 400);
+            Response::error('Task fetching failed', 400);
         }
     }
 
@@ -106,7 +107,7 @@ class AsanaController
     public function getAllProjects($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -124,9 +125,9 @@ class AsanaController
                     'name' => $project->name
                 ];
             }
-            wp_send_json_success($projects, 200);
+            Response::success($projects);
         } else {
-            wp_send_json_error('Projects fetching failed', 400);
+            Response::error('Projects fetching failed', 400);
         }
     }
 
@@ -134,7 +135,7 @@ class AsanaController
     public function getAllSections($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -152,9 +153,9 @@ class AsanaController
                     'name' => $section->name
                 ];
             }
-            wp_send_json_success($sections, 200);
+            Response::success($sections);
         } else {
-            wp_send_json_error('Sections fetching failed', 400);
+            Response::error('Sections fetching failed', 400);
         }
     }
 

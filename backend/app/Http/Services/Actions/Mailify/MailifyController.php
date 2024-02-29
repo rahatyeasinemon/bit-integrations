@@ -6,6 +6,7 @@ use WP_Error;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Actions\Mailify\RecordApiHelper;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class MailifyController
 {
@@ -19,7 +20,7 @@ class MailifyController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->account_id) || empty($requestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = "https://mailifyapis.com/v1/users";
@@ -28,12 +29,12 @@ class MailifyController
         $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($response->users)) {
-            wp_send_json_error(
+            Response::error(
                 empty($response->message) ? 'Unknown' : $response->message,
                 400
             );
         }
-        wp_send_json_success(true);
+        Response::success(true);
     }
 
     public static function mailifyHeaders($requestParams)
@@ -41,7 +42,7 @@ class MailifyController
         if (
             empty($requestParams->account_id) || empty($requestParams->api_key)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -74,14 +75,14 @@ class MailifyController
             }
 
             $response['mailifyField'] = $fields;
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 
     public static function getAllList($requestParams)
     {
         if (empty($requestParams->account_id) || empty($requestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $headers = [
@@ -100,9 +101,9 @@ class MailifyController
         }
 
         if ((count($lists)) > 0) {
-            wp_send_json_success($lists, 200);
+            Response::success($lists);
         } else {
-            wp_send_json_error('List fetching failed', 400);
+            Response::error('List fetching failed', 400);
         }
     }
 

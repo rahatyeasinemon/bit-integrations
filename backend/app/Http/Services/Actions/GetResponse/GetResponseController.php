@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\GetResponse;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for GetResponse integration
@@ -20,7 +21,7 @@ class GetResponseController
     public function fetchCustomFields($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -48,9 +49,9 @@ class GetResponseController
         }
 
         if ($response !== 'Unauthorized') {
-            wp_send_json_success($formattedResponse, 200);
+            Response::success($formattedResponse);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'The token is invalid',
                 400
             );
@@ -60,7 +61,7 @@ class GetResponseController
     public function fetchAllTags($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -87,9 +88,9 @@ class GetResponseController
         }
 
         if ($response !== 'Unauthorized') {
-            wp_send_json_success($formattedResponse, 200);
+            Response::success($formattedResponse);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'The token is invalid',
                 400
             );
@@ -99,7 +100,7 @@ class GetResponseController
     public function authentication($refreshFieldsRequestParams)
     {
         if (empty($refreshFieldsRequestParams->auth_token)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -127,9 +128,9 @@ class GetResponseController
         }
 
         if (property_exists($response[0], 'campaignId')) {
-            wp_send_json_success($campaigns, 200);
+            Response::success($campaigns);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            Response::error('Please enter valid API key', 400);
         }
     }
 

@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Mailjet;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Mailjet integration
@@ -17,7 +18,7 @@ class MailjetController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->secretKey) && empty($fieldsRequestParams->apiKey)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.mailjet.com/v3/REST/contactslist/';
@@ -36,16 +37,16 @@ class MailjetController
                     'name' => $list->Name
                 ];
             }
-            wp_send_json_success($lists, 200);
+            Response::success($lists);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            Response::error('Please enter valid API key', 400);
         }
     }
 
     public function getCustomFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->secretKey) && empty($fieldsRequestParams->apiKey)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.mailjet.com/v3/REST/contactmetadata?Limit=1000';
@@ -66,9 +67,9 @@ class MailjetController
         }
 
         if (!empty($customFields)) {
-            wp_send_json_success($customFields, 200);
+            Response::success($customFields);
         } else {
-            wp_send_json_error('Custom fields fetch failed', 400);
+            Response::error('Custom fields fetch failed', 400);
         }
     }
 

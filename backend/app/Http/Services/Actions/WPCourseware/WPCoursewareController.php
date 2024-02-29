@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\WPCourseware;
 
 use BitApps\BTCBI\Util\Helper;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 class WPCoursewareController
@@ -28,16 +29,16 @@ class WPCoursewareController
     public static function wpCoursewareAuthorize()
     {
         if (!is_plugin_active('wp-courseware/wp-courseware.php')) {
-            wp_send_json_error(__('WP Courseware Plugin is not active or installed', 'bit-integrations'), 400);
+            Response::error(__('WP Courseware Plugin is not active or installed', 'bit-integrations'), 400);
         } else {
-            wp_send_json_success(true);
+            Response::success(true);
         }
     }
 
     public static function WPCWActions()
     {
         if (!is_plugin_active('wp-courseware/wp-courseware.php')) {
-            wp_send_json_error(__('WP Courseware Plugin is not active or installed', 'bit-integrations'), 400);
+            Response::error(__('WP Courseware Plugin is not active or installed', 'bit-integrations'), 400);
         }
 
         $actions = [];
@@ -49,13 +50,13 @@ class WPCoursewareController
         }
 
         $response['WPCWActions'] = $actions;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function WPCWCourses()
     {
         if (!is_plugin_active('wp-courseware/wp-courseware.php')) {
-            wp_send_json_error(__('WP Courseware Plugin is not active or installed', 'bit-integrations'), 400);
+            Response::error(__('WP Courseware Plugin is not active or installed', 'bit-integrations'), 400);
         }
 
         $wpcwCourses = function_exists('wpcw_get_courses') ? wpcw_get_courses() : [];
@@ -73,7 +74,7 @@ class WPCoursewareController
         }
 
         $response['WPCWCourses'] = $courses;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

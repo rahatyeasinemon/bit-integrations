@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\BitForm;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\BitForm\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for BitForm integration
@@ -21,7 +22,7 @@ class BitFormController
             empty($requestParams->app_domain)
             || empty($requestParams->api_key)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -38,9 +39,9 @@ class BitFormController
 
         if ($apiResponse->success) {
             $apiResponse;
-            wp_send_json_success($apiResponse, 200);
+            Response::success($apiResponse);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'There is an error .',
                 400
             );
@@ -53,7 +54,7 @@ class BitFormController
             empty($requestParams->app_domain)
             || empty($requestParams->api_key)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -69,9 +70,9 @@ class BitFormController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader, ['sslverify' => false]);
 
         if ($apiResponse->success) {
-            wp_send_json_success($apiResponse, 200);
+            Response::success($apiResponse);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'There is an error .',
                 400
             );
@@ -85,7 +86,7 @@ class BitFormController
             || empty($requestParams->api_key)
             || empty($requestParams->id)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -101,9 +102,9 @@ class BitFormController
 
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader, ['sslverify' => false]);
         if ($apiResponse->success) {
-            wp_send_json_success($apiResponse->fields, 200);
+            Response::success($apiResponse->fields);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'There is an error .',
                 400
             );
@@ -116,7 +117,7 @@ class BitFormController
             empty($queryParams->accessToken)
             || empty($queryParams->clientId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -142,12 +143,12 @@ class BitFormController
             uksort($allList, 'strnatcasecmp');
             $response['allBoardlist'] = $allList;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $allBoardResponse->response->error->message,
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function fetchAllLists($queryParams)
@@ -156,7 +157,7 @@ class BitFormController
             empty($queryParams->accessToken)
             || empty($queryParams->clientId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -181,12 +182,12 @@ class BitFormController
             uksort($allList, 'strnatcasecmp');
             $response['alllists'] = $allList;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $allBoardResponse->response->error->message,
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**

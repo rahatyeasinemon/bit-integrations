@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\SliceWp;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class SliceWpController
 {
@@ -41,7 +42,7 @@ final class SliceWpController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('SliceWp affiliate is not installed or activated', 'bit-integrations'));
+            Response::error(__('SliceWp affiliate is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['User becomes an affiliate', 'User earns a commission'];
@@ -53,21 +54,21 @@ final class SliceWpController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($affiliate_action);
+        Response::success($affiliate_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('SliceWp affiliate is not installed or activated', 'bit-integrations'));
+            Response::error(__('SliceWp affiliate is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         if ($data->id === '2') {
@@ -76,13 +77,13 @@ final class SliceWpController
         }
 
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -170,6 +171,6 @@ final class SliceWpController
     public static function all_commission_type()
     {
         $commissionType = self::commissionType();
-        wp_send_json_success($commissionType);
+        Response::success($commissionType);
     }
 }

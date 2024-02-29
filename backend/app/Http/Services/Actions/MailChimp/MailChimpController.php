@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\MailChimp;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for MailChimp integration
@@ -42,7 +43,7 @@ class MailChimpController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -70,13 +71,13 @@ class MailChimpController
         $apiResponse->dc = $metaData->dc;
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
     /**
      * Process ajax request for refresh MailChimp Audience list
@@ -92,7 +93,7 @@ class MailChimpController
             || empty($queryParams->clientSecret)
             || empty($queryParams->tokenDetails->dc)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -109,7 +110,7 @@ class MailChimpController
         $allList = [];
         if (!is_wp_error($audienceResponse) && empty($audienceResponse->response->error)) {
             $audienceLists = $audienceResponse->lists;
-            // wp_send_json_success($audienceLists);
+            // Response::success($audienceLists);
             foreach ($audienceLists as $audienceList) {
                 $allList[$audienceList->name] = (object) array(
                         'listId' => $audienceList->id,
@@ -120,12 +121,12 @@ class MailChimpController
 
             $response['audiencelist'] = $allList;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $audienceResponse->response->error->message,
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
     /**
      * Process ajax request for refresh MailChimp Audience Fields
@@ -140,7 +141,7 @@ class MailChimpController
             || empty($queryParams->listId)
             || empty($queryParams->tokenDetails->dc)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -166,7 +167,7 @@ class MailChimpController
             }
             $fields['Email'] = (object) array('tag' => 'email_address', 'name' => 'Email');
             $response['audienceField'] = $fields;
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
     /**
@@ -182,7 +183,7 @@ class MailChimpController
             || empty($queryParams->listId)
             || empty($queryParams->tokenDetails->dc)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -203,7 +204,7 @@ class MailChimpController
         }
         uksort($allList, "strnatcasecmp");
         $response['audienceTags'] = $allList;
-        wp_send_json_success($response);
+        Response::success($response);
     }
 
     /**

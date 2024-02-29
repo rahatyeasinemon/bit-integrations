@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Groundhogg;
 use BitApps\BTCBI\Util\Common;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -64,7 +65,7 @@ class RecordApiHelper
     public static function createContact($finalData, $integrationDetails)
     {
         if (empty($integrationDetails->token) || empty($integrationDetails->public_key) || empty($integrationDetails->domainName)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Request parameter is empty',
                     'bit-integrations'
@@ -101,7 +102,7 @@ class RecordApiHelper
     public static function createTag($diffTags, $integrationDetails)
     {
         if (empty($integrationDetails->token) || empty($integrationDetails->public_key) || empty($integrationDetails->domainName)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Request parameter is empty',
                     'bit-integrations'

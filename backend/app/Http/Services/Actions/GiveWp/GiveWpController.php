@@ -2,6 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\GiveWp;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 class GiveWpController
@@ -17,9 +18,9 @@ class GiveWpController
     public static function authorizeGiveWp()
     {
         if (self::pluginActive()) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
-        wp_send_json_error(__('GiveWp must be activated!', 'bit-integrations'));
+        Response::error(__('GiveWp must be activated!', 'bit-integrations'));
     }
 
     public function execute($integrationData, $fieldValues)

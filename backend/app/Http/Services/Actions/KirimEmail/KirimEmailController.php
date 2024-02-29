@@ -10,6 +10,7 @@ use WP_Error;
 use BitApps\BTCBI\Util\IpTool;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\KirimEmail\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for KirimEmail integration
@@ -25,7 +26,7 @@ class KirimEmailController
             empty($tokenRequestParams->username)
             || empty($tokenRequestParams->api_key)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -48,13 +49,13 @@ class KirimEmailController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (is_wp_error($apiResponse) || $apiResponse->code !== 200) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
 
-        wp_send_json_success($apiResponse->data, 200);
+        Response::success($apiResponse->data);
     }
 
     public function getAllList($tokenRequestParams)
@@ -63,7 +64,7 @@ class KirimEmailController
             empty($tokenRequestParams->username)
             || empty($tokenRequestParams->api_key)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -86,13 +87,13 @@ class KirimEmailController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (is_wp_error($apiResponse) || $apiResponse->code !== 200) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
 
-        wp_send_json_success($apiResponse->data, 200);
+        Response::success($apiResponse->data);
     }
 
     public function execute($integrationData, $fieldValues)

@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Drip;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Drip\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -33,7 +34,7 @@ class DripController
     {
         if (empty($requestsParams->api_token)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -49,13 +50,13 @@ class DripController
         $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($response->accounts)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse) ? 'Unknown' : $apiResponse,
                 400
             );
         }
 
-        wp_send_json_success($response);
+        Response::success($response);
     }
 
     /**
@@ -69,7 +70,7 @@ class DripController
     {
         if (empty($queryParams->api_token)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -96,7 +97,7 @@ class DripController
             }
 
             $response['dripCampaigns'] = $campaigns;
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 
@@ -111,7 +112,7 @@ class DripController
     {
         if (empty($queryParams->api_token)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -150,7 +151,7 @@ class DripController
 
             $response['dripField'] = $fields;
 
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 

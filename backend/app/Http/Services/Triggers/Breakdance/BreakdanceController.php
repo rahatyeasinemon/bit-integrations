@@ -6,6 +6,7 @@ use BitApps\BTCBI\Model\Flow;
 use Breakdance\Forms\Actions\Action;
 use Breakdance\Forms\Actions\ActionProvider;
 use BitApps\BTCBI\Http\Services\Triggers\Breakdance\BreakdanceSubmitData;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class BreakdanceController
 {
@@ -92,7 +93,7 @@ final class BreakdanceController
     public function getAllForms()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Breakdance is not installed or activated', 'bit-integrations'));
+            Response::error(__('Breakdance is not installed or activated', 'bit-integrations'));
         }
 
         $posts = self::getBreakdancePosts();
@@ -110,26 +111,26 @@ final class BreakdanceController
                 }
             }
         }
-        wp_send_json_success($all_forms);
+        Response::success($all_forms);
     }
 
     public function getFormFields($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Breakdance is not installed or activated', 'bit-integrations'));
+            Response::error(__('Breakdance is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id) && empty($data->postId)) {
-            wp_send_json_error(__('Form doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
 
         $fields = self::fields($data);
         if (empty($fields)) {
-            wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
         $responseData['postId'] = $data->postId;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($data)

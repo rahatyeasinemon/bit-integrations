@@ -6,6 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Affiliate;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 /**
@@ -34,9 +35,9 @@ class AffiliateController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (self::pluginActive()) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
-        wp_send_json_error(__('Affiliate must be activated!', 'bit-integrations'));
+        Response::error(__('Affiliate must be activated!', 'bit-integrations'));
     }
 
 

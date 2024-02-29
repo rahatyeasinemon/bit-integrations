@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Autonami;
 
 use BitApps\BTCBI\Util\Helper;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use BWFCRM_Fields;
 use BWFCRM_Lists;
 use BWFCRM_Tag;
@@ -21,7 +22,7 @@ class AutonamiController
     public static function checkedExistsAutonami()
     {
         if (!class_exists('BWFCRM_Contact')) {
-            wp_send_json_error(__('Autonami Pro Plugin is not active or installed', 'bit-integrations'), 400);
+            Response::error(__('Autonami Pro Plugin is not active or installed', 'bit-integrations'), 400);
         } else {
             return true;
         }
@@ -51,7 +52,7 @@ class AutonamiController
 
         $response['autonamiList'] = $autonamiList;
         $response['autonamiTags'] = $autonamiTags;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function autonamiFields()
@@ -80,15 +81,15 @@ class AutonamiController
             ];
         }
         $response['autonamiFields'] = $fieldOptions;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function autonamiAuthorize()
     {
         if (self::checkedExistsAutonami()) {
-            wp_send_json_success(true);
+            Response::success(true);
         } else {
-            wp_send_json_error(__('Autonami Pro Plugin is not active or installed', 'bit-integrations'), 400);
+            Response::error(__('Autonami Pro Plugin is not active or installed', 'bit-integrations'), 400);
         }
     }
 

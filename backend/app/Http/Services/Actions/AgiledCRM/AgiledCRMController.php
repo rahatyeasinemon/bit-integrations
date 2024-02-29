@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\AgiledCRM;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for AgiledCRM integration
@@ -19,7 +20,7 @@ class AgiledCRMController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $brand       = $fieldsRequestParams->brand;
@@ -32,16 +33,16 @@ class AgiledCRMController
         $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($response->data[0]->id)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid Brand name & API key', 400);
+            Response::error('Please enter valid Brand name & API key', 400);
         }
     }
 
     public function getAllOwners($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -60,16 +61,16 @@ class AgiledCRMController
                     'name' => $owner->user->name . ' ' . $owner->user->last_name
                 ];
             }
-            wp_send_json_success($owners, 200);
+            Response::success($owners);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllAccounts($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -88,16 +89,16 @@ class AgiledCRMController
                     'name' => $account->name
                 ];
             }
-            wp_send_json_success($accounts, 200);
+            Response::success($accounts);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllSources($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -116,16 +117,16 @@ class AgiledCRMController
                     'name' => $source->type
                 ];
             }
-            wp_send_json_success($sources, 200);
+            Response::success($sources);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllStatuses($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -144,16 +145,16 @@ class AgiledCRMController
                     'name' => $status->type
                 ];
             }
-            wp_send_json_success($statuses, 200);
+            Response::success($statuses);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllLifeCycleStage($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -172,16 +173,16 @@ class AgiledCRMController
                     'name' => $lifeCycleStage->type
                 ];
             }
-            wp_send_json_success($lifeCycleStages, 200);
+            Response::success($lifeCycleStages);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllCRMPipelines($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -200,16 +201,16 @@ class AgiledCRMController
                     'name' => $pipeline->pipeline_name
                 ];
             }
-            wp_send_json_success($pipelines, 200);
+            Response::success($pipelines);
         } else {
-            wp_send_json_error('Pipelines fetching failed', 400);
+            Response::error('Pipelines fetching failed', 400);
         }
     }
 
     public function getAllCRMPipelineStages($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand) || empty($fieldsRequestParams->selectedCRMPipeline)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -231,9 +232,9 @@ class AgiledCRMController
                     ];
                 }
             }
-            wp_send_json_success($pipelineStages, 200);
+            Response::success($pipelineStages);
         } else {
-            wp_send_json_error('Pipeline stages fetching failed', 400);
+            Response::error('Pipeline stages fetching failed', 400);
         }
     }
 

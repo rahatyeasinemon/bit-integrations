@@ -10,6 +10,7 @@ use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 use BitApps\BTCBI\Http\Services\Actions\SendinBlue\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -27,7 +28,7 @@ class SendinBlueController
     public static function sendinBlueAuthorize($requestsParams)
     {
         if (empty($requestsParams->api_key)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -42,13 +43,13 @@ class SendinBlueController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || $apiResponse->code === 'unauthorized') {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->code) ? 'Unknown' : $apiResponse->message,
                 400
             );
         }
 
-        wp_send_json_success(true);
+        Response::success(true);
     }
     /**
      * Process ajax request for refresh crm modules
@@ -60,7 +61,7 @@ class SendinBlueController
     public function refreshlists($requestsParams)
     {
         if (empty($requestsParams->api_key)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -87,18 +88,18 @@ class SendinBlueController
 
             $response['sblueList'] = $allList;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $apiResponse->message,
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function refreshTemplate($requestsParams)
     {
         if (empty($requestsParams->api_key)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -126,17 +127,17 @@ class SendinBlueController
 
             $response['sblueTemplates'] = $allList;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $sblueResponse->message,
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
     public static function sendinblueHeaders($queryParams)
     {
         if (empty($queryParams->api_key)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -161,7 +162,7 @@ class SendinBlueController
             }
             $fields['Email'] = (object) ['fieldId' => 'email', 'fieldName' => 'Email', 'required' => true];
             $response['sendinBlueField'] = $fields;
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 

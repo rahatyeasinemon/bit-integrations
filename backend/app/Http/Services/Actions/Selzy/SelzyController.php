@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Selzy;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Selzy\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Selzy integration
@@ -21,7 +22,7 @@ class SelzyController
     public function handleAuthorize($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -32,7 +33,7 @@ class SelzyController
         $apiEndpoint = $this->baseUrl . 'getLists?format=json&api_key=' . $requestParams->authKey;
         $response = Http::request($apiEndpoint, 'Get', null);
         if ($response->code === "invalid_api_key") {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -40,13 +41,13 @@ class SelzyController
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function getAllTags($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -57,7 +58,7 @@ class SelzyController
         $apiEndpoint = $this->baseUrl . 'getTags?format=json&api_key=' . $requestParams->authKey;
         $response = Http::request($apiEndpoint, 'Get', null);
         if ($response->code === "invalid_api_key") {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -65,13 +66,13 @@ class SelzyController
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function getAllCustomFields($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = "https://api.selzy.com/en/api/getFields?format=json&api_key=$requestParams->authKey";
@@ -79,7 +80,7 @@ class SelzyController
         $response = Http::request($apiEndpoint, 'Get', null);
 
         if ($response->code === "invalid_api_key") {
-            wp_send_json_error(__('Invalid token', 'bit-integrations'), 400);
+            Response::error(__('Invalid token', 'bit-integrations'), 400);
         }
 
         if (!empty($response->result)) {
@@ -90,7 +91,7 @@ class SelzyController
                   'required' => false
                 ];
             }
-            wp_send_json_success($customFields, 200);
+            Response::success($customFields);
         }
     }
 

@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Clickup;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Clickup integration
@@ -25,7 +26,7 @@ class ClickupController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -37,16 +38,16 @@ class ClickupController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->user)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            Response::error('Please enter valid API key', 400);
         }
     }
 
     public function getCustomFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -70,16 +71,16 @@ class ClickupController
                     'required' => $customField->required,
                 ];
             }
-            wp_send_json_success($customFields, 200);
+            Response::success($customFields);
         } else {
-            wp_send_json_error('Custom field fetching failed', 400);
+            Response::error('Custom field fetching failed', 400);
         }
     }
 
     public function getAllTasks($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -96,9 +97,9 @@ class ClickupController
                     'name' => $task->name
                 ];
             }
-            wp_send_json_success($tasks, 200);
+            Response::success($tasks);
         } else {
-            wp_send_json_error('Task fetching failed', 400);
+            Response::error('Task fetching failed', 400);
         }
     }
 
@@ -106,7 +107,7 @@ class ClickupController
     public function getAllTeams($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -125,16 +126,16 @@ class ClickupController
                     'name' => $team->name
                 ];
             }
-            wp_send_json_success($teams, 200);
+            Response::success($teams);
         } else {
-            wp_send_json_error('Teams fetching failed', 400);
+            Response::error('Teams fetching failed', 400);
         }
     }
 
     public function getAllSpaces($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -153,16 +154,16 @@ class ClickupController
                     'name' => $space->name
                 ];
             }
-            wp_send_json_success($spaces, 200);
+            Response::success($spaces);
         } else {
-            wp_send_json_error('Spaces fetching failed', 400);
+            Response::error('Spaces fetching failed', 400);
         }
     }
 
     public function getAllFolders($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -182,9 +183,9 @@ class ClickupController
                     'name' => $folder->name
                 ];
             }
-            wp_send_json_success($folders, 200);
+            Response::success($folders);
         } else {
-            wp_send_json_error('Folders fetching failed', 400);
+            Response::error('Folders fetching failed', 400);
         }
     }
 
@@ -192,7 +193,7 @@ class ClickupController
     public function getAllLists($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -211,16 +212,16 @@ class ClickupController
                     'name' => $list->name
                 ];
             }
-            wp_send_json_success($lists, 200);
+            Response::success($lists);
         } else {
-            wp_send_json_error('Lists fetching failed', 400);
+            Response::error('Lists fetching failed', 400);
         }
     }
 
     public function getAllTags($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -238,9 +239,9 @@ class ClickupController
                     'name' => $tag->name
                 ];
             }
-            wp_send_json_success($tags, 200);
+            Response::success($tags);
         } else {
-            wp_send_json_error('Tags fetching failed', 400);
+            Response::error('Tags fetching failed', 400);
         }
     }
 

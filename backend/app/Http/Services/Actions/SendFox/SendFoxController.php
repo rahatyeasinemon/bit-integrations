@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\SendFox;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class SendFoxController
 {
@@ -16,7 +17,7 @@ class SendFoxController
     public function sendFoxAuthorize($requestParams)
     {
         if (empty($requestParams->access_token)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -33,9 +34,9 @@ class SendFoxController
 
         $response = Http::request($apiEndpoint, 'Get', null, $requestParams);
         if ($response->message !== 'Unauthenticated.') {
-            wp_send_json_success($response, 200);
+            Response::success($response);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'The token is invalid',
                 400
             );
@@ -45,7 +46,7 @@ class SendFoxController
     public function fetchContactLists($requestParams)
     {
         if (empty($requestParams->access_token)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -63,9 +64,9 @@ class SendFoxController
         $response = Http::request($apiEndpoint, 'Get', null, $requestParams);
 
         if ($response->message !== 'Unauthenticated.') {
-            wp_send_json_success($response, 200);
+            Response::success($response);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'The token is invalid',
                 400
             );

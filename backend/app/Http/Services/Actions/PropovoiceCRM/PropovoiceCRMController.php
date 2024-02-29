@@ -6,6 +6,7 @@ use WP_Error;
 use BitApps\BTCBI\Util\IpTool;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\PropovoiceCRM\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class PropovoiceCRMController
 {
@@ -20,23 +21,23 @@ class PropovoiceCRMController
     public static function authorizePropovoiceCrm()
     {
         if (self::pluginActive()) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
-        wp_send_json_error(__('Propovoice CRM must be activated!', 'bit-integrations'));
+        Response::error(__('Propovoice CRM must be activated!', 'bit-integrations'));
     }
 
     public static function leadTags()
     {
         global $wpdb;
         $tags = $wpdb->get_results("SELECT term_id, name FROM $wpdb->terms WHERE term_id IN (SELECT term_taxonomy_id FROM $wpdb->term_taxonomy WHERE taxonomy = 'ndpv_tag')");
-        wp_send_json_success($tags, 200);
+        Response::success($tags);
     }
 
     public static function leadLabel()
     {
         global $wpdb;
         $labels = $wpdb->get_results("SELECT term_id, name FROM $wpdb->terms WHERE term_id IN (SELECT term_taxonomy_id FROM $wpdb->term_taxonomy WHERE taxonomy = 'ndpv_lead_level')");
-        wp_send_json_success($labels, 200);
+        Response::success($labels);
     }
 
 

@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Affiliate;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class AffiliateController
 {
@@ -42,7 +43,7 @@ final class AffiliateController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('AffiliateWP is not installed or activated', 'bit-integrations'));
+            Response::error(__('AffiliateWP is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['A new affiliate is approved', 'A user becomes an affiliate','An affiliate makes a referral of a specific type','An affiliates referral of a specific type is rejected Pro','An affiliates referral of a specific type is paid Pro'];
@@ -54,21 +55,21 @@ final class AffiliateController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($affiliate_action);
+        Response::success($affiliate_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('AffiliateWP is not installed or activated', 'bit-integrations'));
+            Response::error(__('AffiliateWP is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
 
@@ -88,13 +89,13 @@ final class AffiliateController
         }
         $responseData['allType'] = $organizeType;
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

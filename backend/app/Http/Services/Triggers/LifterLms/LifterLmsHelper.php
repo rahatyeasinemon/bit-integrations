@@ -2,12 +2,14 @@
 
 namespace BitApps\BTCBI\Http\Services\Triggers\LifterLms;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
+
 class LifterLmsHelper
 {
     public static function fields($id)
     {
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

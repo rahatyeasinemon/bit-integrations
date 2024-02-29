@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Bricks;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class BricksController
 {
@@ -76,7 +77,7 @@ final class BricksController
     public function getAllForms()
     {
         if (!self::is_bricks_active()) {
-            wp_send_json_error(__('Bricks is not installed or activated', 'bit-integrations'));
+            Response::error(__('Bricks is not installed or activated', 'bit-integrations'));
         }
 
         $posts = self::getBricksPosts();
@@ -99,26 +100,26 @@ final class BricksController
                 }
             }
         }
-        wp_send_json_success($all_forms);
+        Response::success($all_forms);
     }
 
     public function getFormFields($data)
     {
         if (!self::is_bricks_active()) {
-            wp_send_json_error(__('Bricks is not installed or activated', 'bit-integrations'));
+            Response::error(__('Bricks is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id) && empty($data->postId)) {
-            wp_send_json_error(__('Form doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
 
         $fields = self::fields($data);
         if (empty($fields)) {
-            wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
         $responseData['postId'] = $data->postId;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($data)

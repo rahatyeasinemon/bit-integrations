@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Groundhogg;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use Groundhogg\DB\Tags;
 
 final class GroundhoggController
@@ -123,7 +124,7 @@ final class GroundhoggController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Groundhogg is not installed or activated', 'bit-integrations'));
+            Response::error(__('Groundhogg is not installed or activated', 'bit-integrations'));
         }
         $types = ['Contact-Create', 'Add-Tag-To-Contact', 'Remove-Tag-From-Contact'];
         $groundhogg_action = [];
@@ -134,16 +135,16 @@ final class GroundhoggController
             ];
         }
 
-        wp_send_json_success($groundhogg_action);
+        Response::success($groundhogg_action);
     }
 
     public function getFormFields($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Groundhogg is not installed or activated', 'bit-integrations'));
+            Response::error(__('Groundhogg is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__(' Doesn\'t exists', 'bit-integrations'));
+            Response::error(__(' Doesn\'t exists', 'bit-integrations'));
         }
         $id = $data->id;
         if ($id == 2 || $id == 3) {
@@ -167,17 +168,17 @@ final class GroundhoggController
 
         $fields = self::fields($data->id);
         if (empty($fields)) {
-            wp_send_json_error(__('Doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -263,6 +264,6 @@ final class GroundhoggController
                 'tag_name' => $val->tag_name,
             ];
         }
-        wp_send_json_success($allTag);
+        Response::success($allTag);
     }
 }

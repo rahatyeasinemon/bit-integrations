@@ -8,6 +8,7 @@ use FluentCrm\App\Models\Tag;
 use FluentCrm\App\Models\Lists;
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Http\Controllers\FlowController;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use FluentCrm\App\Models\Subscriber;
 use FluentCrm\App\Models\CustomContactField;
 
@@ -40,7 +41,7 @@ final class FluentCrmController
     public static function checkedExistsFluentCRM()
     {
         if (!is_plugin_active('fluent-crm/fluent-crm.php')) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Fluent CRM Plugin is not active or not installed',
                     'bit-integrations'
@@ -64,7 +65,7 @@ final class FluentCrmController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($fluentcrm_action);
+        Response::success($fluentcrm_action);
     }
     public function get_a_form($data)
     {
@@ -72,7 +73,7 @@ final class FluentCrmController
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
         if ($data->id == "fluentcrm-1" || $data->id == 'fluentcrm-2') {
             $tags[] = [
@@ -103,7 +104,7 @@ final class FluentCrmController
 
 
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fluentCrmStatus()
@@ -159,7 +160,7 @@ final class FluentCrmController
     public static function fields($id)
     {
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -508,7 +509,7 @@ final class FluentCrmController
         $fluentCrmTags = self::fluentCrmTags();
 
         $tags = array_merge($tags, $fluentCrmTags);
-        wp_send_json_success($tags);
+        Response::success($tags);
     }
 
     public static function getFluentCrmList()
@@ -520,7 +521,7 @@ final class FluentCrmController
         $fluentCrmLists = self::fluentCrmLists();
 
         $lists = array_merge($lists, $fluentCrmLists);
-        wp_send_json_success($lists);
+        Response::success($lists);
     }
 
     public static function getFluentCrmStatus()
@@ -532,6 +533,6 @@ final class FluentCrmController
         $fluentCrmStatus = self::fluentCrmStatus();
 
         $status = array_merge($status, $fluentCrmStatus);
-        wp_send_json_success($status);
+        Response::success($status);
     }
 }

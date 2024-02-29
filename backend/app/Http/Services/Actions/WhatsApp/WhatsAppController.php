@@ -24,7 +24,7 @@ class WhatsAppController
     //         empty($queryParams->accessToken)
     //         || empty($queryParams->clientId)
     //     ) {
-    //         wp_send_json_error(
+    //         Response::error(
     //             __(
     //                 'Requested parameter is empty',
     //                 'bit-integrations'
@@ -50,12 +50,12 @@ class WhatsAppController
     //         uksort($allList, 'strnatcasecmp');
     //         $response['allBoardlist'] = $allList;
     //     } else {
-    //         wp_send_json_error(
+    //         Response::error(
     //             $allBoardResponse->response->error->message,
     //             400
     //         );
     //     }
-    //     wp_send_json_success($response, 200);
+    //     Response::success($response);
     // }
 
     // public function fetchAllLists($queryParams)
@@ -64,7 +64,7 @@ class WhatsAppController
     //         empty($queryParams->accessToken)
     //         || empty($queryParams->clientId)
     //     ) {
-    //         wp_send_json_error(
+    //         Response::error(
     //             __(
     //                 'Requested parameter is empty',
     //                 'bit-integrations'
@@ -89,12 +89,12 @@ class WhatsAppController
     //         uksort($allList, 'strnatcasecmp');
     //         $response['alllists'] = $allList;
     //     } else {
-    //         wp_send_json_error(
+    //         Response::error(
     //             $allBoardResponse->response->error->message,
     //             400
     //         );
     //     }
-    //     wp_send_json_success($response, 200);
+    //     Response::success($response);
     // }
 
     /**

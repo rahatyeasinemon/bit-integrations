@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\ThriveApprentice;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class ThriveApprenticeController
 {
@@ -41,7 +42,7 @@ final class ThriveApprenticeController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Thrive Apprentice is not installed or activated', 'bit-integrations'));
+            Response::error(__('Thrive Apprentice is not installed or activated', 'bit-integrations'));
         }
 
         $types = [
@@ -57,21 +58,21 @@ final class ThriveApprenticeController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($thriveapprentice_action);
+        Response::success($thriveapprentice_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Thrive Apprentice is not installed or activated', 'bit-integrations'));
+            Response::error(__('Thrive Apprentice is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = ThriveApprenticeHelper::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
@@ -92,7 +93,7 @@ final class ThriveApprenticeController
                 'title' => 'Any Module'
             ]], ThriveApprenticeHelper::getAllModule());
         }
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function handleCourseComplete($course_details, $user_details)
@@ -182,7 +183,7 @@ final class ThriveApprenticeController
             'id' => 'any',
             'title' => 'Any Course'
         ]], ThriveApprenticeHelper::getAllCourse());
-        wp_send_json_success($allCourse);
+        Response::success($allCourse);
     }
 
     public static function getAllLessonEdit()
@@ -191,7 +192,7 @@ final class ThriveApprenticeController
             'id' => 'any',
             'title' => 'Any Lesson'
         ]], ThriveApprenticeHelper::getAllLesson());
-        wp_send_json_success($allLesson);
+        Response::success($allLesson);
     }
 
     public static function getAllModuleEdit()
@@ -200,6 +201,6 @@ final class ThriveApprenticeController
             'id' => 'any',
             'title' => 'Any Module'
         ]], ThriveApprenticeHelper::getAllModule());
-        wp_send_json_success($allModule);
+        Response::success($allModule);
     }
 }

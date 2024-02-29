@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Trello;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Trello\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Trello integration
@@ -25,7 +26,7 @@ class TrelloController
             empty($queryParams->accessToken)
             || empty($queryParams->clientId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -51,12 +52,12 @@ class TrelloController
             uksort($allList, 'strnatcasecmp');
             $response['allBoardlist'] = $allList;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $allBoardResponse->response->error->message,
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function fetchAllLists($queryParams)
@@ -65,7 +66,7 @@ class TrelloController
             empty($queryParams->accessToken)
             || empty($queryParams->clientId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -90,12 +91,12 @@ class TrelloController
             uksort($allList, 'strnatcasecmp');
             $response['alllists'] = $allList;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $allBoardResponse->response->error->message,
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**

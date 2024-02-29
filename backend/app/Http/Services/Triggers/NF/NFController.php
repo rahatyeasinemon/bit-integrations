@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\NF;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class NFController
 {
@@ -49,22 +50,22 @@ final class NFController
     public function getAForm($data)
     {
         if (empty($data->id) || !(function_exists('Ninja_Forms') && is_callable('Ninja_Forms'))) {
-            wp_send_json_error(__('Ninja Forms  is not installed or activated', 'bit-integrations'));
+            Response::error(__('Ninja Forms  is not installed or activated', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($form_id)
     {
         if (!(function_exists('Ninja_Forms') && is_callable('Ninja_Forms'))) {
-            wp_send_json_error(__('Ninja Forms  is not installed or activated', 'bit-integrations'));
+            Response::error(__('Ninja Forms  is not installed or activated', 'bit-integrations'));
         }
         $fieldDetails = Ninja_Forms()->form($form_id)->get_fields();
 

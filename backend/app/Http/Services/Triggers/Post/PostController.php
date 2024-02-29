@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\Post;
 
 use BitApps\BTCBI\Model\Flow;
 use BitApps\BTCBI\Http\Services\Triggers\Post\PostHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class PostController
 {
@@ -57,7 +58,7 @@ final class PostController
             ['id' => 9, 'title' => 'Post trashed']
         ];
 
-        wp_send_json_success($triggers);
+        Response::success($triggers);
     }
 
     public function get_a_form($data)
@@ -70,7 +71,7 @@ final class PostController
         }
 
         if (!is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
 
         $ids = [1, 2, 3, 6];
@@ -88,10 +89,10 @@ final class PostController
         $responseData['fields'] = self::fields($data->id);
 
         if (count($responseData['fields']) <= 0) {
-            wp_send_json_error(__('Form fields doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Form fields doesn\'t exists', 'bit-integrations'));
         }
 
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function createPost($postId, $newPostData, $update, $beforePostData)
@@ -289,13 +290,13 @@ final class PostController
     {
         $types = array_values(PostHelper::getPostTypes());
         array_unshift($types, ['id' => 'any-post-type', 'title' => 'Any Post Type']);
-        wp_send_json_success($types);
+        Response::success($types);
     }
 
     public static function getAllPosts()
     {
         $posts = PostHelper::getPostTitles();
         array_unshift($posts, ['id' => 'any-post', 'title' => 'Any Post']);
-        wp_send_json_success($posts);
+        Response::success($posts);
     }
 }

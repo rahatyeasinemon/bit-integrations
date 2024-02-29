@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ZoomWebinar;
 
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 class ZoomWebinarController
@@ -18,7 +19,7 @@ class ZoomWebinarController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->clientId) || empty($requestParams->clientSecret) || empty($requestParams->code) || empty($requestParams->redirectURI)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $body = [
@@ -32,16 +33,16 @@ class ZoomWebinarController
         $header['Authorization'] = 'Basic ' . base64_encode("$requestParams->clientId:$requestParams->clientSecret");
         $apiResponse = Http::request($apiEndpoint, 'Post', $body, $header);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
+            Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     public static function zoomFetchAllWebinar($requestParams)
     {
         if (empty($requestParams->accessToken)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
         $header = [
             'Authorization' => 'Bearer ' . $requestParams->accessToken,
@@ -52,11 +53,11 @@ class ZoomWebinarController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
+            Response::error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
         }
 
         $response['allWebinar'] = $apiResponse->webinars;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     private static function tokenExpiryCheck($token, $clientId, $clientSecret)

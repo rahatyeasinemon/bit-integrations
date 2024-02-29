@@ -6,6 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\BuddyBoss;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 /**
@@ -48,9 +49,9 @@ class BuddyBossController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (self::pluginActive()) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
-        wp_send_json_error(__('BuddyBoss must be activated!', 'bit-integrations'));
+        Response::error(__('BuddyBoss must be activated!', 'bit-integrations'));
     }
 
     public static function getAllGroups()
@@ -60,9 +61,9 @@ class BuddyBossController
             global $wpdb;
             $groups = $wpdb->get_results("select id,name from {$wpdb->prefix}bp_groups");
 
-            wp_send_json_success($groups, 200);
+            Response::success($groups);
         }
-        wp_send_json_error(__('BuddyBoss must be activated!', 'bit-integrations'));
+        Response::error(__('BuddyBoss must be activated!', 'bit-integrations'));
     }
 
     public static function getAllUser()
@@ -71,9 +72,9 @@ class BuddyBossController
         if (self::pluginActive()) {
             global $wpdb;
             $users = $wpdb->get_results("select ID,display_name from {$wpdb->prefix}users");
-            wp_send_json_success($users, 200);
+            Response::success($users);
         }
-        wp_send_json_error(__('BuddyBoss must be activated!', 'bit-integrations'));
+        Response::error(__('BuddyBoss must be activated!', 'bit-integrations'));
     }
 
     public static function getAllForums()
@@ -127,7 +128,7 @@ class BuddyBossController
                 ];
         }
 
-        wp_send_json_success($topics);
+        Response::success($topics);
     }
 
     // for action 11 - BuddyBoss update started

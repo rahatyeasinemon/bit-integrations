@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\RestrictContent;
 
 use WP_Error;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for RestricContent integration
@@ -37,9 +38,9 @@ class RestrictContentController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (self::pluginActive()) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
-        wp_send_json_error(__('Restrict Content must be activated!', 'bit-integrations'));
+        Response::error(__('Restrict Content must be activated!', 'bit-integrations'));
     }
 
     public static function getAllLevels()
@@ -55,7 +56,7 @@ class RestrictContentController
             }
             $response['levellists'] = $data;
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

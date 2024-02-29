@@ -10,6 +10,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Twilio;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class TwilioController
 {
@@ -29,7 +30,7 @@ final class TwilioController
             || empty($tokenRequestParams->token)
             || empty($tokenRequestParams->from_num)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -51,12 +52,12 @@ final class TwilioController
         $response = json_decode($json, true);
 
         if (array_key_exists('RestException', $response)) {
-            wp_send_json_error(
+            Response::error(
                 'Unauthorize',
                 400
             );
         } else {
-            wp_send_json_success($apiResponse, 200);
+            Response::success($apiResponse);
         }
     }
 

@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Mautic;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for MailChimp integration
@@ -36,7 +37,7 @@ class MauticController
             || empty($requestsParams->baseUrl)
             || empty($requestsParams->code)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -56,13 +57,13 @@ class MauticController
         );
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams, $authorizationHeader);
         if (is_wp_error($apiResponse) || !empty($apiResponse->errors)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     protected static function _refreshAccessToken($apiData)
@@ -103,7 +104,7 @@ class MauticController
     public static function getAllFields($queryParams)
     {
         if (empty($queryParams->tokenDetails)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -131,13 +132,13 @@ class MauticController
                 );
             }
         }
-        wp_send_json_success($response);
+        Response::success($response);
     }
 
     public static function getAllTags($queryParams)
     {
         if (empty($queryParams->tokenDetails)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -164,7 +165,7 @@ class MauticController
                 );
             }
         }
-        wp_send_json_success($response);
+        Response::success($response);
     }
 
 

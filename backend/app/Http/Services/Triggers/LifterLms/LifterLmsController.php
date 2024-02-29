@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\LifterLms;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class LifterLmsController
 {
@@ -41,7 +42,7 @@ final class LifterLmsController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('LifterLMS is not installed or activated', 'bit-integrations'));
+            Response::error(__('LifterLMS is not installed or activated', 'bit-integrations'));
         }
 
         $types = [
@@ -62,21 +63,21 @@ final class LifterLmsController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($lifterLms_action);
+        Response::success($lifterLms_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('LifterLms is not installed or activated', 'bit-integrations'));
+            Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = LifterLmsHelper::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
@@ -104,55 +105,55 @@ final class LifterLmsController
             ]], LifterLmsHelper::getAllMembership());
         }
 
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function getLifterLmsAllQuiz()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('LifterLms is not installed or activated', 'bit-integrations'));
+            Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
         }
         $allQuiz = array_merge([[
             'ID' => 'any',
             'post_title' => 'Any Quiz'
         ]], LifterLmsHelper::getAllQuiz());
-        wp_send_json_success($allQuiz);
+        Response::success($allQuiz);
     }
 
     public static function getLifterLmsAllLesson()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('LifterLms is not installed or activated', 'bit-integrations'));
+            Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
         }
         $allLesson = array_merge([[
             'ID' => 'any',
             'post_title' => 'Any Lesson'
         ]], LifterLmsHelper::getAllLesson());
-        wp_send_json_success($allLesson);
+        Response::success($allLesson);
     }
 
     public static function getLifterLmsAllCourse()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('LifterLms is not installed or activated', 'bit-integrations'));
+            Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
         }
         $allCourse = array_merge([[
             'ID' => 'any',
             'post_title' => 'Any Course'
         ]], LifterLmsHelper::getAllCourse());
-        wp_send_json_success($allCourse);
+        Response::success($allCourse);
     }
 
     public static function getLifterLmsAllMembership()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('LifterLms is not installed or activated', 'bit-integrations'));
+            Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
         }
         $allMembership = array_merge([[
             'ID' => 'any',
             'post_title' => 'Any Membership'
         ]], LifterLmsHelper::getAllMembership());
-        wp_send_json_success($allMembership);
+        Response::success($allMembership);
     }
 
     public static function handleAttemptQuiz($user_id, $quiz_id, $quiz_obj)

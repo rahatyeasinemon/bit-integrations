@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Zendesk;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Zendesk integration
@@ -25,7 +26,7 @@ class ZendeskController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -37,16 +38,16 @@ class ZendeskController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->data)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            Response::error('Please enter valid API key', 400);
         }
     }
 
     public function getCustomFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -74,16 +75,16 @@ class ZendeskController
                     'required' => false,
                 ];
             }
-            wp_send_json_success($customFields, 200);
+            Response::success($customFields);
         } else {
-            wp_send_json_error('Custom field fetching failed', 400);
+            Response::error('Custom field fetching failed', 400);
         }
     }
 
     public function getAllLeads($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -101,16 +102,16 @@ class ZendeskController
                     'name' => $lead->name
                 ];
             }
-            wp_send_json_success($leads, 200);
+            Response::success($leads);
         } else {
-            wp_send_json_error('Lead fetching failed', 400);
+            Response::error('Lead fetching failed', 400);
         }
     }
 
     public function getAllParentOrganizations($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -130,16 +131,16 @@ class ZendeskController
                     ];
                 }
             }
-            wp_send_json_success($parentOrganizations, 200);
+            Response::success($parentOrganizations);
         } else {
-            wp_send_json_error('ParentOrganizations fetching failed', 400);
+            Response::error('ParentOrganizations fetching failed', 400);
         }
     }
 
     public function getAllTeams($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -157,16 +158,16 @@ class ZendeskController
                     'name' => $team->name
                 ];
             }
-            wp_send_json_success($teams, 200);
+            Response::success($teams);
         } else {
-            wp_send_json_error('Teams fetching failed', 400);
+            Response::error('Teams fetching failed', 400);
         }
     }
 
     public function getAllCurrencies($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -185,16 +186,16 @@ class ZendeskController
                     'name' => $currency->code
                 ];
             }
-            wp_send_json_success($currencies, 200);
+            Response::success($currencies);
         } else {
-            wp_send_json_error('Currencies fetching failed', 400);
+            Response::error('Currencies fetching failed', 400);
         }
     }
 
     public function getAllStages($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -213,16 +214,16 @@ class ZendeskController
                     'name' => $stage->data->name
                 ];
             }
-            wp_send_json_success($stages, 200);
+            Response::success($stages);
         } else {
-            wp_send_json_error('Stages fetching failed', 400);
+            Response::error('Stages fetching failed', 400);
         }
     }
 
     public function getAllCRMCompanies($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -242,16 +243,16 @@ class ZendeskController
                     ];
                 }
             }
-            wp_send_json_success($companies, 200);
+            Response::success($companies);
         } else {
-            wp_send_json_error('Companies fetching failed', 400);
+            Response::error('Companies fetching failed', 400);
         }
     }
 
     public function getAllCRMContacts($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -269,16 +270,16 @@ class ZendeskController
                     'name' => $contact->data->name
                 ];
             }
-            wp_send_json_success($contacts, 200);
+            Response::success($contacts);
         } else {
-            wp_send_json_error('Contacts fetching failed', 400);
+            Response::error('Contacts fetching failed', 400);
         }
     }
 
     public function getAllCRMSources($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -301,9 +302,9 @@ class ZendeskController
                     'name' => $source->data->name
                 ];
             }
-            wp_send_json_success($sources, 200);
+            Response::success($sources);
         } else {
-            wp_send_json_error('Sources fetching failed', 400);
+            Response::error('Sources fetching failed', 400);
         }
     }
 

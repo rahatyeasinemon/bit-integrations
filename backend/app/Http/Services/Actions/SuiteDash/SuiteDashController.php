@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\SuiteDash;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for SuiteDash integration
@@ -25,7 +26,7 @@ class SuiteDashController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->public_id) || empty($fieldsRequestParams->secret_key) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -46,9 +47,9 @@ class SuiteDashController
         $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->success) && $response->success) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid Session Token or Link Name', 400);
+            Response::error('Please enter valid Session Token or Link Name', 400);
         }
     }
 
@@ -60,7 +61,7 @@ class SuiteDashController
         $response = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->success) && $response->success === false) {
-            wp_send_json_error('Fields fetching failed', 400);
+            Response::error('Fields fetching failed', 400);
         } else {
             $fieldMap = [];
             $fieldNames   = ['uid', 'name_prefix', 'active', 'role', 'tags', 'created', 'company', 'companies'];
@@ -99,7 +100,7 @@ class SuiteDashController
                 }
             }
 
-            wp_send_json_success($fieldMap, 200);
+            Response::success($fieldMap);
         }
     }
 
@@ -118,9 +119,9 @@ class SuiteDashController
                     $company->name
                 );
             }
-            wp_send_json_success($companies, 200);
+            Response::success($companies);
         } else {
-            wp_send_json_error('Tags fetching failed', 400);
+            Response::error('Tags fetching failed', 400);
         }
     }
 

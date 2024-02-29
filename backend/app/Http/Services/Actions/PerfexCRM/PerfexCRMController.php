@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\PerfexCRM;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for PerfexCRM integration
@@ -26,7 +27,7 @@ class PerfexCRMController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_token) || empty($fieldsRequestParams->domain) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -49,9 +50,9 @@ class PerfexCRMController
         $response      = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            wp_send_json_error('Please enter valid API Token or Access Api URL', 400);
+            Response::error('Please enter valid API Token or Access Api URL', 400);
         } else {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         }
     }
 
@@ -85,7 +86,7 @@ class PerfexCRMController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            wp_send_json_error('Custom Fields fetching failed', 400);
+            Response::error('Custom Fields fetching failed', 400);
         } else {
             $fieldMap = [];
             foreach ($response as $field) {
@@ -98,7 +99,7 @@ class PerfexCRMController
                     ]
                 );
             }
-            wp_send_json_success($fieldMap, 200);
+            Response::success($fieldMap);
         }
     }
 
@@ -112,7 +113,7 @@ class PerfexCRMController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            wp_send_json_error('Customer fetching failed', 400);
+            Response::error('Customer fetching failed', 400);
         } else {
             $customers = [];
             foreach ($response as $customer) {
@@ -124,7 +125,7 @@ class PerfexCRMController
                     ]
                 );
             }
-            wp_send_json_success($customers, 200);
+            Response::success($customers);
         }
     }
 
@@ -138,7 +139,7 @@ class PerfexCRMController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            wp_send_json_error('Lead fetching failed', 400);
+            Response::error('Lead fetching failed', 400);
         } else {
             $leads = [];
             foreach ($response as $lead) {
@@ -150,7 +151,7 @@ class PerfexCRMController
                     ]
                 );
             }
-            wp_send_json_success($leads, 200);
+            Response::success($leads);
         }
     }
 
@@ -164,7 +165,7 @@ class PerfexCRMController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            wp_send_json_error('Project Member fetching failed', 400);
+            Response::error('Project Member fetching failed', 400);
         } else {
             $staffs = [];
             foreach ($response as $staff) {
@@ -176,7 +177,7 @@ class PerfexCRMController
                     ]
                 );
             }
-            wp_send_json_success($staffs, 200);
+            Response::success($staffs);
         }
     }
 

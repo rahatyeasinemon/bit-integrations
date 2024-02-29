@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Salesmate;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Salesmate integration
@@ -26,7 +27,7 @@ class SalesmateController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->session_token) || empty($fieldsRequestParams->link_name) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -81,9 +82,9 @@ class SalesmateController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->Status) && $response->Status === "success") {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid Session Token or Link Name', 400);
+            Response::error('Please enter valid Session Token or Link Name', 400);
         }
     }
 
@@ -114,9 +115,9 @@ class SalesmateController
             }
 
 
-            wp_send_json_success($fieldMap, 200);
+            Response::success($fieldMap);
         } else {
-            wp_send_json_error('Fields fetching failed', 400);
+            Response::error('Fields fetching failed', 400);
         }
     }
 
@@ -136,9 +137,9 @@ class SalesmateController
                     'tag' => $tag->tag
                 ];
             }
-            wp_send_json_success($tags, 200);
+            Response::success($tags);
         } else {
-            wp_send_json_error('Tags fetching failed', 400);
+            Response::error('Tags fetching failed', 400);
         }
     }
 
@@ -158,9 +159,9 @@ class SalesmateController
                     'currency' => $currency->code
                 ];
             }
-            wp_send_json_success($currencies, 200);
+            Response::success($currencies);
         } else {
-            wp_send_json_error('Currencies fetching failed', 400);
+            Response::error('Currencies fetching failed', 400);
         }
     }
 
@@ -181,9 +182,9 @@ class SalesmateController
                     'stages' => $pipelines->stages
                 ];
             }
-            wp_send_json_success($CRMPipelines, 200);
+            Response::success($CRMPipelines);
         } else {
-            wp_send_json_error('Pipelines fetching failed', 400);
+            Response::error('Pipelines fetching failed', 400);
         }
     }
 
@@ -206,9 +207,9 @@ class SalesmateController
                     'email' => $contact->email
                 ];
             }
-            wp_send_json_success($CRMContacts, 200);
+            Response::success($CRMContacts);
         } else {
-            wp_send_json_error('Contacts fetching failed', 400);
+            Response::error('Contacts fetching failed', 400);
         }
     }
 
@@ -230,9 +231,9 @@ class SalesmateController
                     'name'   => $contact->name
                 ];
             }
-            wp_send_json_success($CRMCompanies, 200);
+            Response::success($CRMCompanies);
         } else {
-            wp_send_json_error('Companies fetching failed', 400);
+            Response::error('Companies fetching failed', 400);
         }
     }
 
@@ -253,9 +254,9 @@ class SalesmateController
                     'name' => "$owner->firstName $owner->lastName"
                 ];
             }
-            wp_send_json_success($CRMOwners, 200);
+            Response::success($CRMOwners);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            Response::error('Owners fetching failed', 400);
         }
     }
 

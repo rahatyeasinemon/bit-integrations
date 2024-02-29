@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Smaily;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Smaily integration
@@ -17,7 +18,7 @@ class SmailyController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->subdomain) && empty($fieldsRequestParams->api_user_name) && empty($fieldsRequestParams->api_user_password)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $subdomain       = $fieldsRequestParams->subdomain;
@@ -31,9 +32,9 @@ class SmailyController
         $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($response[0]->id) && !empty($response)) {
-            wp_send_json_success('authentication successful', 200);
+            Response::success('authentication successful');
         } else {
-            wp_send_json_error('Please enter valid subdomain name and api credentials', 400);
+            Response::error('Please enter valid subdomain name and api credentials', 400);
         }
     }
 

@@ -10,6 +10,7 @@ use WP_Error;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -40,7 +41,7 @@ class ZohoBiginController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -60,13 +61,13 @@ class ZohoBiginController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     /**
@@ -84,7 +85,7 @@ class ZohoBiginController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -99,7 +100,7 @@ class ZohoBiginController
         $modulesMetaApiEndpoint = "https://www.zohoapis.{$queryParams->dataCenter}/bigin/v1/settings/modules";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $modulesMetaResponse = Http::request($modulesMetaApiEndpoint, 'Get', null, $authorizationHeader);
-        // wp_send_json_success($modulesMetaResponse, 200);
+        // Response::success($modulesMetaResponse);
         if (!is_wp_error($modulesMetaResponse) && (empty($modulesMetaResponse->status) || (!empty($modulesMetaResponse->status) && $modulesMetaResponse->status !== 'error'))) {
             $retriveModuleData = $modulesMetaResponse->modules;
             $allModules = [];
@@ -114,7 +115,7 @@ class ZohoBiginController
             uksort($allModules, 'strnatcasecmp');
             $response['modules'] = $allModules;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($modulesMetaResponse->error) ? 'Unknown' : $modulesMetaResponse->error,
                 400
             );
@@ -122,7 +123,7 @@ class ZohoBiginController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -140,7 +141,7 @@ class ZohoBiginController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -155,7 +156,7 @@ class ZohoBiginController
         $layoutsMetaApiEndpoint = "https://www.zohoapis.{$queryParams->dataCenter}/bigin/v2/settings/layouts?module=Deals";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $layoutsMetaResponse = Http::request($layoutsMetaApiEndpoint, 'Get', null, $authorizationHeader);
-        // wp_send_json_success($layoutsMetaResponse, 200);
+        // Response::success($layoutsMetaResponse);
         if (!is_wp_error($layoutsMetaResponse) && (empty($layoutsMetaResponse->status) || (!empty($layoutsMetaResponse->status) && $layoutsMetaResponse->status !== 'error'))) {
             $retriveLayoutsData = $layoutsMetaResponse->layouts;
             $allLayouts = [];
@@ -168,7 +169,7 @@ class ZohoBiginController
             uksort($allLayouts, 'strnatcasecmp');
             $response['pLayouts'] = $allLayouts;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($layoutsMetaResponse->error) ? 'Unknown' : $layoutsMetaResponse->error,
                 400
             );
@@ -176,7 +177,7 @@ class ZohoBiginController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -195,7 +196,7 @@ class ZohoBiginController
             || empty($queryParams->clientSecret)
             || empty($queryParams->module)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -224,7 +225,7 @@ class ZohoBiginController
         // $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         // $requiredParams['module'] = $queryParams->module;
         // $modulesMetaResponse = Http::request($modulesMetaApiEndpoint, 'Get', $queryParams, $authorizationHeader);
-        // wp_send_json_success($modulesMetaResponse, 200);
+        // Response::success($modulesMetaResponse);
         foreach ($allModules as $module) {
             if ($module->api_name !== $queryParams->module) {
                 $relatedModules[$module->plural_label] = (object) [
@@ -239,7 +240,7 @@ class ZohoBiginController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['related_modules']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -258,7 +259,7 @@ class ZohoBiginController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -317,7 +318,7 @@ class ZohoBiginController
             ];
             $response['fieldDetails'] = $fieldDetails;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $fieldsMetaResponse->status === 'error' ? $fieldsMetaResponse->message : 'Unknown',
                 400
             );
@@ -326,7 +327,7 @@ class ZohoBiginController
             $response['queryModule'] = $queryParams->module;
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function getTagList($queryParams)
@@ -338,7 +339,7 @@ class ZohoBiginController
             || empty($queryParams->clientSecret)
             || empty($queryParams->module)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -371,7 +372,7 @@ class ZohoBiginController
                 $response['tags'] = $allTags;
             }
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($tagsMetaResponse->data) ? 'Unknown' : $tagsMetaResponse->error,
                 400
             );
@@ -379,7 +380,7 @@ class ZohoBiginController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function getUsers($queryParams)
@@ -390,7 +391,7 @@ class ZohoBiginController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -423,7 +424,7 @@ class ZohoBiginController
                 $response['users'] = $allUsers;
             }
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($usersMetaResponse->data) ? 'Unknown' : $usersMetaResponse->error,
                 400
             );
@@ -431,7 +432,7 @@ class ZohoBiginController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**

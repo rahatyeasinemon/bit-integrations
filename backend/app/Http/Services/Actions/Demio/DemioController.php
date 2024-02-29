@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Demio;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Demio integration
@@ -25,7 +26,7 @@ class DemioController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_secret) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -46,9 +47,9 @@ class DemioController
         $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if ($response->pong) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid API Key & API Secret', 400);
+            Response::error('Please enter valid API Key & API Secret', 400);
         }
     }
 
@@ -70,9 +71,9 @@ class DemioController
                     ]
                 );
             }
-            wp_send_json_success($events, 200);
+            Response::success($events);
         } else {
-            wp_send_json_error('Events fetching failed', 400);
+            Response::error('Events fetching failed', 400);
         }
     }
 
@@ -94,9 +95,9 @@ class DemioController
                     ]
                 );
             }
-            wp_send_json_success($sessions, 200);
+            Response::success($sessions);
         } else {
-            wp_send_json_error('Events fetching failed', 400);
+            Response::error('Events fetching failed', 400);
         }
     }
 

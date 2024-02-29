@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\FreshSales;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\FreshSales\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for FreshSales integration
@@ -18,7 +19,7 @@ class FreshSalesController
     public function authorization($requestParams)
     {
         if (empty($requestParams->api_key)  || empty($requestParams->bundle_alias)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -32,12 +33,12 @@ class FreshSalesController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->fields)) {
-            wp_send_json_success(__(
+            Response::success(__(
                 'Authorization Success',
                 'bit-integrations'
-            ), 200);
+            ));
         } else {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'The token is invalid',
                     'bit-integrations'
@@ -50,7 +51,7 @@ class FreshSalesController
     public function getMetaData($requestParams)
     {
         if (empty($requestParams->api_key)  || empty($requestParams->bundle_alias)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -105,9 +106,9 @@ class FreshSalesController
         }
 
         if (isset($response) && $response) {
-            wp_send_json_success($formattedResponse, 200);
+            Response::success($formattedResponse);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'The token is invalid',
                 400
             );
@@ -117,7 +118,7 @@ class FreshSalesController
     public function getFields($requestParams)
     {
         if (empty($requestParams->api_key)  || empty($requestParams->bundle_alias)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -178,7 +179,7 @@ class FreshSalesController
                     'required' => false
                 ],
             ];
-            wp_send_json_success($formattedResponse, 200);
+            Response::success($formattedResponse);
         } else {
             $apiEndpoint =   "https://" . $requestParams->bundle_alias . "/api/settings/" . $requestModule . "/fields";
             $headers = [
@@ -196,9 +197,9 @@ class FreshSalesController
                         ];
                     }
                 }
-                wp_send_json_success($formattedResponse, 200);
+                Response::success($formattedResponse);
             } else {
-                wp_send_json_error(
+                Response::error(
                     'The token is invalid',
                     400
                 );

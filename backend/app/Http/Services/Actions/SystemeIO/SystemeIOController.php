@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\SystemeIO;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for SystemeIO integration
@@ -25,7 +26,7 @@ class SystemeIOController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -45,9 +46,9 @@ class SystemeIOController
         $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->items)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid API Key & API Secret', 400);
+            Response::error('Please enter valid API Key & API Secret', 400);
         }
     }
 
@@ -69,9 +70,9 @@ class SystemeIOController
                     ]
                 );
             }
-            wp_send_json_success($tags, 200);
+            Response::success($tags);
         } else {
-            wp_send_json_error('Tags fetching failed', 400);
+            Response::error('Tags fetching failed', 400);
         }
     }
 

@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\GiveWp;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class GiveWpController
 {
@@ -41,7 +42,7 @@ final class GiveWpController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('GiveWp is not installed or activated', 'bit-integrations'));
+            Response::error(__('GiveWp is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['A user makes donation via form', 'A user cancels a recurring donation via form', 'User continues recurring donation'];
@@ -53,21 +54,21 @@ final class GiveWpController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($give_action);
+        Response::success($give_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('GiveWp is not installed or activated', 'bit-integrations'));
+            Response::error(__('GiveWp is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         if ($data->id === '1') {
@@ -78,13 +79,13 @@ final class GiveWpController
         }
 
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -248,6 +249,6 @@ final class GiveWpController
     public static function all_donation_form()
     {
         $allDonationForm = self::donationForm();
-        wp_send_json_success($allDonationForm);
+        Response::success($allDonationForm);
     }
 }

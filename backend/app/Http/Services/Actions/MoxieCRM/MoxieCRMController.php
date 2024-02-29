@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\MoxieCRM;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for MoxieCRM integration
@@ -25,7 +26,7 @@ class MoxieCRMController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -38,16 +39,16 @@ class MoxieCRMController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->error)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            Response::error('Please enter valid API key', 400);
         }
     }
 
     // public function getCustomFields($fieldsRequestParams)
     // {
     //     if (empty($fieldsRequestParams->api_key)) {
-    //         wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+    //         Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
     //     }
 
     //     $apiKey      = $fieldsRequestParams->api_key;
@@ -70,16 +71,16 @@ class MoxieCRMController
     //                 ];
     //             }
     //         }
-    //         wp_send_json_success($customFields, 200);
+    //         Response::success($customFields);
     //     } else {
-    //         wp_send_json_error('Custom field fetching failed', 400);
+    //         Response::error('Custom field fetching failed', 400);
     //     }
     // }
 
     public function getAllOpportunities($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -97,16 +98,16 @@ class MoxieCRMController
                     'name' => $opportunity->name
                 ];
             }
-            wp_send_json_success($opportunities, 200);
+            Response::success($opportunities);
         } else {
-            wp_send_json_error('Opportunity fetching failed', 400);
+            Response::error('Opportunity fetching failed', 400);
         }
     }
 
     public function getAllClients($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
         $apiKey      = $fieldsRequestParams->api_key;
         $apiUrl     = $fieldsRequestParams->api_url;
@@ -126,9 +127,9 @@ class MoxieCRMController
                     'name' => $client->name
                 ];
             }
-            wp_send_json_success($clients, 200);
+            Response::success($clients);
         } else {
-            wp_send_json_error('Clients fetching failed', 400);
+            Response::error('Clients fetching failed', 400);
         }
     }
 
@@ -136,7 +137,7 @@ class MoxieCRMController
     public function getAllPipelineStages($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -155,16 +156,16 @@ class MoxieCRMController
                     'name' => $pipelineStage->label
                 ];
             }
-            wp_send_json_success($pipelineStages, 200);
+            Response::success($pipelineStages);
         } else {
-            wp_send_json_error('PipelineStages fetching failed', 400);
+            Response::error('PipelineStages fetching failed', 400);
         }
     }
 
     public function getAllCRMPeoples($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -184,16 +185,16 @@ class MoxieCRMController
                     'name' => $people->name
                 ];
             }
-            wp_send_json_success($peoples, 200);
+            Response::success($peoples);
         } else {
-            wp_send_json_error('Peoples fetching failed', 400);
+            Response::error('Peoples fetching failed', 400);
         }
     }
 
     public function getAllCRMPipelines($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -213,9 +214,9 @@ class MoxieCRMController
                     'name' => $pipeline->name
                 ];
             }
-            wp_send_json_success($pipelines, 200);
+            Response::success($pipelines);
         } else {
-            wp_send_json_error('Pipelines fetching failed', 400);
+            Response::error('Pipelines fetching failed', 400);
         }
     }
 
