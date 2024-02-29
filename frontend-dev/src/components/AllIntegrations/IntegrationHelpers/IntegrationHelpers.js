@@ -73,7 +73,6 @@ export const saveIntegConfig = async (
     flow.triggered_entity === "Divi" ||
     flow.triggered_entity === "Bricks" ||
     flow.triggered_entity === "Brizy" ||
-    flow.triggered_entity === "Breakdance" ||
     flow.triggered_entity === "CartFlow"
   ) {
     if (edit) {
@@ -150,15 +149,10 @@ export const saveIntegConfig = async (
   } else if (flow.triggered_entity === "ARMember") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = ARMemberStateIH(tmpConf, dataFlow);
-  } else if (
-    flow.triggered_entity === "ActionHook" ||
-    flow.triggered_entity === "Spectra" ||
-    flow.triggered_entity === "EssentialBlocks"
-  ) {
-    tmpConf["primaryKey"] = flow.triggerData.primaryKey;
+  } else if (flow?.triggerData?.primaryKey || flow?.flow_details?.primaryKey) {
+    tmpConf["primaryKey"] =
+      flow.triggerData.primaryKey ?? flow?.flow_details?.primaryKey;
   }
-  console.log("flow1", flow);
-  console.log("tmpConf1", tmpConf);
 
   const data = {
     name: confTmp.name,
@@ -223,7 +217,6 @@ export const saveActionConf = async ({
     flow.triggered_entity === "Divi" ||
     flow.triggered_entity === "Bricks" ||
     flow.triggered_entity === "Brizy" ||
-    flow.triggered_entity === "Breakdance" ||
     flow.triggered_entity === "CartFlow"
   ) {
     if (edit) {
@@ -291,12 +284,9 @@ export const saveActionConf = async ({
   } else if (flow.triggered_entity === "ARMember") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = ARMemberStateIH(tmpConf, dataFlow);
-  } else if (
-    flow.triggered_entity === "ActionHook" ||
-    flow.triggered_entity === "Spectra" ||
-    flow.triggered_entity === "EssentialBlocks"
-  ) {
-    tmpConf["primaryKey"] = flow.triggerData.primaryKey;
+  } else if (flow?.triggerData?.primaryKey || flow?.flow_details?.primaryKey) {
+    tmpConf["primaryKey"] =
+      flow.triggerData.primaryKey ?? flow?.flow_details?.primaryKey;
   }
 
   const data = {

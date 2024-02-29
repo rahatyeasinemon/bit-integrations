@@ -28,7 +28,6 @@ const CustomFormSubmission = () => {
   const setFields = useSetRecoilState($formFields)
   const [primaryKey, setPrimaryKey] = useState()
   const [primaryKeyModal, setPrimaryKeyModal] = useState(false)
-  const [selectedFields, setSelectedFields] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
   const [showResponse, setShowResponse] = useState(false)
@@ -38,14 +37,7 @@ const CustomFormSubmission = () => {
   const removeAction = newFlow?.triggerDetail?.fetch_remove?.action || ''
   const removeMethod = newFlow?.triggerDetail?.fetch_remove?.method || ''
 
-  console.log(newFlow)
-  console.log([fetchAction, fetchMethod, removeAction, removeMethod])
-
   const setTriggerData = () => {
-    if (!selectedFields.length) {
-      toast.error('Please Select fields')
-      return
-    }
     if (!primaryKey) {
       toast.error('Please Select a Primary Key')
       return
@@ -54,38 +46,13 @@ const CustomFormSubmission = () => {
     const tmpNewFlow = { ...newFlow }
     tmpNewFlow.triggerData = {
       primaryKey: primaryKey,
-      fields: selectedFields.map(field => ({ label: field, name: field }))
+      fields: tmpNewFlow.triggerDetail.data.map(field => ({ label: field.label, name: field.name }))
     }
-    tmpNewFlow['primaryKey'] = primaryKey
-    tmpNewFlow.triggered_entity_id = 'eb_form_submit_before_email'
-    setFields(selectedFields)
+
+    tmpNewFlow.triggered_entity_id = newFlow?.triggerDetail?.triggered_entity_id
+    setFields(tmpNewFlow.triggerDetail.data)
     setNewFlow(tmpNewFlow)
     setFlowStep(2)
-  }
-
-
-  const setSelectedFieldsData = (value = null, remove = false, index = null) => {
-    if (remove) {
-      index = index ? index : selectedFields.indexOf(value)
-
-      if (index !== -1) {
-        removeSelectedField(index)
-      }
-      return
-    }
-    addSelectedField(value)
-  }
-
-  const addSelectedField = value => {
-    setSelectedFields(prevFields => create(prevFields, (draftFields) => {
-      draftFields.push(value)
-    }))
-  }
-
-  const removeSelectedField = index => {
-    setSelectedFields(prevFields => create(prevFields, (draftFields) => {
-      draftFields.splice(index, 1)
-    }))
   }
 
   const handleFetch = () => {
@@ -97,20 +64,21 @@ const CustomFormSubmission = () => {
     }
 
     setIsLoading(true)
+    setShowResponse(false)
+    setPrimaryKey(undefined)
+    setNewFlow(prevFlow => create(prevFlow, draftFlow => {
+      delete draftFlow.triggerDetail.data
+    }))
     intervalRef.current = setInterval(() => {
       bitsFetch(null, fetchAction, null, fetchMethod).then((resp) => {
         if (resp.success) {
           clearInterval(intervalRef.current)
-          const tmpNewFlow = { ...newFlow }
-          console.log(resp)
-
-          tmpNewFlow.triggerDetail.tmp = resp.data?.formData
-          tmpNewFlow.triggerDetail.data = resp.data?.formData
-          setNewFlow(tmpNewFlow)
-          setPrimaryKey(resp.data?.primaryKey || {})
+          setNewFlow(prevFlow => create(prevFlow, draftFlow => {
+            draftFlow.triggerDetail.data = resp.data?.formData
+          }))
+          setPrimaryKey(resp.data?.primaryKey || undefined)
           setIsLoading(false)
           setShowResponse(true)
-          setSelectedFields([])
           bitsFetch({ reset: true }, removeAction, null, removeMethod)
         }
       })
@@ -124,7 +92,7 @@ const CustomFormSubmission = () => {
   const primaryKeySet = (val) => {
     setPrimaryKey(!val ? undefined : {
       key: val,
-      value: extractValueFromPath(newFlow.triggerDetail?.data, val)
+      value: newFlow.triggerDetail?.data?.find(item => item.name === val)?.value || null
     })
   }
 
@@ -143,8 +111,8 @@ const CustomFormSubmission = () => {
     }
   }, [])
 
-  const info = `<h4>Setup Essential Blocks</h4>
-            <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/action-hook-integrations" target="_blank" rel="noreferrer">${__('More Details on Documentation', 'bit-integrations')}</a>
+  const info = `<h4>Setup ${newFlow?.triggerDetail?.name}</h4>
+            <a className="btcd-link" href=${newFlow?.triggerDetail?.documentation_url} target="_blank" rel="noreferrer">${__('More Details on Documentation', 'bit-integrations')}</a>
             <ul>
                 <li>Click on the <b>Fetch</b> button then Submit your <b>Form</b> to get the form data</li>
             </ul>`
@@ -152,15 +120,18 @@ const CustomFormSubmission = () => {
   return (
     <div className="trigger-custom-width">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="flx flx-between">
+      <div className={`flx mt-2 flx-${newFlow.triggerDetail?.data ? 'between' : 'around'}`}>
         <button
           onClick={handleFetch}
           className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'green'}`}
           type="button"
         >
-          {isLoading ? __('Stop', 'bit-integrations') : newFlow.triggerDetail?.data
-            ? __('Fetched ✔', 'bit-integrations')
-            : __('Fetch', 'bit-integrations')}
+          {isLoading
+            ? __('Stop', 'bit-integrations')
+            : newFlow.triggerDetail?.data
+              ? __('Fetched ✔', 'bit-integrations')
+              : __('Fetch', 'bit-integrations')
+          }
           {isLoading && (
             <LoaderSm size="20" clr="#022217" className="ml-2" />
           )}
@@ -207,12 +178,6 @@ const CustomFormSubmission = () => {
 
       {
         newFlow.triggerDetail?.data && showResponse && (
-          // <>
-          //   <div className="mt-3">
-          //     <b>{__('Select Fields:', 'bit-integrations')}</b>
-          //   </div>
-          //   <TreeViewer data={newFlow?.triggerDetail?.data} onChange={setSelectedFieldsData} />
-          // </>
           <WebhookDataTable
             data={newFlow?.triggerDetail?.data}
             flow={newFlow}
@@ -248,13 +213,13 @@ const CustomFormSubmission = () => {
             onClick={setTriggerData}
             className="btn btcd-btn-lg green sh-sm flx"
             type="button"
-            disabled={!selectedFields.length || !primaryKey}
+            disabled={!newFlow.triggerDetail.data.length || !primaryKey}
           >
             Set Action
           </button>
         </div>
       }
-      <div className='flx flx-center'>
+      <div className="flx flx-center">
         <Note note={info} />
       </div>
     </div >
