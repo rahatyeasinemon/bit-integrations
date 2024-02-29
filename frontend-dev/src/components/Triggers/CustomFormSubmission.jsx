@@ -20,6 +20,7 @@ import EyeOffIcn from '../Utilities/EyeOffIcn'
 import SnackMsg from '../Utilities/SnackMsg'
 import TreeViewer from '../Utilities/treeViewer/TreeViewer'
 import Note from '../Utilities/Note'
+import WebhookDataTable from '../Utilities/WebhookDataTable'
 
 const CustomFormSubmission = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
@@ -101,10 +102,12 @@ const CustomFormSubmission = () => {
         if (resp.success) {
           clearInterval(intervalRef.current)
           const tmpNewFlow = { ...newFlow }
+          console.log(resp)
 
-          tmpNewFlow.triggerDetail.tmp = resp.data.essentialBlocks
-          tmpNewFlow.triggerDetail.data = resp.data.essentialBlocks
+          tmpNewFlow.triggerDetail.tmp = resp.data?.formData
+          tmpNewFlow.triggerDetail.data = resp.data?.formData
           setNewFlow(tmpNewFlow)
+          setPrimaryKey(resp.data?.primaryKey || {})
           setIsLoading(false)
           setShowResponse(true)
           setSelectedFields([])
@@ -149,34 +152,7 @@ const CustomFormSubmission = () => {
   return (
     <div className="trigger-custom-width">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      {newFlow.triggerDetail?.data &&
-        <>
-          <div className="my-3">
-            <b>{__('Selected Fields:', 'bit-integrations')}</b>
-          </div>
-          <div className="bg-white rounded border my-1 table-webhook-div p-2" style={{ minHeight: '40px', maxHeight: '14rem' }}>
-            {selectedFields.map((field, index) => <div key={index} style={{ position: "relative" }}>
-              <input key={index} className="btcd-paper-inp w-100 m-1" type='text' onChange={e => setSelectedFieldsData(e.target.value, index)} value={field.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')} disabled={isLoading} />
-              <button
-                className="btn btcd-btn-lg sh-sm"
-                onClick={() => removeSelectedField(index)}
-                style={
-                  {
-                    position: 'absolute',
-                    top: -5,
-                    right: -5,
-                    color: '#ff4646',
-                    padding: '2px'
-                  }
-                }
-              >
-                <CloseIcn size={12} />
-              </button>
-            </div>)}
-          </div>
-        </>
-      }
-      <div className="flx flx-around">
+      <div className="flx flx-between">
         <button
           onClick={handleFetch}
           className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'green'}`}
@@ -189,12 +165,12 @@ const CustomFormSubmission = () => {
             <LoaderSm size="20" clr="#022217" className="ml-2" />
           )}
         </button>
-        {selectedFields.length > 0 &&
+        {newFlow.triggerDetail?.data?.length > 0 &&
           <button
             onClick={() => setPrimaryKeyModal(true)}
-            className={`btn btcd-btn-lg sh-sm flx ${selectedFields.length && 'green'}`}
+            className={`btn btcd-btn-lg sh-sm flx ${newFlow.triggerDetail?.data?.length > 0 && 'green'}`}
             type="button"
-            disabled={!selectedFields.length}
+            disabled={!newFlow.triggerDetail?.data?.length > 0}
           >
             {primaryKey
               ? __('Unique Key ✔', 'bit-integrations')
@@ -219,7 +195,7 @@ const CustomFormSubmission = () => {
         </div>
         <div className="flx flx-between mt-2">
           <MultiSelect
-            options={selectedFields.map(field => ({ label: field, value: field }))}
+            options={newFlow.triggerDetail?.data?.map(field => ({ label: field?.label, value: field?.name }))}
             className="msl-wrp-options"
             defaultValue={primaryKey?.key}
             onChange={primaryKeySet}
@@ -231,12 +207,17 @@ const CustomFormSubmission = () => {
 
       {
         newFlow.triggerDetail?.data && showResponse && (
-          <>
-            <div className="mt-3">
-              <b>{__('Select Fields:', 'bit-integrations')}</b>
-            </div>
-            <TreeViewer data={newFlow?.triggerDetail?.data} onChange={setSelectedFieldsData} />
-          </>
+          // <>
+          //   <div className="mt-3">
+          //     <b>{__('Select Fields:', 'bit-integrations')}</b>
+          //   </div>
+          //   <TreeViewer data={newFlow?.triggerDetail?.data} onChange={setSelectedFieldsData} />
+          // </>
+          <WebhookDataTable
+            data={newFlow?.triggerDetail?.data}
+            flow={newFlow}
+            setFlow={setNewFlow}
+          />
         )
       }
       {
