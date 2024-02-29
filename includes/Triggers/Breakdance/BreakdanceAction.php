@@ -36,7 +36,15 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
             $formData       = BreakdanceHelper::setFields($extra, $form);
 
             if (get_option('btcbi_breakdance_test') !== false) {
-                update_option('btcbi_breakdance_test', $formData);
+                $testData = [
+                    'formData'      => $formData,
+                    'primaryKey'    => [
+                        'key'   => 'formId',
+                        'value' => $extra['formId']
+                    ]
+                ];
+
+                update_option('btcbi_breakdance_test', $testData);
             }
 
 

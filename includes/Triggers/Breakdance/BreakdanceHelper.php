@@ -9,8 +9,8 @@ class BreakdanceHelper
     public static function setFields($data, $form)
     {
         $allFields = [
-            ['name' => self::findKeyPath($data, 'formId'), 'type' => 'text', 'label' => "Form Id ({$data['formId']})"],
-            ['name' => self::findKeyPath($data, 'postId'), 'type' => 'text', 'label' => "Post Id ({$data['postId']})"]
+            ['name' => self::findKeyPath($data, 'formId'), 'type' => 'text', 'label' => "Form Id ({$data['formId']})", 'value' => $data['formId']],
+            ['name' => self::findKeyPath($data, 'postId'), 'type' => 'text', 'label' => "Post Id ({$data['postId']})", 'value' => $data['postId']]
         ];
 
         $formFields = [];
@@ -24,7 +24,8 @@ class BreakdanceHelper
                 $allFields[] = [
                     'name'  => self::findKeyPath($data, $key),
                     'type'  => $formFields[$formKey]['type'],
-                    'label' => $formFields[$formKey]['label'] . ' (' . $value . ')'
+                    'label' => $formFields[$formKey]['label'] . ' (' . $value . ')',
+                    'value' => $value
                 ];
             }
         }

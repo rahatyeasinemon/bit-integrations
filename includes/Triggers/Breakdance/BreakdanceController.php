@@ -18,30 +18,23 @@ final class BreakdanceController
     {
         $plugin_path = self::pluginActive('get_name');
         return [
-            'name' => 'Breakdance',
-            'title' => 'Breakdance is the platform web creators choose to build professional WordPress websites, grow their skills, and build their business. Start for free today!',
-            'slug' => $plugin_path,
-            'pro' => $plugin_path,
-            'type' => 'custom_form_submission',
-            'is_active' => is_plugin_active($plugin_path),
-            'activation_url' => wp_nonce_url(self_admin_url('plugins.php?action=activate&amp;plugin=' . $plugin_path . '&amp;plugin_status=all&amp;paged=1&amp;s'), 'activate-plugin_' . $plugin_path),
-            'install_url' => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
-            // 'list' => [
-            //     'action' => 'breakdance/get',
-            //     'method' => 'get',
-            // ],
-            // 'fields' => [
-            //     'action' => 'breakdance/get/form',
-            //     'method' => 'post',
-            //     'data' => ['id']
-            // ],
-            'fetch' => [
-                'action' => 'breakdance/test',
-                'method' => 'post',
+            'name'                  => 'Breakdance',
+            'title'                 => 'Breakdance is the platform web creators choose to build professional WordPress websites, grow their skills, and build their business. Start for free today!',
+            'slug'                  => $plugin_path,
+            'pro'                   => $plugin_path,
+            'type'                  => 'custom_form_submission',
+            'is_active'             => is_plugin_active($plugin_path),
+            'activation_url'        => wp_nonce_url(self_admin_url('plugins.php?action=activate&amp;plugin=' . $plugin_path . '&amp;plugin_status=all&amp;paged=1&amp;s'), 'activate-plugin_' . $plugin_path),
+            'install_url'           => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
+            'documentation_url'     => 'https://bitapps.pro/docs/bit-integrations/trigger/breakdance-integrations',
+            'triggered_entity_id'   => 'BreakdanceHook',
+            'fetch'         => [
+                'action'    => 'breakdance/test',
+                'method'    => 'post',
             ],
-            'fetch_remove' => [
-                'action' => 'breakdance/test/remove',
-                'method' => 'post',
+            'fetch_remove'  => [
+                'action'    => 'breakdance/test/remove',
+                'method'    => 'post',
             ]
         ];
     }
@@ -72,7 +65,8 @@ final class BreakdanceController
         if (!$testData || empty($testData)) {
             wp_send_json_error(new WP_Error('breakdance_test', __('Breakdance data is empty', 'bit-integrations')));
         }
-        wp_send_json_success(['breakdance' => $testData]);
+
+        wp_send_json_success($testData);
     }
 
     public function removeTestData($data)
@@ -86,6 +80,7 @@ final class BreakdanceController
         if (!$testData) {
             wp_send_json_error(new WP_Error('breakdance_test', __('Failed to remove test data', 'bit-integrations')));
         }
+
         wp_send_json_success(__('breakdance test data removed successfully', 'bit-integrations'));
     }
 
