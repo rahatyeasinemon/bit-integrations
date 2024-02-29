@@ -31,6 +31,10 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
         public function run($form, $settings, $extra)
         {
             error_log(print_r(['path' => BreakdanceHelper::setFields($extra, $form), 'name' => 'Action', 'form' => $form, 'settings' => $settings, 'extra' => $extra], true));
+            if (get_option('btcbi_breakdance_test') !== false) {
+                $formData = BreakdanceHelper::setFields($extra, $form);
+                update_option('btcbi_breakdance_test', $formData);
+            }
 
             $reOrganizeId = "{$extra['formId']}-{$extra['postId']}";
             $flows = Flow::exists('Breakdance', $reOrganizeId);

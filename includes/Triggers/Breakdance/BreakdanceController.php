@@ -64,10 +64,10 @@ final class BreakdanceController
 
     public function getTestData()
     {
-        $testData = get_option('breakdance_test');
+        $testData = get_option('btcbi_breakdance_test');
 
         if ($testData === false) {
-            update_option('breakdance_test', []);
+            update_option('btcbi_breakdance_test', []);
         }
         if (!$testData || empty($testData)) {
             wp_send_json_error(new WP_Error('breakdance_test', __('Breakdance data is empty', 'bit-integrations')));
@@ -78,9 +78,9 @@ final class BreakdanceController
     public function removeTestData($data)
     {
         if (is_object($data) && property_exists($data, 'reset') && $data->reset) {
-            $testData = update_option('breakdance_test', []);
+            $testData = update_option('btcbi_breakdance_test', []);
         } else {
-            $testData = delete_option('breakdance_test');
+            $testData = delete_option('btcbi_breakdance_test');
         }
 
         if (!$testData) {
