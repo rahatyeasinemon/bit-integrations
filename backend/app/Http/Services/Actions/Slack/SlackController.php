@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Slack;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for slack integration
@@ -28,7 +29,7 @@ class SlackController
         if (
             empty($tokenRequestParams->accessToken)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -46,13 +47,13 @@ class SlackController
         $apiResponse = Http::request($apiEndpoint, 'Post', null, $header);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     public function execute($integrationData, $fieldValues)

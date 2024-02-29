@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Log;
 
 use BitApps\BTCBI\Model\LogModel;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class LogHandler
 {
@@ -14,12 +15,12 @@ final class LogHandler
     public function get($data)
     {
         if (!isset($data->id)) {
-            wp_send_json_error('Integration Id cann\'t be empty');
+            Response::error('Integration Id cann\'t be empty');
         }
         $logModel = new LogModel();
         $countResult = $logModel->count(['flow_id' => $data->id]);
         if (is_wp_error($countResult)) {
-            wp_send_json_success(
+            Response::success(
                 [
                     'count' => 0,
                     'data' => [],
@@ -28,7 +29,7 @@ final class LogHandler
         }
         $count = $countResult[0]->count;
         if ($count < 1) {
-            wp_send_json_success(
+            Response::success(
                 [
                     'count' => 0,
                     'data' => [],
@@ -49,14 +50,14 @@ final class LogHandler
 
         $result = $logModel->get('*', ['flow_id' => $data->id], $limit, $offset, 'id', 'desc');
         if (is_wp_error($result)) {
-            wp_send_json_success(
+            Response::success(
                 [
                     'count' => 0,
                     'data' => [],
                 ]
             );
         }
-        wp_send_json_success(
+        Response::success(
             [
                 'count' => intval($count),
                 'data' => $result,
@@ -81,13 +82,13 @@ final class LogHandler
     public static function deleteLog($data)
     {
         if (empty($data->id) && empty($data->flow_id)) {
-            wp_send_json_error('Integration Id or Log Id required');
+            Response::error('Integration Id or Log Id required');
         }
         $deleteStatus = self::delete($data);
         if (is_wp_error($deleteStatus)) {
-            wp_send_json_error($deleteStatus->get_error_code());
+            Response::error($deleteStatus->get_error_code());
         }
-        wp_send_json_success(__('Log deleted successfully', 'bit-integrations'));
+        Response::success(__('Log deleted successfully', 'bit-integrations'));
     }
 
     public static function delete($data)

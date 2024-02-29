@@ -6,6 +6,7 @@ use BitApps\BTCBI\Util\Common;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class CustomActionController
 {
@@ -16,20 +17,20 @@ class CustomActionController
         $filePath = stream_get_meta_data($temp_file)['uri'];
         if (function_exists('exec') === false) {
             fclose($temp_file);
-            wp_send_json_success('Exec function not found in your server, So we can\'t validate your function. But you can run your custom action.');
+            Response::success('Exec function not found in your server, So we can\'t validate your function. But you can run your custom action.');
         }
         $response = exec(escapeshellcmd("php -l $filePath"), $output, $return);
         if (empty($response)) {
             fclose($temp_file);
-            wp_send_json_success('Exec function not found in your server, So we can\'t validate your function. But you can run your custom action.');
+            Response::success('Exec function not found in your server, So we can\'t validate your function. But you can run your custom action.');
         }
 
         $msg = str_replace($filePath, 'your function', $response);
         fclose($temp_file);
         if (str_contains($response, 'No syntax errors detected')) {
-            wp_send_json_success("Congrats, $msg");
+            Response::success("Congrats, $msg");
         }
-        wp_send_json_error($msg);
+        Response::error($msg);
     }
 
     public function execute($integrationData, $fieldValues)

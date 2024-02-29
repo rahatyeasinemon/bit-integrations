@@ -2,6 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\MasterStudyLms;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 class MasterStudyLmsController
@@ -20,9 +21,9 @@ class MasterStudyLmsController
     public static function authorizeMasterStudyLms()
     {
         if (self::pluginActive()) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
-        wp_send_json_error(__('MasterStudyLms must be activated!', 'bit-integrations'));
+        Response::error(__('MasterStudyLms must be activated!', 'bit-integrations'));
     }
 
     public static function getAllCourse()
@@ -40,9 +41,9 @@ class MasterStudyLmsController
                     'post_title' => $course->post_title,
                 ];
             }
-            wp_send_json_success($courseList, 200);
+            Response::success($courseList);
         }
-        wp_send_json_error(__('MasterStudyLms must be activated!', 'bit-integrations'));
+        Response::error(__('MasterStudyLms must be activated!', 'bit-integrations'));
     }
 
     public static function getAllLesson($queryPrarms)
@@ -50,9 +51,9 @@ class MasterStudyLmsController
         $courseId = $queryPrarms->courseId;
         if (self::pluginActive()) {
             $allLesson = MasterStudyLmsHelper::getLessonByCourse($courseId);
-            wp_send_json_success($allLesson, 200);
+            Response::success($allLesson);
         }
-        wp_send_json_error(__('MasterStudyLms must be activated!', 'bit-integrations'));
+        Response::error(__('MasterStudyLms must be activated!', 'bit-integrations'));
     }
 
     public static function getAllQuizByCourse($queryPrarms)
@@ -60,9 +61,9 @@ class MasterStudyLmsController
         $courseId = $queryPrarms->courseId;
         if (self::pluginActive()) {
             $allQuiz = MasterStudyLmsHelper::getQuizByCourse($courseId);
-            wp_send_json_success($allQuiz, 200);
+            Response::success($allQuiz);
         }
-        wp_send_json_error(__('MasterStudyLms must be activated!', 'bit-integrations'));
+        Response::error(__('MasterStudyLms must be activated!', 'bit-integrations'));
     }
 
     public function execute($integrationData, $fieldValues)

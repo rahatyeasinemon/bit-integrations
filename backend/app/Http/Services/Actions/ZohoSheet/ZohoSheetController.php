@@ -6,6 +6,7 @@ use WP_Error;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\ZohoSheet\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class ZohoSheetController
 {
@@ -22,7 +23,7 @@ class ZohoSheetController
             empty($requestParams->{'accounts-server'}) || empty($requestParams->dataCenter) || empty($requestParams->clientId)
             || empty($requestParams->clientSecret) || empty($requestParams->redirectURI) || empty($requestParams->code)
         ) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint   = \urldecode($requestParams->{'accounts-server'}) . '/oauth/v2/token';
@@ -37,11 +38,11 @@ class ZohoSheetController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
+            Response::error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
         }
 
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     public static function getAllWorkbooks($requestParams)
@@ -50,7 +51,7 @@ class ZohoSheetController
             empty($requestParams->tokenDetails) || empty($requestParams->clientId) || empty($requestParams->clientSecret)
             || empty($requestParams->dataCenter)
         ) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret, $requestParams->dataCenter);
@@ -68,9 +69,9 @@ class ZohoSheetController
                     'name' => $workbook->workbook_name
                 ];
             }
-            wp_send_json_success($workbooks, 200);
+            Response::success($workbooks);
         } else {
-            wp_send_json_error('Workbooks fetching failed', 400);
+            Response::error('Workbooks fetching failed', 400);
         }
     }
 
@@ -80,7 +81,7 @@ class ZohoSheetController
             empty($requestParams->tokenDetails) || empty($requestParams->clientId) || empty($requestParams->clientSecret)
             || empty($requestParams->dataCenter) || empty($requestParams->workbook)
         ) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret, $requestParams->dataCenter);
@@ -98,9 +99,9 @@ class ZohoSheetController
                     'name' => $worksheet->worksheet_name
                 ];
             }
-            wp_send_json_success($worksheets, 200);
+            Response::success($worksheets);
         } else {
-            wp_send_json_error('Workbooks fetching failed', 400);
+            Response::error('Workbooks fetching failed', 400);
         }
     }
 
@@ -111,7 +112,7 @@ class ZohoSheetController
             || empty($requestParams->dataCenter) || empty($requestParams->workbook) || empty($requestParams->worksheet)
             || empty($requestParams->headerRow)
         ) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret, $requestParams->dataCenter);
@@ -132,12 +133,12 @@ class ZohoSheetController
                         'required' => false
                     ];
                 }
-                wp_send_json_success($sheetHeaders, 200);
+                Response::success($sheetHeaders);
             } else {
-                wp_send_json_error('No header found', 400);
+                Response::error('No header found', 400);
             }
         } else {
-            wp_send_json_error('Header fetching failed', 400);
+            Response::error('Header fetching failed', 400);
         }
     }
 

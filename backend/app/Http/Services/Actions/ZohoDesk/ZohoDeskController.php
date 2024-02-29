@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ZohoDesk;
 
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 /**
@@ -36,7 +37,7 @@ class ZohoDeskController
                 || empty($requestsParams->redirectURI)
                 || empty($requestsParams->code)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -56,13 +57,13 @@ class ZohoDeskController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     public static function refreshOrganizations($queryParams)
@@ -72,7 +73,7 @@ class ZohoDeskController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -105,7 +106,7 @@ class ZohoDeskController
             uksort($allOrganizations, 'strnatcasecmp');
             $response['organizations'] = $allOrganizations;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($organizationsMetaResponse->data) ? 'Unknown' : $organizationsMetaResponse->error,
                 400
             );
@@ -113,9 +114,9 @@ class ZohoDeskController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
         // } else {
-        //     wp_send_json_error(
+        //     Response::error(
         //         __(
         //             'Token expired',
         //             'bit-integrations'
@@ -138,7 +139,7 @@ class ZohoDeskController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->orgId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -172,7 +173,7 @@ class ZohoDeskController
             uksort($allDepartments, 'strnatcasecmp');
             $response['departments'] = $allDepartments;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($departmentsMetaResponse->data) ? 'Unknown' : $departmentsMetaResponse->error,
                 400
             );
@@ -180,7 +181,7 @@ class ZohoDeskController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -198,7 +199,7 @@ class ZohoDeskController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->orgId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -253,7 +254,7 @@ class ZohoDeskController
             uksort($response['fields'], 'strnatcasecmp');
             usort($response['required'], 'strnatcasecmp');
         } else {
-            wp_send_json_error(
+            Response::error(
                 $fieldsMetaResponse->status === 'error' ? $fieldsMetaResponse->message : 'Unknown',
                 400
             );
@@ -262,7 +263,7 @@ class ZohoDeskController
             $response['queryModule'] = $queryParams->module;
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -280,7 +281,7 @@ class ZohoDeskController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->orgId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -311,7 +312,7 @@ class ZohoDeskController
                 }
             }
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($ownersMetaResponse->data) ? 'Unknown' : $ownersMetaResponse->error,
                 400
             );
@@ -319,7 +320,7 @@ class ZohoDeskController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -338,7 +339,7 @@ class ZohoDeskController
                 || empty($queryParams->orgId)
                 || empty($queryParams->departmentId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -370,7 +371,7 @@ class ZohoDeskController
                 }
             }
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($productsMetaResponse->data) ? 'Unknown' : $productsMetaResponse->error,
                 400
             );
@@ -378,7 +379,7 @@ class ZohoDeskController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**

@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\DirectIq;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\DirectIq\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -38,7 +39,7 @@ class DirectIqController
     {
         if (empty($requestsParams->client_id) || empty($requestsParams->client_secret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -70,13 +71,13 @@ class DirectIqController
         curl_close($curl);
 
         if ($statusCode !== 200) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse) ? 'Unknown' : $apiResponse,
                 400
             );
         }
 
-        wp_send_json_success(true);
+        Response::success(true);
     }
 
     /**
@@ -90,7 +91,7 @@ class DirectIqController
     {
         if (empty($queryParams->client_id) || empty($queryParams->client_secret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -116,7 +117,7 @@ class DirectIqController
             }
 
             $response['directIqLists'] = $lists;
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 
@@ -131,7 +132,7 @@ class DirectIqController
     {
         if (empty($queryParams->client_id) || empty($queryParams->client_secret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -163,7 +164,7 @@ class DirectIqController
 
             $response['directIqField'] = $fields;
 
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 

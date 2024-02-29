@@ -6,6 +6,7 @@ use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 use BitApps\BTCBI\Http\Services\Actions\Getgist\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class GetgistController
 {
@@ -14,7 +15,7 @@ class GetgistController
     public static function getgistAuthorize($requestsParams)
     {
         if (empty($requestsParams->api_key)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -28,13 +29,13 @@ class GetgistController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || $apiResponse->code === 'authentication_failed') {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->code) ? 'Unknown' : $apiResponse->message,
                 400
             );
         }
 
-        wp_send_json_success(true);
+        Response::success(true);
     }
 
     public function execute($integrationData, $fieldValues)

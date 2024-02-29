@@ -11,6 +11,7 @@ use BitApps\BTCBI\Util\IpTool;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 use BitApps\BTCBI\Http\Services\Actions\Encharge\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Encharge integration
@@ -36,7 +37,7 @@ class EnchargeController
     public static function enChargeAuthorize($requestsParams)
     {
         if (empty($requestsParams->api_key)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -51,13 +52,13 @@ class EnchargeController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || isset($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->code) ? 'Unknown' : $apiResponse->error->message,
                 400
             );
         }
 
-        wp_send_json_success(true);
+        Response::success(true);
     }
     /**
      * Process ajax request for refresh crm modules
@@ -69,7 +70,7 @@ class EnchargeController
     public static function enchargeHeaders($queryParams)
     {
         if (empty($queryParams->api_key)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -84,7 +85,7 @@ class EnchargeController
         $fields = [];
         if (!is_wp_error($enChargeResponse)) {
             $allFields = $enChargeResponse->items;
-            // wp_send_json_success($allFields);
+            // Response::success($allFields);
             foreach ($allFields as $field) {
                 $required = $field->name === 'email' ? true : false;
                 $fields[$field->name] = (object) [
@@ -94,7 +95,7 @@ class EnchargeController
                 ];
             }
             $response['enChargeFields'] = $fields;
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 

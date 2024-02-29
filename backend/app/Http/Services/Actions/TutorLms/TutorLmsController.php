@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\TutorLms;
 
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Tutor LMS integration
@@ -25,16 +26,16 @@ class TutorLmsController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (is_plugin_active('tutor/tutor.php')) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
 
-        wp_send_json_error(__('Tutor LMS must be activated!', 'bit-integrations'));
+        Response::error(__('Tutor LMS must be activated!', 'bit-integrations'));
     }
 
     public static function getAllLesson()
     {
         if (!function_exists('tutor')) {
-            wp_send_json_error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
+            Response::error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
         }
 
         $lessons = [];
@@ -51,14 +52,14 @@ class TutorLmsController
                 'lessonTitle' => $val->post_title,
             ];
         }
-        wp_send_json_success($lessons, 200);
+        Response::success($lessons);
     }
 
     public static function getAllCourse($queryParams)
     {
         $action = $queryParams->type;
         if (!function_exists('tutor')) {
-            wp_send_json_error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
+            Response::error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
         }
 
 
@@ -81,7 +82,7 @@ class TutorLmsController
                 'courseTitle' => $val->post_title,
             ];
         }
-        wp_send_json_success($courses, 200);
+        Response::success($courses);
     }
 
     public static function enrollCourse($selectedCourse, $selectedAllCourse, $type)

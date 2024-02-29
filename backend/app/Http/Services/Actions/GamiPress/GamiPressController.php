@@ -6,6 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\GamiPress;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 /**
@@ -33,9 +34,9 @@ class GamiPressController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (self::pluginActive()) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
-        wp_send_json_error(__('GamiPress must be activated!', 'bit-integrations'));
+        Response::error(__('GamiPress must be activated!', 'bit-integrations'));
     }
 
     public static function getCourses()
@@ -80,7 +81,7 @@ class GamiPressController
             $wpdb->prepare("SELECT ID, post_name, post_title, post_type FROM wp_posts where post_type like %s AND post_status = 'publish'", $selectRankType)
         );
 
-        wp_send_json_success($ranks);
+        Response::success($ranks);
     }
 
     public static function fetchAllAchievementType()
@@ -100,7 +101,7 @@ class GamiPressController
             $wpdb->prepare("SELECT ID, post_name, post_title, post_type FROM wp_posts where post_type like %s AND post_status = 'publish'", $selectAchievementType)
         );
         array_unshift($awards, ['ID' => 'Any', 'post_name' => 'any_achievement', 'post_title' => 'Any Achievement']);
-        wp_send_json_success($awards);
+        Response::success($awards);
     }
 
     public static function fetchAllPointType()
@@ -109,7 +110,7 @@ class GamiPressController
         $points = $wpdb->get_results(
             $wpdb->prepare("SELECT ID, post_name, post_title, post_type FROM $wpdb->posts WHERE post_type LIKE 'points-type' AND post_status = 'publish' ORDER BY post_title ASC")
         );
-        wp_send_json_success($points);
+        Response::success($points);
     }
 
     public function execute($integrationData, $fieldValues)

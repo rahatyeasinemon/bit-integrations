@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\BitForm;
 use BitApps\BTCBI\Util\Common;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -46,7 +47,7 @@ class RecordApiHelper
             || empty($api_key)
             || empty($formId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

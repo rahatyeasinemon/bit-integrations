@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Notion;
 
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Notion\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 class NotionController
@@ -13,7 +14,7 @@ class NotionController
     public function authorization($requestParams)
     {
         if (empty($requestParams->clientId) || empty($requestParams->clientSecret) || empty($requestParams->code) || empty($requestParams->redirectURI)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $body = [
@@ -31,18 +32,18 @@ class NotionController
 
         $apiResponse = Http::request($apiEndpoint, 'Post', json_encode($body), $header);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
+            Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
         $apiResponse->generates_on = \time();
 
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     public function getAllDatabaseLists($requestParams)
     {
 
         if (empty($requestParams->accessToken)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -57,7 +58,7 @@ class NotionController
         ];
         $response = Http::request($apiEndpoint, 'Post', null, $headers);
         if ($response->Error !== null) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -65,14 +66,14 @@ class NotionController
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function getFieldsProperties($requestParams)
     {
 
         if (empty($requestParams->accessToken)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -87,7 +88,7 @@ class NotionController
         ];
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if ($response->Error !== null) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -95,7 +96,7 @@ class NotionController
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

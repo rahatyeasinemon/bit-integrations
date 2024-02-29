@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\CapsuleCRM;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for CapsuleCRM integration
@@ -25,7 +26,7 @@ class CapsuleCRMController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -37,16 +38,16 @@ class CapsuleCRMController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->users)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            Response::error('Please enter valid API key', 400);
         }
     }
 
     public function getCustomFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -73,16 +74,16 @@ class CapsuleCRMController
                     'required' => $customField->important,
                 ];
             }
-            wp_send_json_success($customFields, 200);
+            Response::success($customFields);
         } else {
-            wp_send_json_error('Custom field fetching failed', 400);
+            Response::error('Custom field fetching failed', 400);
         }
     }
 
     public function getAllOpportunities($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -100,16 +101,16 @@ class CapsuleCRMController
                     'name' => $opportunity->name
                 ];
             }
-            wp_send_json_success($opportunities, 200);
+            Response::success($opportunities);
         } else {
-            wp_send_json_error('Opportunity fetching failed', 400);
+            Response::error('Opportunity fetching failed', 400);
         }
     }
 
     public function getAllOwners($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -127,16 +128,16 @@ class CapsuleCRMController
                     'name' => $owner->name
                 ];
             }
-            wp_send_json_success($owners, 200);
+            Response::success($owners);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllTeams($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -154,16 +155,16 @@ class CapsuleCRMController
                     'name' => $team->name
                 ];
             }
-            wp_send_json_success($teams, 200);
+            Response::success($teams);
         } else {
-            wp_send_json_error('Teams fetching failed', 400);
+            Response::error('Teams fetching failed', 400);
         }
     }
 
     public function getAllCurrencies($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -182,16 +183,16 @@ class CapsuleCRMController
                     'name' => $currency->code
                 ];
             }
-            wp_send_json_success($currencies, 200);
+            Response::success($currencies);
         } else {
-            wp_send_json_error('Currencies fetching failed', 400);
+            Response::error('Currencies fetching failed', 400);
         }
     }
 
     public function getAllCRMParties($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -217,16 +218,16 @@ class CapsuleCRMController
                     ];
                 }
             }
-            wp_send_json_success($parties, 200);
+            Response::success($parties);
         } else {
-            wp_send_json_error('Parties fetching failed', 400);
+            Response::error('Parties fetching failed', 400);
         }
     }
 
     public function getAllCRMMilestones($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -244,9 +245,9 @@ class CapsuleCRMController
                     'name' => $milestone->name
                 ];
             }
-            wp_send_json_success($milestones, 200);
+            Response::success($milestones);
         } else {
-            wp_send_json_error('Milestones fetching failed', 400);
+            Response::error('Milestones fetching failed', 400);
         }
     }
 

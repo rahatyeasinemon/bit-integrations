@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Keap;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Controllers\FlowController;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for keap integration
@@ -32,7 +33,7 @@ class KeapController
             || empty($queryParams->clientSecret)
             || empty($queryParams->tokenDetails)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -57,7 +58,7 @@ class KeapController
 
 
         if (isset($tagListApiResponse->error)) {
-            wp_send_json_error('Tags fetch failed', 400);
+            Response::error('Tags fetch failed', 400);
         } else {
             foreach ($tagListApiResponse->tags as $tag) {
                 $tags[] = [
@@ -65,12 +66,12 @@ class KeapController
                     'name' => $tag->name
                 ];
             }
-            wp_send_json_success($tags, 200);
+            Response::success($tags);
         }
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             static::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
 
@@ -89,7 +90,7 @@ class KeapController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -111,13 +112,13 @@ class KeapController
 
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     public function refreshAccessToken($requestsParams)
@@ -127,7 +128,7 @@ class KeapController
             || empty($requestsParams->clientSecret)
             || empty($requestsParams->tokenDetails)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

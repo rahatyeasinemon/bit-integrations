@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\CompanyHub;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for CompanyHub integration
@@ -25,7 +26,7 @@ class CompanyHubController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->sub_domain) || empty($fieldsRequestParams->api_key) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -45,9 +46,9 @@ class CompanyHubController
         $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->Success) && !$response->Success) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid Sub Domain & API Key', 400);
+            Response::error('Please enter valid Sub Domain & API Key', 400);
         }
     }
 
@@ -69,9 +70,9 @@ class CompanyHubController
                     ]
                 );
             }
-            wp_send_json_success($companies, 200);
+            Response::success($companies);
         } else {
-            wp_send_json_error('Companies fetching failed', 400);
+            Response::error('Companies fetching failed', 400);
         }
     }
 
@@ -93,9 +94,9 @@ class CompanyHubController
                     ]
                 );
             }
-            wp_send_json_success($contacts, 200);
+            Response::success($contacts);
         } else {
-            wp_send_json_error('Contacts fetching failed', 400);
+            Response::error('Contacts fetching failed', 400);
         }
     }
 

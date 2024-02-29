@@ -6,6 +6,7 @@ use WP_Error;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Actions\SendPulse\RecordApiHelper;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class SendPulseController
 {
@@ -19,7 +20,7 @@ class SendPulseController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->client_id) || empty($requestParams->client_secret)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $body = [
@@ -33,18 +34,18 @@ class SendPulseController
         $apiResponse = Http::request($apiEndpoint, 'Post', $body);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
+            Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
         $apiResponse->generates_on = \time();
 
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     public static function sendPulseHeaders($requestParams)
     {
         if (empty($requestParams->client_id) || empty($requestParams->client_secret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -83,14 +84,14 @@ class SendPulseController
 
             $response['sendPulseField'] = $fields;
 
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 
     public static function getAllList($requestParams)
     {
         if (empty($requestParams->tokenDetails) || empty($requestParams->client_id) || empty($requestParams->client_secret)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->client_id, $requestParams->client_secret);
@@ -109,9 +110,9 @@ class SendPulseController
         }
 
         if ((count($lists)) > 0) {
-            wp_send_json_success($lists, 200);
+            Response::success($lists);
         } else {
-            wp_send_json_error('List fetching failed', 400);
+            Response::error('List fetching failed', 400);
         }
     }
 

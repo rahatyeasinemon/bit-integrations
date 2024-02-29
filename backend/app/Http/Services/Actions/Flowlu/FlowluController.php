@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Flowlu;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Flowlu integration
@@ -31,7 +32,7 @@ class FlowluController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->company_name) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -44,9 +45,9 @@ class FlowluController
         $response           = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->error)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid Session Token or Link Name', 400);
+            Response::error('Please enter valid Session Token or Link Name', 400);
         }
     }
 
@@ -111,9 +112,9 @@ class FlowluController
                 }
             }
 
-            wp_send_json_success($fieldMap, 200);
+            Response::success($fieldMap);
         } else {
-            wp_send_json_error('Fields fetching failed', 400);
+            Response::error('Fields fetching failed', 400);
         }
     }
 
@@ -137,9 +138,9 @@ class FlowluController
                 );
             }
 
-            wp_send_json_success($accountCategories, 200);
+            Response::success($accountCategories);
         } else {
-            wp_send_json_error('Category fetching failed', 400);
+            Response::error('Category fetching failed', 400);
         }
     }
 
@@ -163,9 +164,9 @@ class FlowluController
                 );
             }
 
-            wp_send_json_success($industries, 200);
+            Response::success($industries);
         } else {
-            wp_send_json_error('Industry fetching failed', 400);
+            Response::error('Industry fetching failed', 400);
         }
     }
 
@@ -189,9 +190,9 @@ class FlowluController
                 );
             }
 
-            wp_send_json_success($pipelines, 200);
+            Response::success($pipelines);
         } else {
-            wp_send_json_error('Pipelines fetching failed', 400);
+            Response::error('Pipelines fetching failed', 400);
         }
     }
 
@@ -217,9 +218,9 @@ class FlowluController
                 }
             }
 
-            wp_send_json_success($stages, 200);
+            Response::success($stages);
         } else {
-            wp_send_json_error('Opportunity stages fetching failed', 400);
+            Response::error('Opportunity stages fetching failed', 400);
         }
     }
 
@@ -243,9 +244,9 @@ class FlowluController
                 );
             }
 
-            wp_send_json_success($sources, 200);
+            Response::success($sources);
         } else {
-            wp_send_json_error('Source fetching failed', 400);
+            Response::error('Source fetching failed', 400);
         }
     }
 
@@ -269,9 +270,9 @@ class FlowluController
                 );
             }
 
-            wp_send_json_success($customers, 200);
+            Response::success($customers);
         } else {
-            wp_send_json_error('Customer fetching failed', 400);
+            Response::error('Customer fetching failed', 400);
         }
     }
 
@@ -295,9 +296,9 @@ class FlowluController
                 );
             }
 
-            wp_send_json_success($managers, 200);
+            Response::success($managers);
         }
-        wp_send_json_error('Project Manager fetching failed', 400);
+        Response::error('Project Manager fetching failed', 400);
     }
 
     public function getAllProjectStage($fieldsRequestParams)
@@ -320,9 +321,9 @@ class FlowluController
                 );
             }
 
-            wp_send_json_success($stages, 200);
+            Response::success($stages);
         }
-        wp_send_json_error('Project Manager fetching failed', 400);
+        Response::error('Project Manager fetching failed', 400);
     }
 
     public function getAllPortfolio($fieldsRequestParams)
@@ -345,9 +346,9 @@ class FlowluController
                 );
             }
 
-            wp_send_json_success($portfolios, 200);
+            Response::success($portfolios);
         }
-        wp_send_json_error('Project Manager fetching failed', 400);
+        Response::error('Project Manager fetching failed', 400);
     }
 
     public function getAllProjectOpportunity($fieldsRequestParams)
@@ -370,9 +371,9 @@ class FlowluController
                 );
             }
 
-            wp_send_json_success($portfolios, 200);
+            Response::success($portfolios);
         }
-        wp_send_json_error('Project Manager fetching failed', 400);
+        Response::error('Project Manager fetching failed', 400);
     }
 
     public function execute($integrationData, $fieldValues)

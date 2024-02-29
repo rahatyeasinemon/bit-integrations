@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Acumbamail;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Trello integration
@@ -19,7 +20,7 @@ class AcumbamailController
     public function fetchAllLists($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -37,9 +38,9 @@ class AcumbamailController
         $response = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if ($response !== 'Unauthorized') {
-            wp_send_json_success($response, 200);
+            Response::success($response);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'The token is invalid',
                 400
             );
@@ -49,7 +50,7 @@ class AcumbamailController
     public function acumbamailAuthAndFetchSubscriberList($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -66,16 +67,16 @@ class AcumbamailController
         $response = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if ($response == 'Unauthorized' || $response == 'This endpoint is not available for non-paying customers' || $response == 'Your auth token has expired check /apidoc/ for the new one') {
-            wp_send_json_error($response, 400);
+            Response::error($response, 400);
         } else {
-            wp_send_json_success($response, 200);
+            Response::success($response);
         }
     }
 
     public function acumbamailRefreshFields($refreshFieldsRequestParams)
     {
         if (empty($refreshFieldsRequestParams->auth_token) || empty($refreshFieldsRequestParams->list_id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -103,9 +104,9 @@ class AcumbamailController
         }
 
         if ($response !== 'Unauthorized') {
-            wp_send_json_success($formattedResponse, 200);
+            Response::success($formattedResponse);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'The token is invalid',
                 400
             );

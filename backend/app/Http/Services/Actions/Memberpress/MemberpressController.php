@@ -2,6 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\Memberpress;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 use MeprOptions;
 
@@ -27,9 +28,9 @@ class MemberpressController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (self::pluginActive()) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
-        wp_send_json_error(__('Memberpress must be activated!', 'bit-integrations'));
+        Response::error(__('Memberpress must be activated!', 'bit-integrations'));
     }
 
     public function getAllMembership($label = null, $option_code = 'MPPRODUCT', $args = [])
@@ -61,15 +62,15 @@ class MemberpressController
                     'membershipTitle' => $post->post_title,
                 ];
             }
-            wp_send_json_success($allMembership, 200);
+            Response::success($allMembership);
         }
-        wp_send_json_error(__('Memberpress must be activated!', 'bit-integrations'));
+        Response::error(__('Memberpress must be activated!', 'bit-integrations'));
     }
 
     public static function allPaymentGateway()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Memberpress must be activated!', 'bit-integrations'));
+            Response::error(__('Memberpress must be activated!', 'bit-integrations'));
         }
         $mepr_options = MeprOptions::fetch();
 
@@ -91,7 +92,7 @@ class MemberpressController
             }
         }
         $finalGateways = array_merge($gateways, $initGateways);
-        wp_send_json_success($finalGateways, 200);
+        Response::success($finalGateways);
     }
 
     public function execute($integrationData, $fieldValues)

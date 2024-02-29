@@ -2,6 +2,8 @@
 
 namespace BitApps\BTCBI\Http\Controllers;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
+
 final class UserController
 {
     public function __construct()
@@ -13,7 +15,7 @@ final class UserController
     {
         $users = get_users(['fields' => ['display_name', 'ID']]);
 
-        wp_send_json_success($users);
+        Response::success($users);
     }
 
     public function getUserRoles()
@@ -26,6 +28,6 @@ final class UserController
             $roles[$key]['key'] = $index;
             $roles[$key]['name'] = $role;
         }
-        wp_send_json_success($roles, 200);
+        Response::success($roles);
     }
 }

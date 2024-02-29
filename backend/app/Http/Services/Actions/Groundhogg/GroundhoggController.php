@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Groundhogg;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Groundhogg integration
@@ -20,7 +21,7 @@ class GroundhoggController
             empty($requestParams->public_key) || empty($requestParams->token)
             || empty($requestParams->domainName)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -39,9 +40,9 @@ class GroundhoggController
 
         if ($apiResponse->status === 'success') {
             $apiResponse;
-            wp_send_json_success($apiResponse, 200);
+            Response::success($apiResponse);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'There is an error .',
                 400
             );
@@ -54,7 +55,7 @@ class GroundhoggController
             empty($requestParams->public_key) || empty($requestParams->token)
             || empty($requestParams->domainName)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -73,9 +74,9 @@ class GroundhoggController
 
         if ($apiResponse->status === 'success') {
             $apiResponse;
-            wp_send_json_success($apiResponse, 200);
+            Response::success($apiResponse);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'There is an error .',
                 400
             );

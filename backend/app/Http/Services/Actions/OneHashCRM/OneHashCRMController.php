@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\OneHashCRM;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for OneHashCRM integration
@@ -26,7 +27,7 @@ class OneHashCRMController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_secret) || empty($fieldsRequestParams->domain) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -50,9 +51,9 @@ class OneHashCRMController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->data)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid API Key & Secret or Access Api URL', 400);
+            Response::error('Please enter valid API Key & Secret or Access Api URL', 400);
         }
     }
 

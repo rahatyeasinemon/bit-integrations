@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\SendGrid;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for SendGrid integration
@@ -17,7 +18,7 @@ class SendGridController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->apiKey)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.sendgrid.com/v3/marketing/field_definitions';
@@ -36,16 +37,16 @@ class SendGridController
                     'required' => false
                 ];
             }
-            wp_send_json_success($customFields, 200);
+            Response::success($customFields);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            Response::error('Please enter valid API key', 400);
         }
     }
 
     public function getLists($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->apiKey)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.sendgrid.com/v3/marketing/lists';
@@ -64,9 +65,9 @@ class SendGridController
         }
 
         if (!empty($lists)) {
-            wp_send_json_success($lists, 200);
+            Response::success($lists);
         } else {
-            wp_send_json_error('Lists fetch failed', 400);
+            Response::error('Lists fetch failed', 400);
         }
     }
 

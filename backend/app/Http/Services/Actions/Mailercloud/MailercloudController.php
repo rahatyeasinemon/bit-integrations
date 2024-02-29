@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Mailercloud;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Mailercloud\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Mailercloud integration
@@ -21,7 +22,7 @@ class MailercloudController
     public function handleAuthorize($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -36,7 +37,7 @@ class MailercloudController
         ];
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if ($response->code === "invalid_api_key") {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -44,13 +45,13 @@ class MailercloudController
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function getAllLists($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -70,7 +71,7 @@ class MailercloudController
         $response = Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
 
         if ($response->code === "invalid_api_key") {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -79,13 +80,13 @@ class MailercloudController
             );
         }
 
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function getAllFields($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -105,7 +106,7 @@ class MailercloudController
         $response = Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
 
         if ($response->code === "invalid_api_key") {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -131,7 +132,7 @@ class MailercloudController
             }
         }
 
-        wp_send_json_success($fields, 200);
+        Response::success($fields);
     }
 
 

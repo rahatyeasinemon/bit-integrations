@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Gravitec;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Gravitec integration
@@ -17,7 +18,7 @@ class GravitecController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->site_url) || empty($fieldsRequestParams->app_key) || empty($fieldsRequestParams->app_secret)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $headers = [
@@ -38,9 +39,9 @@ class GravitecController
         $response     = Http::request($apiEndpoint, 'Post', json_encode($data), $headers);
 
         if (isset($response->id)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid Site Url, App Key & App Secret', 400);
+            Response::error('Please enter valid Site Url, App Key & App Secret', 400);
         }
     }
 

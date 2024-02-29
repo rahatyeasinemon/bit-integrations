@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ZagoMail;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\ZagoMail\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -38,7 +39,7 @@ class ZagoMailController
     {
         if (empty($requestsParams->api_public_key)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -58,13 +59,13 @@ class ZagoMailController
         $apiResponse = Http::request($apiEndpoint, 'Post', json_encode($body), $header);
 
         if ($apiResponse->status == 'error' || $apiResponse->status !== 'success') {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse) ? 'Unknown' : $apiResponse,
                 400
             );
         }
 
-        wp_send_json_success(true);
+        Response::success(true);
     }
 
 
@@ -79,7 +80,7 @@ class ZagoMailController
     {
         if (empty($queryParams->api_public_key)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -110,7 +111,7 @@ class ZagoMailController
                 ];
             }
             $response['zagoMailLists'] = $lists;
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 
@@ -125,7 +126,7 @@ class ZagoMailController
     {
         if (empty($queryParams->api_public_key)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -155,7 +156,7 @@ class ZagoMailController
                 ];
             }
             $response['zagoMailTags'] = $tags;
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 
@@ -170,7 +171,7 @@ class ZagoMailController
     {
         if (empty($queryParams->api_public_key)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -202,7 +203,7 @@ class ZagoMailController
             }
 
             $response['zagoMailField'] = $fields;
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 

@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\MailPoet;
 
 use WP_Error;
 use BitApps\BTCBI\Http\Services\Actions\MailPoet\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -27,7 +28,7 @@ class MailPoetController
     public static function isExists()
     {
         if (!class_exists(\MailPoet\API\API::class)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'MailPoet is not activate or not installed',
                     'bit-integrations'
@@ -44,7 +45,7 @@ class MailPoetController
     public static function mailPoetAuthorize()
     {
         self::isExists();
-        wp_send_json_success(true);
+        Response::success(true);
     }
     /**
      * Process ajax request for refresh crm modules
@@ -67,7 +68,7 @@ class MailPoetController
             ];
         }
         $response['newsletterList'] = $allList;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
     public static function mailPoetListHeaders()
     {
@@ -85,7 +86,7 @@ class MailPoetController
             ];
         }
         $response['mailPoetFields'] = $allList;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

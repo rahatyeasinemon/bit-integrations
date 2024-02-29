@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\SolidAffiliate;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class SolidAffiliateController
 {
@@ -42,7 +43,7 @@ final class SolidAffiliateController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Solid Affiliate is not installed or activated', 'bit-integrations'));
+            Response::error(__('Solid Affiliate is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['Created new affiliate', 'Created new referral affiliate'];
@@ -54,31 +55,31 @@ final class SolidAffiliateController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($affiliate_action);
+        Response::success($affiliate_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Solid affiliate is not installed or activated', 'bit-integrations'));
+            Response::error(__('Solid affiliate is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

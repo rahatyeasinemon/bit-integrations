@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\ARMember;
 
 use BitApps\BTCBI\Model\Flow;
 use BitApps\BTCBI\Http\Services\Triggers\ARMember\ARMemberHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class ARMemberController
 {
@@ -43,7 +44,7 @@ final class ARMemberController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('ARMember is not installed or activated', 'bit-integrations'));
+            Response::error(__('ARMember is not installed or activated', 'bit-integrations'));
         }
 
         $types = [
@@ -62,26 +63,26 @@ final class ARMemberController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($armember_action);
+        Response::success($armember_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('ARMember is not installed or activated', 'bit-integrations'));
+            Response::error(__('ARMember is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = ARMemberHelper::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
 
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function handleRegisterForm($user_id, $post_data)

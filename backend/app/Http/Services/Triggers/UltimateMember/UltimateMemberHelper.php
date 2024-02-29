@@ -2,12 +2,14 @@
 
 namespace BitApps\BTCBI\Http\Services\Triggers\UltimateMember;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
+
 class UltimateMemberHelper
 {
     public static function fields($id)
     {
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

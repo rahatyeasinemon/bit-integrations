@@ -15,14 +15,16 @@ final class TriggerController
     public static function triggerList()
     {
         // if(!Plugin::instance()->isLicenseActive()) {
-        //     return wp_send_json_error(['message' => 'License is not active']);
+        //     return Response::error(['message' => 'License is not active']);
         // }
 
         $triggers = [];
         $dirs = new FilesystemIterator(__DIR__);
+
         foreach ($dirs as $dirInfo) {
             if ($dirInfo->isDir()) {
                 $trigger = basename($dirInfo);
+
                 if (file_exists(__DIR__ . '/' . $trigger)
                     && file_exists(__DIR__ . '/' . $trigger . '/' . $trigger . 'Controller.php')
                 ) {
@@ -33,6 +35,7 @@ final class TriggerController
                 }
             }
         }
+
         return $triggers;
     }
 

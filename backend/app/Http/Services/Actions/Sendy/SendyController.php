@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Sendy;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for MailChimp integration
@@ -32,7 +33,7 @@ class SendyController
     public static function sendyAuthorize($requestsParams)
     {
         if (empty($requestsParams->api_key)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -47,13 +48,13 @@ class SendyController
         // $authorizationHeader["api-key"] = $requestsParams->api_key;
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
         if (is_wp_error($apiResponse) || $apiResponse->status === 'error' || !count($apiResponse)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->code) ? 'Unknown' : $apiResponse->message,
                 400
             );
         }
 
-        wp_send_json_success(true);
+        Response::success(true);
     }
 
     public function getAllBrands($queryParams)
@@ -62,7 +63,7 @@ class SendyController
             empty($queryParams->api_key)
             || empty($queryParams->sendy_url)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -86,7 +87,7 @@ class SendyController
                 'brandName' => $list->name
             ];
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function getAllLists($queryParams)
@@ -95,7 +96,7 @@ class SendyController
             empty($queryParams->api_key)
             || empty($queryParams->sendy_url)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -122,7 +123,7 @@ class SendyController
                 'listName' => $list->name,
             ];
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

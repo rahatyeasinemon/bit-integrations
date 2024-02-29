@@ -2,6 +2,8 @@
 
 namespace BitApps\BTCBI\Util;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
+
 class CustomFuncValidator
 {
     public static function functionValidateHandler($data)
@@ -17,7 +19,7 @@ class CustomFuncValidator
             $data->flow_details->funcFileLocation = $fileLocation;
             file_put_contents($fileLocation, $fileContent);
         } else {
-            wp_send_json_error('Your function is not valid, Failed to save file');
+            Response::error('Your function is not valid, Failed to save file');
         }
     }
 

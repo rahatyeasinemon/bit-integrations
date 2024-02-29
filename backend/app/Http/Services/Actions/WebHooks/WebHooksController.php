@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\WebHooks;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Util\Common;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for webhooks
@@ -20,12 +21,12 @@ class WebHooksController
         $data['flow_details'] = $webhookDetails->hookDetails;
         $response = self::execute((object) $data, []);
         if (is_wp_error($response)) {
-            wp_send_json_error(
+            Response::error(
                 empty($response) ? 'Unknown Error Occurred' : $response->get_error_message(),
                 400
             );
         }
-        wp_send_json_success(__('webhook executed succcessfully', 'bit-integrations'), 200);
+        Response::success(__('webhook executed succcessfully', 'bit-integrations'));
     }
 
     public static function execute($integrationDetails, $fieldValues)

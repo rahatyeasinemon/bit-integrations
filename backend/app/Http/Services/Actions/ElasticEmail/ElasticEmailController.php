@@ -10,6 +10,7 @@ use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 use BitApps\BTCBI\Http\Services\Actions\ElasticEmail\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -19,7 +20,7 @@ class ElasticEmailController
     public static function elasticEmailAuthorize($requestsParams)
     {
         if (empty($requestsParams->api_key)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -36,17 +37,17 @@ class ElasticEmailController
         ];
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
         if (is_wp_error($apiResponse) || !is_null($apiResponse->Error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->code) ? 'Unknown' : $apiResponse->Error,
                 400
             );
         }
-        wp_send_json_success(true);
+        Response::success(true);
     }
     public static function getAllLists($requestsParams)
     {
         if (empty($requestsParams->apiKey)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -70,8 +71,8 @@ class ElasticEmailController
             ];
         }
         $response['lists'] = $data;
-        wp_send_json_success($response, 200);
-        // wp_send_json_success(true);
+        Response::success($response);
+        // Response::success(true);
     }
 
 

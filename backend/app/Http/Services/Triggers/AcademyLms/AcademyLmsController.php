@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\AcademyLms;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 // use Academy\Traits\Lessons;
 
@@ -35,7 +36,7 @@ final class AcademyLmsController
     public static function isPluginActive()
     {
         if (!class_exists('Academy')) {
-            wp_send_json_error(__('Academy Lms is not installed or activated', 'bit-integrations'));
+            Response::error(__('Academy Lms is not installed or activated', 'bit-integrations'));
         }
     }
 
@@ -57,19 +58,19 @@ final class AcademyLmsController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($academy_action);
+        Response::success($academy_action);
     }
 
     public function get_a_form($data)
     {
         self::isPluginActive();
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         if ($data->id == 1 || $data->id == 4) {
@@ -171,13 +172,13 @@ final class AcademyLmsController
 
 
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

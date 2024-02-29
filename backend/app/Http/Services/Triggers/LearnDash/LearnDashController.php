@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\LearnDash;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class LearnDashController
 {
@@ -46,7 +47,7 @@ final class LearnDashController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('LearnDash LMS is not installed or activated', 'bit-integrations'));
+            Response::error(__('LearnDash LMS is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['A user is enrolled in a course', 'A user is unenrolled from a course', 'User completed a course',
@@ -61,7 +62,7 @@ final class LearnDashController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($learndash_action);
+        Response::success($learndash_action);
     }
 
     public function getLessonsByCourse($queryParams)
@@ -83,7 +84,7 @@ final class LearnDashController
                 ];
             }
         }
-        wp_send_json_success($lessons);
+        Response::success($lessons);
     }
 
     public function getTopicsByLesson($queryParams)
@@ -106,7 +107,7 @@ final class LearnDashController
                 ];
             }
         }
-        wp_send_json_success($topics);
+        Response::success($topics);
     }
 
     public static function getTopics()
@@ -247,15 +248,15 @@ final class LearnDashController
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('LearnDash LMS is not installed or activated', 'bit-integrations'));
+            Response::error(__('LearnDash LMS is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
         $id = $data->id;
         if ($id == 1 || $id == 2 || $id == 3) {
@@ -276,13 +277,13 @@ final class LearnDashController
         }
 
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

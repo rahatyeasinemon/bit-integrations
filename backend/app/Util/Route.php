@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Util;
 
 use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class Route
 {

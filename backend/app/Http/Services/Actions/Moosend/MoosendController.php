@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Moosend;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Moosend\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Moosend integration
@@ -21,7 +22,7 @@ class MoosendController
     public function handleAuthorize($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -36,7 +37,7 @@ class MoosendController
         ];
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if ($response->Error !== null) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -44,7 +45,7 @@ class MoosendController
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
 

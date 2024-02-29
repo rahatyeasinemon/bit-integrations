@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\FluentSupport;
 
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Util\Common;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use FluentSupport\App\Models\Ticket;
 use FluentSupport\App\Models\Customer;
 use FluentSupport\App\Services\Helper;
@@ -48,7 +49,7 @@ class RecordApiHelper
             $finalData['customer_id'] = $customer->id;
             return $this->createTicketByExistCustomer($finalData);
         } else {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Create Customer Failed!',
                     'bit-integrations'
@@ -75,7 +76,7 @@ class RecordApiHelper
         if (isset($ticket->id)) {
             return $ticket;
         } else {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Create Ticket Failed!',
                     'bit-integrations'

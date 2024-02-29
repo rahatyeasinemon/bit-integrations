@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\UltimateMember;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class UltimateMemberController
 {
@@ -41,7 +42,7 @@ final class UltimateMemberController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Ultimate Member is not installed or activated', 'bit-integrations'));
+            Response::error(__('Ultimate Member is not installed or activated', 'bit-integrations'));
         }
 
         $loginForms = UltimateMemberHelper::getAllLoginAndRegistrationForm('login');
@@ -60,21 +61,21 @@ final class UltimateMemberController
                 'title' => $type['title'],
             ];
         }
-        wp_send_json_success($ultimateMember_action);
+        Response::success($ultimateMember_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Ultimate Member is not installed or activated', 'bit-integrations'));
+            Response::error(__('Ultimate Member is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = UltimateMemberHelper::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
@@ -82,7 +83,7 @@ final class UltimateMemberController
         if ($id == 'roleSpecificChange') {
             $responseData['allRole'] = UltimateMemberHelper::getRoles();
         }
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function handleUserLogViaForm($um_args)
@@ -150,6 +151,6 @@ final class UltimateMemberController
     public static function getUMrole()
     {
         $roles = UltimateMemberHelper::getRoles();
-        wp_send_json_success($roles);
+        Response::success($roles);
     }
 }

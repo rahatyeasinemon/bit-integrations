@@ -6,6 +6,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\LearnDash;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 /**
@@ -38,9 +39,9 @@ class LearnDashController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (self::pluginActive()) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
-        wp_send_json_error(__('LearnDash must be activated!', 'bit-integrations'));
+        Response::error(__('LearnDash must be activated!', 'bit-integrations'));
     }
 
     public static function getCourses()
@@ -102,7 +103,7 @@ class LearnDashController
             ];
         }
 
-        wp_send_json_success($lessons);
+        Response::success($lessons);
     }
 
     public static function getTopicsByLesson($requestParams)
@@ -119,7 +120,7 @@ class LearnDashController
             ];
         }
 
-        wp_send_json_success($topics);
+        Response::success($topics);
     }
 
     public static function getQuizes()

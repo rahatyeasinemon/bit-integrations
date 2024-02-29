@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ZohoProjects;
 
 use BitApps\BTCBI\Util\IpTool;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -35,7 +36,7 @@ class ZohoProjectsController
                 || empty($requestsParams->redirectURI)
                 || empty($requestsParams->code)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -55,13 +56,13 @@ class ZohoProjectsController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     public static function refreshPortalsAjaxHelper($queryParams)
@@ -71,7 +72,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -104,7 +105,7 @@ class ZohoProjectsController
             uksort($allPortals, 'strnatcasecmp');
             $response['portals'] = $allPortals;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($portalsMetaResponse->data) ? 'Unknown' : $portalsMetaResponse->error,
                 400
             );
@@ -112,7 +113,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function refreshProjectsAjaxHelper($queryParams)
@@ -123,7 +124,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -141,7 +142,7 @@ class ZohoProjectsController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $projectsMetaResponse = Http::request($projectsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // wp_send_json_success($projectsMetaResponse, 200);
+        // Response::success($projectsMetaResponse);
 
         if (!is_wp_error($projectsMetaResponse)) {
             $allProjects = [];
@@ -158,7 +159,7 @@ class ZohoProjectsController
             uksort($allProjects, 'strnatcasecmp');
             $response['projects'] = $allProjects;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($projectsMetaResponse->data) ? 'Unknown' : $projectsMetaResponse->error,
                 400
             );
@@ -166,7 +167,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function refreshMilestonesAjaxHelper($queryParams)
@@ -178,7 +179,7 @@ class ZohoProjectsController
                 || empty($queryParams->portalId)
                 || empty($queryParams->projectId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -211,7 +212,7 @@ class ZohoProjectsController
             uksort($allMilestones, 'strnatcasecmp');
             $response['milestones'] = $allMilestones;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($milestonesMetaResponse->data) ? 'Unknown' : $milestonesMetaResponse->error,
                 400
             );
@@ -219,7 +220,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function refreshTasklistsAjaxHelper($queryParams)
@@ -232,7 +233,7 @@ class ZohoProjectsController
                 || empty($queryParams->projectId)
                 || empty($queryParams->tasklistFlag)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -269,7 +270,7 @@ class ZohoProjectsController
             uksort($allTasklists, 'strnatcasecmp');
             $response['tasklists'] = $allTasklists;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($tasklistsMetaResponse->data) ? 'Unknown' : $tasklistsMetaResponse->error,
                 400
             );
@@ -277,7 +278,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function refreshTasksAjaxHelper($queryParams)
@@ -289,7 +290,7 @@ class ZohoProjectsController
                 || empty($queryParams->portalId)
                 || empty($queryParams->projectId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -329,7 +330,7 @@ class ZohoProjectsController
             uksort($allTasks, 'strnatcasecmp');
             $response['tasks'] = $allTasks;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($tasksMetaResponse->data) ? 'Unknown' : $tasksMetaResponse->error,
                 400
             );
@@ -337,7 +338,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function refreshFieldsAjaxHelper($queryParams)
@@ -349,7 +350,7 @@ class ZohoProjectsController
                 || empty($queryParams->portalId)
                 || empty($queryParams->event)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -378,7 +379,7 @@ class ZohoProjectsController
             $response['queryModule'] = $queryParams->module;
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     protected static function getProjectFields($dataCenter, $portalId, $access_token)
@@ -673,7 +674,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -697,7 +698,7 @@ class ZohoProjectsController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $usersMetaResponse = Http::request($usersMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // wp_send_json_success($usersMetaResponse, 200);
+        // Response::success($usersMetaResponse);
 
         if (!is_wp_error($usersMetaResponse)) {
             $users = $usersMetaResponse->users;
@@ -712,7 +713,7 @@ class ZohoProjectsController
                 }
             }
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($usersMetaResponse->data) ? 'Unknown' : $usersMetaResponse->error,
                 400
             );
@@ -720,7 +721,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function refreshTaskLaysAjaxHelper($queryParams)
@@ -731,7 +732,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -749,7 +750,7 @@ class ZohoProjectsController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $taskLaysMetaResponse = Http::request($taskLaysMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // wp_send_json_success($taskLaysMetaResponse, 200);
+        // Response::success($taskLaysMetaResponse);
 
         if (!is_wp_error($taskLaysMetaResponse)) {
             $taskLays = $taskLaysMetaResponse->layouts;
@@ -763,7 +764,7 @@ class ZohoProjectsController
                 }
             }
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($taskLaysMetaResponse->data) ? 'Unknown' : $taskLaysMetaResponse->error,
                 400
             );
@@ -771,7 +772,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function refreshGroupsAjaxHelper($queryParams)
@@ -782,7 +783,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -800,7 +801,7 @@ class ZohoProjectsController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $groupsMetaResponse = Http::request($groupsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // wp_send_json_success($groupsMetaResponse, 200);
+        // Response::success($groupsMetaResponse);
 
         if (!is_wp_error($groupsMetaResponse)) {
             $groups = $groupsMetaResponse->groups;
@@ -814,7 +815,7 @@ class ZohoProjectsController
                 }
             }
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($groupsMetaResponse->data) ? 'Unknown' : $groupsMetaResponse->error,
                 400
             );
@@ -822,7 +823,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function refreshTagsAjaxHelper($queryParams)
@@ -833,7 +834,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -852,7 +853,7 @@ class ZohoProjectsController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $tagsMetaResponse = Http::request($tagsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // wp_send_json_success($tagsMetaResponse, 200);
+        // Response::success($tagsMetaResponse);
 
         if (!is_wp_error($tagsMetaResponse)) {
             $tags = $tagsMetaResponse->tags;
@@ -869,7 +870,7 @@ class ZohoProjectsController
                 $response['tags'] = $allTags;
             }
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($tagsMetaResponse->data) ? 'Unknown' : $tagsMetaResponse->error,
                 400
             );
@@ -877,7 +878,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     protected static function refreshAccessToken($apiData)

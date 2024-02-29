@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Discord;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for discord integration
@@ -28,7 +29,7 @@ class DiscordController
         if (
             empty($tokenRequestParams->accessToken)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -44,12 +45,12 @@ class DiscordController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($apiResponse->id)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
 
@@ -58,7 +59,7 @@ class DiscordController
         if (
             empty($tokenRequestParams->accessToken)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -80,9 +81,9 @@ class DiscordController
                     'name' => $server->name
                 ];
             }
-            wp_send_json_success($servers, 200);
+            Response::success($servers);
         } else {
-            wp_send_json_error('Servers fetching failed', 400);
+            Response::error('Servers fetching failed', 400);
         }
     }
 
@@ -92,7 +93,7 @@ class DiscordController
         if (
             empty($tokenRequestParams->accessToken) || empty($tokenRequestParams->serverId)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -114,9 +115,9 @@ class DiscordController
                     'name' => $channel->name
                 ];
             }
-            wp_send_json_success($channels, 200);
+            Response::success($channels);
         } else {
-            wp_send_json_error('Channels fetching failed', 400);
+            Response::error('Channels fetching failed', 400);
         }
     }
 

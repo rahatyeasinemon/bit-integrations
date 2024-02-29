@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\PipeDrive;
 use BitApps\BTCBI\Http\Services\Actions\PipeDrive\RecordApiHelper;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for PipeDrive integration
@@ -20,7 +21,7 @@ class PipeDriveController
     public function getMetaData($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -51,9 +52,9 @@ class PipeDriveController
         }
 
         if (isset($response->success) && $response->success) {
-            wp_send_json_success($formattedResponse, 200);
+            Response::success($formattedResponse);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'The token is invalid',
                 400
             );
@@ -63,7 +64,7 @@ class PipeDriveController
     public function getFields($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -141,9 +142,9 @@ class PipeDriveController
                 array_push($formattedResponse, ...$addFields);
             }
 
-            wp_send_json_success($formattedResponse, 200);
+            Response::success($formattedResponse);
         } else {
-            wp_send_json_error(
+            Response::error(
                 'The token is invalid',
                 400
             );

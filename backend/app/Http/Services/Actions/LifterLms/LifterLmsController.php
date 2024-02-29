@@ -2,6 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\LifterLms;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 class LifterLmsController
@@ -18,9 +19,9 @@ class LifterLmsController
     public static function authorizeLifterLms()
     {
         if (self::pluginActive()) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
-        wp_send_json_error(__('LifterLms must be activated!', 'bit-integrations'));
+        Response::error(__('LifterLms must be activated!', 'bit-integrations'));
     }
 
     public static function getAllLesson()

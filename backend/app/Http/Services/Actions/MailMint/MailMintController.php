@@ -2,6 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\MailMint;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 use Mint\MRM\Constants;
 use Mint\MRM\DataBase\Models\ContactGroupModel;
@@ -20,9 +21,9 @@ class MailMintController
     public static function authorizeMailMint()
     {
         if (self::pluginActive()) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
-        wp_send_json_error(__('Mail Mint must be activated!', 'bit-integrations'));
+        Response::error(__('Mail Mint must be activated!', 'bit-integrations'));
     }
 
     public static function allCustomFields()
@@ -47,9 +48,9 @@ class MailMintController
                     ];
                 }
             }
-            wp_send_json_success($allFields, 200);
+            Response::success($allFields);
         }
-        wp_send_json_error(__('Mail Mint must be activated!', 'bit-integrations'));
+        Response::error(__('Mail Mint must be activated!', 'bit-integrations'));
     }
 
     public static function getAllList()
@@ -67,7 +68,7 @@ class MailMintController
                 }
             }
         }
-        wp_send_json_success($allLists, 200);
+        Response::success($allLists);
     }
 
     public static function getAllTags()
@@ -85,7 +86,7 @@ class MailMintController
                 }
             }
         }
-        wp_send_json_success($allTags, 200);
+        Response::success($allTags);
     }
 
     public function execute($integrationData, $fieldValues)

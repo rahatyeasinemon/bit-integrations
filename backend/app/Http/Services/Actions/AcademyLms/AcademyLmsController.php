@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Actions\AcademyLms;
 
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Academy Lms integration
@@ -25,16 +26,16 @@ class AcademyLmsController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (is_plugin_active('academy/academy.php')) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
 
-        wp_send_json_error(__('Academy Lms must be activated!', 'bit-integrations'));
+        Response::error(__('Academy Lms must be activated!', 'bit-integrations'));
     }
 
     public static function getAllLesson()
     {
         if (!class_exists('Academy')) {
-            wp_send_json_error(__('Academy Lms is not installed or activated', 'bit-integrations'));
+            Response::error(__('Academy Lms is not installed or activated', 'bit-integrations'));
         }
 
         $lessons = [];
@@ -47,14 +48,14 @@ class AcademyLmsController
                 'lessonTitle' => $val->lesson_title,
             ];
         }
-        wp_send_json_success($lessons, 200);
+        Response::success($lessons);
     }
 
     public static function getAllCourse($queryParams)
     {
         $action = $queryParams->type;
         if (!class_exists('Academy')) {
-            wp_send_json_error(__('Academy Lms is not installed or activated', 'bit-integrations'));
+            Response::error(__('Academy Lms is not installed or activated', 'bit-integrations'));
         }
 
 
@@ -77,7 +78,7 @@ class AcademyLmsController
                 'courseTitle' => $val->post_title,
             ];
         }
-        wp_send_json_success($courses, 200);
+        Response::success($courses);
     }
 
     public static function enrollCourse($selectedCourse, $selectedAllCourse, $type)

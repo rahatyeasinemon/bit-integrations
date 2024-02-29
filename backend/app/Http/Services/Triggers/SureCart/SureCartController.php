@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\SureCart;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use SureCart\Models\Product;
 
 final class SureCartController
@@ -42,7 +43,7 @@ final class SureCartController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('SureCart is not installed or activated', 'bit-integrations'));
+            Response::error(__('SureCart is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['User perches a product', 'User revoke perches a product', 'User unrevoked perches product'];
@@ -54,21 +55,21 @@ final class SureCartController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($affiliate_action);
+        Response::success($affiliate_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('SureCart is not installed or activated', 'bit-integrations'));
+            Response::error(__('SureCart is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         if ($data->id == 1 || $data->id == 2 || $data->id == 3) {
@@ -76,13 +77,13 @@ final class SureCartController
         }
 
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -123,7 +124,7 @@ final class SureCartController
     public static function surecart_purchase_product($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('SureCart is not installed or activated', 'bit-integrations'));
+            Response::error(__('SureCart is not installed or activated', 'bit-integrations'));
         }
         $accountDetails = \SureCart\Models\Account::find();
         $product = Product::find($data['product_id']);
@@ -143,7 +144,7 @@ final class SureCartController
     public static function get_sureCart_all_product()
     {
         $allProduct = self::getAllProduct();
-        wp_send_json_success($allProduct);
+        Response::success($allProduct);
     }
 
     public static function surecart_purchase_revoked($data)

@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\CampaignMonitor;
 
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class RecordApiHelper
 {
@@ -102,7 +103,7 @@ class RecordApiHelper
                 }
             } else {
                 LogHandler::save($this->_integrationID, ['type' => 'Subscriber', 'type_name' => 'Adding Subscriber'], 'error', 'Email address already exists in the system');
-                wp_send_json_error('Email address already exists in the system', 400);
+                Response::error('Email address already exists in the system', 400);
             }
         }
 

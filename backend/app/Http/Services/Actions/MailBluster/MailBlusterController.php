@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\MailBluster;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for MailBluster integration
@@ -20,7 +21,7 @@ class MailBlusterController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -47,9 +48,9 @@ class MailBlusterController
         }
 
         if (property_exists($response, 'fields')) {
-            wp_send_json_success($customFields, 200);
+            Response::success($customFields);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            Response::error('Please enter valid API key', 400);
         }
     }
 

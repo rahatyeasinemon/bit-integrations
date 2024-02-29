@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\EssentialBlocks;
 
 use WP_Error;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class EssentialBlocksController
 {
@@ -25,9 +26,9 @@ class EssentialBlocksController
             update_option('btcbi_test_eb_form_submit_before_email', []);
         }
         if (!$testData || empty($testData)) {
-            wp_send_json_error(new WP_Error('essentialBlocks_test', __('EssentialBlocks data is empty', 'bit-integrations')));
+            Response::error(new WP_Error('essentialBlocks_test', __('EssentialBlocks data is empty', 'bit-integrations')));
         }
-        wp_send_json_success(['essentialBlocks' => $testData]);
+        Response::success(['essentialBlocks' => $testData]);
     }
 
 
@@ -36,9 +37,9 @@ class EssentialBlocksController
         $testData = delete_option('btcbi_test_eb_form_submit_before_email');
 
         if (!$testData) {
-            wp_send_json_error(new WP_Error('essential_blocks_test', __('Failed to remove test data', 'bit-integrations')));
+            Response::error(new WP_Error('essential_blocks_test', __('Failed to remove test data', 'bit-integrations')));
         }
-        wp_send_json_success(__('essential_blocks test data removed successfully', 'bit-integrations'));
+        Response::success(__('essential_blocks test data removed successfully', 'bit-integrations'));
     }
     public static function essentialBlocksHandler(...$args)
     {
@@ -90,18 +91,18 @@ class EssentialBlocksController
         $currentPart = array_shift($parts);
         if (is_array($data)) {
             if (!isset($data[$currentPart])) {
-                wp_send_json_error(new WP_Error('Action Hook', __('Index out of bounds or invalid', 'bit-integrations')));
+                Response::error(new WP_Error('Action Hook', __('Index out of bounds or invalid', 'bit-integrations')));
             }
             return self::extractValueFromPath($data[$currentPart], $parts);
         }
 
         if (is_object($data)) {
             if (!property_exists($data, $currentPart)) {
-                wp_send_json_error(new WP_Error('Action Hook', __('Invalid path', 'bit-integrations')));
+                Response::error(new WP_Error('Action Hook', __('Invalid path', 'bit-integrations')));
             }
             return self::extractValueFromPath($data->$currentPart, $parts);
         }
 
-        wp_send_json_error(new WP_Error('Action Hook', __('Invalid path', 'bit-integrations')));
+        Response::error(new WP_Error('Action Hook', __('Invalid path', 'bit-integrations')));
     }
 }

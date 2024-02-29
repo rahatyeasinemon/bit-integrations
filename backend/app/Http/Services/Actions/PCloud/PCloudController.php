@@ -5,6 +5,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\PCloud;
 use BitApps\BTCBI\Http\Services\Actions\PCloud\RecordApiHelper as PCloudRecordApiHelper;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 class PCloudController
@@ -19,7 +20,7 @@ class PCloudController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->clientId) || empty($requestParams->clientSecret) || empty($requestParams->code)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $body = [
@@ -33,16 +34,16 @@ class PCloudController
         $apiResponse            = Http::request($apiEndpoint, 'Post', $body, $header);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
+            Response::error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     public static function getAllFolders($queryParams)
     {
         if (empty($queryParams->tokenDetails)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint             = 'https://api.pcloud.com/listfolder?folderid=0';
@@ -59,9 +60,9 @@ class PCloudController
                     ];
                 }
             }
-            wp_send_json_success($folders, 200);
+            Response::success($folders);
         } else {
-            wp_send_json_error('Folders fetching failed', 400);
+            Response::error('Folders fetching failed', 400);
         }
     }
 

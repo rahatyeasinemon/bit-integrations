@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Lemlist;
 
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class RecordApiHelper
 {
@@ -84,7 +85,7 @@ class RecordApiHelper
                 }
             } else {
                 LogHandler::save($this->_integrationID, ['type' => 'Lead', 'type_name' => 'Adding Lead'], 'error', 'Email address already exists in the system');
-                wp_send_json_error('Email address already exists in the system', 400);
+                Response::error('Email address already exists in the system', 400);
             }
         }
 

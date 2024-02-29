@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\FluentCrm;
 use WP_Error;
 
 use BitApps\BTCBI\Http\Services\Actions\FluentCrm\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use FluentCrm\App\Models\Lists;
 use FluentCrm\App\Models\Tag;
 use FluentCrm\App\Models\Subscriber;
@@ -35,7 +36,7 @@ class FluentCrmController
     public static function checkedExistsFluentCRM()
     {
         if (!is_plugin_active('fluent-crm/fluent-crm.php')) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Fluent CRM Plugin is not active or not installed',
                     'bit-integrations'
@@ -73,7 +74,7 @@ class FluentCrmController
         }
         $response['fluentCrmList'] = $fluentCrmList;
         $response['fluentCrmTags'] = $fluentCrmTags;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function fluentCrmTags()
@@ -89,7 +90,7 @@ class FluentCrmController
             ];
         }
         $response['fluentCrmTags'] = $fluentCrmTags;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function fluentCrmFields()
@@ -130,7 +131,7 @@ class FluentCrmController
             ];
         }
         $response['fluentCrmFlelds'] = $fieldOptions;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -139,9 +140,9 @@ class FluentCrmController
     public static function fluentCrmAuthorize()
     {
         if (self::checkedExistsFluentCRM()) {
-            wp_send_json_success(true);
+            Response::success(true);
         } else {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Please! Install Fluent CRM',
                     'bit-integrations'

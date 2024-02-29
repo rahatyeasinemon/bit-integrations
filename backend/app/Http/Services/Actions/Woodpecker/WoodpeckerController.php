@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Woodpecker;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Woodpecker integration
@@ -26,7 +27,7 @@ class WoodpeckerController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -48,9 +49,9 @@ class WoodpeckerController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->status) && $response->status->status === "ERROR") {
-            wp_send_json_error('Please enter valid API Key', 400);
+            Response::error('Please enter valid API Key', 400);
         } else {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         }
     }
 
@@ -63,7 +64,7 @@ class WoodpeckerController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->status) && $response->status->status === "ERROR") {
-            wp_send_json_error('Campaign not found!', 400);
+            Response::error('Campaign not found!', 400);
         } else {
             $campaigns = [];
             foreach ($response as $campaign) {
@@ -76,7 +77,7 @@ class WoodpeckerController
                 );
             }
 
-            wp_send_json_success($campaigns, 200);
+            Response::success($campaigns);
         }
     }
 

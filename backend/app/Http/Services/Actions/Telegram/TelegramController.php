@@ -11,6 +11,7 @@ use BitApps\BTCBI\Util\IpTool;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 use BitApps\BTCBI\Http\Services\Actions\Telegram\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Telegram integration
@@ -35,7 +36,7 @@ class TelegramController
     public static function telegramAuthorize($requestsParams)
     {
         if (empty($requestsParams->bot_api_key)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -49,7 +50,7 @@ class TelegramController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || !$apiResponse->ok) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error_code) ? 'Unknown' : $apiResponse,
                 400
             );
@@ -60,13 +61,13 @@ class TelegramController
 
 
         if (is_wp_error($apiResponse) || !$apiResponse->ok) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error_code) ? 'Unknown' : $apiResponse,
                 400
             );
         }
 
-        wp_send_json_success(true);
+        Response::success(true);
     }
     /**
      * Process ajax request for refresh telegram get Updates
@@ -79,7 +80,7 @@ class TelegramController
     public static function refreshGetUpdates($requestsParams)
     {
         if (empty($requestsParams->bot_api_key)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -105,12 +106,12 @@ class TelegramController
 
             $response['telegramChatLists'] = $allList;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $telegramResponse->description,
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

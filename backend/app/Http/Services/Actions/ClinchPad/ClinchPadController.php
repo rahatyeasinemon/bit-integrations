@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ClinchPad;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for ClinchPad integration
@@ -25,7 +26,7 @@ class ClinchPadController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -37,16 +38,16 @@ class ClinchPadController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            Response::error('Please enter valid API key', 400);
         }
     }
 
     public function getAllParentOrganizations($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -64,16 +65,16 @@ class ClinchPadController
                     'name' => $parentOrganization->name
                 ];
             }
-            wp_send_json_success($parentOrganizations, 200);
+            Response::success($parentOrganizations);
         } else {
-            wp_send_json_error('ParentOrganizations fetching failed', 400);
+            Response::error('ParentOrganizations fetching failed', 400);
         }
     }
 
     public function getAllCRMPipelines($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -91,16 +92,16 @@ class ClinchPadController
                     'name' => $pipeline->name
                 ];
             }
-            wp_send_json_success($pipelines, 200);
+            Response::success($pipelines);
         } else {
-            wp_send_json_error('Pipelines fetching failed', 400);
+            Response::error('Pipelines fetching failed', 400);
         }
     }
 
     public function getAllCRMContacts($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -118,9 +119,9 @@ class ClinchPadController
                     'name' => $contact->name
                 ];
             }
-            wp_send_json_success($contacts, 200);
+            Response::success($contacts);
         } else {
-            wp_send_json_error('Contacts fetching failed', 400);
+            Response::error('Contacts fetching failed', 400);
         }
     }
 

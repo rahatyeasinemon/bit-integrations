@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\LionDesk;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for LionDesk integration
@@ -25,7 +26,7 @@ class LionDeskController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->token_details->access_token) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -52,7 +53,7 @@ class LionDeskController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -70,13 +71,13 @@ class LionDeskController
         );
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     /**
@@ -108,7 +109,7 @@ class LionDeskController
 
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -139,12 +140,12 @@ class LionDeskController
                         'label' => $customField->name,
                     ];
                 }
-                wp_send_json_success($customFields, 200);
+                Response::success($customFields);
             } else {
-                wp_send_json_error($response->message, 400);
+                Response::error($response->message, 400);
             }
         } else {
-            wp_send_json_error('Custom field fetching failed', 400);
+            Response::error('Custom field fetching failed', 400);
         }
     }
 
@@ -169,12 +170,12 @@ class LionDeskController
                         'tag' => $tag->content
                     ];
                 }
-                wp_send_json_success($tags, 200);
+                Response::success($tags);
             } else {
-                wp_send_json_error($response->message, 400);
+                Response::error($response->message, 400);
             }
         } else {
-            wp_send_json_error('Tags fetching failed', 400);
+            Response::error('Tags fetching failed', 400);
         }
     }
 

@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ActiveCampaign;
 use WP_Error;
 use BitApps\BTCBI\Http\Services\Actions\ActiveCampaign\RecordApiHelper;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -40,7 +41,7 @@ class ActiveCampaignController
             empty($requestsParams->api_key)
             || empty($requestsParams->api_url)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -54,13 +55,13 @@ class ActiveCampaignController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || empty($apiResponse)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse) ? 'Unknown' : $apiResponse,
                 400
             );
         }
 
-        wp_send_json_success(true);
+        Response::success(true);
     }
 
     /**
@@ -76,7 +77,7 @@ class ActiveCampaignController
             empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -103,7 +104,7 @@ class ActiveCampaignController
                 ];
             }
             $response['activeCampaignLists'] = $lists;
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 
@@ -120,7 +121,7 @@ class ActiveCampaignController
             empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -144,7 +145,7 @@ class ActiveCampaignController
             //     ];
             // }
             // $response['activeCampaignLists'] = $lists;
-            wp_send_json_success($aCampaignResponse->accounts);
+            Response::success($aCampaignResponse->accounts);
         }
     }
 
@@ -154,7 +155,7 @@ class ActiveCampaignController
             empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -205,7 +206,7 @@ class ActiveCampaignController
             );
         }
         $response['activeCampaignTags'] = $tag_items;
-        wp_send_json_success($response);
+        Response::success($response);
     }
 
     public static function activeCampaignHeaders($queryParams)
@@ -214,7 +215,7 @@ class ActiveCampaignController
             empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -246,7 +247,7 @@ class ActiveCampaignController
             $fields['Email'] = (object) ['fieldId' => 'email', 'fieldName' => 'Email', 'required' => true];
             $fields['Phone'] = (object) ['fieldId' => 'phone', 'fieldName' => 'Phone', 'required' => false];
             $response['activeCampaignField'] = $fields;
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 
@@ -292,7 +293,7 @@ class ActiveCampaignController
 //     if (empty($queryParams->api_key)
 //         || empty($queryParams->api_url)
 //     ) {
-//         wp_send_json_error(
+//         Response::error(
 //             __(
 //                 'Requested parameter is empty',
 //                 'bit-integrations'
@@ -320,6 +321,6 @@ class ActiveCampaignController
 //         }
 //         var_dump($tags,'tags');die;
 //         $response['activeCampaignTags'] = $tags;
-//         wp_send_json_success($response);
+//         Response::success($response);
 //     }
 // }

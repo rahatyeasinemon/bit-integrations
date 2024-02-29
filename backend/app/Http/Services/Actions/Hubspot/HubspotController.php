@@ -6,6 +6,7 @@ use WP_Error;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class HubspotController
 {
@@ -19,7 +20,7 @@ final class HubspotController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/contacts';
@@ -30,16 +31,16 @@ final class HubspotController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($apiResponse->results)) {
-            wp_send_json_success('Authorization successfull', 200);
+            Response::success('Authorization successfull');
         } else {
-            wp_send_json_error('Authorization failed', 400);
+            Response::error('Authorization failed', 400);
         }
     }
 
     public static function getFields($requestParams)
     {
         if (empty($requestParams->api_key) || empty($requestParams->type)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = "https://api.hubapi.com/crm/v3/properties/$requestParams->type";
@@ -72,16 +73,16 @@ final class HubspotController
                 }
             }
 
-            wp_send_json_success($fields, 200);
+            Response::success($fields);
         } else {
-            wp_send_json_error('fields fetching failed', 400);
+            Response::error('fields fetching failed', 400);
         }
     }
 
     public static function getAllOwners($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/owners';
@@ -98,16 +99,16 @@ final class HubspotController
                     'ownerName' => "$owner->firstName $owner->lastName"
                 ];
             }
-            wp_send_json_success($owners, 200);
+            Response::success($owners);
         } else {
-            wp_send_json_error('fields fetching failed', 400);
+            Response::error('fields fetching failed', 400);
         }
     }
 
     public static function getAllPipelines($requestParams)
     {
         if (empty($requestParams->api_key) || empty($requestParams->type)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = "https://api.hubapi.com/crm/v3/pipelines/$requestParams->type";
@@ -135,16 +136,16 @@ final class HubspotController
                     'stages'       => $tempStage
                 );
             }
-            wp_send_json_success($response, 200);
+            Response::success($response);
         } else {
-            wp_send_json_error('pipelines fetching failed', 400);
+            Response::error('pipelines fetching failed', 400);
         }
     }
 
     public static function getAllContacts($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/contacts?limit=100';
@@ -162,16 +163,16 @@ final class HubspotController
                     'contactName' => $contactName
                 ];
             }
-            wp_send_json_success($contacts, 200);
+            Response::success($contacts);
         } else {
-            wp_send_json_error('contacts fetching failed', 400);
+            Response::error('contacts fetching failed', 400);
         }
     }
 
     public static function getAllCompany($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/companies?limit=100';
@@ -188,9 +189,9 @@ final class HubspotController
                     'companyName' => $company->properties->name
                 ];
             }
-            wp_send_json_success($companies, 200);
+            Response::success($companies);
         } else {
-            wp_send_json_error('fields fetching failed', 400);
+            Response::error('fields fetching failed', 400);
         }
     }
 

@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\BenchMark;
 
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Record insert,update, exist
@@ -174,7 +175,7 @@ class RecordApiHelper
             } else {
                 LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', 'Email address already exists in the system');
 
-                wp_send_json_error(
+                Response::error(
                     __(
                         $this->_errorMessage,
                         'bit-integrations'

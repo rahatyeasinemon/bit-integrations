@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\EmailOctopus;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for EmailOctopus integration
@@ -19,7 +20,7 @@ class EmailOctopusController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -33,16 +34,16 @@ class EmailOctopusController
                     'name' => $list->name
                 ];
             }
-            wp_send_json_success($lists, 200);
+            Response::success($lists);
         } else {
-            wp_send_json_error('Please a enter valid API key', 400);
+            Response::error('Please a enter valid API key', 400);
         }
     }
 
     public function getAllFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->listId)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -58,16 +59,16 @@ class EmailOctopusController
                     'required' => $field->tag === 'EmailAddress' ? true : false
                 ];
             }
-            wp_send_json_success($fields, 200);
+            Response::success($fields);
         } else {
-            wp_send_json_error('Groups fetch failed', 400);
+            Response::error('Groups fetch failed', 400);
         }
     }
 
     public function getAllTags($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->listId)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -82,9 +83,9 @@ class EmailOctopusController
         }
 
         if (isset($response->error)) {
-            wp_send_json_error('Groups fetching failed', 400);
+            Response::error('Groups fetching failed', 400);
         } else {
-            wp_send_json_success($tags, 200);
+            Response::success($tags);
         }
     }
 

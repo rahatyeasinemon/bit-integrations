@@ -6,6 +6,7 @@ use WP_Error;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Actions\Lemlist\RecordApiHelper;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class LemlistController
 {
@@ -19,7 +20,7 @@ class LemlistController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = "https://api.lemlist.com/api/team";
@@ -27,18 +28,18 @@ class LemlistController
         $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($response->_id)) {
-            wp_send_json_error(
+            Response::error(
                 empty($response) ? 'Unknown' : $response,
                 400
             );
         }
-        wp_send_json_success(true);
+        Response::success(true);
     }
 
     public static function getAllCampaign($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $header["Authorization"] = 'Basic ' . base64_encode(":$requestParams->api_key");
@@ -54,9 +55,9 @@ class LemlistController
         }
 
         if ((count($campaigns)) > 0) {
-            wp_send_json_success($campaigns, 200);
+            Response::success($campaigns);
         } else {
-            wp_send_json_error('Campaign fetching failed', 400);
+            Response::error('Campaign fetching failed', 400);
         }
     }
 

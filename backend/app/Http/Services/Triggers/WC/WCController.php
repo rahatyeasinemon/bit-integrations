@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\WC;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class WCController
 {
@@ -33,7 +34,7 @@ final class WCController
     public function getAll()
     {
         if (!class_exists('WooCommerce')) {
-            wp_send_json_error(__('WooCommerce is not installed or activated', 'bit-integrations'));
+            Response::error(__('WooCommerce is not installed or activated', 'bit-integrations'));
         }
         $types = [
             'Customer-Create', 'Customer-Edit', 'Customer-Delete', 'Product-Create', 'Product-Edit', 'Product-Delete', 'Order-Create', 'Order-Edit', 'Order-Delete', 'Order-Specific-Product', 'Order-Status-Change-Specific-Status', 'User-Subscribes-Product', 'User-Cancel-Subscription-Product', 'Expired-Subscription-Product', 'Subscription-Product-Status-Change', 'Subscription-Trial-Period-End', 'Order-Specific-Category', 'Booking-Created', 'User reviews a product',
@@ -46,20 +47,20 @@ final class WCController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($wc_action);
+        Response::success($wc_action);
     }
 
     public function get_trigger_field($data)
     {
         if (!class_exists('WooCommerce')) {
-            wp_send_json_error(__('WooCommerce is not installed or activated', 'bit-integrations'));
+            Response::error(__('WooCommerce is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__(' Doesn\'t exists', 'bit-integrations'));
+            Response::error(__(' Doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
         if (empty($fields)) {
-            wp_send_json_error(__('Doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
@@ -117,7 +118,7 @@ final class WCController
             $responseData['allVariableProduct'] = WCHelper::getAllWcVariableProduct();
         }
 
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($id)
@@ -137,7 +138,7 @@ final class WCController
         }
 
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -1929,13 +1930,13 @@ final class WCController
     public static function getOrderStatus()
     {
         $orderStatuses = wc_get_order_statuses();
-        wp_send_json_success($orderStatuses);
+        Response::success($orderStatuses);
     }
 
     public static function getSubscriptionProduct()
     {
         $subscriptions = self::getAllSubscriptions();
-        wp_send_json_success($subscriptions);
+        Response::success($subscriptions);
     }
 
     public static function getSubscriptionStatus()
@@ -1951,7 +1952,7 @@ final class WCController
         } else {
             $subscription_statuses = (array) $anyStatus;
         }
-        wp_send_json_success($subscription_statuses);
+        Response::success($subscription_statuses);
     }
 
     public static function getWooCommerceProduct()
@@ -1972,7 +1973,7 @@ final class WCController
                 'product_sku' => $productSku,
             ];
         }
-        wp_send_json_success($allProducts);
+        Response::success($allProducts);
     }
 
     public static function getProductCategories()
@@ -1996,7 +1997,7 @@ final class WCController
                 'name' => $category->name,
             ];
         }
-        wp_send_json_success($product_categories, 200);
+        Response::success($product_categories);
     }
 
     public static function getUserInfo($user_id)
@@ -2020,6 +2021,6 @@ final class WCController
     public static function getVariationOfProduct($requestPrarams)
     {
         $allVariation = WCHelper::getAllVariations($requestPrarams->product_id);
-        wp_send_json_success($allVariation, 200);
+        Response::success($allVariation);
     }
 }

@@ -10,6 +10,7 @@ use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Util\Helper;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Klaviyo integration
@@ -22,7 +23,7 @@ class KlaviyoController
     public function handleAuthorize($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -33,7 +34,7 @@ class KlaviyoController
         $apiEndpoint = $this->baseUrl . 'lists?api_key=' . $requestParams->authKey;
         $response = Http::request($apiEndpoint, 'Get', null);
         if ($response->message === "The API key specified is invalid.") {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -41,7 +42,7 @@ class KlaviyoController
                 400
             );
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

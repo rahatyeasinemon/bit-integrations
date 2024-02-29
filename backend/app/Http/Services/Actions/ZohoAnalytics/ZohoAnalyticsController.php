@@ -11,6 +11,7 @@ use BitApps\BTCBI\Util\IpTool;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Util\ApiResponse as UtilApiResponse;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -39,7 +40,7 @@ class ZohoAnalyticsController
                 || empty($requestsParams->redirectURI)
                 || empty($requestsParams->code)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -59,13 +60,13 @@ class ZohoAnalyticsController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
 
     /**
@@ -81,7 +82,7 @@ class ZohoAnalyticsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->ownerEmail)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -108,7 +109,7 @@ class ZohoAnalyticsController
             usort($allWorkspaces, 'strnatcasecmp');
             $response['workspaces'] = $allWorkspaces;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $workspacesMetaResponse->response->error->message,
                 400
             );
@@ -116,7 +117,7 @@ class ZohoAnalyticsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['workspaces']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function refreshUsersAjaxHelper($queryParams)
@@ -127,7 +128,7 @@ class ZohoAnalyticsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->ownerEmail)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -154,7 +155,7 @@ class ZohoAnalyticsController
             usort($allusers, 'strnatcasecmp');
             $response['users'] = $allusers;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $usersMetaResponse->response->error->message,
                 400
             );
@@ -162,7 +163,7 @@ class ZohoAnalyticsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['users']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -178,7 +179,7 @@ class ZohoAnalyticsController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -207,7 +208,7 @@ class ZohoAnalyticsController
             usort($allTables, 'strnatcasecmp');
             $response['tables'] = $allTables;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $fieldsMetaResponse->status === 'error' ? $fieldsMetaResponse->message : 'Unknown',
                 400
             );
@@ -216,7 +217,7 @@ class ZohoAnalyticsController
             $response['queryWorkspace'] = $queryParams->workspace;
             self::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -233,7 +234,7 @@ class ZohoAnalyticsController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -260,7 +261,7 @@ class ZohoAnalyticsController
             usort($allHeaders, 'strnatcasecmp');
             $response['table_headers'] = $allHeaders;
         } else {
-            wp_send_json_error(
+            Response::error(
                 $tableHeadersMetaResponse->status === 'error' ? $tableHeadersMetaResponse->message : 'Unknown',
                 400
             );
@@ -269,7 +270,7 @@ class ZohoAnalyticsController
             $response['queryModule'] = $queryParams->module;
             self::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**

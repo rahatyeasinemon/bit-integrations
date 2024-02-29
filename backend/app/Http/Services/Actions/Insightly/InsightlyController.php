@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Insightly;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Insightly integration
@@ -19,7 +20,7 @@ class InsightlyController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiUrl       = $fieldsRequestParams->api_url;
@@ -32,16 +33,16 @@ class InsightlyController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (is_array($response) && isset($response[0]->USER_ID)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid API URL & API key', 400);
+            Response::error('Please enter valid API URL & API key', 400);
         }
     }
 
     public function getAllOrganisations($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
 
@@ -60,16 +61,16 @@ class InsightlyController
                     'name' => $organisation->ORGANISATION_NAME
                 ];
             }
-            wp_send_json_success($organisations, 200);
+            Response::success($organisations);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllCategories($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiUrl       = $fieldsRequestParams->api_url;
@@ -96,16 +97,16 @@ class InsightlyController
                     'name' => $category->CATEGORY_NAME
                 ];
             }
-            wp_send_json_success($categories, 200);
+            Response::success($categories);
         } else {
-            wp_send_json_error('Categories fetching failed', 400);
+            Response::error('Categories fetching failed', 400);
         }
     }
 
     public function getAllStatuses($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -124,16 +125,16 @@ class InsightlyController
                     'name' => $status->type
                 ];
             }
-            wp_send_json_success($statuses, 200);
+            Response::success($statuses);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getLeadStatuses($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiUrl       = $fieldsRequestParams->api_url;
@@ -151,16 +152,16 @@ class InsightlyController
                     'name' => $leadStatus->LEAD_STATUS
                 ];
             }
-            wp_send_json_success($leadStatuses, 200);
+            Response::success($leadStatuses);
         } else {
-            wp_send_json_error('Lead Status fetching failed', 400);
+            Response::error('Lead Status fetching failed', 400);
         }
     }
 
     public function getLeadSources($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiUrl       = $fieldsRequestParams->api_url;
@@ -178,16 +179,16 @@ class InsightlyController
                     'name' => $leadSource->LEAD_SOURCE
                 ];
             }
-            wp_send_json_success($leadSources, 200);
+            Response::success($leadSources);
         } else {
-            wp_send_json_error('Lead Status fetching failed', 400);
+            Response::error('Lead Status fetching failed', 400);
         }
     }
 
     public function getAllCRMPipelines($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiUrl       = $fieldsRequestParams->api_url;
@@ -214,16 +215,16 @@ class InsightlyController
                     ];
                 }
             }
-            wp_send_json_success($pipelines, 200);
+            Response::success($pipelines);
         } else {
-            wp_send_json_error('Pipelines fetching failed', 400);
+            Response::error('Pipelines fetching failed', 400);
         }
     }
 
     public function getAllCRMPipelineStages($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiUrl         = $fieldsRequestParams->api_url;
@@ -242,9 +243,9 @@ class InsightlyController
                     'name'         => $pipelineStage->STAGE_NAME
                 ];
             }
-            wp_send_json_success($pipelineStages, 200);
+            Response::success($pipelineStages);
         } else {
-            wp_send_json_error('Pipeline stages fetching failed', 400);
+            Response::error('Pipeline stages fetching failed', 400);
         }
     }
 

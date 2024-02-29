@@ -11,6 +11,7 @@ use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 
 use BitApps\BTCBI\Http\Services\Actions\ZohoMarketingHub\RecordApiHelper;
 use BitApps\BTCBI\Http\Controllers\FlowController;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 /**
@@ -41,7 +42,7 @@ class ZohoMarketingHubController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -61,13 +62,13 @@ class ZohoMarketingHubController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
+            Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
+        Response::success($apiResponse);
     }
     /**
      * Process ajax request for refresh crm modules
@@ -83,7 +84,7 @@ class ZohoMarketingHubController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -116,7 +117,7 @@ class ZohoMarketingHubController
             uksort($allLists, 'strnatcasecmp');
             $response['lists'] = $allLists;
         } else {
-            wp_send_json_error(
+            Response::error(
                 empty($listsMetaResponse->data) ? 'Unknown' : $listsMetaResponse->error,
                 400
             );
@@ -124,7 +125,7 @@ class ZohoMarketingHubController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**
@@ -142,7 +143,7 @@ class ZohoMarketingHubController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -175,7 +176,7 @@ class ZohoMarketingHubController
 
             $response['required'] = ['Contact Email'];
         } else {
-            wp_send_json_error(
+            Response::error(
                 $contactFieldsMetaResponse->status === 'error' ? $contactFieldsMetaResponse->message : 'Unknown',
                 400
             );
@@ -184,7 +185,7 @@ class ZohoMarketingHubController
             $response["queryModule"] = $queryParams->module;
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
         }
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     /**

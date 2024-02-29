@@ -5,6 +5,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\Brizy;
 use BitApps\BTCBI\Model\Flow;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Util\Common;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class BrizyController
 {
@@ -74,7 +75,7 @@ final class BrizyController
     public function getAllForms()
     {
         if (!is_plugin_active('brizy/brizy.php')) {
-            wp_send_json_error(__('Brizy Pro is not installed or activated', 'bit-integrations'));
+            Response::error(__('Brizy Pro is not installed or activated', 'bit-integrations'));
         }
         //Brizy get form list
         $posts      = self::getBrizyPosts();
@@ -103,26 +104,26 @@ final class BrizyController
             // }
             self::parseContentGetForms($form_content, $post->post_title, $post->ID, $all_forms);
         }
-        wp_send_json_success(array_values($all_forms));
+        Response::success(array_values($all_forms));
     }
 
     public function getFormFields($data)
     {
         if (!is_plugin_active('brizy/brizy.php')) {
-            wp_send_json_error(__('Brizy Pro is not installed or activated', 'bit-integrations'));
+            Response::error(__('Brizy Pro is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id) && empty($data->postId)) {
-            wp_send_json_error(__('Form doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
 
         $fields = self::fields($data);
         if (empty($fields)) {
-            wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
         $responseData['postId'] = $data->postId;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($data)

@@ -6,6 +6,7 @@ use WP_Error;
 use BitApps\BTCBI\Http\Controllers\FlowController;
 use BitApps\BTCBI\Http\Services\Actions\CampaignMonitor\RecordApiHelper;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class CampaignMonitorController
 {
@@ -27,7 +28,7 @@ class CampaignMonitorController
     private function checkValidation($apiKey, $clientId, $customParam = "**")
     {
         if (empty($apiKey) || empty($clientId) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -39,12 +40,12 @@ class CampaignMonitorController
         $response    = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->ApiKey)) {
-            wp_send_json_error(
+            Response::error(
                 empty($response) ? 'Unknown' : $response,
                 400
             );
         }
-        wp_send_json_success(true);
+        Response::success(true);
     }
 
     public function getAllLists($requestParams)
@@ -63,9 +64,9 @@ class CampaignMonitorController
         }
 
         if ((count($lists)) > 0) {
-            wp_send_json_success($lists, 200);
+            Response::success($lists);
         } else {
-            wp_send_json_error('Lists fetching failed', 400);
+            Response::error('Lists fetching failed', 400);
         }
     }
 
@@ -85,9 +86,9 @@ class CampaignMonitorController
         }
 
         if (!isset($apiResponse->Code)) {
-            wp_send_json_success($fields, 200);
+            Response::success($fields);
         } else {
-            wp_send_json_error("Field fetching failed: {$apiResponse->Message}", 400);
+            Response::error("Field fetching failed: {$apiResponse->Message}", 400);
         }
     }
 

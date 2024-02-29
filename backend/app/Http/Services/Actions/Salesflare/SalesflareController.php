@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Salesflare;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Salesflare integration
@@ -26,7 +27,7 @@ class SalesflareController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -48,9 +49,9 @@ class SalesflareController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->error)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid API Key', 400);
+            Response::error('Please enter valid API Key', 400);
         }
     }
 
@@ -75,9 +76,9 @@ class SalesflareController
                 );
             }
 
-            wp_send_json_success($fieldMap, 200);
+            Response::success($fieldMap);
         } else {
-            wp_send_json_error('Custom fields not found!', 400);
+            Response::error('Custom fields not found!', 400);
         }
     }
 
@@ -95,9 +96,9 @@ class SalesflareController
                 $tags[] = $tag->name;
             }
 
-            wp_send_json_success($tags, 200);
+            Response::success($tags);
         } else {
-            wp_send_json_error('Tags fetching failed!', 400);
+            Response::error('Tags fetching failed!', 400);
         }
     }
 
@@ -121,9 +122,9 @@ class SalesflareController
                 );
             }
 
-            wp_send_json_success($accounts, 200);
+            Response::success($accounts);
         } else {
-            wp_send_json_error('Accounts fetching failed!', 400);
+            Response::error('Accounts fetching failed!', 400);
         }
     }
 
@@ -148,9 +149,9 @@ class SalesflareController
                 );
             }
 
-            wp_send_json_success($pipelines, 200);
+            Response::success($pipelines);
         } else {
-            wp_send_json_error('Accounts fetching failed!', 400);
+            Response::error('Accounts fetching failed!', 400);
         }
     }
 

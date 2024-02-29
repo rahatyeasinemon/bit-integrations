@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\GamiPress;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class GamiPressController
 {
@@ -41,7 +42,7 @@ final class GamiPressController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('GamiPress is not installed or activated', 'bit-integrations'));
+            Response::error(__('GamiPress is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['A user earns a rank',
@@ -58,21 +59,21 @@ final class GamiPressController
                 'title' => $type,
             ];
         }
-        wp_send_json_success($gamiPress_action);
+        Response::success($gamiPress_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('GamiPress is not installed or activated', 'bit-integrations'));
+            Response::error(__('GamiPress is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
         $id = $data->id;
         if ($id == 1) {
@@ -85,13 +86,13 @@ final class GamiPressController
         }
 
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -250,7 +251,7 @@ final class GamiPressController
             "SELECT ID, post_name, post_title, post_type FROM wp_posts where post_type like '{$selectRankType}' AND post_status = 'publish'"
         );
 
-        wp_send_json_success($ranks);
+        Response::success($ranks);
     }
 
     public static function getRanks()
@@ -315,7 +316,7 @@ final class GamiPressController
         $awards = $wpdb->get_results(
             "SELECT ID, post_name, post_title, post_type FROM wp_posts where post_type like '{$selectAchievementType}' AND post_status = 'publish'"
         );
-        wp_send_json_success($awards);
+        Response::success($awards);
     }
 
     public static function handle_award_achievement($user_id, $achievement_id, $trigger, $site_id, $args)
@@ -467,12 +468,12 @@ final class GamiPressController
     {
         $achievementTypes = self::getAchievementType();
         array_unshift($achievementTypes, ['post_name' => 'any-achievement', 'post_title' => 'Any Achievement']);
-        wp_send_json_success($achievementTypes);
+        Response::success($achievementTypes);
     }
 
     public static function getAllRankType()
     {
         $rankTypes = self::getRankTypes();
-        wp_send_json_success($rankTypes);
+        Response::success($rankTypes);
     }
 }

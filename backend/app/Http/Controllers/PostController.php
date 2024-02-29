@@ -2,6 +2,8 @@
 
 namespace BitApps\BTCBI\Http\Controllers;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
+
 final class PostController
 {
     public function __construct()
@@ -24,7 +26,7 @@ final class PostController
             $lists[$key]['id'] = $type->name;
             $lists[$key]['title'] = $type->label;
         }
-        wp_send_json_success(array_values($lists));
+        Response::success(array_values($lists));
     }
 
     public static function getAcfFields($postType)
@@ -104,7 +106,7 @@ final class PostController
             'mb_files' => $metabox['files'],
         ];
 
-        wp_send_json_success($fields, 200);
+        Response::success($fields);
 
     }
 
@@ -133,7 +135,7 @@ final class PostController
             }
         }
         $data = ['users' => $users, 'post_types' => $pods];
-        wp_send_json_success($data, 200);
+        Response::success($data);
     }
 
     public function getPodsField($data)
@@ -159,6 +161,6 @@ final class PostController
             }
         }
         // echo json_encode(array_values($pods->fields) );
-        wp_send_json_success(['podFields' => $podField, 'podFiles' => $podFile], 200);
+        Response::success(['podFields' => $podField, 'podFiles' => $podFile]);
     }
 }

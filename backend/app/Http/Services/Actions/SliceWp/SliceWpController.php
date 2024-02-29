@@ -2,6 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\SliceWp;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 class SliceWpController
@@ -17,9 +18,9 @@ class SliceWpController
     public static function authorizeSliceWp()
     {
         if (self::pluginActive()) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
-        wp_send_json_error(__('SliceWp affiliate must be activated!', 'bit-integrations'));
+        Response::error(__('SliceWp affiliate must be activated!', 'bit-integrations'));
     }
 
     public function execute($integrationData, $fieldValues)

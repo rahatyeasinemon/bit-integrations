@@ -12,6 +12,7 @@ use WP_Error;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\Rapidmail\RecordApiHelper as RapidmailRecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class RapidmailController
 {
@@ -32,7 +33,7 @@ final class RapidmailController
             empty($tokenRequestParams->username)
             || empty($tokenRequestParams->password)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -50,14 +51,14 @@ final class RapidmailController
 
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
         if (!(property_exists($apiResponse, '_embedded') && property_exists($apiResponse->_embedded, 'apiusers'))) {
-            wp_send_json_error(
+            Response::error(
                 // empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 'Unauthorize',
                 400
             );
         } else {
             $apiResponse->generates_on = \time();
-            wp_send_json_success($apiResponse, 200);
+            Response::success($apiResponse);
         }
     }
     /**
@@ -73,7 +74,7 @@ final class RapidmailController
             empty($queryParams->username)
             || empty($queryParams->password)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -98,7 +99,7 @@ final class RapidmailController
             ];
         }
         $response['recipientlists'] = $data;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function getAllFields($queryParams)
@@ -107,7 +108,7 @@ final class RapidmailController
             empty($queryParams->username)
             || empty($queryParams->password)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -132,7 +133,7 @@ final class RapidmailController
             ];
         }
         $response['recipientlists'] = $data;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

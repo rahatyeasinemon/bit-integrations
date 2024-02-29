@@ -10,6 +10,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\WishList;
 use WP_Error;
 use BitApps\BTCBI\Http\Services\Actions\WishList\RecordApiHelper;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 include('wlmapiclass.php');
 
@@ -21,7 +22,7 @@ final class WishListController
             empty($tokenRequestParams->baseUrl)
             || empty($tokenRequestParams->apiKey)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -36,13 +37,13 @@ final class WishListController
         $apiResponse = $api->get('/levels');
         $apiResponse = json_decode($apiResponse);
         if (!(property_exists($apiResponse, 'success'))) {
-            wp_send_json_error(
+            Response::error(
                 'Unauthorize',
                 400
             );
         } else {
             $apiResponse->generates_on = \time();
-            wp_send_json_success(true);
+            Response::success(true);
         }
     }
 
@@ -60,7 +61,7 @@ final class WishListController
             empty($queryParams->baseUrl)
             || empty($queryParams->apiKey)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -83,7 +84,7 @@ final class WishListController
             ];
         }
         $response['levellists'] = $data;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public static function getAllMembers($queryParams)
@@ -92,7 +93,7 @@ final class WishListController
             empty($queryParams->baseUrl)
             || empty($queryParams->apiKey)
         ) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -116,7 +117,7 @@ final class WishListController
             ];
         }
         $response['memberlists'] = $data;
-        wp_send_json_success($response, 200);
+        Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

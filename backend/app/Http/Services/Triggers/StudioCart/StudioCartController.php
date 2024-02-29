@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\StudioCart;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class StudioCartController
 {
@@ -67,7 +68,7 @@ final class StudioCartController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Studiocart is not installed or activated', 'bit-integrations'));
+            Response::error(__('Studiocart is not installed or activated', 'bit-integrations'));
         }
 
         $sc_actions = [];
@@ -77,24 +78,24 @@ final class StudioCartController
                 'title' => $action['title'],
             ];
         }
-        wp_send_json_success($sc_actions);
+        Response::success($sc_actions);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Studiocart is not installed or activated', 'bit-integrations'));
+            Response::error(__('Studiocart is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__('Form doesn\'t exists', 'bit-integrations'));
+            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
         if (empty($fields)) {
-            wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        wp_send_json_success($responseData);
+        Response::success($responseData);
     }
 
     public static function fields($selectedAction)

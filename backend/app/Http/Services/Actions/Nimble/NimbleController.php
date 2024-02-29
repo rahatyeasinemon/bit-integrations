@@ -8,6 +8,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Nimble;
 
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for Nimble integration
@@ -25,7 +26,7 @@ class NimbleController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -73,9 +74,9 @@ class NimbleController
         $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->user_id)) {
-            wp_send_json_success('Authentication successful', 200);
+            Response::success('Authentication successful');
         } else {
-            wp_send_json_error('Please enter valid API Key', 400);
+            Response::error('Please enter valid API Key', 400);
         }
     }
 
@@ -130,7 +131,7 @@ class NimbleController
                 }
             }
 
-            wp_send_json_success(
+            Response::success(
                 [
                     "person"        => $person,
                     "company"       => $company,
@@ -143,7 +144,7 @@ class NimbleController
                 200
             );
         } else {
-            wp_send_json_error('Field fetching failed', 400);
+            Response::error('Field fetching failed', 400);
         }
     }
 

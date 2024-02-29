@@ -2,6 +2,7 @@
 
 namespace BitApps\BTCBI\Http\Services\Actions\PaidMembershipPro;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
 class PaidMembershipProController
@@ -17,9 +18,9 @@ class PaidMembershipProController
     public static function authorizeMemberpress()
     {
         if (self::pluginActive()) {
-            wp_send_json_success(true, 200);
+            Response::success(true);
         }
-        wp_send_json_error(__('Paid Membership must be activated!', 'bit-integrations'));
+        Response::error(__('Paid Membership must be activated!', 'bit-integrations'));
     }
 
     public static function getAllPaidMembershipProLevel()
@@ -40,7 +41,7 @@ class PaidMembershipProController
         //     'membershipId' => 'any',
         //     'membershipTitle' => 'Any Membership Level',
         // ]]);
-        wp_send_json_success($allLevels);
+        Response::success($allLevels);
     }
 
     public function execute($integrationData, $fieldValues)

@@ -9,6 +9,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\ConvertKit;
 use WP_Error;
 use BTCBI\Deps\BitApps\WPKit\Http\Client\Http;
 use BitApps\BTCBI\Http\Services\Actions\ConvertKit\RecordApiHelper;
+use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -37,7 +38,7 @@ class ConvertKitController
     public static function convertKitAuthorize($requestsParams)
     {
         if (empty($requestsParams->api_secret)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -50,13 +51,13 @@ class ConvertKitController
         $apiResponse = Http::request($apiEndpoint, 'Get', null);
 
         if (is_wp_error($apiResponse) || empty($apiResponse) || !empty($apiResponse->error) || empty($apiResponse->primary_email_address)) {
-            wp_send_json_error(
+            Response::error(
                 !empty($apiResponse->error) ? $apiResponse->message : 'Unknown',
                 400
             );
         }
 
-        wp_send_json_success(true);
+        Response::success(true);
     }
 
 
@@ -70,7 +71,7 @@ class ConvertKitController
     public static function convertKitForms($queryParams)
     {
         if (empty($queryParams->api_secret)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -93,7 +94,7 @@ class ConvertKitController
                 ];
             }
             $response['convertKitForms'] = $forms;
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 
@@ -107,7 +108,7 @@ class ConvertKitController
     public static function convertKitTags($queryParams)
     {
         if (empty($queryParams->api_secret)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -132,7 +133,7 @@ class ConvertKitController
             }
             $response['convertKitTags'] = $tags;
 
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 
@@ -146,7 +147,7 @@ class ConvertKitController
     public static function convertKitHeaders($queryParams)
     {
         if (empty($queryParams->api_secret)) {
-            wp_send_json_error(
+            Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -175,7 +176,7 @@ class ConvertKitController
             $fields['Email'] = (object) ['fieldId' => 'email', 'fieldName' => 'Email', 'required' => true];
 
             $response['convertKitField'] = $fields;
-            wp_send_json_success($response);
+            Response::success($response);
         }
     }
 
