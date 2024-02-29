@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\CampaignMonitor\CampaignMonitorController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('campaign_monitor_authorize', [CampaignMonitorController::class, 'authorization']);
 Route::post('campaign_monitor_lists', [CampaignMonitorController::class, 'getAllLists']);

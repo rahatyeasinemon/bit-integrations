@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Sendy\SendyController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('sendy_authorize', [SendyController::class, 'sendyAuthorize']);
 Route::post('get_all_brands', [SendyController::class, 'getAllBrands']);

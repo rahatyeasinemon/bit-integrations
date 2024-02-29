@@ -5,6 +5,6 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\GiveWp\GiveWpController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('giveWp_authorize', [GiveWpController::class, 'authorizeGiveWp']);

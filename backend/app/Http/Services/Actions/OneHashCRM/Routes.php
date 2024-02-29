@@ -5,6 +5,6 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\OneHashCRM\OneHashCRMController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('onehashcrm_authentication', [OneHashCRMController::class, 'authentication']);

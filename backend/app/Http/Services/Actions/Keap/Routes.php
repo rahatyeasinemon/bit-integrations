@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Keap\KeapController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('keap_generate_token', [ KeapController::class, 'generateTokens']);
 // Route::post('keap_refresh_audience', [ KeapController::class, 'refreshAudience']);

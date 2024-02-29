@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Telegram\TelegramController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('telegram_authorize', [ TelegramController::class, 'telegramAuthorize']);
 Route::post('refresh_get_updates', [ TelegramController::class, 'refreshGetUpdates']);

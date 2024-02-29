@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\DirectIq\DirectIqController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('directIq_authorize', [DirectIqController::class, 'directIqAuthorize']);
 Route::post('directIq_headers', [DirectIqController::class, 'directIqHeaders']);

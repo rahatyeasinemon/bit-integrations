@@ -3,7 +3,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 use BitApps\BTCBI\Http\Services\Triggers\Tripetto\TripettoController;
 
 Route::get('tripetto/get', [TripettoController::class, 'getAll']);

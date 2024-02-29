@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\BenchMark\BenchMarkController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('benchMark_authorize', [BenchMarkController::class, 'benchMarkAuthorize']);
 Route::post('benchMark_headers', [BenchMarkController::class, 'benchMarkHeaders']);

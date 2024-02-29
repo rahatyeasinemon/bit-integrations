@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Vbout\VboutController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('vbout_handle_authorize', [VboutController::class, 'handleAuthorize']);
 Route::post('vbout_fetch_all_lists', [VboutController::class, 'fetchAllLists']);

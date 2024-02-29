@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\OneDrive\OneDriveController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('oneDrive_authorization', [OneDriveController::class, 'authorization']);
 Route::post('oneDrive_get_all_folders', [OneDriveController::class, 'getAllFolders']);

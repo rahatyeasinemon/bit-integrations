@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\ConvertKit\ConvertKitController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('convertKit_authorize', [ConvertKitController::class, 'convertKitAuthorize']);
 Route::post('convertKit_headers', [ConvertKitController::class, 'convertKitHeaders']);

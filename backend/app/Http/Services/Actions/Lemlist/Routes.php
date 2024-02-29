@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Lemlist\LemlistController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('lemlist_authorize', [LemlistController::class, 'authorization']);
 Route::post('lemlist_campaigns', [LemlistController::class, 'getAllCampaign']);

@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Hubspot\HubspotController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('hubSpot_authorization', [HubspotController::class, 'authorization']);
 Route::post('getFields', [HubspotController::class, 'getFields']);

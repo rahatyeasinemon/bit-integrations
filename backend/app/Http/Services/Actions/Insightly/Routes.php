@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Insightly\InsightlyController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('insightly_authentication', [InsightlyController::class, 'authentication']);
 Route::post('insightly_fetch_all_organisations', [InsightlyController::class, 'getAllOrganisations']);

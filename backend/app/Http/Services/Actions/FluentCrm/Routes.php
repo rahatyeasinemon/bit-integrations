@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\FluentCrm\FluentCrmController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('fluent_crm_authorize', [FluentCrmController::class, 'fluentCrmAuthorize']);
 Route::post('refresh_fluent_crm_lists', [FluentCrmController::class, 'fluentCrmLists']);

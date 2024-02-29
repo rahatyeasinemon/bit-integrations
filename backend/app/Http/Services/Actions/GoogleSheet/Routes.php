@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 use BitApps\BTCBI\Http\Services\Actions\GoogleSheet\GoogleSheetController;
 
 Route::post('gsheet_generate_token', [GoogleSheetController::class, 'generateTokens']);

@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\ActiveCampaign\ActiveCampaignController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('aCampaign_authorize', [ActiveCampaignController::class, 'activeCampaignAuthorize']);
 Route::post('aCampaign_headers', [ActiveCampaignController::class, 'activeCampaignHeaders']);

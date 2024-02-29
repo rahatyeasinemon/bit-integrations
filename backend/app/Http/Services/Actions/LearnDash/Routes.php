@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\LearnDash\LearnDashController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('learnDash_authorize', [LearnDashController::class, 'authorizeRestrictContent']);
 Route::post('learDash_fetch_all_course', [LearnDashController::class, 'getCourses']);

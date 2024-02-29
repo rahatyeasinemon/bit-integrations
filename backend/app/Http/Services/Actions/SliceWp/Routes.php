@@ -5,6 +5,6 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\SliceWp\SliceWpController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('slicewp_authorize', [SliceWpController::class, 'authorizeSliceWp']);

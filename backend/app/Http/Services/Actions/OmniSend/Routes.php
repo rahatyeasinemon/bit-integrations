@@ -5,6 +5,6 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\OmniSend\OmniSendController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('Omnisend_authorization', [OmniSendController::class, 'authorization']);

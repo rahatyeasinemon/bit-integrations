@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Rapidmail\RapidmailController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 //Rapidmail
 Route::post('rapidmail_authorization', [RapidmailController::class, 'checkAuthorization']);
