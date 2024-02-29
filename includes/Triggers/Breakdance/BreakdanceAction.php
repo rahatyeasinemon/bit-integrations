@@ -31,18 +31,34 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
         public function run($form, $settings, $extra)
         {
             error_log(print_r(['path' => BreakdanceHelper::setFields($extra, $form), 'name' => 'Action', 'form' => $form, 'settings' => $settings, 'extra' => $extra], true));
+            $formData = BreakdanceHelper::setFields($extra, $form);
             if (get_option('btcbi_breakdance_test') !== false) {
-                $formData = BreakdanceHelper::setFields($extra, $form);
                 update_option('btcbi_breakdance_test', $formData);
             }
 
-            $reOrganizeId = "{$extra['formId']}-{$extra['postId']}";
-            $flows = Flow::exists('Breakdance', $reOrganizeId);
+            $reOrganizeId   = "{$extra['formId']}-{$extra['postId']}";
+
+            global $wpdb;
+            $flows = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT triggered_entity, triggered_entity_id, flow_details 
+                    FROM wp_btcbi_flow 
+                    WHERE status = true 
+                    AND triggered_entity = 'Breakdance' 
+                    AND (triggered_entity_id = 'BreakdanceHook' 
+                    OR triggered_entity_id = %s)",
+                    $reOrganizeId
+                )
+            );
+
+            // $flows          = Flow::exists('Breakdance', $reOrganizeId);
             if (!$flows) {
                 return;
             }
 
-            $data = $extra['fields'];
+            // $data           = $extra['fields'];
+            // $data['formId'] = $extra['formId'];
+            // $data['postId'] = $extra['postId'];
 
             Flow::execute('Breakdance', $reOrganizeId, $data, $flows);
 
