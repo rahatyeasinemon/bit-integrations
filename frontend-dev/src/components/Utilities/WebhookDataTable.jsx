@@ -8,6 +8,7 @@ export default function WebhookDataTable({ data, flow, setFlow }) {
 
   const types = [
     { key: 'text', value: 'text' },
+    { key: 'email', value: 'email' },
     { key: 'file', value: 'file' },
     { key: 'array', value: 'array' },
     { key: 'object', value: 'object' },

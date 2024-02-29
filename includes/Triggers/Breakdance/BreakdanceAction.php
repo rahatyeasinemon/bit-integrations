@@ -3,6 +3,7 @@
 namespace BitCode\FI\Triggers\Breakdance;
 
 use BitCode\FI\Flow\Flow;
+use BitCode\FI\Core\Util\Helper;
 use Breakdance\Forms\Actions\Action;
 use BitCode\FI\Triggers\Breakdance\BreakdanceHelper;
 
@@ -45,7 +46,6 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
                 update_option('btcbi_breakdance_test', $testData);
             }
 
-
             global $wpdb;
             $flows = $wpdb->get_results(
                 $wpdb->prepare(
@@ -68,12 +68,12 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
 
                 if (isset($flowDetails->primaryKey)) {
                     $data               = [];
-                    $primaryKeyValue    = BreakdanceHelper::extractValueFromPath($extra, $flowDetails->primaryKey->key);
+                    $primaryKeyValue    = Helper::extractValueFromPath($extra, $flowDetails->primaryKey->key);
 
                     if ($flowDetails->primaryKey->value != $primaryKeyValue) continue;
 
                     foreach ($formData as $field) {
-                        $value                  = BreakdanceHelper::extractValueFromPath($extra, $field['name']);
+                        $value                  = Helper::extractValueFromPath($extra, $field['name']);
                         $data[$field['name']]   = $field['type'] != 'file' ? $value : explode(',', $value);
                     }
 
