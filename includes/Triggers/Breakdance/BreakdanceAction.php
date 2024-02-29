@@ -30,8 +30,6 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
          */
         public function run($form, $settings, $extra)
         {
-            error_log(print_r(['path' => BreakdanceHelper::setFields($extra, $form), 'name' => 'Action', 'form' => $form, 'settings' => $settings, 'extra' => $extra], true));
-
             $reOrganizeId   = "{$extra['formId']}-{$extra['postId']}";
             $formData       = BreakdanceHelper::setFields($extra, $form);
 
@@ -75,7 +73,8 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
                     if ($flowDetails->primaryKey->value != $primaryKeyValue) continue;
 
                     foreach ($formData as $field) {
-                        $data[$field['name']] = BreakdanceHelper::extractValueFromPath($extra, $field['name']);
+                        $value                  = BreakdanceHelper::extractValueFromPath($extra, $field['name']);
+                        $data[$field['name']]   = $field['type'] != 'file' ? $value : explode(',', $value);
                     }
 
                     Flow::execute('Breakdance', 'BreakdanceHook', $data, array($flow));
