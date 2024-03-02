@@ -23,7 +23,7 @@ class ZohoSheetController
             empty($requestParams->{'accounts-server'}) || empty($requestParams->dataCenter) || empty($requestParams->clientId)
             || empty($requestParams->clientSecret) || empty($requestParams->redirectURI) || empty($requestParams->code)
         ) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint   = \urldecode($requestParams->{'accounts-server'}) . '/oauth/v2/token';
@@ -42,7 +42,7 @@ class ZohoSheetController
         }
 
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public static function getAllWorkbooks($requestParams)
@@ -51,7 +51,7 @@ class ZohoSheetController
             empty($requestParams->tokenDetails) || empty($requestParams->clientId) || empty($requestParams->clientSecret)
             || empty($requestParams->dataCenter)
         ) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret, $requestParams->dataCenter);
@@ -69,9 +69,9 @@ class ZohoSheetController
                     'name' => $workbook->workbook_name
                 ];
             }
-            Response::success($workbooks);
+            return Response::success($workbooks);
         } else {
-            Response::error('Workbooks fetching failed', 400);
+            return Response::error('Workbooks fetching failed', 400);
         }
     }
 
@@ -81,7 +81,7 @@ class ZohoSheetController
             empty($requestParams->tokenDetails) || empty($requestParams->clientId) || empty($requestParams->clientSecret)
             || empty($requestParams->dataCenter) || empty($requestParams->workbook)
         ) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret, $requestParams->dataCenter);
@@ -99,9 +99,9 @@ class ZohoSheetController
                     'name' => $worksheet->worksheet_name
                 ];
             }
-            Response::success($worksheets);
+            return Response::success($worksheets);
         } else {
-            Response::error('Workbooks fetching failed', 400);
+            return Response::error('Workbooks fetching failed', 400);
         }
     }
 
@@ -112,7 +112,7 @@ class ZohoSheetController
             || empty($requestParams->dataCenter) || empty($requestParams->workbook) || empty($requestParams->worksheet)
             || empty($requestParams->headerRow)
         ) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret, $requestParams->dataCenter);
@@ -133,12 +133,12 @@ class ZohoSheetController
                         'required' => false
                     ];
                 }
-                Response::success($sheetHeaders);
+                return Response::success($sheetHeaders);
             } else {
-                Response::error('No header found', 400);
+                return Response::error('No header found', 400);
             }
         } else {
-            Response::error('Header fetching failed', 400);
+            return Response::error('Header fetching failed', 400);
         }
     }
 

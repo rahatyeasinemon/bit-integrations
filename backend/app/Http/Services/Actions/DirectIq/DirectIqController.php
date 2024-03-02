@@ -117,7 +117,7 @@ class DirectIqController
             }
 
             $response['directIqLists'] = $lists;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -164,7 +164,7 @@ class DirectIqController
 
             $response['directIqField'] = $fields;
 
-            Response::success($response);
+            return Response::success($response);
         }
     }
 

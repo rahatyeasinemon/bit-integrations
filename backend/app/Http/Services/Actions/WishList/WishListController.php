@@ -84,7 +84,7 @@ final class WishListController
             ];
         }
         $response['levellists'] = $data;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function getAllMembers($queryParams)
@@ -117,7 +117,7 @@ final class WishListController
             ];
         }
         $response['memberlists'] = $data;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

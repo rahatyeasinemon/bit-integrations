@@ -40,7 +40,7 @@ class GroundhoggController
 
         if ($apiResponse->status === 'success') {
             $apiResponse;
-            Response::success($apiResponse);
+            return Response::success($apiResponse);
         } else {
             Response::error(
                 'There is an error .',
@@ -74,7 +74,7 @@ class GroundhoggController
 
         if ($apiResponse->status === 'success') {
             $apiResponse;
-            Response::success($apiResponse);
+            return Response::success($apiResponse);
         } else {
             Response::error(
                 'There is an error .',

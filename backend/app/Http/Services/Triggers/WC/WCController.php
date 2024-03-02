@@ -34,7 +34,7 @@ final class WCController
     public function getAll()
     {
         if (!class_exists('WooCommerce')) {
-            Response::error(__('WooCommerce is not installed or activated', 'bit-integrations'));
+            return Response::error(__('WooCommerce is not installed or activated', 'bit-integrations'));
         }
         $types = [
             'Customer-Create', 'Customer-Edit', 'Customer-Delete', 'Product-Create', 'Product-Edit', 'Product-Delete', 'Order-Create', 'Order-Edit', 'Order-Delete', 'Order-Specific-Product', 'Order-Status-Change-Specific-Status', 'User-Subscribes-Product', 'User-Cancel-Subscription-Product', 'Expired-Subscription-Product', 'Subscription-Product-Status-Change', 'Subscription-Trial-Period-End', 'Order-Specific-Category', 'Booking-Created', 'User reviews a product',
@@ -47,20 +47,20 @@ final class WCController
                 'title' => $type,
             ];
         }
-        Response::success($wc_action);
+        return Response::success($wc_action);
     }
 
     public function get_trigger_field($data)
     {
         if (!class_exists('WooCommerce')) {
-            Response::error(__('WooCommerce is not installed or activated', 'bit-integrations'));
+            return Response::error(__('WooCommerce is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__(' Doesn\'t exists', 'bit-integrations'));
+            return Response::error(__(' Doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
         if (empty($fields)) {
-            Response::error(__('Doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
@@ -118,7 +118,7 @@ final class WCController
             $responseData['allVariableProduct'] = WCHelper::getAllWcVariableProduct();
         }
 
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($id)
@@ -1930,13 +1930,13 @@ final class WCController
     public static function getOrderStatus()
     {
         $orderStatuses = wc_get_order_statuses();
-        Response::success($orderStatuses);
+        return Response::success($orderStatuses);
     }
 
     public static function getSubscriptionProduct()
     {
         $subscriptions = self::getAllSubscriptions();
-        Response::success($subscriptions);
+        return Response::success($subscriptions);
     }
 
     public static function getSubscriptionStatus()
@@ -1952,7 +1952,7 @@ final class WCController
         } else {
             $subscription_statuses = (array) $anyStatus;
         }
-        Response::success($subscription_statuses);
+        return Response::success($subscription_statuses);
     }
 
     public static function getWooCommerceProduct()
@@ -1973,7 +1973,7 @@ final class WCController
                 'product_sku' => $productSku,
             ];
         }
-        Response::success($allProducts);
+        return Response::success($allProducts);
     }
 
     public static function getProductCategories()
@@ -1997,7 +1997,7 @@ final class WCController
                 'name' => $category->name,
             ];
         }
-        Response::success($product_categories);
+        return Response::success($product_categories);
     }
 
     public static function getUserInfo($user_id)
@@ -2021,6 +2021,6 @@ final class WCController
     public static function getVariationOfProduct($requestPrarams)
     {
         $allVariation = WCHelper::getAllVariations($requestPrarams->product_id);
-        Response::success($allVariation);
+        return Response::success($allVariation);
     }
 }

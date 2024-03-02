@@ -39,7 +39,7 @@ class OmniSendController
 
         $response = Http::request($apiEndpoint, 'Get', null, $header);
         if (isset($response->contacts)) {
-            Response::success('');
+            return Response::success('');
         } else {
             Response::error(
                 'The token is invalid',

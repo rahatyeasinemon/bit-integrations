@@ -45,7 +45,7 @@ final class RestrictContentController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('Restrict Content is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Restrict Content is not installed or activated', 'bit-integrations'));
         }
         // A user's membership to a specific level expires Pro
         // A user's membership to a specific level is cancelled Pro
@@ -58,21 +58,21 @@ final class RestrictContentController
                 'title' => $type,
             ];
         }
-        Response::success($restrictContent_action);
+        return Response::success($restrictContent_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('Restrict Content is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Restrict Content is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         // query for levels
@@ -95,7 +95,7 @@ final class RestrictContentController
         $responseData['allMembership'] = $organizelevels;
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($id)
@@ -140,7 +140,7 @@ final class RestrictContentController
     public static function get_all_membership()
     {
         if (!self::pluginActive()) {
-            Response::error(__('Restrict Content is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Restrict Content is not installed or activated', 'bit-integrations'));
         }
         global $wpdb;
 

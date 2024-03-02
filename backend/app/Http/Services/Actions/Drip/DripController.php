@@ -56,7 +56,7 @@ class DripController
             );
         }
 
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -97,7 +97,7 @@ class DripController
             }
 
             $response['dripCampaigns'] = $campaigns;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -151,7 +151,7 @@ class DripController
 
             $response['dripField'] = $fields;
 
-            Response::success($response);
+            return Response::success($response);
         }
     }
 

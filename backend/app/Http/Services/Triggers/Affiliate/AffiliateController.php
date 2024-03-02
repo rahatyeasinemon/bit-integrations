@@ -43,7 +43,7 @@ final class AffiliateController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('AffiliateWP is not installed or activated', 'bit-integrations'));
+            return Response::error(__('AffiliateWP is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['A new affiliate is approved', 'A user becomes an affiliate','An affiliate makes a referral of a specific type','An affiliates referral of a specific type is rejected Pro','An affiliates referral of a specific type is paid Pro'];
@@ -55,21 +55,21 @@ final class AffiliateController
                 'title' => $type,
             ];
         }
-        Response::success($affiliate_action);
+        return Response::success($affiliate_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('AffiliateWP is not installed or activated', 'bit-integrations'));
+            return Response::error(__('AffiliateWP is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
 
@@ -89,7 +89,7 @@ final class AffiliateController
         }
         $responseData['allType'] = $organizeType;
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($id)

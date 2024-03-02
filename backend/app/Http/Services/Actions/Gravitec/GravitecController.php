@@ -18,7 +18,7 @@ class GravitecController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->site_url) || empty($fieldsRequestParams->app_key) || empty($fieldsRequestParams->app_secret)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $headers = [
@@ -39,9 +39,9 @@ class GravitecController
         $response     = Http::request($apiEndpoint, 'Post', json_encode($data), $headers);
 
         if (isset($response->id)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid Site Url, App Key & App Secret', 400);
+            return Response::error('Please enter valid Site Url, App Key & App Secret', 400);
         }
     }
 

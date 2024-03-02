@@ -28,7 +28,7 @@ class WooCommerceController
             Response::success(true);
         }
 
-        Response::error(__('WooCommerce must be activated!', 'bit-integrations'));
+        return Response::error(__('WooCommerce must be activated!', 'bit-integrations'));
     }
 
     public static function metaboxFields($module)
@@ -734,7 +734,7 @@ class WooCommerceController
                 'required' => $required
             ];
 
-            Response::success($response);
+            return Response::success($response);
         }
 
         uksort($fields, 'strnatcasecmp');
@@ -746,7 +746,7 @@ class WooCommerceController
             'required' => $required
         ];
 
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function searchProjects($queryParams)
@@ -765,7 +765,7 @@ class WooCommerceController
             }
         }
 
-        Response::success($products);
+        return Response::success($products);
     }
 
     public static function allSubscriptionsProducts()
@@ -795,7 +795,7 @@ class WooCommerceController
                 'product_name' => $val->post_title,
             ];
         }
-        Response::success($subscriptions);
+        return Response::success($subscriptions);
     }
 
     public function execute($integrationData, $fieldValues)

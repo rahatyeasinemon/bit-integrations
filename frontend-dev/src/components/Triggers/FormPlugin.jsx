@@ -22,6 +22,7 @@ const FormPlugin = () => {
   const [snack, setSnackbar] = useState({ show: false, msg: '' })
   const [isLoad, setIsLoad] = useState(false)
 
+  console.log('data', data)
   // const setFlowData = (val, type) => {
   //   const tmpFlow = { ...newFlow }
   //   tmpFlow.triggerData[type] = val

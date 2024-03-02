@@ -15,7 +15,7 @@ final class UserController
     {
         $users = get_users(['fields' => ['display_name', 'ID']]);
 
-        Response::success($users);
+        return Response::success($users);
     }
 
     public function getUserRoles()
@@ -28,6 +28,6 @@ final class UserController
             $roles[$key]['key'] = $index;
             $roles[$key]['name'] = $role;
         }
-        Response::success($roles);
+        return Response::success($roles);
     }
 }

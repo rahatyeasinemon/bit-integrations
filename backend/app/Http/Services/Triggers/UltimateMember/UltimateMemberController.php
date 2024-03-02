@@ -42,7 +42,7 @@ final class UltimateMemberController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('Ultimate Member is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Ultimate Member is not installed or activated', 'bit-integrations'));
         }
 
         $loginForms = UltimateMemberHelper::getAllLoginAndRegistrationForm('login');
@@ -61,21 +61,21 @@ final class UltimateMemberController
                 'title' => $type['title'],
             ];
         }
-        Response::success($ultimateMember_action);
+        return Response::success($ultimateMember_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('Ultimate Member is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Ultimate Member is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = UltimateMemberHelper::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
@@ -83,7 +83,7 @@ final class UltimateMemberController
         if ($id == 'roleSpecificChange') {
             $responseData['allRole'] = UltimateMemberHelper::getRoles();
         }
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function handleUserLogViaForm($um_args)
@@ -151,6 +151,6 @@ final class UltimateMemberController
     public static function getUMrole()
     {
         $roles = UltimateMemberHelper::getRoles();
-        Response::success($roles);
+        return Response::success($roles);
     }
 }

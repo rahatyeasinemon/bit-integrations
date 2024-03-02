@@ -48,9 +48,9 @@ class MailBlusterController
         }
 
         if (property_exists($response, 'fields')) {
-            Response::success($customFields);
+            return Response::success($customFields);
         } else {
-            Response::error('Please enter valid API key', 400);
+            return Response::error('Please enter valid API key', 400);
         }
     }
 

@@ -26,7 +26,7 @@ class NutshellCRMController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->user_name) || empty($fieldsRequestParams->api_token) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -55,16 +55,16 @@ class NutshellCRMController
 
 
         if (isset($response->result)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid User Name & Secret or Access Api URL', 400);
+            return Response::error('Please enter valid User Name & Secret or Access Api URL', 400);
         }
     }
 
     public function getCompanies($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $userName       = $fieldsRequestParams->user_name;
@@ -85,16 +85,16 @@ class NutshellCRMController
                     'name' => $company->name
                 ];
             }
-            Response::success($companies);
+            return Response::success($companies);
         } else {
-            Response::error('Contacts fetching failed', 400);
+            return Response::error('Contacts fetching failed', 400);
         }
     }
 
     public function getContacts($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $userName       = $fieldsRequestParams->user_name;
@@ -115,16 +115,16 @@ class NutshellCRMController
                     'name' => $contact->name
                 ];
             }
-            Response::success($contacts);
+            return Response::success($contacts);
         } else {
-            Response::error('Contacts fetching failed', 400);
+            return Response::error('Contacts fetching failed', 400);
         }
     }
 
     public function getProducts($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $userName       = $fieldsRequestParams->user_name;
@@ -145,16 +145,16 @@ class NutshellCRMController
                     'name' => $product->name
                 ];
             }
-            Response::success($products);
+            return Response::success($products);
         } else {
-            Response::error('Products fetching failed', 400);
+            return Response::error('Products fetching failed', 400);
         }
     }
 
     public function getSources($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $userName       = $fieldsRequestParams->user_name;
@@ -175,16 +175,16 @@ class NutshellCRMController
                     'name' => $source->name
                 ];
             }
-            Response::success($sources);
+            return Response::success($sources);
         } else {
-            Response::error('Sources fetching failed', 400);
+            return Response::error('Sources fetching failed', 400);
         }
     }
 
     public function getTags($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $userName       = $fieldsRequestParams->user_name;
@@ -205,16 +205,16 @@ class NutshellCRMController
                     'name' => $tag
                 ];
             }
-            Response::success($tags);
+            return Response::success($tags);
         } else {
-            Response::error('Tags fetching failed', 400);
+            return Response::error('Tags fetching failed', 400);
         }
     }
 
     public function getCompanyTypes($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->user_name || $fieldsRequestParams->api_token)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $userName       = $fieldsRequestParams->user_name;
@@ -235,9 +235,9 @@ class NutshellCRMController
                     'name' => $companyType->name
                 ];
             }
-            Response::success($companyTypes);
+            return Response::success($companyTypes);
         } else {
-            Response::error('CompanyTypes fetching failed', 400);
+            return Response::error('CompanyTypes fetching failed', 400);
         }
     }
 

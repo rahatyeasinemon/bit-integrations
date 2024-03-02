@@ -111,7 +111,7 @@ class ZagoMailController
                 ];
             }
             $response['zagoMailLists'] = $lists;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -156,7 +156,7 @@ class ZagoMailController
                 ];
             }
             $response['zagoMailTags'] = $tags;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -203,7 +203,7 @@ class ZagoMailController
             }
 
             $response['zagoMailField'] = $fields;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 

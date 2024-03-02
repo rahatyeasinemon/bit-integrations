@@ -26,7 +26,7 @@ class CompanyHubController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->sub_domain) || empty($fieldsRequestParams->api_key) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -46,9 +46,9 @@ class CompanyHubController
         $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->Success) && !$response->Success) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid Sub Domain & API Key', 400);
+            return Response::error('Please enter valid Sub Domain & API Key', 400);
         }
     }
 
@@ -70,9 +70,9 @@ class CompanyHubController
                     ]
                 );
             }
-            Response::success($companies);
+            return Response::success($companies);
         } else {
-            Response::error('Companies fetching failed', 400);
+            return Response::error('Companies fetching failed', 400);
         }
     }
 
@@ -94,9 +94,9 @@ class CompanyHubController
                     ]
                 );
             }
-            Response::success($contacts);
+            return Response::success($contacts);
         } else {
-            Response::error('Contacts fetching failed', 400);
+            return Response::error('Contacts fetching failed', 400);
         }
     }
 

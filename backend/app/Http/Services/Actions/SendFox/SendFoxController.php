@@ -34,7 +34,7 @@ class SendFoxController
 
         $response = Http::request($apiEndpoint, 'Get', null, $requestParams);
         if ($response->message !== 'Unauthenticated.') {
-            Response::success($response);
+            return Response::success($response);
         } else {
             Response::error(
                 'The token is invalid',
@@ -64,7 +64,7 @@ class SendFoxController
         $response = Http::request($apiEndpoint, 'Get', null, $requestParams);
 
         if ($response->message !== 'Unauthenticated.') {
-            Response::success($response);
+            return Response::success($response);
         } else {
             Response::error(
                 'The token is invalid',

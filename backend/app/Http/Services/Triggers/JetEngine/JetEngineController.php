@@ -47,7 +47,7 @@ final class JetEngineController
             ['id' => 2, 'title' => 'A user updates a specific JetEngine field on a specific post type a specific value'],
         ];
 
-        Response::success($triggers);
+        return Response::success($triggers);
     }
 
     public function get_a_form($data)
@@ -73,10 +73,10 @@ final class JetEngineController
         $responseData['fields'] = self::fields($data->id);
 
         if (count($responseData['fields']) <= 0) {
-            Response::error(__('Form fields doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form fields doesn\'t exists', 'bit-integrations'));
         }
 
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function post_meta_data($meta_id, $post_id, $meta_key, $meta_value)
@@ -135,14 +135,14 @@ final class JetEngineController
     {
         $types = array_values(JetEngineHelper::getPostTypes());
         array_unshift($types, ['id' => 'any-post-type', 'title' => 'Any Post Type']);
-        Response::success($types);
+        return Response::success($types);
     }
 
     public static function getAllPosts()
     {
         $posts = JetEngineHelper::getPostTitles();
         array_unshift($posts, ['id' => 'any-post', 'title' => 'Any Post']);
-        Response::success($posts);
+        return Response::success($posts);
     }
 }
 

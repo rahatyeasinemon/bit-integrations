@@ -45,7 +45,7 @@ class MoosendController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
 

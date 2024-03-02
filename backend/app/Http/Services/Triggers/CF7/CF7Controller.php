@@ -34,7 +34,7 @@ final class CF7Controller
     public function getAll()
     {
         if (!class_exists('WPCF7_ContactForm')) {
-            Response::error(__('Contact Form 7 is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Contact Form 7 is not installed or activated', 'bit-integrations'));
         }
         $forms = \WPCF7_ContactForm::find();
         $all_forms = [];
@@ -44,7 +44,7 @@ final class CF7Controller
                 'title' => $form->title()
             ];
         }
-        Response::success($all_forms);
+        return Response::success($all_forms);
     }
     public function get_a_form($data)
     {
@@ -57,11 +57,11 @@ final class CF7Controller
             Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($form_id)

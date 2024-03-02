@@ -26,7 +26,7 @@ class NimbleController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -74,9 +74,9 @@ class NimbleController
         $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->user_id)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid API Key', 400);
+            return Response::error('Please enter valid API Key', 400);
         }
     }
 
@@ -144,7 +144,7 @@ class NimbleController
                 200
             );
         } else {
-            Response::error('Field fetching failed', 400);
+            return Response::error('Field fetching failed', 400);
         }
     }
 

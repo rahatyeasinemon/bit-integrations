@@ -35,7 +35,7 @@ final class ForminatorController
     public function getAll()
     {
         if (!class_exists('Forminator')) {
-            Response::error(__('Forminator is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Forminator is not installed or activated', 'bit-integrations'));
         }
 
 
@@ -51,26 +51,26 @@ final class ForminatorController
             }
         }
 
-        Response::success($all_forms);
+        return Response::success($all_forms);
     }
 
     public function get_a_form($data)
     {
         if (!class_exists('Forminator')) {
-            Response::error(__('Forminator is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Forminator is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
 
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($form_id)

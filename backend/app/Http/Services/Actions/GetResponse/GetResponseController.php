@@ -49,7 +49,7 @@ class GetResponseController
         }
 
         if ($response !== 'Unauthorized') {
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
             Response::error(
                 'The token is invalid',
@@ -88,7 +88,7 @@ class GetResponseController
         }
 
         if ($response !== 'Unauthorized') {
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
             Response::error(
                 'The token is invalid',
@@ -128,9 +128,9 @@ class GetResponseController
         }
 
         if (property_exists($response[0], 'campaignId')) {
-            Response::success($campaigns);
+            return Response::success($campaigns);
         } else {
-            Response::error('Please enter valid API key', 400);
+            return Response::error('Please enter valid API key', 400);
         }
     }
 

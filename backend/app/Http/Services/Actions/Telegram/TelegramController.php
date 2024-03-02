@@ -111,7 +111,7 @@ class TelegramController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

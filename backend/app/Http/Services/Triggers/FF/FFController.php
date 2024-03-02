@@ -36,7 +36,7 @@ final class FFController
     public function getAll()
     {
         if (!function_exists('wpFluent')) {
-            Response::error(__('Fluent Form is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Fluent Form is not installed or activated', 'bit-integrations'));
         }
         $forms = wpFluent()->table('fluentform_forms')->select('id', 'title')->get();
         $all_forms = [];
@@ -46,7 +46,7 @@ final class FFController
                 'title' => $form->title
             ];
         }
-        Response::success($all_forms);
+        return Response::success($all_forms);
     }
 
     private static function _getFieldLabel($field)
@@ -64,15 +64,15 @@ final class FFController
     public function get_a_form($data)
     {
         if (empty($data->id)) {
-            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($form_id)

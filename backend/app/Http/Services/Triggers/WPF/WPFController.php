@@ -49,7 +49,7 @@ final class WPFController
     public function getAll()
     {
         if (!function_exists('WPForms')) {
-            Response::error(__('WPForms is not installed or activated', 'bit-integrations'));
+            return Response::error(__('WPForms is not installed or activated', 'bit-integrations'));
         }
         $forms = \WPForms()->form->get();
         $all_forms = [];
@@ -61,23 +61,23 @@ final class WPFController
                 ];
             }
         }
-        Response::success($all_forms);
+        return Response::success($all_forms);
     }
     public function get_a_form($data)
     {
         if (!function_exists('WPForms')) {
-            Response::error(__('WPForms is not installed or activated', 'bit-integrations'));
+            return Response::error(__('WPForms is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($form_id)

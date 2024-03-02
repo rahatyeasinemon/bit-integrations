@@ -29,7 +29,7 @@ class WPCoursewareController
     public static function wpCoursewareAuthorize()
     {
         if (!is_plugin_active('wp-courseware/wp-courseware.php')) {
-            Response::error(__('WP Courseware Plugin is not active or installed', 'bit-integrations'), 400);
+            return Response::error(__('WP Courseware Plugin is not active or installed', 'bit-integrations'), 400);
         } else {
             Response::success(true);
         }
@@ -38,7 +38,7 @@ class WPCoursewareController
     public static function WPCWActions()
     {
         if (!is_plugin_active('wp-courseware/wp-courseware.php')) {
-            Response::error(__('WP Courseware Plugin is not active or installed', 'bit-integrations'), 400);
+            return Response::error(__('WP Courseware Plugin is not active or installed', 'bit-integrations'), 400);
         }
 
         $actions = [];
@@ -50,13 +50,13 @@ class WPCoursewareController
         }
 
         $response['WPCWActions'] = $actions;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function WPCWCourses()
     {
         if (!is_plugin_active('wp-courseware/wp-courseware.php')) {
-            Response::error(__('WP Courseware Plugin is not active or installed', 'bit-integrations'), 400);
+            return Response::error(__('WP Courseware Plugin is not active or installed', 'bit-integrations'), 400);
         }
 
         $wpcwCourses = function_exists('wpcw_get_courses') ? wpcw_get_courses() : [];
@@ -74,7 +74,7 @@ class WPCoursewareController
         }
 
         $response['WPCWCourses'] = $courses;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

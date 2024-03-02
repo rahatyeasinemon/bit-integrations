@@ -20,7 +20,7 @@ class AirtableController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -40,16 +40,16 @@ class AirtableController
                     ];
                 }
             }
-            Response::success($bases);
+            return Response::success($bases);
         } else {
-            Response::error('Authentication failed', 400);
+            return Response::error('Authentication failed', 400);
         }
     }
 
     public function getAllTables($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->baseId)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -68,16 +68,16 @@ class AirtableController
                     'name' => $table->name,
                 ];
             }
-            Response::success($tables);
+            return Response::success($tables);
         } else {
-            Response::error('Tables fetching failed', 400);
+            return Response::error('Tables fetching failed', 400);
         }
     }
 
     public function getAllFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->baseId) || empty($fieldsRequestParams->tableId)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -105,9 +105,9 @@ class AirtableController
                     }
                 }
             }
-            Response::success($fields);
+            return Response::success($fields);
         } else {
-            Response::error('Table fields fetching failed', 400);
+            return Response::error('Table fields fetching failed', 400);
         }
     }
 

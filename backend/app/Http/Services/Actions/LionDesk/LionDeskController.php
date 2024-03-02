@@ -26,7 +26,7 @@ class LionDeskController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->token_details->access_token) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -77,7 +77,7 @@ class LionDeskController
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     /**
@@ -140,12 +140,12 @@ class LionDeskController
                         'label' => $customField->name,
                     ];
                 }
-                Response::success($customFields);
+                return Response::success($customFields);
             } else {
-                Response::error($response->message, 400);
+                return Response::error($response->message, 400);
             }
         } else {
-            Response::error('Custom field fetching failed', 400);
+            return Response::error('Custom field fetching failed', 400);
         }
     }
 
@@ -170,12 +170,12 @@ class LionDeskController
                         'tag' => $tag->content
                     ];
                 }
-                Response::success($tags);
+                return Response::success($tags);
             } else {
-                Response::error($response->message, 400);
+                return Response::error($response->message, 400);
             }
         } else {
-            Response::error('Tags fetching failed', 400);
+            return Response::error('Tags fetching failed', 400);
         }
     }
 

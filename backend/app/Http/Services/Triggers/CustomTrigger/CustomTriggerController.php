@@ -23,7 +23,7 @@ class CustomTriggerController
         $hook_id = wp_generate_uuid4();
 
         if (!$hook_id) {
-            Response::error(__('Failed to generate new hook id', 'bit-integrations'));
+            return Response::error(__('Failed to generate new hook id', 'bit-integrations'));
         }
         add_option('btcbi_custom_trigger_' . $hook_id, [], '', 'no');
         Response::success(['hook_id' => $hook_id]);
@@ -80,6 +80,6 @@ class CustomTriggerController
         if (!$testData) {
             Response::error(new WP_Error('webhook_test', __('Failed to remove test data', 'bit-integrations')));
         }
-        Response::success(__('Webhook test data removed successfully', 'bit-integrations'));
+        return Response::success(__('Webhook test data removed successfully', 'bit-integrations'));
     }
 }

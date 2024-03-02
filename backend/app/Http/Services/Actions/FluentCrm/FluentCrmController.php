@@ -74,7 +74,7 @@ class FluentCrmController
         }
         $response['fluentCrmList'] = $fluentCrmList;
         $response['fluentCrmTags'] = $fluentCrmTags;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function fluentCrmTags()
@@ -90,7 +90,7 @@ class FluentCrmController
             ];
         }
         $response['fluentCrmTags'] = $fluentCrmTags;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function fluentCrmFields()
@@ -131,7 +131,7 @@ class FluentCrmController
             ];
         }
         $response['fluentCrmFlelds'] = $fieldOptions;
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**

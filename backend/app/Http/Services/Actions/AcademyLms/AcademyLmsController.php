@@ -29,13 +29,13 @@ class AcademyLmsController
             Response::success(true);
         }
 
-        Response::error(__('Academy Lms must be activated!', 'bit-integrations'));
+        return Response::error(__('Academy Lms must be activated!', 'bit-integrations'));
     }
 
     public static function getAllLesson()
     {
         if (!class_exists('Academy')) {
-            Response::error(__('Academy Lms is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Academy Lms is not installed or activated', 'bit-integrations'));
         }
 
         $lessons = [];
@@ -48,14 +48,14 @@ class AcademyLmsController
                 'lessonTitle' => $val->lesson_title,
             ];
         }
-        Response::success($lessons);
+        return Response::success($lessons);
     }
 
     public static function getAllCourse($queryParams)
     {
         $action = $queryParams->type;
         if (!class_exists('Academy')) {
-            Response::error(__('Academy Lms is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Academy Lms is not installed or activated', 'bit-integrations'));
         }
 
 
@@ -78,7 +78,7 @@ class AcademyLmsController
                 'courseTitle' => $val->post_title,
             ];
         }
-        Response::success($courses);
+        return Response::success($courses);
     }
 
     public static function enrollCourse($selectedCourse, $selectedAllCourse, $type)

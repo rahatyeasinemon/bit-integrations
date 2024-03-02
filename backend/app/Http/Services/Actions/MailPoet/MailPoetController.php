@@ -68,7 +68,7 @@ class MailPoetController
             ];
         }
         $response['newsletterList'] = $allList;
-        Response::success($response);
+        return Response::success($response);
     }
     public static function mailPoetListHeaders()
     {
@@ -86,7 +86,7 @@ class MailPoetController
             ];
         }
         $response['mailPoetFields'] = $allList;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

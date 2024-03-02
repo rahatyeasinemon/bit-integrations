@@ -93,7 +93,7 @@ class SendinBlueController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function refreshTemplate($requestsParams)
@@ -132,7 +132,7 @@ class SendinBlueController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
     public static function sendinblueHeaders($queryParams)
     {
@@ -162,7 +162,7 @@ class SendinBlueController
             }
             $fields['Email'] = (object) ['fieldId' => 'email', 'fieldName' => 'Email', 'required' => true];
             $response['sendinBlueField'] = $fields;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 

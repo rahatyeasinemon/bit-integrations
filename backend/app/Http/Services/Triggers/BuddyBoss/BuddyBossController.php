@@ -47,7 +47,7 @@ final class BuddyBossController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('BuddyBoss is not installed or activated', 'bit-integrations'));
+            return Response::error(__('BuddyBoss is not installed or activated', 'bit-integrations'));
         }
 
         $types = [
@@ -79,21 +79,21 @@ final class BuddyBossController
                 'title' => $type,
             ];
         }
-        Response::success($buddyboss_action);
+        return Response::success($buddyboss_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('BuddyBoss is not installed or activated', 'bit-integrations'));
+            return Response::error(__('BuddyBoss is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
@@ -113,7 +113,7 @@ final class BuddyBossController
             $responseData['groups'] = $groups;
         }
 
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function getAllForums()
@@ -548,7 +548,7 @@ final class BuddyBossController
                 ];
             }
         }
-        Response::success($topics);
+        return Response::success($topics);
     }
 
     public static function getActivityInfo($activity_id, $group_id, $user_id)
@@ -1057,6 +1057,6 @@ final class BuddyBossController
                 ];
             }
         }
-        Response::success($topics);
+        return Response::success($topics);
     }
 }

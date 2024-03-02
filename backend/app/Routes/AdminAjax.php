@@ -17,17 +17,17 @@ class AdminAjax
     public function updatedAppConfig($data)
     {
         if (!property_exists($data, 'data')) {
-            Response::error(__('Data can\'t be empty', 'bit-integrations'));
+            return Response::error(__('Data can\'t be empty', 'bit-integrations'));
         }
 
         update_option('btcbi_app_conf', $data->data);
-        Response::success(__('save successfully done', 'bit-integrations'));
+        return Response::success(__('save successfully done', 'bit-integrations'));
     }
 
     public function getAppConfig()
     {
         $data = get_option('btcbi_app_conf');
-        Response::success($data);
+        return Response::success($data);
     }
 
 }

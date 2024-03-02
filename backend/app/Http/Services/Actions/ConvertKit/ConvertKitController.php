@@ -94,7 +94,7 @@ class ConvertKitController
                 ];
             }
             $response['convertKitForms'] = $forms;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -133,7 +133,7 @@ class ConvertKitController
             }
             $response['convertKitTags'] = $tags;
 
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -176,7 +176,7 @@ class ConvertKitController
             $fields['Email'] = (object) ['fieldId' => 'email', 'fieldName' => 'Email', 'required' => true];
 
             $response['convertKitField'] = $fields;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 

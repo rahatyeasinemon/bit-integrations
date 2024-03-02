@@ -51,7 +51,7 @@ class BuddyBossController
         if (self::pluginActive()) {
             Response::success(true);
         }
-        Response::error(__('BuddyBoss must be activated!', 'bit-integrations'));
+        return Response::error(__('BuddyBoss must be activated!', 'bit-integrations'));
     }
 
     public static function getAllGroups()
@@ -61,9 +61,9 @@ class BuddyBossController
             global $wpdb;
             $groups = $wpdb->get_results("select id,name from {$wpdb->prefix}bp_groups");
 
-            Response::success($groups);
+            return Response::success($groups);
         }
-        Response::error(__('BuddyBoss must be activated!', 'bit-integrations'));
+        return Response::error(__('BuddyBoss must be activated!', 'bit-integrations'));
     }
 
     public static function getAllUser()
@@ -72,9 +72,9 @@ class BuddyBossController
         if (self::pluginActive()) {
             global $wpdb;
             $users = $wpdb->get_results("select ID,display_name from {$wpdb->prefix}users");
-            Response::success($users);
+            return Response::success($users);
         }
-        Response::error(__('BuddyBoss must be activated!', 'bit-integrations'));
+        return Response::error(__('BuddyBoss must be activated!', 'bit-integrations'));
     }
 
     public static function getAllForums()
@@ -128,7 +128,7 @@ class BuddyBossController
                 ];
         }
 
-        Response::success($topics);
+        return Response::success($topics);
     }
 
     // for action 11 - BuddyBoss update started

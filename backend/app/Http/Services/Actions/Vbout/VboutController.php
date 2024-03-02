@@ -40,7 +40,7 @@ class VboutController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function fetchAllLists($requestParams)
@@ -75,7 +75,7 @@ class VboutController
             }
         }
 
-        Response::success($formattedResponse);
+        return Response::success($formattedResponse);
     }
 
     public function vboutRefreshFields($requestParams)
@@ -109,7 +109,7 @@ class VboutController
             }
         }
 
-        Response::success($formattedResponse);
+        return Response::success($formattedResponse);
     }
 
     public function execute($integrationData, $fieldValues)

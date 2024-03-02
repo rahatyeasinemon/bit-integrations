@@ -50,7 +50,7 @@ class DiscordController
                 400
             );
         }
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
 
@@ -81,9 +81,9 @@ class DiscordController
                     'name' => $server->name
                 ];
             }
-            Response::success($servers);
+            return Response::success($servers);
         } else {
-            Response::error('Servers fetching failed', 400);
+            return Response::error('Servers fetching failed', 400);
         }
     }
 
@@ -115,9 +115,9 @@ class DiscordController
                     'name' => $channel->name
                 ];
             }
-            Response::success($channels);
+            return Response::success($channels);
         } else {
-            Response::error('Channels fetching failed', 400);
+            return Response::error('Channels fetching failed', 400);
         }
     }
 

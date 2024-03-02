@@ -38,7 +38,7 @@ final class RegistrationController
             ['id' => 5, 'title' => 'User delete account'],
         ];
 
-        Response::success($forms);
+        return Response::success($forms);
     }
 
     public static function fields($triggerId)
@@ -110,7 +110,7 @@ final class RegistrationController
             'type' => 'password',
         ];
 
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function userCreate()

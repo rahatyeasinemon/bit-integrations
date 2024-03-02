@@ -99,7 +99,7 @@ class BenchMarkController
                 ];
             }
             $response['benchMarkLists'] = $lists;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -147,7 +147,7 @@ class BenchMarkController
 
             $response['benchMarkField'] = $fields;
 
-            Response::success($response);
+            return Response::success($response);
         }
     }
 

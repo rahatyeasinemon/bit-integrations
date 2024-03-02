@@ -26,7 +26,7 @@ class ClickupController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -38,16 +38,16 @@ class ClickupController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->user)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid API key', 400);
+            return Response::error('Please enter valid API key', 400);
         }
     }
 
     public function getCustomFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -71,16 +71,16 @@ class ClickupController
                     'required' => $customField->required,
                 ];
             }
-            Response::success($customFields);
+            return Response::success($customFields);
         } else {
-            Response::error('Custom field fetching failed', 400);
+            return Response::error('Custom field fetching failed', 400);
         }
     }
 
     public function getAllTasks($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -97,9 +97,9 @@ class ClickupController
                     'name' => $task->name
                 ];
             }
-            Response::success($tasks);
+            return Response::success($tasks);
         } else {
-            Response::error('Task fetching failed', 400);
+            return Response::error('Task fetching failed', 400);
         }
     }
 
@@ -107,7 +107,7 @@ class ClickupController
     public function getAllTeams($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -126,16 +126,16 @@ class ClickupController
                     'name' => $team->name
                 ];
             }
-            Response::success($teams);
+            return Response::success($teams);
         } else {
-            Response::error('Teams fetching failed', 400);
+            return Response::error('Teams fetching failed', 400);
         }
     }
 
     public function getAllSpaces($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -154,16 +154,16 @@ class ClickupController
                     'name' => $space->name
                 ];
             }
-            Response::success($spaces);
+            return Response::success($spaces);
         } else {
-            Response::error('Spaces fetching failed', 400);
+            return Response::error('Spaces fetching failed', 400);
         }
     }
 
     public function getAllFolders($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -183,9 +183,9 @@ class ClickupController
                     'name' => $folder->name
                 ];
             }
-            Response::success($folders);
+            return Response::success($folders);
         } else {
-            Response::error('Folders fetching failed', 400);
+            return Response::error('Folders fetching failed', 400);
         }
     }
 
@@ -193,7 +193,7 @@ class ClickupController
     public function getAllLists($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -212,16 +212,16 @@ class ClickupController
                     'name' => $list->name
                 ];
             }
-            Response::success($lists);
+            return Response::success($lists);
         } else {
-            Response::error('Lists fetching failed', 400);
+            return Response::error('Lists fetching failed', 400);
         }
     }
 
     public function getAllTags($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -239,9 +239,9 @@ class ClickupController
                     'name' => $tag->name
                 ];
             }
-            Response::success($tags);
+            return Response::success($tags);
         } else {
-            Response::error('Tags fetching failed', 400);
+            return Response::error('Tags fetching failed', 400);
         }
     }
 

@@ -58,7 +58,7 @@ final class PostController
             ['id' => 9, 'title' => 'Post trashed']
         ];
 
-        Response::success($triggers);
+        return Response::success($triggers);
     }
 
     public function get_a_form($data)
@@ -89,10 +89,10 @@ final class PostController
         $responseData['fields'] = self::fields($data->id);
 
         if (count($responseData['fields']) <= 0) {
-            Response::error(__('Form fields doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form fields doesn\'t exists', 'bit-integrations'));
         }
 
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function createPost($postId, $newPostData, $update, $beforePostData)
@@ -290,13 +290,13 @@ final class PostController
     {
         $types = array_values(PostHelper::getPostTypes());
         array_unshift($types, ['id' => 'any-post-type', 'title' => 'Any Post Type']);
-        Response::success($types);
+        return Response::success($types);
     }
 
     public static function getAllPosts()
     {
         $posts = PostHelper::getPostTitles();
         array_unshift($posts, ['id' => 'any-post', 'title' => 'Any Post']);
-        Response::success($posts);
+        return Response::success($posts);
     }
 }

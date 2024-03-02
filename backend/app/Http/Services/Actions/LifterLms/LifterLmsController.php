@@ -21,7 +21,7 @@ class LifterLmsController
         if (self::pluginActive()) {
             Response::success(true);
         }
-        Response::error(__('LifterLms must be activated!', 'bit-integrations'));
+        return Response::error(__('LifterLms must be activated!', 'bit-integrations'));
     }
 
     public static function getAllLesson()

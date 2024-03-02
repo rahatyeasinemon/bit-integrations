@@ -32,7 +32,7 @@ class FlowluController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->company_name) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -45,9 +45,9 @@ class FlowluController
         $response           = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!isset($response->error)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid Session Token or Link Name', 400);
+            return Response::error('Please enter valid Session Token or Link Name', 400);
         }
     }
 
@@ -112,9 +112,9 @@ class FlowluController
                 }
             }
 
-            Response::success($fieldMap);
+            return Response::success($fieldMap);
         } else {
-            Response::error('Fields fetching failed', 400);
+            return Response::error('Fields fetching failed', 400);
         }
     }
 
@@ -138,9 +138,9 @@ class FlowluController
                 );
             }
 
-            Response::success($accountCategories);
+            return Response::success($accountCategories);
         } else {
-            Response::error('Category fetching failed', 400);
+            return Response::error('Category fetching failed', 400);
         }
     }
 
@@ -164,9 +164,9 @@ class FlowluController
                 );
             }
 
-            Response::success($industries);
+            return Response::success($industries);
         } else {
-            Response::error('Industry fetching failed', 400);
+            return Response::error('Industry fetching failed', 400);
         }
     }
 
@@ -190,9 +190,9 @@ class FlowluController
                 );
             }
 
-            Response::success($pipelines);
+            return Response::success($pipelines);
         } else {
-            Response::error('Pipelines fetching failed', 400);
+            return Response::error('Pipelines fetching failed', 400);
         }
     }
 
@@ -218,9 +218,9 @@ class FlowluController
                 }
             }
 
-            Response::success($stages);
+            return Response::success($stages);
         } else {
-            Response::error('Opportunity stages fetching failed', 400);
+            return Response::error('Opportunity stages fetching failed', 400);
         }
     }
 
@@ -244,9 +244,9 @@ class FlowluController
                 );
             }
 
-            Response::success($sources);
+            return Response::success($sources);
         } else {
-            Response::error('Source fetching failed', 400);
+            return Response::error('Source fetching failed', 400);
         }
     }
 
@@ -270,9 +270,9 @@ class FlowluController
                 );
             }
 
-            Response::success($customers);
+            return Response::success($customers);
         } else {
-            Response::error('Customer fetching failed', 400);
+            return Response::error('Customer fetching failed', 400);
         }
     }
 
@@ -296,9 +296,9 @@ class FlowluController
                 );
             }
 
-            Response::success($managers);
+            return Response::success($managers);
         }
-        Response::error('Project Manager fetching failed', 400);
+        return Response::error('Project Manager fetching failed', 400);
     }
 
     public function getAllProjectStage($fieldsRequestParams)
@@ -321,9 +321,9 @@ class FlowluController
                 );
             }
 
-            Response::success($stages);
+            return Response::success($stages);
         }
-        Response::error('Project Manager fetching failed', 400);
+        return Response::error('Project Manager fetching failed', 400);
     }
 
     public function getAllPortfolio($fieldsRequestParams)
@@ -346,9 +346,9 @@ class FlowluController
                 );
             }
 
-            Response::success($portfolios);
+            return Response::success($portfolios);
         }
-        Response::error('Project Manager fetching failed', 400);
+        return Response::error('Project Manager fetching failed', 400);
     }
 
     public function getAllProjectOpportunity($fieldsRequestParams)
@@ -371,9 +371,9 @@ class FlowluController
                 );
             }
 
-            Response::success($portfolios);
+            return Response::success($portfolios);
         }
-        Response::error('Project Manager fetching failed', 400);
+        return Response::error('Project Manager fetching failed', 400);
     }
 
     public function execute($integrationData, $fieldValues)

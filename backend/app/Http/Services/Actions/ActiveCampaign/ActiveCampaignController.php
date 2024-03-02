@@ -104,7 +104,7 @@ class ActiveCampaignController
                 ];
             }
             $response['activeCampaignLists'] = $lists;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -145,7 +145,7 @@ class ActiveCampaignController
             //     ];
             // }
             // $response['activeCampaignLists'] = $lists;
-            Response::success($aCampaignResponse->accounts);
+            return Response::success($aCampaignResponse->accounts);
         }
     }
 
@@ -206,7 +206,7 @@ class ActiveCampaignController
             );
         }
         $response['activeCampaignTags'] = $tag_items;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function activeCampaignHeaders($queryParams)
@@ -247,7 +247,7 @@ class ActiveCampaignController
             $fields['Email'] = (object) ['fieldId' => 'email', 'fieldName' => 'Email', 'required' => true];
             $fields['Phone'] = (object) ['fieldId' => 'phone', 'fieldName' => 'Phone', 'required' => false];
             $response['activeCampaignField'] = $fields;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -321,6 +321,6 @@ class ActiveCampaignController
 //         }
 //         var_dump($tags,'tags');die;
 //         $response['activeCampaignTags'] = $tags;
-//         Response::success($response);
+//         return Response::success($response);
 //     }
 // }

@@ -36,7 +36,7 @@ final class AcademyLmsController
     public static function isPluginActive()
     {
         if (!class_exists('Academy')) {
-            Response::error(__('Academy Lms is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Academy Lms is not installed or activated', 'bit-integrations'));
         }
     }
 
@@ -58,19 +58,19 @@ final class AcademyLmsController
                 'title' => $type,
             ];
         }
-        Response::success($academy_action);
+        return Response::success($academy_action);
     }
 
     public function get_a_form($data)
     {
         self::isPluginActive();
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         if ($data->id == 1 || $data->id == 4) {
@@ -172,7 +172,7 @@ final class AcademyLmsController
 
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($id)

@@ -71,7 +71,7 @@ class ElasticEmailController
             ];
         }
         $response['lists'] = $data;
-        Response::success($response);
+        return Response::success($response);
         // Response::success(true);
     }
 

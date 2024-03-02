@@ -77,7 +77,7 @@ class MailChimpController
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
     /**
      * Process ajax request for refresh MailChimp Audience list
@@ -110,7 +110,7 @@ class MailChimpController
         $allList = [];
         if (!is_wp_error($audienceResponse) && empty($audienceResponse->response->error)) {
             $audienceLists = $audienceResponse->lists;
-            // Response::success($audienceLists);
+            // return Response::success($audienceLists);
             foreach ($audienceLists as $audienceList) {
                 $allList[$audienceList->name] = (object) array(
                         'listId' => $audienceList->id,
@@ -126,7 +126,7 @@ class MailChimpController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
     /**
      * Process ajax request for refresh MailChimp Audience Fields
@@ -167,7 +167,7 @@ class MailChimpController
             }
             $fields['Email'] = (object) array('tag' => 'email_address', 'name' => 'Email');
             $response['audienceField'] = $fields;
-            Response::success($response);
+            return Response::success($response);
         }
     }
     /**
@@ -204,7 +204,7 @@ class MailChimpController
         }
         uksort($allList, "strnatcasecmp");
         $response['audienceTags'] = $allList;
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**

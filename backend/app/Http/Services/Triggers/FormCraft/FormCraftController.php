@@ -34,7 +34,7 @@ final class FormCraftController
     public function getAll()
     {
         if (!self::plugin_active()) {
-            Response::error(__('FormCraft3 is not installed or activated', 'bit-integrations'));
+            return Response::error(__('FormCraft3 is not installed or activated', 'bit-integrations'));
         }
 
         $forms = self::getAllForms();
@@ -50,7 +50,7 @@ final class FormCraftController
             }
         }
 
-        Response::success($all_forms);
+        return Response::success($all_forms);
     }
 
     public static function getAllForms()
@@ -65,20 +65,20 @@ final class FormCraftController
     public function get_a_form($data)
     {
         if (!self::plugin_active()) {
-            Response::error(__('FormCraft3 is not installed or activated', 'bit-integrations'));
+            return Response::error(__('FormCraft3 is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
 
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($form_id)

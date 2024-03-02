@@ -20,7 +20,7 @@ class SliceWpController
         if (self::pluginActive()) {
             Response::success(true);
         }
-        Response::error(__('SliceWp affiliate must be activated!', 'bit-integrations'));
+        return Response::error(__('SliceWp affiliate must be activated!', 'bit-integrations'));
     }
 
     public function execute($integrationData, $fieldValues)

@@ -52,7 +52,7 @@ final class EVFController
                 }
             }
         } else {
-            Response::error(__('Everest Forms  is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Everest Forms  is not installed or activated', 'bit-integrations'));
         }
         return $all_forms;
     }
@@ -60,16 +60,16 @@ final class EVFController
     public function getAForm($data)
     {
         if (empty($data->id) || !(self::isActive())) {
-            Response::error(__('Everest Forms  is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Everest Forms  is not installed or activated', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
 

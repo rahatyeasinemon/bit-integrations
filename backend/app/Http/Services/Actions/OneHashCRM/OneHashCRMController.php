@@ -27,7 +27,7 @@ class OneHashCRMController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_secret) || empty($fieldsRequestParams->domain) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -51,9 +51,9 @@ class OneHashCRMController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->data)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid API Key & Secret or Access Api URL', 400);
+            return Response::error('Please enter valid API Key & Secret or Access Api URL', 400);
         }
     }
 

@@ -20,7 +20,7 @@ class InsightlyController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiUrl       = $fieldsRequestParams->api_url;
@@ -33,16 +33,16 @@ class InsightlyController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (is_array($response) && isset($response[0]->USER_ID)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid API URL & API key', 400);
+            return Response::error('Please enter valid API URL & API key', 400);
         }
     }
 
     public function getAllOrganisations($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
 
@@ -61,16 +61,16 @@ class InsightlyController
                     'name' => $organisation->ORGANISATION_NAME
                 ];
             }
-            Response::success($organisations);
+            return Response::success($organisations);
         } else {
-            Response::error('Owners fetching failed', 400);
+            return Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllCategories($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiUrl       = $fieldsRequestParams->api_url;
@@ -97,16 +97,16 @@ class InsightlyController
                     'name' => $category->CATEGORY_NAME
                 ];
             }
-            Response::success($categories);
+            return Response::success($categories);
         } else {
-            Response::error('Categories fetching failed', 400);
+            return Response::error('Categories fetching failed', 400);
         }
     }
 
     public function getAllStatuses($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -125,16 +125,16 @@ class InsightlyController
                     'name' => $status->type
                 ];
             }
-            Response::success($statuses);
+            return Response::success($statuses);
         } else {
-            Response::error('Owners fetching failed', 400);
+            return Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getLeadStatuses($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiUrl       = $fieldsRequestParams->api_url;
@@ -152,16 +152,16 @@ class InsightlyController
                     'name' => $leadStatus->LEAD_STATUS
                 ];
             }
-            Response::success($leadStatuses);
+            return Response::success($leadStatuses);
         } else {
-            Response::error('Lead Status fetching failed', 400);
+            return Response::error('Lead Status fetching failed', 400);
         }
     }
 
     public function getLeadSources($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiUrl       = $fieldsRequestParams->api_url;
@@ -179,16 +179,16 @@ class InsightlyController
                     'name' => $leadSource->LEAD_SOURCE
                 ];
             }
-            Response::success($leadSources);
+            return Response::success($leadSources);
         } else {
-            Response::error('Lead Status fetching failed', 400);
+            return Response::error('Lead Status fetching failed', 400);
         }
     }
 
     public function getAllCRMPipelines($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiUrl       = $fieldsRequestParams->api_url;
@@ -215,16 +215,16 @@ class InsightlyController
                     ];
                 }
             }
-            Response::success($pipelines);
+            return Response::success($pipelines);
         } else {
-            Response::error('Pipelines fetching failed', 400);
+            return Response::error('Pipelines fetching failed', 400);
         }
     }
 
     public function getAllCRMPipelineStages($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_url)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiUrl         = $fieldsRequestParams->api_url;
@@ -243,9 +243,9 @@ class InsightlyController
                     'name'         => $pipelineStage->STAGE_NAME
                 ];
             }
-            Response::success($pipelineStages);
+            return Response::success($pipelineStages);
         } else {
-            Response::error('Pipeline stages fetching failed', 400);
+            return Response::error('Pipeline stages fetching failed', 400);
         }
     }
 

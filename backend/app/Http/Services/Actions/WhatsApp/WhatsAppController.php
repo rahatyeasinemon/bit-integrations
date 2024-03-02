@@ -55,7 +55,7 @@ class WhatsAppController
     //             400
     //         );
     //     }
-    //     Response::success($response);
+    //     return Response::success($response);
     // }
 
     // public function fetchAllLists($queryParams)
@@ -94,7 +94,7 @@ class WhatsAppController
     //             400
     //         );
     //     }
-    //     Response::success($response);
+    //     return Response::success($response);
     // }
 
     /**

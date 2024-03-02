@@ -49,9 +49,9 @@ class MailRelayController
         }
 
         if (isset($response->error) || isset($response->errors) || gettype($response) == "string") {
-            Response::error('Please enter valid Domain name & API key', 400);
+            return Response::error('Please enter valid Domain name & API key', 400);
         } else {
-            Response::success($customFields);
+            return Response::success($customFields);
         }
     }
 
@@ -86,9 +86,9 @@ class MailRelayController
         }
 
         if (isset($response->error)) {
-            Response::error('Groups fetch failed', 400);
+            return Response::error('Groups fetch failed', 400);
         } else {
-            Response::success($groups);
+            return Response::success($groups);
         }
     }
 

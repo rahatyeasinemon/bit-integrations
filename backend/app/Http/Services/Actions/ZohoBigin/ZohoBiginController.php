@@ -67,7 +67,7 @@ class ZohoBiginController
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     /**
@@ -100,7 +100,7 @@ class ZohoBiginController
         $modulesMetaApiEndpoint = "https://www.zohoapis.{$queryParams->dataCenter}/bigin/v1/settings/modules";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $modulesMetaResponse = Http::request($modulesMetaApiEndpoint, 'Get', null, $authorizationHeader);
-        // Response::success($modulesMetaResponse);
+        // return Response::success($modulesMetaResponse);
         if (!is_wp_error($modulesMetaResponse) && (empty($modulesMetaResponse->status) || (!empty($modulesMetaResponse->status) && $modulesMetaResponse->status !== 'error'))) {
             $retriveModuleData = $modulesMetaResponse->modules;
             $allModules = [];
@@ -123,7 +123,7 @@ class ZohoBiginController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -156,7 +156,7 @@ class ZohoBiginController
         $layoutsMetaApiEndpoint = "https://www.zohoapis.{$queryParams->dataCenter}/bigin/v2/settings/layouts?module=Deals";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $layoutsMetaResponse = Http::request($layoutsMetaApiEndpoint, 'Get', null, $authorizationHeader);
-        // Response::success($layoutsMetaResponse);
+        // return Response::success($layoutsMetaResponse);
         if (!is_wp_error($layoutsMetaResponse) && (empty($layoutsMetaResponse->status) || (!empty($layoutsMetaResponse->status) && $layoutsMetaResponse->status !== 'error'))) {
             $retriveLayoutsData = $layoutsMetaResponse->layouts;
             $allLayouts = [];
@@ -177,7 +177,7 @@ class ZohoBiginController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -225,7 +225,7 @@ class ZohoBiginController
         // $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         // $requiredParams['module'] = $queryParams->module;
         // $modulesMetaResponse = Http::request($modulesMetaApiEndpoint, 'Get', $queryParams, $authorizationHeader);
-        // Response::success($modulesMetaResponse);
+        // return Response::success($modulesMetaResponse);
         foreach ($allModules as $module) {
             if ($module->api_name !== $queryParams->module) {
                 $relatedModules[$module->plural_label] = (object) [
@@ -240,7 +240,7 @@ class ZohoBiginController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['related_modules']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -327,7 +327,7 @@ class ZohoBiginController
             $response['queryModule'] = $queryParams->module;
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function getTagList($queryParams)
@@ -380,7 +380,7 @@ class ZohoBiginController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function getUsers($queryParams)
@@ -432,7 +432,7 @@ class ZohoBiginController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**

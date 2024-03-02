@@ -26,7 +26,7 @@ class DemioController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($fieldsRequestParams->api_secret) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -47,9 +47,9 @@ class DemioController
         $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if ($response->pong) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid API Key & API Secret', 400);
+            return Response::error('Please enter valid API Key & API Secret', 400);
         }
     }
 
@@ -71,9 +71,9 @@ class DemioController
                     ]
                 );
             }
-            Response::success($events);
+            return Response::success($events);
         } else {
-            Response::error('Events fetching failed', 400);
+            return Response::error('Events fetching failed', 400);
         }
     }
 
@@ -95,9 +95,9 @@ class DemioController
                     ]
                 );
             }
-            Response::success($sessions);
+            return Response::success($sessions);
         } else {
-            Response::error('Events fetching failed', 400);
+            return Response::error('Events fetching failed', 400);
         }
     }
 

@@ -85,7 +85,7 @@ class MailerLiteController
         }
 
         if ($response !== 'Unauthorized' || $response !== 'Unauthenticated.') {
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
             Response::error(
                 'The token is invalid',
@@ -136,7 +136,7 @@ class MailerLiteController
             $formattedResponse = array_merge($email, $newResponse);
 
             if (isset($response->data)) {
-                Response::success($formattedResponse);
+                return Response::success($formattedResponse);
             } elseif (isset($response->message) && 'Unauthenticated.' === $response->message) {
                 Response::error(
                     __(
@@ -166,7 +166,7 @@ class MailerLiteController
             }
         }
         if (count($response) > 0) {
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
             Response::error(
                 'The token is invalid',

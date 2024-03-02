@@ -26,7 +26,7 @@ class ZendeskController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -38,16 +38,16 @@ class ZendeskController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->data)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid API key', 400);
+            return Response::error('Please enter valid API key', 400);
         }
     }
 
     public function getCustomFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -75,16 +75,16 @@ class ZendeskController
                     'required' => false,
                 ];
             }
-            Response::success($customFields);
+            return Response::success($customFields);
         } else {
-            Response::error('Custom field fetching failed', 400);
+            return Response::error('Custom field fetching failed', 400);
         }
     }
 
     public function getAllLeads($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -102,16 +102,16 @@ class ZendeskController
                     'name' => $lead->name
                 ];
             }
-            Response::success($leads);
+            return Response::success($leads);
         } else {
-            Response::error('Lead fetching failed', 400);
+            return Response::error('Lead fetching failed', 400);
         }
     }
 
     public function getAllParentOrganizations($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -131,16 +131,16 @@ class ZendeskController
                     ];
                 }
             }
-            Response::success($parentOrganizations);
+            return Response::success($parentOrganizations);
         } else {
-            Response::error('ParentOrganizations fetching failed', 400);
+            return Response::error('ParentOrganizations fetching failed', 400);
         }
     }
 
     public function getAllTeams($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -158,16 +158,16 @@ class ZendeskController
                     'name' => $team->name
                 ];
             }
-            Response::success($teams);
+            return Response::success($teams);
         } else {
-            Response::error('Teams fetching failed', 400);
+            return Response::error('Teams fetching failed', 400);
         }
     }
 
     public function getAllCurrencies($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -186,16 +186,16 @@ class ZendeskController
                     'name' => $currency->code
                 ];
             }
-            Response::success($currencies);
+            return Response::success($currencies);
         } else {
-            Response::error('Currencies fetching failed', 400);
+            return Response::error('Currencies fetching failed', 400);
         }
     }
 
     public function getAllStages($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -214,16 +214,16 @@ class ZendeskController
                     'name' => $stage->data->name
                 ];
             }
-            Response::success($stages);
+            return Response::success($stages);
         } else {
-            Response::error('Stages fetching failed', 400);
+            return Response::error('Stages fetching failed', 400);
         }
     }
 
     public function getAllCRMCompanies($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -243,16 +243,16 @@ class ZendeskController
                     ];
                 }
             }
-            Response::success($companies);
+            return Response::success($companies);
         } else {
-            Response::error('Companies fetching failed', 400);
+            return Response::error('Companies fetching failed', 400);
         }
     }
 
     public function getAllCRMContacts($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -270,16 +270,16 @@ class ZendeskController
                     'name' => $contact->data->name
                 ];
             }
-            Response::success($contacts);
+            return Response::success($contacts);
         } else {
-            Response::error('Contacts fetching failed', 400);
+            return Response::error('Contacts fetching failed', 400);
         }
     }
 
     public function getAllCRMSources($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -302,9 +302,9 @@ class ZendeskController
                     'name' => $source->data->name
                 ];
             }
-            Response::success($sources);
+            return Response::success($sources);
         } else {
-            Response::error('Sources fetching failed', 400);
+            return Response::error('Sources fetching failed', 400);
         }
     }
 

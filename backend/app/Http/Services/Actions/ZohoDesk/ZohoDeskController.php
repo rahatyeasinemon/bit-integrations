@@ -63,7 +63,7 @@ class ZohoDeskController
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public static function refreshOrganizations($queryParams)
@@ -114,7 +114,7 @@ class ZohoDeskController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
         // } else {
         //     Response::error(
         //         __(
@@ -181,7 +181,7 @@ class ZohoDeskController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -263,7 +263,7 @@ class ZohoDeskController
             $response['queryModule'] = $queryParams->module;
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -320,7 +320,7 @@ class ZohoDeskController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -379,7 +379,7 @@ class ZohoDeskController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**

@@ -18,7 +18,7 @@ class SendGridController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->apiKey)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.sendgrid.com/v3/marketing/field_definitions';
@@ -37,16 +37,16 @@ class SendGridController
                     'required' => false
                 ];
             }
-            Response::success($customFields);
+            return Response::success($customFields);
         } else {
-            Response::error('Please enter valid API key', 400);
+            return Response::error('Please enter valid API key', 400);
         }
     }
 
     public function getLists($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->apiKey)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.sendgrid.com/v3/marketing/lists';
@@ -65,9 +65,9 @@ class SendGridController
         }
 
         if (!empty($lists)) {
-            Response::success($lists);
+            return Response::success($lists);
         } else {
-            Response::error('Lists fetch failed', 400);
+            return Response::error('Lists fetch failed', 400);
         }
     }
 

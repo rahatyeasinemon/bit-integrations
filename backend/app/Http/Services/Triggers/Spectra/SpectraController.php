@@ -39,7 +39,7 @@ class SpectraController
         if (!$testData) {
             Response::error(new WP_Error('spectra_test', __('Failed to remove test data', 'bit-integrations')));
         }
-        Response::success(__('spectra test data removed successfully', 'bit-integrations'));
+        return Response::success(__('spectra test data removed successfully', 'bit-integrations'));
     }
     public static function spectraHandler(...$args)
     {

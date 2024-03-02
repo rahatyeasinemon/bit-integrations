@@ -55,7 +55,7 @@ class SalesforceController
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public function customFields($customFieldRequestParams)
@@ -115,7 +115,7 @@ class SalesforceController
         $apiResponse                            = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (!property_exists((object) $apiResponse, 'fields')) {
-            Response::error($apiResponse, 400);
+            return Response::error($apiResponse, 400);
         }
 
         $customFields = array_filter($apiResponse->fields, function ($field) {
@@ -139,7 +139,7 @@ class SalesforceController
         if (!empty($response['tokenDetails'])) {
             self::saveRefreshedToken($customFieldRequestParams->flowID, $response['tokenDetails'], $response['organizations']);
         }
-        Response::success($fieldMap);
+        return Response::success($fieldMap);
     }
 
     public static function selesforceCampaignList($campaignRequestParams)
@@ -179,7 +179,7 @@ class SalesforceController
         if (!empty($response['tokenDetails'])) {
             self::saveRefreshedToken($campaignRequestParams->flowID, $response['tokenDetails'], $response['organizations']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function selesforceLeadList($campaignRequestParams)
@@ -219,7 +219,7 @@ class SalesforceController
         if (!empty($response['tokenDetails'])) {
             self::saveRefreshedToken($campaignRequestParams->flowID, $response['tokenDetails'], $response['organizations']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function selesforceContactList($campaignRequestParams)
@@ -258,7 +258,7 @@ class SalesforceController
         if (!empty($response['tokenDetails'])) {
             self::saveRefreshedToken($campaignRequestParams->flowID, $response['tokenDetails'], $response['organizations']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function selesforceAccountList($campaignRequestParams)
@@ -297,7 +297,7 @@ class SalesforceController
         if (!empty($response['tokenDetails'])) {
             self::saveRefreshedToken($campaignRequestParams->flowID, $response['tokenDetails']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     protected static function refreshAccessToken($apiData)

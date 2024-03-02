@@ -26,7 +26,7 @@ class WebHooksController
                 400
             );
         }
-        Response::success(__('webhook executed succcessfully', 'bit-integrations'));
+        return Response::success(__('webhook executed succcessfully', 'bit-integrations'));
     }
 
     public static function execute($integrationDetails, $fieldValues)

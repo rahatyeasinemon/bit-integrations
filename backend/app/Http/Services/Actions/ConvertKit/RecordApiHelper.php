@@ -22,7 +22,7 @@ class RecordApiHelper
 
     public function __construct($api_secret, $integId)
     {
-        // Response::success($tokenDetails);
+        // return Response::success($tokenDetails);
         $this->_defaultHeader = $api_secret;
         $this->_apiEndpoint = 'https://api.convertkit.com/v3';
         $this->_integrationID = $integId;

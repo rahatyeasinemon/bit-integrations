@@ -85,7 +85,7 @@ class EnchargeController
         $fields = [];
         if (!is_wp_error($enChargeResponse)) {
             $allFields = $enChargeResponse->items;
-            // Response::success($allFields);
+            // return Response::success($allFields);
             foreach ($allFields as $field) {
                 $required = $field->name === 'email' ? true : false;
                 $fields[$field->name] = (object) [
@@ -95,7 +95,7 @@ class EnchargeController
                 ];
             }
             $response['enChargeFields'] = $fields;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 

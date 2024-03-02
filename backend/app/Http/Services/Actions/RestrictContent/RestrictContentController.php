@@ -40,7 +40,7 @@ class RestrictContentController
         if (self::pluginActive()) {
             Response::success(true);
         }
-        Response::error(__('Restrict Content must be activated!', 'bit-integrations'));
+        return Response::error(__('Restrict Content must be activated!', 'bit-integrations'));
     }
 
     public static function getAllLevels()
@@ -56,7 +56,7 @@ class RestrictContentController
             }
             $response['levellists'] = $data;
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

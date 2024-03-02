@@ -38,7 +38,7 @@ class AcumbamailController
         $response = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if ($response !== 'Unauthorized') {
-            Response::success($response);
+            return Response::success($response);
         } else {
             Response::error(
                 'The token is invalid',
@@ -67,9 +67,9 @@ class AcumbamailController
         $response = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if ($response == 'Unauthorized' || $response == 'This endpoint is not available for non-paying customers' || $response == 'Your auth token has expired check /apidoc/ for the new one') {
-            Response::error($response, 400);
+            return Response::error($response, 400);
         } else {
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -104,7 +104,7 @@ class AcumbamailController
         }
 
         if ($response !== 'Unauthorized') {
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
             Response::error(
                 'The token is invalid',

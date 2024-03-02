@@ -87,7 +87,7 @@ class SendyController
                 'brandName' => $list->name
             ];
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function getAllLists($queryParams)
@@ -123,7 +123,7 @@ class SendyController
                 'listName' => $list->name,
             ];
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

@@ -18,7 +18,7 @@ class MailjetController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->secretKey) && empty($fieldsRequestParams->apiKey)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.mailjet.com/v3/REST/contactslist/';
@@ -37,16 +37,16 @@ class MailjetController
                     'name' => $list->Name
                 ];
             }
-            Response::success($lists);
+            return Response::success($lists);
         } else {
-            Response::error('Please enter valid API key', 400);
+            return Response::error('Please enter valid API key', 400);
         }
     }
 
     public function getCustomFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->secretKey) && empty($fieldsRequestParams->apiKey)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.mailjet.com/v3/REST/contactmetadata?Limit=1000';
@@ -67,9 +67,9 @@ class MailjetController
         }
 
         if (!empty($customFields)) {
-            Response::success($customFields);
+            return Response::success($customFields);
         } else {
-            Response::error('Custom fields fetch failed', 400);
+            return Response::error('Custom fields fetch failed', 400);
         }
     }
 

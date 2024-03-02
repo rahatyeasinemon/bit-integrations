@@ -23,21 +23,21 @@ class PropovoiceCRMController
         if (self::pluginActive()) {
             Response::success(true);
         }
-        Response::error(__('Propovoice CRM must be activated!', 'bit-integrations'));
+        return Response::error(__('Propovoice CRM must be activated!', 'bit-integrations'));
     }
 
     public static function leadTags()
     {
         global $wpdb;
         $tags = $wpdb->get_results("SELECT term_id, name FROM $wpdb->terms WHERE term_id IN (SELECT term_taxonomy_id FROM $wpdb->term_taxonomy WHERE taxonomy = 'ndpv_tag')");
-        Response::success($tags);
+        return Response::success($tags);
     }
 
     public static function leadLabel()
     {
         global $wpdb;
         $labels = $wpdb->get_results("SELECT term_id, name FROM $wpdb->terms WHERE term_id IN (SELECT term_taxonomy_id FROM $wpdb->term_taxonomy WHERE taxonomy = 'ndpv_lead_level')");
-        Response::success($labels);
+        return Response::success($labels);
     }
 
 

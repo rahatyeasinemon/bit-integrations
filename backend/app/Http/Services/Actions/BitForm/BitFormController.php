@@ -39,7 +39,7 @@ class BitFormController
 
         if ($apiResponse->success) {
             $apiResponse;
-            Response::success($apiResponse);
+            return Response::success($apiResponse);
         } else {
             Response::error(
                 'There is an error .',
@@ -70,7 +70,7 @@ class BitFormController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader, ['sslverify' => false]);
 
         if ($apiResponse->success) {
-            Response::success($apiResponse);
+            return Response::success($apiResponse);
         } else {
             Response::error(
                 'There is an error .',
@@ -102,7 +102,7 @@ class BitFormController
 
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader, ['sslverify' => false]);
         if ($apiResponse->success) {
-            Response::success($apiResponse->fields);
+            return Response::success($apiResponse->fields);
         } else {
             Response::error(
                 'There is an error .',
@@ -148,7 +148,7 @@ class BitFormController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function fetchAllLists($queryParams)
@@ -187,7 +187,7 @@ class BitFormController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**

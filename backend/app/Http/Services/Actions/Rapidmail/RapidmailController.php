@@ -58,7 +58,7 @@ final class RapidmailController
             );
         } else {
             $apiResponse->generates_on = \time();
-            Response::success($apiResponse);
+            return Response::success($apiResponse);
         }
     }
     /**
@@ -99,7 +99,7 @@ final class RapidmailController
             ];
         }
         $response['recipientlists'] = $data;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function getAllFields($queryParams)
@@ -133,7 +133,7 @@ final class RapidmailController
             ];
         }
         $response['recipientlists'] = $data;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

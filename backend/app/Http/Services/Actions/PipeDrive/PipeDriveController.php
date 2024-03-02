@@ -52,7 +52,7 @@ class PipeDriveController
         }
 
         if (isset($response->success) && $response->success) {
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
             Response::error(
                 'The token is invalid',
@@ -142,7 +142,7 @@ class PipeDriveController
                 array_push($formattedResponse, ...$addFields);
             }
 
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
             Response::error(
                 'The token is invalid',

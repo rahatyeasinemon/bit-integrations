@@ -50,7 +50,7 @@ final class ThemifyController
     public function getAllForms()
     {
         if (!self::pluginActive()) {
-            Response::error(__('Themify is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Themify is not installed or activated', 'bit-integrations'));
         }
 
         $posts = self::getThemifyPosts();
@@ -74,26 +74,26 @@ final class ThemifyController
                 }
             }
         }
-        Response::success($all_forms);
+        return Response::success($all_forms);
     }
 
     public function getFormFields($data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('Themify is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Themify is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id) && empty($data->postId)) {
-            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
 
         $fields = self::fields($data);
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
         $responseData['postId'] = $data->postId;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($data)

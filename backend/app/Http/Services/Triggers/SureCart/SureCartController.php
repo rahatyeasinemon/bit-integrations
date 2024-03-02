@@ -43,7 +43,7 @@ final class SureCartController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('SureCart is not installed or activated', 'bit-integrations'));
+            return Response::error(__('SureCart is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['User perches a product', 'User revoke perches a product', 'User unrevoked perches product'];
@@ -55,21 +55,21 @@ final class SureCartController
                 'title' => $type,
             ];
         }
-        Response::success($affiliate_action);
+        return Response::success($affiliate_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('SureCart is not installed or activated', 'bit-integrations'));
+            return Response::error(__('SureCart is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         if ($data->id == 1 || $data->id == 2 || $data->id == 3) {
@@ -77,7 +77,7 @@ final class SureCartController
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($id)
@@ -124,7 +124,7 @@ final class SureCartController
     public static function surecart_purchase_product($data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('SureCart is not installed or activated', 'bit-integrations'));
+            return Response::error(__('SureCart is not installed or activated', 'bit-integrations'));
         }
         $accountDetails = \SureCart\Models\Account::find();
         $product = Product::find($data['product_id']);
@@ -144,7 +144,7 @@ final class SureCartController
     public static function get_sureCart_all_product()
     {
         $allProduct = self::getAllProduct();
-        Response::success($allProduct);
+        return Response::success($allProduct);
     }
 
     public static function surecart_purchase_revoked($data)

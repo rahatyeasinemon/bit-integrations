@@ -27,7 +27,7 @@ class WoodpeckerController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -49,9 +49,9 @@ class WoodpeckerController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->status) && $response->status->status === "ERROR") {
-            Response::error('Please enter valid API Key', 400);
+            return Response::error('Please enter valid API Key', 400);
         } else {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         }
     }
 
@@ -64,7 +64,7 @@ class WoodpeckerController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->status) && $response->status->status === "ERROR") {
-            Response::error('Campaign not found!', 400);
+            return Response::error('Campaign not found!', 400);
         } else {
             $campaigns = [];
             foreach ($response as $campaign) {
@@ -77,7 +77,7 @@ class WoodpeckerController
                 );
             }
 
-            Response::success($campaigns);
+            return Response::success($campaigns);
         }
     }
 

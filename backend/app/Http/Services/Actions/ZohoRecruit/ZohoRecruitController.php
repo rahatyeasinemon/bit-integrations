@@ -65,7 +65,7 @@ class ZohoRecruitController
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     /**
@@ -139,7 +139,7 @@ class ZohoRecruitController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function refreshNoteTypes($queryParams)
@@ -167,7 +167,7 @@ class ZohoRecruitController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $notesMetaResponse = Http::request($notesMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // Response::success($notesMetaResponse);
+        // return Response::success($notesMetaResponse);
 
         if (!is_wp_error($notesMetaResponse) && (empty($notesMetaResponse->status) || (!empty($notesMetaResponse->status) && $notesMetaResponse->status !== 'error'))) {
             $retriveModuleData = $notesMetaResponse->response->result->Notes->row;
@@ -189,7 +189,7 @@ class ZohoRecruitController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['notetypes']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -247,7 +247,7 @@ class ZohoRecruitController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['related_modules']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -390,7 +390,7 @@ class ZohoRecruitController
             $response['queryModule'] = $queryParams->module;
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
         // } else {
         //     Response::error(
         //         __(

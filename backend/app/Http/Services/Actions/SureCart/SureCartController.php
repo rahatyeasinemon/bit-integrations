@@ -52,7 +52,7 @@ class SureCartController
         $request_body = wp_remote_retrieve_body($request);
         $request_data = json_decode($request_body);
         if ($request_data->code !== 'unauthorized') {
-            Response::success($request_body);
+            return Response::success($request_body);
         } else {
             Response::error(
                 $request_data->message,

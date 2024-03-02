@@ -19,7 +19,7 @@ class ZoomController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->clientId) || empty($requestParams->clientSecret) || empty($requestParams->code) || empty($requestParams->redirectURI)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $body = [
@@ -36,13 +36,13 @@ class ZoomController
             Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public static function zoomFetchAllMeetings($requestParams)
     {
         if (empty($requestParams->accessToken)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
         $header = [
             'Authorization' => 'Bearer ' . $requestParams->accessToken,
@@ -57,13 +57,13 @@ class ZoomController
         }
 
         $response['allMeeting'] = $apiResponse->meetings;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function getAllFolders($queryParams)
     {
         if (empty($queryParams->tokenDetails) || empty($queryParams->clientId) || empty($queryParams->clientSecret)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token = self::tokenExpiryCheck($queryParams->tokenDetails, $queryParams->clientId, $queryParams->clientSecret, null);
@@ -84,7 +84,7 @@ class ZoomController
         }
         $response['oneDriveFoldersList'] = $data;
         $response['tokenDetails'] = $token;
-        Response::success($response);
+        return Response::success($response);
     }
 
     private static function tokenExpiryCheck($token, $clientId, $clientSecret)

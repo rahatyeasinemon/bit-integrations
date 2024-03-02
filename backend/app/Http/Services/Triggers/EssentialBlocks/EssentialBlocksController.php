@@ -39,7 +39,7 @@ class EssentialBlocksController
         if (!$testData) {
             Response::error(new WP_Error('essential_blocks_test', __('Failed to remove test data', 'bit-integrations')));
         }
-        Response::success(__('essential_blocks test data removed successfully', 'bit-integrations'));
+        return Response::success(__('essential_blocks test data removed successfully', 'bit-integrations'));
     }
     public static function essentialBlocksHandler(...$args)
     {

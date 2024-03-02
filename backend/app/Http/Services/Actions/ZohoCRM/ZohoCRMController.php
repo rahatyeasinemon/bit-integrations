@@ -70,7 +70,7 @@ final class ZohoCRMController
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
     /**
      * Process ajax request for refresh crm modules
@@ -159,7 +159,7 @@ final class ZohoCRMController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             ZohoCRMController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
     /**
      * Process ajax request for refresh crm layouts
@@ -285,7 +285,7 @@ final class ZohoCRMController
             $response["queryModule"] = $queryParams->module;
             ZohoCRMController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -405,7 +405,7 @@ final class ZohoCRMController
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             static::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
     /**
      * Process ajax request to get realted lists of a Zoho CRM module
@@ -456,7 +456,7 @@ final class ZohoCRMController
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             static::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
     /**
      * Process ajax request for refresh crm users
@@ -525,7 +525,7 @@ final class ZohoCRMController
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             static::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
     /**
      * Process ajax request for refresh tags of a module
@@ -570,7 +570,7 @@ final class ZohoCRMController
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             static::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function addRelatedList($zcrmApiResponse, $integID, $fieldValues, $integrationDetails, RecordApiHelper $recordApiHelper)

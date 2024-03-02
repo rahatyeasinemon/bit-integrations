@@ -68,7 +68,7 @@ class ZohoMarketingHubController
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
     /**
      * Process ajax request for refresh crm modules
@@ -125,7 +125,7 @@ class ZohoMarketingHubController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -185,7 +185,7 @@ class ZohoMarketingHubController
             $response["queryModule"] = $queryParams->module;
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**

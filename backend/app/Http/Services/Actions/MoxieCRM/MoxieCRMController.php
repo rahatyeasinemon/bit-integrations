@@ -26,7 +26,7 @@ class MoxieCRMController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -39,16 +39,16 @@ class MoxieCRMController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->error)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid API key', 400);
+            return Response::error('Please enter valid API key', 400);
         }
     }
 
     // public function getCustomFields($fieldsRequestParams)
     // {
     //     if (empty($fieldsRequestParams->api_key)) {
-    //         Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+    //         return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
     //     }
 
     //     $apiKey      = $fieldsRequestParams->api_key;
@@ -71,16 +71,16 @@ class MoxieCRMController
     //                 ];
     //             }
     //         }
-    //         Response::success($customFields);
+    //         return Response::success($customFields);
     //     } else {
-    //         Response::error('Custom field fetching failed', 400);
+    //         return Response::error('Custom field fetching failed', 400);
     //     }
     // }
 
     public function getAllOpportunities($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -98,16 +98,16 @@ class MoxieCRMController
                     'name' => $opportunity->name
                 ];
             }
-            Response::success($opportunities);
+            return Response::success($opportunities);
         } else {
-            Response::error('Opportunity fetching failed', 400);
+            return Response::error('Opportunity fetching failed', 400);
         }
     }
 
     public function getAllClients($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
         $apiKey      = $fieldsRequestParams->api_key;
         $apiUrl     = $fieldsRequestParams->api_url;
@@ -127,9 +127,9 @@ class MoxieCRMController
                     'name' => $client->name
                 ];
             }
-            Response::success($clients);
+            return Response::success($clients);
         } else {
-            Response::error('Clients fetching failed', 400);
+            return Response::error('Clients fetching failed', 400);
         }
     }
 
@@ -137,7 +137,7 @@ class MoxieCRMController
     public function getAllPipelineStages($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -156,16 +156,16 @@ class MoxieCRMController
                     'name' => $pipelineStage->label
                 ];
             }
-            Response::success($pipelineStages);
+            return Response::success($pipelineStages);
         } else {
-            Response::error('PipelineStages fetching failed', 400);
+            return Response::error('PipelineStages fetching failed', 400);
         }
     }
 
     public function getAllCRMPeoples($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -185,16 +185,16 @@ class MoxieCRMController
                     'name' => $people->name
                 ];
             }
-            Response::success($peoples);
+            return Response::success($peoples);
         } else {
-            Response::error('Peoples fetching failed', 400);
+            return Response::error('Peoples fetching failed', 400);
         }
     }
 
     public function getAllCRMPipelines($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -214,9 +214,9 @@ class MoxieCRMController
                     'name' => $pipeline->name
                 ];
             }
-            Response::success($pipelines);
+            return Response::success($pipelines);
         } else {
-            Response::error('Pipelines fetching failed', 400);
+            return Response::error('Pipelines fetching failed', 400);
         }
     }
 

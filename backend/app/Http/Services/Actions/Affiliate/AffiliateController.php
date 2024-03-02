@@ -37,7 +37,7 @@ class AffiliateController
         if (self::pluginActive()) {
             Response::success(true);
         }
-        Response::error(__('Affiliate must be activated!', 'bit-integrations'));
+        return Response::error(__('Affiliate must be activated!', 'bit-integrations'));
     }
 
 

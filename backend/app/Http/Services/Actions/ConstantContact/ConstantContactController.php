@@ -58,7 +58,7 @@ class ConstantContactController
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     protected static function _refreshAccessToken($apiData)
@@ -145,7 +145,7 @@ class ConstantContactController
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->integId)) {
             static::_saveRefreshedToken($queryParams->integId, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function refreshTags($queryParams)
@@ -201,7 +201,7 @@ class ConstantContactController
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->integId)) {
             static::_saveRefreshedToken($queryParams->integId, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function getCustomFields($queryParams)
@@ -258,7 +258,7 @@ class ConstantContactController
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->integId)) {
             static::_saveRefreshedToken($queryParams->integId, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     private static function _saveRefreshedToken($integrationID, $tokenDetails)

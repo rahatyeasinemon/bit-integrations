@@ -27,7 +27,7 @@ class PerfexCRMController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_token) || empty($fieldsRequestParams->domain) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -50,9 +50,9 @@ class PerfexCRMController
         $response      = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            Response::error('Please enter valid API Token or Access Api URL', 400);
+            return Response::error('Please enter valid API Token or Access Api URL', 400);
         } else {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         }
     }
 
@@ -86,7 +86,7 @@ class PerfexCRMController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            Response::error('Custom Fields fetching failed', 400);
+            return Response::error('Custom Fields fetching failed', 400);
         } else {
             $fieldMap = [];
             foreach ($response as $field) {
@@ -99,7 +99,7 @@ class PerfexCRMController
                     ]
                 );
             }
-            Response::success($fieldMap);
+            return Response::success($fieldMap);
         }
     }
 
@@ -113,7 +113,7 @@ class PerfexCRMController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            Response::error('Customer fetching failed', 400);
+            return Response::error('Customer fetching failed', 400);
         } else {
             $customers = [];
             foreach ($response as $customer) {
@@ -125,7 +125,7 @@ class PerfexCRMController
                     ]
                 );
             }
-            Response::success($customers);
+            return Response::success($customers);
         }
     }
 
@@ -139,7 +139,7 @@ class PerfexCRMController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            Response::error('Lead fetching failed', 400);
+            return Response::error('Lead fetching failed', 400);
         } else {
             $leads = [];
             foreach ($response as $lead) {
@@ -151,7 +151,7 @@ class PerfexCRMController
                     ]
                 );
             }
-            Response::success($leads);
+            return Response::success($leads);
         }
     }
 
@@ -165,7 +165,7 @@ class PerfexCRMController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            Response::error('Project Member fetching failed', 400);
+            return Response::error('Project Member fetching failed', 400);
         } else {
             $staffs = [];
             foreach ($response as $staff) {
@@ -177,7 +177,7 @@ class PerfexCRMController
                     ]
                 );
             }
-            Response::success($staffs);
+            return Response::success($staffs);
         }
     }
 

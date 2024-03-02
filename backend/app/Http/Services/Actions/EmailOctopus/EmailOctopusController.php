@@ -20,7 +20,7 @@ class EmailOctopusController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -34,16 +34,16 @@ class EmailOctopusController
                     'name' => $list->name
                 ];
             }
-            Response::success($lists);
+            return Response::success($lists);
         } else {
-            Response::error('Please a enter valid API key', 400);
+            return Response::error('Please a enter valid API key', 400);
         }
     }
 
     public function getAllFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->listId)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -59,16 +59,16 @@ class EmailOctopusController
                     'required' => $field->tag === 'EmailAddress' ? true : false
                 ];
             }
-            Response::success($fields);
+            return Response::success($fields);
         } else {
-            Response::error('Groups fetch failed', 400);
+            return Response::error('Groups fetch failed', 400);
         }
     }
 
     public function getAllTags($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->listId)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -83,9 +83,9 @@ class EmailOctopusController
         }
 
         if (isset($response->error)) {
-            Response::error('Groups fetching failed', 400);
+            return Response::error('Groups fetching failed', 400);
         } else {
-            Response::success($tags);
+            return Response::success($tags);
         }
     }
 

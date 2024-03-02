@@ -38,7 +38,7 @@ final class BitFormController
     public function getAll()
     {
         if (!self::isPluginActive()) {
-            Response::error(__('Bit Form is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Bit Form is not installed or activated', 'bit-integrations'));
         }
 
         $forms = \BitApps\BitForm\API\BitForm_Public\BitForm_Public::getForms();
@@ -49,21 +49,21 @@ final class BitFormController
                 'title' => $form->form_name
             ];
         }
-        Response::success($all_forms);
+        return Response::success($all_forms);
     }
 
     public function get_a_form($data)
     {
         if (empty($data->id)) {
-            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($form_id)

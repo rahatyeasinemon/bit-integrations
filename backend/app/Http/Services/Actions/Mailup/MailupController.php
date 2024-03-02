@@ -20,7 +20,7 @@ class MailupController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->clientId) || empty($requestParams->clientSecret) || empty($requestParams->code)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $authCode = explode('-', $requestParams->code)[0];
@@ -41,13 +41,13 @@ class MailupController
             Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public static function getAllList($requestParams)
     {
         if (empty($requestParams->tokenDetails) || empty($requestParams->clientId) || empty($requestParams->clientSecret)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret);
@@ -66,16 +66,16 @@ class MailupController
         }
 
         if (property_exists($apiResponse, 'Items')) {
-            Response::success($lists);
+            return Response::success($lists);
         } else {
-            Response::error('List fetching failed', 400);
+            return Response::error('List fetching failed', 400);
         }
     }
 
     public static function getAllGroup($requestParams)
     {
         if (empty($requestParams->tokenDetails) || empty($requestParams->clientId) || empty($requestParams->clientSecret) || empty($requestParams->listId)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret);
@@ -94,9 +94,9 @@ class MailupController
         }
 
         if (property_exists($apiResponse, 'Items')) {
-            Response::success($lists);
+            return Response::success($lists);
         } else {
-            Response::error('List fetching failed', 400);
+            return Response::error('List fetching failed', 400);
         }
     }
 

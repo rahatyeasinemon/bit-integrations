@@ -35,10 +35,10 @@ final class MetaBoxController
     public function getAll()
     {
         if (!function_exists('rwmb_meta')) {
-            Response::error(__('Meta Box is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Meta Box is not installed or activated', 'bit-integrations'));
         }
         if (!function_exists('mb_frontend_submission_load')) {
-            Response::error(__('MB Frontend Submission is not installed or activated', 'bit-integrations'));
+            return Response::error(__('MB Frontend Submission is not installed or activated', 'bit-integrations'));
         }
 
         if (function_exists('rwmb_meta')) {
@@ -53,7 +53,7 @@ final class MetaBoxController
                 ];
             }
 
-            Response::success($all_forms);
+            return Response::success($all_forms);
         }
     }
 
@@ -95,11 +95,11 @@ final class MetaBoxController
             Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         if (empty($fields)) {
-            Response::error(__('Metabox doesn\'t exists any Field Group', 'bit-integrations'));
+            return Response::error(__('Metabox doesn\'t exists any Field Group', 'bit-integrations'));
         }
 
         $responseData['fields'] = array_merge($this->postFields(), $fields);
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($form_id)

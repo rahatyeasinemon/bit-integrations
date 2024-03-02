@@ -42,7 +42,7 @@ final class GamiPressController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('GamiPress is not installed or activated', 'bit-integrations'));
+            return Response::error(__('GamiPress is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['A user earns a rank',
@@ -59,21 +59,21 @@ final class GamiPressController
                 'title' => $type,
             ];
         }
-        Response::success($gamiPress_action);
+        return Response::success($gamiPress_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('GamiPress is not installed or activated', 'bit-integrations'));
+            return Response::error(__('GamiPress is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
         $id = $data->id;
         if ($id == 1) {
@@ -86,7 +86,7 @@ final class GamiPressController
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($id)
@@ -251,7 +251,7 @@ final class GamiPressController
             "SELECT ID, post_name, post_title, post_type FROM wp_posts where post_type like '{$selectRankType}' AND post_status = 'publish'"
         );
 
-        Response::success($ranks);
+        return Response::success($ranks);
     }
 
     public static function getRanks()
@@ -316,7 +316,7 @@ final class GamiPressController
         $awards = $wpdb->get_results(
             "SELECT ID, post_name, post_title, post_type FROM wp_posts where post_type like '{$selectAchievementType}' AND post_status = 'publish'"
         );
-        Response::success($awards);
+        return Response::success($awards);
     }
 
     public static function handle_award_achievement($user_id, $achievement_id, $trigger, $site_id, $args)
@@ -468,12 +468,12 @@ final class GamiPressController
     {
         $achievementTypes = self::getAchievementType();
         array_unshift($achievementTypes, ['post_name' => 'any-achievement', 'post_title' => 'Any Achievement']);
-        Response::success($achievementTypes);
+        return Response::success($achievementTypes);
     }
 
     public static function getAllRankType()
     {
         $rankTypes = self::getRankTypes();
-        Response::success($rankTypes);
+        return Response::success($rankTypes);
     }
 }

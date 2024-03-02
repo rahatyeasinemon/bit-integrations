@@ -55,7 +55,7 @@ class KirimEmailController
             );
         }
 
-        Response::success($apiResponse->data);
+        return Response::success($apiResponse->data);
     }
 
     public function getAllList($tokenRequestParams)
@@ -93,7 +93,7 @@ class KirimEmailController
             );
         }
 
-        Response::success($apiResponse->data);
+        return Response::success($apiResponse->data);
     }
 
     public function execute($integrationData, $fieldValues)

@@ -23,7 +23,7 @@ class MasterStudyLmsController
         if (self::pluginActive()) {
             Response::success(true);
         }
-        Response::error(__('MasterStudyLms must be activated!', 'bit-integrations'));
+        return Response::error(__('MasterStudyLms must be activated!', 'bit-integrations'));
     }
 
     public static function getAllCourse()
@@ -41,9 +41,9 @@ class MasterStudyLmsController
                     'post_title' => $course->post_title,
                 ];
             }
-            Response::success($courseList);
+            return Response::success($courseList);
         }
-        Response::error(__('MasterStudyLms must be activated!', 'bit-integrations'));
+        return Response::error(__('MasterStudyLms must be activated!', 'bit-integrations'));
     }
 
     public static function getAllLesson($queryPrarms)
@@ -51,9 +51,9 @@ class MasterStudyLmsController
         $courseId = $queryPrarms->courseId;
         if (self::pluginActive()) {
             $allLesson = MasterStudyLmsHelper::getLessonByCourse($courseId);
-            Response::success($allLesson);
+            return Response::success($allLesson);
         }
-        Response::error(__('MasterStudyLms must be activated!', 'bit-integrations'));
+        return Response::error(__('MasterStudyLms must be activated!', 'bit-integrations'));
     }
 
     public static function getAllQuizByCourse($queryPrarms)
@@ -61,9 +61,9 @@ class MasterStudyLmsController
         $courseId = $queryPrarms->courseId;
         if (self::pluginActive()) {
             $allQuiz = MasterStudyLmsHelper::getQuizByCourse($courseId);
-            Response::success($allQuiz);
+            return Response::success($allQuiz);
         }
-        Response::error(__('MasterStudyLms must be activated!', 'bit-integrations'));
+        return Response::error(__('MasterStudyLms must be activated!', 'bit-integrations'));
     }
 
     public function execute($integrationData, $fieldValues)

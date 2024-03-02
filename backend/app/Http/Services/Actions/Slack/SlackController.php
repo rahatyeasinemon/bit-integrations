@@ -53,7 +53,7 @@ class SlackController
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public function execute($integrationData, $fieldValues)

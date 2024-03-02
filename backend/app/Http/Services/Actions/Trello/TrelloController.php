@@ -57,7 +57,7 @@ class TrelloController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function fetchAllLists($queryParams)
@@ -96,7 +96,7 @@ class TrelloController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**

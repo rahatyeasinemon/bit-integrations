@@ -45,7 +45,7 @@ class MailercloudController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function getAllLists($requestParams)
@@ -80,7 +80,7 @@ class MailercloudController
             );
         }
 
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function getAllFields($requestParams)
@@ -132,7 +132,7 @@ class MailercloudController
             }
         }
 
-        Response::success($fields);
+        return Response::success($fields);
     }
 
 

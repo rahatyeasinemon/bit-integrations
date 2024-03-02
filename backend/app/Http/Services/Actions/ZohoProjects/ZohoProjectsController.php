@@ -62,7 +62,7 @@ class ZohoProjectsController
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public static function refreshPortalsAjaxHelper($queryParams)
@@ -113,7 +113,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function refreshProjectsAjaxHelper($queryParams)
@@ -142,7 +142,7 @@ class ZohoProjectsController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $projectsMetaResponse = Http::request($projectsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // Response::success($projectsMetaResponse);
+        // return Response::success($projectsMetaResponse);
 
         if (!is_wp_error($projectsMetaResponse)) {
             $allProjects = [];
@@ -167,7 +167,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function refreshMilestonesAjaxHelper($queryParams)
@@ -220,7 +220,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function refreshTasklistsAjaxHelper($queryParams)
@@ -278,7 +278,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function refreshTasksAjaxHelper($queryParams)
@@ -338,7 +338,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function refreshFieldsAjaxHelper($queryParams)
@@ -379,7 +379,7 @@ class ZohoProjectsController
             $response['queryModule'] = $queryParams->module;
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     protected static function getProjectFields($dataCenter, $portalId, $access_token)
@@ -698,7 +698,7 @@ class ZohoProjectsController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $usersMetaResponse = Http::request($usersMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // Response::success($usersMetaResponse);
+        // return Response::success($usersMetaResponse);
 
         if (!is_wp_error($usersMetaResponse)) {
             $users = $usersMetaResponse->users;
@@ -721,7 +721,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function refreshTaskLaysAjaxHelper($queryParams)
@@ -750,7 +750,7 @@ class ZohoProjectsController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $taskLaysMetaResponse = Http::request($taskLaysMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // Response::success($taskLaysMetaResponse);
+        // return Response::success($taskLaysMetaResponse);
 
         if (!is_wp_error($taskLaysMetaResponse)) {
             $taskLays = $taskLaysMetaResponse->layouts;
@@ -772,7 +772,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function refreshGroupsAjaxHelper($queryParams)
@@ -801,7 +801,7 @@ class ZohoProjectsController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $groupsMetaResponse = Http::request($groupsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // Response::success($groupsMetaResponse);
+        // return Response::success($groupsMetaResponse);
 
         if (!is_wp_error($groupsMetaResponse)) {
             $groups = $groupsMetaResponse->groups;
@@ -823,7 +823,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function refreshTagsAjaxHelper($queryParams)
@@ -853,7 +853,7 @@ class ZohoProjectsController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $tagsMetaResponse = Http::request($tagsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // Response::success($tagsMetaResponse);
+        // return Response::success($tagsMetaResponse);
 
         if (!is_wp_error($tagsMetaResponse)) {
             $tags = $tagsMetaResponse->tags;
@@ -878,7 +878,7 @@ class ZohoProjectsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     protected static function refreshAccessToken($apiData)

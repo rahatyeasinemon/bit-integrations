@@ -20,7 +20,7 @@ class RecordApiHelper
 
     public function __construct($api_key, $api_url, $integId)
     {
-        // Response::success($tokenDetails);
+        // return Response::success($tokenDetails);
         $this->_defaultHeader['Api-Token'] = $api_key;
         $this->_apiEndpoint = $api_url . '/api/3';
         $this->_integrationID = $integId;

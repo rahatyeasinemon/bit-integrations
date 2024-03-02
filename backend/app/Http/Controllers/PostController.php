@@ -106,7 +106,7 @@ final class PostController
             'mb_files' => $metabox['files'],
         ];
 
-        Response::success($fields);
+        return Response::success($fields);
 
     }
 
@@ -135,7 +135,7 @@ final class PostController
             }
         }
         $data = ['users' => $users, 'post_types' => $pods];
-        Response::success($data);
+        return Response::success($data);
     }
 
     public function getPodsField($data)

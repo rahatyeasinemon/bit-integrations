@@ -58,7 +58,7 @@ class KeapController
 
 
         if (isset($tagListApiResponse->error)) {
-            Response::error('Tags fetch failed', 400);
+            return Response::error('Tags fetch failed', 400);
         } else {
             foreach ($tagListApiResponse->tags as $tag) {
                 $tags[] = [
@@ -66,12 +66,12 @@ class KeapController
                     'name' => $tag->name
                 ];
             }
-            Response::success($tags);
+            return Response::success($tags);
         }
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             static::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
 
@@ -118,7 +118,7 @@ class KeapController
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public function refreshAccessToken($requestsParams)

@@ -20,7 +20,7 @@ class LemlistController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = "https://api.lemlist.com/api/team";
@@ -39,7 +39,7 @@ class LemlistController
     public static function getAllCampaign($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $header["Authorization"] = 'Basic ' . base64_encode(":$requestParams->api_key");
@@ -55,9 +55,9 @@ class LemlistController
         }
 
         if ((count($campaigns)) > 0) {
-            Response::success($campaigns);
+            return Response::success($campaigns);
         } else {
-            Response::error('Campaign fetching failed', 400);
+            return Response::error('Campaign fetching failed', 400);
         }
     }
 

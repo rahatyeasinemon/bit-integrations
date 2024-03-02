@@ -14,7 +14,7 @@ class NotionController
     public function authorization($requestParams)
     {
         if (empty($requestParams->clientId) || empty($requestParams->clientSecret) || empty($requestParams->code) || empty($requestParams->redirectURI)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $body = [
@@ -36,7 +36,7 @@ class NotionController
         }
         $apiResponse->generates_on = \time();
 
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public function getAllDatabaseLists($requestParams)
@@ -66,7 +66,7 @@ class NotionController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function getFieldsProperties($requestParams)
@@ -96,7 +96,7 @@ class NotionController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

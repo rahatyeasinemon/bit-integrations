@@ -33,7 +33,7 @@ class FreshSalesController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->fields)) {
-            Response::success(__(
+            return Response::success(__(
                 'Authorization Success',
                 'bit-integrations'
             ));
@@ -106,7 +106,7 @@ class FreshSalesController
         }
 
         if (isset($response) && $response) {
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
             Response::error(
                 'The token is invalid',
@@ -179,7 +179,7 @@ class FreshSalesController
                     'required' => false
                 ],
             ];
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
             $apiEndpoint =   "https://" . $requestParams->bundle_alias . "/api/settings/" . $requestModule . "/fields";
             $headers = [
@@ -197,7 +197,7 @@ class FreshSalesController
                         ];
                     }
                 }
-                Response::success($formattedResponse);
+                return Response::success($formattedResponse);
             } else {
                 Response::error(
                     'The token is invalid',

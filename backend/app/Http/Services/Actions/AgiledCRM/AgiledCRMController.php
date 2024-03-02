@@ -20,7 +20,7 @@ class AgiledCRMController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $brand       = $fieldsRequestParams->brand;
@@ -33,16 +33,16 @@ class AgiledCRMController
         $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($response->data[0]->id)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid Brand name & API key', 400);
+            return Response::error('Please enter valid Brand name & API key', 400);
         }
     }
 
     public function getAllOwners($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -61,16 +61,16 @@ class AgiledCRMController
                     'name' => $owner->user->name . ' ' . $owner->user->last_name
                 ];
             }
-            Response::success($owners);
+            return Response::success($owners);
         } else {
-            Response::error('Owners fetching failed', 400);
+            return Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllAccounts($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -89,16 +89,16 @@ class AgiledCRMController
                     'name' => $account->name
                 ];
             }
-            Response::success($accounts);
+            return Response::success($accounts);
         } else {
-            Response::error('Owners fetching failed', 400);
+            return Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllSources($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -117,16 +117,16 @@ class AgiledCRMController
                     'name' => $source->type
                 ];
             }
-            Response::success($sources);
+            return Response::success($sources);
         } else {
-            Response::error('Owners fetching failed', 400);
+            return Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllStatuses($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -145,16 +145,16 @@ class AgiledCRMController
                     'name' => $status->type
                 ];
             }
-            Response::success($statuses);
+            return Response::success($statuses);
         } else {
-            Response::error('Owners fetching failed', 400);
+            return Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllLifeCycleStage($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -173,16 +173,16 @@ class AgiledCRMController
                     'name' => $lifeCycleStage->type
                 ];
             }
-            Response::success($lifeCycleStages);
+            return Response::success($lifeCycleStages);
         } else {
-            Response::error('Owners fetching failed', 400);
+            return Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllCRMPipelines($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -201,16 +201,16 @@ class AgiledCRMController
                     'name' => $pipeline->pipeline_name
                 ];
             }
-            Response::success($pipelines);
+            return Response::success($pipelines);
         } else {
-            Response::error('Pipelines fetching failed', 400);
+            return Response::error('Pipelines fetching failed', 400);
         }
     }
 
     public function getAllCRMPipelineStages($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) || empty($fieldsRequestParams->brand) || empty($fieldsRequestParams->selectedCRMPipeline)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->auth_token;
@@ -232,9 +232,9 @@ class AgiledCRMController
                     ];
                 }
             }
-            Response::success($pipelineStages);
+            return Response::success($pipelineStages);
         } else {
-            Response::error('Pipeline stages fetching failed', 400);
+            return Response::error('Pipeline stages fetching failed', 400);
         }
     }
 

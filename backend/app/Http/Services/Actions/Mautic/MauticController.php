@@ -63,7 +63,7 @@ class MauticController
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     protected static function _refreshAccessToken($apiData)
@@ -132,7 +132,7 @@ class MauticController
                 );
             }
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function getAllTags($queryParams)
@@ -165,7 +165,7 @@ class MauticController
                 );
             }
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
 

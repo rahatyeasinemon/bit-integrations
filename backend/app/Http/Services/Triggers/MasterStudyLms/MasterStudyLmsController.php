@@ -42,7 +42,7 @@ final class MasterStudyLmsController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('MasterStudy Lms is not installed or activated', 'bit-integrations'));
+            return Response::error(__('MasterStudy Lms is not installed or activated', 'bit-integrations'));
         }
 
         $types = [
@@ -60,21 +60,21 @@ final class MasterStudyLmsController
                 'title' => $type,
             ];
         }
-        Response::success($MasterStudyLms_action);
+        return Response::success($MasterStudyLms_action);
     }
 
     public function get_a_form($data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('MasterStudy Lms is not installed or activated', 'bit-integrations'));
+            return Response::error(__('MasterStudy Lms is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = MasterStudyLmsHelper::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
@@ -91,14 +91,14 @@ final class MasterStudyLmsController
                 'title' => 'Any Lesson'
             ]], MasterStudyLmsHelper::getAllLesson());
         }
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function getAllQuizByCourse($data)
     {
         $quizzes = MasterStudyLmsHelper::getAllQuiz($data->course_id);
         if (empty($quizzes)) {
-            Response::error(__('No quiz Found', 'bit-integrations'));
+            return Response::error(__('No quiz Found', 'bit-integrations'));
         }
         foreach ($quizzes as $key => $value) {
             $allQuiz[] = [
@@ -107,7 +107,7 @@ final class MasterStudyLmsController
             ];
         }
         $allQuiz = array_merge([['id' => 'any', 'title' => 'Any Quiz']], $allQuiz);
-        Response::success($allQuiz);
+        return Response::success($allQuiz);
     }
 
     public static function handleCourseComplete($course_id, $user_id, $progress)
@@ -278,7 +278,7 @@ final class MasterStudyLmsController
             'id' => 'any',
             'title' => 'Any Course'
         ]], $allCourse);
-        Response::success($allCourse);
+        return Response::success($allCourse);
     }
 
     public static function getAllLessonEdit()
@@ -288,6 +288,6 @@ final class MasterStudyLmsController
             'id' => 'any',
             'title' => 'Any Lesson'
         ]], $allLesson);
-        Response::success($allLesson);
+        return Response::success($allLesson);
     }
 }

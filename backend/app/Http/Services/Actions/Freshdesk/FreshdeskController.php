@@ -57,7 +57,7 @@ class FreshdeskController
             );
         }
 
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
 

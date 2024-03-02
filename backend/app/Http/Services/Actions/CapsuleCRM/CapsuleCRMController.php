@@ -26,7 +26,7 @@ class CapsuleCRMController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -38,16 +38,16 @@ class CapsuleCRMController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->users)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid API key', 400);
+            return Response::error('Please enter valid API key', 400);
         }
     }
 
     public function getCustomFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -74,16 +74,16 @@ class CapsuleCRMController
                     'required' => $customField->important,
                 ];
             }
-            Response::success($customFields);
+            return Response::success($customFields);
         } else {
-            Response::error('Custom field fetching failed', 400);
+            return Response::error('Custom field fetching failed', 400);
         }
     }
 
     public function getAllOpportunities($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -101,16 +101,16 @@ class CapsuleCRMController
                     'name' => $opportunity->name
                 ];
             }
-            Response::success($opportunities);
+            return Response::success($opportunities);
         } else {
-            Response::error('Opportunity fetching failed', 400);
+            return Response::error('Opportunity fetching failed', 400);
         }
     }
 
     public function getAllOwners($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -128,16 +128,16 @@ class CapsuleCRMController
                     'name' => $owner->name
                 ];
             }
-            Response::success($owners);
+            return Response::success($owners);
         } else {
-            Response::error('Owners fetching failed', 400);
+            return Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllTeams($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -155,16 +155,16 @@ class CapsuleCRMController
                     'name' => $team->name
                 ];
             }
-            Response::success($teams);
+            return Response::success($teams);
         } else {
-            Response::error('Teams fetching failed', 400);
+            return Response::error('Teams fetching failed', 400);
         }
     }
 
     public function getAllCurrencies($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -183,16 +183,16 @@ class CapsuleCRMController
                     'name' => $currency->code
                 ];
             }
-            Response::success($currencies);
+            return Response::success($currencies);
         } else {
-            Response::error('Currencies fetching failed', 400);
+            return Response::error('Currencies fetching failed', 400);
         }
     }
 
     public function getAllCRMParties($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -218,16 +218,16 @@ class CapsuleCRMController
                     ];
                 }
             }
-            Response::success($parties);
+            return Response::success($parties);
         } else {
-            Response::error('Parties fetching failed', 400);
+            return Response::error('Parties fetching failed', 400);
         }
     }
 
     public function getAllCRMMilestones($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -245,9 +245,9 @@ class CapsuleCRMController
                     'name' => $milestone->name
                 ];
             }
-            Response::success($milestones);
+            return Response::success($milestones);
         } else {
-            Response::error('Milestones fetching failed', 400);
+            return Response::error('Milestones fetching failed', 400);
         }
     }
 

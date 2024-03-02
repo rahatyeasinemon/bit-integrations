@@ -57,7 +57,7 @@ final class TwilioController
                 400
             );
         } else {
-            Response::success($apiResponse);
+            return Response::success($apiResponse);
         }
     }
 

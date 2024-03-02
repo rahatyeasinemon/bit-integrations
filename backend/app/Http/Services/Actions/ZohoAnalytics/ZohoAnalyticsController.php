@@ -66,7 +66,7 @@ class ZohoAnalyticsController
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     /**
@@ -117,7 +117,7 @@ class ZohoAnalyticsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['workspaces']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function refreshUsersAjaxHelper($queryParams)
@@ -163,7 +163,7 @@ class ZohoAnalyticsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['users']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -217,7 +217,7 @@ class ZohoAnalyticsController
             $response['queryWorkspace'] = $queryParams->workspace;
             self::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -270,7 +270,7 @@ class ZohoAnalyticsController
             $response['queryModule'] = $queryParams->module;
             self::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**

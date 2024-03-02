@@ -39,7 +39,7 @@ final class GFController
     public function getAll()
     {
         if (!(class_exists('GFFormsModel') && is_callable('GFFormsModel::get_forms'))) {
-            Response::error(__('Gravity Forms is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Gravity Forms is not installed or activated', 'bit-integrations'));
         }
         $all_forms = [];
         $forms = \GFFormsModel::get_forms(1);//param is_active = 1
@@ -51,21 +51,21 @@ final class GFController
                 ];
             }
         }
-        Response::success($all_forms);
+        return Response::success($all_forms);
     }
 
     public function get_a_form($data)
     {
         if (empty($data->id) || ! class_exists('GFAPI')) {
-            Response::error(__('Gravity Forms is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Gravity Forms is not installed or activated', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
         if (!$fields) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($form_id)

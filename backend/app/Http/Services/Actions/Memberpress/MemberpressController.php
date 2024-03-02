@@ -30,7 +30,7 @@ class MemberpressController
         if (self::pluginActive()) {
             Response::success(true);
         }
-        Response::error(__('Memberpress must be activated!', 'bit-integrations'));
+        return Response::error(__('Memberpress must be activated!', 'bit-integrations'));
     }
 
     public function getAllMembership($label = null, $option_code = 'MPPRODUCT', $args = [])
@@ -62,15 +62,15 @@ class MemberpressController
                     'membershipTitle' => $post->post_title,
                 ];
             }
-            Response::success($allMembership);
+            return Response::success($allMembership);
         }
-        Response::error(__('Memberpress must be activated!', 'bit-integrations'));
+        return Response::error(__('Memberpress must be activated!', 'bit-integrations'));
     }
 
     public static function allPaymentGateway()
     {
         if (!self::pluginActive()) {
-            Response::error(__('Memberpress must be activated!', 'bit-integrations'));
+            return Response::error(__('Memberpress must be activated!', 'bit-integrations'));
         }
         $mepr_options = MeprOptions::fetch();
 
@@ -92,7 +92,7 @@ class MemberpressController
             }
         }
         $finalGateways = array_merge($gateways, $initGateways);
-        Response::success($finalGateways);
+        return Response::success($finalGateways);
     }
 
     public function execute($integrationData, $fieldValues)
