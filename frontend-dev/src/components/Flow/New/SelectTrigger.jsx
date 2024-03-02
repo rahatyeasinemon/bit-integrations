@@ -92,7 +92,6 @@ export default function SelectTrigger() {
     )
   }
 
-  console.log('newFlow.triggered_entity', newFlow.triggered_entity)
   return (
     <>
       {newFlow.triggered_entity

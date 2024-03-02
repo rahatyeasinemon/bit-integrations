@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Drip\DripController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('drip_authorize', [DripController::class, 'dripAuthorize']);
 Route::post('drip_headers', [DripController::class, 'dripHeaders']);

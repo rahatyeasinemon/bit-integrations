@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Mautic\MauticController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('mautic_generate_token', [ MauticController::class, 'generateTokens']);
 // Route::post('mChimp_refresh_audience', [ MailChimpController::class, 'refreshAudience']);

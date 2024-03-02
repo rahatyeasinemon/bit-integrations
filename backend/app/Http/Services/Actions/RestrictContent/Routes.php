@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\RestrictContent\RestrictContentController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('restrict_authorize', [ RestrictContentController::class, 'authorizeRestrictContent']);
 Route::get('restrict_get_all_levels', [ RestrictContentController::class, 'getAllLevels']);

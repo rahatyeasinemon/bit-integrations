@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Salesmate\SalesmateController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('salesmate_authentication', [SalesmateController::class, 'authentication']);
 Route::post('Salesmate_fields', [SalesmateController::class, 'getAllFields']);

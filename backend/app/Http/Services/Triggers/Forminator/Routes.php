@@ -3,7 +3,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 use BitApps\BTCBI\Http\Services\Triggers\Forminator\ForminatorController;
 
 Route::get('forminator/get', [ForminatorController::class, 'getAll']);

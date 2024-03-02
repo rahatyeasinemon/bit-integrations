@@ -3,7 +3,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 use BitApps\BTCBI\Http\Services\Triggers\Formidable\FormidableController;
 
 Route::get('formidable/get', [FormidableController::class, 'getAll']);

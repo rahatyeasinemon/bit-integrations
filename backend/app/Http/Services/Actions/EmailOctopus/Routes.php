@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\EmailOctopus\EmailOctopusController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('emailOctopus_authentication', [EmailOctopusController::class, 'authentication']);
 Route::post('emailOctopus_fetch_all_tags', [EmailOctopusController::class, 'getAllTags']);

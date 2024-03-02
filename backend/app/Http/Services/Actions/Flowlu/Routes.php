@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Flowlu\FlowluController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('flowlu_authentication', [FlowluController::class, 'authentication']);
 Route::post('Flowlu_all_fields', [FlowluController::class, 'getAllFields']);

@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Clickup\ClickupController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('clickup_authentication', [ClickupController::class, 'authentication']);
 Route::post('clickup_fetch_custom_fields', [ClickupController::class, 'getCustomFields']);

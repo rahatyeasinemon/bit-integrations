@@ -3,7 +3,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 use BitApps\BTCBI\Http\Services\Triggers\ARForm\ARFormController;
 
 Route::get('arform/get', [ARFormController::class, 'getAll']);

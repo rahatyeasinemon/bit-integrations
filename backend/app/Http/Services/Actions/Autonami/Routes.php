@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Autonami\AutonamiController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('autonami_authorize', [AutonamiController::class, 'autonamiAuthorize']);
 Route::post('autonami_lists_and_tags', [AutonamiController::class, 'autonamiListsAndTags']);

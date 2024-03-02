@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\MailPoet\MailPoetController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('mail_poet_authorize', [ MailPoetController::class, 'mailPoetAuthorize']);
 Route::post('refresh_news_letter', [ MailPoetController::class, 'refreshNeswLetter']);

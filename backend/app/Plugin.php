@@ -13,6 +13,7 @@ use BitApps\BTCBI\Util\Activation;
 use BitApps\BTCBI\Util\Deactivation;
 use BitApps\BTCBI\Util\UnInstallation;
 use BitApps\BTCBI\db\DB;
+use BitApps\BTCBI\HTTP\Middleware\NonceCheckerMiddleware;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Providers\Hooks\HookService;
 use BitApps\BTCBI\Views\Layout;
@@ -103,6 +104,13 @@ final class Plugin
         if ($installed_db_version != $btcbi_db_version) {
             DB::migrate();
         }
+    }
+
+    public function middlewares()
+    {
+        return [
+            'nonce' => NonceCheckerMiddleware::class,
+        ];
     }
 
     public function isLicenseActive()

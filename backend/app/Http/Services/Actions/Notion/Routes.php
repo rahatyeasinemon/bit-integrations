@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\Notion\NotionController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('notion_authorization', [NotionController::class, 'authorization']);
 Route::post('notion_database_lists', [NotionController::class, 'getAllDatabaseLists']);

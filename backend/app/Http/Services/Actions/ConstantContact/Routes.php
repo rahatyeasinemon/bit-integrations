@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\ConstantContact\ConstantContactController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('cContact_generate_token', [ConstantContactController::class, 'generateTokens']);
 Route::post('cContact_refresh_list', [ConstantContactController::class, 'refreshList']);

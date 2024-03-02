@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\GetResponse\GetResponseController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('getresponse_fetch_all_tags', [GetResponseController::class, 'fetchAllTags']);
 Route::post('getresponse_authentication', [GetResponseController::class, 'authentication']);

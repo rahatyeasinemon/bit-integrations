@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\SendinBlue\SendinBlueController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('sblue_authorize', [SendinBlueController::class, 'sendinBlueAuthorize']);
 Route::post('sblue_refresh_lists', [SendinBlueController::class, 'refreshlists']);

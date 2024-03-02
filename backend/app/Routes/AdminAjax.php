@@ -2,8 +2,8 @@
 
 namespace BitApps\BTCBI\Routes;
 
-use BitApps\BTCBI\Util\Route;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 class AdminAjax
 {

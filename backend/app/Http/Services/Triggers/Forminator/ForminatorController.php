@@ -38,6 +38,7 @@ final class ForminatorController
             Response::error(__('Forminator is not installed or activated', 'bit-integrations'));
         }
 
+
         $forms = \Forminator_API::get_forms(null, 1, 100);
         $all_forms = [];
 

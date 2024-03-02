@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 // use BitApps\BTCBI\Http\Controllers\PostController;
 use BitApps\BTCBI\Http\Controllers\UserController;
 use BitApps\BTCBI\Http\Controllers\PostController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 use BitApps\BTCBI\Model\Flow;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Http\Services\Triggers\TriggerController;

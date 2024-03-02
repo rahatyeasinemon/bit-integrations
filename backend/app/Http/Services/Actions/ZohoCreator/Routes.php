@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\ZohoCreator\ZohoCreatorController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('zcreator_generate_token', [ZohoCreatorController::class, 'generateTokens']);
 Route::post('zcreator_refresh_applications', [ZohoCreatorController::class, 'refreshApplicationsAjaxHelper']);

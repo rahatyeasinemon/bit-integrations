@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\MailChimp\MailChimpController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('mChimp_generate_token', [ MailChimpController::class, 'generateTokens']);
 Route::post('mChimp_refresh_audience', [ MailChimpController::class, 'refreshAudience']);

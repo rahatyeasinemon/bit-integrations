@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\SuiteDash\SuiteDashController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('suite_dash_authentication', [SuiteDashController::class, 'authentication']);
 Route::post('suite_dash_fetch_all_fields', [SuiteDashController::class, 'getAllFields']);

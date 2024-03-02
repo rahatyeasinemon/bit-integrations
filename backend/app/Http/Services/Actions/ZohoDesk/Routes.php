@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\ZohoDesk\ZohoDeskController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('zdesk_generate_token', [ZohoDeskController::class, 'generateTokens']);
 Route::post('zdesk_refresh_organizations', [ZohoDeskController::class, 'refreshOrganizations']);

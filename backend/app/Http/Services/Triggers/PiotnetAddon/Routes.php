@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 use BitApps\BTCBI\Http\Services\Triggers\PiotnetAddon\PiotnetAddonController;
 
 Route::get('piotnetaddon/get', [PiotnetAddonController::class, 'getAllForms']);

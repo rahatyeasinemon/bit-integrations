@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\WooCommerce\WooCommerceController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('wc_authorize', [WooCommerceController::class, 'authorizeWC']);
 Route::post('wc_refresh_fields', [WooCommerceController::class, 'refreshFields']);

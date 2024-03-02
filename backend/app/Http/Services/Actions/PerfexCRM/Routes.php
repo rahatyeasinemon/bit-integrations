@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\PerfexCRM\PerfexCRMController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('perfexcrm_authentication', [PerfexCRMController::class, 'authentication']);
 Route::post('perfexcrm_custom_fields', [PerfexCRMController::class, 'getCustomFields']);

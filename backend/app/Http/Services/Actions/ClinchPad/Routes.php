@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\ClinchPad\ClinchPadController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('clinchPad_authentication', [ClinchPadController::class, 'authentication']);
 Route::post('clinchPad_fetch_custom_fields', [ClinchPadController::class, 'getCustomFields']);

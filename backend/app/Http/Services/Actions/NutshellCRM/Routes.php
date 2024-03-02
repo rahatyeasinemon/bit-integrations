@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 use BitApps\BTCBI\Http\Services\Actions\NutshellCRM\NutshellCRMController;
-use BitApps\BTCBI\Util\Route;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 
 Route::post('nutshellcrm_authentication', [NutshellCRMController::class, 'authentication']);
 Route::post('nutshellcrm_fetch_all_contacts', [NutshellCRMController::class, 'getContacts']);
