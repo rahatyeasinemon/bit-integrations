@@ -8,6 +8,7 @@ namespace BitCode\FI\Actions\ZohoBigin;
 
 use WP_Error;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Core\Util\DateTimeHelper;
 use BitCode\FI\Core\Util\FieldValueHandler;
@@ -86,7 +87,7 @@ class RecordApiHelper
             $recordID = $recordApiResponse->data[0]->details->id;
             if (isset($actions->note)) {
                 $note_title = $actions->note->title ? $actions->note->title : '';
-                $note_content = $actions->note->content ? $actions->note->content : '';
+                $note_content = $actions->note->content ? Common::replaceFieldWithValue($actions->note->content, $fieldValues) : '';
                 $note = (object) array(
                     'Note_Title' => $note_title,
                     'Note_Content' => $note_content,
