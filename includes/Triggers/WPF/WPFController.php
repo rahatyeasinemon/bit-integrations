@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Triggers\WPF;
 
+use BitCode\FI\Flow\Flow;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Flow\Flow;
 
 final class WPFController
 {
@@ -110,8 +110,8 @@ final class WPFController
                         'label' => "$value " . $field['label'],
                     ];
                 }
-            } elseif($field['type']=='address' && $field['format'] != 'simple') {
-                $address = ['address1' => 'Address1', 'address2' => 'Address2','city' => 'City', 'state' => 'State','postal' => 'Zip Code'];
+            } elseif ($field['type'] == 'address' && $field['format'] != 'simple') {
+                $address = ['address1' => 'Address1', 'address2' => 'Address2', 'city' => 'City', 'state' => 'State', 'postal' => 'Zip Code'];
                 foreach ($address as $key => $value) {
                     $fields[] = [
                         'name' => "$id=>$key",
@@ -123,7 +123,7 @@ final class WPFController
                 $fields[] = [
                     'name' => $id,
                     'type' => $field['type'] === 'file-upload' ? 'file' : $field['type'],
-                    'separator' => isset($field['multiple']) && $field['multiple']==1 || in_array($field['type'], ['checkbox','file-upload']) ? "\n" : '',
+                    'separator' => isset($field['multiple']) && $field['multiple'] == 1 || in_array($field['type'], ['checkbox', 'file-upload']) ? "\n" : '',
                     'label' => $field['label'],
                 ];
             }
@@ -154,7 +154,7 @@ final class WPFController
                     // }
                     // $data[$fldDetail['id']] = $dateTimeHelper->getFormated($fldDetail['value'], $date_format, wp_timezone(), 'Y-m-d\TH:i', null);
                 } elseif ($fldDetail['type'] == 'file-upload') {
-                    $data[$fldDetail['id']] = Common::filePath($fldDetail['value']);
+                    $data[$fldDetail['id']] = self::setFiles($fldDetail['value_raw']);
                 } else {
                     $data[$fldDetail['id']] = $fldDetail['value'];
                 }
@@ -163,5 +163,15 @@ final class WPFController
                 Flow::execute('WPF', $form_id, $data, $flows);
             }
         }
+    }
+
+    private static function setFiles($files)
+    {
+        $allFiles = [];
+        foreach ($files as $file) {
+            $allFiles[] = $file['value'];
+        }
+
+        return $allFiles;
     }
 }
