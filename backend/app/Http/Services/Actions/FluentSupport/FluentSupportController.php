@@ -23,7 +23,7 @@ class FluentSupportController
     public function checkAuthorization()
     {
         if (!is_plugin_active('fluent-support/fluent-support.php')) {
-            Response::error(
+            return Response::error(
                 __(
                     'Fluent Support Plugin is not active or not installed',
                     'bit-integrations'
@@ -40,12 +40,12 @@ class FluentSupportController
         $supportStaff = Agent::get();
 
         if (is_wp_error($supportStaff)) {
-            Response::error(
+            return Response::error(
                 empty($supportStaff->error) ? 'Unknown' : $supportStaff->error,
                 400
             );
         }
-        Response::success(is_string($supportStaff) ? json_decode($supportStaff) : $supportStaff);
+        return Response::success(is_string($supportStaff) ? json_decode($supportStaff) : $supportStaff);
     }
 
     public function getAllBusinessInboxes()
@@ -53,12 +53,12 @@ class FluentSupportController
         $businessInboxes = MailBox::all();
 
         if (is_wp_error($businessInboxes)) {
-            Response::error(
+            return Response::error(
                 empty($businessInboxes->error) ? 'Unknown' : $businessInboxes->error,
                 400
             );
         }
-        Response::success(is_string($businessInboxes) ? json_decode($businessInboxes) : $businessInboxes);
+        return Response::success(is_string($businessInboxes) ? json_decode($businessInboxes) : $businessInboxes);
     }
 
     public function execute($integrationData, $fieldValues)

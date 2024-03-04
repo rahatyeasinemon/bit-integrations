@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\ARForm;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use DateTime;
 use BitApps\BTCBI\Util\Common;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
@@ -58,7 +59,7 @@ final class ARFormController
         return Response::success($all_forms);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::isARFormActive()) {
             return Response::error(__('ARForms is not installed or activated', 'bit-integrations'));

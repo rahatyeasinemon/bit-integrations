@@ -43,7 +43,7 @@ const Webhook = () => {
     } else {
       bitsFetch({ hook_id: hookID }, 'webhook/new', null, 'get').then(
         (resp) => {
-          if (resp.success) {
+          if (resp.status === 'success') {
             setHookID(resp.data.hook_id)
             window.hook_id = resp.data.hook_id
           }
@@ -64,7 +64,7 @@ const Webhook = () => {
     setIsLoading(true)
     intervalRef.current = setInterval(() => {
       bitsFetch({ hook_id: hookID }, 'webhook/test').then((resp) => {
-        if (resp.success) {
+        if (resp.status === 'success') {
           clearInterval(intervalRef.current)
           const tmpNewFlow = { ...newFlow }
           const data = resp.data.webhook

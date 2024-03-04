@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\PiotnetAddon;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BitApps\BTCBI\Util\Common;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 

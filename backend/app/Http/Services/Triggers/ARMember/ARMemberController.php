@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\ARMember;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BitApps\BTCBI\Http\Services\Triggers\ARMember\ARMemberHelper;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
@@ -66,7 +67,7 @@ final class ARMemberController
         return Response::success($armember_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
             return Response::error(__('ARMember is not installed or activated', 'bit-integrations'));

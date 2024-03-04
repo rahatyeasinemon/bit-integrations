@@ -11,6 +11,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\PostCreation;
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Util\Helper;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 final class PostCreationController

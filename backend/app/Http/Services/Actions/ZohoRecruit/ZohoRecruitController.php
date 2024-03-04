@@ -39,7 +39,7 @@ class ZohoRecruitController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -59,7 +59,7 @@ class ZohoRecruitController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -82,7 +82,7 @@ class ZohoRecruitController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -131,7 +131,7 @@ class ZohoRecruitController
             uksort($allModules, 'strnatcasecmp');
             $response['modules'] = $allModules;
         } else {
-            Response::error(
+            return Response::error(
                 empty($modulesMetaResponse->error) ? 'Unknown' : $modulesMetaResponse->error,
                 400
             );
@@ -149,7 +149,7 @@ class ZohoRecruitController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -181,7 +181,7 @@ class ZohoRecruitController
             uksort($allNoteTypes, 'strnatcasecmp');
             $response['noteTypes'] = $allNoteTypes;
         } else {
-            Response::error(
+            return Response::error(
                 empty($notesMetaResponse->error) ? 'Unknown' : $notesMetaResponse->error,
                 400
             );
@@ -205,7 +205,7 @@ class ZohoRecruitController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->module)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -263,7 +263,7 @@ class ZohoRecruitController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -381,7 +381,7 @@ class ZohoRecruitController
             ];
             $response['fieldDetails'] = $fieldDetails;
         } else {
-            Response::error(
+            return Response::error(
                 $fieldsMetaResponse->status === 'error' ? $fieldsMetaResponse->message : 'Unknown',
                 400
             );
@@ -392,7 +392,7 @@ class ZohoRecruitController
         }
         return Response::success($response);
         // } else {
-        //     Response::error(
+        //     return Response::error(
         //         __(
         //             'Token expired',
         //             'bit-integrations'

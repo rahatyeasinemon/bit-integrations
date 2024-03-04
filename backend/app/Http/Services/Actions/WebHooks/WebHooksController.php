@@ -21,7 +21,7 @@ class WebHooksController
         $data['flow_details'] = $webhookDetails->hookDetails;
         $response = self::execute((object) $data, []);
         if (is_wp_error($response)) {
-            Response::error(
+            return Response::error(
                 empty($response) ? 'Unknown Error Occurred' : $response->get_error_message(),
                 400
             );

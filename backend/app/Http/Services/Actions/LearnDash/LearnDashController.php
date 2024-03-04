@@ -39,7 +39,7 @@ class LearnDashController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (self::pluginActive()) {
-            Response::success(true);
+            return Response::success(true);
         }
         return Response::error(__('LearnDash must be activated!', 'bit-integrations'));
     }

@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Brizy;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Util\Common;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
@@ -104,7 +105,7 @@ final class BrizyController
             // }
             self::parseContentGetForms($form_content, $post->post_title, $post->ID, $all_forms);
         }
-        Response::success(array_values($all_forms));
+        return Response::success(array_values($all_forms));
     }
 
     public function getFormFields($data)

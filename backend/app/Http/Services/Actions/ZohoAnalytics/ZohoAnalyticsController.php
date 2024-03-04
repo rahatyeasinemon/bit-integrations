@@ -40,7 +40,7 @@ class ZohoAnalyticsController
                 || empty($requestsParams->redirectURI)
                 || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -60,7 +60,7 @@ class ZohoAnalyticsController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -82,7 +82,7 @@ class ZohoAnalyticsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->ownerEmail)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -109,7 +109,7 @@ class ZohoAnalyticsController
             usort($allWorkspaces, 'strnatcasecmp');
             $response['workspaces'] = $allWorkspaces;
         } else {
-            Response::error(
+            return Response::error(
                 $workspacesMetaResponse->response->error->message,
                 400
             );
@@ -128,7 +128,7 @@ class ZohoAnalyticsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->ownerEmail)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -155,7 +155,7 @@ class ZohoAnalyticsController
             usort($allusers, 'strnatcasecmp');
             $response['users'] = $allusers;
         } else {
-            Response::error(
+            return Response::error(
                 $usersMetaResponse->response->error->message,
                 400
             );
@@ -179,7 +179,7 @@ class ZohoAnalyticsController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -208,7 +208,7 @@ class ZohoAnalyticsController
             usort($allTables, 'strnatcasecmp');
             $response['tables'] = $allTables;
         } else {
-            Response::error(
+            return Response::error(
                 $fieldsMetaResponse->status === 'error' ? $fieldsMetaResponse->message : 'Unknown',
                 400
             );
@@ -234,7 +234,7 @@ class ZohoAnalyticsController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -261,7 +261,7 @@ class ZohoAnalyticsController
             usort($allHeaders, 'strnatcasecmp');
             $response['table_headers'] = $allHeaders;
         } else {
-            Response::error(
+            return Response::error(
                 $tableHeadersMetaResponse->status === 'error' ? $tableHeadersMetaResponse->message : 'Unknown',
                 400
             );

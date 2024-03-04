@@ -36,7 +36,7 @@ class ZohoProjectsController
                 || empty($requestsParams->redirectURI)
                 || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -56,7 +56,7 @@ class ZohoProjectsController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -72,7 +72,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -105,7 +105,7 @@ class ZohoProjectsController
             uksort($allPortals, 'strnatcasecmp');
             $response['portals'] = $allPortals;
         } else {
-            Response::error(
+            return Response::error(
                 empty($portalsMetaResponse->data) ? 'Unknown' : $portalsMetaResponse->error,
                 400
             );
@@ -124,7 +124,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -159,7 +159,7 @@ class ZohoProjectsController
             uksort($allProjects, 'strnatcasecmp');
             $response['projects'] = $allProjects;
         } else {
-            Response::error(
+            return Response::error(
                 empty($projectsMetaResponse->data) ? 'Unknown' : $projectsMetaResponse->error,
                 400
             );
@@ -179,7 +179,7 @@ class ZohoProjectsController
                 || empty($queryParams->portalId)
                 || empty($queryParams->projectId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -212,7 +212,7 @@ class ZohoProjectsController
             uksort($allMilestones, 'strnatcasecmp');
             $response['milestones'] = $allMilestones;
         } else {
-            Response::error(
+            return Response::error(
                 empty($milestonesMetaResponse->data) ? 'Unknown' : $milestonesMetaResponse->error,
                 400
             );
@@ -233,7 +233,7 @@ class ZohoProjectsController
                 || empty($queryParams->projectId)
                 || empty($queryParams->tasklistFlag)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -270,7 +270,7 @@ class ZohoProjectsController
             uksort($allTasklists, 'strnatcasecmp');
             $response['tasklists'] = $allTasklists;
         } else {
-            Response::error(
+            return Response::error(
                 empty($tasklistsMetaResponse->data) ? 'Unknown' : $tasklistsMetaResponse->error,
                 400
             );
@@ -290,7 +290,7 @@ class ZohoProjectsController
                 || empty($queryParams->portalId)
                 || empty($queryParams->projectId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -330,7 +330,7 @@ class ZohoProjectsController
             uksort($allTasks, 'strnatcasecmp');
             $response['tasks'] = $allTasks;
         } else {
-            Response::error(
+            return Response::error(
                 empty($tasksMetaResponse->data) ? 'Unknown' : $tasksMetaResponse->error,
                 400
             );
@@ -350,7 +350,7 @@ class ZohoProjectsController
                 || empty($queryParams->portalId)
                 || empty($queryParams->event)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -674,7 +674,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -713,7 +713,7 @@ class ZohoProjectsController
                 }
             }
         } else {
-            Response::error(
+            return Response::error(
                 empty($usersMetaResponse->data) ? 'Unknown' : $usersMetaResponse->error,
                 400
             );
@@ -732,7 +732,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -764,7 +764,7 @@ class ZohoProjectsController
                 }
             }
         } else {
-            Response::error(
+            return Response::error(
                 empty($taskLaysMetaResponse->data) ? 'Unknown' : $taskLaysMetaResponse->error,
                 400
             );
@@ -783,7 +783,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -815,7 +815,7 @@ class ZohoProjectsController
                 }
             }
         } else {
-            Response::error(
+            return Response::error(
                 empty($groupsMetaResponse->data) ? 'Unknown' : $groupsMetaResponse->error,
                 400
             );
@@ -834,7 +834,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -870,7 +870,7 @@ class ZohoProjectsController
                 $response['tags'] = $allTags;
             }
         } else {
-            Response::error(
+            return Response::error(
                 empty($tagsMetaResponse->data) ? 'Unknown' : $tagsMetaResponse->error,
                 400
             );

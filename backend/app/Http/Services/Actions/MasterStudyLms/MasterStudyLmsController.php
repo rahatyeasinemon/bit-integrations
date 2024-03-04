@@ -21,7 +21,7 @@ class MasterStudyLmsController
     public static function authorizeMasterStudyLms()
     {
         if (self::pluginActive()) {
-            Response::success(true);
+            return Response::success(true);
         }
         return Response::error(__('MasterStudyLms must be activated!', 'bit-integrations'));
     }

@@ -43,7 +43,7 @@ class RecordApiHelper
     public function existSubscriber($auth_token, $email)
     {
         if (empty($auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -65,7 +65,7 @@ class RecordApiHelper
     public function enableDoubleOptIn($auth_token)
     {
         if (empty($auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

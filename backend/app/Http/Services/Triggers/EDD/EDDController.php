@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\EDD;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class EDDController
@@ -61,7 +62,7 @@ final class EDDController
         return Response::success($edd_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
             return Response::error(__('Easy Digital Downloads is not installed or activated', 'bit-integrations'));

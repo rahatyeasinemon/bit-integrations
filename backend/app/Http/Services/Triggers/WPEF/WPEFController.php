@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\WPEF;
 
 use wpdb;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Util\DateTimeHelper;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;

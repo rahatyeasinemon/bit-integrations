@@ -40,12 +40,12 @@ class CampaignMonitorController
         $response    = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->ApiKey)) {
-            Response::error(
+            return Response::error(
                 empty($response) ? 'Unknown' : $response,
                 400
             );
         }
-        Response::success(true);
+        return Response::success(true);
     }
 
     public function getAllLists($requestParams)
@@ -88,7 +88,7 @@ class CampaignMonitorController
         if (!isset($apiResponse->Code)) {
             return Response::success($fields);
         } else {
-            Response::error("Field fetching failed: {$apiResponse->Message}", 400);
+            return Response::error("Field fetching failed: {$apiResponse->Message}", 400);
         }
     }
 

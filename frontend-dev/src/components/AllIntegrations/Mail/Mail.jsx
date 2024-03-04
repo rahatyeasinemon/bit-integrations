@@ -149,7 +149,7 @@ function Mail({ allIntegURL, isInfo, edit, isLearnDash = false, learnDashConf })
     const allConf = { ...conf, learnDashConf }
     const resp = saveIntegConfig(flow, setFlow, allIntegURL, allConf, navigate, '', edit, setIsLoading)
     resp.then(res => {
-      if (res.success) {
+      if (res.status === 'success') {
         if (edit) {
           toast.success('Integration Updated Successfully')
         }

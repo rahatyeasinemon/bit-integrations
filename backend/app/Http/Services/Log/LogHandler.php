@@ -20,7 +20,7 @@ final class LogHandler
         $logModel = new LogModel();
         $countResult = $logModel->count(['flow_id' => $data->id]);
         if (is_wp_error($countResult)) {
-            Response::success(
+            return Response::success(
                 [
                     'count' => 0,
                     'data' => [],
@@ -29,7 +29,7 @@ final class LogHandler
         }
         $count = $countResult[0]->count;
         if ($count < 1) {
-            Response::success(
+            return Response::success(
                 [
                     'count' => 0,
                     'data' => [],
@@ -50,14 +50,14 @@ final class LogHandler
 
         $result = $logModel->get('*', ['flow_id' => $data->id], $limit, $offset, 'id', 'desc');
         if (is_wp_error($result)) {
-            Response::success(
+            return Response::success(
                 [
                     'count' => 0,
                     'data' => [],
                 ]
             );
         }
-        Response::success(
+        return Response::success(
             [
                 'count' => intval($count),
                 'data' => $result,

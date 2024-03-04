@@ -29,7 +29,7 @@ class SlackController
         if (
             empty($tokenRequestParams->accessToken)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -47,7 +47,7 @@ class SlackController
         $apiResponse = Http::request($apiEndpoint, 'Post', null, $header);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );

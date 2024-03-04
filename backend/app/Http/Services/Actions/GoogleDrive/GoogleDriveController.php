@@ -37,7 +37,7 @@ class GoogleDriveController
         $apiResponse = Http::request($apiEndpoint, 'Post', $body, $header);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
+            return Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
         $apiResponse->generates_on = \time();
         return Response::success($apiResponse);

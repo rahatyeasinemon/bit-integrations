@@ -36,7 +36,7 @@ class FluentCrmController
     public static function checkedExistsFluentCRM()
     {
         if (!is_plugin_active('fluent-crm/fluent-crm.php')) {
-            Response::error(
+            return Response::error(
                 __(
                     'Fluent CRM Plugin is not active or not installed',
                     'bit-integrations'
@@ -140,9 +140,9 @@ class FluentCrmController
     public static function fluentCrmAuthorize()
     {
         if (self::checkedExistsFluentCRM()) {
-            Response::success(true);
+            return Response::success(true);
         } else {
-            Response::error(
+            return Response::error(
                 __(
                     'Please! Install Fluent CRM',
                     'bit-integrations'

@@ -28,7 +28,7 @@ class MailPoetController
     public static function isExists()
     {
         if (!class_exists(\MailPoet\API\API::class)) {
-            Response::error(
+            return Response::error(
                 __(
                     'MailPoet is not activate or not installed',
                     'bit-integrations'
@@ -45,7 +45,7 @@ class MailPoetController
     public static function mailPoetAuthorize()
     {
         self::isExists();
-        Response::success(true);
+        return Response::success(true);
     }
     /**
      * Process ajax request for refresh crm modules

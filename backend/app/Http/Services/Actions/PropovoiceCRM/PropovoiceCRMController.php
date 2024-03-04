@@ -21,7 +21,7 @@ class PropovoiceCRMController
     public static function authorizePropovoiceCrm()
     {
         if (self::pluginActive()) {
-            Response::success(true);
+            return Response::success(true);
         }
         return Response::error(__('Propovoice CRM must be activated!', 'bit-integrations'));
     }

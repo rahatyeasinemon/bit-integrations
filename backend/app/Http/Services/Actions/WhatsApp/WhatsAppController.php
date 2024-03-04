@@ -24,7 +24,7 @@ class WhatsAppController
     //         empty($queryParams->accessToken)
     //         || empty($queryParams->clientId)
     //     ) {
-    //         Response::error(
+    //         return Response::error(
     //             __(
     //                 'Requested parameter is empty',
     //                 'bit-integrations'
@@ -50,7 +50,7 @@ class WhatsAppController
     //         uksort($allList, 'strnatcasecmp');
     //         $response['allBoardlist'] = $allList;
     //     } else {
-    //         Response::error(
+    //         return Response::error(
     //             $allBoardResponse->response->error->message,
     //             400
     //         );
@@ -64,7 +64,7 @@ class WhatsAppController
     //         empty($queryParams->accessToken)
     //         || empty($queryParams->clientId)
     //     ) {
-    //         Response::error(
+    //         return Response::error(
     //             __(
     //                 'Requested parameter is empty',
     //                 'bit-integrations'
@@ -89,7 +89,7 @@ class WhatsAppController
     //         uksort($allList, 'strnatcasecmp');
     //         $response['alllists'] = $allList;
     //     } else {
-    //         Response::error(
+    //         return Response::error(
     //             $allBoardResponse->response->error->message,
     //             400
     //         );

@@ -87,7 +87,7 @@ class AutonamiController
     public static function autonamiAuthorize()
     {
         if (self::checkedExistsAutonami()) {
-            Response::success(true);
+            return Response::success(true);
         } else {
             return Response::error(__('Autonami Pro Plugin is not active or installed', 'bit-integrations'), 400);
         }

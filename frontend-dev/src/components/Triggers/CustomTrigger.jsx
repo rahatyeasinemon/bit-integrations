@@ -49,7 +49,7 @@ const CustomTrigger = () => {
     } else {
       bitsFetch({ hook_id: hookID }, 'custom_trigger/new', null, 'get').then(
         (resp) => {
-          if (resp.success) {
+          if (resp.status === 'success') {
             setHookID(resp.data.hook_id)
             window.hook_id = resp.data.hook_id
           }
@@ -71,7 +71,7 @@ const CustomTrigger = () => {
     setIsLoading(true)
     fetchIntervalRef.current = setInterval(() => {
       bitsFetch({ hook_id: hookID }, 'custom_trigger/test').then((resp) => {
-        if (resp.success) {
+        if (resp.status === 'success') {
           clearInterval(fetchIntervalRef.current)
           const tmpNewFlow = { ...newFlow }
           const data = resp.data.custom_trigger

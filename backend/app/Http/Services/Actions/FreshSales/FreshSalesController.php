@@ -19,7 +19,7 @@ class FreshSalesController
     public function authorization($requestParams)
     {
         if (empty($requestParams->api_key)  || empty($requestParams->bundle_alias)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -38,7 +38,7 @@ class FreshSalesController
                 'bit-integrations'
             ));
         } else {
-            Response::error(
+            return Response::error(
                 __(
                     'The token is invalid',
                     'bit-integrations'
@@ -51,7 +51,7 @@ class FreshSalesController
     public function getMetaData($requestParams)
     {
         if (empty($requestParams->api_key)  || empty($requestParams->bundle_alias)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -108,7 +108,7 @@ class FreshSalesController
         if (isset($response) && $response) {
             return Response::success($formattedResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );
@@ -118,7 +118,7 @@ class FreshSalesController
     public function getFields($requestParams)
     {
         if (empty($requestParams->api_key)  || empty($requestParams->bundle_alias)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -199,7 +199,7 @@ class FreshSalesController
                 }
                 return Response::success($formattedResponse);
             } else {
-                Response::error(
+                return Response::error(
                     'The token is invalid',
                     400
                 );

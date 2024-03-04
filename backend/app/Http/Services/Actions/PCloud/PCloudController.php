@@ -34,7 +34,7 @@ class PCloudController
         $apiResponse            = Http::request($apiEndpoint, 'Post', $body, $header);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
+            return Response::error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
         }
         $apiResponse->generates_on = \time();
         return Response::success($apiResponse);

@@ -131,7 +131,7 @@ class NimbleController
                 }
             }
 
-            Response::success(
+            return Response::success(
                 [
                     "person"        => $person,
                     "company"       => $company,

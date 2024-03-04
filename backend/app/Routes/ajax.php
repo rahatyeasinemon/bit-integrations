@@ -11,6 +11,7 @@ use BitApps\BTCBI\Http\Controllers\UserController;
 use BitApps\BTCBI\Http\Controllers\PostController;
 use BTCBI\Deps\BitApps\WPKit\Http\Router\Route;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Http\Services\Triggers\TriggerController;
 

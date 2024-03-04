@@ -25,7 +25,7 @@ class WooCommerceController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (is_plugin_active('woocommerce/woocommerce.php')) {
-            Response::success(true);
+            return Response::success(true);
         }
 
         return Response::error(__('WooCommerce must be activated!', 'bit-integrations'));
@@ -78,7 +78,7 @@ class WooCommerceController
     public static function refreshFields($queryParams)
     {
         if (empty($queryParams->module)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -680,7 +680,7 @@ class WooCommerceController
                 'required' => $requiredLine
             ];
 
-            Response::success([$responseOrder, $responseCustomer, $responseLine]);
+            return Response::success([$responseOrder, $responseCustomer, $responseLine]);
         }
 
         if ($queryParams->module === 'changestatus') {

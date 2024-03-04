@@ -175,7 +175,7 @@ class RecordApiHelper
             } else {
                 LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', 'Email address already exists in the system');
 
-                Response::error(
+                return Response::error(
                     __(
                         $this->_errorMessage,
                         'bit-integrations'

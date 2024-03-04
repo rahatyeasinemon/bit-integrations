@@ -21,7 +21,7 @@ class PipeDriveController
     public function getMetaData($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -54,7 +54,7 @@ class PipeDriveController
         if (isset($response->success) && $response->success) {
             return Response::success($formattedResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );
@@ -64,7 +64,7 @@ class PipeDriveController
     public function getFields($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -144,7 +144,7 @@ class PipeDriveController
 
             return Response::success($formattedResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );

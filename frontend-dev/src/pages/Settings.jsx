@@ -13,7 +13,7 @@ function Settings() {
   useEffect(() => {
     const loadFetch = bitsFetch({}, 'get/config', null, 'GET')
       .then(res => {
-        if ('success' in res && res.success) {
+        if ('success' in res && res.status === 'success') {
           setAppConf(res.data)
         }
         if (res?.success) return 'Successfully fetched'
@@ -31,7 +31,7 @@ function Settings() {
     const config = { ...appConf }
     const loadSaving = bitsFetch({ data: config }, 'app/config')
       .then(res => {
-        if ('success' in res && res.success) {
+        if ('success' in res && res.status === 'success') {
           return 'Save successfully done'
         }
         delete config[name]

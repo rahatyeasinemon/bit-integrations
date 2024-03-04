@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Formidable;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BitApps\BTCBI\Util\Common;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
@@ -50,7 +51,7 @@ final class FormidableController
         return Response::success($all_forms);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!function_exists('load_formidable_forms')) {
             return Response::error(__('Formidable is not installed or activated', 'bit-integrations'));

@@ -21,7 +21,7 @@ class MailMintController
     public static function authorizeMailMint()
     {
         if (self::pluginActive()) {
-            Response::success(true);
+            return Response::success(true);
         }
         return Response::error(__('Mail Mint must be activated!', 'bit-integrations'));
     }

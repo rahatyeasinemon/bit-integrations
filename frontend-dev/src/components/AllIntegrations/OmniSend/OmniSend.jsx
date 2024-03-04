@@ -115,7 +115,7 @@ function OmniSend({ formFields, setFlow, flow, allIntegURL }) {
       setIsLoading,
     )
     resp.then((res) => {
-      if (res.success) {
+      if (res.status === 'success') {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
       } else {

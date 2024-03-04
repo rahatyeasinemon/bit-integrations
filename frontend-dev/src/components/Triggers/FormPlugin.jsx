@@ -51,7 +51,7 @@ const FormPlugin = () => {
 
       bitsFetch(queryData, newFlow.triggerDetail.fields.action)
         .then(resp => {
-          if (resp.success) {
+          if (resp.status === 'success') {
             tmpNewFlow.triggerData = {
               formID: val,
               fields: resp.data.fields,

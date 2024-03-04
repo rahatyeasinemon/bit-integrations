@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\BuddyBoss;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class BuddyBossController
@@ -82,7 +83,7 @@ final class BuddyBossController
         return Response::success($buddyboss_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
             return Response::error(__('BuddyBoss is not installed or activated', 'bit-integrations'));
@@ -173,7 +174,7 @@ final class BuddyBossController
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

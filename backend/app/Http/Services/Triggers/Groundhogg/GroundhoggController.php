@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Groundhogg;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use Groundhogg\DB\Tags;
 
@@ -178,7 +179,7 @@ final class GroundhoggController
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

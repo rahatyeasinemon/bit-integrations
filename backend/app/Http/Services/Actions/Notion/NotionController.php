@@ -32,7 +32,7 @@ class NotionController
 
         $apiResponse = Http::request($apiEndpoint, 'Post', json_encode($body), $header);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
+            return Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
         $apiResponse->generates_on = \time();
 
@@ -43,7 +43,7 @@ class NotionController
     {
 
         if (empty($requestParams->accessToken)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -58,7 +58,7 @@ class NotionController
         ];
         $response = Http::request($apiEndpoint, 'Post', null, $headers);
         if ($response->Error !== null) {
-            Response::error(
+            return Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -73,7 +73,7 @@ class NotionController
     {
 
         if (empty($requestParams->accessToken)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -88,7 +88,7 @@ class NotionController
         ];
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if ($response->Error !== null) {
-            Response::error(
+            return Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'

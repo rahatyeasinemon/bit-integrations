@@ -34,7 +34,7 @@ class SendPulseController
         $apiResponse = Http::request($apiEndpoint, 'Post', $body);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
+            return Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
         $apiResponse->generates_on = \time();
 
@@ -45,7 +45,7 @@ class SendPulseController
     {
         if (empty($requestParams->client_id) || empty($requestParams->client_secret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

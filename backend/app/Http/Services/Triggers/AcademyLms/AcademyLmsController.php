@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\AcademyLms;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 // use Academy\Traits\Lessons;
@@ -61,7 +62,7 @@ final class AcademyLmsController
         return Response::success($academy_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         self::isPluginActive();
         if (empty($data->id)) {
@@ -178,7 +179,7 @@ final class AcademyLmsController
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

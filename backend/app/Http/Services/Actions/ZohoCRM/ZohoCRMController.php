@@ -46,7 +46,7 @@ final class ZohoCRMController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -64,7 +64,7 @@ final class ZohoCRMController
         );
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -87,7 +87,7 @@ final class ZohoCRMController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -101,7 +101,7 @@ final class ZohoCRMController
             if ($refreshedToken) {
                 $response['tokenDetails'] = $refreshedToken;
             } else {
-                Response::error(
+                return Response::error(
                     __('Failed to refresh access token', 'bit-integrations'),
                     400
                 );
@@ -142,7 +142,7 @@ final class ZohoCRMController
                 }
                 uksort($allModules, 'strnatcasecmp');
             } else {
-                Response::error(
+                return Response::error(
                     empty($modulesMetaResponse->message) ? 'Unknown' : $modulesMetaResponse->message,
                     400
                 );
@@ -177,7 +177,7 @@ final class ZohoCRMController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -276,7 +276,7 @@ final class ZohoCRMController
             uksort($layouts, 'strnatcasecmp');
             $response["layouts"] = $layouts;
         } else {
-            Response::error(
+            return Response::error(
                 $layoutsMetaResponse->status === 'error' ? $layoutsMetaResponse->message : 'Unknown',
                 400
             );
@@ -372,7 +372,7 @@ final class ZohoCRMController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -395,7 +395,7 @@ final class ZohoCRMController
             uksort($rules, 'strnatcasecmp');
             $response["assignmentRules"] = $rules;
         } else {
-            Response::error(
+            return Response::error(
                 !empty($assignmentRulesResponse->status)
                     && $assignmentRulesResponse->status === 'error' ?
                     $assignmentRulesResponse->message : (empty($assignmentRulesResponse) ? __('Assignment rules is empty', 'bit-integrations') : 'Unknown'),
@@ -423,7 +423,7 @@ final class ZohoCRMController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -445,7 +445,7 @@ final class ZohoCRMController
             uksort($relatedListResponse, 'strnatcasecmp');
             $response["relatedLists"] = $relatedListResponse;
         } else {
-            Response::error(
+            return Response::error(
                 is_object($relatedListResponse->status)
                     && !empty($relatedListResponse->status)
                     && $relatedListResponse->status === 'error' ?
@@ -473,7 +473,7 @@ final class ZohoCRMController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -517,7 +517,7 @@ final class ZohoCRMController
             uksort($users, 'strnatcasecmp');
             $response["users"] = $users;
         } else {
-            Response::error(
+            return Response::error(
                 $usersResponse->status === 'error' ? $usersResponse->message : 'Unknown',
                 400
             );
@@ -543,7 +543,7 @@ final class ZohoCRMController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -562,7 +562,7 @@ final class ZohoCRMController
             usort($tagListApiResponse, 'strnatcasecmp');
             $response["tags"] = $tagListApiResponse;
         } else {
-            Response::error(
+            return Response::error(
                 is_wp_error($tagListApiResponse) ? $tagListApiResponse->get_error_message() : (empty($tagListApiResponse) ? __('Tag is empty', 'bit-integrations') : 'Unknown'),
                 empty($tagListApiResponse) ? 204 : 400
             );

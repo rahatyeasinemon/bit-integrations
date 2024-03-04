@@ -21,7 +21,7 @@ class GetResponseController
     public function fetchCustomFields($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -51,7 +51,7 @@ class GetResponseController
         if ($response !== 'Unauthorized') {
             return Response::success($formattedResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );
@@ -61,7 +61,7 @@ class GetResponseController
     public function fetchAllTags($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -90,7 +90,7 @@ class GetResponseController
         if ($response !== 'Unauthorized') {
             return Response::success($formattedResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );
@@ -100,7 +100,7 @@ class GetResponseController
     public function authentication($refreshFieldsRequestParams)
     {
         if (empty($refreshFieldsRequestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

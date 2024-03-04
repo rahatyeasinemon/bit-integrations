@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\UltimateMember;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class UltimateMemberController
@@ -64,7 +65,7 @@ final class UltimateMemberController
         return Response::success($ultimateMember_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
             return Response::error(__('Ultimate Member is not installed or activated', 'bit-integrations'));

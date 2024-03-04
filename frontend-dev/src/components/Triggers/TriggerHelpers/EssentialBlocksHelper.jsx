@@ -89,7 +89,7 @@ const EssentialBlocksHelper = () => {
     setIsLoading(true)
     intervalRef.current = setInterval(() => {
       bitsFetch(null, 'essential_blocks/get').then((resp) => {
-        if (resp.success) {
+        if (resp.status === 'success') {
           clearInterval(intervalRef.current)
           const tmpNewFlow = { ...newFlow }
 

@@ -20,7 +20,7 @@ function EditWebhookInteg({ setSnackbar }) {
     setIsLoading(true)
     const fetchCheckTimer = setInterval(() => {
       bitsFetch({ hook_id: hookID }, 'webhook/test').then(resp => {
-        if (resp.success) {
+        if (resp.status === 'success') {
           clearInterval(fetchCheckTimer)
           let data = resp.data.webhook
           if (typeof resp.data.webhook === 'object') {

@@ -18,7 +18,7 @@ class PaidMembershipProController
     public static function authorizeMemberpress()
     {
         if (self::pluginActive()) {
-            Response::success(true);
+            return Response::success(true);
         }
         return Response::error(__('Paid Membership must be activated!', 'bit-integrations'));
     }

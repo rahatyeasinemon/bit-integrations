@@ -31,7 +31,7 @@ class WPCoursewareController
         if (!is_plugin_active('wp-courseware/wp-courseware.php')) {
             return Response::error(__('WP Courseware Plugin is not active or installed', 'bit-integrations'), 400);
         } else {
-            Response::success(true);
+            return Response::success(true);
         }
     }
 

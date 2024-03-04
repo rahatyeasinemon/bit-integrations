@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\WPCourseware;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class WPCoursewareController
@@ -181,7 +182,7 @@ final class WPCoursewareController
         return Response::success($wpcw_actions);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!is_plugin_active('wp-courseware/wp-courseware.php')) {
             return Response::error(__('WP Courseware is not installed or activated', 'bit-integrations'));

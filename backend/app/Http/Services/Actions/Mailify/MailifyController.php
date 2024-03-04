@@ -29,12 +29,12 @@ class MailifyController
         $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($response->users)) {
-            Response::error(
+            return Response::error(
                 empty($response->message) ? 'Unknown' : $response->message,
                 400
             );
         }
-        Response::success(true);
+        return Response::success(true);
     }
 
     public static function mailifyHeaders($requestParams)
@@ -42,7 +42,7 @@ class MailifyController
         if (
             empty($requestParams->account_id) || empty($requestParams->api_key)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

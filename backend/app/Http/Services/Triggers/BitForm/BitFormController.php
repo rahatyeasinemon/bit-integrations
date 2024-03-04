@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\BitForm;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class BitFormController
@@ -52,7 +53,7 @@ final class BitFormController
         return Response::success($all_forms);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (empty($data->id)) {
             return Response::error(__('Form doesn\'t exists', 'bit-integrations'));

@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\MetaBox;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class MetaBoxController
@@ -84,7 +85,7 @@ final class MetaBoxController
         return $postFields;
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         $fields = self::fields($data->id);
         $missing_field = null;
@@ -92,7 +93,7 @@ final class MetaBoxController
             $missing_field = 'Form ID';
         }
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         if (empty($fields)) {
             return Response::error(__('Metabox doesn\'t exists any Field Group', 'bit-integrations'));

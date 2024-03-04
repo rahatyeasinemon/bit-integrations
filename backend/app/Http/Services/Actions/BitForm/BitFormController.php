@@ -22,7 +22,7 @@ class BitFormController
             empty($requestParams->app_domain)
             || empty($requestParams->api_key)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -41,7 +41,7 @@ class BitFormController
             $apiResponse;
             return Response::success($apiResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'There is an error .',
                 400
             );
@@ -54,7 +54,7 @@ class BitFormController
             empty($requestParams->app_domain)
             || empty($requestParams->api_key)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -72,7 +72,7 @@ class BitFormController
         if ($apiResponse->success) {
             return Response::success($apiResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'There is an error .',
                 400
             );
@@ -86,7 +86,7 @@ class BitFormController
             || empty($requestParams->api_key)
             || empty($requestParams->id)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -104,7 +104,7 @@ class BitFormController
         if ($apiResponse->success) {
             return Response::success($apiResponse->fields);
         } else {
-            Response::error(
+            return Response::error(
                 'There is an error .',
                 400
             );
@@ -117,7 +117,7 @@ class BitFormController
             empty($queryParams->accessToken)
             || empty($queryParams->clientId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -143,7 +143,7 @@ class BitFormController
             uksort($allList, 'strnatcasecmp');
             $response['allBoardlist'] = $allList;
         } else {
-            Response::error(
+            return Response::error(
                 $allBoardResponse->response->error->message,
                 400
             );
@@ -157,7 +157,7 @@ class BitFormController
             empty($queryParams->accessToken)
             || empty($queryParams->clientId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -182,7 +182,7 @@ class BitFormController
             uksort($allList, 'strnatcasecmp');
             $response['alllists'] = $allList;
         } else {
-            Response::error(
+            return Response::error(
                 $allBoardResponse->response->error->message,
                 400
             );

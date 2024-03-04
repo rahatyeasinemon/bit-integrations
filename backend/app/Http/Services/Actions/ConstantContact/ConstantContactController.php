@@ -26,7 +26,7 @@ class ConstantContactController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -52,7 +52,7 @@ class ConstantContactController
         $apiResponse = Http::request('https://authz.constantcontact.com/oauth2/default/v1/token', 'Post', $requestParams, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -97,7 +97,7 @@ class ConstantContactController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -113,7 +113,7 @@ class ConstantContactController
             if ($refreshedToken) {
                 $response['tokenDetails'] = $refreshedToken;
             } else {
-                Response::error(
+                return Response::error(
                     __('Failed to refresh access token', 'bit-integrations'),
                     400
                 );
@@ -137,7 +137,7 @@ class ConstantContactController
 
             $response['contactList'] = $allList;
         } else {
-            Response::error(
+            return Response::error(
                 $apiResponse->response->error->message,
                 400
             );
@@ -154,7 +154,7 @@ class ConstantContactController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -169,7 +169,7 @@ class ConstantContactController
             if ($refreshedToken) {
                 $response['tokenDetails'] = $refreshedToken;
             } else {
-                Response::error(
+                return Response::error(
                     __('Failed to refresh access token', 'bit-integrations'),
                     400
                 );
@@ -192,7 +192,7 @@ class ConstantContactController
 
             $response['contactTag'] = $allTag;
         } else {
-            Response::error(
+            return Response::error(
                 $apiResponse->response->error->message,
                 400
             );
@@ -210,7 +210,7 @@ class ConstantContactController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -225,7 +225,7 @@ class ConstantContactController
             if ($refreshedToken) {
                 $response['tokenDetails'] = $refreshedToken;
             } else {
-                Response::error(
+                return Response::error(
                     __('Failed to refresh access token', 'bit-integrations'),
                     400
                 );
@@ -249,7 +249,7 @@ class ConstantContactController
 
             $response['customFields'] = $allCFields;
         } else {
-            Response::error(
+            return Response::error(
                 $apiResponse->response->error->message,
                 400
             );

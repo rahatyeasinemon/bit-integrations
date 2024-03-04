@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\LearnDash;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class LearnDashController
@@ -245,7 +246,7 @@ final class LearnDashController
         return $groups;
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
             return Response::error(__('LearnDash LMS is not installed or activated', 'bit-integrations'));
@@ -283,7 +284,7 @@ final class LearnDashController
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

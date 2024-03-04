@@ -18,7 +18,7 @@ class SliceWpController
     public static function authorizeSliceWp()
     {
         if (self::pluginActive()) {
-            Response::success(true);
+            return Response::success(true);
         }
         return Response::error(__('SliceWp affiliate must be activated!', 'bit-integrations'));
     }

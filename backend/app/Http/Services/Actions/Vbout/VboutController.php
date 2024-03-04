@@ -20,7 +20,7 @@ class VboutController
     public function handleAuthorize($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -32,7 +32,7 @@ class VboutController
 
         $response = Http::request($apiEndpoint, 'Post', null);
         if ($response->response->header->status !== "ok") {
-            Response::error(
+            return Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -46,7 +46,7 @@ class VboutController
     public function fetchAllLists($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -60,7 +60,7 @@ class VboutController
 
         $formattedResponse = [];
         if ($response->response->header->status !== "ok") {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );
@@ -81,7 +81,7 @@ class VboutController
     public function vboutRefreshFields($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -95,7 +95,7 @@ class VboutController
 
         $formattedResponse = [];
         if ($response->response->header->status !== "ok") {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );

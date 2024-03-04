@@ -37,7 +37,7 @@ class EnchargeController
     public static function enChargeAuthorize($requestsParams)
     {
         if (empty($requestsParams->api_key)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -52,13 +52,13 @@ class EnchargeController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || isset($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->code) ? 'Unknown' : $apiResponse->error->message,
                 400
             );
         }
 
-        Response::success(true);
+        return Response::success(true);
     }
     /**
      * Process ajax request for refresh crm modules
@@ -70,7 +70,7 @@ class EnchargeController
     public static function enchargeHeaders($queryParams)
     {
         if (empty($queryParams->api_key)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

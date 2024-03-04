@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\TutorLms;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class TutorLmsController
@@ -48,7 +49,7 @@ final class TutorLmsController
         return Response::success($tutor_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!function_exists('tutor')) {
             return Response::error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
@@ -194,7 +195,7 @@ final class TutorLmsController
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

@@ -20,7 +20,7 @@ class ElasticEmailController
     public static function elasticEmailAuthorize($requestsParams)
     {
         if (empty($requestsParams->api_key)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -37,17 +37,17 @@ class ElasticEmailController
         ];
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
         if (is_wp_error($apiResponse) || !is_null($apiResponse->Error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->code) ? 'Unknown' : $apiResponse->Error,
                 400
             );
         }
-        Response::success(true);
+        return Response::success(true);
     }
     public static function getAllLists($requestsParams)
     {
         if (empty($requestsParams->apiKey)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

@@ -49,7 +49,7 @@ class RecordApiHelper
             $finalData['customer_id'] = $customer->id;
             return $this->createTicketByExistCustomer($finalData);
         } else {
-            Response::error(
+            return Response::error(
                 __(
                     'Create Customer Failed!',
                     'bit-integrations'
@@ -76,7 +76,7 @@ class RecordApiHelper
         if (isset($ticket->id)) {
             return $ticket;
         } else {
-            Response::error(
+            return Response::error(
                 __(
                     'Create Ticket Failed!',
                     'bit-integrations'

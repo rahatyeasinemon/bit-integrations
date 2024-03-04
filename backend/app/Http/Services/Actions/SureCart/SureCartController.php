@@ -16,7 +16,7 @@ class SureCartController
         if (
             empty($tokenRequestParams->api_key) || empty($tokenRequestParams->auth_url)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -54,7 +54,7 @@ class SureCartController
         if ($request_data->code !== 'unauthorized') {
             return Response::success($request_body);
         } else {
-            Response::error(
+            return Response::error(
                 $request_data->message,
                 400
             );

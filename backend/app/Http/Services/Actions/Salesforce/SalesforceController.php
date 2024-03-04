@@ -28,7 +28,7 @@ class SalesforceController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -49,7 +49,7 @@ class SalesforceController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -66,7 +66,7 @@ class SalesforceController
             || empty($customFieldRequestParams->clientId)
             || empty($customFieldRequestParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -149,7 +149,7 @@ class SalesforceController
             || empty($campaignRequestParams->clientId)
             || empty($campaignRequestParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -171,7 +171,7 @@ class SalesforceController
         if (property_exists($apiResponse, 'objectDescribe')) {
             $response['allCampaignLists'] = $apiResponse->recentItems;
         } else {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->recentItems) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -189,7 +189,7 @@ class SalesforceController
             || empty($campaignRequestParams->clientId)
             || empty($campaignRequestParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -211,7 +211,7 @@ class SalesforceController
         if (property_exists($apiResponse, 'recentItems')) {
             $response['leadLists'] = $apiResponse->recentItems;
         } else {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->recentItems) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -229,7 +229,7 @@ class SalesforceController
             || empty($campaignRequestParams->clientId)
             || empty($campaignRequestParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -250,7 +250,7 @@ class SalesforceController
         if (property_exists($apiResponse, 'recentItems')) {
             $response['contactLists'] = $apiResponse->recentItems;
         } else {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->recentItems) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -268,7 +268,7 @@ class SalesforceController
             || empty($campaignRequestParams->clientId)
             || empty($campaignRequestParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -289,7 +289,7 @@ class SalesforceController
         if (property_exists($apiResponse, 'recentItems')) {
             $response['accountLists'] = $apiResponse->recentItems;
         } else {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->recentItems) ? 'Unknown' : $apiResponse->error,
                 400
             );

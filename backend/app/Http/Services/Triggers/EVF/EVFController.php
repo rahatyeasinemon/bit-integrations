@@ -5,6 +5,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\EVF;
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Util\DateTimeHelper;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use wpdb;
 

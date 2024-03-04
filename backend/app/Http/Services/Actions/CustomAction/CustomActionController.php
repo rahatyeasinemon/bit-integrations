@@ -28,7 +28,7 @@ class CustomActionController
         $msg = str_replace($filePath, 'your function', $response);
         fclose($temp_file);
         if (str_contains($response, 'No syntax errors detected')) {
-            Response::success("Congrats, $msg");
+            return Response::success("Congrats, $msg");
         }
         return Response::error($msg);
     }

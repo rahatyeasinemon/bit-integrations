@@ -15,7 +15,7 @@ class GetgistController
     public static function getgistAuthorize($requestsParams)
     {
         if (empty($requestsParams->api_key)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -29,13 +29,13 @@ class GetgistController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || $apiResponse->code === 'authentication_failed') {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->code) ? 'Unknown' : $apiResponse->message,
                 400
             );
         }
 
-        Response::success(true);
+        return Response::success(true);
     }
 
     public function execute($integrationData, $fieldValues)

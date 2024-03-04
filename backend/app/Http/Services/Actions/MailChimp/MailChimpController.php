@@ -43,7 +43,7 @@ class MailChimpController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -71,7 +71,7 @@ class MailChimpController
         $apiResponse->dc = $metaData->dc;
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -93,7 +93,7 @@ class MailChimpController
             || empty($queryParams->clientSecret)
             || empty($queryParams->tokenDetails->dc)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -121,7 +121,7 @@ class MailChimpController
 
             $response['audiencelist'] = $allList;
         } else {
-            Response::error(
+            return Response::error(
                 $audienceResponse->response->error->message,
                 400
             );
@@ -141,7 +141,7 @@ class MailChimpController
             || empty($queryParams->listId)
             || empty($queryParams->tokenDetails->dc)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -183,7 +183,7 @@ class MailChimpController
             || empty($queryParams->listId)
             || empty($queryParams->tokenDetails->dc)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

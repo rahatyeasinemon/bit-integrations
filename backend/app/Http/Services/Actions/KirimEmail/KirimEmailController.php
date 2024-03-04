@@ -26,7 +26,7 @@ class KirimEmailController
             empty($tokenRequestParams->username)
             || empty($tokenRequestParams->api_key)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -49,7 +49,7 @@ class KirimEmailController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (is_wp_error($apiResponse) || $apiResponse->code !== 200) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -64,7 +64,7 @@ class KirimEmailController
             empty($tokenRequestParams->username)
             || empty($tokenRequestParams->api_key)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -87,7 +87,7 @@ class KirimEmailController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (is_wp_error($apiResponse) || $apiResponse->code !== 200) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );

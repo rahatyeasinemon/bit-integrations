@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\PaidMembershipPro;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class PaidMembershipProController
@@ -57,7 +58,7 @@ final class PaidMembershipProController
         return Response::success($affiliate_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
             return Response::error(__('Paid Membership Pro is not installed or activated', 'bit-integrations'));
@@ -81,7 +82,7 @@ final class PaidMembershipProController
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

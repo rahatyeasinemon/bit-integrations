@@ -37,7 +37,7 @@ class ZohoDeskController
                 || empty($requestsParams->redirectURI)
                 || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -57,7 +57,7 @@ class ZohoDeskController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -73,7 +73,7 @@ class ZohoDeskController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -106,7 +106,7 @@ class ZohoDeskController
             uksort($allOrganizations, 'strnatcasecmp');
             $response['organizations'] = $allOrganizations;
         } else {
-            Response::error(
+            return Response::error(
                 empty($organizationsMetaResponse->data) ? 'Unknown' : $organizationsMetaResponse->error,
                 400
             );
@@ -116,7 +116,7 @@ class ZohoDeskController
         }
         return Response::success($response);
         // } else {
-        //     Response::error(
+        //     return Response::error(
         //         __(
         //             'Token expired',
         //             'bit-integrations'
@@ -139,7 +139,7 @@ class ZohoDeskController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->orgId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -173,7 +173,7 @@ class ZohoDeskController
             uksort($allDepartments, 'strnatcasecmp');
             $response['departments'] = $allDepartments;
         } else {
-            Response::error(
+            return Response::error(
                 empty($departmentsMetaResponse->data) ? 'Unknown' : $departmentsMetaResponse->error,
                 400
             );
@@ -199,7 +199,7 @@ class ZohoDeskController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->orgId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -254,7 +254,7 @@ class ZohoDeskController
             uksort($response['fields'], 'strnatcasecmp');
             usort($response['required'], 'strnatcasecmp');
         } else {
-            Response::error(
+            return Response::error(
                 $fieldsMetaResponse->status === 'error' ? $fieldsMetaResponse->message : 'Unknown',
                 400
             );
@@ -281,7 +281,7 @@ class ZohoDeskController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->orgId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -312,7 +312,7 @@ class ZohoDeskController
                 }
             }
         } else {
-            Response::error(
+            return Response::error(
                 empty($ownersMetaResponse->data) ? 'Unknown' : $ownersMetaResponse->error,
                 400
             );
@@ -339,7 +339,7 @@ class ZohoDeskController
                 || empty($queryParams->orgId)
                 || empty($queryParams->departmentId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -371,7 +371,7 @@ class ZohoDeskController
                 }
             }
         } else {
-            Response::error(
+            return Response::error(
                 empty($productsMetaResponse->data) ? 'Unknown' : $productsMetaResponse->error,
                 400
             );

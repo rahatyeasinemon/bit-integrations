@@ -26,7 +26,7 @@ class TutorLmsController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (is_plugin_active('tutor/tutor.php')) {
-            Response::success(true);
+            return Response::success(true);
         }
 
         return Response::error(__('Tutor LMS must be activated!', 'bit-integrations'));

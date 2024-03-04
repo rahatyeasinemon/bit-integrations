@@ -113,8 +113,6 @@ export const saveIntegConfig = async (flow, setFlow, allIntegURL, confTmp, navig
   } else if (flow.triggered_entity === 'ActionHook' || flow.triggered_entity === 'Spectra'  || flow.triggered_entity === 'EssentialBlocks') {
     tmpConf['primaryKey'] = flow.triggerData.primaryKey
   }
-  console.log('flow1',flow)
-  console.log('tmpConf1',tmpConf)
 
   const data = {
     name: confTmp.name,
@@ -134,7 +132,7 @@ export const saveIntegConfig = async (flow, setFlow, allIntegURL, confTmp, navig
   }
   try {
     const res = await bitsFetch(data, action)
-    if (!edit && res.success) {
+    if (!edit && res.status === 'success') {
       navigate(allIntegURL)
       // getRecoil, setRecoil, resetRecoil
       resetRecoil($newFlow)
@@ -229,8 +227,6 @@ export const saveActionConf = async ({ flow, setFlow, allIntegURL, conf, navigat
   } else if (flow.triggered_entity === 'ActionHook' || flow.triggered_entity === 'Spectra'  || flow.triggered_entity === 'EssentialBlocks') {
     tmpConf['primaryKey'] = flow.triggerData.primaryKey
   }
-  console.log('flow2',flow)
-  console.log('tmpConf2',tmpConf)
 
   const data = {
     name: conf.name,
@@ -250,7 +246,7 @@ export const saveActionConf = async ({ flow, setFlow, allIntegURL, conf, navigat
   try {
     await bitsFetch(data, action)
       .then(res => {
-        if (!edit && res.success) {
+        if (!edit && res.status === 'success') {
           navigate(allIntegURL)
         }
 
@@ -258,7 +254,7 @@ export const saveActionConf = async ({ flow, setFlow, allIntegURL, conf, navigat
         let msgType = 'success'
         if (res.data?.msg) {
           msg = res.data.msg
-        } else if (res.success) {
+        } else if (res.status === 'success') {
           msg = edit ? __('Integration updated successfully', 'bit-integrations') : __('Integration saved successfully', 'bit-integrations')
         } else {
           msgType = 'error'
@@ -343,7 +339,7 @@ const tokenHelper = (ajaxInteg, grantToken, confTmp, setConf, setisAuthorized, s
   bitsFetch(tokenRequestParams, `${ajaxInteg}_generate_token`)
     .then(result => result)
     .then(result => {
-      if (result && result.success) {
+      if (result &&  res.status === 'success') {
         const newConf = { ...confTmp }
         newConf.tokenDetails = result.data
         setConf(newConf)

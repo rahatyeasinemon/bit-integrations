@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\Forminator;
 
 use DateTime;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class ForminatorController
@@ -54,7 +55,7 @@ final class ForminatorController
         return Response::success($all_forms);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!class_exists('Forminator')) {
             return Response::error(__('Forminator is not installed or activated', 'bit-integrations'));
@@ -64,7 +65,6 @@ final class ForminatorController
         }
 
         $fields = self::fields($data->id);
-
         if (empty($fields)) {
             return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }

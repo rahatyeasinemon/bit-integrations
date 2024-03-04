@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\WSForm;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class WSFormController
@@ -105,7 +106,7 @@ final class WSFormController
         return Response::success($all_forms);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!is_plugin_active('ws-form-pro/ws-form.php')) {
             return Response::error(__('WS Form Pro is not installed or activated', 'bit-integrations'));

@@ -53,7 +53,7 @@ export const checkMappedMbFields = data => {
 
 export const refreshAcfFields = (acfConf, setAcfFields, setAcfFile) => {
   const loadAcfFields = bitsFetch({ post_type: acfConf?.post_type }, 'bitforms_get_custom_field').then((res) => {
-    if (res !== undefined && res.success) {
+    if (res !== undefined && res.status === 'success') {
       if (res?.data?.acfFields) {
         setAcfFields(res.data.acfFields)
       }

@@ -41,7 +41,7 @@ class ActiveCampaignController
             empty($requestsParams->api_key)
             || empty($requestsParams->api_url)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -55,13 +55,13 @@ class ActiveCampaignController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || empty($apiResponse)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse) ? 'Unknown' : $apiResponse,
                 400
             );
         }
 
-        Response::success(true);
+        return Response::success(true);
     }
 
     /**
@@ -77,7 +77,7 @@ class ActiveCampaignController
             empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -121,7 +121,7 @@ class ActiveCampaignController
             empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -155,7 +155,7 @@ class ActiveCampaignController
             empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -215,7 +215,7 @@ class ActiveCampaignController
             empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -293,7 +293,7 @@ class ActiveCampaignController
 //     if (empty($queryParams->api_key)
 //         || empty($queryParams->api_url)
 //     ) {
-//         Response::error(
+//         return Response::error(
 //             __(
 //                 'Requested parameter is empty',
 //                 'bit-integrations'

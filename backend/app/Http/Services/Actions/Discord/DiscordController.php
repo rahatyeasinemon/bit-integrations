@@ -29,7 +29,7 @@ class DiscordController
         if (
             empty($tokenRequestParams->accessToken)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -45,7 +45,7 @@ class DiscordController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($apiResponse->id)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -59,7 +59,7 @@ class DiscordController
         if (
             empty($tokenRequestParams->accessToken)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -93,7 +93,7 @@ class DiscordController
         if (
             empty($tokenRequestParams->accessToken) || empty($tokenRequestParams->serverId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

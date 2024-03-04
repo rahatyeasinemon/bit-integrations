@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\WC;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class WCController
@@ -138,7 +139,7 @@ final class WCController
         }
 
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

@@ -19,7 +19,7 @@ class LifterLmsController
     public static function authorizeLifterLms()
     {
         if (self::pluginActive()) {
-            Response::success(true);
+            return Response::success(true);
         }
         return Response::error(__('LifterLms must be activated!', 'bit-integrations'));
     }

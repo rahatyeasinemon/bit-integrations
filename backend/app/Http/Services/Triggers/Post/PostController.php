@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Post;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BitApps\BTCBI\Http\Services\Triggers\Post\PostHelper;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
@@ -61,7 +62,7 @@ final class PostController
         return Response::success($triggers);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         $responseData = [];
         $missing_field = null;
@@ -71,7 +72,7 @@ final class PostController
         }
 
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
 
         $ids = [1, 2, 3, 6];

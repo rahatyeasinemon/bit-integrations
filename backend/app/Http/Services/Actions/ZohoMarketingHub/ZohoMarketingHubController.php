@@ -42,7 +42,7 @@ class ZohoMarketingHubController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -62,7 +62,7 @@ class ZohoMarketingHubController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -84,7 +84,7 @@ class ZohoMarketingHubController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -117,7 +117,7 @@ class ZohoMarketingHubController
             uksort($allLists, 'strnatcasecmp');
             $response['lists'] = $allLists;
         } else {
-            Response::error(
+            return Response::error(
                 empty($listsMetaResponse->data) ? 'Unknown' : $listsMetaResponse->error,
                 400
             );
@@ -143,7 +143,7 @@ class ZohoMarketingHubController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -176,7 +176,7 @@ class ZohoMarketingHubController
 
             $response['required'] = ['Contact Email'];
         } else {
-            Response::error(
+            return Response::error(
                 $contactFieldsMetaResponse->status === 'error' ? $contactFieldsMetaResponse->message : 'Unknown',
                 400
             );

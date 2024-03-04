@@ -20,7 +20,7 @@ class MailRelayController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) && empty($fieldsRequestParams->domain)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -58,7 +58,7 @@ class MailRelayController
     public function getAllGroups($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) && empty($fieldsRequestParams->domain)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

@@ -89,7 +89,7 @@ const SpectraHelper = () => {
     setIsLoading(true)
     intervalRef.current = setInterval(() => {
       bitsFetch(null, 'spectra/get').then((resp) => {
-        if (resp.success) {
+        if (resp.status === 'success') {
           clearInterval(intervalRef.current)
           const tmpNewFlow = { ...newFlow }
 

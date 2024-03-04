@@ -26,7 +26,7 @@ class AcademyLmsController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (is_plugin_active('academy/academy.php')) {
-            Response::success(true);
+            return Response::success(true);
         }
 
         return Response::error(__('Academy Lms must be activated!', 'bit-integrations'));

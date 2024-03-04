@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\StudioCart;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class StudioCartController
@@ -81,7 +82,7 @@ final class StudioCartController
         return Response::success($sc_actions);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
             return Response::error(__('Studiocart is not installed or activated', 'bit-integrations'));

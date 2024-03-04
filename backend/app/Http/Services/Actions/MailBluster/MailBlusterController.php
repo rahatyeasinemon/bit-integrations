@@ -21,7 +21,7 @@ class MailBlusterController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

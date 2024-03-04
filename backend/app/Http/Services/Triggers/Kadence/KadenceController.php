@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Kadence;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class KadenceController
@@ -87,7 +88,7 @@ final class KadenceController
         return Response::success($all_forms);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
             return Response::error(__('Kadence Blocks is not installed or activated', 'bit-integrations'));

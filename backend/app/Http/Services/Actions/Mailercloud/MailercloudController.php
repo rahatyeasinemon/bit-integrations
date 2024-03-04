@@ -22,7 +22,7 @@ class MailercloudController
     public function handleAuthorize($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -37,7 +37,7 @@ class MailercloudController
         ];
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if ($response->code === "invalid_api_key") {
-            Response::error(
+            return Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -51,7 +51,7 @@ class MailercloudController
     public function getAllLists($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -71,7 +71,7 @@ class MailercloudController
         $response = Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
 
         if ($response->code === "invalid_api_key") {
-            Response::error(
+            return Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -86,7 +86,7 @@ class MailercloudController
     public function getAllFields($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -106,7 +106,7 @@ class MailercloudController
         $response = Http::request($apiEndpoint, 'Post', json_encode($body), $headers);
 
         if ($response->code === "invalid_api_key") {
-            Response::error(
+            return Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'

@@ -65,7 +65,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     }
 
     const loadFormFields = bitsFetch(queryData, `${flow.triggered_entity.toLowerCase()}/get/form`).then((res) => {
-      if (res.success) {
+      if (res.status === 'success') {
         setFormFields(res.data.fields)
       }
       return res.data
@@ -242,7 +242,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
 
   useEffect(() => {
     bitsFetch({}, `${flow.triggered_entity.toLowerCase()}/get`, null, 'GET').then((res) => {
-      if (res.success) {
+      if (res.status === 'success') {
         setForms(res.data)
         const tmpFormPost = {}
         res.data?.map((form) => {

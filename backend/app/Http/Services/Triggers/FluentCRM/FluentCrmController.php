@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\FluentCrm;
 
 use DateTime;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use FluentCrm\App\Models\Tag;
 use FluentCrm\App\Models\Lists;
 use BitApps\BTCBI\Util\Common;
@@ -41,7 +42,7 @@ final class FluentCrmController
     public static function checkedExistsFluentCRM()
     {
         if (!is_plugin_active('fluent-crm/fluent-crm.php')) {
-            Response::error(
+            return Response::error(
                 __(
                     'Fluent CRM Plugin is not active or not installed',
                     'bit-integrations'
@@ -67,7 +68,7 @@ final class FluentCrmController
         }
         return Response::success($fluentcrm_action);
     }
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         self::checkedExistsFluentCRM();
         $fields = self::fields($data->id);
@@ -160,7 +161,7 @@ final class FluentCrmController
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\RestrictContent;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class RestrictContentController
@@ -61,7 +62,7 @@ final class RestrictContentController
         return Response::success($restrictContent_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
             return Response::error(__('Restrict Content is not installed or activated', 'bit-integrations'));
@@ -101,7 +102,7 @@ final class RestrictContentController
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

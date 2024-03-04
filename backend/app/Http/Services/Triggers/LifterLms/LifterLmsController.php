@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\LifterLms;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class LifterLmsController
@@ -66,7 +67,7 @@ final class LifterLmsController
         return Response::success($lifterLms_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
             return Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));

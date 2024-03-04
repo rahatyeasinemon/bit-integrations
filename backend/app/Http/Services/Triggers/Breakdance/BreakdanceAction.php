@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Breakdance;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use Breakdance\Forms\Actions\Action;
 
 if (class_exists('Breakdance\Forms\Actions\Action')) {

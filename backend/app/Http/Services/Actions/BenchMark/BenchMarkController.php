@@ -39,7 +39,7 @@ class BenchMarkController
     {
         if (empty($requestsParams->api_secret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -54,13 +54,13 @@ class BenchMarkController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || empty($apiResponse)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse) ? 'Unknown' : $apiResponse,
                 400
             );
         }
 
-        Response::success(true);
+        return Response::success(true);
     }
 
     /**
@@ -74,7 +74,7 @@ class BenchMarkController
     {
         if (empty($queryParams->api_secret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -114,7 +114,7 @@ class BenchMarkController
     {
         if (empty($queryParams->api_secret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

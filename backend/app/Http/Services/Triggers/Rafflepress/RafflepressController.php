@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Rafflepress;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class RafflepressController
@@ -59,7 +60,7 @@ final class RafflepressController
         return Response::success($affiliate_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
             return Response::error(__('Rafflepress is not installed or activated', 'bit-integrations'));
@@ -80,7 +81,7 @@ final class RafflepressController
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

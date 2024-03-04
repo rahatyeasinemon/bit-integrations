@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Tripetto;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class TripettoController
@@ -62,7 +63,7 @@ final class TripettoController
         return Response::success($all_forms);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::isTripettoActive()) {
             return Response::error(__('Tripetto is not installed or activated', 'bit-integrations'));

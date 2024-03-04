@@ -20,7 +20,7 @@ class AcumbamailController
     public function fetchAllLists($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -40,7 +40,7 @@ class AcumbamailController
         if ($response !== 'Unauthorized') {
             return Response::success($response);
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );
@@ -50,7 +50,7 @@ class AcumbamailController
     public function acumbamailAuthAndFetchSubscriberList($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -76,7 +76,7 @@ class AcumbamailController
     public function acumbamailRefreshFields($refreshFieldsRequestParams)
     {
         if (empty($refreshFieldsRequestParams->auth_token) || empty($refreshFieldsRequestParams->list_id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -106,7 +106,7 @@ class AcumbamailController
         if ($response !== 'Unauthorized') {
             return Response::success($formattedResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );

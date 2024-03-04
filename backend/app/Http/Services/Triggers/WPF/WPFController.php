@@ -5,6 +5,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\WPF;
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Util\DateTimeHelper;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class WPFController
@@ -63,7 +64,7 @@ final class WPFController
         }
         return Response::success($all_forms);
     }
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!function_exists('WPForms')) {
             return Response::error(__('WPForms is not installed or activated', 'bit-integrations'));

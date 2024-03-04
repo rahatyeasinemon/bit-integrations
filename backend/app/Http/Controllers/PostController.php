@@ -26,7 +26,7 @@ final class PostController
             $lists[$key]['id'] = $type->name;
             $lists[$key]['title'] = $type->label;
         }
-        Response::success(array_values($lists));
+        return Response::success(array_values($lists));
     }
 
     public static function getAcfFields($postType)
@@ -161,6 +161,6 @@ final class PostController
             }
         }
         // echo json_encode(array_values($pods->fields) );
-        Response::success(['podFields' => $podField, 'podFiles' => $podFile]);
+        return Response::success(['podFields' => $podField, 'podFiles' => $podFile]);
     }
 }

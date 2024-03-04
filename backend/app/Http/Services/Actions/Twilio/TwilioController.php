@@ -30,7 +30,7 @@ final class TwilioController
             || empty($tokenRequestParams->token)
             || empty($tokenRequestParams->from_num)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -52,7 +52,7 @@ final class TwilioController
         $response = json_decode($json, true);
 
         if (array_key_exists('RestException', $response)) {
-            Response::error(
+            return Response::error(
                 'Unauthorize',
                 400
             );

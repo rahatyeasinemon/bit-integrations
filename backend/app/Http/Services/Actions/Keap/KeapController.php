@@ -33,7 +33,7 @@ class KeapController
             || empty($queryParams->clientSecret)
             || empty($queryParams->tokenDetails)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -90,7 +90,7 @@ class KeapController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -112,7 +112,7 @@ class KeapController
 
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -128,7 +128,7 @@ class KeapController
             || empty($requestsParams->clientSecret)
             || empty($requestsParams->tokenDetails)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

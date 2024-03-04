@@ -28,12 +28,12 @@ class LemlistController
         $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($response->_id)) {
-            Response::error(
+            return Response::error(
                 empty($response) ? 'Unknown' : $response,
                 400
             );
         }
-        Response::success(true);
+        return Response::success(true);
     }
 
     public static function getAllCampaign($requestParams)
