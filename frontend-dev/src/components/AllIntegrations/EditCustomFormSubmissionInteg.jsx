@@ -21,8 +21,6 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
   const fetchMethod = flow?.flow_details?.fetch?.method || ''
   const removeAction = flow?.flow_details?.fetch_remove?.action || ''
   const removeMethod = flow?.flow_details?.fetch_remove?.method || ''
-  console.log(flow)
-  console.log('intervalRef', intervalRef)
 
   const handleFetch = () => {
     if (isLoading) {
