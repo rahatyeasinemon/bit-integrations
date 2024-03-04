@@ -56,8 +56,7 @@ final class FilesApiHelper
         $uploadFileEndpoint = $apiEndPoint . $apiMethod;
 
         $data[$param] = new \CURLFILE("{$data['photo']}");
-        // var_dump($data);
-        // die;
+
         if ($param != 'photo') {
             unset($data['photo']);
         }
@@ -89,7 +88,7 @@ final class FilesApiHelper
         $uploadMultipleFileEndpoint = $apiEndPoint . '/sendMediaGroup';
         $postFields = [
             'chat_id' => $data['chat_id'],
-            'caption' => $data['caption']
+            'caption' => $data['caption'],
         ];
 
         foreach ($data['media'] as $key => $value) {
@@ -104,7 +103,7 @@ final class FilesApiHelper
             } elseif ($fileType[0] == 'application') {
                 $type = 'document';
             } else {
-                $type = $fileType[0];
+                $type = empty($fileType[0]) ? 'photo' : $fileType[0];
             }
 
             $media[] = [
@@ -114,7 +113,7 @@ final class FilesApiHelper
                 'parse_mode' => 'HTML'
             ];
             $nameK = "{$key}.path";
-            $postFields[$nameK] = new \CURLFILE(realpath($value));
+            $postFields[$nameK] = new \CURLFILE(empty(realpath($value)) ? "{$value}" : realpath($value));
         }
         $postFields['media'] = json_encode($media);
 
