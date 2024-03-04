@@ -149,9 +149,28 @@ export const saveIntegConfig = async (
   } else if (flow.triggered_entity === "ARMember") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = ARMemberStateIH(tmpConf, dataFlow);
-  } else if (flow?.triggerData?.primaryKey || flow?.flow_details?.primaryKey) {
-    tmpConf["primaryKey"] =
-      flow.triggerData.primaryKey ?? flow?.flow_details?.primaryKey;
+  } else if (
+    flow.triggered_entity === "ActionHook" ||
+    flow.triggered_entity === "Spectra" ||
+    flow.triggered_entity === "EssentialBlocks"
+  ) {
+    tmpConf["primaryKey"] = flow.triggerData.primaryKey;
+  } else if (
+    flow?.triggerData?.trigger_type === "custom_form_submission" ||
+    flow?.flow_details?.trigger_type === "custom_form_submission"
+  ) {
+    tmpConf["primaryKey"] = !edit
+      ? flow.triggerData.primaryKey
+      : flow?.flow_details?.primaryKey;
+    tmpConf["fields"] = !edit
+      ? flow?.triggerData?.fields
+      : flow?.flow_details?.fields;
+    tmpConf["fetch"] = !edit
+      ? flow?.triggerData?.fetch
+      : flow?.flow_details?.fetch;
+    tmpConf["fetch_remove"] = !edit
+      ? flow?.triggerData?.fetch_remove
+      : flow?.flow_details?.fetch_remove;
   }
 
   const data = {
@@ -284,9 +303,28 @@ export const saveActionConf = async ({
   } else if (flow.triggered_entity === "ARMember") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = ARMemberStateIH(tmpConf, dataFlow);
-  } else if (flow?.triggerData?.primaryKey || flow?.flow_details?.primaryKey) {
-    tmpConf["primaryKey"] =
-      flow.triggerData.primaryKey ?? flow?.flow_details?.primaryKey;
+  } else if (
+    flow.triggered_entity === "ActionHook" ||
+    flow.triggered_entity === "Spectra" ||
+    flow.triggered_entity === "EssentialBlocks"
+  ) {
+    tmpConf["primaryKey"] = flow.triggerData.primaryKey;
+  } else if (
+    flow?.triggerData?.trigger_type === "custom_form_submission" ||
+    flow?.flow_details?.trigger_type === "custom_form_submission"
+  ) {
+    tmpConf["primaryKey"] = !edit
+      ? flow.triggerData.primaryKey
+      : flow?.flow_details?.primaryKey;
+    tmpConf["fields"] = !edit
+      ? flow?.triggerData?.fields
+      : flow?.flow_details?.fields;
+    tmpConf["fetch"] = !edit
+      ? flow?.triggerData?.fetch
+      : flow?.flow_details?.fetch;
+    tmpConf["fetch_remove"] = !edit
+      ? flow?.triggerData?.fetch_remove
+      : flow?.flow_details?.fetch_remove;
   }
 
   const data = {

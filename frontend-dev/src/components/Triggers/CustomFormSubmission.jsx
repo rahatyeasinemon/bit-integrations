@@ -46,7 +46,11 @@ const CustomFormSubmission = () => {
     const tmpNewFlow = { ...newFlow }
     tmpNewFlow.triggerData = {
       primaryKey: primaryKey,
-      fields: tmpNewFlow.triggerDetail.data.map(field => ({ label: field.label, name: field.name }))
+      trigger_type: newFlow?.triggerDetail?.type,
+      fields: tmpNewFlow.triggerDetail.data,
+      fetch: newFlow?.triggerDetail?.fetch,
+      fetch_remove: newFlow?.triggerDetail?.fetch_remove
+
     }
 
     tmpNewFlow.triggered_entity_id = newFlow?.triggerDetail?.triggered_entity_id
@@ -157,12 +161,12 @@ const CustomFormSubmission = () => {
         show={primaryKeyModal}
         close={() => setPrimaryKeyModal(false)}
         action={() => setPrimaryKeyModal(false)}
-        title={__('Primary Key', 'bit-integrations')}
+        title={__('Unique Key', 'bit-integrations')}
         cssTransStyle={{ zIndex: 99999 }}
       >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">
-          {__('Select Primary Key', 'bit-integrations')}
+          {__('Select Unique Key', 'bit-integrations')}
         </div>
         <div className="flx flx-between mt-2">
           <MultiSelect
