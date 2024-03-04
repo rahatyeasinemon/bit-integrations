@@ -83,7 +83,7 @@ export default function SelectTrigger() {
     )
   }
 
-  if (data?.success === false) {
+  if (data?.status === 'error') {
     return (
       <div>
         <h1 className="txt-center mt-5">License is not active </h1>
