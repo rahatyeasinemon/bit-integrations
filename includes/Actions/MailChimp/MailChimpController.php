@@ -3,6 +3,7 @@
 /**
  * MailChimp Integration
  */
+
 namespace BitCode\FI\Actions\MailChimp;
 
 use WP_Error;
@@ -14,7 +15,7 @@ use BitCode\FI\Core\Util\HttpHelper;
  */
 class MailChimpController
 {
-    
+
     private $_integrationID;
 
     public function __construct($integrationID)
@@ -38,7 +39,8 @@ class MailChimpController
      */
     public static function generateTokens($requestsParams)
     {
-        if (empty($requestsParams->clientId)
+        if (
+            empty($requestsParams->clientId)
             || empty($requestsParams->clientSecret)
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
@@ -55,12 +57,12 @@ class MailChimpController
         $apiEndpoint = 'https://login.mailchimp.com/oauth2/token';
         $authorizationHeader["Content-Type"] = 'application/x-www-form-urlencoded';
         $requestParams = array(
-                'code' => $requestsParams->code,
-                'client_id' => $requestsParams->clientId,
-                'client_secret' => $requestsParams->clientSecret,
-                'redirect_uri' => $requestsParams->redirectURI,
-                'grant_type' => 'authorization_code'
-            );
+            'code' => $requestsParams->code,
+            'client_id' => $requestsParams->clientId,
+            'client_secret' => $requestsParams->clientSecret,
+            'redirect_uri' => $requestsParams->redirectURI,
+            'grant_type' => 'authorization_code'
+        );
         $apiResponse = HttpHelper::post($apiEndpoint, $requestParams, $authorizationHeader);
 
         $metaDataEndPoint = 'https://login.mailchimp.com/oauth2/metadata';
@@ -88,7 +90,8 @@ class MailChimpController
      */
     public static function refreshAudience($queryParams)
     {
-        if (empty($queryParams->tokenDetails)
+        if (
+            empty($queryParams->tokenDetails)
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
             || empty($queryParams->tokenDetails->dc)
@@ -113,9 +116,9 @@ class MailChimpController
             // wp_send_json_success($audienceLists);
             foreach ($audienceLists as $audienceList) {
                 $allList[$audienceList->name] = (object) array(
-                        'listId' => $audienceList->id,
-                        'listName' => $audienceList->name
-                    );
+                    'listId' => $audienceList->id,
+                    'listName' => $audienceList->name
+                );
             }
             uksort($allList, 'strnatcasecmp');
 
@@ -137,7 +140,8 @@ class MailChimpController
      */
     public static function refreshAudienceFields($queryParams)
     {
-        if (empty($queryParams->tokenDetails)
+        if (
+            empty($queryParams->tokenDetails)
             || empty($queryParams->listId)
             || empty($queryParams->tokenDetails->dc)
         ) {
@@ -152,7 +156,8 @@ class MailChimpController
         $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . "/lists/$queryParams->listId/merge-fields";
         $authorizationHeader["Authorization"] = "Bearer {$queryParams->tokenDetails->access_token}";
         $mergeFieldResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
-        
+        error_log(print_r($mergeFieldResponse, true));
+
         $fields = [];
         if (!is_wp_error($mergeFieldResponse)) {
             $allFields = $mergeFieldResponse->merge_fields;
@@ -160,12 +165,13 @@ class MailChimpController
                 if ($field->name === 'Address') {
                     continue;
                 }
-                $fields[$field->name] = (object) array(
-                        'tag' => $field->tag,
-                        'name' => $field->name
-                    );
+                $fields[$field->tag] = (object) array(
+                    'tag' => $field->tag,
+                    'name' => $field->name,
+                    'required' => $field->required ?? false
+                );
             }
-            $fields['Email'] = (object) array('tag' => 'email_address', 'name' => 'Email');
+            $fields['Email'] = (object) array('tag' => 'email_address', 'name' => 'Email', 'required' => true);
             $response['audienceField'] = $fields;
             wp_send_json_success($response);
         }
@@ -179,7 +185,8 @@ class MailChimpController
      */
     public static function refreshTags($queryParams)
     {
-        if (empty($queryParams->tokenDetails)
+        if (
+            empty($queryParams->tokenDetails)
             || empty($queryParams->listId)
             || empty($queryParams->tokenDetails->dc)
         ) {
@@ -198,9 +205,9 @@ class MailChimpController
         $allList = [];
         foreach ($tagsList->segments as $tag) {
             $allList[$tag->name] = (object) array(
-                    'tagId' => $tag->id,
-                    'tagName' => $tag->name
-                );
+                'tagId' => $tag->id,
+                'tagName' => $tag->name
+            );
         }
         uksort($allList, "strnatcasecmp");
         $response['audienceTags'] = $allList;
@@ -227,7 +234,8 @@ class MailChimpController
         $defaultDataConf = $integrationDetails->default;
         $addressFields = $integrationDetails->address_field;
 
-        if (empty($tokenDetails)
+        if (
+            empty($tokenDetails)
             || empty($listId)
             || empty($fieldMap)
             || empty($defaultDataConf)

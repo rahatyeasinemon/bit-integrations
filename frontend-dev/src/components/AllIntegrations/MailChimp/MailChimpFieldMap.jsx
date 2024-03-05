@@ -11,6 +11,9 @@ import { addFieldMap, delFieldMap, handleFieldMapping } from '../IntegrationHelp
 export default function MailChimpFieldMap({ i, formFields, field, sheetConf, setSheetConf }) {
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
+  const requiredFields = sheetConf.default?.fields?.[sheetConf.listId] && Object.values(sheetConf.default.fields[sheetConf.listId]).filter(fld => fld.required === true) || []
+  const allNonRequiredFields = sheetConf.default?.fields?.[sheetConf.listId] && Object.values(sheetConf.default.fields[sheetConf.listId]).filter(fld => fld.required === false) || []
+
   return (
     <div
       className="flx mt-2 mb-2 btcbi-field-map"
@@ -35,14 +38,20 @@ export default function MailChimpFieldMap({ i, formFields, field, sheetConf, set
 
         {field.formField === 'custom' && <TagifyInput onChange={e => handleCustomValue(e, i, sheetConf, setSheetConf)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bit-integrations')} formFields={formFields} />}
 
-        <select className="btcd-paper-inp" name="mailChimpField" value={field.mailChimpField || ''} onChange={(ev) => handleFieldMapping(ev, i, sheetConf, setSheetConf)}>
+        <select className="btcd-paper-inp" name="mailChimpField" value={field.mailChimpField || ''} onChange={(ev) => handleFieldMapping(ev, i, sheetConf, setSheetConf)} disabled={i < requiredFields.length}>
           <option value="">{__('Select Field', 'bit-integrations')}</option>
           {
-            sheetConf.default?.fields?.[sheetConf.listId] && Object.values(sheetConf.default.fields[sheetConf.listId]).map((listField, indx) => (
-              <option key={`mchimp-${indx * 2}`} value={listField.tag}>
-                {listField.name}
+            i < requiredFields.length ? (
+              <option key={`mchimp-${requiredFields[i].tag}`} value={requiredFields[i].tag}>
+                {requiredFields[i].name}
               </option>
-            ))
+            ) : (
+              allNonRequiredFields.map(({ tag, name }) => (
+                <option key={`mchimp-${tag}`} value={tag}>
+                  {name}
+                </option>
+              ))
+            )
           }
         </select>
       </div>
