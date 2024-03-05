@@ -31,9 +31,9 @@ function App() {
   // check if integrations are available
   const { data, isLoading } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
 
-  const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
+  const [integrations, setIntegrations] = useState(!isLoading && data.status === 'success' && data?.data?.integrations ? data.data.integrations : [])
   useEffect(() => {
-    !isLoading && setIntegrations(data.success ? data.data.integrations : [])
+    !isLoading && setIntegrations(data.status === 'success' ? data.data.integrations : [])
   }, [data])
   // check integrations end
   const flowNumber = integrations.length

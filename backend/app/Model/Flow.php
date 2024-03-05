@@ -164,15 +164,15 @@ final class Flow
     public function save(Request $data)
     {
         $missing_field = null;
-        if (!property_exists($data, 'trigger')) {
+        if (!isset($data->trigger)) {
             $missing_field = 'Trigger';
         }
 
-        if (!property_exists($data, 'triggered_entity_id')) {
+        if (!isset($data->triggered_entity_id)) {
             $missing_field = (is_null($missing_field) ? null : ', ') . 'Triggered form ID';
         }
 
-        if (!property_exists($data, 'flow_details')) {
+        if (!isset($data->flow_details)) {
             $missing_field = (is_null($missing_field) ? null : ', ') . 'Integration details';
         }
         if (!is_null($missing_field)) {
