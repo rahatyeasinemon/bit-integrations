@@ -5,8 +5,9 @@ import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import EditFormInteg from '../EditFormInteg'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import EditWebhookInteg from '../EditWebhookInteg'
-import { checkWebhookIntegrationsExist } from '../IntegrationHelpers/IntegrationHelpers'
+import { } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { editHandleInput, saveUpdateConfig } from './KlaviyoCommonFunc'
 import KlaviyoIntegLayout from './KlaviyoIntegLayout'
@@ -32,8 +33,7 @@ function EditKlaviyo({ allIntegURL }) {
         <input className="btcd-paper-inp w-5" name="name" onChange={(e) => editHandleInput(e, klaviyoConf, setKlaviyoConf)} value={klaviyoConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
       </div>
       <div className="my-3">
-        {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
-        {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
+        <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
       </div>
 
       <KlaviyoIntegLayout

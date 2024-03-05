@@ -6,12 +6,13 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
-import { checkWebhookIntegrationsExist, saveActionConf, saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import { saveActionConf, saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import UserFieldMap from './UserFieldMap'
 import UserMetaField from './UserMetaField'
 import { userFields } from '../../../Utils/StaticData/userField'
 import { checkMappedUserFields } from './UserHelperFunction'
 import EditFormInteg from '../EditFormInteg'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import EditWebhookInteg from '../EditWebhookInteg'
@@ -95,8 +96,8 @@ export default function EditRegistration({ allIntegURL }) {
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <br />
-      {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
-      {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
+
+      <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
       <div className="font-w-m mt-3">{__('Action type', 'bit-integrations')}</div>
       <div>
         <CheckBox radio name="action_type" onChange={actionHandler} checked={userConf?.action_type === 'new_user'} value="new_user" title={__('New User Create', 'bit-integrations')} />

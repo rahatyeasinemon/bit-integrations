@@ -4,10 +4,8 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
-import EditFormInteg from '../EditFormInteg'
-import EditWebhookInteg from '../EditWebhookInteg'
-import { checkWebhookIntegrationsExist } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import { handleInput, saveUpdateConfig } from './MailercloudCommonFunc'
 import MailercloudIntegLayout from './MailercloudIntegLayout'
 
@@ -37,8 +35,7 @@ function EditMailercloud({ allIntegURL }) {
         <input className="btcd-paper-inp w-5" name="name" onChange={(e) => handleInput(e, mailercloudConf, setMailercloudConf, error, setError)} value={mailercloudConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
       </div>
       <div className="my-3">
-        {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
-        {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
+        <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
       </div>
 
       <MailercloudIntegLayout

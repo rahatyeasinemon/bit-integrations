@@ -7,8 +7,9 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { handleInput } from './MailChimpCommonFunc'
 import MailChimpIntegLayout from './MailChimpIntegLayout'
 import EditFormInteg from '../EditFormInteg'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
-import { checkWebhookIntegrationsExist, saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
+import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import EditWebhookInteg from '../EditWebhookInteg'
 
 function EditMailChimp({ allIntegURL }) {
@@ -30,8 +31,8 @@ function EditMailChimp({ allIntegURL }) {
       </div>
       <br />
 
-      {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
-      {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
+
+      <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
 
       <MailChimpIntegLayout
         formID={formID}

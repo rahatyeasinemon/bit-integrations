@@ -6,10 +6,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import SnackMsg from '../../Utilities/SnackMsg'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkWebhookIntegrationsExist, saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
+import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import { handleInput } from './BenchMarkCommonFunc'
 import BenchMarkIntegLayout from './BenchMarkIntegLayout'
 import EditFormInteg from '../EditFormInteg'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import EditWebhookInteg from '../EditWebhookInteg'
 
@@ -32,8 +33,8 @@ function EditBenchMark({ allIntegURL }) {
         <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, benchMarkConf, setBenchMarkConf)} name="name" value={benchMarkConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
       </div>
       <br />
-      {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
-      {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
+
+      <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
       <BenchMarkIntegLayout
         formID={formID}
         formFields={formFields}

@@ -1,16 +1,14 @@
 /* eslint-disable no-param-reassign */
 
+import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $btcbi, $formFields, $newFlow } from '../../GlobalStates'
-import bitsFetch from '../../Utils/bitsFetch'
-import { deepCopy } from '../../Utils/Helpers'
-import { __ } from '../../Utils/i18nwrap'
-import LoaderSm from '../Loaders/LoaderSm'
-import CopyText from '../Utilities/CopyText'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { create } from 'mutative'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $formFields, $newFlow } from '../../GlobalStates'
+import bitsFetch from '../../Utils/bitsFetch'
+import { __ } from '../../Utils/i18nwrap'
+import LoaderSm from '../Loaders/LoaderSm'
 
 function EditCustomFormSubmissionInteg({ setSnackbar }) {
   const [flow, setFlow] = useRecoilState($newFlow)
@@ -70,9 +68,9 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
   }, [])
 
   return (
-    <div className="flx mt-3">
+    <div className="flx">
       <b className="wdt-200 d-in-b">{__('Unique Key:', 'bit-integrations')}</b>
-      <div className="w-5">
+      <div className="w-5 flx flx-between">
         <MultiSelect
           options={flow.flow_details.fields?.map(field => ({ label: field?.label, value: field?.name }))}
           className="msl-wrp-options"
@@ -82,7 +80,7 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
           singleSelect
           closeOnSelect
         />
-        <button onClick={handleFetch} className={`btn btcd-btn-lg sh-sm flx mt-1 ml-1 ${isLoading ? 'red' : 'green'}`} type="button">
+        <button onClick={handleFetch} className={`btn btcd-btn-lg sh-sm flx ml-1 ${isLoading ? 'red' : 'green'}`} type="button">
           {isLoading
             ? __('Stop', 'bit-integrations')
             : (flow.flow_details.fields
