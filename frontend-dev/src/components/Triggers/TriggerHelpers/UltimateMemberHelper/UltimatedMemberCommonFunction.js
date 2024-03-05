@@ -4,7 +4,7 @@ import { __ } from '../../../../Utils/i18nwrap'
 
 export const getAllUMrole = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_um_all_role', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allRole = result.data
 

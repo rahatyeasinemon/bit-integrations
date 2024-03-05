@@ -51,7 +51,7 @@ export const getAllFields = (
   };
   bitsFetch(requestParams, "mautic_get_fields")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...mauticConf };
         if (result.data) {
           if (!newConf.default) {
@@ -100,7 +100,7 @@ export const getAllTags = (
   };
   bitsFetch(requestParams, "mautic_get_tags")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...mauticConf };
         if (result.data) {
           if (!newConf.default) {
@@ -250,7 +250,7 @@ const tokenHelper = (
   bitsFetch(tokenRequestParams, "mautic_generate_token")
     .then((result) => result)
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp };
         newConf.tokenDetails = result.data;
         setConf(newConf);
@@ -261,7 +261,7 @@ const tokenHelper = (
         });
       } else if (
         (result && result.data && result.data.data) ||
-        (!result.success && typeof result.data === "string")
+        (result.status === 'error' && typeof result.data === "string")
       ) {
         setSnackbar({
           show: true,

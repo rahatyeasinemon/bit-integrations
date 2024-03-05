@@ -10,7 +10,7 @@ export const getAllOrderStatus = (data, setFlow) => {
     null,
     "GET"
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data };
       tmpFlow.flow_details.orderStatus = result.data;
       setFlow({ ...tmpFlow });
@@ -32,7 +32,7 @@ export const getAllSubscriptionProduct = (data, setFlow) => {
     null,
     "GET"
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data };
       tmpFlow.flow_details.subscriptions = result.data;
       setFlow({ ...tmpFlow });
@@ -54,7 +54,7 @@ export const getAllSubscriptionStatus = (data, setFlow) => {
     null,
     "GET"
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data };
       tmpFlow.flow_details.subscriptionStatus = result.data;
       setFlow({ ...tmpFlow });
@@ -76,7 +76,7 @@ export const getAllWCProducts = (data, setFlow) => {
     null,
     "GET"
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data };
       tmpFlow.flow_details.products = result.data;
       setFlow({ ...tmpFlow });
@@ -98,7 +98,7 @@ export const getAllWCProductCategory = (data, setFlow) => {
     null,
     "GET"
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data };
       tmpFlow.flow_details.allProductCategories = result.data;
       setFlow({ ...tmpFlow });
@@ -126,7 +126,7 @@ export const getVariationsByProduct = (
     queryParams,
     "GET"
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       // rubel vai code with immer js
       setNewFlow(
         create(tmpNewFlow, (draftConf) => {

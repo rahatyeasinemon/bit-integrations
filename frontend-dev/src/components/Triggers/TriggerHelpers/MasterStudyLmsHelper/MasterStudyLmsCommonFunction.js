@@ -4,7 +4,7 @@ import { __ } from '../../../../Utils/i18nwrap'
 
 export const getAllMasterStudyLmsCourse = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_masterStudyLms_all_course', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allCourse = result.data
 
@@ -22,7 +22,7 @@ export const getAllMasterStudyLmsCourse = (data, setFlow) => {
 
 export const getAllMasterStudyLmsLesson = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_masterStudyLms_all_lesson', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allLesson = result.data
 
@@ -51,7 +51,7 @@ export const getQuizByCourse = (
     queryParams,
     'GET',
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...tmpNewFlow }
       if (!edit) {
         newConf.triggerData.allQuiz = result.data

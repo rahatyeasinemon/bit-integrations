@@ -20,7 +20,7 @@ export const mailMintRefreshFields = (mailMintConf, setMailMintConf, setIsLoadin
   setIsLoading(true)
   bitsFetch(null, 'fetch_all_mail_mint_custom_fields')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setMailMintConf((oldConf) => {
           const newConf = { ...oldConf }
           if (!newConf.default) {
@@ -45,7 +45,7 @@ export const getAllList = (mailMintConf, setMailMintConf, setIsLoading, setSnack
   setIsLoading(true)
   bitsFetch(null, 'fetch_all_mail_mint_list')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setMailMintConf((oldConf) => {
           const newConf = { ...oldConf }
           if (!newConf.default) {
@@ -70,7 +70,7 @@ export const getAllTags = (mailMintConf, setMailMintConf, setIsLoading, setSnack
   setIsLoading(true)
   bitsFetch(null, 'fetch_all_mail_mint_tags')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setMailMintConf((oldConf) => {
           const newConf = { ...oldConf }
           if (!newConf.default) {

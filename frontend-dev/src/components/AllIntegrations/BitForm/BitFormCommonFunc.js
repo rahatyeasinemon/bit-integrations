@@ -52,7 +52,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
 
   bitsFetch(requestParams, 'bitForm_authorization_and_fetch_form_list')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         setConf(newConf)
         setisAuthorized(true)
@@ -71,7 +71,7 @@ export const fetchAllForm = (bitFormConf, setBitFormConf, setIsLoading, setSnack
 
   bitsFetch(requestParams, 'bitForm_all_form_list')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...bitFormConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -96,7 +96,7 @@ export const fetchSingleFormFeilds = (formID, bitFormConf, setBitFormConf, setIs
 
   bitsFetch(requestParams, 'bitForm_fetch_single_form_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...bitFormConf }
         if (!newConf.default) {
           newConf.default = {}

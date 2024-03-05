@@ -22,7 +22,7 @@ export const refreshActiveCampaingList = (
   setIsLoading(true)
   bitsFetch(refreshListsRequestParams, 'aCampaign_lists')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         if (result.data.activeCampaignLists) {
           setActiveCampaingConf(prevConf => create(prevConf, draftConf => {
             if (!draftConf.default) {
@@ -70,7 +70,7 @@ export const refreshActiveCampaingAccounts = (
   setIsLoading(true)
   bitsFetch(refreshListsRequestParams, 'aCampaign_accounts')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         if (result.data) {
           setActiveCampaingConf(prevConf => create(prevConf, draftConf => {
             draftConf.accounts = result.data
@@ -115,7 +115,7 @@ export const refreshActiveCampaingTags = (
   }
   bitsFetch(refreshListsRequestParams, 'aCampaign_tags')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         if (result.data.activeCampaignTags) {
           setActiveCampaingConf(prevConf => create(prevConf, draftConf => {
             if (!draftConf.default) {
@@ -163,7 +163,7 @@ export const refreshActiveCampaingHeader = (
   setIsLoading(true)
   bitsFetch(refreshListsRequestParams, 'aCampaign_headers')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         if (result.data.activeCampaignField) {
           setActiveCampaingConf(prevConf => create(prevConf, draftConf => {
             if (!draftConf.default) {

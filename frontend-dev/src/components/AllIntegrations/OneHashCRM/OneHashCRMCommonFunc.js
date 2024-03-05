@@ -80,7 +80,7 @@ export const oneHashCRMAuthentication = (
   };
 
   bitsFetch(requestParams, "onehashcrm_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
       toast.success(__("Authorized successfully", "bit-integrations"));

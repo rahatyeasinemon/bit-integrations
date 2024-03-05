@@ -64,7 +64,7 @@ export const livestormAuthentication = (
   const requestParams = { api_key: confTmp.api_key };
 
   bitsFetch(requestParams, "livestorm_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
       toast.success(__("Authorized successfully", "bit-integrations"));
@@ -82,7 +82,7 @@ export const getAllEvents = (confTmp, setConf, setLoading) => {
   const requestParams = { api_key: confTmp.api_key };
 
   bitsFetch(requestParams, "livestorm_fetch_all_events").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       if (result.data) {
         setConf((prevConf) => {
           prevConf.events = result.data.events;
@@ -112,7 +112,7 @@ export const getAllSessions = (confTmp, setConf, event_id, setLoading) => {
   };
 
   bitsFetch(requestParams, "livestorm_fetch_all_sessions").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       if (result.data) {
         setConf((prevConf) => {
           prevConf.sessions = result.data;

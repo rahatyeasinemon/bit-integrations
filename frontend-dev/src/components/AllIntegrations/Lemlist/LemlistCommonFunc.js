@@ -21,7 +21,7 @@ export const refreshLemlistCampaign = (
   }
   bitsFetch(refreshListsRequestParams, "lemlist_campaigns")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...lemlistConf }
         if (result.data) {
           if (!newConf.default) {

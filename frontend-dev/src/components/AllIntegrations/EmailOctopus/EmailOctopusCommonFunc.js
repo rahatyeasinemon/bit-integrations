@@ -46,7 +46,7 @@ export const emailOctopusAuthentication = (confTmp, setConf, setError, setIsAuth
 
   bitsFetch(requestParams, 'emailOctopus_authentication')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         setIsAuthorized(true)
         if (type === 'authentication') {
@@ -76,7 +76,7 @@ export const getAllFields = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'emailOctopus_fetch_all_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.emailOctopusFields = result.data
@@ -100,7 +100,7 @@ export const getAllTags = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'emailOctopus_fetch_all_tags')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.tags = result.data

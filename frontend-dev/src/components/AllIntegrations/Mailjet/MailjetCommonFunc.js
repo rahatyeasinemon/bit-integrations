@@ -53,7 +53,7 @@ export const mailjetAuthentication = (confTmp, setConf, setError, setIsAuthorize
 
   bitsFetch(requestParams, 'mailjet_authentication')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         setIsAuthorized(true)
         if (type === 'authentication') {
@@ -85,7 +85,7 @@ export const getCustomFields = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'mailjet_fetch_all_custom_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.customFields = result.data

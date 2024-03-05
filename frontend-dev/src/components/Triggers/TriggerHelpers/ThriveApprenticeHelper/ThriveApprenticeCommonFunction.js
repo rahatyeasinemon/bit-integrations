@@ -4,7 +4,7 @@ import { __ } from '../../../../Utils/i18nwrap'
 
 export const getAllThriveApprenticeCourse = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_thriveapprentice_all_course', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allCourse = result.data
 
@@ -22,7 +22,7 @@ export const getAllThriveApprenticeCourse = (data, setFlow) => {
 
 export const getAllThriveApprenticeLesson = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_thriveapprentice_all_lesson', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allLesson = result.data
 
@@ -40,7 +40,7 @@ export const getAllThriveApprenticeLesson = (data, setFlow) => {
 
 export const getAllThriveApprenticeModule = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_thriveapprentice_all_module', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allModule = result.data
 

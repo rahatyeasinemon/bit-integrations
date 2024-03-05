@@ -24,7 +24,7 @@ export const fetchAllList = (mailupConf, setMailupConf, setIsLoading, setSnackba
   }
   bitsFetch(requestParams, 'mailup_fetch_all_list')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...mailupConf }
         if (result.data) {
           newConf.allList = result.data
@@ -49,7 +49,7 @@ export const fetchAllGroup = (mailupConf, setMailupConf, setIsLoading, setSnackb
   }
   bitsFetch(requestParams, 'mailup_fetch_all_group')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...mailupConf }
         if (result.data) {
           newConf.allGroup = result.data
@@ -132,13 +132,13 @@ const tokenHelper = (grantToken, confTmp, setConf, setIsAuthorized, setIsLoading
 
   bitsFetch(tokenRequestParams, 'mailup_authorization')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         newConf.tokenDetails = result.data
         setConf(newConf)
         setIsAuthorized(true)
         toast.success(__('Authorized Successfully', 'bit-integrations'))
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         toast.error(`${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}`)
       } else {
         toast.error(__('Authorization failed. please try again', 'bit-integrations'))

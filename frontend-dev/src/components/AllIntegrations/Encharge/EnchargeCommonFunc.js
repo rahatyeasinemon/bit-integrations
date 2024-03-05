@@ -13,7 +13,7 @@ export const refreshEnchargeHeader = (enchargeConf, setEnchargeConf, setIsLoadin
   const newConf = { ...enchargeConf }
   bitsFetch(refreshEnchargeHeaderData, 'encharge_headers')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         if (!newConf.default) {
           newConf.default = {}
         }

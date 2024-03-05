@@ -19,7 +19,7 @@ export const refreshConvertKitForm = (
   }
   bitsFetch(refreshFormsRequestParams, 'convertKit_forms')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...convertKitConf }
         if (result.data.convertKitForms) {
           if (!newConf.default) {
@@ -66,7 +66,7 @@ export const refreshConvertKitTags = (
   }
   bitsFetch(refreshFormsRequestParams, 'convertKit_tags')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...convertKitConf }
         if (result.data.convertKitTags) {
           if (!newConf.default) {
@@ -113,7 +113,7 @@ export const refreshConvertKitHeader = (
   }
   bitsFetch(refreshFormsRequestParams, 'convertKit_headers')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...convertKitConf }
         if (result.data.convertKitField) {
           if (!newConf.default) {

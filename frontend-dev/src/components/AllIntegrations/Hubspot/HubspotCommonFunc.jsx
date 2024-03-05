@@ -45,7 +45,7 @@ export const hubspotAuthorization = (confTmp, setError, setIsAuthorized, loading
 
   bitsFetch(requestParams, 'hubSpot_authorization')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setIsAuthorized(true)
         setLoading({ ...loading, auth: false })
         toast.success(__('Authorized successfully', 'bit-integrations'))
@@ -62,7 +62,7 @@ export const getAllPipelines = (confTmp, setConf, setLoading, type, loading) => 
 
   bitsFetch(requestParams, 'hubspot_pipeline')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           if (!newConf.default) newConf.default = {}
@@ -87,7 +87,7 @@ export const getAllOwners = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'hubspot_owners')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           if (!newConf.default) newConf.default = {}
@@ -110,7 +110,7 @@ export const getAllContacts = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'hubspot_contacts')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           if (!newConf.default) newConf.default = {}
@@ -133,7 +133,7 @@ export const getAllCompany = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'hubspot_company')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           if (!newConf.default) newConf.default = {}
@@ -160,7 +160,7 @@ export const getFields = (confTmp, setConf, setLoading, type, loading, refreshCu
 
   bitsFetch(requestParams, 'getFields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.hubSpotFields = result.data

@@ -26,7 +26,7 @@ export const getAllBuddyBossGroup = (buddyBossConf, setBuddyBossConf, setIsLoadi
   // const requestParams = {  }
   bitsFetch(null, 'fetch_all_group')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setBuddyBossConf((oldConf) => {
           const newConf = { ...oldConf }
           if (!newConf.default) {
@@ -58,7 +58,7 @@ export const getAllUser = (buddyBossConf, setBuddyBossConf, setIsLoading, setSna
   setIsLoading(true)
   bitsFetch(null, 'fetch_all_user')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setBuddyBossConf((oldConf) => {
           const newConf = { ...oldConf }
           if (!newConf.default) {
@@ -84,7 +84,7 @@ export const getAllForum = (buddyBossConf, setBuddyBossConf, setIsLoading, setSn
   setIsLoading(true)
   bitsFetch(null, 'fetch_all_forum')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...buddyBossConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -109,7 +109,7 @@ export const getAllTopic = (buddyBossConf, setBuddyBossConf, setIsLoading, setSn
   const requestParams = { forumID: buddyBossConf.forumId }
   bitsFetch(requestParams, 'fetch_all_topic')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...buddyBossConf }
         if (!newConf.default) {
           newConf.default = {}

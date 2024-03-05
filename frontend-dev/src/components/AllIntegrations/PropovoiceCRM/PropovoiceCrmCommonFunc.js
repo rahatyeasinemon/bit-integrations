@@ -40,7 +40,7 @@ export const getALLPropovoiceFields = (propovoiceCrmConf, setPropovoiceCrmConf, 
   setIsLoading(true)
   bitsFetch(null, 'propovoice_crm_fetch_all_fields')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...propovoiceCrmConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -63,7 +63,7 @@ export const getAllLeadTags = (propovoiceCrmConf, setPropovoiceCrmConf, loading,
   setLoading({ ...loading, tags: true })
   bitsFetch(null, 'propovoice_crm_lead_tags')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setPropovoiceCrmConf((prevState) => {
           const newConf = { ...prevState }
           if (!newConf.default) {
@@ -88,7 +88,7 @@ export const getAllLeadLabel = (propovoiceCrmConf, setPropovoiceCrmConf, loading
   setLoading({ ...loading, label: true })
   bitsFetch(null, 'propovoice_crm_lead_label')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setPropovoiceCrmConf((prev) => {
           const newConf = { ...prev }
           if (!newConf.default) {

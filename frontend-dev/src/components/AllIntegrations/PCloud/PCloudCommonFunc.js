@@ -27,7 +27,7 @@ export const getAllPCloudFolders = (pCloudConf, setPCloudConf, type) => {
   const queryParams = { tokenDetails: pCloudConf.tokenDetails }
   const loadPostTypes = bitsFetch(queryParams, 'pCloud_get_all_folders')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...pCloudConf }
         if (result.data) {
           newConf.foldersList = result.data
@@ -93,13 +93,13 @@ const tokenHelper = (grantToken, confTmp, setConf, setIsAuthorized, setIsLoading
 
   bitsFetch(tokenRequestParams, 'pCloud_authorization')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         newConf.tokenDetails = result.data
         setConf(newConf)
         setIsAuthorized(true)
         toast.success(__('Authorized Successfully', 'bit-integrations'))
-      } else if ((result && result.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data) || (result.status === 'error' && typeof result.data === 'string')) {
         toast.error(`${__('Authorization failed Cause:', 'bit-integrations')}${result.data}. ${__('please try again', 'bit-integrations')}`)
       } else {
         toast.error(__('Authorization failed. please try again', 'bit-integrations'))

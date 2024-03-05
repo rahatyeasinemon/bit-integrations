@@ -50,7 +50,7 @@ export const mailRelayAuthentication = (confTmp, setConf, setError, setIsAuthori
 
   bitsFetch(requestParams, 'mailRelay_authentication')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.campaigns = result.data
@@ -84,7 +84,7 @@ export const getAllGroups = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'mailRelay_fetch_all_groups')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.groups = result.data

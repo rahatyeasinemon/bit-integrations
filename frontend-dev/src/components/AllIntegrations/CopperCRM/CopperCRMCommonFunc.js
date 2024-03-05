@@ -83,7 +83,7 @@ export const coppercrmAuthentication = (
   };
 
   bitsFetch(requestParams, "coppercrm_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
       toast.success(__("Authorized successfully", "bit-integrations"));
@@ -109,7 +109,7 @@ export const getCustomFields = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "coppercrm_fetch_custom_fields").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.customFields = result.data;
@@ -140,7 +140,7 @@ export const getAllOpportunities = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, "coppercrm_fetch_all_opportunities").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp };
         if (result.data) {
           newConf.opportunities = result.data;
@@ -168,7 +168,7 @@ export const getAllOwners = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "coppercrm_fetch_all_owners").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.owners = result.data;
@@ -193,7 +193,7 @@ export const getAllCompanies = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "coppercrm_fetch_all_companies").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.companies = result.data;
@@ -220,7 +220,7 @@ export const getAllPipelineStages = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, "coppercrm_fetch_all_pipelineStages").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp };
         if (result.data) {
           newConf.pipelineStages = result.data;
@@ -249,7 +249,7 @@ export const getAllCRMPeoples = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "coppercrm_fetch_all_CRMPeoples").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.CRMPeoples = result.data;
@@ -275,7 +275,7 @@ export const getAllCRMPipelines = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, "coppercrm_fetch_all_CRMPipelines").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp };
         if (result.data) {
           newConf.CRMPipelines = result.data;

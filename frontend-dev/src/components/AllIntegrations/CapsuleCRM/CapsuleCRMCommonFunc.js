@@ -80,7 +80,7 @@ export const capsulecrmAuthentication = (
   const requestParams = { api_key: confTmp.api_key, api_url: confTmp.api_url };
 
   bitsFetch(requestParams, "capsulecrm_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
       toast.success(__("Authorized successfully", "bit-integrations"));
@@ -106,7 +106,7 @@ export const getCustomFields = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "capsulecrm_fetch_custom_fields").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.customFields = result.data;
@@ -134,7 +134,7 @@ export const getAllOpportunities = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, "capsulecrm_fetch_all_opportunities").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp };
         if (result.data) {
           newConf.opportunities = result.data;
@@ -159,7 +159,7 @@ export const getAllOwners = (confTmp, setConf, setLoading) => {
   const requestParams = { api_key: confTmp.api_key, api_url: confTmp.api_url };
 
   bitsFetch(requestParams, "capsulecrm_fetch_all_owners").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.owners = result.data;
@@ -181,7 +181,7 @@ export const getAllTeams = (confTmp, setConf, setLoading) => {
   const requestParams = { api_key: confTmp.api_key, api_url: confTmp.api_url };
 
   bitsFetch(requestParams, "capsulecrm_fetch_all_teams").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.teams = result.data;
@@ -207,7 +207,7 @@ export const getAllCurrencies = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "capsulecrm_fetch_all_currencies").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.currencies = result.data;
@@ -233,7 +233,7 @@ export const getAllCRMParties = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "capsulecrm_fetch_all_CRMParties").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.CRMParties = result.data;
@@ -259,7 +259,7 @@ export const getAllCRMMilestones = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, "capsulecrm_fetch_all_CRMMilestones").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp };
         if (result.data) {
           newConf.CRMMilestones = result.data;

@@ -56,13 +56,13 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setIsLoading
   bitsFetch(tokenRequestParams, 'keap_generate_token')
     .then(result => result)
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
         setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bit-integrations') })
@@ -96,7 +96,7 @@ export const getAllTags = (confTmp, setConf, setLoading) => {
   
   bitsFetch(requestParams, 'keap_fetch_all_tags')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.tags = result.data

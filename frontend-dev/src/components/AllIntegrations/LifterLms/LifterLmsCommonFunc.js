@@ -23,7 +23,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
 
   bitsFetch(requestParams, 'learnDash_authorize')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         setConf(newConf)
         setisAuthorized(true)
@@ -53,7 +53,7 @@ export const fetchAllLesson = (lifterLmsConf, setLifterLmsConf, setIsLoading, se
   setIsLoading(true)
   bitsFetch({}, 'lifterLms_fetch_all_lesson')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...lifterLmsConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -77,7 +77,7 @@ export const fetchAllSection = (lifterLmsConf, setLifterLmsConf, setIsLoading, s
   setIsLoading(true)
   bitsFetch({}, 'lifterLms_fetch_all_section')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...lifterLmsConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -101,7 +101,7 @@ export const fetchAllCourse = (lifterLmsConf, setLifterLmsConf, setIsLoading, se
   setIsLoading(true)
   bitsFetch({}, 'lifterLms_fetch_all_course')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...lifterLmsConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -125,7 +125,7 @@ export const fetchAllMembership = (lifterLmsConf, setLifterLmsConf, setIsLoading
   setIsLoading(true)
   bitsFetch({}, 'lifterLms_fetch_all_membership')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...lifterLmsConf }
         if (!newConf.default) {
           newConf.default = {}

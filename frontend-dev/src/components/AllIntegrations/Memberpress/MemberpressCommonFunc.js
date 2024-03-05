@@ -19,7 +19,7 @@ export const getAllMemberShip = (memberpressConf, setMemberpressConf, setIsLoadi
   setIsLoading(true)
   bitsFetch(null, 'fetch_all_membership')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setMemberpressConf((oldConf) => {
           const newConf = { ...oldConf }
           if (!newConf.default) {
@@ -44,7 +44,7 @@ export const paymentGateway = (memberpressConf, setMemberpressConf, setIsLoading
   setIsLoading(true)
   bitsFetch(null, 'fetch_all_payment_gateway')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setMemberpressConf((oldConf) => {
           const newConf = { ...oldConf }
           if (!newConf.default) {

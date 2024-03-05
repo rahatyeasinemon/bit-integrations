@@ -71,7 +71,7 @@ export const woodpeckerAuthentication = (
   };
 
   bitsFetch(requestParams, "woodpecker_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
       toast.success(__("Authorized successfully", "bit-integrations"));
@@ -91,7 +91,7 @@ export const getAllCampaign = (woodpeckerConf, setWoodpeckerConf, loading, setLo
   };
 
   bitsFetch(requestParams, "woodpecker_fetch_all_campaigns").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setWoodpeckerConf((prevConf) => {
         const draftConf = { ...prevConf };
         draftConf.campaigns = result.data;

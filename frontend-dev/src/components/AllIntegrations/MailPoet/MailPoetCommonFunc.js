@@ -5,7 +5,7 @@ export const refreshNewsLetter = (formID, mailPoetConf, setMailPoetConf, setIsLo
   setIsLoading(true)
   bitsFetch({}, 'refresh_news_letter')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...mailPoetConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -15,7 +15,7 @@ export const refreshNewsLetter = (formID, mailPoetConf, setMailPoetConf, setIsLo
         }
         setSnackbar({ show: true, msg: __('Newsletter list refreshed', 'bit-integrations') })
         setMailPoetConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Newsletter list refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Newsletter list refresh failed. please try again', 'bit-integrations') })
@@ -28,7 +28,7 @@ export const refreshNewsLetter = (formID, mailPoetConf, setMailPoetConf, setIsLo
 export const refreshMailpoetHeader = (mailPoetConf, setMailPoetConf, setIsLoading, setSnackbar) => {
   bitsFetch({}, 'mail_poet_list_headers')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...mailPoetConf }
         if (result.data.mailPoetFields) {
           newConf.default.fields = result.data.mailPoetFields

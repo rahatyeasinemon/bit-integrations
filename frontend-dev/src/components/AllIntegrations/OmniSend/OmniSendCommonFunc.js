@@ -70,7 +70,7 @@ export const handleOmniSendAuthorize = (
   const requestParams = { api_key: confTmp.api_key }
 
   bitsFetch(requestParams, 'Omnisend_authorization').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp }
       setConf(newConf)
       setisAuthorized(true)

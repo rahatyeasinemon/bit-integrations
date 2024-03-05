@@ -46,7 +46,7 @@ export const mailBlusterAuthentication = (confTmp, setConf, setError, setIsAutho
 
   bitsFetch(requestParams, 'mailBluster_authentication')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.campaigns = result.data

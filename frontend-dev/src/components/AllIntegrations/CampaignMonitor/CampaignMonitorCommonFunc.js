@@ -23,7 +23,7 @@ export const refreshCampaignMonitorLists = (
 
   bitsFetch(refreshListsRequestParams, "campaign_monitor_lists")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...campaignMonitorConf }
         if (result.data) {
           if (!newConf.default) {
@@ -75,7 +75,7 @@ export const refreshCampaignMonitorFields = (
 
   bitsFetch(refreshListsRequestParams, "campaign_monitor_custom_fields")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setCampaignMonitorConf(prevConf => {
           prevConf.customFields = result.data ? result.data : []
           return prevConf

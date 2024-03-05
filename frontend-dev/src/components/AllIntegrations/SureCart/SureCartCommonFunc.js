@@ -26,7 +26,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setIsAuthorized, set
 
   bitsFetch(tokenRequestParams, 'sureCart_authorization')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         setConf(newConf)
         setIsAuthorized(true)

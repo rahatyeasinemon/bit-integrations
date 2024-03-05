@@ -27,7 +27,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setIsAuthorized, set
   bitsFetch(tokenRequestParams, 'kirimEmail_authorization')
     .then(result => result)
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (!newConf.default) {
           newConf.default = {}
@@ -38,7 +38,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setIsAuthorized, set
         setConf(newConf)
         setIsAuthorized(true)
         setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bit-integrations') })
@@ -53,7 +53,7 @@ export const getAllList = (kirimEmailConf, setKirimEmailConf, setIsLoading, setS
 
   bitsFetch(tokenRequestParams, 'kirimEmail_fetch_all_list')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...kirimEmailConf }
         if (!newConf.default) {
           newConf.default = {}

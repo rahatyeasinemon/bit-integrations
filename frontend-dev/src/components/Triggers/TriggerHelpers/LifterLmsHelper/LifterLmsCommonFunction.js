@@ -4,7 +4,7 @@ import { __ } from '../../../../Utils/i18nwrap'
 
 export const getAllLifterLmsQuiz = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_lifterLms_all_quiz', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allQuiz = result.data
 
@@ -22,7 +22,7 @@ export const getAllLifterLmsQuiz = (data, setFlow) => {
 
 export const getAllLifterLmsLesson = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_lifterLms_all_lesson', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allQuiz = result.data
 
@@ -40,7 +40,7 @@ export const getAllLifterLmsLesson = (data, setFlow) => {
 
 export const getAllLifterLmsCourse = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_lifterLms_all_course', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allCourse = result.data
 
@@ -58,7 +58,7 @@ export const getAllLifterLmsCourse = (data, setFlow) => {
 
 export const getAllLifterLmsMembership = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_lifterLms_all_membership', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allMembership = result.data
 

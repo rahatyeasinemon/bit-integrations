@@ -46,7 +46,7 @@ export const sendGridAuthentication = (confTmp, setConf, setError, setIsAuthoriz
 
   bitsFetch(requestParams, 'sendGrid_authentication')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         setIsAuthorized(true)
         if (type === 'authentication') {
@@ -78,7 +78,7 @@ export const getLists = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'sendGrid_fetch_all_lists')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.lists = result.data

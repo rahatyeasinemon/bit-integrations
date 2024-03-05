@@ -24,7 +24,7 @@ export const zoomAllWebinar = (formID, zoomWebinarConf, setZoomWebinarConf, setI
   }
   bitsFetch(fetchWebinarModulesRequestParams, 'zoom_webinar_fetch_all_webinar')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...zoomWebinarConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -37,7 +37,7 @@ export const zoomAllWebinar = (formID, zoomWebinarConf, setZoomWebinarConf, setI
         // }
         setSnackbar({ show: true, msg: __('Webinar list refreshed', 'bit-integrations') })
         setZoomWebinarConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('All Webinar list refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('All Webinar list failed. please try again', 'bit-integrations') })
@@ -91,13 +91,13 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setIsLoading
   bitsFetch(tokenRequestParams, 'zoom_webinar_generate_token')
     .then(result => result)
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
         setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bit-integrations') })

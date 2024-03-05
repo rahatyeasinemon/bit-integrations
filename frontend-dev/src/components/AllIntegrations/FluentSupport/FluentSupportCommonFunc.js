@@ -41,7 +41,7 @@ export const supportStaff = (
     "fluent_support_get_all_support_staff"
   )
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...fluentSupportConf };
         if (!newConf.default) {
           newConf.default = {};
@@ -79,7 +79,7 @@ export const getAllBusinessInboxes = (
   
   bitsFetch('',"fluent_support_get_all_business_inboxes")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...fluentSupportConf };
         if (!newConf.default) {
           newConf.default = {};
@@ -147,7 +147,7 @@ export const handleAuthorize = (
   bitsFetch(null, "fluentSupport_authorization")
     .then((result) => result)
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp };
         setConf(newConf);
         setisAuthorized(true);
@@ -157,7 +157,7 @@ export const handleAuthorize = (
         });
       } else if (
         (result && result.data && result.data.data) ||
-        (!result.success && typeof result.data === "string")
+        (result.status === 'error' && typeof result.data === "string")
       ) {
         setSnackbar({
           show: true,

@@ -17,7 +17,7 @@ export const handleInput = (e, restrictConf, setRestrictConf) => {
 export const getAllLevels = (restrictConf, setRestrictConf, setIsLoading) => {
     setIsLoading(true);
     const loadPostTypes = bitsFetch(null, "restrict_get_all_levels", null, "GET").then((result) => {
-        if (result && result.success) {
+        if (result && result.status === 'success') {
             const newConf = { ...restrictConf };
             if (!newConf.default) newConf.default = {};
             if (result.data.levellists) {

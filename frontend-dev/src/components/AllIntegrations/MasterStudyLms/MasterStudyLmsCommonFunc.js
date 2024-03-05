@@ -33,7 +33,7 @@ export const fetchAllMsLmsCourse = (msLmsConf, setMsLmsConf, setIsLoading, setSn
   const queryPrarms = { courseId: msLmsConf.courseId }
   bitsFetch({}, 'mslms_fetch_all_course')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...msLmsConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -58,7 +58,7 @@ export const fetchAllLesson = (msLmsConf, setMsLmsConf, setIsLoading, setSnackba
   const queryPrarms = { courseId: msLmsConf.courseId }
   bitsFetch(queryPrarms, 'msLms_fetch_all_lesson')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...msLmsConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -82,7 +82,7 @@ export const fetchAllQuiz = (msLmsConf, setMsLmsConf, setIsLoading, setSnackbar)
   const queryPrarms = { courseId: msLmsConf.courseId }
   bitsFetch(queryPrarms, 'msLms_fetch_all_quiz')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...msLmsConf }
         if (!newConf.default) {
           newConf.default = {}

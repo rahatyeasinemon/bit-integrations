@@ -41,7 +41,7 @@ export const handleAuthorize = (
   const requestParams = { authKey: conf.authKey };
 
   bitsFetch(requestParams, "klaviyo_handle_authorize").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...conf };
       if (result.data) {
         if (!newConf.default) {
@@ -66,7 +66,7 @@ export const getAllLists = (conf, setConf, loading, setLoading) => {
   const requestParams = { authKey: conf.authKey };
 
   bitsFetch(requestParams, "klaviyo_handle_authorize").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...conf };
       if (result.data) {
         if (!newConf.default) {

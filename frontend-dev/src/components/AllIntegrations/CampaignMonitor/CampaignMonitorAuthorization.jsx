@@ -34,13 +34,13 @@ export default function CampaignMonitorAuthorization({ campaignMonitorConf, setC
 
     bitsFetch(data, 'campaign_monitor_authorize')
       .then(result => {
-        if (result && result.success) {
+        if (result && result.status === 'success') {
           const newConf = { ...campaignMonitorConf }
           newConf.tokenDetails = result.data
           setCampaignMonitorConf(newConf)
           setisAuthorized(true)
           toast.success(__('Authorized Successfully', 'bit-integrations'))
-        } else if ((result && result.data) || (!result.success && typeof result.data.Message === 'string')) {
+        } else if ((result && result.data) || (result.status === 'error' && typeof result.data.Message === 'string')) {
           toast.error(`${__('Authorization failed Cause:', 'bit-integrations')}${result.data.Message}. ${__('please try again', 'bit-integrations')}`)
         } else {
           toast.error(__('Authorization failed. please try again', 'bit-integrations'))

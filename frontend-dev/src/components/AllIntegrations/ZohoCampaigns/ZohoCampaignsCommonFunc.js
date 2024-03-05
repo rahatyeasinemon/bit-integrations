@@ -54,7 +54,7 @@ export const refreshLists = (formID, campaignsConf, setCampaignsConf, setIsLoadi
   }
   bitsFetch(refreshListsRequestParams, 'zcampaigns_refresh_lists')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...campaignsConf }
         if (result.data.lists) {
           newConf.default = { ...newConf.default, lists: result.data.lists }
@@ -64,7 +64,7 @@ export const refreshLists = (formID, campaignsConf, setCampaignsConf, setIsLoadi
         }
         setSnackbar({ show: true, msg: __('Lists refreshed', 'bit-integrations') })
         setCampaignsConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Lists refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Lists refresh failed. please try again', 'bit-integrations') })
@@ -91,7 +91,7 @@ export const refreshContactFields = (formID, campaignsConf, setCampaignsConf, se
   }
   bitsFetch(refreshContactFieldsRequestParams, 'zcampaigns_refresh_contact_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...campaignsConf }
         if (result.data.fields) {
           if (!newConf.default.fields) {

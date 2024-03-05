@@ -21,7 +21,7 @@ export const fetchAllRankType = (gamiPressConf, setGamiPressConf, setIsLoading, 
   const requestParams = { domainName: gamiPressConf.domainName }
   bitsFetch(requestParams, 'gamiPress_fetch_all_rank_type')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...gamiPressConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -45,7 +45,7 @@ export const fetchAllAchievementType = (gamiPressConf, setGamiPressConf, setIsLo
   setIsLoading(true)
   bitsFetch(null, 'gamiPress_fetch_all_achievement_type')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...gamiPressConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -69,7 +69,7 @@ export const fetchAllAchievementByType = (gamiPressConf, setGamiPressConf, setIs
   const requestParams = { achievementType: gamiPressConf.selectedAchievementType }
   bitsFetch(requestParams, 'gamiPress_fetch_all_achievement_by_type')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...gamiPressConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -94,7 +94,7 @@ export const fetchAllRankByType = (gamiPressConf, setGamiPressConf, setIsLoading
   const requestParams = { domainName: gamiPressConf.rankType }
   bitsFetch(requestParams, 'gamiPress_fetch_all_rank_by_type')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...gamiPressConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -119,7 +119,7 @@ export const fetchAllPointType = (gamiPressConf, setGamiPressConf, setIsLoading,
   const requestParams = { domainName: gamiPressConf.rankType }
   bitsFetch(requestParams, 'gamiPress_fetch_all_point_type')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...gamiPressConf }
         if (!newConf.default) {
           newConf.default = {}

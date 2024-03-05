@@ -36,7 +36,7 @@ export const getAllCourses = (academyLmsConf, setAcademyLmsConf, setIsLoading, v
   const queryParams = { type: value }
   const loadPostTypes = bitsFetch(null, 'academy_lms_all_course', queryParams, 'GET')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...academyLmsConf }
         if (!newConf.default) newConf.default = {}
         newConf.default.courses = result.data
@@ -58,7 +58,7 @@ export const getAllLesson = (academyLmsConf, setAcademyLmsConf, setIsLoading) =>
   setIsLoading(true)
   const loadPostTypes = bitsFetch(null, 'academy_lms_all_lesson', '', 'GET')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...academyLmsConf }
         if (!newConf.default) newConf.default = {}
         newConf.default.lessons = result.data

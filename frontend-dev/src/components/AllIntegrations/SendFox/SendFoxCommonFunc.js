@@ -31,7 +31,7 @@ export const fetchAllList = (sendFoxConf, setSendFoxConf, setIsLoading, setSnack
 
   bitsFetch(requestParams, 'sendfox_fetch_all_list')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...sendFoxConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -63,7 +63,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
 
   bitsFetch(requestParams, 'sendFox_authorize')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         setConf(newConf)
         setisAuthorized(true)

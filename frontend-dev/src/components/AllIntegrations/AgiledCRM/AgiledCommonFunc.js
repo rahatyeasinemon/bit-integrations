@@ -52,7 +52,7 @@ export const agiledAuthentication = (confTmp, setConf, setError, setIsAuthorized
 
   bitsFetch(requestParams, 'agiled_authentication')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setIsAuthorized(true)
         setLoading({ ...loading, auth: false })
         toast.success(__('Authorized successfully', 'bit-integrations'))
@@ -70,7 +70,7 @@ export const getAllOwners = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'agiled_fetch_all_owners')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.owners = result.data
@@ -93,7 +93,7 @@ export const getAllAccounts = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'agiled_fetch_all_accounts')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.accounts = result.data
@@ -116,7 +116,7 @@ export const getAllSources = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'agiled_fetch_all_sources')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.sources = result.data
@@ -139,7 +139,7 @@ export const getAllStatuses = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'agiled_fetch_all_statuses')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.statuses = result.data
@@ -162,7 +162,7 @@ export const getAllLifeCycleStage = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'agiled_fetch_all_lifeCycleStages')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.lifeCycleStages = result.data
@@ -185,7 +185,7 @@ export const getAllCRMPipelines = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'agiled_fetch_all_CRMPipelines')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.CRMPipelines = result.data
@@ -208,7 +208,7 @@ export const getAllCRMPipelineStages = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'agiled_fetch_all_CRMPipelineStages')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.CRMPipelineStages = result.data

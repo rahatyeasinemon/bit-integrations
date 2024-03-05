@@ -44,7 +44,7 @@ export const getresponseAuthentication = (confTmp, setConf, setError, setisAutho
 
   bitsFetch(requestParams, 'getresponse_authentication')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.campaigns = result.data
@@ -72,7 +72,7 @@ export const getAllTags = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'getresponse_fetch_all_tags')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.tags = result.data
@@ -97,7 +97,7 @@ export const fetchCustomFields = (confTmp, setConf, setLoading, type) => {
 
   bitsFetch(requestParams, 'getresponse_fetch_custom_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.contactsFields = [...newConf.contactsFields, ...result.data]

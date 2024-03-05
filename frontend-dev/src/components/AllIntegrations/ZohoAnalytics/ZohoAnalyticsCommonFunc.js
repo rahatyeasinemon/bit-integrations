@@ -69,13 +69,13 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setIsLoading
   bitsFetch(tokenRequestParams, 'zanalytics_generate_token')
     .then(result => result)
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
         setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bit-integrations') })
@@ -148,7 +148,7 @@ export const refreshWorkspaces = (formID, analyticsConf, setAnalyticsConf, setIs
   }
   bitsFetch(refreshModulesRequestParams, 'zanalytics_refresh_workspaces')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...analyticsConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -161,7 +161,7 @@ export const refreshWorkspaces = (formID, analyticsConf, setAnalyticsConf, setIs
         }
         setSnackbar({ show: true, msg: __('Workspaces refreshed', 'bit-integrations') })
         setAnalyticsConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Workspaces refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Workspaces refresh failed. please try again', 'bit-integrations') })
@@ -184,7 +184,7 @@ export const refreshUsers = (formID, analyticsConf, setAnalyticsConf, setIsLoadi
   }
   bitsFetch(refreshUsersRequestParams, 'zanalytics_refresh_users')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...analyticsConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -197,7 +197,7 @@ export const refreshUsers = (formID, analyticsConf, setAnalyticsConf, setIsLoadi
         }
         setSnackbar({ show: true, msg: __('Users refreshed', 'bit-integrations') })
         setAnalyticsConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Users refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Users refresh failed. please try again', 'bit-integrations') })
@@ -225,7 +225,7 @@ export const refreshTables = (formID, analyticsConf, setAnalyticsConf, setIsLoad
   }
   bitsFetch(refreshTablesRequestParams, 'zanalytics_refresh_tables')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...analyticsConf }
         if (result.data.tables) {
           if (!newConf.default.tables) {
@@ -266,7 +266,7 @@ export const refreshTableHeaders = (formID, analyticsConf, setAnalyticsConf, set
   }
   bitsFetch(refreshTableHeadersRequestParams, 'zanalytics_refresh_table_headers')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...analyticsConf }
         if (result.data.table_headers) {
           if (!newConf.default.tables.headers) {

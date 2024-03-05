@@ -15,7 +15,7 @@ export const getLessonByCourse = (
     queryParams,
     'GET',
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...tmpNewFlow }
       if (!edit) {
         newConf.triggerData.lessons = result.data
@@ -51,7 +51,7 @@ export const getTopicByLesson = (
     queryParams,
     'GET',
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...tmpNewFlow }
       if (!edit) {
         newConf.triggerData.topics = result.data
@@ -77,7 +77,7 @@ export const getAllCourses = (data, setFlow) => {
     null,
     'GET',
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.courses = result.data
       setFlow({ ...tmpFlow })
@@ -99,7 +99,7 @@ export const getAllQuizes = (data, setFlow) => {
     null,
     'GET',
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.quizes = result.data
       setFlow({ ...tmpFlow })
@@ -121,7 +121,7 @@ export const getAllGroups = (data, setFlow) => {
     null,
     'GET',
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.groups = result.data
       setFlow({ ...tmpFlow })

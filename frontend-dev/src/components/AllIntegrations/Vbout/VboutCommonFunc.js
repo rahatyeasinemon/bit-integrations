@@ -41,7 +41,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, loa
   const requestParams = { auth_token: confTmp.auth_token }
   bitsFetch(requestParams, 'vbout_handle_authorize')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         setConf(newConf)
         setisAuthorized(true)
@@ -62,7 +62,7 @@ export const VboutRefreshFields = (confTmp, setConf, loading, setLoading) => {
 
   bitsFetch(requestParams, 'vbout_refresh_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.VboutFields = result.data
@@ -85,7 +85,7 @@ export const getAllLists = (confTmp, setConf, loading, setLoading,) => {
 
   bitsFetch(requestParams, 'vbout_fetch_all_lists')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           if (!newConf.default) {

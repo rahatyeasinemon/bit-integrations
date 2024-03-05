@@ -13,7 +13,7 @@ export const refreshCrmList = (
   setLoading({ ...loading, fluentCrmList: true });
   bitsFetch({}, "refresh_fluent_crm_lists")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setFluentCrmConf((prevConf) =>
           create(prevConf, (newConf) => {
             newConf.fluentCrmList = result.data.fluentCrmList;
@@ -26,7 +26,7 @@ export const refreshCrmList = (
         });
       } else if (
         (result && result.data && result.data.data) ||
-        (!result.success && typeof result.data === "string")
+        (result.status === 'error' && typeof result.data === "string")
       ) {
         setSnackbar({
           show: true,
@@ -63,7 +63,7 @@ export const refreshCrmTag = (
   setLoading({ ...loading, fluentCrmTags: true });
   bitsFetch({}, "refresh_fluent_crm_tags")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setFluentCrmConf((prevConf) =>
           create(prevConf, (newConf) => {
             if (!newConf.default) {
@@ -80,7 +80,7 @@ export const refreshCrmTag = (
         });
       } else if (
         (result && result.data && result.data.data) ||
-        (!result.success && typeof result.data === "string")
+        (result.status === 'error' && typeof result.data === "string")
       ) {
         setSnackbar({
           show: true,
@@ -115,7 +115,7 @@ export const refreshfluentCrmHeader = (
   setIsLoading(true);
   bitsFetch({}, "fluent_crm_headers")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         if (result.data.fluentCrmFlelds) {
           setFluentCrmConf((prevConf) =>
             create(prevConf, (newConf) => {

@@ -68,7 +68,7 @@ export const refreshList = (
   }
   bitsFetch(refreshModulesRequestParams, 'cContact_refresh_list')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...constantContactConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -86,7 +86,7 @@ export const refreshList = (
         setConstantContactConf({ ...newConf })
       } else if (
         (result && result.data && result.data.data)
-        || (!result.success && typeof result.data === 'string')
+        || (result.status === 'error' && typeof result.data === 'string')
       ) {
         setSnackbar({
           show: true,
@@ -126,7 +126,7 @@ export const getAllContactLists = (
   }
 
   bitsFetch(requestParams, 'cContact_refresh_list').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp }
       if (result.data) {
         newConf.lists = result.data.contactList
@@ -149,7 +149,7 @@ export const getAllCustomFields = (confTmp, setConf) => {
   }
 
   bitsFetch(requestParams, 'cContact_custom_fields').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp }
       if (result.data) {
         const mergedFields = newConf.default.constantContactFields.concat(
@@ -173,7 +173,7 @@ export const getContactTags = (id, confTmp, setConf, isLoading, setIsLoading) =>
   }
 
   bitsFetch(requestParams, 'cContact_refresh_tags').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp }
       if (result.data) {
         newConf.tags = result.data.contactTag
@@ -312,7 +312,7 @@ const tokenHelper = (
   bitsFetch(tokenRequestParams, `${ajaxInteg}_generate_token`)
     .then((result) => result)
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         newConf.tokenDetails = result.data
         setConf(newConf)
@@ -323,7 +323,7 @@ const tokenHelper = (
         })
       } else if (
         (result && result.data && result.data.data)
-        || (!result.success && typeof result.data === 'string')
+        || (result.status === 'error' && typeof result.data === 'string')
       ) {
         setSnackbar({
           show: true,

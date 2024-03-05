@@ -71,7 +71,7 @@ export const clickupAuthentication = (
   const requestParams = { api_key: confTmp.api_key };
 
   bitsFetch(requestParams, "clickup_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
       toast.success(__("Authorized successfully", "bit-integrations"));
@@ -94,7 +94,7 @@ export const getCustomFields = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "clickup_fetch_custom_fields").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       // const newConf = { ...confTmp };
       // if (result.data) {
       //   newConf.customFields = result.data;
@@ -134,7 +134,7 @@ export const getAllTeams = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "clickup_fetch_all_Teams").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.Teams = result.data;
@@ -164,7 +164,7 @@ export const getAllSpaces = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "clickup_fetch_all_Spaces").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.Spaces = result.data;
@@ -194,7 +194,7 @@ export const getAllFolders = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "clickup_fetch_all_Folders").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.Folders = result.data;
@@ -224,7 +224,7 @@ export const getAllLists = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "clickup_fetch_all_Lists").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.Lists = result.data;
@@ -254,7 +254,7 @@ export const getAllTags = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "clickup_fetch_all_Tags").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.Tags = result.data;

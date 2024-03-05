@@ -67,7 +67,7 @@ export const insightlyAuthentication = (confTmp, setConf, setError, setIsAuthori
 
   bitsFetch(requestParams, 'insightly_authentication')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setIsAuthorized(true)
         setLoading({ ...loading, auth: false })
         toast.success(__('Authorized successfully', 'bit-integrations'))
@@ -85,7 +85,7 @@ export const getAllOrganisations = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'insightly_fetch_all_organisations')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.organisations = result.data
@@ -108,7 +108,7 @@ export const getAllCategories = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'insightly_fetch_all_categories')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.categories = result.data
@@ -131,7 +131,7 @@ export const getAllStatuses = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'insightly_fetch_all_statuses')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.statuses = result.data
@@ -154,7 +154,7 @@ export const getLeadSources = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'insightly_fetch_all_LeadSources')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
 
         setConf((oldConf) => {
           const newConf = { ...oldConf }
@@ -183,7 +183,7 @@ export const getLeadStatuses = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'insightly_fetch_all_LeadStatuses')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
 
         setConf((oldConf) => {
           const newConf = { ...oldConf }
@@ -213,7 +213,7 @@ export const getAllCRMPipelines = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'insightly_fetch_all_CRMPipelines')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.CRMPipelines = result.data
@@ -236,7 +236,7 @@ export const getAllCRMPipelineStages = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, 'insightly_fetch_all_CRMPipelineStages')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.CRMPipelineStages = result.data

@@ -81,7 +81,7 @@ export const moxiecrmAuthentication = (
   };
 
   bitsFetch(requestParams, "moxiecrm_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
       toast.success(__("Authorized successfully", "bit-integrations"));
@@ -107,7 +107,7 @@ export const moxiecrmAuthentication = (
 //   };
 
 //   bitsFetch(requestParams, "moxiecrm_fetch_custom_fields").then((result) => {
-//     if (result && result.success) {
+//     if (result && result.status === 'success') {
 //       const newConf = { ...confTmp };
 //       if (result.data) {
 //         newConf.customFields = result.data;
@@ -138,7 +138,7 @@ export const getAllClients = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "moxiecrm_fetch_all_clients").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.clients = result.data;
@@ -166,7 +166,7 @@ export const getAllPipelineStages = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, "moxiecrm_fetch_all_pipelineStages").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp };
         if (result.data) {
           newConf.pipelineStages = result.data;

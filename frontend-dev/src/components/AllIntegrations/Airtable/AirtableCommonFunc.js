@@ -46,7 +46,7 @@ export const airtableAuthentication = (confTmp, setConf, setError, setIsAuthoriz
 
   bitsFetch(requestParams, 'airtable_authentication')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         setIsAuthorized(true)
         if (type === 'authentication') {
@@ -76,7 +76,7 @@ export const getAllTables = (confTmp, setConf, loading, setLoading) => {
 
   bitsFetch(requestParams, 'airtable_fetch_all_tables')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.tables = result.data
@@ -101,7 +101,7 @@ export const getAllFields = (confTmp, setConf, loading, setLoading, type) => {
 
   bitsFetch(requestParams, 'airtable_fetch_all_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.airtableFields = result.data

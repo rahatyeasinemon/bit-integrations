@@ -48,7 +48,7 @@ export const getAllLists = async (conf, setConf, loading, setLoading) => {
   setLoading && setLoading({ ...loading, list: true });
   const requestParams = { authKey: conf.authKey };
   const result = await bitsFetch(requestParams, "moosend_handle_authorize");
-  if (result.success && result.data.Code === 0) {
+  if (result.status === 'success' && result.data.Code === 0) {
     const { MailingLists } = result.data.Context;
     const newConf = { ...conf };
     if (MailingLists) {

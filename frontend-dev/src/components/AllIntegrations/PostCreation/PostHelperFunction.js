@@ -73,7 +73,7 @@ export const refreshAcfFields = (acfConf, setAcfFields, setAcfFile) => {
 export const refreshPostTypes = (postTypes, setPostTypes) => {
   const loadPostTypes = bitsFetch({}, 'post-types/list')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const { data } = result
         if (data) {
           setPostTypes(data)
