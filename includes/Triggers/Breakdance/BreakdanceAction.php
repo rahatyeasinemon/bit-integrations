@@ -50,7 +50,7 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
             $flows = $wpdb->get_results(
                 $wpdb->prepare(
                     "SELECT triggered_entity, triggered_entity_id, flow_details 
-                    FROM wp_btcbi_flow 
+                    FROM {$wpdb->prefix}btcbi_flow 
                     WHERE status = true 
                     AND triggered_entity = 'Breakdance' 
                     AND (triggered_entity_id = 'BreakdanceHook' 
