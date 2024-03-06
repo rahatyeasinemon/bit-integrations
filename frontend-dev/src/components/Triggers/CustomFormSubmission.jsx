@@ -1,6 +1,6 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable no-console */
-import { create } from 'mutative'
+import { create, rawReturn } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
@@ -93,11 +93,24 @@ const CustomFormSubmission = () => {
     setShowResponse((prevState) => !prevState)
   }
 
-  const primaryKeySet = (val) => {
-    setPrimaryKey(!val ? undefined : {
-      key: val,
-      value: newFlow.triggerDetail?.data?.find(item => item.name === val)?.value || null
-    })
+  const primaryKeySet = (key) => {
+    setPrimaryKey(prev => create(prev, draft => {
+      const keys = key?.split(',') || []
+      const primaryKey = keys.map(k => (
+        {
+          key: k,
+          value: newFlow.triggerDetail?.data?.find(item => item.name === k)?.value
+        }
+      ))
+
+      const hasEmptyValues = primaryKey.some(item => !item.value);
+      if (key && hasEmptyValues) {
+        toast.error('Unique value not found!')
+        return rawReturn(null)
+      }
+
+      return rawReturn(primaryKey)
+    }))
   }
 
   const removeTestData = () => {
@@ -172,9 +185,8 @@ const CustomFormSubmission = () => {
           <MultiSelect
             options={newFlow.triggerDetail?.data?.map(field => ({ label: field?.label, value: field?.name }))}
             className="msl-wrp-options"
-            defaultValue={primaryKey?.key}
+            defaultValue={Array.isArray(primaryKey) ? primaryKey.map(item => item.key).join(',') : ''}
             onChange={primaryKeySet}
-            singleSelect
             closeOnSelect
           />
         </div>

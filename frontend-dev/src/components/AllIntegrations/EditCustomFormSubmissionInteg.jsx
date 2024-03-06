@@ -9,6 +9,7 @@ import { $formFields, $newFlow } from '../../GlobalStates'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
+import toast from 'react-hot-toast'
 
 function EditCustomFormSubmissionInteg({ setSnackbar }) {
   const [flow, setFlow] = useRecoilState($newFlow)
@@ -46,10 +47,25 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
     }, 1500)
   }
 
-  const primaryKeySet = (val) => {
+  const primaryKeySet = (key) => {
     setFlow(prevFlow => create(prevFlow, draftFlow => {
-      draftFlow.flow_details.primaryKey.key = val
-      draftFlow.flow_details.primaryKey.value = flow.flow_details.fields?.find(item => item.name === val)?.value || null
+      const keys = key?.split(',') || []
+      const primaryKey = keys.map(k => (
+        {
+          key: k,
+          value: flow.flow_details.fields?.find(item => item.name === k)?.value
+        }
+      ))
+
+      const hasEmptyValues = primaryKey.some(item => !item.value);
+      if (key && hasEmptyValues) {
+        draftFlow.flow_details.primaryKey = null
+
+        toast.error('Unique value not found!')
+        return
+      }
+
+      draftFlow.flow_details.primaryKey = primaryKey
     }))
   }
 
@@ -74,10 +90,9 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
         <MultiSelect
           options={flow.flow_details.fields?.map(field => ({ label: field?.label, value: field?.name }))}
           className="msl-wrp-options"
-          defaultValue={flow?.flow_details?.primaryKey?.key}
+          defaultValue={Array.isArray(flow?.flow_details?.primaryKey) ? flow?.flow_details?.primaryKey.map(item => item.key).join(',') : ''}
           onChange={primaryKeySet}
           disabled={isLoading}
-          singleSelect
           closeOnSelect
         />
         <button onClick={handleFetch} className={`btn btcd-btn-lg sh-sm flx ml-1 ${isLoading ? 'red' : 'green'}`} type="button">
