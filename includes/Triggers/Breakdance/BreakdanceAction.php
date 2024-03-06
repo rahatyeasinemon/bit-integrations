@@ -35,29 +35,20 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
             $formData       = BreakdanceHelper::setFields($extra, $form);
 
             if (get_option('btcbi_breakdance_test') !== false) {
-                $testData = [
+                update_option('btcbi_breakdance_test', [
                     'formData'      => $formData,
-                    'primaryKey'    => [
-                        'key'   => 'formId',
-                        'value' => $extra['formId']
-                    ]
-                ];
-
-                update_option('btcbi_breakdance_test', $testData);
+                    'primaryKey'    => [(object) ['key'   => 'formId', 'value' => $extra['formId']]]
+                ]);
             }
 
             global $wpdb;
-            $flows = $wpdb->get_results(
-                $wpdb->prepare(
-                    "SELECT * 
-                    FROM {$wpdb->prefix}btcbi_flow 
+            $flows = $wpdb->get_results($wpdb->prepare(
+                "SELECT * FROM {$wpdb->prefix}btcbi_flow 
                     WHERE status = true 
                     AND triggered_entity = 'Breakdance' 
-                    AND (triggered_entity_id = 'BreakdanceHook' 
-                    OR triggered_entity_id = %s)",
-                    $reOrganizeId
-                )
-            );
+                    AND (triggered_entity_id = 'BreakdanceHook' OR triggered_entity_id = %s)",
+                $reOrganizeId
+            ));
 
             if (!$flows) {
                 return;
@@ -66,20 +57,32 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
             foreach ($flows as $flow) {
                 $flowDetails = json_decode($flow->flow_details);
 
-                if (isset($flowDetails->primaryKey)) {
-                    $data               = [];
-                    $primaryKeyValue    = Helper::extractValueFromPath($extra, $flowDetails->primaryKey->key);
+                if (!isset($flowDetails->primaryKey) && $flow->triggered_entity_id == $reOrganizeId) {
+                    Flow::execute('Breakdance', $reOrganizeId, $extra['fields'], array($flow));
+                    continue;
+                }
 
-                    if ($flowDetails->primaryKey->value != $primaryKeyValue) continue;
+                if (!is_array($flowDetails->primaryKey)) {
+                    continue;
+                }
 
+                $isPrimaryKeysMatch = true;
+                foreach ($flowDetails->primaryKey as $primaryKey) {
+                    $primaryKeyValue = Helper::extractValueFromPath($extra, $primaryKey->key);
+
+                    if ($primaryKey->value != $primaryKeyValue) {
+                        $isPrimaryKeysMatch = false;
+                        break;
+                    }
+                }
+
+                if ($isPrimaryKeysMatch) {
+                    $data = [];
                     foreach ($formData as $field) {
                         $value                  = Helper::extractValueFromPath($extra, $field['name']);
                         $data[$field['name']]   = $field['type'] != 'file' ? $value : explode(',', $value);
                     }
-
                     Flow::execute('Breakdance', 'BreakdanceHook', $data, array($flow));
-                } elseif ($flow->triggered_entity_id == $reOrganizeId) {
-                    Flow::execute('Breakdance', $reOrganizeId, $extra['fields'], array($flow));
                 }
             }
 

@@ -50,7 +50,6 @@ const CustomFormSubmission = () => {
       fields: tmpNewFlow.triggerDetail.data,
       fetch: newFlow?.triggerDetail?.fetch,
       fetch_remove: newFlow?.triggerDetail?.fetch_remove
-
     }
 
     tmpNewFlow.triggered_entity_id = newFlow?.triggerDetail?.triggered_entity_id
