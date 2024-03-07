@@ -84,7 +84,7 @@ function CapsuleCRM({ formFields, setFlow, flow, allIntegURL }) {
     setIsLoading(true)
     const resp = saveIntegConfig(flow, setFlow, allIntegURL, capsulecrmConf, navigate, '', '', setIsLoading)
     resp.then(res => {
-      if (res.success) {
+      if (res.status === 'success') {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
       } else {

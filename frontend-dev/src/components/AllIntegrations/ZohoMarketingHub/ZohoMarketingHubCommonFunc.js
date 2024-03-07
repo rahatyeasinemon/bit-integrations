@@ -42,7 +42,7 @@ export const refreshLists = (formID, marketingHubConf, setMarketingHubConf, setI
   }
   bitsFetch(refreshListsRequestParams, 'zmarketingHub_refresh_lists')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...marketingHubConf }
         if (result.data.lists) {
           newConf.default = { ...newConf.default, lists: result.data.lists }
@@ -52,7 +52,7 @@ export const refreshLists = (formID, marketingHubConf, setMarketingHubConf, setI
         }
         setSnackbar({ show: true, msg: __('Lists refreshed', 'bit-integrations') })
         setMarketingHubConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Lists refresh failed Cause:')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Lists refresh failed. please try again', 'bit-integrations') })
@@ -79,7 +79,7 @@ export const refreshContactFields = (formID, marketingHubConf, setMarketingHubCo
   }
   bitsFetch(refreshContactFieldsRequestParams, 'zmarketingHub_refresh_contact_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...marketingHubConf }
         if (result.data.fields) {
           if (!newConf.default.fields) {

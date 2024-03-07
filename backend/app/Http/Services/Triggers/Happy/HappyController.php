@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\Happy;
 
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use DateTime;
 
@@ -36,7 +37,7 @@ final class HappyController
     public function getAll()
     {
         if (!function_exists('HappyForms')) {
-            Response::error(__('Happy Form is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Happy Form is not installed or activated', 'bit-integrations'));
         }
 
         $forms = happyforms_get_form_controller()->get();
@@ -50,24 +51,24 @@ final class HappyController
                 ];
             }
         }
-        Response::success($all_forms);
+        return Response::success($all_forms);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!function_exists('HappyForms')) {
-            Response::error(__('Happy Form is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Happy Form is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($form_id)

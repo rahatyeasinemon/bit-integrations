@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Actions\Registration;
 
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 
 final class RegistrationController

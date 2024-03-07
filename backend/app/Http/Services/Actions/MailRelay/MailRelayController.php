@@ -20,7 +20,7 @@ class MailRelayController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) && empty($fieldsRequestParams->domain)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -49,16 +49,16 @@ class MailRelayController
         }
 
         if (isset($response->error) || isset($response->errors) || gettype($response) == "string") {
-            Response::error('Please enter valid Domain name & API key', 400);
+            return Response::error('Please enter valid Domain name & API key', 400);
         } else {
-            Response::success($customFields);
+            return Response::success($customFields);
         }
     }
 
     public function getAllGroups($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token) && empty($fieldsRequestParams->domain)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -86,9 +86,9 @@ class MailRelayController
         }
 
         if (isset($response->error)) {
-            Response::error('Groups fetch failed', 400);
+            return Response::error('Groups fetch failed', 400);
         } else {
-            Response::success($groups);
+            return Response::success($groups);
         }
     }
 

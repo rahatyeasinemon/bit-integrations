@@ -60,7 +60,7 @@ export const refreshOrganizations = (formID, deskConf, setDeskConf, setIsLoading
   }
   bitsFetch(refreshOrganizationsRequestParams, 'zdesk_refresh_organizations')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...deskConf }
         if (result.data.organizations) {
           newConf.default = { ...newConf.default, organizations: result.data.organizations }
@@ -70,7 +70,7 @@ export const refreshOrganizations = (formID, deskConf, setDeskConf, setIsLoading
         }
         setSnackbar({ show: true, msg: __('Portals refreshed', 'bit-integrations') })
         setDeskConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Portals refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Portals refresh failed. please try again', 'bit-integrations') })
@@ -93,7 +93,7 @@ export const refreshDepartments = (formID, deskConf, setDeskConf, setIsLoading, 
   }
   bitsFetch(refreshDepartmentsRequestParams, 'zdesk_refresh_departments')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...deskConf }
         if (!newConf.default.departments) {
           newConf.default.departments = {}
@@ -110,7 +110,7 @@ export const refreshDepartments = (formID, deskConf, setDeskConf, setIsLoading, 
         }
         setSnackbar({ show: true, msg: __('Departments refreshed', 'bit-integrations') })
         setDeskConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Departments refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Departments refresh failed. please try again', 'bit-integrations') })
@@ -132,7 +132,7 @@ export const refreshFields = (formID, deskConf, setDeskConf, setIsLoading, setSn
   }
   bitsFetch(refreshFieldsRequestParams, 'zdesk_refresh_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...deskConf }
         if (result.data.fields) {
           if (!newConf.default.fields) {
@@ -173,7 +173,7 @@ export const refreshOwners = (formID, deskConf, setDeskConf, setIsLoading, setSn
   }
   bitsFetch(refreshOwnersRequestParams, 'zdesk_refresh_owners')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...deskConf }
         if (!newConf.default.owners) {
           newConf.default.owners = {}
@@ -186,7 +186,7 @@ export const refreshOwners = (formID, deskConf, setDeskConf, setIsLoading, setSn
         }
         setSnackbar({ show: true, msg: __('Owners refreshed', 'bit-integrations') })
         setDeskConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Owners refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Owners refresh failed. please try again', 'bit-integrations') })
@@ -210,7 +210,7 @@ export const refreshProducts = (formID, deskConf, setDeskConf, setIsLoading, set
   }
   bitsFetch(refreshProductsRequestParams, 'zdesk_refresh_products')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...deskConf }
         if (!newConf.default.products) {
           newConf.default.products = {}
@@ -223,7 +223,7 @@ export const refreshProducts = (formID, deskConf, setDeskConf, setIsLoading, set
         }
         setSnackbar({ show: true, msg: __('Products refreshed', 'bit-integrations') })
         setDeskConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Products refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Products refresh failed. please try again', 'bit-integrations') })

@@ -92,7 +92,7 @@ class RecordApiHelper
                 }
             } else {
                 LogHandler::save($this->_integrationID, ['type' => 'contact', 'type_name' => 'Adding Contact'], 'error', 'Email address already exists in the system');
-                Response::error('Email address already exists in the system', 400);
+                return Response::error('Email address already exists in the system', 400);
             }
         }
 

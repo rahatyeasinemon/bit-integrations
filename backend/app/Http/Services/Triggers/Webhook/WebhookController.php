@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\Webhook;
 
 use BitApps\BTCBI\Util\Helper;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 use WP_REST_Request;
@@ -36,10 +37,10 @@ class WebhookController
         $hook_id = wp_generate_uuid4();
 
         if (!$hook_id) {
-            Response::error(__('Failed to generate new hook', 'bit-integrations'));
+            return Response::error(__('Failed to generate new hook', 'bit-integrations'));
         }
         add_option('btcbi_webhook_' . $hook_id, [], '', 'no');
-        Response::success(['hook_id' => $hook_id]);
+        return Response::success(['hook_id' => $hook_id]);
     }
 
     public function getTestData($data)
@@ -50,7 +51,7 @@ class WebhookController
             $missing_field = is_null($missing_field) ? 'Webhook ID' : $missing_field . ', Webhook ID';
         }
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
         $testData = get_option('btcbi_webhook_' . $data->hook_id);
@@ -58,9 +59,9 @@ class WebhookController
             update_option('btcbi_webhook_' . $data->hook_id, []);
         }
         if (!$testData || empty($testData)) {
-            Response::error(new WP_Error('webhook_test', __('Webhook data is empty', 'bit-integrations')));
+            return Response::error(new WP_Error('webhook_test', __('Webhook data is empty', 'bit-integrations')));
         }
-        Response::success(['webhook' => $testData]);
+        return Response::success(['webhook' => $testData]);
     }
 
     public function removeTestData($data)
@@ -71,7 +72,7 @@ class WebhookController
             $missing_field = is_null($missing_field) ? 'Webhook ID' : $missing_field . ', Webhook ID';
         }
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
         if (property_exists($data, 'reset') && $data->reset) {
@@ -80,9 +81,9 @@ class WebhookController
             $testData = delete_option('btcbi_webhook_' . $data->hook_id);
         }
         if (!$testData) {
-            Response::error(new WP_Error('webhook_test', __('Failed to remove test data', 'bit-integrations')));
+            return Response::error(new WP_Error('webhook_test', __('Failed to remove test data', 'bit-integrations')));
         }
-        Response::success(__('Webhook test data removed successfully', 'bit-integrations'));
+        return Response::success(__('Webhook test data removed successfully', 'bit-integrations'));
     }
 
     public static function makeNonNestedRecursive(array &$out, $key, array $in)

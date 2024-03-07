@@ -48,7 +48,7 @@ export const getAllLists = async (conf, setConf, loading, setLoading) => {
   setLoading && setLoading({ ...loading, list: true });
   const requestParams = { authKey: conf.authKey };
   const result = await bitsFetch(requestParams, "mailercloud_get_all_lists");
-  if (result.success) {
+  if (result.status === 'success') {
     const { data } = result.data;
     const newConf = { ...conf };
     if (data) {
@@ -75,7 +75,7 @@ export const getAllFields = async (conf, setConf, loading, setLoading) => {
   setLoading && setLoading({ ...loading, field: true });
   const requestParams = { authKey: conf.authKey };
   const result = await bitsFetch(requestParams, "mailercloud_get_all_fields");
-  if (result.success) {
+  if (result.status === 'success') {
     const { data } = result;
     const newConf = { ...conf };
     if (data) {
@@ -157,7 +157,7 @@ export const saveConfig = (
     setLoading
   );
   resp.then((res) => {
-    if (res.success) {
+    if (res.status === 'success') {
       toast.success(res.data?.msg);
       navigate(allIntegURL);
     } else {

@@ -28,7 +28,7 @@ class CampaignMonitorController
     private function checkValidation($apiKey, $clientId, $customParam = "**")
     {
         if (empty($apiKey) || empty($clientId) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -40,12 +40,12 @@ class CampaignMonitorController
         $response    = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->ApiKey)) {
-            Response::error(
+            return Response::error(
                 empty($response) ? 'Unknown' : $response,
                 400
             );
         }
-        Response::success(true);
+        return Response::success(true);
     }
 
     public function getAllLists($requestParams)
@@ -64,9 +64,9 @@ class CampaignMonitorController
         }
 
         if ((count($lists)) > 0) {
-            Response::success($lists);
+            return Response::success($lists);
         } else {
-            Response::error('Lists fetching failed', 400);
+            return Response::error('Lists fetching failed', 400);
         }
     }
 
@@ -86,9 +86,9 @@ class CampaignMonitorController
         }
 
         if (!isset($apiResponse->Code)) {
-            Response::success($fields);
+            return Response::success($fields);
         } else {
-            Response::error("Field fetching failed: {$apiResponse->Message}", 400);
+            return Response::error("Field fetching failed: {$apiResponse->Message}", 400);
         }
     }
 

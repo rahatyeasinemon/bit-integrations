@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Formidable;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BitApps\BTCBI\Util\Common;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
@@ -35,7 +36,7 @@ final class FormidableController
     public function getAll()
     {
         if (!function_exists('load_formidable_forms')) {
-            Response::error(__('Formidable is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Formidable is not installed or activated', 'bit-integrations'));
         }
         $forms = \FrmForm::getAll();
         $all_forms = [];
@@ -47,22 +48,22 @@ final class FormidableController
                 ];
             }
         }
-        Response::success($all_forms);
+        return Response::success($all_forms);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!function_exists('load_formidable_forms')) {
-            Response::error(__('Formidable is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Formidable is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
 
         $fields = self::fields($data->id);
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($form_id)
@@ -70,7 +71,7 @@ final class FormidableController
         $fields = \FrmField::get_all_for_form($form_id, '', 'include');
         $field = [];
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $visistedKey = [];

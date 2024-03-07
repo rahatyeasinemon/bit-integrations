@@ -195,7 +195,7 @@ export default function EditInteg({ allIntegURL }) {
     return <Loader style={loaderStyle} />
   }
 
-  if (!data.success) {
+  if (data.status === 'error') {
     return <div style={loaderStyle}>{data.data}</div>
   }
   return (

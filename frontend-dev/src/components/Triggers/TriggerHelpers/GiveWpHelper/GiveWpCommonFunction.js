@@ -4,7 +4,7 @@ import { __ } from '../../../../Utils/i18nwrap'
 
 const getAllDonationForms = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_all_donation_form', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allDonationForms = result.data
 
@@ -22,7 +22,7 @@ const getAllDonationForms = (data, setFlow) => {
 
 export function getAllRecurringDonationForms (data, setFlow) {
   const loadPostTypes = bitsFetch(null, 'get_all_recurring_donation_form', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allRecurringForms = result.data
       setFlow({ ...tmpFlow })

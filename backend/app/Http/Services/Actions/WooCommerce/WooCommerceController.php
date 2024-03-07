@@ -25,10 +25,10 @@ class WooCommerceController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (is_plugin_active('woocommerce/woocommerce.php')) {
-            Response::success(true);
+            return Response::success(true);
         }
 
-        Response::error(__('WooCommerce must be activated!', 'bit-integrations'));
+        return Response::error(__('WooCommerce must be activated!', 'bit-integrations'));
     }
 
     public static function metaboxFields($module)
@@ -78,7 +78,7 @@ class WooCommerceController
     public static function refreshFields($queryParams)
     {
         if (empty($queryParams->module)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -680,7 +680,7 @@ class WooCommerceController
                 'required' => $requiredLine
             ];
 
-            Response::success([$responseOrder, $responseCustomer, $responseLine]);
+            return Response::success([$responseOrder, $responseCustomer, $responseLine]);
         }
 
         if ($queryParams->module === 'changestatus') {
@@ -734,7 +734,7 @@ class WooCommerceController
                 'required' => $required
             ];
 
-            Response::success($response);
+            return Response::success($response);
         }
 
         uksort($fields, 'strnatcasecmp');
@@ -746,7 +746,7 @@ class WooCommerceController
             'required' => $required
         ];
 
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function searchProjects($queryParams)
@@ -765,7 +765,7 @@ class WooCommerceController
             }
         }
 
-        Response::success($products);
+        return Response::success($products);
     }
 
     public static function allSubscriptionsProducts()
@@ -795,7 +795,7 @@ class WooCommerceController
                 'product_name' => $val->post_title,
             ];
         }
-        Response::success($subscriptions);
+        return Response::success($subscriptions);
     }
 
     public function execute($integrationData, $fieldValues)

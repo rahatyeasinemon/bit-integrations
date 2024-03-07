@@ -64,13 +64,13 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setIsLoading
   bitsFetch(tokenRequestParams, 'zcreator_generate_token')
     .then(result => result)
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
         setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bit-integrations') })
@@ -142,14 +142,14 @@ export const refreshApplications = (formID, creatorConf, setCreatorConf, setIsLo
   }
   bitsFetch(refreshApplicationsRequestParams, 'zcreator_refresh_applications')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...creatorConf }
         if (result.data.applications) {
           newConf.default = { ...newConf.default, applications: result.data.applications }
         }
         setSnackbar({ show: true, msg: __('Applications refreshed', 'bit-integrations') })
         setCreatorConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Applications refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Applications refresh failed. please try again', 'bit-integrations') })
@@ -174,7 +174,7 @@ export const refreshForms = (formID, creatorConf, setCreatorConf, setIsLoading, 
   }
   bitsFetch(refreshFormsRequestParams, 'zcreator_refresh_forms')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...creatorConf }
         if (!newConf.default.forms) {
           newConf.default.forms = {}
@@ -187,7 +187,7 @@ export const refreshForms = (formID, creatorConf, setCreatorConf, setIsLoading, 
         }
         setSnackbar({ show: true, msg: __('Forms refreshed', 'bit-integrations') })
         setCreatorConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Forms refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Forms refresh failed. please try again', 'bit-integrations') })
@@ -212,7 +212,7 @@ export const refreshFields = (formID, creatorConf, setCreatorConf, setIsLoading,
   }
   bitsFetch(refreshFieldsRequestParams, 'zcreator_refresh_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...creatorConf }
         if (result.data.fields) {
           if (!newConf.default.fields) {

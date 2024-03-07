@@ -22,7 +22,7 @@ class MailerLiteController
     public function fetchAllGroups($refreshFieldsRequestParams)
     {
         if (empty($refreshFieldsRequestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -85,9 +85,9 @@ class MailerLiteController
         }
 
         if ($response !== 'Unauthorized' || $response !== 'Unauthenticated.') {
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );
@@ -97,7 +97,7 @@ class MailerLiteController
     public function mailerliteRefreshFields($refreshFieldsRequestParams)
     {
         if (empty($refreshFieldsRequestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -136,9 +136,9 @@ class MailerLiteController
             $formattedResponse = array_merge($email, $newResponse);
 
             if (isset($response->data)) {
-                Response::success($formattedResponse);
+                return Response::success($formattedResponse);
             } elseif (isset($response->message) && 'Unauthenticated.' === $response->message) {
-                Response::error(
+                return Response::error(
                     __(
                         'Invalid API Token',
                         'bit-integrations'
@@ -166,9 +166,9 @@ class MailerLiteController
             }
         }
         if (count($response) > 0) {
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );

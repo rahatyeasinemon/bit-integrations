@@ -21,7 +21,7 @@ export const refreshDripCampaign = (
   };
   bitsFetch(refreshCampaignsRequestParams, "drip_campaigns")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...dripConf };
         if (result.data.dripCampaigns) {
           if (!newConf.default) {
@@ -71,7 +71,7 @@ export const refreshDripHeader = (
 
   bitsFetch(refreshCampaignsRequestParams, "drip_headers")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...dripConf };
         if (result.data.dripField) {
           if (!newConf.default) {

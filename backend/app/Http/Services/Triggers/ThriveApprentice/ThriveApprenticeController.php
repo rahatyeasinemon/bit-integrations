@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\ThriveApprentice;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class ThriveApprenticeController
@@ -42,7 +43,7 @@ final class ThriveApprenticeController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('Thrive Apprentice is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Thrive Apprentice is not installed or activated', 'bit-integrations'));
         }
 
         $types = [
@@ -58,21 +59,21 @@ final class ThriveApprenticeController
                 'title' => $type,
             ];
         }
-        Response::success($thriveapprentice_action);
+        return Response::success($thriveapprentice_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('Thrive Apprentice is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Thrive Apprentice is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = ThriveApprenticeHelper::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
@@ -93,7 +94,7 @@ final class ThriveApprenticeController
                 'title' => 'Any Module'
             ]], ThriveApprenticeHelper::getAllModule());
         }
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function handleCourseComplete($course_details, $user_details)
@@ -183,7 +184,7 @@ final class ThriveApprenticeController
             'id' => 'any',
             'title' => 'Any Course'
         ]], ThriveApprenticeHelper::getAllCourse());
-        Response::success($allCourse);
+        return Response::success($allCourse);
     }
 
     public static function getAllLessonEdit()
@@ -192,7 +193,7 @@ final class ThriveApprenticeController
             'id' => 'any',
             'title' => 'Any Lesson'
         ]], ThriveApprenticeHelper::getAllLesson());
-        Response::success($allLesson);
+        return Response::success($allLesson);
     }
 
     public static function getAllModuleEdit()
@@ -201,6 +202,6 @@ final class ThriveApprenticeController
             'id' => 'any',
             'title' => 'Any Module'
         ]], ThriveApprenticeHelper::getAllModule());
-        Response::success($allModule);
+        return Response::success($allModule);
     }
 }

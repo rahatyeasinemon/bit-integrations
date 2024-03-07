@@ -35,9 +35,9 @@ class AffiliateController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (self::pluginActive()) {
-            Response::success(true);
+            return Response::success(true);
         }
-        Response::error(__('Affiliate must be activated!', 'bit-integrations'));
+        return Response::error(__('Affiliate must be activated!', 'bit-integrations'));
     }
 
 

@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\SolidAffiliate;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class SolidAffiliateController
@@ -43,7 +44,7 @@ final class SolidAffiliateController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('Solid Affiliate is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Solid Affiliate is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['Created new affiliate', 'Created new referral affiliate'];
@@ -55,31 +56,31 @@ final class SolidAffiliateController
                 'title' => $type,
             ];
         }
-        Response::success($affiliate_action);
+        return Response::success($affiliate_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('Solid affiliate is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Solid affiliate is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

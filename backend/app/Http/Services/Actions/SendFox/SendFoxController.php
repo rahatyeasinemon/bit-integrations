@@ -17,7 +17,7 @@ class SendFoxController
     public function sendFoxAuthorize($requestParams)
     {
         if (empty($requestParams->access_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -34,9 +34,9 @@ class SendFoxController
 
         $response = Http::request($apiEndpoint, 'Get', null, $requestParams);
         if ($response->message !== 'Unauthenticated.') {
-            Response::success($response);
+            return Response::success($response);
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );
@@ -46,7 +46,7 @@ class SendFoxController
     public function fetchContactLists($requestParams)
     {
         if (empty($requestParams->access_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -64,9 +64,9 @@ class SendFoxController
         $response = Http::request($apiEndpoint, 'Get', null, $requestParams);
 
         if ($response->message !== 'Unauthenticated.') {
-            Response::success($response);
+            return Response::success($response);
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );

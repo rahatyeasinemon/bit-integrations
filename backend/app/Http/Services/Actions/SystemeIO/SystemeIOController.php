@@ -26,7 +26,7 @@ class SystemeIOController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -46,9 +46,9 @@ class SystemeIOController
         $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->items)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid API Key & API Secret', 400);
+            return Response::error('Please enter valid API Key & API Secret', 400);
         }
     }
 
@@ -70,9 +70,9 @@ class SystemeIOController
                     ]
                 );
             }
-            Response::success($tags);
+            return Response::success($tags);
         } else {
-            Response::error('Tags fetching failed', 400);
+            return Response::error('Tags fetching failed', 400);
         }
     }
 

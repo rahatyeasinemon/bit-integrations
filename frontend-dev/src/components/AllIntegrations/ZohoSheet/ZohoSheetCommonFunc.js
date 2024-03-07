@@ -34,7 +34,7 @@ export const getAllWorkbooks = (confTmp, setConf, loading, setLoading) => {
 
   bitsFetch(requestParams, 'zohoSheet_fetch_all_work_books')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.workbooks = result.data
@@ -55,7 +55,7 @@ export const getAllWorksheets = (confTmp, setConf, loading, setLoading) => {
 
   bitsFetch(requestParams, 'zohoSheet_fetch_all_work_sheets')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.worksheets = result.data
@@ -84,7 +84,7 @@ export const getWorksheetHeader = (confTmp, setConf, loading, setLoading) => {
 
   bitsFetch(requestParams, 'zohoSheet_fetch_all_work_sheet_header')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.workSheetHeaders = result.data
@@ -162,14 +162,14 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, loading, set
   bitsFetch(tokenRequestParams, 'zohoSheet_generate_token')
     .then(result => result)
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
         toast.success(__('Authorized Successfully', 'bit-integrations'))
         getAllWorkbooks(newConf, setConf, loading, setLoading)
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         toast.error(__(`${__('Authorization failed Cause:')}${result.data.data || result.data}. ${__('please try again')}`, 'bit-integrations'))
       } else {
         toast.error(__('Authorization failed. please try again', 'bit-integrations'))

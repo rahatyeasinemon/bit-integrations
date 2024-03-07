@@ -41,7 +41,7 @@ class ActiveCampaignController
             empty($requestsParams->api_key)
             || empty($requestsParams->api_url)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -55,13 +55,13 @@ class ActiveCampaignController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || empty($apiResponse)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse) ? 'Unknown' : $apiResponse,
                 400
             );
         }
 
-        Response::success(true);
+        return Response::success(true);
     }
 
     /**
@@ -77,7 +77,7 @@ class ActiveCampaignController
             empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -104,7 +104,7 @@ class ActiveCampaignController
                 ];
             }
             $response['activeCampaignLists'] = $lists;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -121,7 +121,7 @@ class ActiveCampaignController
             empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -145,7 +145,7 @@ class ActiveCampaignController
             //     ];
             // }
             // $response['activeCampaignLists'] = $lists;
-            Response::success($aCampaignResponse->accounts);
+            return Response::success($aCampaignResponse->accounts);
         }
     }
 
@@ -155,7 +155,7 @@ class ActiveCampaignController
             empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -206,7 +206,7 @@ class ActiveCampaignController
             );
         }
         $response['activeCampaignTags'] = $tag_items;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function activeCampaignHeaders($queryParams)
@@ -215,7 +215,7 @@ class ActiveCampaignController
             empty($queryParams->api_key)
             || empty($queryParams->api_url)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -247,7 +247,7 @@ class ActiveCampaignController
             $fields['Email'] = (object) ['fieldId' => 'email', 'fieldName' => 'Email', 'required' => true];
             $fields['Phone'] = (object) ['fieldId' => 'phone', 'fieldName' => 'Phone', 'required' => false];
             $response['activeCampaignField'] = $fields;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -293,7 +293,7 @@ class ActiveCampaignController
 //     if (empty($queryParams->api_key)
 //         || empty($queryParams->api_url)
 //     ) {
-//         Response::error(
+//         return Response::error(
 //             __(
 //                 'Requested parameter is empty',
 //                 'bit-integrations'
@@ -321,6 +321,6 @@ class ActiveCampaignController
 //         }
 //         var_dump($tags,'tags');die;
 //         $response['activeCampaignTags'] = $tags;
-//         Response::success($response);
+//         return Response::success($response);
 //     }
 // }

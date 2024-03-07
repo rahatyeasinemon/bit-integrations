@@ -36,7 +36,7 @@ class ZohoCreatorController
                 || empty($requestsParams->redirectURI)
                 || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -56,13 +56,13 @@ class ZohoCreatorController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public static function refreshApplicationsAjaxHelper($queryParams)
@@ -72,7 +72,7 @@ class ZohoCreatorController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -90,7 +90,7 @@ class ZohoCreatorController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $applicationsMetaResponse = Http::request($applicationsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // Response::success($applicationsMetaResponse);
+        // return Response::success($applicationsMetaResponse);
 
         if (!is_wp_error($applicationsMetaResponse)) {
             $allApplications = [];
@@ -109,7 +109,7 @@ class ZohoCreatorController
             uksort($allApplications, 'strnatcasecmp');
             $response['applications'] = $allApplications;
         } else {
-            Response::error(
+            return Response::error(
                 empty($applicationsMetaResponse->data) ? 'Unknown' : $applicationsMetaResponse->error,
                 400
             );
@@ -117,7 +117,7 @@ class ZohoCreatorController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -134,7 +134,7 @@ class ZohoCreatorController
                 || empty($queryParams->accountOwner)
                 || empty($queryParams->applicationId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -153,7 +153,7 @@ class ZohoCreatorController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $formsMetaResponse = Http::request($formsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // Response::success($formsMetaResponse);
+        // return Response::success($formsMetaResponse);
 
         if (!is_wp_error($formsMetaResponse)) {
             $allForms = [];
@@ -170,7 +170,7 @@ class ZohoCreatorController
             uksort($allForms, 'strnatcasecmp');
             $response['forms'] = $allForms;
         } else {
-            Response::error(
+            return Response::error(
                 empty($formsMetaResponse->data) ? 'Unknown' : $formsMetaResponse->error,
                 400
             );
@@ -178,7 +178,7 @@ class ZohoCreatorController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -196,7 +196,7 @@ class ZohoCreatorController
                 || empty($queryParams->applicationId)
                 || empty($queryParams->formId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -214,7 +214,7 @@ class ZohoCreatorController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $fieldsMetaResponse = Http::request($fieldsMetaApiEndpoint, 'Get', null, $authorizationHeader);
 
-        // Response::success($fieldsMetaResponse);
+        // return Response::success($fieldsMetaResponse);
 
         if (!is_wp_error($fieldsMetaResponse)) {
             $fields = $fieldsMetaResponse->fields;
@@ -280,7 +280,7 @@ class ZohoCreatorController
             uksort($response['fileUploadFields'], 'strnatcasecmp');
             usort($response['requiredFileUploadFields'], 'strnatcasecmp');
         } else {
-            Response::error(
+            return Response::error(
                 $fieldsMetaResponse->status === 'error' ? $fieldsMetaResponse->message : 'Unknown',
                 400
             );
@@ -289,7 +289,7 @@ class ZohoCreatorController
             $response['queryModule'] = $queryParams->module;
             self::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**

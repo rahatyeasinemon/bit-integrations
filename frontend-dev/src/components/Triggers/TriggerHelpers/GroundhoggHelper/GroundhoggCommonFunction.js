@@ -5,7 +5,7 @@ import { create } from 'mutative'
 
 export const getAllGroundhoggTags = (data, setFlow) => {
   const loadPostTypes = bitsFetch({}, `${data.triggered_entity.toLowerCase()}/get/tags`, null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setFlow(prevFlow => create(prevFlow, (draftFlow) => {
         draftFlow.flow_details['allTag'] = result.data
       }))

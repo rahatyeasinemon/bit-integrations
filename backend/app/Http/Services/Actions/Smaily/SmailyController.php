@@ -18,7 +18,7 @@ class SmailyController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->subdomain) && empty($fieldsRequestParams->api_user_name) && empty($fieldsRequestParams->api_user_password)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $subdomain       = $fieldsRequestParams->subdomain;
@@ -32,9 +32,9 @@ class SmailyController
         $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($response[0]->id) && !empty($response)) {
-            Response::success('authentication successful');
+            return Response::success('authentication successful');
         } else {
-            Response::error('Please enter valid subdomain name and api credentials', 400);
+            return Response::error('Please enter valid subdomain name and api credentials', 400);
         }
     }
 

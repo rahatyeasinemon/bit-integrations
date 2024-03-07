@@ -2,12 +2,15 @@
 
 namespace BitApps\BTCBI\Providers\Hooks;
 
+use BitApps\BTCBI\Config;
+use BitApps\BTCBI\Plugin;
 use BitApps\BTCBI\Routes\AdminAjax;
 use FilesystemIterator;
 use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
 
 use BitApps\BTCBI\Util\StoreInCache;
 use BTCBI\Deps\BitApps\WPKit\Http\RequestType;
+use BTCBI\Deps\BitApps\WPKit\Http\Router\Router;
 
 class HookService
 {
@@ -51,7 +54,10 @@ class HookService
         // echo('loadAppHooks');
         // die;
         if (RequestType::is('ajax') && is_readable(BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'ajax.php')) {
+            $router = new Router(RequestType::AJAX, Config::VAR_PREFIX, '');
+            $router->setMiddlewares(Plugin::instance()->middlewares());
             include BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'ajax.php';
+            $router->register();
         }
         if (is_readable(BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'hooks.php')) {
             include BTCBI_PLUGIN_BASEDIR . 'backend' . DIRECTORY_SEPARATOR . 'hooks.php';
@@ -124,7 +130,10 @@ class HookService
                 $task_name = basename($dirInfo);
                 $task_path = $task_dir . DIRECTORY_SEPARATOR . $task_name . DIRECTORY_SEPARATOR;
                 if (is_readable($task_path . 'Routes.php') && RequestType::is('ajax') && RequestType::is('admin')) {
+                    $router = new Router(RequestType::AJAX, Config::VAR_PREFIX, '');
+                    $router->setMiddlewares(Plugin::instance()->middlewares());
                     include $task_path . 'Routes.php';
+                    $router->register();
                 }
             }
         }
@@ -143,7 +152,10 @@ class HookService
 
                 // error_log(print_r(is_readable($task_path . 'Routes.php')));
                 if (is_readable($task_path . 'Routes.php') && RequestType::is('ajax') && RequestType::is('admin')) {
+                    $router = new Router(RequestType::AJAX, Config::VAR_PREFIX, '');
+                    $router->setMiddlewares(Plugin::instance()->middlewares());
                     include $task_path . 'Routes.php';
+                    $router->register();
                 }
                 if (is_readable($task_path . 'Hooks.php')) {
                     include $task_path . 'Hooks.php';

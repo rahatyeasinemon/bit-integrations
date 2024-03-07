@@ -76,7 +76,7 @@ export const nutshellCRMAuthentication = (
   };
 
   bitsFetch(requestParams, "nutshellcrm_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
       toast.success(__("Authorized successfully", "bit-integrations"));
@@ -102,7 +102,7 @@ export const getAllCompanies = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "nutshellcrm_fetch_all_companies").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.companies = result.data;
@@ -127,7 +127,7 @@ export const getAllContacts = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "nutshellcrm_fetch_all_contacts").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.contacts = result.data;
@@ -152,7 +152,7 @@ export const getAllSources = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "nutshellcrm_fetch_all_sources").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.sources = result.data;
@@ -176,7 +176,7 @@ export const getAllTags = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "nutshellcrm_fetch_all_tags").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.tags = result.data;
@@ -201,7 +201,7 @@ export const getAllProducts = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "nutshellcrm_fetch_all_products").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.products = result.data;
@@ -226,7 +226,7 @@ export const getAllCompanyTypes = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "nutshellcrm_fetch_all_companytypes").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.companyTypes = result.data;

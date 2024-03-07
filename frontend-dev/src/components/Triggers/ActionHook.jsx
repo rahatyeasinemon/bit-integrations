@@ -110,7 +110,7 @@ const ActionHook = () => {
     window.hook_id = hookID
     intervalRef.current = setInterval(() => {
       bitsFetch({ hook_id: hookID }, 'action_hook/test').then((resp) => {
-        if (resp.success) {
+        if (resp.status === 'success') {
           clearInterval(intervalRef.current)
           const tmpNewFlow = { ...newFlow }
 

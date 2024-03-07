@@ -21,7 +21,7 @@ export const refreshMailifyList = (
   };
   bitsFetch(refreshListsRequestParams, "mailify_lists")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...mailifyConf };
         if (result.data) {
           if (!newConf.default) {
@@ -72,7 +72,7 @@ export const refreshMailifyHeader = (
 
   bitsFetch(refreshListsRequestParams, "mailify_headers")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...mailifyConf };
         if (result.data.mailifyField) {
           if (!newConf.default) {

@@ -23,7 +23,7 @@ export const handleInput = (e, salesforceConf, setSalesforceConf, formID, setIsL
 //   }
 //   const loadPostTypes = bitsFetch(campaignRequestParams, 'selesforce_campaign_list')
 //     .then(result => {
-//       if (result && result.success) {
+//       if (result && result.status === 'success') {
 //         const newConf = { ...salesforceConf }
 //         if (!newConf.default) newConf.default = {}
 //         if (!newConf.default?.campaignLists) {
@@ -59,7 +59,7 @@ export const getAllCampaignList = (formID, salesforceConf, setSalesforceConf, se
   }
   const loadPostTypes = bitsFetch(campaignRequestParams, 'selesforce_campaign_list')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setSalesforceConf((oldConf) => {
           const newConf = { ...oldConf }
           if (!newConf.default) newConf.default = {}
@@ -97,7 +97,7 @@ export const getAllCampaignList = (formID, salesforceConf, setSalesforceConf, se
 //   }
 //   bitsFetch(campaignRequestParams, 'selesforce_lead_list')
 //     .then(result => {
-//       if (result && result.success) {
+//       if (result && result.status === 'success') {
 //         const newConf = { ...salesforceConf }
 //         if (!newConf.default) newConf.default = {}
 //         if (!newConf.default?.leadLists) {
@@ -111,7 +111,7 @@ export const getAllCampaignList = (formID, salesforceConf, setSalesforceConf, se
 //         }
 //         setSnackbar({ show: true, msg: __('lead list refreshed', 'bit-integrations') })
 //         setSalesforceConf({ ...newConf })
-//       } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+//       } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
 //         setSnackbar({ show: true, msg: `${__('Lead list refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
 //       } else {
 //         setSnackbar({ show: true, msg: __('Lead list refresh failed. please try again', 'bit-integrations') })
@@ -130,7 +130,7 @@ export const getAllCampaignList = (formID, salesforceConf, setSalesforceConf, se
 //   }
 //   const loadPostTypes = bitsFetch(campaignRequestParams, 'selesforce_contact_list')
 //     .then(result => {
-//       if (result && result.success) {
+//       if (result && result.status === 'success') {
 //         const newConf = { ...salesforceConf }
 //         if (!newConf.default) newConf.default = {}
 //         if (!newConf.default?.contactLists) {
@@ -166,7 +166,7 @@ export const getAllLeadList = (formID, salesforceConf, setSalesforceConf, setIsL
   }
   bitsFetch(campaignRequestParams, 'selesforce_lead_list')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setSalesforceConf((oldConf) => {
           const newConf = { ...oldConf }
           if (!newConf.default) newConf.default = {}
@@ -200,7 +200,7 @@ export const getAllContactList = (formID, salesforceConf, setSalesforceConf, set
   }
   const loadPostTypes = bitsFetch(campaignRequestParams, 'selesforce_contact_list')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setSalesforceConf((oldConf) => {
           const newConf = { ...oldConf }
           if (!newConf.default) newConf.default = {}
@@ -239,8 +239,8 @@ export const getAllCustomFields = (formID, actionName, salesforceConf, setSalesf
   }
   const loadPostTypes = bitsFetch(customFieldRequestParams, 'selesforce_custom_field')
     .then(result => {
-      const customFields = result && result.success ? result?.data : []
-      const returnMsg = result && result.success ? 'Custom field refresh successfully.' : result?.data[0]?.message ? 'Custom field: ' + result?.data[0]?.message : 'Custom field refresh failed. please try again'
+      const customFields = result && result.status === 'success' ? result?.data : []
+      const returnMsg = result && result.status === 'success' ? 'Custom field refresh successfully.' : result?.data[0]?.message ? 'Custom field: ' + result?.data[0]?.message : 'Custom field refresh failed. please try again'
 
       setSalesforceConf((prevConf) => {
         const draftConf = prevConf;
@@ -311,7 +311,7 @@ export const getAllCustomFields = (formID, actionName, salesforceConf, setSalesf
 //   }
 //   const loadPostTypes = bitsFetch(campaignRequestParams, 'selesforce_account_list')
 //     .then(result => {
-//       if (result && result.success) {
+//       if (result && result.status === 'success') {
 //         const newConf = { ...salesforceConf }
 //         if (!newConf.default) newConf.default = {}
 //         if (!newConf.default?.accountLists) {
@@ -347,7 +347,7 @@ export const getAllAccountList = (formID, salesforceConf, setSalesforceConf, set
   }
   const loadPostTypes = bitsFetch(campaignRequestParams, 'selesforce_account_list')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setSalesforceConf((oldConf) => {
           const newConf = { ...oldConf }
           if (!newConf.default) newConf.default = {}
@@ -450,13 +450,13 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setIsLoading
   tokenRequestParams.redirectURI = `${encodeURIComponent(window.location.href)}/redirect`
   bitsFetch(tokenRequestParams, 'selesforce_generate_token')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
         setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bit-integrations') })

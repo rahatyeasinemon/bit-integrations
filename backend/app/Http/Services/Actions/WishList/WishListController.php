@@ -22,7 +22,7 @@ final class WishListController
             empty($tokenRequestParams->baseUrl)
             || empty($tokenRequestParams->apiKey)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -37,13 +37,13 @@ final class WishListController
         $apiResponse = $api->get('/levels');
         $apiResponse = json_decode($apiResponse);
         if (!(property_exists($apiResponse, 'success'))) {
-            Response::error(
+            return Response::error(
                 'Unauthorize',
                 400
             );
         } else {
             $apiResponse->generates_on = \time();
-            Response::success(true);
+            return Response::success(true);
         }
     }
 
@@ -61,7 +61,7 @@ final class WishListController
             empty($queryParams->baseUrl)
             || empty($queryParams->apiKey)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -84,7 +84,7 @@ final class WishListController
             ];
         }
         $response['levellists'] = $data;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function getAllMembers($queryParams)
@@ -93,7 +93,7 @@ final class WishListController
             empty($queryParams->baseUrl)
             || empty($queryParams->apiKey)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -117,7 +117,7 @@ final class WishListController
             ];
         }
         $response['memberlists'] = $data;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

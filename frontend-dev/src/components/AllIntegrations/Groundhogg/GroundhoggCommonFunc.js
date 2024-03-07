@@ -62,7 +62,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
 
   bitsFetch(requestParams, 'groundhogg_authorization_and_fetch_contacts')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         setConf(newConf)
         setisAuthorized(true)
@@ -82,7 +82,7 @@ export const fetchAllTags = (formID, groundhoggConf, setGroundhoggConf, setIsLoa
 
   bitsFetch(requestParams, 'groundhogg_fetch_all_tags')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...groundhoggConf }
         if (!newConf.default) {
           newConf.default = {}

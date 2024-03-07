@@ -27,7 +27,7 @@ class SalesflareController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -49,9 +49,9 @@ class SalesflareController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->error)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid API Key', 400);
+            return Response::error('Please enter valid API Key', 400);
         }
     }
 
@@ -76,9 +76,9 @@ class SalesflareController
                 );
             }
 
-            Response::success($fieldMap);
+            return Response::success($fieldMap);
         } else {
-            Response::error('Custom fields not found!', 400);
+            return Response::error('Custom fields not found!', 400);
         }
     }
 
@@ -96,9 +96,9 @@ class SalesflareController
                 $tags[] = $tag->name;
             }
 
-            Response::success($tags);
+            return Response::success($tags);
         } else {
-            Response::error('Tags fetching failed!', 400);
+            return Response::error('Tags fetching failed!', 400);
         }
     }
 
@@ -122,9 +122,9 @@ class SalesflareController
                 );
             }
 
-            Response::success($accounts);
+            return Response::success($accounts);
         } else {
-            Response::error('Accounts fetching failed!', 400);
+            return Response::error('Accounts fetching failed!', 400);
         }
     }
 
@@ -149,9 +149,9 @@ class SalesflareController
                 );
             }
 
-            Response::success($pipelines);
+            return Response::success($pipelines);
         } else {
-            Response::error('Accounts fetching failed!', 400);
+            return Response::error('Accounts fetching failed!', 400);
         }
     }
 

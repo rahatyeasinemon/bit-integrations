@@ -20,7 +20,7 @@ class SendPulseController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->client_id) || empty($requestParams->client_secret)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $body = [
@@ -34,18 +34,18 @@ class SendPulseController
         $apiResponse = Http::request($apiEndpoint, 'Post', $body);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
+            return Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
         $apiResponse->generates_on = \time();
 
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public static function sendPulseHeaders($requestParams)
     {
         if (empty($requestParams->client_id) || empty($requestParams->client_secret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -84,14 +84,14 @@ class SendPulseController
 
             $response['sendPulseField'] = $fields;
 
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
     public static function getAllList($requestParams)
     {
         if (empty($requestParams->tokenDetails) || empty($requestParams->client_id) || empty($requestParams->client_secret)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->client_id, $requestParams->client_secret);
@@ -110,9 +110,9 @@ class SendPulseController
         }
 
         if ((count($lists)) > 0) {
-            Response::success($lists);
+            return Response::success($lists);
         } else {
-            Response::error('List fetching failed', 400);
+            return Response::error('List fetching failed', 400);
         }
     }
 

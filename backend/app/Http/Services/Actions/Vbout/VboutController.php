@@ -20,7 +20,7 @@ class VboutController
     public function handleAuthorize($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -32,7 +32,7 @@ class VboutController
 
         $response = Http::request($apiEndpoint, 'Post', null);
         if ($response->response->header->status !== "ok") {
-            Response::error(
+            return Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -40,13 +40,13 @@ class VboutController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function fetchAllLists($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -60,7 +60,7 @@ class VboutController
 
         $formattedResponse = [];
         if ($response->response->header->status !== "ok") {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );
@@ -75,13 +75,13 @@ class VboutController
             }
         }
 
-        Response::success($formattedResponse);
+        return Response::success($formattedResponse);
     }
 
     public function vboutRefreshFields($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -95,7 +95,7 @@ class VboutController
 
         $formattedResponse = [];
         if ($response->response->header->status !== "ok") {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );
@@ -109,7 +109,7 @@ class VboutController
             }
         }
 
-        Response::success($formattedResponse);
+        return Response::success($formattedResponse);
     }
 
     public function execute($integrationData, $fieldValues)

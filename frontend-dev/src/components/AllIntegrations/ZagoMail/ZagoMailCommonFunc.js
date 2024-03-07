@@ -20,7 +20,7 @@ export const refreshZagoMailList = (
   }
   bitsFetch(refreshListsRequestParams, 'zagoMail_lists')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...zagoMailConf }
         if (result.data.zagoMailLists) {
           if (!newConf.default) {
@@ -68,7 +68,7 @@ export const refreshZagoMailTags = (
   }
   bitsFetch(refreshListsRequestParams, 'zagoMail_tags')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...zagoMailConf }
         if (result.data.zagoMailTags) {
           if (!newConf.tags) {
@@ -119,7 +119,7 @@ export const refreshZagoMailFields = (
   // console.log('zagoMailConf', zagoMailConf)
   bitsFetch(refreshListsRequestParams, 'zagoMail_refresh_fields')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...zagoMailConf }
         if (result.data.zagoMailField) {
           if (!newConf.default) {

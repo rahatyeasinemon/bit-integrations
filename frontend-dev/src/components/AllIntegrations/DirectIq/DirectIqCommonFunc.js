@@ -16,7 +16,7 @@ export const refreshDirectIqList = (directIqConf, setDirectIqConf, setIsLoading,
   }
   bitsFetch(refreshListsRequestParams, 'directIq_lists')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...directIqConf }
         if (result.data.directIqLists) {
           if (!newConf.default) {
@@ -63,7 +63,7 @@ export const refreshDirectIqHeader = (directIqConf, setDirectIqConf, setIsLoadin
 
   bitsFetch(refreshListsRequestParams, 'directIq_headers')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...directIqConf }
         if (result.data.directIqField) {
           if (!newConf.default) {

@@ -18,9 +18,9 @@ class PaidMembershipProController
     public static function authorizeMemberpress()
     {
         if (self::pluginActive()) {
-            Response::success(true);
+            return Response::success(true);
         }
-        Response::error(__('Paid Membership must be activated!', 'bit-integrations'));
+        return Response::error(__('Paid Membership must be activated!', 'bit-integrations'));
     }
 
     public static function getAllPaidMembershipProLevel()
@@ -41,7 +41,7 @@ class PaidMembershipProController
         //     'membershipId' => 'any',
         //     'membershipTitle' => 'Any Membership Level',
         // ]]);
-        Response::success($allLevels);
+        return Response::success($allLevels);
     }
 
     public function execute($integrationData, $fieldValues)

@@ -21,7 +21,7 @@ export const saveIntegConfig = async (flow, setFlow, allIntegURL, confTmp, navig
   }
   try {
     const res = await bitsFetch(data, action)
-    if (res.success) {
+    if (res.status === 'success') {
       navigate(allIntegURL)
     }
     return res

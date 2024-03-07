@@ -32,7 +32,7 @@ export const getAllFields = (
 
   bitsFetch(requestParams, "Flowlu_all_fields")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setFlowluConf((prevFlowluConf) => {
           const draftConf = deepCopy(prevFlowluConf);
           draftConf.field_map = [{ formField: "", flowluFormField: "" }];
@@ -118,7 +118,7 @@ export const flowluAuthentication = (
   };
 
   bitsFetch(requestParams, "flowlu_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
       toast.success(__("Authorized successfully", "bit-integrations"));
@@ -144,7 +144,7 @@ export const getAllAccountCategories = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, "flowlu_fetch_all_account_categories").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp };
         if (result.data) {
           newConf.accountCategories = result.data;
@@ -172,7 +172,7 @@ export const getAllIndustry = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "flowlu_fetch_all_industries").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.industries = result.data;
@@ -197,7 +197,7 @@ export const getAllPipeline = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "flowlu_fetch_all_pipelines").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.pipelines = result.data;
@@ -223,7 +223,7 @@ export const getAllStage = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "flowlu_fetch_all_stages").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.stages = result.data;
@@ -250,7 +250,7 @@ export const getAllSource = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "flowlu_fetch_all_sources").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.sources = result.data;
@@ -275,7 +275,7 @@ export const getAllCustomer = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "flowlu_fetch_all_customers").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.customers = result.data;
@@ -300,7 +300,7 @@ export const getAllManagers = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "flowlu_fetch_all_managers").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.managers = result.data;
@@ -327,7 +327,7 @@ export const getAllProjectStage = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "flowlu_fetch_all_project_tages").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.projectStages = result.data;
@@ -354,7 +354,7 @@ export const getAllPortfolio = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "flowlu_fetch_all_portfolio").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.portfolios = result.data;
@@ -382,7 +382,7 @@ export const getAllProjectOpportunity = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, "flowlu_fetch_all_project_opportunity").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp };
         if (result.data) {
           newConf.projectOpportunities = result.data;

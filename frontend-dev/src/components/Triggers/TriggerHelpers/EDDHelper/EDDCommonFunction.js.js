@@ -4,7 +4,7 @@ import { __ } from '../../../../Utils/i18nwrap'
 
 export const getAllEDDProduct = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_edd_all_product', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allProduct = result.data
 
@@ -22,7 +22,7 @@ export const getAllEDDProduct = (data, setFlow) => {
 
 export const getAllEDDDiscountCode = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_edd_all_discount_code', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allDiscountCode = result.data
 

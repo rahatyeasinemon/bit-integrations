@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\EDD;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class EDDController
@@ -42,7 +43,7 @@ final class EDDController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('Easy Digital Downloads is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Easy Digital Downloads is not installed or activated', 'bit-integrations'));
         }
 
         $types = [
@@ -58,21 +59,21 @@ final class EDDController
                 'title' => $type,
             ];
         }
-        Response::success($edd_action);
+        return Response::success($edd_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('Easy Digital Downloads is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Easy Digital Downloads is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = EDDHelper::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         $id = $data->id;
@@ -83,7 +84,7 @@ final class EDDController
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function handlePurchaseProduct($payment_id)
@@ -207,12 +208,12 @@ final class EDDController
     public static function getProduct()
     {
         $products = EDDHelper::allProducts();
-        Response::success($products);
+        return Response::success($products);
     }
 
     public static function getDiscount()
     {
         $discounts = EDDHelper::allDiscount();
-        Response::success($discounts);
+        return Response::success($discounts);
     }
 }

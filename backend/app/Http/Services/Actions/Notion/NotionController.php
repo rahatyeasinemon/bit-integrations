@@ -14,7 +14,7 @@ class NotionController
     public function authorization($requestParams)
     {
         if (empty($requestParams->clientId) || empty($requestParams->clientSecret) || empty($requestParams->code) || empty($requestParams->redirectURI)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $body = [
@@ -32,18 +32,18 @@ class NotionController
 
         $apiResponse = Http::request($apiEndpoint, 'Post', json_encode($body), $header);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
+            return Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
         $apiResponse->generates_on = \time();
 
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public function getAllDatabaseLists($requestParams)
     {
 
         if (empty($requestParams->accessToken)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -58,7 +58,7 @@ class NotionController
         ];
         $response = Http::request($apiEndpoint, 'Post', null, $headers);
         if ($response->Error !== null) {
-            Response::error(
+            return Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -66,14 +66,14 @@ class NotionController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function getFieldsProperties($requestParams)
     {
 
         if (empty($requestParams->accessToken)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -88,7 +88,7 @@ class NotionController
         ];
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if ($response->Error !== null) {
-            Response::error(
+            return Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -96,7 +96,7 @@ class NotionController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

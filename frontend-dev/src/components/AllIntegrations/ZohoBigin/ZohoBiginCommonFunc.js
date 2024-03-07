@@ -78,7 +78,7 @@ export const refreshModules = (formID, biginConf, setBiginConf, setIsLoading, se
   }
   bitsFetch(refreshModulesRequestParams, 'zbigin_refresh_modules')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...biginConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -91,7 +91,7 @@ export const refreshModules = (formID, biginConf, setBiginConf, setIsLoading, se
         }
         setBiginConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Modules refreshed', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Modules refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Modules refresh failed. please try again', 'bit-integrations') })
@@ -113,7 +113,7 @@ export const refreshPipelinesLayout = (formID, biginConf, setBiginConf, setIsLoa
   }
   bitsFetch(refreshLayoutRequestParams, 'zbigin_refresh_playouts')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...biginConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -126,7 +126,7 @@ export const refreshPipelinesLayout = (formID, biginConf, setBiginConf, setIsLoa
         }
         setBiginConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Pipeline Layouts refreshed', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Pipeline Layouts refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Pipeline Layouts refresh failed. please try again', 'bit-integrations') })
@@ -151,7 +151,7 @@ export const refreshRelatedList = (formID, biginConf, setBiginConf, setIsLoading
   }
   bitsFetch(relatedListRequestParams, 'zbigin_refresh_related_lists')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...biginConf }
         if (result.data.related_modules) {
           if (!newConf.default.relatedlists) {
@@ -164,7 +164,7 @@ export const refreshRelatedList = (formID, biginConf, setBiginConf, setIsLoading
         }
         setBiginConf({ ...newConf })
         setSnackbar({ show: true, msg: __('RelatedLists refreshed', 'bit-integrations') })
-      } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result?.data?.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('RelatedLists refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('RelatedLists refresh failed. please try again', 'bit-integrations') })
@@ -191,7 +191,7 @@ export const getFields = (recordTab, formID, biginConf, setBiginConf, setIsLoadi
   }
   bitsFetch(getFieldsRequestParams, 'zbigin_refresh_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...biginConf }
         if (result.data.fieldDetails) {
           if (!newConf.default.moduleData) {
@@ -240,7 +240,7 @@ export const refreshTags = (recordTab, formID, biginConf, setBiginConf, setIsLoa
   }
   bitsFetch(getTagsRequestParams, 'zbigin_refresh_tags')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...biginConf }
         if (result.data.tags) {
           if (!newConf.default.moduleData) {
@@ -273,7 +273,7 @@ export const refreshUsers = (formID, biginConf, setBiginConf, setIsLoading, setS
   }
   bitsFetch(getUsersRequestParams, 'zbigin_refresh_users')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...biginConf }
         if (result.data.users) {
           if (!newConf.default) {

@@ -145,7 +145,7 @@ function Mail({ allIntegURL, isInfo, edit }) {
     }
     const resp = saveIntegConfig(flow, setFlow, allIntegURL, conf, navigate, '', edit, setIsLoading)
     resp.then(res => {
-      if (res.success) {
+      if (res.status === 'success') {
         if (edit) {
           toast.success('Integration Updated Successfully')
         }

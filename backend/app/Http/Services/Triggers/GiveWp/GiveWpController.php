@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\GiveWp;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class GiveWpController
@@ -42,7 +43,7 @@ final class GiveWpController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('GiveWp is not installed or activated', 'bit-integrations'));
+            return Response::error(__('GiveWp is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['A user makes donation via form', 'A user cancels a recurring donation via form', 'User continues recurring donation'];
@@ -54,21 +55,21 @@ final class GiveWpController
                 'title' => $type,
             ];
         }
-        Response::success($give_action);
+        return Response::success($give_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('GiveWp is not installed or activated', 'bit-integrations'));
+            return Response::error(__('GiveWp is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         if ($data->id === '1') {
@@ -79,13 +80,13 @@ final class GiveWpController
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -249,6 +250,6 @@ final class GiveWpController
     public static function all_donation_form()
     {
         $allDonationForm = self::donationForm();
-        Response::success($allDonationForm);
+        return Response::success($allDonationForm);
     }
 }

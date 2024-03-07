@@ -36,7 +36,7 @@ export const getAllCourses = (tutorlmsConf, setTutorlmsConf, setIsLoading, value
   const queryParams = { type: value }
   const loadPostTypes = bitsFetch(null, 'tutor_all_course', queryParams, 'GET')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...tutorlmsConf }
         if (!newConf.default) newConf.default = {}
         newConf.default.courses = result.data
@@ -58,7 +58,7 @@ export const getAllLesson = (tutorlmsConf, setTutorlmsConf, setIsLoading) => {
   setIsLoading(true)
   const loadPostTypes = bitsFetch(null, 'tutor_all_lesson', '', 'GET')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...tutorlmsConf }
         if (!newConf.default) newConf.default = {}
         newConf.default.lessons = result.data

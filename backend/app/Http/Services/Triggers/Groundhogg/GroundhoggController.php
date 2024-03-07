@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Groundhogg;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use Groundhogg\DB\Tags;
 
@@ -124,7 +125,7 @@ final class GroundhoggController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('Groundhogg is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Groundhogg is not installed or activated', 'bit-integrations'));
         }
         $types = ['Contact-Create', 'Add-Tag-To-Contact', 'Remove-Tag-From-Contact'];
         $groundhogg_action = [];
@@ -135,16 +136,16 @@ final class GroundhoggController
             ];
         }
 
-        Response::success($groundhogg_action);
+        return Response::success($groundhogg_action);
     }
 
     public function getFormFields($data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('Groundhogg is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Groundhogg is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__(' Doesn\'t exists', 'bit-integrations'));
+            return Response::error(__(' Doesn\'t exists', 'bit-integrations'));
         }
         $id = $data->id;
         if ($id == 2 || $id == 3) {
@@ -168,17 +169,17 @@ final class GroundhoggController
 
         $fields = self::fields($data->id);
         if (empty($fields)) {
-            Response::error(__('Doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -264,6 +265,6 @@ final class GroundhoggController
                 'tag_name' => $val->tag_name,
             ];
         }
-        Response::success($allTag);
+        return Response::success($allTag);
     }
 }

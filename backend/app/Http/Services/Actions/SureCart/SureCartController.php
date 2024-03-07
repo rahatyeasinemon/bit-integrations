@@ -16,7 +16,7 @@ class SureCartController
         if (
             empty($tokenRequestParams->api_key) || empty($tokenRequestParams->auth_url)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -52,9 +52,9 @@ class SureCartController
         $request_body = wp_remote_retrieve_body($request);
         $request_data = json_decode($request_body);
         if ($request_data->code !== 'unauthorized') {
-            Response::success($request_body);
+            return Response::success($request_body);
         } else {
-            Response::error(
+            return Response::error(
                 $request_data->message,
                 400
             );

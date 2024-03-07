@@ -26,7 +26,7 @@ class LivestormController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->api_key) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -47,11 +47,11 @@ class LivestormController
         $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (!count((array) $response)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } elseif (isset($response->errors) && $response->errors[0]->title === "Workspace blocked") {
-            Response::error($response->errors[0]->detail, 400);
+            return Response::error($response->errors[0]->detail, 400);
         } else {
-            Response::error('Authorized failed, Please enter valid API Key', 400);
+            return Response::error('Authorized failed, Please enter valid API Key', 400);
         }
     }
 
@@ -89,9 +89,9 @@ class LivestormController
                 }
             }
 
-            Response::success($data);
+            return Response::success($data);
         } else {
-            Response::error('Events fetching failed', 400);
+            return Response::error('Events fetching failed', 400);
         }
     }
 
@@ -113,9 +113,9 @@ class LivestormController
                     ]
                 );
             }
-            Response::success($sessions);
+            return Response::success($sessions);
         } else {
-            Response::error('Session fetching failed', 400);
+            return Response::error('Session fetching failed', 400);
         }
     }
 

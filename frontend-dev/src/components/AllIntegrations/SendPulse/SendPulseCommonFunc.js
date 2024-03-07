@@ -18,7 +18,7 @@ export const refreshSendPulseList = (sendPulseConf, setSendPulseConf, setIsLoadi
   }
   bitsFetch(refreshListsRequestParams, 'sendPulse_lists')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...sendPulseConf }
         if (result.data) {
           if (!newConf.default) {
@@ -66,7 +66,7 @@ export const refreshSendPulseHeader = (sendPulseConf, setSendPulseConf, setIsLoa
 
   bitsFetch(refreshListsRequestParams, 'sendPulse_headers')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...sendPulseConf }
         if (result.data.sendPulseField) {
           if (!newConf.default) {

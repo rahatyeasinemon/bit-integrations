@@ -32,7 +32,7 @@ export const refreshCustomFields = (
 
   bitsFetch(requestParams, "perfexcrm_custom_fields")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setPerfexCRMConf((prevPerfexCRMConf) =>
           create(prevPerfexCRMConf, (draftConf) => {
             draftConf.perfexCRMFields = "";
@@ -139,7 +139,7 @@ export const perfexCRMAuthentication = (
   };
 
   bitsFetch(requestParams, "perfexcrm_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
       toast.success(__("Authorized successfully", "bit-integrations"));
@@ -164,7 +164,7 @@ export const getAllCustomer = (confTmp, setConf, loading, setLoading) => {
   };
 
   bitsFetch(requestParams, "perfexcrm_fetch_all_customers").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setConf((prevConf) =>
         create(prevConf, (draftConf) => {
           if (result.data) {
@@ -190,7 +190,7 @@ export const getAllLeads = (confTmp, setConf, loading, setLoading) => {
   };
 
   bitsFetch(requestParams, "perfexcrm_fetch_all_leads").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setConf((prevConf) =>
         create(prevConf, (draftConf) => {
           if (result.data) {
@@ -216,7 +216,7 @@ export const getAllStaffs = (confTmp, setConf, loading, setLoading) => {
   };
 
   bitsFetch(requestParams, "perfexcrm_fetch_all_staffs").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setConf((prevConf) =>
         create(prevConf, (draftConf) => {
           if (result.data) {

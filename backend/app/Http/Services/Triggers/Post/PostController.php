@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Post;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BitApps\BTCBI\Http\Services\Triggers\Post\PostHelper;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
@@ -58,10 +59,10 @@ final class PostController
             ['id' => 9, 'title' => 'Post trashed']
         ];
 
-        Response::success($triggers);
+        return Response::success($triggers);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         $responseData = [];
         $missing_field = null;
@@ -71,7 +72,7 @@ final class PostController
         }
 
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
 
         $ids = [1, 2, 3, 6];
@@ -89,10 +90,10 @@ final class PostController
         $responseData['fields'] = self::fields($data->id);
 
         if (count($responseData['fields']) <= 0) {
-            Response::error(__('Form fields doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form fields doesn\'t exists', 'bit-integrations'));
         }
 
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function createPost($postId, $newPostData, $update, $beforePostData)
@@ -290,13 +291,13 @@ final class PostController
     {
         $types = array_values(PostHelper::getPostTypes());
         array_unshift($types, ['id' => 'any-post-type', 'title' => 'Any Post Type']);
-        Response::success($types);
+        return Response::success($types);
     }
 
     public static function getAllPosts()
     {
         $posts = PostHelper::getPostTitles();
         array_unshift($posts, ['id' => 'any-post', 'title' => 'Any Post']);
-        Response::success($posts);
+        return Response::success($posts);
     }
 }

@@ -31,7 +31,7 @@ class RecordApiHelper
             empty($data)
             || empty($api_key)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -53,7 +53,7 @@ class RecordApiHelper
         $data = \json_encode($data);
         $apiResponse = Http::request($apiEndpoint, 'Post', $data, $header);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
@@ -102,7 +102,7 @@ class RecordApiHelper
             empty($app_base_domamin)
             || empty($email) || empty($api_key)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -125,7 +125,7 @@ class RecordApiHelper
             empty($finalDataContact)
             || empty($api_key)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -156,7 +156,7 @@ class RecordApiHelper
             empty($finalDataContact)
             || empty($api_key) || empty($contactId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

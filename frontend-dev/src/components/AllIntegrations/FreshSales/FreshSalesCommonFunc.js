@@ -166,7 +166,7 @@ export const refreshFields = (module, freshSalesConf, setFreshSalesConf, recordT
   const requestParams = { api_key: freshSalesConf.api_key, bundle_alias: freshSalesConf.bundle_alias, module }
   bitsFetch(requestParams, 'FreshSales_refresh_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...freshSalesConf }
         if (!newConf.default.modules[module].fields) newConf.default.modules[module].fields = {}
         if (result.data) {
@@ -188,7 +188,7 @@ export const accountRefreshViews = (freshSalesConf, setFreshSalesConf, setIsLoad
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...freshSalesConf }
         if (!newConf.default.accountViews) newConf.default.accountViews = {}
         if (result.data) {
@@ -196,7 +196,7 @@ export const accountRefreshViews = (freshSalesConf, setFreshSalesConf, setIsLoad
         }
         setFreshSalesConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Account views refreshed', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Account views refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Account views refresh failed. please try again', 'bit-integrations') })
@@ -212,7 +212,7 @@ export const contactRefreshViews = (freshSalesConf, setFreshSalesConf, setIsLoad
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...freshSalesConf }
         if (!newConf.default.contactViews) newConf.default.contactViews = {}
         if (result.data) {
@@ -220,7 +220,7 @@ export const contactRefreshViews = (freshSalesConf, setFreshSalesConf, setIsLoad
         }
         setFreshSalesConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Contact views refreshed', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Contact views refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Contact views refresh failed. please try again', 'bit-integrations') })
@@ -236,7 +236,7 @@ export const refreshAccounts = (freshSalesConf, setFreshSalesConf, setIsLoading,
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...freshSalesConf }
         if (!newConf.default.accounts) newConf.default.accounts = {}
         if (result.data) {
@@ -244,7 +244,7 @@ export const refreshAccounts = (freshSalesConf, setFreshSalesConf, setIsLoading,
         }
         setFreshSalesConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Accounts refreshed', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Accounts refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Accounts refresh failed. please try again', 'bit-integrations') })
@@ -260,7 +260,7 @@ export const refreshContacts = (freshSalesConf, setFreshSalesConf, setIsLoading,
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...freshSalesConf }
         if (!newConf.default.contacts) newConf.default.contacts = {}
         if (result.data) {
@@ -268,7 +268,7 @@ export const refreshContacts = (freshSalesConf, setFreshSalesConf, setIsLoading,
         }
         setFreshSalesConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Contacts refreshed', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Contacts refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Contacts refresh failed. please try again', 'bit-integrations') })
@@ -284,7 +284,7 @@ export const getAllOwners = (freshSalesConf, setFreshSalesConf, setIsLoading, se
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...freshSalesConf }
         if (!newConf.default.owners) newConf.default.owners = {}
         if (result.data) {
@@ -292,7 +292,7 @@ export const getAllOwners = (freshSalesConf, setFreshSalesConf, setIsLoading, se
         }
         setFreshSalesConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Owners fetched successfully', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Owners fetch failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Owners fetch failed. please try again', 'bit-integrations') })
@@ -308,7 +308,7 @@ export const getAllLeadLabels = (freshSalesConf, setFreshSalesConf, setIsLoading
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...freshSalesConf }
         if (!newConf.default.leadLabels) newConf.default.leadLabels = {}
         if (result.data) {
@@ -316,7 +316,7 @@ export const getAllLeadLabels = (freshSalesConf, setFreshSalesConf, setIsLoading
         }
         setFreshSalesConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Labels fetched successfully', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Labels fetch failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Labels fetch failed. please try again', 'bit-integrations') })
@@ -331,7 +331,7 @@ export const getAllCurrencies = (freshSalesConf, setFreshSalesConf, setIsLoading
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...freshSalesConf }
         if (!newConf.default.currencies) newConf.default.currencies = {}
         if (result.data) {
@@ -339,7 +339,7 @@ export const getAllCurrencies = (freshSalesConf, setFreshSalesConf, setIsLoading
         }
         setFreshSalesConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Currencies fetched successfully', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Currencies fetch failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Currencies fetch failed. please try again', 'bit-integrations') })
@@ -355,7 +355,7 @@ export const getDealStages = (freshSalesConf, setFreshSalesConf, setIsLoading, s
 
   bitsFetch(requestParams, 'FreshSales_fetch_meta_data')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...freshSalesConf }
         if (!newConf.default.stages) newConf.default.stages = {}
         if (result.data) {
@@ -363,7 +363,7 @@ export const getDealStages = (freshSalesConf, setFreshSalesConf, setIsLoading, s
         }
         setFreshSalesConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Stages fetched successfully', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Stages fetch failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Stages fetch failed. please try again', 'bit-integrations') })
@@ -430,7 +430,7 @@ export const handleAuthorize = (
   const requestParams = { api_key: confTmp.api_key, bundle_alias: confTmp.bundle_alias, module: 'filters' }
 
   bitsFetch(requestParams, 'FreshSales_authorization').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setisAuthorized(true)
       setIsLoading(false)
       toast.success(__('Authorized successfully', 'bit-integrations'))

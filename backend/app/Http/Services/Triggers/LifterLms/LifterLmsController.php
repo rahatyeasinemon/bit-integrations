@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\LifterLms;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class LifterLmsController
@@ -42,7 +43,7 @@ final class LifterLmsController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('LifterLMS is not installed or activated', 'bit-integrations'));
+            return Response::error(__('LifterLMS is not installed or activated', 'bit-integrations'));
         }
 
         $types = [
@@ -63,21 +64,21 @@ final class LifterLmsController
                 'title' => $type,
             ];
         }
-        Response::success($lifterLms_action);
+        return Response::success($lifterLms_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
+            return Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = LifterLmsHelper::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
@@ -105,55 +106,55 @@ final class LifterLmsController
             ]], LifterLmsHelper::getAllMembership());
         }
 
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function getLifterLmsAllQuiz()
     {
         if (!self::pluginActive()) {
-            Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
+            return Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
         }
         $allQuiz = array_merge([[
             'ID' => 'any',
             'post_title' => 'Any Quiz'
         ]], LifterLmsHelper::getAllQuiz());
-        Response::success($allQuiz);
+        return Response::success($allQuiz);
     }
 
     public static function getLifterLmsAllLesson()
     {
         if (!self::pluginActive()) {
-            Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
+            return Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
         }
         $allLesson = array_merge([[
             'ID' => 'any',
             'post_title' => 'Any Lesson'
         ]], LifterLmsHelper::getAllLesson());
-        Response::success($allLesson);
+        return Response::success($allLesson);
     }
 
     public static function getLifterLmsAllCourse()
     {
         if (!self::pluginActive()) {
-            Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
+            return Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
         }
         $allCourse = array_merge([[
             'ID' => 'any',
             'post_title' => 'Any Course'
         ]], LifterLmsHelper::getAllCourse());
-        Response::success($allCourse);
+        return Response::success($allCourse);
     }
 
     public static function getLifterLmsAllMembership()
     {
         if (!self::pluginActive()) {
-            Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
+            return Response::error(__('LifterLms is not installed or activated', 'bit-integrations'));
         }
         $allMembership = array_merge([[
             'ID' => 'any',
             'post_title' => 'Any Membership'
         ]], LifterLmsHelper::getAllMembership());
-        Response::success($allMembership);
+        return Response::success($allMembership);
     }
 
     public static function handleAttemptQuiz($user_id, $quiz_id, $quiz_obj)

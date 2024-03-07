@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\LearnDash;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class LearnDashController
@@ -47,7 +48,7 @@ final class LearnDashController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('LearnDash LMS is not installed or activated', 'bit-integrations'));
+            return Response::error(__('LearnDash LMS is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['A user is enrolled in a course', 'A user is unenrolled from a course', 'User completed a course',
@@ -62,7 +63,7 @@ final class LearnDashController
                 'title' => $type,
             ];
         }
-        Response::success($learndash_action);
+        return Response::success($learndash_action);
     }
 
     public function getLessonsByCourse($queryParams)
@@ -84,7 +85,7 @@ final class LearnDashController
                 ];
             }
         }
-        Response::success($lessons);
+        return Response::success($lessons);
     }
 
     public function getTopicsByLesson($queryParams)
@@ -107,7 +108,7 @@ final class LearnDashController
                 ];
             }
         }
-        Response::success($topics);
+        return Response::success($topics);
     }
 
     public static function getTopics()
@@ -245,18 +246,18 @@ final class LearnDashController
         return $groups;
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('LearnDash LMS is not installed or activated', 'bit-integrations'));
+            return Response::error(__('LearnDash LMS is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
         $id = $data->id;
         if ($id == 1 || $id == 2 || $id == 3) {
@@ -277,13 +278,13 @@ final class LearnDashController
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

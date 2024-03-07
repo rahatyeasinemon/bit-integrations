@@ -50,7 +50,7 @@ function Log({ allIntegURL }) {
     }
     const ajaxData = { id: entries }
     bitsFetch(ajaxData, 'log/delete').then((res) => {
-      if (res.success) {
+      if (res.status === 'success') {
         if (action && action.fetchData && action.data) {
           action.fetchData(action.data)
         }

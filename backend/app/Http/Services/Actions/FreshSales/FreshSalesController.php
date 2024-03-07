@@ -19,7 +19,7 @@ class FreshSalesController
     public function authorization($requestParams)
     {
         if (empty($requestParams->api_key)  || empty($requestParams->bundle_alias)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -33,12 +33,12 @@ class FreshSalesController
         $response       = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->fields)) {
-            Response::success(__(
+            return Response::success(__(
                 'Authorization Success',
                 'bit-integrations'
             ));
         } else {
-            Response::error(
+            return Response::error(
                 __(
                     'The token is invalid',
                     'bit-integrations'
@@ -51,7 +51,7 @@ class FreshSalesController
     public function getMetaData($requestParams)
     {
         if (empty($requestParams->api_key)  || empty($requestParams->bundle_alias)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -106,9 +106,9 @@ class FreshSalesController
         }
 
         if (isset($response) && $response) {
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );
@@ -118,7 +118,7 @@ class FreshSalesController
     public function getFields($requestParams)
     {
         if (empty($requestParams->api_key)  || empty($requestParams->bundle_alias)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -179,7 +179,7 @@ class FreshSalesController
                     'required' => false
                 ],
             ];
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
             $apiEndpoint =   "https://" . $requestParams->bundle_alias . "/api/settings/" . $requestModule . "/fields";
             $headers = [
@@ -197,9 +197,9 @@ class FreshSalesController
                         ];
                     }
                 }
-                Response::success($formattedResponse);
+                return Response::success($formattedResponse);
             } else {
-                Response::error(
+                return Response::error(
                     'The token is invalid',
                     400
                 );

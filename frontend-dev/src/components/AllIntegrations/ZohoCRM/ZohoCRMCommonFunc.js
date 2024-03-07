@@ -106,7 +106,7 @@ export const refreshModules = (formID, crmConf, setCrmConf, setIsLoading, setSna
   }
   bitsFetch(refreshModulesRequestParams, 'zcrm_refresh_modules')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...crmConf }
         if (!newConf.default) newConf.default = {}
         if (result.data.modules) {
@@ -117,7 +117,7 @@ export const refreshModules = (formID, crmConf, setCrmConf, setIsLoading, setSna
         }
         setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Modules refreshed', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Modules refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Modules refresh failed. please try again', 'bit-integrations') })
@@ -144,7 +144,7 @@ export const refreshLayouts = (recordTab, formID, crmConf, setCrmConf, setIsLoad
   }
   bitsFetch(refreshLayoutsRequestParams, 'zcrm_refresh_layouts')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         if (result.data.layouts) {
           if (!newConf.default.layouts) newConf.default.layouts = {}
           newConf.default.layouts[module] = result.data.layouts
@@ -173,7 +173,7 @@ export const refreshLayouts = (recordTab, formID, crmConf, setCrmConf, setIsLoad
         }
         setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Layouts refreshed', 'bit-integrations') })
-      } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result?.data?.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Layouts refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Layouts refresh failed. please try again', 'bit-integrations') })
@@ -198,7 +198,7 @@ export const refreshRelatedList = (formID, crmConf, setCrmConf, setIsLoading, se
   }
   bitsFetch(relatedListRequestParams, 'zcrm_get_related_lists')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...crmConf }
         if (result.data.relatedLists) {
           if (!newConf.default.relatedlists) {
@@ -211,7 +211,7 @@ export const refreshRelatedList = (formID, crmConf, setCrmConf, setIsLoading, se
         }
         setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: __('RelatedLists refreshed', 'bit-integrations') })
-      } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result?.data?.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('RelatedLists refresh failed Cause:')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('RelatedLists refresh failed. please try again', 'bit-integrations') })
@@ -248,7 +248,7 @@ export const refreshTags = (recordTab, formID, crmConf, setCrmConf, setIsLoading
         }
         setCrmConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Tags refreshed', 'bit-integrations') })
-      } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result?.data?.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Tags refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Tags refresh failed. please try again', 'bit-integrations') })

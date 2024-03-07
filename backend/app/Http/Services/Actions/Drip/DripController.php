@@ -34,7 +34,7 @@ class DripController
     {
         if (empty($requestsParams->api_token)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -50,13 +50,13 @@ class DripController
         $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($response->accounts)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse) ? 'Unknown' : $apiResponse,
                 400
             );
         }
 
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -70,7 +70,7 @@ class DripController
     {
         if (empty($queryParams->api_token)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -97,7 +97,7 @@ class DripController
             }
 
             $response['dripCampaigns'] = $campaigns;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -112,7 +112,7 @@ class DripController
     {
         if (empty($queryParams->api_token)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -151,7 +151,7 @@ class DripController
 
             $response['dripField'] = $fields;
 
-            Response::success($response);
+            return Response::success($response);
         }
     }
 

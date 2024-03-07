@@ -20,8 +20,7 @@ const Welcome = lazy(() => import('./Welcome'))
 
 function AllIntegrations({ isLicenseActive }) {
   const { data, isLoading, mutate } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
-  console.log('>>> ', data)
-  const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
+  const [integrations, setIntegrations] = useState(!isLoading && data.status === 'success' && data?.data?.integrations ? data.data.integrations : [])
   const [snack, setSnackbar] = useState({ show: false })
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const [proModal, setProModal] = useState({ show: false, msg: '' })
@@ -36,7 +35,7 @@ function AllIntegrations({ isLicenseActive }) {
   ])
 
   useEffect(() => {
-    !isLoading && setIntegrations(data.success ? data.data.integrations : [])
+    !isLoading && setIntegrations(data.status === 'success' ? data.data.integrations : [])
   }, [data])
 
   useEffect(() => {

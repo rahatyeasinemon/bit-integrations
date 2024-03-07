@@ -21,7 +21,7 @@ class GetResponseController
     public function fetchCustomFields($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -49,9 +49,9 @@ class GetResponseController
         }
 
         if ($response !== 'Unauthorized') {
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );
@@ -61,7 +61,7 @@ class GetResponseController
     public function fetchAllTags($requestParams)
     {
         if (empty($requestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -88,9 +88,9 @@ class GetResponseController
         }
 
         if ($response !== 'Unauthorized') {
-            Response::success($formattedResponse);
+            return Response::success($formattedResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );
@@ -100,7 +100,7 @@ class GetResponseController
     public function authentication($refreshFieldsRequestParams)
     {
         if (empty($refreshFieldsRequestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -128,9 +128,9 @@ class GetResponseController
         }
 
         if (property_exists($response[0], 'campaignId')) {
-            Response::success($campaigns);
+            return Response::success($campaigns);
         } else {
-            Response::error('Please enter valid API key', 400);
+            return Response::error('Please enter valid API key', 400);
         }
     }
 

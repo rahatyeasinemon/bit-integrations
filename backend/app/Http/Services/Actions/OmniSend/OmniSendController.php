@@ -22,7 +22,7 @@ class OmniSendController
     public function authorization($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -39,9 +39,9 @@ class OmniSendController
 
         $response = Http::request($apiEndpoint, 'Get', null, $header);
         if (isset($response->contacts)) {
-            Response::success('');
+            return Response::success('');
         } else {
-            Response::error(
+            return Response::error(
                 'The token is invalid',
                 400
             );

@@ -15,12 +15,12 @@ final class LogHandler
     public function get($data)
     {
         if (!isset($data->id)) {
-            Response::error('Integration Id cann\'t be empty');
+            return Response::error('Integration Id cann\'t be empty');
         }
         $logModel = new LogModel();
         $countResult = $logModel->count(['flow_id' => $data->id]);
         if (is_wp_error($countResult)) {
-            Response::success(
+            return Response::success(
                 [
                     'count' => 0,
                     'data' => [],
@@ -29,7 +29,7 @@ final class LogHandler
         }
         $count = $countResult[0]->count;
         if ($count < 1) {
-            Response::success(
+            return Response::success(
                 [
                     'count' => 0,
                     'data' => [],
@@ -50,14 +50,14 @@ final class LogHandler
 
         $result = $logModel->get('*', ['flow_id' => $data->id], $limit, $offset, 'id', 'desc');
         if (is_wp_error($result)) {
-            Response::success(
+            return Response::success(
                 [
                     'count' => 0,
                     'data' => [],
                 ]
             );
         }
-        Response::success(
+        return Response::success(
             [
                 'count' => intval($count),
                 'data' => $result,
@@ -82,13 +82,13 @@ final class LogHandler
     public static function deleteLog($data)
     {
         if (empty($data->id) && empty($data->flow_id)) {
-            Response::error('Integration Id or Log Id required');
+            return Response::error('Integration Id or Log Id required');
         }
         $deleteStatus = self::delete($data);
         if (is_wp_error($deleteStatus)) {
-            Response::error($deleteStatus->get_error_code());
+            return Response::error($deleteStatus->get_error_code());
         }
-        Response::success(__('Log deleted successfully', 'bit-integrations'));
+        return Response::success(__('Log deleted successfully', 'bit-integrations'));
     }
 
     public static function delete($data)

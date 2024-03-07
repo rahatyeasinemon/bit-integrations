@@ -130,7 +130,7 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
     setIsLoading(true)
     const resp = saveIntegConfig(flow, setFlow, allIntegURL, postConf, navigate, '', '', setIsLoading)
     resp.then(res => {
-      if (res.success) {
+      if (res.status === 'success') {
         setSnackbar({ show: true, msg: res.data?.msg })
         navigate(allIntegURL)
       } else {

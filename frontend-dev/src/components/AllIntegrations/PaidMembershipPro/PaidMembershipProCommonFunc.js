@@ -19,7 +19,7 @@ export const getAllPaidMemberShipProLevel = (paidMembershipProConf, setPaidMembe
   setIsLoading(true)
   bitsFetch(null, 'fetch_all_paid_membership_pro_level')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...paidMembershipProConf }
         if (!newConf.default) {
           newConf.default = {}

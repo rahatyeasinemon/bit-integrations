@@ -20,7 +20,7 @@ class MailifyController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->account_id) || empty($requestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = "https://mailifyapis.com/v1/users";
@@ -29,12 +29,12 @@ class MailifyController
         $response = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($response->users)) {
-            Response::error(
+            return Response::error(
                 empty($response->message) ? 'Unknown' : $response->message,
                 400
             );
         }
-        Response::success(true);
+        return Response::success(true);
     }
 
     public static function mailifyHeaders($requestParams)
@@ -42,7 +42,7 @@ class MailifyController
         if (
             empty($requestParams->account_id) || empty($requestParams->api_key)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -75,14 +75,14 @@ class MailifyController
             }
 
             $response['mailifyField'] = $fields;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
     public static function getAllList($requestParams)
     {
         if (empty($requestParams->account_id) || empty($requestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $headers = [
@@ -101,9 +101,9 @@ class MailifyController
         }
 
         if ((count($lists)) > 0) {
-            Response::success($lists);
+            return Response::success($lists);
         } else {
-            Response::error('List fetching failed', 400);
+            return Response::error('List fetching failed', 400);
         }
     }
 

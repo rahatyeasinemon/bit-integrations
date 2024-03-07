@@ -30,7 +30,7 @@ export const getAllList = (elasticEmailConf, setElasticEmailConf, setIsLoading) 
   const queryParams = { apiKey: elasticEmailConf.api_key }
   const loadPostTypes = bitsFetch(null, 'get_all_lists', queryParams, 'GET')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...elasticEmailConf }
         if (!newConf.default) newConf.default = {}
         if (result.data.lists) {

@@ -79,7 +79,7 @@ export const mailerliteRefreshFields = (
   };
 
   bitsFetch(requestParams, "mailerlite_refresh_fields").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.mailerLiteFields = result.data;
@@ -114,7 +114,7 @@ export const getAllGroups = (confTmp, setConf, loding, setLoading) => {
   };
 
   bitsFetch(requestParams, "mailerlite_fetch_all_groups").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.groups = result.data;

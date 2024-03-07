@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\MetaBox;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class MetaBoxController
@@ -35,10 +36,10 @@ final class MetaBoxController
     public function getAll()
     {
         if (!function_exists('rwmb_meta')) {
-            Response::error(__('Meta Box is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Meta Box is not installed or activated', 'bit-integrations'));
         }
         if (!function_exists('mb_frontend_submission_load')) {
-            Response::error(__('MB Frontend Submission is not installed or activated', 'bit-integrations'));
+            return Response::error(__('MB Frontend Submission is not installed or activated', 'bit-integrations'));
         }
 
         if (function_exists('rwmb_meta')) {
@@ -53,7 +54,7 @@ final class MetaBoxController
                 ];
             }
 
-            Response::success($all_forms);
+            return Response::success($all_forms);
         }
     }
 
@@ -84,7 +85,7 @@ final class MetaBoxController
         return $postFields;
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         $fields = self::fields($data->id);
         $missing_field = null;
@@ -92,14 +93,14 @@ final class MetaBoxController
             $missing_field = 'Form ID';
         }
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         if (empty($fields)) {
-            Response::error(__('Metabox doesn\'t exists any Field Group', 'bit-integrations'));
+            return Response::error(__('Metabox doesn\'t exists any Field Group', 'bit-integrations'));
         }
 
         $responseData['fields'] = array_merge($this->postFields(), $fields);
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($form_id)

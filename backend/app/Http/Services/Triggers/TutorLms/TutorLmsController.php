@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\TutorLms;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class TutorLmsController
@@ -34,7 +35,7 @@ final class TutorLmsController
     public function getAll()
     {
         if (!function_exists('tutor')) {
-            Response::error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['Course-Enroll', 'User attempts(submit) a quiz', 'Completed a lesson', 'Complete a course', 'User achieves a targeted percentage on a quiz'];
@@ -45,21 +46,21 @@ final class TutorLmsController
                 'title' => $type,
             ];
         }
-        Response::success($tutor_action);
+        return Response::success($tutor_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!function_exists('tutor')) {
-            Response::error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         if ($data->id == 1) {
@@ -188,13 +189,13 @@ final class TutorLmsController
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

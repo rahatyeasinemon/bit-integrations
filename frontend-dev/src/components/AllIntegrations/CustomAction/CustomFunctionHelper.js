@@ -8,7 +8,7 @@ export const checkFunctionValidity = (customActionConf, setCustomActionConf, set
   setLoading({ ...loading, validate: true });
   bitsFetch(data, 'checking_function_validity', null, 'POST')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         if (result.data) {
           newConf.isValid = true
         }

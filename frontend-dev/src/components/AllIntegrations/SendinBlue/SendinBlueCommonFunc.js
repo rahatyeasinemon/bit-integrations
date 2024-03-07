@@ -12,7 +12,7 @@ export const refreshLists = (sendinBlueConf, setSendinBlueConf, setIsLoading, se
   const refreshListsRequestParams = { api_key: sendinBlueConf.api_key }
   bitsFetch(refreshListsRequestParams, 'sblue_refresh_lists')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...sendinBlueConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -22,7 +22,7 @@ export const refreshLists = (sendinBlueConf, setSendinBlueConf, setIsLoading, se
         }
         setSnackbar({ show: true, msg: __('List refreshed', 'bit-integrations') })
         setSendinBlueConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('List refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('List failed. please try again', 'bit-integrations') })
@@ -37,7 +37,7 @@ export const refreshTemplate = (sendinBlueConf, setSendinBlueConf, setSnackbar) 
   const refreshListsRequestParams = { api_key: sendinBlueConf.api_key }
   bitsFetch(refreshListsRequestParams, 'sblue_refresh_template')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...sendinBlueConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -47,7 +47,7 @@ export const refreshTemplate = (sendinBlueConf, setSendinBlueConf, setSnackbar) 
         }
         setSnackbar({ show: true, msg: __('Templates refreshed', 'bit-integrations') })
         setSendinBlueConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Templates refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Templates failed. please try again', 'bit-integrations') })
@@ -61,7 +61,7 @@ export const refreshSendinBlueHeader = (sendinBlueConf, setSendinBlueConf, setIs
   const refreshListsRequestParams = { api_key: sendinBlueConf.api_key }
   bitsFetch(refreshListsRequestParams, 'sblue_headers')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...sendinBlueConf }
         if (result.data.sendinBlueField) {
           newConf.default.fields = result.data.sendinBlueField

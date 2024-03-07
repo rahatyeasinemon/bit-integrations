@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\WPEF;
 
 use wpdb;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BitApps\BTCBI\Util\Common;
 use BitApps\BTCBI\Util\DateTimeHelper;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
@@ -47,7 +48,7 @@ final class WPEFController
     public function getAll()
     {
         if (!self::isActive()) {
-            Response::error(__('eForm  is not installed or activated', 'bit-integrations'));
+            return Response::error(__('eForm  is not installed or activated', 'bit-integrations'));
         }
         $all_forms = [];
         if (self::isActive()) {
@@ -67,16 +68,16 @@ final class WPEFController
     public function getAForm($data)
     {
         if (empty($data->id) || !(self::isActive())) {
-            Response::error(__('eForm  is not installed or activated', 'bit-integrations'));
+            return Response::error(__('eForm  is not installed or activated', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
 

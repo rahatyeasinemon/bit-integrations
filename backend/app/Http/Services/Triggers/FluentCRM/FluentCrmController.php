@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\FluentCrm;
 
 use DateTime;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use FluentCrm\App\Models\Tag;
 use FluentCrm\App\Models\Lists;
 use BitApps\BTCBI\Util\Common;
@@ -41,7 +42,7 @@ final class FluentCrmController
     public static function checkedExistsFluentCRM()
     {
         if (!is_plugin_active('fluent-crm/fluent-crm.php')) {
-            Response::error(
+            return Response::error(
                 __(
                     'Fluent CRM Plugin is not active or not installed',
                     'bit-integrations'
@@ -65,15 +66,15 @@ final class FluentCrmController
                 'title' => $type,
             ];
         }
-        Response::success($fluentcrm_action);
+        return Response::success($fluentcrm_action);
     }
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         self::checkedExistsFluentCRM();
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
         if ($data->id == "fluentcrm-1" || $data->id == 'fluentcrm-2') {
             $tags[] = [
@@ -104,7 +105,7 @@ final class FluentCrmController
 
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fluentCrmStatus()
@@ -160,7 +161,7 @@ final class FluentCrmController
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -509,7 +510,7 @@ final class FluentCrmController
         $fluentCrmTags = self::fluentCrmTags();
 
         $tags = array_merge($tags, $fluentCrmTags);
-        Response::success($tags);
+        return Response::success($tags);
     }
 
     public static function getFluentCrmList()
@@ -521,7 +522,7 @@ final class FluentCrmController
         $fluentCrmLists = self::fluentCrmLists();
 
         $lists = array_merge($lists, $fluentCrmLists);
-        Response::success($lists);
+        return Response::success($lists);
     }
 
     public static function getFluentCrmStatus()
@@ -533,6 +534,6 @@ final class FluentCrmController
         $fluentCrmStatus = self::fluentCrmStatus();
 
         $status = array_merge($status, $fluentCrmStatus);
-        Response::success($status);
+        return Response::success($status);
     }
 }

@@ -38,7 +38,7 @@ class ConvertKitController
     public static function convertKitAuthorize($requestsParams)
     {
         if (empty($requestsParams->api_secret)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -51,13 +51,13 @@ class ConvertKitController
         $apiResponse = Http::request($apiEndpoint, 'Get', null);
 
         if (is_wp_error($apiResponse) || empty($apiResponse) || !empty($apiResponse->error) || empty($apiResponse->primary_email_address)) {
-            Response::error(
+            return Response::error(
                 !empty($apiResponse->error) ? $apiResponse->message : 'Unknown',
                 400
             );
         }
 
-        Response::success(true);
+        return Response::success(true);
     }
 
 
@@ -71,7 +71,7 @@ class ConvertKitController
     public static function convertKitForms($queryParams)
     {
         if (empty($queryParams->api_secret)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -94,7 +94,7 @@ class ConvertKitController
                 ];
             }
             $response['convertKitForms'] = $forms;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -108,7 +108,7 @@ class ConvertKitController
     public static function convertKitTags($queryParams)
     {
         if (empty($queryParams->api_secret)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -133,7 +133,7 @@ class ConvertKitController
             }
             $response['convertKitTags'] = $tags;
 
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -147,7 +147,7 @@ class ConvertKitController
     public static function convertKitHeaders($queryParams)
     {
         if (empty($queryParams->api_secret)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -176,7 +176,7 @@ class ConvertKitController
             $fields['Email'] = (object) ['fieldId' => 'email', 'fieldName' => 'Email', 'required' => true];
 
             $response['convertKitField'] = $fields;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 

@@ -14,7 +14,7 @@ export const refreshBenchMarkList = (benchMarkConf, setBenchMarkConf, setIsLoadi
   }
   bitsFetch(refreshListsRequestParams, 'benchMark_lists')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...benchMarkConf }
         if (result.data.benchMarkLists) {
           if (!newConf.default) {
@@ -58,7 +58,7 @@ export const refreshBenchMarkHeader = (benchMarkConf, setBenchMarkConf, setIsLoa
   }
   bitsFetch(refreshListsRequestParams, 'benchMark_headers')
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...benchMarkConf }
         if (result.data.benchMarkField) {
           if (!newConf.default) {

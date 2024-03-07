@@ -4,7 +4,7 @@ import { __ } from '../../../../Utils/i18nwrap'
 
 const getSureCartAllProduct = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_sureCart_all_product', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allProduct = result.data
 

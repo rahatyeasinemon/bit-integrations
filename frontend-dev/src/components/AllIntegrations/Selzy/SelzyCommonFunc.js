@@ -36,7 +36,7 @@ export const handleAuthorize = (
   const requestParams = { authKey: conf.authKey };
 
   bitsFetch(requestParams, "selzy_handle_authorize").then((result) => {
-    if (result.success && result.data) {
+    if (result.status === 'success' && result.data) {
       const newConf = { ...conf };
       if (result.data) {
         if (!newConf.default) {
@@ -64,7 +64,7 @@ export const getAllLists = async (conf, setConf, loading, setLoading) => {
   setLoading({ ...loading, list: true });
   const requestParams = { authKey: conf.authKey };
   const result = await bitsFetch(requestParams, "selzy_handle_authorize");
-  if (result.success) {
+  if (result.status === 'success') {
     const data = result.data.result?.map((v) => ({ ...v, id: String(v.id) }));
     const newConf = { ...conf };
     if (data) {
@@ -86,7 +86,7 @@ export const getAllTags = async (conf, setConf, loading, setLoading) => {
   setLoading && setLoading({ ...loading, tag: true });
   const requestParams = { authKey: conf.authKey };
   const result = await bitsFetch(requestParams, "selzy_get_all_tags");
-  if (result.success) {
+  if (result.status === 'success') {
     const data = result.data.result;
     const newConf = { ...conf };
     if (data) {
@@ -118,7 +118,7 @@ export const getAllCustomFields = async (
   setLoading && setLoading({ ...loading, customFields: true });
   const requestParams = { authKey: conf.authKey };
   const result = await bitsFetch(requestParams, "selzy_get_all_custom_fields");
-  if (result.success) {
+  if (result.status === 'success') {
     const newConf = { ...conf };
     if (result.data) {
       if (!newConf.default) {
@@ -198,7 +198,7 @@ export const saveConfig = (
     setLoading
   );
   resp.then((res) => {
-    if (res.success) {
+    if (res.status === 'success') {
       toast.success(res.data?.msg);
       navigate(allIntegURL);
     } else {

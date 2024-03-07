@@ -22,7 +22,7 @@ export const fetchAllBoard = (formID, trelloConf, setTrelloConf, setIsLoading, s
   }
   bitsFetch(fetchBoardModulesRequestParams, 'trello_fetch_all_board')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...trelloConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -35,7 +35,7 @@ export const fetchAllBoard = (formID, trelloConf, setTrelloConf, setIsLoading, s
         // }
         setSnackbar({ show: true, msg: __('Board list refreshed', 'bit-integrations') })
         setTrelloConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Board list refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Board list failed. please try again', 'bit-integrations') })
@@ -56,7 +56,7 @@ export const fetchAllList = (trelloConf, setTrelloConf, setIsLoading, setSnackba
   bitsFetch(fetchListModulesRequestParams, 'trello_fetch_all_list_Individual_board')
 
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...trelloConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -66,7 +66,7 @@ export const fetchAllList = (trelloConf, setTrelloConf, setIsLoading, setSnackba
         }
         setSnackbar({ show: true, msg: __('Board list refreshed', 'bit-integrations') })
         setTrelloConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Board list refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Board list failed. please try again', 'bit-integrations') })

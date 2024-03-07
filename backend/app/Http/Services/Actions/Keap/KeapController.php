@@ -33,7 +33,7 @@ class KeapController
             || empty($queryParams->clientSecret)
             || empty($queryParams->tokenDetails)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -58,7 +58,7 @@ class KeapController
 
 
         if (isset($tagListApiResponse->error)) {
-            Response::error('Tags fetch failed', 400);
+            return Response::error('Tags fetch failed', 400);
         } else {
             foreach ($tagListApiResponse->tags as $tag) {
                 $tags[] = [
@@ -66,12 +66,12 @@ class KeapController
                     'name' => $tag->name
                 ];
             }
-            Response::success($tags);
+            return Response::success($tags);
         }
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             static::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
 
@@ -90,7 +90,7 @@ class KeapController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -112,13 +112,13 @@ class KeapController
 
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public function refreshAccessToken($requestsParams)
@@ -128,7 +128,7 @@ class KeapController
             || empty($requestsParams->clientSecret)
             || empty($requestsParams->tokenDetails)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

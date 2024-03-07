@@ -4,7 +4,7 @@ import { __ } from '../../../../Utils/i18nwrap'
 
 const getAllCommissionType = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_all_commission_type', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.AllCommissionType = result.data
 

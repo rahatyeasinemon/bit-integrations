@@ -26,7 +26,7 @@ class SuiteDashController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->public_id) || empty($fieldsRequestParams->secret_key) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -47,9 +47,9 @@ class SuiteDashController
         $response     = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->success) && $response->success) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid Session Token or Link Name', 400);
+            return Response::error('Please enter valid Session Token or Link Name', 400);
         }
     }
 
@@ -61,7 +61,7 @@ class SuiteDashController
         $response = Http::request($apiEndpoint, 'Get', null, $this->_defaultHeader);
 
         if (isset($response->success) && $response->success === false) {
-            Response::error('Fields fetching failed', 400);
+            return Response::error('Fields fetching failed', 400);
         } else {
             $fieldMap = [];
             $fieldNames   = ['uid', 'name_prefix', 'active', 'role', 'tags', 'created', 'company', 'companies'];
@@ -100,7 +100,7 @@ class SuiteDashController
                 }
             }
 
-            Response::success($fieldMap);
+            return Response::success($fieldMap);
         }
     }
 
@@ -119,9 +119,9 @@ class SuiteDashController
                     $company->name
                 );
             }
-            Response::success($companies);
+            return Response::success($companies);
         } else {
-            Response::error('Tags fetching failed', 400);
+            return Response::error('Tags fetching failed', 400);
         }
     }
 

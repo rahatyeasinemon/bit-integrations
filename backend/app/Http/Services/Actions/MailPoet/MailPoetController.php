@@ -28,7 +28,7 @@ class MailPoetController
     public static function isExists()
     {
         if (!class_exists(\MailPoet\API\API::class)) {
-            Response::error(
+            return Response::error(
                 __(
                     'MailPoet is not activate or not installed',
                     'bit-integrations'
@@ -45,7 +45,7 @@ class MailPoetController
     public static function mailPoetAuthorize()
     {
         self::isExists();
-        Response::success(true);
+        return Response::success(true);
     }
     /**
      * Process ajax request for refresh crm modules
@@ -68,7 +68,7 @@ class MailPoetController
             ];
         }
         $response['newsletterList'] = $allList;
-        Response::success($response);
+        return Response::success($response);
     }
     public static function mailPoetListHeaders()
     {
@@ -86,7 +86,7 @@ class MailPoetController
             ];
         }
         $response['mailPoetFields'] = $allList;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

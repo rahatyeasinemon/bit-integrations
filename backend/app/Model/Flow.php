@@ -16,6 +16,7 @@ use BitApps\BTCBI\Util\StoreInCache;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Plugin;
 use BitApps\BTCBI\Http\Services\Triggers\TriggerController;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
@@ -101,7 +102,7 @@ final class Flow
             ]
         );
         if (is_wp_error($integrations)) {
-            Response::error($integrations->get_error_message());
+            return Response::error($integrations->get_error_message());
         }
         foreach ($integrations as $integration) {
             if (isset($triggers[$integration->triggered_entity])) {
@@ -110,7 +111,7 @@ final class Flow
                 $integration->isCorrupted = $triggers[$entity]['is_active'];
             }
         }
-        Response::success(['integrations' => $integrations]);
+        return Response::success(['integrations' => $integrations]);
     }
 
     public function get($data)
@@ -120,7 +121,7 @@ final class Flow
             $missing_field = 'Integration ID';
         }
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         $integrationHandler = new FlowController();
         $integrations = $integrationHandler->get(
@@ -134,11 +135,11 @@ final class Flow
             ]
         );
         if (is_wp_error($integrations)) {
-            Response::error($integrations->get_error_message());
+            return Response::error($integrations->get_error_message());
         }
         $integration = $integrations[0];
         if (!($trigger = self::isTriggerExists($integration->triggered_entity))) {
-            Response::error('Trigger does not exists');
+            return Response::error('Trigger does not exists');
         }
         if (is_string($integration->flow_details)) {
             $integration->flow_details = json_decode($integration->flow_details);
@@ -157,25 +158,25 @@ final class Flow
         if (property_exists($integration->flow_details, 'fields')) {
             $integration->fields = $integration->flow_details->fields;
         }
-        Response::success(['integration' => $integration]);
+        return Response::success(['integration' => $integration]);
     }
 
-    public function save($data)
+    public function save(Request $data)
     {
         $missing_field = null;
-        if (!property_exists($data, 'trigger')) {
+        if (!isset($data->trigger)) {
             $missing_field = 'Trigger';
         }
 
-        if (!property_exists($data, 'triggered_entity_id')) {
+        if (!isset($data->triggered_entity_id)) {
             $missing_field = (is_null($missing_field) ? null : ', ') . 'Triggered form ID';
         }
 
-        if (!property_exists($data, 'flow_details')) {
+        if (!isset($data->flow_details)) {
             $missing_field = (is_null($missing_field) ? null : ', ') . 'Integration details';
         }
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
 
         // custom action
@@ -195,10 +196,9 @@ final class Flow
         }
 
         if (is_wp_error($saveStatus)) {
-            Response::error($saveStatus->get_error_message());
+            return Response::error($saveStatus->get_error_message());
         }
-
-        Response::success(['id' => $saveStatus, 'msg' => __('Integration saved successfully', 'bit-integrations')]);
+        return Response::success(['id' => $saveStatus, 'msg' => __('Integration saved successfully', 'bit-integrations')]);
     }
 
     public function flowClone($data)
@@ -209,7 +209,7 @@ final class Flow
             $missingId = 'Flow ID';
         }
         if (!is_null($missingId)) {
-            Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missingId));
+            return Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missingId));
         }
         $integrationHandler = new FlowController();
         $integrations = $integrationHandler->get(
@@ -228,11 +228,11 @@ final class Flow
             $saveStatus = $integrationHandler->save($newInteg->name, $newInteg->triggered_entity, $newInteg->triggered_entity_id, $newInteg->flow_details);
 
             if (is_wp_error($saveStatus)) {
-                Response::error($saveStatus->get_error_message());
+                return Response::error($saveStatus->get_error_message());
             }
-            Response::success(['id' => $saveStatus, 'created_at' => $user_details['time']]);
+            return Response::success(['id' => $saveStatus, 'created_at' => $user_details['time']]);
         } else {
-            Response::error(__('Flow ID is not exists', 'bit-integrations'));
+            return Response::error(__('Flow ID is not exists', 'bit-integrations'));
         }
     }
 
@@ -246,7 +246,7 @@ final class Flow
             $missing_field = 'Flow details';
         }
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
 
         if ($data->flow_details->type === 'CustomAction') {
@@ -265,9 +265,9 @@ final class Flow
             ]
         );
         if (is_wp_error($updateStatus) && $updateStatus->get_error_code() !== 'result_empty') {
-            Response::error($updateStatus->get_error_message());
+            return Response::error($updateStatus->get_error_message());
         }
-        Response::success(__('Integration updated successfully', 'bit-integrations'));
+        return Response::success(__('Integration updated successfully', 'bit-integrations'));
     }
 
     public function delete($data)
@@ -277,29 +277,29 @@ final class Flow
             $missing_field = 'Integration id';
         }
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
         }
         $integrationHandler = new FlowController();
         $deleteStatus = $integrationHandler->delete($data->id);
         if (is_wp_error($deleteStatus)) {
-            Response::error($deleteStatus->get_error_message());
+            return Response::error($deleteStatus->get_error_message());
         }
-        Response::success(__('Integration deleted successfully', 'bit-integrations'));
+        return Response::success(__('Integration deleted successfully', 'bit-integrations'));
     }
 
     public function bulkDelete($param)
     {
         if (!is_array($param->flowID) || $param->flowID === []) {
-            Response::error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), 'Integration id'));
+            return Response::error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), 'Integration id'));
         }
 
         $integrationHandler = new FlowController();
         $deleteStatus = $integrationHandler->bulkDelete($param->flowID);
 
         if (is_wp_error($deleteStatus)) {
-            Response::error($deleteStatus->get_error_message());
+            return Response::error($deleteStatus->get_error_message());
         }
-        Response::success(__('Integration deleted successfully', 'bit-integrations'));
+        return Response::success(__('Integration deleted successfully', 'bit-integrations'));
     }
 
     public function toggle_status($data)
@@ -312,14 +312,14 @@ final class Flow
             $missing_field = 'Integration id';
         }
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
         }
         $integrationHandler = new FlowController();
         $toggleStatus = $integrationHandler->updateStatus($data->id, $data->status);
         if (is_wp_error($toggleStatus)) {
-            Response::error($toggleStatus->get_error_message());
+            return Response::error($toggleStatus->get_error_message());
         }
-        Response::success(__('Status changed successfully', 'bit-integrations'));
+        return Response::success(__('Status changed successfully', 'bit-integrations'));
     }
 
     /**

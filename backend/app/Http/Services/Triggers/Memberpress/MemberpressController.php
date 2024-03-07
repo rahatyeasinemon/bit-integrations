@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Memberpress;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class MemberpressController
@@ -43,7 +44,7 @@ final class MemberpressController
     public function getAll()
     {
         if (!self::pluginActive()) {
-            Response::error(__('Memberpress is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Memberpress is not installed or activated', 'bit-integrations'));
         }
 
         $types = ['A user purchases a one-time subscription membership', 'A user purchases a recurring subscription membership', 'User cancels a membership', 'A user\'s subscribe membership expires', 'A user\'s subscribe membership paused.'];
@@ -55,21 +56,21 @@ final class MemberpressController
                 'title' => $type,
             ];
         }
-        Response::success($affiliate_action);
+        return Response::success($affiliate_action);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('Memberpress is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Memberpress is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Trigger type doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
 
         if (empty($fields)) {
-            Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
         if ($data->id === '1') {
@@ -87,13 +88,13 @@ final class MemberpressController
             $responseData['allMemberships'] = $allMemberships;
         }
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($id)
     {
         if (empty($id)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -321,19 +322,19 @@ final class MemberpressController
     public static function getAllMembership()
     {
         $allMemberships = self::all_memberpress_products();
-        Response::success($allMemberships);
+        return Response::success($allMemberships);
     }
 
     public static function getAllOnetimeMembership()
     {
         $oneTimeMembership = self::getOneTimeSubscriptions();
-        Response::success($oneTimeMembership);
+        return Response::success($oneTimeMembership);
     }
 
     public static function getAllRecurringMembership()
     {
         $recurringMembership = self::getRecurringSubscriptions();
-        Response::success($recurringMembership);
+        return Response::success($recurringMembership);
     }
 
     public static function getUserInfo($user_id)

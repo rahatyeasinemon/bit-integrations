@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\ActionHook;
 
 use WP_Error;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class ActionHookController
@@ -26,7 +27,7 @@ class ActionHookController
             $missing_field = is_null($missing_field) ? 'ActionHook ID' : $missing_field . ', ActionHook ID';
         }
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
         $testData = get_option('btcbi_action_hook_test_' . $data->hook_id);
@@ -34,9 +35,9 @@ class ActionHookController
             update_option('btcbi_action_hook_test_' . $data->hook_id, []);
         }
         if (!$testData || empty($testData)) {
-            Response::error(new WP_Error('actionHook_test', __('ActionHook data is empty', 'bit-integrations')));
+            return Response::error(new WP_Error('actionHook_test', __('ActionHook data is empty', 'bit-integrations')));
         }
-        Response::success(['actionHook' => $testData]);
+        return Response::success(['actionHook' => $testData]);
     }
 
     public static function actionHookHandler(...$args)
@@ -54,7 +55,7 @@ class ActionHookController
             $missing_field = is_null($missing_field) ? 'ActionHook ID' : $missing_field . ', ActionHook ID';
         }
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
         if (property_exists($data, 'reset') && $data->reset) {
@@ -63,9 +64,9 @@ class ActionHookController
             $testData = delete_option('btcbi_action_hook_test_' . $data->hook_id);
         }
         if (!$testData) {
-            Response::error(new WP_Error('actionHook_test', __('Failed to remove test data', 'bit-integrations')));
+            return Response::error(new WP_Error('actionHook_test', __('Failed to remove test data', 'bit-integrations')));
         }
-        Response::success(__('ActionHook test data removed successfully', 'bit-integrations'));
+        return Response::success(__('ActionHook test data removed successfully', 'bit-integrations'));
     }
 
     public static function handle(...$args)
@@ -115,18 +116,18 @@ class ActionHookController
         $currentPart = array_shift($parts);
         if (is_array($data)) {
             if (!isset($data[$currentPart])) {
-                Response::error(new WP_Error('capture Action', __('Index out of bounds or invalid', 'bit-integrations')));
+                return Response::error(new WP_Error('capture Action', __('Index out of bounds or invalid', 'bit-integrations')));
             }
             return self::extractValueFromPath($data[$currentPart], $parts);
         }
 
         if (is_object($data)) {
             if (!property_exists($data, $currentPart)) {
-                Response::error(new WP_Error('capture Action', __('Invalid path', 'bit-integrations')));
+                return Response::error(new WP_Error('capture Action', __('Invalid path', 'bit-integrations')));
             }
             return self::extractValueFromPath($data->$currentPart, $parts);
         }
 
-        Response::error(new WP_Error('capture Action', __('Invalid path', 'bit-integrations')));
+        return Response::error(new WP_Error('capture Action', __('Invalid path', 'bit-integrations')));
     }
 }

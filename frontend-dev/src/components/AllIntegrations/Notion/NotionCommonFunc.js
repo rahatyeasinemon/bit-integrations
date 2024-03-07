@@ -108,7 +108,7 @@ const tokenHelper = (
   // eslint-disable-next-line no-undef
   tokenRequestParams.redirectURI = `${btcbi.api.base}/redirect`;
   bitsFetch(tokenRequestParams, "notion_authorization").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...conf };
       newConf.tokenDetails = result.data;
       setConf(newConf);
@@ -116,7 +116,7 @@ const tokenHelper = (
       toast.success(__("Authorized Successfully"));
     } else if (
       (result && result.data && result.data.data) ||
-      (!result.success && typeof result.data === "string")
+      (result.status === 'error' && typeof result.data === "string")
     ) {
       toast.error(
         `${__("Authorization failed Cause:")}${
@@ -139,7 +139,7 @@ export const getAllDatabaseLists = async (
   setLoading && setLoading({ ...loading, list: true });
   const requestParams = { accessToken: conf.tokenDetails.access_token };
   const result = await bitsFetch(requestParams, "notion_database_lists");
-  if (result.success && result.data.results) {
+  if (result.status === 'success' && result.data.results) {
     const data = result?.data.results
       .filter((e) => e.object === "database")
       .map((e) => ({ id: e.id, name: e.title[0].text.content }));
@@ -178,7 +178,7 @@ export const getFieldsProperties = async (
   };
   const result = await bitsFetch(requestParams, "notion_database_properties");
 
-  if (result.success && result.data.properties) {
+  if (result.status === 'success' && result.data.properties) {
     const data = result?.data.properties;
     const field = [];
     const sanitizeField = [
@@ -284,7 +284,7 @@ export const saveConfig = (
     setLoading
   );
   resp.then((res) => {
-    if (res.success) {
+    if (res.status === 'success') {
       toast.success(res.data?.msg);
       navigate(allIntegURL);
     } else {

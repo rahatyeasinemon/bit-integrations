@@ -21,7 +21,7 @@ export const fetchAllCourse = (learnDashConf, setLearnDashConf, setIsLoading, se
   const requestParams = { domainName: learnDashConf.domainName }
   bitsFetch(requestParams, 'learDash_fetch_all_course')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...learnDashConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -46,7 +46,7 @@ export const fetchAllGroup = (learnDashConf, setLearnDashConf, setIsLoading, set
   const requestParams = { domainName: learnDashConf.domainName }
   bitsFetch(requestParams, 'learDash_fetch_all_group')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...learnDashConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -70,7 +70,7 @@ export const fetchAllCourseOfLesson = (learnDashConf, setLearnDashConf, setIsLoa
   const requestParams = { courseId: learnDashConf.courseId }
   bitsFetch(requestParams, 'learDash_fetch_all_course_of_lesson')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...learnDashConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -95,7 +95,7 @@ export const fetchAllTopicOfLesson = (learnDashConf, setLearnDashConf, setIsLoad
   const requestParams = { courseId: learnDashConf.courseId, lessonId: learnDashConf.lessonId }
   bitsFetch(requestParams, 'learDash_fetch_all_topic_of_lesson')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...learnDashConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -120,7 +120,7 @@ export const fetchAllQuiz = (learnDashConf, setLearnDashConf, setIsLoading, setS
   const requestParams = { courseId: learnDashConf.courseId, lessonId: learnDashConf.lessonId }
   bitsFetch(requestParams, 'learDash_fetch_all_quiz')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...learnDashConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -144,7 +144,7 @@ export const fetchAllCourseUnenroll = (learnDashConf, setLearnDashConf, setIsLoa
   const requestParams = { domainName: learnDashConf.domainName }
   bitsFetch(requestParams, 'learDash_fetch_all_course_unenroll')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...learnDashConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -172,7 +172,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
 
   bitsFetch(requestParams, 'learnDash_authorize')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         setConf(newConf)
         setisAuthorized(true)

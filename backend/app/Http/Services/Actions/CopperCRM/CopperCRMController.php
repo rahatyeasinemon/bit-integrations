@@ -26,7 +26,7 @@ class CopperCRMController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -42,16 +42,16 @@ class CopperCRMController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (!isset($response->error)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid API key', 400);
+            return Response::error('Please enter valid API key', 400);
         }
     }
 
     public function getCustomFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -83,16 +83,16 @@ class CopperCRMController
                     ];
                 }
             }
-            Response::success($customFields);
+            return Response::success($customFields);
         } else {
-            Response::error('Custom field fetching failed', 400);
+            return Response::error('Custom field fetching failed', 400);
         }
     }
 
     public function getAllOpportunities($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -110,16 +110,16 @@ class CopperCRMController
                     'name' => $opportunity->name
                 ];
             }
-            Response::success($opportunities);
+            return Response::success($opportunities);
         } else {
-            Response::error('Opportunity fetching failed', 400);
+            return Response::error('Opportunity fetching failed', 400);
         }
     }
 
     public function getAllOwners($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
         $apiKey      = $fieldsRequestParams->api_key;
         $apiEmail     = $fieldsRequestParams->api_email;
@@ -140,16 +140,16 @@ class CopperCRMController
                     'name' => $owner->name
                 ];
             }
-            Response::success($owners);
+            return Response::success($owners);
         } else {
-            Response::error('Owners fetching failed', 400);
+            return Response::error('Owners fetching failed', 400);
         }
     }
 
     public function getAllCompanies($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
         $apiKey      = $fieldsRequestParams->api_key;
         $apiEmail     = $fieldsRequestParams->api_email;
@@ -170,16 +170,16 @@ class CopperCRMController
                     'name' => $company->name
                 ];
             }
-            Response::success($companies);
+            return Response::success($companies);
         } else {
-            Response::error('Companies fetching failed', 400);
+            return Response::error('Companies fetching failed', 400);
         }
     }
 
     public function getAllPipelineStages($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -201,16 +201,16 @@ class CopperCRMController
                     'name' => $pipelineStage->name
                 ];
             }
-            Response::success($pipelineStages);
+            return Response::success($pipelineStages);
         } else {
-            Response::error('PipelineStages fetching failed', 400);
+            return Response::error('PipelineStages fetching failed', 400);
         }
     }
 
     public function getAllCRMPeoples($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -232,16 +232,16 @@ class CopperCRMController
                     'name' => $people->name
                 ];
             }
-            Response::success($peoples);
+            return Response::success($peoples);
         } else {
-            Response::error('Peoples fetching failed', 400);
+            return Response::error('Peoples fetching failed', 400);
         }
     }
 
     public function getAllCRMPipelines($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -263,9 +263,9 @@ class CopperCRMController
                     'name' => $pipeline->name
                 ];
             }
-            Response::success($pipelines);
+            return Response::success($pipelines);
         } else {
-            Response::error('Pipelines fetching failed', 400);
+            return Response::error('Pipelines fetching failed', 400);
         }
     }
 

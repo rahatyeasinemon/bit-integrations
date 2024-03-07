@@ -21,7 +21,7 @@ class MailBlusterController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->auth_token)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -48,9 +48,9 @@ class MailBlusterController
         }
 
         if (property_exists($response, 'fields')) {
-            Response::success($customFields);
+            return Response::success($customFields);
         } else {
-            Response::error('Please enter valid API key', 400);
+            return Response::error('Please enter valid API key', 400);
         }
     }
 

@@ -34,7 +34,7 @@ export const refreshFields = (formID, acumbamailConf, setAcumbamailConf, setIsLo
   const refreshFieldsRequestParams = { auth_token: acumbamailConf.auth_token, list_id: listId }
   bitsFetch(refreshFieldsRequestParams, 'acumbamail_refresh_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...acumbamailConf }
         if (result.data) {
           if (!newConf.default?.allFields) {
@@ -76,7 +76,7 @@ export const fetchAllBoard = (formID, acumbamailConf, setAcumbamailConf, setIsLo
   }
   bitsFetch(fetchBoardModulesRequestParams, 'trello_fetch_all_board')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...acumbamailConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -89,7 +89,7 @@ export const fetchAllBoard = (formID, acumbamailConf, setAcumbamailConf, setIsLo
         // }
         setSnackbar({ show: true, msg: __('Board list refreshed', 'bit-integrations') })
         setAcumbamailConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Board list refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Board list failed. please try again', 'bit-integrations') })
@@ -105,7 +105,7 @@ export const fetchAllList = (acumbamailConf, setAcumbamailConf, setIsLoading, se
 
   bitsFetch(requestParams, 'acumbamail_fetch_all_list')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...acumbamailConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -137,7 +137,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
 
   bitsFetch(requestParams, 'acumbamail_authorization_and_fetch_subscriber_list')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         setConf(newConf)
         setisAuthorized(true)

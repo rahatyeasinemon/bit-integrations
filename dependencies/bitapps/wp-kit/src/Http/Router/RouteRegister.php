@@ -152,7 +152,8 @@ final class RouteRegister
             return false;
         }
 
-        return !(preg_match_all('/\{\w+\??\}\??/', $this->_path, $this->_regexMatched) === false
+        return !(
+            preg_match_all('/\{\w+\??\}\??/', $this->_path, $this->_regexMatched) === false
             || empty($this->_regexMatched[0])
         );
     }

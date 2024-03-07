@@ -26,16 +26,16 @@ class TutorLmsController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (is_plugin_active('tutor/tutor.php')) {
-            Response::success(true);
+            return Response::success(true);
         }
 
-        Response::error(__('Tutor LMS must be activated!', 'bit-integrations'));
+        return Response::error(__('Tutor LMS must be activated!', 'bit-integrations'));
     }
 
     public static function getAllLesson()
     {
         if (!function_exists('tutor')) {
-            Response::error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
         }
 
         $lessons = [];
@@ -52,14 +52,14 @@ class TutorLmsController
                 'lessonTitle' => $val->post_title,
             ];
         }
-        Response::success($lessons);
+        return Response::success($lessons);
     }
 
     public static function getAllCourse($queryParams)
     {
         $action = $queryParams->type;
         if (!function_exists('tutor')) {
-            Response::error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Tutor LMS is not installed or activated', 'bit-integrations'));
         }
 
 
@@ -82,7 +82,7 @@ class TutorLmsController
                 'courseTitle' => $val->post_title,
             ];
         }
-        Response::success($courses);
+        return Response::success($courses);
     }
 
     public static function enrollCourse($selectedCourse, $selectedAllCourse, $type)

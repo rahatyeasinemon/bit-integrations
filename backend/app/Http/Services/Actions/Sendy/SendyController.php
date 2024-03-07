@@ -33,7 +33,7 @@ class SendyController
     public static function sendyAuthorize($requestsParams)
     {
         if (empty($requestsParams->api_key)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -48,13 +48,13 @@ class SendyController
         // $authorizationHeader["api-key"] = $requestsParams->api_key;
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
         if (is_wp_error($apiResponse) || $apiResponse->status === 'error' || !count($apiResponse)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->code) ? 'Unknown' : $apiResponse->message,
                 400
             );
         }
 
-        Response::success(true);
+        return Response::success(true);
     }
 
     public function getAllBrands($queryParams)
@@ -63,7 +63,7 @@ class SendyController
             empty($queryParams->api_key)
             || empty($queryParams->sendy_url)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -87,7 +87,7 @@ class SendyController
                 'brandName' => $list->name
             ];
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function getAllLists($queryParams)
@@ -96,7 +96,7 @@ class SendyController
             empty($queryParams->api_key)
             || empty($queryParams->sendy_url)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -123,7 +123,7 @@ class SendyController
                 'listName' => $list->name,
             ];
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

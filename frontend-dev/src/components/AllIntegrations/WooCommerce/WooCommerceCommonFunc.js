@@ -47,7 +47,7 @@ export const refreshFields = (wcConf, setWcConf, setIsLoading, setSnackbar) => {
   setIsLoading(true)
   bitsFetch({ module }, 'wc_refresh_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         let newConf = deepCopy(wcConf)
         if (result.data) {
           if (!newConf.default) newConf.default = {}
@@ -128,7 +128,7 @@ export const getAllSubscriptionsProducts = (wcConf, setWcConf, setIsLoading, set
   setIsLoading(true)
   bitsFetch({}, 'wc_get_all_subscriptions_products')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = deepCopy(wcConf)
         if (!newConf.default) {
           newConf.default = {}

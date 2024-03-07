@@ -64,7 +64,7 @@ export const nimbleAuthentication = (
   const requestParams = { api_key: confTmp.api_key };
 
   bitsFetch(requestParams, "nimble_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
       toast.success(__("Authorized successfully", "bit-integrations"));
@@ -82,7 +82,7 @@ export const getAllFields = (confTmp, setConf, setLoading) => {
   const requestParams = { api_key: confTmp.api_key };
 
   bitsFetch(requestParams, "nimble_fetch_all_fields").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       if (result.data) {
         setConf((prevConf) => {
           prevConf.peopleFields = result.data.person;

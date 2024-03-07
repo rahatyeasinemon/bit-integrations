@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\CustomTrigger;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 use WP_Error;
 
@@ -23,10 +24,10 @@ class CustomTriggerController
         $hook_id = wp_generate_uuid4();
 
         if (!$hook_id) {
-            Response::error(__('Failed to generate new hook id', 'bit-integrations'));
+            return Response::error(__('Failed to generate new hook id', 'bit-integrations'));
         }
         add_option('btcbi_custom_trigger_' . $hook_id, [], '', 'no');
-        Response::success(['hook_id' => $hook_id]);
+        return Response::success(['hook_id' => $hook_id]);
     }
 
     public function getTestData($data)
@@ -36,7 +37,7 @@ class CustomTriggerController
             $missing_field = is_null($missing_field) ? 'Custom trigger ID' : $missing_field . ', Webhook ID';
         }
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
         $testData = get_option('btcbi_custom_trigger_' . $data->hook_id);
@@ -44,9 +45,9 @@ class CustomTriggerController
             update_option('btcbi_custom_trigger_' . $data->hook_id, []);
         }
         if (!$testData || empty($testData)) {
-            Response::error(new WP_Error('custom_trigger_test', __('Custom trigger data is empty', 'bit-integrations')));
+            return Response::error(new WP_Error('custom_trigger_test', __('Custom trigger data is empty', 'bit-integrations')));
         }
-        Response::success(['custom_trigger' => $testData]);
+        return Response::success(['custom_trigger' => $testData]);
     }
 
     public static function handleCustomTrigger($hook_id, $data)
@@ -69,7 +70,7 @@ class CustomTriggerController
             $missing_field = is_null($missing_field) ? 'Custom trigger ID' : $missing_field . ', Custom trigger ID';
         }
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
         if (property_exists($data, 'reset') && $data->reset) {
@@ -78,8 +79,8 @@ class CustomTriggerController
             $testData = delete_option('btcbi_custom_trigger_' . $data->hook_id);
         }
         if (!$testData) {
-            Response::error(new WP_Error('webhook_test', __('Failed to remove test data', 'bit-integrations')));
+            return Response::error(new WP_Error('webhook_test', __('Failed to remove test data', 'bit-integrations')));
         }
-        Response::success(__('Webhook test data removed successfully', 'bit-integrations'));
+        return Response::success(__('Webhook test data removed successfully', 'bit-integrations'));
     }
 }

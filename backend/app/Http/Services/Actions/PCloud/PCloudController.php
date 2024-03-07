@@ -20,7 +20,7 @@ class PCloudController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->clientId) || empty($requestParams->clientSecret) || empty($requestParams->code)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $body = [
@@ -34,16 +34,16 @@ class PCloudController
         $apiResponse            = Http::request($apiEndpoint, 'Post', $body, $header);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
+            return Response::error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public static function getAllFolders($queryParams)
     {
         if (empty($queryParams->tokenDetails)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint             = 'https://api.pcloud.com/listfolder?folderid=0';
@@ -60,9 +60,9 @@ class PCloudController
                     ];
                 }
             }
-            Response::success($folders);
+            return Response::success($folders);
         } else {
-            Response::error('Folders fetching failed', 400);
+            return Response::error('Folders fetching failed', 400);
         }
     }
 

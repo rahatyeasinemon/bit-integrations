@@ -27,7 +27,7 @@ class SalesmateController
     private function checkValidation($fieldsRequestParams, $customParam = '**')
     {
         if (empty($fieldsRequestParams->session_token) || empty($fieldsRequestParams->link_name) || empty($customParam)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
     }
 
@@ -82,9 +82,9 @@ class SalesmateController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->Status) && $response->Status === "success") {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid Session Token or Link Name', 400);
+            return Response::error('Please enter valid Session Token or Link Name', 400);
         }
     }
 
@@ -115,9 +115,9 @@ class SalesmateController
             }
 
 
-            Response::success($fieldMap);
+            return Response::success($fieldMap);
         } else {
-            Response::error('Fields fetching failed', 400);
+            return Response::error('Fields fetching failed', 400);
         }
     }
 
@@ -137,9 +137,9 @@ class SalesmateController
                     'tag' => $tag->tag
                 ];
             }
-            Response::success($tags);
+            return Response::success($tags);
         } else {
-            Response::error('Tags fetching failed', 400);
+            return Response::error('Tags fetching failed', 400);
         }
     }
 
@@ -159,9 +159,9 @@ class SalesmateController
                     'currency' => $currency->code
                 ];
             }
-            Response::success($currencies);
+            return Response::success($currencies);
         } else {
-            Response::error('Currencies fetching failed', 400);
+            return Response::error('Currencies fetching failed', 400);
         }
     }
 
@@ -182,9 +182,9 @@ class SalesmateController
                     'stages' => $pipelines->stages
                 ];
             }
-            Response::success($CRMPipelines);
+            return Response::success($CRMPipelines);
         } else {
-            Response::error('Pipelines fetching failed', 400);
+            return Response::error('Pipelines fetching failed', 400);
         }
     }
 
@@ -207,9 +207,9 @@ class SalesmateController
                     'email' => $contact->email
                 ];
             }
-            Response::success($CRMContacts);
+            return Response::success($CRMContacts);
         } else {
-            Response::error('Contacts fetching failed', 400);
+            return Response::error('Contacts fetching failed', 400);
         }
     }
 
@@ -231,9 +231,9 @@ class SalesmateController
                     'name'   => $contact->name
                 ];
             }
-            Response::success($CRMCompanies);
+            return Response::success($CRMCompanies);
         } else {
-            Response::error('Companies fetching failed', 400);
+            return Response::error('Companies fetching failed', 400);
         }
     }
 
@@ -254,9 +254,9 @@ class SalesmateController
                     'name' => "$owner->firstName $owner->lastName"
                 ];
             }
-            Response::success($CRMOwners);
+            return Response::success($CRMOwners);
         } else {
-            Response::error('Owners fetching failed', 400);
+            return Response::error('Owners fetching failed', 400);
         }
     }
 

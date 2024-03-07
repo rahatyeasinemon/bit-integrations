@@ -47,7 +47,7 @@ class RecordApiHelper
             || empty($api_key)
             || empty($formId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'

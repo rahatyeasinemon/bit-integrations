@@ -78,7 +78,7 @@ export const refreshModules = (formID, recruitConf, setRecruitConf, setIsLoading
   }
   bitsFetch(refreshModulesRequestParams, 'zrecruit_refresh_modules')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...recruitConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -91,7 +91,7 @@ export const refreshModules = (formID, recruitConf, setRecruitConf, setIsLoading
         }
         setRecruitConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Modules refreshed', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Modules refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Modules refresh failed. please try again', 'bit-integrations') })
@@ -113,7 +113,7 @@ export const refreshNoteTypes = (formID, recruitConf, setRecruitConf, setIsLoadi
   }
   bitsFetch(refreshModulesRequestParams, 'zrecruit_refresh_notetypes')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...recruitConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -126,7 +126,7 @@ export const refreshNoteTypes = (formID, recruitConf, setRecruitConf, setIsLoadi
         }
         setRecruitConf({ ...newConf })
         setSnackbar({ show: true, msg: __('Note Types refreshed', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Note Types refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Note Types refresh failed. please try again', 'bit-integrations') })
@@ -151,7 +151,7 @@ export const refreshRelatedList = (formID, recruitConf, setRecruitConf, setIsLoa
   }
   bitsFetch(relatedListRequestParams, 'zrecruit_refresh_related_lists')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...recruitConf }
         if (result.data.related_modules) {
           if (!newConf.default.relatedlists) {
@@ -164,7 +164,7 @@ export const refreshRelatedList = (formID, recruitConf, setRecruitConf, setIsLoa
         }
         setRecruitConf({ ...newConf })
         setSnackbar({ show: true, msg: __('RelatedLists refreshed', 'bit-integrations') })
-      } else if ((result?.data?.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result?.data?.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('RelatedLists refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('RelatedLists refresh failed. please try again', 'bit-integrations') })
@@ -191,7 +191,7 @@ export const getFields = (recordTab, formID, recruitConf, setRecruitConf, setIsL
   }
   bitsFetch(getFieldsRequestParams, 'zrecruit_get_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...recruitConf }
         if (result.data.fieldDetails) {
           if (!newConf.default.moduleData) {

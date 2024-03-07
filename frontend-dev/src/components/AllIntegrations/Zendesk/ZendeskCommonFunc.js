@@ -77,7 +77,7 @@ export const zendeskAuthentication = (
   const requestParams = { api_key: confTmp.api_key };
 
   bitsFetch(requestParams, "zendesk_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
       toast.success(__("Authorized successfully", "bit-integrations"));
@@ -99,7 +99,7 @@ export const getCustomFields = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "zendesk_fetch_custom_fields").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.customFields = result.data;
@@ -126,7 +126,7 @@ export const getAllLeads = (confTmp, setConf, setLoading) => {
   const requestParams = { api_key: confTmp.api_key };
 
   bitsFetch(requestParams, "zendesk_fetch_all_leads").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.leads = result.data;
@@ -149,7 +149,7 @@ export const getAllParentOrganizations = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, "zendesk_fetch_all_parentOrganizations").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp };
         if (result.data) {
           newConf.parentOrganizations = result.data;
@@ -176,7 +176,7 @@ export const getAllTeams = (confTmp, setConf, setLoading) => {
   const requestParams = { api_key: confTmp.api_key };
 
   bitsFetch(requestParams, "zendesk_fetch_all_teams").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.teams = result.data;
@@ -200,7 +200,7 @@ export const getAllCurrencies = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "zendesk_fetch_all_currencies").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.currencies = result.data;
@@ -225,7 +225,7 @@ export const getAllStages = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "zendesk_fetch_all_stages").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.stages = result.data;
@@ -250,7 +250,7 @@ export const getAllCRMCompanies = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "zendesk_fetch_all_CRMCompanies").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.CRMCompanies = result.data;
@@ -283,7 +283,7 @@ export const getAllCRMContacts = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "zendesk_fetch_all_CRMContacts").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.CRMContacts = result.data;
@@ -308,7 +308,7 @@ export const getAllCRMSources = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "zendesk_fetch_all_CRMSources").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.CRMSources = result.data;

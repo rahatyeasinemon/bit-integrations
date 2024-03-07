@@ -26,7 +26,7 @@ class AsanaController
     public function authentication($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -38,16 +38,16 @@ class AsanaController
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
 
         if (isset($response->data)) {
-            Response::success('Authentication successful');
+            return Response::success('Authentication successful');
         } else {
-            Response::error('Please enter valid API key', 400);
+            return Response::error('Please enter valid API key', 400);
         }
     }
 
     public function getCustomFields($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -70,16 +70,16 @@ class AsanaController
                     'required' => false,
                 ];
             }
-            Response::success($customFields);
+            return Response::success($customFields);
         } else {
-            Response::error('Custom field fetching failed', 400);
+            return Response::error('Custom field fetching failed', 400);
         }
     }
 
     public function getAllTasks($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -97,9 +97,9 @@ class AsanaController
                     'name' => $task->name
                 ];
             }
-            Response::success($tasks);
+            return Response::success($tasks);
         } else {
-            Response::error('Task fetching failed', 400);
+            return Response::error('Task fetching failed', 400);
         }
     }
 
@@ -107,7 +107,7 @@ class AsanaController
     public function getAllProjects($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -125,9 +125,9 @@ class AsanaController
                     'name' => $project->name
                 ];
             }
-            Response::success($projects);
+            return Response::success($projects);
         } else {
-            Response::error('Projects fetching failed', 400);
+            return Response::error('Projects fetching failed', 400);
         }
     }
 
@@ -135,7 +135,7 @@ class AsanaController
     public function getAllSections($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
@@ -153,9 +153,9 @@ class AsanaController
                     'name' => $section->name
                 ];
             }
-            Response::success($sections);
+            return Response::success($sections);
         } else {
-            Response::error('Sections fetching failed', 400);
+            return Response::error('Sections fetching failed', 400);
         }
     }
 

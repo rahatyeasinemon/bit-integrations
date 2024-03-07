@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\Spectra;
 
 use WP_Error;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 class SpectraController
@@ -26,9 +27,9 @@ class SpectraController
             update_option('btcbi_test_uagb_form_success', []);
         }
         if (!$testData || empty($testData)) {
-            Response::error(new WP_Error('spectra_test', __('Spectra data is empty', 'bit-integrations')));
+            return Response::error(new WP_Error('spectra_test', __('Spectra data is empty', 'bit-integrations')));
         }
-        Response::success(['spectra' => $testData]);
+        return Response::success(['spectra' => $testData]);
     }
 
 
@@ -37,9 +38,9 @@ class SpectraController
         $testData = delete_option('btcbi_test_uagb_form_success');
 
         if (!$testData) {
-            Response::error(new WP_Error('spectra_test', __('Failed to remove test data', 'bit-integrations')));
+            return Response::error(new WP_Error('spectra_test', __('Failed to remove test data', 'bit-integrations')));
         }
-        Response::success(__('spectra test data removed successfully', 'bit-integrations'));
+        return Response::success(__('spectra test data removed successfully', 'bit-integrations'));
     }
     public static function spectraHandler(...$args)
     {
@@ -94,18 +95,18 @@ class SpectraController
 
         if (is_array($data)) {
             if (!isset($data[$currentPart])) {
-                Response::error(new WP_Error('Spectra', __('Index out of bounds or invalid', 'bit-integrations')));
+                return Response::error(new WP_Error('Spectra', __('Index out of bounds or invalid', 'bit-integrations')));
             }
             return self::extractValueFromPath($data[$currentPart], $parts);
         }
 
         if (is_object($data)) {
             if (!property_exists($data, $currentPart)) {
-                Response::error(new WP_Error('Spectra', __('Invalid path', 'bit-integrations')));
+                return Response::error(new WP_Error('Spectra', __('Invalid path', 'bit-integrations')));
             }
             return self::extractValueFromPath($data->$currentPart, $parts);
         }
 
-        Response::error(new WP_Error('Spectra', __('Invalid path', 'bit-integrations')));
+        return Response::error(new WP_Error('Spectra', __('Invalid path', 'bit-integrations')));
     }
 }

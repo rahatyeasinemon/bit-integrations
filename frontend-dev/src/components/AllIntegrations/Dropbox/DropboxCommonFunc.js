@@ -23,7 +23,7 @@ export const getAllDropboxFolders = (flowID, dropboxConf, setDropboxConf) => {
   }
   const loadPostTypes = bitsFetch(queryParams, 'dropbox_get_all_folders')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...dropboxConf }
         if (result.data.dropboxFoldersList) {
           newConf.foldersList = result.data.dropboxFoldersList
@@ -63,13 +63,13 @@ export const handleAuthorize = (confTmp, setConf, setIsAuthorized, setIsLoading,
   bitsFetch(tokenRequestParams, 'dropbox_authorization')
     .then(result => result)
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         newConf.tokenDetails = result.data
         setConf(newConf)
         setIsAuthorized(true)
         toast.success(__('Authorized Successfully', 'bit-integrations'))
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         toast.error(`${__('Authorization failed Cause: ', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}`)
       } else {
         toast.error(__('Authorization failed. please try again', 'bit-integrations'))

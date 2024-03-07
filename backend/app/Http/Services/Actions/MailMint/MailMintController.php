@@ -21,9 +21,9 @@ class MailMintController
     public static function authorizeMailMint()
     {
         if (self::pluginActive()) {
-            Response::success(true);
+            return Response::success(true);
         }
-        Response::error(__('Mail Mint must be activated!', 'bit-integrations'));
+        return Response::error(__('Mail Mint must be activated!', 'bit-integrations'));
     }
 
     public static function allCustomFields()
@@ -48,9 +48,9 @@ class MailMintController
                     ];
                 }
             }
-            Response::success($allFields);
+            return Response::success($allFields);
         }
-        Response::error(__('Mail Mint must be activated!', 'bit-integrations'));
+        return Response::error(__('Mail Mint must be activated!', 'bit-integrations'));
     }
 
     public static function getAllList()
@@ -68,7 +68,7 @@ class MailMintController
                 }
             }
         }
-        Response::success($allLists);
+        return Response::success($allLists);
     }
 
     public static function getAllTags()
@@ -86,7 +86,7 @@ class MailMintController
                 }
             }
         }
-        Response::success($allTags);
+        return Response::success($allTags);
     }
 
     public function execute($integrationData, $fieldValues)

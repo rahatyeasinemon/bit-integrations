@@ -75,7 +75,7 @@ export const clinchPadAuthentication = (
   const requestParams = { api_key: confTmp.api_key };
 
   bitsFetch(requestParams, "clinchPad_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
       toast.success(__("Authorized successfully", "bit-integrations"));
@@ -95,7 +95,7 @@ export const getAllParentOrganizations = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, "clinchPad_fetch_all_parentOrganizations").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp };
         if (result.data) {
           newConf.parentOrganizations = result.data;
@@ -126,7 +126,7 @@ export const getAllCRMPipelines = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, "clinchPad_fetch_all_CRMPipelines").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp };
         if (result.data) {
           newConf.CRMPipelines = result.data;
@@ -152,7 +152,7 @@ export const getAllCRMContacts = (confTmp, setConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "clinchPad_fetch_all_CRMContacts").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...confTmp };
       if (result.data) {
         newConf.CRMContacts = result.data;

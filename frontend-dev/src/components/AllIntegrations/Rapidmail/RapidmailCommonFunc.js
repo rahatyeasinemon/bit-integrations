@@ -22,7 +22,7 @@ export const getAllRecipient = (rapidmailConf, setRapidmailConf, setIsLoading, s
   }
   const loadPostTypes = bitsFetch(null, 'rapidmail_get_all_recipients', queryParams, 'GET')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...rapidmailConf }
         if (!newConf.default) newConf.default = {}
         if (result.data.recipientlists) {
@@ -76,13 +76,13 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
   bitsFetch(tokenRequestParams, 'rapidmail_authorization')
     .then(result => result)
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
         setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bit-integrations') })

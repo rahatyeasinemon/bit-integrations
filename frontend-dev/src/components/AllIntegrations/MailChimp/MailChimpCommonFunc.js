@@ -49,7 +49,7 @@ export const refreshAudience = (formID, sheetConf, setSheetConf, setIsLoading, s
   }
   bitsFetch(refreshModulesRequestParams, 'mChimp_refresh_audience')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...sheetConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -62,7 +62,7 @@ export const refreshAudience = (formID, sheetConf, setSheetConf, setIsLoading, s
         }
         setSnackbar({ show: true, msg: __('Audience list refreshed', 'bit-integrations') })
         setSheetConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Audience list refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Audience list failed. please try again', 'bit-integrations') })
@@ -83,14 +83,14 @@ export const refreshTags = (formID, sheetConf, setSheetConf, setIsLoading, setSn
   }
   bitsFetch(refreshModulesRequestParams, 'mChimp_refresh_tags')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...sheetConf }
         if (result.data.audienceTags) {
           newConf.default.audienceTags = result.data.audienceTags
         }
         setSnackbar({ show: true, msg: __('Audience tags refreshed', 'bit-integrations') })
         setSheetConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: sprintf(__('Audience tags refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
       } else {
         setSnackbar({ show: true, msg: __('Audience tags failed. please try again', 'bit-integrations') })
@@ -115,7 +115,7 @@ export const refreshFields = (formID, sheetConf, setSheetConf, setIsLoading, set
   }
   bitsFetch(refreshSpreadsheetsRequestParams, 'mChimp_refresh_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...sheetConf }
         if (result.data.audienceField) {
           if (!newConf.default.fields) {
@@ -203,13 +203,13 @@ const tokenHelper = (ajaxInteg, grantToken, confTmp, setConf, setisAuthorized, s
   bitsFetch(tokenRequestParams, `${ajaxInteg}_generate_token`)
     .then(result => result)
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
         setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bit-integrations') })

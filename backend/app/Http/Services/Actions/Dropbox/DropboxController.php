@@ -22,7 +22,7 @@ class DropboxController
     public static function checkAuthorization($tokenRequestParams)
     {
         if (empty($tokenRequestParams->accessCode) || empty($tokenRequestParams->clientId) || empty($tokenRequestParams->clientSecret)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $body = [
@@ -36,16 +36,16 @@ class DropboxController
         $apiResponse = Http::request($apiEndpoint, 'Post', $body);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
+            return Response::error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     public static function getAllFolders($queryParams)
     {
         if (empty($queryParams->tokenDetails) || empty($queryParams->clientId) || empty($queryParams->clientSecret)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $token = self::tokenExpiryCheck($queryParams->tokenDetails, $queryParams->clientId, $queryParams->clientSecret);
@@ -69,7 +69,7 @@ class DropboxController
 
         $response['dropboxFoldersList'] = $data;
         $response['tokenDetails'] = $token;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function getDropboxFoldersList($token)

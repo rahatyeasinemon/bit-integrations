@@ -23,7 +23,7 @@ class KlaviyoController
     public function handleAuthorize($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -34,7 +34,7 @@ class KlaviyoController
         $apiEndpoint = $this->baseUrl . 'lists?api_key=' . $requestParams->authKey;
         $response = Http::request($apiEndpoint, 'Get', null);
         if ($response->message === "The API key specified is invalid.") {
-            Response::error(
+            return Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -42,7 +42,7 @@ class KlaviyoController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

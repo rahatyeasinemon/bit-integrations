@@ -71,7 +71,7 @@ export const salesflareAuthentication = (
   };
 
   bitsFetch(requestParams, "salesflare_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true);
       setLoading({ ...loading, auth: false });
       toast.success(__("Authorized successfully", "bit-integrations"));
@@ -98,7 +98,7 @@ export const salesflareFields = (
 
   bitsFetch(requestParams, "Salesflare_custom_fields")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setSalesflareConf((prevConf) => {
           const draftConf = prevConf;
           draftConf.field_map = [{ formField: "", salesmateFormField: "" }];
@@ -134,7 +134,7 @@ export const getAllTags = (salesflareConf, setSalesflareConf, setLoading) => {
   };
 
   bitsFetch(requestParams, "Salesflare_fetch_all_tags").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setSalesflareConf((prevConf) => {
         const draftConf = { ...prevConf };
         draftConf.tags = result.data;
@@ -162,7 +162,7 @@ export const getallAccounts = (
   };
 
   bitsFetch(requestParams, "Salesflare_fetch_all_account").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setSalesflareConf((prevConf) => {
         const draftConf = { ...prevConf };
         draftConf.accounts = result.data;
@@ -189,7 +189,7 @@ export const getallPipelines = (
   };
 
   bitsFetch(requestParams, "Salesflare_fetch_all_pipelines").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setSalesflareConf((prevConf) => {
         const draftConf = { ...prevConf };
         draftConf.pipelines = result.data;

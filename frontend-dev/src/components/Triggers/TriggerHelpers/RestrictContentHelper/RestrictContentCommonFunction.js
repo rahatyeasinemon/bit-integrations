@@ -9,7 +9,7 @@ export const getAllLevels = (data, setFlow) => {
     null,
     'GET',
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allMembership = result.data
       setFlow({ ...tmpFlow })

@@ -37,7 +37,7 @@ class MauticController
             || empty($requestsParams->baseUrl)
             || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -57,13 +57,13 @@ class MauticController
         );
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams, $authorizationHeader);
         if (is_wp_error($apiResponse) || !empty($apiResponse->errors)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
     protected static function _refreshAccessToken($apiData)
@@ -104,7 +104,7 @@ class MauticController
     public static function getAllFields($queryParams)
     {
         if (empty($queryParams->tokenDetails)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -132,13 +132,13 @@ class MauticController
                 );
             }
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function getAllTags($queryParams)
     {
         if (empty($queryParams->tokenDetails)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -165,7 +165,7 @@ class MauticController
                 );
             }
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
 

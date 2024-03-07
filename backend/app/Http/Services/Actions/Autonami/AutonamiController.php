@@ -22,7 +22,7 @@ class AutonamiController
     public static function checkedExistsAutonami()
     {
         if (!class_exists('BWFCRM_Contact')) {
-            Response::error(__('Autonami Pro Plugin is not active or installed', 'bit-integrations'), 400);
+            return Response::error(__('Autonami Pro Plugin is not active or installed', 'bit-integrations'), 400);
         } else {
             return true;
         }
@@ -52,7 +52,7 @@ class AutonamiController
 
         $response['autonamiList'] = $autonamiList;
         $response['autonamiTags'] = $autonamiTags;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function autonamiFields()
@@ -81,15 +81,15 @@ class AutonamiController
             ];
         }
         $response['autonamiFields'] = $fieldOptions;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function autonamiAuthorize()
     {
         if (self::checkedExistsAutonami()) {
-            Response::success(true);
+            return Response::success(true);
         } else {
-            Response::error(__('Autonami Pro Plugin is not active or installed', 'bit-integrations'), 400);
+            return Response::error(__('Autonami Pro Plugin is not active or installed', 'bit-integrations'), 400);
         }
     }
 

@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\PiotnetAddon;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BitApps\BTCBI\Util\Common;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
@@ -66,7 +67,7 @@ final class PiotnetAddonController
     public function getAllForms()
     {
         if (!self::pluginActive()) {
-            Response::error(__('Piotnet Addon is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Piotnet Addon is not installed or activated', 'bit-integrations'));
         }
 
         $posts = self::getElementorPosts();
@@ -93,27 +94,27 @@ final class PiotnetAddonController
                 }
             }
         }
-        Response::success($piotnetForms);
+        return Response::success($piotnetForms);
     }
 
     public function getFormFields($data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('Piotnet Addon is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Piotnet Addon is not installed or activated', 'bit-integrations'));
         }
 
         if (empty($data->id) && empty($data->postId)) {
-            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
 
         $fields = self::fields($data);
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
         $responseData['postId'] = $data->postId;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($data)

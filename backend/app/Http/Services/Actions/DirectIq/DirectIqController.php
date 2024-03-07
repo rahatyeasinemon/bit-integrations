@@ -39,7 +39,7 @@ class DirectIqController
     {
         if (empty($requestsParams->client_id) || empty($requestsParams->client_secret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -71,13 +71,13 @@ class DirectIqController
         curl_close($curl);
 
         if ($statusCode !== 200) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse) ? 'Unknown' : $apiResponse,
                 400
             );
         }
 
-        Response::success(true);
+        return Response::success(true);
     }
 
     /**
@@ -91,7 +91,7 @@ class DirectIqController
     {
         if (empty($queryParams->client_id) || empty($queryParams->client_secret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -117,7 +117,7 @@ class DirectIqController
             }
 
             $response['directIqLists'] = $lists;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -132,7 +132,7 @@ class DirectIqController
     {
         if (empty($queryParams->client_id) || empty($queryParams->client_secret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -164,7 +164,7 @@ class DirectIqController
 
             $response['directIqField'] = $fields;
 
-            Response::success($response);
+            return Response::success($response);
         }
     }
 

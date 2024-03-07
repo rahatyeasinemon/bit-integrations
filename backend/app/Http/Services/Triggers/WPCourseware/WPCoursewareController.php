@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\WPCourseware;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class WPCoursewareController
@@ -168,7 +169,7 @@ final class WPCoursewareController
     public function getAll()
     {
         if (!is_plugin_active('wp-courseware/wp-courseware.php')) {
-            Response::error(__('WP Courseware is not installed or activated', 'bit-integrations'));
+            return Response::error(__('WP Courseware is not installed or activated', 'bit-integrations'));
         }
 
         $wpcw_actions = [];
@@ -178,20 +179,20 @@ final class WPCoursewareController
                 'title' => $action['title'],
             ];
         }
-        Response::success($wpcw_actions);
+        return Response::success($wpcw_actions);
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         if (!is_plugin_active('wp-courseware/wp-courseware.php')) {
-            Response::error(__('WP Courseware is not installed or activated', 'bit-integrations'));
+            return Response::error(__('WP Courseware is not installed or activated', 'bit-integrations'));
         }
         if (empty($data->id)) {
-            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         if ($data->id == 'userEnrolledCourse' || $data->id == 'courseCompleted') {
@@ -203,7 +204,7 @@ final class WPCoursewareController
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($selectedAction)

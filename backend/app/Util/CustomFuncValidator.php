@@ -19,7 +19,7 @@ class CustomFuncValidator
             $data->flow_details->funcFileLocation = $fileLocation;
             file_put_contents($fileLocation, $fileContent);
         } else {
-            Response::error('Your function is not valid, Failed to save file');
+            return Response::error('Your function is not valid, Failed to save file');
         }
     }
 

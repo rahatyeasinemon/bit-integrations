@@ -43,7 +43,7 @@ class MailChimpController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -71,13 +71,13 @@ class MailChimpController
         $apiResponse->dc = $metaData->dc;
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
     /**
      * Process ajax request for refresh MailChimp Audience list
@@ -93,7 +93,7 @@ class MailChimpController
             || empty($queryParams->clientSecret)
             || empty($queryParams->tokenDetails->dc)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -110,7 +110,7 @@ class MailChimpController
         $allList = [];
         if (!is_wp_error($audienceResponse) && empty($audienceResponse->response->error)) {
             $audienceLists = $audienceResponse->lists;
-            // Response::success($audienceLists);
+            // return Response::success($audienceLists);
             foreach ($audienceLists as $audienceList) {
                 $allList[$audienceList->name] = (object) array(
                         'listId' => $audienceList->id,
@@ -121,12 +121,12 @@ class MailChimpController
 
             $response['audiencelist'] = $allList;
         } else {
-            Response::error(
+            return Response::error(
                 $audienceResponse->response->error->message,
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
     /**
      * Process ajax request for refresh MailChimp Audience Fields
@@ -141,7 +141,7 @@ class MailChimpController
             || empty($queryParams->listId)
             || empty($queryParams->tokenDetails->dc)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -167,7 +167,7 @@ class MailChimpController
             }
             $fields['Email'] = (object) array('tag' => 'email_address', 'name' => 'Email');
             $response['audienceField'] = $fields;
-            Response::success($response);
+            return Response::success($response);
         }
     }
     /**
@@ -183,7 +183,7 @@ class MailChimpController
             || empty($queryParams->listId)
             || empty($queryParams->tokenDetails->dc)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -204,7 +204,7 @@ class MailChimpController
         }
         uksort($allList, "strnatcasecmp");
         $response['audienceTags'] = $allList;
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**

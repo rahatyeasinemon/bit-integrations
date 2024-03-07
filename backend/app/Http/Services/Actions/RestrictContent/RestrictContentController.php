@@ -38,9 +38,9 @@ class RestrictContentController
     {
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (self::pluginActive()) {
-            Response::success(true);
+            return Response::success(true);
         }
-        Response::error(__('Restrict Content must be activated!', 'bit-integrations'));
+        return Response::error(__('Restrict Content must be activated!', 'bit-integrations'));
     }
 
     public static function getAllLevels()
@@ -56,7 +56,7 @@ class RestrictContentController
             }
             $response['levellists'] = $data;
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

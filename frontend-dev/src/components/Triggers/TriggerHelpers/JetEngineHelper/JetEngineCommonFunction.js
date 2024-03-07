@@ -9,7 +9,7 @@ export const getAllPostTypeJetEngine = (data, setFlow) => {
     null,
     'GET',
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.types = result.data
       setFlow({ ...tmpFlow })
@@ -31,7 +31,7 @@ export const getAllPostPosts = (data, setFlow) => {
     null,
     'GET',
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.posts = result.data
       setFlow({ ...tmpFlow })

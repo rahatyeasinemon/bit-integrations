@@ -22,7 +22,7 @@ class MoosendController
     public function handleAuthorize($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -37,7 +37,7 @@ class MoosendController
         ];
         $response = Http::request($apiEndpoint, 'Get', null, $headers);
         if ($response->Error !== null) {
-            Response::error(
+            return Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -45,7 +45,7 @@ class MoosendController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
 

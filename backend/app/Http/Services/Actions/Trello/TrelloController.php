@@ -26,7 +26,7 @@ class TrelloController
             empty($queryParams->accessToken)
             || empty($queryParams->clientId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -52,12 +52,12 @@ class TrelloController
             uksort($allList, 'strnatcasecmp');
             $response['allBoardlist'] = $allList;
         } else {
-            Response::error(
+            return Response::error(
                 $allBoardResponse->response->error->message,
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function fetchAllLists($queryParams)
@@ -66,7 +66,7 @@ class TrelloController
             empty($queryParams->accessToken)
             || empty($queryParams->clientId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -91,12 +91,12 @@ class TrelloController
             uksort($allList, 'strnatcasecmp');
             $response['alllists'] = $allList;
         } else {
-            Response::error(
+            return Response::error(
                 $allBoardResponse->response->error->message,
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**

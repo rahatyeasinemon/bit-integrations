@@ -32,13 +32,13 @@ export default function MailifyAuthorization({ formID, mailifyConf, setMailifyCo
     }
     bitsFetch(data, 'mailify_authorize')
       .then(result => {
-        if (result && result.success) {
+        if (result && result.status === 'success') {
           const newConf = { ...mailifyConf }
           newConf.tokenDetails = result.data
           setMailifyConf(newConf)
           setisAuthorized(true)
           toast.success(__('Authorized Successfully', 'bit-integrations'))
-        } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+        } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
           toast.error(`${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}`)
         } else {
           toast.error(__('Authorization failed. please try again', 'bit-integrations'))

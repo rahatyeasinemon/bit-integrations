@@ -20,7 +20,7 @@ final class HubspotController
     public static function authorization($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/contacts';
@@ -31,16 +31,16 @@ final class HubspotController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (isset($apiResponse->results)) {
-            Response::success('Authorization successfull');
+            return Response::success('Authorization successfull');
         } else {
-            Response::error('Authorization failed', 400);
+            return Response::error('Authorization failed', 400);
         }
     }
 
     public static function getFields($requestParams)
     {
         if (empty($requestParams->api_key) || empty($requestParams->type)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = "https://api.hubapi.com/crm/v3/properties/$requestParams->type";
@@ -73,16 +73,16 @@ final class HubspotController
                 }
             }
 
-            Response::success($fields);
+            return Response::success($fields);
         } else {
-            Response::error('fields fetching failed', 400);
+            return Response::error('fields fetching failed', 400);
         }
     }
 
     public static function getAllOwners($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/owners';
@@ -99,16 +99,16 @@ final class HubspotController
                     'ownerName' => "$owner->firstName $owner->lastName"
                 ];
             }
-            Response::success($owners);
+            return Response::success($owners);
         } else {
-            Response::error('fields fetching failed', 400);
+            return Response::error('fields fetching failed', 400);
         }
     }
 
     public static function getAllPipelines($requestParams)
     {
         if (empty($requestParams->api_key) || empty($requestParams->type)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = "https://api.hubapi.com/crm/v3/pipelines/$requestParams->type";
@@ -136,16 +136,16 @@ final class HubspotController
                     'stages'       => $tempStage
                 );
             }
-            Response::success($response);
+            return Response::success($response);
         } else {
-            Response::error('pipelines fetching failed', 400);
+            return Response::error('pipelines fetching failed', 400);
         }
     }
 
     public static function getAllContacts($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/contacts?limit=100';
@@ -163,16 +163,16 @@ final class HubspotController
                     'contactName' => $contactName
                 ];
             }
-            Response::success($contacts);
+            return Response::success($contacts);
         } else {
-            Response::error('contacts fetching failed', 400);
+            return Response::error('contacts fetching failed', 400);
         }
     }
 
     public static function getAllCompany($requestParams)
     {
         if (empty($requestParams->api_key)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/companies?limit=100';
@@ -189,9 +189,9 @@ final class HubspotController
                     'companyName' => $company->properties->name
                 ];
             }
-            Response::success($companies);
+            return Response::success($companies);
         } else {
-            Response::error('fields fetching failed', 400);
+            return Response::error('fields fetching failed', 400);
         }
     }
 

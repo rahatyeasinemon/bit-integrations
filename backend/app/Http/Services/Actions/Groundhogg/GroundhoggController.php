@@ -21,7 +21,7 @@ class GroundhoggController
             empty($requestParams->public_key) || empty($requestParams->token)
             || empty($requestParams->domainName)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -40,9 +40,9 @@ class GroundhoggController
 
         if ($apiResponse->status === 'success') {
             $apiResponse;
-            Response::success($apiResponse);
+            return Response::success($apiResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'There is an error .',
                 400
             );
@@ -55,7 +55,7 @@ class GroundhoggController
             empty($requestParams->public_key) || empty($requestParams->token)
             || empty($requestParams->domainName)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -74,9 +74,9 @@ class GroundhoggController
 
         if ($apiResponse->status === 'success') {
             $apiResponse;
-            Response::success($apiResponse);
+            return Response::success($apiResponse);
         } else {
-            Response::error(
+            return Response::error(
                 'There is an error .',
                 400
             );

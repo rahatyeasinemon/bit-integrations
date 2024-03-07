@@ -9,7 +9,7 @@ export const getFluentCrmTags = (data, setFlow) => {
     null,
     'GET',
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.tags = result.data
       setFlow({ ...tmpFlow })
@@ -31,7 +31,7 @@ export const getFluentCrmLists = (data, setFlow) => {
     null,
     'GET',
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.lists = result.data
       setFlow({ ...tmpFlow })
@@ -53,7 +53,7 @@ export const getFluentCrmStatus = (data, setFlow) => {
     null,
     'GET',
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.status = result.data
       setFlow({ ...tmpFlow })

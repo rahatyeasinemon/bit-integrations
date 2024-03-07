@@ -30,7 +30,7 @@ export const refreshSalesmateFields = (
 
   bitsFetch(requestParams, "Salesmate_fields")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setSalesmateConf(prevSalesmateConf => {
           const draftConf = { ...prevSalesmateConf }
           draftConf.field_map = [
@@ -119,7 +119,7 @@ export const salesmateAuthentication = (
   }
 
   bitsFetch(requestParams, "salesmate_authentication").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setIsAuthorized(true)
       setLoading({ ...loading, auth: false })
       toast.success(__("Authorized successfully", "bit-integrations"))
@@ -142,7 +142,7 @@ export const getAllTags = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, "salesmate_fetch_all_tags").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.tags = result.data
@@ -243,7 +243,7 @@ export const getAllCRMCurrency = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, "salesmate_fetch_all_currencies").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...confTmp }
         if (result.data) {
           newConf.currencies = result.data
@@ -273,7 +273,7 @@ export const getAllCRMCompany = (confTmp, setConf, setLoading) => {
 
   bitsFetch(requestParams, "salesmate_fetch_all_CRMCompanies").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         if (!result.data) {
           setLoading({ ...setLoading, CRMCompany: false })
           toast.error(__("Companies Not Found!", "bit-integrations"))
@@ -312,7 +312,7 @@ export const getAllCRMPipelines = (confTmp, setConf, loading, setLoading) => {
   bitsFetch(requestParams, "salesmate_fetch_all_CRMPipelines").then(
     (result) => {
       setLoading({ ...loading, CRMPipelines: false })
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setConf(prevConf => {
           const draftConf = { ...prevConf }
           if (result.data) {
@@ -338,7 +338,7 @@ export const getAllCRMPrimaryContact = (confTmp, setConf, loading, setLoading) =
   bitsFetch(requestParams, "salesmate_fetch_all_CRMContacts").then(
     (result) => {
       setLoading({ ...loading, CRMContacts: false })
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         if (!result.data) {
           toast.error(__("Contacts Not Found!", "bit-integrations"))
           return
@@ -370,7 +370,7 @@ export const getAllCRMOwner = (confTmp, setConf, loading, setLoading) => {
   bitsFetch(requestParams, "salesmate_fetch_all_CRMOwners").then(
     (result) => {
       setLoading({ ...loading, CRMOwners: false })
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         setConf(prevConf => {
           const draftConf = { ...prevConf }
           if (result.data) {

@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\Elementor;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class ElementorController
@@ -42,7 +43,7 @@ final class ElementorController
     public function getAllForms()
     {
         if (!self::pluginActive()) {
-            Response::error(__('Elementor Pro is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Elementor Pro is not installed or activated', 'bit-integrations'));
         }
 
         $forms = ElementorHelper::all_forms();
@@ -53,32 +54,32 @@ final class ElementorController
                 'post_id'   => $form['post_id']
             ];
         }
-        Response::success($all_forms);
+        return Response::success($all_forms);
     }
 
     public function getFormFields($data)
     {
         if (!self::pluginActive()) {
-            Response::error(__('Elementor Pro is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Elementor Pro is not installed or activated', 'bit-integrations'));
         }
 
         if (empty($data->id)) {
-            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data);
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
         $responseData['postId'] = $data->postId;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($data)
     {
         if (empty($data->id)) {
-            Response::error(__('Form doesn\'t exists', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists', 'bit-integrations'));
         }
         $form_id = $data->id;
         $post_id = $data->postId;

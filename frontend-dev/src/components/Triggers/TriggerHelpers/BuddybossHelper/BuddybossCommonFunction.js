@@ -10,7 +10,7 @@ export const getTopicByForum = (val, tmpNewFlow, setNewFlow, edit = false) => {
     queryParams,
     "GET"
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       // const newConf = { ...tmpNewFlow }
       // if (!edit) {
       //   newConf.triggerData.topics = result.data
@@ -71,7 +71,7 @@ export const getBuddybossTopicByForum = (data, setFlow) => {
     queryParams,
     "GET"
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data };
       tmpFlow.flow_details.topics = result.data;
 
@@ -90,7 +90,7 @@ export const getBuddybossTopicByForum = (data, setFlow) => {
 export const getBuddybossForum = (data, setFlow) => {
   const loadQuizType = bitsFetch(null, "get_all_forum", null, "GET").then(
     (result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const tmpFlow = { ...data };
         tmpFlow.flow_details.forums = result.data;
         setFlow({ ...tmpFlow });
@@ -115,7 +115,7 @@ export const getBuddybossGroup = (data, setFlow) => {
     queryParams,
     "GET"
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data };
       tmpFlow.flow_details.groups = result.data;
       setFlow({ ...tmpFlow });

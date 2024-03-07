@@ -18,9 +18,9 @@ class GiveWpController
     public static function authorizeGiveWp()
     {
         if (self::pluginActive()) {
-            Response::success(true);
+            return Response::success(true);
         }
-        Response::error(__('GiveWp must be activated!', 'bit-integrations'));
+        return Response::error(__('GiveWp must be activated!', 'bit-integrations'));
     }
 
     public function execute($integrationData, $fieldValues)

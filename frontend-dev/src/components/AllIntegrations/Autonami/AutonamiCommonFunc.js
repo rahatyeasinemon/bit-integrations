@@ -5,7 +5,7 @@ export const refreshAutonamiListsAndTags = (autonamiConf, setAutonamiConf, setIs
   setIsLoading(true)
   bitsFetch({}, 'autonami_lists_and_tags')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...autonamiConf }
         if (!newConf.default) {
           newConf.default = {}
@@ -18,7 +18,7 @@ export const refreshAutonamiListsAndTags = (autonamiConf, setAutonamiConf, setIs
         }
         setSnackbar({ show: true, msg: __('Autonami lists and tags refreshed', 'bit-integrations') })
         setAutonamiConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
+      } else if ((result && result.data && result.data.data) || (result.status === 'error' && typeof result.data === 'string')) {
         setSnackbar({ show: true, msg: `${__('Autonami lists and tags refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
       } else {
         setSnackbar({ show: true, msg: __('Autonami lists and tags refresh failed. please try again', 'bit-integrations') })
@@ -31,7 +31,7 @@ export const refreshAutonamiListsAndTags = (autonamiConf, setAutonamiConf, setIs
 export const getAutonamiFields = (autonamiConf, setAutonamiConf, setIsLoading, setSnackbar, refreshFields = false) => {
   bitsFetch({}, 'autonami_fields')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...autonamiConf }
         if (!newConf.default) {
           newConf.default = {}

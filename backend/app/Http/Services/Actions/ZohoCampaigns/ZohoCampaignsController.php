@@ -46,7 +46,7 @@ class ZohoCampaignsController
             || empty($requestsParams->redirectURI)
             || empty($requestsParams->code)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -66,13 +66,13 @@ class ZohoCampaignsController
         $apiResponse = Http::request($apiEndpoint, 'Post', $requestParams);
 
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
         $apiResponse->generates_on = \time();
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
     /**
      * Process ajax request for refresh crm modules
@@ -88,7 +88,7 @@ class ZohoCampaignsController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -121,7 +121,7 @@ class ZohoCampaignsController
             uksort($allLists, 'strnatcasecmp');
             $response['lists'] = $allLists;
         } else {
-            Response::error(
+            return Response::error(
                 empty($listsMetaResponse->data) ? 'Unknown' : $listsMetaResponse->error,
                 400
             );
@@ -129,7 +129,7 @@ class ZohoCampaignsController
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['lists']);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**
@@ -147,7 +147,7 @@ class ZohoCampaignsController
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -181,7 +181,7 @@ class ZohoCampaignsController
 
             $response['required'] = ['Contact Email'];
         } else {
-            Response::error(
+            return Response::error(
                 $contactFieldsMetaResponse->status === 'error' ? $contactFieldsMetaResponse->message : 'Unknown',
                 400
             );
@@ -190,7 +190,7 @@ class ZohoCampaignsController
             $response["queryModule"] = $queryParams->module;
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     /**

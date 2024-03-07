@@ -36,7 +36,7 @@ class TelegramController
     public static function telegramAuthorize($requestsParams)
     {
         if (empty($requestsParams->bot_api_key)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -50,7 +50,7 @@ class TelegramController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || !$apiResponse->ok) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error_code) ? 'Unknown' : $apiResponse,
                 400
             );
@@ -61,13 +61,13 @@ class TelegramController
 
 
         if (is_wp_error($apiResponse) || !$apiResponse->ok) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error_code) ? 'Unknown' : $apiResponse,
                 400
             );
         }
 
-        Response::success(true);
+        return Response::success(true);
     }
     /**
      * Process ajax request for refresh telegram get Updates
@@ -80,7 +80,7 @@ class TelegramController
     public static function refreshGetUpdates($requestsParams)
     {
         if (empty($requestsParams->bot_api_key)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -106,12 +106,12 @@ class TelegramController
 
             $response['telegramChatLists'] = $allList;
         } else {
-            Response::error(
+            return Response::error(
                 $telegramResponse->description,
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Triggers\CF7;
 
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class CF7Controller
@@ -34,7 +35,7 @@ final class CF7Controller
     public function getAll()
     {
         if (!class_exists('WPCF7_ContactForm')) {
-            Response::error(__('Contact Form 7 is not installed or activated', 'bit-integrations'));
+            return Response::error(__('Contact Form 7 is not installed or activated', 'bit-integrations'));
         }
         $forms = \WPCF7_ContactForm::find();
         $all_forms = [];
@@ -44,9 +45,9 @@ final class CF7Controller
                 'title' => $form->title()
             ];
         }
-        Response::success($all_forms);
+        return Response::success($all_forms);
     }
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         $fields = self::fields($data->id);
         $missing_field = null;
@@ -54,14 +55,14 @@ final class CF7Controller
             $missing_field = 'Form ID';
         }
         if (!is_null($missing_field)) {
-            Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            return Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         if (empty($fields)) {
-            Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
+            return Response::error(__('Form doesn\'t exists any field', 'bit-integrations'));
         }
 
         $responseData['fields'] = $fields;
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function fields($form_id)

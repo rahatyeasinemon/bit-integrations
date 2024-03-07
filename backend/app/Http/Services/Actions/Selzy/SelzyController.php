@@ -22,7 +22,7 @@ class SelzyController
     public function handleAuthorize($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -33,7 +33,7 @@ class SelzyController
         $apiEndpoint = $this->baseUrl . 'getLists?format=json&api_key=' . $requestParams->authKey;
         $response = Http::request($apiEndpoint, 'Get', null);
         if ($response->code === "invalid_api_key") {
-            Response::error(
+            return Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -41,13 +41,13 @@ class SelzyController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function getAllTags($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -58,7 +58,7 @@ class SelzyController
         $apiEndpoint = $this->baseUrl . 'getTags?format=json&api_key=' . $requestParams->authKey;
         $response = Http::request($apiEndpoint, 'Get', null);
         if ($response->code === "invalid_api_key") {
-            Response::error(
+            return Response::error(
                 __(
                     'Invalid token',
                     'bit-integrations'
@@ -66,13 +66,13 @@ class SelzyController
                 400
             );
         }
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function getAllCustomFields($requestParams)
     {
         if (empty($requestParams->authKey)) {
-            Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
+            return Response::error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
         $apiEndpoint = "https://api.selzy.com/en/api/getFields?format=json&api_key=$requestParams->authKey";
@@ -80,7 +80,7 @@ class SelzyController
         $response = Http::request($apiEndpoint, 'Get', null);
 
         if ($response->code === "invalid_api_key") {
-            Response::error(__('Invalid token', 'bit-integrations'), 400);
+            return Response::error(__('Invalid token', 'bit-integrations'), 400);
         }
 
         if (!empty($response->result)) {
@@ -91,7 +91,7 @@ class SelzyController
                   'required' => false
                 ];
             }
-            Response::success($customFields);
+            return Response::success($customFields);
         }
     }
 

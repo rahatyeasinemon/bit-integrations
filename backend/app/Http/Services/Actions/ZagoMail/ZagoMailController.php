@@ -39,7 +39,7 @@ class ZagoMailController
     {
         if (empty($requestsParams->api_public_key)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -59,13 +59,13 @@ class ZagoMailController
         $apiResponse = Http::request($apiEndpoint, 'Post', json_encode($body), $header);
 
         if ($apiResponse->status == 'error' || $apiResponse->status !== 'success') {
-            Response::error(
+            return Response::error(
                 empty($apiResponse) ? 'Unknown' : $apiResponse,
                 400
             );
         }
 
-        Response::success(true);
+        return Response::success(true);
     }
 
 
@@ -80,7 +80,7 @@ class ZagoMailController
     {
         if (empty($queryParams->api_public_key)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -111,7 +111,7 @@ class ZagoMailController
                 ];
             }
             $response['zagoMailLists'] = $lists;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -126,7 +126,7 @@ class ZagoMailController
     {
         if (empty($queryParams->api_public_key)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -156,7 +156,7 @@ class ZagoMailController
                 ];
             }
             $response['zagoMailTags'] = $tags;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 
@@ -171,7 +171,7 @@ class ZagoMailController
     {
         if (empty($queryParams->api_public_key)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -203,7 +203,7 @@ class ZagoMailController
             }
 
             $response['zagoMailField'] = $fields;
-            Response::success($response);
+            return Response::success($response);
         }
     }
 

@@ -29,7 +29,7 @@ class DiscordController
         if (
             empty($tokenRequestParams->accessToken)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -45,12 +45,12 @@ class DiscordController
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
 
         if (!isset($apiResponse->id)) {
-            Response::error(
+            return Response::error(
                 empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 400
             );
         }
-        Response::success($apiResponse);
+        return Response::success($apiResponse);
     }
 
 
@@ -59,7 +59,7 @@ class DiscordController
         if (
             empty($tokenRequestParams->accessToken)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -81,9 +81,9 @@ class DiscordController
                     'name' => $server->name
                 ];
             }
-            Response::success($servers);
+            return Response::success($servers);
         } else {
-            Response::error('Servers fetching failed', 400);
+            return Response::error('Servers fetching failed', 400);
         }
     }
 
@@ -93,7 +93,7 @@ class DiscordController
         if (
             empty($tokenRequestParams->accessToken) || empty($tokenRequestParams->serverId)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -115,9 +115,9 @@ class DiscordController
                     'name' => $channel->name
                 ];
             }
-            Response::success($channels);
+            return Response::success($channels);
         } else {
-            Response::error('Channels fetching failed', 400);
+            return Response::error('Channels fetching failed', 400);
         }
     }
 

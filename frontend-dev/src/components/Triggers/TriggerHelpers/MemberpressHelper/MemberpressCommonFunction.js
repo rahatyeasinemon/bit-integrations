@@ -4,7 +4,7 @@ import { __ } from '../../../../Utils/i18nwrap'
 
 export const getAllMembership = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_all_membership', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.allMemberships = result.data
 
@@ -22,7 +22,7 @@ export const getAllMembership = (data, setFlow) => {
 
 export const getAllOneTimeMembership = (data, setFlow) => {
   const loadPostTypes = bitsFetch(null, 'get_all_onetime_membership', null, 'GET').then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.oneTimeMembership = result.data
 
@@ -45,7 +45,7 @@ export const getAllRecurringMembership = (data, setFlow) => {
     null,
     'GET',
   ).then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const tmpFlow = { ...data }
       tmpFlow.flow_details.recurringMembership = result.data
       setFlow({ ...tmpFlow })

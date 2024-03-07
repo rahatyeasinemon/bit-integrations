@@ -4,6 +4,7 @@ namespace BitApps\BTCBI\Http\Services\Triggers\Registration;
 
 use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
 use BitApps\BTCBI\Model\Flow;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class RegistrationController
@@ -38,7 +39,7 @@ final class RegistrationController
             ['id' => 5, 'title' => 'User delete account'],
         ];
 
-        Response::success($forms);
+        return Response::success($forms);
     }
 
     public static function fields($triggerId)
@@ -101,7 +102,7 @@ final class RegistrationController
         return $fields;
     }
 
-    public function get_a_form($data)
+    public function get_a_form(Request $data)
     {
         $responseData['fields'] = self::fields($data->id);
         $responseData['fields'][] = [
@@ -110,7 +111,7 @@ final class RegistrationController
             'type' => 'password',
         ];
 
-        Response::success($responseData);
+        return Response::success($responseData);
     }
 
     public static function userCreate()

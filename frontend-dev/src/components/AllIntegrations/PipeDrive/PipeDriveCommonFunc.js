@@ -150,7 +150,7 @@ export const refreshFields = (
 ) => {
   const requestParams = { api_key: pipeDriveConf.api_key, module };
   bitsFetch(requestParams, "PipeDrive_refresh_fields").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       const newConf = { ...pipeDriveConf };
       if (!newConf.default.modules[module].fields)
         newConf.default.modules[module].fields = {};
@@ -186,7 +186,7 @@ export const refreshOrganizations = (
 
   bitsFetch(requestParams, "PipeDrive_fetch_meta_data")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...pipeDriveConf };
         if (!newConf.default.organizations) newConf.default.organizations = {};
         if (result.data) {
@@ -199,7 +199,7 @@ export const refreshOrganizations = (
         });
       } else if (
         (result && result.data && result.data.data) ||
-        (!result.success && typeof result.data === "string")
+        (result.status === 'error' && typeof result.data === "string")
       ) {
         setSnackbar({
           show: true,
@@ -236,7 +236,7 @@ export const refreshPersons = (
 
   bitsFetch(requestParams, "PipeDrive_fetch_meta_data")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...pipeDriveConf };
         if (!newConf.default.persons) newConf.default.persons = {};
         if (result.data) {
@@ -249,7 +249,7 @@ export const refreshPersons = (
         });
       } else if (
         (result && result.data && result.data.data) ||
-        (!result.success && typeof result.data === "string")
+        (result.status === 'error' && typeof result.data === "string")
       ) {
         setSnackbar({
           show: true,
@@ -286,7 +286,7 @@ export const getAllOwners = (
 
   bitsFetch(requestParams, "PipeDrive_fetch_meta_data")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...pipeDriveConf };
         if (!newConf.default.owners) newConf.default.owners = {};
         if (result.data) {
@@ -299,7 +299,7 @@ export const getAllOwners = (
         });
       } else if (
         (result && result.data && result.data.data) ||
-        (!result.success && typeof result.data === "string")
+        (result.status === 'error' && typeof result.data === "string")
       ) {
         setSnackbar({
           show: true,
@@ -333,7 +333,7 @@ export const getAllLeadLabels = (
 
   bitsFetch(requestParams, "PipeDrive_fetch_meta_data")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...pipeDriveConf };
         if (!newConf.default.leadLabels) newConf.default.leadLabels = {};
         if (result.data) {
@@ -346,7 +346,7 @@ export const getAllLeadLabels = (
         });
       } else if (
         (result && result.data && result.data.data) ||
-        (!result.success && typeof result.data === "string")
+        (result.status === 'error' && typeof result.data === "string")
       ) {
         setSnackbar({
           show: true,
@@ -379,7 +379,7 @@ export const getAllCurrencies = (
 
   bitsFetch(requestParams, "PipeDrive_fetch_meta_data")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...pipeDriveConf };
         if (!newConf.default.currencies) newConf.default.currencies = {};
         if (result.data) {
@@ -392,7 +392,7 @@ export const getAllCurrencies = (
         });
       } else if (
         (result && result.data && result.data.data) ||
-        (!result.success && typeof result.data === "string")
+        (result.status === 'error' && typeof result.data === "string")
       ) {
         setSnackbar({
           show: true,
@@ -429,7 +429,7 @@ export const getDealStages = (
 
   bitsFetch(requestParams, "PipeDrive_fetch_meta_data")
     .then((result) => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...pipeDriveConf };
         if (!newConf.default.stages) newConf.default.stages = {};
         if (result.data) {
@@ -442,7 +442,7 @@ export const getDealStages = (
         });
       } else if (
         (result && result.data && result.data.data) ||
-        (!result.success && typeof result.data === "string")
+        (result.status === 'error' && typeof result.data === "string")
       ) {
         setSnackbar({
           show: true,
@@ -549,7 +549,7 @@ export const handleAuthorize = (
   const requestParams = { api_key: confTmp.api_key, type: "persons" };
 
   bitsFetch(requestParams, "PipeDrive_fetch_meta_data").then((result) => {
-    if (result && result.success) {
+    if (result && result.status === 'success') {
       setisAuthorized(true);
       setIsLoading(false);
       toast.success(__("Authorized successfully", "bit-integrations"));

@@ -33,7 +33,7 @@ final class RapidmailController
             empty($tokenRequestParams->username)
             || empty($tokenRequestParams->password)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -51,14 +51,14 @@ final class RapidmailController
 
         $apiResponse = Http::request($apiEndpoint, 'Get', null, $header);
         if (!(property_exists($apiResponse, '_embedded') && property_exists($apiResponse->_embedded, 'apiusers'))) {
-            Response::error(
+            return Response::error(
                 // empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
                 'Unauthorize',
                 400
             );
         } else {
             $apiResponse->generates_on = \time();
-            Response::success($apiResponse);
+            return Response::success($apiResponse);
         }
     }
     /**
@@ -74,7 +74,7 @@ final class RapidmailController
             empty($queryParams->username)
             || empty($queryParams->password)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -99,7 +99,7 @@ final class RapidmailController
             ];
         }
         $response['recipientlists'] = $data;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public static function getAllFields($queryParams)
@@ -108,7 +108,7 @@ final class RapidmailController
             empty($queryParams->username)
             || empty($queryParams->password)
         ) {
-            Response::error(
+            return Response::error(
                 __(
                     'Requested parameter is empty',
                     'bit-integrations'
@@ -133,7 +133,7 @@ final class RapidmailController
             ];
         }
         $response['recipientlists'] = $data;
-        Response::success($response);
+        return Response::success($response);
     }
 
     public function execute($integrationData, $fieldValues)

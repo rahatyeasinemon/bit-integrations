@@ -22,7 +22,7 @@ export const getAllBrand = (sendyConf, setSendyConf, setIsLoading, setSnackbar) 
   }
   const loadPostTypes = bitsFetch(queryParams, 'get_all_brands')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...sendyConf }
         if (!newConf.default) newConf.default = {}
         if (result.data) {
@@ -53,7 +53,7 @@ export const getAllList = (sendyConf, setSendyConf, setIsLoading, setSnackbar) =
   }
   const loadPostTypes = bitsFetch(queryParams, 'get_all_lists_from_sendy')
     .then(result => {
-      if (result && result.success) {
+      if (result && result.status === 'success') {
         const newConf = { ...sendyConf }
         if (!newConf.default) newConf.default = {}
         if (result.data) {
