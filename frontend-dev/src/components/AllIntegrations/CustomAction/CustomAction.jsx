@@ -82,7 +82,7 @@ const CustomAction = ({ formFields, setFlow, flow, allIntegURL }) => {
           formFields={formFields}
         />
         <button
-          onClick={() => checkFunctionValidity(customActionConf, setCustomActionConf, setLoading)}
+          onClick={() => checkFunctionValidity(customActionConf, setCustomActionConf, loading, setLoading)}
           disabled={!customActionConf.value}
           className="btn f-left btcd-btn-lg green sh-sm flx mt-5"
           type="button"
