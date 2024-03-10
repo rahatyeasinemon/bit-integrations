@@ -3,6 +3,7 @@
 namespace BitApps\BTCBI\Http\Services\Log;
 
 use BitApps\BTCBI\Model\LogModel;
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class LogHandler
@@ -12,13 +13,13 @@ final class LogHandler
         //
     }
 
-    public function get($data)
+    public function get(Request $request)
     {
-        if (!isset($data->id)) {
+        if (!$request->has('id')) {
             return Response::error('Integration Id cann\'t be empty');
         }
         $logModel = new LogModel();
-        $countResult = $logModel->count(['flow_id' => $data->id]);
+        $countResult = $logModel->count(['flow_id' => $request->id]);
         if (is_wp_error($countResult)) {
             return Response::success(
                 [
@@ -38,17 +39,17 @@ final class LogHandler
         }
         $offset = 0;
         $limit = 10;
-        if (isset($data->offset)) {
-            $offset = $data->offset;
+        if ($request->has('offset')) {
+            $offset = $request->offset;
         }
-        if (isset($data->pageSize)) {
-            $limit = $data->pageSize;
+        if ($request->has('pageSize')) {
+            $limit = $request->pageSize;
         }
-        if (isset($data->limit)) {
-            $limit = $data->limit;
+        if ($request->has('limit')) {
+            $limit = $request->limit;
         }
 
-        $result = $logModel->get('*', ['flow_id' => $data->id], $limit, $offset, 'id', 'desc');
+        $result = $logModel->get('*', ['flow_id' => $request->id], $limit, $offset, 'id', 'desc');
         if (is_wp_error($result)) {
             return Response::success(
                 [

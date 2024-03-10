@@ -28,7 +28,7 @@ class HookService
         $this->loadTriggersRoutes();
         $this->loadAppHooks();
         $this->loadActionsHooks();
-        $this->loadAdminAjax();
+        // $this->loadAdminAjax();
 
         Hooks::addAction('rest_api_init', [$this, 'loadApi']);
     }
@@ -38,10 +38,10 @@ class HookService
      *
      * @return null
      */
-    public function loadAdminAjax()
-    {
-        (new AdminAjax())->register();
-    }
+    // public function loadAdminAjax()
+    // {
+    //     (new AdminAjax())->register();
+    // }
 
     /**
      * Helps to register App hooks

@@ -30,29 +30,34 @@ final class FlowController
      */
     public function get($conditions = [], $columns = [])
     {
-        if (empty($columns)) {
-            $columns = [
-                'id',
-                'name',
-                'triggered_entity',
-                'triggered_entity_id',
-                'flow_details',
-                'status',
-                'user_id',
-                'user_ip',
-                'created_at',
-                'updated_at'
 
-            ];
-        }
-        return static::$_integrationModel->get(
-            $columns,
-            $conditions,
-            null,
-            null,
-            'created_at',
-            'DESC'
-        );
+        // error_log(print_r($conditions, true));
+        return FlowModel::orderBy('created_at')->desc()->all($columns);
+        // ($item = "*", $condition = [], $limit = null, $offset = null, $order_by = null, $order_follow = null)
+
+        // if (empty($columns)) {
+        //     $columns = [
+        //         'id',
+        //         'name',
+        //         'triggered_entity',
+        //         'triggered_entity_id',
+        //         'flow_details',
+        //         'status',
+        //         'user_id',
+        //         'user_ip',
+        //         'created_at',
+        //         'updated_at'
+
+        //     ];
+        // }
+        // return static::$_integrationModel->get(
+        //     $columns,
+        //     $conditions,
+        //     null,
+        //     null,
+        //     'created_at',
+        //     'DESC'
+        // );
     }
 
     /**

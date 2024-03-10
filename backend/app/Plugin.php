@@ -17,6 +17,7 @@ use BitApps\BTCBI\HTTP\Middleware\NonceCheckerMiddleware;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Providers\Hooks\HookService;
 use BitApps\BTCBI\Views\Layout;
+use BTCBI\Deps\BitApps\WPDatabase\Connection;
 use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
 use BTCBI\Deps\BitApps\WPKit\Http\RequestType;
 use BTCBI\Deps\BitApps\WPKit\Utils\Capabilities;
@@ -41,6 +42,7 @@ final class Plugin
      */
     public function initialize()
     {
+        Connection::setPluginPrefix(Config::VAR_PREFIX);
         Hooks::addAction('plugins_loaded', [$this, 'init_plugin'], 12);
         (new Activation())->activate();
         (new Deactivation())->register();
