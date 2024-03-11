@@ -77,11 +77,7 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
                 }
 
                 if ($isPrimaryKeysMatch) {
-                    $data = [];
-                    foreach ($formData as $field) {
-                        $value                  = Helper::extractValueFromPath($extra, $field['name']);
-                        $data[$field['name']]   = $field['type'] != 'file' ? $value : explode(',', $value);
-                    }
+                    $data = array_column($formData, 'value', 'name');
                     Flow::execute('Breakdance', 'BreakdanceHook', $data, array($flow));
                 }
             }
