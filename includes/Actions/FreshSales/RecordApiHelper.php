@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\FreshSales;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -27,7 +27,7 @@ class RecordApiHelper
         $this->baseUrl = $this->_integrationDetails->bundle_alias;
         $this->_defaultHeader = [
             'Content-Type' => 'application/json',
-            "Authorization" => "Token token=".$this->_integrationDetails->api_key
+            "Authorization" => "Token token=" . $this->_integrationDetails->api_key
         ];
     }
 
@@ -41,13 +41,13 @@ class RecordApiHelper
 
             foreach ($accounts as $account) {
                 if ($account->value == $account_id) {
-                    $finalData['sales_account'] = [ 'name' => $account->label];
+                    $finalData['sales_account'] = ['name' => $account->label];
                 }
             }
         }
 
         if ($module === 'deal') {
-            $finalData['contacts_added_list'] = [ $this->_integrationDetails->moduleData->contact_id];
+            $finalData['contacts_added_list'] = [$this->_integrationDetails->moduleData->contact_id];
         }
 
         if ($module === 'account') {
@@ -55,9 +55,9 @@ class RecordApiHelper
         }
 
         if ($module === 'product') {
-            $apiEndpoints =   "https://".$this->baseUrl."/api/cpq/". $module."s" ;
+            $apiEndpoints =   "https://" . $this->baseUrl . "/api/cpq/" . $module . "s";
         } else {
-            $apiEndpoints =   "https://".$this->baseUrl."/api/". $module."s" ;
+            $apiEndpoints =   "https://" . $this->baseUrl . "/api/" . $module . "s";
         }
 
         $actions = $this->_integrationDetails->actions;
@@ -94,7 +94,7 @@ class RecordApiHelper
                 foreach ($participants as $participant) {
                     array_push($allParticipants, (object)[
                         'contact_id'   => (int) $participant,
-                        'primary_flag'=> false
+                        'primary_flag' => false
                     ]);
                 };
                 $finalData['participants'] = $allParticipants;
@@ -114,15 +114,25 @@ class RecordApiHelper
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
-        $dataFinal = [];
+        $dataFinal      = [];
+        $customFields   = [];
+
         foreach ($fieldMap as $key => $value) {
             $triggerValue = $value->formField;
             $actionValue = $value->freshSalesFormField;
-            if ($triggerValue === 'custom') {
+            if (strpos($actionValue, 'cf_') === 0) {
+                $customFields[$actionValue] = $data[$triggerValue];
+            } elseif (strpos($actionValue, 'cf_') === 0 && $triggerValue === 'custom') {
+                $customFields[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
+            } elseif ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
             } elseif (!is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
+        }
+
+        if (!empty($customFields)) {
+            $dataFinal['custom_field'] = $customFields;
         }
 
         return $dataFinal;
@@ -139,7 +149,7 @@ class RecordApiHelper
             $finalData
         );
 
-        if (isset($apiResponse->error)) {
+        if (isset($apiResponse->errors)) {
             LogHandler::save($this->_integrationID, json_encode(['type' => $module, 'type_name' => 'add-' . $module]), 'error', json_encode($apiResponse));
         } else {
             LogHandler::save($this->_integrationID, json_encode(['type' => $module, 'type_name' => 'add-' . $module]), 'success', json_encode($apiResponse));
