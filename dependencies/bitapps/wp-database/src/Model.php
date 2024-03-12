@@ -4,7 +4,7 @@
  * Provides Base Model Class.
  *
  * @license GPL-2.0-or-later
- * Modified on 27-February-2024 using Strauss.
+ * Modified on 12-March-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 
@@ -119,7 +119,6 @@ abstract class Model implements ArrayAccess, JsonSerializable
      */
     public function __construct($attributes = [])
     {
-        $this->prefix = Connection::getPrefix();
         if (!property_exists($this, 'table') || !$this->table) {
             $this->_tableWithoutPrefix = ltrim(
                 strtolower(
@@ -131,9 +130,17 @@ abstract class Model implements ArrayAccess, JsonSerializable
                 ),
                 '_'
             ) . 's';
+        } else {
+            $this->_tableWithoutPrefix = $this->table;
         }
 
-        $this->table = $this->prefix . $this->_tableWithoutPrefix . $this->table;
+        $dbPrefix = Connection::wpPrefix();
+
+        if ($this->prefix === '') {
+            $dbPrefix = Connection::getPrefix();
+        }
+
+        $this->table = $dbPrefix . $this->prefix . $this->_tableWithoutPrefix;
 
         if (!isset($this->primaryKey)) {
             $this->primaryKey = 'id';
@@ -238,7 +245,8 @@ abstract class Model implements ArrayAccess, JsonSerializable
     {
         if (
             $this->_isExists
-            && (!isset($this->_original[$key])
+            && (
+                !isset($this->_original[$key])
                 || isset($this->_original[$key]) && $this->_original[$key] != $value
             )
         ) {

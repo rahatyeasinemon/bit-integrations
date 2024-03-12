@@ -2,7 +2,7 @@
 /**
  * @license GPL-2.0-or-later
  *
- * Modified on 27-February-2024 using Strauss.
+ * Modified on 12-March-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 
@@ -16,15 +16,15 @@ use Exception;
 
 class QueryBuilder
 {
-    const UPDATE = 'Update';
+    public const UPDATE = 'Update';
 
-    const INSERT = 'Insert';
+    public const INSERT = 'Insert';
 
-    const DELETE = 'Delete';
+    public const DELETE = 'Delete';
 
-    const SELECT = 'Select';
+    public const SELECT = 'Select';
 
-    const TIME_FORMAT = 'Y-m-d H:i:s';
+    public const TIME_FORMAT = 'Y-m-d H:i:s';
 
     protected $table;
 
@@ -547,7 +547,7 @@ class QueryBuilder
      */
     public function join($table, $firstColumn, $operator = null, $secondColumn = null, $type = 'INNER')
     {
-        $table    = Connection::getPrefix() . $table;
+        $table    = Connection::wpPrefix() . $this->_model->getPrefix() . $table;
         $hasAlias = preg_split('/ as /i', $table);
         if ($hasAlias && isset($hasAlias[1])) {
             $table = $hasAlias[0];
@@ -1336,9 +1336,10 @@ class QueryBuilder
 
             if (
                 !empty($ids)
-                && ($allRows = $this->newQuery()
-                    ->where($this->_model->getPrimaryKey(), $ids)
-                    ->get()
+                && (
+                    $allRows = $this->newQuery()
+                        ->where($this->_model->getPrimaryKey(), $ids)
+                        ->get()
                 )
             ) {
                 return $allRows;

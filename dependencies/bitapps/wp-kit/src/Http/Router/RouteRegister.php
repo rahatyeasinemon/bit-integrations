@@ -2,7 +2,7 @@
 /**
  * @license GPL-2.0-or-later
  *
- * Modified on 27-February-2024 using Strauss.
+ * Modified on 12-March-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 
@@ -351,7 +351,7 @@ final class RouteRegister
             }
 
             $this->setResponse(
-                Response::error([])
+                return Response::error([])
                     ->code('NOT_AUTHORIZED')
                     ->message($message)
             );

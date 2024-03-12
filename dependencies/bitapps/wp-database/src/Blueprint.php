@@ -2,7 +2,7 @@
 /**
  * @license GPL-2.0-or-later
  *
- * Modified on 27-February-2024 using Strauss.
+ * Modified on 12-March-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 
@@ -133,6 +133,13 @@ class Blueprint
         }
 
         throw new RuntimeException("Undefined method [  {$method}  ] called on Blueprint");
+    }
+
+    public function withPrefix($prefix)
+    {
+        $this->table = "{$prefix}{$this->table}";
+
+        return $this;
     }
 
     public function build()
@@ -736,7 +743,8 @@ class Blueprint
                 $query .= ' ADD ';
             }
 
-            $query .= (isset($indexColumn['type']) ? $indexColumn['type'] : null
+            $query .= (
+                isset($indexColumn['type']) ? $indexColumn['type'] : null
             ) . "INDEX {$indexColumn['name']}_INDEX ({$indexColumn['name']} ASC)";
         }
 

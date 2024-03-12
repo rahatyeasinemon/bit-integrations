@@ -16,11 +16,15 @@ use BitApps\BTCBI\db\DB;
 use BitApps\BTCBI\HTTP\Middleware\NonceCheckerMiddleware;
 use BitApps\BTCBI\Http\Services\Log\LogHandler;
 use BitApps\BTCBI\Providers\Hooks\HookService;
+use BitApps\BTCBI\Providers\InstallerProvider;
 use BitApps\BTCBI\Views\Layout;
 use BTCBI\Deps\BitApps\WPDatabase\Connection;
 use BTCBI\Deps\BitApps\WPKit\Hooks\Hooks;
 use BTCBI\Deps\BitApps\WPKit\Http\RequestType;
+use BTCBI\Deps\BitApps\WPKit\Migration\MigrationHelper;
 use BTCBI\Deps\BitApps\WPKit\Utils\Capabilities;
+use BTCBI\Deps\BitApps\WPTelemetry\Telemetry\Telemetry;
+use BTCBI\Deps\BitApps\WPTelemetry\Telemetry\TelemetryConfig;
 
 final class Plugin
 {
@@ -40,20 +44,53 @@ final class Plugin
      *
      * @return void
      */
-    public function initialize()
+    // public function initialize()
+    // {
+    //     Connection::setPluginPrefix(Config::VAR_PREFIX);
+    //     Hooks::addAction('plugins_loaded', [$this, 'init_plugin'], 12);
+    //     (new Activation())->activate();
+    //     (new Deactivation())->register();
+    //     (new UnInstallation())->register();
+    // }
+
+    public function __construct()
     {
         Connection::setPluginPrefix(Config::VAR_PREFIX);
+
+        $this->registerInstaller();
+
         Hooks::addAction('plugins_loaded', [$this, 'init_plugin'], 12);
-        (new Activation())->activate();
-        (new Deactivation())->register();
-        (new UnInstallation())->register();
+
+        $this->initWPTelemetry();
+    }
+
+    public function registerInstaller()
+    {
+        $installerProvider = new InstallerProvider();
+        $installerProvider->register();
+    }
+
+    public function initWPTelemetry()
+    {
+        TelemetryConfig::setSlug(Config::SLUG);
+        TelemetryConfig::setTitle(Config::TITLE);
+        TelemetryConfig::setVersion(Config::VERSION);
+        TelemetryConfig::setPrefix(Config::VAR_PREFIX);
+
+        Telemetry::report()->init();
+        Telemetry::feedback()->init();
     }
 
     public function init_plugin()
     {
+        Hooks::doAction(Config::withPrefix('loaded'));
+
         Hooks::addAction('init', [$this, 'init_classes'], 8);
         Hooks::addAction('init', [$this, 'integrationlogDelete'], 11);
         Hooks::addFilter('plugin_action_links_' . plugin_basename(BTCBI_PLUGIN_MAIN_FILE), [$this, 'plugin_action_links']);
+
+
+        $this->maybeMigrateDB();
     }
 
     /**
@@ -82,6 +119,18 @@ final class Plugin
         $links[] = '<a href="https://docs.bit-integrations.bitapps.pro" target="_blank">' . __('Docs', 'bit-integrations') . '</a>';
 
         return $links;
+    }
+
+
+    public static function maybeMigrateDB()
+    {
+        if (!Capabilities::check('manage_options')) {
+            return;
+        }
+
+        if (version_compare(Config::getOption('db_version'), Config::DB_VERSION, '<')) {
+            MigrationHelper::migrate(InstallerProvider::migration());
+        }
     }
 
     /**
@@ -156,7 +205,7 @@ final class Plugin
             return false;
         }
         static::$_instance = new static($main_file);
-        static::$_instance->initialize();
+        // static::$_instance->initialize();
         return true;
     }
 }
