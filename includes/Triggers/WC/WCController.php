@@ -1853,6 +1853,16 @@ final class WCController
         // }
     }
 
+    public static function handle_order_checkout($order)
+    {
+        if (!is_plugin_active('woocommerce/woocommerce.php')) {
+            return false;
+        }
+
+        $checkout = new \WC_Checkout();
+        self::handle_order_create($order->id, $checkout->get_posted_data());
+    }
+
     public static function accessSubscription($subscription, $quantity)
     {
         $items = $subscription->get_items();
