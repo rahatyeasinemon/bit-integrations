@@ -23,6 +23,7 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
 
     setKlaviyoConf({ ...newConf })
   }
+
   return (
     <div>
       <b className="wdt-200 d-in-b mt-2">{__('List:', 'bit-integrations')}</b>
@@ -30,8 +31,8 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
         <option value="">{__('Select List', 'bit-integrations')}</option>
         {
           klaviyoConf?.default?.lists && klaviyoConf.default.lists.map(list => (
-            <option key={list.list_id} value={list.list_id}>
-              {list.list_name}
+            <option key={list.id} value={list.id}>
+              {list.attributes.name}
             </option>
           ))
         }
