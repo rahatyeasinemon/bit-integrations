@@ -233,6 +233,14 @@ class RecordApiHelper
             $potentialLiabilityId = empty($integrationDetails->actions->potentialLiabilityId) ? null : $integrationDetails->actions->potentialLiabilityId;
             $slaViolationId = empty($integrationDetails->actions->slaViolationId) ? null : $integrationDetails->actions->slaViolationId;
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+
+            if (!empty($integrationDetails->actions->caseReason)) {
+                $finalData['Reason'] = $integrationDetails->actions->caseReason;
+            }
+            if (!empty($integrationDetails->actions->caseType)) {
+                $finalData['Type'] = $integrationDetails->actions->caseType;
+            }
+
             $createCaseResponse = $this->createCase($finalData, $contactId, $accountId, $caseStatusId, $caseOriginId, $casePriorityId, $potentialLiabilityId, $slaViolationId);
             if (is_object($createCaseResponse) && property_exists($createCaseResponse, 'id')) {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Case', 'type_name' => 'Case-create']), 'success', wp_json_encode("Created case id is : $createCaseResponse->id"));

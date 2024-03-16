@@ -81,8 +81,6 @@ function Salesforce({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'SicDesc', label: 'Sic Desc', required: false },
     { key: 'Fax', label: 'Fax', required: false },
     { key: 'TickerSymbol', label: 'Ticker Symbol', required: false },
-    // { key: 'Type', label: 'Account Type', required: false },
-    // { key: 'Ownership', label: 'Ownership', required: false },
     { key: 'AnnualRevenue', label: 'Annual Revenue', required: false },
   ]
 
