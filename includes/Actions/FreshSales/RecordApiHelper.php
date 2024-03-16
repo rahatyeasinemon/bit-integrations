@@ -18,7 +18,7 @@ class RecordApiHelper
     private $_integrationDetails;
     private $_integrationID;
     private $_defaultHeader;
-    private $baseUrl = 'https://api.pipedrive.com/v1/';
+    private $baseUrl;
 
     public function __construct($integrationDetails, $integId)
     {

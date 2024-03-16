@@ -25,6 +25,29 @@ function EditFreshSales({ allIntegURL }) {
   const [tab, settab] = useState(0)
   const formFields = useRecoilValue($formFields)
 
+  const setIntegName = (e, recordTab, freshSalesConf, setFreshSalesConf) => {
+    const newConf = { ...freshSalesConf }
+    const { name } = e.target
+
+    if (recordTab === 0) {
+      if (e.target.value !== '') {
+        newConf[name] = e.target.value
+      } else {
+        delete newConf[name]
+      }
+    } else {
+      if (!newConf.relatedlists) {
+        newConf.relatedlists = [];
+      }
+      if (e.target.value !== "") {
+        newConf.relatedlists[recordTab - 1][e.target.name] = e.target.value
+      } else {
+        delete newConf.relatedlists[recordTab - 1][e.target.name];
+      }
+    }
+    setFreshSalesConf({ ...newConf })
+  }
+
   const saveConfig = () => {
     if (!checkMappedFields(freshSalesConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
@@ -48,7 +71,7 @@ function EditFreshSales({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 ">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, tab, freshSalesConf, setFreshSalesConf)} name="name" value={freshSalesConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input className="btcd-paper-inp w-5" onChange={e => setIntegName(e, tab, freshSalesConf, setFreshSalesConf)} name="name" value={freshSalesConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
       </div>
       <br />
 
