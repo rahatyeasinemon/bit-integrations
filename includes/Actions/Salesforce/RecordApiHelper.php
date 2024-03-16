@@ -149,6 +149,14 @@ class RecordApiHelper
         }
         if ($actionName === 'account-create') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+
+            if (!empty($integrationDetails->actions->selectedAccType)) {
+                $finalData['Type'] = $integrationDetails->actions->selectedAccType;
+            }
+            if (!empty($integrationDetails->actions->selectedOwnership)) {
+                $finalData['Ownership'] = $integrationDetails->actions->selectedOwnership;
+            }
+
             $createAccountResponse = $this->createAccount($finalData);
             if (is_object($createAccountResponse) && property_exists($createAccountResponse, 'id')) {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Account', 'type_name' => 'Account-create']), 'success', wp_json_encode("Created account id is : $createAccountResponse->id"));

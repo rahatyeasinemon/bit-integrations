@@ -253,7 +253,7 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
         )}
       <br />
       <br />
-      {['opportunity-create', 'event-create', 'case-create'].includes(salesforceConf?.actionName)
+      {['opportunity-create', 'event-create', 'case-create', 'account-create'].includes(salesforceConf?.actionName)
         && (
           <>
             <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
