@@ -1,4 +1,5 @@
 <?php
+
 /***
  * If try to direct access  plugin folder it will Exit
  **/
@@ -6,12 +7,13 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\controller\PostController;
-use BitCode\FI\controller\UserController;
-use BitCode\FI\Core\Util\Route;
 use BitCode\FI\Flow\Flow;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Route;
+use BitCode\FI\controller\PostController;
+use BitCode\FI\controller\UserController;
 use BitCode\FI\Triggers\TriggerController;
+use BitCode\FI\controller\ZohoAuthController;
 
 Route::post('log/get', [LogHandler::class, 'get']);
 Route::post('log/delete', [LogHandler::class, 'delete']);
@@ -36,3 +38,6 @@ Route::get('role/list', [UserController::class, 'getUserRoles']);
 Route::get('page/list', [PostController::class, 'getPages']);
 Route::post('post-types/list', [PostController::class, 'getPostTypes']);
 /*Controller */
+
+/*Zoho Controller */
+Route::post('zoho/generate-token', [ZohoAuthController::class, 'generateTokens']);
