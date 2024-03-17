@@ -10,6 +10,8 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import ZohoMarketingHubAuthorization from './ZohoMarketingHubAuthorization'
 import { checkMappedFields, handleInput, refreshLists, setGrantTokenResponse } from './ZohoMarketingHubCommonFunc'
 import ZohoMarketingHubIntegLayout from './ZohoMarketingHubIntegLayout'
+import ZohoAuthorization from '../ZohoAuthorization'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 function ZohoMarketingHub({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -17,6 +19,8 @@ function ZohoMarketingHub({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
+  const scopes = 'ZohoMarketingHub.lead.READ,ZohoMarketingHub.lead.CREATE,ZohoMarketingHub.lead.UPDATE'
+  const { zohoMarketingHub } = tutorialLinks
   const [marketingHubConf, setMarketingHubConf] = useState({
     name: 'Zoho Marketing Automation(Zoho Marketing Hub)',
     type: 'Zoho Marketing Automation(Zoho Marketing Hub)',
@@ -56,12 +60,26 @@ function ZohoMarketingHub({ formFields, setFlow, flow, allIntegURL }) {
       <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <ZohoMarketingHubAuthorization
+      {/* <ZohoMarketingHubAuthorization
         formID={formID}
         marketingHubConf={marketingHubConf}
         setMarketingHubConf={setMarketingHubConf}
         step={step}
         setstep={setstep}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        setSnackbar={setSnackbar}
+      /> */}
+      <ZohoAuthorization
+        integ="zohoMarkatingHub"
+        tutorialLink={zohoMarketingHub}
+        scopes={scopes}
+        formID={formID}
+        config={marketingHubConf}
+        setConfig={setMarketingHubConf}
+        step={step}
+        setstep={setstep}
+        nextPage={nextPage}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         setSnackbar={setSnackbar}

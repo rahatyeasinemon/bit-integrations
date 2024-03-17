@@ -8,8 +8,10 @@ import Steps from '../../Utilities/Steps'
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import ZohoCampaignsAuthorization from './ZohoCampaignsAuthorization'
-import { checkMappedFields, handleInput } from './ZohoCampaignsCommonFunc'
+import { checkMappedFields, handleInput, refreshLists } from './ZohoCampaignsCommonFunc'
 import ZohoCampaignsIntegLayout from './ZohoCampaignsIntegLayout'
+import ZohoAuthorization from '../ZohoAuthorization'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 function ZohoCampaigns({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -17,6 +19,8 @@ function ZohoCampaigns({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
+  const scopes = 'ZohoCampaigns.contact.READ,ZohoCampaigns.contact.CREATE,ZohoCampaigns.contact.UPDATE'
+  const { zohoCampaigns } = tutorialLinks
   const [campaignsConf, setCampaignsConf] = useState({
     name: 'Zoho Campaigns',
     type: 'Zoho Campaigns',
@@ -32,10 +36,17 @@ function ZohoCampaigns({ formFields, setFlow, flow, allIntegURL }) {
     window.opener && setGrantTokenResponse('zohoCampaigns')
   }, [])
 
-  const nextPage = () => {
+  const nextPage = (pageNo) => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
+
+    if (pageNo === 2) {
+      setstep(pageNo)
+      refreshLists(formID, campaignsConf, setCampaignsConf, setIsLoading, setSnackbar)
+      return
+    }
+
     if (!checkMappedFields(campaignsConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
       return
@@ -51,12 +62,27 @@ function ZohoCampaigns({ formFields, setFlow, flow, allIntegURL }) {
       <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <ZohoCampaignsAuthorization
+      {/* <ZohoCampaignsAuthorization
         formID={formID}
         campaignsConf={campaignsConf}
         setCampaignsConf={setCampaignsConf}
         step={step}
         setstep={setstep}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        setSnackbar={setSnackbar}
+      /> */}
+
+      <ZohoAuthorization
+        integ="zohoCampaigns"
+        tutorialLink={zohoCampaigns}
+        scopes={scopes}
+        formID={formID}
+        config={campaignsConf}
+        setConfig={setCampaignsConf}
+        step={step}
+        setstep={setstep}
+        nextPage={nextPage}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         setSnackbar={setSnackbar}

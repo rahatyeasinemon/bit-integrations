@@ -11,6 +11,8 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import ZohoDeskAuthorization from './ZohoDeskAuthorization'
 import { checkMappedFields, handleInput, refreshOrganizations } from './ZohoDeskCommonFunc'
 import ZohoDeskIntegLayout from './ZohoDeskIntegLayout'
+import ZohoAuthorization from '../ZohoAuthorization'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 function ZohoDesk({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -18,6 +20,8 @@ function ZohoDesk({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
+  const scopes = 'Desk.settings.READ,Desk.basic.READ,Desk.search.READ,Desk.contacts.READ,Desk.contacts.CREATE,Desk.contacts.UPDATE,Desk.tickets.CREATE,Desk.tickets.UPDATE'
+  const { zohoDesk } = tutorialLinks
   const [deskConf, setDeskConf] = useState({
     name: 'Zoho Desk',
     type: 'Zoho Desk',
@@ -35,6 +39,10 @@ function ZohoDesk({ formFields, setFlow, flow, allIntegURL }) {
   }, [])
 
   const nextPage = val => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
+
     if (val === 3) {
       if (!checkMappedFields(deskConf)) {
         setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
@@ -63,12 +71,26 @@ function ZohoDesk({ formFields, setFlow, flow, allIntegURL }) {
       <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <ZohoDeskAuthorization
+      {/* <ZohoDeskAuthorization
         formID={formID}
         deskConf={deskConf}
         setDeskConf={setDeskConf}
         step={step}
         setstep={setstep}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        setSnackbar={setSnackbar}
+      /> */}
+      <ZohoAuthorization
+        integ="zohoDesk"
+        tutorialLink={zohoDesk}
+        scopes={scopes}
+        formID={formID}
+        config={deskConf}
+        setConfig={setDeskConf}
+        step={step}
+        setstep={setstep}
+        nextPage={nextPage}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         setSnackbar={setSnackbar}

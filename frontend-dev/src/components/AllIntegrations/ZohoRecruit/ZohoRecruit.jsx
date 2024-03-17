@@ -8,8 +8,10 @@ import Steps from '../../Utilities/Steps'
 import { saveIntegConfig, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import ZohoRecruitAuthorization from './ZohoRecruitAuthorization'
-import { checkMappedFields, handleInput } from './ZohoRecruitCommonFunc'
+import { checkMappedFields, handleInput, refreshModules } from './ZohoRecruitCommonFunc'
 import ZohoRecruitIntegLayout from './ZohoRecruitIntegLayout'
+import ZohoAuthorization from '../ZohoAuthorization'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 function ZohoRecruit({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -18,6 +20,8 @@ function ZohoRecruit({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [tab, settab] = useState(0)
+  const scopes = 'ZohoRecruit.users.ALL,ZohoRecruit.modules.all'
+  const { zohoRecruit } = tutorialLinks
   const [recruitConf, setRecruitConf] = useState({
     name: 'Zoho Recruit',
     type: 'Zoho Recruit',
@@ -35,14 +39,17 @@ function ZohoRecruit({ formFields, setFlow, flow, allIntegURL }) {
     window.opener && setGrantTokenResponse('zohoRecruit')
   }, [])
 
-  const nextPage = () => {
+  const nextPage = (pageNo) => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
 
-    setTimeout(() => {
-      document.getElementById('btcd-settings-wrp').scrollTop = 0
-    }, 300)
+    if (pageNo === 2) {
+      setstep(pageNo)
+      refreshModules(formID, recruitConf, setRecruitConf, setIsLoading, setSnackbar)
+      return
+    }
+
     if (!checkMappedFields(recruitConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
       return
@@ -58,12 +65,26 @@ function ZohoRecruit({ formFields, setFlow, flow, allIntegURL }) {
       <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <ZohoRecruitAuthorization
+      {/* <ZohoRecruitAuthorization
         formID={formID}
         recruitConf={recruitConf}
         setRecruitConf={setRecruitConf}
         step={step}
         setstep={setstep}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        setSnackbar={setSnackbar}
+      /> */}
+      <ZohoAuthorization
+        integ="zohoRecruit"
+        tutorialLink={zohoRecruit}
+        scopes={scopes}
+        formID={formID}
+        config={recruitConf}
+        setConfig={setRecruitConf}
+        step={step}
+        setstep={setstep}
+        nextPage={nextPage}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         setSnackbar={setSnackbar}

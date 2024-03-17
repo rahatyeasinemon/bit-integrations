@@ -405,7 +405,6 @@ export const setGrantTokenResponse = (integ) => {
 
 export const handleAuthorize = (
   integ,
-  ajaxInteg,
   scopes,
   confTmp,
   setConf,
@@ -430,7 +429,7 @@ export const handleAuthorize = (
     return;
   }
   setIsLoading(true);
-  const apiEndpoint = `https://accounts.zoho.${
+  const apiEndpoint = `https://accounts.${
     confTmp.dataCenter
   }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${
     confTmp.clientId
@@ -447,10 +446,10 @@ export const handleAuthorize = (
       clearInterval(popupURLCheckTimer);
       let grantTokenResponse = {};
       let isauthRedirectLocation = false;
-      const bitformsZoho = localStorage.getItem(`__${integ}`);
-      if (bitformsZoho) {
+      const zohoTokenResponse = localStorage.getItem(`__${integ}`);
+      if (zohoTokenResponse) {
         isauthRedirectLocation = true;
-        grantTokenResponse = JSON.parse(bitformsZoho);
+        grantTokenResponse = JSON.parse(zohoTokenResponse);
         localStorage.removeItem(`__${integ}`);
       }
       if (
@@ -474,7 +473,6 @@ export const handleAuthorize = (
         const newConf = { ...confTmp };
         newConf.accountServer = grantTokenResponse["accounts-server"];
         tokenHelper(
-          ajaxInteg,
           grantTokenResponse,
           newConf,
           setConf,
@@ -489,7 +487,6 @@ export const handleAuthorize = (
 };
 
 const tokenHelper = (
-  ajaxInteg,
   grantToken,
   confTmp,
   setConf,
@@ -505,7 +502,8 @@ const tokenHelper = (
   // tokenRequestParams.redirectURI = `${encodeURIComponent(window.location.href)}/redirect`
   tokenRequestParams.redirectURI = `${btcbi.api.base}/redirect`;
 
-  bitsFetch(tokenRequestParams, `${ajaxInteg}_generate_token`)
+  // bitsFetch(tokenRequestParams, `${ajaxInteg}_generate_token`)
+  bitsFetch(tokenRequestParams, "zoho/generate-token")
     .then((result) => result)
     .then((result) => {
       if (result && result.success) {

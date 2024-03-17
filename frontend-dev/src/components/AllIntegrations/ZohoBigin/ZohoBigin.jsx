@@ -7,11 +7,13 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveActionConf, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, handleInput } from './ZohoBiginCommonFunc'
+import { checkMappedFields, handleInput, refreshModules } from './ZohoBiginCommonFunc'
 import ZohoBiginIntegLayout from './ZohoBiginIntegLayout'
 import ZohoBiginAuthorization from './ZohoBiginAuthorization'
 import BackIcn from '../../../Icons/BackIcn'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
+import ZohoAuthorization from '../ZohoAuthorization'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 function ZohoBigin({ allIntegURL }) {
   const navigate = useNavigate()
@@ -23,6 +25,8 @@ function ZohoBigin({ allIntegURL }) {
   const [tab, settab] = useState(0)
   const [biginConf, setBiginConf] = useRecoilState($actionConf)
   const formFields = useRecoilValue($formFields)
+  const scopes = 'ZohoBigin.settings.modules.READ,ZohoBigin.settings.fields.READ,ZohoBigin.settings.tags.READ,ZohoBigin.users.READ,ZohoBigin.modules.ALL,ZohoBigin.settings.layouts.READ'
+  const { zohoBigin } = tutorialLinks
 
   useEffect(() => {
     window.opener && setGrantTokenResponse('zohoBigin')
@@ -40,7 +44,16 @@ function ZohoBigin({ allIntegURL }) {
     })
   }, [])
 
-  const nextPage = () => {
+  const nextPage = (pageNo) => {
+    setTimeout(() => {
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
+
+    if (pageNo === 2) {
+      setstep(pageNo)
+      refreshModules(formID, biginConf, setBiginConf, setIsLoading, setSnackbar)
+      return
+    }
     if (!checkMappedFields(biginConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
       return
@@ -49,9 +62,6 @@ function ZohoBigin({ allIntegURL }) {
       setSnackbar({ show: true, msg: __('Please select a layout', 'bit-integrations') })
       return
     }
-    setTimeout(() => {
-      document.getElementById('btcd-settings-wrp').scrollTop = 0
-    }, 300)
     if (biginConf.module !== '' && biginConf.field_map.length > 0) {
       setstep(3)
     }
@@ -63,12 +73,26 @@ function ZohoBigin({ allIntegURL }) {
       <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <ZohoBiginAuthorization
+      {/* <ZohoBiginAuthorization
         formID={formID}
         biginConf={biginConf}
         setBiginConf={setBiginConf}
         step={step}
         setstep={setstep}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        setSnackbar={setSnackbar}
+      /> */}
+      <ZohoAuthorization
+        integ="zohoBigin"
+        tutorialLink={zohoBigin}
+        scopes={scopes}
+        formID={formID}
+        config={biginConf}
+        setConfig={setBiginConf}
+        step={step}
+        setstep={setstep}
+        nextPage={nextPage}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         setSnackbar={setSnackbar}

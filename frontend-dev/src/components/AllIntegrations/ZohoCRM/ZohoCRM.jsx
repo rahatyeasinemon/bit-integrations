@@ -8,8 +8,10 @@ import Steps from '../../Utilities/Steps'
 import { saveActionConf, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import ZohoCRMAuthorization from './ZohoCRMAuthorization'
-import { checkMappedFields, handleInput } from './ZohoCRMCommonFunc'
+import { checkMappedFields, handleInput, refreshModules } from './ZohoCRMCommonFunc'
 import ZohoCRMIntegLayout from './ZohoCRMIntegLayout'
+import ZohoAuthorization from '../ZohoAuthorization'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 function ZohoCRM({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -18,6 +20,9 @@ function ZohoCRM({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [tab, settab] = useState(0)
+  const { zohoCRM } = tutorialLinks
+  const scopes = 'ZohoCRM.modules.ALL,ZohoCRM.settings.ALL,ZohoCRM.users.Read,zohocrm.files.CREATE'
+
 
   const [crmConf, setCrmConf] = useState({
     name: 'Zoho CRM',
@@ -44,6 +49,13 @@ function ZohoCRM({ formFields, setFlow, flow, allIntegURL }) {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
+
+    if (pageNo === 2) {
+      setstep(pageNo)
+      !crmConf.module && refreshModules(formID, crmConf, setCrmConf, setIsLoading, setSnackbar)
+      return
+    }
+
     if (!checkMappedFields(crmConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
       return
@@ -58,12 +70,26 @@ function ZohoCRM({ formFields, setFlow, flow, allIntegURL }) {
       <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <ZohoCRMAuthorization
+      {/* <ZohoCRMAuthorization
         formID={formID}
         crmConf={crmConf}
         setCrmConf={setCrmConf}
         step={step}
         setstep={setstep}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        setSnackbar={setSnackbar}
+      /> */}
+      <ZohoAuthorization
+        integ="zohoCRM"
+        tutorialLink={zohoCRM}
+        scopes={scopes}
+        formID={formID}
+        config={crmConf}
+        setConfig={setCrmConf}
+        step={step}
+        setstep={setstep}
+        nextPage={nextPage}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         setSnackbar={setSnackbar}

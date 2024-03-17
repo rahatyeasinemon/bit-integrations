@@ -1,16 +1,17 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-expressions */
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import ZohoSheetAuthorization from './ZohoSheetAuthorization'
-import { checkMappedFields, setGrantTokenResponse } from './ZohoSheetCommonFunc'
+import { checkMappedFields, getAllWorkbooks, setGrantTokenResponse } from './ZohoSheetCommonFunc'
 import ZohoSheetIntegLayout from './ZohoSheetIntegLayout'
+import ZohoAuthorization from '../ZohoAuthorization'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 function ZohoSheet({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -25,6 +26,8 @@ function ZohoSheet({ formFields, setFlow, flow, allIntegURL }) {
 
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
+  const scopes = 'ZohoSheet.dataAPI.READ,ZohoSheet.dataAPI.UPDATE'
+  const { zohoSheet } = tutorialLinks
   const [zohoSheetConf, setZohoSheetConf] = useState({
     name: 'Zoho Sheet',
     type: 'Zoho Sheet',
@@ -65,6 +68,12 @@ function ZohoSheet({ formFields, setFlow, flow, allIntegURL }) {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
 
+    if (pageNo === 2) {
+      setStep(pageNo)
+      getAllWorkbooks(zohoSheetConf, setZohoSheetConf, loading, setLoading)
+      return
+    }
+
     if (!checkMappedFields(zohoSheetConf)) {
       toast.error('Please map mandatory workSheetHeaders')
       return
@@ -78,13 +87,16 @@ function ZohoSheet({ formFields, setFlow, flow, allIntegURL }) {
       <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      <ZohoSheetAuthorization
-        zohoSheetConf={zohoSheetConf}
-        setZohoSheetConf={setZohoSheetConf}
+      <ZohoAuthorization
+        integ="zohoSheet"
+        tutorialLink={zohoSheet}
+        scopes={scopes}
+        config={zohoSheetConf}
+        setConfig={setZohoSheetConf}
         step={step}
-        setStep={setStep}
-        loading={loading}
-        setLoading={setLoading}
+        nextPage={nextPage}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
         setSnackbar={setSnackbar}
       />
 
