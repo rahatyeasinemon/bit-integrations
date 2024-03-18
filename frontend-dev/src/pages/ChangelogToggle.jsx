@@ -10,7 +10,7 @@ import Modal from '../components/Utilities/Modal'
 export default function ChangelogToggle() {
     const btcbi = useRecoilValue($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const version = btcbi.isPro ? '1.4.3' : '1.6.1'
+    const version = btcbi.isPro ? '1.4.4' : '1.6.2'
     return (
         <div className="changelog-toggle">
             <button
@@ -27,7 +27,7 @@ export default function ChangelogToggle() {
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
                         <h3>What's New in {version}?</h3>
-                        <small className='date'> <b>21th February 2023</b></small>
+                        <small className='date'> <b>18th March 2023</b></small>
                     </div>
                     <div className='changelog-content'>
                         {/* <h4>New Integration</h4> */}
@@ -41,19 +41,25 @@ export default function ChangelogToggle() {
                             </ul>
                         </div> */}
 
-                        {/* <span className='new-integration'><b>New Actions</b></span>
+                        <span className='new-integration' style={{ background: "cornflowerblue" }}><b>New Improvements</b></span>
 
                         <div className='integration-list'>
                             <ul>
-                                <li>Zagomail</li>
+                                <li>Brekdance: UI & functionality upgraded</li>
+                                <li>Klaviyo: API version upgraded</li>
                             </ul>
-                        </div> */}
+                        </div>
 
                         <span className='new-feature'><b>New Features</b></span>
 
                         <div className='feature-list'>
                             <ul>
-                                <li>WooCommerce: Order module checkout custom field & customer Note</li>
+                                <li>WooCommerce: Order Attribution Tracking fields</li>
+                                <li>PerfexCRM: lead module: status & source fields</li>
+                                <li>Zoom: Generall fields & custom question's</li>
+                                <li>OmniSend: Tag action</li>
+                                <li>Salesforce: account & Case module:  missing fields</li>
+
                             </ul>
                         </div>
 
@@ -61,13 +67,18 @@ export default function ChangelogToggle() {
 
                         <div className='fixes-list'>
                             <ul>
-                                <li>Formidable: Single checkbox</li>
-                                <li>Dropbox: Multiple file upload </li>
-                                <li>Moosend: Phone number validation</li>
-                                <li>Telegram: Single file attachment upload</li>
-                                <li>PropovoiceCRM: Lead module fields </li>
-                                <li>Piotnet Addon: Form fields</li>
-                                <li>Pipedrive: Multiple label</li>
+                                <li>Mailjet: Contact list limitation</li>
+                                <li>Keap: data submit</li>
+                                <li>Clickup: phone number</li>
+                                <li>Zoom: access token expired</li>
+                                <li>Zoho Bigin: note content</li>
+                                <li>WPForms: file attachment path</li>
+                                <li>MailChimp: custom fields</li>
+                                <li>Custom Action: function file location missing</li>
+                                <li>FreshSales: Deal module: custom field</li>
+                                <li>WooCommerce: order-create module: checkout handling</li>
+                                <li>Freshsales: integration name update</li>
+                                <li>Telegram: file attachment upload</li>
                             </ul>
                         </div>
                     </div>
