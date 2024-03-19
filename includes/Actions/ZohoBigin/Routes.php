@@ -3,10 +3,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\ZohoBigin\ZohoBiginController;
 use BitCode\FI\Core\Util\Route;
+use BitCode\FI\Actions\ZohoBigin\ZohoBiginController;
 
-Route::post('zbigin_generate_token', [ZohoBiginController::class, 'generateTokens']);
 Route::post('zbigin_refresh_modules', [ZohoBiginController::class, 'refreshModules']);
 Route::post('zbigin_refresh_playouts', [ZohoBiginController::class, 'refreshPLayouts']);
 Route::post('zbigin_refresh_notetypes', [ZohoBiginController::class, 'refreshNoteTypes']);

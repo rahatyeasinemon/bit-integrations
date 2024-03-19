@@ -2,16 +2,15 @@
 import { useEffect, useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveActionConf, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import ZohoCRMAuthorization from './ZohoCRMAuthorization'
+import ZohoAuthorization from '../ZohoAuthorization'
 import { checkMappedFields, handleInput, refreshModules } from './ZohoCRMCommonFunc'
 import ZohoCRMIntegLayout from './ZohoCRMIntegLayout'
-import ZohoAuthorization from '../ZohoAuthorization'
-import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 function ZohoCRM({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -70,25 +69,13 @@ function ZohoCRM({ formFields, setFlow, flow, allIntegURL }) {
       <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      {/* <ZohoCRMAuthorization
-        formID={formID}
-        crmConf={crmConf}
-        setCrmConf={setCrmConf}
-        step={step}
-        setstep={setstep}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-        setSnackbar={setSnackbar}
-      /> */}
       <ZohoAuthorization
         integ="zohoCRM"
         tutorialLink={zohoCRM}
         scopes={scopes}
-        formID={formID}
         config={crmConf}
         setConfig={setCrmConf}
         step={step}
-        setstep={setstep}
         nextPage={nextPage}
         isLoading={isLoading}
         setIsLoading={setIsLoading}

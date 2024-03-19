@@ -10,6 +10,7 @@ use WP_Error;
 use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\controller\ZohoAuthController;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -21,52 +22,6 @@ class ZohoBiginController
     public function __construct($integrationID)
     {
         $this->_integrationID = $integrationID;
-    }
-
-    /**
-     * Process ajax request for generate_token
-     *
-     * @param Object $requestsParams Params to generate token
-     *
-     * @return JSON zoho bigin api response and status
-     */
-    public static function generateTokens($requestsParams)
-    {
-        if (
-            empty($requestsParams->{'accounts-server'})
-            || empty($requestsParams->dataCenter)
-            || empty($requestsParams->clientId)
-            || empty($requestsParams->clientSecret)
-            || empty($requestsParams->redirectURI)
-            || empty($requestsParams->code)
-        ) {
-            wp_send_json_error(
-                __(
-                    'Requested parameter is empty',
-                    'bit-integrations'
-                ),
-                400
-            );
-        }
-
-        $apiEndpoint = \urldecode($requestsParams->{'accounts-server'}) . '/oauth/v2/token';
-        $requestParams = [
-            'grant_type' => 'authorization_code',
-            'client_id' => $requestsParams->clientId,
-            'client_secret' => $requestsParams->clientSecret,
-            'redirect_uri' => \urldecode($requestsParams->redirectURI),
-            'code' => $requestsParams->code
-        ];
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
-
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
-                empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
-                400
-            );
-        }
-        $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
     }
 
     /**
@@ -94,9 +49,9 @@ class ZohoBiginController
         }
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::_refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
-        $modulesMetaApiEndpoint = "https://www.zohoapis.{$queryParams->dataCenter}/bigin/v1/settings/modules";
+        $modulesMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/bigin/v1/settings/modules";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $modulesMetaResponse = HttpHelper::get($modulesMetaApiEndpoint, null, $authorizationHeader);
         // wp_send_json_success($modulesMetaResponse, 200);
@@ -120,7 +75,7 @@ class ZohoBiginController
             );
         }
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
-            self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
+            ZohoAuthController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
         }
         wp_send_json_success($response, 200);
     }
@@ -150,9 +105,9 @@ class ZohoBiginController
         }
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::_refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
-        $layoutsMetaApiEndpoint = "https://www.zohoapis.{$queryParams->dataCenter}/bigin/v2/settings/layouts?module=Deals";
+        $layoutsMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/bigin/v2/settings/layouts?module=Deals";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $layoutsMetaResponse = HttpHelper::get($layoutsMetaApiEndpoint, null, $authorizationHeader);
         // wp_send_json_success($layoutsMetaResponse, 200);
@@ -174,7 +129,7 @@ class ZohoBiginController
             );
         }
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
-            self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
+            ZohoAuthController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
         }
         wp_send_json_success($response, 200);
     }
@@ -220,7 +175,7 @@ class ZohoBiginController
                 'plural_label' => 'Calls'
             ],
         ];
-        // $modulesMetaApiEndpoint = "https://www.zohoapis.{$queryParams->dataCenter}/bigin/v1/settings/related_lists";
+        // $modulesMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/bigin/v1/settings/related_lists";
         // $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         // $requiredParams['module'] = $queryParams->module;
         // $modulesMetaResponse = HttpHelper::get($modulesMetaApiEndpoint, $queryParams, $authorizationHeader);
@@ -237,7 +192,7 @@ class ZohoBiginController
         $response['related_modules'] = $relatedModules;
 
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
-            self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['related_modules']);
+            ZohoAuthController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['related_modules']);
         }
         wp_send_json_success($response, 200);
     }
@@ -268,9 +223,9 @@ class ZohoBiginController
         }
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::_refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
-        $fieldsMetaApiEndpoint = "https://www.zohoapis.{$queryParams->dataCenter}/bigin/v1/settings/fields";
+        $fieldsMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/bigin/v1/settings/fields";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $requiredParams['module'] = $queryParams->module;
@@ -324,7 +279,7 @@ class ZohoBiginController
         }
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             $response['queryModule'] = $queryParams->module;
-            self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
+            ZohoAuthController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
         wp_send_json_success($response, 200);
     }
@@ -349,10 +304,10 @@ class ZohoBiginController
 
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::_refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
 
-        $tagsMetaApiEndpoint = "http://www.zohoapis.{$queryParams->dataCenter}/bigin/v1/settings/tags?module={$queryParams->module}";
+        $tagsMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/bigin/v1/settings/tags?module={$queryParams->module}";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $tagsMetaResponse = HttpHelper::get($tagsMetaApiEndpoint, null, $authorizationHeader);
 
@@ -377,7 +332,7 @@ class ZohoBiginController
             );
         }
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
-            self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['lists']);
+            ZohoAuthController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['lists']);
         }
         wp_send_json_success($response, 200);
     }
@@ -401,10 +356,10 @@ class ZohoBiginController
 
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::_refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
 
-        $usersMetaApiEndpoint = "https://www.zohoapis.{$queryParams->dataCenter}/bigin/v1/users";
+        $usersMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/bigin/v1/users";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $usersMetaResponse = HttpHelper::get($usersMetaApiEndpoint, null, $authorizationHeader);
 
@@ -429,79 +384,9 @@ class ZohoBiginController
             );
         }
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
-            self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['lists']);
+            ZohoAuthController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['lists']);
         }
         wp_send_json_success($response, 200);
-    }
-
-    /**
-     * Helps to refresh zoho bigin access_token
-     *
-     * @param  Array $apiData Contains required data for refresh access token
-     * @return JSON  $tokenDetails API token details
-     */
-    protected static function _refreshAccessToken($apiData)
-    {
-        if (
-            !is_object($apiData) ||
-            empty($apiData->dataCenter)
-            || empty($apiData->clientId)
-            || empty($apiData->clientSecret)
-            || empty($apiData->tokenDetails)
-        ) {
-            return false;
-        }
-        $tokenDetails = $apiData->tokenDetails;
-
-        $dataCenter = $apiData->dataCenter;
-        $apiEndpoint = "https://accounts.zoho.{$dataCenter}/oauth/v2/token";
-        $requestParams = [
-            'grant_type' => 'refresh_token',
-            'client_id' => $apiData->clientId,
-            'client_secret' => $apiData->clientSecret,
-            'refresh_token' => $tokenDetails->refresh_token,
-        ];
-
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            return false;
-        }
-        $tokenDetails->generates_on = \time();
-        $tokenDetails->access_token = $apiResponse->access_token;
-        return $tokenDetails;
-    }
-
-    /**
-     * Save updated access_token to avoid unnecessary token generation
-     *
-     * @param Integer $integrationID ID of Zoho bigin Integration
-     * @param Obeject $tokenDetails  refreshed token info
-     *
-     * @return null
-     */
-    protected static function saveRefreshedToken($integrationID, $tokenDetails, $others = null)
-    {
-        if (empty($integrationID)) {
-            return;
-        }
-
-        $flow = new FlowController();
-        $zbiginDetails = $flow->get(['id' => $integrationID]);
-
-        if (is_wp_error($zbiginDetails)) {
-            return;
-        }
-        $newDetails = json_decode($zbiginDetails[0]->flow_details);
-
-        $newDetails->tokenDetails = $tokenDetails;
-        if (!empty($others['modules'])) {
-            $newDetails->default->modules = $others['modules'];
-        }
-        if (!empty($others['related_modules'])) {
-            $newDetails->default->relatedlist['modules'] = $others['related_modules'];
-        }
-
-        $flow->update($integrationID, ['flow_details' => \json_encode($newDetails)]);
     }
 
     public function execute($integrationData, $fieldValues)
@@ -527,9 +412,9 @@ class ZohoBiginController
             $requiredParams['clientSecret'] = $integrationDetails->clientSecret;
             $requiredParams['dataCenter'] = $integrationDetails->dataCenter;
             $requiredParams['tokenDetails'] = $tokenDetails;
-            $newTokenDetails = self::_refreshAccessToken((object)$requiredParams);
+            $newTokenDetails = ZohoAuthController::_refreshAccessToken((object)$requiredParams);
             if ($newTokenDetails) {
-                self::saveRefreshedToken($this->_integrationID, $newTokenDetails);
+                ZohoAuthController::_saveRefreshedToken($this->_integrationID, $newTokenDetails);
                 $tokenDetails = $newTokenDetails;
             }
         }

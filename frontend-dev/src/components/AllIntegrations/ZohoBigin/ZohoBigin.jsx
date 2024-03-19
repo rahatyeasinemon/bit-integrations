@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
+import BackIcn from '../../../Icons/BackIcn'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import { __ } from '../../../Utils/i18nwrap'
-import 'react-multiple-select-dropdown-lite/dist/index.css'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveActionConf, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import ZohoAuthorization from '../ZohoAuthorization'
 import { checkMappedFields, handleInput, refreshModules } from './ZohoBiginCommonFunc'
 import ZohoBiginIntegLayout from './ZohoBiginIntegLayout'
-import ZohoBiginAuthorization from './ZohoBiginAuthorization'
-import BackIcn from '../../../Icons/BackIcn'
-import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
-import ZohoAuthorization from '../ZohoAuthorization'
-import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 function ZohoBigin({ allIntegURL }) {
   const navigate = useNavigate()
@@ -73,25 +72,13 @@ function ZohoBigin({ allIntegURL }) {
       <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      {/* <ZohoBiginAuthorization
-        formID={formID}
-        biginConf={biginConf}
-        setBiginConf={setBiginConf}
-        step={step}
-        setstep={setstep}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-        setSnackbar={setSnackbar}
-      /> */}
       <ZohoAuthorization
         integ="zohoBigin"
         tutorialLink={zohoBigin}
         scopes={scopes}
-        formID={formID}
         config={biginConf}
         setConfig={setBiginConf}
         step={step}
-        setstep={setstep}
         nextPage={nextPage}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
