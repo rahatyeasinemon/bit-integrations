@@ -3,11 +3,13 @@
 /**
  * ZohoRecruit Integration
  */
+
 namespace BitCode\FI\Actions\ZohoRecruit;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\controller\ZohoAuthController;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -22,51 +24,6 @@ class ZohoRecruitController
     }
 
     /**
-     * Process ajax request for generate_token
-     *
-     * @param Object $requestsParams Params to generate token
-     *
-     * @return JSON zoho recruit api response and status
-     */
-    public static function generateTokens($requestsParams)
-    {
-        if (empty($requestsParams->{'accounts-server'})
-            || empty($requestsParams->dataCenter)
-            || empty($requestsParams->clientId)
-            || empty($requestsParams->clientSecret)
-            || empty($requestsParams->redirectURI)
-            || empty($requestsParams->code)
-        ) {
-            wp_send_json_error(
-                __(
-                    'Requested parameter is empty',
-                    'bit-integrations'
-                ),
-                400
-            );
-        }
-
-        $apiEndpoint = \urldecode($requestsParams->{'accounts-server'}) . '/oauth/v2/token';
-        $requestParams = [
-            'grant_type' => 'authorization_code',
-            'client_id' => $requestsParams->clientId,
-            'client_secret' => $requestsParams->clientSecret,
-            'redirect_uri' => \urldecode($requestsParams->redirectURI),
-            'code' => $requestsParams->code
-        ];
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
-
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
-                empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
-                400
-            );
-        }
-        $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
-    }
-
-    /**
      * Process ajax request for refresh recruit modules
      *
      * @param Object $queryParams Params to refresh module
@@ -75,7 +32,8 @@ class ZohoRecruitController
      */
     public static function refreshModules($queryParams)
     {
-        if (empty($queryParams->tokenDetails)
+        if (
+            empty($queryParams->tokenDetails)
             || empty($queryParams->dataCenter)
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
@@ -90,7 +48,7 @@ class ZohoRecruitController
         }
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
         $zohosIntegratedModules = [
             'zohosign__ZohoSign_Document_Events',
@@ -99,7 +57,7 @@ class ZohoRecruitController
             'zohosign__ZohoSign_Documents',
             'zohosign__ZohoSign_Recipients'
         ];
-        $modulesMetaApiEndpoint = "https://recruit.zoho.{$queryParams->dataCenter}/recruit/private/json/Info/getModules?authtoken={$queryParams->tokenDetails->access_token}&scope=ZohoRecruit.modules.all&version=2";
+        $modulesMetaApiEndpoint = "https://recruit.{$queryParams->dataCenter}/recruit/private/json/Info/getModules?authtoken={$queryParams->tokenDetails->access_token}&scope=ZohoRecruit.modules.all&version=2";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $modulesMetaResponse = HttpHelper::get($modulesMetaApiEndpoint, null, $authorizationHeader);
         if (!is_wp_error($modulesMetaResponse) && (empty($modulesMetaResponse->status) || (!empty($modulesMetaResponse->status) && $modulesMetaResponse->status !== 'error'))) {
@@ -135,14 +93,15 @@ class ZohoRecruitController
             );
         }
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
-            self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
+            ZohoAuthController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['modules']);
         }
         wp_send_json_success($response, 200);
     }
 
     public static function refreshNoteTypes($queryParams)
     {
-        if (empty($queryParams->tokenDetails)
+        if (
+            empty($queryParams->tokenDetails)
             || empty($queryParams->dataCenter)
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
@@ -157,10 +116,10 @@ class ZohoRecruitController
         }
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
 
-        $notesMetaApiEndpoint = "https: //recruit.zoho.com/recruit/private/json/Notes/getNoteTypes?authtoken={$queryParams->tokenDetails->access_token}&scope=ZohoRecruit.modules.call.all&version=2";
+        $notesMetaApiEndpoint = "https: //com/recruit/private/json/Notes/getNoteTypes?authtoken={$queryParams->tokenDetails->access_token}&scope=ZohoRecruit.modules.call.all&version=2";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $notesMetaResponse = HttpHelper::get($notesMetaApiEndpoint, null, $authorizationHeader);
@@ -185,7 +144,7 @@ class ZohoRecruitController
             );
         }
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
-            self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['notetypes']);
+            ZohoAuthController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['notetypes']);
         }
         wp_send_json_success($response, 200);
     }
@@ -197,12 +156,13 @@ class ZohoRecruitController
      */
     public static function refreshRelatedModules($queryParams)
     {
-        if (empty($queryParams->tokenDetails)
-                || empty($queryParams->dataCenter)
-                || empty($queryParams->clientId)
-                || empty($queryParams->clientSecret)
-                || empty($queryParams->module)
-            ) {
+        if (
+            empty($queryParams->tokenDetails)
+            || empty($queryParams->dataCenter)
+            || empty($queryParams->clientId)
+            || empty($queryParams->clientSecret)
+            || empty($queryParams->module)
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -243,7 +203,7 @@ class ZohoRecruitController
         $response['related_modules'] = $relatedModules;
 
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
-            self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['related_modules']);
+            ZohoAuthController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['related_modules']);
         }
         wp_send_json_success($response, 200);
     }
@@ -255,12 +215,13 @@ class ZohoRecruitController
      */
     public static function getFields($queryParams)
     {
-        if (empty($queryParams->module)
-                || empty($queryParams->tokenDetails)
-                || empty($queryParams->dataCenter)
-                || empty($queryParams->clientId)
-                || empty($queryParams->clientSecret)
-            ) {
+        if (
+            empty($queryParams->module)
+            || empty($queryParams->tokenDetails)
+            || empty($queryParams->dataCenter)
+            || empty($queryParams->clientId)
+            || empty($queryParams->clientSecret)
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -271,9 +232,9 @@ class ZohoRecruitController
         }
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
-        $fieldsMetaApiEndpoint = "https://recruit.zoho.{$queryParams->dataCenter}/recruit/private/json/{$queryParams->module}/getFields?authtoken={$queryParams->tokenDetails->access_token}&scope=recruitapi&version=2";
+        $fieldsMetaApiEndpoint = "https://recruit.{$queryParams->dataCenter}/recruit/private/json/{$queryParams->module}/getFields?authtoken={$queryParams->tokenDetails->access_token}&scope=recruitapi&version=2";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $requiredParams['module'] = $queryParams->module;
         $fieldsMetaResponse = HttpHelper::get($fieldsMetaApiEndpoint, $requiredParams, $authorizationHeader);
@@ -386,7 +347,7 @@ class ZohoRecruitController
         }
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             $response['queryModule'] = $queryParams->module;
-            self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
+            ZohoAuthController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
         wp_send_json_success($response, 200);
         // } else {
@@ -400,75 +361,6 @@ class ZohoRecruitController
         // }
     }
 
-    /**
-     * Helps to refresh zoho recruit access_token
-     *
-     * @param Object $apiData Contains required data for refresh access token
-     *
-     * @return JSON  $tokenDetails API token details
-     */
-    protected static function refreshAccessToken($apiData)
-    {
-        if (empty($apiData->dataCenter)
-            || empty($apiData->clientId)
-            || empty($apiData->clientSecret)
-            || empty($apiData->tokenDetails)
-        ) {
-            return false;
-        }
-        $tokenDetails = $apiData->tokenDetails;
-
-        $dataCenter = $apiData->dataCenter;
-        $apiEndpoint = "https://accounts.zoho.{$dataCenter}/oauth/v2/token";
-        $requestParams = [
-            'grant_type' => 'refresh_token',
-            'client_id' => $apiData->clientId,
-            'client_secret' => $apiData->clientSecret,
-            'refresh_token' => $tokenDetails->refresh_token,
-        ];
-
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            return false;
-        }
-        $tokenDetails->generates_on = \time();
-        $tokenDetails->access_token = $apiResponse->access_token;
-        return $tokenDetails;
-    }
-
-    /**
-     * Save updated access_token to avoid unnecessary token generation
-     *
-     * @param Integer $integrationID ID of Zoho recruit Integration
-     * @param Object  $tokenDetails  refreshed token info
-     *
-     * @return null
-     */
-    protected static function saveRefreshedToken($integrationID, $tokenDetails, $others = null)
-    {
-        if (empty($integrationID)) {
-            return;
-        }
-
-        $flow = new FlowController();
-        $zrecruitDetails = $flow->get(['id' => $integrationID]);
-
-        if (is_wp_error($zrecruitDetails)) {
-            return;
-        }
-        $newDetails = json_decode($zrecruitDetails[0]->integration_details);
-
-        $newDetails->tokenDetails = $tokenDetails;
-        if (!empty($others['modules'])) {
-            $newDetails->default->modules = $others['modules'];
-        }
-        if (!empty($others['related_modules'])) {
-            $newDetails->default->relatedlist['modules'] = $others['related_modules'];
-        }
-
-        $flow->update($integrationID, ['flow_details' => \json_encode($newDetails)]);
-    }
-
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
@@ -477,7 +369,8 @@ class ZohoRecruitController
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;
         $defaultDataConf = $integrationDetails->default;
-        if (empty($tokenDetails)
+        if (
+            empty($tokenDetails)
             || empty($module)
             || empty($fieldMap)
         ) {
@@ -491,9 +384,9 @@ class ZohoRecruitController
             $requiredParams['clientSecret'] = $integrationDetails->clientSecret;
             $requiredParams['dataCenter'] = $integrationDetails->dataCenter;
             $requiredParams['tokenDetails'] = $tokenDetails;
-            $newTokenDetails = self::refreshAccessToken((object)$requiredParams);
+            $newTokenDetails = ZohoAuthController::_refreshAccessToken((object)$requiredParams);
             if ($newTokenDetails) {
-                self::saveRefreshedToken($this->_integrationID, $newTokenDetails);
+                ZohoAuthController::_saveRefreshedToken($this->_integrationID, $newTokenDetails);
                 $tokenDetails = $newTokenDetails;
             }
         }
@@ -518,7 +411,8 @@ class ZohoRecruitController
             return $zRecruitApiResponse;
         }
 
-        if (count($integrationDetails->relatedlists)
+        if (
+            count($integrationDetails->relatedlists)
             && !empty($zRecruitApiResponse->response->result->row->success->details->FL[0])
             && $zRecruitApiResponse->response->result->row->success->details->FL[0]->val === 'Id'
         ) {

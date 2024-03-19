@@ -7,13 +7,13 @@
 namespace BitCode\FI\Actions\ZohoRecruit;
 
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Core\Util\DateTimeHelper;
 use BitCode\FI\Core\Util\FieldValueHandler;
-use BitCode\FI\Core\Util\ApiResponse as UtilApiResponse;
 use BitCode\FI\Actions\ZohoRecruit\FilesApiHelper;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\ApiResponse as UtilApiResponse;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -22,6 +22,8 @@ class RecordApiHelper
 {
     private $_defaultHeader;
     private $_tokenDetails;
+    private $_dataCenter;
+    private $_integrationID;
 
     public function __construct($dataCenter, $tokenDetails, $integId)
     {
@@ -33,7 +35,7 @@ class RecordApiHelper
 
     public function insertRecord($module, $data)
     {
-        $insertRecordEndpoint = "https://recruit.zoho.{$this->_dataCenter}/recruit/private/json/{$module}/addRecords";
+        $insertRecordEndpoint = "https://recruit.{$this->_dataCenter}/recruit/private/json/{$module}/addRecords";
         return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
     }
 
@@ -152,38 +154,38 @@ class RecordApiHelper
         }
 
         switch ($formatSpecs->data_type) {
-        case 'AutoNumber':
-            $apiFormat = 'integer';
-            break;
+            case 'AutoNumber':
+                $apiFormat = 'integer';
+                break;
 
-        case 'Text':
-        case 'Picklist':
-        case 'Email':
-        case 'Website':
-        case 'Currency':
-        case 'TextArea':
-            $apiFormat = 'string';
-            break;
+            case 'Text':
+            case 'Picklist':
+            case 'Email':
+            case 'Website':
+            case 'Currency':
+            case 'TextArea':
+                $apiFormat = 'string';
+                break;
 
-        case 'Date':
-            $apiFormat = 'date';
-            break;
+            case 'Date':
+                $apiFormat = 'date';
+                break;
 
-        case 'DateTime':
-            $apiFormat = 'datetime';
-            break;
+            case 'DateTime':
+                $apiFormat = 'datetime';
+                break;
 
-        case 'Double':
-            $apiFormat = 'double';
-            break;
+            case 'Double':
+                $apiFormat = 'double';
+                break;
 
-        case 'Boolean':
-            $apiFormat = 'boolean';
-            break;
+            case 'Boolean':
+                $apiFormat = 'boolean';
+                break;
 
-        default:
-            $apiFormat = $formatSpecs->data_type;
-            break;
+            default:
+                $apiFormat = $formatSpecs->data_type;
+                break;
         }
 
         $formatedValue = '';
@@ -203,21 +205,21 @@ class RecordApiHelper
                 $stringyfiedValue = !is_string($value) ? json_encode($value) : $value;
 
                 switch ($apiFormat) {
-                case 'double':
-                    $formatedValue = (float) $stringyfiedValue;
-                    break;
+                    case 'double':
+                        $formatedValue = (float) $stringyfiedValue;
+                        break;
 
-                case 'boolean':
-                    $formatedValue = (bool) $stringyfiedValue;
-                    break;
+                    case 'boolean':
+                        $formatedValue = (bool) $stringyfiedValue;
+                        break;
 
-                case 'integer':
-                    $formatedValue = (int) $stringyfiedValue;
-                    break;
+                    case 'integer':
+                        $formatedValue = (int) $stringyfiedValue;
+                        break;
 
-                default:
-                    $formatedValue = $stringyfiedValue;
-                    break;
+                    default:
+                        $formatedValue = $stringyfiedValue;
+                        break;
                 }
             }
         }

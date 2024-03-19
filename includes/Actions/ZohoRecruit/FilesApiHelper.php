@@ -16,6 +16,7 @@ final class FilesApiHelper
     private $_defaultHeader;
     private $_payloadBoundary;
     private $_module;
+    private $_dataCenter;
 
     /**
      * @param String $module       zoho recruit module name
@@ -45,9 +46,9 @@ final class FilesApiHelper
         $uploadFileEndpoint = '';
 
         if ($zohoField === 'Candidate Photo') {
-            $uploadFileEndpoint = "https://recruit.zoho.{$this->_dataCenter}/recruit/private/xml/{$this->_module}/uploadPhoto?Scope=recruitapi&type={$zohoField}&version=2&id={$recordID}";
+            $uploadFileEndpoint = "https://recruit.{$this->_dataCenter}/recruit/private/xml/{$this->_module}/uploadPhoto?Scope=recruitapi&type={$zohoField}&version=2&id={$recordID}";
         } else {
-            $uploadFileEndpoint = "https://recruit.zoho.{$this->_dataCenter}/recruit/private/json/{$this->_module}/uploadFile?Scope=ZohoRecruit.modules.all&type={$zohoField}&version=2&id={$recordID}";
+            $uploadFileEndpoint = "https://recruit.{$this->_dataCenter}/recruit/private/json/{$this->_module}/uploadFile?Scope=ZohoRecruit.modules.all&type={$zohoField}&version=2&id={$recordID}";
         }
 
         $payload = '';
