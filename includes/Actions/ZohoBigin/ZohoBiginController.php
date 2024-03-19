@@ -51,7 +51,7 @@ class ZohoBiginController
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
-        $modulesMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/bigin/v1/settings/modules";
+        $modulesMetaApiEndpoint = \urldecode($queryParams->tokenDetails->api_domain) . "/bigin/v1/settings/modules";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $modulesMetaResponse = HttpHelper::get($modulesMetaApiEndpoint, null, $authorizationHeader);
         // wp_send_json_success($modulesMetaResponse, 200);
@@ -107,7 +107,7 @@ class ZohoBiginController
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
-        $layoutsMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/bigin/v2/settings/layouts?module=Deals";
+        $layoutsMetaApiEndpoint = \urldecode($queryParams->tokenDetails->api_domain) . "/bigin/v2/settings/layouts?module=Deals";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $layoutsMetaResponse = HttpHelper::get($layoutsMetaApiEndpoint, null, $authorizationHeader);
         // wp_send_json_success($layoutsMetaResponse, 200);
@@ -175,7 +175,7 @@ class ZohoBiginController
                 'plural_label' => 'Calls'
             ],
         ];
-        // $modulesMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/bigin/v1/settings/related_lists";
+        // $modulesMetaApiEndpoint = \urldecode($queryParams->tokenDetails->api_domain) . "/bigin/v1/settings/related_lists";
         // $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         // $requiredParams['module'] = $queryParams->module;
         // $modulesMetaResponse = HttpHelper::get($modulesMetaApiEndpoint, $queryParams, $authorizationHeader);
@@ -225,7 +225,7 @@ class ZohoBiginController
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
-        $fieldsMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/bigin/v1/settings/fields";
+        $fieldsMetaApiEndpoint = \urldecode($queryParams->tokenDetails->api_domain) . "/bigin/v1/settings/fields";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $requiredParams['module'] = $queryParams->module;
@@ -307,7 +307,7 @@ class ZohoBiginController
             $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
 
-        $tagsMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/bigin/v1/settings/tags?module={$queryParams->module}";
+        $tagsMetaApiEndpoint = \urldecode($queryParams->tokenDetails->api_domain) . "/bigin/v1/settings/tags?module={$queryParams->module}";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $tagsMetaResponse = HttpHelper::get($tagsMetaApiEndpoint, null, $authorizationHeader);
 
@@ -359,7 +359,7 @@ class ZohoBiginController
             $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
 
-        $usersMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/bigin/v1/users";
+        $usersMetaApiEndpoint = \urldecode($queryParams->tokenDetails->api_domain) . "/bigin/v1/users";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $usersMetaResponse = HttpHelper::get($usersMetaApiEndpoint, null, $authorizationHeader);
 
