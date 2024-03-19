@@ -952,7 +952,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 == Changelog ==
 
 = 1.6.2  =
-*Release Date - *21th February 2024\*
+*Release Date - *19th March 2024\*
 
 - **New Features :**
   - WooCommerce: Order Attribution Tracking fields

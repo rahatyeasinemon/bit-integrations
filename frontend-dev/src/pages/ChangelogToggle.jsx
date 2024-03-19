@@ -27,7 +27,7 @@ export default function ChangelogToggle() {
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
                         <h3>What's New in {version}?</h3>
-                        <small className='date'> <b>18th March 2023</b></small>
+                        <small className='date'> <b>19th March 2023</b></small>
                     </div>
                     <div className='changelog-content'>
                         {/* <h4>New Integration</h4> */}
