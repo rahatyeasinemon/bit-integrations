@@ -45,7 +45,7 @@ final class FilesApiHelper
      */
     public function uploadFiles($files, $ticketId, $dataCenter)
     {
-        $uploadFileEndpoint = "https://desk.zoho.{$dataCenter}/api/v1/tickets/{$ticketId}/attachments";
+        $uploadFileEndpoint = "https://desk.{$dataCenter}/api/v1/tickets/{$ticketId}/attachments";
         $payload = '';
         if (is_array($files)) {
             foreach ($files as $fileIndex => $fileName) {

@@ -3,11 +3,13 @@
 /**
  * ZohoDesk Integration
  */
+
 namespace BitCode\FI\Actions\ZohoDesk;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
 use WP_Error;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\controller\ZohoAuthController;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -21,56 +23,14 @@ class ZohoDeskController
         $this->_integrationID = $integrationID;
     }
 
-    /**
-     * Process ajax request for generate_token
-     *
-     * @return JSON zoho crm api response and status
-     */
-    public static function generateTokens($requestsParams)
-    {
-        if (empty($requestsParams->{'accounts-server'})
-                || empty($requestsParams->dataCenter)
-                || empty($requestsParams->clientId)
-                || empty($requestsParams->clientSecret)
-                || empty($requestsParams->redirectURI)
-                || empty($requestsParams->code)
-            ) {
-            wp_send_json_error(
-                __(
-                    'Requested parameter is empty',
-                    'bit-integrations'
-                ),
-                400
-            );
-        }
-
-        $apiEndpoint = \urldecode($requestsParams->{'accounts-server'}) . '/oauth/v2/token';
-        $requestParams = [
-            'grant_type' => 'authorization_code',
-            'client_id' => $requestsParams->clientId,
-            'client_secret' => $requestsParams->clientSecret,
-            'redirect_uri' => \urldecode($requestsParams->redirectURI),
-            'code' => $requestsParams->code
-        ];
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
-
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
-                empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
-                400
-            );
-        }
-        $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
-    }
-
     public static function refreshOrganizations($queryParams)
     {
-        if (empty($queryParams->tokenDetails)
-                || empty($queryParams->dataCenter)
-                || empty($queryParams->clientId)
-                || empty($queryParams->clientSecret)
-            ) {
+        if (
+            empty($queryParams->tokenDetails)
+            || empty($queryParams->dataCenter)
+            || empty($queryParams->clientId)
+            || empty($queryParams->clientSecret)
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -81,10 +41,10 @@ class ZohoDeskController
         }
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
 
-        $organizationsMetaApiEndpoint = "https://desk.zoho.{$queryParams->dataCenter}/api/v1/organizations";
+        $organizationsMetaApiEndpoint = "https://desk.{$queryParams->dataCenter}/api/v1/organizations";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $organizationsMetaResponse = HttpHelper::get($organizationsMetaApiEndpoint, null, $authorizationHeader);
@@ -110,7 +70,7 @@ class ZohoDeskController
             );
         }
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
-            self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
+            ZohoAuthController::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
         wp_send_json_success($response, 200);
         // } else {
@@ -131,12 +91,13 @@ class ZohoDeskController
      */
     public static function refreshDepartments($queryParams)
     {
-        if (empty($queryParams->tokenDetails)
-                || empty($queryParams->dataCenter)
-                || empty($queryParams->clientId)
-                || empty($queryParams->clientSecret)
-                || empty($queryParams->orgId)
-            ) {
+        if (
+            empty($queryParams->tokenDetails)
+            || empty($queryParams->dataCenter)
+            || empty($queryParams->clientId)
+            || empty($queryParams->clientSecret)
+            || empty($queryParams->orgId)
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -147,10 +108,10 @@ class ZohoDeskController
         }
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
 
-        $departmentsMetaApiEndpoint = "https://desk.zoho.{$queryParams->dataCenter}/api/v1/departments?isEnabled=true&limit=100";
+        $departmentsMetaApiEndpoint = "https://desk.{$queryParams->dataCenter}/api/v1/departments?isEnabled=true&limit=100";
 
         $authorizationHeader['orgId'] = "{$queryParams->orgId}";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
@@ -177,7 +138,7 @@ class ZohoDeskController
             );
         }
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
-            self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
+            ZohoAuthController::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
         wp_send_json_success($response, 200);
     }
@@ -191,12 +152,13 @@ class ZohoDeskController
      */
     public static function refreshFields($queryParams)
     {
-        if (empty($queryParams->tokenDetails)
-                || empty($queryParams->dataCenter)
-                || empty($queryParams->clientId)
-                || empty($queryParams->clientSecret)
-                || empty($queryParams->orgId)
-            ) {
+        if (
+            empty($queryParams->tokenDetails)
+            || empty($queryParams->dataCenter)
+            || empty($queryParams->clientId)
+            || empty($queryParams->clientSecret)
+            || empty($queryParams->orgId)
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -207,10 +169,10 @@ class ZohoDeskController
         }
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
 
-        $fieldsMetaApiEndpoint = "https://desk.zoho.{$queryParams->dataCenter}/api/v1/organizationFields?module=tickets";
+        $fieldsMetaApiEndpoint = "https://desk.{$queryParams->dataCenter}/api/v1/organizationFields?module=tickets";
 
         $authorizationHeader['orgId'] = "{$queryParams->orgId}";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
@@ -259,7 +221,7 @@ class ZohoDeskController
         }
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             $response['queryModule'] = $queryParams->module;
-            self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
+            ZohoAuthController::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
         }
         wp_send_json_success($response, 200);
     }
@@ -273,12 +235,13 @@ class ZohoDeskController
      */
     public static function refreshTicketOwners($queryParams)
     {
-        if (empty($queryParams->tokenDetails)
-                || empty($queryParams->dataCenter)
-                || empty($queryParams->clientId)
-                || empty($queryParams->clientSecret)
-                || empty($queryParams->orgId)
-            ) {
+        if (
+            empty($queryParams->tokenDetails)
+            || empty($queryParams->dataCenter)
+            || empty($queryParams->clientId)
+            || empty($queryParams->clientSecret)
+            || empty($queryParams->orgId)
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -289,10 +252,10 @@ class ZohoDeskController
         }
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
 
-        $ownersMetaApiEndpoint = "https://desk.zoho.{$queryParams->dataCenter}/api/v1/agents?status=ACTIVE&limit=100";
+        $ownersMetaApiEndpoint = "https://desk.{$queryParams->dataCenter}/api/v1/agents?status=ACTIVE&limit=100";
 
         $authorizationHeader['orgId'] = "{$queryParams->orgId}";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
@@ -316,7 +279,7 @@ class ZohoDeskController
             );
         }
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
-            self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
+            ZohoAuthController::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
         wp_send_json_success($response, 200);
     }
@@ -330,13 +293,14 @@ class ZohoDeskController
      */
     public static function refreshProducts($queryParams)
     {
-        if (empty($queryParams->tokenDetails)
-                || empty($queryParams->dataCenter)
-                || empty($queryParams->clientId)
-                || empty($queryParams->clientSecret)
-                || empty($queryParams->orgId)
-                || empty($queryParams->departmentId)
-            ) {
+        if (
+            empty($queryParams->tokenDetails)
+            || empty($queryParams->dataCenter)
+            || empty($queryParams->clientId)
+            || empty($queryParams->clientSecret)
+            || empty($queryParams->orgId)
+            || empty($queryParams->departmentId)
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -348,10 +312,10 @@ class ZohoDeskController
 
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
 
-        $productsMetaApiEndpoint = "https://desk.zoho.{$queryParams->dataCenter}/api/v1/products?departmentId={$queryParams->departmentId}&limit=100";
+        $productsMetaApiEndpoint = "https://desk.{$queryParams->dataCenter}/api/v1/products?departmentId={$queryParams->departmentId}&limit=100";
 
         $authorizationHeader['orgId'] = "{$queryParams->orgId}";
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
@@ -375,76 +339,9 @@ class ZohoDeskController
             );
         }
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
-            self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
+            ZohoAuthController::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
         wp_send_json_success($response, 200);
-    }
-
-    /**
-     * Helps to refresh zoho crm access_token
-     *
-     * @param  Array $apiData Contains required data for refresh access token
-     * @return JSON  $tokenDetails API token details
-     */
-    protected static function refreshAccessToken($apiData)
-    {
-        if (!is_object($apiData)
-            || empty($apiData->dataCenter)
-            || empty($apiData->clientId)
-            || empty($apiData->clientSecret)
-            || empty($apiData->tokenDetails)
-        ) {
-            return false;
-        }
-        $tokenDetails = $apiData->tokenDetails;
-
-        $dataCenter = $apiData->dataCenter;
-        $apiEndpoint = "https://accounts.zoho.{$dataCenter}/oauth/v2/token";
-        $requestParams = [
-            'grant_type' => 'refresh_token',
-            'client_id' => $apiData->clientId,
-            'client_secret' => $apiData->clientSecret,
-            'refresh_token' => $tokenDetails->refresh_token,
-        ];
-
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            return false;
-        }
-        $tokenDetails->generates_on = \time();
-        $tokenDetails->access_token = $apiResponse->access_token;
-        return $tokenDetails;
-    }
-
-    /**
-     * Save updated access_token to avoid unnecessary token generation
-     *
-     * @param Integer $formID        ID of Integration related form
-     * @param Integer $integrationID ID of Zoho crm Integration
-     * @param Obeject $tokenDetails  refreshed token info
-     *
-     * @return null
-     */
-    protected static function saveRefreshedToken($integrationID, $tokenDetails, $others = null)
-    {
-        if (empty($formID) || empty($integrationID)) {
-            return;
-        }
-        $flow = new FlowController();
-        $zdeskDetails = $flow->get(['id' => $integrationID]);
-
-        if (is_wp_error($zdeskDetails)) {
-            return;
-        }
-        $newDetails = json_decode($zdeskDetails[0]->flow_details);
-
-        $newDetails->tokenDetails = $tokenDetails;
-
-        if (!empty($others['organizations'])) {
-            $newDetails->default->organizations = $others['organizations'];
-        }
-
-        $flow->update($integrationID, ['flow_details' => \json_encode($newDetails)]);
     }
 
     public function execute($integrationData, $fieldValues)
@@ -458,10 +355,11 @@ class ZohoDeskController
         $fieldMap = $integrationDetails->field_map;
         $required = $integrationDetails->default->fields->{$orgId}->required;
         $actions = $integrationDetails->actions;
-        if (empty($tokenDetails)
-        || empty($orgId)
-        || empty($department)
-        || empty($fieldMap)
+        if (
+            empty($tokenDetails)
+            || empty($orgId)
+            || empty($department)
+            || empty($fieldMap)
         ) {
             return new WP_Error('REQ_FIELD_EMPTY', __('list are required for zoho desk api', 'bit-integrations'));
         }
@@ -471,9 +369,9 @@ class ZohoDeskController
             $requiredParams['clientSecret'] = $integrationDetails->clientSecret;
             $requiredParams['dataCenter'] = $integrationDetails->dataCenter;
             $requiredParams['tokenDetails'] = $tokenDetails;
-            $newTokenDetails = self::refreshAccessToken((object)$requiredParams);
+            $newTokenDetails = ZohoAuthController::_refreshAccessToken((object)$requiredParams);
             if ($newTokenDetails) {
-                self::saveRefreshedToken($this->_integrationID, $newTokenDetails);
+                ZohoAuthController::_saveRefreshedToken($this->_integrationID, $newTokenDetails);
                 $tokenDetails = $newTokenDetails;
             }
         }

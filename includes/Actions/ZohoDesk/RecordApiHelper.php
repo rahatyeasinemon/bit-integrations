@@ -15,6 +15,8 @@ class RecordApiHelper
 {
     private $_defaultHeader;
     private $_tokenDetails;
+    private $_apiDomain;
+    private $_integrationID;
 
     public function __construct($tokenDetails, $orgId, $integId)
     {
@@ -28,13 +30,13 @@ class RecordApiHelper
 
     public function insertRecord($dataCenter, $data)
     {
-        $insertRecordEndpoint = "https://desk.zoho.{$dataCenter}/api/v1/tickets";
+        $insertRecordEndpoint = "https://desk.{$dataCenter}/api/v1/tickets";
         return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
     }
 
     public function createContact($dataCenter, $data)
     {
-        $getContactEndpoint = "https://desk.zoho.{$dataCenter}/api/v1/contacts";
+        $getContactEndpoint = "https://desk.{$dataCenter}/api/v1/contacts";
 
         return HttpHelper::post($getContactEndpoint, $data, $this->_defaultHeader);
     }
@@ -42,7 +44,7 @@ class RecordApiHelper
     public function searchContact($dataCenter, $email)
     {
 
-        $searchContactEndpoint = "https://desk.zoho.{$dataCenter}/api/v1/contacts/search?limit=1&email={$email}";
+        $searchContactEndpoint = "https://desk.{$dataCenter}/api/v1/contacts/search?limit=1&email={$email}";
 
         return HttpHelper::get($searchContactEndpoint, null, $this->_defaultHeader);
     }

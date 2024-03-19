@@ -3,16 +3,15 @@ import { useEffect, useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveActionConf, setGrantTokenResponse } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import ZohoDeskAuthorization from './ZohoDeskAuthorization'
+import ZohoAuthorization from '../ZohoAuthorization'
 import { checkMappedFields, handleInput, refreshOrganizations } from './ZohoDeskCommonFunc'
 import ZohoDeskIntegLayout from './ZohoDeskIntegLayout'
-import ZohoAuthorization from '../ZohoAuthorization'
-import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
 function ZohoDesk({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -71,25 +70,13 @@ function ZohoDesk({ formFields, setFlow, flow, allIntegURL }) {
       <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
-      {/* <ZohoDeskAuthorization
-        formID={formID}
-        deskConf={deskConf}
-        setDeskConf={setDeskConf}
-        step={step}
-        setstep={setstep}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-        setSnackbar={setSnackbar}
-      /> */}
       <ZohoAuthorization
         integ="zohoDesk"
         tutorialLink={zohoDesk}
         scopes={scopes}
-        formID={formID}
         config={deskConf}
         setConfig={setDeskConf}
         step={step}
-        setstep={setstep}
         nextPage={nextPage}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
