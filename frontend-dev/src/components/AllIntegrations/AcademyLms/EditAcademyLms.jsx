@@ -6,8 +6,9 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import EditFormInteg from '../EditFormInteg'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import EditWebhookInteg from '../EditWebhookInteg'
-import { checkWebhookIntegrationsExist, saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
+import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { handleInput } from './AcademyLmsCommonFunc'
 import AcademyLmsIntegLayout from './AcademyLmsIntegLayout'
@@ -32,8 +33,8 @@ function EditAcademyLms({ allIntegURL }) {
         <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, academyLmsConf, setAcademyLmsConf)} name="name" value={academyLmsConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
       </div>
       <br />
-      {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
-      {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
+
+      <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
 
       <AcademyLmsIntegLayout
         academyLmsConf={academyLmsConf}

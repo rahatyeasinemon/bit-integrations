@@ -65,7 +65,6 @@ function Salesforce({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'BillingState', label: 'Billing State', required: false },
     { key: 'BillingPostalCode', label: 'Billing Postal Code', required: false },
     { key: 'BillingCountry', label: 'Billing Country', required: false },
-    { key: 'Type', label: 'Account Type', required: false },
     { key: 'ShippingStreet', label: 'Shipping Street', required: false },
     { key: 'ShippingCity', label: 'Shipping City', required: false },
     { key: 'ShippingState', label: 'Shipping State', required: false },
@@ -80,7 +79,9 @@ function Salesforce({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'CleanStatus', label: 'Clean Status', required: false },
     { key: 'NaicsDesc', label: 'Naics Desc', required: false },
     { key: 'SicDesc', label: 'Sic Desc', required: false },
-
+    { key: 'Fax', label: 'Fax', required: false },
+    { key: 'TickerSymbol', label: 'Ticker Symbol', required: false },
+    { key: 'AnnualRevenue', label: 'Annual Revenue', required: false },
   ]
 
   const campaignFields = [

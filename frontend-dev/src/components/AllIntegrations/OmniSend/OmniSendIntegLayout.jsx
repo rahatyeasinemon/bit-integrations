@@ -125,63 +125,63 @@ export default function OmniSendIntegLayout({ formFields,
 
       {(omniSendConf.channels.search('email') !== -1
         || omniSendConf.channels.search('sms') !== -1) && (
-        <>
-          <br />
-          <div className="mt-5">
-            <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
-          </div>
-          <br />
-
-          {loading.field && (
-            <Loader
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 100,
-                transform: 'scale(0.7)',
-              }}
-            />
-          )}
-          <div className="btcd-hr mt-1" />
-          <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-            <div className="txt-dp">
-              <b>{__('Form Fields', 'bit-integrations')}</b>
+          <>
+            <br />
+            <div className="mt-5">
+              <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
             </div>
-            <div className="txt-dp">
-              <b>{__('OmniSend Fields', 'bit-integrations')}</b>
+            <br />
+
+            {loading.field && (
+              <Loader
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 100,
+                  transform: 'scale(0.7)',
+                }}
+              />
+            )}
+            <div className="btcd-hr mt-1" />
+            <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
+              <div className="txt-dp">
+                <b>{__('Form Fields', 'bit-integrations')}</b>
+              </div>
+              <div className="txt-dp">
+                <b>{__('OmniSend Fields', 'bit-integrations')}</b>
+              </div>
             </div>
-          </div>
 
-          {omniSendConf?.field_map.map((itm, i) => (
-            <OmniSendFieldMap
-              key={`rp-m-${i + 9}`}
-              i={i}
-              field={itm}
-              omniSendConf={omniSendConf}
-              formFields={formFields}
-              setOmniSendConf={setOmniSendConf}
-              setSnackbar={setSnackbar}
-            />
-          ))}
-          <div className="txt-center btcbi-field-map-button mt-2">
-            <button
-              onClick={() => addFieldMap(
-                omniSendConf.field_map.length,
-                omniSendConf,
-                setOmniSendConf,
-                false,
-              )}
-              className="icn-btn sh-sm"
-              type="button"
-            >
-              +
-            </button>
-          </div>
-          <br />
-          <br />
+            {omniSendConf?.field_map.map((itm, i) => (
+              <OmniSendFieldMap
+                key={`rp-m-${i + 9}`}
+                i={i}
+                field={itm}
+                omniSendConf={omniSendConf}
+                formFields={formFields}
+                setOmniSendConf={setOmniSendConf}
+                setSnackbar={setSnackbar}
+              />
+            ))}
+            <div className="txt-center btcbi-field-map-button mt-2">
+              <button
+                onClick={() => addFieldMap(
+                  omniSendConf.field_map.length,
+                  omniSendConf,
+                  setOmniSendConf,
+                  false,
+                )}
+                className="icn-btn sh-sm"
+                type="button"
+              >
+                +
+              </button>
+            </div>
+            <br />
+            <br />
 
-          {/* <div className="mt-4">
+            <div className="mt-4">
               <b className="wdt-100">{__("Actions", "bit-integrations")}</b>
             </div>
             <div className="btcd-hr mt-1" />
@@ -191,9 +191,9 @@ export default function OmniSendIntegLayout({ formFields,
               formFields={formFields}
               loading={loading}
               setLoading={setLoading}
-            /> */}
-        </>
-      )}
+            />
+          </>
+        )}
     </>
   )
 }

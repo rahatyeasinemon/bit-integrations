@@ -1,9 +1,10 @@
 <?php
+
 namespace BitCode\FI\Actions\Zoom;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
 use WP_Error;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class ZoomController
 {
@@ -39,11 +40,13 @@ class ZoomController
 
     public static function zoomFetchAllMeetings($requestParams)
     {
-        if (empty($requestParams->accessToken)) {
+        if (empty($requestParams->tokenDetails) || empty($requestParams->clientId) || empty($requestParams->clientSecret)) {
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
-        $header = [
-            'Authorization' => 'Bearer ' . $requestParams->accessToken,
+
+        $tokenDetails   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret);
+        $header         = [
+            'Authorization' => 'Bearer ' . $tokenDetails->access_token,
             'Content-Type' => 'application/json'
         ];
 
@@ -58,31 +61,51 @@ class ZoomController
         wp_send_json_success($response, 200);
     }
 
-    public static function getAllFolders($queryParams)
+    public static function zoomFetchAllCustomFields($requestParams)
     {
-        if (empty($queryParams->tokenDetails) || empty($queryParams->clientId) || empty($queryParams->clientSecret)) {
+        if (empty($requestParams->tokenDetails) || empty($requestParams->clientId) || empty($requestParams->clientSecret) || empty($requestParams->meetingId)) {
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $token = self::tokenExpiryCheck($queryParams->tokenDetails, $queryParams->clientId, $queryParams->clientSecret, null);
-        if ($token->access_token !== $queryParams->tokenDetails->access_token) {
-            self::saveRefreshedToken($queryParams->flowID, $token);
+        $tokenDetails   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret);
+        $header         = [
+            'Authorization' => 'Bearer ' . $tokenDetails->access_token,
+            'Content-Type' => 'application/json'
+        ];
+        error_log(print_r($tokenDetails, true));
+        $apiEndpoint = "https://api.zoom.us/v2/meetings/{$requestParams->meetingId}/registrants/questions";
+        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+
+        if (is_wp_error($apiResponse) || !empty($apiResponse->error) || !isset($apiResponse->questions)) {
+            wp_send_json_error(empty($apiResponse->message) ? 'Unknown' : $apiResponse->message, 400);
         }
 
-        $folders = self::getOneDriveFoldersList($token->access_token);
-        $foldersOnly = $folders->value;
+        $allFields      = [
+            (object) ["key" => "first_name", "label" => "First Name", "required" => true],
+            (object) ["key" => "last_name", "label" => "Last Name", "required" => true],
+            (object) ["key" => "email", "label" => "Email", "required" => true]
+        ];
+        $excludedFields = ['first_name', 'last_name', 'email'];
 
-        $data = [];
-        if (is_array($foldersOnly)) {
-            foreach ($foldersOnly as $folder) {
-                if (property_exists($folder, 'folder')) {
-                    $data[] = $folder;
-                }
-            }
+        foreach ($apiResponse->questions as $field) {
+            if (in_array($field->field_name, $excludedFields)) continue;
+
+            $allFields[] = (object) [
+                "key"       => $field->field_name,
+                "label"     => ucwords(str_replace('_', ' ', $field->field_name)),
+                "required"  => $field->required
+            ];
         }
-        $response['oneDriveFoldersList'] = $data;
-        $response['tokenDetails'] = $token;
-        wp_send_json_success($response, 200);
+
+        foreach ($apiResponse->custom_questions as $field) {
+            $allFields[] = (object) [
+                "key"       => 'custom_questions_' . $field->title,
+                "label"     => $field->title,
+                "required"  => $field->required
+            ];
+        }
+
+        wp_send_json_success($allFields, 200);
     }
 
     private static function tokenExpiryCheck($token, $clientId, $clientSecret)

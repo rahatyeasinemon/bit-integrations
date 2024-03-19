@@ -6,10 +6,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import SnackMsg from '../../Utilities/SnackMsg'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkWebhookIntegrationsExist, saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
+import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import { handleInput } from './ActiveCampaignCommonFunc'
 import ActiveCampaignIntegLayout from './ActiveCampaignIntegLayout'
 import EditFormInteg from '../EditFormInteg'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import EditWebhookInteg from '../EditWebhookInteg'
 
@@ -32,8 +33,8 @@ function EditActiveCampaign({ allIntegURL }) {
         <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, activeCampaingConf, setActiveCampaingConf)} name="name" value={activeCampaingConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
       </div>
       <br />
-      {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
-      {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
+
+      <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
       <ActiveCampaignIntegLayout
         formID={formID}
         formFields={formFields}

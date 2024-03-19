@@ -6,7 +6,8 @@ import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import EditFormInteg from '../EditFormInteg'
-import { checkWebhookIntegrationsExist, saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
+import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import EditWebhookInteg from '../EditWebhookInteg'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { handleInput } from './EnchargeCommonFunc'
@@ -28,8 +29,8 @@ function EditEncharge({ allIntegURL }) {
         <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, enchargeConf, setEnchargeConf)} name="name" value={enchargeConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
       </div>
       <br />
-      {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
-      {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
+
+      <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
       <EnchargeIntegLayout
         formID={formID}
         formFields={formFields}

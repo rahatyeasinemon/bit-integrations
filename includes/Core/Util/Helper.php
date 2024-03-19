@@ -2,6 +2,7 @@
 
 namespace BitCode\FI\Core\Util;
 
+use WP_Error;
 use BitCode\FI\Triggers\TriggerController;
 
 /**
@@ -141,5 +142,30 @@ final class Helper
     {
         json_decode($string);
         return json_last_error() === JSON_ERROR_NONE;
+    }
+
+    public static function extractValueFromPath($data, $path)
+    {
+        $parts = is_array($path) ? $path : explode('.', $path);
+        if (count($parts) === 0) {
+            return $data;
+        }
+
+        $currentPart = array_shift($parts);
+        if (is_array($data)) {
+            if (!isset($data[$currentPart])) {
+                wp_send_json_error(new WP_Error('Breakdance', __('Index out of bounds or invalid', 'bit-integrations')));
+            }
+            return self::extractValueFromPath($data[$currentPart], $parts);
+        }
+
+        if (is_object($data)) {
+            if (!property_exists($data, $currentPart)) {
+                wp_send_json_error(new WP_Error('Breakdance', __('Invalid path', 'bit-integrations')));
+            }
+            return self::extractValueFromPath($data->$currentPart, $parts);
+        }
+
+        wp_send_json_error(new WP_Error('Breakdance', __('Invalid path', 'bit-integrations')));
     }
 }

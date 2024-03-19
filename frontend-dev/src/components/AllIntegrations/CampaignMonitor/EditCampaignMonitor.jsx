@@ -7,8 +7,9 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import SnackMsg from '../../Utilities/SnackMsg'
 import EditFormInteg from '../EditFormInteg'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import EditWebhookInteg from '../EditWebhookInteg'
-import { checkWebhookIntegrationsExist, saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
+import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { handleInput } from './CampaignMonitorCommonFunc'
 import CampaignMonitorIntegLayout from './CampaignMonitorIntegLayout'
@@ -32,8 +33,8 @@ function EditCampaignMonitor({ allIntegURL }) {
         <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, campaignMonitorConf, setCampaignMonitorConf)} name="name" value={campaignMonitorConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
       </div>
       <br />
-      {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
-      {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
+
+      <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
       <CampaignMonitorIntegLayout
         formID={formID}
         formFields={formFields}

@@ -2,20 +2,19 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
-import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
-import { __ } from '../../../Utils/i18nwrap'
 import { postFields } from '../../../Utils/StaticData/postField'
+import bitsFetch from '../../../Utils/bitsFetch'
+import { __ } from '../../../Utils/i18nwrap'
 // import { postFields } from '../../../Utils/StaticData/postField'
 import Cooltip from '../../Utilities/Cooltip'
 import SnackMsg from '../../Utilities/SnackMsg'
-import EditFormInteg from '../EditFormInteg'
-import EditWebhookInteg from '../EditWebhookInteg'
-import { checkWebhookIntegrationsExist, saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
+import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import CustomField from './CustomField'
 import FieldMap from './FieldMap'
-import { addFieldMap, refreshPostTypes, checkMappedPostFields, checkMappedAcfFields, checkMappedMbFields } from './PostHelperFunction'
+import { addFieldMap, checkMappedAcfFields, checkMappedMbFields, checkMappedPostFields, refreshPostTypes } from './PostHelperFunction'
 
 function Post({ allIntegURL }) {
   const [users, setUsers] = useState([])
@@ -127,8 +126,7 @@ function Post({ allIntegURL }) {
         <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={postConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
         <br />
         <br />
-        {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} className="d-blk" />}
-        {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
+        <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
 
         <div className="mt-3 flx">
           <b>{__('Post Type', 'bit-integrations')}</b>

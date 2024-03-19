@@ -61,7 +61,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
 
           </div>
         )}
-        { ['opportunity-create', 'event-create', 'case-create'].includes(salesforceConf.actionName) && (
+        {['opportunity-create', 'event-create', 'case-create'].includes(salesforceConf.actionName) && (
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <TableCheckBox onChange={openAccountModel} checked={'accountId' in salesforceConf.actions} className="wdt-200 mt-4 mr-2" value="accountId" title={__('Account', 'bit-integrations')} subTitle={__('Account of salesforce.', 'bit-integrations')} />
 
@@ -85,7 +85,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
             <TableCheckBox onChange={() => openActionMdl('opportunityLeadSource')} checked={'opportunityLeadSourceId' in salesforceConf.actions} className="wdt-200 mt-4 mr-2" value="opportunityLeadSourceId" title={__('Opportunity Lead Source', 'bit-integrations')} subTitle={__('Opportunity Lead Source of salesforce.', 'bit-integrations')} />
           </div>
         )}
-        { ['event-create', 'case-create'].includes(salesforceConf.actionName) && (
+        {['event-create', 'case-create'].includes(salesforceConf.actionName) && (
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <TableCheckBox onChange={openContactModel} checked={'contactId' in salesforceConf.actions} className="wdt-200 mt-4 mr-2" value="contactId" title={__('Contacts', 'bit-integrations')} subTitle={__('Contacts of salesforce.', 'bit-integrations')} />
           </div>
@@ -113,6 +113,22 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <TableCheckBox onChange={() => openActionMdl('slaViolation')} checked={'slaViolationId' in salesforceConf.actions} className="wdt-200 mt-4 mr-2" value="slaViolationId" title={__('SLA Violation', 'bit-integrations')} subTitle={__('SLA ViolationId of salesforce.', 'bit-integrations')} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <TableCheckBox onChange={() => openActionMdl('caseType')} checked={'caseType' in salesforceConf.actions} className="wdt-200 mt-4 mr-2" value="caseType" title={__('Type', 'bit-integrations')} subTitle={__('Add Case Type.', 'bit-integrations')} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <TableCheckBox onChange={() => openActionMdl('caseReason')} checked={'caseReason' in salesforceConf.actions} className="wdt-200 mt-4 mr-2" value="caseReason" title={__('Case Reason', 'bit-integrations')} subTitle={__('Add Case Reason.', 'bit-integrations')} />
+            </div>
+          </>
+        )}
+        {(salesforceConf.actionName === 'account-create') && (
+          <>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <TableCheckBox onChange={() => openActionMdl('accType')} checked={'selectedAccType' in salesforceConf.actions} className="wdt-200 mt-4 mr-2" value="accType" title={__('Type', 'bit-integrations')} subTitle={__('Add Account Type', 'bit-integrations')} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <TableCheckBox onChange={() => openActionMdl('ownership')} checked={'selectedOwnership' in salesforceConf.actions} className="wdt-200 mt-4 mr-2" value="ownership" title={__('Ownership', 'bit-integrations')} subTitle={__('Add Account Ownership', 'bit-integrations')} />
             </div>
           </>
         )}
@@ -552,6 +568,154 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
             </div>
           )}
       </ConfirmModal>
+
+      {/* Account Module */}
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt={__('Ok', 'bit-integrations')}
+        show={actionMdl.show === 'accType'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title={__('Add Account Type', 'bit-integrations')}
+      >
+        <div className="btcd-hr mt-2" />
+        {isLoading ? (
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 45,
+            transform: 'scale(0.5)',
+          }}
+          />
+        )
+          : (
+            <div className="flx flx-between mt-2">
+              <select
+                value={salesforceConf.actions.selectedAccType}
+                className="btcd-paper-inp"
+                onChange={e => actionHandler(e.target.value, 'selectedAccType')}
+              >
+                <option value="">{__('Select type', 'bit-integrations')}</option>
+                {accountTypes.map((item, key) => <option key={key} value={item}>{item}</option>)}
+              </select>
+            </div>
+          )}
+      </ConfirmModal>
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt={__('Ok', 'bit-integrations')}
+        show={actionMdl.show === 'ownership'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title={__('Add Account Ownership', 'bit-integrations')}
+      >
+        <div className="btcd-hr mt-2" />
+        {isLoading ? (
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 45,
+            transform: 'scale(0.5)',
+          }}
+          />
+        )
+          : (
+            <div className="flx flx-between mt-2">
+              <select
+                value={salesforceConf.actions.selectedOwnership}
+                className="btcd-paper-inp"
+                onChange={e => actionHandler(e.target.value, 'selectedOwnership')}
+              >
+                <option value="">{__('Select Ownership', 'bit-integrations')}</option>
+                {['Public', 'Private', 'Subsidiary', 'Other'].map((item, key) => <option key={key} value={item}>{item}</option>)}
+              </select>
+            </div>
+          )}
+      </ConfirmModal>
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt={__('Ok', 'bit-integrations')}
+        show={actionMdl.show === 'caseType'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title={__('Add Case Type', 'bit-integrations')}
+      >
+        <div className="btcd-hr mt-2" />
+        {isLoading ? (
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 45,
+            transform: 'scale(0.5)',
+          }}
+          />
+        )
+          : (
+            <div className="flx flx-between mt-2">
+              <select
+                value={salesforceConf.actions.caseType}
+                className="btcd-paper-inp"
+                onChange={e => actionHandler(e.target.value, 'caseType')}
+              >
+                <option value="">{__('Select type', 'bit-integrations')}</option>
+                {['Mechanical', 'Electrical', 'Electronic', 'Structural', 'Other'].map((item, key) => <option key={key} value={item}>{item}</option>)}
+              </select>
+            </div>
+          )}
+      </ConfirmModal>
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt={__('Ok', 'bit-integrations')}
+        show={actionMdl.show === 'caseReason'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title={__('Add Case Reason', 'bit-integrations')}
+      >
+        <div className="btcd-hr mt-2" />
+        {isLoading ? (
+          <Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 45,
+            transform: 'scale(0.5)',
+          }}
+          />
+        )
+          : (
+            <div className="flx flx-between mt-2">
+              <select
+                value={salesforceConf.actions.caseReason}
+                className="btcd-paper-inp"
+                onChange={e => actionHandler(e.target.value, 'caseReason')}
+              >
+                <option value="">{__('Select type', 'bit-integrations')}</option>
+                {['Installation', 'Equipment Complexity', 'Breakdown', 'Equipment Design', 'Feedback', 'Other'].map((item, key) => <option key={key} value={item}>{item}</option>)}
+              </select>
+            </div>
+          )}
+      </ConfirmModal>
     </div>
   )
 }
+
+const accountTypes = [
+  'Prospect',
+  'Customer - Direct',
+  'Customer - Channel',
+  'Channel Partner / Reseller',
+  'Installation Partner',
+  'Technology Partner',
+  'Other',
+]

@@ -3,16 +3,15 @@ import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import bitsFetch from '../../../Utils/bitsFetch'
-import { checkWebhookIntegrationsExist, saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
-import { addFieldMap, checkMappedPostFields, checkMappedPodFields } from './PodHelperFunction'
-import PodsFieldMap from './FieldMap'
-import SnackMsg from '../../Utilities/SnackMsg'
-import { postFields } from '../../../Utils/StaticData/postField'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
+import { postFields } from '../../../Utils/StaticData/postField'
+import bitsFetch from '../../../Utils/bitsFetch'
+import SnackMsg from '../../Utilities/SnackMsg'
+import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import EditWebhookInteg from '../EditWebhookInteg'
-import EditFormInteg from '../EditFormInteg'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
+import PodsFieldMap from './FieldMap'
+import { addFieldMap, checkMappedPodFields, checkMappedPostFields } from './PodHelperFunction'
 
 function EditPod({ allIntegURL }) {
   const [types, setTypes] = useState([])
@@ -93,8 +92,7 @@ function EditPod({ allIntegURL }) {
       <input className="btcd-paper-inp w-5 mt-1" onChange={(e) => handleInput(e.target.name, e.target.value)} name="name" value={data.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
       <br />
       <br />
-      {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} className="d-blk" />}
-      {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
+      <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
 
       <div className="mt-3"><b>{__('Post Type', 'bit-integrations')}</b></div>
       <select name="post_type" onChange={(e) => getPodsField(e.target.name, e.target.value)} value={data?.post_type} className="btcd-paper-inp w-5 mt-1">

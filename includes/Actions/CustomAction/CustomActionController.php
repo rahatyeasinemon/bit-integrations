@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Actions\CustomAction;
 
-use BitCode\FI\Core\Util\Common;
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class CustomActionController
 {
@@ -34,24 +34,29 @@ class CustomActionController
 
     public function execute($integrationData, $fieldValues)
     {
-        $funcFileLocation = $integrationData->flow_details->funcFileLocation;
-        $integId = $integrationData->id;
-        $isExits = file_exists($funcFileLocation);
-        $isSuccessfullyRun = true;
+        $funcFileLocation   = $integrationData->flow_details->funcFileLocation;
+        $integId            = $integrationData->id;
+        $isExits            = file_exists($funcFileLocation);
+        $isSuccessfullyRun  = true;
+        $additionalData     = null;
+
+        ob_start();
         if ($isExits) {
             $trigger = (array)$fieldValues;
+
             try {
                 include "$funcFileLocation";
             } catch (\Throwable $th) {
                 $isSuccessfullyRun = false;
                 LogHandler::save($integId, $th->getMessage(), 'error', 'Custom action Failed');
             }
+            $additionalData = ob_get_clean();
         } else {
             LogHandler::save($integId, wp_json_encode(['type' => 'custom_action', 'type_name' => 'custom action']), 'error', wp_json_encode('Custom action file not found'));
             return;
         }
         if ($isSuccessfullyRun) {
-            LogHandler::save($integId, wp_json_encode(['type' => 'custom_action', 'type_name' => 'custom action']), 'success', wp_json_encode('Custom action successfully run'));
+            LogHandler::save($integId, wp_json_encode(['type' => 'custom_action', 'type_name' => 'custom action']), 'success', wp_json_encode("Custom action successfully run" . !empty($additionalData) ? json_encode($additionalData) : ''));
         }
 
         return true;

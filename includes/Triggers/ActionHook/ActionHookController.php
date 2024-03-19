@@ -4,6 +4,7 @@ namespace BitCode\FI\Triggers\ActionHook;
 
 use WP_Error;
 use BitCode\FI\Flow\Flow;
+use BitCode\FI\Core\Util\Helper;
 
 class ActionHookController
 {
@@ -77,7 +78,7 @@ class ActionHookController
                     continue;
                 }
 
-                $primaryKeyValue = self::extractValueFromPath($args, $flowDetails->primaryKey->key);
+                $primaryKeyValue = Helper::extractValueFromPath($args, $flowDetails->primaryKey->key);
                 if ($flowDetails->primaryKey->value === $primaryKeyValue) {
                     $fieldKeys      = [];
                     $formatedData   = [];
@@ -93,7 +94,7 @@ class ActionHookController
                     }
 
                     foreach ($fieldKeys as $key) {
-                        $formatedData[$key] = self::extractValueFromPath($args, $key);
+                        $formatedData[$key] = Helper::extractValueFromPath($args, $key);
                     }
 
                     Flow::execute('ActionHook', current_action(), $formatedData, array($flow));
@@ -102,30 +103,5 @@ class ActionHookController
         }
 
         return rest_ensure_response(['status' => 'success']);
-    }
-
-    private static function extractValueFromPath($data, $path)
-    {
-        $parts = is_array($path) ? $path : explode('.', $path);
-        if (count($parts) === 0) {
-            return $data;
-        }
-
-        $currentPart = array_shift($parts);
-        if (is_array($data)) {
-            if (!isset($data[$currentPart])) {
-                wp_send_json_error(new WP_Error('capture Action', __('Index out of bounds or invalid', 'bit-integrations')));
-            }
-            return self::extractValueFromPath($data[$currentPart], $parts);
-        }
-
-        if (is_object($data)) {
-            if (!property_exists($data, $currentPart)) {
-                wp_send_json_error(new WP_Error('capture Action', __('Invalid path', 'bit-integrations')));
-            }
-            return self::extractValueFromPath($data->$currentPart, $parts);
-        }
-
-        wp_send_json_error(new WP_Error('capture Action', __('Invalid path', 'bit-integrations')));
     }
 }

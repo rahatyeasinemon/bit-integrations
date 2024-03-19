@@ -3,11 +3,12 @@
 /**
  * OmniSend    Record Api
  */
+
 namespace BitCode\FI\Actions\OmniSend;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -15,6 +16,8 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_integrationID;
+    private $_integrationDetails;
+    private $_defaultHeader;
     private $baseUrl = 'https://api.omnisend.com/v3/';
 
     public function __construct($integrationDetails, $integId)
@@ -37,7 +40,7 @@ class RecordApiHelper
         if (!empty($channels)) {
             $splitChannels = explode(',', $channels);
         } else {
-            return ['success'=>false, 'message'=>'At least one channel is required', 'code'=>400];
+            return ['success' => false, 'message' => 'At least one channel is required', 'code' => 400];
         }
         $email = $finalData['email'];
         $phone = $finalData['phone_number'];
@@ -46,15 +49,15 @@ class RecordApiHelper
         if (count($splitChannels)) {
             foreach ($splitChannels as $channel) {
                 $status = $channel === 'email' ? $emailStatus : $smsStatus;
-                $type = $channel === 'email' ? 'email' : 'phone' ;
+                $type = $channel === 'email' ? 'email' : 'phone';
                 $id = $channel === 'email' ? $email : $phone;
                 array_push($identifires, (object) [
-                    'channels'=> [
+                    'channels' => [
                         $channel => [
-                            'status'=> $status
+                            'status' => $status
                         ]
                     ],
-                    'type'=> $type,
+                    'type' => $type,
                     'id'  => $id
 
                 ]);
@@ -62,6 +65,10 @@ class RecordApiHelper
         }
 
         $requestParams['identifiers'] = $identifires;
+
+        if ($this->_integrationDetails->actions->tag && !empty($this->_integrationDetails->selected_tags)) {
+            $requestParams['tags'] = explode(',', $this->_integrationDetails->selected_tags);
+        }
 
         foreach ($finalData as $key => $value) {
             if ($key !== 'email' && $key !== 'phone_number') {

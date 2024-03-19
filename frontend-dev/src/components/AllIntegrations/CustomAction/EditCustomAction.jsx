@@ -6,11 +6,13 @@ import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import EditFormInteg from '../EditFormInteg'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import EditWebhookInteg from '../EditWebhookInteg'
-import { checkWebhookIntegrationsExist, saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
+import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import CustomActionStepTwo from './CustomActionStepTwo'
 import CustomFuncEditor from './CustomFuncEditor'
 import { checkFunctionValidity } from './CustomFunctionHelper'
+import LoaderSm from '../../Loaders/LoaderSm'
 
 function EditCustomAction({ allIntegURL }) {
   const navigate = useNavigate()
@@ -19,6 +21,7 @@ function EditCustomAction({ allIntegURL }) {
   const [customActionConf, setCustomActionConf] = useRecoilState($actionConf)
   const [flow, setFlow] = useRecoilState($newFlow)
   const formFields = useRecoilValue($formFields)
+  const [loading, setLoading] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
   const [step, setStep] = useState(1)
@@ -40,8 +43,8 @@ function EditCustomAction({ allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
-      {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
+
+      <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
       <div className="mt-3">
         <div className="btcd-stp-page" style={{ ...(step === 1 && { width: '91%', height: 'auto', overflow: 'visible' }) }}>
           <h1>custom action</h1>
@@ -51,12 +54,13 @@ function EditCustomAction({ allIntegURL }) {
             formFields={formFields}
           />
           <button
-            onClick={() => checkFunctionValidity(customActionConf, setCustomActionConf, setIsLoading)}
-            disabled={!customActionConf.value}
+            onClick={() => checkFunctionValidity(customActionConf, setCustomActionConf, loading, setLoading)}
+            disabled={!customActionConf.value || loading?.validate}
             className="btn f-left btcd-btn-lg green sh-sm flx mt-5"
             type="button"
           >
-            {__('Validated ', 'bit-integrations')}
+            {customActionConf?.isValid && !loading?.validate ? __('Validated ✔', 'bit-integrations') : __('Validated', 'bit-integrations')}
+            {loading?.validate && <LoaderSm size="20" clr="#022217" className="ml-2" />}
           </button>
         </div>
       </div>
@@ -68,7 +72,7 @@ function EditCustomAction({ allIntegURL }) {
         disabled={!customActionConf.isValid}
       />
       <br />
-    </div>
+    </div >
   )
 }
 

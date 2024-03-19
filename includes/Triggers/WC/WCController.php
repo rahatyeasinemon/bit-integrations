@@ -509,10 +509,6 @@ final class WCController
                     'fieldKey' => 'discount_total',
                     'fieldName' => 'Discount Total'
                 ],
-                // 'fees' => (object) array(
-                //     'fieldKey' => 'fees',
-                //     'fieldName' => 'Fees'
-                // ),
                 'shipping_tax' => (object) [
                     'fieldKey' => 'shipping_tax',
                     'fieldName' => 'Shipping Tax'
@@ -683,6 +679,48 @@ final class WCController
                     'fieldName' => 'Customer Note'
                 ],
             ];
+
+            if (version_compare(WC_VERSION, '8.5.1', '>=')) {
+                $fields += [
+                    'Device Type' => (object) [
+                        'fieldKey' => '_wc_order_attribution_device_type',
+                        'fieldName' => 'Device Type'
+                    ],
+                    'Referring source' => (object) [
+                        'fieldKey' => '_wc_order_attribution_referrer',
+                        'fieldName' => 'Referring source'
+                    ],
+                    'Session Count' => (object) [
+                        'fieldKey' => '_wc_order_attribution_session_count',
+                        'fieldName' => 'Session Count'
+                    ],
+                    'Session Entry' => (object) [
+                        'fieldKey' => '_wc_order_attribution_session_entry',
+                        'fieldName' => 'Session Entry'
+                    ],
+                    'Session page views' => (object) [
+                        'fieldKey' => '_wc_order_attribution_session_pages',
+                        'fieldName' => 'Session page views'
+                    ],
+                    'Session Start Time' => (object) [
+                        'fieldKey' => '_wc_order_attribution_session_start_time',
+                        'fieldName' => 'Session Start Time'
+                    ],
+                    'Source Type' => (object) [
+                        'fieldKey' => '_wc_order_attribution_source_type',
+                        'fieldName' => 'Source Type'
+                    ],
+                    'User Agent' => (object) [
+                        'fieldKey' => '_wc_order_attribution_user_agent',
+                        'fieldName' => 'User Agent'
+                    ],
+                    'Origin' => (object) [
+                        'fieldKey' => '_wc_order_attribution_utm_source',
+                        'fieldName' => 'Origin'
+                    ],
+                ];
+            }
+
             $acfFieldGroups = self::acfGetFieldGroups(['shop_order']);
             $checkoutFields = WC()->checkout()->get_checkout_fields();
             foreach ($acfFieldGroups as $group) {
@@ -1251,6 +1289,20 @@ final class WCController
             'checkout_order_received_url' => $order->get_checkout_order_received_url(),
             'customer_note' => $order->get_customer_note()
         ];
+        if (version_compare(WC_VERSION, '8.5.1', '>=')) {
+            $data += [
+                '_wc_order_attribution_referrer'            => $order->get_meta('_wc_order_attribution_referrer'),
+                '_wc_order_attribution_user_agent'          => $order->get_meta('_wc_order_attribution_user_agent'),
+                '_wc_order_attribution_utm_source'          => $order->get_meta('_wc_order_attribution_utm_source'),
+                '_wc_order_attribution_device_type'         => $order->get_meta('_wc_order_attribution_device_type'),
+                '_wc_order_attribution_source_type'         => $order->get_meta('_wc_order_attribution_source_type'),
+                '_wc_order_attribution_session_count'       => $order->get_meta('_wc_order_attribution_session_count'),
+                '_wc_order_attribution_session_entry'       => $order->get_meta('_wc_order_attribution_session_entry'),
+                '_wc_order_attribution_session_pages'       => $order->get_meta('_wc_order_attribution_session_pages'),
+                '_wc_order_attribution_session_start_time'  => $order->get_meta('_wc_order_attribution_session_start_time'),
+            ];
+        }
+
         $line_items = [];
         $line_items_all = [];
         $count = 0;
@@ -1851,6 +1903,16 @@ final class WCController
         //         }
         //     }
         // }
+    }
+
+    public static function handle_order_checkout($order)
+    {
+        if (!is_plugin_active('woocommerce/woocommerce.php')) {
+            return false;
+        }
+
+        $checkout = new \WC_Checkout();
+        self::handle_order_create($order->id, $checkout->get_posted_data());
     }
 
     public static function accessSubscription($subscription, $quantity)

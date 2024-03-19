@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Keap;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -33,9 +33,8 @@ class RecordApiHelper
 
         $header["Authorization"] = "Bearer {$this->_tokenDetails->access_token}";
         $header["Content-Type"] = "application/json";
-        $insertRecordEndpoint = 'https://api.infusionsoft.com/crm/rest/v1/contact';
+        $insertRecordEndpoint = 'https://api.infusionsoft.com/crm/rest/v1/contacts';
         return HttpHelper::post($insertRecordEndpoint, $data, $header);
-
     }
 
     public function insertTag($contactId, $tags)
@@ -53,8 +52,6 @@ class RecordApiHelper
         $insertTagEndpoint = 'https://api.infusionsoft.com/crm/rest/v1/contacts/' . $contactId . '/tags';
 
         return $response = HttpHelper::post($insertTagEndpoint, json_encode($data), $header);
-
-
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

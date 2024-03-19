@@ -9,8 +9,9 @@ import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import EditFormInteg from '../EditFormInteg'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import EditWebhookInteg from '../EditWebhookInteg'
-import { checkWebhookIntegrationsExist, saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
+import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { checkMappedFields, handleInput } from './PerfexCRMCommonFunc'
 import PerfexCRMIntegLayout from './PerfexCRMIntegLayout'
@@ -33,6 +34,10 @@ function EditPerfexCRM({ allIntegURL }) {
 
     if (perfexCRMConf.actionName === 'contact' && !perfexCRMConf.selectedCustomer) {
       toast.error('Please select a Customer')
+      return
+    }
+    if (perfexCRMConf.actionName === 'lead' && (!perfexCRMConf.selectedLeadStatusId || !perfexCRMConf.selectedLeadSourceId)) {
+      toast.error('Lead Status Id and Lead Source Id are required!')
       return
     }
     if (perfexCRMConf.actionName === 'project') {
@@ -74,8 +79,8 @@ function EditPerfexCRM({ allIntegURL }) {
         <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, perfexCRMConf, setPerfexCRMConf)} name="name" value={perfexCRMConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
       </div>
       <br />
-      {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
-      {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
+
+      <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
       <PerfexCRMIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}

@@ -6,10 +6,10 @@
 
 namespace BitCode\FI\Actions\Klaviyo;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record Add Member
@@ -17,7 +17,7 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_integrationID;
-    private $baseUrl = 'https://a.klaviyo.com/api/v2/';
+    private $baseUrl = 'https://a.klaviyo.com/api/';
 
 
     public function __construct($integrationDetails, $integId)
@@ -28,20 +28,40 @@ class RecordApiHelper
 
     public function addMember($authKey, $listId, $data)
     {
-        $apiEndpoints = "{$this->baseUrl}list/{$listId}/members?api_key={$authKey}";
-        $headers = [
-            'Content-Type' => 'application/json'
+        $data = [
+            "data" => (object)[
+                "type" => "profile",
+                "attributes" => $data
+            ]
         ];
 
-        return HttpHelper::post($apiEndpoints, $data, $headers);
+        $headers = [
+            'Authorization' => "Klaviyo-API-Key {$authKey}",
+            'Content-Type'  => 'application/json',
+            'accept'        => 'application/json',
+            'revision'      => '2024-02-15'
+        ];
+
+        $apiEndpoints   = "{$this->baseUrl}profiles";
+        $apiResponse    = HttpHelper::post($apiEndpoints, json_encode($data), $headers);
+        if (!isset($apiResponse->data)) {
+            return $apiResponse;
+        }
+
+        $data = [
+            "data" => [(object)[
+                "type"  => "profile",
+                "id"    => $apiResponse->data->id
+            ]]
+        ];
+
+        $apiEndpoints = "{$this->baseUrl}lists/{$listId}/relationships/profiles";
+        return HttpHelper::post($apiEndpoints, json_encode($data), $headers);
     }
 
     public function generateReqDataFromFieldMap($data, $field_map)
     {
         $dataFinal = [];
-
-        
-
         foreach ($field_map as $key => $value) {
             $triggerValue = $value->formField;
             $actionValue = $value->klaviyoFormField;
@@ -61,18 +81,11 @@ class RecordApiHelper
         $authKey
     ) {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $field_map);
-        $requestBody = [
-            "profiles" => [
-                $finalData
-            ]
-        ];
-        $data = (object)$requestBody;
-        $apiResponse = $this->addMember($authKey, $listId, wp_json_encode($data));
-        if ($apiResponse->detail) {
-            $res = ['success' => false, 'message' => $apiResponse->detail, 'code' => 400];
+        $apiResponse = $this->addMember($authKey, $listId, (object) $finalData);
+        if (isset($apiResponse->errors)) {
+            $res = ['success' => false, 'message' => $apiResponse->errors[0]->detail, 'code' => 400];
             LogHandler::save($this->_integrationID, json_encode(['type' => 'members', 'type_name' => 'add-members']), 'error', json_encode($res));
         } else {
-
             $res = ['success' => true, 'message' => $apiResponse, 'code' => 200];
             LogHandler::save($this->_integrationID, json_encode(['type' => 'members', 'type_name' => 'add-members']), 'success', json_encode($res));
         }

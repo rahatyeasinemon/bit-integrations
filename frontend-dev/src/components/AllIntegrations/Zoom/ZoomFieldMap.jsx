@@ -11,8 +11,6 @@ import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 export default function ZoomFieldMap({ i, formFields, field, zoomConf, setZoomConf }) {
   if (zoomConf?.field_map?.length === 1 && field.zoomField === '') {
     const newConf = { ...zoomConf }
-    const tmp = generateMappedField(newConf)
-    newConf.field_map = tmp
     setZoomConf(newConf)
   }
 

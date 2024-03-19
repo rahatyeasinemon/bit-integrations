@@ -13,6 +13,7 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import TinyMCE from '../../Utilities/TinyMCE'
 import EditFormInteg from '../EditFormInteg'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import EditWebhookInteg from '../EditWebhookInteg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 

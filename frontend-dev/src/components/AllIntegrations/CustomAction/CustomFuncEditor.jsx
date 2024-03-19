@@ -2,8 +2,9 @@ import React, { useEffect, useRef } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import Editor, { DiffEditor, useMonaco, loader } from "@monaco-editor/react";
 import { __ } from '../../../Utils/i18nwrap';
+import { create } from 'mutative'
 
-const CustomFuncEditor = ({customActionConf, setCustomActionConf,formFields ,isInfo}) => {
+const CustomFuncEditor = ({ customActionConf, setCustomActionConf, formFields, isInfo }) => {
     const monacoEditorRef = useRef(null);
 
     useEffect(() => {
@@ -20,8 +21,12 @@ const CustomFuncEditor = ({customActionConf, setCustomActionConf,formFields ,isI
         setCustomActionConf({ ...newConf })
     }
     const handleChange = (val) => {
-        setCustomActionConf(prv => ({ ...prv, value: val }))
-        monacoEditorRef.current &&  onChange(val)
+        // setCustomActionConf(prv => ({ ...prv, value: val }))
+        setCustomActionConf(prv => create(prv, draft => {
+            draft.value = val
+            draft.isValid = false
+        }))
+        monacoEditorRef.current && onChange(val)
         monacoEditorRef.current = ''
     }
     function createDependencyProposals(range) {
@@ -66,23 +71,23 @@ const CustomFuncEditor = ({customActionConf, setCustomActionConf,formFields ,isI
 
     return (
         <div className='flx '>{!isInfo ?
-             <Editor
+            <Editor
                 width={'100%'}
                 className='monaco-editor'
                 height="50vh"
                 theme='vs-dark'
                 defaultLanguage="php"
-                defaultValue = {customActionConf?.defaultValue}
-                value = {customActionConf?.value}
-                onChange = {handleChange}
+                defaultValue={customActionConf?.defaultValue}
+                value={customActionConf?.value}
+                onChange={handleChange}
                 onMount={onMount}
             /> : <div>
-                    <div className="mt-3" style={{width:'1500px'}}><b>{__('Custom Action:', 'bit-integrations')}</b></div>
-                    <textarea className="btcd-paper-inp w-6 mt-1" style={{resize:'none'}} rows="20" value={customActionConf.value} type="text" disabled={isInfo} />
-                </div>
+                <div className="mt-3" style={{ width: '1500px' }}><b>{__('Custom Action:', 'bit-integrations')}</b></div>
+                <textarea className="btcd-paper-inp w-6 mt-1" style={{ resize: 'none' }} rows="20" value={customActionConf.value} type="text" disabled={isInfo} />
+            </div>
         }
         </div>
-       );
+    );
 }
 
 export default CustomFuncEditor

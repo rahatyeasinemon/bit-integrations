@@ -40,54 +40,46 @@ class RecordApiHelper
 
         if (!empty($integrationDetails->actions->attachments)) {
             foreach ($fieldValues as $fieldKey => $fieldValue) {
-                if ($integrationDetails->actions->attachments === $fieldKey) {
+                if ($integrationDetails->actions->attachments == $fieldKey) {
                     $file = $fieldValue;
                 }
             }
 
-            if (
-                !empty($file)
-                && ((is_array($file) && is_readable($file[0][0]))
-                    || (is_string($file) && is_readable($file)))
-            ) {
-                if (is_array($file[0]) && count($file[0]) > 1) {
-                    $data = [
-                        'chat_id' => $integrationDetails->chat_id,
-                        'caption' => $messagesBody,
-                        'media' => is_array($file) ? $file[0] : $file
-                    ];
-
-                    $sendPhotoApiHelper = new FilesApiHelper();
-                    $recordApiResponse = $sendPhotoApiHelper->uploadMultipleFiles($this->_apiEndPoint, $data);
-                } else {
-                    $data = [
-                        'chat_id' => $integrationDetails->chat_id,
-                        'caption' => $messagesBody,
-                        'parse_mode' => $integrationDetails->parse_mode,
-                        'photo' => is_array($file[0]) ? $file[0][0] : $file[0]
-                    ];
-
-                    $sendPhotoApiHelper = new FilesApiHelper();
-                    $recordApiResponse = $sendPhotoApiHelper->uploadFiles($this->_apiEndPoint, $data);
-                }
-            } elseif (
-                !empty($file)
-                && (is_array($file) && is_string($file[0]))
-            ) {
+            $file = self::getFiles($file);
+            if (!empty($file) && is_array($file) && count($file) > 1) {
                 $data = [
-                    'chat_id' => $integrationDetails->chat_id,
-                    'caption' => $messagesBody,
-                    'parse_mode' => $integrationDetails->parse_mode,
-                    'photo' => $file[0]
+                    'chat_id'   => $integrationDetails->chat_id,
+                    'caption'   => $messagesBody,
+                    'media'     => $file
                 ];
 
                 $sendPhotoApiHelper = new FilesApiHelper();
-                $recordApiResponse = $sendPhotoApiHelper->uploadFiles($this->_apiEndPoint, $data);
+                $recordApiResponse  = $sendPhotoApiHelper->uploadMultipleFiles($this->_apiEndPoint, $data);
+                $recordApiResponse  = is_string($recordApiResponse) ? json_decode($recordApiResponse) : $recordApiResponse;
+
+                if ($recordApiResponse && $recordApiResponse->ok) {
+                    $data = [
+                        'chat_id'       => $integrationDetails->chat_id,
+                        'text'          => $messagesBody,
+                        'parse_mode'    => $integrationDetails->parse_mode
+                    ];
+                    $recordApiResponse = $this->sendMessages($data);
+                }
+            } elseif (!empty($file)) {
+                $data = [
+                    'chat_id'       => $integrationDetails->chat_id,
+                    'caption'       => $messagesBody,
+                    'parse_mode'    => $integrationDetails->parse_mode,
+                    'photo'         => is_array($file) ? $file[0] : $file
+                ];
+
+                $sendPhotoApiHelper = new FilesApiHelper();
+                $recordApiResponse  = $sendPhotoApiHelper->uploadFiles($this->_apiEndPoint, $data);
             } else {
                 $data = [
-                    'chat_id' => $integrationDetails->chat_id,
-                    'text' => $messagesBody,
-                    'parse_mode' => $integrationDetails->parse_mode
+                    'chat_id'       => $integrationDetails->chat_id,
+                    'text'          => $messagesBody,
+                    'parse_mode'    => $integrationDetails->parse_mode
                 ];
                 $recordApiResponse = $this->sendMessages($data);
             }
@@ -110,5 +102,23 @@ class RecordApiHelper
             LogHandler::save($this->_integrationID, ['type' =>  'record', 'type_name' => $type], 'error', $recordApiResponse);
         }
         return $recordApiResponse;
+    }
+
+    private static function getFiles($files)
+    {
+        $allFiles = [];
+        if (is_array($files)) {
+            foreach ($files as $file) {
+                if (is_array($file)) {
+                    $allFiles = self::getFiles($file);
+                } else {
+                    $allFiles[] = $file;
+                }
+            }
+        } else {
+            return $files;
+        }
+
+        return $allFiles;
     }
 }

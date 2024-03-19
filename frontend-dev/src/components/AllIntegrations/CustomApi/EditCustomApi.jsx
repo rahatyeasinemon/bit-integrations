@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import CustomApiIntegrationLayout from './CustomApiIntegrationLayout'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import SnackMsg from '../../Utilities/SnackMsg'
-import EditFormInteg from '../EditFormInteg'
-import EditWebhookInteg from '../EditWebhookInteg'
-import { checkWebhookIntegrationsExist, saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
+import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
+import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
+import CustomApiIntegrationLayout from './CustomApiIntegrationLayout'
 
 export default function EditCustomApi({ allIntegURL }) {
     const navigate = useNavigate()
@@ -22,8 +21,7 @@ export default function EditCustomApi({ allIntegURL }) {
     return (
         <div style={{ width: 900 }}>
             <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-            {!checkWebhookIntegrationsExist(flow.triggered_entity) && <EditFormInteg setSnackbar={setSnackbar} />}
-            {checkWebhookIntegrationsExist(flow.triggered_entity) && <EditWebhookInteg setSnackbar={setSnackbar} />}
+            <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
             <div className="mt-3">
                 <CustomApiIntegrationLayout
                     formID={formID}

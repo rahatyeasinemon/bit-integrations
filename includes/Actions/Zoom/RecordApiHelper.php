@@ -3,11 +3,12 @@
 /**
  * Zoom Record Api
  */
+
 namespace BitCode\FI\Actions\Zoom;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -65,15 +66,28 @@ class RecordApiHelper
     {
         $dataFinal = [];
         foreach ($fieldMap as $key => $value) {
-            $triggerValue = $value->formField;
-            $actionValue = $value->zoomField;
-            if ($triggerValue === 'custom') {
+            $triggerValue   = $value->formField;
+            $actionValue    = $value->zoomField;
+
+            if (str_starts_with($actionValue, 'custom_questions_') && $triggerValue === 'custom') {
+                $dataFinal['custom_questions'][] =  self::setCustomFieldMap(str_replace('custom_questions_', '', $value->zoomField), Common::replaceFieldWithValue($value->customValue, $data));
+            } elseif (str_starts_with($actionValue, 'custom_questions_')) {
+                $dataFinal['custom_questions'][] =  self::setCustomFieldMap(str_replace('custom_questions_', '', $value->zoomField), $data[$triggerValue]);
+            } elseif ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
             } elseif (!is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
         return $dataFinal;
+    }
+
+    private static function setCustomFieldMap($title, $value)
+    {
+        return (object) [
+            "title" => $title,
+            "value" => $value,
+        ];
     }
 
     public function createUser($meetingId, $finalData, $tokenDetails)
