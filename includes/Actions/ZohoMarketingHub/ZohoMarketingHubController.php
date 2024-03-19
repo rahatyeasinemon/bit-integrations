@@ -6,12 +6,13 @@
 
 namespace BitCode\FI\Actions\ZohoMarketingHub;
 
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
-
-use BitCode\FI\Actions\ZohoMarketingHub\RecordApiHelper;
-use BitCode\FI\Flow\FlowController;
 use WP_Error;
+use BitCode\FI\Core\Util\IpTool;
+
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\controller\ZohoAuthController;
+use BitCode\FI\Actions\ZohoMarketingHub\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -26,50 +27,6 @@ class ZohoMarketingHubController
     }
 
     /**
-     * Process ajax request for generate_token
-     *
-     * @param Object $requestsParams Params to generate token
-     *
-     * @return JSON zoho crm api response and status
-     */
-    public static function generateTokens($requestsParams)
-    {
-        if (empty($requestsParams->{'accounts-server'})
-            || empty($requestsParams->dataCenter)
-            || empty($requestsParams->clientId)
-            || empty($requestsParams->clientSecret)
-            || empty($requestsParams->redirectURI)
-            || empty($requestsParams->code)
-        ) {
-            wp_send_json_error(
-                __(
-                    'Requested parameter is empty',
-                    'bit-integrations'
-                ),
-                400
-            );
-        }
-
-        $apiEndpoint = \urldecode($requestsParams->{'accounts-server'}) . '/oauth/v2/token';
-        $requestParams = array(
-                "grant_type" => "authorization_code",
-                "client_id" => $requestsParams->clientId,
-                "client_secret" => $requestsParams->clientSecret,
-                "redirect_uri" => \urldecode($requestsParams->redirectURI),
-                "code" => $requestsParams->code
-            );
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
-
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(
-                empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
-                400
-            );
-        }
-        $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
-    }
-    /**
      * Process ajax request for refresh crm modules
      *
      * @param Object $queryParams Params to refresh lists
@@ -78,7 +35,8 @@ class ZohoMarketingHubController
      */
     public static function refreshLists($queryParams)
     {
-        if (empty($queryParams->tokenDetails)
+        if (
+            empty($queryParams->tokenDetails)
             || empty($queryParams->dataCenter)
             || empty($queryParams->clientId)
             || empty($queryParams->clientSecret)
@@ -93,10 +51,10 @@ class ZohoMarketingHubController
         }
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
 
-        $listsMetaApiEndpoint = "https://marketinghub.zoho.{$queryParams->dataCenter}/api/v1/getmailinglists?resfmt=JSON&range=100";
+        $listsMetaApiEndpoint = "https://marketinghub.{$queryParams->dataCenter}/api/v1/getmailinglists?resfmt=JSON&range=100";
 
         $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $listsMetaResponse = HttpHelper::get($listsMetaApiEndpoint, null, $authorizationHeader);
@@ -108,9 +66,9 @@ class ZohoMarketingHubController
             if (count($lists) > 0) {
                 foreach ($lists as $list) {
                     $allLists[$list->listname] = (object) array(
-                            'listkey' => $list->listkey,
-                            'listname' => $list->listname
-                        );
+                        'listkey' => $list->listkey,
+                        'listname' => $list->listname
+                    );
                 }
             }
             uksort($allLists, 'strnatcasecmp');
@@ -122,7 +80,7 @@ class ZohoMarketingHubController
             );
         }
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
-            self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
+            ZohoAuthController::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response['lists']);
         }
         wp_send_json_success($response, 200);
     }
@@ -136,7 +94,8 @@ class ZohoMarketingHubController
      */
     public static function refreshContactFields($queryParams)
     {
-        if (empty($queryParams->list)
+        if (
+            empty($queryParams->list)
             || empty($queryParams->tokenDetails)
             || empty($queryParams->dataCenter)
             || empty($queryParams->clientId)
@@ -152,10 +111,10 @@ class ZohoMarketingHubController
         }
         $response = [];
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $response['tokenDetails'] = self::refreshAccessToken($queryParams);
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
 
-        $contactFieldsMetaApiEndpoint = "https://marketinghub.zoho.{$queryParams->dataCenter}/api/v1/lead/allfields?type=json";
+        $contactFieldsMetaApiEndpoint = "https://marketinghub.{$queryParams->dataCenter}/api/v1/lead/allfields?type=json";
 
         $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $contactFieldsMetaResponse = HttpHelper::get($contactFieldsMetaApiEndpoint, null, $authorizationHeader);
@@ -182,82 +141,9 @@ class ZohoMarketingHubController
         }
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
             $response["queryModule"] = $queryParams->module;
-            self::saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
+            ZohoAuthController::_saveRefreshedToken($queryParams->formID, $queryParams->id, $response['tokenDetails'], $response);
         }
         wp_send_json_success($response, 200);
-    }
-
-    /**
-     * Helps to refresh zoho crm access_token
-     *
-     * @param Object $apiData Contains required data for refresh access token
-     * 
-     * @return JSON  $tokenDetails API token details
-     */
-    protected static function refreshAccessToken($apiData)
-    {
-        if (empty($apiData->dataCenter)
-            || empty($apiData->clientId)
-            || empty($apiData->clientSecret)
-            || empty($apiData->tokenDetails)
-        ) {
-            return false;
-        }
-        $tokenDetails = $apiData->tokenDetails;
-
-        $dataCenter = $apiData->dataCenter;
-        $apiEndpoint = "https://accounts.zoho.{$dataCenter}/oauth/v2/token";
-        $requestParams = array(
-            "grant_type" => "refresh_token",
-            "client_id" => $apiData->clientId,
-            "client_secret" => $apiData->clientSecret,
-            "refresh_token" => $tokenDetails->refresh_token,
-        );
-
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            return false;
-        }
-        $tokenDetails->generates_on = \time();
-        $tokenDetails->access_token = $apiResponse->access_token;
-        return $tokenDetails;
-    }
-
-    /**
-     * Save updated access_token to avoid unnecessary token generation
-     *
-     * @param Integer $integrationID ID of Zoho crm Integration
-     * @param Object  $tokenDetails  refreshed token info
-     *
-     * @return null
-     */
-    protected static function saveRefreshedToken($integrationID, $tokenDetails, $others = null)
-    {
-        if (empty($formID) || empty($integrationID)) {
-            return;
-        }
-
-        $flow = new FlowController();
-        $zmarketingHubDetails = $flow->get(['id' => $integrationID]);
-
-        if (is_wp_error($zmarketingHubDetails)) {
-            return;
-        }
-        $newDetails = json_decode($zmarketingHubDetails[0]->flow_details);
-
-        $newDetails->tokenDetails = $tokenDetails;
-        if (!empty($others['lists'])) {
-            $newDetails->default->lists = $others['lists'];
-        }
-        if (!empty($others['fieds'])) {
-            $newDetails->default->fields = $others['fields'];
-        }
-        if (!empty($others['required'])) {
-            $newDetails->default->required = $others['required'];
-        }
-
-
-        $flow->update($integrationID, ['flow_details' => \json_encode($newDetails)]);
     }
 
     public function execute($integrationData, $fieldValues)
@@ -269,7 +155,8 @@ class ZohoMarketingHubController
         $dataCenter = $integrationDetails->dataCenter;
         $fieldMap = $integrationDetails->field_map;
         $required = $integrationDetails->default->fields->{$list}->required;
-        if (empty($tokenDetails)
+        if (
+            empty($tokenDetails)
             || empty($list)
             || empty($fieldMap)
         ) {
@@ -281,9 +168,9 @@ class ZohoMarketingHubController
             $requiredParams['clientSecret'] = $integrationDetails->clientSecret;
             $requiredParams['dataCenter'] = $integrationDetails->dataCenter;
             $requiredParams['tokenDetails'] = $tokenDetails;
-            $newTokenDetails = self::refreshAccessToken((object)$requiredParams);
+            $newTokenDetails = ZohoAuthController::_refreshAccessToken((object)$requiredParams);
             if ($newTokenDetails) {
-                self::saveRefreshedToken($this->_formID, $this->_integrationID, $newTokenDetails);
+                ZohoAuthController::_saveRefreshedToken($this->_formID, $this->_integrationID, $newTokenDetails);
                 $tokenDetails = $newTokenDetails;
             }
         }

@@ -7,8 +7,8 @@
 namespace BitCode\FI\Actions\ZohoMarketingHub;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -18,6 +18,7 @@ class RecordApiHelper
     private $_defaultHeader;
     private $_apiDomain;
     private $_tokenDetails;
+    private $_integrationID;
 
     public function __construct($tokenDetails, $integId)
     {
@@ -29,7 +30,7 @@ class RecordApiHelper
 
     public function insertRecord($list, $dataCenter, $data)
     {
-        $insertRecordEndpoint = "https://marketinghub.zoho.{$dataCenter}/api/v1/json/listsubscribe?resfmt=JSON&listkey={$list}&leadinfo=" . urlencode($data);
+        $insertRecordEndpoint = "https://marketinghub.{$dataCenter}/api/v1/json/listsubscribe?resfmt=JSON&listkey={$list}&leadinfo=" . urlencode($data);
 
         return HttpHelper::post($insertRecordEndpoint, null, $this->_defaultHeader);
     }
