@@ -6,7 +6,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
 import { $btcbi } from '../../../GlobalStates'
-import { handleAuthorization } from './ZohoSheetCommonFunc'
+// import { handleAuthorization } from './ZohoSheetCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 

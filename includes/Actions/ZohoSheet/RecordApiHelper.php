@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\ZohoSheet;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 class RecordApiHelper
 {
@@ -33,7 +33,7 @@ class RecordApiHelper
         $jsonData = json_encode($finalData);
         $data     = "[{$jsonData}]";
 
-        $apiEndpoint = "https://sheet.zoho.{$this->dataCenter}/api/v2/{$this->workbook}?method=worksheet.records.add&worksheet_name={$this->worksheet}&header_row={$this->headerRow}&json_data={$data}";
+        $apiEndpoint = "https://sheet.{$this->dataCenter}/api/v2/{$this->workbook}?method=worksheet.records.add&worksheet_name={$this->worksheet}&header_row={$this->headerRow}&json_data={$data}";
 
         return HttpHelper::post($apiEndpoint, null, $this->defaultHeader);
     }

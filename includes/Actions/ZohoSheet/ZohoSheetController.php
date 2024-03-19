@@ -5,6 +5,7 @@ namespace BitCode\FI\Actions\ZohoSheet;
 use WP_Error;
 use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\controller\ZohoAuthController;
 use BitCode\FI\Actions\ZohoSheet\RecordApiHelper;
 
 class ZohoSheetController
@@ -14,34 +15,6 @@ class ZohoSheetController
     public function __construct($integrationID)
     {
         $this->integrationID = $integrationID;
-    }
-
-    public static function generateTokens($requestParams)
-    {
-        if (
-            empty($requestParams->{'accounts-server'}) || empty($requestParams->dataCenter) || empty($requestParams->clientId)
-            || empty($requestParams->clientSecret) || empty($requestParams->redirectURI) || empty($requestParams->code)
-        ) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
-        }
-
-        $apiEndpoint   = \urldecode($requestParams->{'accounts-server'}) . '/oauth/v2/token';
-        $requestParams = [
-            'grant_type'    => 'authorization_code',
-            'client_id'     => $requestParams->clientId,
-            'client_secret' => $requestParams->clientSecret,
-            'redirect_uri'  => \urldecode($requestParams->redirectURI),
-            'code'          => $requestParams->code
-        ];
-
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
-
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            wp_send_json_error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
-        }
-
-        $apiResponse->generates_on = \time();
-        wp_send_json_success($apiResponse, 200);
     }
 
     public static function getAllWorkbooks($requestParams)
@@ -58,7 +31,7 @@ class ZohoSheetController
             'Authorization' => 'Zoho-oauthtoken ' . $token->access_token,
         ];
 
-        $apiEndpoint = "https://sheet.zoho.{$requestParams->dataCenter}/api/v2/workbooks?method=workbook.list";
+        $apiEndpoint = "https://sheet.{$requestParams->dataCenter}/api/v2/workbooks?method=workbook.list";
         $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (isset($apiResponse->workbooks) && !empty($apiResponse->workbooks)) {
@@ -88,7 +61,7 @@ class ZohoSheetController
             'Authorization' => 'Zoho-oauthtoken ' . $token->access_token,
         ];
 
-        $apiEndpoint = "https://sheet.zoho.{$requestParams->dataCenter}/api/v2/{$requestParams->workbook}?method=worksheet.list";
+        $apiEndpoint = "https://sheet.{$requestParams->dataCenter}/api/v2/{$requestParams->workbook}?method=worksheet.list";
         $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (isset($apiResponse->worksheet_names) && !empty($apiResponse->worksheet_names)) {
@@ -119,7 +92,7 @@ class ZohoSheetController
             'Authorization' => 'Zoho-oauthtoken ' . $token->access_token,
         ];
 
-        $apiEndpoint = "https://sheet.zoho.{$requestParams->dataCenter}/api/v2/{$requestParams->workbook}?method=worksheet.records.fetch&worksheet_name={$requestParams->worksheet}&count=1&header_row={$requestParams->headerRow}";
+        $apiEndpoint = "https://sheet.{$requestParams->dataCenter}/api/v2/{$requestParams->workbook}?method=worksheet.records.fetch&worksheet_name={$requestParams->worksheet}&count=1&header_row={$requestParams->headerRow}";
         $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (isset($apiResponse->records)) {
@@ -148,7 +121,7 @@ class ZohoSheetController
         }
 
         if ((intval($token->generates_on) + (55 * 60)) < time()) {
-            $refreshToken = self::refreshToken($token->refresh_token, $clientId, $clientSecret, $dataCenter);
+            $refreshToken = ZohoAuthController::_refreshAccessToken($token->refresh_token, $clientId, $clientSecret, $dataCenter);
             if (is_wp_error($refreshToken) || !empty($refreshToken->error)) {
                 return false;
             }
@@ -159,42 +132,6 @@ class ZohoSheetController
         return $token;
     }
 
-    protected static function refreshToken($refresh_token, $clientId, $clientSecret, $dataCenter)
-    {
-        $body = [
-            'grant_type'    => 'refresh_token',
-            'client_id'     => $clientId,
-            'client_secret' => $clientSecret,
-            'refresh_token' => $refresh_token
-        ];
-
-        $apiEndpoint = "https://accounts.zoho.{$dataCenter}/oauth/v2/token";
-        $apiResponse = HttpHelper::post($apiEndpoint, $body);
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            return false;
-        }
-        $token = $apiResponse;
-        $token->generates_on = \time();
-        return $token;
-    }
-
-    protected function saveRefreshedToken($integrationID, $tokenDetails)
-    {
-        if (empty($integrationID)) {
-            return;
-        }
-
-        $flow = new FlowController();
-        $zohoSheetDetails = $flow->get(['id' => $integrationID]);
-        if (is_wp_error($zohoSheetDetails)) {
-            return;
-        }
-
-        $newDetails = json_decode($zohoSheetDetails[0]->flow_details);
-        $newDetails->tokenDetails = $tokenDetails;
-        $flow->update($integrationID, ['flow_details' => \json_encode($newDetails)]);
-    }
-
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
@@ -202,7 +139,7 @@ class ZohoSheetController
         $fieldMap           = $integrationDetails->field_map;
         $tokenDetails       = self::tokenExpiryCheck($integrationDetails->tokenDetails, $integrationDetails->clientId, $integrationDetails->clientSecret, $integrationDetails->dataCenter);
         if ($tokenDetails->access_token !== $integrationDetails->tokenDetails->access_token) {
-            $this->saveRefreshedToken($this->integrationID, $tokenDetails);
+            ZohoAuthController::_saveRefreshedToken($this->integrationID, $tokenDetails);
         }
 
         if (empty($fieldMap) || empty($tokenDetails)) {
