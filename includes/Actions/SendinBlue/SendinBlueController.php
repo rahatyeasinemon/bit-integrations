@@ -61,37 +61,47 @@ class SendinBlueController
     {
         if (empty($requestsParams->api_key)) {
             wp_send_json_error(
-                __(
-                    'Requested parameter is empty',
-                    'bit-integrations'
-                ),
+                __('Requested parameter is empty', 'bit-integrations'),
                 400
             );
         }
-        $apiEndpoint = self::APIENDPOINT . '/contacts/lists';
-        $authorizationHeader["Accept"] = 'application/json';
-        $authorizationHeader["api-key"] = $requestsParams->api_key;
-        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 
-        $allList = [];
-        if (!is_wp_error($apiResponse) && empty($apiResponse->code)) {
-            $sblueList = $apiResponse->lists;
+        $allList    = [];
+        $limit      = 50; // Maximum limit allowed by the API
+        $offset     = 0;
+        $hasMore    = true;
 
-            foreach ($sblueList as $list) {
-                $allList[$list->name] = (object) [
-                    'id' => $list->id,
-                    'name' => $list->name
-                ];
+        $authorizationHeader = [
+            "Accept"    => 'application/json',
+            "api-key"   => $requestsParams->api_key
+        ];
+
+        while ($hasMore) {
+            $apiEndpoint = self::APIENDPOINT . "/contacts/lists?limit={$limit}&offset={$offset}&sort=desc";
+            $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+
+            if (!is_wp_error($apiResponse) && empty($apiResponse->code)) {
+                $sblueList = $apiResponse->lists;
+                if (empty($sblueList)) {
+                    $hasMore = false;
+                    break;
+                }
+
+                foreach ($sblueList as $list) {
+                    $allList[$list->name] = (object)[
+                        'id'    => $list->id,
+                        'name'  => $list->name
+                    ];
+                }
+                $offset += $limit;
+            } else {
+                wp_send_json_error($apiResponse->message, 400);
+                return;
             }
-            uksort($allList, 'strnatcasecmp');
-
-            $response['sblueList'] = $allList;
-        } else {
-            wp_send_json_error(
-                $apiResponse->message,
-                400
-            );
         }
+
+        uksort($allList, 'strnatcasecmp');
+        $response['sblueList'] = $allList;
         wp_send_json_success($response, 200);
     }
 
