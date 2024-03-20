@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\ConvertKit;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,update, exist
@@ -18,7 +18,7 @@ class RecordApiHelper
     private $_integrationID;
     private $_apiEndpoint;
 
-    
+
     public function __construct($api_secret, $integId)
     {
         // wp_send_json_success($tokenDetails);
@@ -36,17 +36,17 @@ class RecordApiHelper
             'first_name' => $data->firstName,
         ];
 
-        foreach ($data as $key=>$value) {
+        foreach ($data as $key => $value) {
             $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
             $array_keys = array_keys($query);
             if (!(in_array($key, $array_keys))) {
                 $query['fields'] = [
-                     $key => $value,
+                    $key => $value,
                 ];
             }
         }
 
-        $queries= http_build_query($query);
+        $queries = http_build_query($query);
 
         $insertRecordEndpoint = "{$this->_apiEndpoint}/forms/{$formId}/{$method}?{$queries}";
 
@@ -71,19 +71,19 @@ class RecordApiHelper
             'first_name' => $data->firstName,
         ];
 
-        foreach ($data as $key=>$value) {
+        foreach ($data as $key => $value) {
             $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
             $array_keys = array_keys($query);
             if (!(in_array($key, $array_keys))) {
                 $query['fields'] = [
-                     $key => $value,
+                    $key => $value,
                 ];
             }
         }
 
-        $queries= http_build_query($query);
+        $queries = http_build_query($query);
 
-        $updateRecordEndpoint = "{$this->_apiEndpoint}/subscribers/{$id}?".$queries;
+        $updateRecordEndpoint = "{$this->_apiEndpoint}/subscribers/{$id}?" . $queries;
 
         return  HttpHelper::request($updateRecordEndpoint, 'PUT', null);
     }
@@ -156,7 +156,10 @@ class RecordApiHelper
 
                 wp_send_json_error(
                     __(
-                        $this->_errorMessage,
+                        [
+                            "type" => "error",
+                            "message" => "Check your email for confirmation."
+                        ],
                         'bit-integrations'
                     ),
                     400
