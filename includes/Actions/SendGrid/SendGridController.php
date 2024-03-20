@@ -27,7 +27,6 @@ class SendGridController
         ];
 
         $response = HttpHelper::get($apiEndpoints, null, $header);
-
         if (!isset($response->errors)) {
             foreach ($response->custom_fields as $customField) {
                 $customFields[] = [
@@ -38,7 +37,7 @@ class SendGridController
             }
             wp_send_json_success($customFields, 200);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            wp_send_json_error($response->errors[0]->message ?? 'Please enter valid API key', 400);
         }
     }
 
