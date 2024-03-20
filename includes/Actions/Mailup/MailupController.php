@@ -53,7 +53,7 @@ class MailupController
         $headers = [
             'Authorization' => 'Bearer ' . $token->access_token,
         ];
-        $apiEndpoint = 'https://services.mailup.com/API/v1.1/Rest/ConsoleService.svc/Console/List';
+        $apiEndpoint = 'https://services.mailup.com/API/v1.1/Rest/ConsoleService.svc/Console/List?PageNumber=0&PageSize=1000';
         $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
         $lists       = [];
 
@@ -81,7 +81,7 @@ class MailupController
         $headers = [
             'Authorization' => 'Bearer ' . $token->access_token,
         ];
-        $apiEndpoint = "https://services.mailup.com/API/v1.1/Rest/ConsoleService.svc/Console/List/{$requestParams->listId}/Groups";
+        $apiEndpoint = "https://services.mailup.com/API/v1.1/Rest/ConsoleService.svc/Console/List/{$requestParams->listId}/Groups?PageNumber=0&PageSize=1000";
         $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
         $lists       = [];
 
