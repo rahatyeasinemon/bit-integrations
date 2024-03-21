@@ -156,7 +156,6 @@ class MailChimpController
         $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . "/lists/$queryParams->listId/merge-fields";
         $authorizationHeader["Authorization"] = "Bearer {$queryParams->tokenDetails->access_token}";
         $mergeFieldResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
-        error_log(print_r($mergeFieldResponse, true));
 
         $fields = [];
         if (!is_wp_error($mergeFieldResponse)) {
