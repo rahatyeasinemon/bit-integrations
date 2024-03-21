@@ -63,7 +63,7 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
         }}
         />
       )}
-      {sheetConf.default?.fields?.[sheetConf.listId]
+      {sheetConf.default?.fields?.[sheetConf.listId] && !isLoading
         && (
           <>
             <div className="mt-4">

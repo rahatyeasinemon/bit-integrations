@@ -1,6 +1,7 @@
 import bitsFetch from "../../../Utils/bitsFetch";
 import { deepCopy } from "../../../Utils/Helpers";
 import { __, sprintf } from "../../../Utils/i18nwrap";
+import { create } from "mutative";
 
 export const handleInput = (
   e,
@@ -20,6 +21,7 @@ export const handleInput = (
     setError({ ...rmError });
   }
   newConf[e.target.name] = e.target.value;
+
   switch (e.target.name) {
     case "listId":
       newConf = listChange(
@@ -197,23 +199,27 @@ export const refreshFields = (
   bitsFetch(refreshSpreadsheetsRequestParams, "mChimp_refresh_fields")
     .then((result) => {
       if (result && result.success) {
-        const newConf = { ...sheetConf };
-        if (result.data.audienceField) {
-          if (!newConf.default.fields) {
-            newConf.default.fields = {};
-          }
-          newConf.default.fields[listId] = result.data.audienceField;
-          newConf.field_map = generateMappedField(result.data.audienceField);
-        }
+        setSheetConf((prevConf) =>
+          create(prevConf, (draftConf) => {
+            if (result.data.audienceField) {
+              if (!draftConf.default.fields) {
+                draftConf.default.fields = {};
+              }
+              draftConf.default.fields[listId] = result.data.audienceField;
+              draftConf.field_map = generateMappedField(
+                result.data.audienceField
+              );
+            }
 
-        if (result.data.tokenDetails) {
-          newConf.tokenDetails = result.data.tokenDetails;
-        }
-        setSnackbar({
-          show: true,
-          msg: __("Fields refreshed", "bit-integrations"),
-        });
-        setSheetConf({ ...newConf });
+            if (result.data.tokenDetails) {
+              draftConf.tokenDetails = result.data.tokenDetails;
+            }
+            setSnackbar({
+              show: true,
+              msg: __("Fields refreshed", "bit-integrations"),
+            });
+          })
+        );
       } else {
         setSnackbar({
           show: true,
