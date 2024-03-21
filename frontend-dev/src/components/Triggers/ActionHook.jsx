@@ -20,6 +20,7 @@ import EyeOffIcn from '../Utilities/EyeOffIcn'
 import SnackMsg from '../Utilities/SnackMsg'
 import TreeViewer from '../Utilities/treeViewer/TreeViewer'
 import Note from '../Utilities/Note'
+import InfoIcn from '../../Icons/InfoIcn'
 
 const ActionHook = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
@@ -196,7 +197,7 @@ const ActionHook = () => {
       {customHook && (
         <>
           <div className="mt-3">
-            <b>{__('Custom Hook:', 'bit-integrations')}</b>
+            <b>{__('Custom Hook: (use add_action hook only)', 'bit-integrations')}</b>
           </div>
           <input className="btcd-paper-inp w-100 mt-1" onChange={e => setHook(e.target.value, 'custom')} name="custom" value={hookID} type="text" placeholder={__('Enter Hook...', 'bit-integrations')} disabled={isLoading} />
         </>
