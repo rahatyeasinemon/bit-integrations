@@ -2,8 +2,64 @@
 
 namespace BitCode\FI\Triggers\Elementor;
 
+use BitCode\FI\Core\Util\Helper;
+
 class ElementorHelper
 {
+    public static function extractRecordData($record)
+    {
+        return [
+            'id'            => $record->get_form_settings('id'),
+            'form_post_id'  => $record->get_form_settings('form_post_id'),
+            'edit_post_id'  => $record->get_form_settings('edit_post_id'),
+            'fields'        => $record->get('fields'),
+            'files'         => $record->get('files'),
+        ];
+    }
+
+    public static function fetchFlows($formId, $reOrganizeId)
+    {
+        global $wpdb;
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT * FROM {$wpdb->prefix}btcbi_flow
+                WHERE status = true 
+                AND triggered_entity = %s 
+                AND (triggered_entity_id = %s
+                OR triggered_entity_id = %s
+                OR triggered_entity_id = %s)",
+                'Elementor',
+                'elementor_pro/forms/new_record',
+                $formId,
+                $reOrganizeId
+            )
+        );
+    }
+
+    public static function isPrimaryKeysMatch($recordData, $flowDetails)
+    {
+        foreach ($flowDetails->primaryKey as $primaryKey) {
+            if ($primaryKey->value != Helper::extractValueFromPath($recordData, $primaryKey->key)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static function prepareDataForFlow($record)
+    {
+        $data = [];
+        foreach ($record->get('fields') as $field) {
+            if ($field['type'] == 'upload') {
+                $data[$field['id']] = explode(',', $field['value']);
+            } else {
+                $data[$field['id']] = $field['value'];
+            }
+        }
+        return $data;
+    }
+
     public static function setFields($formData)
     {
         $allFields  = [
