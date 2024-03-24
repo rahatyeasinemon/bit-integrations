@@ -85,7 +85,7 @@ class ElementorHelper
         // Process files data
         foreach ($formData['files'] as $key => $file) {
             if (!empty($file)) {
-                $fieldTitle = isset($formData['fields'][$key]['title']) ? $formData['fields'][$key]['title'] : 'File';
+                $fieldTitle = !empty($formData['fields'][$key]['title']) ? $formData['fields'][$key]['title'] : 'File';
 
                 $allFields[] = [
                     'name'  => "files.$key.url",

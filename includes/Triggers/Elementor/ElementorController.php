@@ -6,6 +6,7 @@ use WP_Error;
 use ReflectionClass;
 use BitCode\FI\Flow\Flow;
 use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Triggers\TriggerController;
 
 final class ElementorController
 {
@@ -44,31 +45,12 @@ final class ElementorController
 
     public function getTestData()
     {
-        $testData = get_option('btcbi_elementor_test');
-
-        if ($testData === false) {
-            update_option('btcbi_elementor_test', []);
-        }
-        if (!$testData || empty($testData)) {
-            wp_send_json_error(new WP_Error('elementor_test', __('Elementor data is empty', 'bit-integrations')));
-        }
-        error_log(print_r($testData, true));
-        wp_send_json_success($testData);
+        return TriggerController::getTestData('elementor');
     }
 
     public function removeTestData($data)
     {
-        if (is_object($data) && property_exists($data, 'reset') && $data->reset) {
-            $testData = update_option('btcbi_elementor_test', []);
-        } else {
-            $testData = delete_option('btcbi_elementor_test');
-        }
-
-        if (!$testData) {
-            wp_send_json_error(new WP_Error('elementor_test', __('Failed to remove test data', 'bit-integrations')));
-        }
-
-        wp_send_json_success(__('Elementor test data removed successfully', 'bit-integrations'));
+        return TriggerController::removeTestData($data, 'elementor');
     }
 
     private static function parseFlowDetails($flowDetails)
