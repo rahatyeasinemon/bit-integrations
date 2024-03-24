@@ -8,5 +8,5 @@ if (!defined('ABSPATH')) {
 use BitCode\FI\Core\Util\Route;
 use BitCode\FI\Triggers\Elementor\ElementorController;
 
-Route::get('elementor/get', [ElementorController::class, 'getAllForms']);
-Route::post('elementor/get/form', [ElementorController::class, 'getFormFields']);
+Route::post('elementor/test', [ElementorController::class, 'getTestData']);
+Route::post('elementor/test/remove', [ElementorController::class, 'removeTestData']);
