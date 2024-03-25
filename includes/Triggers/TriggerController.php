@@ -65,7 +65,7 @@ final class TriggerController
         if (!$testData || empty($testData)) {
             wp_send_json_error(new WP_Error("{$triggerName}_test", __("{$triggerName} data is empty", 'bit-integrations')));
         }
-        error_log(print_r($testData, true));
+
         wp_send_json_success($testData);
     }
 

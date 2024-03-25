@@ -5,6 +5,7 @@ namespace BitCode\FI\Triggers\Breakdance;
 use WP_Error;
 use BitCode\FI\Flow\Flow;
 use Breakdance\Forms\Actions\Action;
+use BitCode\FI\Triggers\TriggerController;
 use Breakdance\Forms\Actions\ActionProvider;
 use BitCode\FI\Triggers\Breakdance\BreakdanceSubmitData;
 
@@ -57,30 +58,11 @@ final class BreakdanceController
 
     public function getTestData()
     {
-        $testData = get_option('btcbi_breakdance_test');
-
-        if ($testData === false) {
-            update_option('btcbi_breakdance_test', []);
-        }
-        if (!$testData || empty($testData)) {
-            wp_send_json_error(new WP_Error('breakdance_test', __('Breakdance data is empty', 'bit-integrations')));
-        }
-
-        wp_send_json_success($testData);
+        return TriggerController::getTestData('breakdance');
     }
 
     public function removeTestData($data)
     {
-        if (is_object($data) && property_exists($data, 'reset') && $data->reset) {
-            $testData = update_option('btcbi_breakdance_test', []);
-        } else {
-            $testData = delete_option('btcbi_breakdance_test');
-        }
-
-        if (!$testData) {
-            wp_send_json_error(new WP_Error('breakdance_test', __('Failed to remove test data', 'bit-integrations')));
-        }
-
-        wp_send_json_success(__('breakdance test data removed successfully', 'bit-integrations'));
+        return TriggerController::removeTestData($data, 'breakdance');
     }
 }
