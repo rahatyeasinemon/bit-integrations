@@ -33,13 +33,14 @@ final class DiviController
 
     public static function is_divi_active()
     {
+        global $themename;
         $diviThemes = [
             'divi',
             'extra',
             'bloom',
             'monarch',
         ];
-        return in_array(strtolower(wp_get_theme()->get_template()), $diviThemes);
+        return in_array(strtolower($themename), $diviThemes);
     }
 
     public static function handle_divi_submit($et_pb_contact_form_submit, $et_contact_error, $contact_form_info)
