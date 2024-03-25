@@ -71,13 +71,14 @@ class ElementorHelper
         // Process fields data
         foreach ($formData['fields'] as $key => $field) {
             if ($field['type'] != 'upload') {
-                $labelValue = strlen($field['value']) > 20 ? substr($field['value'], 0, 20) . '...' : $field['value'];
+                $value      = $field['type'] == 'checkbox' && is_array($field['raw_value']) && count($field['raw_value']) == 1 ? $field['raw_value'][0] : $field['raw_value'];
+                $labelValue = is_string($value) && strlen($value) > 20 ? substr($value, 0, 20) . '...' : $value;
 
                 $allFields[] = [
-                    'name'  => "fields.$key.value",
+                    'name'  => "fields.$key.raw_value",
                     'type'  => $field['type'],
                     'label' => $field['title'] . ' (' . $labelValue . ')',
-                    'value' => $field['value']
+                    'value' => $value
                 ];
             }
         }
@@ -85,7 +86,7 @@ class ElementorHelper
         // Process files data
         foreach ($formData['files'] as $key => $file) {
             if (!empty($file)) {
-                $fieldTitle = !empty($formData['fields'][$key]['title']) ? $formData['fields'][$key]['title'] : 'File';
+                $fieldTitle = !empty($formData['fields'][$key]['title']) ? $formData['fields'][$key]['title'] : 'Files';
 
                 $allFields[] = [
                     'name'  => "files.$key.url",
