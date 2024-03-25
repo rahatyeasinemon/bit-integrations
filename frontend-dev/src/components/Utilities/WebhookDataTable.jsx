@@ -19,7 +19,7 @@ export default function WebhookDataTable({ data, flow, setFlow }) {
       <table className="border-collapse table-fixed webhook-table-scroll">
         <thead>
           <tr className="btcd-drawer-title tbl-webhook-head">
-            <th className="w-7">Value</th>
+            <th className="w-7">Field</th>
             <th className="w-3">Type</th>
           </tr>
         </thead>
