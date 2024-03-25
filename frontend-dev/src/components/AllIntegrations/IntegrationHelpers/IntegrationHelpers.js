@@ -69,7 +69,6 @@ export const saveIntegConfig = async (
    */
 
   if (
-    flow.triggered_entity === "Elementor" ||
     flow.triggered_entity === "Divi" ||
     flow.triggered_entity === "Bricks" ||
     flow.triggered_entity === "Brizy" ||
@@ -235,7 +234,6 @@ export const saveActionConf = async ({
    * Have to move this to a better place
    */
   if (
-    flow.triggered_entity === "Elementor" ||
     flow.triggered_entity === "Divi" ||
     flow.triggered_entity === "Bricks" ||
     flow.triggered_entity === "Brizy" ||
