@@ -84,8 +84,6 @@ class RecordApiHelper
             }
         }
 
-        // error_log(print_r(['fieldValues' => $fieldValues, 'fieldMap' => $fieldMap, 'fieldData' => $fieldData], true));
-        // die;
         foreach ($fileMap as $fileKey => $filePair) {
             if (!empty($filePair->zohoFormField)) {
                 if (($defaultConf->layouts->{$module}->{$layout}->fileUploadFields->{$filePair->zohoFormField}->data_type === 'fileupload'
@@ -214,24 +212,17 @@ class RecordApiHelper
                 $responseType = 'success';
                 $attachmentApiResponses = [];
                 $attachment = explode(",", $actions->attachment);
+
                 foreach ($attachment as $fileField) {
                     if (isset($fieldValues[$fileField]) && !empty($fieldValues[$fileField])) {
-                        $fileFound = 1;
-                        if (is_array($fieldValues[$fileField])) {
-                            foreach ($fieldValues[$fileField] as $singleFile) {
-                                $attachmentApiResponse = $filesApiHelper->uploadFiles($singleFile, 'fileupload', true, $module, $recordApiResponse->data[0]->details->id);
-                                if ($attachmentApiResponse instanceof \stdClass && isset($attachmentApiResponse->status) && $attachmentApiResponse->status === 'error') {
-                                    $responseType = 'error';
-                                }
-                            }
-                        } else {
-                            $attachmentApiResponse = $filesApiHelper->uploadFiles($fieldValues[$fileField], 'fileupload', true, $module, $recordApiResponse->data[0]->details->id);
-                            if ($attachmentApiResponse instanceof \stdClass && isset($attachmentApiResponse->status) && $attachmentApiResponse->status === 'error') {
-                                $responseType = 'error';
-                            }
-                        }
+                        $fileFound  = 1;
+                        $response   = static::uploadFiles($fieldValues[$fileField], $filesApiHelper, $module, $recordApiResponse);
+
+                        $responseType           = $response['responseType'];
+                        $attachmentApiResponses = $response['attachmentApiResponse'];
                     }
                 }
+
                 if ($fileFound) {
                     LogHandler::save($integId, wp_json_encode(['type' => 'attachment', 'type_name' => $module]), $responseType, wp_json_encode($attachmentApiResponses));
                 }
@@ -239,6 +230,24 @@ class RecordApiHelper
         }
 
         return $recordApiResponse;
+    }
+
+    private static function uploadFiles($attachments, $filesApiHelper, $module, $recordApiResponse)
+    {
+        if (is_array($attachments)) {
+            $response = '';
+            foreach ($attachments as $attachment) {
+                $response = static::uploadFiles($attachment, $filesApiHelper, $module, $recordApiResponse);
+            }
+            return $response;
+        }
+
+        $attachmentApiResponse = $filesApiHelper->uploadFiles($attachments, 'fileupload', true, $module, $recordApiResponse->data[0]->details->id);
+        if ($attachmentApiResponse instanceof \stdClass && isset($attachmentApiResponse->status) && $attachmentApiResponse->status === 'error') {
+            $responseType = 'error';
+        }
+
+        return ['attachmentApiResponse' => $attachmentApiResponse, 'responseType' => $responseType ?? 'success'];
     }
 
     public function formatFieldValue($value, $formatSpecs)
