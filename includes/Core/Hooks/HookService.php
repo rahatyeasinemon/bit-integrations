@@ -60,10 +60,10 @@ class HookService
         if (!$activeTrigger) {
             $activeTrigger = [];
         }
-        $activeTrigger[] = 'CustomTrigger';
-        $activeTrigger[] = 'ActionHook';
-        $activeTrigger[] = 'Spectra';
-        $activeTrigger[] = 'EssentialBlocks';
+
+        $listedTriggers = ['CustomTrigger', 'ActionHook', 'Spectra', 'EssentialBlocks', 'Elementor'];
+        $activeTrigger  = array_merge($activeTrigger, $listedTriggers);
+
         if (empty($activeTrigger) || !is_array($activeTrigger)) {
             return;
         }
