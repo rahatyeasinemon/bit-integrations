@@ -66,14 +66,15 @@ class RecordApiHelper
             $fieldData['Pipeline'] = $integrationDetails->pLayout;
         }
 
-        $requestParams['data'][] =  (object) $fieldData;
         $requestParams['trigger'] = [];
+        if (!empty($actions->approval)) {
+            $fieldData['$approved'] = false;
+            $requestParams['trigger'][] = 'approval';
+        }
+        $requestParams['data'][] =  (object) $fieldData;
 
         if (!empty($actions->workflow)) {
             $requestParams['trigger'][] = 'workflow';
-        }
-        if (!empty($actions->approval)) {
-            $requestParams['trigger'][] = 'approval';
         }
 
         $recordApiResponse = $this->insertRecord($module, wp_json_encode($requestParams));
