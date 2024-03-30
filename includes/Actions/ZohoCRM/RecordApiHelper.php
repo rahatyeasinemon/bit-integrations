@@ -125,13 +125,14 @@ class RecordApiHelper
         if (!empty($actions->rec_owner)) {
             $fieldData['Owner']['id'] = $actions->rec_owner;
         }
-        $requestParams['data'][] = (object) $fieldData;
         $requestParams['trigger'] = [];
+        if (!empty($actions->approval)) {
+            $fieldData['$approved'] = false;
+            $requestParams['trigger'][] = 'approval';
+        }
+        $requestParams['data'][] = (object) $fieldData;
         if (!empty($actions->workflow)) {
             $requestParams['trigger'][] = 'workflow';
-        }
-        if (!empty($actions->approval)) {
-            $requestParams['trigger'][] = 'approval';
         }
         if (!empty($actions->blueprint)) {
             $requestParams['trigger'][] = 'blueprint';
