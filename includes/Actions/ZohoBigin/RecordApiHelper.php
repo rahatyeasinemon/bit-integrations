@@ -115,21 +115,10 @@ class RecordApiHelper
             foreach ($attachments as $fileField) {
                 if (isset($fieldValues[$fileField]) && !empty($fieldValues[$fileField])) {
                     $fileFound = 1;
-                    if (is_array($fieldValues[$fileField])) {
-                        foreach ($fieldValues[$fileField] as $singleFile) {
-                            $attachmentApiResponse = $filesApiHelper->uploadFiles($singleFile, $module, $recordID);
-                            if (is_object($attachmentApiResponse) &&  isset($attachmentApiResponse->status) &&  $attachmentApiResponse->status === 'error') {
-                                $responseType = 'error';
-                            }
-                            $attachmentApiResponses[] = $attachmentApiResponse;
-                        }
-                    } else {
-                        $attachmentApiResponse = $filesApiHelper->uploadFiles($fieldValues[$fileField], $module, $recordID);
-                        if (is_object($attachmentApiResponse) &&  isset($attachmentApiResponse->status) &&  $attachmentApiResponse->status === 'error') {
-                            $responseType = 'error';
-                        }
-                        $attachmentApiResponses[] = $attachmentApiResponse;
-                    }
+                    $response   = static::letsUploadFiles($fieldValues[$fileField], $filesApiHelper, $module, $recordID);
+
+                    $responseType           = $response['responseType'];
+                    $attachmentApiResponses = $response['attachmentApiResponse'];
                 }
             }
             if ($fileFound) {
@@ -150,6 +139,24 @@ class RecordApiHelper
         }
 
         return $recordApiResponse;
+    }
+
+    private static function letsUploadFiles($attachments, $filesApiHelper, $module, $recordID)
+    {
+        if (is_array($attachments)) {
+            $response = '';
+            foreach ($attachments as $attachment) {
+                $response = static::letsUploadFiles($attachment, $filesApiHelper, $module, $recordID);
+            }
+            return $response;
+        }
+
+        $attachmentApiResponse = $filesApiHelper->uploadFiles($attachments, $module, $recordID);
+        if (is_object($attachmentApiResponse) &&  isset($attachmentApiResponse->status) &&  $attachmentApiResponse->status === 'error') {
+            $responseType = 'error';
+        }
+
+        return ['attachmentApiResponse' => $attachmentApiResponse, 'responseType' => $responseType ?? 'success'];
     }
 
     public function formatFieldValue($value, $formatSpecs)
