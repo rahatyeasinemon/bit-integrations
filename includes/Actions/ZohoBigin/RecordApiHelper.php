@@ -129,7 +129,9 @@ class RecordApiHelper
         if (isset($actions->photo)) {
             $filesApiHelper = new FilesApiHelper($this->_tokenDetails);
             if (isset($fieldValues[$actions->photo])) {
-                $attachmentApiResponse = $filesApiHelper->uploadFiles($fieldValues[$actions->photo], $module, $recordID, true);
+                $response = static::letsUploadFiles($fieldValues[$actions->photo], $filesApiHelper, $module, $recordID, true);
+                $attachmentApiResponse = $response['attachmentApiResponse'];
+
                 if (is_object($attachmentApiResponse) &&  isset($attachmentApiResponse->status) &&  $attachmentApiResponse->status === 'error') {
                     LogHandler::save($this->_integID, ['type' => 'photo', 'type_name' => $module], 'error', $attachmentApiResponse);
                 } else {
@@ -141,17 +143,17 @@ class RecordApiHelper
         return $recordApiResponse;
     }
 
-    private static function letsUploadFiles($attachments, $filesApiHelper, $module, $recordID)
+    private static function letsUploadFiles($attachments, $filesApiHelper, $module, $recordID, $isPhoto = null)
     {
         if (is_array($attachments)) {
             $response = '';
             foreach ($attachments as $attachment) {
-                $response = static::letsUploadFiles($attachment, $filesApiHelper, $module, $recordID);
+                $response = static::letsUploadFiles($attachment, $filesApiHelper, $module, $recordID, $isPhoto);
             }
             return $response;
         }
 
-        $attachmentApiResponse = $filesApiHelper->uploadFiles($attachments, $module, $recordID);
+        $attachmentApiResponse = $filesApiHelper->uploadFiles($attachments, $module, $recordID, $isPhoto);
         if (is_object($attachmentApiResponse) &&  isset($attachmentApiResponse->status) &&  $attachmentApiResponse->status === 'error') {
             $responseType = 'error';
         }
