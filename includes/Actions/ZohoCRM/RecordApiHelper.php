@@ -25,7 +25,7 @@ class RecordApiHelper
     public function __construct($tokenDetails)
     {
         $this->_defaultHeader['Authorization'] = "Zoho-oauthtoken {$tokenDetails->access_token}";
-        $this->_apiDomain = \urldecode($tokenDetails->api_domain) . '/crm/v2.1';
+        $this->_apiDomain = \urldecode($tokenDetails->api_domain) . '/crm/v6';
         $this->_tokenDetails = $tokenDetails;
     }
 

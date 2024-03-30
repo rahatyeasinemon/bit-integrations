@@ -1,7 +1,9 @@
 <?php
+
 /**
  * ZohoCrm Tag Api Helper
  */
+
 namespace BitCode\FI\Actions\ZohoCRM;
 
 use WP_Error;
@@ -25,10 +27,10 @@ final class TagApiHelper
     public function __construct($tokenDetails, $module)
     {
         $this->_defaultHeader['Authorization'] = "Zoho-oauthtoken {$tokenDetails->access_token}";
-        $this->_apiDomain = \urldecode($tokenDetails->api_domain) . '/crm/v2';
+        $this->_apiDomain = \urldecode($tokenDetails->api_domain) . '/crm/v6';
         $this->_module = $module;
     }
-    
+
     /**
      * Helps to get Tags List of zcrm module
      *
@@ -37,7 +39,7 @@ final class TagApiHelper
     public function getTagList()
     {
         $getTagsEndpoint = "{$this->_apiDomain}/settings/tags";
-        
+
         $tagListResponse = HttpHelper::get($getTagsEndpoint, ['module' => $this->_module], $this->_defaultHeader);
         if (is_wp_error($tagListResponse)) {
             return $tagListResponse;
@@ -65,9 +67,9 @@ final class TagApiHelper
     public function addTagsSingleRecord($recordID, $tagNames)
     {
         $addTagsEndpoint = "{$this->_apiDomain}/{$this->_module}/{$recordID}/actions/add_tags";
-        
+
         $addTagsResponse = HttpHelper::post($addTagsEndpoint, ['tag_names' => $tagNames], $this->_defaultHeader);
-       
+
         return $addTagsResponse;
     }
 }

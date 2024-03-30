@@ -71,7 +71,7 @@ final class ZohoCRMController
             'zohosign__ZohoSign_Documents',
             'zohosign__ZohoSign_Recipients'
         );
-        $modulesMetaApiEndpoint = \urldecode($queryParams->tokenDetails->api_domain) . "/crm/v2.1/settings/modules";
+        $modulesMetaApiEndpoint = \urldecode($queryParams->tokenDetails->api_domain) . "/crm/v6/settings/modules";
         $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $isProVersion = Plugin::instance()->isProVer();
         if ($isProVersion) {
@@ -146,7 +146,7 @@ final class ZohoCRMController
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
-        $layoutsMetaApiEndpoint = \urldecode($queryParams->tokenDetails->api_domain) . "/crm/v2.1/settings/layouts";
+        $layoutsMetaApiEndpoint = \urldecode($queryParams->tokenDetails->api_domain) . "/crm/v6/settings/layouts";
         $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $requiredParams['module'] = $queryParams->module;
         $layoutsMetaResponse = HttpHelper::get($layoutsMetaApiEndpoint, $requiredParams, $authorizationHeader);
@@ -372,7 +372,7 @@ final class ZohoCRMController
         if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
-        $usersApiEndpoint = \urldecode($queryParams->tokenDetails->api_domain) . "/crm/v2.1/users?type=ActiveConfirmedUsers";
+        $usersApiEndpoint = \urldecode($queryParams->tokenDetails->api_domain) . "/crm/v6/users?type=ActiveConfirmedUsers";
         $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $retrivedUsersData = [];
         $usersResponse = null;

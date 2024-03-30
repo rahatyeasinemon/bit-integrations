@@ -1,7 +1,9 @@
 <?php
+
 /**
  * Zoho CRM Meta Data Api Helper
  */
+
 namespace BitCode\FI\Actions\ZohoCRM;
 
 use BitCode\FI\Core\Util\HttpHelper;
@@ -23,9 +25,9 @@ final class MetaDataApiHelper
     public function __construct($tokenDetails, $minorV = false)
     {
         $this->_defaultHeader['Authorization'] = "Zoho-oauthtoken {$tokenDetails->access_token}";
-        $this->_apiDomain = urldecode($tokenDetails->api_domain) ."/crm/v2.1/settings";
+        $this->_apiDomain = urldecode($tokenDetails->api_domain) . "/crm/v6/settings";
     }
-    
+
     /**
      * Helps to get Assignment rules of a Zoho CRM module
      *
@@ -64,7 +66,7 @@ final class MetaDataApiHelper
         if (is_wp_error($getRelatedListsResponse)) {
             return $getRelatedListsResponse;
         }
-        
+
         if ($module !== 'Tasks' || $module !== 'Events' || $module !== 'Calls') {
             $related_lists = array(
                 'Tasks' => (object) array(
@@ -87,8 +89,8 @@ final class MetaDataApiHelper
                 ),
             );
         }
-        
-        $relatedModuleToRemove = array('Attachments','Products','Activities','Activities_History','Emails','Invited_Events','Campaigns','Social','CheckLists','Zoho_Survey','Visits_Zoho_Livedesk','ZohoSign_Documents','Lead_Quote','Zoho_ShowTime');
+
+        $relatedModuleToRemove = array('Attachments', 'Products', 'Activities', 'Activities_History', 'Emails', 'Invited_Events', 'Campaigns', 'Social', 'CheckLists', 'Zoho_Survey', 'Visits_Zoho_Livedesk', 'ZohoSign_Documents', 'Lead_Quote', 'Zoho_ShowTime');
         if (!empty($getRelatedListsResponse->related_lists)) {
             foreach ($getRelatedListsResponse->related_lists as $relatedListsDetails) {
                 if (!in_array($relatedListsDetails->api_name, $relatedModuleToRemove)) {

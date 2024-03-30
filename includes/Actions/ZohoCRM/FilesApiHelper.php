@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\ZohoCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Upload files
@@ -47,8 +47,8 @@ final class FilesApiHelper
     public function uploadFiles($files, $uploadType, $isAttachment = false, $module = '', $recordID = 0)
     {
         $uploadFileEndpoint = $isAttachment ?
-            "{$this->_apiDomain}/crm/v2/{$module}/{$recordID}/Attachments"
-            : "{$this->_apiDomain}/crm/v2/files";
+            "{$this->_apiDomain}/crm/v6/{$module}/{$recordID}/Attachments"
+            : "{$this->_apiDomain}/crm/v6/files";
         $payload = '';
         if (is_array($files)) {
             foreach ($files as $fileIndex => $file) {
