@@ -130,11 +130,15 @@ class RecordApiHelper
                     if (!empty($filePair->zohoFormField) && !empty($fieldValues[$filePair->formField])) {
                         $fileFound = 1;
                         if (@property_exists($defaultConf->moduleData->{$module}->fileUploadFields, $filePair->zohoFormField) && $defaultConf->moduleData->{$module}->fileUploadFields->{$filePair->zohoFormField}->data_type === 'UploadText') {
-                            $fileUpResponse = $filesApiHelper->uploadFiles($fieldValues[$filePair->formField], $recordID, $filePair->zohoFormField);
-                            if (isset($fileUpResponse->response->error)) {
-                                $responseType = 'error';
-                            }
-                            $fileUpResponses[] = $fileUpResponse;
+                            // $fileUpResponse = $filesApiHelper->uploadFiles($fieldValues[$filePair->formField], $recordID, $filePair->zohoFormField);
+                            // if (isset($fileUpResponse->response->error)) {
+                            //     $responseType = 'error';
+                            // }
+                            // $fileUpResponses[] = $fileUpResponse;
+
+                            $response           = static::letsUploadFiles($fieldValues[$filePair->formField], $filesApiHelper, $filePair->zohoFormField, $recordID);
+                            $responseType       = $response['responseType'];
+                            $fileUpResponses    = $response['attachmentApiResponse'];
                         }
                     }
                 }
@@ -145,6 +149,24 @@ class RecordApiHelper
         }
 
         return $recordApiResponse;
+    }
+
+    private static function letsUploadFiles($attachments, $filesApiHelper, $zohoFormFields, $recordID)
+    {
+        if (is_array($attachments)) {
+            $response = '';
+            foreach ($attachments as $attachment) {
+                $response = static::letsUploadFiles($attachment, $filesApiHelper, $zohoFormFields, $recordID);
+            }
+            return $response;
+        }
+
+        $attachmentApiResponse = $filesApiHelper->uploadFiles($attachments, $recordID, $zohoFormFields);
+        if (is_object($attachmentApiResponse) &&  isset($attachmentApiResponse->status) &&  $attachmentApiResponse->status === 'error') {
+            $responseType = 'error';
+        }
+
+        return ['attachmentApiResponse' => $attachmentApiResponse, 'responseType' => $responseType ?? 'success'];
     }
 
     public function formatFieldValue($value, $formatSpecs)
