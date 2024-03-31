@@ -130,12 +130,6 @@ class RecordApiHelper
                     if (!empty($filePair->zohoFormField) && !empty($fieldValues[$filePair->formField])) {
                         $fileFound = 1;
                         if (@property_exists($defaultConf->moduleData->{$module}->fileUploadFields, $filePair->zohoFormField) && $defaultConf->moduleData->{$module}->fileUploadFields->{$filePair->zohoFormField}->data_type === 'UploadText') {
-                            // $fileUpResponse = $filesApiHelper->uploadFiles($fieldValues[$filePair->formField], $recordID, $filePair->zohoFormField);
-                            // if (isset($fileUpResponse->response->error)) {
-                            //     $responseType = 'error';
-                            // }
-                            // $fileUpResponses[] = $fileUpResponse;
-
                             $response           = static::letsUploadFiles($fieldValues[$filePair->formField], $filesApiHelper, $filePair->zohoFormField, $recordID);
                             $responseType       = $response['responseType'];
                             $fileUpResponses    = $response['attachmentApiResponse'];

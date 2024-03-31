@@ -5,7 +5,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import Loader from '../../Loaders/Loader'
-import { refreshNoteTypes } from './ZohoRecruitCommonFunc'
+import { refreshNoteTypes, refreshOwners } from './ZohoRecruitCommonFunc'
 
 export default function ZohoRecruitActions({ tab, formID, formFields, recruitConf, setRecruitConf, setSnackbar }) {
   const [recOwnerMdl, setrecOwnerMdl] = useState(false)
@@ -119,10 +119,35 @@ export default function ZohoRecruitActions({ tab, formID, formFields, recruitCon
         title={__('Record Owner', 'bit-integrations')}
       >
         <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">{__('Owner ID', 'bit-integrations')}</div>
-        <div className="flx flx-between">
+        <div className="mt-2">{__('Owner Name', 'bit-integrations')}</div>
+        {/* <div className="flx flx-between">
           <input onChange={e => actionHandler(e.target.value, 'recordOwner')} className="btcd-paper-inp mt-2" type="number" min="0" value={tab === 0 ? (recruitConf?.actions?.recordOwner || '') : (recruitConf.relatedlists?.[tab - 1]?.actions?.recordOwner || '')} placeholder={__('Enter Owner ID', 'bit-integrations')} />
-        </div>
+        </div> */}
+
+        {isLoading
+          ? (
+            <Loader style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 45,
+              transform: 'scale(0.5)',
+            }}
+            />
+          )
+          : (
+            <div className="flx flx-between mt-2">
+              <select
+                value={tab === 0 ? recruitConf?.actions?.recordOwner : recruitConf.relatedlists[tab - 1].actions?.recordOwner}
+                className="btcd-paper-inp"
+                onChange={e => actionHandler(e.target.value, 'recordOwner')}
+              >
+                <option value="">{__('Select Owner', 'bit-integrations')}</option>
+                {recruitConf.default?.recruitOwner && Object.values(recruitConf.default?.recruitOwner)?.map(owner => <option key={owner.id} value={owner.id}>{owner.full_name}</option>)}
+              </select>
+              <button onClick={() => refreshOwners(formID, recruitConf, setRecruitConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Recruit Owners', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
+          )}
 
       </ConfirmModal>
 

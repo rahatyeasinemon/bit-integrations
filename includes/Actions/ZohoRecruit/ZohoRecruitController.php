@@ -209,6 +209,82 @@ class ZohoRecruitController
     }
 
     /**
+     * Process ajax request for refresh users
+     *
+     * @param $queryParams Mandatory params
+     *
+     * @return JSON crm users data
+     */
+    public static function refreshUsers($queryParams)
+    {
+        if (
+            empty($queryParams->tokenDetails)
+            || empty($queryParams->dataCenter)
+            || empty($queryParams->clientId)
+            || empty($queryParams->clientSecret)
+            || empty($queryParams->module)
+        ) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+        $response = [];
+        if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+            $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
+        }
+        $usersApiEndpoint                       = "https://recruit.{$queryParams->dataCenter}/recruit/v2/users?type=AllUsers";
+        $authorizationHeader['Authorization']   = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
+        $requiredParams['module']               = $queryParams->module;
+        // $usersResponse                          = HttpHelper::get($usersApiEndpoint, $requiredParams, $authorizationHeader);
+
+        $retrivedUsersData  = [];
+        $usersResponse      = null;
+        do {
+            $requiredParams = [];
+            if ($usersResponse instanceof \stdClass && !empty($usersResponse->users)) {
+                if (!empty($retrivedUsersData)) {
+                    $retrivedUsersData = array_merge($retrivedUsersData, $usersResponse->users);
+                } else {
+                    $retrivedUsersData = $usersResponse->users;
+                }
+            }
+            if ($usersResponse instanceof \stdClass && !empty($usersResponse->info->more_records) && $usersResponse->info->more_records) {
+                $requiredParams["page"] = intval($usersResponse->info->page) + 1;
+            }
+            $usersResponse = HttpHelper::get($usersApiEndpoint, $requiredParams, $authorizationHeader);
+        } while ($usersResponse == null || (!empty($usersResponse->info->more_records) && $usersResponse->info->more_records));
+
+        if (empty($requiredParams) && !is_wp_error($usersResponse)) {
+            $retrivedUsersData = $usersResponse->users;
+        }
+        if (!is_wp_error($usersResponse) && !empty($retrivedUsersData)) {
+            $users = [];
+            foreach ($retrivedUsersData as $userKey => $userValue) {
+                $users[$userValue->full_name] = (object) array(
+                    'id'        => $userValue->id,
+                    'full_name' => $userValue->full_name,
+                );
+            }
+            uksort($users, 'strnatcasecmp');
+            $response["users"] = $users;
+        } else {
+            wp_send_json_error(
+                $usersResponse->status === 'error' ? $usersResponse->message : 'Unknown',
+                400
+            );
+        }
+        if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
+            $response['queryModule'] = $queryParams->module;
+            ZohoAuthController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
+        }
+        wp_send_json_success($response, 200);
+    }
+
+    /**
      * Process ajax request for refesh recruit layouts
      *
      * @return JSON recruit layout data
@@ -350,15 +426,6 @@ class ZohoRecruitController
             ZohoAuthController::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
         wp_send_json_success($response, 200);
-        // } else {
-        //     wp_send_json_error(
-        //         __(
-        //             'Token expired',
-        //             'bit-integrations'
-        //         ),
-        //         401
-        //     );
-        // }
     }
 
     public function execute($integrationData, $fieldValues)
