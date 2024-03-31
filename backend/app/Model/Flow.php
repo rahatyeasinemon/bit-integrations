@@ -116,6 +116,9 @@ final class Flow
 
     public function get($data)
     {
+        var_dump($data);
+        die;
+
         $missing_field = null;
         if (!property_exists($data, 'id')) {
             $missing_field = 'Integration ID';

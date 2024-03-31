@@ -2,17 +2,18 @@
 
 namespace BitApps\BTCBI\Http\Controllers;
 
+use BTCBI\Deps\BitApps\WPKit\Http\Request\Request;
 use BTCBI\Deps\BitApps\WPKit\Http\Response;
 
 final class ConfigController
 {
-    public function updatedAppConfig($data)
+    public function updatedAppConfig(Request $request)
     {
-        if (!property_exists($data, 'data')) {
+        if (!$request->has('data')) {
             return Response::error(__('Data can\'t be empty', 'bit-integrations'));
         }
 
-        update_option('btcbi_app_conf', $data->data);
+        update_option('btcbi_app_conf', $request->data);
         return Response::success(__('save successfully done', 'bit-integrations'));
     }
 
