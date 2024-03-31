@@ -2,7 +2,7 @@
 /**
  * @license GPL-2.0-or-later
  *
- * Modified on 12-March-2024 using Strauss.
+ * Modified on 30-March-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 
@@ -37,6 +37,8 @@ final class RouteRegister
     private $_regex;
 
     private $_regexMatched;
+
+    private $_middleware = [];
 
     /**
      * Instance of rest request
@@ -152,15 +154,21 @@ final class RouteRegister
             return false;
         }
 
-        return !(
-            preg_match_all('/\{\w+\??\}\??/', $this->_path, $this->_regexMatched) === false
+        return !(preg_match_all('/\{\w+\??\}\??/', $this->_path, $this->_regexMatched) === false
             || empty($this->_regexMatched[0])
         );
     }
 
     public function getMiddleware()
     {
-        return $this->_routeBase->getMiddleware();
+        return array_merge($this->_routeBase->getMiddleware(), $this->_middleware);
+    }
+
+    public function middleware()
+    {
+        $this->_middleware = array_merge($this->_middleware, \func_get_args());
+
+        return $this;
     }
 
     public function handleMiddleware()
@@ -351,7 +359,7 @@ final class RouteRegister
             }
 
             $this->setResponse(
-                return Response::error([])
+                Response::error([])
                     ->code('NOT_AUTHORIZED')
                     ->message($message)
             );

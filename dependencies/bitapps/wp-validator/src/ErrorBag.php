@@ -2,7 +2,7 @@
 /**
  * @license MIT
  *
- * Modified on 12-March-2024 using Strauss.
+ * Modified on 30-March-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 
@@ -16,7 +16,9 @@ class ErrorBag
     public function addError($role, $customMessages)
     {
         $attributeKey = $role->getInputDataContainer()->getAttributeKey();
+
         $roleName = $role->getRuleName();
+
         $paramValues = $role->getParamValues();
 
         $defaultPlaceholders = [

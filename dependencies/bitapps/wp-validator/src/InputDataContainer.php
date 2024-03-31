@@ -2,7 +2,7 @@
 /**
  * @license MIT
  *
- * Modified on 12-March-2024 using Strauss.
+ * Modified on 30-March-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 namespace BTCBI\Deps\BitApps\WPValidator;
@@ -10,8 +10,11 @@ namespace BTCBI\Deps\BitApps\WPValidator;
 class InputDataContainer
 {
     use Helpers;
+
     private $data = [];
+
     private $attributeKey;
+
     private $attributeLabel;
 
     public function __construct($data = [])
@@ -32,6 +35,7 @@ class InputDataContainer
     public function getAttributeValue($key = null)
     {
         $keys = explode('.', trim($this->attributeKey, '[]'));
+
         $data = $this->data;
 
         if (is_array($keys) && count($keys) > 1) {

@@ -75,14 +75,9 @@ final class InstallerProvider
     public static function migration()
     {
         $migrations = [
-            'BitAppsPiFlowsTableMigration',
-            'BitAppsPiWebhooksTableMigration',
-            'BitAppsPiFlowNodesTableMigration',
-            'BitAppsPiTagsTableMigration',
-            'BitAppsPiAppConnectionsTableMigration',
-            'BitAppsPiFlowHistoryTableMigration',
-            'BitAppsPiFlowLogsTableMigration',
-            'BitAppsPiPluginOptions',
+            'BTCBIFlowTableMigration',
+            'BTCBILogsTableMigration',
+            'BTCBIPluginOptions'
         ];
 
         return [
@@ -99,14 +94,9 @@ final class InstallerProvider
     public static function drop()
     {
         $migrations = [
-            'BitAppsPiFlowNodesTableMigration',
-            'BitAppsPiFlowLogsTableMigration',
-            'BitAppsPiFlowHistoryTableMigration',
-            'BitAppsPiWebhooksTableMigration',
-            'BitAppsPiFlowsTableMigration',
-            'BitAppsPiTagsTableMigration',
-            'BitAppsPiAppConnectionsTableMigration',
-            'BitAppsPiPluginOptions',
+            'BTCBIFlowTableMigration',
+            'BTCBILogsTableMigration',
+            'BTCBIPluginOptions'
         ];
 
         return [

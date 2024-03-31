@@ -2,7 +2,7 @@
 /**
  * @license MIT
  *
- * Modified on 12-March-2024 using Strauss.
+ * Modified on 30-March-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 
@@ -40,7 +40,7 @@ abstract class Rule
             if (!isset($this->params[$param])) {
                 $ruleName = $this->getRuleName();
                 $parameterCount = count($params);
-                throw new InvalidArgumentException("Validation rule $ruleName requires at least $parameterCount parameters");
+                throw new InvalidArgumentException($ruleName, $parameterCount);
             }
         }
     }

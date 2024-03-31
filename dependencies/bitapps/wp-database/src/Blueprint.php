@@ -2,7 +2,7 @@
 /**
  * @license GPL-2.0-or-later
  *
- * Modified on 12-March-2024 using Strauss.
+ * Modified on 30-March-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 
@@ -759,7 +759,7 @@ class Blueprint
 
         $query = '';
         foreach ($this->uniqueIndex as $key => $uniqueColumn) {
-            $query .= "\nUNIQUE INDEX {$uniqueColumn}_UNIQUE ({$uniqueColumn} ASC) VISIBLE,";
+            $query .= "\nUNIQUE INDEX {$uniqueColumn}_UNIQUE ({$uniqueColumn} ASC),";
         }
 
         return $query;

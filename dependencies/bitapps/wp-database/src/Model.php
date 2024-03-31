@@ -4,7 +4,7 @@
  * Provides Base Model Class.
  *
  * @license GPL-2.0-or-later
- * Modified on 12-March-2024 using Strauss.
+ * Modified on 30-March-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 
@@ -274,6 +274,11 @@ abstract class Model implements ArrayAccess, JsonSerializable
     public function getTable()
     {
         return $this->table;
+    }
+
+    public function getPrefix()
+    {
+        return $this->prefix === '' ? Connection::getPrefix() : $this->prefix;
     }
 
     public function getTableWithoutPrefix()

@@ -9,6 +9,8 @@ namespace BitApps\BTCBI\Model;
  * Undocumented class
  */
 // use BitApps\BTCBI\Model\Model;
+
+use BitApps\BTCBI\Config;
 use BitApps\BTCBI\Model\Model;
 use BTCBI\Deps\BitApps\WPDatabase\Model as WPDatabaseModel;
 
@@ -27,4 +29,6 @@ use BTCBI\Deps\BitApps\WPDatabase\Model as WPDatabaseModel;
 class FlowModel extends WPDatabaseModel
 {
     protected $table = 'flow';
+
+    protected $prefix = Config::VAR_PREFIX;
 }
