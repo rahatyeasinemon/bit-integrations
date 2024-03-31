@@ -119,7 +119,7 @@ class ZohoRecruitController
             $response['tokenDetails'] = ZohoAuthController::_refreshAccessToken($queryParams);
         }
 
-        $notesMetaApiEndpoint = "https: //com/recruit/private/json/Notes/getNoteTypes?authtoken={$queryParams->tokenDetails->access_token}&scope=ZohoRecruit.modules.call.all&version=2";
+        $notesMetaApiEndpoint = "https://recruit.{$queryParams->dataCenter}/recruit/private/json/Notes/getNoteTypes?authtoken={$queryParams->tokenDetails->access_token}&scope=ZohoRecruit.modules.call.all&version=2";
 
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $notesMetaResponse = HttpHelper::get($notesMetaApiEndpoint, null, $authorizationHeader);
