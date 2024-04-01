@@ -23,13 +23,19 @@ function EditSendFox({ allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
 
+  const setIntegName = e => {
+    const newConf = { ...sendFoxConf }
+    newConf[e.target.name] = e.target.value
+    setSendFoxConf(newConf)
+  }
+
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, sendFoxConf, setSendFoxConf)} name="name" value={sendFoxConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input className="btcd-paper-inp w-5" onChange={setIntegName} name="name" value={sendFoxConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
       </div>
       <br />
       <br />
