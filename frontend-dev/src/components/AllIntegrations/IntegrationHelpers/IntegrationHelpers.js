@@ -108,7 +108,7 @@ export const saveIntegConfig = async (
     tmpConf = wpCoursewareStateIH(tmpConf, dataFlow);
   } else if (flow.triggered_entity === "FluentCrm") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
-    tmpConf = fluentCrmStateIH(tmpConf, dataFlow);
+    tmpConf = fluentCrmStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
   } else if (flow.triggered_entity === "Post") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = postStateIH(tmpConf, dataFlow);
@@ -267,7 +267,7 @@ export const saveActionConf = async ({
     tmpConf = wpCoursewareStateIH(tmpConf, dataFlow);
   } else if (flow.triggered_entity === "FluentCrm") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
-    tmpConf = fluentCrmStateIH(tmpConf, dataFlow);
+    tmpConf = fluentCrmStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
   } else if (flow.triggered_entity === "Post") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = postStateIH(tmpConf, dataFlow);
