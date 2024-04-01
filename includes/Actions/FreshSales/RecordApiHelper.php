@@ -36,14 +36,7 @@ class RecordApiHelper
         $finalData
     ) {
         if ($module === 'contact') {
-            $accounts = $this->_integrationDetails->default->accounts;
-            $account_id = $this->_integrationDetails->moduleData->account_id;
-
-            foreach ($accounts as $account) {
-                if ($account->value == $account_id) {
-                    $finalData['sales_account'] = ['name' => $account->label];
-                }
-            }
+            $finalData['sales_accounts'] = [(object) ['id' => $this->_integrationDetails->moduleData->account_id, 'is_primary' => true]];
         }
 
         if ($module === 'deal') {
@@ -61,7 +54,7 @@ class RecordApiHelper
         }
 
         $actions = $this->_integrationDetails->actions;
-
+        error_log(print_r($finalData, true));
         $body = wp_json_encode([$module => $finalData]);
 
         $response = HttpHelper::post($apiEndpoints, $body, $this->_defaultHeader);
