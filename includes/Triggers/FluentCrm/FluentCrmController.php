@@ -460,14 +460,6 @@ final class FluentCrmController
                 $data[$key] = $value;
             }
         }
-        $tags = $contact->tags;
-        $fluentCrmTags = [];
-        foreach ($tags as $tag) {
-            $fluentCrmTags[] = (object) [
-                'tag_id' => $tag->id,
-                'tag_title' => $tag->title
-            ];
-        }
 
         $lists = $contact->lists;
         $fluentCrmLists = [];
@@ -478,7 +470,7 @@ final class FluentCrmController
             ];
         }
 
-        $data['tags'] = $fluentCrmTags;
+        $data['tags'] = implode(', ', array_column($contact->tags->toArray() ?? [], 'title'));
         $data['lists'] = $fluentCrmLists;
         return $data;
     }
