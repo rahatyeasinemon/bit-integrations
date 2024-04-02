@@ -207,7 +207,7 @@ final class WPEFController
                 } else if (isset($field['values'])) {
                     $processedValues["{$field['m_type']}.$index"] =   $field['values'];
                 } else if (isset($field['options'])) {
-                    $processedValues["{$field['m_type']}.$index"] =   $field['options'];
+                    $processedValues["{$field['m_type']}.$index"] =   is_array($field['options']) && count($field['options']) == 1 ? $field['options'][0] : $field['options'];
                 } else if (isset($field['rows'])) {
                     $processedValues["{$field['m_type']}.$index"] =   $field['rows'];
                 } else if (isset($field['order'])) {
