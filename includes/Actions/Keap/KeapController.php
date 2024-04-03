@@ -6,9 +6,10 @@
 
 namespace BitCode\FI\Actions\Keap;
 
+use Error;
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for keap integration
@@ -68,11 +69,52 @@ class KeapController
             wp_send_json_success($tags, 200);
         }
         if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
-            static::_saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
+            static::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
         }
         wp_send_json_success($response, 200);
     }
 
+    public static function refreshCustomFieldAjaxHelper($queryParams)
+    {
+        if (
+            empty($queryParams->clientId)
+            || empty($queryParams->clientSecret)
+            || empty($queryParams->tokenDetails)
+        ) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+        $response = [];
+        if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+            $response['tokenDetails'] = static::refreshAccessToken($queryParams);
+        }
+        $apiEndpoint    = 'https://api.infusionsoft.com/crm/rest/v1/contacts/model';
+        $tokenDetails   = empty($response['tokenDetails']) ? $queryParams->tokenDetails : $response['tokenDetails'];
+        $headers        = [
+            "Content-Type"  => 'application/x-www-form-urlencoded',
+            "Authorization" => 'Bearer ' . $tokenDetails->access_token
+        ];
+
+        $customFieldResponse = HttpHelper::get($apiEndpoint, null, $headers);
+        if (isset($customFieldResponse->error)) {
+            wp_send_json_error('Custom Field fetch failed', 400);
+        } else {
+            $customFields = [];
+            foreach ($customFieldResponse->custom_fields as $field) {
+                $customFields[] = ['key' => "custom_fields_{$field->id}", 'label' => $field->label, 'required' => false];
+            }
+            wp_send_json_success($customFields, 200);
+        }
+        if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
+            static::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
+        }
+        wp_send_json_success($response, 200);
+    }
 
     /**
      * Process ajax request for generate_token
@@ -120,7 +162,7 @@ class KeapController
         wp_send_json_success($apiResponse, 200);
     }
 
-    public function refreshAccessToken($requestsParams)
+    public static function refreshAccessToken($requestsParams)
     {
         if (
             empty($requestsParams->clientId)
@@ -150,7 +192,6 @@ class KeapController
         $tokenDetails->generates_on = \time();
         $tokenDetails->access_token = $apiResponse->access_token;
         $tokenDetails->refresh_token = $apiResponse->refresh_token;
-
         return $tokenDetails;
     }
 
