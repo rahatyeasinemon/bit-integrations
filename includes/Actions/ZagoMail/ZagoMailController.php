@@ -36,8 +36,7 @@ class ZagoMailController
      */
     public static function zagoMailAuthorize($requestsParams)
     {
-        if (empty($requestsParams->api_public_key)
-        ) {
+        if (empty($requestsParams->api_public_key)) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -77,8 +76,7 @@ class ZagoMailController
      */
     public static function zagoMailLists($queryParams)
     {
-        if (empty($queryParams->api_public_key)
-        ) {
+        if (empty($queryParams->api_public_key)) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -123,8 +121,7 @@ class ZagoMailController
      */
     public static function zagoMailTags($queryParams)
     {
-        if (empty($queryParams->api_public_key)
-        ) {
+        if (empty($queryParams->api_public_key)) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -168,8 +165,7 @@ class ZagoMailController
      */
     public static function zagoMailRefreshFields($queryParams)
     {
-        if (empty($queryParams->api_public_key)
-        ) {
+        if (empty($queryParams->api_public_key)) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -213,11 +209,13 @@ class ZagoMailController
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;
         $listId = $integrationDetails->listId;
+        $tags = null;
         if (count($integrationDetails->selectedTags) > 0) {
             $tags = explode(',', $integrationDetails->selectedTags);
         }
 
-        if (empty($api_public_key)
+        if (
+            empty($api_public_key)
             || empty($fieldMap)
         ) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Sendinblue api', 'bit-integrations'));
