@@ -48,6 +48,7 @@ function Keap({ formFields, setFlow, flow, allIntegURL }) {
       { formField: '', keapField: '' },
     ],
     contactFields,
+    customFields: [],
     actions: {},
   })
 

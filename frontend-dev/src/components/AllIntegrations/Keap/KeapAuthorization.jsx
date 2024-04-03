@@ -5,7 +5,7 @@ import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
-import { handleAuthorize } from './KeapCommonFunc'
+import { handleAuthorize, refreshCustomFields } from './KeapCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 
@@ -27,6 +27,8 @@ export default function KeapAuthorization({ formID, keapConf, setKeapConf, step,
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
+
+    refreshCustomFields(keapConf, setKeapConf, setIsLoading, setSnackbar)
     setstep(2)
   }
   return (

@@ -16,8 +16,9 @@ export default function KeapFieldMap({ i, formFields, field, keapConf, setKeapCo
     setKeapConf(newConf)
   }
 
-  const requiredFlds = keapConf?.contactFields.filter(fld => fld.required === true) || []
-  const nonRequiredFlds = keapConf?.contactFields.filter(fld => fld.required === false) || []
+  const allFields = [...keapConf?.contactFields, ...keapConf?.customFields]
+  const requiredFlds = allFields.filter(fld => fld.required === true) || []
+  const nonRequiredFlds = allFields.filter(fld => fld.required === false) || []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
