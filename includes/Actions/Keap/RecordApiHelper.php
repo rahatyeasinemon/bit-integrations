@@ -65,14 +65,29 @@ class RecordApiHelper
         ];
         $restOfdata = [];
         $anotherData = [];
+        $customFields = [];
 
         foreach ($fieldMap as $key => $value) {
 
             $triggerValue = $value->formField;
             $actionValue = $value->keapField;
-            if ($triggerValue === 'custom') {
+
+            if ($triggerValue === 'custom' && str_starts_with($actionValue, 'custom_fields_')) {
+
+                $customFields[] = (object) [
+                    'id'        => str_replace('custom_fields_', '', $actionValue),
+                    'content'   => Common::replaceFieldWithValue($value->customValue, $data)
+                ];
+            } elseif ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
+            } elseif (!is_null($data[$triggerValue]) && str_starts_with($actionValue, 'custom_fields_')) {
+
+                $customFields[] = (object) [
+                    'id'        => str_replace('custom_fields_', '', $actionValue),
+                    'content'   => $data[$triggerValue]
+                ];
             } elseif (!is_null($data[$triggerValue])) {
+
                 if ($actionValue === 'billing_country_code') {
                     $billing_address = $billing_address + ["country_code" => $data[$triggerValue]];
                 } elseif ($actionValue === 'billing_locality') {
@@ -119,7 +134,7 @@ class RecordApiHelper
         $addressMergeData["addresses"][0] = (object)$billing_address;
         $addressMergeData["addresses"][1] = (object)$shipping_address;
 
-        $dataFinal = $addressMergeData + $restOfdata + $anotherData;
+        $dataFinal = $addressMergeData + $restOfdata + $anotherData + ['custom_fields' => $customFields];
         return $dataFinal;
     }
 
@@ -127,6 +142,7 @@ class RecordApiHelper
     {
         $fieldData = [];
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        error_log(print_r($finalData, true));
         $apiResponse = $this->insertCard($finalData);
 
         if ($defaultConf->actions->tags || isset($apiResponse->id)) {
