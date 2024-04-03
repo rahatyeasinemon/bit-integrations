@@ -16,7 +16,7 @@ export default function KeapFieldMap({ i, formFields, field, keapConf, setKeapCo
     setKeapConf(newConf)
   }
 
-  const allFields = [...keapConf?.contactFields, ...keapConf?.customFields]
+  const allFields = keapConf?.customFields ? [...keapConf?.contactFields, ...keapConf?.customFields] : keapConf?.contactFields
   const requiredFlds = allFields.filter(fld => fld.required === true) || []
   const nonRequiredFlds = allFields.filter(fld => fld.required === false) || []
 
