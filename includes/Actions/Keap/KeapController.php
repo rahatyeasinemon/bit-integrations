@@ -103,17 +103,17 @@ class KeapController
         $customFieldResponse = HttpHelper::get($apiEndpoint, null, $headers);
         if (isset($customFieldResponse->error)) {
             wp_send_json_error('Custom Field fetch failed', 400);
-        } else {
-            $customFields = [];
-            foreach ($customFieldResponse->custom_fields as $field) {
-                $customFields[] = ['key' => "custom_fields_{$field->id}", 'label' => $field->label, 'required' => false];
-            }
-            wp_send_json_success($customFields, 200);
+            return;
         }
-        if (!empty($response['tokenDetails']) && $response['tokenDetails'] && !empty($queryParams->id)) {
-            static::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response);
+        $customFields = [];
+        foreach ($customFieldResponse->custom_fields as $field) {
+            $customFields[] = ['key' => "custom_fields_{$field->id}", 'label' => $field->label, 'required' => false];
         }
-        wp_send_json_success($response, 200);
+
+        if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
+            static::saveRefreshedToken($queryParams->id, $response['tokenDetails']);
+        }
+        wp_send_json_success($customFields, 200);
     }
 
     /**
@@ -177,7 +177,6 @@ class KeapController
                 400
             );
         }
-
         $apiEndpoint = 'https://api.infusionsoft.com/token';
         $tokenDetails = $requestsParams->tokenDetails;
         $authorizationHeader["Authorization"] = 'Basic ' . base64_encode("$requestsParams->clientId:$requestsParams->clientSecret");

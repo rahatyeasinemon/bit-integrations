@@ -194,6 +194,7 @@ export const getAllTags = (confTmp, setConf, setLoading) => {
 };
 
 export const refreshCustomFields = (
+  id,
   confTmp,
   setConf,
   setIsLoading,
@@ -202,6 +203,7 @@ export const refreshCustomFields = (
   setIsLoading(true);
 
   const requestParams = {
+    id: id,
     clientId: confTmp.clientId,
     clientSecret: confTmp.clientSecret,
     tokenDetails: confTmp.tokenDetails,

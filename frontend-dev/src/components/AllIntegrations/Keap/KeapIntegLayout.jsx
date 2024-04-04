@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import KeapActions from './KeapActions'
@@ -6,6 +7,8 @@ import KeapFieldMap from './KeapFieldMap'
 import { addFieldMap } from './KeapIntegrationHelpers'
 
 export default function KeapIntegLayout({ formID, formFields, handleInput, keapConf, setKeapConf, isLoading, setIsLoading, setSnackbar, a }) {
+  const { id } = useParams()
+
   const setTags = (val) => {
     const newConf = { ...keapConf }
     if (val) {
@@ -31,7 +34,7 @@ export default function KeapIntegLayout({ formID, formFields, handleInput, keapC
       <>
         <div className="mt-4">
           <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
-          <button onClick={() => refreshCustomFields(keapConf, setKeapConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Lemlist Field', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+          <button onClick={() => refreshCustomFields(id, keapConf, setKeapConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Lemlist Field', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
         </div>
         <div className="btcd-hr mt-1" />
         <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
