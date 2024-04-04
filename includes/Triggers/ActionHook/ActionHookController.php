@@ -59,9 +59,13 @@ class ActionHookController
 
         if (property_exists($data, 'reset') && $data->reset) {
             $testData = update_option('btcbi_action_hook_test_' . $data->hook_id, []);
+        } elseif ($data->hook_id == 'all') {
+            global $wpdb;
+            $testData = $wpdb->get_results($wpdb->prepare("DELETE FROM {$wpdb->options} WHERE option_name LIKE '%btcbi_action_hook_test_%'"));
         } else {
             $testData = delete_option('btcbi_action_hook_test_' . $data->hook_id);
         }
+
         if (!$testData) {
             wp_send_json_error(new WP_Error('actionHook_test', __('Failed to remove test data', 'bit-integrations')));
         }

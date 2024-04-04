@@ -91,18 +91,14 @@ const ActionHook = () => {
 
     return () => {
       setFields()
-      bitsFetch({ hook_id: window.hook_id }, 'action_hook/test/remove').then(
-        (resp) => {
-          delete window.hook_id
-          intervalRef.current && clearInterval(intervalRef.current)
-        },
-      )
+      removeTestData('all')
     }
   }, [])
 
   const handleFetch = () => {
     if (isLoading) {
       clearInterval(intervalRef.current)
+      removeTestData(hookID)
       setIsLoading(false)
       return
     }
@@ -142,9 +138,22 @@ const ActionHook = () => {
     })
   }
 
+  const removeTestData = (hookID) => {
+    bitsFetch({ hook_id: hookID }, 'action_hook/test/remove').then(
+      (resp) => {
+        delete window.hook_id
+        intervalRef.current && clearInterval(intervalRef.current)
+      },
+    )
+  }
+
   const setHook = (val, name) => {
     const isCustom = name === 'custom';
     const isHook = name === 'hook';
+
+    if (hookID) {
+      removeTestData(hookID)
+    }
 
     if (isCustom || (isHook && val === 'custom')) {
       setHookID(isCustom ? val : '');
