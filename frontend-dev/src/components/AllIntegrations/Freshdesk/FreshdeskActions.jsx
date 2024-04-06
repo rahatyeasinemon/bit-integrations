@@ -323,6 +323,94 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
           )}
         </ConfirmModal>
       </div>
+      {/* Ticket Products */}
+      <div className="pos-rel d-flx w-8l">
+        <div className="d-flx flx-wrp">
+          <TableCheckBox onChange={() => setActionMdl({ show: 'product' })} checked={'selected_ticket_product' in freshdeskConf} className="wdt-200 mt-4 mr-2" value="product" title={__('Product', 'bit-integrations')} subTitle={__('Add Product in Ticket', 'bit-integrations')} />
+        </div>
+
+        <ConfirmModal
+          className="custom-conf-mdl"
+          mainMdlCls="o-v"
+          btnClass="blue"
+          btnTxt="Ok"
+          show={actionMdl.show === 'product'}
+          close={() => setActionMdl({ show: false })}
+          action={() => setActionMdl({ show: false })}
+          title={__('Select Product', 'bit-integrations')}
+        >
+          <div className="btcd-hr mt-2" />
+          <div className="mt-2">{__('Please select product', 'bit-integrations')}</div>
+          {isLoading ? (
+            <Loader style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 100,
+              transform: 'scale(0.7)',
+            }}
+            />
+          ) : (
+            <div className="flx">
+              <select onChange={(e) => setAction(e.target.value, 'selected_ticket_product')} name="product" value={freshdeskConf.selected_ticket_product} className="btcd-paper-inp w-10 mt-2">
+                <option value="">{__('Select product', 'bit-integrations')}</option>
+                {
+                  freshdeskConf?.products && Object.keys(freshdeskConf?.products)?.map((itm, key) => (
+                    <option key={key} value={freshdeskConf?.products[itm]}>
+                      {itm}
+                    </option>
+                  ))
+                }
+              </select>
+              <button onClick={() => getAllTicketFields(freshdeskConf, setFreshdeskConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Ticket Field & products', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
+          )}
+        </ConfirmModal>
+      </div>
+      {/* Ticket agent */}
+      <div className="pos-rel d-flx w-8l">
+        <div className="d-flx flx-wrp">
+          <TableCheckBox onChange={() => setActionMdl({ show: 'agent' })} checked={'selected_ticket_agent' in freshdeskConf} className="wdt-200 mt-4 mr-2" value="agent" title={__('Agent', 'bit-integrations')} subTitle={__('Add Agent in Ticket', 'bit-integrations')} />
+        </div>
+
+        <ConfirmModal
+          className="custom-conf-mdl"
+          mainMdlCls="o-v"
+          btnClass="blue"
+          btnTxt="Ok"
+          show={actionMdl.show === 'agent'}
+          close={() => setActionMdl({ show: false })}
+          action={() => setActionMdl({ show: false })}
+          title={__('Select Agent', 'bit-integrations')}
+        >
+          <div className="btcd-hr mt-2" />
+          <div className="mt-2">{__('Please select agent', 'bit-integrations')}</div>
+          {isLoading ? (
+            <Loader style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 100,
+              transform: 'scale(0.7)',
+            }}
+            />
+          ) : (
+            <div className="flx">
+              <select onChange={(e) => setAction(e.target.value, 'selected_ticket_agent')} name="agent" value={freshdeskConf.selected_ticket_agent} className="btcd-paper-inp w-10 mt-2">
+                <option value="">{__('Select Agent', 'bit-integrations')}</option>
+                {
+                  freshdeskConf?.agents && Object.keys(freshdeskConf?.agents)?.map((itm, key) => (
+                    <option key={key} value={freshdeskConf?.agents[itm]}>
+                      {itm}
+                    </option>
+                  ))
+                }
+              </select>
+              <button onClick={() => getAllTicketFields(freshdeskConf, setFreshdeskConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Ticket Field & agents', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
+          )}
+        </ConfirmModal>
+      </div>
 
       <div className="pos-rel d-flx w-8l">
         <div className="d-flx flx-wrp">
