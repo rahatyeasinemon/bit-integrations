@@ -7,12 +7,24 @@ import Loader from '../../Loaders/Loader'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
+import { create } from "mutative"
+import { getAllTicketFields } from './FreshdeskCommonFunc'
 
-export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, formFields }) {
+export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, formFields, setSnackbar }) {
   const [isLoading, setIsLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
   const actionHandler = (e, type) => {
     const newConf = { ...freshdeskConf }
+    if (type === 'ticket_type') {
+      if (e.target?.checked) {
+        newConf.actions.ticket_type = true
+        setActionMdl({ show: 'ticket_type' })
+      } else {
+        setActionMdl({ show: false })
+        delete newConf.actions.ticket_type
+        delete newConf.ticket_type
+      }
+    }
     if (type === 'status') {
       if (e.target?.checked) {
         newConf.actions.status = true
@@ -71,6 +83,14 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
     setFreshdeskConf(newConf)
   }
 
+  const setAction = (val, name) => {
+    setFreshdeskConf(prevConf => create(prevConf, draftConf => {
+      draftConf[name] = val
+    }))
+  }
+
+  console.log(freshdeskConf)
+
   const statusOptions = [
     { label: 'Open', value: '2' },
     { label: 'Pending', value: '3' },
@@ -86,8 +106,8 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
 
   return (
 
-    <div className="d-flx wdt-200">
-      <div className="pos-rel d-flx flx-col w-8">
+    <div className="d-flx flx-wrp">
+      <div className="pos-rel d-flx flx-col">
         <TableCheckBox checked={freshdeskConf?.actions?.status || false} onChange={(e) => actionHandler(e, 'status')} className="wdt-200 mt-4 mr-2" value="status" title={__('Status', 'bit-integrations')} subTitle={__('Add Ticket Status', 'bit-integrations')} />
         <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>{__('This Required', 'bit-integrations')}</small>
         <ConfirmModal
@@ -128,7 +148,7 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
         </ConfirmModal>
 
       </div>
-      <div className="pos-rel d-flx flx-col w-8">
+      <div className="pos-rel d-flx flx-col">
         <TableCheckBox checked={freshdeskConf?.actions?.priority || false} onChange={(e) => actionHandler(e, 'priority')} className="wdt-200 mt-4 mr-2" value="priority" title={__('Priority', 'bit-integrations')} subTitle={__('Add Ticket Priority ', 'bit-integrations')} />
         <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>{__('This Required', 'bit-integrations')}</small>
         <ConfirmModal
@@ -170,6 +190,140 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
 
       </div>
 
+
+      {/* Ticket Type */}
+      <div className="pos-rel d-flx">
+        <div className="d-flx flx-wrp">
+          <TableCheckBox onChange={() => setActionMdl({ show: 'ticket_type' })} checked={'selected_ticket_type' in freshdeskConf} className="wdt-200 mt-4 mr-2" value="ticket_type" title={__('Ticket Type', 'bit-integrations')} subTitle={__('Add Ticket type', 'bit-integrations')} />
+        </div>
+
+        <ConfirmModal
+          className="custom-conf-mdl"
+          mainMdlCls="o-v"
+          btnClass="blue"
+          btnTxt="Ok"
+          show={actionMdl.show === 'ticket_type'}
+          close={() => setActionMdl({ show: false })}
+          action={() => setActionMdl({ show: false })}
+          title={__('Select Type', 'bit-integrations')}
+        >
+          <div className="btcd-hr mt-2" />
+          <div className="mt-2">{__('Please select ticket type', 'bit-integrations')}</div>
+          {isLoading ? (
+            <Loader style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 100,
+              transform: 'scale(0.7)',
+            }}
+            />
+          ) : (
+            <div className="flx">
+              <select onChange={(e) => setAction(e.target.value, 'selected_ticket_type')} name="ticket_type" value={freshdeskConf.selected_ticket_type} className="btcd-paper-inp w-10 mt-2">
+                <option value="">{__('Select ticket type', 'bit-integrations')}</option>
+                {
+                  freshdeskConf?.ticketType?.map((itm, key) => (
+                    <option key={key} value={itm}>
+                      {itm}
+                    </option>
+                  ))
+                }
+              </select>
+              <button onClick={() => getAllTicketFields(freshdeskConf, setFreshdeskConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Ticket Field & Types', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
+          )}
+        </ConfirmModal>
+      </div>
+      {/* Ticket Source */}
+      <div className="pos-rel d-flx w-8l">
+        <div className="d-flx flx-wrp">
+          <TableCheckBox onChange={() => setActionMdl({ show: 'source' })} checked={'selected_ticket_source' in freshdeskConf} className="wdt-200 mt-4 mr-2" value="source" title={__('Source', 'bit-integrations')} subTitle={__('Add Ticket Source', 'bit-integrations')} />
+        </div>
+
+        <ConfirmModal
+          className="custom-conf-mdl"
+          mainMdlCls="o-v"
+          btnClass="blue"
+          btnTxt="Ok"
+          show={actionMdl.show === 'source'}
+          close={() => setActionMdl({ show: false })}
+          action={() => setActionMdl({ show: false })}
+          title={__('Select Source', 'bit-integrations')}
+        >
+          <div className="btcd-hr mt-2" />
+          <div className="mt-2">{__('Please select ticket source', 'bit-integrations')}</div>
+          {isLoading ? (
+            <Loader style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 100,
+              transform: 'scale(0.7)',
+            }}
+            />
+          ) : (
+            <div className="flx">
+              <select onChange={(e) => setAction(e.target.value, 'selected_ticket_source')} name="source" value={freshdeskConf.selected_ticket_source} className="btcd-paper-inp w-10 mt-2">
+                <option value="">{__('Select ticket source', 'bit-integrations')}</option>
+                {
+                  freshdeskConf?.sources && Object.keys(freshdeskConf?.sources)?.map((itm, key) => (
+                    <option key={key} value={freshdeskConf?.sources[itm]}>
+                      {itm}
+                    </option>
+                  ))
+                }
+              </select>
+              <button onClick={() => getAllTicketFields(freshdeskConf, setFreshdeskConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Ticket Field & Sources', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
+          )}
+        </ConfirmModal>
+      </div>
+      {/* Ticket Groups */}
+      <div className="pos-rel d-flx w-8l">
+        <div className="d-flx flx-wrp">
+          <TableCheckBox onChange={() => setActionMdl({ show: 'group' })} checked={'selected_ticket_group' in freshdeskConf} className="wdt-200 mt-4 mr-2" value="group" title={__('Group', 'bit-integrations')} subTitle={__('Add Ticket Group', 'bit-integrations')} />
+        </div>
+
+        <ConfirmModal
+          className="custom-conf-mdl"
+          mainMdlCls="o-v"
+          btnClass="blue"
+          btnTxt="Ok"
+          show={actionMdl.show === 'group'}
+          close={() => setActionMdl({ show: false })}
+          action={() => setActionMdl({ show: false })}
+          title={__('Select Group', 'bit-integrations')}
+        >
+          <div className="btcd-hr mt-2" />
+          <div className="mt-2">{__('Please select ticket Group', 'bit-integrations')}</div>
+          {isLoading ? (
+            <Loader style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 100,
+              transform: 'scale(0.7)',
+            }}
+            />
+          ) : (
+            <div className="flx">
+              <select onChange={(e) => setAction(e.target.value, 'selected_ticket_group')} name="group" value={freshdeskConf.selected_ticket_group} className="btcd-paper-inp w-10 mt-2">
+                <option value="">{__('Select ticket group', 'bit-integrations')}</option>
+                {
+                  freshdeskConf?.groups && Object.keys(freshdeskConf?.groups)?.map((itm, key) => (
+                    <option key={key} value={freshdeskConf?.groups[itm]}>
+                      {itm}
+                    </option>
+                  ))
+                }
+              </select>
+              <button onClick={() => getAllTicketFields(freshdeskConf, setFreshdeskConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Ticket Field & Groups', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+            </div>
+          )}
+        </ConfirmModal>
+      </div>
+
       <div className="pos-rel d-flx w-8l">
         <div className="d-flx flx-wrp">
           <TableCheckBox onChange={() => setActionMdl({ show: 'attachments' })} checked={'attachments' in freshdeskConf.actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Photo', 'bit-integrations')} subTitle={__('Add Photo on Freshdsk Account.', 'bit-integrations')} />
@@ -200,7 +354,7 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
         </ConfirmModal>
       </div>
       {/* file */}
-      <div className="pos-rel d-flx w-8l">
+      <div className="pos-rel d-flx">
         <div className="d-flx flx-wrp">
           <TableCheckBox onChange={() => setActionMdl({ show: 'file' })} checked={'file' in freshdeskConf.actions} className="wdt-200 mt-4 mr-2" value="file" title={__('File', 'bit-integrations')} subTitle={__('Add File from Bit Integrations to send Freshdsk.', 'bit-integrations')} />
         </div>
@@ -230,7 +384,7 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
         </ConfirmModal>
       </div>
 
-      <div className="pos-rel d-flx w-8">
+      <div className="pos-rel d-flx">
         <TableCheckBox checked={freshdeskConf?.updateContact || false} onChange={(e) => actionHandler(e, 'updateContact')} className="wdt-200 mt-4 mr-2" value="updateContact" title={__('Update', 'bit-integrations')} subTitle={__('Update Contact or Create Contact', 'bit-integrations')} />
       </div>
     </div>

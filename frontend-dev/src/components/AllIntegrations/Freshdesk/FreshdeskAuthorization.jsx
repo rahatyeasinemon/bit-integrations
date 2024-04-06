@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
-import { handleAuthorize } from './FreshdeskCommonFunc'
+import { getAllTicketFields, handleAuthorize } from './FreshdeskCommonFunc'
 import Note from '../../Utilities/Note'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
@@ -24,6 +24,7 @@ export default function FreshdeskAuthorization({ formID,
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
 
+    getAllTicketFields(freshdeskConf, setFreshdeskConf, setIsLoading, setSnackbar)
     setstep(2)
   }
   const handleInput = (e) => {

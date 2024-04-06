@@ -3,11 +3,12 @@
 /**
  * Freshdesk Record Api
  */
+
 namespace BitCode\FI\Actions\Freshdesk;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -25,6 +26,7 @@ class RecordApiHelper
 
     public function insertTicket($apiEndpoint, $data, $api_key, $fileTicket)
     {
+        error_log(print_r([$apiEndpoint, $data, $api_key, $fileTicket], true));
         if (
             empty($data)
             || empty($api_key)
@@ -63,6 +65,7 @@ class RecordApiHelper
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
+        error_log(print_r([$data, $fieldMap], true));
 
         foreach ($fieldMap as $key => $value) {
             $triggerValue = $value->formField;

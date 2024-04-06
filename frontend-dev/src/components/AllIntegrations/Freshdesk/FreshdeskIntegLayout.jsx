@@ -7,6 +7,7 @@ import FreshdeskFieldMap from './FreshdeskFieldMap'
 import FreshdeskActions from './FreshdeskActions'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import FreshdeskContactFieldMap from './FreshdeskContactFieldMap'
+import { getAllTicketFields } from './FreshdeskCommonFunc'
 
 export default function FreshdeskIntegLayout({ formID, formFields, handleInput, freshdeskConf, setFreshdeskConf, isLoading, setIsLoading, setSnackbar, a }) {
   const actionHandler = (e, type) => {
@@ -36,6 +37,7 @@ export default function FreshdeskIntegLayout({ formID, formFields, handleInput, 
       <>
         <div className="mt-4">
           <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
+          <button onClick={() => getAllTicketFields(freshdeskConf, setFreshdeskConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Ticket Field', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
         </div>
         <div className="btcd-hr mt-1" />
         <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
@@ -82,6 +84,9 @@ export default function FreshdeskIntegLayout({ formID, formFields, handleInput, 
           freshdeskConf={freshdeskConf}
           setFreshdeskConf={setFreshdeskConf}
           formFields={formFields}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          setSnackbar={setSnackbar}
         />
       </>
 

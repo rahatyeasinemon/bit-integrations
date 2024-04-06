@@ -19,13 +19,13 @@ function Freshdesk({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
 
-  const ticketFields = [
-    { key: 'email', label: 'email ', required: true },
-    { key: 'subject', label: 'subject', required: true },
-    { key: 'description', label: 'description', required: true },
-    { key: 'name', label: 'name', required: false },
-    { key: 'phone', label: 'phone ', required: false },
-  ]
+  // const ticketFields = [
+  //   { key: 'email', label: 'email ', required: true },
+  //   // { key: 'subject', label: 'subject', required: true },
+  //   // { key: 'description', label: 'description', required: true },
+  //   { key: 'name', label: 'name', required: false },
+  //   // { key: 'phone', label: 'phone ', required: false },
+  // ]
 
   const contactFields = [
     { key: 'name', label: 'Name', required: true },
@@ -44,7 +44,7 @@ function Freshdesk({ formFields, setFlow, flow, allIntegURL }) {
     field_map: [{ formField: '', freshdeskFormField: '' }],
     field_map_contact: [{ formField: '', contactFreshdeskFormField: '' }],
     freshdesk_id: '',
-    ticketFields,
+    ticketFields: [],
     contactFields,
     contactShow: '',
     status: '',
