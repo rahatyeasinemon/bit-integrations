@@ -1,10 +1,10 @@
 === Webhook Automator & Form Integration to Automate 200+ Platforms – Bit Integrations ===
 Contributors: bitpressadmin
-Tags: automation,integration,automator,Zapier,webhook
+Tags: automation,integrator,integrate,Zapier,api
 Requires at least: 5.1
-Tested up to: 6.4.3
+Tested up to: 6.5
 Requires PHP: 7.0
-Stable tag: 1.6.2
+Stable tag: 1.6.3
 License: GPLv2 or later
 
 Automation Plugin for WordPress; Integration of 60+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -950,6 +950,31 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 1.6.3  =
+*Release Date - *6th April 2024\*
+
+- **New Features :**
+  - Keap: Custom Fields Added
+  
+- **Improvements :**
+  - Elementor: UI & functionality upgraded
+
+- **Fixes :**
+  - Mailup: Lists & Groups limitation
+  - Sendinblue (Brevo): Lists limitation
+  - SendGrid: Authorization error response
+  - ConvertKit: Existing subscriber
+  - MailChimp: Required field missing
+  - Divi: Theme active check
+  - Freshsales: Contact Module: Account
+  - SendFox: Integration name edit/update
+  - FluentCRM: Tag added Contact Module: tag json format
+	- FluentCRM: Dependency form list update
+  - eForm: Single dropdown array
+  - Zagomail: Error response
+  - Keap: Refresh token expired
+  - ActionHook: Remove test option hook
 
 = 1.6.2  =
 *Release Date - *19th March 2024\*

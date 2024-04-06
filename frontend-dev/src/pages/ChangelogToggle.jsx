@@ -10,7 +10,7 @@ import Modal from '../components/Utilities/Modal'
 export default function ChangelogToggle() {
     const btcbi = useRecoilValue($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const version = btcbi.isPro ? '1.4.4' : '1.6.2'
+    const version = btcbi.isPro ? '1.4.4' : '1.6.3'
     return (
         <div className="changelog-toggle">
             <button
@@ -27,7 +27,7 @@ export default function ChangelogToggle() {
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
                         <h3>What's New in {version}?</h3>
-                        <small className='date'> <b>19th March 2023</b></small>
+                        <small className='date'> <b>6th April 2024</b></small>
                     </div>
                     <div className='changelog-content'>
                         {/* <h4>New Integration</h4> */}
@@ -45,8 +45,7 @@ export default function ChangelogToggle() {
 
                         <div className='integration-list'>
                             <ul>
-                                <li>Brekdance: UI & functionality upgraded</li>
-                                <li>Klaviyo: API version upgraded</li>
+                                <li>Elementor: UI & functionality upgraded</li>
                             </ul>
                         </div>
 
@@ -54,12 +53,7 @@ export default function ChangelogToggle() {
 
                         <div className='feature-list'>
                             <ul>
-                                <li>WooCommerce: Order Attribution Tracking fields</li>
-                                <li>PerfexCRM: lead module: status & source fields</li>
-                                <li>Zoom: Generall fields & custom question's</li>
-                                <li>OmniSend: Tag action</li>
-                                <li>Salesforce: account & Case module:  missing fields</li>
-
+                                <li>Keap: Custom Fields Added</li>
                             </ul>
                         </div>
 
@@ -67,18 +61,20 @@ export default function ChangelogToggle() {
 
                         <div className='fixes-list'>
                             <ul>
-                                <li>Mailjet: Contact list limitation</li>
-                                <li>Keap: data submit</li>
-                                <li>Clickup: phone number</li>
-                                <li>Zoom: access token expired</li>
-                                <li>Zoho Bigin: note content</li>
-                                <li>WPForms: file attachment path</li>
-                                <li>MailChimp: custom fields</li>
-                                <li>Custom Action: function file location missing</li>
-                                <li>FreshSales: Deal module: custom field</li>
-                                <li>WooCommerce: order-create module: checkout handling</li>
-                                <li>Freshsales: integration name update</li>
-                                <li>Telegram: file attachment upload</li>
+                                <li>Mailup: Lists & Groups limitation</li>
+                                <li>Sendinblue (Brevo): Lists limitation</li>
+                                <li>SendGrid: Authorization error response</li>
+                                <li>ConvertKit: Existing subscriber</li>
+                                <li>MailChimp: Required field missing</li>
+                                <li>Divi: Theme active check</li>
+                                <li>Freshsales: Contact Module: Account</li>
+                                <li>SendFox: Integration name edit/update</li>
+                                <li>FluentCRM: Tag added Contact Module: tag json format</li>
+                                <li>FluentCRM: Dependency form list update</li>
+                                <li>eForm: Single dropdown array</li>
+                                <li>Zagomail: Error response</li>
+                                <li>Keap: Refresh token expired</li>
+                                <li>ActionHook: Remove test option hook</li>
                             </ul>
                         </div>
                     </div>
