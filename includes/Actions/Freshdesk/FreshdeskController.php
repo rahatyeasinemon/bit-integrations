@@ -98,7 +98,7 @@ class FreshdeskController
                 400
             );
         }
-
+        error_log(print_r($apiResponse, true));
         $responseData = [
             'ticketFields' => [(object) ['key' => 'email', 'label' => 'Email', 'required' => true]]
         ];

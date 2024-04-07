@@ -26,7 +26,6 @@ class RecordApiHelper
 
     public function insertTicket($apiEndpoint, $data, $api_key, $fileTicket)
     {
-        error_log(print_r([$apiEndpoint, $data, $api_key, $fileTicket], true));
         if (
             empty($data)
             || empty($api_key)
@@ -65,8 +64,6 @@ class RecordApiHelper
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
-        error_log(print_r([$data, $fieldMap], true));
-
         foreach ($fieldMap as $key => $value) {
             $triggerValue = $value->formField;
             $actionValue = $value->freshdeskFormField;
@@ -186,6 +183,23 @@ class RecordApiHelper
         $fieldData = [];
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $finalData = $finalData + ['status' => \json_decode($integrationDetails->status)] + ['priority' => \json_decode($integrationDetails->priority)];
+
+        if (!empty($integrationDetails->selected_ticket_type)) {
+            $finalData['type'] = $integrationDetails->selected_ticket_type;
+        }
+        if (!empty($integrationDetails->selected_ticket_source)) {
+            $finalData['source'] = (int)$integrationDetails->selected_ticket_source;
+        }
+        if (!empty($integrationDetails->selected_ticket_group)) {
+            $finalData['group_id'] = (int)$integrationDetails->selected_ticket_group;
+        }
+        if (!empty($integrationDetails->selected_ticket_product)) {
+            $finalData['product_id'] = (int)$integrationDetails->selected_ticket_product;
+        }
+        if (!empty($integrationDetails->selected_ticket_agent)) {
+            $finalData['responder_id'] = (int)$integrationDetails->selected_ticket_agent;
+        }
+
         if ($integrationDetails->updateContact && $integrationDetails->contactShow) {
             $finalDataContact = $this->generateReqDataFromFieldMapContact($fieldValues, $fieldMapContact);
             $avatarFieldName = $integrationDetails->actions->attachments;
@@ -210,7 +224,6 @@ class RecordApiHelper
         };
         $attachmentsFieldName = $integrationDetails->actions->attachments;
         $fileTicket = $fieldValues[$attachmentsFieldName][0];
-
         $apiResponse = $this->insertTicket($apiEndpoint, $finalData, $integrationDetails->api_key, $fileTicket);
 
         if (property_exists($apiResponse, 'errors')) {
