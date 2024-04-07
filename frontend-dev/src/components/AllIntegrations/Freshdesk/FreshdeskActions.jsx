@@ -16,7 +16,6 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
   const actionHandler = (e, type) => {
     const newConf = { ...freshdeskConf }
     if (type === 'ticket_type') {
-      console.log(e.target?.checked)
       if (e.target?.checked) {
         newConf.actions.ticket_type = true
         setActionMdl({ show: 'ticket_type' })
@@ -133,8 +132,6 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
       draftConf[name] = val
     }))
   }
-
-  console.log(freshdeskConf)
 
   const statusOptions = [
     { label: 'Open', value: '2' },

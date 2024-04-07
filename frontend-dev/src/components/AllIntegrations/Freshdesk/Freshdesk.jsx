@@ -91,7 +91,6 @@ function Freshdesk({ formFields, setFlow, flow, allIntegURL }) {
         {checkMappedFields(freshdeskConf?.field_map_contact)}
         <button
           onClick={() => nextPage(3)}
-          // disabled={!freshdeskConf.priority || !freshdeskConf.status || !checkMappedFields(freshdeskConf?.field_map)}
           disabled={!freshdeskConf.priority || !freshdeskConf.status || !checkMappedFields(freshdeskConf?.field_map) || (freshdeskConf.contactShow && !checkMappedFieldsContact(freshdeskConf?.field_map_contact))}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
