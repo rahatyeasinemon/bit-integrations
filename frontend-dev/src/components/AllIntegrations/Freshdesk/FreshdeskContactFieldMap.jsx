@@ -7,15 +7,8 @@ import { $btcbi } from '../../../GlobalStates'
 import { generateContactMappedField } from './FreshdeskCommonFunc'
 
 export default function FreshdeskContactFieldMap({ i, formFields, field, freshdeskConf, setFreshdeskConf }) {
-  if (freshdeskConf?.field_map_contact?.length === 1 && field.contactFreshdeskFormField === '') {
-    const newConf = { ...freshdeskConf }
-    const tmp = generateContactMappedField(newConf)
-    newConf.field_map_contact = tmp
-    setFreshdeskConf(newConf)
-  }
-
-  const requiredFlds = freshdeskConf?.contactFields?.filter(fld => fld.required === true) || []
-  const nonRequiredFlds = freshdeskConf?.contactFields?.filter(fld => fld.required === false) || []
+  const requiredFlds = freshdeskConf?.contactFields && freshdeskConf?.contactFields?.filter(fld => fld.required === true) || []
+  const nonRequiredFlds = freshdeskConf?.contactFields && freshdeskConf?.contactFields?.filter(fld => fld.required === false) || []
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
