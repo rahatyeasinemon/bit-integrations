@@ -16,13 +16,58 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
   const actionHandler = (e, type) => {
     const newConf = { ...freshdeskConf }
     if (type === 'ticket_type') {
+      console.log(e.target?.checked)
       if (e.target?.checked) {
         newConf.actions.ticket_type = true
         setActionMdl({ show: 'ticket_type' })
       } else {
         setActionMdl({ show: false })
         delete newConf.actions.ticket_type
-        delete newConf.ticket_type
+        delete newConf.selected_ticket_type
+      }
+    }
+    if (type === 'source') {
+      console.log(e.target?.checked)
+      if (e.target?.checked) {
+        newConf.actions.source = true
+        setActionMdl({ show: 'source' })
+      } else {
+        setActionMdl({ show: false })
+        delete newConf.actions.source
+        delete newConf.selected_ticket_source
+      }
+    }
+    if (type === 'group') {
+      console.log(e.target?.checked)
+      if (e.target?.checked) {
+        newConf.actions.group = true
+        setActionMdl({ show: 'group' })
+      } else {
+        setActionMdl({ show: false })
+        delete newConf.actions.group
+        delete newConf.selected_ticket_group
+      }
+    }
+    if (type === 'product') {
+      console.log(e.target?.checked)
+      if (e.target?.checked) {
+        newConf.actions.product = true
+        setActionMdl({ show: 'product' })
+      } else {
+        setActionMdl({ show: false })
+        delete newConf.actions.product
+        delete newConf.selected_ticket_product
+      }
+    }
+    if (type === 'agent') {
+      console.log(e.target?.checked)
+      if (e.target?.checked) {
+        newConf.actions.agent = true
+        setActionMdl({ show: 'agent' })
+      } else {
+        setActionMdl({ show: false })
+        delete newConf.actions.agent
+        delete newConf.selected_ticket_agent
       }
     }
     if (type === 'status') {
@@ -194,7 +239,7 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
       {/* Ticket Type */}
       <div className="pos-rel d-flx">
         <div className="d-flx flx-wrp">
-          <TableCheckBox onChange={() => setActionMdl({ show: 'ticket_type' })} checked={'selected_ticket_type' in freshdeskConf} className="wdt-200 mt-4 mr-2" value="ticket_type" title={__('Ticket Type', 'bit-integrations')} subTitle={__('Add Ticket type', 'bit-integrations')} />
+          <TableCheckBox onChange={(e) => actionHandler(e, 'ticket_type')} checked={freshdeskConf?.actions?.ticket_type || false} className="wdt-200 mt-4 mr-2" value="ticket_type" title={__('Ticket Type', 'bit-integrations')} subTitle={__('Add Ticket type', 'bit-integrations')} />
         </div>
 
         <ConfirmModal
@@ -238,7 +283,7 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
       {/* Ticket Source */}
       <div className="pos-rel d-flx w-8l">
         <div className="d-flx flx-wrp">
-          <TableCheckBox onChange={() => setActionMdl({ show: 'source' })} checked={'selected_ticket_source' in freshdeskConf} className="wdt-200 mt-4 mr-2" value="source" title={__('Source', 'bit-integrations')} subTitle={__('Add Ticket Source', 'bit-integrations')} />
+          <TableCheckBox onChange={(e) => actionHandler(e, 'source')} checked={freshdeskConf?.actions?.source || false} className="wdt-200 mt-4 mr-2" value="source" title={__('Source', 'bit-integrations')} subTitle={__('Add Ticket Source', 'bit-integrations')} />
         </div>
 
         <ConfirmModal
@@ -282,7 +327,7 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
       {/* Ticket Groups */}
       <div className="pos-rel d-flx w-8l">
         <div className="d-flx flx-wrp">
-          <TableCheckBox onChange={() => setActionMdl({ show: 'group' })} checked={'selected_ticket_group' in freshdeskConf} className="wdt-200 mt-4 mr-2" value="group" title={__('Group', 'bit-integrations')} subTitle={__('Add Ticket Group', 'bit-integrations')} />
+          <TableCheckBox onChange={(e) => actionHandler(e, 'group')} checked={freshdeskConf?.actions?.group || false} className="wdt-200 mt-4 mr-2" value="group" title={__('Group', 'bit-integrations')} subTitle={__('Add Ticket Group', 'bit-integrations')} />
         </div>
 
         <ConfirmModal
@@ -326,7 +371,7 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
       {/* Ticket Products */}
       <div className="pos-rel d-flx w-8l">
         <div className="d-flx flx-wrp">
-          <TableCheckBox onChange={() => setActionMdl({ show: 'product' })} checked={'selected_ticket_product' in freshdeskConf} className="wdt-200 mt-4 mr-2" value="product" title={__('Product', 'bit-integrations')} subTitle={__('Add Product in Ticket', 'bit-integrations')} />
+          <TableCheckBox onChange={(e) => actionHandler(e, 'product')} checked={freshdeskConf?.actions?.product || false} className="wdt-200 mt-4 mr-2" value="product" title={__('Product', 'bit-integrations')} subTitle={__('Add Product in Ticket', 'bit-integrations')} />
         </div>
 
         <ConfirmModal
@@ -370,7 +415,7 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
       {/* Ticket agent */}
       <div className="pos-rel d-flx w-8l">
         <div className="d-flx flx-wrp">
-          <TableCheckBox onChange={() => setActionMdl({ show: 'agent' })} checked={'selected_ticket_agent' in freshdeskConf} className="wdt-200 mt-4 mr-2" value="agent" title={__('Agent', 'bit-integrations')} subTitle={__('Add Agent in Ticket', 'bit-integrations')} />
+          <TableCheckBox onChange={(e) => actionHandler(e, 'agent')} checked={freshdeskConf?.actions?.agent || false} className="wdt-200 mt-4 mr-2" value="agent" title={__('Agent', 'bit-integrations')} subTitle={__('Add Agent in Ticket', 'bit-integrations')} />
         </div>
 
         <ConfirmModal
