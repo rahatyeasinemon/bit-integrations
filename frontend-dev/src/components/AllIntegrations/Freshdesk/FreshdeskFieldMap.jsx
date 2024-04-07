@@ -9,13 +9,6 @@ import TagifyInput from '../../Utilities/TagifyInput'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function FreshdeskFieldMap({ i, formFields, field, freshdeskConf, setFreshdeskConf }) {
-  // if (freshdeskConf?.field_map?.length === 1 && field.freshdeskFormField === '') {
-  //   const newConf = { ...freshdeskConf }
-  //   const tmp = generateMappedField(newConf)
-  //   newConf.field_map = tmp
-  //   setFreshdeskConf(newConf)
-  // }
-
   const requiredFlds = freshdeskConf?.ticketFields && freshdeskConf?.ticketFields?.filter(fld => fld.required === true) || []
   const nonRequiredFlds = freshdeskConf?.ticketFields && freshdeskConf?.ticketFields?.filter(fld => fld.required === false) || []
 

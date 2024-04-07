@@ -98,7 +98,6 @@ class FreshdeskController
                 400
             );
         }
-        error_log(print_r($apiResponse, true));
         $responseData = [
             'ticketFields' => [(object) ['key' => 'email', 'label' => 'Email', 'required' => true]]
         ];
@@ -122,6 +121,55 @@ class FreshdeskController
             }
             if ($value->name == 'product') {
                 $responseData['products'] = $value->choices;
+            }
+        }
+
+        wp_send_json_success($responseData, 200);
+    }
+
+    /**
+     * Process ajax request for Fetch Contact fields
+     *
+     * @param Object $requestsParams Params to authorize
+     *
+     * @return JSON Freshdesk api response and status
+     */
+
+    public function getAllContactFields($tokenRequestParams)
+    {
+
+        if (
+            empty($tokenRequestParams->app_domain)
+            || empty($tokenRequestParams->api_key)
+        ) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+        $header = [
+            'Authorization' => base64_encode("$tokenRequestParams->api_key"),
+            'Content-Type' => 'application/json'
+        ];
+
+        $apiEndpoint        = $tokenRequestParams->app_domain . '/api/v2/contact_fields';
+        $apiResponse        = HttpHelper::get($apiEndpoint, null, $header);
+        $excludingFields    = ['time_zone', 'language', 'unique_external_id'];
+
+        if (is_wp_error($apiResponse) || empty($apiResponse[0]->id)) {
+            wp_send_json_error(
+                empty($apiResponse->error) ? 'Unknown' : $apiResponse->error,
+                400
+            );
+        }
+
+        $responseData = [];
+        foreach ($apiResponse as $value) {
+            if (!in_array($value->name, $excludingFields)) {
+                $responseData[] = (object) ['key' => $value->name, 'label' => $value->label, 'required' => $value->name == 'email' || $value->name == 'name' ? true : $value->required_for_agents];
             }
         }
 
