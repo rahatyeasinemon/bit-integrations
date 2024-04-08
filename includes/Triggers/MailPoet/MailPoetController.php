@@ -105,77 +105,33 @@ final class MailPoetController
         return self::flattenArray($fields);
     }
 
-    //forminator didn't return any kind of type of value..
     public static function handle_mailpoet_submit($data, $segmentIds, $form)
     {
-        error_log(print_r($data, true));
-        error_log(print_r($segmentIds, true));
-        error_log(print_r($form, true));
-    }
-    // public static function handle_mailpoet_submit($entry, $form_id, $form_data)
-    // {
-    //     $post_id = url_to_postid($_SERVER['HTTP_REFERER']);
+        $formData = [];
 
-    //     if (!empty($form_id)) {
-    //         $data = [];
-    //         if ($post_id) {
-    //             $data['post_id'] = $post_id;
-    //         }
-    //         foreach ($form_data as $fldDetail) {
-    //             if (is_array($fldDetail['value'])) {
-    //                 if (array_key_exists('file', $fldDetail['value'])) {
-    //                     $data[$fldDetail['name']] = [$fldDetail['value']['file']['file_path']];
-    //                 } elseif (explode("-", $fldDetail['name'])[0] == 'name') {
-    //                     if ($fldDetail['name']) {
-    //                         $last_dash_position = strrpos($fldDetail['name'], "-");
-    //                         $index = substr($fldDetail['name'], $last_dash_position + 1);
-    //                     }
-    //                     foreach ($fldDetail['value'] as $nameKey => $nameVal) {
-    //                         $data[$nameKey . '-' . $index] = $nameVal;
-    //                     }
-    //                 } elseif (explode("-", $fldDetail['name'])[0] == 'address') {
-    //                     if ($fldDetail['name']) {
-    //                         $last_dash_position = strrpos($fldDetail['name'], "-");
-    //                         $index = substr($fldDetail['name'], $last_dash_position + 1);
-    //                     }
-    //                     foreach ($fldDetail['value'] as $nameKey => $nameVal) {
-    //                         $data[$nameKey . '-' . $index] = $nameVal;
-    //                     }
-    //                 } else {
-    //                     $val = $fldDetail['value'];
-    //                     if (array_key_exists('ampm', $val)) {
-    //                         $time = $val['hours'] . ':' . $val['minutes'] . ' ' . $val['ampm'];
-    //                         $data[$fldDetail['name']] = $time;
-    //                     } elseif (array_key_exists('year', $val)) {
-    //                         $date = $val['year'] . '-' . $val['month'] . '-' . $val['day'];
-    //                         $data[$fldDetail['name']] = $date;
-    //                     } elseif (array_key_exists('formatting_result', $val)) {
-    //                         $data[$fldDetail['name']] = $fldDetail['value']['formatting_result'];
-    //                     } else {
-    //                         $data[$fldDetail['name']] = $fldDetail['value'];
-    //                     }
-    //                 }
-    //             } else {
-    //                 if (self::isValidDate($fldDetail['value'])) {
-    //                     $dateTmp = new DateTime($fldDetail['value']);
-    //                     $dateFinal = date_format($dateTmp, 'Y-m-d');
-    //                     $data[$fldDetail['name']] = $dateFinal;
-    //                 } else {
-    //                     $data[$fldDetail['name']] = $fldDetail['value'];
-    //                 }
-    //             }
-    //         }
+        foreach ($data as $key => $item) {
+            $keySeparated = explode('_', $key);
 
-    //         if (!empty($form_id) && $flows = Flow::exists('Forminator', $form_id)) {
-    //             Flow::execute('Forminator', $form_id, $data, $flows);
-    //         }
-    //     }
-    // }
+            if ($keySeparated[0] === 'cf') {
+                if (is_array($item)) {
+                    $formData[$keySeparated[1]] = self::handleDateField($item);
+                } else {
+                    $formData[$keySeparated[1]] = $item;
+                }
+            } else {
+                if (is_array($item)) {
+                    $formData[$key] = self::handleDateField($item);
+                } else {
+                    $formData[$key] = $item;
+                }
+            }
+        }
 
-    public static function isValidDate($date, $format = 'd/m/Y')
-    {
-        $dateTime = DateTime::createFromFormat($format, $date);
-        return $dateTime && $dateTime->format($format) === $date;
+        $form_id = $form->getId();
+
+        if (!empty($form_id) && $flows = Flow::exists('MailPoet', $form_id)) {
+            Flow::execute('MailPoet', $form_id, $formData, $flows);
+        }
     }
 
     public static function extractColumnData($array, &$result)
@@ -211,5 +167,43 @@ final class MailPoetController
             }
         }
         return $result;
+    }
+
+    public static function handleDateField($item)
+    {
+        if (
+            array_key_exists('year', $item)
+            && array_key_exists('month', $item)
+            && array_key_exists('day', $item)
+            && (!empty($item['year']) || !empty($item['month']) || !empty($item['day']))
+        ) {
+            $year  = (int) !empty($item['year']) ? $item['year'] : date('Y');
+            $month = (int) !empty($item['month']) ? $item['month'] : 1;
+            $day   = (int) !empty($item['day']) ? $item['day'] : 1;
+        } elseif (
+            array_key_exists('year', $item)
+            && array_key_exists('month', $item)
+            && (!empty($item['year']) || !empty($item['month']))
+        ) {
+            $year  = (int) !empty($item['year']) ? $item['year'] : date('Y');
+            $month = (int) !empty($item['month']) ? $item['month'] : 1;
+            $day   = 1;
+        } elseif (array_key_exists('year', $item) && !empty($item['year'])) {
+            $year  = $item['year'];
+            $month = 1;
+            $day   = 1;
+        } elseif (array_key_exists('month', $item) && !empty($item['month'])) {
+            $year  = date('Y');
+            $month = $item['month'];
+            $day   = 1;
+        }
+
+        if (isset($year, $month, $day)) {
+            $date = new DateTime();
+            $date->setDate($year, $month, $day);
+            return $date->format('Y-m-d');
+        }
+
+        return null;
     }
 }
