@@ -15,8 +15,6 @@ export const handleInput = (
   error,
   setError
 ) => {
-  // let newConf = { ...sheetConf };
-
   setSheetConf((prevConf) =>
     create(prevConf, (draftConf) => {
       if (isNew) {
@@ -48,8 +46,6 @@ export const handleInput = (
       }
     })
   );
-
-  // setSheetConf({ ...newConf });
 };
 
 export const checkAddressFieldMapRequired = (sheetConf) => {
@@ -64,27 +60,6 @@ export const checkAddressFieldMapRequired = (sheetConf) => {
   }
   return true;
 };
-
-// export const listChange = (
-//   sheetConf,
-//   formID,
-//   setSheetConf,
-//   setSnackbar,
-//   loading,
-//   setLoading
-// ) => {
-//   const newConf = deepCopy(sheetConf);
-//   refreshTags(formID, newConf, setSheetConf, setSnackbar, loading, setLoading);
-//   refreshFields(
-//     formID,
-//     newConf,
-//     setSheetConf,
-//     setSnackbar,
-//     loading,
-//     setLoading
-//   );
-//   return newConf;
-// };
 
 export const refreshAudience = (
   formID,
@@ -162,8 +137,6 @@ export const refreshTags = (
   bitsFetch(refreshModulesRequestParams, "mChimp_refresh_tags")
     .then((result) => {
       if (result && result.success) {
-        // const newConf = { ...sheetConf };
-
         setSheetConf((prevConf) =>
           create(prevConf, (draftConf) => {
             if (result.data.audienceTags) {
@@ -175,7 +148,6 @@ export const refreshTags = (
             });
           })
         );
-        // setSheetConf({ ...newConf });
       } else if (
         (result && result.data && result.data.data) ||
         (!result.success && typeof result.data === "string")
