@@ -8,34 +8,48 @@ export const handleInput = (
   sheetConf,
   setSheetConf,
   formID,
-  setIsLoading,
+  loading,
+  setLoading,
   setSnackbar,
   isNew,
   error,
   setError
 ) => {
-  let newConf = { ...sheetConf };
-  if (isNew) {
-    const rmError = { ...error };
-    rmError[e.target.name] = "";
-    setError({ ...rmError });
-  }
-  newConf[e.target.name] = e.target.value;
+  // let newConf = { ...sheetConf };
 
-  switch (e.target.name) {
-    case "listId":
-      newConf = listChange(
-        newConf,
-        formID,
-        setSheetConf,
-        setIsLoading,
-        setSnackbar
-      );
-      break;
-    default:
-      break;
-  }
-  setSheetConf({ ...newConf });
+  setSheetConf((prevConf) =>
+    create(prevConf, (draftConf) => {
+      if (isNew) {
+        const rmError = { ...error };
+        rmError[e.target.name] = "";
+        setError({ ...rmError });
+      }
+      draftConf[e.target.name] = e.target.value;
+
+      if (e.target.name === "listId" && e.target.value) {
+        refreshTags(
+          formID,
+          draftConf,
+          setSheetConf,
+          setSnackbar,
+          loading,
+          setLoading
+        );
+        refreshFields(
+          formID,
+          draftConf,
+          setSheetConf,
+          setSnackbar,
+          loading,
+          setLoading
+        );
+      } else if (!e.target.value) {
+        draftConf.field_map = [{ formField: "", mailChimpField: "" }];
+      }
+    })
+  );
+
+  // setSheetConf({ ...newConf });
 };
 
 export const checkAddressFieldMapRequired = (sheetConf) => {
@@ -51,22 +65,26 @@ export const checkAddressFieldMapRequired = (sheetConf) => {
   return true;
 };
 
-export const listChange = (
-  sheetConf,
-  formID,
-  setSheetConf,
-  setIsLoading,
-  setSnackbar
-) => {
-  const newConf = deepCopy(sheetConf);
-  newConf.field_map = [{ formField: "", mailChimpField: "" }];
-  console.log(newConf?.default?.fields?.[sheetConf.listId]);
-  if (!newConf?.default?.fields?.[sheetConf.listId]) {
-    refreshTags(formID, newConf, setSheetConf, setIsLoading, setSnackbar);
-    refreshFields(formID, newConf, setSheetConf, setIsLoading, setSnackbar);
-  }
-  return newConf;
-};
+// export const listChange = (
+//   sheetConf,
+//   formID,
+//   setSheetConf,
+//   setSnackbar,
+//   loading,
+//   setLoading
+// ) => {
+//   const newConf = deepCopy(sheetConf);
+//   refreshTags(formID, newConf, setSheetConf, setSnackbar, loading, setLoading);
+//   refreshFields(
+//     formID,
+//     newConf,
+//     setSheetConf,
+//     setSnackbar,
+//     loading,
+//     setLoading
+//   );
+//   return newConf;
+// };
 
 export const refreshAudience = (
   formID,
@@ -129,10 +147,11 @@ export const refreshTags = (
   formID,
   sheetConf,
   setSheetConf,
-  setIsLoading,
-  setSnackbar
+  setSnackbar,
+  loading,
+  setLoading
 ) => {
-  setIsLoading(true);
+  setLoading({ ...loading, tags: true });
   const refreshModulesRequestParams = {
     formID,
     clientId: sheetConf.clientId,
@@ -143,15 +162,20 @@ export const refreshTags = (
   bitsFetch(refreshModulesRequestParams, "mChimp_refresh_tags")
     .then((result) => {
       if (result && result.success) {
-        const newConf = { ...sheetConf };
-        if (result.data.audienceTags) {
-          newConf.default.audienceTags = result.data.audienceTags;
-        }
-        setSnackbar({
-          show: true,
-          msg: __("Audience tags refreshed", "bit-integrations"),
-        });
-        setSheetConf({ ...newConf });
+        // const newConf = { ...sheetConf };
+
+        setSheetConf((prevConf) =>
+          create(prevConf, (draftConf) => {
+            if (result.data.audienceTags) {
+              draftConf.default.audienceTags = result.data.audienceTags;
+            }
+            setSnackbar({
+              show: true,
+              msg: __("Audience tags refreshed", "bit-integrations"),
+            });
+          })
+        );
+        // setSheetConf({ ...newConf });
       } else if (
         (result && result.data && result.data.data) ||
         (!result.success && typeof result.data === "string")
@@ -172,23 +196,25 @@ export const refreshTags = (
           msg: __("Audience tags failed. please try again", "bit-integrations"),
         });
       }
-      setIsLoading(false);
+      setLoading({ ...loading, tags: false });
     })
-    .catch(() => setIsLoading(false));
+    .catch(() => setLoading({ ...loading, tags: false }));
 };
 
 export const refreshFields = (
   formID,
   sheetConf,
   setSheetConf,
-  setIsLoading,
-  setSnackbar
+  setSnackbar,
+  loading,
+  setLoading
 ) => {
   const { listId } = sheetConf;
   if (!listId) {
     return;
   }
-  setIsLoading(true);
+
+  setLoading({ ...loading, refreshFields: true });
   const refreshSpreadsheetsRequestParams = {
     formID,
     listId,
@@ -229,9 +255,10 @@ export const refreshFields = (
           ),
         });
       }
-      setIsLoading(false);
+
+      setLoading({ ...loading, refreshFields: false });
     })
-    .catch(() => setIsLoading(false));
+    .catch(() => setLoading({ ...loading, refreshFields: false }));
 };
 
 export const setGrantTokenResponse = (integ) => {

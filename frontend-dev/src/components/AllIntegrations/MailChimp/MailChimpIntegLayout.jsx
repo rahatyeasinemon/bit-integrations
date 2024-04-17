@@ -7,7 +7,7 @@ import MailChimpActions from './MailChimpActions'
 import { refreshAudience, refreshFields, refreshTags } from './MailChimpCommonFunc'
 import MailChimpFieldMap from './MailChimpFieldMap'
 
-export default function MailChimpIntegLayout({ formID, formFields, handleInput, sheetConf, setSheetConf, isLoading, setIsLoading, setSnackbar, a }) {
+export default function MailChimpIntegLayout({ formID, formFields, handleInput, sheetConf, setSheetConf, isLoading, setIsLoading, setSnackbar, a, loading, setLoading }) {
   const address = [
     { tag: 'addr1', name: 'Address 1', required: true },
     { tag: 'addr2', name: 'Address 2', required: false },
@@ -51,9 +51,9 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
           options={sheetConf?.default?.audienceTags && Object.keys(sheetConf.default.audienceTags).map(tag => ({ label: sheetConf.default.audienceTags[tag].tagName, value: sheetConf.default.audienceTags[tag].tagName }))}
           onChange={val => setTags(val)}
         />
-        <button onClick={() => refreshTags(formID, sheetConf, setSheetConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MailChimp Tags', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <button onClick={() => refreshTags(formID, sheetConf, setSheetConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MailChimp Tags', 'bit-integrations')}'` }} type="button" disabled={loading?.tags}>&#x21BB;</button>
       </div>
-      {isLoading && (
+      {(isLoading || loading?.tags || loading?.refreshFields) && (
         <Loader style={{
           display: 'flex',
           justifyContent: 'center',
@@ -63,17 +63,17 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
         }}
         />
       )}
-      {sheetConf.default?.fields?.[sheetConf.listId] && !isLoading
+      {sheetConf.default?.fields?.[sheetConf.listId] && !loading?.refreshFields
         && (
           <>
             <div className="mt-4">
               <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
               <button
-                onClick={() => refreshFields(formID, sheetConf, setSheetConf, setIsLoading, setSnackbar)}
+                onClick={() => refreshFields(formID, sheetConf, setSheetConf, setSnackbar, loading, setLoading)}
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
                 style={{ '--tooltip-txt': `'${__('Refresh Fields', 'bit-integrations')}'` }}
                 type="button"
-                disabled={isLoading}
+                disabled={loading?.refreshFields}
               >
                 &#x21BB;
               </button>
