@@ -6,6 +6,7 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import { clickupAuthentication } from './ClickupCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
+import Note from '../../Utilities/Note'
 
 export default function ClickupAuthorization({ clickupConf, setClickupConf, step, setStep, loading, setLoading, isInfo }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
@@ -29,6 +30,16 @@ export default function ClickupAuthorization({ clickupConf, setClickupConf, step
     setError(rmError)
     setClickupConf(newConf)
   }
+
+  const ActiveInstructions = `
+            <h4>To get the ClickUp API Key</h4>
+            <ul>
+                <li>Navigate to your personal Settings.</li>
+                <li>Click Apps in the left sidebar.</li>
+                <li>Click Generate to create your API token.</li>
+                <li>Click Copy to copy the key to your clipboard.</li>
+                <li>Paste your API Key into the “API Key” field.</li>
+            </ul>`
 
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
@@ -73,6 +84,7 @@ export default function ClickupAuthorization({ clickupConf, setClickupConf, step
           </button>
         </div>
       )}
+      <Note note={ActiveInstructions} />
     </div>
   )
 }
