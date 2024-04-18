@@ -1,17 +1,17 @@
 === Webhook Automator & Form Integration to Automate 200+ Platforms – Bit Integrations ===
 Contributors: bitpressadmin
-Tags: automation,integrator,integrate,Zapier,api
+Tags: automation,integration,Gutenberg,Zapier,webhook
 Requires at least: 5.1
 Tested up to: 6.5
 Requires PHP: 7.0
-Stable tag: 1.6.3
+Stable tag: 1.6.4
 License: GPLv2 or later
 
-Automation Plugin for WordPress; Integration of 60+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
+Automation Plugin for WordPress; Integration of 65+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
 
 == Description ==
 
-<strong> Best Automation Plugin for WordPress. Automate 200+ (highest in WordPress) Individual Platforms.</strong>
+<strong> Best Automation Plugin for WordPress. Automate 210+ (highest in WordPress) Individual Platforms.</strong>
 
 Automate your WordPress workflow with **Bit**: the all-in-one plugin for WooCommerce, form builders, CRM, LMS, bookings, spreadsheets, [**webhooks**](https://webhook.is/difference-between-webhook-and-api), social media, and email marketing. No technical knowledge needed. Automate tasks across 200+ platforms effortlessly.
 
@@ -101,6 +101,7 @@ https://youtu.be/eFuficjF_F4
 * [**Meta Box**](https://wordpress.org/plugins/meta-box/)
 * [**Metform**](https://wordpress.org/plugins/metform/)
 * [**MemberPress**](https://wordpress.org/plugins/members/)
+* [**MailPoet**](https://wordpress.org/plugins/mailpoet/)
 * [**Ninja Forms**](https://wordpress.org/plugins/ninja-forms/)
 * [**Piotnet Forms**](https://wordpress.org/plugins/piotnetforms/)
 * [**Paid Memberships Pro**](https://wordpress.org/plugins/paid-memberships-pro/)
@@ -308,11 +309,6 @@ Not only am I a fan of the support, I’ve become a big fan of the integration p
 
 -by @jamesmarnell
 
-[` 💠 Brilliant and Easy to use`](https://wordpress.org/support/topic/brilliant-and-easy-to-use-14/)
-
-This plugins works very well. The are always releasing updates and new integrations. The plugin is easy to use and works brilliantly!
-
--by @marcelobacchi
 
 [` 💠 Pure Automation at Play!`](https://wordpress.org/support/topic/pure-automation-at-play/)
 
@@ -950,6 +946,18 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 1.6.4  =
+*Release Date - *18th April 2024\*
+
+- **New Triggers :**
+  - Mailpoet
+
+- **New Features :**
+  - Freshdesk: Custom Field Added
+
+- **Fixes :**
+  - MailChimp: Field Mapping visibility 
 
 = 1.6.3  =
 *Release Date - *6th April 2024\*
