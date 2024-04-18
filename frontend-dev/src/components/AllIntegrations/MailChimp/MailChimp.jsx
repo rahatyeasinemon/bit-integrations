@@ -15,6 +15,7 @@ function MailChimp({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
   const { formID } = useParams()
   const [isLoading, setIsLoading] = useState(false)
+  const [loading, setLoading] = useState({})
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const [sheetConf, setSheetConf] = useState({
@@ -75,12 +76,14 @@ function MailChimp({ formFields, setFlow, flow, allIntegURL }) {
         <MailChimpIntegLayout
           formID={formID}
           formFields={formFields}
-          handleInput={(e) => handleInput(e, sheetConf, setSheetConf, formID, setIsLoading, setSnackbar)}
+          handleInput={(e) => handleInput(e, sheetConf, setSheetConf, formID, loading, setLoading, setSnackbar)}
           sheetConf={sheetConf}
           setSheetConf={setSheetConf}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           setSnackbar={setSnackbar}
+          loading={loading}
+          setLoading={setLoading}
         />
         <button
           onClick={() => nextPage(3)}
