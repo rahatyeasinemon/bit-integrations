@@ -126,7 +126,7 @@ class RecordApiHelper
         $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         if ($actionName === 'task') {
             $apiResponse = $this->addTask($finalData, $fieldValues);
-            $apiResponse = json_decode($apiResponse) ?? $apiResponse;
+            $apiResponse = is_string($apiResponse) ? json_decode($apiResponse) : $apiResponse;
         }
 
         if (!empty($apiResponse->id)) {
