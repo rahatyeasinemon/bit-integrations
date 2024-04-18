@@ -29,9 +29,9 @@ class ClickupController
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."user";
+        $apiEndpoint = $this->apiEndpoint . "user";
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -53,22 +53,24 @@ class ClickupController
         $action      = $fieldsRequestParams->action;
         $listId      = $fieldsRequestParams->list_id;
         if ($action == 'task') {
-            $apiEndpoint = $this->apiEndpoint."list/".$listId."/field";
+            $apiEndpoint = $this->apiEndpoint . "list/" . $listId . "/field";
         }
 
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
         if (isset($response->fields)) {
             foreach ($response->fields as $customField) {
-                $customFields[] = [
-                    'key' => $customField->id,
-                    'label' => $customField->name,
-                    'type' => $customField->type,
-                    'required' => $customField->required,
-                ];
+                if ($customField->type != 'attachment') {
+                    $customFields[] = [
+                        'key' => $customField->id,
+                        'label' => $customField->name,
+                        'type' => $customField->type,
+                        'required' => $customField->required,
+                    ];
+                }
             }
             wp_send_json_success($customFields, 200);
         } else {
@@ -83,9 +85,9 @@ class ClickupController
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."/tasks";
+        $apiEndpoint = $this->apiEndpoint . "/tasks";
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -110,9 +112,9 @@ class ClickupController
         }
 
         $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."team";
+        $apiEndpoint = $this->apiEndpoint . "team";
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -139,9 +141,9 @@ class ClickupController
 
         $apiKey      = $fieldsRequestParams->api_key;
         $teamId     = $fieldsRequestParams->team_id;
-        $apiEndpoint = $this->apiEndpoint."team/".$teamId."/space";
+        $apiEndpoint = $this->apiEndpoint . "team/" . $teamId . "/space";
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -167,9 +169,9 @@ class ClickupController
 
         $apiKey      = $fieldsRequestParams->api_key;
         $spaceId     = $fieldsRequestParams->space_id;
-        $apiEndpoint = $this->apiEndpoint."space/".$spaceId."/folder";
+        $apiEndpoint = $this->apiEndpoint . "space/" . $spaceId . "/folder";
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -197,9 +199,9 @@ class ClickupController
 
         $apiKey      = $fieldsRequestParams->api_key;
         $folderId     = $fieldsRequestParams->folder_id;
-        $apiEndpoint = $this->apiEndpoint."folder/".$folderId."/list";
+        $apiEndpoint = $this->apiEndpoint . "folder/" . $folderId . "/list";
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -225,9 +227,9 @@ class ClickupController
 
         $apiKey      = $fieldsRequestParams->api_key;
         $spaceId     = $fieldsRequestParams->space_id;
-        $apiEndpoint = $this->apiEndpoint."space/".$spaceId."/tag";
+        $apiEndpoint = $this->apiEndpoint . "space/" . $spaceId . "/tag";
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
