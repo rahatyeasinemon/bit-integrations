@@ -32,16 +32,9 @@ class KlaviyoController
       );
     }
 
-    $headers = [
-      'Authorization' => "Klaviyo-API-Key {$requestParams->authKey}",
-      'accept'        => 'application/json',
-      'revision'      => '2024-02-15',
-    ];
+    $response = static::fetchLists($requestParams->authKey, $this->baseUrl . 'lists');
 
-    $apiEndpoints = $this->baseUrl . 'lists';
-    $response     = HttpHelper::get($apiEndpoints, null, $headers);
-
-    if (!isset($response->data)) {
+    if (empty($response)) {
       wp_send_json_error(
         __(
           'Invalid token',
@@ -51,7 +44,25 @@ class KlaviyoController
       );
     }
 
-    wp_send_json_success($response->data, 200);
+    wp_send_json_success($response, 200);
+  }
+
+  private static function fetchLists($authKey, $apiEndpoints, $data = [])
+  {
+    $headers = [
+      'Authorization' => "Klaviyo-API-Key {$authKey}",
+      'accept'        => 'application/json',
+      'revision'      => '2024-02-15',
+    ];
+
+    $response = HttpHelper::get($apiEndpoints, null, $headers);
+    $data = array_merge($data, $response->data);
+
+    if (!empty($response->links->next)) {
+      return static::fetchLists($authKey, $response->links->next, $data);
+    }
+
+    return $data;
   }
 
   public function execute($integrationData, $fieldValues)
