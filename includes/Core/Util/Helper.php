@@ -42,7 +42,7 @@ final class Helper
             $date = new DateTime($dateString);
             return $date->format(DateTime::ATOM); // DateTime::ATOM is the ISO-8601 format
         } catch (\Exception $e) {
-            return "Invalid date format: " . $e->getMessage();
+            return $dateString;
         }
     }
 
