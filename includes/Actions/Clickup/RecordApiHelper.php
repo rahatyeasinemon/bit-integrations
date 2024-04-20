@@ -93,7 +93,9 @@ class RecordApiHelper
             if (is_array($file)) {
                 $result =  static::uploadFile($file, $taskId);
             } else {
+                $file = !filter_var($file, FILTER_VALIDATE_URL) ? $file : str_replace($_SERVER['HTTP_ORIGIN'], $_SERVER['DOCUMENT_ROOT'], $file);
                 $curl = curl_init();
+
                 curl_setopt($curl, CURLOPT_URL, $this->apiUrl . "task/{$taskId}/attachment");
                 curl_setopt($curl, CURLOPT_USERAGENT, 'Opera/9.80 (Windows NT 6.2; Win64; x64) Presto/2.12.388 Version/12.15');
                 curl_setopt($curl, CURLOPT_HTTPHEADER, array('User-Agent: Opera/9.80 (Windows NT 6.2; Win64; x64) Presto/2.12.388 Version/12.15', 'Content-Type: multipart/form-data', "Authorization: {$this->integrationDetails->api_key}"));
@@ -102,6 +104,7 @@ class RecordApiHelper
                 curl_setopt($curl, CURLOPT_POST, true);
                 curl_setopt($curl, CURLOPT_POSTFIELDS, array('attachment' => curl_file_create($file)));
                 curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+
                 $result = curl_exec($curl);
                 curl_close($curl);
             }
