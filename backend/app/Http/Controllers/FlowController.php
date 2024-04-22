@@ -85,9 +85,7 @@ final class FlowController
                 'flow_details' => is_string($flow_details) ? $flow_details : wp_json_encode($flow_details),
                 'status' => $status,
                 'user_id' => $user_details['id'],
-                'user_ip' => $user_details['ip'],
-                'created_at' => $user_details['time'],
-                'updated_at' => $user_details['time']
+                'user_ip' => $user_details['ip']
             ]
         );
     }

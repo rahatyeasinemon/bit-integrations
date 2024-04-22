@@ -2,7 +2,7 @@
 /**
  * @license GPL-2.0-or-later
  *
- * Modified on 30-March-2024 using Strauss.
+ * Modified on 18-April-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 
@@ -33,17 +33,16 @@ final class AjaxRouter
 
     public function addRoute(RouteRegister $route)
     {
-
         $requestMethod = isset($_SERVER['REQUEST_METHOD']) ? sanitize_text_field($_SERVER['REQUEST_METHOD']) : '';
-        $action = isset($_REQUEST['action']) ? sanitize_text_field($_REQUEST['action']) : '';
+        $action        = isset($_REQUEST['action']) ? sanitize_text_field($_REQUEST['action']) : '';
 
-        if (strpos($action, $this->_router->getAjaxPrefix()) === false
+        if (strpos($action, $route->getRouter()->getAjaxPrefix()) === false
             || !\in_array(strtoupper($requestMethod), $route->getMethods())
         ) {
             return;
         }
 
-        $requestPath = str_replace($this->_router->getAjaxPrefix(), '', $action);
+        $requestPath = str_replace($route->getRouter()->getAjaxPrefix(), '', $action);
         if (!$this->isRouteMatched($route, $requestPath)) {
             return;
         }
@@ -53,15 +52,15 @@ final class AjaxRouter
             Hooks::addAction('wp_ajax_nopriv_' . $action, [$route, 'handleRequest']);
         }
 
-        $this->_router->addRegisteredRoute($this->currentRouteName(), $route);
+        $route->getRouter()->addRegisteredRoute($this->currentRouteName(), $route);
     }
 
     public function currentRouteName()
     {
         $requestMethod = isset($_SERVER['REQUEST_METHOD']) ? sanitize_text_field($_SERVER['REQUEST_METHOD']) : '';
-        $action = isset($_REQUEST['action']) ? sanitize_text_field($_REQUEST['action']) : '';
-        
-        return $requestMethod. $action;
+        $action        = isset($_REQUEST['action']) ? sanitize_text_field($_REQUEST['action']) : '';
+
+        return $requestMethod . $action;
     }
 
     /**

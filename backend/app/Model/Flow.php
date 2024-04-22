@@ -114,13 +114,10 @@ final class Flow
         return Response::success(['integrations' => $integrations]);
     }
 
-    public function get($data)
+    public function get(Request $request)
     {
-        var_dump($data);
-        die;
-
         $missing_field = null;
-        if (!property_exists($data, 'id')) {
+        if (!$request->has('id')) {
             $missing_field = 'Integration ID';
         }
         if (!is_null($missing_field)) {
@@ -128,7 +125,7 @@ final class Flow
         }
         $integrationHandler = new FlowController();
         $integrations = $integrationHandler->get(
-            ['id' => $data->id],
+            ['id' => $request->id],
             [
                 'id',
                 'name',
@@ -164,18 +161,18 @@ final class Flow
         return Response::success(['integration' => $integration]);
     }
 
-    public function save(Request $data)
+    public function save(Request $request)
     {
         $missing_field = null;
-        if (!isset($data->trigger)) {
+        if (!isset($request->trigger)) {
             $missing_field = 'Trigger';
         }
 
-        if (!isset($data->triggered_entity_id)) {
+        if (!isset($request->triggered_entity_id)) {
             $missing_field = (is_null($missing_field) ? null : ', ') . 'Triggered form ID';
         }
 
-        if (!isset($data->flow_details)) {
+        if (!isset($request->flow_details)) {
             $missing_field = (is_null($missing_field) ? null : ', ') . 'Integration details';
         }
         if (!is_null($missing_field)) {
@@ -184,13 +181,13 @@ final class Flow
 
         // custom action
 
-        if ($data->name === 'CustomAction') {
-            CustomFuncValidator::functionValidateHandler($data);
+        if ($request->name === 'CustomAction') {
+            CustomFuncValidator::functionValidateHandler($request);
         }
 
-        $name = !empty($data->name) ? $data->name : '';
+        $name = isset($request->name) ? $request->name : '';
         $integrationHandler = new FlowController();
-        $saveStatus = $integrationHandler->save($name, $data->trigger, $data->triggered_entity_id, $data->flow_details);
+        $saveStatus = $integrationHandler->save($name, $request->trigger, $request->triggered_entity_id, $request->flow_details);
 
         if ($saveStatus) {
             $storeInCacheInstance = new StoreInCache();
@@ -239,32 +236,32 @@ final class Flow
         }
     }
 
-    public function update($data)
+    public function update(Request $request)
     {
         $missing_field = null;
-        if (empty($data->id)) {
+        if (!$request->has('id')) {
             $missing_field = 'Integration id';
         }
-        if (empty($data->flow_details)) {
+        if (!$request->has('flow_details')) {
             $missing_field = 'Flow details';
         }
         if (!is_null($missing_field)) {
             return Response::error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
 
-        if ($data->flow_details->type === 'CustomAction') {
-            CustomFuncValidator::functionValidateHandler($data);
+        if ($request->flow_details->type === 'CustomAction') {
+            CustomFuncValidator::functionValidateHandler($request);
         }
 
-        $name = !empty($data->name) ? $data->name : '';
+        $name = !empty($request->name) ? $request->name : '';
         $integrationHandler = new FlowController();
         $updateStatus = $integrationHandler->update(
-            $data->id,
+            $request->id,
             [
                 'name' => $name,
-                'triggered_entity' => $data->trigger,
-                'triggered_entity_id' => $data->triggered_entity_id,
-                'flow_details' => is_string($data->flow_details) ? $data->flow_details : wp_json_encode($data->flow_details),
+                'triggered_entity' => $request->trigger,
+                'triggered_entity_id' => $request->triggered_entity_id,
+                'flow_details' => is_string($request->flow_details) ? $request->flow_details : wp_json_encode($request->flow_details),
             ]
         );
         if (is_wp_error($updateStatus) && $updateStatus->get_error_code() !== 'result_empty') {
@@ -273,31 +270,31 @@ final class Flow
         return Response::success(__('Integration updated successfully', 'bit-integrations'));
     }
 
-    public function delete($data)
+    public function delete(Request $request)
     {
         $missing_field = null;
-        if (empty($data->id)) {
+        if (!$request->has('id')) {
             $missing_field = 'Integration id';
         }
         if (!is_null($missing_field)) {
             return Response::error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
         }
         $integrationHandler = new FlowController();
-        $deleteStatus = $integrationHandler->delete($data->id);
+        $deleteStatus = $integrationHandler->delete($request->id);
         if (is_wp_error($deleteStatus)) {
             return Response::error($deleteStatus->get_error_message());
         }
         return Response::success(__('Integration deleted successfully', 'bit-integrations'));
     }
 
-    public function bulkDelete($param)
+    public function bulkDelete(Request $request)
     {
-        if (!is_array($param->flowID) || $param->flowID === []) {
+        if (!is_array($request->flowID) || $request->flowID === []) {
             return Response::error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), 'Integration id'));
         }
 
         $integrationHandler = new FlowController();
-        $deleteStatus = $integrationHandler->bulkDelete($param->flowID);
+        $deleteStatus = $integrationHandler->delete($request->flowID);
 
         if (is_wp_error($deleteStatus)) {
             return Response::error($deleteStatus->get_error_message());

@@ -2,7 +2,7 @@
 /**
  * @license GPL-2.0-or-later
  *
- * Modified on 30-March-2024 using Strauss.
+ * Modified on 18-April-2024 using Strauss.
  * @see https://github.com/BrianHenryIE/strauss
  */
 
@@ -92,6 +92,13 @@ final class Router
         }
 
         return self::$_instance;
+    }
+
+    public function registerFile($routeFile)
+    {
+        self::$_instance = $this;
+
+        include_once $routeFile;
     }
 
     public function register()

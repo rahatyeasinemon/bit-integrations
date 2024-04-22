@@ -11,8 +11,7 @@ namespace BitApps\BTCBI\Model;
 // use BitApps\BTCBI\Model\Model;
 
 use BitApps\BTCBI\Config;
-use BitApps\BTCBI\Model\Model;
-use BTCBI\Deps\BitApps\WPDatabase\Model as WPDatabaseModel;
+use BTCBI\Deps\BitApps\WPDatabase\Model;
 
 /**
  * @property int id
@@ -26,7 +25,7 @@ use BTCBI\Deps\BitApps\WPDatabase\Model as WPDatabaseModel;
  * @property string created_at
  * @property string updated_at
  */
-class FlowModel extends WPDatabaseModel
+class FlowModel extends Model
 {
     protected $table = 'flow';
 
