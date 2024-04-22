@@ -115,44 +115,32 @@ final class ZohoCRMController
         );
         $modulesMetaApiEndpoint = "{$queryParams->tokenDetails->api_domain}/crm/v2.1/settings/modules";
         $authorizationHeader["Authorization"] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $isProVersion = Plugin::instance()->isProVer();
-        if ($isProVersion) {
-            $isBitFiLicActive =  \BitApps\BTCBI_PRO\Plugin::instance()->isLicenseActive();
-        } else {
-            $isBitFiLicActive = false;
-        }
-        if ($isBitFiLicActive) {
-            $modulesMetaResponse = HttpHelper::get($modulesMetaApiEndpoint, null, $authorizationHeader);
-            if (!is_wp_error($modulesMetaResponse) && (empty($modulesMetaResponse->status) || (!empty($modulesMetaResponse->status) && $modulesMetaResponse->status !== 'error'))) {
-                $retriveModuleData = $modulesMetaResponse->modules;
 
-                $allModules = [];
-                foreach ($retriveModuleData as $key => $value) {
-                    if ((!empty($value->inventory_template_supported) && $value->inventory_template_supported) || \in_array($value->api_name, $zohosIntegratedModules) || count((array)$value->parent_module) > 0) {
-                        continue;
-                    }
-                    if (!empty($value->api_supported) && $value->api_supported && !empty($value->editable) && $value->editable) {
-                        $allModules[$value->api_name] = (object) array(
-                            'plural_label' => $value->plural_label,
-                            'triggers_supported' => $value->triggers_supported,
-                            'quick_create' => $value->quick_create,
-                        );
-                    }
+        $modulesMetaResponse = HttpHelper::get($modulesMetaApiEndpoint, null, $authorizationHeader);
+        if (!is_wp_error($modulesMetaResponse) && (empty($modulesMetaResponse->status) || (!empty($modulesMetaResponse->status) && $modulesMetaResponse->status !== 'error'))) {
+            $retriveModuleData = $modulesMetaResponse->modules;
+
+            $allModules = [];
+            foreach ($retriveModuleData as $key => $value) {
+                if ((!empty($value->inventory_template_supported) && $value->inventory_template_supported) || \in_array($value->api_name, $zohosIntegratedModules) || count((array)$value->parent_module) > 0) {
+                    continue;
                 }
-                uksort($allModules, 'strnatcasecmp');
-            } else {
-                wp_send_json_error(
-                    empty($modulesMetaResponse->message) ? 'Unknown' : $modulesMetaResponse->message,
-                    400
-                );
+                if (!empty($value->api_supported) && $value->api_supported && !empty($value->editable) && $value->editable) {
+                    $allModules[$value->api_name] = (object) array(
+                        'plural_label' => $value->plural_label,
+                        'triggers_supported' => $value->triggers_supported,
+                        'quick_create' => $value->quick_create,
+                    );
+                }
             }
+            uksort($allModules, 'strnatcasecmp');
         } else {
-            $allModules['Leads'] = (object) array(
-                'plural_label' => 'Leads',
-                'triggers_supported' => true,
-                'quick_create' => true,
+            wp_send_json_error(
+                empty($modulesMetaResponse->message) ? 'Unknown' : $modulesMetaResponse->message,
+                400
             );
         }
+
         $response["modules"] = $allModules;
 
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
@@ -195,14 +183,8 @@ final class ZohoCRMController
         if (!is_wp_error($layoutsMetaResponse) && (empty($layoutsMetaResponse->status) || (!empty($layoutsMetaResponse->status) && $layoutsMetaResponse->status !== 'error'))) {
             $retriveLayoutsData = $layoutsMetaResponse->layouts;
             $layouts = [];
-            $isProVersion = Plugin::instance()->isProVer();
-            if ($isProVersion) {
-                $isBitFiLicActive =  \BitApps\BTCBI_PRO\Plugin::instance()->isLicenseActive();
-            } else {
-                $isBitFiLicActive = false;
-            }
             foreach ($retriveLayoutsData as $layoutKey => $layoutValue) {
-                if (!$isBitFiLicActive && $layoutValue->name !== 'Standard') {
+                if ($layoutValue->name !== 'Standard') {
                     continue;
                 }
                 $fields = [];
@@ -214,7 +196,7 @@ final class ZohoCRMController
 
                 foreach ($layoutValue->sections as $sectionKey => $sectionValue) {
                     foreach ($sectionValue->fields as $fieldKey => $fieldDetails) {
-                        if (!$isBitFiLicActive && !in_array($fieldDetails->api_name, $fieldToShow)) {
+                        if (!in_array($fieldDetails->api_name, $fieldToShow)) {
                             continue;
                         }
                         if (

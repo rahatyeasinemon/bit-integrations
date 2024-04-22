@@ -22,8 +22,7 @@ final class JetEngineController
                 'action' => 'jetengine/get/form',
                 'method' => 'post',
                 'data' => ['id'],
-            ],
-            'isPro' => false,
+            ]
         ];
     }
 

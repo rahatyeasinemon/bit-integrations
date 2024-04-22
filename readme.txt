@@ -1,10 +1,10 @@
 === Webhook Automator & Form Integration to Automate 200+ Platforms – Bit Integrations ===
 Contributors: bitpressadmin
-Tags: automation,integration,Gutenberg,Zapier,webhook
+Tags: automation,integration,automator,form builder integration,webhook
 Requires at least: 5.1
 Tested up to: 6.5
 Requires PHP: 7.0
-Stable tag: 1.6.4
+Stable tag: 1.6.5
 License: GPLv2 or later
 
 Automation Plugin for WordPress; Integration of 65+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -946,6 +946,12 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 1.6.5  =
+*Release Date - *22th April 2024\*
+
+- **Improvements :**
+  - Unusefull code removed.
 
 = 1.6.4  =
 *Release Date - *18th April 2024\*

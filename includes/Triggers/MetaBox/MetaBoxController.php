@@ -25,8 +25,7 @@ final class MetaBoxController
                 'action' => 'metabox/get/form',
                 'method' => 'post',
                 'data' => ['id'],
-            ],
-            'isPro' => false
+            ]
         ];
     }
 

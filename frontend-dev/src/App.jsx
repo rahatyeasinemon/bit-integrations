@@ -39,7 +39,7 @@ function App() {
   const flowNumber = integrations.length
   useEffect(() => { removeUnwantedCSS() }, [])
 
-  const isLicenseActive = typeof btcbi !== 'undefined' ? ('isPro' in btcbi ? btcbi.isPro : false) : false
+  const isValidUser = typeof btcbi !== 'undefined' ? ('isPro' in btcbi ? btcbi.isPro : false) : false
 
   return (
     <Suspense fallback={(<Loader className="g-c" style={loaderStyle} />)}>
@@ -109,7 +109,7 @@ function App() {
           <Routes>
             <Route path="/" element={
               <Suspense fallback={<TableLoader />}>
-                <AllIntegrations integrations={integrations} setIntegrations={setIntegrations} isLoading={isLoading} isLicenseActive={isLicenseActive} />
+                <AllIntegrations integrations={integrations} setIntegrations={setIntegrations} isLoading={isLoading} isValidUser={isValidUser} />
               </Suspense>
             } />
             <Route path="/app-settings" element={
@@ -125,7 +125,7 @@ function App() {
             } />
 
             <Route path="/flow/new" element={
-              (flowNumber >= 1 && !isLicenseActive) ?
+              (flowNumber >= 1 && !isValidUser) ?
                 <Navigate to="/" /> :
                 <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
                   <FlowBuilder />

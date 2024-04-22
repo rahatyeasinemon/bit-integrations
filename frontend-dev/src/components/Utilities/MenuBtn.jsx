@@ -51,7 +51,7 @@ export default function MenuBtn(props) {
           &nbsp;
           Edit
         </Link>
-        {props.isLicenseActive &&
+        {props.isValidUser &&
           (<button type="button" aria-label="actions" className="flx" onClick={props.dup}>
             <CopyIcn size={16} />
             &nbsp;

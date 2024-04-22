@@ -1,7 +1,7 @@
 {
-    "name": "bitcode/btcbi",
+    "name": "bitapps/bit-integrations",
     "description": "An Integration plugin for wordpress",
-    "license": "gpl-2",
+    "license": "GPL-2.0-or-later",
     "autoload": {
         "psr-4": {
             "BitCode\\FI\\": "includes/"

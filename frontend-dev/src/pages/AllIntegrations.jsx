@@ -18,14 +18,14 @@ import BuyProModal from '../components/Utilities/BuyProModal'
 
 const Welcome = lazy(() => import('./Welcome'))
 
-function AllIntegrations({ isLicenseActive }) {
+function AllIntegrations({ isValidUser }) {
   const { data, isLoading, mutate } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
   const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
   const [snack, setSnackbar] = useState({ show: false })
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const [proModal, setProModal] = useState({ show: false, msg: '' })
   const [premiumModal, setPremiumModal] = useState({ show: false, msg: '' })
-  const [showLicenseModal, setShowLicenseModal] = useState({ show: isLicenseActive === true })
+  const [showLicenseModal, setShowLicenseModal] = useState({ show: isValidUser === true })
 
   const [cols, setCols] = useState([
     { width: 250, minWidth: 80, Header: __('Trigger', 'bit-integrations'), accessor: 'triggered_entity' },
@@ -41,7 +41,7 @@ function AllIntegrations({ isLicenseActive }) {
   useEffect(() => {
     const ncols = cols.filter(itm => itm.accessor !== 't_action' && itm.accessor !== 'status')
     ncols.push({ width: 70, minWidth: 60, Header: __('Status', 'bit-integrations'), accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.id)} checked={Number(value.row.original.status) === 1} /> })
-    ncols.push({ sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn isLicenseActive={isLicenseActive} id={val.row.original.id} name={val.row.original.name} index={val.row.id} del={() => showDelModal(val.row.original.id, val.row.index)} dup={() => showDupMdl(val.row.original.id, val.row.index)} /> })
+    ncols.push({ sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn isValidUser={isValidUser} id={val.row.original.id} name={val.row.original.name} index={val.row.id} del={() => showDelModal(val.row.original.id, val.row.index)} dup={() => showDupMdl(val.row.original.id, val.row.index)} /> })
     setCols([...ncols])
   }, [integrations])
 
@@ -174,7 +174,7 @@ function AllIntegrations({ isLicenseActive }) {
     setPremiumModal({ show: false })
   }
   const actionHandler = (e) => {
-    if ((!isLicenseActive || btcbi.pro === 'undefined')) {
+    if ((!isValidUser || btcbi.pro === 'undefined')) {
       setPremiumModal({ show: true })
     } else {
       setShowLicenseModal({ show: true })
@@ -203,7 +203,7 @@ function AllIntegrations({ isLicenseActive }) {
         <>
           <div className="af-header flx flx-between">
             <h2>{__('Integrations', 'bit-integrations')}</h2>
-            {(integrations.length >= 1 && !isLicenseActive)
+            {(integrations.length >= 1 && !isValidUser)
               ? (
                 // eslint-disable-next-line react/button-has-type
                 <button className="btn round btcd-btn-lg blue blue-sh" onClick={(e) => actionHandler(e)}>
@@ -239,7 +239,7 @@ function AllIntegrations({ isLicenseActive }) {
             data={integrations.length}
           />
         </>
-      ) : <Welcome isLicenseActive={isLicenseActive} actionHandler={actionHandler} integrations={integrations} />}
+      ) : <Welcome isValidUser={isValidUser} actionHandler={actionHandler} integrations={integrations} />}
 
       <Modal
         sm

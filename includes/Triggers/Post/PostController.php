@@ -23,8 +23,7 @@ final class PostController
                 'action' => 'post/get/form',
                 'method' => 'post',
                 'data' => ['id'],
-            ],
-            'isPro' => false,
+            ]
         ];
     }
 

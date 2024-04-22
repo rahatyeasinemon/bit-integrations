@@ -29,9 +29,6 @@ final class Plugin
      */
     private static $_instance = null;
 
-    private $isLicActive;
-    private $isPro;
-
     /**
      * Initialize the hooks
      *
@@ -104,24 +101,6 @@ final class Plugin
         }
     }
 
-    public function isLicenseActive()
-    {
-        if (!isset($this->isLicActive)) {
-            $this->isLicActive = false;
-        }
-        return $this->isLicActive;
-    }
-    public function isProVer()
-    {
-        $plugins_keys = array_keys(get_plugins());
-        $plugin = 'bit-integrations-pro/bitwpfi.php';
-        if (in_array($plugin, $plugins_keys) && is_plugin_active($plugin)) {
-            $this->isPro =  true;
-        } else {
-            $this->isPro = false;
-        }
-        return $this->isPro;
-    }
 
     /**
      * Loads the plugin main instance and initializes it.
