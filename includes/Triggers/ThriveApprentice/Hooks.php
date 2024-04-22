@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Triggers\ThriveApprentice\ThriveApprenticeController;
+use BitApps\BTCBI_PRO\Core\Util\Hooks;
+use BitApps\BTCBI_PRO\Triggers\ThriveApprentice\ThriveApprenticeController;
 
 Hooks::add('thrive_apprentice_course_finish', [ThriveApprenticeController::class, 'handleCourseComplete'], 10, 2);
 Hooks::add('thrive_apprentice_lesson_complete', [ThriveApprenticeController::class, 'handleLessonComplete'], 10, 2);

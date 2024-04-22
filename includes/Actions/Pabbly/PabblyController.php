@@ -4,10 +4,14 @@
  * Pabbly Integration
  *
  */
-namespace BitCode\FI\Actions\Pabbly;
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+
+namespace BitApps\BTCBI_PRO\Actions\Pabbly;
+
+use BitApps\BTCBI_PRO\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for PabblyHandler
  */
-class PabblyController extends WebHooksController{ }
+class PabblyController extends WebHooksController
+{
+}

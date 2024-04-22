@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Core\Util;
+namespace BitApps\BTCBI_PRO\Core\Util;
 
 use WP_Error;
-use BitCode\FI\Triggers\TriggerController;
+use BitApps\BTCBI_PRO\Triggers\TriggerController;
 
 /**
  * bit-integration helper class

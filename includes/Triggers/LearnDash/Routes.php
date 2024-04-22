@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\LearnDash\LearnDashController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
+use BitApps\BTCBI_PRO\Triggers\LearnDash\LearnDashController;
 
 Route::get('learndash/get', [LearnDashController::class, 'getAll']);
 Route::post('learndash/get/form', [LearnDashController::class, 'get_a_form']);

@@ -4,11 +4,11 @@
  * Fluent CRM Integration
  */
 
-namespace BitCode\FI\Actions\FluentCrm;
+namespace BitApps\BTCBI_PRO\Actions\FluentCrm;
 
 use WP_Error;
 
-use BitCode\FI\Actions\FluentCrm\RecordApiHelper;
+use BitApps\BTCBI_PRO\Actions\FluentCrm\RecordApiHelper;
 use FluentCrm\App\Models\Lists;
 use FluentCrm\App\Models\Tag;
 use FluentCrm\App\Models\Subscriber;
@@ -19,7 +19,6 @@ use FluentCrm\App\Models\CustomContactField;
  */
 class FluentCrmController
 {
-
     private $_integrationID;
 
     public function __construct($integrationID)
@@ -123,7 +122,7 @@ class FluentCrmController
                 ];
             }
         }
-        foreach ((new CustomContactField)->getGlobalFields()['fields'] as $field) {
+        foreach ((new CustomContactField())->getGlobalFields()['fields'] as $field) {
             $fieldOptions[$field['label']] = (object) [
                 'key'         => $field['slug'],
                 'label'       => $field['label'],

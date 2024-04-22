@@ -3,11 +3,12 @@
 /**
  * Slack Record Api
  */
-namespace BitCode\FI\Actions\Slack;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
+namespace BitApps\BTCBI_PRO\Actions\Slack;
+
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert

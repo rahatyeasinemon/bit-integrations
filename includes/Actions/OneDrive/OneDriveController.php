@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\FI\Actions\OneDrive;
+namespace BitApps\BTCBI_PRO\Actions\OneDrive;
 
-use BitCode\FI\Actions\OneDrive\RecordApiHelper as OneDriveRecordApiHelper;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Actions\OneDrive\RecordApiHelper as OneDriveRecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Flow\FlowController;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 use WP_Error;
 
 class OneDriveController
@@ -58,7 +58,7 @@ class OneDriveController
         $data = [];
         if (is_array($foldersOnly)) {
             foreach ($foldersOnly as $folder) {
-                if(property_exists($folder, 'folder')){
+                if(property_exists($folder, 'folder')) {
                     $data[] = $folder;
                 }
             }
@@ -78,16 +78,19 @@ class OneDriveController
         ];
         $apiEndpoint = "https://api.onedrive.com/v1.0/drive/root/children";
         $apiResponse = HttpHelper::get($apiEndpoint, [], $headers);
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) return false;
+        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
+            return false;
+        }
         return $apiResponse;
     }
 
-    public static function singleOneDriveFolderList($queryParams){
+    public static function singleOneDriveFolderList($queryParams)
+    {
         if (empty($queryParams->tokenDetails) || empty($queryParams->clientId) || empty($queryParams->clientSecret)) {
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $ids = explode('!',$queryParams->folder);
+        $ids = explode('!', $queryParams->folder);
         $token = self::tokenExpiryCheck($queryParams->tokenDetails, $queryParams->clientId, $queryParams->clientSecret);
         if ($token->access_token !== $queryParams->tokenDetails->access_token) {
             self::saveRefreshedToken($queryParams->flowID, $token);
@@ -104,7 +107,7 @@ class OneDriveController
         $data = [];
         if (is_array($foldersOnly)) {
             foreach ($foldersOnly as $folder) {
-                if(property_exists($folder, 'folder')){
+                if(property_exists($folder, 'folder')) {
                     $data[] = $folder;
                 }
             }
@@ -116,11 +119,15 @@ class OneDriveController
 
     private static function tokenExpiryCheck($token, $clientId, $clientSecret)
     {
-        if (!$token) return false;
+        if (!$token) {
+            return false;
+        }
 
         if ((intval($token->generates_on) + (55 * 60)) < time()) {
             $refreshToken = self::refreshToken($token->refresh_token, $clientId, $clientSecret);
-            if (is_wp_error($refreshToken) || !empty($refreshToken->error)) return false;
+            if (is_wp_error($refreshToken) || !empty($refreshToken->error)) {
+                return false;
+            }
             $token->access_token = $refreshToken->access_token;
             $token->expires_in = $refreshToken->expires_in;
             $token->generates_on = $refreshToken->generates_on;
@@ -139,7 +146,9 @@ class OneDriveController
 
         $apiEndpoint = "https://login.live.com/oauth20_token.srf";
         $apiResponse = HttpHelper::post($apiEndpoint, $body);
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) return false;
+        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
+            return false;
+        }
         $token = $apiResponse;
         $token->generates_on = \time();
         return $token;
@@ -147,11 +156,15 @@ class OneDriveController
 
     private static function saveRefreshedToken($integrationID, $tokenDetails)
     {
-        if (empty($integrationID)) return;
+        if (empty($integrationID)) {
+            return;
+        }
 
         $flow = new FlowController();
         $googleDriveDetails = $flow->get(['id' => $integrationID]);
-        if (is_wp_error($googleDriveDetails)) return;
+        if (is_wp_error($googleDriveDetails)) {
+            return;
+        }
 
         $newDetails = json_decode($googleDriveDetails[0]->flow_details);
         $newDetails->tokenDetails = $tokenDetails;
@@ -176,9 +189,7 @@ class OneDriveController
             self::saveRefreshedToken($this->integrationID, $tokenDetails);
         }
 
-        (new OneDriveRecordApiHelper($tokenDetails->access_token))->executeRecordApi($this->integrationID, $fieldValues, $fieldMap, $actions,$folderId,$parentId);
+        (new OneDriveRecordApiHelper($tokenDetails->access_token))->executeRecordApi($this->integrationID, $fieldValues, $fieldMap, $actions, $folderId, $parentId);
         return true;
     }
 }
-
-

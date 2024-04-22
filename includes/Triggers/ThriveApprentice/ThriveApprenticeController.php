@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\ThriveApprentice;
+namespace BitApps\BTCBI_PRO\Triggers\ThriveApprentice;
 
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Flow\Flow;
 
 final class ThriveApprenticeController
 {

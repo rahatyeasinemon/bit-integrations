@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\FI\Triggers\UltimateMember;
+namespace BitApps\BTCBI_PRO\Triggers\UltimateMember;
 
 class UltimateMemberHelper
 {

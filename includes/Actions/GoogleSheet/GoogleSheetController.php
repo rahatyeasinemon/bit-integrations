@@ -4,20 +4,19 @@
  * ZohoSheet Integration
  */
 
-namespace BitCode\FI\Actions\GoogleSheet;
+namespace BitApps\BTCBI_PRO\Actions\GoogleSheet;
 
 use WP_Error;
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\GoogleSheet\RecordApiHelper;
-use BitCode\FI\Flow\FlowController;
+use BitApps\BTCBI_PRO\Core\Util\IpTool;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Actions\GoogleSheet\RecordApiHelper;
+use BitApps\BTCBI_PRO\Flow\FlowController;
 
 /**
  * Provide functionality for ZohoCrm integration
  */
 class GoogleSheetController
 {
-    
     private $_integrationID;
 
     public function __construct($integrationID)
@@ -41,8 +40,8 @@ class GoogleSheetController
     /**
      * Process ajax request for generate_token
      *
-     * @param Object $requestsParams 
-     * 
+     * @param Object $requestsParams
+     *
      * @return JSON zoho crm api response and status
      */
     public static function generateTokens($requestsParams)
@@ -85,7 +84,7 @@ class GoogleSheetController
      * Process ajax request for refresh crm modules
      *
      * @param Object $queryParams Request Params
-     * 
+     *
      * @return JSON crm module data
      */
     public static function refreshSpreadsheetsAjaxHelper($queryParams)
@@ -138,7 +137,7 @@ class GoogleSheetController
      * Process ajax request for refesh crm layouts
      *
      * @param Object $queryParams Request Params
-     * 
+     *
      * @return JSON crm layout data
      */
     public static function refreshWorksheetsAjaxHelper($queryParams)
@@ -185,9 +184,9 @@ class GoogleSheetController
 
     /**
      * Process ajax request for refesh crm layouts
-     * 
+     *
      * @param Object $queryParams Request Params
-     * 
+     *
      * @return JSON crm layout data
      */
     public static function refreshWorksheetHeadersAjaxHelper($queryParams)
@@ -254,7 +253,7 @@ class GoogleSheetController
      * Helps to refresh zoho crm access_token
      *
      * @param Array $apiData Contains required data for refresh access token
-     * 
+     *
      * @return JSON  $tokenDetails API token details
      */
     protected static function refreshAccessToken($apiData)

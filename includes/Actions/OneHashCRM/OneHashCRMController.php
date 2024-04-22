@@ -4,10 +4,10 @@
  * OneHashCRM Integration
  */
 
-namespace BitCode\FI\Actions\OneHashCRM;
+namespace BitApps\BTCBI_PRO\Actions\OneHashCRM;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for OneHashCRM integration
@@ -70,7 +70,7 @@ class OneHashCRMController
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for OneHashCRM api', 'bit-integrations'));
         }
 
-        $recordApiHelper        = new RecordApiHelper($integrationDetails, $integId, $apiKey, $apiSecret,  $domain);
+        $recordApiHelper        = new RecordApiHelper($integrationDetails, $integId, $apiKey, $apiSecret, $domain);
         $oneHashCRMApiResponse  = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
 
         if (is_wp_error($oneHashCRMApiResponse)) {

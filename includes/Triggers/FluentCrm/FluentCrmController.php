@@ -1,13 +1,13 @@
 <?php
 
-namespace BitCode\FI\Triggers\FluentCrm;
+namespace BitApps\BTCBI_PRO\Triggers\FluentCrm;
 
 use DateTime;
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Flow\Flow;
 use FluentCrm\App\Models\Tag;
 use FluentCrm\App\Models\Lists;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Flow\FlowController;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Flow\FlowController;
 use FluentCrm\App\Models\Subscriber;
 use FluentCrm\App\Models\CustomContactField;
 
@@ -299,7 +299,7 @@ final class FluentCrmController
             }
         }
 
-        foreach ((new CustomContactField)->getGlobalFields()['fields'] as $field) {
+        foreach ((new CustomContactField())->getGlobalFields()['fields'] as $field) {
             $fieldOptions[] = [
                 'name'         => $field['slug'],
                 'label'       => $field['label'],

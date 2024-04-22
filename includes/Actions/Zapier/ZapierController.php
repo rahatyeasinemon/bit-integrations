@@ -5,10 +5,13 @@
  *
  */
 
-namespace BitCode\FI\Actions\Zapier;
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+namespace BitApps\BTCBI_PRO\Actions\Zapier;
+
+use BitApps\BTCBI_PRO\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for ZapierHandler
  */
-class ZapierController extends WebHooksController{ }
+class ZapierController extends WebHooksController
+{
+}

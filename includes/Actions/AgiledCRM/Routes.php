@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\AgiledCRM\AgiledCRMController;
-use BitCode\FI\Core\Util\Route;
+use BitApps\BTCBI_PRO\Actions\AgiledCRM\AgiledCRMController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
 
 Route::post('agiled_authentication', [AgiledCRMController::class, 'authentication']);
 Route::post('agiled_fetch_all_owners', [AgiledCRMController::class, 'getAllOwners']);

@@ -4,12 +4,12 @@
  * HubSpot Record Api
  */
 
-namespace BitCode\FI\Actions\Hubspot;
+namespace BitApps\BTCBI_PRO\Actions\Hubspot;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\DateTimeHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -123,8 +123,12 @@ class HubspotRecordApiHelper
         $stage    = $integrationDetails->stage;
         $action   = $integrationDetails->actions;
 
-        if (!empty($pipeline)) $dataFinal['pipeline'] = $pipeline;
-        if (!empty($stage)) $dataFinal['dealstage']   = $stage;
+        if (!empty($pipeline)) {
+            $dataFinal['pipeline'] = $pipeline;
+        }
+        if (!empty($stage)) {
+            $dataFinal['dealstage']   = $stage;
+        }
 
         $dataForAssosciations = [];
 
@@ -156,7 +160,9 @@ class HubspotRecordApiHelper
         $finalData = [];
         $finalData['properties'] = $dataFinal;
 
-        if (!empty($dataForAssosciations)) $finalData['associations'] = $dataForAssosciations;
+        if (!empty($dataForAssosciations)) {
+            $finalData['associations'] = $dataForAssosciations;
+        }
 
         return $finalData;
     }

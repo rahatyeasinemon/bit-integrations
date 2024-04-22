@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Triggers\AcademyLms\AcademyLmsController;
+use BitApps\BTCBI_PRO\Core\Util\Hooks;
+use BitApps\BTCBI_PRO\Triggers\AcademyLms\AcademyLmsController;
 
 Hooks::add('academy/course/after_enroll', [AcademyLmsController::class, 'handle_course_enroll'], 10, 2);
 Hooks::add('academy_quizzes/api/after_quiz_attempt_finished', [AcademyLmsController::class, 'handleQuizAttempt'], 10, 1);

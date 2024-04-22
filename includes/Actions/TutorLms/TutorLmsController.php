@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Actions\TutorLms;
+namespace BitApps\BTCBI_PRO\Actions\TutorLms;
 
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Tutor LMS integration
@@ -232,7 +232,7 @@ class TutorLmsController
                 }
                 if ($actionName === 'complete-course') {
                     $response = self::completeCourse($selectedCourse);
-                } else if ($actionName === 'reset-course') {
+                } elseif ($actionName === 'reset-course') {
                     $response = self::resetCourse($selectedCourse);
                 } else {
                     $response = self::enrollCourse($selectedCourse, $selectedAllCourse, "enroll");

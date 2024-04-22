@@ -4,20 +4,19 @@
  * freshdesk Integration
  */
 
-namespace BitCode\FI\Actions\Freshdesk;
+namespace BitApps\BTCBI_PRO\Actions\Freshdesk;
 
 use WP_Error;
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\IpTool;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
-use BitCode\FI\Actions\Freshdesk\RecordApiHelper;
+use BitApps\BTCBI_PRO\Actions\Freshdesk\RecordApiHelper;
 
 /**
  * Provide functionality for Freshdesk integration
  */
 class FreshdeskController
 {
-
     /**
      * Process ajax request for generate_token
      *

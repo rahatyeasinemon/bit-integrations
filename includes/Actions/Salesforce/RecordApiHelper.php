@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\FI\Actions\Salesforce;
+namespace BitApps\BTCBI_PRO\Actions\Salesforce;
 
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Core\Util\DateTimeHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\DateTimeHelper;
 
 /**
  * Provide functionality for Record insert,upsert

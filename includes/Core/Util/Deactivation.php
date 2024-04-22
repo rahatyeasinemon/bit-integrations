@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\FI\Core\Util;
+namespace BitApps\BTCBI_PRO\Core\Util;
 
 /**
  * Class handling plugin deactivation.

@@ -4,11 +4,11 @@
  * trello Record Api
  */
 
-namespace BitCode\FI\Actions\Acumbamail;
+namespace BitApps\BTCBI_PRO\Actions\Acumbamail;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -68,7 +68,7 @@ class RecordApiHelper
             $actionValue = $value->acumbamailFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }

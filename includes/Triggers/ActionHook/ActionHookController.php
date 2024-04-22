@@ -1,10 +1,10 @@
 <?php
 
-namespace BitCode\FI\Triggers\ActionHook;
+namespace BitApps\BTCBI_PRO\Triggers\ActionHook;
 
 use WP_Error;
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Core\Util\Helper;
+use BitApps\BTCBI_PRO\Flow\Flow;
+use BitApps\BTCBI_PRO\Core\Util\Helper;
 
 class ActionHookController
 {

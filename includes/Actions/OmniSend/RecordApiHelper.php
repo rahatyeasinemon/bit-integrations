@@ -4,11 +4,11 @@
  * OmniSend    Record Api
  */
 
-namespace BitCode\FI\Actions\OmniSend;
+namespace BitApps\BTCBI_PRO\Actions\OmniSend;
 
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert

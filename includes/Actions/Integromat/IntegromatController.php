@@ -5,11 +5,13 @@
  *
  */
 
-namespace BitCode\FI\Actions\Integromat;
+namespace BitApps\BTCBI_PRO\Actions\Integromat;
 
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+use BitApps\BTCBI_PRO\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for IntegromatHandler
  */
-class IntegromatController extends WebHooksController{ }
+class IntegromatController extends WebHooksController
+{
+}

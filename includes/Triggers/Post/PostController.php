@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Triggers\Post;
+namespace BitApps\BTCBI_PRO\Triggers\Post;
 
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Triggers\Post\PostHelper;
+use BitApps\BTCBI_PRO\Flow\Flow;
+use BitApps\BTCBI_PRO\Triggers\Post\PostHelper;
 
 final class PostController
 {

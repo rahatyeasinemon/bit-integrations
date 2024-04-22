@@ -4,10 +4,10 @@
  * Smaily Record Api
  */
 
-namespace BitCode\FI\Actions\Smaily;
+namespace BitApps\BTCBI_PRO\Actions\Smaily;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -45,7 +45,7 @@ class RecordApiHelper
         $requestParams['is_unsubscribed'] = $this->_integrationDetails->actions->unsubscribe ? 1 : 0;
         $this->_requestStoringTypes       = $this->isExist($apiEndpoint, $finalData['email']) ? 'updated' : 'created';
 
-        return HttpHelper::post($apiEndpoint,  json_encode($requestParams), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

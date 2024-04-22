@@ -4,19 +4,18 @@
  * ZohoSheet Integration
  */
 
-namespace BitCode\FI\Actions\ElasticEmail;
+namespace BitApps\BTCBI_PRO\Actions\ElasticEmail;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
-use BitCode\FI\Actions\ElasticEmail\RecordApiHelper;
+use BitApps\BTCBI_PRO\Actions\ElasticEmail\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
  */
 class ElasticEmailController
 {
-   
     public static function elasticEmailAuthorize($requestsParams)
     {
         if (empty($requestsParams->api_key)) {
@@ -75,14 +74,14 @@ class ElasticEmailController
         // wp_send_json_success(true);
     }
 
-    
 
-    
+
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
         $integId = $integrationData->id;
-    
+
         $api_key = $integrationDetails->api_key;
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;

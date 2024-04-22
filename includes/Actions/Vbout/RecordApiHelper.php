@@ -3,11 +3,12 @@
 /**
  * Vbout    Record Api
  */
-namespace BitCode\FI\Actions\Vbout;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+namespace BitApps\BTCBI_PRO\Actions\Vbout;
+
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -26,7 +27,7 @@ class RecordApiHelper
 
 
 
- 
+
     public function getContactByEmail($auth_token, $email, $listId)
     {
         $apiEndpoints = $this->baseUrl . 'emailmarketing/getcontactbyemail?key=' . $auth_token . '&email=' . $email . '&list_id=' . $listId;
@@ -50,25 +51,25 @@ class RecordApiHelper
         ];
 
         if (empty($finalData[$emailId])) {
-            return ['success'=>false, 'message'=>'Required field Email is empty', 'code'=>400];
+            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
         }
-  
+
         foreach ($finalData as $key => $value) {
             if ($key != $emailId) {
                 $requestParams['fields'][$key] = $value;
             }
         }
         $requestParams['fields'] = (object) $requestParams['fields'];
-        $exitContact=$this->getContactByEmail($auth_token, $finalData[$emailId], $listId);
-        $response=[];
+        $exitContact = $this->getContactByEmail($auth_token, $finalData[$emailId], $listId);
+        $response = [];
         if (isset($exitContact->response->data->contact->errorCode)) {
             $response = HttpHelper::post($apiEndpoints, $requestParams);
         } elseif (!isset($exitContact->response->data->contact->errorCode) && !empty($this->_integrationDetails->actions->update)) {
             $requestParams['id'] = $exitContact->response->data->contact[0]->id;
-            $response=HttpHelper::post($this->editContact($auth_token), $requestParams);
-            $response->update=true;
+            $response = HttpHelper::post($this->editContact($auth_token), $requestParams);
+            $response->update = true;
         } else {
-            return ['success'=>false, 'message'=>'Your contact already exists in list!', 'code'=>400];
+            return ['success' => false, 'message' => 'Your contact already exists in list!', 'code' => 400];
         }
 
         return $response;
@@ -99,14 +100,14 @@ class RecordApiHelper
         $auth_token
     ) {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $emailId=$fieldMap[0]->VboutFormField;
+        $emailId = $fieldMap[0]->VboutFormField;
 
         $apiResponse = $this->addContact($auth_token, $listId, $contactStatus, $finalData, $emailId);
         if ($apiResponse->response->data->id) {
-            $res=['success'=>true, 'message'=>$apiResponse->update?'Your contact has been updated successfully.':'Your contact has been created successfully.', 'code'=>200];
+            $res = ['success' => true, 'message' => $apiResponse->update ? 'Your contact has been updated successfully.' : 'Your contact has been created successfully.', 'code' => 200];
             LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'success', json_encode($res));
         } elseif ($apiResponse->update) {
-            $res=['success'=>true, 'message'=>'Your contact has been updated successfully.', 'code'=>200];
+            $res = ['success' => true, 'message' => 'Your contact has been updated successfully.', 'code' => 200];
             LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'success', json_encode($res));
         } else {
             LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', json_encode($apiResponse));

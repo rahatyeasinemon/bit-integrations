@@ -4,16 +4,16 @@
  * ZohoRecruit Record Api
  */
 
-namespace BitCode\FI\Actions\ZohoRecruit;
+namespace BitApps\BTCBI_PRO\Actions\ZohoRecruit;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Core\Util\FieldValueHandler;
-use BitCode\FI\Core\Util\ApiResponse as UtilApiResponse;
-use BitCode\FI\Actions\ZohoRecruit\FilesApiHelper;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\DateTimeHelper;
+use BitApps\BTCBI_PRO\Core\Util\FieldValueHandler;
+use BitApps\BTCBI_PRO\Core\Util\ApiResponse as UtilApiResponse;
+use BitApps\BTCBI_PRO\Actions\ZohoRecruit\FilesApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -152,38 +152,38 @@ class RecordApiHelper
         }
 
         switch ($formatSpecs->data_type) {
-        case 'AutoNumber':
-            $apiFormat = 'integer';
-            break;
+            case 'AutoNumber':
+                $apiFormat = 'integer';
+                break;
 
-        case 'Text':
-        case 'Picklist':
-        case 'Email':
-        case 'Website':
-        case 'Currency':
-        case 'TextArea':
-            $apiFormat = 'string';
-            break;
+            case 'Text':
+            case 'Picklist':
+            case 'Email':
+            case 'Website':
+            case 'Currency':
+            case 'TextArea':
+                $apiFormat = 'string';
+                break;
 
-        case 'Date':
-            $apiFormat = 'date';
-            break;
+            case 'Date':
+                $apiFormat = 'date';
+                break;
 
-        case 'DateTime':
-            $apiFormat = 'datetime';
-            break;
+            case 'DateTime':
+                $apiFormat = 'datetime';
+                break;
 
-        case 'Double':
-            $apiFormat = 'double';
-            break;
+            case 'Double':
+                $apiFormat = 'double';
+                break;
 
-        case 'Boolean':
-            $apiFormat = 'boolean';
-            break;
+            case 'Boolean':
+                $apiFormat = 'boolean';
+                break;
 
-        default:
-            $apiFormat = $formatSpecs->data_type;
-            break;
+            default:
+                $apiFormat = $formatSpecs->data_type;
+                break;
         }
 
         $formatedValue = '';
@@ -203,21 +203,21 @@ class RecordApiHelper
                 $stringyfiedValue = !is_string($value) ? json_encode($value) : $value;
 
                 switch ($apiFormat) {
-                case 'double':
-                    $formatedValue = (float) $stringyfiedValue;
-                    break;
+                    case 'double':
+                        $formatedValue = (float) $stringyfiedValue;
+                        break;
 
-                case 'boolean':
-                    $formatedValue = (bool) $stringyfiedValue;
-                    break;
+                    case 'boolean':
+                        $formatedValue = (bool) $stringyfiedValue;
+                        break;
 
-                case 'integer':
-                    $formatedValue = (int) $stringyfiedValue;
-                    break;
+                    case 'integer':
+                        $formatedValue = (int) $stringyfiedValue;
+                        break;
 
-                default:
-                    $formatedValue = $stringyfiedValue;
-                    break;
+                    default:
+                        $formatedValue = $stringyfiedValue;
+                        break;
                 }
             }
         }

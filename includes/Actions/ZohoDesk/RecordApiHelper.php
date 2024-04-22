@@ -1,12 +1,10 @@
 <?php
 
-
-
-namespace BitCode\FI\Actions\ZohoDesk;
+namespace BitApps\BTCBI_PRO\Actions\ZohoDesk;
 
 use WP_Error;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,upsert

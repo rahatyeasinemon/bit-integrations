@@ -4,11 +4,11 @@
  * MailerLite    Record Api
  */
 
-namespace BitCode\FI\Actions\MailerLite;
+namespace BitApps\BTCBI_PRO\Actions\MailerLite;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -90,7 +90,7 @@ class RecordApiHelper
         }
 
         if (empty($finalData['email'])) {
-            return ['success'=>false, 'message'=>'Required field Email is empty', 'code'=>400];
+            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
         }
         if ('https://connect.mailerlite.com/api/' === $this->_baseUrl) {
             $requestParams = [
@@ -137,7 +137,7 @@ class RecordApiHelper
             $response = HttpHelper::post($apiEndpoints, $requestParams, $this->_defaultHeader);
             $response->update = true;
         } elseif ($isExist && empty($this->_actions->update)) {
-            return ['success'=>false, 'message'=>'Subscriber already exist', 'code'=>400];
+            return ['success' => false, 'message' => 'Subscriber already exist', 'code' => 400];
         } else {
             if (!empty($this->_actions->double_opt_in)) {
                 $this->enableDoubleOptIn($auth_token);
@@ -187,7 +187,7 @@ class RecordApiHelper
         $apiResponse = $this->addSubscriber($auth_token, $groupId, $type, $finalData);
 
         if (isset($apiResponse->data->id) || isset($apiResponse->id)) {
-            $res = ['success'=>true, 'message'=>isset($apiResponse->update) ? 'Subscriber updated successfully' : 'Subscriber created successfully', 'code'=>200];
+            $res = ['success' => true, 'message' => isset($apiResponse->update) ? 'Subscriber updated successfully' : 'Subscriber created successfully', 'code' => 200];
             LogHandler::save($this->_integrationID, json_encode(['type' => 'subscriber', 'type_name' => 'add-subscriber']), 'success', json_encode($res));
         } else {
             LogHandler::save($this->_integrationID, json_encode(['type' => 'subscriber', 'type_name' => 'add-subscriber']), 'error', json_encode($apiResponse));

@@ -1,10 +1,10 @@
 {
-    "name": "bitcode/btcbi",
+    "name": "bitcode/btcbi_pro",
     "description": "An Integration plugin for wordpress",
     "license": "gpl-2",
     "autoload": {
         "psr-4": {
-            "BitCode\\FI\\": "includes/"
+            "BitApps\\BTCBI_PRO\\": "includes/"
         }
     },
     "require-dev": {

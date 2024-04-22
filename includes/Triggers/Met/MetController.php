@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\Met;
+namespace BitApps\BTCBI_PRO\Triggers\Met;
 
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Flow\Flow;
 
 final class MetController
 {

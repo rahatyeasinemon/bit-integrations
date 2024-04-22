@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\ZohoAnalytics\ZohoAnalyticsController;
-use BitCode\FI\Core\Util\Route;
+use BitApps\BTCBI_PRO\Actions\ZohoAnalytics\ZohoAnalyticsController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
 
 Route::post('zanalytics_generate_token', [ZohoAnalyticsController::class, 'generateTokens']);
 Route::post('zanalytics_refresh_workspaces', [ZohoAnalyticsController::class, 'refreshWorkspacesAjaxHelper']);

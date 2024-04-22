@@ -4,11 +4,11 @@
  * CustomApi Integration
  */
 
-namespace BitCode\FI\Actions\CustomApi;
+namespace BitApps\BTCBI_PRO\Actions\CustomApi;
 
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for webhooks

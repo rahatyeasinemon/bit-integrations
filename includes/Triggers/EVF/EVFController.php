@@ -1,10 +1,10 @@
 <?php
 
-namespace BitCode\FI\Triggers\EVF;
+namespace BitApps\BTCBI_PRO\Triggers\EVF;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\DateTimeHelper;
+use BitApps\BTCBI_PRO\Flow\Flow;
 use wpdb;
 
 final class EVFController
@@ -120,7 +120,7 @@ final class EVFController
     {
         if (empty($field->label) && !empty($field->placeholder)) {
             return $field->placeholder;
-        } else if (empty($field->label)) {
+        } elseif (empty($field->label)) {
             return $field->id . ' - ' . $field->type;
         }
         return $field->label;
@@ -142,28 +142,28 @@ final class EVFController
     private static function fieldType($type)
     {
         switch ($type) {
-        case 'first-name':
-        case 'last-name':
-        case 'range-slider':
-        case 'payment-quantity':
-        case 'payment-total':
-        case 'rating':
-            return 'text';
-        case 'phone':
-            return 'tel';
-        case 'privacy-policy':
-        case 'payment-checkbox':
-        case 'payment-multiple':
-            return 'checkbox';
-        case 'payment-single':
-            return 'radio';
-        case 'image-upload':
-        case 'file-upload':
-        case 'signature':
-            return 'file';
+            case 'first-name':
+            case 'last-name':
+            case 'range-slider':
+            case 'payment-quantity':
+            case 'payment-total':
+            case 'rating':
+                return 'text';
+            case 'phone':
+                return 'tel';
+            case 'privacy-policy':
+            case 'payment-checkbox':
+            case 'payment-multiple':
+                return 'checkbox';
+            case 'payment-single':
+                return 'radio';
+            case 'image-upload':
+            case 'file-upload':
+            case 'signature':
+                return 'file';
 
-        default:
-            return $type;
+            default:
+                return $type;
         }
     }
 
@@ -173,8 +173,8 @@ final class EVFController
 
         foreach ($fields as $index => $field) {
             $methodName = 'process' . str_replace(' ', '', ucwords(str_replace('-', ' ', self::fieldType($field['type'])))) . 'FieldValue';
-            if (method_exists(new self, $methodName)) {
-                $processedValues =  array_merge($processedValues, call_user_func_array([new self, $methodName], [$index, $field, $form_data]));
+            if (method_exists(new self(), $methodName)) {
+                $processedValues =  array_merge($processedValues, call_user_func_array([new self(), $methodName], [$index, $field, $form_data]));
             } else {
                 $processedValues["$index"] =   $entry['form_fields'][$index];
             }
@@ -192,29 +192,29 @@ final class EVFController
         }
         return $processedValue;
     }
-    
+
     public static function processCountryFieldValue($index, $field, $data)
     {
         $processedValue = [];
         $processedValue["$index"] = $field['value']['country_code'];
         return $processedValue;
     }
-    
+
     public static function processRadioFieldValue($index, $field, $data)
     {
         $processedValue = [];
         $processedValue["$index"] = $field['value_raw'];
         return $processedValue;
     }
-    
+
     public static function processCheckboxFieldValue($index, $field, $data)
     {
         $processedValue = [];
         $processedValue["$index"] = $field['value_raw'];
         return $processedValue;
     }
-    
-    
+
+
     public static function processFileFieldValue($index, $field, $data)
     {
         $processedValue = [];
@@ -231,7 +231,7 @@ final class EVFController
     public static function processDateTimeFieldValue($index, $field, $data)
     {
         $processedValue = [];
-    
+
         $fieldInfo =  $data['form_fields'][$index];
         if ($fieldInfo['date_mode'] === 'single') {
             $dateTimeHelper = new DateTimeHelper();
@@ -249,7 +249,7 @@ final class EVFController
         } else {
             $processedValue[$index] = $field['value'];
         }
-        
+
         return $processedValue;
     }
 

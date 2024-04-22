@@ -4,10 +4,10 @@
  * AgiledCRM Record Api
  */
 
-namespace BitCode\FI\Actions\AgiledCRM;
+namespace BitApps\BTCBI_PRO\Actions\AgiledCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -61,7 +61,7 @@ class RecordApiHelper
         $this->type     = 'Account';
         $this->typeName = 'Account created';
 
-        return HttpHelper::post($apiEndpoint,  json_encode($requestParams), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -116,7 +116,7 @@ class RecordApiHelper
         $this->type     = 'Contact';
         $this->typeName = 'Contact created';
 
-        return HttpHelper::post($apiEndpoint,  json_encode($requestParams), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
 
     public function addDeal($finalData)
@@ -145,7 +145,7 @@ class RecordApiHelper
         $this->type     = 'Deal';
         $this->typeName = 'Deal created';
 
-        return HttpHelper::post($apiEndpoint,  json_encode($requestParams), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -160,7 +160,7 @@ class RecordApiHelper
                 } else {
                     $dataFinal[$actionValue] = $value->customValue;
                 }
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!is_null($data[$triggerValue])) {
                 if ($actionValue === 'customFieldKey') {
                     $dataFinal[$value->customFieldKey] = $data[$triggerValue];
                 } else {
@@ -179,7 +179,7 @@ class RecordApiHelper
             $actionValue  = $value->agiledFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = $value->customValue;
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }

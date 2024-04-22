@@ -4,11 +4,11 @@
  * Mailercloud Integration
  */
 
-namespace BitCode\FI\Actions\Mailercloud;
+namespace BitApps\BTCBI_PRO\Actions\Mailercloud;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\Mailercloud\RecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Actions\Mailercloud\RecordApiHelper;
 
 /**
  * Provide functionality for Mailercloud integration
@@ -64,8 +64,8 @@ class MailercloudController
           'Authorization' => $requestParams->authKey
         ];
         $body = [
-            "limit"=>100,
-            "page"=>1
+            "limit" => 100,
+            "page" => 1
         ];
         $response = HttpHelper::post($apiEndpoints, json_encode($body), $headers);
 
@@ -99,8 +99,8 @@ class MailercloudController
           'Authorization' => $requestParams->authKey
         ];
         $body = [
-            "limit"=>100,
-            "page"=>1
+            "limit" => 100,
+            "page" => 1
         ];
         $response = HttpHelper::post($apiEndpoints, json_encode($body), $headers);
 
@@ -115,18 +115,18 @@ class MailercloudController
         }
         $fields = [];
         $staticFieldsKeys = ['city', 'country', "details", 'department', 'dob', 'email', 'industry', 'job_title', 'last_name', 'lead_source', 'middle_name', 'name', 'organization', 'phone', 'salary', 'state', 'zip','contact_type', 'list_id' , 'lead_source' , 'userip'];
-        foreach ($response->data as $key=>$field) {
+        foreach ($response->data as $key => $field) {
             if (in_array($field->field_value, $staticFieldsKeys)) {
                 $fields[] = (object) [
                     'label' => $field->field_name,
-                    'key' =>$field->field_value ,
-                    'required' =>$field->field_value == 'email' ? true : false ,
+                    'key' => $field->field_value ,
+                    'required' => $field->field_value == 'email' ? true : false ,
                 ];
             } else {
                 $fields[] = (object) [
                     'label' => $field->field_name,
-                    'key' =>$field->id ,
-                    'required' =>$field->field_value == 'email' ? true : false ,
+                    'key' => $field->id ,
+                    'required' => $field->field_value == 'email' ? true : false ,
                 ];
             }
         }

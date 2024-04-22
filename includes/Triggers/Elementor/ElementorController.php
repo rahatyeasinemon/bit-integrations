@@ -1,12 +1,12 @@
 <?php
 
-namespace BitCode\FI\Triggers\Elementor;
+namespace BitApps\BTCBI_PRO\Triggers\Elementor;
 
 use WP_Error;
 use ReflectionClass;
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Triggers\TriggerController;
+use BitApps\BTCBI_PRO\Flow\Flow;
+use BitApps\BTCBI_PRO\Core\Util\Helper;
+use BitApps\BTCBI_PRO\Triggers\TriggerController;
 
 final class ElementorController
 {

@@ -5,8 +5,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\Brizy\BrizyController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
+use BitApps\BTCBI_PRO\Triggers\Brizy\BrizyController;
 
 Route::get('brizy/get', [BrizyController::class, 'getAllForms']);
 Route::post('brizy/get/form', [BrizyController::class, 'getFormFields']);

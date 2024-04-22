@@ -1,5 +1,6 @@
 <?php
-namespace BitCode\FI\Actions\SliceWp;
+
+namespace BitApps\BTCBI_PRO\Actions\SliceWp;
 
 use WP_Error;
 
@@ -23,7 +24,7 @@ class SliceWpController
 
     public function execute($integrationData, $fieldValues)
     {
-        
+
         $integrationDetails = $integrationData->flow_details;
         $integId = $integrationData->id;
         $mainAction = $integrationDetails->mainAction;

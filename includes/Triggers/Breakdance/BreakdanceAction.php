@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\FI\Triggers\Breakdance;
+namespace BitApps\BTCBI_PRO\Triggers\Breakdance;
 
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Core\Util\Helper;
+use BitApps\BTCBI_PRO\Flow\Flow;
+use BitApps\BTCBI_PRO\Core\Util\Helper;
 use Breakdance\Forms\Actions\Action;
-use BitCode\FI\Triggers\Breakdance\BreakdanceHelper;
+use BitApps\BTCBI_PRO\Triggers\Breakdance\BreakdanceHelper;
 
 if (class_exists('Breakdance\Forms\Actions\Action')) {
     class BreakdanceAction extends Action

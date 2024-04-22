@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Triggers\Groundhogg\GroundhoggController;
+use BitApps\BTCBI_PRO\Core\Util\Hooks;
+use BitApps\BTCBI_PRO\Triggers\Groundhogg\GroundhoggController;
 
 // Hooks::add('groundhogg/db/post_insert/contact', [GroundhoggController::class, 'handle_groundhogg_submit'], 10, 2);
 Hooks::add('groundhogg/contact/post_create', [GroundhoggController::class, 'handle_groundhogg_submit'], 10, 3);

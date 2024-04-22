@@ -1,19 +1,18 @@
 <?php
 
+namespace BitApps\BTCBI_PRO\Actions\WishList;
 
-
-namespace BitCode\FI\Actions\WishList;
-
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\DateTimeHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
  */
 class RecordApiHelper
 {
-    protected $action, $api;
+    protected $action;
+    protected $api;
     public function __construct($integrationDetails, $baseUrl, $apiKey)
     {
         $this->integrationDetails = $integrationDetails;
@@ -50,7 +49,9 @@ class RecordApiHelper
         } else {
             $data['Levels'] = [$levelId];
             $apiResponse = $this->api->post('/members', $data);
-            if ($apiResponse) $response = json_decode($apiResponse);
+            if ($apiResponse) {
+                $response = json_decode($apiResponse);
+            }
         }
         return $response;
     }
@@ -76,7 +77,9 @@ class RecordApiHelper
         $isExist = $this->searchLevel($data['name']);
         if (!$isExist) {
             $apiResponse = $this->api->post('/levels', $data);
-            if ($apiResponse) $isExist = json_decode($apiResponse)->level;
+            if ($apiResponse) {
+                $isExist = json_decode($apiResponse)->level;
+            }
         }
         $levelId = $isExist->id;
         $response = $this->api->post("/levels/$levelId/members", $users);
@@ -92,7 +95,7 @@ class RecordApiHelper
             $actionValue = $value->wishlistField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }

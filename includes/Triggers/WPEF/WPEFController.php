@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\FI\Triggers\WPEF;
+namespace BitApps\BTCBI_PRO\Triggers\WPEF;
 
 use wpdb;
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\DateTimeHelper;
+use BitApps\BTCBI_PRO\Flow\Flow;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\DateTimeHelper;
 
 final class WPEFController
 {
@@ -189,13 +189,13 @@ final class WPEFController
         foreach ($fields as $index => $field) {
             if ($field['type'] == 'datetime') {
                 $processedValues["{$field['m_type']}.$index"] =  self::processDateFieldValue($index, $field, $data);
-            } else if ($field['type'] == 'feedback_matrix') {
+            } elseif ($field['type'] == 'feedback_matrix') {
                 $processedValues["{$field['m_type']}.$index"] =   $field['rows'];
-            } else if ($field['type'] == 'gps') {
+            } elseif ($field['type'] == 'gps') {
                 $processedValues["{$field['m_type']}.$index"] =   $field['lat'] . ", " .  $field['long'];
-            } else if ($field['type'] == 'upload') {
+            } elseif ($field['type'] == 'upload') {
                 $processedValues["{$field['m_type']}.$index"] = self::processUploadFieldValue($index, $field, $data);
-            } else if ($field['type'] == 'address') {
+            } elseif ($field['type'] == 'address') {
                 $processedValues = array_merge($processedValues, self::processAddressFieldValue($index, $field, $data));
             } else {
                 // $elementValueHelper = new \IPT_EForm_Form_Elements_Values($data->data_id, $data->form_id);
@@ -204,13 +204,13 @@ final class WPEFController
                 $processedValues["{$field['m_type']}.$index"] =   '';
                 if (isset($field['value'])) {
                     $processedValues["{$field['m_type']}.$index"] =   $field['value'];
-                } else if (isset($field['values'])) {
+                } elseif (isset($field['values'])) {
                     $processedValues["{$field['m_type']}.$index"] =   $field['values'];
-                } else if (isset($field['options'])) {
+                } elseif (isset($field['options'])) {
                     $processedValues["{$field['m_type']}.$index"] =   is_array($field['options']) && count($field['options']) == 1 ? $field['options'][0] : $field['options'];
-                } else if (isset($field['rows'])) {
+                } elseif (isset($field['rows'])) {
                     $processedValues["{$field['m_type']}.$index"] =   $field['rows'];
-                } else if (isset($field['order'])) {
+                } elseif (isset($field['order'])) {
                     $processedValues["{$field['m_type']}.$index"] =   $field['order'];
                 }
             }
@@ -253,9 +253,9 @@ final class WPEFController
         $f_time_format = $fieldInfo['settings']['time_format'];
         if ($f_date_format == 'mm/dd/yy') {
             $date_format = 'm/d/Y';
-        } else if ($f_date_format == 'yy-mm-dd') {
+        } elseif ($f_date_format == 'yy-mm-dd') {
             $date_format = 'Y-m-d';
-        } else if ($f_date_format == 'dd.mm.yy') {
+        } elseif ($f_date_format == 'dd.mm.yy') {
             $date_format = 'd.m.Y';
         } else {
             $date_format = 'd-m-Y';

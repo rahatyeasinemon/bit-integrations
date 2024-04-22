@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\FI\Actions\SendPulse;
+namespace BitApps\BTCBI_PRO\Actions\SendPulse;
 
 use WP_Error;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Actions\SendPulse\RecordApiHelper;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Flow\FlowController;
+use BitApps\BTCBI_PRO\Actions\SendPulse\RecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 class SendPulseController
 {
@@ -76,7 +76,7 @@ class SendPulseController
                     $fields[$field->name] = (object) [
                         'fieldName' => $field->name,
                         'fieldValue' => strtolower(str_replace(' ', '_', $field->name)),
-                        'required' =>  strtolower($field->name)=='email' ? true : false
+                        'required' =>  strtolower($field->name) == 'email' ? true : false
                     ];
                 }
             }
@@ -108,7 +108,7 @@ class SendPulseController
             ];
         }
 
-        if ((count($lists))>0) {
+        if ((count($lists)) > 0) {
             wp_send_json_success($lists, 200);
         } else {
             wp_send_json_error('List fetching failed', 400);

@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\WPCourseware\WPCoursewareController;
-use BitCode\FI\Core\Util\Route;
+use BitApps\BTCBI_PRO\Actions\WPCourseware\WPCoursewareController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
 
 Route::post('wpCourseware_authorize', [WPCoursewareController::class, 'wpCoursewareAuthorize']);
 Route::post('wpCourseware_actions', [WPCoursewareController::class, 'WPCWActions']);

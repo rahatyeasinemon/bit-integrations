@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\Airtable\AirtableController;
-use BitCode\FI\Core\Util\Route;
+use BitApps\BTCBI_PRO\Actions\Airtable\AirtableController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
 
 Route::post('airtable_authentication', [AirtableController::class, 'authentication']);
 Route::post('airtable_fetch_all_tables', [AirtableController::class, 'getAllTables']);

@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\FI\controller;
+namespace BitApps\BTCBI_PRO\controller;
 
 final class PostController
 {
@@ -15,14 +15,14 @@ final class PostController
             'public'   => true,
             'capability_type' => 'post',
         );
-    
-        $types = get_post_types( $cptArguments, 'object' );
+
+        $types = get_post_types($cptArguments, 'object');
 
         $lists = [];
 
         foreach ($types as $key => $type) {
-                $lists[$key]['id'] = $type->name;
-                $lists[$key]['title'] = $type->label;
+            $lists[$key]['id'] = $type->name;
+            $lists[$key]['title'] = $type->label;
         }
         wp_send_json_success(array_values($lists));
     }
@@ -146,19 +146,19 @@ final class PostController
             $i = 0;
             foreach (array_values($pods->fields) as $field) {
                 $i++;
-                if($field['type'] === 'file'){
+                if($field['type'] === 'file') {
                     $podFile[$i]['key'] = $field['name'];
                     $podFile[$i]['name'] = $field['label'];
                     $podFile[$i]['required'] = $field['options']['required'] == 1 ? true : false;
-                 }else{
+                } else {
                     $podField[$i]['key'] = $field['name'];
                     $podField[$i]['name'] = $field['label'];
                     $podField[$i]['required'] = $field['options']['required'] == 1 ? true : false;
-                  }
-               
+                }
+
             }
         }
         // echo json_encode(array_values($pods->fields) );
-        wp_send_json_success(['podFields'=>$podField, 'podFiles'=>$podFile], 200);
+        wp_send_json_success(['podFields' => $podField, 'podFiles' => $podFile], 200);
     }
 }

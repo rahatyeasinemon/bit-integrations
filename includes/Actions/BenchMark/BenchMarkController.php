@@ -4,11 +4,11 @@
  * Benchmark Integration
  */
 
-namespace BitCode\FI\Actions\BenchMark;
+namespace BitApps\BTCBI_PRO\Actions\BenchMark;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\BenchMark\RecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Actions\BenchMark\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -91,7 +91,7 @@ class BenchMarkController
         if (!is_wp_error($benchMarkResponse)) {
             $allLists = (object)($benchMarkResponse->Response->Data);
 
-            foreach ($allLists as $key=>$list) {
+            foreach ($allLists as $key => $list) {
                 $lists[$list->Name] = (object) [
                     'listId' => $list->ID,
                     'listName' => $list->Name,
@@ -140,7 +140,7 @@ class BenchMarkController
                     'fieldId' => $field,
                     'fieldName' => $field,
                     'fieldValue' => strtolower(str_replace(' ', '_', $field)),
-                    'required' =>  $field=='email' ? true : false
+                    'required' =>  $field == 'email' ? true : false
                 ];
             }
 

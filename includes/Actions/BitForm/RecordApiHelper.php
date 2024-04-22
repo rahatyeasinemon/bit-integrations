@@ -4,11 +4,11 @@
  * BitForm Record Api
  */
 
-namespace BitCode\FI\Actions\BitForm;
+namespace BitApps\BTCBI_PRO\Actions\BitForm;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -32,14 +32,14 @@ class RecordApiHelper
             $actionValue = $value->BitFormMapField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
         return $dataFinal;
     }
 
-    public function insertRecord($finalData, $api_key, $domainName,$formId)
+    public function insertRecord($finalData, $api_key, $domainName, $formId)
     {
         if (
             empty($domainName)
@@ -61,7 +61,7 @@ class RecordApiHelper
         $apiEndpoint = $domainName . '/wp-json/bitform/v1/entry/' . $formId;
 
         return HttpHelper::post($apiEndpoint, $finalData, $authorizationHeader);
-        
+
     }
 
     public function execute(
@@ -74,9 +74,9 @@ class RecordApiHelper
     ) {
         $fieldData = [];
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        
-        $apiResponse = $this->insertRecord($finalData, $api_key, $domainName,$formId);
-   
+
+        $apiResponse = $this->insertRecord($finalData, $api_key, $domainName, $formId);
+
         if (property_exists($apiResponse, 'errors')) {
             LogHandler::save($this->_integrationID, json_encode(['type' =>  'contact', 'type_name' => 'add-contact']), 'error', json_encode($apiResponse));
         } else {

@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Actions\GoogleDrive;
+namespace BitApps\BTCBI_PRO\Actions\GoogleDrive;
 
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 class RecordApiHelper
 {
@@ -18,7 +18,9 @@ class RecordApiHelper
 
     public function uploadFile($folder, $filePath)
     {
-        if ($filePath === '') return false;
+        if ($filePath === '') {
+            return false;
+        }
 
         $apiEndpoint = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart';
         $boundary = $this->getBoundary();
@@ -50,7 +52,9 @@ class RecordApiHelper
     {
         foreach ($folderWithFile as $folder => $filePath) {
             $folder = $folderKey ? $folderKey : $folder;
-            if ($filePath == '') continue;
+            if ($filePath == '') {
+                continue;
+            }
 
             if (is_array($filePath)) {
                 $this->handleAllFiles($filePath, $actions, $folder);

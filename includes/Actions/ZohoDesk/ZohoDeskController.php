@@ -3,10 +3,11 @@
 /**
  * ZohoDesk Integration
  */
-namespace BitCode\FI\Actions\ZohoDesk;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
+namespace BitApps\BTCBI_PRO\Actions\ZohoDesk;
+
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Flow\FlowController;
 use WP_Error;
 
 /**
@@ -34,7 +35,7 @@ class ZohoDeskController
                 || empty($requestsParams->clientSecret)
                 || empty($requestsParams->redirectURI)
                 || empty($requestsParams->code)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -70,7 +71,7 @@ class ZohoDeskController
                 || empty($queryParams->dataCenter)
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -136,7 +137,7 @@ class ZohoDeskController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->orgId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -196,7 +197,7 @@ class ZohoDeskController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->orgId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -278,7 +279,7 @@ class ZohoDeskController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->orgId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -336,7 +337,7 @@ class ZohoDeskController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->orgId)
                 || empty($queryParams->departmentId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',

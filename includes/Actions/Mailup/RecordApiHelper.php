@@ -1,10 +1,10 @@
 <?php
 
-namespace BitCode\FI\Actions\Mailup;
+namespace BitApps\BTCBI_PRO\Actions\Mailup;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 class RecordApiHelper
 {
@@ -53,7 +53,7 @@ class RecordApiHelper
         if (!empty($customFields)) {
             $requestParams['Fields'] = $customFields;
         }
-        return HttpHelper::post($apiEndpoints,  json_encode($requestParams), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoints, json_encode($requestParams), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Actions\SliceWp;
+namespace BitApps\BTCBI_PRO\Actions\SliceWp;
 
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\Common;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
 
 class RecordApiHelper
 {

@@ -1,8 +1,9 @@
 <?php
-namespace BitCode\FI\Actions\Memberpress;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
+namespace BitApps\BTCBI_PRO\Actions\Memberpress;
+
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 use MeprTransaction;
 use MeprUser;
 use MeprUtils;
@@ -79,12 +80,12 @@ class RecordApiHelper
 
             // This is a recurring payment
             if (($sub = $allData->subscription()) && $sub->txn_count > 1) {
-                 MeprEvent::record(
+                MeprEvent::record(
                     'recurring-transaction-completed',
                     $allData
                 );
             } elseif (!$sub) {
-                 MeprEvent::record(
+                MeprEvent::record(
                     'non-recurring-transaction-completed',
                     $allData
                 );
@@ -94,54 +95,55 @@ class RecordApiHelper
         return $apiResponse;
     }
 
-    public function removeUserFormMembership($integrationDetails, $finalData){
+    public function removeUserFormMembership($integrationDetails, $finalData)
+    {
 
-		$membership = $integrationDetails->selectedMembership;
+        $membership = $integrationDetails->selectedMembership;
         $user_id = get_current_user_id();
-		$user_obj   = get_user_by( 'id', $user_id );
-		$table      = MeprSubscription::account_subscr_table(
-			'created_at',
-			'DESC',
-			'',
-			'',
-			'any',
-			'',
-			false,
-			array(
-				'member'   => $user_obj->user_login,
-				'statuses' => array(
-					MeprSubscription::$active_str,
-					MeprSubscription::$suspended_str,
-					MeprSubscription::$cancelled_str,
-				),
-			),
-			MeprHooks::apply_filters(
-				'mepr_user_subscriptions_query_cols',
-				array(
-					'id',
-					'product_id',
-					'created_at',
-				)
-			)
-		);
+        $user_obj   = get_user_by('id', $user_id);
+        $table      = MeprSubscription::account_subscr_table(
+            'created_at',
+            'DESC',
+            '',
+            '',
+            'any',
+            '',
+            false,
+            array(
+                'member'   => $user_obj->user_login,
+                'statuses' => array(
+                    MeprSubscription::$active_str,
+                    MeprSubscription::$suspended_str,
+                    MeprSubscription::$cancelled_str,
+                ),
+            ),
+            MeprHooks::apply_filters(
+                'mepr_user_subscriptions_query_cols',
+                array(
+                    'id',
+                    'product_id',
+                    'created_at',
+                )
+            )
+        );
 
-		if ( $table['count'] > 0 ) {
-			foreach ( $table['results'] as $row ) {
-				if ( $row->product_id == $membership || $membership == - 1 ) {
-					if ( $row->sub_type == 'subscription' ) {
-						$sub = new MeprSubscription( $row->id );
-					} elseif ( $row->sub_type == 'transaction' ) {
-						$sub = new MeprTransaction( $row->id );
-					}
-					$apiResponse = $sub->destroy();
-					$member = $sub->user();
-					$member->update_member_data();
-				}
-			}
+        if ($table['count'] > 0) {
+            foreach ($table['results'] as $row) {
+                if ($row->product_id == $membership || $membership == - 1) {
+                    if ($row->sub_type == 'subscription') {
+                        $sub = new MeprSubscription($row->id);
+                    } elseif ($row->sub_type == 'transaction') {
+                        $sub = new MeprTransaction($row->id);
+                    }
+                    $apiResponse = $sub->destroy();
+                    $member = $sub->user();
+                    $member->update_member_data();
+                }
+            }
             return $apiResponse;
-		}
+        }
 
-	}
+    }
 
     public function execute(
         $mainAction,
@@ -159,7 +161,7 @@ class RecordApiHelper
             } else {
                 LogHandler::save(self::$integrationID, json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership']), 'success', json_encode("Successfully user added to the membership and id is: $apiResponse"));
             }
-        } elseif ($mainAction === '2'){
+        } elseif ($mainAction === '2') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = $this->removeUserFormMembership($integrationDetails, $finalData);
             if ($apiResponse) {

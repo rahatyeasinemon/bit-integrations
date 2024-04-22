@@ -4,10 +4,10 @@
  * ClinchPad Integration
  */
 
-namespace BitCode\FI\Actions\ClinchPad;
+namespace BitApps\BTCBI_PRO\Actions\ClinchPad;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ClinchPad integration
@@ -81,7 +81,7 @@ class ClinchPadController
         $headers = [
             "Authorization" => 'Basic ' . base64_encode("api-key:$apiKey")
         ];
-        
+
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (!empty($response)) {

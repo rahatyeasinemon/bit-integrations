@@ -4,26 +4,25 @@
  * Encharge Integration
  */
 
-namespace BitCode\FI\Actions\Encharge;
+namespace BitApps\BTCBI_PRO\Actions\Encharge;
 
 use WP_Error;
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\IpTool;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
-use BitCode\FI\Actions\Encharge\RecordApiHelper;
+use BitApps\BTCBI_PRO\Actions\Encharge\RecordApiHelper;
 
 /**
  * Provide functionality for Encharge integration
  */
 class EnchargeController
 {
-    
     private $_integrationID;
-    const APIENDPOINT = 'https://api.encharge.io/v1/';
+    public const APIENDPOINT = 'https://api.encharge.io/v1/';
 
     public function __construct($integrationID)
     {
-        
+
         $this->_integrationID = $integrationID;
     }
 
@@ -106,7 +105,7 @@ class EnchargeController
         $api_key = $integrationDetails->api_key;
         $fieldMap = $integrationDetails->field_map;
         $tags = property_exists($integrationDetails, 'tags') ? $integrationDetails->tags : null;
-  
+
         if (empty($api_key)
             || empty($fieldMap)
         ) {

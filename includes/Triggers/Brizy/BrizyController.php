@@ -1,10 +1,10 @@
 <?php
 
-namespace BitCode\FI\Triggers\Brizy;
+namespace BitApps\BTCBI_PRO\Triggers\Brizy;
 
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\Common;
+use BitApps\BTCBI_PRO\Flow\Flow;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
 
 final class BrizyController
 {

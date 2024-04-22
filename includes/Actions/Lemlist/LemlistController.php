@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\FI\Actions\Lemlist;
+namespace BitApps\BTCBI_PRO\Actions\Lemlist;
 
 use WP_Error;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Actions\Lemlist\RecordApiHelper;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Flow\FlowController;
+use BitApps\BTCBI_PRO\Actions\Lemlist\RecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 class LemlistController
 {

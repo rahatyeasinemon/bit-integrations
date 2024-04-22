@@ -5,11 +5,11 @@
  *
  */
 
-namespace BitCode\FI\Actions\WishList;
+namespace BitApps\BTCBI_PRO\Actions\WishList;
 
 use WP_Error;
-use BitCode\FI\Actions\WishList\RecordApiHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Actions\WishList\RecordApiHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 include('wlmapiclass.php');
 

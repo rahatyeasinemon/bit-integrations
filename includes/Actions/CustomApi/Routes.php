@@ -4,5 +4,5 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\CustomApi\CustomApiController;
-use BitCode\FI\Core\Util\Route;
+use BitApps\BTCBI_PRO\Actions\CustomApi\CustomApiController;
+use BitApps\BTCBI_PRO\Core\Util\Route;

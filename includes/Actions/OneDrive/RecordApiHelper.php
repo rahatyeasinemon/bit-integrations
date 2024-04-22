@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Actions\OneDrive;
+namespace BitApps\BTCBI_PRO\Actions\OneDrive;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 class RecordApiHelper
 {
@@ -24,7 +24,9 @@ class RecordApiHelper
             $parentId = $folderId;
         }
         $ids = explode('!', $folderId);
-        if ($filePath === '') return false;
+        if ($filePath === '') {
+            return false;
+        }
         $apiEndpoint = 'https://api.onedrive.com/v1.0/drives/' . $ids[0] . '/items/' . $parentId . ':/' . basename($filePath) . ':/content';
 
         $headers = [
@@ -53,10 +55,14 @@ class RecordApiHelper
     public function handleAllFiles($folderWithFile, $actions, $folderId, $parentId)
     {
         foreach ($folderWithFile as $folder => $filePath) {
-            if ($filePath == '') continue;
+            if ($filePath == '') {
+                continue;
+            }
             if (is_array($filePath)) {
                 foreach ($filePath as $singleFilePath) {
-                    if ($singleFilePath == '') continue;
+                    if ($singleFilePath == '') {
+                        continue;
+                    }
                     $response = $this->uploadFile($folder, $singleFilePath, $folderId, $parentId);
                     $this->storeInState($response);
                     $this->deleteFile($singleFilePath, $actions);
@@ -94,7 +100,7 @@ class RecordApiHelper
         $actionsAttachments = explode(",", "$actions->attachments");
         if (is_array($actionsAttachments)) {
             foreach ($actionsAttachments as $actionAttachment) {
-                if(is_array($fieldValues[$actionAttachment])){
+                if(is_array($fieldValues[$actionAttachment])) {
                     foreach ($fieldValues[$actionAttachment] as $value) {
                         $folderWithFile = ["$actionsAttachments" => $value];
                     }

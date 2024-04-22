@@ -1,12 +1,10 @@
 <?php
 
+namespace BitApps\BTCBI_PRO\Actions\ElasticEmail;
 
-namespace BitCode\FI\Actions\ElasticEmail;
-
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
-
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 class RecordApiHelper
 {
@@ -20,7 +18,7 @@ class RecordApiHelper
         $this->_integrationID = $integId;
     }
 
-    public function createContact($data, $listName,$apiKey)
+    public function createContact($data, $listName, $apiKey)
     {
 
         $tmpData = \is_string($data) ? $data : \json_encode([(object)$data]);
@@ -43,27 +41,27 @@ class RecordApiHelper
             $actionValue = $value->elasticEmailField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
         return $dataFinal;
     }
-    
-    public function execute($integId,$fieldValues, $fieldMap,$integrationDetails)
+
+    public function execute($integId, $fieldValues, $fieldMap, $integrationDetails)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $listName = $integrationDetails->list_id;
         $query = "";
 
-        foreach($listName as $key=>$val) {
-            $query.='listnames='.$val.'&';
+        foreach($listName as $key => $val) {
+            $query .= 'listnames='.$val.'&';
         };
         if(strlen($query)) {
             $query = substr($query, 0, -1);
         }
         $api_key = $integrationDetails->api_key;
-        $apiResponse = $this->createContact($finalData, $query,  $api_key);
+        $apiResponse = $this->createContact($finalData, $query, $api_key);
 
         if (!is_array($apiResponse)) {
             LogHandler::save($integId, wp_json_encode(['type' => 'contacts', 'type_name' => "contact_add"]), 'error', wp_json_encode($apiResponse));

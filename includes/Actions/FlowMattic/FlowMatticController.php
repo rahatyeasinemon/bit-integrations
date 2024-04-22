@@ -5,9 +5,9 @@
  *
  */
 
-namespace BitCode\FI\Actions\FlowMattic;
+namespace BitApps\BTCBI_PRO\Actions\FlowMattic;
 
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+use BitApps\BTCBI_PRO\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for FlowMatticHandler

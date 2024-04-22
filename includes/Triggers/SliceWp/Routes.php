@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\SliceWp\SliceWpController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
+use BitApps\BTCBI_PRO\Triggers\SliceWp\SliceWpController;
 
 Route::get('slicewp/get', [SliceWpController::class, 'getAll']);
 Route::post('slicewp/get/form', [SliceWpController::class, 'get_a_form']);

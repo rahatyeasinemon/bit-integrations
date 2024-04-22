@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\ConstantContact\ConstantContactController;
-use BitCode\FI\Core\Util\Route;
+use BitApps\BTCBI_PRO\Actions\ConstantContact\ConstantContactController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
 
 Route::post('cContact_generate_token', [ConstantContactController::class, 'generateTokens']);
 Route::post('cContact_refresh_list', [ConstantContactController::class, 'refreshList']);

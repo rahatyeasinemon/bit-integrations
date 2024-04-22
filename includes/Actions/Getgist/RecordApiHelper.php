@@ -1,11 +1,10 @@
 <?php
 
-namespace BitCode\FI\Actions\Getgist;
+namespace BitApps\BTCBI_PRO\Actions\Getgist;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
-
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 class RecordApiHelper
 {
@@ -35,20 +34,20 @@ class RecordApiHelper
             $actionValue = $value->getgistFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
-        
+
         if (property_exists($integrationDetails, 'user_type') && property_exists($integrationDetails, 'userId') && $integrationDetails->user_type == 'User') {
             $dataFinal['user_id'] = $integrationDetails->userId;
         }
         return $dataFinal;
     }
-    
-    public function execute($integId,$fieldValues, $fieldMap,$integrationDetails)
+
+    public function execute($integId, $fieldValues, $fieldMap, $integrationDetails)
     {
-        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap,$integrationDetails);
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap, $integrationDetails);
         $apiResponse = $this->createContact($finalData);
 
         if (!property_exists($apiResponse, 'contact')) {

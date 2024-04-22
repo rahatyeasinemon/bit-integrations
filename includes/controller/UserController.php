@@ -1,5 +1,6 @@
 <?php
-namespace BitCode\FI\controller;
+
+namespace BitApps\BTCBI_PRO\controller;
 
 final class UserController
 {

@@ -3,11 +3,12 @@
 /**
  * PipeDrive    Record Api
  */
-namespace BitCode\FI\Actions\PipeDrive;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+namespace BitApps\BTCBI_PRO\Actions\PipeDrive;
+
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -50,7 +51,7 @@ class RecordApiHelper
             if ($module === 'leads' && isset($actions->currency) && !empty($actions->currency)) {
                 $finalData['value'] = (object)[
                     'amount'  => isset($finalData['value']) ? (int) $finalData['value'] : 0,
-                    'currency'=> $moduleData->currency,
+                    'currency' => $moduleData->currency,
                 ];
                 unset($finalData['currency']);
             }
@@ -121,7 +122,7 @@ class RecordApiHelper
             foreach ($participants as $participant) {
                 array_push($allParticipants, (object)[
                     'person_id'   => (int) $participant,
-                    'primary_flag'=> false
+                    'primary_flag' => false
                 ]);
             };
             $finalData['participants'] = $allParticipants;
@@ -155,7 +156,7 @@ class RecordApiHelper
                 foreach ($participants as $participant) {
                     array_push($allParticipants, (object)[
                         'person_id'   => (int) $participant,
-                        'primary_flag'=> false
+                        'primary_flag' => false
                     ]);
                 };
                 $finalData['participants'] = $allParticipants;

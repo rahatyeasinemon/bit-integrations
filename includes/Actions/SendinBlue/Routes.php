@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\SendinBlue\SendinBlueController;
-use BitCode\FI\Core\Util\Route;
+use BitApps\BTCBI_PRO\Actions\SendinBlue\SendinBlueController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
 
 Route::post('sblue_authorize', [SendinBlueController::class, 'sendinBlueAuthorize']);
 Route::post('sblue_refresh_lists', [SendinBlueController::class, 'refreshlists']);

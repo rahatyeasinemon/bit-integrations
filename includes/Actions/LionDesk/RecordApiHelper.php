@@ -4,10 +4,10 @@
  * LionDesk Record Api
  */
 
-namespace BitCode\FI\Actions\LionDesk;
+namespace BitApps\BTCBI_PRO\Actions\LionDesk;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -39,7 +39,7 @@ class RecordApiHelper
         if (empty($finalData['name'])) {
             return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
         }
-        
+
         $this->type     = 'Campaign';
         $this->typeName = 'Campaign created';
         $apiEndpoint = $this->apiUrl . "/campaigns";
@@ -51,31 +51,33 @@ class RecordApiHelper
         if (empty($finalData['email'])) {
             return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
         }
-        
+
         $staticFieldKeys = ['first_name', 'last_name', 'email', 'mobile_phone','home_phone', 'office_phone', 'fax', 'company', 'birthday', 'anniversary', 'spouse_name', 'spouse_email', 'spouse_phone', 'spouse_birthday', 'type', 'street_address_1', 'street_address_2', 'zip', 'city', 'state'];
         $address         = [];
         $requestParams   = [];
         $customParams    = [];
 
-        foreach($finalData as $key => $value){
-            if(in_array($key, $staticFieldKeys)){
-                if($key === "type" ||$key === "street_address_1" ||$key === "street_address_2" ||$key === "zip" ||$key === "city" ||$key === "state" ){
+        foreach($finalData as $key => $value) {
+            if(in_array($key, $staticFieldKeys)) {
+                if($key === "type" || $key === "street_address_1" || $key === "street_address_2" || $key === "zip" || $key === "city" || $key === "state") {
                     $address[$key] = $value;
-                }else{
+                } else {
                     $requestParams[$key] = $value;
                 }
-            }else{
-                array_push($customParams, 
-                (object)[
+            } else {
+                array_push(
+                    $customParams,
+                    (object)[
                     'id'    => $key,
                     'value' => $value
-                ]);
+                ]
+                );
             }
         }
         if (isset($this->integrationDetails->selectedTag) && !empty($this->integrationDetails->selectedTag)) {
             $requestParams['tags'] = ($this->integrationDetails->selectedTag);
         }
-        if(count($customParams)){
+        if(count($customParams)) {
             $requestParams["custom_fields"] = $customParams;
         }
 
@@ -83,11 +85,11 @@ class RecordApiHelper
         $this->typeName = 'Contact created';
         $apiEndpoint = $this->apiUrl . "/contacts";
         $apiResponse =  HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
-        
-        if(isset($apiResponse->id) && count($address) > 0){
+
+        if(isset($apiResponse->id) && count($address) > 0) {
             $apiEndpoint = $this->apiUrl . "/contacts/$apiResponse->id/addresses";
             return HttpHelper::post($apiEndpoint, json_encode($address), $this->defaultHeader);
-        }else{
+        } else {
             return $apiResponse;
         }
     }
@@ -108,10 +110,10 @@ class RecordApiHelper
         $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         if ($actionName === "campaign") {
             $apiResponse = $this->addCampaign($finalData);
-        } else{
+        } else {
             $apiResponse = $this->addContact($finalData);
         }
-        
+
         if (isset($apiResponse->id)) {
             $res = [$this->typeName . ' successfully'];
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));

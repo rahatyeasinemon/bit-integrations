@@ -4,11 +4,11 @@
  * Selesforce Integration
  */
 
-namespace BitCode\FI\Actions\Salesforce;
+namespace BitApps\BTCBI_PRO\Actions\Salesforce;
 
 use WP_Error;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Flow\FlowController;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 class SalesforceController
 {
@@ -118,7 +118,9 @@ class SalesforceController
         }
 
         $customFields = array_filter($apiResponse->fields, function ($field) {
-            if ($field->custom) return true;
+            if ($field->custom) {
+                return true;
+            }
         });
 
         $fieldMap = [];

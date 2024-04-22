@@ -4,10 +4,10 @@
  * Freshdesk Record Api
  */
 
-namespace BitCode\FI\Actions\FluentSupport;
+namespace BitApps\BTCBI_PRO\Actions\FluentSupport;
 
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\Common;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
 use FluentSupport\App\Models\Ticket;
 use FluentSupport\App\Models\Customer;
 use FluentSupport\App\Services\Helper;
@@ -17,7 +17,6 @@ use FluentSupport\App\Services\Helper;
  */
 class RecordApiHelper
 {
-
     private $_integrationID;
 
     public function __construct($integrationId)
@@ -34,7 +33,7 @@ class RecordApiHelper
             $actionValue = $value->fluentSupportFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }

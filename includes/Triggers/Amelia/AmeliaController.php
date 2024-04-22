@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\Amelia;
+namespace BitApps\BTCBI_PRO\Triggers\Amelia;
 
-use BitCode\FI\Triggers\Webhook\WebhookController;
+use BitApps\BTCBI_PRO\Triggers\Webhook\WebhookController;
 
 final class AmeliaController extends WebhookController
 {

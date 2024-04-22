@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\FI\Triggers\SureCart;
 
-use BitCode\FI\Flow\Flow;
+namespace BitApps\BTCBI_PRO\Triggers\SureCart;
+
+use BitApps\BTCBI_PRO\Flow\Flow;
 use SureCart\Models\Product;
 
 final class SureCartController

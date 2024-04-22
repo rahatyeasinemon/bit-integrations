@@ -4,10 +4,10 @@
  * Zendesk Record Api
  */
 
-namespace BitCode\FI\Actions\Zendesk;
+namespace BitApps\BTCBI_PRO\Actions\Zendesk;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -51,13 +51,13 @@ class RecordApiHelper
             } else {
                 $requestParams['fields'][] = (object) [
                     'value'   => $value,
-                    'definition' => (object)['id'=> $key]
+                    'definition' => (object)['id' => $key]
                 ];
             }
         }
 
         if ($this->integrationDetails->actions->parentOrganization) {
-            $requestParams['parent_organization_id']=(int)$this->integrationDetails->selectedParentOrganization;
+            $requestParams['parent_organization_id'] = (int)$this->integrationDetails->selectedParentOrganization;
         }
 
         $requestParams['is_organization'] = true;
@@ -67,7 +67,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl."contacts";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode(['data'=>$requestParams]), $this->defaultHeader);
+        return $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $requestParams]), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -88,7 +88,7 @@ class RecordApiHelper
             } else {
                 $requestParams['fields'][] = (object) [
                     'value'   => $value,
-                    'definition' => (object)['id'=> $key]
+                    'definition' => (object)['id' => $key]
                 ];
             }
         }
@@ -98,7 +98,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl."contacts";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode(['data'=>$requestParams]), $this->defaultHeader);
+        return $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $requestParams]), $this->defaultHeader);
     }
 
     public function addLead($finalData)
@@ -118,16 +118,16 @@ class RecordApiHelper
             } else {
                 $requestParams['fields'][] = (object) [
                     'value'   => $value,
-                    'definition' => (object)['id'=> $key]
+                    'definition' => (object)['id' => $key]
                 ];
             }
         }
 
         if (!empty($this->integrationDetails->selectedCRMCompany)) {
-            $requestParams['organization_name'] =($this->integrationDetails->selectedCRMCompany);
+            $requestParams['organization_name'] = ($this->integrationDetails->selectedCRMCompany);
         }
         if (!empty($this->integrationDetails->selectedCRMSources)) {
-            $requestParams['source_id'] =(int)($this->integrationDetails->selectedCRMSources);
+            $requestParams['source_id'] = (int)($this->integrationDetails->selectedCRMSources);
         }
 
         $this->type     = 'Lead';
@@ -135,7 +135,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl."leads";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode(['data'=>$requestParams]), $this->defaultHeader);
+        return $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $requestParams]), $this->defaultHeader);
     }
 
     public function addDeal($finalData)
@@ -151,16 +151,16 @@ class RecordApiHelper
             } else {
                 $requestParams['fields'][] = (object) [
                     'value'   => $value,
-                    'definition' => (object)['id'=> $key]
+                    'definition' => (object)['id' => $key]
                 ];
             }
         }
 
         if (!empty($this->integrationDetails->selectedCRMCompany)) {
-            $requestParams['contact_id'] =(int)($this->integrationDetails->selectedCRMCompany);
+            $requestParams['contact_id'] = (int)($this->integrationDetails->selectedCRMCompany);
         }
         if (!empty($this->integrationDetails->selectedCRMSources)) {
-            $requestParams['source_id'] =(int)($this->integrationDetails->selectedCRMSources);
+            $requestParams['source_id'] = (int)($this->integrationDetails->selectedCRMSources);
         }
         if ($this->integrationDetails->actions->stage) {
             $requestParams['stage_id'] = (int)($this->integrationDetails->selectedStage);
@@ -171,7 +171,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl."deals ";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode(['data'=>$requestParams]), $this->defaultHeader);
+        return $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $requestParams]), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

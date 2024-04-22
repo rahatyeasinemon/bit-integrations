@@ -3,10 +3,11 @@
 /**
  * ZohoProjects Integration
  */
-namespace BitCode\FI\Actions\ZohoProjects;
 
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
+namespace BitApps\BTCBI_PRO\Actions\ZohoProjects;
+
+use BitApps\BTCBI_PRO\Core\Util\IpTool;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -33,7 +34,7 @@ class ZohoProjectsController
                 || empty($requestsParams->clientSecret)
                 || empty($requestsParams->redirectURI)
                 || empty($requestsParams->code)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -69,7 +70,7 @@ class ZohoProjectsController
                 || empty($queryParams->dataCenter)
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -121,7 +122,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -176,7 +177,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
                 || empty($queryParams->projectId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -230,7 +231,7 @@ class ZohoProjectsController
                 || empty($queryParams->portalId)
                 || empty($queryParams->projectId)
                 || empty($queryParams->tasklistFlag)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -287,7 +288,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
                 || empty($queryParams->projectId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -347,7 +348,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
                 || empty($queryParams->event)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -671,7 +672,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -729,7 +730,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -780,7 +781,7 @@ class ZohoProjectsController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -831,12 +832,12 @@ class ZohoProjectsController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->portalId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
-                        'Requested parameter is empty',
-                        'bit-integrations'
-                    ),
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
                 400
             );
         }

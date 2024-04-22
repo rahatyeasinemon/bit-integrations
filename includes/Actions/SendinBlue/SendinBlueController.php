@@ -4,19 +4,19 @@
  * ZohoSheet Integration
  */
 
-namespace BitCode\FI\Actions\SendinBlue;
+namespace BitApps\BTCBI_PRO\Actions\SendinBlue;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
-use BitCode\FI\Actions\SendinBlue\RecordApiHelper;
+use BitApps\BTCBI_PRO\Actions\SendinBlue\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
  */
 class SendinBlueController
 {
-    const APIENDPOINT = 'https://api.sendinblue.com/v3';
+    public const APIENDPOINT = 'https://api.sendinblue.com/v3';
     /**
      * Process ajax request for generate_token
      *

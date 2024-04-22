@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\Tripetto;
+namespace BitApps\BTCBI_PRO\Triggers\Tripetto;
 
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Flow\Flow;
 
 final class TripettoController
 {

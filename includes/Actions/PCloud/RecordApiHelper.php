@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Actions\PCloud;
+namespace BitApps\BTCBI_PRO\Actions\PCloud;
 
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 use CURLFile;
 
 class RecordApiHelper
@@ -18,7 +18,9 @@ class RecordApiHelper
 
     public function uploadFile($folder, $filePath)
     {
-        if ($filePath === '') return false;
+        if ($filePath === '') {
+            return false;
+        }
 
         $curl = curl_init();
 
@@ -47,9 +49,13 @@ class RecordApiHelper
     public function handleAllFiles($folderWithFiles, $actions)
     {
         foreach ($folderWithFiles as $folderWithFile) {
-            if ($folderWithFile == '') continue;
+            if ($folderWithFile == '') {
+                continue;
+            }
             foreach ($folderWithFile as $folder => $singleFilePath) {
-                if ($singleFilePath == '') continue;
+                if ($singleFilePath == '') {
+                    continue;
+                }
                 $response = $this->uploadFile($folder, $singleFilePath[0]);
                 $this->storeInState($response);
                 $this->deleteFile($singleFilePath[0], $actions);

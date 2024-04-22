@@ -4,17 +4,17 @@
  * ZohoSheet Integration
  */
 
-namespace BitCode\FI\Actions\MailPoet;
+namespace BitApps\BTCBI_PRO\Actions\MailPoet;
 
 use WP_Error;
-use BitCode\FI\Actions\MailPoet\RecordApiHelper;
+use BitApps\BTCBI_PRO\Actions\MailPoet\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
  */
 class MailPoetController
 {
-    //BitCode\FI\Actions\MailPoet\MailPoetController
+    //BitApps\BTCBI_PRO\Actions\MailPoet\MailPoetController
 
 
 
@@ -57,7 +57,7 @@ class MailPoetController
         self::isExists();
         $mailpoet_api = \MailPoet\API\API::MP('v1');
         $newsletterList = $mailpoet_api->getLists();
-       
+
         $allList = [];
 
         foreach ($newsletterList as $newsletter) {
@@ -95,7 +95,7 @@ class MailPoetController
         $fieldMap = $integrationDetails->field_map;
         $defaultDataConf = $integrationDetails->default;
         $lists = $integrationDetails->lists;
-        
+
         if (empty($fieldMap)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Google sheet api', 'bit-integrations'));
         }

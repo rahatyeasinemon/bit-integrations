@@ -4,11 +4,11 @@
  * DirectIQ Integration
  */
 
-namespace BitCode\FI\Actions\DirectIq;
+namespace BitApps\BTCBI_PRO\Actions\DirectIq;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\DirectIq\RecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Actions\DirectIq\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -108,7 +108,7 @@ class DirectIqController
         if (!is_wp_error($directIqResponse)) {
             $allLists = ($directIqResponse);
 
-            foreach ($allLists as $key=>$list) {
+            foreach ($allLists as $key => $list) {
                 $lists[$list->name] = (object) [
                     'listId' => $list->id,
                     'listName' => $list->name,
@@ -157,7 +157,7 @@ class DirectIqController
                     'fieldId' => $field->shortCode,
                     'fieldName' => $field->name,
                     'fieldValue' => strtolower(str_replace(' ', '_', $field->name)),
-                    'required' =>  strtolower($field->name)=='email' ? true : false
+                    'required' =>  strtolower($field->name) == 'email' ? true : false
                 ];
             }
 

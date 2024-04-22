@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\Drip\DripController;
-use BitCode\FI\Core\Util\Route;
+use BitApps\BTCBI_PRO\Actions\Drip\DripController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
 
 Route::post('drip_authorize', [DripController::class, 'dripAuthorize']);
 Route::post('drip_headers', [DripController::class, 'dripHeaders']);

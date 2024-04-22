@@ -3,10 +3,11 @@
 /**
  * ZohoCreator Integration
  */
-namespace BitCode\FI\Actions\ZohoCreator;
 
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
+namespace BitApps\BTCBI_PRO\Actions\ZohoCreator;
+
+use BitApps\BTCBI_PRO\Core\Util\IpTool;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -33,7 +34,7 @@ class ZohoCreatorController
                 || empty($requestsParams->clientSecret)
                 || empty($requestsParams->redirectURI)
                 || empty($requestsParams->code)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -69,7 +70,7 @@ class ZohoCreatorController
                 || empty($queryParams->dataCenter)
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -131,12 +132,12 @@ class ZohoCreatorController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->accountOwner)
                 || empty($queryParams->applicationId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
-                        'Requested parameter is empty',
-                        'bit-integrations'
-                    ),
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
                 400
             );
         }
@@ -193,12 +194,12 @@ class ZohoCreatorController
                 || empty($queryParams->accountOwner)
                 || empty($queryParams->applicationId)
                 || empty($queryParams->formId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
-                        'Requested parameter is empty',
-                        'bit-integrations'
-                    ),
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
                 400
             );
         }

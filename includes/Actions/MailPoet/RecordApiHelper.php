@@ -4,10 +4,10 @@
  * ZohoRecruit Record Api
  */
 
-namespace BitCode\FI\Actions\MailPoet;
+namespace BitApps\BTCBI_PRO\Actions\MailPoet;
 
-use BitCode\FI\Log\LogHandler;
-use \MailPoet\API\MP\v1\APIException;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use MailPoet\API\MP\v1\APIException;
 
 /**
  * Provide functionality for Record insert,upsert

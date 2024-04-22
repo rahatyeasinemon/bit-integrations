@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Triggers\BuddyBoss\BuddyBossController;
+use BitApps\BTCBI_PRO\Core\Util\Hooks;
+use BitApps\BTCBI_PRO\Triggers\BuddyBoss\BuddyBossController;
 
 Hooks::add('friends_friendship_accepted', [BuddyBossController::class, 'handle_accept_friend_request'], 10, 4);
 Hooks::add('friends_friendship_requested', [BuddyBossController::class, 'handle_sends_friend_request'], 10, 4);

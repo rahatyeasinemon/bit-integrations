@@ -4,11 +4,11 @@
  * ZohoRecruit Record Api
  */
 
-namespace BitCode\FI\Actions\ZohoMarketingHub;
+namespace BitApps\BTCBI_PRO\Actions\ZohoMarketingHub;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert

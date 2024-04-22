@@ -4,10 +4,10 @@
  * Encharge Record Api
  */
 
-namespace BitCode\FI\Actions\Encharge;
+namespace BitApps\BTCBI_PRO\Actions\Encharge;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert
@@ -44,7 +44,7 @@ class RecordApiHelper
                 //echo $fieldPair->enChargeFields . ' ' . $fieldPair->formField;
                 if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
                     $fieldData[$fieldPair->enChargeFields] = $fieldPair->customValue;
-                } else if (!is_null($fieldValues[$fieldPair->formField])) {
+                } elseif (!is_null($fieldValues[$fieldPair->formField])) {
                     $fieldData[$fieldPair->enChargeFields] = $fieldValues[$fieldPair->formField];
                 }
             }

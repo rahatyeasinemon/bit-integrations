@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\WeForms;
+namespace BitApps\BTCBI_PRO\Triggers\WeForms;
 
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Flow\Flow;
 use DateTime;
 
 final class WeFormsController
@@ -172,7 +172,7 @@ final class WeFormsController
             if ($isName) {
                 unset($submittedData[$key]);
                 $nameValues = explode('|', $value);
-                if (count($nameValues) ==2) {
+                if (count($nameValues) == 2) {
                     $nameOrganized = [
                         'first_name' => $nameValues[0],
                         'last_name' => $nameValues[1]

@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\FI\Actions\Dropbox;
+namespace BitApps\BTCBI_PRO\Actions\Dropbox;
 
-use BitCode\FI\Actions\Dropbox\RecordApiHelper as DropboxRecordApiHelper;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Actions\Dropbox\RecordApiHelper as DropboxRecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Flow\FlowController;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 use WP_Error;
 
 class DropboxController
@@ -88,17 +88,23 @@ class DropboxController
 
         $apiEndpoint = self::$apiBaseUri . '/2/files/list_folder';
         $apiResponse = HttpHelper::post($apiEndpoint, $options, $headers);
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) return false;
+        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
+            return false;
+        }
         return $apiResponse;
     }
 
     private static function tokenExpiryCheck($token, $clientId, $clientSecret)
     {
-        if (!$token) return false;
+        if (!$token) {
+            return false;
+        }
 
         if (($token->generates_on + $token->expires_in - 30) < time()) {
             $refreshToken = self::refreshToken($token->refresh_token, $clientId, $clientSecret);
-            if (is_wp_error($refreshToken) || !empty($refreshToken->error)) return false;
+            if (is_wp_error($refreshToken) || !empty($refreshToken->error)) {
+                return false;
+            }
 
             $token->access_token = $refreshToken->access_token;
             $token->expires_in = $refreshToken->expires_in;
@@ -118,7 +124,9 @@ class DropboxController
 
         $apiEndpoint = self::$apiBaseUri . '/oauth2/token';
         $apiResponse = HttpHelper::post($apiEndpoint, $body);
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) return false;
+        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
+            return false;
+        }
         $token = $apiResponse;
         $token->generates_on = \time();
         return $token;
@@ -126,11 +134,15 @@ class DropboxController
 
     private static function saveRefreshedToken($integrationID, $tokenDetails)
     {
-        if (empty($integrationID)) return;
+        if (empty($integrationID)) {
+            return;
+        }
 
         $flow = new FlowController();
         $dropboxDetails = $flow->get(['id' => $integrationID]);
-        if (is_wp_error($dropboxDetails)) return;
+        if (is_wp_error($dropboxDetails)) {
+            return;
+        }
 
         $newDetails = json_decode($dropboxDetails[0]->flow_details);
         $newDetails->tokenDetails = $tokenDetails;

@@ -4,9 +4,9 @@
  * ZohoCreator Files Api
  */
 
-namespace BitCode\FI\Actions\ZohoCreator;
+namespace BitApps\BTCBI_PRO\Actions\ZohoCreator;
 
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Upload files
@@ -43,7 +43,7 @@ final class FilesApiHelper
      *
      * @return Array $uploadedFiles ID's of uploaded file in Zoho Creator
      */
-    public function uploadFiles($dataCenter, $files, $accountOwner, $applicationId,  $reportId, $recordId, $fieldId)
+    public function uploadFiles($dataCenter, $files, $accountOwner, $applicationId, $reportId, $recordId, $fieldId)
     {
         $uploadFileEndpoint = "https://creator.zoho.{$dataCenter}/api/v2/{$accountOwner}/{$applicationId}/report/{$reportId}/{$recordId}/{$fieldId}/upload";
         $payload = '';

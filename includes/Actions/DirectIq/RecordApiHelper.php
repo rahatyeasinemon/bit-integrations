@@ -4,10 +4,10 @@
  * DirectIQ Record Api
  */
 
-namespace BitCode\FI\Actions\DirectIq;
+namespace BitApps\BTCBI_PRO\Actions\DirectIq;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,update, exist

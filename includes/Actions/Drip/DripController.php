@@ -4,11 +4,11 @@
  * Drip Integration
  */
 
-namespace BitCode\FI\Actions\Drip;
+namespace BitApps\BTCBI_PRO\Actions\Drip;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\Drip\RecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Actions\Drip\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -88,7 +88,7 @@ class DripController
         if (!is_wp_error($dripResponse->broadcasts)) {
             $allCampaigns = ($dripResponse->broadcasts);
 
-            foreach ($allCampaigns as $key=>$broadcast) {
+            foreach ($allCampaigns as $key => $broadcast) {
                 $campaigns[$broadcast->name] = (object) [
                     'campaignId' => $broadcast->id,
                     'campaignName' => $broadcast->name,

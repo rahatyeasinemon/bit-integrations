@@ -4,11 +4,11 @@
  * Active Campaign Integration
  */
 
-namespace BitCode\FI\Actions\ActiveCampaign;
+namespace BitApps\BTCBI_PRO\Actions\ActiveCampaign;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\ActiveCampaign\RecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Actions\ActiveCampaign\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -286,40 +286,40 @@ class ActiveCampaignController
 
 
 
-   
-    // public static function activeCampaignTags($queryParams)
-    // {
-    //     if (empty($queryParams->api_key)
-    //         || empty($queryParams->api_url)
-    //     ) {
-    //         wp_send_json_error(
-    //             __(
-    //                 'Requested parameter is empty',
-    //                 'bit-integrations'
-    //             ),
-    //             400
-    //         );
-    //     }
 
-    //     $apiEndpoint = self::_apiEndpoint($queryParams->api_url, 'tags');
-    //     $authorizationHeader['Api-Token'] = $queryParams->api_key;
-    //     $requestParams = [
-    //         'limit' => 1000,
-    //     ];
-    //     $aCampaignResponse = HttpHelper::get($apiEndpoint, $requestParams, $authorizationHeader);
+// public static function activeCampaignTags($queryParams)
+// {
+//     if (empty($queryParams->api_key)
+//         || empty($queryParams->api_url)
+//     ) {
+//         wp_send_json_error(
+//             __(
+//                 'Requested parameter is empty',
+//                 'bit-integrations'
+//             ),
+//             400
+//         );
+//     }
 
-    //     $tags = [];
-    //     if (!is_wp_error($aCampaignResponse)) {
-    //         $allTags = $aCampaignResponse->tags;
+//     $apiEndpoint = self::_apiEndpoint($queryParams->api_url, 'tags');
+//     $authorizationHeader['Api-Token'] = $queryParams->api_key;
+//     $requestParams = [
+//         'limit' => 1000,
+//     ];
+//     $aCampaignResponse = HttpHelper::get($apiEndpoint, $requestParams, $authorizationHeader);
 
-    //         foreach ($allTags as $tag) {
-    //             $tags[$tag->tag] = (object) [
-    //                 'tagId' => $tag->id,
-    //                 'tagName' => $tag->tag,
-    //             ];
-    //         }
-    //         var_dump($tags,'tags');die;
-    //         $response['activeCampaignTags'] = $tags;
-    //         wp_send_json_success($response);
-    //     }
-    // }
+//     $tags = [];
+//     if (!is_wp_error($aCampaignResponse)) {
+//         $allTags = $aCampaignResponse->tags;
+
+//         foreach ($allTags as $tag) {
+//             $tags[$tag->tag] = (object) [
+//                 'tagId' => $tag->id,
+//                 'tagName' => $tag->tag,
+//             ];
+//         }
+//         var_dump($tags,'tags');die;
+//         $response['activeCampaignTags'] = $tags;
+//         wp_send_json_success($response);
+//     }
+// }

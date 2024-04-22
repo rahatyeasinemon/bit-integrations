@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Triggers\Happy\HappyController;
+use BitApps\BTCBI_PRO\Core\Util\Hooks;
+use BitApps\BTCBI_PRO\Triggers\Happy\HappyController;
 
 Hooks::add('happyforms_submission_success', [HappyController::class, 'handle_happy_submit'], 10, 3);

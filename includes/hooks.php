@@ -4,8 +4,8 @@
  * If try to direct access  plugin folder it will Exit
  **/
 
-use BitCode\FI\Core\Util\Activation;
-use BitCode\FI\Core\Util\Hooks;
+use BitApps\BTCBI_PRO\Core\Util\Activation;
+use BitApps\BTCBI_PRO\Core\Util\Hooks;
 
 if (!defined('ABSPATH')) {
     exit;

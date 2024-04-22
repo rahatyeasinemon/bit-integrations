@@ -1,8 +1,9 @@
 <?php
-namespace BitCode\FI\Actions\LifterLms;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
+namespace BitApps\BTCBI_PRO\Actions\LifterLms;
+
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 use WP_Error;
 use LLMS_Course;
 use LLMS_Section;
@@ -117,27 +118,27 @@ class RecordApiHelper
         }
 
         return llms_enroll_student($user_id, $membershipId);
-    } 
+    }
 
     public function unEnrollUserFromMembership($membershipId)
     {
         $user_id = 30;
-        if ( ! function_exists( 'llms_unenroll_student' ) && empty( $user_id ) && empty($membershipId)) {
-			return false;
-		}
+        if (! function_exists('llms_unenroll_student') && empty($user_id) && empty($membershipId)) {
+            return false;
+        }
 
-		if ( 'All' === intval( $membershipId ) ) {
-			$student     = llms_get_student( $user_id );
-			$memberships = $student->get_memberships( array( 'limit' => 999 ) );
-			if ( isset( $memberships['results'] ) && ! empty( $memberships['results'] ) ) {
-				foreach ( $memberships['results'] as $membership ) {
-					llms_unenroll_student( $user_id, $membership, 'expired' );
-				}
+        if ('All' === intval($membershipId)) {
+            $student     = llms_get_student($user_id);
+            $memberships = $student->get_memberships(array( 'limit' => 999 ));
+            if (isset($memberships['results']) && ! empty($memberships['results'])) {
+                foreach ($memberships['results'] as $membership) {
+                    llms_unenroll_student($user_id, $membership, 'expired');
+                }
                 return true;
-			}
-		} else {
-		    return llms_unenroll_student( $user_id, $membershipId, 'expired' );
-		}
+            }
+        } else {
+            return llms_unenroll_student($user_id, $membershipId, 'expired');
+        }
 
     }
 
@@ -198,7 +199,7 @@ class RecordApiHelper
             } else {
                 LogHandler::save($this->integrationID, json_encode(['type' => 'course-unenroll', 'type_name' => 'user-course-unenroll']), 'error', 'Failed to unenroll user from course.');
             }
-        } elseif ($mainAction == 7){
+        } elseif ($mainAction == 7) {
             $membershipId = $integrationDetails->membershipId;
             $response = $this->unEnrollUserFromMembership($membershipId);
             if ($response) {

@@ -1,10 +1,10 @@
 <?php
 
-namespace BitCode\FI\Actions\Zoom;
+namespace BitApps\BTCBI_PRO\Actions\Zoom;
 
 use WP_Error;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Flow\FlowController;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 class ZoomController
 {
@@ -88,7 +88,9 @@ class ZoomController
         $excludedFields = ['first_name', 'last_name', 'email'];
 
         foreach ($apiResponse->questions as $field) {
-            if (in_array($field->field_name, $excludedFields)) continue;
+            if (in_array($field->field_name, $excludedFields)) {
+                continue;
+            }
 
             $allFields[] = (object) [
                 "key"       => $field->field_name,

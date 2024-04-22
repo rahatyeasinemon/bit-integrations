@@ -1,11 +1,10 @@
 <?php
 
-namespace BitCode\FI\Actions\Mautic;
+namespace BitApps\BTCBI_PRO\Actions\Mautic;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
-
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 class RecordApiHelper
 {
@@ -25,7 +24,8 @@ class RecordApiHelper
     public function insertRecord($data)
     {
         $data = \is_string($data) ? $data : \json_encode((object)$data);
-        $insertRecordEndpoint = "$this->_baseUrl/api/contacts/new";;
+        $insertRecordEndpoint = "$this->_baseUrl/api/contacts/new";
+        ;
         return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
     }
 
@@ -38,7 +38,7 @@ class RecordApiHelper
             $actionValue = $value->mauticField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }

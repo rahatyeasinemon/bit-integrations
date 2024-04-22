@@ -4,11 +4,11 @@
  * EmailOctopus Record Api
  */
 
-namespace BitCode\FI\Actions\EmailOctopus;
+namespace BitApps\BTCBI_PRO\Actions\EmailOctopus;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -59,7 +59,7 @@ class RecordApiHelper
 
         if (!empty($this->_integrationDetails->actions->status)) {
             $data['status'] = 'UNSUBSCRIBED';
-        }else{
+        } else {
             $data['status'] = 'SUBSCRIBED';
         }
 
@@ -96,7 +96,7 @@ class RecordApiHelper
         }
 
         $this->_requestStoringType = 'created';
-        return HttpHelper::post($apiEndpoint,  $data, null);
+        return HttpHelper::post($apiEndpoint, $data, null);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -117,7 +117,7 @@ class RecordApiHelper
     public function execute($selectedTags, $fieldValues, $fieldMap, $selectedList)
     {
         $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $apiResponse = $this->addContact($selectedTags,  $finalData, $selectedList);
+        $apiResponse = $this->addContact($selectedTags, $finalData, $selectedList);
 
         if ($apiResponse->id) {
             $successMessage = ['message' => 'Contact ' . $this->_requestStoringType . ' successfully'];

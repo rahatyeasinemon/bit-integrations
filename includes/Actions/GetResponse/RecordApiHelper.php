@@ -4,11 +4,11 @@
  * GetResponse    Record Api
  */
 
-namespace BitCode\FI\Actions\GetResponse;
+namespace BitApps\BTCBI_PRO\Actions\GetResponse;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -123,7 +123,7 @@ class RecordApiHelper
         $campaign
     ) {
         $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $apiResponse = $this->addContactToCampaign($auth_token, $selectedTag,  $finalData, $campaign);
+        $apiResponse = $this->addContactToCampaign($auth_token, $selectedTag, $finalData, $campaign);
 
         if ($apiResponse->contactId) {
             $updatedContactId = $apiResponse->contactId;

@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\PaidMembershipPro;
+namespace BitApps\BTCBI_PRO\Triggers\PaidMembershipPro;
 
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Flow\Flow;
 
 final class PaidMembershipProController
 {

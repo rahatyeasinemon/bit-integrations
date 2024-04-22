@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\WPCourseware;
+namespace BitApps\BTCBI_PRO\Triggers\WPCourseware;
 
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Flow\Flow;
 
 final class WPCoursewareController
 {
@@ -81,7 +81,7 @@ final class WPCoursewareController
         if (!$flows) {
             return;
         }
-        
+
         $user = get_user_by('id', $userId);
         if (!$user) {
             return;
@@ -195,9 +195,9 @@ final class WPCoursewareController
 
         if ($data->id == 'userEnrolledCourse' || $data->id == 'courseCompleted') {
             $responseData['courses'] = $this->getWPCWCourses();
-        } else if ($data->id === 'moduleCompleted') {
+        } elseif ($data->id === 'moduleCompleted') {
             $responseData['modules'] = $this->getWPCWModules();
-        } else if ($data->id === 'unitCompleted') {
+        } elseif ($data->id === 'unitCompleted') {
             $responseData['units'] = $this->getWPCWUnits();
         }
 
@@ -210,9 +210,9 @@ final class WPCoursewareController
         $fieldDetails = [];
         if ($selectedAction == 'userEnrolledCourse' || $selectedAction == 'courseCompleted') {
             $fieldDetails = self::courseFields();
-        } else if ($selectedAction === 'moduleCompleted') {
+        } elseif ($selectedAction === 'moduleCompleted') {
             $fieldDetails = self::moduleCompletedFields();
-        } else if ($selectedAction === 'unitCompleted') {
+        } elseif ($selectedAction === 'unitCompleted') {
             $fieldDetails = self::unitCompletedFields();
         }
 

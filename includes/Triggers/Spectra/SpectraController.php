@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Triggers\Spectra;
+namespace BitApps\BTCBI_PRO\Triggers\Spectra;
 
 use WP_Error;
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Flow\Flow;
 
 class SpectraController
 {

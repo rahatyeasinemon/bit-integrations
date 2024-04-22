@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\MailPoet\MailPoetController;
-use BitCode\FI\Core\Util\Route;
+use BitApps\BTCBI_PRO\Actions\MailPoet\MailPoetController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
 
 Route::post('mail_poet_authorize', [ MailPoetController::class, 'mailPoetAuthorize']);
 Route::post('refresh_news_letter', [ MailPoetController::class, 'refreshNeswLetter']);

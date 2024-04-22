@@ -4,15 +4,15 @@
  * ZohoCampaigns Integration
  */
 
-namespace BitCode\FI\Actions\ZohoCampaigns;
+namespace BitApps\BTCBI_PRO\Actions\ZohoCampaigns;
 
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\IpTool;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
-use BitCode\FI\Actions\ZohoCampaigns\RecordApiHelper;
-use BitCode\FI\Core\Util\ApiResponse as UtilApiResponse;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Actions\ZohoCampaigns\RecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\ApiResponse as UtilApiResponse;
+use BitApps\BTCBI_PRO\Flow\FlowController;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 use WP_Error;
 
 /**

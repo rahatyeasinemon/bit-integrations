@@ -1,13 +1,12 @@
 <?php
 
-namespace BitCode\FI\Core\Util;
+namespace BitApps\BTCBI_PRO\Core\Util;
 
 /**
  * A wrapper class for actions and filters.
  */
 final class Hooks
 {
-
     /**
      * A wrapper for do_action()
      *

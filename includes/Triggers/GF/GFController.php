@@ -1,8 +1,9 @@
 <?php
-namespace BitCode\FI\Triggers\GF;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Flow\Flow;
+namespace BitApps\BTCBI_PRO\Triggers\GF;
+
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Flow\Flow;
 
 final class GFController
 {
@@ -10,7 +11,7 @@ final class GFController
     {
         //
     }
-    
+
     public static function info()
     {
         $plugin_path = 'gravityforms/gravityforms.php';
@@ -76,19 +77,19 @@ final class GFController
         $fields = [];
         $inputTypes = ['color','date','datetime-local','email','fileupload', 'file','hidden','image','month','number','password','radio','range','tel','text','time','url','week'];
         foreach ($fieldDetails as  $id => $field) {
-      
+
             if (isset($field->inputs) && is_array($field->inputs)) {
-               
+
                 $labelPrefix =  !empty($field->adminLabel) ? $field->adminLabel : (!empty($field->label) ? $field->label : $field->id);
-                if($field->type === 'checkbox'){
+                if($field->type === 'checkbox') {
                     $fields[] = [
                         'name' => $field->id,
                         'type' => 'checkbox',
                         'label' => !empty($field->adminLabel) ? $field->adminLabel : (!empty($field->label) ? $field->label : $field->id),
                     ];
-                 }
+                }
                 foreach ($field->inputs as $input) {
-                    if (!isset($input['isHidden']) && $field->type !=='checkbox') {
+                    if (!isset($input['isHidden']) && $field->type !== 'checkbox') {
                         $fields[] = [
                             'name' => $input['id'],
                             'type' => isset($input['inputType']) &&  in_array($input['inputType'], $inputTypes) ? $input['inputType'] : 'text',
@@ -100,13 +101,13 @@ final class GFController
                 $fields[] = [
                         'name' => $field->id,
                         'type' => in_array($field->type, $inputTypes) ? ($field->type === 'fileupload' ? 'file' : $field->type) : 'text',
-                        'separator' => in_array($field->type,['multiselect']) ? "str_array" : '',
+                        'separator' => in_array($field->type, ['multiselect']) ? "str_array" : '',
                         'label' => !empty($field->adminLabel) ? $field->adminLabel : (!empty($field->label) ? $field->label : $field->id),
                     ];
             }
         }
         $someAdditionalFields = [
-            
+
                 [
                     'name' => 'id',
                     'type' => 'text',
@@ -127,8 +128,8 @@ final class GFController
                     'type' => 'text',
                     'label' => 'Date Created',
                 ]
-            ];  
-    
+            ];
+
         return array_merge($fields, $someAdditionalFields);
     }
 
@@ -139,21 +140,21 @@ final class GFController
             $upDir = wp_upload_dir();
             foreach ($form['fields'] as $key => $value) {
                 if ($value->type === 'fileupload' && isset($entry[$value->id])) {
-                    if($value->multipleFiles === false ){
+                    if($value->multipleFiles === false) {
                         $entry[$value->id] = Common::filePath($entry[$value->id]);
-                    }else{
+                    } else {
                         $entry[$value->id] = Common::filePath(json_decode($entry[$value->id], true));
-                     }
+                    }
                 }
-                if($value->type === 'checkbox' && is_array($value->inputs)){
-                    foreach($value->inputs as $input){
-                        if(isset($entry[$input['id']])){
+                if($value->type === 'checkbox' && is_array($value->inputs)) {
+                    foreach($value->inputs as $input) {
+                        if(isset($entry[$input['id']])) {
                             $entry[$value->id][] = $entry[$input['id']];
-                         }
-                     }
-                 }
+                        }
+                    }
+                }
             }
-            $finalData = $entry + ['title'=> $form['title']];
+            $finalData = $entry + ['title' => $form['title']];
             Flow::execute('GF', $form_id, $finalData, $flows);
         }
     }

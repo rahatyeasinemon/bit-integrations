@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Actions\Freshdesk\FreshdeskController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
+use BitApps\BTCBI_PRO\Actions\Freshdesk\FreshdeskController;
 
 Route::post('freshdesk_authorization_and_fetch_tickets', [FreshdeskController::class, 'checkAuthorizationAndFetchTickets']);
 Route::post('freshdesk_fetch_ticket_fields', [FreshdeskController::class, 'getAllTicketFields']);

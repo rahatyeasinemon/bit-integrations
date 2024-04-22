@@ -4,10 +4,10 @@
  * Salesmate Record Api
  */
 
-namespace BitCode\FI\Actions\Salesmate;
+namespace BitApps\BTCBI_PRO\Actions\Salesmate;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert

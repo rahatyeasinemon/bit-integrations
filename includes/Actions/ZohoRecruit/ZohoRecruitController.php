@@ -3,11 +3,12 @@
 /**
  * ZohoRecruit Integration
  */
-namespace BitCode\FI\Actions\ZohoRecruit;
+
+namespace BitApps\BTCBI_PRO\Actions\ZohoRecruit;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Flow\FlowController;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -202,7 +203,7 @@ class ZohoRecruitController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->module)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -260,7 +261,7 @@ class ZohoRecruitController
                 || empty($queryParams->dataCenter)
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',

@@ -1,11 +1,11 @@
 <?php
 
-namespace BitCode\FI\Actions\CampaignMonitor;
+namespace BitApps\BTCBI_PRO\Actions\CampaignMonitor;
 
 use WP_Error;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Actions\CampaignMonitor\RecordApiHelper;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Flow\FlowController;
+use BitApps\BTCBI_PRO\Actions\CampaignMonitor\RecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 class CampaignMonitorController
 {

@@ -4,10 +4,10 @@
  * Acumbamail Integration
  */
 
-namespace BitCode\FI\Actions\Acumbamail;
+namespace BitApps\BTCBI_PRO\Actions\Acumbamail;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Trello integration

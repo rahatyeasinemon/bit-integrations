@@ -2,18 +2,20 @@
 /**
  * Provides Base Model Class
  */
-namespace BitCode\FI\Core\Database;
+
+namespace BitApps\BTCBI_PRO\Core\Database;
 
 /**
  * Undocumented class
  */
-use BitCode\FI\Core\Database\Model;
+use BitApps\BTCBI_PRO\Core\Database\Model;
 
 class LogModel extends Model
 {
     protected static $table = 'btcbi_log';
 
-    public function autoLogDelete($condition){
+    public function autoLogDelete($condition)
+    {
         global $wpdb;
         if (
             !\is_null($condition)
@@ -21,8 +23,8 @@ class LogModel extends Model
             $tableName = $wpdb->prefix.static::$table;
 
             $result = $this->app_db->get_results("DELETE FROM $tableName WHERE $condition", OBJECT_K);
-       
+
             return $result;
-        } 
-     } 
+        }
+    }
 }

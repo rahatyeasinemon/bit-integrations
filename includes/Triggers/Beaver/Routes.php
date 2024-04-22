@@ -5,8 +5,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\Beaver\BeaverController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
+use BitApps\BTCBI_PRO\Triggers\Beaver\BeaverController;
 
 Route::get('beaver/get', [BeaverController::class, 'getAllForms']);
 Route::post('beaver/get/form', [BeaverController::class, 'getFormFields']);

@@ -4,10 +4,10 @@
  * ZagoMail Record Api
  */
 
-namespace BitCode\FI\Actions\ZagoMail;
+namespace BitApps\BTCBI_PRO\Actions\ZagoMail;
 
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,update, exist

@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Actions\Autonami;
+namespace BitApps\BTCBI_PRO\Actions\Autonami;
 
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 use BWF_Contacts;
 use BWFCRM_Contact;
 
@@ -31,7 +31,7 @@ class RecordApiHelper
             $contact->set_status(1);
             $contact->save();
 
-            $customContact = new BWFCRM_Contact( $data['email'] );
+            $customContact = new BWFCRM_Contact($data['email']);
             foreach ($data as $key => $item) {
                 if($key == 'address') {
                     $key = 'address-1';

@@ -3,13 +3,14 @@
 /**
  * ZohoAnalytics Integration
  */
-namespace BitCode\FI\Actions\ZohoAnalytics;
+
+namespace BitApps\BTCBI_PRO\Actions\ZohoAnalytics;
 
 use WP_Error;
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Core\Util\ApiResponse as UtilApiResponse;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\IpTool;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\ApiResponse as UtilApiResponse;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -37,12 +38,12 @@ class ZohoAnalyticsController
                 || empty($requestsParams->clientSecret)
                 || empty($requestsParams->redirectURI)
                 || empty($requestsParams->code)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
-                        'Requested parameter is empty',
-                        'bit-integrations'
-                    ),
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
                 400
             );
         }
@@ -79,7 +80,7 @@ class ZohoAnalyticsController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->ownerEmail)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -125,7 +126,7 @@ class ZohoAnalyticsController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->ownerEmail)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -176,7 +177,7 @@ class ZohoAnalyticsController
                 || empty($queryParams->dataCenter)
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -231,7 +232,7 @@ class ZohoAnalyticsController
                 || empty($queryParams->dataCenter)
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -365,7 +366,7 @@ class ZohoAnalyticsController
             // $this->_logResponse->apiResponse($logID, $this->_integrationID, 'record', 'validation', $error);
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'validation']), 'error', wp_json_encode($error));
 
-            
+
 
 
             return $error;

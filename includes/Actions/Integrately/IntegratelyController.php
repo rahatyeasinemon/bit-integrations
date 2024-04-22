@@ -5,11 +5,13 @@
  *
  */
 
-namespace BitCode\FI\Actions\Integrately;
+namespace BitApps\BTCBI_PRO\Actions\Integrately;
 
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+use BitApps\BTCBI_PRO\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for IntegratelyHandler
  */
-class IntegratelyController extends WebHooksController{ }
+class IntegratelyController extends WebHooksController
+{
+}

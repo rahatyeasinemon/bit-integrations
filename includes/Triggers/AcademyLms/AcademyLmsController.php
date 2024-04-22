@@ -1,8 +1,9 @@
 <?php
 
-namespace BitCode\FI\Triggers\AcademyLms;
+namespace BitApps\BTCBI_PRO\Triggers\AcademyLms;
 
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Flow\Flow;
+
 // use Academy\Traits\Lessons;
 
 final class AcademyLmsController

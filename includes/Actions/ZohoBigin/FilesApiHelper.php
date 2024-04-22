@@ -4,9 +4,9 @@
  * ZohoBigin Files Api
  */
 
-namespace BitCode\FI\Actions\ZohoBigin;
+namespace BitApps\BTCBI_PRO\Actions\ZohoBigin;
 
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Upload files
@@ -18,8 +18,8 @@ final class FilesApiHelper
     private $_payloadBoundary;
 
     /**
-     * Constructor for File API helper. Sets api token details 
-     * 
+     * Constructor for File API helper. Sets api token details
+     *
      * @param Object $tokenDetails Api token details
      */
     public function __construct($tokenDetails)

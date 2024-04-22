@@ -4,10 +4,10 @@
  * CapsuleCRM Record Api
  */
 
-namespace BitCode\FI\Actions\CapsuleCRM;
+namespace BitApps\BTCBI_PRO\Actions\CapsuleCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -65,13 +65,13 @@ class RecordApiHelper
             } else {
                 $requestParams['fields'][] = (object) [
                     'value'   => $value,
-                    'definition' => (object)['id'=> $key]
+                    'definition' => (object)['id' => $key]
                 ];
             }
         }
 
         if ($this->integrationDetails->actions->owner) {
-            $requestParams['owner'][] =[
+            $requestParams['owner'][] = [
                     'id' =>  (int)($this->integrationDetails->selectedOwner),
                 ];
         }
@@ -86,7 +86,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl."/parties";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode(['party'=>$requestParams]), $this->defaultHeader);
+        return $response = HttpHelper::post($apiEndpoint, json_encode(['party' => $requestParams]), $this->defaultHeader);
     }
 
     public function addPerson($finalData)
@@ -121,7 +121,7 @@ class RecordApiHelper
             } else {
                 $requestParams['fields'][] = (object) [
                     'value'   => $value,
-                    'definition' => (object)['id'=> $key]
+                    'definition' => (object)['id' => $key]
                 ];
             }
         }
@@ -132,7 +132,7 @@ class RecordApiHelper
             $requestParams['organisation'] = (int)($this->integrationDetails->selectedOrganisation);
         }
         if ($this->integrationDetails->actions->owner) {
-            $requestParams['owner'] =[
+            $requestParams['owner'] = [
                     'id' =>  (int)($this->integrationDetails->selectedOwner),
                 ];
         }
@@ -145,7 +145,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl."/parties";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode(['party'=>$requestParams]), $this->defaultHeader);
+        return $response = HttpHelper::post($apiEndpoint, json_encode(['party' => $requestParams]), $this->defaultHeader);
     }
 
     public function addOpportunity($finalData)
@@ -167,23 +167,23 @@ class RecordApiHelper
             } else {
                 $requestParams['fields'][] = (object) [
                     'value'   => $value,
-                    'definition' => (object)['id'=> $key]
+                    'definition' => (object)['id' => $key]
                 ];
             }
         }
 
         if (!empty($this->integrationDetails->selectedCRMParty)) {
-            $requestParams['party'] =[
+            $requestParams['party'] = [
                     'id' =>  (int)($this->integrationDetails->selectedCRMParty),
                 ];
         }
         if (!empty($this->integrationDetails->selectedCRMMilestones)) {
-            $requestParams['milestone'] =[
+            $requestParams['milestone'] = [
                     'id' =>  (int)($this->integrationDetails->selectedCRMMilestones),
                 ];
         }
         if ($this->integrationDetails->actions->owner) {
-            $requestParams['owner'] =[
+            $requestParams['owner'] = [
                     'id' =>  (int)($this->integrationDetails->selectedOwner),
                 ];
         }
@@ -199,7 +199,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl."/opportunities";
 
-        return  $response = HttpHelper::post($apiEndpoint, json_encode(['opportunity'=>$requestParams]), $this->defaultHeader);
+        return  $response = HttpHelper::post($apiEndpoint, json_encode(['opportunity' => $requestParams]), $this->defaultHeader);
     }
 
     public function addProject($finalData)
@@ -215,23 +215,23 @@ class RecordApiHelper
             } else {
                 $requestParams['fields'][] = (object) [
                     'value'   => $value,
-                    'definition' => (object)['id'=> $key]
+                    'definition' => (object)['id' => $key]
                 ];
             }
         }
 
         if (!empty($this->integrationDetails->selectedCRMParty)) {
-            $requestParams['party'] =[
+            $requestParams['party'] = [
                     'id' =>  (int)($this->integrationDetails->selectedCRMParty),
                 ];
         }
         if ($this->integrationDetails->actions->owner) {
-            $requestParams['owner'] =[
+            $requestParams['owner'] = [
                     'id' =>  (int)($this->integrationDetails->selectedOwner),
                 ];
         }
         if ($this->integrationDetails->actions->opportunity) {
-            $requestParams['opportunity'] =[
+            $requestParams['opportunity'] = [
                     'id' =>  (int)($this->integrationDetails->selectedOpportunity),
                 ];
         }
@@ -244,7 +244,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl."/kases";
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode(['kase'=>$requestParams]), $this->defaultHeader);
+        return $response = HttpHelper::post($apiEndpoint, json_encode(['kase' => $requestParams]), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\ARMember\ARMemberController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
+use BitApps\BTCBI_PRO\Triggers\ARMember\ARMemberController;
 
 Route::get('armember/get', [ARMemberController::class, 'getAll']);
 Route::post('armember/get/form', [ARMemberController::class, 'get_a_form']);

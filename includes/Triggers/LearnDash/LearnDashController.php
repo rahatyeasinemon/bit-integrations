@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\LearnDash;
+namespace BitApps\BTCBI_PRO\Triggers\LearnDash;
 
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Flow\Flow;
 
 final class LearnDashController
 {

@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\MailRelay\MailRelayController;
-use BitCode\FI\Core\Util\Route;
+use BitApps\BTCBI_PRO\Actions\MailRelay\MailRelayController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
 
 Route::post('mailRelay_authentication', [MailRelayController::class, 'authentication']);
 Route::post('mailRelay_fetch_all_groups', [MailRelayController::class, 'getAllGroups']);

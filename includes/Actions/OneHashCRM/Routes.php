@@ -4,8 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Actions\OneHashCRM\OneHashCRMController;
-use BitCode\FI\Core\Util\Route;
-
+use BitApps\BTCBI_PRO\Actions\OneHashCRM\OneHashCRMController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
 
 Route::post('onehashcrm_authentication', [OneHashCRMController::class, 'authentication']);

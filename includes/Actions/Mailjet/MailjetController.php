@@ -4,10 +4,10 @@
  * Mailjet Integration
  */
 
-namespace BitCode\FI\Actions\Mailjet;
+namespace BitApps\BTCBI_PRO\Actions\Mailjet;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Mailjet integration

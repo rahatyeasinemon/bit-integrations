@@ -4,12 +4,12 @@
  * KirimEmail Integration
  */
 
-namespace BitCode\FI\Actions\KirimEmail;
+namespace BitApps\BTCBI_PRO\Actions\KirimEmail;
 
 use WP_Error;
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\KirimEmail\RecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\IpTool;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Actions\KirimEmail\RecordApiHelper;
 
 /**
  * Provide functionality for KirimEmail integration

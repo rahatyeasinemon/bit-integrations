@@ -4,11 +4,11 @@
  * Freshdesk Record Api
  */
 
-namespace BitCode\FI\Actions\Freshdesk;
+namespace BitApps\BTCBI_PRO\Actions\Freshdesk;
 
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert

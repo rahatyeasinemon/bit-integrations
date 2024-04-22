@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\FI\Triggers\WC;
+namespace BitApps\BTCBI_PRO\Triggers\WC;
 
 class WCHelper
 {

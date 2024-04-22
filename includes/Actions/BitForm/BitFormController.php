@@ -4,19 +4,17 @@
  * BitForm Integration
  */
 
-namespace BitCode\FI\Actions\BitForm;
+namespace BitApps\BTCBI_PRO\Actions\BitForm;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\BitForm\RecordApiHelper;
-
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Actions\BitForm\RecordApiHelper;
 
 /**
  * Provide functionality for BitForm integration
  */
 class BitFormController
 {
-
     public function bitFormAuthorization($requestParams)
     {
         if (

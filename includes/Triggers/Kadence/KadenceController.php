@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\FI\Triggers\Kadence;
 
-use BitCode\FI\Flow\Flow;
+namespace BitApps\BTCBI_PRO\Triggers\Kadence;
+
+use BitApps\BTCBI_PRO\Flow\Flow;
 
 final class KadenceController
 {

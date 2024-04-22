@@ -4,7 +4,7 @@
  * BuddyBoss Integration
  */
 
-namespace BitCode\FI\Actions\BuddyBoss;
+namespace BitApps\BTCBI_PRO\Actions\BuddyBoss;
 
 use WP_Error;
 

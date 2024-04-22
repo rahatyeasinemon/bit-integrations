@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Actions\AcademyLms;
+namespace BitApps\BTCBI_PRO\Actions\AcademyLms;
 
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Academy Lms integration
@@ -218,9 +218,9 @@ class AcademyLmsController
                 }
                 if ($actionName === 'complete-course') {
                     $response = self::completeCourse($selectedCourse);
-                } else if ($actionName === 'reset-course') {
+                } elseif ($actionName === 'reset-course') {
                     $response = self::resetCourse($selectedCourse);
-                } else if ($actionName === 'enroll-course') {
+                } elseif ($actionName === 'enroll-course') {
                     $response = self::enrollCourse($selectedCourse, $selectedAllCourse, "enroll");
                 } else {
                     $response = self::enrollCourse($selectedCourse, $selectedAllCourse, "unenroll");

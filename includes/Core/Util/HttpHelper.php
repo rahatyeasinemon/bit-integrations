@@ -1,12 +1,12 @@
 <?php
 
-namespace BitCode\FI\Core\Util;
+namespace BitApps\BTCBI_PRO\Core\Util;
 
 final class HttpHelper
 {
     public static function post($url, $data, $headers = null, $options = null)
     {
-        $defaultOptions =[
+        $defaultOptions = [
             'headers' => $headers,
             'body' => $data,
             "timeout" => 30
@@ -29,7 +29,7 @@ final class HttpHelper
 
     public static function get($url, $data, $headers = null, $options = null)
     {
-        $defaultOptions =[
+        $defaultOptions = [
             'headers' => $headers,
             'body' => $data,
             "timeout" => 30
@@ -50,7 +50,7 @@ final class HttpHelper
 
     public static function request($url, $type, $data, $headers = null, $options = null)
     {
-        $defaultOptions =[
+        $defaultOptions = [
             'method' => $type,
             'headers' => $headers,
             'body' => $data,

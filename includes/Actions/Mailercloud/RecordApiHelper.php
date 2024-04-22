@@ -4,11 +4,11 @@
  * Mailercloud Record Api
  */
 
-namespace BitCode\FI\Actions\Mailercloud;
+namespace BitApps\BTCBI_PRO\Actions\Mailercloud;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record Add Contact
@@ -37,7 +37,7 @@ class RecordApiHelper
             if (in_array($key, $staticFieldsKeys)) {
                 $finalData[$key] = $value;
             } else {
-                $finalData['custom_fields'][$key] =$value;
+                $finalData['custom_fields'][$key] = $value;
             }
         }
 
@@ -68,7 +68,7 @@ class RecordApiHelper
     }
     public function response($status, $code, $type, $typeName, $apiResponse)
     {
-        $res = ['success' =>$code===200 ? true : false, 'message' => $apiResponse, 'code' => $code];
+        $res = ['success' => $code === 200 ? true : false, 'message' => $apiResponse, 'code' => $code];
         LogHandler::save($this->_integrationID, json_encode(['type' => $type, 'type_name' => $typeName]), $status, json_encode($res));
         return $res;
     }

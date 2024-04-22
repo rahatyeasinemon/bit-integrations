@@ -5,9 +5,9 @@
  *
  */
 
-namespace BitCode\FI\Actions\AutomatorWP;
+namespace BitApps\BTCBI_PRO\Actions\AutomatorWP;
 
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+use BitApps\BTCBI_PRO\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for AutomatorWPHandler

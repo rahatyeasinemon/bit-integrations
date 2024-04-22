@@ -3,17 +3,18 @@
 /**
  * slack Integration
  */
-namespace BitCode\FI\Actions\Slack;
+
+namespace BitApps\BTCBI_PRO\Actions\Slack;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for slack integration
  */
 class SlackController
 {
-    const APIENDPOINT = 'https://slack.com/api';
+    public const APIENDPOINT = 'https://slack.com/api';
 
     /**
      * Process ajax request for generate_token

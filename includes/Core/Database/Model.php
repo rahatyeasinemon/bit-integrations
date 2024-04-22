@@ -4,7 +4,7 @@
  * Provides Base Model Class
  */
 
-namespace BitCode\FI\Core\Database;
+namespace BitApps\BTCBI_PRO\Core\Database;
 
 /**
  * Undocumented class
@@ -371,7 +371,7 @@ class Model
                     $value_type .= $this->getFieldFormat($value['value']);
                     $all_values[] = $value['value'];
                 } else {
-                    $set_check_operator = \is_null($check_operator) ? 'in' :  $check_operator;
+                    $set_check_operator = \is_null($check_operator) ? 'in' : $check_operator;
                     $value_type .= ' ( ';
                     $value_index_checker = 0;
                     $value_count = count($value) - 1;
@@ -386,7 +386,7 @@ class Model
                     $value_type .= ' )';
                 }
             } else {
-                $set_check_operator = \is_null($check_operator) ? '=' :  $check_operator;
+                $set_check_operator = \is_null($check_operator) ? '=' : $check_operator;
                 $value_type .= $this->getFieldFormat($value);
                 $all_values[] = $value;
             }

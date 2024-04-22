@@ -1,5 +1,6 @@
 <?php
-namespace BitCode\FI\Triggers\EDD;
+
+namespace BitApps\BTCBI_PRO\Triggers\EDD;
 
 class EDDHelper
 {
@@ -97,7 +98,7 @@ class EDDHelper
                     'fieldName' => 'Status'
                 ],
             ];
-        } elseif ($id == 3){
+        } elseif ($id == 3) {
             $refundField = [
                 'Refund Id' => (object) [
                     'fieldKey' => 'refund_id',
@@ -164,7 +165,8 @@ class EDDHelper
         return $productsArray;
     }
 
-    public static function allDiscount(){
+    public static function allDiscount()
+    {
         $allDiscountCode[] = [
             'id' => 'any',
             'title' => 'Any Discount Code',

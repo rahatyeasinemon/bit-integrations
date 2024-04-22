@@ -4,11 +4,11 @@
  * ZagoMail Integration
  */
 
-namespace BitCode\FI\Actions\ZagoMail;
+namespace BitApps\BTCBI_PRO\Actions\ZagoMail;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\ZagoMail\RecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Actions\ZagoMail\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration

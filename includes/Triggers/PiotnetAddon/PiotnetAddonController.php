@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Triggers\PiotnetAddon;
+namespace BitApps\BTCBI_PRO\Triggers\PiotnetAddon;
 
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Core\Util\Common;
+use BitApps\BTCBI_PRO\Flow\Flow;
+use BitApps\BTCBI_PRO\Core\Util\Common;
 
 final class PiotnetAddonController
 {

@@ -4,10 +4,10 @@
  * BuddyBoss Record Api
  */
 
-namespace BitCode\FI\Actions\BuddyBoss;
+namespace BitApps\BTCBI_PRO\Actions\BuddyBoss;
 
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\Common;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
 
 /**
  * Provide functionality for Record insert, upsert

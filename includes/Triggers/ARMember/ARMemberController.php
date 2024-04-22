@@ -1,8 +1,9 @@
 <?php
-namespace BitCode\FI\Triggers\ARMember;
 
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Triggers\ARMember\ARMemberHelper;
+namespace BitApps\BTCBI_PRO\Triggers\ARMember;
+
+use BitApps\BTCBI_PRO\Flow\Flow;
+use BitApps\BTCBI_PRO\Triggers\ARMember\ARMemberHelper;
 
 final class ARMemberController
 {
@@ -33,7 +34,7 @@ final class ARMemberController
     public static function pluginActive($option = null)
     {
 
-        if(class_exists('ARMember')){
+        if(class_exists('ARMember')) {
             return true;
         }
         return false;
@@ -85,7 +86,7 @@ final class ARMemberController
 
     public static function handleRegisterForm($user_id, $post_data)
     {
-        if(array_key_exists('arm_form_id', $post_data) === false){
+        if(array_key_exists('arm_form_id', $post_data) === false) {
             return;
         }
         $form_id = $post_data['arm_form_id'];
@@ -102,12 +103,13 @@ final class ARMemberController
         }
     }
 
-    public static function handleUpdateUserByForm($user_ID, $posted_data){
-        if(array_key_exists('form_random_key', $posted_data) === false){
+    public static function handleUpdateUserByForm($user_ID, $posted_data)
+    {
+        if(array_key_exists('form_random_key', $posted_data) === false) {
             return;
         }
         $form_id = str_starts_with($posted_data['form_random_key'], '101');
-        if(!$form_id){
+        if(!$form_id) {
             return;
         }
         $form_id = '101_2';
@@ -124,11 +126,11 @@ final class ARMemberController
 
     public static function handleMemberAddByAdmin($user_id, $post_data)
     {
-        if(array_key_exists('action', $post_data) === false){
+        if(array_key_exists('action', $post_data) === false) {
             return;
         }
         $form_id = $post_data['form'];
-        if(!$form_id){
+        if(!$form_id) {
             return;
         }
         $form_id = '101_3';
@@ -145,7 +147,8 @@ final class ARMemberController
         }
     }
 
-    public static function handleCancelSubscription($user_id, $plan_id){
+    public static function handleCancelSubscription($user_id, $plan_id)
+    {
         $flows = Flow::exists('ARMember', '4');
         if (empty($flows)) {
             return;
@@ -156,7 +159,8 @@ final class ARMemberController
         }
     }
 
-    public static function handlePlanChangeAdmin($user_id, $plan_id){
+    public static function handlePlanChangeAdmin($user_id, $plan_id)
+    {
         $flows = Flow::exists('ARMember', '5');
         if (empty($flows)) {
             return;
@@ -166,8 +170,9 @@ final class ARMemberController
             Flow::execute('ARMember', '5', $finalData, $flows);
         }
     }
-    
-    public static function handleRenewSubscriptionPlan($user_id, $plan_id){
+
+    public static function handleRenewSubscriptionPlan($user_id, $plan_id)
+    {
         $flows = Flow::exists('ARMember', '6');
         if (empty($flows)) {
             return;

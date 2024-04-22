@@ -4,11 +4,12 @@
  * Rapidmail Integration
  *
  */
-namespace BitCode\FI\Actions\Twilio;
+
+namespace BitApps\BTCBI_PRO\Actions\Twilio;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 final class TwilioController
 {

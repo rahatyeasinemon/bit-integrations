@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Actions\Mailify;
+namespace BitApps\BTCBI_PRO\Actions\Mailify;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 class RecordApiHelper
 {

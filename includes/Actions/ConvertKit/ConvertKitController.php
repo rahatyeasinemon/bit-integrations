@@ -4,11 +4,11 @@
  * Convert Kit Integration
  */
 
-namespace BitCode\FI\Actions\ConvertKit;
+namespace BitApps\BTCBI_PRO\Actions\ConvertKit;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\ConvertKit\RecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Actions\ConvertKit\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration

@@ -3,7 +3,8 @@
 /**
  * Freshdesk Files Api
  */
-namespace BitCode\FI\Actions\Freshdesk;
+
+namespace BitApps\BTCBI_PRO\Actions\Freshdesk;
 
 /**
  * Provide functionality for Upload files

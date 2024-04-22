@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\Memberpress\MemberpressController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
+use BitApps\BTCBI_PRO\Triggers\Memberpress\MemberpressController;
 
 Route::get('memberpress/get', [MemberpressController::class, 'getAll']);
 Route::post('memberpress/get/form', [MemberpressController::class, 'get_a_form']);

@@ -3,11 +3,12 @@
 /**
  * OmniSend Integration
  */
-namespace BitCode\FI\Actions\OmniSend;
 
-use BitCode\FI\Actions\OmniSend\RecordApiHelper;
+namespace BitApps\BTCBI_PRO\Actions\OmniSend;
+
+use BitApps\BTCBI_PRO\Actions\OmniSend\RecordApiHelper;
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for OmniSend integration

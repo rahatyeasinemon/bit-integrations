@@ -4,10 +4,10 @@
  * Clickup Integration
  */
 
-namespace BitCode\FI\Actions\Clickup;
+namespace BitApps\BTCBI_PRO\Actions\Clickup;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Clickup integration
@@ -31,7 +31,7 @@ class ClickupController
         $apiKey      = $fieldsRequestParams->api_key;
         $apiEndpoint = $this->apiEndpoint."user";
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -57,7 +57,7 @@ class ClickupController
         }
 
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -85,7 +85,7 @@ class ClickupController
         $apiKey      = $fieldsRequestParams->api_key;
         $apiEndpoint = $this->apiEndpoint."/tasks";
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -112,7 +112,7 @@ class ClickupController
         $apiKey      = $fieldsRequestParams->api_key;
         $apiEndpoint = $this->apiEndpoint."team";
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -141,7 +141,7 @@ class ClickupController
         $teamId     = $fieldsRequestParams->team_id;
         $apiEndpoint = $this->apiEndpoint."team/".$teamId."/space";
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -169,7 +169,7 @@ class ClickupController
         $spaceId     = $fieldsRequestParams->space_id;
         $apiEndpoint = $this->apiEndpoint."space/".$spaceId."/folder";
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -199,7 +199,7 @@ class ClickupController
         $folderId     = $fieldsRequestParams->folder_id;
         $apiEndpoint = $this->apiEndpoint."folder/".$folderId."/list";
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -227,7 +227,7 @@ class ClickupController
         $spaceId     = $fieldsRequestParams->space_id;
         $apiEndpoint = $this->apiEndpoint."space/".$spaceId."/tag";
         $headers = [
-            "Authorization" =>$apiKey,
+            "Authorization" => $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);

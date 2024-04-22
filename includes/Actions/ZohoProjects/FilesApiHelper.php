@@ -4,9 +4,9 @@
  * ZohoProjects Files Api
  */
 
-namespace BitCode\FI\Actions\ZohoProjects;
+namespace BitApps\BTCBI_PRO\Actions\ZohoProjects;
 
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Upload files

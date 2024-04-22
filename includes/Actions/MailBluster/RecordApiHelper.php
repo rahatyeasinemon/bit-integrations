@@ -4,11 +4,11 @@
  * MailBluster Record Api
  */
 
-namespace BitCode\FI\Actions\MailBluster;
+namespace BitApps\BTCBI_PRO\Actions\MailBluster;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -47,8 +47,12 @@ class RecordApiHelper
             'subscribed' => $subscribed === 'true' ? true : false
         ];
 
-        if (!empty($this->_integrationDetails->actions->update)) $requestParams['overrideExisting'] = true;
-        if (!empty($this->_integrationDetails->actions->doubleOptIn)) $requestParams['doubleOptIn'] = true;
+        if (!empty($this->_integrationDetails->actions->update)) {
+            $requestParams['overrideExisting'] = true;
+        }
+        if (!empty($this->_integrationDetails->actions->doubleOptIn)) {
+            $requestParams['doubleOptIn'] = true;
+        }
 
         $staticFieldsKeys = ['email', 'firstName', 'lastName', 'timezone', 'ipAddress'];
         $customFields     = [];
@@ -91,7 +95,7 @@ class RecordApiHelper
     public function execute($selectedTag, $fieldValues, $fieldMap, $subscribed)
     {
         $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $apiResponse = $this->addLeadToBrand($selectedTag,  $finalData, $subscribed);
+        $apiResponse = $this->addLeadToBrand($selectedTag, $finalData, $subscribed);
 
         if ($apiResponse->lead->id) {
             $res = ['message' => $apiResponse->message.' successfully'];

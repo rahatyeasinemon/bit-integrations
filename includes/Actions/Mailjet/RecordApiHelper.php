@@ -4,11 +4,11 @@
  * Mailjet Record Api
  */
 
-namespace BitCode\FI\Actions\Mailjet;
+namespace BitApps\BTCBI_PRO\Actions\Mailjet;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, update
@@ -88,7 +88,7 @@ class RecordApiHelper
     public function execute($selectedLists, $fieldValues, $fieldMap)
     {
         $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $apiResponse = $this->addSubscriber($selectedLists,  $finalData);
+        $apiResponse = $this->addSubscriber($selectedLists, $finalData);
 
         if (empty($apiResponse)) {
             $res = ['message' => 'Contact ' . $this->_responseType . ' successfully'];

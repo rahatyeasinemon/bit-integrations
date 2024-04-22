@@ -1,14 +1,13 @@
 <?php
 
-namespace BitCode\FI\Triggers\Breakdance;
+namespace BitApps\BTCBI_PRO\Triggers\Breakdance;
 
 use WP_Error;
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Flow\Flow;
 use Breakdance\Forms\Actions\Action;
-use BitCode\FI\Triggers\TriggerController;
+use BitApps\BTCBI_PRO\Triggers\TriggerController;
 use Breakdance\Forms\Actions\ActionProvider;
-use BitCode\FI\Triggers\Breakdance\BreakdanceSubmitData;
-
+use BitApps\BTCBI_PRO\Triggers\Breakdance\BreakdanceSubmitData;
 
 final class BreakdanceController
 {

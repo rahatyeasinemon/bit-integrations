@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\FI\Actions\PropovoiceCRM;
+namespace BitApps\BTCBI_PRO\Actions\PropovoiceCRM;
 
 /**
  * Provide functionality for Record insert, upsert

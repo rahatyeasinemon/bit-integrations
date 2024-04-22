@@ -4,10 +4,10 @@
  * Gravitec Record Api
  */
 
-namespace BitCode\FI\Actions\Gravitec;
+namespace BitApps\BTCBI_PRO\Actions\Gravitec;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -47,7 +47,7 @@ class RecordApiHelper
 
         $requestData = [];
         $payloadData = [];
-        $payload = ['message', 'title', 'icon', 'image', 'redirect_url']; 
+        $payload = ['message', 'title', 'icon', 'image', 'redirect_url'];
         foreach ($finalData as $key => $value) {
             if (array_search($key, $payload) === false) {
                 $requestData[$key] = $value;

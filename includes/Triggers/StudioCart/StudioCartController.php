@@ -1,8 +1,8 @@
 <?php
 
-namespace BitCode\FI\Triggers\StudioCart;
+namespace BitApps\BTCBI_PRO\Triggers\StudioCart;
 
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Flow\Flow;
 
 final class StudioCartController
 {

@@ -1,5 +1,6 @@
 <?php
-namespace BitCode\FI\Actions\GiveWp;
+
+namespace BitApps\BTCBI_PRO\Actions\GiveWp;
 
 use WP_Error;
 

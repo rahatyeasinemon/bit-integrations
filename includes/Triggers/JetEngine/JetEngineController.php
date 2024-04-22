@@ -1,8 +1,9 @@
 <?php
-namespace BitCode\FI\Triggers\JetEngine;
 
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Triggers\JetEngine\JetEngineHelper;
+namespace BitApps\BTCBI_PRO\Triggers\JetEngine;
+
+use BitApps\BTCBI_PRO\Flow\Flow;
+use BitApps\BTCBI_PRO\Triggers\JetEngine\JetEngineHelper;
 
 final class JetEngineController
 {

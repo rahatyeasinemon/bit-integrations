@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\FI\Actions\MailMint;
+namespace BitApps\BTCBI_PRO\Actions\MailMint;
 
 use WP_Error;
 use Mint\MRM\Constants;

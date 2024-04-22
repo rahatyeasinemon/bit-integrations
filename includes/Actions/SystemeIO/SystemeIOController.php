@@ -4,10 +4,10 @@
  * SystemeIO Integration
  */
 
-namespace BitCode\FI\Actions\SystemeIO;
+namespace BitApps\BTCBI_PRO\Actions\SystemeIO;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for SystemeIO integration

@@ -4,12 +4,12 @@
  * ZohoBigin Integration
  */
 
-namespace BitCode\FI\Actions\ZohoBigin;
+namespace BitApps\BTCBI_PRO\Actions\ZohoBigin;
 
 use WP_Error;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Flow\FlowController;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration

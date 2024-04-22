@@ -5,8 +5,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\Post\PostController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
+use BitApps\BTCBI_PRO\Triggers\Post\PostController;
 
 Route::get('post/get', [PostController::class, 'getAll']);
 Route::post('post/get/form', [PostController::class, 'get_a_form']);

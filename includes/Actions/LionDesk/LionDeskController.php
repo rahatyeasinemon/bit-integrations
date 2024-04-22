@@ -4,10 +4,10 @@
  * LionDesk Integration
  */
 
-namespace BitCode\FI\Actions\LionDesk;
+namespace BitApps\BTCBI_PRO\Actions\LionDesk;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for LionDesk integration
@@ -120,7 +120,7 @@ class LionDeskController
 
     public function getCustomFields($fieldsRequestParams)
     {
-        $response =[];
+        $response = [];
         if (strtotime($fieldsRequestParams->token_details->expires) < time()) {
             $response['tokenDetails']           = $this->_refreshAccessToken($fieldsRequestParams);
             $fieldsRequestParams->token_details = $response['tokenDetails'];
@@ -150,7 +150,7 @@ class LionDeskController
 
     public function getAllTags($fieldsRequestParams)
     {
-        $response =[];
+        $response = [];
         if (strtotime($fieldsRequestParams->token_details->expires) < time()) {
             $response['tokenDetails']           = $this->_refreshAccessToken($fieldsRequestParams);
             $fieldsRequestParams->token_details = $response['tokenDetails'];
@@ -190,7 +190,7 @@ class LionDeskController
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for LionDesk api', 'bit-integrations'));
         }
 
-        $response =[];
+        $response = [];
         if (strtotime($tokenDetails->expires) < time()) {
             $response['tokenDetails'] = $this->_refreshAccessToken($tokenDetails);
             $tokenDetails             = $response['tokenDetails'];

@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\FI\Core\Util;
+namespace BitApps\BTCBI_PRO\Core\Util;
 
 use DateTime;
 use DateTimeZone;
@@ -32,8 +32,8 @@ final class DateTimeHelper
 
         $currentFormat = is_null($currentFormat) ? $this->_currentFormat : $currentFormat;
         $currentTZ = is_null($currentTZ) ? $this->_timezone : $currentTZ;
-        $expectedFormat = is_null($expectedFormat) ?  $this->_dateFormat : $expectedFormat;
-        $expectedTZ = is_null($expectedTZ) ?  $this->_timezone : $expectedTZ;
+        $expectedFormat = is_null($expectedFormat) ? $this->_dateFormat : $expectedFormat;
+        $expectedTZ = is_null($expectedTZ) ? $this->_timezone : $expectedTZ;
 
         return $this->getFormated($date, $currentFormat, $currentTZ, $expectedFormat, $expectedTZ);
     }
@@ -48,8 +48,8 @@ final class DateTimeHelper
 
         $currentFormat = is_null($currentFormat) ? $this->_currentFormat : $currentFormat;
         $currentTZ = is_null($currentTZ) ? $this->_timezone : $currentTZ;
-        $expectedFormat = is_null($expectedFormat) ?  $this->_timeFormat : $expectedFormat;
-        $expectedTZ = is_null($expectedTZ) ?  $this->_timezone : $expectedTZ;
+        $expectedFormat = is_null($expectedFormat) ? $this->_timeFormat : $expectedFormat;
+        $expectedTZ = is_null($expectedTZ) ? $this->_timezone : $expectedTZ;
 
         return $this->getFormated($date, $currentFormat, $currentTZ, $expectedFormat, $expectedTZ);
     }
@@ -64,7 +64,7 @@ final class DateTimeHelper
 
         $currentFormat = is_null($currentFormat) ? $this->_currentFormat : $currentFormat;
         $currentTZ = is_null($currentTZ) ? $this->_timezone : $currentTZ;
-        $expectedTZ = is_null($expectedTZ) ?  $this->_timezone : $expectedTZ;
+        $expectedTZ = is_null($expectedTZ) ? $this->_timezone : $expectedTZ;
 
         switch ($nameType) {
             case 'numeric-with-leading':
@@ -101,7 +101,7 @@ final class DateTimeHelper
 
         $currentFormat = is_null($currentFormat) ? $this->_currentFormat : $currentFormat;
         $currentTZ = is_null($currentTZ) ? $this->_timezone : $currentTZ;
-        $expectedTZ = is_null($expectedTZ) ?  $this->_timezone : $expectedTZ;
+        $expectedTZ = is_null($expectedTZ) ? $this->_timezone : $expectedTZ;
 
         switch ($nameType) {
             case 'numeric-with-leading':

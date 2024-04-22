@@ -1,5 +1,6 @@
 <?php
-namespace BitCode\FI\Triggers\Memberpress;
+
+namespace BitApps\BTCBI_PRO\Triggers\Memberpress;
 
 final class MemberpressHelper
 {

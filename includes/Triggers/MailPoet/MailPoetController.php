@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Triggers\MailPoet;
+namespace BitApps\BTCBI_PRO\Triggers\MailPoet;
 
 use DateTime;
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Flow\Flow;
 use MailPoet\Form\FormsRepository;
 use MailPoet\DI\ContainerWrapper;
 
@@ -93,7 +93,7 @@ final class MailPoetController
                 $columnData = [];
                 self::extractColumnData($item, $columnData);
                 $fields[] = $columnData;
-            } else if (isset($item['name']) && isset($item['id']) && $item['type'] !== 'submit' && $item['type'] !== 'divider' && $item['type'] !== 'segment') {
+            } elseif (isset($item['name']) && isset($item['id']) && $item['type'] !== 'submit' && $item['type'] !== 'divider' && $item['type'] !== 'segment') {
                 $fields[] = [
                     'name'  => $item['id'],
                     'type'  => $item['type'],

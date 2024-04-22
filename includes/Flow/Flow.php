@@ -5,17 +5,17 @@
  * @package bit-integrations
  */
 
-namespace BitCode\FI\Flow;
+namespace BitApps\BTCBI_PRO\Flow;
 
 use WP_Error;
-use BitCode\FI\Plugin;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\SmartTags;
-use BitCode\FI\Core\Util\StoreInCache;
-use BitCode\FI\Triggers\TriggerController;
-use BitCode\FI\Core\Util\CustomFuncValidator;
+use BitApps\BTCBI_PRO\Plugin;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\IpTool;
+use BitApps\BTCBI_PRO\Core\Util\SmartTags;
+use BitApps\BTCBI_PRO\Core\Util\StoreInCache;
+use BitApps\BTCBI_PRO\Triggers\TriggerController;
+use BitApps\BTCBI_PRO\Core\Util\CustomFuncValidator;
 
 /**
  * Provides details of available integration and helps to

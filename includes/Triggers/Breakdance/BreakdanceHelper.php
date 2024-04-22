@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\FI\Triggers\Breakdance;
+namespace BitApps\BTCBI_PRO\Triggers\Breakdance;
 
 use WP_Error;
 

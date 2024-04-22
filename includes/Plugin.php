@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\FI;
+namespace BitApps\BTCBI_PRO;
 
 /**
  * Main class for the plugin.
@@ -8,16 +8,18 @@ namespace BitCode\FI;
  * @since 1.0.0-alpha
  */
 
-use BitCode\FI\Core\Database\DB;
-use BitCode\FI\Admin\Admin_Bar;
-use BitCode\FI\Core\Util\Request;
-use BitCode\FI\Core\Util\Activation;
-use BitCode\FI\Core\Util\Deactivation;
-use BitCode\FI\Core\Util\UnInstallation;
-use BitCode\FI\Core\Hooks\HookService;
-use BitCode\FI\Core\Util\Capabilities;
-use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Database\DB;
+use BitApps\BTCBI_PRO\Admin\Admin_Bar;
+use BitApps\BTCBI_PRO\Core\Util\Request;
+use BitApps\BTCBI_PRO\Core\Util\Activation;
+use BitApps\BTCBI_PRO\Core\Util\Deactivation;
+use BitApps\BTCBI_PRO\Core\Util\UnInstallation;
+use BitApps\BTCBI_PRO\Core\Hooks\HookService;
+use BitApps\BTCBI_PRO\Core\Update\API;
+use BitApps\BTCBI_PRO\Core\Util\Capabilities;
+use BitApps\BTCBI_PRO\Core\Util\Hooks;
+use BitApps\BTCBI_PRO\Core\Update\Updater;
+use BitApps\BTCBI_PRO\Core\Util\Installer as FreeInstaller;
 
 final class Plugin
 {
@@ -30,7 +32,6 @@ final class Plugin
     private static $_instance = null;
 
     private $isLicActive;
-    private $isPro;
 
     /**
      * Initialize the hooks
@@ -40,6 +41,8 @@ final class Plugin
     public function initialize()
     {
         Hooks::add('plugins_loaded', [$this, 'init_plugin'], 12);
+        $freeInstaller = new FreeInstaller();
+        Hooks::add('plugins_loaded', [$freeInstaller, 'init']);
         (new Activation())->activate();
         (new Deactivation())->register();
         (new UnInstallation())->register();
@@ -48,8 +51,8 @@ final class Plugin
     public function init_plugin()
     {
         Hooks::add('init', [$this, 'init_classes'], 8);
-        Hooks::add('init', [$this, 'integrationlogDelete'], 11);
-        Hooks::filter('plugin_action_links_' . plugin_basename(BTCBI_PLUGIN_MAIN_FILE), [$this, 'plugin_action_links']);
+        // Hooks::add('init', [$this, 'integrationLogRetention'], 11);
+        Hooks::filter('plugin_action_links_' . plugin_basename(BTCBI_PRO_PLUGIN_MAIN_FILE), [$this, 'plugin_action_links']);
     }
 
     /**
@@ -60,10 +63,14 @@ final class Plugin
     public function init_classes()
     {
         static::update_tables();
+        $isBitFiLicActive = Plugin::instance()->isLicenseActive();
         if (Request::Check('admin')) {
             (new Admin_Bar())->register();
+            new Updater();
         }
         new HookService();
+        global $wp_rewrite;
+        define('BTCBI_PRO_API_MAIN', get_site_url() . ($wp_rewrite->permalink_structure ? '/wp-json' : '/?rest_route='));
     }
 
     /**
@@ -97,30 +104,18 @@ final class Plugin
         if (!Capabilities::Check('manage_options')) {
             return;
         }
-        global $btcbi_db_version;
-        $installed_db_version = get_site_option('btcbi_db_version');
-        if ($installed_db_version != $btcbi_db_version) {
+        global $btcbi_pro_db_version;
+        $installed_db_version = get_site_option('btcbi_pro_db_version');
+        if ($installed_db_version != $btcbi_pro_db_version) {
             DB::migrate();
         }
     }
-
     public function isLicenseActive()
     {
         if (!isset($this->isLicActive)) {
-            $this->isLicActive = false;
+            $this->isLicActive = API::isLicenseActive();
         }
         return $this->isLicActive;
-    }
-    public function isProVer()
-    {
-        $plugins_keys = array_keys(get_plugins());
-        $plugin = 'bit-integrations-pro/bitwpfi.php';
-        if (in_array($plugin, $plugins_keys) && is_plugin_active($plugin)) {
-            $this->isPro =  true;
-        } else {
-            $this->isPro = false;
-        }
-        return $this->isPro;
     }
 
     /**
@@ -131,20 +126,13 @@ final class Plugin
      * @param string $main_file Absolute path to the plugin main file.
      * @return bool True if the plugin main instance could be loaded, false otherwise./
      */
-    public static function integrationlogDelete()
-    {
-        $option = get_option('btcbi_app_conf');
-        if (isset($option->enable_log_del) && isset($option->day)) {
-            LogHandler::logAutoDelte($option->day);
-        }
-    }
 
-    public static function load($main_file)
+    public static function load()
     {
         if (null !== static::$_instance) {
             return false;
         }
-        static::$_instance = new static($main_file);
+        static::$_instance = new static();
         static::$_instance->initialize();
         return true;
     }

@@ -4,13 +4,13 @@
  * Telegrom Integration
  */
 
-namespace BitCode\FI\Actions\Telegram;
+namespace BitApps\BTCBI_PRO\Actions\Telegram;
 
 use WP_Error;
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\IpTool;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
-use BitCode\FI\Actions\Telegram\RecordApiHelper;
+use BitApps\BTCBI_PRO\Actions\Telegram\RecordApiHelper;
 
 /**
  * Provide functionality for Telegram integration

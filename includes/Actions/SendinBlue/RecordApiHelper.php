@@ -4,10 +4,10 @@
  * ZohoRecruit Record Api
  */
 
-namespace BitCode\FI\Actions\SendinBlue;
+namespace BitApps\BTCBI_PRO\Actions\SendinBlue;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -78,13 +78,13 @@ class RecordApiHelper
         $fieldData['attributes'] = (object) $attributes;
 
         foreach ($lists as $index => $value) {
-            //code to be executed; 
+            //code to be executed;
             $lists[$index] = (int)$value;
         }
         $fieldData['listIds'] = $lists;
 
         if (property_exists($actions, 'double_optin') && $actions->double_optin) {
-            $recordApiResponse = $this->insertRecordDoubleOpt(($fieldData),  $integrationDetails);
+            $recordApiResponse = $this->insertRecordDoubleOpt(($fieldData), $integrationDetails);
         } else {
             $recordApiResponse = $this->insertRecord(wp_json_encode($fieldData));
         }

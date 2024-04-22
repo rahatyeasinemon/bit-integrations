@@ -4,13 +4,13 @@
  * ZohoMarketingHub Integration
  */
 
-namespace BitCode\FI\Actions\ZohoMarketingHub;
+namespace BitApps\BTCBI_PRO\Actions\ZohoMarketingHub;
 
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\IpTool;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
-use BitCode\FI\Actions\ZohoMarketingHub\RecordApiHelper;
-use BitCode\FI\Flow\FlowController;
+use BitApps\BTCBI_PRO\Actions\ZohoMarketingHub\RecordApiHelper;
+use BitApps\BTCBI_PRO\Flow\FlowController;
 use WP_Error;
 
 /**
@@ -191,7 +191,7 @@ class ZohoMarketingHubController
      * Helps to refresh zoho crm access_token
      *
      * @param Object $apiData Contains required data for refresh access token
-     * 
+     *
      * @return JSON  $tokenDetails API token details
      */
     protected static function refreshAccessToken($apiData)

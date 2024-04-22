@@ -1,12 +1,11 @@
 <?php
 
-namespace BitCode\FI\Triggers\CF7;
+namespace BitApps\BTCBI_PRO\Triggers\CF7;
 
-use BitCode\FI\Flow\Flow;
+use BitApps\BTCBI_PRO\Flow\Flow;
 
 final class CF7Controller
 {
-    
     public static function info()
     {
         $plugin_path = 'contact-form-7/wp-contact-form-7.php';
@@ -82,7 +81,7 @@ final class CF7Controller
         }
 
         $fields = [];
-        
+
         foreach ($fieldDetails as $field) {
             if (!empty($field->name) && $field->type !== 'submit') {
                 $fields[] = [

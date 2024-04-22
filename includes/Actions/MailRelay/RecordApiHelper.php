@@ -4,11 +4,11 @@
  * MailRelay Record Api
  */
 
-namespace BitCode\FI\Actions\MailRelay;
+namespace BitApps\BTCBI_PRO\Actions\MailRelay;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -79,7 +79,7 @@ class RecordApiHelper
         }
 
         $this->_requestStoringTypes = 'created';
-        return HttpHelper::post($apiEndpoints,  $apiRequestBody, $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoints, $apiRequestBody, $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -100,7 +100,7 @@ class RecordApiHelper
     public function execute($selectedGroups, $fieldValues, $fieldMap, $status)
     {
         $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $apiResponse = $this->addSubscriber($selectedGroups,  $finalData, $status);
+        $apiResponse = $this->addSubscriber($selectedGroups, $finalData, $status);
 
         if ($apiResponse->id) {
             $res = ['message' => 'Subscriber ' . $this->_requestStoringTypes . ' successfully'];

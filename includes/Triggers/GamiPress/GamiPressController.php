@@ -1,7 +1,8 @@
 <?php
-namespace BitCode\FI\Triggers\GamiPress;
 
-use BitCode\FI\Flow\Flow;
+namespace BitApps\BTCBI_PRO\Triggers\GamiPress;
+
+use BitApps\BTCBI_PRO\Flow\Flow;
 
 final class GamiPressController
 {

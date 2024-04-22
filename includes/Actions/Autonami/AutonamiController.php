@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Actions\Autonami;
+namespace BitApps\BTCBI_PRO\Actions\Autonami;
 
-use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Helper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 use BWFCRM_Fields;
 use BWFCRM_Lists;
 use BWFCRM_Tag;

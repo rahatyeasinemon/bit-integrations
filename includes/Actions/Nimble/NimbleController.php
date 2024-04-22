@@ -4,10 +4,10 @@
  * Nimble Integration
  */
 
-namespace BitCode\FI\Actions\Nimble;
+namespace BitApps\BTCBI_PRO\Actions\Nimble;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Nimble integration

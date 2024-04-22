@@ -1,8 +1,9 @@
 <?php
-namespace BitCode\FI\Actions\MasterStudyLms;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
+namespace BitApps\BTCBI_PRO\Actions\MasterStudyLms;
+
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 use WP_Error;
 
 class MasterStudyLmsHelper

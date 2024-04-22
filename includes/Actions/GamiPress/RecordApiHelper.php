@@ -4,10 +4,10 @@
  * GamiPress Record Api
  */
 
-namespace BitCode\FI\Actions\GamiPress;
+namespace BitApps\BTCBI_PRO\Actions\GamiPress;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -147,7 +147,7 @@ class RecordApiHelper
 
         if ($mainAction === '3') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-            $point= (int)$finalData['point'];
+            $point = (int)$finalData['point'];
             if (!empty($point) && is_numeric($point)) {
                 $apiResponse = self::addPointToUser($integrationDetails->selectedPointType, $point, $mainAction);
                 if ($apiResponse) {
@@ -180,7 +180,7 @@ class RecordApiHelper
 
         if ($mainAction === '6') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-            $point= (int)$finalData['point'];
+            $point = (int)$finalData['point'];
             if (!empty($point) && is_numeric($point)) {
                 $apiResponse = self::addPointToUser($integrationDetails->selectedPointType, $point, $mainAction);
                 if ($apiResponse) {

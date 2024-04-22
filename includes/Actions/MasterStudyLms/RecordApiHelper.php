@@ -1,8 +1,9 @@
 <?php
-namespace BitCode\FI\Actions\MasterStudyLms;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
+namespace BitApps\BTCBI_PRO\Actions\MasterStudyLms;
+
+use BitApps\BTCBI_PRO\Core\Util\Common;
+use BitApps\BTCBI_PRO\Log\LogHandler;
 use WP_Error;
 
 class RecordApiHelper
@@ -243,48 +244,49 @@ class RecordApiHelper
         return false;
     }
 
-    public static function reset_lesson($course_id,$lesson_id){
+    public static function reset_lesson($course_id, $lesson_id)
+    {
         $user_id = get_current_user_id();
-        $curriculum = get_post_meta( $course_id, 'curriculum', true );
+        $curriculum = get_post_meta($course_id, 'curriculum', true);
 
-		if ( ! empty( $curriculum ) ) {
-			$curriculum = \STM_LMS_Helpers::only_array_numbers( explode( ',', $curriculum ) );
+        if (! empty($curriculum)) {
+            $curriculum = \STM_LMS_Helpers::only_array_numbers(explode(',', $curriculum));
 
-			$curriculum_posts = get_posts(
-				array(
-					'post__in'       => $curriculum,
-					'posts_per_page' => 999,
-					'post_type'      => array( 'stm-lessons', 'stm-quizzes' ),
-					'post_status'    => 'publish',
-				)
-			);
+            $curriculum_posts = get_posts(
+                array(
+                    'post__in'       => $curriculum,
+                    'posts_per_page' => 999,
+                    'post_type'      => array( 'stm-lessons', 'stm-quizzes' ),
+                    'post_status'    => 'publish',
+                )
+            );
 
-			if ( ! empty( $curriculum_posts ) ) {
+            if (! empty($curriculum_posts)) {
 
-				$curriculum = get_post_meta( $course_id, 'curriculum', true );
+                $curriculum = get_post_meta($course_id, 'curriculum', true);
 
-				if ( empty( $curriculum ) ) {
+                if (empty($curriculum)) {
                     return false;
-				} else {
-					$curriculum = explode( ',', $curriculum );
+                } else {
+                    $curriculum = explode(',', $curriculum);
 
-					foreach ( $curriculum as $item_id ) {
+                    foreach ($curriculum as $item_id) {
 
-						$item_type = get_post_type( $item_id );
+                        $item_type = get_post_type($item_id);
 
-						if ( $item_type === 'stm-lessons' ) {
-							if ( $item_id == $lesson_id ) {
-								\STM_LMS_User_Manager_Course_User::reset_lesson( $user_id, $course_id, $item_id );
-							}
-						}
-					}
+                        if ($item_type === 'stm-lessons') {
+                            if ($item_id == $lesson_id) {
+                                \STM_LMS_User_Manager_Course_User::reset_lesson($user_id, $course_id, $item_id);
+                            }
+                        }
+                    }
 
-					\STM_LMS_Course::update_course_progress( $user_id, $course_id );
+                    \STM_LMS_Course::update_course_progress($user_id, $course_id);
                     return true;
-				}
-			}
+                }
+            }
             return false;
-		}
+        }
     }
 
     public function execute(
@@ -330,7 +332,7 @@ class RecordApiHelper
             } else {
                 LogHandler::save($this->integrationID, json_encode(['type' => 'course-reset', 'type_name' => 'user-course-reset']), 'error', 'Failed to reset course');
             }
-        } else if($mainAction == 5){
+        } elseif($mainAction == 5) {
             $course_id = $integrationDetails->courseId;
             $lesson_id = $integrationDetails->lessonId;
             $response = self::reset_lesson($course_id, $lesson_id);

@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Actions\MailMint;
+namespace BitApps\BTCBI_PRO\Actions\MailMint;
 
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\Common;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\Common;
 use Mint\MRM\DataStores\ContactData;
 use Mint\MRM\DataBase\Models\ContactModel;
 use Mint\MRM\DataBase\Models\ContactGroupModel;
@@ -173,7 +173,7 @@ class RecordApiHelper
                 LogHandler::save(self::$integrationID, ['type' =>  'create', 'type_name' => 'create contact'], 'error', "Failed to create contact");
             }
             return $apiResponse;
-        } else if ($mainAction === '1' && $contactExist && $update) {
+        } elseif ($mainAction === '1' && $contactExist && $update) {
             $selectedList = $integrationDetails->selectedList;
             $selectedTags = $integrationDetails->selectedTags;
             $selectedSubStatus = $integrationDetails->selectedSubStatus;

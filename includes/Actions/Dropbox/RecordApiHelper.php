@@ -1,10 +1,10 @@
 <?php
 
-namespace BitCode\FI\Actions\Dropbox;
+namespace BitApps\BTCBI_PRO\Actions\Dropbox;
 
 use WP_Error;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Log\LogHandler;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 class RecordApiHelper
 {
@@ -20,10 +20,14 @@ class RecordApiHelper
 
     public function uploadFile($folder, $filePath)
     {
-        if ($filePath === '') return false;
+        if ($filePath === '') {
+            return false;
+        }
 
         $body = file_get_contents(trim($filePath));
-        if (!$body) return new WP_Error(423, 'Can\'t open file!');
+        if (!$body) {
+            return new WP_Error(423, 'Can\'t open file!');
+        }
 
         $apiEndPoint = $this->contentBaseUri . '/2/files/upload';
         $headers = [
@@ -38,7 +42,9 @@ class RecordApiHelper
     {
         foreach ($folderWithFile as $folder => $filePath) {
             $folder = $folderKey ? $folderKey : $folder;
-            if ($filePath == '') continue;
+            if ($filePath == '') {
+                continue;
+            }
 
             if (is_array($filePath)) {
                 return $this->handleAllFiles($filePath, $actions, $folder);

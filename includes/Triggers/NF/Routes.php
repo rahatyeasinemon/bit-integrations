@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\NF\NFController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
+use BitApps\BTCBI_PRO\Triggers\NF\NFController;
 
 Route::get('nf/get', [NFController::class, 'getAll']);
 Route::post('nf/get/form', [NFController::class, 'getAForm']);

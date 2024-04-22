@@ -1,9 +1,9 @@
 <?php
 
-namespace BitCode\FI\Triggers;
+namespace BitApps\BTCBI_PRO\Triggers;
 
 use WP_Error;
-use BitCode\FI\Plugin;
+use BitApps\BTCBI_PRO\Plugin;
 use FilesystemIterator;
 
 final class TriggerController

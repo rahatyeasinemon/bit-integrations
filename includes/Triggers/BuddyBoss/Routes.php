@@ -1,10 +1,11 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Route;
-use BitCode\FI\Triggers\BuddyBoss\BuddyBossController;
+use BitApps\BTCBI_PRO\Core\Util\Route;
+use BitApps\BTCBI_PRO\Triggers\BuddyBoss\BuddyBossController;
 
 Route::get('buddyboss/get', [BuddyBossController::class, 'getAll']);
 Route::post('buddyboss/get/form', [BuddyBossController::class, 'get_a_form']);

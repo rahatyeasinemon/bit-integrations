@@ -1,5 +1,6 @@
 <?php
-namespace BitCode\FI\Triggers\ThriveApprentice;
+
+namespace BitApps\BTCBI_PRO\Triggers\ThriveApprentice;
 
 class ThriveApprenticeHelper
 {

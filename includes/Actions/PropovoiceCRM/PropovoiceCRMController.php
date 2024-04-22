@@ -1,17 +1,17 @@
 <?php
 
-namespace BitCode\FI\Actions\PropovoiceCRM;
+namespace BitApps\BTCBI_PRO\Actions\PropovoiceCRM;
 
 use WP_Error;
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\PropovoiceCRM\RecordApiHelper;
+use BitApps\BTCBI_PRO\Core\Util\IpTool;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Actions\PropovoiceCRM\RecordApiHelper;
 
 class PropovoiceCRMController
 {
     public static function pluginActive()
     {
-        if(class_exists('Ndpv')){
+        if(class_exists('Ndpv')) {
             return true;
         }
         return false;

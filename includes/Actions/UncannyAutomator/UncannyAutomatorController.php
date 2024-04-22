@@ -5,9 +5,9 @@
  *
  */
 
-namespace BitCode\FI\Actions\UncannyAutomator;
+namespace BitApps\BTCBI_PRO\Actions\UncannyAutomator;
 
-use BitCode\FI\Actions\WebHooks\WebHooksController;
+use BitApps\BTCBI_PRO\Actions\WebHooks\WebHooksController;
 
 /**
  * Provide functionality for UncannyAutomatorHandler

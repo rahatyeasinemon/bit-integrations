@@ -1,17 +1,16 @@
 <?php
 
-namespace BitCode\FI\Actions\Getgist;
+namespace BitApps\BTCBI_PRO\Actions\Getgist;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
-use BitCode\FI\Actions\Getgist\RecordApiHelper;
-
+use BitApps\BTCBI_PRO\Actions\Getgist\RecordApiHelper;
 
 class GetgistController
 {
-    const APIENDPOINT = 'https://api.getgist.com';
-   
+    public const APIENDPOINT = 'https://api.getgist.com';
+
     public static function getgistAuthorize($requestsParams)
     {
         if (empty($requestsParams->api_key)) {
@@ -37,12 +36,12 @@ class GetgistController
 
         wp_send_json_success(true);
     }
-    
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
         $integId = $integrationData->id;
-    
+
         $api_key = $integrationDetails->api_key;
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;

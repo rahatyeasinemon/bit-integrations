@@ -4,10 +4,10 @@
  * AgiledCRM Integration
  */
 
-namespace BitCode\FI\Actions\AgiledCRM;
+namespace BitApps\BTCBI_PRO\Actions\AgiledCRM;
 
 use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for AgiledCRM integration
