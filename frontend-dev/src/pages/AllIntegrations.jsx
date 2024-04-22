@@ -186,6 +186,7 @@ function AllIntegrations({ isValidUser }) {
       <Loader style={loaderStyle} />
     )
   }
+
   return (
     <div id="all-forms">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -204,12 +205,7 @@ function AllIntegrations({ isValidUser }) {
           <div className="af-header flx flx-between">
             <h2>{__('Integrations', 'bit-integrations')}</h2>
             {(integrations.length >= 1 && !isValidUser)
-              ? (
-                // eslint-disable-next-line react/button-has-type
-                <button className="btn round btcd-btn-lg blue blue-sh" onClick={(e) => actionHandler(e)}>
-                  {__('Create Integration', 'bit-integrations')}
-                </button>
-              )
+              ? ""
               : (
                 <Link to="/flow/new" className="btn round btcd-btn-lg blue blue-sh">
                   {__('Create Integration', 'bit-integrations')}
