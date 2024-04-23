@@ -29,6 +29,7 @@ final class ARFormController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

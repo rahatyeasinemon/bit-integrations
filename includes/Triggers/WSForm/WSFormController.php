@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\WSForm;
 
 use BitCode\FI\Flow\Flow;
@@ -39,7 +40,8 @@ final class WSFormController
                 <li>Goto <b>Field Settings</b></li>
                 <li>Under File Handler select Save To <b>WS Form (Public)</b></li>
             </ul>
-            '
+            ',
+            'isPro' => true
         ];
     }
 

@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $btcbi, $flowStep, $newFlow } from '../../../GlobalStates'
 import useFetch from '../../../hooks/useFetch'
 import CloseIcn from '../../../Icons/CloseIcn'
-import { deepCopy, sortObj } from '../../../Utils/Helpers'
+import { deepCopy, sortFreeProd, sortObj } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import CustomTrigger from '../../Triggers/CustomTrigger'
@@ -34,7 +34,7 @@ export default function SelectTrigger() {
   useEffect(() => {
     setAllTriggers({ data: sortFeaturedProducts(data?.data) })
   }, [data])
-
+  console.log(allTriggers)
   const featuredProducts = ['BitForm', 'BitAssist']
 
   const sortFeaturedProducts = (dataObj = {}) => {
@@ -51,7 +51,8 @@ export default function SelectTrigger() {
         return tempAccr
       }, {})
       const sortedTriggers = sortObj(newData)
-      const finalData = { ...featuredProductData, ...sortedTriggers }
+      const finalSortedTriggers = sortFreeProd(sortedTriggers)
+      const finalData = { ...featuredProductData, ...finalSortedTriggers }
       return finalData
     }
 

@@ -28,6 +28,7 @@ final class CartFlowController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

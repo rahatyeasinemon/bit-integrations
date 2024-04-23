@@ -27,7 +27,8 @@ final class DiviController
                 'method' => 'post',
                 'data' => ['id']
             ],
-            'note' => '<p>Tested version: 4.14.8.</p>'
+            'note' => '<p>Tested version: 4.14.8.</p>',
+            'isPro' => true
         ];
     }
 

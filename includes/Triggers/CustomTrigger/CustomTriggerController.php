@@ -1,8 +1,9 @@
 <?php
+
 namespace BitCode\FI\Triggers\CustomTrigger;
 
-use BitCode\FI\Flow\Flow;
 use WP_Error;
+use BitCode\FI\Flow\Flow;
 
 class CustomTriggerController
 {
@@ -12,7 +13,8 @@ class CustomTriggerController
             'name' => 'Custom Trigger',
             'title' => 'You can connect bit integrations with any other plugin or theme using this trigger(custom hook)',
             'type' => 'custom_trigger',
-            'is_active' => true
+            'is_active' => true,
+            'isPro' => false
         ];
     }
 

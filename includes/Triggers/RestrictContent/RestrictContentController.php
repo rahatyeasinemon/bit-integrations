@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\RestrictContent;
 
 use BitCode\FI\Flow\Flow;
@@ -26,6 +27,7 @@ final class RestrictContentController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 
@@ -47,7 +49,8 @@ final class RestrictContentController
         }
         // A user's membership to a specific level expires Pro
         // A user's membership to a specific level is cancelled Pro
-        $types = ['A user purchases a membership level', 'A users membership to a specific level expires Pro', 'A users membership to a specific level is cancelled Pro'
+        $types = [
+            'A user purchases a membership level', 'A users membership to a specific level expires Pro', 'A users membership to a specific level is cancelled Pro'
         ];
         $restrictContent_action = [];
         foreach ($types as $index => $type) {

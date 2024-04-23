@@ -29,6 +29,7 @@ final class BrizyController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

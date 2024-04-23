@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Triggers\Groundhogg;
 
-use BitCode\FI\Flow\Flow;
 use Groundhogg\DB\Tags;
+use BitCode\FI\Flow\Flow;
 
 final class GroundhoggController
 {
@@ -28,6 +28,7 @@ final class GroundhoggController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

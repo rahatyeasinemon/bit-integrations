@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\FormCraft;
 
 use BitCode\FI\Flow\Flow;
@@ -21,6 +22,7 @@ final class FormCraftController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

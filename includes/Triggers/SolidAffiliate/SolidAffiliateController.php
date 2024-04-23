@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\SolidAffiliate;
 
 use BitCode\FI\Flow\Flow;
@@ -26,6 +27,7 @@ final class SolidAffiliateController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 
@@ -86,9 +88,9 @@ final class SolidAffiliateController
             );
         }
 
-        if ($id === '1'){
+        if ($id === '1') {
             $fields = SolidAffiliateHelper::getAffiliateField();
-        } elseif ($id === '2'){
+        } elseif ($id === '2') {
             $fields = SolidAffiliateHelper::getReferralAffiliateField();
         }
 

@@ -6,7 +6,7 @@ use BitCode\FI\Flow\Flow;
 
 final class CF7Controller
 {
-    
+
     public static function info()
     {
         $plugin_path = 'contact-form-7/wp-contact-form-7.php';
@@ -27,6 +27,7 @@ final class CF7Controller
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => false
         ];
     }
 
@@ -82,7 +83,7 @@ final class CF7Controller
         }
 
         $fields = [];
-        
+
         foreach ($fieldDetails as $field) {
             if (!empty($field->name) && $field->type !== 'submit') {
                 $fields[] = [

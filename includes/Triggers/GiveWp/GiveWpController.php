@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\GiveWp;
 
 use BitCode\FI\Flow\Flow;
@@ -26,6 +27,7 @@ final class GiveWpController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

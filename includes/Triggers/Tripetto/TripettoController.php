@@ -30,6 +30,7 @@ final class TripettoController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

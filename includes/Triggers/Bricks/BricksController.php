@@ -28,6 +28,7 @@ final class BricksController
                 'data' => ['id']
             ],
             'note' => '<p>' . __('Select <b>"Custom"</b> as a form submit actions from your Bricks Builder sidebar.', 'bit-integrations') . '</p>',
+            'isPro' => true
         ];
     }
 

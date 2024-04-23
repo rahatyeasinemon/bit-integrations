@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Triggers\EVF;
 
+use wpdb;
+use BitCode\FI\Flow\Flow;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Flow\Flow;
-use wpdb;
 
 final class EVFController
 {
@@ -29,6 +29,7 @@ final class EVFController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 
@@ -142,28 +143,28 @@ final class EVFController
     private static function fieldType($type)
     {
         switch ($type) {
-        case 'first-name':
-        case 'last-name':
-        case 'range-slider':
-        case 'payment-quantity':
-        case 'payment-total':
-        case 'rating':
-            return 'text';
-        case 'phone':
-            return 'tel';
-        case 'privacy-policy':
-        case 'payment-checkbox':
-        case 'payment-multiple':
-            return 'checkbox';
-        case 'payment-single':
-            return 'radio';
-        case 'image-upload':
-        case 'file-upload':
-        case 'signature':
-            return 'file';
+            case 'first-name':
+            case 'last-name':
+            case 'range-slider':
+            case 'payment-quantity':
+            case 'payment-total':
+            case 'rating':
+                return 'text';
+            case 'phone':
+                return 'tel';
+            case 'privacy-policy':
+            case 'payment-checkbox':
+            case 'payment-multiple':
+                return 'checkbox';
+            case 'payment-single':
+                return 'radio';
+            case 'image-upload':
+            case 'file-upload':
+            case 'signature':
+                return 'file';
 
-        default:
-            return $type;
+            default:
+                return $type;
         }
     }
 
@@ -192,29 +193,29 @@ final class EVFController
         }
         return $processedValue;
     }
-    
+
     public static function processCountryFieldValue($index, $field, $data)
     {
         $processedValue = [];
         $processedValue["$index"] = $field['value']['country_code'];
         return $processedValue;
     }
-    
+
     public static function processRadioFieldValue($index, $field, $data)
     {
         $processedValue = [];
         $processedValue["$index"] = $field['value_raw'];
         return $processedValue;
     }
-    
+
     public static function processCheckboxFieldValue($index, $field, $data)
     {
         $processedValue = [];
         $processedValue["$index"] = $field['value_raw'];
         return $processedValue;
     }
-    
-    
+
+
     public static function processFileFieldValue($index, $field, $data)
     {
         $processedValue = [];
@@ -231,7 +232,7 @@ final class EVFController
     public static function processDateTimeFieldValue($index, $field, $data)
     {
         $processedValue = [];
-    
+
         $fieldInfo =  $data['form_fields'][$index];
         if ($fieldInfo['date_mode'] === 'single') {
             $dateTimeHelper = new DateTimeHelper();
@@ -249,7 +250,7 @@ final class EVFController
         } else {
             $processedValue[$index] = $field['value'];
         }
-        
+
         return $processedValue;
     }
 

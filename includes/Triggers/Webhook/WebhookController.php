@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Triggers\Webhook;
 
-use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Flow\Flow;
 use WP_Error;
 use WP_REST_Request;
+use BitCode\FI\Flow\Flow;
+use BitCode\FI\Core\Util\Helper;
 
 class WebhookController
 {
@@ -26,7 +26,8 @@ class WebhookController
             'name' => 'Webhook',
             'title' => 'Get callback data through an URL',
             'type' => 'webhook',
-            'is_active' => true
+            'is_active' => true,
+            'isPro' => false
         ];
     }
 

@@ -27,6 +27,7 @@ final class LearnDashController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 
@@ -49,7 +50,8 @@ final class LearnDashController
             wp_send_json_error(__('LearnDash LMS is not installed or activated', 'bit-integrations'));
         }
 
-        $types = ['A user is enrolled in a course', 'A user is unenrolled from a course', 'User completed a course',
+        $types = [
+            'A user is enrolled in a course', 'A user is unenrolled from a course', 'User completed a course',
             'User completes a lesson', 'User completes a topic', 'User attempts(pass/fail) a quiz',
             'A user fails a quiz', 'A user passes a quiz', 'A user is added to a group', 'A user is removed from a group',
             'A user submits an assignments for a lesson'

@@ -1,8 +1,9 @@
 <?php
+
 namespace BitCode\FI\Triggers\Registration;
 
-use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Flow\Flow;
+use BitCode\FI\Core\Util\Hooks;
 
 final class RegistrationController
 {
@@ -22,6 +23,7 @@ final class RegistrationController
                 'method' => 'post',
                 'data' => ['id'],
             ],
+            'isPro' => true
 
         ];
     }

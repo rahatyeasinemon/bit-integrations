@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\SureCart;
 
 use BitCode\FI\Flow\Flow;
@@ -27,6 +28,7 @@ final class SureCartController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

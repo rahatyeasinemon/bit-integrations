@@ -34,6 +34,7 @@ final class StudioCartController
                 'method' => 'post',
                 'data'   => ['id']
             ],
+            'isPro' => true
         ];
     }
 

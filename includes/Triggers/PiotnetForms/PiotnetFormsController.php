@@ -1,8 +1,9 @@
 <?php
+
 namespace BitCode\FI\Triggers\PiotnetForms;
 
-use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Flow\Flow;
+use BitCode\FI\Core\Util\Common;
 
 final class PiotnetFormsController
 {
@@ -30,7 +31,8 @@ final class PiotnetFormsController
                 'method' => 'post',
                 'data' => ['id']
             ],
-            'note' => 'Please make sure that all of your input fields <b>"Form ID"</b> are same for the selected form.'
+            'note' => 'Please make sure that all of your input fields <b>"Form ID"</b> are same for the selected form.',
+            'isPro' => true
         ];
     }
 

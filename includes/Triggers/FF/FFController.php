@@ -1,9 +1,10 @@
 <?php
+
 namespace BitCode\FI\Triggers\FF;
 
+use BitCode\FI\Flow\Flow;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Flow\Flow;
 use FluentForm\App\Modules\Form\FormFieldsParser;
 
 final class FFController
@@ -28,6 +29,7 @@ final class FFController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

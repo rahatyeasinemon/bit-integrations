@@ -36,7 +36,8 @@ final class BreakdanceController
             'fetch_remove'  => [
                 'action'    => 'breakdance/test/remove',
                 'method'    => 'post',
-            ]
+            ],
+            'isPro' => true
         ];
     }
 

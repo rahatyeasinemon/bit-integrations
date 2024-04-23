@@ -13,7 +13,8 @@ class EssentialBlocksController
             'name' => 'Essential Blocks',
             'title' => 'Get callback data through an URL',
             'type' => 'essentialBlocks',
-            'is_active' => true
+            'is_active' => true,
+            'isPro' => true
         ];
     }
 

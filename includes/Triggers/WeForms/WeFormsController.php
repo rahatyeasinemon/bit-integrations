@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Triggers\WeForms;
 
-use BitCode\FI\Flow\Flow;
 use DateTime;
+use BitCode\FI\Flow\Flow;
 
 final class WeFormsController
 {
@@ -28,6 +28,7 @@ final class WeFormsController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 
@@ -172,7 +173,7 @@ final class WeFormsController
             if ($isName) {
                 unset($submittedData[$key]);
                 $nameValues = explode('|', $value);
-                if (count($nameValues) ==2) {
+                if (count($nameValues) == 2) {
                     $nameOrganized = [
                         'first_name' => $nameValues[0],
                         'last_name' => $nameValues[1]

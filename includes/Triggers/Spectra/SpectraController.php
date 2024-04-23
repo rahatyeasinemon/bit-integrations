@@ -13,7 +13,8 @@ class SpectraController
             'name' => 'Spectra',
             'title' => 'Get callback data through an URL',
             'type' => 'spectra',
-            'is_active' => true
+            'is_active' => true,
+            'isPro' => true
         ];
     }
 

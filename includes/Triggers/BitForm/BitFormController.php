@@ -30,7 +30,7 @@ final class BitFormController
                 'action' => 'bitform/get/form',
                 'method' => 'post',
                 'data' => ['id']
-            ],
+            ]
         ];
     }
 

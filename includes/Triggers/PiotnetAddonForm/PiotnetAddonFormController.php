@@ -27,6 +27,7 @@ final class PiotnetAddonFormController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 
