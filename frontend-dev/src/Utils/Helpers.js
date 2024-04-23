@@ -362,7 +362,6 @@ export const sortFreeProd = (obj) => {
   const newData = deepCopy(obj);
   const sortedTriggers = sortObj(newData);
   const freeProd = [];
-  console.log("all", obj);
   Object.keys(obj).forEach((key) => {
     if (!obj[key].isPro) {
       freeProd.push(key);
