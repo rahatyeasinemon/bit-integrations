@@ -16,8 +16,10 @@ import GetLogo from '../../../Utils/GetLogo'
 import EssentialBlocksHelper from '../../Triggers/TriggerHelpers/EssentialBlocksHelper'
 import SpectraHelper from '../../Triggers/TriggerHelpers/SpectraHelper'
 import CustomFormSubmission from '../../Triggers/CustomFormSubmission'
+import { allTriggersName } from '../../../Utils/AllTriggersName'
 
 export default function SelectTrigger() {
+  const data = allTriggersName
   const { isPro } = useRecoilValue($btcbi)
   const loaderStyle = {
     display: 'flex',
@@ -25,14 +27,17 @@ export default function SelectTrigger() {
     justifyContent: 'center',
     alignItems: 'center',
   }
-  const { data, isLoading } = useFetch({ payload: {}, action: 'trigger/list', method: 'GET' })
+  // const { data, isLoading } = useFetch({ payload: {}, action: 'trigger/list', method: 'GET' })
+  // const { data, isLoading } = useFetch({ payload: {}, action: 'trigger/list', method: 'GET' })
   const [allTriggers, setAllTriggers] = useState(data || {})
   const [searchValue, setSearchValue] = useState('')
   const flowStep = useRecoilValue($flowStep)
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
 
+  
+
   useEffect(() => {
-    setAllTriggers({ data: sortFeaturedProducts(data?.data) })
+    setAllTriggers({ data: sortFeaturedProducts(data) })
   }, [data])
 
   const featuredProducts = ['BitForm', 'BitAssist']
@@ -62,7 +67,7 @@ export default function SelectTrigger() {
   const searchInteg = (e) => {
     const { value } = e.target
     setSearchValue(value)
-    const filtered = Object.entries(data.data).filter((integ) => integ[1].name.toLowerCase().includes(value.toLowerCase())).reduce((prev, [key, values]) => ({ ...prev, [key]: values }), {})
+    const filtered = Object.entries(data).filter((integ) => integ[1].name.toLowerCase().includes(value.toLowerCase())).reduce((prev, [key, values]) => ({ ...prev, [key]: values }), {})
     // const organizeData = filtered?.reduce((prev, [key, values]) => ({ ...prev, [key]: values }), {})
     setAllTriggers({ success: true, data: sortFeaturedProducts(filtered) })
   }
@@ -79,11 +84,11 @@ export default function SelectTrigger() {
     delete tempConf.triggered_entity
     setNewFlow(tempConf)
   }
-  if (isLoading) {
-    return (
-      <Loader style={loaderStyle} />
-    )
-  }
+  // if (isLoading) {
+  //   return (
+  //     <Loader style={loaderStyle} />
+  //   )
+  // }
 
   if (data?.success === false) {
     return (
