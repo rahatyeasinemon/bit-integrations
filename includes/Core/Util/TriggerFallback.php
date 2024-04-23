@@ -2,11 +2,12 @@
 
 namespace BitCode\FI\Core\Util;
 
+use DateTime;
 use BitCode\FI\Flow\Flow;
 
 final class TriggerFallback
 {
-    public static function handle_formidable_submit($conf_method, $form, $form_option, $entry_id, $extra_args)
+    public static function handleFormidableSubmit($conf_method, $form, $form_option, $entry_id, $extra_args)
     {
         $form_id = $form->id;
         if (empty($form_id)) {
@@ -1824,5 +1825,693 @@ final class TriggerFallback
         }
 
         return ['triggered_entity' => 'Divi', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
+    }
+
+    public static function eddHandlePurchaseProduct($payment_id)
+    {
+        $flows = Flow::exists('EDD', 1);
+        if (!$flows) {
+            return;
+        }
+
+        $cart_items = edd_get_payment_meta_cart_details($payment_id);
+        if (!class_exists('\EDD_Payment') || empty($cart_items)) {
+            return;
+        }
+
+        $payment = new \EDD_Payment($payment_id);
+
+        foreach ($cart_items as $item) {
+            $final_data = [
+                'user_id' => $payment->user_id,
+                'first_name' => $payment->first_name,
+                'last_name' => $payment->last_name,
+                'user_email' => $payment->email,
+                'product_name' => $item['name'],
+                'product_id' => $item['id'],
+                'order_item_id' => $item['order_item_id'],
+                'discount_codes' => $payment->discounts,
+                'order_discounts' => $item['discount'],
+                'order_subtotal' => $payment->subtotal,
+                'order_total' => $payment->total,
+                'order_tax' => $payment->tax,
+                'payment_method' => $payment->gateway,
+            ];
+        }
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedProduct = !empty($flowDetails->selectedProduct) ? $flowDetails->selectedProduct : [];
+
+        return ['triggered_entity' => 'EDD', 'triggered_entity_id' => 1, 'data' => $final_data, 'flows' => $flows];
+    }
+
+    public static function eddHandlePurchaseProductDiscountCode($payment_id, $payment, $customer)
+    {
+        $flows = Flow::exists('EDD', 2);
+        if (!$flows) {
+            return;
+        }
+
+        $cart_items = edd_get_payment_meta_cart_details($payment_id);
+        if (!class_exists('\EDD_Payment') || empty($cart_items)) {
+            return;
+        }
+
+        $payment = new \EDD_Payment($payment_id);
+        foreach ($cart_items as $item) {
+            $final_data = [
+                'user_id' => $payment->user_id,
+                'first_name' => $payment->first_name,
+                'last_name' => $payment->last_name,
+                'user_email' => $payment->email,
+                'product_name' => $item['name'],
+                'product_id' => $item['id'],
+                'order_item_id' => $item['order_item_id'],
+                'discount_codes' => $payment->discounts,
+                'order_discounts' => $item['discount'],
+                'order_subtotal' => $payment->subtotal,
+                'order_total' => $payment->total,
+                'order_tax' => $payment->tax,
+                'payment_method' => $payment->gateway,
+                'status' => $payment->status,
+            ];
+        }
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedDiscount = !empty($flowDetails->selectedDiscount) ? $flowDetails->selectedDiscount : [];
+
+        return ['triggered_entity' => 'EDD', 'triggered_entity_id' => 2, 'data' => $final_data, 'flows' => $flows];
+    }
+
+    public static function eddHandleOrderRefunded($order_id)
+    {
+        $flows = Flow::exists('EDD', 3);
+        if (!$flows) {
+            return;
+        }
+
+        $order_detail   = edd_get_payment($order_id);
+        $total_discount = 0;
+
+        if (empty($order_detail)) {
+            return;
+        }
+
+        $payment_id = $order_detail->ID;
+        $user_id    = edd_get_payment_user_id($payment_id);
+
+        if (!$user_id) {
+            $user_id = wp_get_current_user()->ID;
+        }
+
+        $userInfo = static::eddGetUserInfo($user_id);
+
+        $payment_info = [
+            'first_name' => $userInfo['first_name'],
+            'last_name' => $userInfo['last_name'],
+            'nickname' => $userInfo['nickname'],
+            'avatar_url' => $userInfo['avatar_url'],
+            'user_email' => $userInfo['user_email'],
+            'discount_codes'  => $order_detail->discounts,
+            'order_discounts' => $total_discount,
+            'order_subtotal'  => $order_detail->subtotal,
+            'order_total'     => $order_detail->total,
+            'order_tax'       => $order_detail->tax,
+            'payment_method'  => $order_detail->gateway,
+        ];
+
+        return ['triggered_entity' => 'EDD', 'triggered_entity_id' => 3, 'data' => $payment_info, 'flows' => $flows];
+    }
+
+    public static function eddGetUserInfo($user_id)
+    {
+        $userInfo = get_userdata($user_id);
+        $user = [];
+        if ($userInfo) {
+            $userData = $userInfo->data;
+            $user_meta = get_user_meta($user_id);
+            $user = [
+                'first_name' => $user_meta['first_name'][0],
+                'last_name' => $user_meta['last_name'][0],
+                'user_email' => $userData->user_email,
+                'nickname' => $userData->user_nicename,
+                'avatar_url' => get_avatar_url($user_id),
+            ];
+        }
+        return $user;
+    }
+
+    public static function essentialBlocksHandler(...$args)
+    {
+        if ($flows = Flow::exists('EssentialBlocks', current_action())) {
+
+            foreach ($flows as $flow) {
+                $flowDetails = json_decode($flow->flow_details);
+                if (!isset($flowDetails->primaryKey)) {
+                    continue;
+                }
+
+                $primaryKeyValue = Helper::extractValueFromPath($args, $flowDetails->primaryKey->key);
+                if ($flowDetails->primaryKey->value === $primaryKeyValue) {
+                    $fieldKeys      = [];
+                    $formatedData   = [];
+
+                    if ($flowDetails->body->data && is_array($flowDetails->body->data)) {
+                        $fieldKeys = array_map(function ($field) use ($args) {
+                            return $field->key;
+                        }, $flowDetails->body->data);
+                    } elseif (isset($flowDetails->field_map) && is_array($flowDetails->field_map)) {
+                        $fieldKeys = array_map(function ($field) use ($args) {
+                            return $field->formField;
+                        }, $flowDetails->field_map);
+                    }
+
+                    foreach ($fieldKeys as $key) {
+                        $formatedData[$key] = Helper::extractValueFromPath($args, $key);
+                    }
+
+                    $execData = ['triggered_entity' => 'EssentialBlocks', 'triggered_entity_id' => current_action(), 'data' => $formatedData, 'flows' => array($flow)];
+                }
+            }
+            return $execData;
+        }
+
+        return;
+    }
+
+    public static function evfHandleSubmission($entry_id, $fields, $entry, $form_id, $form_data)
+    {
+        $flows = Flow::exists('EVF', $form_id);
+
+        if (!$flows) {
+            return;
+        }
+
+        $processedEntry = self::evfProcessValues($entry, $fields, $form_data);
+        return ['triggered_entity' => 'EVF', 'triggered_entity_id' => 3, 'data' => $processedEntry, 'flows' => $flows];
+    }
+
+    private static function evfFieldType($type)
+    {
+        switch ($type) {
+            case 'first-name':
+            case 'last-name':
+            case 'range-slider':
+            case 'payment-quantity':
+            case 'payment-total':
+            case 'rating':
+                return 'text';
+            case 'phone':
+                return 'tel';
+            case 'privacy-policy':
+            case 'payment-checkbox':
+            case 'payment-multiple':
+                return 'checkbox';
+            case 'payment-single':
+                return 'radio';
+            case 'image-upload':
+            case 'file-upload':
+            case 'signature':
+                return 'file';
+
+            default:
+                return $type;
+        }
+    }
+
+    public static function evfProcessValues($entry, $fields, $form_data)
+    {
+        $processedValues = [];
+
+        foreach ($fields as $index => $field) {
+            $methodName = 'process' . str_replace(' ', '', ucwords(str_replace('-', ' ', self::evfFieldType($field['type'])))) . 'FieldValue';
+            if (method_exists(new self, $methodName)) {
+                $processedValues =  array_merge($processedValues, call_user_func_array([new self, $methodName], [$index, $field, $form_data]));
+            } else {
+                $processedValues["$index"] =   $entry['form_fields'][$index];
+            }
+        }
+
+        return $processedValues;
+    }
+
+    public static function ffHandleSubmit($entryId, $formData, $form)
+    {
+        $form_id = $form->id;
+        if (!empty($form_id) && $flows = Flow::exists('FF', $form_id)) {
+            foreach ($formData as $primaryFld => $primaryFldValue) {
+                if ($primaryFld === 'repeater_field') {
+                    foreach ($primaryFldValue as $secondaryFld => $secondaryFldValue) {
+                        foreach ($secondaryFldValue as $tertiaryFld => $tertiaryFldValue) {
+                            $formData["$primaryFld:$secondaryFld-$tertiaryFld"] = $tertiaryFldValue;
+                        }
+                    }
+                }
+                if (is_array($primaryFldValue) && array_keys($primaryFldValue) !== range(0, count($primaryFldValue) - 1)) {
+                    foreach ($primaryFldValue as $secondaryFld => $secondaryFldValue) {
+                        $formData["$primaryFld:$secondaryFld"] = $secondaryFldValue;
+                    }
+                }
+            }
+
+            if (isset($form->form_fields) && isset(json_decode($form->form_fields)->fields)) {
+                $formFields = json_decode($form->form_fields)->fields;
+                foreach ($formFields as $fieldInfo) {
+                    $attributes = $fieldInfo->attributes;
+                    $type = isset($attributes->type) ? $attributes->type : $fieldInfo->element;
+                    if ($type === 'file') {
+                        $formData[$attributes->name] = Common::filePath($formData[$attributes->name]);
+                    }
+                    if (property_exists($fieldInfo, 'element') && $fieldInfo->element === 'input_date') {
+                        $dateTimeHelper = new DateTimeHelper();
+                        $currentDateFormat = $fieldInfo->settings->date_format;
+                        $formData[$attributes->name] = $dateTimeHelper->getFormated($formData[$attributes->name], $currentDateFormat, wp_timezone(), 'Y-m-d\TH:i:sP', null);
+                    }
+                }
+            }
+
+            return ['triggered_entity' => 'FF', 'triggered_entity_id' => $form_id, 'data' => $formData, 'flows' => $flows];
+        }
+    }
+
+    protected static function fluentcrmFlowFilter($flows, $key, $value)
+    {
+        $filteredFlows = [];
+        if (is_array($flows) || is_object($flows)) {
+            foreach ($flows as $flow) {
+                if (is_string($flow->flow_details)) {
+                    $flow->flow_details = json_decode($flow->flow_details);
+                }
+                if (!isset($flow->flow_details->$key) || $flow->flow_details->$key === 'any' || in_array($flow->flow_details->$key, $value) || $flow->flow_details->$key === '') {
+                    $filteredFlows[] = $flow;
+                }
+            }
+        }
+        return $filteredFlows;
+    }
+    public static function fluentcrmGetContactData($email)
+    {
+        $contactApi     = \FluentCrmApi('contacts');
+        $contact        = $contactApi->getContact($email);
+        $customFields   = $contact->custom_fields();
+
+        $data = [
+            "prefix" => $contact->prefix,
+            "first_name" => $contact->first_name,
+            "last_name" => $contact->last_name,
+            "full_name" => $contact->full_name,
+            "email" => $contact->email,
+            "timezone" => $contact->timezone,
+            "address_line_1" => $contact->address_line_1,
+            "address_line_2" => $contact->address_line_2,
+            "city" => $contact->city,
+            "state" => $contact->state,
+            "postal_code" => $contact->postal_code,
+            "country" => $contact->country,
+            "ip" => $contact->ip,
+            "phone" => $contact->phone,
+            "source" => $contact->source,
+            "date_of_birth" => $contact->date_of_birth,
+        ];
+
+        if (!empty($customFields)) {
+            foreach ($customFields as $key => $value) {
+                $data[$key] = $value;
+            }
+        }
+
+        $lists = $contact->lists;
+        $fluentCrmLists = [];
+        foreach ($lists as $list) {
+            $fluentCrmLists[] = (object) [
+                'list_id' => $list->id,
+                'list_title' => $list->title
+            ];
+        }
+
+        $data['tags'] = implode(', ', array_column($contact->tags->toArray() ?? [], 'title'));
+        $data['lists'] = $fluentCrmLists;
+        return $data;
+    }
+
+    public static function fluentcrmHandleAddTag($tag_ids, $subscriber)
+    {
+        $flows = Flow::exists('FluentCrm', 'fluentcrm-1');
+        $flows = self::fluentcrmFlowFilter($flows, 'selectedTag', $tag_ids);
+
+        if (!$flows) {
+            return;
+        }
+
+        $email = $subscriber->email;
+        $data = ['tag_ids' => $tag_ids];
+        $dataContact = self::fluentcrmGetContactData($email);
+        $data = $data + $dataContact;
+
+        return ['triggered_entity' => 'FluentCrm', 'triggered_entity_id' => 'fluentcrm-1', 'data' => $data, 'flows' => $flows];
+    }
+
+    public static function fluentcrmHandleRemoveTag($tag_ids, $subscriber)
+    {
+        $flows = Flow::exists('FluentCrm', 'fluentcrm-2');
+        $flows = self::fluentcrmFlowFilter($flows, 'selectedTag', $tag_ids);
+
+        if (!$flows) {
+            return;
+        }
+
+        $email = $subscriber->email;
+        $data = ['removed_tag_ids' => $tag_ids];
+        $dataContact = self::fluentcrmGetContactData($email);
+        $data = $data + $dataContact;
+
+        return ['triggered_entity' => 'FluentCrm', 'triggered_entity_id' => 'fluentcrm-2', 'data' => $data, 'flows' => $flows];
+    }
+
+    public static function fluentcrmHandleAddList($list_ids, $subscriber)
+    {
+        $flows = Flow::exists('FluentCrm', 'fluentcrm-3');
+        $flows = self::fluentcrmFlowFilter($flows, 'selectedList', $list_ids);
+
+        if (!$flows) {
+            return;
+        }
+
+        $email = $subscriber->email;
+        $data = ['list_ids' => $list_ids];
+        $dataContact = self::fluentcrmGetContactData($email);
+        $data = $data + $dataContact;
+
+        return ['triggered_entity' => 'FluentCrm', 'triggered_entity_id' => 'fluentcrm-3', 'data' => $data, 'flows' => $flows];
+    }
+
+    public static function fluentcrmHandleRemoveList($list_ids, $subscriber)
+    {
+        $flows = Flow::exists('FluentCrm', 'fluentcrm-4');
+        $flows = self::fluentcrmFlowFilter($flows, 'selectedList', $list_ids);
+
+        if (!$flows) {
+            return;
+        }
+
+        $email = $subscriber->email;
+        $data = ['remove_list_ids' => $list_ids];
+        $dataContact = self::fluentcrmGetContactData($email);
+        $data = $data + $dataContact;
+
+        return ['triggered_entity' => 'FluentCrm', 'triggered_entity_id' => 'fluentcrm-4', 'data' => $data, 'flows' => $flows];
+    }
+
+    public static function fluentcrmHandleContactCreate($subscriber)
+    {
+        $flows = Flow::exists('FluentCrm', 'fluentcrm-6');
+        if (!$flows) {
+            return;
+        }
+
+        $email  = $subscriber->email;
+        $data   = self::fluentcrmGetContactData($email);
+
+        return ['triggered_entity' => 'FluentCrm', 'triggered_entity_id' => 'fluentcrm-6', 'data' => $data, 'flows' => $flows];
+    }
+
+    public static function fluentcrmHandleChangeStatus($subscriber, $old_status)
+    {
+        $newStatus = [$subscriber->status];
+
+        $flows = Flow::exists('FluentCrm', 'fluentcrm-5');
+        $flows = self::fluentcrmFlowFilter($flows, 'selectedStatus', $newStatus);
+
+        $email = $subscriber->email;
+
+        $data = [
+            'old_status' => $old_status,
+            'new_status' => $newStatus,
+        ];
+
+        $dataContact = self::fluentcrmGetContactData($email);
+        $data = $data + $dataContact;
+
+        return ['triggered_entity' => 'FluentCrm', 'triggered_entity_id' => 'fluentcrm-5', 'data' => $data, 'flows' => $flows];
+    }
+
+    public static function handleFormcraftSubmit($template, $meta, $content, $integrations)
+    {
+        $form_id = $template['Form ID'];
+        $flows = Flow::exists('FormCraft', $form_id);
+
+        if (!$flows) {
+            return;
+        }
+
+        $finalData = [];
+        if (!empty($content)) {
+            foreach ($content as $value) {
+                if ($value['type'] === 'fileupload') {
+                    $finalData[$value['identifier']] = $value['url'][0];
+                } else {
+                    $finalData[$value['identifier']] = $value['value'];
+                }
+            }
+        }
+
+        return ['triggered_entity' => 'FormCraft', 'triggered_entity_id' => $form_id, 'data' => $finalData, 'flows' => $flows];
+    }
+
+    public static function handleForminatorSubmit($entry, $form_id, $form_data)
+    {
+        $post_id = url_to_postid($_SERVER['HTTP_REFERER']);
+
+        if (!empty($form_id) && $flows = Flow::exists('Forminator', $form_id)) {
+            $data = [];
+            if ($post_id) {
+                $data['post_id'] = $post_id;
+            }
+            foreach ($form_data as $fldDetail) {
+                if (is_array($fldDetail['value'])) {
+                    if (array_key_exists('file', $fldDetail['value'])) {
+                        $data[$fldDetail['name']] = [$fldDetail['value']['file']['file_path']];
+                    } elseif (explode("-", $fldDetail['name'])[0] == 'name') {
+                        if ($fldDetail['name']) {
+                            $last_dash_position = strrpos($fldDetail['name'], "-");
+                            $index = substr($fldDetail['name'], $last_dash_position + 1);
+                        }
+                        foreach ($fldDetail['value'] as $nameKey => $nameVal) {
+                            $data[$nameKey . '-' . $index] = $nameVal;
+                        }
+                    } elseif (explode("-", $fldDetail['name'])[0] == 'address') {
+                        if ($fldDetail['name']) {
+                            $last_dash_position = strrpos($fldDetail['name'], "-");
+                            $index = substr($fldDetail['name'], $last_dash_position + 1);
+                        }
+                        foreach ($fldDetail['value'] as $nameKey => $nameVal) {
+                            $data[$nameKey . '-' . $index] = $nameVal;
+                        }
+                    } else {
+                        $val = $fldDetail['value'];
+                        if (array_key_exists('ampm', $val)) {
+                            $time = $val['hours'] . ':' . $val['minutes'] . ' ' . $val['ampm'];
+                            $data[$fldDetail['name']] = $time;
+                        } elseif (array_key_exists('year', $val)) {
+                            $date = $val['year'] . '-' . $val['month'] . '-' . $val['day'];
+                            $data[$fldDetail['name']] = $date;
+                        } elseif (array_key_exists('formatting_result', $val)) {
+                            $data[$fldDetail['name']] = $fldDetail['value']['formatting_result'];
+                        } else {
+                            $data[$fldDetail['name']] = $fldDetail['value'];
+                        }
+                    }
+                } else {
+                    if (self::ForminatorIsValidDate($fldDetail['value'])) {
+                        $dateTmp = new DateTime($fldDetail['value']);
+                        $dateFinal = date_format($dateTmp, 'Y-m-d');
+                        $data[$fldDetail['name']] = $dateFinal;
+                    } else {
+                        $data[$fldDetail['name']] = $fldDetail['value'];
+                    }
+                }
+            }
+
+            return ['triggered_entity' => 'Forminator', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
+        }
+    }
+
+    public static function ForminatorIsValidDate($date, $format = 'd/m/Y')
+    {
+        $dateTime = DateTime::createFromFormat($format, $date);
+        return $dateTime && $dateTime->format($format) === $date;
+    }
+
+    public static function gamipressHandleUserEarnRank($user_id, $new_rank, $old_rank, $admin_id, $achievement_id)
+    {
+        $flows = Flow::exists('GamiPress', 1);
+
+        if (!$flows) {
+            return;
+        }
+        foreach ($flows as $flow) {
+            if (is_string($flow->flow_details)) {
+                $flow->flow_details = json_decode($flow->flow_details);
+                $flowDetails = $flow->flow_details;
+            }
+        }
+
+        $userData = self::gamipressGetUserInfo($user_id);
+
+        if ($flowDetails->selectedRank === $new_rank->post_name) {
+            $newRankData = [
+                'rank_type' => $new_rank->post_type,
+                'rank' => $new_rank->post_name,
+            ];
+
+            $data = array_merge($userData, $newRankData);
+
+            return ['triggered_entity' => 'GamiPress', 'triggered_entity_id' => 1, 'data' => $data, 'flows' => $flows];
+        }
+    }
+
+    public static function gamipressGetUserInfo($user_id)
+    {
+        $userInfo = get_userdata($user_id);
+        $user = [];
+        if ($userInfo) {
+            $userData = $userInfo->data;
+            $user_meta = get_user_meta($user_id);
+            $user = [
+                'first_name' => $user_meta['first_name'][0],
+                'last_name' => $user_meta['last_name'][0],
+                'user_email' => $userData->user_email,
+                'user_url' => $userData->user_url,
+                'display_name' => $userData->display_name,
+            ];
+        }
+        return $user;
+    }
+
+    public static function gamipressHandleAwardAchievement($user_id, $achievement_id, $trigger, $site_id, $args)
+    {
+        $flows = Flow::exists('GamiPress', 2);
+        if (!$flows) {
+            return;
+        }
+
+        foreach ($flows as $flow) {
+            if (is_string($flow->flow_details)) {
+                $flow->flow_details = json_decode($flow->flow_details);
+                $flowDetails = $flow->flow_details;
+            }
+        }
+
+        global $wpdb;
+        $awards = $wpdb->get_results(
+            "SELECT ID, post_name, post_title, post_type FROM wp_posts where id = {$achievement_id}"
+        );
+
+        $userData = self::gamipressGetUserInfo($user_id);
+        $awardData = [
+            'achievement_type' => $awards[0]->post_type,
+            'award' => $awards[0]->post_name,
+        ];
+        $data = array_merge($userData, $awardData);
+
+        if ($flowDetails->selectedAward === $awards[0]->post_name) {
+            return ['triggered_entity' => 'GamiPress', 'triggered_entity_id' => 2, 'data' => $data, 'flows' => $flows];
+        }
+    }
+
+    public static function gamipressHandleGainAchievementType($user_id, $achievement_id, $trigger, $site_id, $args)
+    {
+        $flows = Flow::exists('GamiPress', 3);
+        if (!$flows) {
+            return;
+        }
+        foreach ($flows as $flow) {
+            if (is_string($flow->flow_details)) {
+                $flow->flow_details = json_decode($flow->flow_details);
+                $flowDetails = $flow->flow_details;
+            }
+        }
+
+        $postData = get_post($achievement_id);
+
+        $data = [
+            'post_id' => $achievement_id,
+            'post_title' => $postData->post_title,
+            'post_url' => get_permalink($achievement_id),
+            'post_type' => $postData->post_type,
+            'post_author_id' => $postData->post_author,
+            // 'post_author_email' => $postData->post_author_email,
+            'post_content' => $postData->post_content,
+            'post_parent_id' => $postData->post_parent,
+        ];
+
+        if ($flowDetails->selectedAchievementType === $postData->post_type || $flowDetails->selectedAchievementType === 'any-achievement') {
+            return ['triggered_entity' => 'GamiPress', 'triggered_entity_id' => 3, 'data' => $data, 'flows' => $flows];
+        }
+    }
+
+    public static function gamipressHandleRevokeAchieve($user_id, $achievement_id, $earning_id)
+    {
+        $postData = get_post($achievement_id);
+        $expectedData = get_post($postData->post_parent);
+
+        $data = [
+            'post_id' => $achievement_id,
+            'post_title' => !empty($expectedData->post_title) ? $expectedData->post_title : '',
+            'post_url' => get_permalink($achievement_id),
+            'post_type' => isset($expectedData->post_type),
+            'post_author_id' => isset($expectedData->post_author),
+            // 'post_author_email' => $postData->post_author_email,
+            'post_content' => isset($expectedData->post_content),
+            'post_parent_id' => isset($expectedData->post_parent),
+        ];
+
+        for ($i = 4; $i <= 5; $i++) {
+            if ($i == 4) {
+                $flows = Flow::exists('GamiPress', $i);
+                Flow::execute('GamiPress', $i, $data, $flows);
+            }
+            if ($i == 5) {
+                $flows = Flow::exists('GamiPress', $i);
+                foreach ($flows as $flow) {
+                    if (is_string($flow->flow_details)) {
+                        $flow->flow_details = json_decode($flow->flow_details);
+                        $flowDetails = $flow->flow_details;
+                    }
+                }
+                if ($flowDetails->selectedAchievementType === $expectedData->post_type || $flowDetails->selectedAchievementType === 'any-achievement') {
+                    Flow::execute('GamiPress', $i, $data, $flows);
+                }
+            }
+        }
+
+        return;
+    }
+
+    public static function gamipressHandleEarnPoints($user_id, $new_points, $total_points, $admin_id, $achievement_id, $points_type, $reason, $log_type)
+    {
+        $flows = Flow::exists('GamiPress', 6);
+        if (!$flows) {
+            return;
+        }
+
+        $userData = self::gamipressGetUserInfo($user_id);
+        unset($userData['user_url']);
+
+        foreach ($flows as $flow) {
+            if (is_string($flow->flow_details)) {
+                $flow->flow_details = json_decode($flow->flow_details);
+                $flowDetails = $flow->flow_details;
+            }
+        }
+        $pointData = [
+            'total_points' => $total_points,
+            'new_points' => $new_points,
+            'points_type' => $points_type,
+        ];
+        $data = array_merge($userData, $pointData);
+        if ($flowDetails->selectedPoint === (string)$total_points || $flowDetails->selectedPoint === '') {
+            return ['triggered_entity' => 'GamiPress', 'triggered_entity_id' => 6, 'data' => $data, 'flows' => $flows];
+        }
     }
 }
