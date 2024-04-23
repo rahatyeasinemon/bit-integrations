@@ -142,7 +142,6 @@ class RecordApiHelper
     {
         $fieldData = [];
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        error_log(print_r($finalData, true));
         $apiResponse = $this->insertCard($finalData);
 
         if ($defaultConf->actions->tags || isset($apiResponse->id)) {

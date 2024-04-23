@@ -2,11 +2,11 @@
 
 namespace BitCode\FI\Actions\OneDrive;
 
-use BitCode\FI\Actions\OneDrive\RecordApiHelper as OneDriveRecordApiHelper;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Log\LogHandler;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Actions\OneDrive\RecordApiHelper as OneDriveRecordApiHelper;
 
 class OneDriveController
 {
@@ -58,7 +58,7 @@ class OneDriveController
         $data = [];
         if (is_array($foldersOnly)) {
             foreach ($foldersOnly as $folder) {
-                if(property_exists($folder, 'folder')){
+                if (property_exists($folder, 'folder')) {
                     $data[] = $folder;
                 }
             }
@@ -82,12 +82,13 @@ class OneDriveController
         return $apiResponse;
     }
 
-    public static function singleOneDriveFolderList($queryParams){
+    public static function singleOneDriveFolderList($queryParams)
+    {
         if (empty($queryParams->tokenDetails) || empty($queryParams->clientId) || empty($queryParams->clientSecret)) {
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $ids = explode('!',$queryParams->folder);
+        $ids = explode('!', $queryParams->folder);
         $token = self::tokenExpiryCheck($queryParams->tokenDetails, $queryParams->clientId, $queryParams->clientSecret);
         if ($token->access_token !== $queryParams->tokenDetails->access_token) {
             self::saveRefreshedToken($queryParams->flowID, $token);
@@ -104,7 +105,7 @@ class OneDriveController
         $data = [];
         if (is_array($foldersOnly)) {
             foreach ($foldersOnly as $folder) {
-                if(property_exists($folder, 'folder')){
+                if (property_exists($folder, 'folder')) {
                     $data[] = $folder;
                 }
             }
@@ -170,15 +171,14 @@ class OneDriveController
         $folderId = $integrationDetails->folder;
         // $fieldMap = $integrationDetails->field_map;
         $tokenDetails = self::tokenExpiryCheck($integrationDetails->tokenDetails, $integrationDetails->clientId, $integrationDetails->clientSecret);
+        // folderMap need check
         $parentId = $integrationData->flow_details->folderMap[1];
         $fieldMap = null;
         if ($tokenDetails->access_token !== $integrationDetails->tokenDetails->access_token) {
             self::saveRefreshedToken($this->integrationID, $tokenDetails);
         }
 
-        (new OneDriveRecordApiHelper($tokenDetails->access_token))->executeRecordApi($this->integrationID, $fieldValues, $fieldMap, $actions,$folderId,$parentId);
+        (new OneDriveRecordApiHelper($tokenDetails->access_token))->executeRecordApi($this->integrationID, $fieldValues, $fieldMap, $actions, $folderId, $parentId);
         return true;
     }
 }
-
-

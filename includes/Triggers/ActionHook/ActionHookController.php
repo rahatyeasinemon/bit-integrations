@@ -5,6 +5,7 @@ namespace BitCode\FI\Triggers\ActionHook;
 use WP_Error;
 use BitCode\FI\Flow\Flow;
 use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Triggers\Formidable\FormidableController;
 
 class ActionHookController
 {
@@ -75,6 +76,8 @@ class ActionHookController
 
     public static function handle(...$args)
     {
+        error_log(print_r(Helper::handle_formidable_submit(...$args), true));
+        die;
         if ($flows = Flow::exists('ActionHook', current_action())) {
             foreach ($flows as $flow) {
                 $flowDetails = json_decode($flow->flow_details);

@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\OneDrive;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class RecordApiHelper
 {
@@ -71,6 +71,7 @@ class RecordApiHelper
 
     protected function storeInState($response)
     {
+        // Response test (string|object)
         $response = json_decode($response);
         if (isset($response->id)) {
             $this->successApiResponse[] = $response;
@@ -94,8 +95,9 @@ class RecordApiHelper
         $actionsAttachments = explode(",", "$actions->attachments");
         if (is_array($actionsAttachments)) {
             foreach ($actionsAttachments as $actionAttachment) {
-                if(is_array($fieldValues[$actionAttachment])){
+                if (is_array($fieldValues[$actionAttachment])) {
                     foreach ($fieldValues[$actionAttachment] as $value) {
+                        // key need correction
                         $folderWithFile = ["$actionsAttachments" => $value];
                     }
                     $this->handleAllFiles($folderWithFile, $actions, $folderId, $parentId);
