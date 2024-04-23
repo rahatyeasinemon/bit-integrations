@@ -27,6 +27,7 @@ final class EDDController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 
@@ -180,7 +181,7 @@ final class EDDController
         $payment_id = $order_detail->ID;
         $user_id    = edd_get_payment_user_id($payment_id);
 
-        if (! $user_id) {
+        if (!$user_id) {
             $user_id = wp_get_current_user()->ID;
         }
 

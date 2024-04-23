@@ -31,7 +31,8 @@ final class ElementorController
             'fetch_remove'  => [
                 'action'    => 'elementor/test/remove',
                 'method'    => 'post',
-            ]
+            ],
+            'isPro' => false
         ];
     }
 

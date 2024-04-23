@@ -12,7 +12,7 @@ final class BitAssistController extends WebhookController
             'name' => 'Bit Assist',
             'title' => 'Get callback data through an URL',
             'type' => 'webhook',
-            'is_active' => true,
+            'is_active' => true
         ];
     }
 }

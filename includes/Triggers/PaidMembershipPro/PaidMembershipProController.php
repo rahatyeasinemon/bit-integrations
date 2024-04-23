@@ -27,6 +27,7 @@ final class PaidMembershipProController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

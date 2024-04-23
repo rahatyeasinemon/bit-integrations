@@ -27,6 +27,7 @@ final class ThriveApprenticeController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

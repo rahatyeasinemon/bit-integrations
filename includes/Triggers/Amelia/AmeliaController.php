@@ -13,6 +13,7 @@ final class AmeliaController extends WebhookController
             'title' => 'Get callback data through an URL',
             'type' => 'webhook',
             'is_active' => true,
+            'isPro' => true
         ];
     }
 }

@@ -27,6 +27,7 @@ final class TutorLmsController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

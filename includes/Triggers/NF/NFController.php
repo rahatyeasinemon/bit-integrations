@@ -26,6 +26,7 @@ final class NFController
                 'method' => 'post',
                 'data'   => ['id']
             ],
+            'isPro' => true
         ];
     }
 

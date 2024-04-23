@@ -34,6 +34,7 @@ final class WPFController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

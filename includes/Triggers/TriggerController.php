@@ -31,6 +31,7 @@ final class TriggerController
                 }
             }
         }
+        error_log(print_r($triggers, true));
         return $triggers;
     }
 

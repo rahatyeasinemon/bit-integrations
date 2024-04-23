@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\MasterStudyLms;
 
 use BitCode\FI\Flow\Flow;
@@ -26,6 +27,7 @@ final class MasterStudyLmsController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { $btcbi, $flowStep, $newFlow } from '../../../GlobalStates'
 import useFetch from '../../../hooks/useFetch'
 import CloseIcn from '../../../Icons/CloseIcn'
-import { deepCopy, sortObj } from '../../../Utils/Helpers'
+import { deepCopy, sortFreeProd, sortObj } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import CustomTrigger from '../../Triggers/CustomTrigger'
@@ -51,7 +51,8 @@ export default function SelectTrigger() {
         return tempAccr
       }, {})
       const sortedTriggers = sortObj(newData)
-      const finalData = { ...featuredProductData, ...sortedTriggers }
+      const finalSortedTriggers = sortFreeProd(sortedTriggers)
+      const finalData = { ...featuredProductData, ...finalSortedTriggers }
       return finalData
     }
 
@@ -132,7 +133,7 @@ export default function SelectTrigger() {
                   >
                     {(allTriggers?.data[inte]?.isPro && !isPro) && (
                       <div className="pro-filter">
-                        <span className="txt-pro"><a href="https://www.bitapps.pro" target="_blank" rel="noreferrer">{__('Premium', 'bit-integrations')}</a></span>
+                        <span className="txt-pro"><a href="https://bitapps.pro/bit-integrations" target="_blank" rel="noreferrer">{__('Premium', 'bit-integrations')}</a></span>
                       </div>
                     )}
                     <GetLogo name={inte} extension="webp" />

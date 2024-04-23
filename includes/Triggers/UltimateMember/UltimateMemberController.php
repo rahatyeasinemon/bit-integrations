@@ -27,6 +27,7 @@ final class UltimateMemberController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 
@@ -48,10 +49,14 @@ final class UltimateMemberController
         $registrationForms = UltimateMemberHelper::getAllLoginAndRegistrationForm('register');
 
         $types = array_merge([
-            [ 'id' =>'roleSpecificChange',
-             'title' => 'User\'s role changes to a specific role'],
-             [ 'id' =>'roleChange',
-             'title' => 'User\'s role change'],
+            [
+                'id' => 'roleSpecificChange',
+                'title' => 'User\'s role changes to a specific role'
+            ],
+            [
+                'id' => 'roleChange',
+                'title' => 'User\'s role change'
+            ],
         ], $loginForms, $registrationForms);
         $ultimateMember_action = [];
         foreach ($types as $type) {
@@ -87,11 +92,11 @@ final class UltimateMemberController
 
     public static function handleUserLogViaForm($um_args)
     {
-        
-        if ( !isset( $um_args['form_id']) || !function_exists( 'um_user') ) {
-        	return;
+
+        if (!isset($um_args['form_id']) || !function_exists('um_user')) {
+            return;
         }
-        $user_id = um_user( 'ID' );
+        $user_id = um_user('ID');
         $form_id = $um_args['form_id'];
         $flows = Flow::exists('UltimateMember', $form_id);
         if (empty($flows)) {
@@ -147,7 +152,8 @@ final class UltimateMemberController
         }
     }
 
-    public static function getUMrole(){
+    public static function getUMrole()
+    {
         $roles = UltimateMemberHelper::getRoles();
         wp_send_json_success($roles);
     }

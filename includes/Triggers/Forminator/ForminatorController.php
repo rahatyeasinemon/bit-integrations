@@ -28,6 +28,7 @@ final class ForminatorController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

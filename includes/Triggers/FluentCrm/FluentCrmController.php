@@ -34,6 +34,7 @@ final class FluentCrmController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

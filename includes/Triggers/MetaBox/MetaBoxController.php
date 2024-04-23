@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\MetaBox;
 
 use BitCode\FI\Flow\Flow;
@@ -25,7 +26,8 @@ final class MetaBoxController
                 'action' => 'metabox/get/form',
                 'method' => 'post',
                 'data' => ['id'],
-            ]
+            ],
+            'isPro' => true
         ];
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\GamiPress;
 
 use BitCode\FI\Flow\Flow;
@@ -26,6 +27,7 @@ final class GamiPressController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 
@@ -43,7 +45,8 @@ final class GamiPressController
             wp_send_json_error(__('GamiPress is not installed or activated', 'bit-integrations'));
         }
 
-        $types = ['A user earns a rank',
+        $types = [
+            'A user earns a rank',
             'A user gains an achievement',
             'User earns an specific achievement type',
             'User achievement gets revoked',

@@ -27,6 +27,7 @@ final class MetController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

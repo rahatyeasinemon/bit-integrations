@@ -28,6 +28,7 @@ final class FormidableController
                 'method' => 'post',
                 'data'   => ['id']
             ],
+            'isPro' => true
         ];
     }
 

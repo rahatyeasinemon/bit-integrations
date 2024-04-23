@@ -4,8 +4,8 @@ namespace BitCode\FI\Triggers\MailPoet;
 
 use DateTime;
 use BitCode\FI\Flow\Flow;
-use MailPoet\Form\FormsRepository;
 use MailPoet\DI\ContainerWrapper;
+use MailPoet\Form\FormsRepository;
 
 final class MailPoetController
 {
@@ -30,6 +30,7 @@ final class MailPoetController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

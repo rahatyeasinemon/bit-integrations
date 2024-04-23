@@ -1,9 +1,10 @@
 <?php
+
 namespace BitCode\FI\Triggers\Happy;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Flow\Flow;
 use DateTime;
+use BitCode\FI\Flow\Flow;
+use BitCode\FI\Core\Util\Common;
 
 final class HappyController
 {
@@ -28,6 +29,7 @@ final class HappyController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

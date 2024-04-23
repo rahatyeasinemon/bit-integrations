@@ -28,6 +28,7 @@ final class AcademyLmsController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

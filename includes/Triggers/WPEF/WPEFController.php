@@ -34,6 +34,7 @@ final class WPEFController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

@@ -27,6 +27,7 @@ final class WCController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => false
         ];
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\SliceWp;
 
 use BitCode\FI\Flow\Flow;
@@ -26,6 +27,7 @@ final class SliceWpController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 
@@ -94,7 +96,8 @@ final class SliceWpController
             $sliceWpNewAffiliateFields = SliceWpHelper::getSliceWpNewAffiliateField();
             $userFields = SliceWpHelper::getUserField();
             $fields = array_merge($sliceWpNewAffiliateFields, $userFields);
-        } if ($id === '2') {
+        }
+        if ($id === '2') {
             $fields = SliceWpHelper::getCommissionField();
         }
 

@@ -27,6 +27,7 @@ final class BeaverController
                 'method' => 'post',
                 'data'   => ['id']
             ],
+            'isPro' => true
         ];
     }
 
@@ -143,7 +144,7 @@ final class BeaverController
     public static function get_form_fields($form_id)
     {
         $loginForm = \FLBuilderModel::get_settings_form_defaults('login-form');
-        
+
         $form_fields = [
             'bb_contact_form' => [
                 ['id' => 'name', 'field_label' => 'Name', 'field_type' => 'text'],

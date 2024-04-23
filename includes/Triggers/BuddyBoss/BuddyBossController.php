@@ -27,6 +27,7 @@ final class BuddyBossController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

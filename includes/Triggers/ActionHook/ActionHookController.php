@@ -14,7 +14,8 @@ class ActionHookController
             'name' => 'Action Hook',
             'title' => 'Get callback data through an URL',
             'type' => 'action_hook',
-            'is_active' => true
+            'is_active' => true,
+            'isPro' => false
         ];
     }
 

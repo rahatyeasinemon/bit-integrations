@@ -28,6 +28,7 @@ final class PiotnetAddonController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 

@@ -43,6 +43,7 @@ final class WPCoursewareController
                 'method' => 'post',
                 'data'   => ['id']
             ],
+            'isPro' => true
         ];
     }
 
@@ -81,7 +82,7 @@ final class WPCoursewareController
         if (!$flows) {
             return;
         }
-        
+
         $user = get_user_by('id', $userId);
         if (!$user) {
             return;

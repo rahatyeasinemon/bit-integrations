@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Triggers\Affiliate;
 
 use BitCode\FI\Flow\Flow;
@@ -26,6 +27,7 @@ final class AffiliateController
                 'method' => 'post',
                 'data' => ['id']
             ],
+            'isPro' => true
         ];
     }
 
@@ -44,8 +46,8 @@ final class AffiliateController
             wp_send_json_error(__('AffiliateWP is not installed or activated', 'bit-integrations'));
         }
 
-        $types = ['A new affiliate is approved', 'A user becomes an affiliate','An affiliate makes a referral of a specific type','An affiliates referral of a specific type is rejected Pro','An affiliates referral of a specific type is paid Pro'];
-        
+        $types = ['A new affiliate is approved', 'A user becomes an affiliate', 'An affiliate makes a referral of a specific type', 'An affiliates referral of a specific type is rejected Pro', 'An affiliates referral of a specific type is paid Pro'];
+
         $affiliate_action = [];
         foreach ($types as $index => $type) {
             $affiliate_action[] = (object)[
@@ -70,7 +72,7 @@ final class AffiliateController
             wp_send_json_error(__('Trigger doesn\'t exists any field', 'bit-integrations'));
         }
 
-        
+
         $organizeType[] = [
             'type_id' => 'any',
             'type_name' => 'Any'
@@ -240,7 +242,7 @@ final class AffiliateController
                 ],
             ];
         }
-        
+
 
         foreach ($fields as $field) {
             if ($field->fieldKey === 'payment_email') {
@@ -297,7 +299,7 @@ final class AffiliateController
         $affiliate = affwp_get_affiliate($affiliate_id);
 
         $user = get_user_by('id', $user_id);
-        
+
 
         $data = [
             'status' => $status,
@@ -332,7 +334,7 @@ final class AffiliateController
         $affiliate = affwp_get_affiliate($affiliate_id);
 
         $user = get_user_by('id', $user_id);
-        
+
 
         $data = [
             'status' => $status,
@@ -361,7 +363,7 @@ final class AffiliateController
         $user               = get_user_by('id', $user_id);
         $data = [
             'affiliate_id' => $referral->affiliate_id,
-            'affiliate_url' => maybe_serialize(affwp_get_affiliate_referral_url(array( 'affiliate_id' => $referral->affiliate_id ))),
+            'affiliate_url' => maybe_serialize(affwp_get_affiliate_referral_url(array('affiliate_id' => $referral->affiliate_id))),
             'referral_description' => $referral->description,
             'amount' => $referral->amount,
             'context' => $referral->context,
@@ -406,19 +408,19 @@ final class AffiliateController
         if (!$flows) {
             return;
         }
-        
-        
+
+
         if ((string) $new_status === (string) $old_status || 'rejected' !== (string) $new_status) {
             return $new_status;
         }
-       
+
         $referral      = affwp_get_referral($referral_id);
         $type          = $referral->type;
         $user_id       = affwp_get_affiliate_user_id($referral->affiliate_id);
         $user               = get_user_by('id', $user_id);
         $affiliate          = affwp_get_affiliate($referral->affiliate_id);
         $affiliateNote = maybe_serialize(affwp_get_affiliate_meta($affiliate->affiliate_id, 'notes', true));
-        
+
 
         foreach ($flows as $flow) {
             if (is_string($flow->flow_details)) {
@@ -433,7 +435,7 @@ final class AffiliateController
 
         $data = [
             'affiliate_id' => $referral->affiliate_id,
-            'affiliate_url' => maybe_serialize(affwp_get_affiliate_referral_url(array( 'affiliate_id' => $referral->affiliate_id ))),
+            'affiliate_url' => maybe_serialize(affwp_get_affiliate_referral_url(array('affiliate_id' => $referral->affiliate_id))),
             'referral_description' => $referral->description,
             'amount' => $referral->amount,
             'context' => $referral->context,
@@ -459,26 +461,26 @@ final class AffiliateController
             Flow::execute('Affiliate', 4, $data, $flows);
         }
     }
-    
+
     public static function affiliatesReferralSpecificTypePaid($referral_id, $new_status, $old_status)
     {
         $flows = Flow::exists('Affiliate', 5);
         if (!$flows) {
             return;
         }
-        
-        
+
+
         if ((string) $new_status === (string) $old_status || 'paid' !== (string) $new_status) {
             return $new_status;
         }
-       
+
         $referral      = affwp_get_referral($referral_id);
         $type          = $referral->type;
         $user_id       = affwp_get_affiliate_user_id($referral->affiliate_id);
         $user               = get_user_by('id', $user_id);
         $affiliate          = affwp_get_affiliate($referral->affiliate_id);
         $affiliateNote = maybe_serialize(affwp_get_affiliate_meta($affiliate->affiliate_id, 'notes', true));
-      
+
 
         foreach ($flows as $flow) {
             if (is_string($flow->flow_details)) {
@@ -493,7 +495,7 @@ final class AffiliateController
 
         $data = [
             'affiliate_id' => $referral->affiliate_id,
-            'affiliate_url' => maybe_serialize(affwp_get_affiliate_referral_url(array( 'affiliate_id' => $referral->affiliate_id ))),
+            'affiliate_url' => maybe_serialize(affwp_get_affiliate_referral_url(array('affiliate_id' => $referral->affiliate_id))),
             'referral_description' => $referral->description,
             'amount' => $referral->amount,
             'context' => $referral->context,

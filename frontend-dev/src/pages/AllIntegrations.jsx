@@ -204,13 +204,11 @@ function AllIntegrations({ isValidUser }) {
         <>
           <div className="af-header flx flx-between">
             <h2>{__('Integrations', 'bit-integrations')}</h2>
-            {(integrations.length >= 1 && !isValidUser)
-              ? ""
-              : (
-                <Link to="/flow/new" className="btn round btcd-btn-lg blue blue-sh">
-                  {__('Create Integration', 'bit-integrations')}
-                </Link>
-              )}
+
+            <Link to="/flow/new" className="btn round btcd-btn-lg blue blue-sh">
+              {__('Create Integration', 'bit-integrations')}
+            </Link>
+
           </div>
           <div className="forms">
             <Table
