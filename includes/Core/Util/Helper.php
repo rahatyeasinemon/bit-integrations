@@ -3,7 +3,6 @@
 namespace BitCode\FI\Core\Util;
 
 use WP_Error;
-use BitCode\FI\Flow\Flow;
 use BitCode\FI\Triggers\TriggerController;
 
 /**
