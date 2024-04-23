@@ -125,11 +125,9 @@ function App() {
             } />
 
             <Route path="/flow/new" element={
-              (flowNumber >= 1 && !isValidUser) ?
-                <Navigate to="/" /> :
-                <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                  <FlowBuilder />
-                </Suspense>
+              <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                <FlowBuilder />
+              </Suspense>
             } />
 
             <Route path="/flow/action/*" element={
