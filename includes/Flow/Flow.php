@@ -34,6 +34,8 @@ final class Flow
     {
         if (class_exists("BitCode\\FI\\Actions\\{$name}\\{$name}Controller")) {
             return "BitCode\\FI\\Actions\\{$name}\\{$name}Controller";
+        } elseif (class_exists("BitApps\\BTCBI_PRO\\Actions\\{$name}\\{$name}Controller")) {
+            return "BitApps\\BTCBI_PRO\\Actions\\{$name}\\{$name}Controller";
         } else {
             return false;
         }
@@ -50,6 +52,8 @@ final class Flow
     {
         if (class_exists("BitCode\\FI\\Triggers\\{$name}\\{$name}Controller")) {
             return "BitCode\\FI\\Triggers\\{$name}\\{$name}Controller";
+        } elseif (class_exists("BitApps\\BTCBI_PRO\\Triggers\\{$name}\\{$name}Controller")) {
+            return "BitApps\\BTCBI_PRO\\Triggers\\{$name}\\{$name}Controller";
         } else {
             return false;
         }
