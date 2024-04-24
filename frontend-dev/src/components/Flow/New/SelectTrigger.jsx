@@ -19,7 +19,7 @@ import CustomFormSubmission from '../../Triggers/CustomFormSubmission'
 import { allTriggersName } from '../../../Utils/AllTriggersName'
 
 export default function SelectTrigger() {
-  const data = allTriggersName
+  // const data = allTriggersName
   const { isPro } = useRecoilValue($btcbi)
   const loaderStyle = {
     display: 'flex',
@@ -27,7 +27,7 @@ export default function SelectTrigger() {
     justifyContent: 'center',
     alignItems: 'center',
   }
-  // const { data, isLoading } = useFetch({ payload: {}, action: 'trigger/list', method: 'GET' })
+  const { data, isLoading } = useFetch({ payload: {}, action: 'trigger/list', method: 'GET' })
   // const { data, isLoading } = useFetch({ payload: {}, action: 'trigger/list', method: 'GET' })
   const [allTriggers, setAllTriggers] = useState(data || {})
   const [searchValue, setSearchValue] = useState('')
@@ -37,7 +37,7 @@ export default function SelectTrigger() {
   
 
   useEffect(() => {
-    setAllTriggers({ data: sortFeaturedProducts(data) })
+    setAllTriggers({ data: sortFeaturedProducts(data?.data) })
   }, [data])
 
   const featuredProducts = ['BitForm', 'BitAssist']
