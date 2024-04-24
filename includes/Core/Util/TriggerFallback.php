@@ -3,6 +3,7 @@
 namespace BitCode\FI\Core\Util;
 
 use DateTime;
+use Groundhogg\DB\Tags;
 use BitCode\FI\Flow\Flow;
 
 final class TriggerFallback
@@ -2513,5 +2514,397 @@ final class TriggerFallback
         if ($flowDetails->selectedPoint === (string)$total_points || $flowDetails->selectedPoint === '') {
             return ['triggered_entity' => 'GamiPress', 'triggered_entity_id' => 6, 'data' => $data, 'flows' => $flows];
         }
+    }
+
+    public static function gformAfterSubmission($entry, $form)
+    {
+        $form_id = $form['id'];
+        if (!empty($form_id) && $flows = Flow::exists('GF', $form_id)) {
+            $upDir = wp_upload_dir();
+            foreach ($form['fields'] as $key => $value) {
+                if ($value->type === 'fileupload' && isset($entry[$value->id])) {
+                    if ($value->multipleFiles === false) {
+                        $entry[$value->id] = Common::filePath($entry[$value->id]);
+                    } else {
+                        $entry[$value->id] = Common::filePath(json_decode($entry[$value->id], true));
+                    }
+                }
+                if ($value->type === 'checkbox' && is_array($value->inputs)) {
+                    foreach ($value->inputs as $input) {
+                        if (isset($entry[$input['id']])) {
+                            $entry[$value->id][] = $entry[$input['id']];
+                        }
+                    }
+                }
+            }
+            $finalData = $entry + ['title' => $form['title']];
+            return ['triggered_entity' => 'GF', 'triggered_entity_id' => $form_id, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    public static function giveHandleUserDonation($payment_id, $status, $old_status)
+    {
+        $flows = Flow::exists('GiveWp', 1);
+        if (!$flows) {
+            return;
+        }
+
+        if ('publish' !== $status) {
+            return;
+        }
+
+        $payment = new \Give_Payment($payment_id);
+
+        if (empty($payment)) {
+            return;
+        }
+        $payment_exists = $payment->ID;
+        if (empty($payment_exists)) {
+            return;
+        }
+
+        $give_form_id = $payment->form_id;
+        $user_id = $payment->user_id;
+
+        if (0 === $user_id) {
+            return;
+        }
+
+        $finalData = json_decode(wp_json_encode($payment), true);
+
+        $donarUserInfo = give_get_payment_meta_user_info($payment_id);
+        if ($donarUserInfo) {
+            $finalData['title'] = $donarUserInfo['title'];
+            $finalData['first_name'] = $donarUserInfo['first_name'];
+            $finalData['last_name'] = $donarUserInfo['last_name'];
+            $finalData['email'] = $donarUserInfo['email'];
+            $finalData['address1'] = $donarUserInfo['address']['line1'];
+            $finalData['address2'] = $donarUserInfo['address']['line2'];
+            $finalData['city'] = $donarUserInfo['address']['city'];
+            $finalData['state'] = $donarUserInfo['address']['state'];
+            $finalData['zip'] = $donarUserInfo['address']['zip'];
+            $finalData['country'] = $donarUserInfo['address']['country'];
+            $finalData['donar_id'] = $donarUserInfo['donor_id'];
+        }
+
+        $finalData['give_form_id'] = $give_form_id;
+        $finalData['give_form_title'] = $payment->form_title;
+        $finalData['currency'] = $payment->currency;
+        $finalData['give_price_id'] = $payment->price_id;
+        $finalData['price'] = $payment->total;
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedDonationForm = !empty($flowDetails->selectedDonationForm) ? $flowDetails->selectedDonationForm : [];
+        if ($flows && $give_form_id === $selectedDonationForm || $selectedDonationForm === 'any') {
+            return ['triggered_entity' => 'GiveWp', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    public static function giveWpGetUserInfo($user_id)
+    {
+        $userInfo = get_userdata($user_id);
+        $user = [];
+        if ($userInfo) {
+            $userData = $userInfo->data;
+            $user_meta = get_user_meta($user_id);
+            $user = [
+                'first_name' => $user_meta['first_name'][0],
+                'last_name' => $user_meta['last_name'][0],
+                'user_email' => $userData->user_email,
+                'nickname' => $userData->user_nicename,
+                'avatar_url' => get_avatar_url($user_id),
+            ];
+        }
+        return $user;
+    }
+
+    public static function giveHandleSubscriptionDonationCancel($subscription_id, $subscription)
+    {
+        $flows = Flow::exists('GiveWp', 2);
+        if (!$flows) {
+            return;
+        }
+
+        $give_form_id = $subscription->form_id;
+        $amount = $subscription->recurring_amount;
+        $donor = $subscription->donor;
+        $user_id = $donor->user_id;
+        $getUserData = static::giveWpGetUserInfo($user_id);
+        $finalData = [
+            'subscription_id' => $subscription_id,
+            'give_form_id' => $give_form_id,
+            'amount' => $amount,
+            'donor' => $donor,
+            'user_id' => $user_id,
+            'first_name' => $getUserData['first_name'],
+            'last_name' => $getUserData['last_name'],
+            'user_email' => $getUserData['email'],
+            'nickname' => $getUserData['nickname'],
+            'avatar_url' => $getUserData['avatar_url'],
+        ];
+
+        if (0 === $user_id) {
+            return;
+        }
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedRecurringDonationForm = !empty($flowDetails->selectedRecurringDonationForm) ? $flowDetails->selectedRecurringDonationForm : '';
+        if ($flows && !empty($selectedRecurringDonationForm) && $give_form_id === $selectedRecurringDonationForm) {
+            return ['triggered_entity' => 'GiveWp', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    public static function giveHandleRecurringDonation($status, $row_id, $data, $where)
+    {
+        $flows = Flow::exists('GiveWp', 3);
+        if (!$flows) {
+            return;
+        }
+
+        $subscription = new \Give_Subscription($row_id);
+        $recurring_amount = $subscription->recurring_amount;
+        $give_form_id = $subscription->form_id;
+
+        $total_payment = $subscription->get_total_payments();
+        $donor = $subscription->donor;
+        $user_id = $donor->user_id;
+
+        if (0 === absint($user_id)) {
+            return;
+        }
+
+        if ($total_payment > 1 && 'active' === (string) $data['status']) {
+            $user = static::giveWpGetUserInfo($user_id);
+            $finalData = [
+                'give_form_id' => $give_form_id,
+                'recurring_amount' => $recurring_amount,
+                'total_payment' => $total_payment,
+                'donor' => $donor,
+                'user_id' => $user_id,
+                'first_name' => $user['first_name'],
+                'last_name' => $user['last_name'],
+                'user_email' => $user['user_email'],
+                'nickname' => $user['nickname'],
+                'avatar_url' => $user['avatar_url'],
+            ];
+        }
+
+        return ['triggered_entity' => 'GiveWp', 'triggered_entity_id' => 3, 'data' => $finalData, 'flows' => $flows];
+    }
+
+    public static function groundhoggHandleSubmit($a, $fieldValues)
+    {
+        $form_id    = 1;
+        $flows = Flow::exists('Groundhogg', $form_id);
+        if (!$flows) {
+            return;
+        }
+
+        global $wp_rest_server;
+        $request    = $wp_rest_server->get_raw_data();
+        $data       = json_decode($request);
+        $meta       = $data->meta;
+
+        $fieldValues['primary_phone']   = $meta->primary_phone;
+        $fieldValues['mobile_phone']    = $meta->mobile_phone;
+
+        if (isset($data->tags)) {
+            $fieldValues['tags'] = self::groundhoggSetTagNames($data->tags);
+        }
+
+
+        $data = $fieldValues;
+        return ['triggered_entity' => 'Groundhogg', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
+    }
+
+    private static function groundhoggSetTagNames($tag_ids)
+    {
+        $tags       = new Tags();
+        $tag_list   = [];
+        foreach ($tag_ids as $tag_id) {
+            $tag_list[] = $tags->get_tag($tag_id)->tag_name;
+        }
+        return implode(',', $tag_list);
+    }
+
+    public static function groundhoggTagApplied($a, $b)
+    {
+        $data           = $a['data'];
+        $form_id        = 2;
+        $flows          = Flow::exists('Groundhogg', $form_id);
+
+        if (!$flows) {
+            return;
+        }
+
+        $getSelected    = $flows[0]->flow_details;
+        $enCode         = json_decode($getSelected);
+
+        if (isset($a['tags'])) {
+            $data['tags'] = self::groundhoggSetTagNames($a['tags']);
+        }
+
+        if ($enCode->selectedTag == $b || $enCode->selectedTag == 'any') {
+            return ['triggered_entity' => 'Groundhogg', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
+        }
+
+        return;
+    }
+
+    public static function groundhoggTagRemove($a, $b)
+    {
+        $data           = $a['data'];
+        $form_id        = 3;
+        $flows          = Flow::exists('Groundhogg', $form_id);
+
+        if (!$flows) {
+            return;
+        }
+
+        $getSelected    = $flows[0]->flow_details;
+        $enCode         = json_decode($getSelected);
+
+        if (isset($a['tags'])) {
+            $data['tags'] = self::groundhoggSetTagNames($a['tags']);
+        }
+
+        if ($enCode->selectedTag == $b || $enCode->selectedTag == 'any') {
+            return ['triggered_entity' => 'Groundhogg', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
+        }
+
+        return;
+    }
+
+    public static function happySaveImage($base64_img, $title)
+    {
+        // Upload dir.
+        $upload = wp_upload_dir();
+        $upload_dir = $upload['basedir'];
+        $upload_dir = $upload_dir . '/bihappy';
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0700);
+        }
+        $upload_path = $upload_dir;
+
+        $img = str_replace('data:image/png;base64,', '', $base64_img);
+        $img = str_replace(' ', '+', $img);
+        $decoded = base64_decode($img);
+        $filename = $title . '.png';
+        $file_type = 'image/png';
+        $hashed_filename = md5($filename . microtime()) . '_' . $filename;
+
+        //Save the image in the uploads directory.
+        $upload_file = file_put_contents($upload_path . '/' . $hashed_filename, $decoded);
+        if ($upload_file) {
+            $path = $upload_path . '/' . $hashed_filename;
+            return $path;
+        }
+        return $base64_img;
+    }
+
+    public static function happyGetPath($val)
+    {
+        $img = maybe_unserialize($val);
+        $hash_ids = array_filter(array_values($img));
+        $attachments = happyforms_get_attachment_controller()->get([
+            'hash_id' => $hash_ids,
+        ]);
+
+        $attachment_ids = wp_list_pluck($attachments, 'ID');
+        $links = array_map('wp_get_attachment_url', $attachment_ids);
+        $value = implode(', ', $links);
+        return $value;
+    }
+
+    public static function handleHappySubmit($submission, $form, $a)
+    {
+        $post_id = url_to_postid($_SERVER['HTTP_REFERER']);
+        $form_id = $form['ID'];
+
+        if (!empty($form_id) && $flows = Flow::exists('Happy', $form_id)) {
+            $data = [];
+            if ($post_id) {
+                $data['post_id'] = $post_id;
+            }
+            $form_data = $submission;
+
+            foreach ($form_data as $key => $val) {
+                if (str_contains($key, 'signature')) {
+                    $baseUrl = maybe_unserialize($val)['signature_raster_data'];
+                    $path = self::happySaveImage($baseUrl, 'sign');
+                    $form_data[$key] = $path;
+                } elseif (str_contains($key, 'date')) {
+                    if (strtotime($val)) {
+                        $dateTmp = new DateTime($val);
+                        $dateFinal = date_format($dateTmp, 'Y-m-d');
+                        $form_data[$key] = $dateFinal;
+                    }
+                } elseif (str_contains($key, 'attachment')) {
+                    $image = self::happyGetPath($val);
+                    $form_data[$key] = Common::filePath($image);
+                }
+            }
+            return ['triggered_entity' => 'Happy', 'triggered_entity_id' => $form_id, 'data' => $form_data, 'flows' => $flows];
+        }
+
+        return;
+    }
+
+    public static function jetEnginePostMetaData($meta_id, $post_id, $meta_key, $meta_value)
+    {
+        $postCreateFlow = Flow::exists('JetEngine', 1);
+        if (!$postCreateFlow) {
+            return;
+        }
+
+        $postData = get_post($post_id);
+        $finalData = (array)$postData + ['meta_key' => $meta_key, 'meta_value' => $meta_value];
+        $postData = get_post($post_id);
+        $user_id = get_current_user_id();
+        $postType = $postData->post_type;
+
+        $info = isset($postCreateFlow[0]->flow_details) ? json_decode($postCreateFlow[0]->flow_details) : '';
+        $selectedPostType = !empty($info->selectedPostType) ? $info->selectedPostType : 'any-post-type';
+        $selectedMetaKey = !empty($info->selectedMetaKey) ? $info->selectedMetaKey : '';
+        $selectedMetaValue = !empty($info->selectedMetaValue) ? $info->selectedMetaValue : '';
+
+        $isPostTypeMatched = $selectedPostType ? $selectedPostType === $postType : true;
+        $isMetaKeyMatched = $selectedMetaKey ? $selectedMetaKey === $meta_key : true;
+        $isMetaValueMatched = $selectedMetaValue ? $selectedMetaValue === $meta_value : true;
+        $isEditable = $user_id && $postCreateFlow && !($meta_key === '_edit_lock');
+        if (1 && $isPostTypeMatched && $isMetaKeyMatched && $isEditable) {
+            return ['triggered_entity' => 'JetEngine', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $postCreateFlow];
+        }
+
+        return;
+    }
+
+    public static function jetEnginePostMetaValueCheck($meta_id, $post_id, $meta_key, $meta_value)
+    {
+        $postCreateFlow = Flow::exists('JetEngine', 2);
+        if (!$postCreateFlow) {
+            return;
+        }
+
+        $postData = get_post($post_id);
+        $finalData = (array)$postData + ['meta_key' => $meta_key, 'meta_value' => $meta_value];
+        $postData = get_post($post_id);
+        $user_id = get_current_user_id();
+        $postType = $postData->post_type;
+
+        $info = isset($postCreateFlow[0]->flow_details) ? json_decode($postCreateFlow[0]->flow_details) : '';
+        $selectedPostType = !empty($info->selectedPostType) ? $info->selectedPostType : 'any-post-type';
+        $selectedMetaKey = !empty($info->selectedMetaKey) ? $info->selectedMetaKey : '';
+        $selectedMetaValue = !empty($info->selectedMetaValue) ? $info->selectedMetaValue : '';
+
+        $isPostTypeMatched = $selectedPostType ? $selectedPostType === $postType : true;
+        $isMetaKeyMatched = $selectedMetaKey ? $selectedMetaKey === $meta_key : true;
+        $isMetaValueMatched = $selectedMetaValue ? $selectedMetaValue === $meta_value : true;
+        $isEditable = $user_id && $postCreateFlow && !($meta_key === '_edit_lock');
+        if (2 && $isPostTypeMatched && $isMetaKeyMatched && $isMetaValueMatched && $isEditable) {
+            return ['triggered_entity' => 'JetEngine', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $postCreateFlow];
+        }
+
+        return;
     }
 }
