@@ -72,7 +72,6 @@ class ZoomController
             'Authorization' => 'Bearer ' . $tokenDetails->access_token,
             'Content-Type' => 'application/json'
         ];
-        error_log(print_r($tokenDetails, true));
         $apiEndpoint = "https://api.zoom.us/v2/meetings/{$requestParams->meetingId}/registrants/questions";
         $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
 

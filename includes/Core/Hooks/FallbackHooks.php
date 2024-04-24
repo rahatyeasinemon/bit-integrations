@@ -2,7 +2,7 @@
 
 namespace BitCode\FI\Core\Util;
 
-final class TriggerHelper
+final class FallbackHooks
 {
     public static $triggerHookList = [
         ['hookName' => 'academy/course/after_enroll', 'functionToAdd' => 'academyHandleCourseEnroll', 'priority' => 10, 'acceptedArgs' => 2],

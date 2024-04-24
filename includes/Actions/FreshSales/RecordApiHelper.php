@@ -54,7 +54,6 @@ class RecordApiHelper
         }
 
         $actions = $this->_integrationDetails->actions;
-        error_log(print_r($finalData, true));
         $body = wp_json_encode([$module => $finalData]);
 
         $response = HttpHelper::post($apiEndpoints, $body, $this->_defaultHeader);

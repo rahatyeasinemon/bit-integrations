@@ -91,8 +91,6 @@ class AcumbamailController
         ];
 
         $response = HttpHelper::post($apiEndpoints, $requestParams);
-        // error_log(print_r($response, true));
-        // die;
         $formattedResponse = [];
         foreach ($response->fields as $value) {
             $formattedResponse[$value->name] = [
