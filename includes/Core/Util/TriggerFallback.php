@@ -922,7 +922,7 @@ final class TriggerFallback
             }
         }
 
-        return ['triggered_entity' => 'Brizy', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
+        return ['triggered_entity' => 'Brizy', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows, 'content' => $fields];
     }
 
     public static function BuddyBossGetUserInfo($user_id, $extra = false)

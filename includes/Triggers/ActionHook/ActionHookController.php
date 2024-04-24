@@ -5,6 +5,8 @@ namespace BitCode\FI\Triggers\ActionHook;
 use WP_Error;
 use BitCode\FI\Flow\Flow;
 use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Core\Hooks\FallbackHooks;
+use BitCode\FI\Core\Util\TriggerFallback;
 use BitCode\FI\Triggers\Formidable\FormidableController;
 
 class ActionHookController
@@ -111,5 +113,25 @@ class ActionHookController
         }
 
         return rest_ensure_response(['status' => 'success']);
+    }
+
+    public static function triggerFallbackHandler(...$args)
+    {
+        $hook = FallbackHooks::$triggerHookList[current_action()];
+
+        if (empty($hook)) {
+            return;
+        }
+
+        $dynamicFunc    = $hook['function'];
+        $flowData       = TriggerFallback::$dynamicFunc(...$args);
+
+        if (!empty($flowData)) {
+            Flow::execute($flowData['triggered_entity'], $flowData['triggered_entity_id'], $flowData['data'], is_array($flowData['flows']) ? $flowData['flows'] : array($flowData['flows']));
+        }
+
+        if ($hook['isFilterHook'] && isset($flowData['content'])) {
+            return $flowData['content'];
+        }
     }
 }
