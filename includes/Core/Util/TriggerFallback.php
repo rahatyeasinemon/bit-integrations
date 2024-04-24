@@ -196,7 +196,7 @@ final class TriggerFallback
         return $filteredFlows;
     }
 
-    public static function academyLmsHandleCourseEnroll($course_id, $enrollment_id)
+    public static function academyHandleCourseEnroll($course_id, $enrollment_id)
     {
         $flows = Flow::exists('AcademyLms', 1);
         $flows = self::academyLmsFlowFilter($flows, 'selectedCourse', $course_id);
@@ -241,7 +241,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'AcademyLms', 'triggered_entity_id' => 1, 'data' => $result, 'flows' => $flows];
     }
 
-    public static function academyLmsHandleQuizAttempt($attempt)
+    public static function academyHandleQuizAttempt($attempt)
     {
         $flows = Flow::exists('AcademyLms', 2);
         $quiz_id = $attempt->quiz_id;
@@ -270,7 +270,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'AcademyLms', 'triggered_entity_id' => 2, 'data' => $attempt_details, 'flows' => $flows];
     }
 
-    public static function academyLmsHandleQuizTarget($attempt)
+    public static function academyHandleQuizTarget($attempt)
     {
         $flows = Flow::exists('AcademyLms', 5);
         $quiz_id = $attempt->quiz_id;
@@ -338,7 +338,7 @@ final class TriggerFallback
         return $res;
     }
 
-    public static function academyLmsHandleLessonComplete($topic_type, $course_id, $topic_id, $user_id)
+    public static function academyHandleLessonComplete($topic_type, $course_id, $topic_id, $user_id)
     {
         $flows = Flow::exists('AcademyLms', 3);
         $flows = $flows ? self::academyLmsFlowFilter($flows, 'selectedLesson', $topic_id) : false;
@@ -391,7 +391,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'AcademyLms', 'triggered_entity_id' => 3, 'data' => $lessonDataFinal, 'flows' => $flows];
     }
 
-    public static function academyLmsHandleCourseComplete($course_id)
+    public static function academyHandleCourseComplete($course_id)
     {
         $flows = Flow::exists('AcademyLms', 4);
         $flows = $flows ? self::academyLmsFlowFilter($flows, 'selectedCourse', $course_id) : false;
@@ -439,7 +439,7 @@ final class TriggerFallback
         return $user;
     }
 
-    public static function newAffiliateApproved($affiliate_id, $status, $old_status)
+    public static function affwpNewAffiliateApproved($affiliate_id, $status, $old_status)
     {
         $flows = Flow::exists('Affiliate', 1);
         if (!$flows) {
@@ -470,7 +470,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'Affiliate', 'triggered_entity_id' => 1, 'data' => $data, 'flows' => $flows];
     }
 
-    public static function userBecomesAffiliate($affiliate_id, $status, $old_status)
+    public static function affwpUserBecomesAffiliate($affiliate_id, $status, $old_status)
     {
         if ('active' !== $status) {
             return $status;
@@ -502,7 +502,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'Affiliate', 'triggered_entity_id' => 2, 'data' => $data, 'flows' => $flows];
     }
 
-    public static function affiliateMakesReferral($referral_id)
+    public static function affwpAffiliateMakesReferral($referral_id)
     {
         $flows = Flow::exists('Affiliate', 3);
         if (!$flows) {
@@ -554,7 +554,7 @@ final class TriggerFallback
         return $execData;
     }
 
-    public static function affiliatesReferralSpecificTypeRejected($referral_id, $new_status, $old_status)
+    public static function affwpAffiliatesReferralSpecificTypeRejected($referral_id, $new_status, $old_status)
     {
         $flows = Flow::exists('Affiliate', 4);
         if (!$flows) {
@@ -616,7 +616,7 @@ final class TriggerFallback
         return $execData;
     }
 
-    public static function affiliatesReferralSpecificTypePaid($referral_id, $new_status, $old_status)
+    public static function affwpAffiliatesReferralSpecificTypePaid($referral_id, $new_status, $old_status)
     {
         $flows = Flow::exists('Affiliate', 5);
         if (!$flows) {
@@ -946,7 +946,7 @@ final class TriggerFallback
         return $user;
     }
 
-    public static function BuddyBossHandleAcceptFriendRequest($id, $initiator_user_id, $friend_user_id, $friendship)
+    public static function buddyBossHandleAcceptFriendRequest($id, $initiator_user_id, $friend_user_id, $friendship)
     {
         $flows = Flow::exists('BuddyBoss', 1);
         if (!$flows) {
@@ -978,7 +978,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 1, 'data' => $data, 'flows' => $flows];
     }
 
-    public static function BuddyBossHandleSendsFriendRequest($id, $initiator_user_id, $friend_user_id, $friendship)
+    public static function buddyBossHandleSendsFriendRequest($id, $initiator_user_id, $friend_user_id, $friendship)
     {
         $flows = Flow::exists('BuddyBoss', 2);
         if (!$flows) {
@@ -1053,7 +1053,7 @@ final class TriggerFallback
         return $forum;
     }
 
-    public static function BuddyBossHandleCreateTopic($topic_id, $forum_id, $anonymous_data, $topic_author)
+    public static function buddyBossHandleCreateTopic($topic_id, $forum_id, $anonymous_data, $topic_author)
     {
         $flows = Flow::exists('BuddyBoss', 3);
         $flows = static::BuddyBossFlowFilter($flows, 'selectedForum', $forum_id);
@@ -1079,7 +1079,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 3, 'data' => $data, 'flows' => $flows];
     }
 
-    public static function BuddyBossHandleJoinPublicGroup($group_id, $user_id)
+    public static function buddyBossHandleJoinPublicGroup($group_id, $user_id)
     {
         $flows = Flow::exists('BuddyBoss', 9);
         $flows = static::BuddyBossFlowFilter($flows, 'selectedGroup', $group_id);
@@ -1138,7 +1138,7 @@ final class TriggerFallback
         return $groupInfo;
     }
 
-    public static function BuddyBossHandleJoinPrivateGroup($user_id, $group_id)
+    public static function buddyBossHandleJoinPrivateGroup($user_id, $group_id)
     {
         $flows = Flow::exists('BuddyBoss', 10);
         $flows = static::BuddyBossFlowFilter($flows, 'selectedGroup', $group_id);
@@ -1166,7 +1166,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 10, 'data' => $data, 'flows' => $flows];
     }
 
-    public static function BuddyBossHandleLeavesGroup($group_id, $user_id)
+    public static function buddyBossHandleLeavesGroup($group_id, $user_id)
     {
         $flows = Flow::exists('BuddyBoss', 11);
         $flows = static::BuddyBossFlowFilter($flows, 'selectedGroup', $group_id);
@@ -1212,7 +1212,7 @@ final class TriggerFallback
         return $activityInfo;
     }
 
-    public static function BuddyBossHandlePostGroupActivity($content, $user_id, $group_id, $activity_id)
+    public static function buddyBossHandlePostGroupActivity($content, $user_id, $group_id, $activity_id)
     {
         $flows = Flow::exists('BuddyBoss', 12);
         $flows = static::BuddyBossFlowFilter($flows, 'selectedGroup', $group_id);
@@ -1253,7 +1253,7 @@ final class TriggerFallback
         return $reply;
     }
 
-    public static function BuddyBossHandleRepliesTopic($reply_id, $topic_id, $forum_id)
+    public static function buddyBossHandleRepliesTopic($reply_id, $topic_id, $forum_id)
     {
         $flows = Flow::exists('BuddyBoss', 4);
         $flows = static::BuddyBossFlowFilter($flows, 'selectedTopic', $topic_id);
@@ -1292,7 +1292,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 4, 'data' => $data, 'flows' => $flows];
     }
 
-    public static function BuddyBossHandleRequestPrivateGroup($user_id, $admins, $group_id, $request_id)
+    public static function buddyBossHandleRequestPrivateGroup($user_id, $admins, $group_id, $request_id)
     {
         $flows = Flow::exists('BuddyBoss', 13);
         $flows = static::BuddyBossFlowFilter($flows, 'selectedGroup', $group_id);
@@ -1321,7 +1321,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 13, 'data' => $data, 'flows' => $flows];
     }
 
-    public static function BuddyBossHandleSendEmailInvites($user_id, $post)
+    public static function buddyBossHandleSendEmailInvites($user_id, $post)
     {
         $flows = Flow::exists('BuddyBoss', 5);
         if (!$flows) {
@@ -1343,7 +1343,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 5, 'data' => $data, 'flows' => $flows];
     }
 
-    public static function BuddyBossHandleUpdateAvatar($item_id, $type, $avatar_data)
+    public static function buddyBossHandleUpdateAvatar($item_id, $type, $avatar_data)
     {
         $flows = Flow::exists('BuddyBoss', 6);
         if (!$flows) {
@@ -1632,7 +1632,7 @@ final class TriggerFallback
         return $results;
     }
 
-    public static function BuddyBossHandleUpdateProfile($user_id, $posted_field_ids, $errors, $old_values, $new_values)
+    public static function buddyBossHandleUpdateProfile($user_id, $posted_field_ids, $errors, $old_values, $new_values)
     {
         $flows = Flow::exists('BuddyBoss', 7);
         if (!$flows) {
@@ -1649,7 +1649,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 7, 'data' => $current_user, 'flows' => $flows];
     }
 
-    public static function BuddyBossHandleAccountActive($user_id, $key, $user)
+    public static function buddyBossHandleAccountActive($user_id, $key, $user)
     {
         $flows = Flow::exists('BuddyBoss', 8);
         if (!$flows) {
@@ -1670,7 +1670,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 8, 'data' => $current_user, 'flows' => $flows];
     }
 
-    public static function BuddyBossHandleInviteeActiveAccount($user_id, $inviter_id, $post_id)
+    public static function buddyBossHandleInviteeActiveAccount($user_id, $inviter_id, $post_id)
     {
         $flows = Flow::exists('BuddyBoss', 14);
         if (!$flows) {
@@ -1691,7 +1691,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 14, 'data' => $current_user, 'flows' => $flows];
     }
 
-    public static function BuddyBossHandleInviteeRegisterAccount($user_id, $inviter_id, $post_id)
+    public static function buddyBossHandleInviteeRegisterAccount($user_id, $inviter_id, $post_id)
     {
         $flows = Flow::exists('BuddyBoss', 15);
         if (!$flows) {
