@@ -53,7 +53,7 @@ final class FallbackHooks
         'bp_invites_member_invite_activate_user'        => ['hook' => 'bp_invites_member_invite_activate_user', 'function' => 'buddyBossHandleInviteeActiveAccount', 'priority' => 10, 'acceptedArgs' => 3, 'isFilterHook' => false],
         'bp_invites_member_invite_mark_register_user'   => ['hook' => 'bp_invites_member_invite_mark_register_user', 'function' => 'buddyBossHandleInviteeRegisterAccount', 'priority' => 10, 'acceptedArgs' => 3, 'isFilterHook' => false],
 
-        'woocommerce_checkout_order_processed' => ['hook' => 'woocommerce_checkout_order_processed', 'function' => 'handleOrderCreateWc', 'priority' => 10, 'acceptedArgs' => 2, 'isFilterHook' => false],
+        'woocommerce_checkout_order_processed' => ['hook' => 'woocommerce_checkout_order_processed', 'function' => 'CartFlowHandleOrderCreateWc', 'priority' => 10, 'acceptedArgs' => 2, 'isFilterHook' => false],
 
         'et_pb_contact_form_submit' => ['hook' => 'et_pb_contact_form_submit', 'function' => 'handleDiviSubmit', 'priority' => 10, 'acceptedArgs' => 3, 'isFilterHook' => false],
 
