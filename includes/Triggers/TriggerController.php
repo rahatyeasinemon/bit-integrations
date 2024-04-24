@@ -5,6 +5,7 @@ namespace BitCode\FI\Triggers;
 use WP_Error;
 use FilesystemIterator;
 use BitCode\FI\Core\Util\Hooks;
+use BitCode\FI\Core\Util\AllTriggersName;
 use BitApps\BTCBI_PRO\Triggers\TriggerController as ProTriggerController;
 
 final class TriggerController
@@ -26,6 +27,10 @@ final class TriggerController
                     }
                 }
             }
+        }
+
+        if (!function_exists('btcbi_pro_activate_plugin')) {
+            $triggers = array_merge($triggers, AllTriggersName::$allTriggersName);
         }
 
         return Hooks::apply('bit_integrations_triggers', $triggers);
