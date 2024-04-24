@@ -3,6 +3,7 @@
 namespace BitCode\FI\Triggers;
 
 use BitCode\FI\Core\Util\AllTriggersName;
+use BitApps\BTCBI_PRO\Triggers\TriggerController as ProTriggerController;
 use BitCode\FI\Core\Util\Hooks;
 use WP_Error;
 use FilesystemIterator;
