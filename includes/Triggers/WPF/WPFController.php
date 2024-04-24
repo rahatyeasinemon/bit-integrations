@@ -17,24 +17,24 @@ final class WPFController
     {
         $plugin_path = 'wpforms-lite/wpforms.php';
         return [
-            'name' => 'WPForms',
-            'title' => 'Contact Form by WPForms - Drag & Drop Form Builder for WordPress',
-            'slug' => $plugin_path,
-            'pro'  => 'wpforms/wpforms.php',
-            'type' => 'form',
-            'is_active' => function_exists('WPForms'),
+            'name'           => 'WPForms',
+            'title'          => 'Contact Form by WPForms - Drag & Drop Form Builder for WordPress',
+            'slug'           => $plugin_path,
+            'pro'            => 'wpforms/wpforms.php',
+            'type'           => 'form',
+            'is_active'      => function_exists('WPForms'),
             'activation_url' => wp_nonce_url(self_admin_url('plugins.php?action=activate&amp;plugin=' . $plugin_path . '&amp;plugin_status=all&amp;paged=1&amp;s'), 'activate-plugin_' . $plugin_path),
-            'install_url' => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
-            'list' => [
+            'install_url'    => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
+            'list'           => [
                 'action' => 'wpf/get',
                 'method' => 'get',
             ],
             'fields' => [
                 'action' => 'wpf/get/form',
                 'method' => 'post',
-                'data' => ['id']
+                'data'   => ['id']
             ],
-            'isPro' => true
+            'isPro' => false
         ];
     }
 
@@ -56,13 +56,14 @@ final class WPFController
         if ($forms) {
             foreach ($forms as $form) {
                 $all_forms[] = (object)[
-                    'id' => $form->ID,
+                    'id'    => $form->ID,
                     'title' => $form->post_title,
                 ];
             }
         }
         wp_send_json_success($all_forms);
     }
+
     public function get_a_form($data)
     {
         if (!function_exists('WPForms')) {
@@ -106,8 +107,8 @@ final class WPFController
 
                 foreach ($names as $key => $value) {
                     $fields[] = [
-                        'name' => "$id:$key",
-                        'type' => "text",
+                        'name'  => "$id:$key",
+                        'type'  => 'text',
                         'label' => "$value " . $field['label'],
                     ];
                 }
@@ -115,22 +116,23 @@ final class WPFController
                 $address = ['address1' => 'Address1', 'address2' => 'Address2', 'city' => 'City', 'state' => 'State', 'postal' => 'Zip Code'];
                 foreach ($address as $key => $value) {
                     $fields[] = [
-                        'name' => "$id=>$key",
-                        'type' => "text",
+                        'name'  => "$id=>$key",
+                        'type'  => 'text',
                         'label' => "$value",
                     ];
                 }
             } else {
                 $fields[] = [
-                    'name' => $id,
-                    'type' => $field['type'] === 'file-upload' ? 'file' : $field['type'],
+                    'name'      => $id,
+                    'type'      => $field['type'] === 'file-upload' ? 'file' : $field['type'],
                     'separator' => isset($field['multiple']) && $field['multiple'] == 1 || in_array($field['type'], ['checkbox', 'file-upload']) ? "\n" : '',
-                    'label' => $field['label'],
+                    'label'     => $field['label'],
                 ];
             }
         }
         return $fields;
     }
+
     public static function wpforms_process_complete($fields, $entry, $form_data, $entry_id)
     {
         $form_id = $form_data['id'];

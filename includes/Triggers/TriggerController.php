@@ -3,52 +3,50 @@
 namespace BitCode\FI\Triggers;
 
 use WP_Error;
-use BitCode\FI\Plugin;
 use FilesystemIterator;
+use BitCode\FI\Core\Util\Hooks;
+use BitApps\BTCBI_PRO\Triggers\TriggerController as ProTriggerController;
 
 final class TriggerController
 {
-    /**
-     * Lists available triggers
-     *
-     * @return JSON|WP_Error
-     */
     public static function triggerList()
     {
         $triggers = [];
         $dirs = new FilesystemIterator(__DIR__);
+
         foreach ($dirs as $dirInfo) {
             if ($dirInfo->isDir()) {
                 $trigger = basename($dirInfo);
-                if (
-                    file_exists(__DIR__ . '/' . $trigger)
-                    && file_exists(__DIR__ . '/' . $trigger . '/' . $trigger . 'Controller.php')
-                ) {
+
+                if (file_exists(__DIR__ . '/' . $trigger . '/' . $trigger . 'Controller.php')) {
                     $trigger_controller = __NAMESPACE__ . "\\{$trigger}\\{$trigger}Controller";
+
                     if (method_exists($trigger_controller, 'info')) {
                         $triggers[$trigger] = $trigger_controller::info();
                     }
                 }
             }
         }
-        return $triggers;
+
+        return Hooks::apply('bit_integrations_triggers', $triggers);
     }
 
     public static function getTriggerField($triggerName, $data)
     {
-        $triggers = [];
         $trigger = basename($triggerName);
-        if (
-            file_exists(__DIR__ . '/' . $trigger)
-            && file_exists(__DIR__ . '/' . $trigger . '/' . $trigger . 'Controller.php')
-        ) {
+
+        if (file_exists(__DIR__ . '/' . $trigger . '/' . $trigger . 'Controller.php')) {
             $trigger_controller = __NAMESPACE__ . "\\{$trigger}\\{$trigger}Controller";
+
             if (method_exists($trigger_controller, 'get_a_form')) {
                 $trigger = new $trigger_controller();
                 return $trigger::fields($data->id);
             }
+        } else {
+            return Hooks::apply('bit_integrations_trigger_fields', $triggerName, $data);
         }
-        return $triggers;
+
+        return [];
     }
 
     public static function getTestData($triggerName)
