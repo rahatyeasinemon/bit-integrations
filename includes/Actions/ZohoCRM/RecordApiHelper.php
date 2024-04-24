@@ -84,8 +84,6 @@ class RecordApiHelper
             }
         }
 
-        // error_log(print_r(['fieldValues' => $fieldValues, 'fieldMap' => $fieldMap, 'fieldData' => $fieldData], true));
-        // die;
         foreach ($fileMap as $fileKey => $filePair) {
             if (!empty($filePair->zohoFormField)) {
                 if (($defaultConf->layouts->{$module}->{$layout}->fileUploadFields->{$filePair->zohoFormField}->data_type === 'fileupload'

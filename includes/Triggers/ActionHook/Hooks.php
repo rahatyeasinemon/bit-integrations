@@ -6,6 +6,7 @@ if (!defined('ABSPATH')) {
 
 use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Hooks\FallbackHooks;
 use BitCode\FI\Triggers\ActionHook\ActionHookController;
 
 global $wpdb;
@@ -37,6 +38,20 @@ if (!is_wp_error($flows)) {
     foreach ($flows as  $flow) {
         if (isset($flow->triggered_entity_id)) {
             Hooks::add($flow->triggered_entity_id, [ActionHookController::class, 'handle'], 10, PHP_INT_MAX);
+        }
+    }
+}
+
+if (!function_exists('btcbi_pro_activate_plugin')) {
+
+    foreach (FallbackHooks::$triggerHookList as  $hook) {
+        // if ($hook['hook'] == 'the_content') {
+        //     continue;
+        // }
+        if (!$hook['isFilterHook']) {
+            Hooks::add($hook['hook'], [ActionHookController::class, 'triggerFallbackHandler'], $hook['priority'], PHP_INT_MAX);
+        } else {
+            Hooks::filter($hook['hook'], [ActionHookController::class, 'triggerFallbackHandler'], $hook['priority'], PHP_INT_MAX);
         }
     }
 }
