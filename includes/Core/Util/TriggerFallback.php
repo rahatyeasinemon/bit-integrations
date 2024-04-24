@@ -903,7 +903,7 @@ final class TriggerFallback
         $form_id = $form->getId();
         $flows = Flow::exists('Brizy', $form_id);
         if (!$flows) {
-            return;
+            return ['content' => $fields];
         }
 
         $data = [];
@@ -4310,7 +4310,7 @@ final class TriggerFallback
     {
         $postViewTrigger = Flow::exists('Post', 4);
         if (!$postViewTrigger) {
-            return $content;
+            return ['content' => $content];
         }
         if (is_single() && !empty($GLOBALS['post'])) {
             if (isset($postViewTrigger[0]->selectedPostId) && $postViewTrigger[0]->selectedPostId == 'any-post' || $GLOBALS['post']->ID == get_the_ID()) {
@@ -4318,7 +4318,7 @@ final class TriggerFallback
             }
         }
 
-        return $content;
+        return ['content' => $content];
     }
 
     public static function deletePost($postId, $deletedPost)
