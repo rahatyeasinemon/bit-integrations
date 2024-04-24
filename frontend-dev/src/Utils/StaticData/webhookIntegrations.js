@@ -9,4 +9,4 @@ export const webhookIntegrations = [
   "FluentSupport",
 ];
 
-export const customFormIntegrations = ["Breakdance"];
+export const customFormIntegrations = ["Breakdance", "Elementor"];

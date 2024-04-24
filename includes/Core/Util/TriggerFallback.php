@@ -5008,7 +5008,7 @@ final class TriggerFallback
 
                 $attempt_details['post_id'] = $attempt_id;
 
-                Flow::execute('TutorLms', 5, $attempt_details, $flows = [$flow]);
+                Flow::execute('TutorLms', 5, $attempt_details, [$flow]);
             }
         }
 
