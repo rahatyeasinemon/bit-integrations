@@ -24,7 +24,7 @@ final class PostController
                 'method' => 'post',
                 'data' => ['id'],
             ],
-            'isPro' => true
+            'isPro' => false
         ];
     }
 

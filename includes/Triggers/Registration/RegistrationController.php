@@ -23,7 +23,7 @@ final class RegistrationController
                 'method' => 'post',
                 'data' => ['id'],
             ],
-            'isPro' => true
+            'isPro' => false
 
         ];
     }

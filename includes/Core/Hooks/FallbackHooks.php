@@ -156,22 +156,6 @@ final class FallbackHooks
 
         'piotnetforms/form_builder/new_record' => ['hook' => 'piotnetforms/form_builder/new_record', 'function' => 'handlePiotnetSubmit', 'priority' => 10, 'acceptedArgs' => 1, 'isFilterHook' => false],
 
-        'wp_after_insert_post'      => ['hook' => 'wp_after_insert_post', 'function' => 'createPost', 'priority' => 10, 'acceptedArgs' => 4, 'isFilterHook' => false],
-        'comment_post'              => ['hook' => 'comment_post', 'function' => 'postComment', 'priority' => 10, 'acceptedArgs' => 3, 'isFilterHook' => false],
-        'post_updated'              => ['hook' => 'post_updated', 'function' => 'postUpdated', 'priority' => 10, 'acceptedArgs' => 2, 'isFilterHook' => false],
-        'the_content'               => ['hook' => 'the_content', 'function' => 'viewPost', 'priority' => 10, 'acceptedArgs' => 1, 'isFilterHook' => true],
-        'delete_post'               => ['hook' => 'delete_post', 'function' => 'deletePost', 'priority' => 10, 'acceptedArgs' => 2, 'isFilterHook' => false],
-        'transition_post_status'    => ['hook' => 'transition_post_status', 'function' => 'changePostStatus', 'priority' => 10, 'acceptedArgs' => 3, 'isFilterHook' => false],
-        'trash_comment'             => ['hook' => 'trash_comment', 'function' => 'trashComment', 'priority' => 10, 'acceptedArgs' => 2, 'isFilterHook' => false],
-        'edit_comment'              => ['hook' => 'edit_comment', 'function' => 'updateComment', 'priority' => 10, 'acceptedArgs' => 2, 'isFilterHook' => false],
-        'wp_trash_post'             => ['hook' => 'wp_trash_post', 'function' => 'trashPost', 'priority' => 10, 'acceptedArgs' => 1, 'isFilterHook' => false],
-
-        'user_register'     => ['hook' => 'user_register', 'function' => 'userCreate', 'priority' => 10, 'acceptedArgs' => 2, 'isFilterHook' => false],
-        'profile_update'    => ['hook' => 'profile_update', 'function' => 'profileUpdate', 'priority' => 10, 'acceptedArgs' => 3, 'isFilterHook' => false],
-        'wp_login'          => ['hook' => 'wp_login', 'function' => 'wpLogin', 'priority' => 10, 'acceptedArgs' => 2, 'isFilterHook' => false],
-        'password_reset'    => ['hook' => 'password_reset', 'function' => 'wpResetPassword', 'priority' => 10, 'acceptedArgs' => 1, 'isFilterHook' => false],
-        'delete_user'       => ['hook' => 'delete_user', 'function' => 'wpUserDeleted', 'priority' => 10, 'acceptedArgs' => 3, 'isFilterHook' => false],
-
         'rcp_membership_post_activate'                  => ['hook' => 'rcp_membership_post_activate', 'function' => 'rcpPurchasesMembershipLevel', 'priority' => 10, 'acceptedArgs' => 2, 'isFilterHook' => false],
         'rcp_transition_membership_status_cancelled'    => ['hook' => 'rcp_transition_membership_status_cancelled', 'function' => 'rcpMembershipStatusCancelled', 'priority' => 10, 'acceptedArgs' => 2, 'isFilterHook' => false],
         'rcp_transition_membership_status_expired'      => ['hook' => 'rcp_transition_membership_status_expired', 'function' => 'rcpMembershipStatusExpired', 'priority' => 10, 'acceptedArgs' => 2, 'isFilterHook' => false],
