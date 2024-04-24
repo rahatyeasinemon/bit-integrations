@@ -84,11 +84,11 @@ export default function SelectTrigger() {
     delete tempConf.triggered_entity
     setNewFlow(tempConf)
   }
-  // if (isLoading) {
-  //   return (
-  //     <Loader style={loaderStyle} />
-  //   )
-  // }
+  if (isLoading) {
+    return (
+      <Loader style={loaderStyle} />
+    )
+  }
 
   if (data?.success === false) {
     return (
