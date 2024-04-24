@@ -78,8 +78,6 @@ class ActionHookController
 
     public static function handle(...$args)
     {
-        error_log(print_r(Helper::handle_formidable_submit(...$args), true));
-        die;
         if ($flows = Flow::exists('ActionHook', current_action())) {
             foreach ($flows as $flow) {
                 $flowDetails = json_decode($flow->flow_details);
