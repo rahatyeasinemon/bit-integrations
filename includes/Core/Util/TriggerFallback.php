@@ -3,6 +3,7 @@
 namespace BitCode\FI\Core\Util;
 
 use DateTime;
+use WP_Error;
 use Groundhogg\DB\Tags;
 use BitCode\FI\Flow\Flow;
 
@@ -2906,5 +2907,1882 @@ final class TriggerFallback
         }
 
         return;
+    }
+
+    public static function handleKadenceFormSubmit($form_args, $fields, $form_id, $post_id)
+    {
+        if (!$form_id) {
+            return;
+        }
+        $flows = Flow::exists('Kadence', $post_id . '_' . $form_id);
+        if (!$flows) {
+            return;
+        }
+        $data = [];
+        foreach ($fields as $key => $field) {
+            $data['kb_field_' . $key] = $field['value'];
+        }
+
+        return ['triggered_entity' => 'Kadence', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
+    }
+
+    // LearnDash
+
+    protected static function flowFilter($flows, $key, $value)
+    {
+        $filteredFlows = [];
+        foreach ($flows as $flow) {
+            if (is_string($flow->flow_details)) {
+                $flow->flow_details = json_decode($flow->flow_details);
+            }
+            if (!isset($flow->flow_details->$key) || $flow->flow_details->$key === 'any' || $flow->flow_details->$key == $value || $flow->flow_details->$key === '') {
+                $filteredFlows[] = $flow;
+            }
+        }
+        return $filteredFlows;
+    }
+
+    public static function getUserInfo($user_id)
+    {
+        $userInfo = get_userdata($user_id);
+        $user = [];
+        if ($userInfo) {
+            $userData = $userInfo->data;
+            $user_meta = get_user_meta($user_id);
+            $user = [
+                'first_name' => $user_meta['first_name'][0],
+                'last_name' => $user_meta['last_name'][0],
+                'user_login' => $userData->user_login,
+                'user_email' => $userData->user_email,
+                'user_url' => $userData->user_url,
+                'display_name' => $userData->display_name,
+                'nickname' => $userData->user_nicename,
+                'user_pass' => $userData->user_pass,
+            ];
+        }
+        return $user;
+    }
+
+
+    public static function learndashHandleCourseEnroll($user_id, $course_id, $access_list, $remove)
+    {
+        if (!empty($remove)) {
+            $flows = Flow::exists('LearnDash', 2);
+            $flows = self::flowFilter($flows, 'unenrollCourse', $course_id);
+        } else {
+            $flows = Flow::exists('LearnDash', 1);
+            $flows = self::flowFilter($flows, 'selectedCourse', $course_id);
+        }
+        if (!$flows) {
+            return;
+        }
+
+        $course = get_post($course_id);
+        $course_url = get_permalink($course_id);
+        $result_course = [
+            'course_id' => $course->ID,
+            'course_title' => $course->post_title,
+            'course_url' => $course_url,
+        ];
+        $user = self::getUserInfo($user_id);
+
+        $result = $result_course + $user;
+
+        return ['triggered_entity' => 'LearnDash', 'triggered_entity_id' => 1, 'data' => $result, 'flows' => $flows];
+    }
+
+    public static function learndashHandleLessonCompleted($data)
+    {
+        $user = $data['user']->data;
+        $course = $data['course'];
+        $lesson = $data['lesson'];
+        if ($course && $user) {
+            $course_id = $course->ID;
+            $lesson_id = $lesson->ID;
+            $user_id = $user->ID;
+        }
+        $flows = Flow::exists('LearnDash', 4);
+        $flows = self::flowFilter($flows, 'selectedLesson', $lesson_id);
+
+        if (!$flows) {
+            return;
+        }
+
+        $course_url = get_permalink($course_id);
+        $result_course = [
+            'course_id' => $course->ID,
+            'course_title' => $course->post_title,
+            'course_url' => $course_url,
+        ];
+
+        $lesson_url = get_permalink($lesson_id);
+        $result_lesson = [
+            'lesson_id' => $lesson->ID,
+            'lesson_title' => $lesson->post_title,
+            'lesson_url' => $lesson_url,
+        ];
+
+        $user = self::getUserInfo($user_id);
+
+        $lessonDataFinal = $result_course + $result_lesson + $user;
+        return ['triggered_entity' => 'LearnDash', 'triggered_entity_id' => 4, 'data' => $lessonDataFinal, 'flows' => $flows];
+    }
+
+    public static function learndashHandleQuizAttempt($data, $user)
+    {
+        $user = $user->data;
+        $course = $data['course'];
+        $lesson = $data['lesson'];
+        if ($course && $user) {
+            $course_id = $course->ID;
+            $lesson_id = $lesson->ID;
+            $user_id = $user->ID;
+            $quiz_id = $data['quiz'];
+            $score = $data['score'];
+            $pass = $data['pass'];
+            $total_points = $data['total_points'];
+            $points = $data['points'];
+            $percentage = $data['percentage'];
+        }
+        for ($i = 6; $i < 9; $i++) {
+            $flows = Flow::exists('LearnDash', $i);
+            $flows = self::flowFilter($flows, 'selectedQuiz', $quiz_id);
+
+            if (!$flows) {
+                continue;
+            }
+            if ($i == 7 && $pass) {
+                continue;
+            }
+            if ($i == 8 && !$pass) {
+                continue;
+            }
+            $course_url = get_permalink($course_id);
+            $result_course = [
+                'course_id' => $course->ID,
+                'course_title' => $course->post_title,
+                'course_url' => $course_url,
+            ];
+
+            $lesson_url = get_permalink($lesson_id);
+            $result_lesson = [
+                'lesson_id' => $lesson->ID,
+                'lesson_title' => $lesson->post_title,
+                'lesson_url' => $lesson_url,
+            ];
+
+            $quiz_url = get_permalink($quiz_id);
+
+            $quiz_query_args = [
+                'post_type' => 'sfwd-quiz',
+                'post_status' => 'publish',
+                'orderby' => 'post_title',
+                'order' => 'ASC',
+                'posts_per_page' => 1,
+                'ID' => $quiz_id,
+            ];
+
+            $quizList = get_posts($quiz_query_args);
+
+            $result_quiz = [
+                'quiz_id' => $quiz_id,
+                'quiz_title' => $quizList[0]->post_title,
+                'quiz_url' => $quiz_url,
+                'score' => $score,
+                'pass' => $pass,
+                'total_points' => $total_points,
+                'points' => $points,
+                'percentage' => $percentage,
+            ];
+
+            $user = self::getUserInfo($user_id);
+
+            $quizAttemptDataFinal = $result_course + $result_lesson + $result_quiz + $user;
+            Flow::execute('LearnDash', $i, $quizAttemptDataFinal, $flows);
+        }
+        return;
+    }
+
+    public static function learndashHandleTopicCompleted($data)
+    {
+        if (empty($data)) {
+            return;
+        }
+        $user = $data['user']->data;
+        $course = $data['course'];
+        $lesson = $data['lesson'];
+        $topic = $data['topic'];
+        if ($course && $user && $topic) {
+            $course_id = $course->ID;
+            $lesson_id = $lesson->ID;
+            $user_id = $user->ID;
+            $topic_id = $topic->ID;
+        }
+        $flows = Flow::exists('LearnDash', 5);
+        $flows = self::flowFilter($flows, 'selectedTopic', $topic_id);
+
+        if (!$flows) {
+            return;
+        }
+
+        $course_url = get_permalink($course_id);
+        $result_course = [
+            'course_id' => $course->ID,
+            'course_title' => $course->post_title,
+            'course_url' => $course_url,
+        ];
+
+        $lesson_url = get_permalink($lesson_id);
+        $result_lesson = [
+            'lesson_id' => $lesson->ID,
+            'lesson_title' => $lesson->post_title,
+            'lesson_url' => $lesson_url,
+        ];
+
+        $topic_url = get_permalink($topic_id);
+        $result_topic = [
+            'topic_id' => $topic->ID,
+            'topic_title' => $topic->post_title,
+            'topic_url' => $topic_url,
+        ];
+
+        $user = self::getUserInfo($user_id);
+
+        $topicDataFinal = $result_course + $result_lesson + $result_topic + $user;
+        return ['triggered_entity' => 'LearnDash', 'triggered_entity_id' => 5, 'data' => $topicDataFinal, 'flows' => $flows];
+    }
+
+    public static function learndashHandleCourseCompleted($data)
+    {
+        $user = $data['user']->data;
+        $course = $data['course'];
+        if ($course && $user) {
+            $course_id = $course->ID;
+            $user_id = $user->ID;
+        }
+        $flows = Flow::exists('LearnDash', 3);
+        $flows = self::flowFilter($flows, 'completeCourse', $course_id);
+        if (!$flows) {
+            return;
+        }
+
+        $course_url = get_permalink($course_id);
+        $result_course = [
+            'course_id' => $course->ID,
+            'course_title' => $course->post_title,
+            'course_url' => $course_url,
+        ];
+        $user = self::getUserInfo($user_id);
+        $result = $result_course + $user;
+        return ['triggered_entity' => 'LearnDash', 'triggered_entity_id' => 3, 'data' => $result, 'flows' => $flows];
+    }
+
+    public static function learndashHandleAddedGroup($user_id, $group_id)
+    {
+        if (!$group_id || !$user_id) {
+            return;
+        }
+        $flows = Flow::exists('LearnDash', 9);
+        $flows = self::flowFilter($flows, 'selectedGroup', $group_id);
+
+        if (!$flows) {
+            return;
+        }
+        $group = get_post($group_id);
+        $group_url = get_permalink($group_id);
+        $result_group = [
+            'group_id' => $group->ID,
+            'group_title' => $group->post_title,
+            'group_url' => $group_url,
+        ];
+
+        $user = self::getUserInfo($user_id);
+
+        $groupDataFinal = $result_group + $user;
+        return ['triggered_entity' => 'LearnDash', 'triggered_entity_id' => 9, 'data' => $groupDataFinal, 'flows' => $flows];
+    }
+
+    public static function learndashHandleRemovedGroup($user_id, $group_id)
+    {
+        if (!$group_id || !$user_id) {
+            return;
+        }
+        $flows = Flow::exists('LearnDash', 10);
+        $flows = self::flowFilter($flows, 'selectedGroup', $group_id);
+
+        if (!$flows) {
+            return;
+        }
+        $group = get_post($group_id);
+        $group_url = get_permalink($group_id);
+        $result_group = [
+            'group_id' => $group->ID,
+            'group_title' => $group->post_title,
+            'group_url' => $group_url,
+        ];
+
+        $user = self::getUserInfo($user_id);
+
+        $groupDataFinal = $result_group + $user;
+        return ['triggered_entity' => 'LearnDash', 'triggered_entity_id' => 10, 'data' => $groupDataFinal, 'flows' => $flows];
+    }
+
+    public static function learndashHandleAssignmentSubmit($assignment_post_id, $assignment_meta)
+    {
+        if (!$assignment_post_id || !$assignment_meta) {
+            return;
+        }
+        $file_name = $assignment_meta['file_name'];
+        $file_link = $assignment_meta['file_link'];
+        $file_path = $assignment_meta['file_path'];
+        $user_id = $assignment_meta['user_id'];
+        $lesson_id = $assignment_meta['lesson_id'];
+        $course_id = $assignment_meta['course_id'];
+        $assignment_id = $assignment_post_id;
+
+        $flows = Flow::exists('LearnDash', 11);
+        $flows = self::flowFilter($flows, 'selectedGroup', $lesson_id);
+
+        if (!$flows) {
+            return;
+        }
+        $course = get_post($course_id);
+        $course_url = get_permalink($course_id);
+        $result_course = [
+            'course_id' => $course->ID,
+            'course_title' => $course->post_title,
+            'course_url' => $course_url,
+        ];
+
+        $lesson = get_post($lesson_id);
+        $lesson_url = get_permalink($lesson_id);
+        $result_lesson = [
+            'lesson_id' => $lesson->ID,
+            'lesson_title' => $lesson->post_title,
+            'lesson_url' => $lesson_url,
+        ];
+
+        $result_assignment = [
+            'assignment_id' => $assignment_id,
+            'file_name' => $file_name,
+            'file_link' => $file_link,
+            'file_path' => $file_path,
+        ];
+
+        $user = self::getUserInfo($user_id);
+
+        $assignmentDataFinal = $result_course + $result_lesson + $result_assignment + $user;
+        return ['triggered_entity' => 'LearnDash', 'triggered_entity_id' => 11, 'data' => $assignmentDataFinal, 'flows' => $flows];
+    }
+
+    // lifterLms
+
+    public static function lifterLmsGetUserInfo($user_id)
+    {
+        $userInfo = get_userdata($user_id);
+        $user = [];
+        if ($userInfo) {
+            $userData = $userInfo->data;
+            $user_meta = get_user_meta($user_id);
+            $user = [
+                'first_name' => $user_meta['first_name'][0],
+                'last_name' => $user_meta['last_name'][0],
+                'user_email' => $userData->user_email,
+                'nickname' => $userData->user_nicename,
+                'avatar_url' => get_avatar_url($user_id),
+            ];
+        }
+        return $user;
+    }
+
+    public static function lifterLmsGetQuizDetail($quizId)
+    {
+        global $wpdb;
+
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_quiz' AND $wpdb->posts.ID = %d",
+                $quizId
+            )
+        );
+    }
+
+    public static function lifterLmsHandleAttemptQuiz($user_id, $quiz_id, $quiz_obj)
+    {
+        $flows = Flow::exists('LifterLms', 1);
+        if (!$flows) {
+            return;
+        }
+
+        $userInfo = self::lifterLmsGetUserInfo($user_id);
+        $quizDetail = self::lifterLmsGetQuizDetail($quiz_id);
+
+        $finalData = [
+            'user_id' => $user_id,
+            'quiz_id' => $quiz_id,
+            'first_name' => $userInfo['first_name'],
+            'last_name' => $userInfo['last_name'],
+            'nickname' => $userInfo['nickname'],
+            'avatar_url' => $userInfo['avatar_url'],
+            'user_email' => $userInfo['user_email'],
+            'quiz_title' => $quizDetail[0]->post_title,
+        ];
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedQuiz = !empty($flowDetails->selectedQuiz) ? $flowDetails->selectedQuiz : [];
+        if ($flows && ($quiz_id == $selectedQuiz || $selectedQuiz === 'any')) {
+            return ['triggered_entity' => 'LifterLms', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    public static function lifterLmsHandleQuizPass($user_id, $quiz_id, $quiz_obj)
+    {
+        $flows = Flow::exists('LifterLms', 2);
+        if (!$flows) {
+            return;
+        }
+
+        $userInfo = self::lifterLmsGetUserInfo($user_id);
+        $quizDetail = self::lifterLmsGetQuizDetail($quiz_id);
+
+        $finalData = [
+            'user_id' => $user_id,
+            'quiz_id' => $quiz_id,
+            'first_name' => $userInfo['first_name'],
+            'last_name' => $userInfo['last_name'],
+            'nickname' => $userInfo['nickname'],
+            'avatar_url' => $userInfo['avatar_url'],
+            'user_email' => $userInfo['user_email'],
+            'quiz_title' => $quizDetail[0]->post_title,
+        ];
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedQuiz = !empty($flowDetails->selectedQuiz) ? $flowDetails->selectedQuiz : [];
+        if ($flows && ($quiz_id == $selectedQuiz || $selectedQuiz === 'any')) {
+            return ['triggered_entity' => 'LifterLms', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    public static function lifterLmsHandleQuizFail($user_id, $quiz_id, $quiz_obj)
+    {
+        $flows = Flow::exists('LifterLms', 3);
+        if (!$flows) {
+            return;
+        }
+
+        $userInfo = self::lifterLmsGetUserInfo($user_id);
+        $quizDetail = self::lifterLmsGetQuizDetail($quiz_id);
+
+        $finalData = [
+            'user_id' => $user_id,
+            'quiz_id' => $quiz_id,
+            'first_name' => $userInfo['first_name'],
+            'last_name' => $userInfo['last_name'],
+            'nickname' => $userInfo['nickname'],
+            'avatar_url' => $userInfo['avatar_url'],
+            'user_email' => $userInfo['user_email'],
+            'quiz_title' => $quizDetail[0]->post_title,
+        ];
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedQuiz = !empty($flowDetails->selectedQuiz) ? $flowDetails->selectedQuiz : [];
+        if ($flows && ($quiz_id == $selectedQuiz || $selectedQuiz === 'any')) {
+            return ['triggered_entity' => 'LifterLms', 'triggered_entity_id' => 3, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    public static function lifterLmsGetLessonDetail($lessonId)
+    {
+        global $wpdb;
+
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'lesson' AND $wpdb->posts.ID = %d",
+                $lessonId
+            )
+        );
+    }
+
+    public static function lifterLmsHandleLessonComplete($user_id, $lesson_id)
+    {
+        $flows = Flow::exists('LifterLms', 4);
+        if (!$flows) {
+            return;
+        }
+
+        $userInfo = self::lifterLmsGetUserInfo($user_id);
+        $lessonDetail = self::lifterLmsGetLessonDetail($lesson_id);
+
+        $finalData = [
+            'user_id' => $user_id,
+            'lesson_id' => $lesson_id,
+            'lesson_title' => $lessonDetail[0]->post_title,
+            'first_name' => $userInfo['first_name'],
+            'last_name' => $userInfo['last_name'],
+            'nickname' => $userInfo['nickname'],
+            'avatar_url' => $userInfo['avatar_url'],
+            'user_email' => $userInfo['user_email'],
+        ];
+
+        return ['triggered_entity' => 'LifterLms', 'triggered_entity_id' => 4, 'data' => $finalData, 'flows' => $flows];
+    }
+
+    public static function lifterLmsGetCourseDetail($courseId)
+    {
+        global $wpdb;
+
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'course' AND $wpdb->posts.ID = %d",
+                $courseId
+            )
+        );
+    }
+
+    public static function lifterLmsHandleCourseComplete($user_id, $course_id)
+    {
+        $flows = Flow::exists('LifterLms', 5);
+        if (!$flows) {
+            return;
+        }
+
+        $userInfo = self::lifterLmsGetUserInfo($user_id);
+        $courseDetail = self::lifterLmsGetCourseDetail($course_id);
+
+        $finalData = [
+            'user_id' => $user_id,
+            'course_id' => $course_id,
+            'course_title' => $courseDetail[0]->post_title,
+            'first_name' => $userInfo['first_name'],
+            'last_name' => $userInfo['last_name'],
+            'nickname' => $userInfo['nickname'],
+            'avatar_url' => $userInfo['avatar_url'],
+            'user_email' => $userInfo['user_email'],
+        ];
+        return ['triggered_entity' => 'LifterLms', 'triggered_entity_id' => 5, 'data' => $finalData, 'flows' => $flows];
+    }
+
+    public static function lifterLmsHandleCourseEnroll($user_id, $product_id)
+    {
+        $flows = Flow::exists('LifterLms', 6);
+        if (!$flows) {
+            return;
+        }
+
+        $userInfo = self::lifterLmsGetUserInfo($user_id);
+        $courseDetail = self::lifterLmsGetCourseDetail($product_id);
+
+        $finalData = [
+            'user_id' => $user_id,
+            'course_id' => $product_id,
+            'course_title' => $courseDetail[0]->post_title,
+            'first_name' => $userInfo['first_name'],
+            'last_name' => $userInfo['last_name'],
+            'nickname' => $userInfo['nickname'],
+            'avatar_url' => $userInfo['avatar_url'],
+            'user_email' => $userInfo['user_email'],
+        ];
+        return ['triggered_entity' => 'LifterLms', 'triggered_entity_id' => 6, 'data' => $finalData, 'flows' => $flows];
+    }
+
+    public static function lifterLmsHandleCourseUnEnroll($student_id, $course_id, $a, $status)
+    {
+        $flows = Flow::exists('LifterLms', 7);
+
+        if (!$flows || empty($course_id) || $status != 'cancelled') {
+            return;
+        }
+
+        $userInfo = self::lifterLmsGetUserInfo($student_id);
+        $courseDetail = self::lifterLmsGetCourseDetail($course_id);
+
+        $finalData = [
+            'user_id' => $student_id,
+            'course_id' => $course_id,
+            'course_title' => $courseDetail[0]->post_title,
+            'first_name' => $userInfo['first_name'],
+            'last_name' => $userInfo['last_name'],
+            'nickname' => $userInfo['nickname'],
+            'avatar_url' => $userInfo['avatar_url'],
+            'user_email' => $userInfo['user_email'],
+        ];
+        return ['triggered_entity' => 'LifterLms', 'triggered_entity_id' => 7, 'data' => $finalData, 'flows' => $flows];
+    }
+
+    public static function lifterLmsGetMembershipDetail($membershipId)
+    {
+        global $wpdb;
+
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title FROM $wpdb->posts
+        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_membership' AND $wpdb->posts.ID = %d",
+                $membershipId
+            )
+        );
+    }
+
+    public static function lifterLmsHandleMembershipCancel($data, $user_id, $a, $b)
+    {
+        $flows = Flow::exists('LifterLms', 8);
+        $product_id = $data->get('product_id');
+
+        if (!$flows || !$user_id || !$product_id) {
+            return;
+        }
+
+        $userInfo = self::lifterLmsGetUserInfo($user_id);
+        $membershipDetail = self::lifterLmsGetMembershipDetail($product_id);
+
+        $finalData = [
+            'user_id' => $user_id,
+            'membership_title' => $product_id,
+            'membership_id' => $membershipDetail[0]->post_title,
+            'first_name' => $userInfo['first_name'],
+            'last_name' => $userInfo['last_name'],
+            'nickname' => $userInfo['nickname'],
+            'avatar_url' => $userInfo['avatar_url'],
+            'user_email' => $userInfo['user_email'],
+        ];
+        return ['triggered_entity' => 'LifterLms', 'triggered_entity_id' => 8, 'data' => $finalData, 'flows' => $flows];
+    }
+
+    // mail poet
+
+    public static function mailPoetHandleDateField($item)
+    {
+        if (
+            array_key_exists('year', $item)
+            && array_key_exists('month', $item)
+            && array_key_exists('day', $item)
+            && (!empty($item['year']) || !empty($item['month']) || !empty($item['day']))
+        ) {
+            $year  = (int) !empty($item['year']) ? $item['year'] : date('Y');
+            $month = (int) !empty($item['month']) ? $item['month'] : 1;
+            $day   = (int) !empty($item['day']) ? $item['day'] : 1;
+        } elseif (
+            array_key_exists('year', $item)
+            && array_key_exists('month', $item)
+            && (!empty($item['year']) || !empty($item['month']))
+        ) {
+            $year  = (int) !empty($item['year']) ? $item['year'] : date('Y');
+            $month = (int) !empty($item['month']) ? $item['month'] : 1;
+            $day   = 1;
+        } elseif (array_key_exists('year', $item) && !empty($item['year'])) {
+            $year  = $item['year'];
+            $month = 1;
+            $day   = 1;
+        } elseif (array_key_exists('month', $item) && !empty($item['month'])) {
+            $year  = date('Y');
+            $month = $item['month'];
+            $day   = 1;
+        }
+
+        if (isset($year, $month, $day)) {
+            $date = new DateTime();
+            $date->setDate($year, $month, $day);
+            return $date->format('Y-m-d');
+        }
+
+        return null;
+    }
+
+    public static function handleMailpoetSubmit($data, $segmentIds, $form)
+    {
+        $formData = [];
+
+        foreach ($data as $key => $item) {
+            $keySeparated = explode('_', $key);
+
+            if ($keySeparated[0] === 'cf') {
+                if (is_array($item)) {
+                    $formData[$keySeparated[1]] = self::mailPoetHandleDateField($item);
+                } else {
+                    $formData[$keySeparated[1]] = $item;
+                }
+            } else {
+                if (is_array($item)) {
+                    $formData[$key] = self::mailPoetHandleDateField($item);
+                } else {
+                    $formData[$key] = $item;
+                }
+            }
+        }
+
+        $form_id = $form->getId();
+
+        if (!empty($form_id) && $flows = Flow::exists('MailPoet', $form_id)) {
+            return ['triggered_entity' => 'MailPoet', 'triggered_entity_id' => $form_id, 'data' => $formData, 'flows' => $flows];
+        }
+    }
+
+    // masterStudy Lms
+
+    public static function masterStudyLmsGetUserInfo($user_id)
+    {
+        $userInfo = get_userdata($user_id);
+        $user = [];
+        if ($userInfo) {
+            $userData = $userInfo->data;
+            $user_meta = get_user_meta($user_id);
+            $user = [
+                'first_name' => $user_meta['first_name'][0],
+                'last_name' => $user_meta['last_name'][0],
+                'user_email' => $userData->user_email,
+                'nickname' => $userData->user_nicename,
+                'avatar_url' => get_avatar_url($user_id),
+            ];
+        }
+        return $user;
+    }
+
+    public static function masterStudyGetCourseDetail($courseId)
+    {
+        global $wpdb;
+
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title,post_content FROM $wpdb->posts
+                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-courses' AND $wpdb->posts.ID = %d",
+                $courseId
+            )
+        );
+    }
+
+    public static function stmLmsHandleCourseComplete($course_id, $user_id, $progress)
+    {
+        $flows = Flow::exists('MasterStudyLms', 1);
+        if (!$flows) {
+            return;
+        }
+
+        $userInfo = self::masterStudyLmsGetUserInfo($user_id);
+        $courseDetails = self::masterStudyGetCourseDetail($course_id);
+
+        $finalData = [
+            'user_id' => $user_id,
+            'course_id' => $course_id,
+            'course_title' => $courseDetails[0]->post_title,
+            'course_description' => $courseDetails[0]->post_content,
+            'first_name' => $userInfo['first_name'],
+            'last_name' => $userInfo['last_name'],
+            'nickname' => $userInfo['nickname'],
+            'avatar_url' => $userInfo['avatar_url'],
+            'user_email' => $userInfo['user_email'],
+        ];
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedCourse = !empty($flowDetails->selectedCourse) ? $flowDetails->selectedCourse : [];
+        if ($flows && ($course_id == $selectedCourse || $selectedCourse === 'any')) {
+            return ['triggered_entity' => 'MasterStudyLms', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    public static function stmLmsHandleCourseEnroll($user_id, $course_id)
+    {
+        $flows = Flow::exists('MasterStudyLms', 3);
+        if (!$flows) {
+            return;
+        }
+
+        $userInfo = self::masterStudyLmsGetUserInfo($user_id);
+        $courseDetails = self::masterStudyGetCourseDetail($course_id);
+
+        $finalData = [
+            'user_id' => $user_id,
+            'course_id' => $course_id,
+            'course_title' => $courseDetails[0]->post_title,
+            'course_description' => $courseDetails[0]->post_content,
+            'first_name' => $userInfo['first_name'],
+            'last_name' => $userInfo['last_name'],
+            'nickname' => $userInfo['nickname'],
+            'avatar_url' => $userInfo['avatar_url'],
+            'user_email' => $userInfo['user_email'],
+        ];
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedCourse = !empty($flowDetails->selectedCourse) ? $flowDetails->selectedCourse : [];
+        if ($flows && ($course_id == $selectedCourse || $selectedCourse === 'any')) {
+            return ['triggered_entity' => 'MasterStudyLms', 'triggered_entity_id' => 3, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    public static function masterStudyGetLessonDetail($lessonId)
+    {
+        global $wpdb;
+
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title,post_content FROM $wpdb->posts
+        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-lessons' AND $wpdb->posts.ID = %d",
+                $lessonId
+            )
+        );
+    }
+
+    public static function stmLmsHandleLessonComplete($user_id, $lesson_id)
+    {
+        $flows = Flow::exists('MasterStudyLms', 2);
+        if (!$flows) {
+            return;
+        }
+
+        $userInfo = self::masterStudyLmsGetUserInfo($user_id);
+        $lessonDetails = self::masterStudyGetLessonDetail($lesson_id);
+
+        $finalData = [
+            'user_id' => $user_id,
+            'lesson_id' => $lesson_id,
+            'lesson_title' => $lessonDetails[0]->post_title,
+            'lesson_description' => $lessonDetails[0]->post_content,
+            'first_name' => $userInfo['first_name'],
+            'last_name' => $userInfo['last_name'],
+            'nickname' => $userInfo['nickname'],
+            'avatar_url' => $userInfo['avatar_url'],
+            'user_email' => $userInfo['user_email'],
+        ];
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedLesson = !empty($flowDetails->selectedLesson) ? $flowDetails->selectedLesson : [];
+        if ($flows && ($lesson_id == $selectedLesson || $selectedLesson === 'any')) {
+            return ['triggered_entity' => 'MasterStudyLms', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    public static function masterStudyGetQuizDetails($quiz_id)
+    {
+        global $wpdb;
+
+        return $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT ID, post_title,post_content FROM $wpdb->posts
+                 WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-quizzes' AND $wpdb->posts.ID = %d",
+                $quiz_id
+            )
+        );
+    }
+
+    public static function stmLmsHandleQuizComplete($user_id, $quiz_id, $user_quiz_progress)
+    {
+        $flows = Flow::exists('MasterStudyLms', 4);
+        if (!$flows) {
+            return;
+        }
+
+        $userInfo = self::masterStudyLmsGetUserInfo($user_id);
+        $quizDetails = self::masterStudyGetQuizDetails($quiz_id);
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedCourse = !empty($flowDetails->selectedCourse) ? $flowDetails->selectedCourse : [];
+        $courseDetails = self::masterStudyGetCourseDetail($selectedCourse);
+
+        $finalData = [
+            'user_id' => $user_id,
+            'course_id' => $selectedCourse,
+            'course_title' => $courseDetails[0]->post_title,
+            'course_description' => $courseDetails[0]->post_content,
+            'quiz_id' => $quiz_id,
+            'quiz_title' => $quizDetails[0]->post_title,
+            'quiz_description' => $quizDetails[0]->post_content,
+            'first_name' => $userInfo['first_name'],
+            'last_name' => $userInfo['last_name'],
+            'nickname' => $userInfo['nickname'],
+            'avatar_url' => $userInfo['avatar_url'],
+            'user_email' => $userInfo['user_email'],
+        ];
+
+        $selectedQuiz = !empty($flowDetails->selectedQuiz) ? $flowDetails->selectedQuiz : [];
+
+        if (($quiz_id == $selectedQuiz || $selectedQuiz === 'any')) {
+            return ['triggered_entity' => 'MasterStudyLms', 'triggered_entity_id' => 4, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    public static function stmLmsHandleQuizFailed($user_id, $quiz_id, $user_quiz_progress)
+    {
+        $flows = Flow::exists('MasterStudyLms', 5);
+        if (!$flows) {
+            return;
+        }
+
+        $userInfo = self::masterStudyLmsGetUserInfo($user_id);
+        $quizDetails = self::masterStudyGetQuizDetails($quiz_id);
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedCourse = !empty($flowDetails->selectedCourse) ? $flowDetails->selectedCourse : [];
+        $courseDetails = self::masterStudyGetCourseDetail($selectedCourse);
+
+        $finalData = [
+            'user_id' => $user_id,
+            'course_id' => $selectedCourse,
+            'course_title' => $courseDetails[0]->post_title,
+            'course_description' => $courseDetails[0]->post_content,
+            'quiz_id' => $quiz_id,
+            'quiz_title' => $quizDetails[0]->post_title,
+            'quiz_description' => $quizDetails[0]->post_content,
+            'first_name' => $userInfo['first_name'],
+            'last_name' => $userInfo['last_name'],
+            'nickname' => $userInfo['nickname'],
+            'avatar_url' => $userInfo['avatar_url'],
+            'user_email' => $userInfo['user_email'],
+        ];
+
+        $selectedQuiz = !empty($flowDetails->selectedQuiz) ? $flowDetails->selectedQuiz : [];
+
+        if (($quiz_id == $selectedQuiz || $selectedQuiz === 'any')) {
+            return ['triggered_entity' => 'MasterStudyLms', 'triggered_entity_id' => 5, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    // Memberpress
+
+    public static function MemberpressGetUserInfo($user_id)
+    {
+        $userInfo = get_userdata($user_id);
+        $user = [];
+        if ($userInfo) {
+            $userData = $userInfo->data;
+            $user_meta = get_user_meta($user_id);
+            $user = [
+                'user_id' => $user_id,
+                'first_name' => $user_meta['first_name'][0],
+                'last_name' => $user_meta['last_name'][0],
+                'user_email' => $userData->user_email,
+                'nickname' => $userData->user_nicename,
+                'avatar_url' => get_avatar_url($user_id),
+            ];
+        }
+        return $user;
+    }
+
+    public static function meprOneTimeMembershipSubscribe(\MeprEvent $event)
+    {
+        $transaction = $event->get_data();
+        $product = $transaction->product();
+        $product_id = $product->ID;
+        $user_id = absint($transaction->user()->ID);
+        if ('lifetime' !== (string) $product->period_type) {
+            return;
+        }
+
+        $postData = get_post($product_id);
+        $userData = self::MemberpressGetUserInfo($user_id);
+        $finalData = array_merge((array)$postData, $userData);
+
+        if ($user_id && $flows = Flow::exists('Memberpress', 1)) {
+            return ['triggered_entity' => 'Memberpress', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    public static function meprRecurringMembershipSubscribe(\MeprEvent $event)
+    {
+        $transaction = $event->get_data();
+        $product = $transaction->product();
+        $product_id = $product->ID;
+        $user_id = absint($transaction->user()->ID);
+        if ('lifetime' === (string) $product->period_type) {
+            return;
+        }
+
+        $postData = get_post($product_id);
+        $userData = self::MemberpressGetUserInfo($user_id);
+        $finalData = array_merge((array)$postData, $userData);
+
+        if ($user_id && $flows = Flow::exists('Memberpress', 2)) {
+            return ['triggered_entity' => 'Memberpress', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    public static function meprMembershipSubscribeCancel($old_status, $new_status, $subscription)
+    {
+        $old_status = (string) $old_status;
+        $new_status = (string) $new_status;
+
+        if ($old_status === $new_status && $new_status !== 'cancelled') {
+            return;
+        }
+
+        $product_id = $subscription->rec->product_id;
+        $user_id = intval($subscription->rec->user_id);
+        $userData = self::MemberpressGetUserInfo($user_id);
+        $finalData = array_merge((array)$subscription->rec, $userData);
+
+        $flows = Flow::exists('Memberpress', 3);
+        if (!$flows) {
+            return;
+        }
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedCancelMembership = !empty($flowDetails->selectedCancelMembership) ? $flowDetails->selectedCancelMembership : [];
+
+        if ($product_id === $selectedCancelMembership || $selectedCancelMembership === 'any') {
+            return ['triggered_entity' => 'Memberpress', 'triggered_entity_id' => 3, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    public static function meprMembershipSubscribeExpire($old_status, $new_status, $subscription)
+    {
+        $old_status = (string) $old_status;
+        $new_statuss = (string) $new_status;
+
+        if ($new_statuss !== 'suspended') {
+            return;
+        }
+        $product_id = $subscription->rec->product_id;
+        $user_id = intval($subscription->rec->user_id);
+        $userData = self::MemberpressGetUserInfo($user_id);
+        $finalData = array_merge((array)$subscription->rec, $userData);
+
+        $flows = Flow::exists('Memberpress', 5);
+        if (!$flows) {
+            return;
+        }
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedRecurringMembership = !empty($flowDetails->selectedRecurringMembership) ? $flowDetails->selectedRecurringMembership : [];
+
+        if ($product_id === $selectedRecurringMembership || $selectedRecurringMembership === 'any') {
+            return ['triggered_entity' => 'Memberpress', 'triggered_entity_id' => 5, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    public static function meprMembershipSubscribePaused(\MeprEvent $event)
+    {
+        $transaction = $event->get_data();
+        $product = $transaction->product();
+        $product_id = $product->ID;
+        $user_id = absint($transaction->user()->ID);
+
+        $postData = get_post($product_id);
+        $userData = self::MemberpressGetUserInfo($user_id);
+        $finalData = array_merge((array)$postData, $userData);
+
+        $flows = Flow::exists('Memberpress', 4);
+        if (!$flows) {
+            return;
+        }
+
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedCancelMembership = !empty($flowDetails->selectedCancelMembership) ? $flowDetails->selectedCancelMembership : [];
+
+        if ($product_id === $selectedCancelMembership || $selectedCancelMembership === 'any') {
+            return ['triggered_entity' => 'Memberpress', 'triggered_entity_id' => 4, 'data' => $finalData, 'flows' => $flows];
+        }
+    }
+
+    // metform
+
+    public static function handleMetformProSubmit($form_setting, $form_data, $email_name)
+    {
+        self::handle_submit_data($form_data['id'], $form_data);
+    }
+
+    public static function handleMetformSubmit($form_id, $form_data, $form_settings)
+    {
+        self::handle_submit_data($form_id, $form_data);
+    }
+
+    private static function handle_submit_data($form_id, $form_data)
+    {
+        if (!$form_id) {
+            return;
+        }
+        $flows = Flow::exists('Met', $form_id);
+        if (!$flows) {
+            return;
+        }
+
+        unset($form_data['action'], $form_data['form_nonce'], $form_data['id']);
+        $data = $form_data;
+        return ['triggered_entity' => 'Met', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
+    }
+
+    public static function metaBoxFields($form_id)
+    {
+        if (function_exists('rwmb_meta')) {
+            $meta_box_registry = rwmb_get_registry('meta_box');
+            $fileUploadTypes = ['file_upload', 'single_image', 'file'];
+            $form = $meta_box_registry->get($form_id);
+            $fieldDetails = $form->meta_box['fields'];
+            $fields = [];
+            foreach ($fieldDetails as $field) {
+                if (!empty($field['id']) && $field['type'] !== 'submit') {
+                    $fields[] = [
+                        'name' => $field['id'],
+                        'type' => in_array($field['type'], $fileUploadTypes) ? 'file' : $field['type'],
+                        'label' => $field['name'],
+                    ];
+                }
+            }
+            return $fields;
+        }
+    }
+
+    public static function handleMetaboxSubmit($object)
+    {
+        $formId = $object->config['id'];
+        $fields = self::metaBoxFields($formId);
+        $postId = $object->post_id;
+        $metaBoxFieldValues = [];
+
+        foreach ($fields as $index => $field) {
+            $fieldValues = rwmb_meta($field['name'], $args = [], $postId);
+            if (isset($fieldValues)) {
+                if ($field['type'] !== 'file') {
+                    $metaBoxFieldValues[$field['name']] = $fieldValues;
+                } elseif ($field['type'] === 'file') {
+                    if (isset($fieldValues['path'])) {
+                        $metaBoxFieldValues[$field['name']] = $fieldValues['path'];
+                    } elseif (gettype($fieldValues) === 'array') {
+                        foreach (array_values($fieldValues) as $index => $file) {
+                            if (isset($file['path'])) {
+                                $metaBoxFieldValues[$field['name']][$index] = $file['path'];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $postFieldValues = (array) get_post($object->post_id);
+
+        $data = array_merge($postFieldValues, $metaBoxFieldValues);
+
+        if (!empty($formId) && $flows = Flow::exists('MetaBox', $formId)) {
+            return ['triggered_entity' => 'MetaBox', 'triggered_entity_id' => $formId, 'data' => $data, 'flows' => $flows];
+        }
+    }
+
+    public static function perchesMembershhipLevelByAdministator($level_id, $user_id, $cancel_level)
+    {
+        if ($level_id == 0) {
+            return;
+        }
+        global $wpdb;
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $level_id));
+        $userData = self::paidMembershipProgetUserInfo($user_id);
+        $finalData = array_merge($userData, (array)$levels[0]);
+        $flows = Flow::exists('PaidMembershipPro', 1);
+        if (!$flows) {
+            return;
+        }
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedMembershipLevel = !empty($flowDetails->selectedMembershipLevel) ? $flowDetails->selectedMembershipLevel : [];
+        if ($level_id === $selectedMembershipLevel || $selectedMembershipLevel === 'any') {
+            return ['triggered_entity' => 'PaidMembershipPro', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $flows];
+        }
+        return;
+    }
+
+    public static function paidMembershipProgetUserInfo($user_id)
+    {
+        $userInfo = get_userdata($user_id);
+        $user = [];
+        if ($userInfo) {
+            $userData = $userInfo->data;
+            $user_meta = get_user_meta($user_id);
+            $user = [
+                'user_id' => $user_id,
+                'first_name' => $user_meta['first_name'][0],
+                'last_name' => $user_meta['last_name'][0],
+                'user_email' => $userData->user_email,
+                'nickname' => $userData->user_nicename,
+                'avatar_url' => get_avatar_url($user_id),
+            ];
+        }
+        return $user;
+    }
+
+    public static function cancelMembershhipLevel($level_id, $user_id, $cancel_level)
+    {
+        if (0 !== absint($level_id)) {
+            return;
+        }
+        global $wpdb;
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $cancel_level));
+        $userData = self::paidMembershipProgetUserInfo($user_id);
+        $finalData = array_merge($userData, (array)$levels[0]);
+        $flows = Flow::exists('PaidMembershipPro', 2);
+        if (!$flows) {
+            return;
+        }
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedMembershipLevel = !empty($flowDetails->selectedMembershipLevel) ? $flowDetails->selectedMembershipLevel : [];
+        if (($cancel_level == $selectedMembershipLevel || $selectedMembershipLevel === 'any')) {
+            return ['triggered_entity' => 'PaidMembershipPro', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $flows];
+        }
+        return;
+    }
+
+    public static function perchesMembershipLevel($user_id, $morder)
+    {
+        $user = $morder->getUser();
+        $membership = $morder->getMembershipLevel();
+        $user_id = $user->ID;
+        $membership_id = $membership->id;
+
+        global $wpdb;
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $membership_id));
+        $userData = self::paidMembershipProgetUserInfo($user_id);
+        $finalData = array_merge($userData, (array)$levels[0]);
+        $flows = Flow::exists('PaidMembershipPro', 3);
+        if (!$flows) {
+            return;
+        }
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedMembershipLevel = !empty($flowDetails->selectedMembershipLevel) ? $flowDetails->selectedMembershipLevel : [];
+        if (($membership_id == $selectedMembershipLevel || $selectedMembershipLevel === 'any')) {
+            return ['triggered_entity' => 'PaidMembershipPro', 'triggered_entity_id' => 3, 'data' => $finalData, 'flows' => $flows];
+        }
+
+        return;
+    }
+
+    public static function expiryMembershipLevel($user_id, $membership_id)
+    {
+        global $wpdb;
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $membership_id));
+        $userData = self::paidMembershipProgetUserInfo($user_id);
+        $finalData = array_merge($userData, (array)$levels[0]);
+        $flows = Flow::exists('PaidMembershipPro', 4);
+        if (!$flows) {
+            return;
+        }
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedMembershipLevel = !empty($flowDetails->selectedMembershipLevel) ? $flowDetails->selectedMembershipLevel : [];
+        if (($membership_id == $selectedMembershipLevel || $selectedMembershipLevel === 'any')) {
+            return ['triggered_entity' => 'PaidMembershipPro', 'triggered_entity_id' => 4, 'data' => $finalData, 'flows' => $flows];
+        }
+        return;
+    }
+
+    //PiotnetAddon all functions
+    public static function handlePiotnetAddonSubmit($form_submission)
+    {
+
+        $form_id = $form_submission['form']['id'];
+
+        $flows = Flow::exists('PiotnetAddon', $form_id);
+        if (!$flows) {
+            return;
+        }
+
+        $data = [];
+        $fields = $form_submission['fields'];
+        foreach ($fields as $key => $field) {
+            $data[$key] = $field['value'];
+        }
+
+        return ['triggered_entity' => 'PiotnetAddon', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
+    }
+
+    //PiotnetAddonForm all functions
+    public static function handlePiotnetAddonFormSubmit($form_submission)
+    {
+        $form_id = $form_submission['form']['id'];
+
+
+        $flows = Flow::exists('PiotnetAddonForm', $form_id);
+        if (!$flows) {
+            return;
+        }
+
+        $data = [];
+        $fields = $form_submission['fields'];
+        foreach ($fields as $key => $field) {
+            $data[$key] = $field['value'];
+        }
+
+        return ['triggered_entity' => 'PiotnetAddonForm', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
+    }
+
+    //PiotnetForms all functions
+    public static function handlePiotnetSubmit($fields)
+    {
+        $post_id = $_REQUEST['post_id'];
+
+        $flows = Flow::exists('PiotnetForms', $post_id);
+        if (!$flows) {
+            return;
+        }
+
+        $data = [];
+        foreach ($fields as $field) {
+            if ((key_exists('type', $field) && ($field['type'] == 'file' || $field['type'] == 'signature')) || (key_exists('image_upload', $field) && $field['image_upload'] > 0)) {
+                $field['value'] = Common::filePath($field['value']);
+            }
+            $data[$field['name']] = $field['value'];
+        }
+
+        return ['triggered_entity' => 'PiotnetAddonForm', 'triggered_entity_id' => $post_id, 'data' => $data, 'flows' => $flows];
+    }
+
+    //Post all functions
+    public static function createPost($postId, $newPostData, $update, $beforePostData)
+    {
+        if ('publish' !== $newPostData->post_status || 'revision' === $newPostData->post_type || (!empty($beforePostData->post_status) && 'publish' === $beforePostData->post_status)) {
+            return false;
+        }
+
+        $postCreateFlow = Flow::exists('Post', 1);
+        if (!$postCreateFlow) {
+            return;
+        }
+        if ($postCreateFlow) {
+            $flowDetails = $postCreateFlow[0]->flow_details;
+
+            if (is_string($postCreateFlow[0]->flow_details)) {
+                $flowDetails = json_decode($postCreateFlow[0]->flow_details);
+            }
+
+            if (isset($newPostData->post_content)) {
+                $newPostData->post_content = trim(strip_tags($newPostData->post_content));
+                $newPostData->post_permalink = get_permalink($newPostData);
+            }
+
+            if (isset($flowDetails->selectedPostType) && ($flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $newPostData->post_type)) {
+                if (has_post_thumbnail($postId)) {
+                    $featured_image_url = get_the_post_thumbnail_url($postId, 'full');
+                    $newPostData->featured_image = $featured_image_url;
+                }
+                if (!$update) {
+                    return ['triggered_entity' => 'Post', 'triggered_entity_id' => 1, 'data' => (array) $newPostData, 'flows' => $postCreateFlow];
+                } else {
+                    return ['triggered_entity' => 'Post', 'triggered_entity_id' => 1, 'data' => (array) $newPostData, 'flows' => $postCreateFlow];
+                }
+                return;
+            }
+        }
+    }
+
+    public static function postComment($cmntId, $status, $cmntData)
+    {
+        $cmntTrigger = Flow::exists('Post', 5);
+        if (!$cmntTrigger) {
+            return;
+        }
+        if ($cmntTrigger) {
+            $flowDetails = $cmntTrigger[0]->flow_details;
+
+            if (is_string($cmntTrigger[0]->flow_details)) {
+                $flowDetails = json_decode($cmntTrigger[0]->flow_details);
+            }
+
+            if (isset($flowDetails->selectedPostId) && $flowDetails->selectedPostId == 'any-post' || $flowDetails->selectedPostId == $cmntData['comment_post_ID']) {
+                $cmntData['comment_id'] = $cmntId;
+                return ['triggered_entity' => 'Post', 'triggered_entity_id' => 5, 'data' => (array) $cmntData, 'flows' => $cmntTrigger];
+            }
+        }
+    }
+
+    public static function postUpdated($postId, $updatedPostData)
+    {
+        $postUpdateFlow = Flow::exists('Post', 2);
+        if (!$postUpdateFlow) {
+            return;
+        }
+        if ($postUpdateFlow) {
+            $flowDetails = $postUpdateFlow[0]->flow_details;
+            if (is_string($postUpdateFlow[0]->flow_details)) {
+                $flowDetails = json_decode($postUpdateFlow[0]->flow_details);
+            }
+            if (isset($updatedPostData->post_content)) {
+                $updatedPostData->post_content = trim(strip_tags($updatedPostData->post_content));
+                $updatedPostData->post_permalink = get_permalink($updatedPostData);
+            }
+
+            if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $updatedPostData->post_type) {
+                if (has_post_thumbnail($postId)) {
+                    $featured_image_url = get_the_post_thumbnail_url($postId, 'full');
+                    $updatedPostData->featured_image = $featured_image_url;
+                }
+                return ['triggered_entity' => 'Post', 'triggered_entity_id' => 2, 'data' => (array) $updatedPostData, 'flows' => $postUpdateFlow];
+            }
+            return;
+        }
+    }
+
+
+    public static function viewPost($content)
+    {
+        $postViewTrigger = Flow::exists('Post', 4);
+        if (!$postViewTrigger) {
+            return $content;
+        }
+        if (is_single() && !empty($GLOBALS['post'])) {
+            if (isset($postViewTrigger[0]->selectedPostId) && $postViewTrigger[0]->selectedPostId == 'any-post' || $GLOBALS['post']->ID == get_the_ID()) {
+                return ['triggered_entity' => 'Post', 'triggered_entity_id' => 5, 'data' => (array) $GLOBALS['post'], 'flows' => $postViewTrigger, 'content' => $content];
+            }
+        }
+
+        return $content;
+    }
+
+    public static function deletePost($postId, $deletedPost)
+    {
+        $postDeleteTrigger = Flow::exists('Post', 3);
+        if (!$postDeleteTrigger) {
+            return;
+        }
+
+        if ($postDeleteTrigger) {
+            $flowDetails = $postDeleteTrigger[0]->flow_details;
+
+            if (is_string($postDeleteTrigger[0]->flow_details)) {
+                $flowDetails = json_decode($postDeleteTrigger[0]->flow_details);
+            }
+
+            if (isset($deletedPost->post_content)) {
+                $deletedPost->post_content = trim(strip_tags($deletedPost->post_content));
+                $deletedPost->post_permalink = get_permalink($deletedPost);
+            }
+
+            if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $deletedPost->post_type) {
+                return ['triggered_entity' => 'Post', 'triggered_entity_id' => 5, 'data' => (array) $deletedPost, 'flows' => $postDeleteTrigger];
+            }
+            return;
+        }
+    }
+
+    public static function changePostStatus($newStatus, $oldStatus, $post)
+    {
+        $statusChangeTrigger = Flow::exists('Post', 6);
+        if (!$statusChangeTrigger) {
+            return;
+        }
+        if ($statusChangeTrigger) {
+            $flowDetails = $statusChangeTrigger[0]->flow_details;
+
+            if (is_string($statusChangeTrigger[0]->flow_details)) {
+                $flowDetails = json_decode($statusChangeTrigger[0]->flow_details);
+            }
+
+            if (isset($post->post_content)) {
+                $post->post_content = trim(strip_tags($post->post_content));
+                $post->post_permalink = get_permalink($post);
+            }
+            if (has_post_thumbnail($post->id)) {
+                $post->featured_image = get_the_post_thumbnail_url($post->id, 'full');
+            }
+
+            if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $post->post_type && $newStatus != $oldStatus) {
+                return ['triggered_entity' => 'Post', 'triggered_entity_id' => 6, 'data' => (array) $post, 'flows' => $statusChangeTrigger];
+            }
+            return;
+        }
+    }
+
+    public static function trashComment($cmntId, $cmntData)
+    {
+        $cmntTrigger = Flow::exists('Post', 7);
+
+        if (!$cmntTrigger) {
+            return;
+        }
+
+        if ($cmntTrigger) {
+            $flowDetails = $cmntTrigger[0]->flow_details;
+
+            if (is_string($cmntTrigger[0]->flow_details)) {
+                $flowDetails = json_decode($cmntTrigger[0]->flow_details);
+            }
+
+            $cmntData = (array)$cmntData;
+            if (isset($flowDetails->selectedPostId) && $flowDetails->selectedPostId == 'any-post' || $flowDetails->selectedPostId == $cmntData['comment_post_ID']) {
+                $cmntData['comment_id'] = $cmntId;
+                return ['triggered_entity' => 'Post', 'triggered_entity_id' => 7, 'data' => (array) $cmntData, 'flows' => $cmntTrigger];
+            }
+            return;
+        }
+    }
+
+    public static function updateComment($cmntId, $cmntData)
+    {
+        $cmntTrigger = Flow::exists('Post', 8);
+
+        if (!$cmntTrigger) {
+            return;
+        }
+
+        if ($cmntTrigger) {
+            $flowDetails = $cmntTrigger[0]->flow_details;
+
+            if (is_string($cmntTrigger[0]->flow_details)) {
+                $flowDetails = json_decode($cmntTrigger[0]->flow_details);
+            }
+
+            $cmntData = (array)$cmntData;
+            if (isset($flowDetails->selectedPostId) && $flowDetails->selectedPostId == 'any-post' || $flowDetails->selectedPostId == $cmntData['comment_post_ID']) {
+                $cmntData['comment_id'] = $cmntId;
+                return ['triggered_entity' => 'Post', 'triggered_entity_id' => 8, 'data' => (array) $cmntData, 'flows' => $cmntTrigger];
+            }
+            return;
+        }
+    }
+
+    public static function trashPost($trashPostId)
+    {
+        $postUpdateFlow = Flow::exists('Post', 9);
+
+        if (!$postUpdateFlow) {
+            return;
+        }
+
+        $postData = get_post($trashPostId);
+        $postData->post_permalink = get_permalink($postData);
+
+        if ($postUpdateFlow) {
+            $flowDetails = $postUpdateFlow[0]->flow_details;
+
+            if (is_string($postUpdateFlow[0]->flow_details)) {
+                $flowDetails = json_decode($postUpdateFlow[0]->flow_details);
+            }
+            $postData = (array)$postData;
+            if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $postData['ID']) {
+                return ['triggered_entity' => 'Post', 'triggered_entity_id' => 9, 'data' => (array) $postData, 'flows' => $postUpdateFlow];
+            }
+            return;
+        }
+    }
+
+    //WordPress User Registration all functions
+    public static function userCreate()
+    {
+        $newUserData = func_get_args()[1];
+
+        $userCreateFlow = Flow::exists('Registration', 1);
+
+        if ($userCreateFlow) {
+            return ['triggered_entity' => 'Registration', 'triggered_entity_id' => 1, 'data' => $newUserData, 'flows' => $userCreateFlow];
+        }
+        return;
+    }
+
+    public static function profileUpdate()
+    {
+        $userdata = func_get_args()[2];
+
+        $userUpdateFlow = Flow::exists('Registration', 2);
+
+        if ($userUpdateFlow) {
+            return ['triggered_entity' => 'Registration', 'triggered_entity_id' => 2, 'data' => $userdata, 'flows' => $userUpdateFlow];
+        }
+        return;
+    }
+
+    public static function wpLogin($userId, $data)
+    {
+        $userLoginFlow = Flow::exists('Registration', 3);
+
+        if ($userLoginFlow) {
+            $user = [];
+
+            if (isset($data->data)) {
+                $user['user_id'] = $userId;
+                $user['user_login'] = $data->data->user_login;
+                $user['user_email'] = $data->data->user_email;
+                $user['user_url'] = $data->data->user_url;
+                $user['nickname'] = $data->data->user_nicename;
+                $user['display_name'] = $data->data->display_name;
+            }
+            return ['triggered_entity' => 'Registration', 'triggered_entity_id' => 3, 'data' => $user, 'flows' => $userLoginFlow];
+        }
+        return;
+    }
+
+    public static function wpResetPassword($data)
+    {
+        $userResetPassFlow = Flow::exists('Registration', 4);
+
+        if ($userResetPassFlow) {
+            $user = [];
+            if (isset($data->data)) {
+                $user['user_id'] = $data->data->ID;
+                $user['user_login'] = $data->data->user_login;
+                $user['user_email'] = $data->data->user_email;
+                $user['user_url'] = $data->data->user_url;
+                $user['nickname'] = $data->data->user_nicename;
+                $user['display_name'] = $data->data->display_name;
+            }
+
+            return ['triggered_entity' => 'Registration', 'triggered_entity_id' => 4, 'data' => $user, 'flows' => $userResetPassFlow];
+        }
+        return;
+    }
+
+    public static function wpUserDeleted()
+    {
+        $data = func_get_args()[2];
+
+        $userDeleteFlow = Flow::exists('Registration', 5);
+
+        if ($userDeleteFlow) {
+            $user = [];
+            if (isset($data->data)) {
+                $user['user_id'] = $data->data->ID;
+                $user['user_login'] = $data->data->user_login;
+                $user['user_email'] = $data->data->user_email;
+                $user['user_url'] = $data->data->user_url;
+                $user['nickname'] = $data->data->user_nicename;
+                $user['display_name'] = $data->data->display_name;
+            }
+
+            return ['triggered_entity' => 'Registration', 'triggered_entity_id' => 5, 'data' => $user, 'flows' => $userDeleteFlow];
+        }
+        return;
+    }
+
+    //RestrictContent all functions
+    public static function rcpPurchasesMembershipLevel($membership_id, \RCP_Membership $RCP_Membership)
+    {
+        $flows = Flow::exists('RestrictContent', 1);
+        if (!$flows) {
+            return;
+        }
+        $user_id = $RCP_Membership->get_user_id();
+
+        if (!$user_id) {
+            return;
+        }
+        $level_id = $RCP_Membership->get_object_id();
+
+        foreach ($flows as $flow) {
+            if (is_string($flow->flow_details)) {
+                $flow->flow_details = json_decode($flow->flow_details);
+                $flowDetails = $flow->flow_details;
+            }
+        }
+
+        if ($level_id == $flowDetails->selectedMembership || 'any' == $flowDetails->selectedMembership) {
+            $organizedData = [];
+            if ($membership_id) {
+                $membership = rcp_get_membership($membership_id);
+                if (false !== $membership) {
+                    $organizedData = [
+                        'membership_level' => $membership->get_membership_level_name(),
+                        'membership_payment' => $membership->get_initial_amount(),
+                        'membership_recurring_payment' => $membership->get_recurring_amount(),
+                    ];
+                }
+            }
+
+            return ['triggered_entity' => 'RestrictContent', 'triggered_entity_id' => 1, 'data' => $organizedData, 'flows' => $flows];
+        }
+    }
+
+    public static function rcpMembershipStatusExpired($old_status, $membership_id)
+    {
+        $flows = Flow::exists('RestrictContent', 2);
+        if (!$flows) {
+            return;
+        }
+        foreach ($flows as $flow) {
+            if (is_string($flow->flow_details)) {
+                $flow->flow_details = json_decode($flow->flow_details);
+                $flowDetails = $flow->flow_details;
+            }
+        }
+        $membership = rcp_get_membership($membership_id);
+        $membership_level = rcp_get_membership_level($membership->get_object_id());
+        $level_id = (string)$membership_level->get_id();
+
+        if ($level_id == $flowDetails->selectedMembership || 'any' == $flowDetails->selectedMembership) {
+            $organizedData = [];
+
+            if ($membership_id) {
+                $membership = rcp_get_membership($membership_id);
+
+                if (false !== $membership) {
+                    $organizedData = [
+                        'membership_level' => $membership->get_membership_level_name(),
+                        'membership_payment' => $membership->get_initial_amount(),
+                        'membership_recurring_payment' => $membership->get_recurring_amount(),
+                    ];
+                }
+            }
+
+            return ['triggered_entity' => 'RestrictContent', 'triggered_entity_id' => 2, 'data' => $organizedData, 'flows' => $flows];
+        }
+    }
+
+    public static function rcpMembershipStatusCancelled($old_status, $membership_id)
+    {
+        $flows = Flow::exists('RestrictContent', 3);
+        if (!$flows) {
+            return;
+        }
+
+        $organizedData = [];
+        $membership = rcp_get_membership($membership_id);
+        $membership_level = rcp_get_membership_level($membership->get_object_id());
+        $level_id = $membership_level->get_id();
+
+        foreach ($flows as $flow) {
+            if (is_string($flow->flow_details)) {
+                $flow->flow_details = json_decode($flow->flow_details);
+                $flowDetails = $flow->flow_details;
+            }
+        }
+
+        if ($level_id == $flowDetails->selectedMembership || 'any' == $flowDetails->selectedMembership) {
+            if ($membership_id) {
+                $membership = rcp_get_membership($membership_id);
+
+                if (false !== $membership) {
+                    $organizedData = [
+                        'membership_level' => $membership->get_membership_level_name(),
+                        'membership_payment' => $membership->get_initial_amount(),
+                        'membership_recurring_payment' => $membership->get_recurring_amount(),
+                    ];
+                }
+            }
+
+            return ['triggered_entity' => 'RestrictContent', 'triggered_entity_id' => 3, 'data' => $organizedData, 'flows' => $flows];
+        }
+    }
+
+    //SliceWp all functions
+    public static function newAffiliateCreated($affiliate_id, $affiliate_data)
+    {
+        $userData = self::sliceWpgetUserInfo($affiliate_data['user_id']);
+        $finalData = $affiliate_data + $userData + ['affiliate_id' => $affiliate_id];
+
+        $flows = Flow::exists('SliceWp', 1);
+        if (!$flows) {
+            return;
+        }
+
+        if (!$affiliate_data['user_id'] || !$flows) {
+            return;
+        }
+        return ['triggered_entity' => 'SliceWp', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $flows];
+    }
+
+    public static function userEarnCommission($commission_id, $commission_data)
+    {
+        $finalData = $commission_data + ['commission_id' => $commission_id];
+        $flows = Flow::exists('SliceWp', 2);
+        if (!$flows) {
+            return;
+        }
+        $flowDetails = json_decode($flows[0]->flow_details);
+        $selectedCommissionType = !empty($flowDetails->selectedCommissionType) ? $flowDetails->selectedCommissionType : [];
+
+        if (($commission_data['type'] == $selectedCommissionType || $selectedCommissionType === 'any')) {
+            return ['triggered_entity' => 'SliceWp', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $flows];
+        }
+        return;
+    }
+
+    public static function sliceWpgetUserInfo($user_id)
+    {
+        $userInfo = get_userdata($user_id);
+        $user = [];
+        if ($userInfo) {
+            $userData = $userInfo->data;
+            $user_meta = get_user_meta($user_id);
+            $user = [
+                'user_id' => $user_id,
+                'first_name' => $user_meta['first_name'][0],
+                'last_name' => $user_meta['last_name'][0],
+                'user_email' => $userData->user_email,
+                'nickname' => $userData->user_nicename,
+                'avatar_url' => get_avatar_url($user_id),
+            ];
+        }
+        return $user;
+    }
+
+    //NewSolidAffiliate all functions
+    public static function newSolidAffiliateCreated($affiliate)
+    {
+        $attributes = $affiliate->__get('attributes');
+
+        $flows = Flow::exists('SolidAffiliate', 1);
+        if (!$flows) {
+            return;
+        }
+
+        return ['triggered_entity' => 'SolidAffiliate', 'triggered_entity_id' => 1, 'data' => $attributes, 'flows' => $flows];
+    }
+
+    public static function newSolidAffiliateReferralCreated($referral_accepted)
+    {
+        $affiliateReferralData = $referral_accepted->__get('attributes');
+        $flows = Flow::exists('SolidAffiliate', 2);
+        if (!$flows) {
+            return;
+        }
+        return ['triggered_entity' => 'SolidAffiliate', 'triggered_entity_id' => 2, 'data' => $affiliateReferralData, 'flows' => $flows];
+    }
+
+    //Spectra all functions
+    public static function spectraHandler(...$args)
+    {
+        if (get_option('btcbi_test_uagb_form_success') !== false) {
+            update_option('btcbi_test_uagb_form_success', $args);
+        }
+
+        if ($flows = Flow::exists('Spectra', current_action())) {
+
+            foreach ($flows as $flow) {
+                $flowDetails = json_decode($flow->flow_details);
+                if (!isset($flowDetails->primaryKey)) {
+                    continue;
+                }
+
+                $primaryKeyValue = self::extractValueFromPath($args, $flowDetails->primaryKey->key);
+                if ($flowDetails->primaryKey->value === $primaryKeyValue) {
+                    $fieldKeys      = [];
+                    $formatedData   = [];
+
+                    if ($flowDetails->body->data && is_array($flowDetails->body->data)) {
+                        $fieldKeys = array_map(function ($field) use ($args) {
+                            return $field->key;
+                        }, $flowDetails->body->data);
+                    } elseif (isset($flowDetails->field_map) && is_array($flowDetails->field_map)) {
+                        $fieldKeys = array_map(function ($field) use ($args) {
+                            return $field->formField;
+                        }, $flowDetails->field_map);
+                    }
+
+                    foreach ($fieldKeys as $key) {
+                        $formatedData[$key] = self::extractValueFromPath($args, $key);
+                    }
+                    return ['triggered_entity' => 'Spectra', 'triggered_entity_id' => current_action(), 'data' => $formatedData, 'flows' => array($flow)];
+                }
+            }
+        }
+
+        return rest_ensure_response(['status' => 'success']);
+    }
+
+    private static function extractValueFromPath($data, $path)
+    {
+        $parts = is_array($path) ? $path : explode('.', $path);
+        if (count($parts) === 0) {
+            return $data;
+        }
+
+        $currentPart = array_shift($parts);
+
+        if (is_array($data)) {
+            if (!isset($data[$currentPart])) {
+                wp_send_json_error(new WP_Error('Spectra', __('Index out of bounds or invalid', 'bit-integrations')));
+            }
+            return self::extractValueFromPath($data[$currentPart], $parts);
+        }
+
+        if (is_object($data)) {
+            if (!property_exists($data, $currentPart)) {
+                wp_send_json_error(new WP_Error('Spectra', __('Invalid path', 'bit-integrations')));
+            }
+            return self::extractValueFromPath($data->$currentPart, $parts);
+        }
+
+        wp_send_json_error(new WP_Error('Spectra', __('Invalid path', 'bit-integrations')));
     }
 }
