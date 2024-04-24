@@ -34,7 +34,7 @@ export default function SelectTrigger() {
   const flowStep = useRecoilValue($flowStep)
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
 
-  
+
 
   useEffect(() => {
     setAllTriggers({ data: sortFeaturedProducts(data?.data) })
