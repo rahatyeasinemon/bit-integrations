@@ -1,30 +1,25 @@
 <?php
 
+namespace BitCode\FI\Core\Util;
+
 final class AllTriggersName
 {
-
     public static $allTriggersName =
     [
         'ARForm'            => ['name' => 'ARForm', 'isPro' => true],
         'ARMember'          => ['name' => 'ARMember', 'isPro' => true],
         'AcademyLms'        => ['name' => 'AcademyLms', 'isPro' => true],
-        'ActionHook'        => ['name' => 'ActionHook', 'isPro' => false],
         'Affiliate'         => ['name' => 'Affiliate', 'isPro' => true],
         'Amelia'            => ['name' => 'Amelia', 'isPro' => true],
         'Beaver'            => ['name' => 'Beaver', 'isPro' => true],
-        'BitAssist'         => ['name' => 'BitAssist', 'isPro' => false],
-        'BitForm'           => ['name' => 'BitForm', 'isPro' => false],
         'Breakdance'        => ['name' => 'Breakdance', 'isPro' => true],
         'Bricks'            => ['name' => 'Bricks', 'isPro' => true],
         'Brizy'             => ['name' => 'Brizy', 'isPro' => true],
         'BuddyBoss'         => ['name' => 'BuddyBoss', 'isPro' => true],
-        'CF7'               => ['name' => 'CF7', 'isPro' => false],
         'CartFlow'          => ['name' => 'CartFlow', 'isPro' => true],
-        'CustomTrigger'     => ['name' => 'CustomTrigger', 'isPro' => false],
         'Divi'              => ['name' => 'Divi', 'isPro' => true],
         'EDD'               => ['name' => 'EDD', 'isPro' => true],
         'EVF'               => ['name' => 'EVF', 'isPro' => true],
-        'Elementor'         => ['name' => 'Elementor', 'isPro' => false],
         'EssentialBlocks'   => ['name' => 'EssentialBlocks', 'isPro' => true],
         'FF'                => ['name' => 'FF', 'isPro' => true],
         'FluentCrm'         => ['name' => 'FluentCrm', 'isPro' => true],
@@ -54,9 +49,7 @@ final class AllTriggersName
         'PiotnetAddon'      => ['name' => 'PiotnetAddon', 'isPro' => true],
         'PiotnetAddonForm'  => ['name' => 'PiotnetAddonForm', 'isPro' => true],
         'PiotnetForms'      => ['name' => 'PiotnetForms', 'isPro' => true],
-        'Post'              => ['name' => 'Post', 'isPro' => true],
         'Rafflepress'       => ['name' => 'Rafflepress', 'isPro' => true],
-        'Registration'      => ['name' => 'Registration', 'isPro' => true],
         'RestrictContent'   => ['name' => 'RestrictContent', 'isPro' => true],
         'SliceWp'           => ['name' => 'SliceWp', 'isPro' => true],
         'SolidAffiliate'    => ['name' => 'SolidAffiliate', 'isPro' => true],
@@ -67,13 +60,10 @@ final class AllTriggersName
         'Tripetto'          => ['name' => 'Tripetto', 'isPro' => true],
         'TutorLms'          => ['name' => 'TutorLms', 'isPro' => true],
         'UltimateMember'    => ['name' => 'UltimateMember', 'isPro' => true],
-        'WC'                => ['name' => 'WC', 'isPro' => false],
         'WPCourseware'      => ['name' => 'WPCourseware', 'isPro' => true],
         'WPEF'              => ['name' => 'WPEF', 'isPro' => true],
-        'WPF'               => ['name' => 'WPF', 'isPro' => false],
         'WPFunnels'         => ['name' => 'WPFunnels', 'isPro' => true],
         'WSForm'            => ['name' => 'WSForm', 'isPro' => true],
         'WeForms'           => ['name' => 'WeForms', 'isPro' => true],
-        'Webhook'           => ['name' => 'Webhook', 'isPro' => false],
     ];
 }
