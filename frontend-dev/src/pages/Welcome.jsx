@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { __ } from '../Utils/i18nwrap'
 import greeting from '../resource/img/home.svg'
 
-export default function Welcome({ setModal, isValidUser, actionHandler, integrations }) {
+export default function Welcome({ setModal, isValidUser, integrations }) {
   return (
     <div className="btcd-greeting">
       <img src={greeting} alt="" />
@@ -17,18 +17,9 @@ export default function Welcome({ setModal, isValidUser, actionHandler, integrat
       </Link> */}
 
 
-      {(integrations.length >= 1 && !isValidUser) ?
-        (
-          // eslint-disable-next-line react/button-has-type
-          <button className="btn round btcd-btn-lg dp-blue" onClick={(e) => actionHandler(e)}>
-            {__('Create Integration', 'bit-integrations')}
-          </button>
-        )
-        : (
-          <Link to="/flow/new" className="btn round btcd-btn-lg dp-blue">
-            {__('Create Integration', 'bit-integrations')}
-          </Link>
-        )}
+      <Link to="/flow/new" className="btn round btcd-btn-lg dp-blue">
+        {__('Create Integration', 'bit-integrations')}
+      </Link>
     </div>
   )
 }

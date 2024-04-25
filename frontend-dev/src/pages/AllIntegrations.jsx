@@ -14,7 +14,6 @@ import Table from '../components/Utilities/Table'
 import useFetch from '../hooks/useFetch'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
-import BuyProModal from '../components/Utilities/BuyProModal'
 
 const Welcome = lazy(() => import('./Welcome'))
 
@@ -23,9 +22,6 @@ function AllIntegrations({ isValidUser }) {
   const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
   const [snack, setSnackbar] = useState({ show: false })
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
-  const [proModal, setProModal] = useState({ show: false, msg: '' })
-  const [premiumModal, setPremiumModal] = useState({ show: false, msg: '' })
-  const [showLicenseModal, setShowLicenseModal] = useState({ show: isValidUser === true })
 
   const [cols, setCols] = useState([
     { width: 250, minWidth: 80, Header: __('Trigger', 'bit-integrations'), accessor: 'triggered_entity' },
@@ -166,20 +162,6 @@ function AllIntegrations({ isValidUser }) {
     alignItems: 'center',
   }
 
-  const setAlrtMdl = () => {
-    setProModal({ show: true, msg: 'Only one integration can be done in the free version.' })
-  }
-
-  const clsPremiumMdl = () => {
-    setPremiumModal({ show: false })
-  }
-  const actionHandler = (e) => {
-    if ((!isValidUser || btcbi.pro === 'undefined')) {
-      setPremiumModal({ show: true })
-    } else {
-      setShowLicenseModal({ show: true })
-    }
-  }
 
   if (isLoading) {
     return (
@@ -224,32 +206,9 @@ function AllIntegrations({ isValidUser }) {
               search
             />
           </div>
-          <BuyProModal
-            md
-            show={premiumModal.show}
-            setModal={() => setPremiumModal({ show: false })}
-            title={__('Want to create unlimited integration ?', 'bit-integrations')}
-            className="pro-modal"
-            data={integrations.length}
-          />
         </>
-      ) : <Welcome isValidUser={isValidUser} actionHandler={actionHandler} integrations={integrations} />}
+      ) : <Welcome isValidUser={isValidUser} integrations={integrations} />}
 
-      <Modal
-        sm
-        show={showLicenseModal.show}
-        setModal={() => setShowLicenseModal({ show: false })}
-        title={__('Please active your license', 'bit-integrations')}
-        className="pro-modal"
-      >
-        <h4 className="txt-center mt-5">
-          {__('Please active your license to make unlimited integrations .', 'bit-integrations')}
-        </h4>
-        <div className="txt-center">
-          <a href={window.btcbi.licenseURL} rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Active license', 'bit-integrations')}</button></a>
-        </div>
-
-      </Modal>
     </div>
   )
 }
