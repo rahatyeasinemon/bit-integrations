@@ -1,4 +1,4 @@
-=== Webhook Automator & Form Integration to Automate 200+ Platforms – Bit Integrations ===
+=== Webhook, Elementor, Contact Form 7, WPForms, WooCommerce Automator - Bit Integrations ===
 Contributors: bitpressadmin
 Tags: automation,integration,automator,form builder integration,webhook
 Requires at least: 5.1
