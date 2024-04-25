@@ -6,7 +6,6 @@ use WP_Error;
 use FilesystemIterator;
 use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Core\Util\AllTriggersName;
-use BitApps\BTCBI_PRO\Triggers\TriggerController as ProTriggerController;
 
 final class TriggerController
 {

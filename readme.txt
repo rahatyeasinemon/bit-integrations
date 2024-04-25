@@ -4,7 +4,7 @@ Tags: automation,integration,automator,form builder integration,webhook
 Requires at least: 5.1
 Tested up to: 6.5
 Requires PHP: 7.0
-Stable tag: 1.6.5
+Stable tag: 2.0.0
 License: GPLv2 or later
 
 Automation Plugin for WordPress; Integration of 65+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -946,6 +946,27 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.0.0  =
+*Release Date - *25th April 2024\*
+
+- **New Improvements :**
+  - Expanded Integration Options: In compliance with WordPress guidelines, we have updated the plugin to offer unlimited integration possibilities. Previously, users were limited to creating only one integration, but now they can create unlimited integrations using a wide range of triggers.
+  - New Trigger Options: Users can now create integrations using the following triggers:
+        1. **WooCommerce**
+        2. **Elementor**
+        3. **Contact Form 7**
+        4. **Bit Form**
+        5. **WP Forms**
+        6. **Bit Assist**
+        7. **Webhook**
+        8. **Custom Trigger**
+        9. **WP Post**
+        10. **WP User Registration**
+        11. **Actionhook**
+        
+- **Compatibility Update :**
+  - Existing Integrations: Users who have created integrations using triggers other than those listed above in the previous version of the plugin need not worry. This update will not affect their existing integrations, and they will continue to run properly. However, they will be unable to edit these integrations unless they are using one of the newly added triggers.
 
 = 1.6.5  =
 *Release Date - *22th April 2024\*
