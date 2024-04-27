@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\DirectIq;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,update, exist
@@ -27,31 +27,24 @@ class RecordApiHelper
     // for adding a contact to a list.
     public function storeOrModifyRecord($method, $listId, $data)
     {
-        $finalData = "{\"contacts\":[{\"email\":\"{$data->email}\",\"fistName\":\"{$data->first_name}\",\"lastName\":\"{$data->last_name}\"}]}";
-        $curl = curl_init();
+        $apiEndpoint = "https://rest.directiq.com/contacts/lists/importcontacts/{$listId}";
+        $headers = [
+            "accept" => "application/json",
+            "Authorization" => $this->_defaultHeader,
+            "content-type" => "application/*+json"
+        ];
+        $finalData = [
+            'contacts' => [
+                [
+                    'email' => $data->email ?? '',
+                    'fistName' => $data->first_name ?? '',
+                    'lastName' => $data->last_name ?? ''
+                ],
+            ]
+        ];
 
-        curl_setopt_array($curl, [
-        CURLOPT_URL => "https://rest.directiq.com/contacts/lists/importcontacts/{$listId}",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => $finalData,
-        CURLOPT_HTTPHEADER => [
-            "accept: application/json",
-            "authorization: {$this->_defaultHeader}",
-            "content-type: application/*+json"
-        ],
-        ]);
-
-        $response = curl_exec($curl);
-        $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-        return $statusCode;
+        HttpHelper::post($apiEndpoint, json_encode($finalData), $headers);
+        return HttpHelper::$responseCode;
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
