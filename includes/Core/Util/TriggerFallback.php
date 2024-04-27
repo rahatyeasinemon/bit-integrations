@@ -156,8 +156,8 @@ final class TriggerFallback
                     $repeaterFld = $field->field_key;
                     global $wpdb;
 
-                    $allDividerFlds = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}frm_item_metas WHERE item_id IN (SELECT id FROM {$wpdb->prefix}frm_items WHERE parent_item_id = $entry_id)");
-                    $allItemId = $wpdb->get_results("SELECT id FROM {$wpdb->prefix}frm_items WHERE parent_item_id = $entry_id");
+                    $allDividerFlds = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}frm_item_metas WHERE item_id IN (SELECT id FROM {$wpdb->prefix}frm_items WHERE parent_item_id = %d)", $entry_id));
+                    $allItemId = $wpdb->get_results($wpdb->prepare("SELECT id FROM {$wpdb->prefix}frm_items WHERE parent_item_id = %d", $entry_id));
 
                     $repeater = [];
                     foreach ($allItemId as $k => $value) {
@@ -1198,7 +1198,7 @@ final class TriggerFallback
     {
         global $wpdb;
 
-        $activity = $wpdb->get_results("select id,content from {$wpdb->prefix}bp_activity where id = $activity_id");
+        $activity = $wpdb->get_results($wpdb->prepare("select id,content from {$wpdb->prefix}bp_activity where id = %d", $activity_id));
 
         $group = groups_get_group($group_id);
         $activityInfo = [];
@@ -2406,7 +2406,7 @@ final class TriggerFallback
 
         global $wpdb;
         $awards = $wpdb->get_results(
-            "SELECT ID, post_name, post_title, post_type FROM wp_posts where id = {$achievement_id}"
+            $wpdb->prepare("SELECT ID, post_name, post_title, post_type FROM wp_posts where id = %d", $achievement_id)
         );
 
         $userData = self::gamipressGetUserInfo($user_id);
