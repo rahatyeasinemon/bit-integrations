@@ -30,7 +30,7 @@ final class TriggerFallback
         }
 
         $form_data = self::getFormidableFieldsValues($form, $entry_id);
-        $post_id = url_to_postid($_SERVER['HTTP_REFERER']);
+        $post_id = url_to_postid(sanitize_text_field($_SERVER['HTTP_REFERER']));
 
         if (!empty($form->id)) {
             $data = [];
@@ -2282,7 +2282,7 @@ final class TriggerFallback
 
     public static function handleForminatorSubmit($entry, $form_id, $form_data)
     {
-        $post_id = url_to_postid($_SERVER['HTTP_REFERER']);
+        $post_id = url_to_postid(sanitize_text_field($_SERVER['HTTP_REFERER']));
 
         if (!empty($form_id) && $flows = Flow::exists('Forminator', $form_id)) {
             $data = [];
@@ -2819,7 +2819,7 @@ final class TriggerFallback
 
     public static function handleHappySubmit($submission, $form, $a)
     {
-        $post_id = url_to_postid($_SERVER['HTTP_REFERER']);
+        $post_id = url_to_postid(sanitize_text_field($_SERVER['HTTP_REFERER']));
         $form_id = $form['ID'];
 
         if (!empty($form_id) && $flows = Flow::exists('Happy', $form_id)) {
@@ -4202,7 +4202,7 @@ final class TriggerFallback
     //PiotnetForms all functions
     public static function handlePiotnetSubmit($fields)
     {
-        $post_id = $_REQUEST['post_id'];
+        $post_id = sanitize_text_field($_REQUEST['post_id']);
 
         $flows = Flow::exists('PiotnetForms', $post_id);
         if (!$flows) {
