@@ -19,11 +19,10 @@ class RecordApiHelper
     private $_apiEndpoint;
     private $_apiPublicKey;
 
-
     public function __construct($api_public_key, $integId)
     {
         $this->_apiPublicKey = $api_public_key;
-        $this->_defaultHeader["Content-Type"] = "application/json";
+        $this->_defaultHeader['Content-Type'] = 'application/json';
         $this->_apiEndpoint = 'https://api.zagomail.com/';
         $this->_integrationID = $integId;
     }
@@ -31,7 +30,7 @@ class RecordApiHelper
     // for adding a subscriber
     public function storeOrModifyRecord($listId, $data)
     {
-        $requestParams['publicKey']    =  $this->_apiPublicKey;
+        $requestParams['publicKey'] = $this->_apiPublicKey;
 
         foreach ($data as $key => $value) {
             $requestParams[$key] = $value;
@@ -47,7 +46,7 @@ class RecordApiHelper
     //for updating subscribers data through email id.
     public function updateRecord($subscriberId, $listId, $data)
     {
-        $requestParams['publicKey']    =  $this->_apiPublicKey;
+        $requestParams['publicKey'] = $this->_apiPublicKey;
 
         foreach ($data as $key => $value) {
             $requestParams[$key] = $value;
@@ -63,7 +62,7 @@ class RecordApiHelper
     //add tag to a subscriber
     public function addTagToSubscriber($subscriberId, $listId, $tags)
     {
-        $requestParams['publicKey']    =  $this->_apiPublicKey;
+        $requestParams['publicKey'] = $this->_apiPublicKey;
 
         foreach ($tags as $tagId) {
             $tagEndPoint = "{$this->_apiEndpoint}lists/add-tag?ztag_id={$tagId}&subscriber_uid={$subscriberId}&list_uid={$listId}";
@@ -75,10 +74,9 @@ class RecordApiHelper
     //Check if a subscriber exists through email.
     private function existSubscriber($email, $listId)
     {
-
         $body = [
             'publicKey' => $this->_apiPublicKey,
-            'email' => $email,
+            'email'     => $email,
         ];
 
         $searchEndPoint = "{$this->_apiEndpoint}lists/search-by-email?list_uid={$listId}";
@@ -102,7 +100,6 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-
     public function execute($fieldValues, $fieldMap, $actions, $listId, $tags)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
@@ -120,7 +117,7 @@ class RecordApiHelper
 
                 wp_send_json_error(
                     __(
-                        $this->_errorMessage,
+                        'Email address already exists in the system',
                         'bit-integrations'
                     ),
                     400

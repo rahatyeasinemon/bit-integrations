@@ -18,7 +18,6 @@ class RecordApiHelper
     private $_integrationID;
     private $_apiEndpoint;
 
-
     public function __construct($api_secret, $integId)
     {
         // wp_send_json_success($tokenDetails);
@@ -32,7 +31,7 @@ class RecordApiHelper
     {
         $query = [
             'api_secret' => $this->_defaultHeader,
-            'email' => $data->email,
+            'email'      => $data->email,
             'first_name' => $data->firstName,
         ];
 
@@ -66,9 +65,9 @@ class RecordApiHelper
         }
 
         $query = [
-            'api_secret' => $this->_defaultHeader,
+            'api_secret'    => $this->_defaultHeader,
             'email_address' => $data->email,
-            'first_name' => $data->firstName,
+            'first_name'    => $data->firstName,
         ];
 
         foreach ($data as $key => $value) {
@@ -93,7 +92,7 @@ class RecordApiHelper
     {
         $queries = http_build_query([
             'api_secret' => $this->_defaultHeader,
-            'email' => $email,
+            'email'      => $email,
         ]);
         foreach ($tags as $tagId) {
             $searchEndPoint = "{$this->_apiEndpoint}/tags/{$tagId}/subscribe?{$queries}";
@@ -106,14 +105,13 @@ class RecordApiHelper
     private function existSubscriber($email)
     {
         $queries = http_build_query([
-            'api_secret' => $this->_defaultHeader,
+            'api_secret'    => $this->_defaultHeader,
             'email_address' => $email,
         ]);
         $searchEndPoint = "{$this->_apiEndpoint}/subscribers?{$queries}";
 
         return HttpHelper::get($searchEndPoint, null);
     }
-
 
     public function execute($fieldValues, $fieldMap, $actions, $formId, $tags)
     {
@@ -155,13 +153,10 @@ class RecordApiHelper
                 LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', 'Email address already exists in the system');
 
                 wp_send_json_error(
-                    __(
-                        [
-                            "type" => "error",
-                            "message" => "Check your email for confirmation."
-                        ],
-                        'bit-integrations'
-                    ),
+                    [
+                        'type'    => 'error',
+                        'message' => __('Check your email for confirmation.', 'bit-integrations')
+                    ],
                     400
                 );
             }
