@@ -89,6 +89,10 @@ class Admin_Bar
             // wp_enqueue_style('bf-css', BTCBI_ASSET_URI . "/main-{$build_hash}.css");
         }
 
+        if (!wp_script_is('wp-tinymce')) {
+            wp_enqueue_script('wp-tinymce');
+        }
+
         if (wp_script_is('wp-i18n')) {
             $deps = array('btcbi-vendors', 'btcbi-runtime', 'wp-i18n');
         } else {

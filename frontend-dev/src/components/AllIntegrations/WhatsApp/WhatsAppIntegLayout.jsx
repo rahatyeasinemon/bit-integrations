@@ -138,7 +138,7 @@ export default function WhatsAppIntegLayout({ formFields, handleInput,
           setSnackbar={setSnackbar}
         />
       ))}
-      {whatsAppConf?.messageTypeId === '1' && (
+      {whatsAppConf?.messageTypeId === '2' && (
         <div>
           <b className="wdt-200 d-in-b mr-16 mb-4 mt-4">
             {__('Messages: ', 'bit-integrations')}
