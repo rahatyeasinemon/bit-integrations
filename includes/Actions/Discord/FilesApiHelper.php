@@ -6,6 +6,9 @@
 
 namespace BitCode\FI\Actions\Discord;
 
+use BitCode\FI\Core\Util\HttpHelper;
+use CURLFile;
+
 /**
  * Provide functionality for Upload files
  */
@@ -31,34 +34,28 @@ final class FilesApiHelper
     public function uploadFiles($apiEndPoint, $data, $_accessToken, $channel_id)
     {
         $uploadFileEndpoint = $apiEndPoint . '/channels/' . $channel_id . '/messages';
-        $data['file'] = new \CURLFILE("{$data['file'][0]}");
-        $curl = curl_init();
-        curl_setopt_array(
-            $curl,
-            [
-                CURLOPT_URL => $uploadFileEndpoint,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_FAILONERROR => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_SSL_VERIFYPEER => false,
-                CURLOPT_SSL_VERIFYHOST => false,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => $data,
-                CURLOPT_HTTPHEADER => [
-                    'Content-Type: multipart/form-data',
-                    "Authorization: Bot {$_accessToken}"
-                ]
 
+        if (is_array($data['file'])) {
+            $file = $data['file'][0];
+        } else {
+            $file = $data['file'];
+        }
+
+        if (!file_exists($file)) {
+            return false;
+        }
+
+        $response = HttpHelper::post(
+            $uploadFileEndpoint,
+            [
+                'filename' => new CURLFile($file)
+            ],
+            [
+                'Content-Type'  => 'multipart/form-data',
+                'Authorization' => 'Bot ' . $_accessToken
             ]
         );
 
-        $uploadResponse = curl_exec($curl);
-
-        curl_close($curl);
-        return $uploadResponse;
+        return $response;
     }
 }
