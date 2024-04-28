@@ -537,7 +537,7 @@ class RecordApiHelper
             $statuses   = ['public', 'private', 'hidden'];
             $in_str_arr = array_fill(0, count($statuses), '%s');
             $in_str     = join(',', $in_str_arr);
-            $results    = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}bp_groups WHERE status IN (%s)", $in_str));
+            $results    = $wpdb->get_results($wpdb->prepare("SELECT * FROM %s WHERE status IN (%s)", "{$wpdb->prefix}bp_groups", $in_str));
             if ($results) {
                 foreach ($results as $result) {
                     $hide_sitewide = false;
@@ -564,7 +564,7 @@ class RecordApiHelper
             }
         } else {
             global $wpdb;
-            $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}bp_groups WHERE id = %d", $group_id));
+            $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM %s WHERE id = %d", "{$wpdb->prefix}bp_groups", $group_id));
             if ($results) {
                 foreach ($results as $result) {
                     $hide_sitewide = false;

@@ -771,17 +771,17 @@ class WooCommerceController
     {
         global $wpdb;
         $allSubscriptions = $wpdb->get_results($wpdb->prepare("
-        	SELECT posts.ID, posts.post_title FROM $wpdb->posts as posts
-        	LEFT JOIN $wpdb->term_relationships as rel ON (posts.ID = rel.object_id)
-        	WHERE rel.term_taxonomy_id IN (SELECT term_id FROM $wpdb->terms WHERE slug IN ('subscription','variable-subscription'))
+        	SELECT posts.ID, posts.post_title FROM %s as posts
+        	LEFT JOIN %s as rel ON (posts.ID = rel.object_id)
+        	WHERE rel.term_taxonomy_id IN (SELECT term_id FROM %s WHERE slug IN ('subscription','variable-subscription'))
         	AND posts.post_type = 'product'
         	AND posts.post_status = 'publish'
         	UNION ALL
-        	SELECT ID, post_title FROM $wpdb->posts
+        	SELECT ID, post_title FROM %s
         	WHERE post_type = 'shop_subscription'
         	AND post_status = 'publish'
         	ORDER BY post_title
-        "));
+        ", $wpdb->posts, $wpdb->term_relationships, $wpdb->terms, $wpdb->posts));
 
         $subscriptions[] = [
             'product_id' => 'any',

@@ -156,8 +156,8 @@ final class TriggerFallback
                     $repeaterFld = $field->field_key;
                     global $wpdb;
 
-                    $allDividerFlds = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}frm_item_metas WHERE item_id IN (SELECT id FROM {$wpdb->prefix}frm_items WHERE parent_item_id = %d)", $entry_id));
-                    $allItemId = $wpdb->get_results($wpdb->prepare("SELECT id FROM {$wpdb->prefix}frm_items WHERE parent_item_id = %d", $entry_id));
+                    $allDividerFlds = $wpdb->get_results($wpdb->prepare("SELECT * FROM %s WHERE item_id IN (SELECT id FROM %s WHERE parent_item_id = %d)", "{$wpdb->prefix}frm_item_metas", "{$wpdb->prefix}frm_items", $entry_id));
+                    $allItemId = $wpdb->get_results($wpdb->prepare("SELECT id FROM %s WHERE parent_item_id = %d", "{$wpdb->prefix}frm_items", $entry_id));
 
                     $repeater = [];
                     foreach ($allItemId as $k => $value) {
@@ -1113,12 +1113,13 @@ final class TriggerFallback
         global $wpdb;
         if ($status == '') {
             $group = $wpdb->get_results(
-                $wpdb->prepare("select id,name,description from {$wpdb->prefix}bp_groups where id = %d", $group_id)
+                $wpdb->prepare("SELECT id,name,description FROM %s WHERE id = %d", "{$wpdb->prefix}bp_groups", $group_id)
             );
         } else {
             $group = $wpdb->get_results(
                 $wpdb->prepare(
-                    "SELECT id,name,description FROM {$wpdb->prefix}bp_groups WHERE id = %d AND status = %s",
+                    "SELECT id,name,description FROM %s WHERE id = %d AND status = %s",
+                    "{$wpdb->prefix}bp_groups",
                     $group_id,
                     $status
                 )
@@ -1198,7 +1199,7 @@ final class TriggerFallback
     {
         global $wpdb;
 
-        $activity = $wpdb->get_results($wpdb->prepare("select id,content from {$wpdb->prefix}bp_activity where id = %d", $activity_id));
+        $activity = $wpdb->get_results($wpdb->prepare("SELECT id,content FROM %s WHERE id = %d", "{$wpdb->prefix}bp_activity", $activity_id));
 
         $group = groups_get_group($group_id);
         $activityInfo = [];
@@ -1629,7 +1630,7 @@ final class TriggerFallback
     {
         global $wpdb;
         $table_name = $wpdb->prefix . 'bp_xprofile_fields';
-        $results = $wpdb->get_results("SELECT id, type , name FROM $table_name");
+        $results = $wpdb->get_results($wpdb->prepare("SELECT id, type, name FROM %s", $table_name));
         return $results;
     }
 
@@ -2406,7 +2407,7 @@ final class TriggerFallback
 
         global $wpdb;
         $awards = $wpdb->get_results(
-            $wpdb->prepare("SELECT ID, post_name, post_title, post_type FROM wp_posts where id = %d", $achievement_id)
+            $wpdb->prepare("SELECT ID, post_name, post_title, post_type FROM %S WHERE id = %d", $wpdb->posts, $achievement_id)
         );
 
         $userData = self::gamipressGetUserInfo($user_id);
@@ -3301,8 +3302,12 @@ final class TriggerFallback
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT ID, post_title FROM $wpdb->posts
-                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_quiz' AND $wpdb->posts.ID = %d",
+                "SELECT ID, post_title FROM %s
+                WHERE %s = 'publish' AND %s = 'llms_quiz' AND %s = %d",
+                $wpdb->posts,
+                "$wpdb->posts.post_status",
+                "$wpdb->posts.post_type",
+                "$wpdb->posts.ID",
                 $quizId
             )
         );
@@ -3398,8 +3403,12 @@ final class TriggerFallback
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT ID, post_title FROM $wpdb->posts
-                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'lesson' AND $wpdb->posts.ID = %d",
+                "SELECT ID, post_title FROM %s
+                WHERE %s = 'publish' AND %s = 'lesson' AND %s = %d",
+                $wpdb->posts,
+                "$wpdb->posts.post_status",
+                "$wpdb->posts.post_type",
+                "$wpdb->posts.ID",
                 $lessonId
             )
         );
@@ -3435,8 +3444,12 @@ final class TriggerFallback
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT ID, post_title FROM $wpdb->posts
-                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'course' AND $wpdb->posts.ID = %d",
+                "SELECT ID, post_title FROM %s
+                WHERE %s = 'publish' AND %s = 'course' AND %s = %d",
+                $wpdb->posts,
+                "$wpdb->posts.post_status",
+                "$wpdb->posts.post_type",
+                "$wpdb->posts.ID",
                 $courseId
             )
         );
@@ -3518,8 +3531,12 @@ final class TriggerFallback
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT ID, post_title FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_membership' AND $wpdb->posts.ID = %d",
+                "SELECT ID, post_title FROM %s
+        WHERE %s = 'publish' AND %s = 'llms_membership' AND %s = %d",
+                $wpdb->posts,
+                "$wpdb->posts.post_status",
+                "$wpdb->posts.post_type",
+                "$wpdb->posts.ID",
                 $membershipId
             )
         );
@@ -3645,8 +3662,11 @@ final class TriggerFallback
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT ID, post_title,post_content FROM $wpdb->posts
-                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-courses' AND $wpdb->posts.ID = %d",
+                "SELECT ID, post_title,post_content FROM %s
+                WHERE %s = 'publish' AND %s = 'stm-courses' AND %s = %d",
+                $wpdb->posts,
+                "$wpdb->posts.post_status",
+                "$wpdb->posts.post_type",
                 $courseId
             )
         );
@@ -3716,8 +3736,12 @@ final class TriggerFallback
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT ID, post_title,post_content FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-lessons' AND $wpdb->posts.ID = %d",
+                "SELECT ID, post_title,post_content FROM %s
+        WHERE %s = 'publish' AND %s = 'stm-lessons' AND %s = %d",
+                $wpdb->posts,
+                "$wpdb->posts.post_status",
+                "$wpdb->posts.post_type",
+                "$wpdb->posts.ID",
                 $lessonId
             )
         );
@@ -3758,8 +3782,12 @@ final class TriggerFallback
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT ID, post_title,post_content FROM $wpdb->posts
-                 WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-quizzes' AND $wpdb->posts.ID = %d",
+                "SELECT ID, post_title,post_content FROM %s
+                 WHERE %s = 'publish' AND %s = 'stm-quizzes' AND %s = %d",
+                $wpdb->posts,
+                "$wpdb->posts.post_status",
+                "$wpdb->posts.post_type",
+                "$wpdb->posts.ID",
                 $quiz_id
             )
         );
@@ -4062,7 +4090,7 @@ final class TriggerFallback
             return;
         }
         global $wpdb;
-        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $level_id));
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM %s WHERE id = %d", $wpdb->pmpro_membership_levels, $level_id));
         $userData = self::paidMembershipProgetUserInfo($user_id);
         $finalData = array_merge($userData, (array)$levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 1);
@@ -4102,7 +4130,7 @@ final class TriggerFallback
             return;
         }
         global $wpdb;
-        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $cancel_level));
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM %s WHERE id = %d", $wpdb->pmpro_membership_levels, $cancel_level));
         $userData = self::paidMembershipProgetUserInfo($user_id);
         $finalData = array_merge($userData, (array)$levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 2);
@@ -4125,7 +4153,7 @@ final class TriggerFallback
         $membership_id = $membership->id;
 
         global $wpdb;
-        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $membership_id));
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM %s WHERE id = %d", $wpdb->pmpro_membership_levels, $membership_id));
         $userData = self::paidMembershipProgetUserInfo($user_id);
         $finalData = array_merge($userData, (array)$levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 3);
@@ -4144,7 +4172,7 @@ final class TriggerFallback
     public static function expiryMembershipLevel($user_id, $membership_id)
     {
         global $wpdb;
-        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $membership_id));
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM %s WHERE id = %d", $wpdb->pmpro_membership_levels, $membership_id));
         $userData = self::paidMembershipProgetUserInfo($user_id);
         $finalData = array_merge($userData, (array)$levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 4);

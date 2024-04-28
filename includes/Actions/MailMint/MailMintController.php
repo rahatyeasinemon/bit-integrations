@@ -32,7 +32,7 @@ class MailMintController
             $allFields      = [];
             $fields_table   = $wpdb->prefix . CustomFieldSchema::$table_name;
             $primaryFields  = get_option('mint_contact_primary_fields', Constants::$primary_contact_fields);
-            $customFields   = $wpdb->get_results($wpdb->prepare('SELECT title, slug, type, group_id FROM %1s ', $fields_table), ARRAY_A);
+            $customFields   = $wpdb->get_results($wpdb->prepare('SELECT title, slug, type, group_id FROM %s ', $fields_table), ARRAY_A);
 
             if (!empty($customFields)) {
                 $primaryFields['other'] = array_merge($primaryFields['other'], $customFields);

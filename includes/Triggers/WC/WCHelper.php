@@ -138,7 +138,8 @@ class WCHelper
         global $wpdb;
         $rating = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT meta_value FROM {$wpdb->prefix}commentmeta WHERE comment_id = %d AND meta_key = 'rating'",
+                "SELECT meta_value FROM %s WHERE comment_id = %d AND meta_key = 'rating'",
+                "{$wpdb->prefix}commentmeta",
                 $comment_ID
             )
         );
