@@ -6,6 +6,7 @@ $finder = PhpCsFixer\Finder::create()
     ])
     ->in([
         __DIR__ . '/includes',
+        __DIR__ . '/views',
     ])
     ->ignoreVCSIgnored(true);
 
