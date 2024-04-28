@@ -2,15 +2,18 @@
 
 namespace BitCode\FI\Actions\Dropbox;
 
-use WP_Error;
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
+use WP_Error;
 
 class RecordApiHelper
 {
     protected $token;
+
     protected $errorApiResponse = [];
+
     protected $successApiResponse = [];
+
     protected $contentBaseUri = 'https://content.dropboxapi.com';
 
     public function __construct($token)
@@ -20,10 +23,14 @@ class RecordApiHelper
 
     public function uploadFile($folder, $filePath)
     {
-        if ($filePath === '') return false;
+        if ($filePath === '') {
+            return false;
+        }
 
         $body = file_get_contents(trim($filePath));
-        if (!$body) return new WP_Error(423, 'Can\'t open file!');
+        if (!$body) {
+            return new WP_Error(423, 'Can\'t open file!');
+        }
 
         $apiEndPoint = $this->contentBaseUri . '/2/files/upload';
         $headers = [
@@ -31,6 +38,7 @@ class RecordApiHelper
             'Content-Type'    => 'application/octet-stream',
             'Dropbox-API-Arg' => json_encode(['path' => $folder . '/' . trim(basename($filePath)), 'mode' => 'add', 'autorename' => true, 'mute' => true, 'strict_conflict' => false]),
         ];
+
         return HttpHelper::post($apiEndPoint, $body, $headers);
     }
 
@@ -38,24 +46,16 @@ class RecordApiHelper
     {
         foreach ($folderWithFile as $folder => $filePath) {
             $folder = $folderKey ? $folderKey : $folder;
-            if ($filePath == '') continue;
-
-            if (is_array($filePath)) {
-                return $this->handleAllFiles($filePath, $actions, $folder);
-            } else {
-                $response = $this->uploadFile($folder, $filePath);
-                $this->storeInState($response);
-                $this->deleteFile($filePath, $actions);
+            if ($filePath == '') {
+                continue;
             }
-        }
-    }
 
-    protected function storeInState($response)
-    {
-        if (isset($response->id)) {
-            $this->successApiResponse[] = $response;
-        } else {
-            $this->errorApiResponse[] = $response;
+            if (\is_array($filePath)) {
+                return $this->handleAllFiles($filePath, $actions, $folder);
+            }
+            $response = $this->uploadFile($folder, $filePath);
+            $this->storeInState($response);
+            $this->deleteFile($filePath, $actions);
         }
     }
 
@@ -72,18 +72,28 @@ class RecordApiHelper
     {
         $folderWithFile = [];
         foreach ($fieldMap as $value) {
-            if (!is_null($fieldValues[$value->formField])) {
+            if (!\is_null($fieldValues[$value->formField])) {
                 $folderWithFile[$value->dropboxFormField] = $fieldValues[$value->formField];
             }
         }
         $this->handleAllFiles($folderWithFile, $actions);
 
-        if (count($this->successApiResponse) > 0) {
-            LogHandler::save($integrationId, wp_json_encode(['type' => 'dropbox', 'type_name' => "file_upload"]), 'success', 'All Files Uploaded. ' . json_encode($this->successApiResponse));
+        if (\count($this->successApiResponse) > 0) {
+            LogHandler::save($integrationId, wp_json_encode(['type' => 'dropbox', 'type_name' => 'file_upload']), 'success', 'All Files Uploaded. ' . json_encode($this->successApiResponse));
         }
-        if (count($this->errorApiResponse) > 0) {
-            LogHandler::save($integrationId, wp_json_encode(['type' => 'dropbox', 'type_name' => "file_upload"]), 'error', 'Some Files Can\'t Upload. ' . json_encode($this->errorApiResponse));
+        if (\count($this->errorApiResponse) > 0) {
+            LogHandler::save($integrationId, wp_json_encode(['type' => 'dropbox', 'type_name' => 'file_upload']), 'error', 'Some Files Can\'t Upload. ' . json_encode($this->errorApiResponse));
         }
+
         return true;
+    }
+
+    protected function storeInState($response)
+    {
+        if (isset($response->id)) {
+            $this->successApiResponse[] = $response;
+        } else {
+            $this->errorApiResponse[] = $response;
+        }
     }
 }

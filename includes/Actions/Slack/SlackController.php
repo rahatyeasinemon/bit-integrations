@@ -3,22 +3,24 @@
 /**
  * slack Integration
  */
+
 namespace BitCode\FI\Actions\Slack;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for slack integration
  */
 class SlackController
 {
-    const APIENDPOINT = 'https://slack.com/api';
+    public const APIENDPOINT = 'https://slack.com/api';
 
     /**
      * Process ajax request for generate_token
      *
-     * @param Object $requestsParams Params to authorize
+     * @param object $requestsParams     Params to authorize
+     * @param mixed  $tokenRequestParams
      *
      * @return JSON slack api response and status
      */
@@ -37,8 +39,8 @@ class SlackController
         }
         $header = [
             'Authorization' => 'Bearer ' . $tokenRequestParams->accessToken,
-            'Accept' => '*/*',
-            'verify' => false
+            'Accept'        => '*/*',
+            'verify'        => false
         ];
         $apiEndpoint = self::APIENDPOINT . '/conversations.list';
 
@@ -50,7 +52,7 @@ class SlackController
                 400
             );
         }
-        $apiResponse->generates_on = \time();
+        $apiResponse->generates_on = time();
         wp_send_json_success($apiResponse, 200);
     }
 
@@ -81,6 +83,7 @@ class SlackController
         if (is_wp_error($slackApiResponse)) {
             return $slackApiResponse;
         }
+
         return $slackApiResponse;
     }
 }

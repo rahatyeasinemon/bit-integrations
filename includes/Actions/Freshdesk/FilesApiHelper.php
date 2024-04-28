@@ -3,7 +3,10 @@
 /**
  * Slack Files Api
  */
+
 namespace BitCode\FI\Actions\Freshdesk;
+
+use CURLFile;
 
 /**
  * Provide functionality for Upload files
@@ -11,6 +14,7 @@ namespace BitCode\FI\Actions\Freshdesk;
 final class FilesApiHelper
 {
     private $_defaultHeader;
+
     private $_payloadBoundary;
 
     public function __construct()
@@ -22,33 +26,34 @@ final class FilesApiHelper
     /**
      * Helps to execute upload files api
      *
-     * @param String            $apiEndPoint    FreshDesk API base URL
-     * @param Array             $data           Data to pass to API
+     * @param string $apiEndPoint FreshDesk API base URL
+     * @param array  $data        Data to pass to API
+     * @param mixed  $api_key
      *
-     * @return Array | Boolean  $uploadResponse FreshDesk API response
+     * @return array|bool $uploadResponse FreshDesk API response
      */
     public function uploadFiles($apiEndPoint, $data, $api_key)
     {
-        $data['avatar'] = new \CURLFILE("{$data['avatar']}");
+        $data['avatar'] = new CURLFile("{$data['avatar']}");
         $curl = curl_init();
         curl_setopt_array(
             $curl,
             [
-                CURLOPT_URL => $apiEndPoint,
+                CURLOPT_URL            => $apiEndPoint,
                 CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
+                CURLOPT_ENCODING       => '',
+                CURLOPT_MAXREDIRS      => 10,
+                CURLOPT_TIMEOUT        => 0,
                 CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_FAILONERROR => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_FAILONERROR    => true,
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
                 CURLOPT_SSL_VERIFYPEER => false,
                 CURLOPT_SSL_VERIFYHOST => false,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => $data,
-                CURLOPT_HTTPHEADER => [
+                CURLOPT_CUSTOMREQUEST  => 'POST',
+                CURLOPT_POSTFIELDS     => $data,
+                CURLOPT_HTTPHEADER     => [
                     'Content-Type: multipart/form-data',
-                    'Authorization: ' . base64_encode("$api_key")
+                    'Authorization: ' . base64_encode("{$api_key}")
                 ]
             ]
         );
@@ -58,6 +63,7 @@ final class FilesApiHelper
             $uploadResponse = curl_error($curl);
         }
         curl_close($curl);
+
         return $uploadResponse;
     }
 }

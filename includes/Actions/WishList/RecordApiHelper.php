@@ -1,11 +1,8 @@
 <?php
 
-
-
 namespace BitCode\FI\Actions\WishList;
 
 use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\DateTimeHelper;
 use BitCode\FI\Log\LogHandler;
 
 /**
@@ -13,7 +10,10 @@ use BitCode\FI\Log\LogHandler;
  */
 class RecordApiHelper
 {
-    protected $action, $api;
+    protected $action;
+
+    protected $api;
+
     public function __construct($integrationDetails, $baseUrl, $apiKey)
     {
         $this->integrationDetails = $integrationDetails;
@@ -33,9 +33,11 @@ class RecordApiHelper
         foreach ($apiResponse as $key => $val) {
             if ($val->user_email == $email) {
                 $memberInfo = $val;
+
                 break;
             }
         }
+
         return $memberInfo;
     }
 
@@ -45,13 +47,16 @@ class RecordApiHelper
         $isExistMember = $this->searchMember($data);
         if ($isExistMember) {
             $memberId = $isExistMember->id;
-            $users = ['Users' => (int)$memberId];
-            $response = $this->api->post("/levels/$levelId/members", $users);
+            $users = ['Users' => (int) $memberId];
+            $response = $this->api->post("/levels/{$levelId}/members", $users);
         } else {
             $data['Levels'] = [$levelId];
             $apiResponse = $this->api->post('/members', $data);
-            if ($apiResponse) $response = json_decode($apiResponse);
+            if ($apiResponse) {
+                $response = json_decode($apiResponse);
+            }
         }
+
         return $response;
     }
 
@@ -63,24 +68,28 @@ class RecordApiHelper
         foreach ($apiResponse as $key => $val) {
             if ($val->name == $level) {
                 $levelInfo = $val;
+
                 break;
             }
         }
+
         return $levelInfo;
     }
 
     public function insertLevel($data)
     {
         $member = $this->integrationDetails->member_id;
-        $users = ['Users' => (int)$member];
+        $users = ['Users' => (int) $member];
         $isExist = $this->searchLevel($data['name']);
         if (!$isExist) {
             $apiResponse = $this->api->post('/levels', $data);
-            if ($apiResponse) $isExist = json_decode($apiResponse)->level;
+            if ($apiResponse) {
+                $isExist = json_decode($apiResponse)->level;
+            }
         }
         $levelId = $isExist->id;
-        $response = $this->api->post("/levels/$levelId/members", $users);
-        return $response;
+
+        return $this->api->post("/levels/{$levelId}/members", $users);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -92,12 +101,14 @@ class RecordApiHelper
             $actionValue = $value->wishlistField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
+
     public function executeRecordApi($integId, $defaultConf, $levelLists, $fieldValues, $fieldMap, $actions, $isRelated = false)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
@@ -116,6 +127,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($integId, wp_json_encode(['type' => $type, 'type_name' => $type_name]), 'success', wp_json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }

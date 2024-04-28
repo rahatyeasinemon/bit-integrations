@@ -7,16 +7,13 @@
 namespace BitCode\FI\Actions\MailPoet;
 
 use WP_Error;
-use BitCode\FI\Actions\MailPoet\RecordApiHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
  */
 class MailPoetController
 {
-    //BitCode\FI\Actions\MailPoet\MailPoetController
-
-
+    // BitCode\FI\Actions\MailPoet\MailPoetController
 
     /**
      * Validate if Mail Poet plugin exists or not. If not exits then terminate
@@ -36,6 +33,7 @@ class MailPoetController
             );
         }
     }
+
     /**
      * Process ajax request for generate_token
      *
@@ -46,29 +44,30 @@ class MailPoetController
         self::isExists();
         wp_send_json_success(true);
     }
+
     /**
      * Process ajax request for refresh crm modules
      *
      * @return JSON crm module data
      */
-
     public function refreshNeswLetter()
     {
         self::isExists();
         $mailpoet_api = \MailPoet\API\API::MP('v1');
         $newsletterList = $mailpoet_api->getLists();
-       
+
         $allList = [];
 
         foreach ($newsletterList as $newsletter) {
             $allList[$newsletter['name']] = (object) [
-            'newsletterId' => $newsletter['id'],
-            'newsletterName' => $newsletter['name']
+                'newsletterId'   => $newsletter['id'],
+                'newsletterName' => $newsletter['name']
             ];
         }
         $response['newsletterList'] = $allList;
         wp_send_json_success($response, 200);
     }
+
     public static function mailPoetListHeaders()
     {
         self::isExists();
@@ -79,9 +78,9 @@ class MailPoetController
 
         foreach ($subscriber_form_fields as $fields) {
             $allList[$fields['name']] = (object) [
-            'id' => $fields['id'],
-            'name' => $fields['name'],
-            'required' => $fields['params']['required']
+                'id'       => $fields['id'],
+                'name'     => $fields['name'],
+                'required' => $fields['params']['required']
             ];
         }
         $response['mailPoetFields'] = $allList;
@@ -95,7 +94,7 @@ class MailPoetController
         $fieldMap = $integrationDetails->field_map;
         $defaultDataConf = $integrationDetails->default;
         $lists = $integrationDetails->lists;
-        
+
         if (empty($fieldMap)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Google sheet api', 'bit-integrations'));
         }
@@ -111,6 +110,7 @@ class MailPoetController
         if (is_wp_error($maiPoetApiResponse)) {
             return $maiPoetApiResponse;
         }
+
         return $maiPoetApiResponse;
     }
 }

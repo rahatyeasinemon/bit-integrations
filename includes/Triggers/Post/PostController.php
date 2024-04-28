@@ -3,7 +3,6 @@
 namespace BitCode\FI\Triggers\Post;
 
 use BitCode\FI\Flow\Flow;
-use BitCode\FI\Triggers\Post\PostHelper;
 
 final class PostController
 {
@@ -32,7 +31,7 @@ final class PostController
     {
         $triggerIdList = [1, 2, 3, 4, 6, 9];
 
-        if (in_array($id, $triggerIdList)) {
+        if (\in_array($id, $triggerIdList)) {
             $fields = PostHelper::postFields();
         }
 
@@ -69,25 +68,25 @@ final class PostController
             $missing_field = 'Form ID';
         }
 
-        if (!is_null($missing_field)) {
+        if (!\is_null($missing_field)) {
             wp_send_json_error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
 
         $ids = [1, 2, 3, 6];
 
-        if (in_array($data->id, $ids)) {
+        if (\in_array($data->id, $ids)) {
             $responseData['types'] = array_values(PostHelper::getPostTypes());
             array_unshift($responseData['types'], ['id' => 'any-post-type', 'title' => 'Any Post Type']);
         }
         $postTitleIds = [4, 5, 7, 8, 9];
-        if (in_array($data->id, $postTitleIds)) {
+        if (\in_array($data->id, $postTitleIds)) {
             $responseData['posts'] = PostHelper::getPostTitles();
             array_unshift($responseData['posts'], ['id' => 'any-post', 'title' => 'Any Post']);
         }
 
         $responseData['fields'] = self::fields($data->id);
 
-        if (count($responseData['fields']) <= 0) {
+        if (\count($responseData['fields']) <= 0) {
             wp_send_json_error(__('Form fields doesn\'t exists', 'bit-integrations'));
         }
 
@@ -105,7 +104,7 @@ final class PostController
         if ($postCreateFlow) {
             $flowDetails = $postCreateFlow[0]->flow_details;
 
-            if (is_string($postCreateFlow[0]->flow_details)) {
+            if (\is_string($postCreateFlow[0]->flow_details)) {
                 $flowDetails = json_decode($postCreateFlow[0]->flow_details);
             }
 
@@ -135,7 +134,7 @@ final class PostController
         if ($cmntTrigger) {
             $flowDetails = $cmntTrigger[0]->flow_details;
 
-            if (is_string($cmntTrigger[0]->flow_details)) {
+            if (\is_string($cmntTrigger[0]->flow_details)) {
                 $flowDetails = json_decode($cmntTrigger[0]->flow_details);
             }
 
@@ -154,7 +153,7 @@ final class PostController
         if ($postDeleteTrigger) {
             $flowDetails = $postDeleteTrigger[0]->flow_details;
 
-            if (is_string($postDeleteTrigger[0]->flow_details)) {
+            if (\is_string($postDeleteTrigger[0]->flow_details)) {
                 $flowDetails = json_decode($postDeleteTrigger[0]->flow_details);
             }
 
@@ -187,7 +186,7 @@ final class PostController
         $postUpdateFlow = Flow::exists('Post', 2);
         if ($postUpdateFlow) {
             $flowDetails = $postUpdateFlow[0]->flow_details;
-            if (is_string($postUpdateFlow[0]->flow_details)) {
+            if (\is_string($postUpdateFlow[0]->flow_details)) {
                 $flowDetails = json_decode($postUpdateFlow[0]->flow_details);
             }
             if (isset($updatedPostData->post_content)) {
@@ -212,7 +211,7 @@ final class PostController
         if ($statusChangeTrigger) {
             $flowDetails = $statusChangeTrigger[0]->flow_details;
 
-            if (is_string($statusChangeTrigger[0]->flow_details)) {
+            if (\is_string($statusChangeTrigger[0]->flow_details)) {
                 $flowDetails = json_decode($statusChangeTrigger[0]->flow_details);
             }
 
@@ -236,11 +235,11 @@ final class PostController
         if ($cmntTrigger) {
             $flowDetails = $cmntTrigger[0]->flow_details;
 
-            if (is_string($cmntTrigger[0]->flow_details)) {
+            if (\is_string($cmntTrigger[0]->flow_details)) {
                 $flowDetails = json_decode($cmntTrigger[0]->flow_details);
             }
 
-            $cmntData = (array)$cmntData;
+            $cmntData = (array) $cmntData;
             if (isset($flowDetails->selectedPostId) && $flowDetails->selectedPostId == 'any-post' || $flowDetails->selectedPostId == $cmntData['comment_post_ID']) {
                 $cmntData['comment_id'] = $cmntId;
                 Flow::execute('Post', 7, (array) $cmntData, $cmntTrigger);
@@ -254,11 +253,11 @@ final class PostController
         if ($cmntTrigger) {
             $flowDetails = $cmntTrigger[0]->flow_details;
 
-            if (is_string($cmntTrigger[0]->flow_details)) {
+            if (\is_string($cmntTrigger[0]->flow_details)) {
                 $flowDetails = json_decode($cmntTrigger[0]->flow_details);
             }
 
-            $cmntData = (array)$cmntData;
+            $cmntData = (array) $cmntData;
             if (isset($flowDetails->selectedPostId) && $flowDetails->selectedPostId == 'any-post' || $flowDetails->selectedPostId == $cmntData['comment_post_ID']) {
                 $cmntData['comment_id'] = $cmntId;
                 Flow::execute('Post', 8, (array) $cmntData, $cmntTrigger);
@@ -275,10 +274,10 @@ final class PostController
         if ($postUpdateFlow) {
             $flowDetails = $postUpdateFlow[0]->flow_details;
 
-            if (is_string($postUpdateFlow[0]->flow_details)) {
+            if (\is_string($postUpdateFlow[0]->flow_details)) {
                 $flowDetails = json_decode($postUpdateFlow[0]->flow_details);
             }
-            $postData = (array)$postData;
+            $postData = (array) $postData;
             if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $postData['ID']) {
                 Flow::execute('Post', 9, (array) $postData, $postUpdateFlow);
             }

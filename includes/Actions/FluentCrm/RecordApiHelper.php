@@ -8,7 +8,6 @@ namespace BitCode\FI\Actions\FluentCrm;
 
 use BitCode\FI\Log\LogHandler;
 use FluentCrm\App\Models\Subscriber;
-use FluentCrm\Includes\Helpers\Arr;
 
 /**
  * Provide functionality for Record insert
@@ -16,6 +15,7 @@ use FluentCrm\Includes\Helpers\Arr;
 class RecordApiHelper
 {
     private $_integrationID;
+
     public function __construct($integId)
     {
         $this->_integrationID = $integId;
@@ -23,13 +23,12 @@ class RecordApiHelper
 
     public function insertRecord($data, $actions)
     {
-
         // for exsist user
         $subscriber = Subscriber::where('email', $data['email'])->first();
 
         if ($subscriber && isset($actions->skip_if_exists) && $actions->skip_if_exists) {
             $response = [
-                'success' => false,
+                'success'  => false,
                 'messages' => 'Contact already exists!'
             ];
         } else {
@@ -48,17 +47,16 @@ class RecordApiHelper
                 }
                 if ($subscriber) {
                     $response = [
-                        'success' => true,
+                        'success'  => true,
                         'messages' => 'Insert successfully!'
                     ];
                 } else {
                     $response = [
-                        'success' => false,
+                        'success'  => false,
                         'messages' => 'Something wrong!'
                     ];
                 }
             } else {
-
                 $hasDouBleOptIn = isset($actions->double_opt_in) && $actions->double_opt_in;
 
                 $forceSubscribed = !$hasDouBleOptIn && ($subscriber->status != 'subscribed');
@@ -74,17 +72,18 @@ class RecordApiHelper
                 }
                 if ($subscriber) {
                     $response = [
-                        'success' => true,
+                        'success'  => true,
                         'messages' => 'Insert successfully!'
                     ];
                 } else {
                     $response = [
-                        'success' => false,
+                        'success'  => false,
                         'messages' => 'Something wrong!'
                     ];
                 }
             }
         }
+
         return $response;
     }
 
@@ -94,7 +93,7 @@ class RecordApiHelper
 
         if (!$subscriber) {
             return $response = [
-                'success' => false,
+                'success'  => false,
                 'messages' => "Contact doesn't exists!"
             ];
         }
@@ -105,17 +104,16 @@ class RecordApiHelper
             $subscriber->attachTags($tags);
 
             return $response = [
-                'success' => true,
+                'success'  => true,
                 'messages' => 'Tag added successfully!'
             ];
-        } else {
-            $subscriber->detachTags($tags);
-
-            return $response = [
-                'success' => true,
-                'messages' => 'Tag remove successfully!'
-            ];
         }
+        $subscriber->detachTags($tags);
+
+        return $response = [
+            'success'  => true,
+            'messages' => 'Tag remove successfully!'
+        ];
     }
 
     public function removeUser($data)
@@ -124,7 +122,7 @@ class RecordApiHelper
 
         if (!$subscriber) {
             return $response = [
-                'success' => false,
+                'success'  => false,
                 'messages' => "Contact doesn't exists!"
             ];
         }
@@ -134,7 +132,7 @@ class RecordApiHelper
         $subscriber->detachLists($listId);
 
         return $response = [
-            'success' => true,
+            'success'  => true,
             'messages' => 'User remove from list successfully!'
         ];
     }
@@ -153,31 +151,35 @@ class RecordApiHelper
             }
         }
 
-        if (!is_null($list_id)) {
+        if (!\is_null($list_id)) {
             $fieldData['lists'] = [$list_id];
         }
-        if (!is_null($tags)) {
+        if (!\is_null($tags)) {
             $fieldData['tags'] = $tags;
         }
 
         switch ($actionName) {
-            case "add-tag":
-            case "remove-tag":
+            case 'add-tag':
+            case 'remove-tag':
                 $recordApiResponse = $this->insertDeleteTag($fieldData, $actionName);
+
                 break;
-            case "add-user":
+            case 'add-user':
                 $recordApiResponse = $this->insertRecord($fieldData, $actions);
+
                 break;
-            case "remove-user":
+            case 'remove-user':
                 $recordApiResponse = $this->removeUser($fieldData);
+
                 break;
         }
 
         if ($recordApiResponse['success']) {
-            LogHandler::save($this->_integrationID, ['type' =>  'record', 'type_name' => $actionName], 'success', $recordApiResponse);
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $actionName], 'success', $recordApiResponse);
         } else {
-            LogHandler::save($this->_integrationID, ['type' =>  'record', 'type_name' => $actionName], 'error', $recordApiResponse);
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $actionName], 'error', $recordApiResponse);
         }
+
         return $recordApiResponse;
     }
 }

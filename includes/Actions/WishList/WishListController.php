@@ -2,16 +2,14 @@
 
 /**
  * WishList Integration
- *
  */
 
 namespace BitCode\FI\Actions\WishList;
 
-use WP_Error;
-use BitCode\FI\Actions\WishList\RecordApiHelper;
 use BitCode\FI\Log\LogHandler;
+use WP_Error;
 
-include('wlmapiclass.php');
+include 'wlmapiclass.php';
 
 final class WishListController
 {
@@ -41,7 +39,7 @@ final class WishListController
                 400
             );
         } else {
-            $apiResponse->generates_on = \time();
+            $apiResponse->generates_on = time();
             wp_send_json_success(true);
         }
     }
@@ -53,7 +51,6 @@ final class WishListController
      *
      * @return JSON wishlist levels data
      */
-
     public static function getAllLevels($queryParams)
     {
         if (
@@ -78,7 +75,7 @@ final class WishListController
 
         foreach ($apiResponse as $level) {
             $data[] = (object) [
-                'id' => $level->id,
+                'id'   => $level->id,
                 'name' => $level->name
             ];
         }
@@ -110,8 +107,8 @@ final class WishListController
 
         foreach ($apiResponse as $member) {
             $data[] = (object) [
-                'id' => $member->id,
-                'name' => $member->user_login,
+                'id'    => $member->id,
+                'name'  => $member->user_login,
                 'email' => $member->user_email,
             ];
         }
@@ -136,11 +133,13 @@ final class WishListController
         ) {
             $error = new WP_Error('REQ_FIELD_EMPTY', __('baseUrl, apiKey, fields are required for Wish List API', 'bit-integrations'));
             LogHandler::save($integrationId, 'record', 'validation', $error);
+
             return $error;
         }
         if (empty($levelLists)) {
             $error = new WP_Error('REQ_FIELD_EMPTY', __('level List are required for Wish List API', 'bit-integrations'));
             LogHandler::save($integrationId, 'record', 'validation', $error);
+
             return $error;
         }
         $actions = $integrationDetails->actions;
@@ -156,6 +155,7 @@ final class WishListController
         if (is_wp_error($wishlistResponse)) {
             return $wishlistResponse;
         }
+
         return $wishlistResponse;
     }
 }

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SendFox;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 class SendFoxController
 {
@@ -28,7 +28,7 @@ class SendFoxController
 
         $requestParams = [
             'Authorization' => "Bearer {$requestParams->access_token}",
-            'Accept' => 'application/json',
+            'Accept'        => 'application/json',
         ];
 
         $response = HttpHelper::get($apiEndpoints, null, $requestParams);
@@ -57,7 +57,7 @@ class SendFoxController
 
         $requestParams = [
             'Authorization' => "Bearer {$requestParams->access_token}",
-            'Accept' => 'application/json',
+            'Accept'        => 'application/json',
         ];
 
         $response = HttpHelper::get($apiEndpoints, null, $requestParams);
@@ -99,6 +99,7 @@ class SendFoxController
         if (is_wp_error($acumbamailApiResponse)) {
             return $acumbamailApiResponse;
         }
+
         return $acumbamailApiResponse;
     }
 }

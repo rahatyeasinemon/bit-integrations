@@ -5,11 +5,15 @@ namespace BitCode\FI\Actions\GoogleCalendar;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use DateTime;
+use DateTimeZone;
 
 class RecordApiHelper
 {
     protected $token;
+
     protected $timeZone;
+
     protected $calendarId;
 
     public function __construct($token, $calendarId, $timeZone)
@@ -26,6 +30,7 @@ class RecordApiHelper
             'Content-Type'  => 'application/json',
             'Authorization' => 'Bearer ' . $this->token,
         ];
+
         return HttpHelper::post($apiEndpoint, json_encode($data), $headers);
     }
 
@@ -44,6 +49,7 @@ class RecordApiHelper
                 'id' => $this->calendarId,
             ]],
         ];
+
         return HttpHelper::post($apiEndpoint, json_encode($body), $headers);
     }
 
@@ -53,7 +59,7 @@ class RecordApiHelper
         $dateType = 'dateTime';
         foreach ($fieldData as $title => $value) {
             if ($title === 'start' || $title === 'end') {
-                $date = new \DateTime($value, new \DateTimeZone($this->timeZone));
+                $date = new DateTime($value, new DateTimeZone($this->timeZone));
                 if (isset($actions->allDayEvent)) {
                     $data[$title]['date'] = $date->format('Y-m-d');
                     $dateType = 'date';
@@ -61,12 +67,13 @@ class RecordApiHelper
                     $data[$title]['dateTime'] = $date->format('Y-m-d\TH:i:sP');
                 }
                 $data[$title]['timeZone'] = $this->timeZone;
+
                 continue;
             }
             $data[$title] = $value;
         }
 
-        if (isset($actions->reminders) && count($reminderFieldMap) > 0) {
+        if (isset($actions->reminders) && \count($reminderFieldMap) > 0) {
             $data['reminders'] = [
                 'useDefault' => false,
                 'overrides'  => $reminderFieldMap
@@ -78,10 +85,11 @@ class RecordApiHelper
 
             if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
                 return $apiResponse;
-            };
+            }
             if (empty($apiResponse->calendars->{$this->calendarId}->busy)) {
                 return $this->insertEvent($data);
-            };
+            }
+
             return 'No free slot at this time';
         }
 
@@ -99,7 +107,7 @@ class RecordApiHelper
                         $fieldData[$value->googleCalendarFormField] = $replaceFieldWithValue;
                     }
                 } else {
-                    $fieldData[$value->googleCalendarFormField] = is_array($fieldValues[$value->formField]) ? json_encode($fieldValues[$value->formField]) : $fieldValues[$value->formField];
+                    $fieldData[$value->googleCalendarFormField] = \is_array($fieldValues[$value->formField]) ? json_encode($fieldValues[$value->formField]) : $fieldValues[$value->formField];
                 }
             }
         }
@@ -115,6 +123,6 @@ class RecordApiHelper
         } else {
             LogHandler::save($integrationId, wp_json_encode(['type' => 'record', 'type_name' => 'insert']), 'success', $apiResponse);
         }
-        return;
+
     }
 }

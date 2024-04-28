@@ -1,4 +1,5 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -6,7 +7,7 @@ if (!defined('ABSPATH')) {
 use BitCode\FI\Actions\WishList\WishListController;
 use BitCode\FI\Core\Util\Route;
 
-//WishList
+// WishList
 Route::post('wishlist_authorization', [WishListController::class, 'checkAuthorization']);
 Route::get('wishlist_get_all_levels', [WishListController::class, 'getAllLevels']);
 Route::get('wishlist_get_all_members', [WishListController::class, 'getAllMembers']);

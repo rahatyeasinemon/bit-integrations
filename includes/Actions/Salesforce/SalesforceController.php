@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Salesforce;
 
-use WP_Error;
-use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Flow\FlowController;
+use WP_Error;
 
 class SalesforceController
 {
@@ -38,12 +38,12 @@ class SalesforceController
 
         $apiEndpoint = 'https://login.salesforce.com/services/oauth2/token?grant_type=authorization_code&client_id=' . $requestsParams->clientId . '&client_secret=' . $requestsParams->clientSecret . '&redirect_uri=' . $requestsParams->redirectURI . '&code=' . $requestsParams->code;
         $requestParams = [
-            'grant_type' => 'authorization_code',
-            'code' => explode('#', $requestsParams->code)[0],
-            'client_id' => $requestsParams->clientId,
+            'grant_type'    => 'authorization_code',
+            'code'          => explode('#', $requestsParams->code)[0],
+            'client_id'     => $requestsParams->clientId,
             'client_secret' => $requestsParams->clientSecret,
-            'redirect_uri' => \urldecode($requestsParams->redirectURI),
-            'format' => 'json',
+            'redirect_uri'  => urldecode($requestsParams->redirectURI),
+            'format'        => 'json',
         ];
         $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
 
@@ -53,7 +53,7 @@ class SalesforceController
                 400
             );
         }
-        $apiResponse->generates_on = \time();
+        $apiResponse->generates_on = time();
         wp_send_json_success($apiResponse, 200);
     }
 
@@ -74,63 +74,72 @@ class SalesforceController
             );
         }
         $response = [];
-        if ((intval($customFieldRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($customFieldRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = self::refreshAccessToken($customFieldRequestParams);
         }
 
-
         switch ($customFieldRequestParams->actionName) {
             case 'contact-create':
-                $action = "Contact";
+                $action = 'Contact';
+
                 break;
             case 'lead-create':
-                $action = "Lead";
+                $action = 'Lead';
+
                 break;
             case 'account-create':
-                $action = "Account";
+                $action = 'Account';
+
                 break;
             case 'campaign-create':
             case 'add-campaign-member':
-                $action = "Campaign";
+                $action = 'Campaign';
+
                 break;
             case 'opportunity-create':
-                $action = "Opportunity";
+                $action = 'Opportunity';
+
                 break;
             case 'event-create':
-                $action = "Event";
+                $action = 'Event';
+
                 break;
             case 'case-create':
-                $action = "Case";
+                $action = 'Case';
+
                 break;
 
             default:
                 $action = '';
+
                 break;
         }
 
-        $apiEndpoint                            = "{$customFieldRequestParams->tokenDetails->instance_url}/services/data/v37.0/sobjects/{$action}/describe";
-        $authorizationHeader['Authorization']   = "Bearer {$customFieldRequestParams->tokenDetails->access_token}";
-        $authorizationHeader['Content-Type']    = 'application/json';
-        $apiResponse                            = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+        $apiEndpoint = "{$customFieldRequestParams->tokenDetails->instance_url}/services/data/v37.0/sobjects/{$action}/describe";
+        $authorizationHeader['Authorization'] = "Bearer {$customFieldRequestParams->tokenDetails->access_token}";
+        $authorizationHeader['Content-Type'] = 'application/json';
+        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 
         if (!property_exists((object) $apiResponse, 'fields')) {
             wp_send_json_error($apiResponse, 400);
         }
 
         $customFields = array_filter($apiResponse->fields, function ($field) {
-            if ($field->custom) return true;
+            if ($field->custom) {
+                return true;
+            }
         });
 
         $fieldMap = [];
         foreach ($customFields as $field) {
-            array_push(
-                $fieldMap,
-                (object) [
-                    'key'       => $field->name,
-                    'label'     => $field->label,
-                    'required'  => false
-                ]
-            );
+
+            $fieldMap[]
+            = (object) [
+                'key'      => $field->name,
+                'label'    => $field->label,
+                'required' => false
+            ]
+            ;
         }
 
         if (!empty($response['tokenDetails'])) {
@@ -155,7 +164,7 @@ class SalesforceController
             );
         }
         $response = [];
-        if ((intval($campaignRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($campaignRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = self::refreshAccessToken($campaignRequestParams);
         }
 
@@ -195,7 +204,7 @@ class SalesforceController
             );
         }
         $response = [];
-        if ((intval($campaignRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($campaignRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = self::refreshAccessToken($campaignRequestParams);
         }
 
@@ -235,7 +244,7 @@ class SalesforceController
             );
         }
         $response = [];
-        if ((intval($campaignRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($campaignRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = self::refreshAccessToken($campaignRequestParams);
         }
 
@@ -274,7 +283,7 @@ class SalesforceController
             );
         }
         $response = [];
-        if ((intval($campaignRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($campaignRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = self::refreshAccessToken($campaignRequestParams);
         }
 
@@ -297,53 +306,6 @@ class SalesforceController
         wp_send_json_success($response, 200);
     }
 
-    protected static function refreshAccessToken($apiData)
-    {
-        if (
-            !is_object($apiData)
-            || empty($apiData->clientId)
-            || empty($apiData->clientSecret)
-            || empty($apiData->tokenDetails)
-        ) {
-            return false;
-        }
-        $tokenDetails = $apiData->tokenDetails;
-
-        $apiEndpoint = 'https://login.salesforce.com/services/oauth2/token?grant_type=refresh_token&client_id=' . $apiData->clientId . '&client_secret=' . $apiData->clientSecret . '&redirect_uri=' . $apiData->redirectURI . '&refresh_token=' . $tokenDetails->refresh_token;
-        $requestParams = [
-            'grant_type' => 'refresh_token',
-            'client_id' => $apiData->clientId,
-            'client_secret' => $apiData->clientSecret,
-            'redirect_uri' => \urldecode($apiData->redirectURI),
-            'refresh_token' => $tokenDetails->refresh_token
-        ];
-
-        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
-            return false;
-        }
-        $tokenDetails->generates_on = \time();
-        $tokenDetails->access_token = $apiResponse->access_token;
-        return $tokenDetails;
-    }
-
-    private static function saveRefreshedToken($integrationID, $tokenDetails)
-    {
-        if (empty($integrationID)) {
-            return;
-        }
-
-        $flow = new FlowController();
-        $selesforceDetails = $flow->get(['id' => $integrationID]);
-        if (is_wp_error($selesforceDetails)) {
-            return;
-        }
-
-        $newDetails = json_decode($selesforceDetails[0]->flow_details);
-        $newDetails->tokenDetails = $tokenDetails;
-        $flow->update($integrationID, ['flow_details' => \json_encode($newDetails)]);
-    }
-
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
@@ -358,11 +320,11 @@ class SalesforceController
             return new WP_Error('REQ_FIELD_EMPTY', __('list are required for zoho desk api', 'bit-integrations'));
         }
 
-        if ((intval($tokenDetails->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($tokenDetails->generates_on) + (55 * 60)) < time()) {
             $requiredParams['clientId'] = $integrationDetails->clientId;
             $requiredParams['clientSecret'] = $integrationDetails->clientSecret;
             $requiredParams['tokenDetails'] = $tokenDetails;
-            $newTokenDetails = self::refreshAccessToken((object)$requiredParams);
+            $newTokenDetails = self::refreshAccessToken((object) $requiredParams);
             if ($newTokenDetails) {
                 self::saveRefreshedToken($this->_integrationID, $newTokenDetails);
                 $tokenDetails = $newTokenDetails;
@@ -381,6 +343,55 @@ class SalesforceController
         if (is_wp_error($salesforceApiResponse)) {
             return $salesforceApiResponse;
         }
+
         return $salesforceApiResponse;
+    }
+
+    protected static function refreshAccessToken($apiData)
+    {
+        if (
+            !\is_object($apiData)
+            || empty($apiData->clientId)
+            || empty($apiData->clientSecret)
+            || empty($apiData->tokenDetails)
+        ) {
+            return false;
+        }
+        $tokenDetails = $apiData->tokenDetails;
+
+        $apiEndpoint = 'https://login.salesforce.com/services/oauth2/token?grant_type=refresh_token&client_id=' . $apiData->clientId . '&client_secret=' . $apiData->clientSecret . '&redirect_uri=' . $apiData->redirectURI . '&refresh_token=' . $tokenDetails->refresh_token;
+        $requestParams = [
+            'grant_type'    => 'refresh_token',
+            'client_id'     => $apiData->clientId,
+            'client_secret' => $apiData->clientSecret,
+            'redirect_uri'  => urldecode($apiData->redirectURI),
+            'refresh_token' => $tokenDetails->refresh_token
+        ];
+
+        $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
+        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
+            return false;
+        }
+        $tokenDetails->generates_on = time();
+        $tokenDetails->access_token = $apiResponse->access_token;
+
+        return $tokenDetails;
+    }
+
+    private static function saveRefreshedToken($integrationID, $tokenDetails)
+    {
+        if (empty($integrationID)) {
+            return;
+        }
+
+        $flow = new FlowController();
+        $selesforceDetails = $flow->get(['id' => $integrationID]);
+        if (is_wp_error($selesforceDetails)) {
+            return;
+        }
+
+        $newDetails = json_decode($selesforceDetails[0]->flow_details);
+        $newDetails->tokenDetails = $tokenDetails;
+        $flow->update($integrationID, ['flow_details' => json_encode($newDetails)]);
     }
 }

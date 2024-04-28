@@ -3,6 +3,7 @@
 /**
  * SendFox Record Api
  */
+
 namespace BitCode\FI\Actions\SendFox;
 
 use BitCode\FI\Core\Util\Common;
@@ -28,14 +29,14 @@ class RecordApiHelper
         $listId = explode(',', $listId);
         $header = [
             'Authorization' => "Bearer {$access_token}",
-            'Accept' => 'application/json',
+            'Accept'        => 'application/json',
         ];
 
         $data = [
-            'email' => $finalData['email'],
+            'email'      => $finalData['email'],
             'first_name' => $finalData['first_name'],
-            'last_name' => $finalData['last_name'],
-            'lists' => $listId,
+            'last_name'  => $finalData['last_name'],
+            'lists'      => $listId,
         ];
 
         return HttpHelper::post($apiEndpoints, $data, $header);
@@ -47,7 +48,7 @@ class RecordApiHelper
 
         $header = [
             'Authorization' => "Bearer {$access_token}",
-            'Accept' => 'application/json',
+            'Accept'        => 'application/json',
         ];
 
         $data = [
@@ -66,10 +67,11 @@ class RecordApiHelper
             $actionValue = $value->sendFoxFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
 
@@ -82,10 +84,11 @@ class RecordApiHelper
             $actionValue = $value->sendFoxListFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
 
@@ -98,10 +101,11 @@ class RecordApiHelper
             $actionValue = $value->sendFoxUnsubscribeFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
 
@@ -111,12 +115,13 @@ class RecordApiHelper
 
         $header = [
             'Authorization' => "Bearer {$access_token}",
-            'Accept' => 'application/json',
+            'Accept'        => 'application/json',
         ];
 
         $data = [
             'email' => $finalData['email'],
         ];
+
         return HttpHelper::request($apiEndpoints, 'PATCH', $data, $header);
     }
 

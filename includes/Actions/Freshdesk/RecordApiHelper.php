@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Freshdesk;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -16,6 +16,7 @@ use BitCode\FI\Core\Util\HttpHelper;
 class RecordApiHelper
 {
     private $_integrationID;
+
     private $_api_key;
 
     public function __construct($api_key, $integrationId)
@@ -39,17 +40,18 @@ class RecordApiHelper
             );
         }
         $header = [
-            'Authorization' => base64_encode("$api_key"),
-            'Content-Type' => 'application/json'
+            'Authorization' => base64_encode("{$api_key}"),
+            'Content-Type'  => 'application/json'
         ];
 
         if ($fileTicket) {
             $data = $data + ['attachments' => [$fileTicket]];
 
             $sendPhotoApiHelper = new AllFilesApiHelper();
+
             return $sendPhotoApiHelper->allUploadFiles($apiEndpoint, $data, $api_key);
         }
-        $data = \json_encode($data);
+        $data = json_encode($data);
         $apiResponse = HttpHelper::post($apiEndpoint, $data, $header);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
@@ -57,7 +59,8 @@ class RecordApiHelper
                 400
             );
         }
-        $apiResponse->generates_on = \time();
+        $apiResponse->generates_on = time();
+
         return $apiResponse;
     }
 
@@ -69,10 +72,11 @@ class RecordApiHelper
             $actionValue = $value->freshdeskFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
 
@@ -85,10 +89,11 @@ class RecordApiHelper
             $actionValue = $value->contactFreshdeskFormField;
             if ($triggerValue === 'custom') {
                 $dataFinalContact[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinalContact[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinalContact;
     }
 
@@ -109,18 +114,19 @@ class RecordApiHelper
             );
         }
         $header = [
-            'Authorization' => base64_encode("$api_key"),
-            'Content-Type' => 'application/json'
+            'Authorization' => base64_encode("{$api_key}"),
+            'Content-Type'  => 'application/json'
         ];
         $apiEndpoint = $app_base_domamin . '/api/v2/contacts?email=' . $email;
+
         return HttpHelper::get($apiEndpoint, null, $header);
     }
 
     public function insertContact($app_base_domamin, $finalDataContact, $api_key, $avatar)
     {
         if (
-            empty($app_base_domamin) ||
-            empty($finalDataContact)
+            empty($app_base_domamin)
+            || empty($finalDataContact)
             || empty($api_key)
         ) {
             wp_send_json_error(
@@ -132,8 +138,8 @@ class RecordApiHelper
             );
         }
         $header = [
-            'Authorization' => base64_encode("$api_key"),
-            'Content-Type' => 'multipart/form-data'
+            'Authorization' => base64_encode("{$api_key}"),
+            'Content-Type'  => 'multipart/form-data'
         ];
 
         $data = $finalDataContact;
@@ -141,6 +147,7 @@ class RecordApiHelper
         if ($avatar) {
             $data = $finalDataContact + ['avatar' => $avatar[0][0]];
             $sendPhotoApiHelper = new FilesApiHelper();
+
             return $sendPhotoApiHelper->uploadFiles($apiEndpoint, $data, $api_key);
         }
 
@@ -150,8 +157,8 @@ class RecordApiHelper
     public function updateContact($app_base_domamin, $finalDataContact, $api_key, $contactId)
     {
         if (
-            empty($app_base_domamin) ||
-            empty($finalDataContact)
+            empty($app_base_domamin)
+            || empty($finalDataContact)
             || empty($api_key) || empty($contactId)
         ) {
             wp_send_json_error(
@@ -163,10 +170,10 @@ class RecordApiHelper
             );
         }
         $header = [
-            'Authorization' => base64_encode("$api_key"),
-            'Content-Type' => 'application/json'
+            'Authorization' => base64_encode("{$api_key}"),
+            'Content-Type'  => 'application/json'
         ];
-        $data = \json_encode($finalDataContact);
+        $data = json_encode($finalDataContact);
         $apiEndpoint = $app_base_domamin . '/api/v2/contacts/' . $contactId;
 
         return HttpHelper::request($apiEndpoint, 'PUT', $data, $header);
@@ -182,22 +189,22 @@ class RecordApiHelper
     ) {
         $fieldData = [];
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $finalData = $finalData + ['status' => \json_decode($integrationDetails->status)] + ['priority' => \json_decode($integrationDetails->priority)];
+        $finalData = $finalData + ['status' => json_decode($integrationDetails->status)] + ['priority' => json_decode($integrationDetails->priority)];
 
         if (!empty($integrationDetails->selected_ticket_type)) {
             $finalData['type'] = $integrationDetails->selected_ticket_type;
         }
         if (!empty($integrationDetails->selected_ticket_source)) {
-            $finalData['source'] = (int)$integrationDetails->selected_ticket_source;
+            $finalData['source'] = (int) $integrationDetails->selected_ticket_source;
         }
         if (!empty($integrationDetails->selected_ticket_group)) {
-            $finalData['group_id'] = (int)$integrationDetails->selected_ticket_group;
+            $finalData['group_id'] = (int) $integrationDetails->selected_ticket_group;
         }
         if (!empty($integrationDetails->selected_ticket_product)) {
-            $finalData['product_id'] = (int)$integrationDetails->selected_ticket_product;
+            $finalData['product_id'] = (int) $integrationDetails->selected_ticket_product;
         }
         if (!empty($integrationDetails->selected_ticket_agent)) {
-            $finalData['responder_id'] = (int)$integrationDetails->selected_ticket_agent;
+            $finalData['responder_id'] = (int) $integrationDetails->selected_ticket_agent;
         }
 
         if ($integrationDetails->updateContact && $integrationDetails->contactShow) {
@@ -211,7 +218,7 @@ class RecordApiHelper
                 $contactId = $apiResponseFetchContact[0]->id;
                 $apiResponseContact = $this->updateContact($app_base_domamin, $finalDataContact, $integrationDetails->api_key, $contactId);
             }
-        };
+        }
 
         if ($integrationDetails->contactShow) {
             $finalDataContact = $this->generateReqDataFromFieldMapContact($fieldValues, $fieldMapContact);
@@ -221,7 +228,7 @@ class RecordApiHelper
             if (empty($apiResponseFetchContact)) {
                 $apiResponseContact = $this->insertContact($app_base_domamin, $finalDataContact, $integrationDetails->api_key, $avatar);
             }
-        };
+        }
         $attachmentsFieldName = $integrationDetails->actions->attachments;
         $fileTicket = $fieldValues[$attachmentsFieldName][0];
         $apiResponse = $this->insertTicket($apiEndpoint, $finalData, $integrationDetails->api_key, $fileTicket);
@@ -231,6 +238,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->_integrationID, json_encode(['type' => 'record', 'type_name' => 'add-contact']), 'success', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }

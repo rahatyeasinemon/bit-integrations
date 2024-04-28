@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Insightly;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Insightly integration
@@ -22,16 +22,16 @@ class InsightlyController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiUrl       = $fieldsRequestParams->api_url;
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = "https://api." . $apiUrl . "/v3.1/Users";
+        $apiUrl = $fieldsRequestParams->api_url;
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = 'https://api.' . $apiUrl . '/v3.1/Users';
         $headers = [
-            "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
+            'Authorization' => 'Basic ' . base64_encode("{$apiKey}:"),
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (is_array($response) && isset($response[0]->USER_ID)) {
+        if (\is_array($response) && isset($response[0]->USER_ID)) {
             wp_send_json_success('Authentication successful', 200);
         } else {
             wp_send_json_error('Please enter valid API URL & API key', 400);
@@ -44,12 +44,11 @@ class InsightlyController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-
-        $apiUrl       = $fieldsRequestParams->api_url;
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = "https://api." . $apiUrl . "/v3.1/Organisations";
+        $apiUrl = $fieldsRequestParams->api_url;
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = 'https://api.' . $apiUrl . '/v3.1/Organisations';
         $headers = [
-            "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
+            'Authorization' => 'Basic ' . base64_encode("{$apiKey}:"),
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -72,20 +71,19 @@ class InsightlyController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiUrl       = $fieldsRequestParams->api_url;
-        $apiKey      = $fieldsRequestParams->api_key;
+        $apiUrl = $fieldsRequestParams->api_url;
+        $apiKey = $fieldsRequestParams->api_key;
 
-
-        if ($fieldsRequestParams->action_name == "opportunity") {
-            $apiEndpoint = "https://api." . $apiUrl . "/v3.1/OpportunityCategories";
-        } elseif ($fieldsRequestParams->action_name == "project") {
-            $apiEndpoint = "https://api." . $apiUrl . "/v3.1/ProjectCategories";
-        } elseif ($fieldsRequestParams->action_name == "task") {
-            $apiEndpoint = "https://api." . $apiUrl . "/v3.1/TaskCategories";
+        if ($fieldsRequestParams->action_name == 'opportunity') {
+            $apiEndpoint = 'https://api.' . $apiUrl . '/v3.1/OpportunityCategories';
+        } elseif ($fieldsRequestParams->action_name == 'project') {
+            $apiEndpoint = 'https://api.' . $apiUrl . '/v3.1/ProjectCategories';
+        } elseif ($fieldsRequestParams->action_name == 'task') {
+            $apiEndpoint = 'https://api.' . $apiUrl . '/v3.1/TaskCategories';
         }
 
         $headers = [
-            "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
+            'Authorization' => 'Basic ' . base64_encode("{$apiKey}:"),
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -108,10 +106,10 @@ class InsightlyController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiUrl       = $fieldsRequestParams->api_url;
-        $apiEndpoint = "https://my.insightly.app/api/v1/crm-statuses?api_token=$apiKey";
-        $header      = [
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiUrl = $fieldsRequestParams->api_url;
+        $apiEndpoint = "https://my.insightly.app/api/v1/crm-statuses?api_token={$apiKey}";
+        $header = [
             'Brand' => $apiUrl
         ];
 
@@ -136,11 +134,11 @@ class InsightlyController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiUrl       = $fieldsRequestParams->api_url;
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = "https://api." . $apiUrl . "/v3.1/LeadStatuses";
+        $apiUrl = $fieldsRequestParams->api_url;
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = 'https://api.' . $apiUrl . '/v3.1/LeadStatuses';
         $headers = [
-            "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
+            'Authorization' => 'Basic ' . base64_encode("{$apiKey}:"),
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -163,11 +161,11 @@ class InsightlyController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiUrl       = $fieldsRequestParams->api_url;
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = "https://api." . $apiUrl . "/v3.1/LeadSources";
+        $apiUrl = $fieldsRequestParams->api_url;
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = 'https://api.' . $apiUrl . '/v3.1/LeadSources';
         $headers = [
-            "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
+            'Authorization' => 'Basic ' . base64_encode("{$apiKey}:"),
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -190,11 +188,11 @@ class InsightlyController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiUrl       = $fieldsRequestParams->api_url;
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = "https://api." . $apiUrl . "/v3.1/Pipelines";
+        $apiUrl = $fieldsRequestParams->api_url;
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = 'https://api.' . $apiUrl . '/v3.1/Pipelines';
         $headers = [
-            "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
+            'Authorization' => 'Basic ' . base64_encode("{$apiKey}:"),
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -226,20 +224,20 @@ class InsightlyController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiUrl         = $fieldsRequestParams->api_url;
-        $apiKey         = $fieldsRequestParams->api_key;
-        $apiEndpoint    = "https://api." . $apiUrl . "/v3.1/PipelineStages";
-        $headers        = [
-            "Authorization" => 'Basic ' . base64_encode("$apiKey:"),
+        $apiUrl = $fieldsRequestParams->api_url;
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = 'https://api.' . $apiUrl . '/v3.1/PipelineStages';
+        $headers = [
+            'Authorization' => 'Basic ' . base64_encode("{$apiKey}:"),
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
         if (!empty($response)) {
             foreach ($response as $pipelineStage) {
                 $pipelineStages[] = [
-                    'id'           => (string) $pipelineStage->STAGE_ID,
-                    'pipeline_id'  => (string) $pipelineStage->PIPELINE_ID,
-                    'name'         => $pipelineStage->STAGE_NAME
+                    'id'          => (string) $pipelineStage->STAGE_ID,
+                    'pipeline_id' => (string) $pipelineStage->PIPELINE_ID,
+                    'name'        => $pipelineStage->STAGE_NAME
                 ];
             }
             wp_send_json_success($pipelineStages, 200);
@@ -251,21 +249,22 @@ class InsightlyController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-        $integId            = $integrationData->id;
-        $authToken          = $integrationDetails->api_key;
-        $fieldMap           = $integrationDetails->field_map;
-        $actionName         = $integrationDetails->actionName;
+        $integId = $integrationData->id;
+        $authToken = $integrationDetails->api_key;
+        $fieldMap = $integrationDetails->field_map;
+        $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Insightly api', 'bit-integrations'));
         }
 
-        $recordApiHelper   = new RecordApiHelper($integrationDetails, $integId);
+        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $insightlyApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
 
         if (is_wp_error($insightlyApiResponse)) {
             return $insightlyApiResponse;
         }
+
         return $insightlyApiResponse;
     }
 }

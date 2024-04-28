@@ -2,19 +2,19 @@
 
 namespace BitCode\FI\Triggers\CustomTrigger;
 
-use WP_Error;
 use BitCode\FI\Flow\Flow;
+use WP_Error;
 
 class CustomTriggerController
 {
     public static function info()
     {
         return [
-            'name' => 'Custom Trigger',
-            'title' => 'You can connect bit integrations with any other plugin or theme using this trigger(custom hook)',
-            'type' => 'custom_trigger',
+            'name'      => 'Custom Trigger',
+            'title'     => 'You can connect bit integrations with any other plugin or theme using this trigger(custom hook)',
+            'type'      => 'custom_trigger',
             'is_active' => true,
-            'isPro' => false
+            'isPro'     => false
         ];
     }
 
@@ -33,9 +33,9 @@ class CustomTriggerController
     {
         $missing_field = null;
         if (!property_exists($data, 'hook_id') || (property_exists($data, 'hook_id') && !wp_is_uuid($data->hook_id))) {
-            $missing_field = is_null($missing_field) ? 'Custom trigger ID' : $missing_field . ', Webhook ID';
+            $missing_field = \is_null($missing_field) ? 'Custom trigger ID' : $missing_field . ', Webhook ID';
         }
-        if (!is_null($missing_field)) {
+        if (!\is_null($missing_field)) {
             wp_send_json_error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
@@ -58,6 +58,7 @@ class CustomTriggerController
         if ($flows = Flow::exists('CustomTrigger', $hook_id)) {
             Flow::execute('CustomTrigger', $hook_id, $data, $flows);
         }
+
         return rest_ensure_response(['status' => 'success']);
     }
 
@@ -66,9 +67,9 @@ class CustomTriggerController
         $missing_field = null;
 
         if (!property_exists($data, 'hook_id') || (property_exists($data, 'hook_id') && !wp_is_uuid($data->hook_id))) {
-            $missing_field = is_null($missing_field) ? 'Custom trigger ID' : $missing_field . ', Custom trigger ID';
+            $missing_field = \is_null($missing_field) ? 'Custom trigger ID' : $missing_field . ', Custom trigger ID';
         }
-        if (!is_null($missing_field)) {
+        if (!\is_null($missing_field)) {
             wp_send_json_error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 

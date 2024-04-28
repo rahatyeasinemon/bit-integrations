@@ -3,6 +3,7 @@
 /**
  * PipeDrive    Record Api
  */
+
 namespace BitCode\FI\Actions\PipeDrive;
 
 use BitCode\FI\Core\Util\Common;
@@ -15,8 +16,11 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_integrationDetails;
+
     private $_integrationID;
+
     private $_defaultHeader;
+
     private $baseUrl = 'https://api.pipedrive.com/v1/';
 
     public function __construct($integrationDetails, $integId)
@@ -48,21 +52,21 @@ class RecordApiHelper
                 $finalData['person_id'] = $moduleData->person_id;
             }
             if ($module === 'leads' && isset($actions->currency) && !empty($actions->currency)) {
-                $finalData['value'] = (object)[
-                    'amount'  => isset($finalData['value']) ? (int) $finalData['value'] : 0,
-                    'currency'=> $moduleData->currency,
+                $finalData['value'] = (object) [
+                    'amount'   => isset($finalData['value']) ? (int) $finalData['value'] : 0,
+                    'currency' => $moduleData->currency,
                 ];
                 unset($finalData['currency']);
             }
             if ($module === 'leads' && !isset($actions->currency) && isset($finalData['value'])) {
-                $finalData['value'] = (object)[
-                    'amount'  => (int) $finalData['value']
+                $finalData['value'] = (object) [
+                    'amount' => (int) $finalData['value']
                 ];
                 unset($finalData['value']);
             }
         }
         if (isset($moduleData->owner) && !empty($moduleData->owner)) {
-            if (in_array($module, ['activites', 'notes', 'deals'])) {
+            if (\in_array($module, ['activites', 'notes', 'deals'])) {
                 $finalData['user_id'] = (int) $moduleData->owner;
             } else {
                 $finalData['owner_id'] = (int) $moduleData->owner;
@@ -91,19 +95,19 @@ class RecordApiHelper
 
             if ($module === 'products') {
                 $finalData['prices'] = [(object) [
-                    'currency'               => $moduleData->currency,
-                    'price'                  => isset($finalData['price']) ? (int) $finalData['price'] : 0,
-                    'cost'                   => isset($finalData['cost']) ? (int) $finalData['cost'] : 0,
-                    'overhead_cost'          => isset($finalData['overhead_cost']) ? (int) $finalData['overhead_cost'] : 0,
+                    'currency'      => $moduleData->currency,
+                    'price'         => isset($finalData['price']) ? (int) $finalData['price'] : 0,
+                    'cost'          => isset($finalData['cost']) ? (int) $finalData['cost'] : 0,
+                    'overhead_cost' => isset($finalData['overhead_cost']) ? (int) $finalData['overhead_cost'] : 0,
                 ]];
                 unset($finalData['price'], $finalData['cost'],$finalData['overhead_cost']);
             }
         }
         if ($module === 'products' && !isset($actions->currency)) {
             $finalData['prices'] = [(object) [
-                'price'                  => isset($finalData['price']) ? (int) $finalData['price'] : 0,
-                'cost'                   => isset($finalData['cost']) ? (int) $finalData['cost'] : 0,
-                'overhead_cost'          => isset($finalData['overhead_cost']) ? (int) $finalData['overhead_cost'] : 0,
+                'price'         => isset($finalData['price']) ? (int) $finalData['price'] : 0,
+                'cost'          => isset($finalData['cost']) ? (int) $finalData['cost'] : 0,
+                'overhead_cost' => isset($finalData['overhead_cost']) ? (int) $finalData['overhead_cost'] : 0,
             ]];
             unset($finalData['price'], $finalData['cost'],$finalData['overhead_cost']);
         }
@@ -119,15 +123,15 @@ class RecordApiHelper
             $participants = explode(',', $moduleData->activities_participants);
             $allParticipants = [];
             foreach ($participants as $participant) {
-                array_push($allParticipants, (object)[
-                    'person_id'   => (int) $participant,
-                    'primary_flag'=> false
-                ]);
-            };
+                $allParticipants[] = (object) [
+                    'person_id'    => (int) $participant,
+                    'primary_flag' => false
+                ];
+            }
             $finalData['participants'] = $allParticipants;
         }
-        $response = HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $this->_defaultHeader);
-        return $response;
+
+        return HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $this->_defaultHeader);
     }
 
     public function addRelatedList($pipeDriveApiResponse, $integrationDetails, $fieldValues, $parentModule)
@@ -153,11 +157,11 @@ class RecordApiHelper
                 $participants = explode(',', $moduleData->activities_participants);
                 $allParticipants = [];
                 foreach ($participants as $participant) {
-                    array_push($allParticipants, (object)[
-                        'person_id'   => (int) $participant,
-                        'primary_flag'=> false
-                    ]);
-                };
+                    $allParticipants[] = (object) [
+                        'person_id'    => (int) $participant,
+                        'primary_flag' => false
+                    ];
+                }
                 $finalData['participants'] = $allParticipants;
             }
             $apiEndpoints = $this->baseUrl . $module . '?api_token=' . $this->_integrationDetails->api_key;
@@ -168,8 +172,7 @@ class RecordApiHelper
                 $finalData['deal_id'] = (int) $parendId;
             }
 
-            $response = HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $this->_defaultHeader);
-            return $response;
+            return HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $this->_defaultHeader);
         }
     }
 
@@ -181,7 +184,7 @@ class RecordApiHelper
             $actionValue = $value->pipeDriveFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }

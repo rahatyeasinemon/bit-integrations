@@ -15,26 +15,31 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $integrationDetails;
+
     private $integrationId;
+
     private $apiUrl;
+
     private $defaultHeader;
+
     private $type;
+
     private $typeName;
 
     public function __construct($integrationDetails, $integId, $subDomain, $apiKey)
     {
         $this->integrationDetails = $integrationDetails;
-        $this->integrationId      = $integId;
-        $this->apiUrl             = "https://api.companyhub.com/v1";
-        $this->defaultHeader      = [
-            "Authorization"     => "$subDomain $apiKey",
-            "Content-Type"      => "application/json"
+        $this->integrationId = $integId;
+        $this->apiUrl = 'https://api.companyhub.com/v1';
+        $this->defaultHeader = [
+            'Authorization' => "{$subDomain} {$apiKey}",
+            'Content-Type'  => 'application/json'
         ];
     }
 
     public function addContact($finalData)
     {
-        $this->type     = 'Contact';
+        $this->type = 'Contact';
         $this->typeName = 'Contact created';
 
         if (empty($finalData['LastName'])) {
@@ -47,26 +52,28 @@ class RecordApiHelper
             $finalData['Source'] = $this->integrationDetails->selectedSource;
         }
 
-        $apiEndpoint = $this->apiUrl . "/tables/contact";
+        $apiEndpoint = $this->apiUrl . '/tables/contact';
+
         return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
     public function addCompany($finalData)
     {
-        $this->type     = 'Company';
+        $this->type = 'Company';
         $this->typeName = 'Company created';
 
         if (empty($finalData['Name'])) {
             return ['success' => false, 'message' => 'Required field Company Name is empty', 'code' => 400];
         }
 
-        $apiEndpoint = $this->apiUrl . "/tables/company";
+        $apiEndpoint = $this->apiUrl . '/tables/company';
+
         return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
     public function addDeal($finalData)
     {
-        $this->type     = 'Deal';
+        $this->type = 'Deal';
         $this->typeName = 'Deal created';
 
         if (empty($finalData['Name'])) {
@@ -84,7 +91,8 @@ class RecordApiHelper
             $finalData['Contact'] = $this->integrationDetails->selectedContact;
         }
 
-        $apiEndpoint = $this->apiUrl . "/tables/deal";
+        $apiEndpoint = $this->apiUrl . '/tables/deal';
+
         return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
@@ -93,15 +101,16 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->companyHubFormField;
+            $actionValue = $value->companyHubFormField;
             $dataFinal[$actionValue] = ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue];
         }
+
         return $dataFinal;
     }
 
     public function execute($fieldValues, $fieldMap, $actionName)
     {
-        $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
 
         if ($actionName === 'contact') {
             $apiResponse = $this->addContact($finalData);
@@ -117,6 +126,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }

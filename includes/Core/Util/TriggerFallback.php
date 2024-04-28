@@ -2,10 +2,22 @@
 
 namespace BitCode\FI\Core\Util;
 
-use DateTime;
-use WP_Error;
-use Groundhogg\DB\Tags;
 use BitCode\FI\Flow\Flow;
+use DateTime;
+use EDD_Payment;
+use FrmEntryValues;
+use FrmField;
+use FrmFieldsHelper;
+use Give_Payment;
+use Give_Subscription;
+use Groundhogg\DB\Tags;
+use IPT_EForm_Form_Elements_Values;
+use IPT_FSQM_Form_Elements_Data;
+use MeprEvent;
+use RCP_Membership;
+use WP_Error;
+use WPCF7_ContactForm;
+use WPCF7_Submission;
 
 final class TriggerFallback
 {
@@ -39,8 +51,8 @@ final class TriggerFallback
             }
 
             foreach ($form_data as $key => $val) {
-                if (in_array($key, $fileFlds)) {
-                    if (is_array($val)) {
+                if (\in_array($key, $fileFlds)) {
+                    if (\is_array($val)) {
                         foreach ($val as $fileKey => $file) {
                             $tmpData = wp_get_attachment_url($form_data[$key][$fileKey]);
                             $form_data[$key][$fileKey] = Common::filePath($tmpData);
@@ -58,7 +70,7 @@ final class TriggerFallback
 
     public static function getFormidableFields($form_id)
     {
-        $fields = \FrmField::get_all_for_form($form_id, '', 'include');
+        $fields = FrmField::get_all_for_form($form_id, '', 'include');
         $field = [];
         if (empty($fields)) {
             wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));
@@ -69,57 +81,60 @@ final class TriggerFallback
         foreach ($fields as $key => $val) {
             if ($val->type === 'name') {
                 $field[] = (object) [
-                    'name'     => 'first-name',
-                    'label'    => 'First Name',
-                    'type'     => 'name'
+                    'name'  => 'first-name',
+                    'label' => 'First Name',
+                    'type'  => 'name'
                 ];
                 $field[] = (object) [
-                    'name'     => 'middle-name',
-                    'label'    => 'Middle Name',
-                    'type'     => 'name'
+                    'name'  => 'middle-name',
+                    'label' => 'Middle Name',
+                    'type'  => 'name'
                 ];
                 $field[] = (object) [
-                    'name'     => 'last-name',
-                    'label'    => 'Last Name',
-                    'type'     => 'name'
+                    'name'  => 'last-name',
+                    'label' => 'Last Name',
+                    'type'  => 'name'
                 ];
+
                 continue;
             } elseif ($val->type === 'address') {
                 $allFld = $val->default_value;
                 $addressKey = $val->field_key;
                 foreach ($allFld as $key => $val) {
                     $field[] = (object) [
-                        'name'     => $addressKey . '_' . $key,
-                        'label'    => 'address_' . $key,
-                        'type'     => 'address'
+                        'name'  => $addressKey . '_' . $key,
+                        'label' => 'address_' . $key,
+                        'type'  => 'address'
                     ];
                 }
+
                 continue;
             } elseif ($val->type === 'divider' || $val->type === 'end_divider') {
                 $formName = $val->name;
                 $fldKey = $val->field_key;
                 $cnt = 0;
-                for ($i = $key + 1; $i < count($fields); $i++) {
+                for ($i = $key + 1; $i < \count($fields); $i++) {
                     $id = $fields[$i]->id;
                     if (isset($fields[$i]->form_name) && $fields[$i]->form_name === $formName) {
                         $field[] = (object) [
-                            'name'     => $fldKey . '_' . $id,
-                            'label'    => $formName . ' ' . $fields[$i]->name,
-                            'type'     => $fields[$i]->type
+                            'name'  => $fldKey . '_' . $id,
+                            'label' => $formName . ' ' . $fields[$i]->name,
+                            'type'  => $fields[$i]->type
                         ];
                     }
                     $cnt++;
-                    array_push($visistedKey, $fields[$i]->field_key);
+                    $visistedKey[] = $fields[$i]->field_key;
                 }
+
                 continue;
             }
-            if (in_array($val->field_key, $visistedKey)) {
+            if (\in_array($val->field_key, $visistedKey)) {
                 // continue;
             }
             $field[] = (object) [
-                'name'     => $val->field_key,
-                'label'    => $val->name,
-                'type'     => $val->type
+                'name'  => $val->field_key,
+                'label' => $val->name,
+                'type'  => $val->type
             ];
         }
 
@@ -129,8 +144,8 @@ final class TriggerFallback
     public static function getFormidableFieldsValues($form, $entry_id)
     {
         $form_fields = [];
-        $fields = \FrmFieldsHelper::get_form_fields($form->id);
-        $entry_values = new \FrmEntryValues($entry_id);
+        $fields = FrmFieldsHelper::get_form_fields($form->id);
+        $entry_values = new FrmEntryValues($entry_id);
         $field_values = $entry_values->get_field_values();
 
         foreach ($fields as $field) {
@@ -138,15 +153,15 @@ final class TriggerFallback
 
             $val = (isset($field_values[$field->id]) ? $field_values[$field->id]->get_saved_value() : '');
 
-            if (is_array($val)) {
+            if (\is_array($val)) {
                 if ($field->type === 'name') {
-                    if (array_key_exists('first', $val) || array_key_exists('middle', $val) || array_key_exists('last', $val)) {
+                    if (\array_key_exists('first', $val) || \array_key_exists('middle', $val) || \array_key_exists('last', $val)) {
                         $form_fields['first-name'] = isset($val['first']) ? $val['first'] : '';
                         $form_fields['middle-name'] = isset($val['middle']) ? $val['middle'] : '';
                         $form_fields['last-name'] = isset($val['last']) ? $val['last'] : '';
                     }
                 } elseif ($field->type == 'checkbox' || $field->type == 'file') {
-                    $form_fields[$key] = $field->type == 'checkbox' && is_array($val) && count($val) == 1 ? $val[0] : $val;
+                    $form_fields[$key] = $field->type == 'checkbox' && \is_array($val) && \count($val) == 1 ? $val[0] : $val;
                 } elseif ($field->type == 'address') {
                     $addressKey = $field->field_key;
                     foreach ($val as $k => $value) {
@@ -156,8 +171,8 @@ final class TriggerFallback
                     $repeaterFld = $field->field_key;
                     global $wpdb;
 
-                    $allDividerFlds = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}frm_item_metas WHERE item_id IN (SELECT id FROM {$wpdb->prefix}frm_items WHERE parent_item_id = $entry_id)");
-                    $allItemId = $wpdb->get_results("SELECT id FROM {$wpdb->prefix}frm_items WHERE parent_item_id = $entry_id");
+                    $allDividerFlds = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}frm_item_metas WHERE item_id IN (SELECT id FROM {$wpdb->prefix}frm_items WHERE parent_item_id = {$entry_id})");
+                    $allItemId = $wpdb->get_results("SELECT id FROM {$wpdb->prefix}frm_items WHERE parent_item_id = {$entry_id}");
 
                     $repeater = [];
                     foreach ($allItemId as $k => $value) {
@@ -174,6 +189,7 @@ final class TriggerFallback
                     }
                     $form_fields[$repeaterFld] = $repeater;
                 }
+
                 continue;
             }
 
@@ -181,20 +197,6 @@ final class TriggerFallback
         }
 
         return $form_fields;
-    }
-
-    protected static function academyLmsFlowFilter($flows, $key, $value)
-    {
-        $filteredFlows = [];
-        foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
-                $flow->flow_details = json_decode($flow->flow_details);
-            }
-            if (!isset($flow->flow_details->$key) || $flow->flow_details->$key === 'any' || $flow->flow_details->$key == $value || $flow->flow_details->$key === '') {
-                $filteredFlows[] = $flow;
-            }
-        }
-        return $filteredFlows;
     }
 
     public static function academyHandleCourseEnroll($course_id, $enrollment_id)
@@ -213,7 +215,7 @@ final class TriggerFallback
         $result_student = [];
         if ($student_id && $student_name) {
             $result_student = [
-                'student_id' => $student_id,
+                'student_id'   => $student_id,
                 'student_name' => $student_name,
             ];
         }
@@ -221,8 +223,8 @@ final class TriggerFallback
         $result_course = [];
         $course = get_post($course_id);
         $result_course = [
-            'course_id' => $course->ID,
-            'course_title' => $course->post_title,
+            'course_id'     => $course->ID,
+            'course_title'  => $course->post_title,
             'course_author' => $author_name,
         ];
         $result = $result_student + $result_course;
@@ -230,7 +232,7 @@ final class TriggerFallback
         $courseInfo = get_post_meta($course_id);
         $course_temp = [];
         foreach ($courseInfo as $key => $val) {
-            if (is_array($val)) {
+            if (\is_array($val)) {
                 $val = maybe_unserialize($val[0]);
             }
             $course_temp[$key] = $val;
@@ -262,7 +264,7 @@ final class TriggerFallback
 
         $attempt_details = [];
         foreach ($attempt as $key => $val) {
-            if (is_array($val)) {
+            if (\is_array($val)) {
                 $val = maybe_unserialize($val[0]);
             }
             $attempt_details[$key] = maybe_unserialize($val);
@@ -291,7 +293,7 @@ final class TriggerFallback
 
         $attempt_details = [];
         foreach ($attempt as $key => $val) {
-            if (is_array($val)) {
+            if (\is_array($val)) {
                 $val = maybe_unserialize($val[0]);
             }
             $attempt_details[$key] = maybe_unserialize($val);
@@ -304,6 +306,7 @@ final class TriggerFallback
             $achived = self::academyLmsCheckedAchived($condition, $mark, $attempt_details['earned_marks']);
             $attempt_details['achived_status'] = $achived;
         }
+
         return ['triggered_entity' => 'AcademyLms', 'triggered_entity_id' => 5, 'data' => $attempt_details, 'flows' => $flows];
     }
 
@@ -336,6 +339,7 @@ final class TriggerFallback
                 $res = 'Achived';
             }
         }
+
         return $res;
     }
 
@@ -351,39 +355,39 @@ final class TriggerFallback
         if ($topic_type === 'lesson') {
             $lessonPost = \Academy\Traits\Lessons::get_lesson($topic_id);
             $topicData = [
-                'lesson_id' => $lessonPost->ID,
-                'lesson_title' => $lessonPost->lesson_title,
+                'lesson_id'          => $lessonPost->ID,
+                'lesson_title'       => $lessonPost->lesson_title,
                 'lesson_description' => $lessonPost->lesson_content,
-                'lesson_status' => $lessonPost->lesson_status,
+                'lesson_status'      => $lessonPost->lesson_status,
             ];
         }
 
         if ($topic_type === 'quiz') {
             $quiz = get_post($topic_id);
             $topicData = [
-                'quiz_id' => $quiz->ID,
-                'quiz_title' => $quiz->post_title,
+                'quiz_id'          => $quiz->ID,
+                'quiz_title'       => $quiz->post_title,
                 'quiz_description' => $quiz->post_content,
-                'quiz_url' => $quiz->guid,
+                'quiz_url'         => $quiz->guid,
             ];
         }
 
         $user = self::academyLmsGetUserInfo($user_id);
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
         $courseData = [];
         $coursePost = get_post($course_id);
         $courseData = [
-            'course_id' => $coursePost->ID,
-            'course_title' => $coursePost->post_title,
+            'course_id'          => $coursePost->ID,
+            'course_title'       => $coursePost->post_title,
             'course_description' => $coursePost->post_content,
-            'course_url' => $coursePost->guid,
+            'course_url'         => $coursePost->guid,
         ];
 
         $lessonDataFinal = $topicData + $courseData + $current_user;
@@ -403,16 +407,16 @@ final class TriggerFallback
 
         $coursePost = get_post($course_id);
         $courseData = [
-            'course_id' => $coursePost->ID,
+            'course_id'    => $coursePost->ID,
             'course_title' => $coursePost->post_title,
-            'course_url' => $coursePost->guid,
+            'course_url'   => $coursePost->guid,
         ];
         $user = self::academyLmsGetUserInfo(get_current_user_id());
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
@@ -431,12 +435,13 @@ final class TriggerFallback
             $user_meta = get_user_meta($user_id);
             $user = [
                 'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
+                'last_name'  => $user_meta['last_name'][0],
                 'user_email' => $userData->user_email,
-                'nickname' => $userData->user_nicename,
+                'nickname'   => $userData->user_nicename,
                 'avatar_url' => get_avatar_url($user_id),
             ];
         }
+
         return $user;
     }
 
@@ -446,7 +451,7 @@ final class TriggerFallback
         if (!$flows) {
             return;
         }
-        $user_id =  affwp_get_affiliate_user_id($affiliate_id);
+        $user_id = affwp_get_affiliate_user_id($affiliate_id);
 
         if (!$user_id) {
             return;
@@ -459,12 +464,11 @@ final class TriggerFallback
         $user = get_user_by('id', $user_id);
 
         $data = [
-            'status' => $status,
+            'status'          => $status,
             'flat_rate_basis' => $affiliate->flat_rate_basis,
-            'payment_email' => $affiliate->payment_email,
-            'rate_type' => $affiliate->rate_type,
-            'old_status' => $old_status,
-
+            'payment_email'   => $affiliate->payment_email,
+            'rate_type'       => $affiliate->rate_type,
+            'old_status'      => $old_status,
 
         ];
 
@@ -481,7 +485,7 @@ final class TriggerFallback
         if (!$flows) {
             return;
         }
-        $user_id =  affwp_get_affiliate_user_id($affiliate_id);
+        $user_id = affwp_get_affiliate_user_id($affiliate_id);
 
         if (!$user_id) {
             return;
@@ -491,12 +495,11 @@ final class TriggerFallback
         $user = get_user_by('id', $user_id);
 
         $data = [
-            'status' => $status,
+            'status'          => $status,
             'flat_rate_basis' => $affiliate->flat_rate_basis,
-            'payment_email' => $affiliate->payment_email,
-            'rate_type' => $affiliate->rate_type,
-            'old_status' => $old_status,
-
+            'payment_email'   => $affiliate->payment_email,
+            'rate_type'       => $affiliate->rate_type,
+            'old_status'      => $old_status,
 
         ];
 
@@ -513,25 +516,25 @@ final class TriggerFallback
         $affiliate = affwp_get_affiliate($referral->affiliate_id);
         $user_id = affwp_get_affiliate_user_id($referral->affiliate_id);
         $affiliateNote = maybe_serialize(affwp_get_affiliate_meta($affiliate->affiliate_id, 'notes', true));
-        $user               = get_user_by('id', $user_id);
+        $user = get_user_by('id', $user_id);
         $data = [
-            'affiliate_id' => $referral->affiliate_id,
-            'affiliate_url' => maybe_serialize(affwp_get_affiliate_referral_url(array('affiliate_id' => $referral->affiliate_id))),
+            'affiliate_id'         => $referral->affiliate_id,
+            'affiliate_url'        => maybe_serialize(affwp_get_affiliate_referral_url(['affiliate_id' => $referral->affiliate_id])),
             'referral_description' => $referral->description,
-            'amount' => $referral->amount,
-            'context' => $referral->context,
-            'campaign' => $referral->campaign,
-            'reference' => $referral->reference,
-            'flat_rate_basis' => $affiliate->flat_rate_basis,
-            'account_email' => $user->user_email,
-            'payment_email' => $affiliate->payment_email,
-            'rate_type' => $affiliate->rate_type,
-            'affiliate_note' => $affiliateNote,
+            'amount'               => $referral->amount,
+            'context'              => $referral->context,
+            'campaign'             => $referral->campaign,
+            'reference'            => $referral->reference,
+            'flat_rate_basis'      => $affiliate->flat_rate_basis,
+            'account_email'        => $user->user_email,
+            'payment_email'        => $affiliate->payment_email,
+            'rate_type'            => $affiliate->rate_type,
+            'affiliate_note'       => $affiliateNote,
 
         ];
 
         foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
+            if (\is_string($flow->flow_details)) {
                 $flow->flow_details = json_decode($flow->flow_details);
                 $flowDetails = $flow->flow_details;
             }
@@ -541,10 +544,10 @@ final class TriggerFallback
 
         $selectedTypeID = $flowDetails->selectedType;
 
-
         foreach ($allTypes as $type) {
             if ($referral->type == $type->type_key && $type->type_id == $selectedTypeID) {
                 $execData = ['triggered_entity' => 'Affiliate', 'triggered_entity_id' => 3, 'data' => $data, 'flows' => $flows];
+
                 break;
             }
         }
@@ -552,6 +555,7 @@ final class TriggerFallback
         if ($selectedTypeID == 'any') {
             $execData = ['triggered_entity' => 'Affiliate', 'triggered_entity_id' => 3, 'data' => $data, 'flows' => $flows];
         }
+
         return $execData;
     }
 
@@ -562,21 +566,19 @@ final class TriggerFallback
             return;
         }
 
-
         if ((string) $new_status === (string) $old_status || 'rejected' !== (string) $new_status) {
             return $new_status;
         }
 
-        $referral      = affwp_get_referral($referral_id);
-        $type          = $referral->type;
-        $user_id       = affwp_get_affiliate_user_id($referral->affiliate_id);
-        $user               = get_user_by('id', $user_id);
-        $affiliate          = affwp_get_affiliate($referral->affiliate_id);
+        $referral = affwp_get_referral($referral_id);
+        $type = $referral->type;
+        $user_id = affwp_get_affiliate_user_id($referral->affiliate_id);
+        $user = get_user_by('id', $user_id);
+        $affiliate = affwp_get_affiliate($referral->affiliate_id);
         $affiliateNote = maybe_serialize(affwp_get_affiliate_meta($affiliate->affiliate_id, 'notes', true));
 
-
         foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
+            if (\is_string($flow->flow_details)) {
                 $flow->flow_details = json_decode($flow->flow_details);
                 $flowDetails = $flow->flow_details;
             }
@@ -587,20 +589,20 @@ final class TriggerFallback
         $selectedTypeID = $flowDetails->selectedType;
 
         $data = [
-            'affiliate_id' => $referral->affiliate_id,
-            'affiliate_url' => maybe_serialize(affwp_get_affiliate_referral_url(array('affiliate_id' => $referral->affiliate_id))),
+            'affiliate_id'         => $referral->affiliate_id,
+            'affiliate_url'        => maybe_serialize(affwp_get_affiliate_referral_url(['affiliate_id' => $referral->affiliate_id])),
             'referral_description' => $referral->description,
-            'amount' => $referral->amount,
-            'context' => $referral->context,
-            'campaign' => $referral->campaign,
-            'reference' => $referral->reference,
-            'status' => $new_status,
-            'flat_rate_basis' => $affiliate->flat_rate_basis,
-            'account_email' => $user->user_email,
-            'payment_email' => $affiliate->payment_email,
-            'rate_type' => $affiliate->rate_type,
-            'affiliate_note' => $affiliateNote,
-            'old_status' => $old_status,
+            'amount'               => $referral->amount,
+            'context'              => $referral->context,
+            'campaign'             => $referral->campaign,
+            'reference'            => $referral->reference,
+            'status'               => $new_status,
+            'flat_rate_basis'      => $affiliate->flat_rate_basis,
+            'account_email'        => $user->user_email,
+            'payment_email'        => $affiliate->payment_email,
+            'rate_type'            => $affiliate->rate_type,
+            'affiliate_note'       => $affiliateNote,
+            'old_status'           => $old_status,
 
         ];
 
@@ -624,21 +626,19 @@ final class TriggerFallback
             return;
         }
 
-
         if ((string) $new_status === (string) $old_status || 'paid' !== (string) $new_status) {
             return $new_status;
         }
 
-        $referral      = affwp_get_referral($referral_id);
-        $type          = $referral->type;
-        $user_id       = affwp_get_affiliate_user_id($referral->affiliate_id);
-        $user               = get_user_by('id', $user_id);
-        $affiliate          = affwp_get_affiliate($referral->affiliate_id);
+        $referral = affwp_get_referral($referral_id);
+        $type = $referral->type;
+        $user_id = affwp_get_affiliate_user_id($referral->affiliate_id);
+        $user = get_user_by('id', $user_id);
+        $affiliate = affwp_get_affiliate($referral->affiliate_id);
         $affiliateNote = maybe_serialize(affwp_get_affiliate_meta($affiliate->affiliate_id, 'notes', true));
 
-
         foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
+            if (\is_string($flow->flow_details)) {
                 $flow->flow_details = json_decode($flow->flow_details);
                 $flowDetails = $flow->flow_details;
             }
@@ -649,20 +649,20 @@ final class TriggerFallback
         $selectedTypeID = $flowDetails->selectedType;
 
         $data = [
-            'affiliate_id' => $referral->affiliate_id,
-            'affiliate_url' => maybe_serialize(affwp_get_affiliate_referral_url(array('affiliate_id' => $referral->affiliate_id))),
+            'affiliate_id'         => $referral->affiliate_id,
+            'affiliate_url'        => maybe_serialize(affwp_get_affiliate_referral_url(['affiliate_id' => $referral->affiliate_id])),
             'referral_description' => $referral->description,
-            'amount' => $referral->amount,
-            'context' => $referral->context,
-            'campaign' => $referral->campaign,
-            'reference' => $referral->reference,
-            'status' => $new_status,
-            'flat_rate_basis' => $affiliate->flat_rate_basis,
-            'account_email' => $user->user_email,
-            'payment_email' => $affiliate->payment_email,
-            'rate_type' => $affiliate->rate_type,
-            'affiliate_note' => $affiliateNote,
-            'old_status' => $old_status,
+            'amount'               => $referral->amount,
+            'context'              => $referral->context,
+            'campaign'             => $referral->campaign,
+            'reference'            => $referral->reference,
+            'status'               => $new_status,
+            'flat_rate_basis'      => $affiliate->flat_rate_basis,
+            'account_email'        => $user->user_email,
+            'payment_email'        => $affiliate->payment_email,
+            'rate_type'            => $affiliate->rate_type,
+            'affiliate_note'       => $affiliateNote,
+            'old_status'           => $old_status,
 
         ];
 
@@ -692,7 +692,7 @@ final class TriggerFallback
 
     public static function ARMemberHandleRegisterForm($user_id, $post_data)
     {
-        if (array_key_exists('arm_form_id', $post_data) === false) {
+        if (\array_key_exists('arm_form_id', $post_data) === false) {
             return;
         }
         $form_id = $post_data['arm_form_id'];
@@ -716,20 +716,21 @@ final class TriggerFallback
             $userData = $userInfo->data;
             $user_meta = get_user_meta($user_id);
             $user = [
-                'user_id' => $user_id,
+                'user_id'    => $user_id,
                 'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
+                'last_name'  => $user_meta['last_name'][0],
                 'user_email' => $userData->user_email,
-                'nickname' => $userData->user_nicename,
+                'nickname'   => $userData->user_nicename,
                 'avatar_url' => get_avatar_url($user_id),
             ];
         }
+
         return $user;
     }
 
     public static function ARMemberHandleUpdateUserByForm($user_ID, $posted_data)
     {
-        if (array_key_exists('form_random_key', $posted_data) === false) {
+        if (\array_key_exists('form_random_key', $posted_data) === false) {
             return;
         }
         $form_id = str_starts_with($posted_data['form_random_key'], '101');
@@ -751,7 +752,7 @@ final class TriggerFallback
 
     public static function ARMemberHandleMemberAddByAdmin($user_id, $post_data)
     {
-        if (array_key_exists('action', $post_data) === false) {
+        if (\array_key_exists('action', $post_data) === false) {
             return;
         }
         $form_id = $post_data['form'];
@@ -778,6 +779,7 @@ final class TriggerFallback
             return;
         }
         $finalData = static::ARMemberGetUserInfo($user_id, $plan_id);
+
         return ['triggered_entity' => 'ARMember', 'triggered_entity_id' => 4, 'data' => $finalData, 'flows' => $flows];
     }
 
@@ -788,6 +790,7 @@ final class TriggerFallback
             return;
         }
         $finalData = static::ARMemberGetUserInfo($user_id, $plan_id);
+
         return ['triggered_entity' => 'ARMember', 'triggered_entity_id' => 5, 'data' => $finalData, 'flows' => $flows];
     }
 
@@ -798,6 +801,7 @@ final class TriggerFallback
             return;
         }
         $finalData = static::ARMemberGetUserInfo($user_id, $plan_id);
+
         return ['triggered_entity' => 'ARMember', 'triggered_entity_id' => 6, 'data' => $finalData, 'flows' => $flows];
     }
 
@@ -820,11 +824,12 @@ final class TriggerFallback
             return $value !== '';
         });
 
-        $data = ['subject' => isset($subject) ? $subject : '',];
+        $data = ['subject' => isset($subject) ? $subject : ''];
         foreach ($filterData as $value) {
             $item = explode(':', $value);
             $data[strtolower($item[0])] = trim($item[1]);
         }
+
         return ['triggered_entity' => 'Beaver', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
     }
 
@@ -837,9 +842,10 @@ final class TriggerFallback
         }
 
         $data = [
-            'name' => isset($name) ? $name : '',
+            'name'     => isset($name) ? $name : '',
             'password' => isset($password) ? $password : '',
         ];
+
         return ['triggered_entity' => 'Beaver', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
     }
 
@@ -852,9 +858,10 @@ final class TriggerFallback
         }
 
         $data = [
-            'name' => isset($name) ? $name : '',
+            'name'  => isset($name) ? $name : '',
             'email' => isset($email) ? $email : '',
         ];
+
         return ['triggered_entity' => 'Beaver', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
     }
 
@@ -872,12 +879,12 @@ final class TriggerFallback
         $data = [];
         foreach ($fields as $key => $value) {
             $fieldId = str_replace('form-field-', '', $key);
-            $data[$fieldId] = (is_array($value) && count($value) == 1) ? $value[0] : $value;
+            $data[$fieldId] = (\is_array($value) && \count($value) == 1) ? $value[0] : $value;
         }
         foreach ($files as $key => $item) {
             $fieldId = str_replace('form-field-', '', $key);
 
-            if (is_array($item)) {
+            if (\is_array($item)) {
                 foreach ($item as $file) {
                     if (!isset($file['file'])) {
                         continue;
@@ -935,15 +942,16 @@ final class TriggerFallback
             $user_meta = get_user_meta($user_id);
             $user = [
                 'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
+                'last_name'  => $user_meta['last_name'][0],
                 'user_email' => $userData->user_email,
-                'nickname' => $userData->user_nicename,
+                'nickname'   => $userData->user_nicename,
                 'avatar_url' => get_avatar_url($user_id),
             ];
         }
         if ($extra == '13') {
             $user['user_profile_url'] = maybe_serialize(bbp_get_user_profile_url($user_id));
         }
+
         return $user;
     }
 
@@ -960,19 +968,19 @@ final class TriggerFallback
 
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
         $user = static::BuddyBossGetUserInfo($initiator_user_id);
         $init_user = [
             'friend_first_name' => $user['first_name'],
-            'friend_last_name' => $user['last_name'],
-            'friend_email' => $user['user_email'],
-            'friend_nickname' => $user['nickname'],
+            'friend_last_name'  => $user['last_name'],
+            'friend_email'      => $user['user_email'],
+            'friend_nickname'   => $user['nickname'],
             'friend_avatar_url' => $user['avatar_url'],
-            'friend_id' => $initiator_user_id,
+            'friend_id'         => $initiator_user_id,
         ];
         $data = $current_user + $init_user;
 
@@ -992,37 +1000,23 @@ final class TriggerFallback
 
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
         $user = static::BuddyBossGetUserInfo($friend_user_id);
         $init_user = [
             'friend_first_name' => $user['first_name'],
-            'friend_last_name' => $user['last_name'],
-            'friend_email' => $user['user_email'],
-            'friend_nickname' => $user['nickname'],
+            'friend_last_name'  => $user['last_name'],
+            'friend_email'      => $user['user_email'],
+            'friend_nickname'   => $user['nickname'],
             'friend_avatar_url' => $user['avatar_url'],
-            'friend_id' => $friend_user_id,
+            'friend_id'         => $friend_user_id,
         ];
         $data = $current_user + $init_user;
 
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 2, 'data' => $data, 'flows' => $flows];
-    }
-
-    protected static function BuddyBossFlowFilter($flows, $key, $value)
-    {
-        $filteredFlows = [];
-        foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
-                $flow->flow_details = json_decode($flow->flow_details);
-            }
-            if (!isset($flow->flow_details->$key) || $flow->flow_details->$key === 'any' || $flow->flow_details->$key == $value || $flow->flow_details->$key === '') {
-                $filteredFlows[] = $flow;
-            }
-        }
-        return $filteredFlows;
     }
 
     public static function BuddyBossGetTopicInfo($topic_id)
@@ -1031,12 +1025,13 @@ final class TriggerFallback
         $topic = [];
         if ($topicInfo) {
             $topic = [
-                'topic_title' => $topicInfo->post_title,
-                'topic_id' => $topicInfo->ID,
-                'topic_url' => get_permalink($topicInfo->ID),
+                'topic_title'   => $topicInfo->post_title,
+                'topic_id'      => $topicInfo->ID,
+                'topic_url'     => get_permalink($topicInfo->ID),
                 'topic_content' => $topicInfo->post_content,
             ];
         }
+
         return $topic;
     }
 
@@ -1047,10 +1042,11 @@ final class TriggerFallback
         if ($forumInfo) {
             $forum = [
                 'forum_title' => $forumInfo->post_title,
-                'forum_id' => $forumInfo->ID,
-                'forum_url' => get_permalink($forumInfo->ID),
+                'forum_id'    => $forumInfo->ID,
+                'forum_url'   => get_permalink($forumInfo->ID),
             ];
         }
+
         return $forum;
     }
 
@@ -1067,9 +1063,9 @@ final class TriggerFallback
 
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
@@ -1089,7 +1085,7 @@ final class TriggerFallback
         }
 
         $groups = static::BuddyBossGetGroupInfo($group_id, 'public');
-        if (!count($groups)) {
+        if (!\count($groups)) {
             return;
         }
 
@@ -1098,13 +1094,14 @@ final class TriggerFallback
 
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
         $data = $current_user + $groups;
+
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 9, 'data' => $data, 'flows' => $flows];
     }
 
@@ -1125,17 +1122,18 @@ final class TriggerFallback
             );
         }
 
-        if (count($group)) {
+        if (\count($group)) {
             $groupInfo = [
-                'group_id' => $group[0]->id,
+                'group_id'    => $group[0]->id,
                 'group_title' => $group[0]->name,
-                'group_desc' => $group[0]->description
+                'group_desc'  => $group[0]->description
             ];
         }
         if ($extra == '9') {
             $group_obj = groups_get_group($group_id);
             $groupInfo['manage_group_request_url'] = maybe_serialize(bp_get_group_permalink($group_obj) . 'admin/membership-requests/');
         }
+
         return $groupInfo;
     }
 
@@ -1148,7 +1146,7 @@ final class TriggerFallback
         }
 
         $groups = static::BuddyBossGetGroupInfo($group_id, 'private');
-        if (!count($groups)) {
+        if (!\count($groups)) {
             return;
         }
 
@@ -1157,13 +1155,14 @@ final class TriggerFallback
 
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
         $data = $current_user + $groups;
+
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 10, 'data' => $data, 'flows' => $flows];
     }
 
@@ -1175,7 +1174,7 @@ final class TriggerFallback
             return;
         }
         $groups = static::BuddyBossGetGroupInfo($group_id);
-        if (!count($groups)) {
+        if (!\count($groups)) {
             return;
         }
 
@@ -1184,13 +1183,14 @@ final class TriggerFallback
 
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
         $data = $current_user + $groups;
+
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 11, 'data' => $data, 'flows' => $flows];
     }
 
@@ -1198,18 +1198,19 @@ final class TriggerFallback
     {
         global $wpdb;
 
-        $activity = $wpdb->get_results("select id,content from {$wpdb->prefix}bp_activity where id = $activity_id");
+        $activity = $wpdb->get_results("select id,content from {$wpdb->prefix}bp_activity where id = {$activity_id}");
 
         $group = groups_get_group($group_id);
         $activityInfo = [];
-        if (count($activity)) {
+        if (\count($activity)) {
             $activityInfo = [
-                'activity_id' => $activity[0]->id,
-                'activity_url' => bp_get_group_permalink($group) . 'activity',
-                'activity_content' => $activity[0]->content,
+                'activity_id'         => $activity[0]->id,
+                'activity_url'        => bp_get_group_permalink($group) . 'activity',
+                'activity_content'    => $activity[0]->content,
                 'activity_stream_url' => bp_core_get_user_domain($user_id) . 'activity/' . $activity_id,
             ];
         }
+
         return $activityInfo;
     }
 
@@ -1222,7 +1223,7 @@ final class TriggerFallback
         }
 
         $groups = static::BuddyBossGetGroupInfo($group_id);
-        if (!count($groups)) {
+        if (!\count($groups)) {
             return;
         }
 
@@ -1231,14 +1232,15 @@ final class TriggerFallback
 
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
         $posts = static::BuddyBossGetActivityInfo($activity_id, $group_id, $user_id);
         $data = $current_user + $groups + $posts;
+
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 12, 'data' => $data, 'flows' => $flows];
     }
 
@@ -1251,6 +1253,7 @@ final class TriggerFallback
                 'reply_content' => $replyInfo->post_content,
             ];
         }
+
         return $reply;
     }
 
@@ -1263,17 +1266,17 @@ final class TriggerFallback
         }
 
         $topics = static::BuddyBossGetTopicInfo($topic_id);
-        if (!count($topics)) {
+        if (!\count($topics)) {
             return;
         }
 
         $forums = static::BuddyBossGetForumInfo($forum_id);
-        if (!count($forums)) {
+        if (!\count($forums)) {
             return;
         }
 
         $replies = static::BuddyBossGetReplyInfo($reply_id);
-        if (!count($replies)) {
+        if (!\count($replies)) {
             return;
         }
 
@@ -1283,13 +1286,14 @@ final class TriggerFallback
 
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
         $data = $current_user + $topics + $forums + $replies;
+
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 4, 'data' => $data, 'flows' => $flows];
     }
 
@@ -1302,7 +1306,7 @@ final class TriggerFallback
         }
 
         $groups = static::BuddyBossGetGroupInfo($group_id, 'private', '13');
-        if (!count($groups)) {
+        if (!\count($groups)) {
             return;
         }
 
@@ -1310,15 +1314,16 @@ final class TriggerFallback
         $current_user = [];
 
         $current_user = [
-            'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
-            'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
-            'avatar_url' => $user['avatar_url'],
+            'first_name'       => $user['first_name'],
+            'last_name'        => $user['last_name'],
+            'user_email'       => $user['user_email'],
+            'nickname'         => $user['nickname'],
+            'avatar_url'       => $user['avatar_url'],
             'user_profile_url' => $user['user_profile_url'],
         ];
 
         $data = $current_user + $groups;
+
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 13, 'data' => $data, 'flows' => $flows];
     }
 
@@ -1334,13 +1339,14 @@ final class TriggerFallback
 
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
         $data = $current_user;
+
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 5, 'data' => $data, 'flows' => $flows];
     }
 
@@ -1358,13 +1364,14 @@ final class TriggerFallback
 
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
         $data = $current_user;
+
         return ['triggered_entity' => 'BuddyBoss', 'triggered_entity_id' => 6, 'data' => $data, 'flows' => $flows];
     }
 
@@ -1382,47 +1389,47 @@ final class TriggerFallback
         if ($id == 1 || $id == 2) {
             $fields = [
                 'First Name' => (object) [
-                    'fieldKey' => 'first_name',
+                    'fieldKey'  => 'first_name',
                     'fieldName' => 'First Name'
                 ],
                 'Last Name' => (object) [
-                    'fieldKey' => 'last_name',
+                    'fieldKey'  => 'last_name',
                     'fieldName' => 'Last Name'
                 ],
                 'Nick Name' => (object) [
-                    'fieldKey' => 'nickname',
+                    'fieldKey'  => 'nickname',
                     'fieldName' => 'Nick Name'
                 ],
                 'Avatar URL' => (object) [
-                    'fieldKey' => 'avatar_url',
+                    'fieldKey'  => 'avatar_url',
                     'fieldName' => 'Avatar URL'
                 ],
                 'Email' => (object) [
-                    'fieldKey' => 'user_email',
+                    'fieldKey'  => 'user_email',
                     'fieldName' => 'Email',
                 ],
                 'Friend ID' => (object) [
-                    'fieldKey' => 'friend_id',
+                    'fieldKey'  => 'friend_id',
                     'fieldName' => 'Friend ID',
                 ],
                 'Friend First Name' => (object) [
-                    'fieldKey' => 'friend_first_name',
+                    'fieldKey'  => 'friend_first_name',
                     'fieldName' => 'Friend First Name'
                 ],
                 'Friend Last Name' => (object) [
-                    'fieldKey' => 'friend_last_name',
+                    'fieldKey'  => 'friend_last_name',
                     'fieldName' => 'Friend Last Name'
                 ],
                 'Fiend Nick Name' => (object) [
-                    'fieldKey' => 'friend_nickname',
+                    'fieldKey'  => 'friend_nickname',
                     'fieldName' => 'Fiend Nick Name'
                 ],
                 'Friend Email' => (object) [
-                    'fieldKey' => 'friend_email',
+                    'fieldKey'  => 'friend_email',
                     'fieldName' => 'Friend Email'
                 ],
                 'Friend Avatar URL' => (object) [
-                    'fieldKey' => 'friend_avatar_url',
+                    'fieldKey'  => 'friend_avatar_url',
                     'fieldName' => 'Friend Avatar URL'
                 ],
 
@@ -1430,57 +1437,57 @@ final class TriggerFallback
         } elseif ($id == 3 || $id == 4) {
             $fields = [
                 'First Name' => (object) [
-                    'fieldKey' => 'first_name',
+                    'fieldKey'  => 'first_name',
                     'fieldName' => 'First Name'
                 ],
                 'Last Name' => (object) [
-                    'fieldKey' => 'last_name',
+                    'fieldKey'  => 'last_name',
                     'fieldName' => 'Last Name'
                 ],
                 'Nick Name' => (object) [
-                    'fieldKey' => 'nickname',
+                    'fieldKey'  => 'nickname',
                     'fieldName' => 'Nick Name'
                 ],
                 'Avatar URL' => (object) [
-                    'fieldKey' => 'avatar_url',
+                    'fieldKey'  => 'avatar_url',
                     'fieldName' => 'Avatar URL'
                 ],
                 'Email' => (object) [
-                    'fieldKey' => 'user_email',
+                    'fieldKey'  => 'user_email',
                     'fieldName' => 'Email',
                 ],
                 'Topic Title' => (object) [
-                    'fieldKey' => 'topic_title',
+                    'fieldKey'  => 'topic_title',
                     'fieldName' => 'Topic Title',
                 ],
                 'Topic ID' => (object) [
-                    'fieldKey' => 'topic_id',
+                    'fieldKey'  => 'topic_id',
                     'fieldName' => 'Topic ID',
                 ],
                 'Topic URL' => (object) [
-                    'fieldKey' => 'topic_url',
+                    'fieldKey'  => 'topic_url',
                     'fieldName' => 'Topic URL',
                 ],
                 'Topic Content' => (object) [
-                    'fieldKey' => 'topic_content',
+                    'fieldKey'  => 'topic_content',
                     'fieldName' => 'Topic Content',
                 ],
                 'Forum ID' => (object) [
-                    'fieldKey' => 'forum_id',
+                    'fieldKey'  => 'forum_id',
                     'fieldName' => 'Forum ID',
                 ],
                 'Forum Title' => (object) [
-                    'fieldKey' => 'forum_title',
+                    'fieldKey'  => 'forum_title',
                     'fieldName' => 'Forum Title',
                 ],
                 'Forum URL' => (object) [
-                    'fieldKey' => 'forum_url',
+                    'fieldKey'  => 'forum_url',
                     'fieldName' => 'Forum URL',
                 ],
             ];
             if ($id == 4) {
                 $fields['Reply Content'] = (object) [
-                    'fieldKey' => 'reply_content',
+                    'fieldKey'  => 'reply_content',
                     'fieldName' => 'Reply Content',
                 ];
             }
@@ -1488,104 +1495,104 @@ final class TriggerFallback
             $buddyBossProfileFields = static::getBuddyBossProfileField();
             foreach ($buddyBossProfileFields as $key => $val) {
                 $fields[$val->name] = (object) [
-                    'fieldKey' => str_replace(' ', '_', $val->name),
+                    'fieldKey'  => str_replace(' ', '_', $val->name),
                     'fieldName' => $val->name,
                 ];
             }
         } elseif ($id == 9 || $id == 10 || $id == 11 || $id == 13) {
             $fields = [
                 'Group Title' => (object) [
-                    'fieldKey' => 'group_title',
+                    'fieldKey'  => 'group_title',
                     'fieldName' => 'Group Title',
                 ],
                 'Group ID' => (object) [
-                    'fieldKey' => 'group_id',
+                    'fieldKey'  => 'group_id',
                     'fieldName' => 'Group ID',
                 ],
                 'Group Description' => (object) [
-                    'fieldKey' => 'group_desc',
+                    'fieldKey'  => 'group_desc',
                     'fieldName' => 'Group Description',
                 ],
                 'First Name' => (object) [
-                    'fieldKey' => 'first_name',
+                    'fieldKey'  => 'first_name',
                     'fieldName' => 'First Name'
                 ],
                 'Last Name' => (object) [
-                    'fieldKey' => 'last_name',
+                    'fieldKey'  => 'last_name',
                     'fieldName' => 'Last Name'
                 ],
                 'Nick Name' => (object) [
-                    'fieldKey' => 'nickname',
+                    'fieldKey'  => 'nickname',
                     'fieldName' => 'Nick Name'
                 ],
                 'Avatar URL' => (object) [
-                    'fieldKey' => 'avatar_url',
+                    'fieldKey'  => 'avatar_url',
                     'fieldName' => 'Avatar URL'
                 ],
                 'Email' => (object) [
-                    'fieldKey' => 'user_email',
+                    'fieldKey'  => 'user_email',
                     'fieldName' => 'Email',
                 ]
             ];
             if ($id == 13) {
                 $fields['User Profile URL'] = (object) [
-                    'fieldKey' => 'user_profile_url',
+                    'fieldKey'  => 'user_profile_url',
                     'fieldName' => 'User Profile URL',
                 ];
 
                 $fields['Manage Group Request URL'] = (object) [
-                    'fieldKey' => 'manage_group_request_url',
+                    'fieldKey'  => 'manage_group_request_url',
                     'fieldName' => 'Manage Group Request URL',
                 ];
             }
         } elseif ($id == 12) {
             $fields = [
                 'Group Title' => (object) [
-                    'fieldKey' => 'group_title',
+                    'fieldKey'  => 'group_title',
                     'fieldName' => 'Group Title',
                 ],
                 'Group ID' => (object) [
-                    'fieldKey' => 'group_id',
+                    'fieldKey'  => 'group_id',
                     'fieldName' => 'Group ID',
                 ],
                 'Group Description' => (object) [
-                    'fieldKey' => 'group_desc',
+                    'fieldKey'  => 'group_desc',
                     'fieldName' => 'Group Description',
                 ],
                 'First Name' => (object) [
-                    'fieldKey' => 'first_name',
+                    'fieldKey'  => 'first_name',
                     'fieldName' => 'First Name'
                 ],
                 'Last Name' => (object) [
-                    'fieldKey' => 'last_name',
+                    'fieldKey'  => 'last_name',
                     'fieldName' => 'Last Name'
                 ],
                 'Nick Name' => (object) [
-                    'fieldKey' => 'nickname',
+                    'fieldKey'  => 'nickname',
                     'fieldName' => 'Nick Name'
                 ],
                 'Avatar URL' => (object) [
-                    'fieldKey' => 'avatar_url',
+                    'fieldKey'  => 'avatar_url',
                     'fieldName' => 'Avatar URL'
                 ],
                 'Email' => (object) [
-                    'fieldKey' => 'user_email',
+                    'fieldKey'  => 'user_email',
                     'fieldName' => 'Email',
                 ],
                 'Activity ID' => (object) [
-                    'fieldKey' => 'activity_id',
+                    'fieldKey'  => 'activity_id',
                     'fieldName' => 'Activity ID',
                 ],
                 'Activity URL' => (object) [
-                    'fieldKey' => 'activity_url',
+                    'fieldKey'  => 'activity_url',
                     'fieldName' => 'Activity URL',
                 ],
                 'Activity Content' => (object) [
-                    'fieldKey' => 'activity_content',
+                    'fieldKey'  => 'activity_content',
                     'fieldName' => 'Activity Content',
                 ],
                 'Activity Stream URL' => (object) [
-                    'fieldKey' => 'activity_stream_url',
+                    'fieldKey'  => 'activity_stream_url',
                     'fieldName' => 'Activity Stream URL',
                 ],
 
@@ -1593,23 +1600,23 @@ final class TriggerFallback
         } else {
             $fields = [
                 'First Name' => (object) [
-                    'fieldKey' => 'first_name',
+                    'fieldKey'  => 'first_name',
                     'fieldName' => 'First Name'
                 ],
                 'Last Name' => (object) [
-                    'fieldKey' => 'last_name',
+                    'fieldKey'  => 'last_name',
                     'fieldName' => 'Last Name'
                 ],
                 'Nick Name' => (object) [
-                    'fieldKey' => 'nickname',
+                    'fieldKey'  => 'nickname',
                     'fieldName' => 'Nick Name'
                 ],
                 'Avatar URL' => (object) [
-                    'fieldKey' => 'avatar_url',
+                    'fieldKey'  => 'avatar_url',
                     'fieldName' => 'Avatar URL'
                 ],
                 'Email' => (object) [
-                    'fieldKey' => 'user_email',
+                    'fieldKey'  => 'user_email',
                     'fieldName' => 'Email',
                 ],
             ];
@@ -1617,11 +1624,12 @@ final class TriggerFallback
 
         foreach ($fields as $field) {
             $fieldsNew[] = [
-                'name' => $field->fieldKey,
-                'type' => 'text',
+                'name'  => $field->fieldKey,
+                'type'  => 'text',
                 'label' => $field->fieldName,
             ];
         }
+
         return $fieldsNew;
     }
 
@@ -1629,7 +1637,8 @@ final class TriggerFallback
     {
         global $wpdb;
         $table_name = $wpdb->prefix . 'bp_xprofile_fields';
-        $results = $wpdb->get_results("SELECT id, type , name FROM $table_name");
+        $results = $wpdb->get_results("SELECT id, type , name FROM {$table_name}");
+
         return $results;
     }
 
@@ -1643,7 +1652,7 @@ final class TriggerFallback
         $current_user = [];
 
         $fields = static::BuddyBossFields(7);
-        for ($i = 0; $i < count($fields); $i++) {
+        for ($i = 0; $i < \count($fields); $i++) {
             $current_user[$fields[$i]['name']] = $new_values[$i + 1]['value'];
         }
 
@@ -1662,9 +1671,9 @@ final class TriggerFallback
 
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
@@ -1683,9 +1692,9 @@ final class TriggerFallback
 
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
@@ -1704,9 +1713,9 @@ final class TriggerFallback
 
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
@@ -1720,7 +1729,7 @@ final class TriggerFallback
         }
 
         $metaData = get_post_meta($order_id);
-        $chekoutPageId = (int)$metaData['_wcf_checkout_id'][0];
+        $chekoutPageId = (int) $metaData['_wcf_checkout_id'][0];
         $flows = Flow::exists('CartFlow', $chekoutPageId);
 
         if (!$flows) {
@@ -1755,24 +1764,25 @@ final class TriggerFallback
             $taxstat = $item->get_tax_status();
             $label = 'line_items_';
             $count++;
-            $line_items_all['line_items'][] = (object)[
-                'product_id' => $product_id,
+            $line_items_all['line_items'][] = (object) [
+                'product_id'   => $product_id,
                 'variation_id' => $variation_id,
                 'product_name' => $product_name,
-                'quantity' => $quantity,
-                'subtotal' => $subtotal,
-                'total' => $total,
+                'quantity'     => $quantity,
+                'subtotal'     => $subtotal,
+                'total'        => $total,
                 'subtotal_tax' => $subtotal_tax,
-                'tax_class' => $taxclass,
-                'tax_status' => $taxstat,
+                'tax_class'    => $taxclass,
+                'tax_status'   => $taxstat,
             ];
         }
+
         return $line_items_all;
     }
 
     public static function CF7HandleSubmit()
     {
-        $submission = \WPCF7_Submission::get_instance();
+        $submission = WPCF7_Submission::get_instance();
         $postID = (int) $submission->get_meta('container_post_id');
 
         if (!$submission || !$posted_data = $submission->get_posted_data()) {
@@ -1782,7 +1792,7 @@ final class TriggerFallback
         if (isset($posted_data['_wpcf7'])) {
             $form_id = $posted_data['_wpcf7'];
         } else {
-            $current_form = \WPCF7_ContactForm::get_current();
+            $current_form = WPCF7_ContactForm::get_current();
             $form_id = $current_form->id();
         }
 
@@ -1802,7 +1812,7 @@ final class TriggerFallback
         // array to string conversion for radio and select fields
         $data = [];
         foreach ($posted_data as $key => $value) {
-            if (is_array($value) && count($value) == 1) {
+            if (\is_array($value) && \count($value) == 1) {
                 $data[$key] = $posted_data[$key][0];
             } else {
                 $data[$key] = $posted_data[$key];
@@ -1841,23 +1851,23 @@ final class TriggerFallback
             return;
         }
 
-        $payment = new \EDD_Payment($payment_id);
+        $payment = new EDD_Payment($payment_id);
 
         foreach ($cart_items as $item) {
             $final_data = [
-                'user_id' => $payment->user_id,
-                'first_name' => $payment->first_name,
-                'last_name' => $payment->last_name,
-                'user_email' => $payment->email,
-                'product_name' => $item['name'],
-                'product_id' => $item['id'],
-                'order_item_id' => $item['order_item_id'],
-                'discount_codes' => $payment->discounts,
+                'user_id'         => $payment->user_id,
+                'first_name'      => $payment->first_name,
+                'last_name'       => $payment->last_name,
+                'user_email'      => $payment->email,
+                'product_name'    => $item['name'],
+                'product_id'      => $item['id'],
+                'order_item_id'   => $item['order_item_id'],
+                'discount_codes'  => $payment->discounts,
                 'order_discounts' => $item['discount'],
-                'order_subtotal' => $payment->subtotal,
-                'order_total' => $payment->total,
-                'order_tax' => $payment->tax,
-                'payment_method' => $payment->gateway,
+                'order_subtotal'  => $payment->subtotal,
+                'order_total'     => $payment->total,
+                'order_tax'       => $payment->tax,
+                'payment_method'  => $payment->gateway,
             ];
         }
 
@@ -1879,23 +1889,23 @@ final class TriggerFallback
             return;
         }
 
-        $payment = new \EDD_Payment($payment_id);
+        $payment = new EDD_Payment($payment_id);
         foreach ($cart_items as $item) {
             $final_data = [
-                'user_id' => $payment->user_id,
-                'first_name' => $payment->first_name,
-                'last_name' => $payment->last_name,
-                'user_email' => $payment->email,
-                'product_name' => $item['name'],
-                'product_id' => $item['id'],
-                'order_item_id' => $item['order_item_id'],
-                'discount_codes' => $payment->discounts,
+                'user_id'         => $payment->user_id,
+                'first_name'      => $payment->first_name,
+                'last_name'       => $payment->last_name,
+                'user_email'      => $payment->email,
+                'product_name'    => $item['name'],
+                'product_id'      => $item['id'],
+                'order_item_id'   => $item['order_item_id'],
+                'discount_codes'  => $payment->discounts,
                 'order_discounts' => $item['discount'],
-                'order_subtotal' => $payment->subtotal,
-                'order_total' => $payment->total,
-                'order_tax' => $payment->tax,
-                'payment_method' => $payment->gateway,
-                'status' => $payment->status,
+                'order_subtotal'  => $payment->subtotal,
+                'order_total'     => $payment->total,
+                'order_tax'       => $payment->tax,
+                'payment_method'  => $payment->gateway,
+                'status'          => $payment->status,
             ];
         }
 
@@ -1912,7 +1922,7 @@ final class TriggerFallback
             return;
         }
 
-        $order_detail   = edd_get_payment($order_id);
+        $order_detail = edd_get_payment($order_id);
         $total_discount = 0;
 
         if (empty($order_detail)) {
@@ -1920,7 +1930,7 @@ final class TriggerFallback
         }
 
         $payment_id = $order_detail->ID;
-        $user_id    = edd_get_payment_user_id($payment_id);
+        $user_id = edd_get_payment_user_id($payment_id);
 
         if (!$user_id) {
             $user_id = wp_get_current_user()->ID;
@@ -1929,11 +1939,11 @@ final class TriggerFallback
         $userInfo = static::eddGetUserInfo($user_id);
 
         $payment_info = [
-            'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
-            'avatar_url' => $userInfo['avatar_url'],
-            'user_email' => $userInfo['user_email'],
+            'first_name'      => $userInfo['first_name'],
+            'last_name'       => $userInfo['last_name'],
+            'nickname'        => $userInfo['nickname'],
+            'avatar_url'      => $userInfo['avatar_url'],
+            'user_email'      => $userInfo['user_email'],
             'discount_codes'  => $order_detail->discounts,
             'order_discounts' => $total_discount,
             'order_subtotal'  => $order_detail->subtotal,
@@ -1954,19 +1964,19 @@ final class TriggerFallback
             $user_meta = get_user_meta($user_id);
             $user = [
                 'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
+                'last_name'  => $user_meta['last_name'][0],
                 'user_email' => $userData->user_email,
-                'nickname' => $userData->user_nicename,
+                'nickname'   => $userData->user_nicename,
                 'avatar_url' => get_avatar_url($user_id),
             ];
         }
+
         return $user;
     }
 
     public static function essentialBlocksHandler(...$args)
     {
         if ($flows = Flow::exists('EssentialBlocks', current_action())) {
-
             foreach ($flows as $flow) {
                 $flowDetails = json_decode($flow->flow_details);
                 if (!isset($flowDetails->primaryKey)) {
@@ -1975,14 +1985,14 @@ final class TriggerFallback
 
                 $primaryKeyValue = Helper::extractValueFromPath($args, $flowDetails->primaryKey->key);
                 if ($flowDetails->primaryKey->value === $primaryKeyValue) {
-                    $fieldKeys      = [];
-                    $formatedData   = [];
+                    $fieldKeys = [];
+                    $formatedData = [];
 
-                    if ($flowDetails->body->data && is_array($flowDetails->body->data)) {
+                    if ($flowDetails->body->data && \is_array($flowDetails->body->data)) {
                         $fieldKeys = array_map(function ($field) use ($args) {
                             return $field->key;
                         }, $flowDetails->body->data);
-                    } elseif (isset($flowDetails->field_map) && is_array($flowDetails->field_map)) {
+                    } elseif (isset($flowDetails->field_map) && \is_array($flowDetails->field_map)) {
                         $fieldKeys = array_map(function ($field) use ($args) {
                             return $field->formField;
                         }, $flowDetails->field_map);
@@ -1992,13 +2002,13 @@ final class TriggerFallback
                         $formatedData[$key] = Helper::extractValueFromPath($args, $key);
                     }
 
-                    $execData = ['triggered_entity' => 'EssentialBlocks', 'triggered_entity_id' => current_action(), 'data' => $formatedData, 'flows' => array($flow)];
+                    $execData = ['triggered_entity' => 'EssentialBlocks', 'triggered_entity_id' => current_action(), 'data' => $formatedData, 'flows' => [$flow]];
                 }
             }
+
             return $execData;
         }
 
-        return;
     }
 
     public static function evfHandleSubmission($entry_id, $fields, $entry, $form_id, $form_data)
@@ -2010,35 +2020,8 @@ final class TriggerFallback
         }
 
         $processedEntry = self::evfProcessValues($entry, $fields, $form_data);
+
         return ['triggered_entity' => 'EVF', 'triggered_entity_id' => 3, 'data' => $processedEntry, 'flows' => $flows];
-    }
-
-    private static function evfFieldType($type)
-    {
-        switch ($type) {
-            case 'first-name':
-            case 'last-name':
-            case 'range-slider':
-            case 'payment-quantity':
-            case 'payment-total':
-            case 'rating':
-                return 'text';
-            case 'phone':
-                return 'tel';
-            case 'privacy-policy':
-            case 'payment-checkbox':
-            case 'payment-multiple':
-                return 'checkbox';
-            case 'payment-single':
-                return 'radio';
-            case 'image-upload':
-            case 'file-upload':
-            case 'signature':
-                return 'file';
-
-            default:
-                return $type;
-        }
     }
 
     public static function evfProcessValues($entry, $fields, $form_data)
@@ -2047,10 +2030,10 @@ final class TriggerFallback
 
         foreach ($fields as $index => $field) {
             $methodName = 'process' . str_replace(' ', '', ucwords(str_replace('-', ' ', self::evfFieldType($field['type'])))) . 'FieldValue';
-            if (method_exists(new self, $methodName)) {
-                $processedValues =  array_merge($processedValues, call_user_func_array([new self, $methodName], [$index, $field, $form_data]));
+            if (method_exists(new self(), $methodName)) {
+                $processedValues = array_merge($processedValues, \call_user_func_array([new self(), $methodName], [$index, $field, $form_data]));
             } else {
-                $processedValues["$index"] =   $entry['form_fields'][$index];
+                $processedValues["{$index}"] = $entry['form_fields'][$index];
             }
         }
 
@@ -2065,18 +2048,18 @@ final class TriggerFallback
                 if ($primaryFld === 'repeater_field') {
                     foreach ($primaryFldValue as $secondaryFld => $secondaryFldValue) {
                         foreach ($secondaryFldValue as $tertiaryFld => $tertiaryFldValue) {
-                            $formData["$primaryFld:$secondaryFld-$tertiaryFld"] = $tertiaryFldValue;
+                            $formData["{$primaryFld}:{$secondaryFld}-{$tertiaryFld}"] = $tertiaryFldValue;
                         }
                     }
                 }
-                if (is_array($primaryFldValue) && array_keys($primaryFldValue) !== range(0, count($primaryFldValue) - 1)) {
+                if (\is_array($primaryFldValue) && array_keys($primaryFldValue) !== range(0, \count($primaryFldValue) - 1)) {
                     foreach ($primaryFldValue as $secondaryFld => $secondaryFldValue) {
-                        $formData["$primaryFld:$secondaryFld"] = $secondaryFldValue;
+                        $formData["{$primaryFld}:{$secondaryFld}"] = $secondaryFldValue;
                     }
                 }
             }
 
-            if (isset($form->form_fields) && isset(json_decode($form->form_fields)->fields)) {
+            if (isset($form->form_fields, json_decode($form->form_fields)->fields)) {
                 $formFields = json_decode($form->form_fields)->fields;
                 foreach ($formFields as $fieldInfo) {
                     $attributes = $fieldInfo->attributes;
@@ -2096,44 +2079,29 @@ final class TriggerFallback
         }
     }
 
-    protected static function fluentcrmFlowFilter($flows, $key, $value)
-    {
-        $filteredFlows = [];
-        if (is_array($flows) || is_object($flows)) {
-            foreach ($flows as $flow) {
-                if (is_string($flow->flow_details)) {
-                    $flow->flow_details = json_decode($flow->flow_details);
-                }
-                if (!isset($flow->flow_details->$key) || $flow->flow_details->$key === 'any' || in_array($flow->flow_details->$key, $value) || $flow->flow_details->$key === '') {
-                    $filteredFlows[] = $flow;
-                }
-            }
-        }
-        return $filteredFlows;
-    }
     public static function fluentcrmGetContactData($email)
     {
-        $contactApi     = \FluentCrmApi('contacts');
-        $contact        = $contactApi->getContact($email);
-        $customFields   = $contact->custom_fields();
+        $contactApi = FluentCrmApi('contacts');
+        $contact = $contactApi->getContact($email);
+        $customFields = $contact->custom_fields();
 
         $data = [
-            "prefix" => $contact->prefix,
-            "first_name" => $contact->first_name,
-            "last_name" => $contact->last_name,
-            "full_name" => $contact->full_name,
-            "email" => $contact->email,
-            "timezone" => $contact->timezone,
-            "address_line_1" => $contact->address_line_1,
-            "address_line_2" => $contact->address_line_2,
-            "city" => $contact->city,
-            "state" => $contact->state,
-            "postal_code" => $contact->postal_code,
-            "country" => $contact->country,
-            "ip" => $contact->ip,
-            "phone" => $contact->phone,
-            "source" => $contact->source,
-            "date_of_birth" => $contact->date_of_birth,
+            'prefix'         => $contact->prefix,
+            'first_name'     => $contact->first_name,
+            'last_name'      => $contact->last_name,
+            'full_name'      => $contact->full_name,
+            'email'          => $contact->email,
+            'timezone'       => $contact->timezone,
+            'address_line_1' => $contact->address_line_1,
+            'address_line_2' => $contact->address_line_2,
+            'city'           => $contact->city,
+            'state'          => $contact->state,
+            'postal_code'    => $contact->postal_code,
+            'country'        => $contact->country,
+            'ip'             => $contact->ip,
+            'phone'          => $contact->phone,
+            'source'         => $contact->source,
+            'date_of_birth'  => $contact->date_of_birth,
         ];
 
         if (!empty($customFields)) {
@@ -2146,13 +2114,14 @@ final class TriggerFallback
         $fluentCrmLists = [];
         foreach ($lists as $list) {
             $fluentCrmLists[] = (object) [
-                'list_id' => $list->id,
+                'list_id'    => $list->id,
                 'list_title' => $list->title
             ];
         }
 
         $data['tags'] = implode(', ', array_column($contact->tags->toArray() ?? [], 'title'));
         $data['lists'] = $fluentCrmLists;
+
         return $data;
     }
 
@@ -2231,8 +2200,8 @@ final class TriggerFallback
             return;
         }
 
-        $email  = $subscriber->email;
-        $data   = self::fluentcrmGetContactData($email);
+        $email = $subscriber->email;
+        $data = self::fluentcrmGetContactData($email);
 
         return ['triggered_entity' => 'FluentCrm', 'triggered_entity_id' => 'fluentcrm-6', 'data' => $data, 'flows' => $flows];
     }
@@ -2290,20 +2259,20 @@ final class TriggerFallback
                 $data['post_id'] = $post_id;
             }
             foreach ($form_data as $fldDetail) {
-                if (is_array($fldDetail['value'])) {
-                    if (array_key_exists('file', $fldDetail['value'])) {
+                if (\is_array($fldDetail['value'])) {
+                    if (\array_key_exists('file', $fldDetail['value'])) {
                         $data[$fldDetail['name']] = [$fldDetail['value']['file']['file_path']];
-                    } elseif (explode("-", $fldDetail['name'])[0] == 'name') {
+                    } elseif (explode('-', $fldDetail['name'])[0] == 'name') {
                         if ($fldDetail['name']) {
-                            $last_dash_position = strrpos($fldDetail['name'], "-");
+                            $last_dash_position = strrpos($fldDetail['name'], '-');
                             $index = substr($fldDetail['name'], $last_dash_position + 1);
                         }
                         foreach ($fldDetail['value'] as $nameKey => $nameVal) {
                             $data[$nameKey . '-' . $index] = $nameVal;
                         }
-                    } elseif (explode("-", $fldDetail['name'])[0] == 'address') {
+                    } elseif (explode('-', $fldDetail['name'])[0] == 'address') {
                         if ($fldDetail['name']) {
-                            $last_dash_position = strrpos($fldDetail['name'], "-");
+                            $last_dash_position = strrpos($fldDetail['name'], '-');
                             $index = substr($fldDetail['name'], $last_dash_position + 1);
                         }
                         foreach ($fldDetail['value'] as $nameKey => $nameVal) {
@@ -2311,13 +2280,13 @@ final class TriggerFallback
                         }
                     } else {
                         $val = $fldDetail['value'];
-                        if (array_key_exists('ampm', $val)) {
+                        if (\array_key_exists('ampm', $val)) {
                             $time = $val['hours'] . ':' . $val['minutes'] . ' ' . $val['ampm'];
                             $data[$fldDetail['name']] = $time;
-                        } elseif (array_key_exists('year', $val)) {
+                        } elseif (\array_key_exists('year', $val)) {
                             $date = $val['year'] . '-' . $val['month'] . '-' . $val['day'];
                             $data[$fldDetail['name']] = $date;
-                        } elseif (array_key_exists('formatting_result', $val)) {
+                        } elseif (\array_key_exists('formatting_result', $val)) {
                             $data[$fldDetail['name']] = $fldDetail['value']['formatting_result'];
                         } else {
                             $data[$fldDetail['name']] = $fldDetail['value'];
@@ -2341,6 +2310,7 @@ final class TriggerFallback
     public static function ForminatorIsValidDate($date, $format = 'd/m/Y')
     {
         $dateTime = DateTime::createFromFormat($format, $date);
+
         return $dateTime && $dateTime->format($format) === $date;
     }
 
@@ -2352,7 +2322,7 @@ final class TriggerFallback
             return;
         }
         foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
+            if (\is_string($flow->flow_details)) {
                 $flow->flow_details = json_decode($flow->flow_details);
                 $flowDetails = $flow->flow_details;
             }
@@ -2363,7 +2333,7 @@ final class TriggerFallback
         if ($flowDetails->selectedRank === $new_rank->post_name) {
             $newRankData = [
                 'rank_type' => $new_rank->post_type,
-                'rank' => $new_rank->post_name,
+                'rank'      => $new_rank->post_name,
             ];
 
             $data = array_merge($userData, $newRankData);
@@ -2380,13 +2350,14 @@ final class TriggerFallback
             $userData = $userInfo->data;
             $user_meta = get_user_meta($user_id);
             $user = [
-                'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
-                'user_email' => $userData->user_email,
-                'user_url' => $userData->user_url,
+                'first_name'   => $user_meta['first_name'][0],
+                'last_name'    => $user_meta['last_name'][0],
+                'user_email'   => $userData->user_email,
+                'user_url'     => $userData->user_url,
                 'display_name' => $userData->display_name,
             ];
         }
+
         return $user;
     }
 
@@ -2398,7 +2369,7 @@ final class TriggerFallback
         }
 
         foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
+            if (\is_string($flow->flow_details)) {
                 $flow->flow_details = json_decode($flow->flow_details);
                 $flowDetails = $flow->flow_details;
             }
@@ -2412,7 +2383,7 @@ final class TriggerFallback
         $userData = self::gamipressGetUserInfo($user_id);
         $awardData = [
             'achievement_type' => $awards[0]->post_type,
-            'award' => $awards[0]->post_name,
+            'award'            => $awards[0]->post_name,
         ];
         $data = array_merge($userData, $awardData);
 
@@ -2428,7 +2399,7 @@ final class TriggerFallback
             return;
         }
         foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
+            if (\is_string($flow->flow_details)) {
                 $flow->flow_details = json_decode($flow->flow_details);
                 $flowDetails = $flow->flow_details;
             }
@@ -2437,13 +2408,13 @@ final class TriggerFallback
         $postData = get_post($achievement_id);
 
         $data = [
-            'post_id' => $achievement_id,
-            'post_title' => $postData->post_title,
-            'post_url' => get_permalink($achievement_id),
-            'post_type' => $postData->post_type,
+            'post_id'        => $achievement_id,
+            'post_title'     => $postData->post_title,
+            'post_url'       => get_permalink($achievement_id),
+            'post_type'      => $postData->post_type,
             'post_author_id' => $postData->post_author,
             // 'post_author_email' => $postData->post_author_email,
-            'post_content' => $postData->post_content,
+            'post_content'   => $postData->post_content,
             'post_parent_id' => $postData->post_parent,
         ];
 
@@ -2458,13 +2429,13 @@ final class TriggerFallback
         $expectedData = get_post($postData->post_parent);
 
         $data = [
-            'post_id' => $achievement_id,
-            'post_title' => !empty($expectedData->post_title) ? $expectedData->post_title : '',
-            'post_url' => get_permalink($achievement_id),
-            'post_type' => isset($expectedData->post_type),
+            'post_id'        => $achievement_id,
+            'post_title'     => !empty($expectedData->post_title) ? $expectedData->post_title : '',
+            'post_url'       => get_permalink($achievement_id),
+            'post_type'      => isset($expectedData->post_type),
             'post_author_id' => isset($expectedData->post_author),
             // 'post_author_email' => $postData->post_author_email,
-            'post_content' => isset($expectedData->post_content),
+            'post_content'   => isset($expectedData->post_content),
             'post_parent_id' => isset($expectedData->post_parent),
         ];
 
@@ -2476,7 +2447,7 @@ final class TriggerFallback
             if ($i == 5) {
                 $flows = Flow::exists('GamiPress', $i);
                 foreach ($flows as $flow) {
-                    if (is_string($flow->flow_details)) {
+                    if (\is_string($flow->flow_details)) {
                         $flow->flow_details = json_decode($flow->flow_details);
                         $flowDetails = $flow->flow_details;
                     }
@@ -2487,7 +2458,6 @@ final class TriggerFallback
             }
         }
 
-        return;
     }
 
     public static function gamipressHandleEarnPoints($user_id, $new_points, $total_points, $admin_id, $achievement_id, $points_type, $reason, $log_type)
@@ -2501,18 +2471,18 @@ final class TriggerFallback
         unset($userData['user_url']);
 
         foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
+            if (\is_string($flow->flow_details)) {
                 $flow->flow_details = json_decode($flow->flow_details);
                 $flowDetails = $flow->flow_details;
             }
         }
         $pointData = [
             'total_points' => $total_points,
-            'new_points' => $new_points,
-            'points_type' => $points_type,
+            'new_points'   => $new_points,
+            'points_type'  => $points_type,
         ];
         $data = array_merge($userData, $pointData);
-        if ($flowDetails->selectedPoint === (string)$total_points || $flowDetails->selectedPoint === '') {
+        if ($flowDetails->selectedPoint === (string) $total_points || $flowDetails->selectedPoint === '') {
             return ['triggered_entity' => 'GamiPress', 'triggered_entity_id' => 6, 'data' => $data, 'flows' => $flows];
         }
     }
@@ -2530,7 +2500,7 @@ final class TriggerFallback
                         $entry[$value->id] = Common::filePath(json_decode($entry[$value->id], true));
                     }
                 }
-                if ($value->type === 'checkbox' && is_array($value->inputs)) {
+                if ($value->type === 'checkbox' && \is_array($value->inputs)) {
                     foreach ($value->inputs as $input) {
                         if (isset($entry[$input['id']])) {
                             $entry[$value->id][] = $entry[$input['id']];
@@ -2539,6 +2509,7 @@ final class TriggerFallback
                 }
             }
             $finalData = $entry + ['title' => $form['title']];
+
             return ['triggered_entity' => 'GF', 'triggered_entity_id' => $form_id, 'data' => $finalData, 'flows' => $flows];
         }
     }
@@ -2554,7 +2525,7 @@ final class TriggerFallback
             return;
         }
 
-        $payment = new \Give_Payment($payment_id);
+        $payment = new Give_Payment($payment_id);
 
         if (empty($payment)) {
             return;
@@ -2610,12 +2581,13 @@ final class TriggerFallback
             $user_meta = get_user_meta($user_id);
             $user = [
                 'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
+                'last_name'  => $user_meta['last_name'][0],
                 'user_email' => $userData->user_email,
-                'nickname' => $userData->user_nicename,
+                'nickname'   => $userData->user_nicename,
                 'avatar_url' => get_avatar_url($user_id),
             ];
         }
+
         return $user;
     }
 
@@ -2633,15 +2605,15 @@ final class TriggerFallback
         $getUserData = static::giveWpGetUserInfo($user_id);
         $finalData = [
             'subscription_id' => $subscription_id,
-            'give_form_id' => $give_form_id,
-            'amount' => $amount,
-            'donor' => $donor,
-            'user_id' => $user_id,
-            'first_name' => $getUserData['first_name'],
-            'last_name' => $getUserData['last_name'],
-            'user_email' => $getUserData['email'],
-            'nickname' => $getUserData['nickname'],
-            'avatar_url' => $getUserData['avatar_url'],
+            'give_form_id'    => $give_form_id,
+            'amount'          => $amount,
+            'donor'           => $donor,
+            'user_id'         => $user_id,
+            'first_name'      => $getUserData['first_name'],
+            'last_name'       => $getUserData['last_name'],
+            'user_email'      => $getUserData['email'],
+            'nickname'        => $getUserData['nickname'],
+            'avatar_url'      => $getUserData['avatar_url'],
         ];
 
         if (0 === $user_id) {
@@ -2662,7 +2634,7 @@ final class TriggerFallback
             return;
         }
 
-        $subscription = new \Give_Subscription($row_id);
+        $subscription = new Give_Subscription($row_id);
         $recurring_amount = $subscription->recurring_amount;
         $give_form_id = $subscription->form_id;
 
@@ -2677,16 +2649,16 @@ final class TriggerFallback
         if ($total_payment > 1 && 'active' === (string) $data['status']) {
             $user = static::giveWpGetUserInfo($user_id);
             $finalData = [
-                'give_form_id' => $give_form_id,
+                'give_form_id'     => $give_form_id,
                 'recurring_amount' => $recurring_amount,
-                'total_payment' => $total_payment,
-                'donor' => $donor,
-                'user_id' => $user_id,
-                'first_name' => $user['first_name'],
-                'last_name' => $user['last_name'],
-                'user_email' => $user['user_email'],
-                'nickname' => $user['nickname'],
-                'avatar_url' => $user['avatar_url'],
+                'total_payment'    => $total_payment,
+                'donor'            => $donor,
+                'user_id'          => $user_id,
+                'first_name'       => $user['first_name'],
+                'last_name'        => $user['last_name'],
+                'user_email'       => $user['user_email'],
+                'nickname'         => $user['nickname'],
+                'avatar_url'       => $user['avatar_url'],
             ];
         }
 
@@ -2695,51 +2667,41 @@ final class TriggerFallback
 
     public static function groundhoggHandleSubmit($a, $fieldValues)
     {
-        $form_id    = 1;
+        $form_id = 1;
         $flows = Flow::exists('Groundhogg', $form_id);
         if (!$flows) {
             return;
         }
 
         global $wp_rest_server;
-        $request    = $wp_rest_server->get_raw_data();
-        $data       = json_decode($request);
-        $meta       = $data->meta;
+        $request = $wp_rest_server->get_raw_data();
+        $data = json_decode($request);
+        $meta = $data->meta;
 
-        $fieldValues['primary_phone']   = $meta->primary_phone;
-        $fieldValues['mobile_phone']    = $meta->mobile_phone;
+        $fieldValues['primary_phone'] = $meta->primary_phone;
+        $fieldValues['mobile_phone'] = $meta->mobile_phone;
 
         if (isset($data->tags)) {
             $fieldValues['tags'] = self::groundhoggSetTagNames($data->tags);
         }
 
-
         $data = $fieldValues;
-        return ['triggered_entity' => 'Groundhogg', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
-    }
 
-    private static function groundhoggSetTagNames($tag_ids)
-    {
-        $tags       = new Tags();
-        $tag_list   = [];
-        foreach ($tag_ids as $tag_id) {
-            $tag_list[] = $tags->get_tag($tag_id)->tag_name;
-        }
-        return implode(',', $tag_list);
+        return ['triggered_entity' => 'Groundhogg', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
     }
 
     public static function groundhoggTagApplied($a, $b)
     {
-        $data           = $a['data'];
-        $form_id        = 2;
-        $flows          = Flow::exists('Groundhogg', $form_id);
+        $data = $a['data'];
+        $form_id = 2;
+        $flows = Flow::exists('Groundhogg', $form_id);
 
         if (!$flows) {
             return;
         }
 
-        $getSelected    = $flows[0]->flow_details;
-        $enCode         = json_decode($getSelected);
+        $getSelected = $flows[0]->flow_details;
+        $enCode = json_decode($getSelected);
 
         if (isset($a['tags'])) {
             $data['tags'] = self::groundhoggSetTagNames($a['tags']);
@@ -2749,21 +2711,20 @@ final class TriggerFallback
             return ['triggered_entity' => 'Groundhogg', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
         }
 
-        return;
     }
 
     public static function groundhoggTagRemove($a, $b)
     {
-        $data           = $a['data'];
-        $form_id        = 3;
-        $flows          = Flow::exists('Groundhogg', $form_id);
+        $data = $a['data'];
+        $form_id = 3;
+        $flows = Flow::exists('Groundhogg', $form_id);
 
         if (!$flows) {
             return;
         }
 
-        $getSelected    = $flows[0]->flow_details;
-        $enCode         = json_decode($getSelected);
+        $getSelected = $flows[0]->flow_details;
+        $enCode = json_decode($getSelected);
 
         if (isset($a['tags'])) {
             $data['tags'] = self::groundhoggSetTagNames($a['tags']);
@@ -2773,7 +2734,6 @@ final class TriggerFallback
             return ['triggered_entity' => 'Groundhogg', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
         }
 
-        return;
     }
 
     public static function happySaveImage($base64_img, $title)
@@ -2794,12 +2754,12 @@ final class TriggerFallback
         $file_type = 'image/png';
         $hashed_filename = md5($filename . microtime()) . '_' . $filename;
 
-        //Save the image in the uploads directory.
+        // Save the image in the uploads directory.
         $upload_file = file_put_contents($upload_path . '/' . $hashed_filename, $decoded);
         if ($upload_file) {
-            $path = $upload_path . '/' . $hashed_filename;
-            return $path;
+            return $upload_path . '/' . $hashed_filename;
         }
+
         return $base64_img;
     }
 
@@ -2813,8 +2773,8 @@ final class TriggerFallback
 
         $attachment_ids = wp_list_pluck($attachments, 'ID');
         $links = array_map('wp_get_attachment_url', $attachment_ids);
-        $value = implode(', ', $links);
-        return $value;
+
+        return implode(', ', $links);
     }
 
     public static function handleHappySubmit($submission, $form, $a)
@@ -2845,10 +2805,10 @@ final class TriggerFallback
                     $form_data[$key] = Common::filePath($image);
                 }
             }
+
             return ['triggered_entity' => 'Happy', 'triggered_entity_id' => $form_id, 'data' => $form_data, 'flows' => $flows];
         }
 
-        return;
     }
 
     public static function jetEnginePostMetaData($meta_id, $post_id, $meta_key, $meta_value)
@@ -2859,7 +2819,7 @@ final class TriggerFallback
         }
 
         $postData = get_post($post_id);
-        $finalData = (array)$postData + ['meta_key' => $meta_key, 'meta_value' => $meta_value];
+        $finalData = (array) $postData + ['meta_key' => $meta_key, 'meta_value' => $meta_value];
         $postData = get_post($post_id);
         $user_id = get_current_user_id();
         $postType = $postData->post_type;
@@ -2877,7 +2837,6 @@ final class TriggerFallback
             return ['triggered_entity' => 'JetEngine', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $postCreateFlow];
         }
 
-        return;
     }
 
     public static function jetEnginePostMetaValueCheck($meta_id, $post_id, $meta_key, $meta_value)
@@ -2888,7 +2847,7 @@ final class TriggerFallback
         }
 
         $postData = get_post($post_id);
-        $finalData = (array)$postData + ['meta_key' => $meta_key, 'meta_value' => $meta_value];
+        $finalData = (array) $postData + ['meta_key' => $meta_key, 'meta_value' => $meta_value];
         $postData = get_post($post_id);
         $user_id = get_current_user_id();
         $postType = $postData->post_type;
@@ -2906,7 +2865,6 @@ final class TriggerFallback
             return ['triggered_entity' => 'JetEngine', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $postCreateFlow];
         }
 
-        return;
     }
 
     public static function handleKadenceFormSubmit($form_args, $fields, $form_id, $post_id)
@@ -2926,22 +2884,6 @@ final class TriggerFallback
         return ['triggered_entity' => 'Kadence', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
     }
 
-    // LearnDash
-
-    protected static function flowFilter($flows, $key, $value)
-    {
-        $filteredFlows = [];
-        foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
-                $flow->flow_details = json_decode($flow->flow_details);
-            }
-            if (!isset($flow->flow_details->$key) || $flow->flow_details->$key === 'any' || $flow->flow_details->$key == $value || $flow->flow_details->$key === '') {
-                $filteredFlows[] = $flow;
-            }
-        }
-        return $filteredFlows;
-    }
-
     public static function getUserInfo($user_id)
     {
         $userInfo = get_userdata($user_id);
@@ -2950,19 +2892,19 @@ final class TriggerFallback
             $userData = $userInfo->data;
             $user_meta = get_user_meta($user_id);
             $user = [
-                'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
-                'user_login' => $userData->user_login,
-                'user_email' => $userData->user_email,
-                'user_url' => $userData->user_url,
+                'first_name'   => $user_meta['first_name'][0],
+                'last_name'    => $user_meta['last_name'][0],
+                'user_login'   => $userData->user_login,
+                'user_email'   => $userData->user_email,
+                'user_url'     => $userData->user_url,
                 'display_name' => $userData->display_name,
-                'nickname' => $userData->user_nicename,
-                'user_pass' => $userData->user_pass,
+                'nickname'     => $userData->user_nicename,
+                'user_pass'    => $userData->user_pass,
             ];
         }
+
         return $user;
     }
-
 
     public static function learndashHandleCourseEnroll($user_id, $course_id, $access_list, $remove)
     {
@@ -2980,9 +2922,9 @@ final class TriggerFallback
         $course = get_post($course_id);
         $course_url = get_permalink($course_id);
         $result_course = [
-            'course_id' => $course->ID,
+            'course_id'    => $course->ID,
             'course_title' => $course->post_title,
-            'course_url' => $course_url,
+            'course_url'   => $course_url,
         ];
         $user = self::getUserInfo($user_id);
 
@@ -3010,21 +2952,22 @@ final class TriggerFallback
 
         $course_url = get_permalink($course_id);
         $result_course = [
-            'course_id' => $course->ID,
+            'course_id'    => $course->ID,
             'course_title' => $course->post_title,
-            'course_url' => $course_url,
+            'course_url'   => $course_url,
         ];
 
         $lesson_url = get_permalink($lesson_id);
         $result_lesson = [
-            'lesson_id' => $lesson->ID,
+            'lesson_id'    => $lesson->ID,
             'lesson_title' => $lesson->post_title,
-            'lesson_url' => $lesson_url,
+            'lesson_url'   => $lesson_url,
         ];
 
         $user = self::getUserInfo($user_id);
 
         $lessonDataFinal = $result_course + $result_lesson + $user;
+
         return ['triggered_entity' => 'LearnDash', 'triggered_entity_id' => 4, 'data' => $lessonDataFinal, 'flows' => $flows];
     }
 
@@ -3059,40 +3002,40 @@ final class TriggerFallback
             }
             $course_url = get_permalink($course_id);
             $result_course = [
-                'course_id' => $course->ID,
+                'course_id'    => $course->ID,
                 'course_title' => $course->post_title,
-                'course_url' => $course_url,
+                'course_url'   => $course_url,
             ];
 
             $lesson_url = get_permalink($lesson_id);
             $result_lesson = [
-                'lesson_id' => $lesson->ID,
+                'lesson_id'    => $lesson->ID,
                 'lesson_title' => $lesson->post_title,
-                'lesson_url' => $lesson_url,
+                'lesson_url'   => $lesson_url,
             ];
 
             $quiz_url = get_permalink($quiz_id);
 
             $quiz_query_args = [
-                'post_type' => 'sfwd-quiz',
-                'post_status' => 'publish',
-                'orderby' => 'post_title',
-                'order' => 'ASC',
+                'post_type'      => 'sfwd-quiz',
+                'post_status'    => 'publish',
+                'orderby'        => 'post_title',
+                'order'          => 'ASC',
                 'posts_per_page' => 1,
-                'ID' => $quiz_id,
+                'ID'             => $quiz_id,
             ];
 
             $quizList = get_posts($quiz_query_args);
 
             $result_quiz = [
-                'quiz_id' => $quiz_id,
-                'quiz_title' => $quizList[0]->post_title,
-                'quiz_url' => $quiz_url,
-                'score' => $score,
-                'pass' => $pass,
+                'quiz_id'      => $quiz_id,
+                'quiz_title'   => $quizList[0]->post_title,
+                'quiz_url'     => $quiz_url,
+                'score'        => $score,
+                'pass'         => $pass,
                 'total_points' => $total_points,
-                'points' => $points,
-                'percentage' => $percentage,
+                'points'       => $points,
+                'percentage'   => $percentage,
             ];
 
             $user = self::getUserInfo($user_id);
@@ -3100,7 +3043,7 @@ final class TriggerFallback
             $quizAttemptDataFinal = $result_course + $result_lesson + $result_quiz + $user;
             Flow::execute('LearnDash', $i, $quizAttemptDataFinal, $flows);
         }
-        return;
+
     }
 
     public static function learndashHandleTopicCompleted($data)
@@ -3127,28 +3070,29 @@ final class TriggerFallback
 
         $course_url = get_permalink($course_id);
         $result_course = [
-            'course_id' => $course->ID,
+            'course_id'    => $course->ID,
             'course_title' => $course->post_title,
-            'course_url' => $course_url,
+            'course_url'   => $course_url,
         ];
 
         $lesson_url = get_permalink($lesson_id);
         $result_lesson = [
-            'lesson_id' => $lesson->ID,
+            'lesson_id'    => $lesson->ID,
             'lesson_title' => $lesson->post_title,
-            'lesson_url' => $lesson_url,
+            'lesson_url'   => $lesson_url,
         ];
 
         $topic_url = get_permalink($topic_id);
         $result_topic = [
-            'topic_id' => $topic->ID,
+            'topic_id'    => $topic->ID,
             'topic_title' => $topic->post_title,
-            'topic_url' => $topic_url,
+            'topic_url'   => $topic_url,
         ];
 
         $user = self::getUserInfo($user_id);
 
         $topicDataFinal = $result_course + $result_lesson + $result_topic + $user;
+
         return ['triggered_entity' => 'LearnDash', 'triggered_entity_id' => 5, 'data' => $topicDataFinal, 'flows' => $flows];
     }
 
@@ -3168,12 +3112,13 @@ final class TriggerFallback
 
         $course_url = get_permalink($course_id);
         $result_course = [
-            'course_id' => $course->ID,
+            'course_id'    => $course->ID,
             'course_title' => $course->post_title,
-            'course_url' => $course_url,
+            'course_url'   => $course_url,
         ];
         $user = self::getUserInfo($user_id);
         $result = $result_course + $user;
+
         return ['triggered_entity' => 'LearnDash', 'triggered_entity_id' => 3, 'data' => $result, 'flows' => $flows];
     }
 
@@ -3191,14 +3136,15 @@ final class TriggerFallback
         $group = get_post($group_id);
         $group_url = get_permalink($group_id);
         $result_group = [
-            'group_id' => $group->ID,
+            'group_id'    => $group->ID,
             'group_title' => $group->post_title,
-            'group_url' => $group_url,
+            'group_url'   => $group_url,
         ];
 
         $user = self::getUserInfo($user_id);
 
         $groupDataFinal = $result_group + $user;
+
         return ['triggered_entity' => 'LearnDash', 'triggered_entity_id' => 9, 'data' => $groupDataFinal, 'flows' => $flows];
     }
 
@@ -3216,14 +3162,15 @@ final class TriggerFallback
         $group = get_post($group_id);
         $group_url = get_permalink($group_id);
         $result_group = [
-            'group_id' => $group->ID,
+            'group_id'    => $group->ID,
             'group_title' => $group->post_title,
-            'group_url' => $group_url,
+            'group_url'   => $group_url,
         ];
 
         $user = self::getUserInfo($user_id);
 
         $groupDataFinal = $result_group + $user;
+
         return ['triggered_entity' => 'LearnDash', 'triggered_entity_id' => 10, 'data' => $groupDataFinal, 'flows' => $flows];
     }
 
@@ -3249,29 +3196,30 @@ final class TriggerFallback
         $course = get_post($course_id);
         $course_url = get_permalink($course_id);
         $result_course = [
-            'course_id' => $course->ID,
+            'course_id'    => $course->ID,
             'course_title' => $course->post_title,
-            'course_url' => $course_url,
+            'course_url'   => $course_url,
         ];
 
         $lesson = get_post($lesson_id);
         $lesson_url = get_permalink($lesson_id);
         $result_lesson = [
-            'lesson_id' => $lesson->ID,
+            'lesson_id'    => $lesson->ID,
             'lesson_title' => $lesson->post_title,
-            'lesson_url' => $lesson_url,
+            'lesson_url'   => $lesson_url,
         ];
 
         $result_assignment = [
             'assignment_id' => $assignment_id,
-            'file_name' => $file_name,
-            'file_link' => $file_link,
-            'file_path' => $file_path,
+            'file_name'     => $file_name,
+            'file_link'     => $file_link,
+            'file_path'     => $file_path,
         ];
 
         $user = self::getUserInfo($user_id);
 
         $assignmentDataFinal = $result_course + $result_lesson + $result_assignment + $user;
+
         return ['triggered_entity' => 'LearnDash', 'triggered_entity_id' => 11, 'data' => $assignmentDataFinal, 'flows' => $flows];
     }
 
@@ -3286,12 +3234,13 @@ final class TriggerFallback
             $user_meta = get_user_meta($user_id);
             $user = [
                 'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
+                'last_name'  => $user_meta['last_name'][0],
                 'user_email' => $userData->user_email,
-                'nickname' => $userData->user_nicename,
+                'nickname'   => $userData->user_nicename,
                 'avatar_url' => get_avatar_url($user_id),
             ];
         }
+
         return $user;
     }
 
@@ -3301,8 +3250,8 @@ final class TriggerFallback
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT ID, post_title FROM $wpdb->posts
-                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_quiz' AND $wpdb->posts.ID = %d",
+                "SELECT ID, post_title FROM {$wpdb->posts}
+                WHERE {$wpdb->posts}.post_status = 'publish' AND {$wpdb->posts}.post_type = 'llms_quiz' AND {$wpdb->posts}.ID = %d",
                 $quizId
             )
         );
@@ -3319,11 +3268,11 @@ final class TriggerFallback
         $quizDetail = self::lifterLmsGetQuizDetail($quiz_id);
 
         $finalData = [
-            'user_id' => $user_id,
-            'quiz_id' => $quiz_id,
+            'user_id'    => $user_id,
+            'quiz_id'    => $quiz_id,
             'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
+            'last_name'  => $userInfo['last_name'],
+            'nickname'   => $userInfo['nickname'],
             'avatar_url' => $userInfo['avatar_url'],
             'user_email' => $userInfo['user_email'],
             'quiz_title' => $quizDetail[0]->post_title,
@@ -3347,11 +3296,11 @@ final class TriggerFallback
         $quizDetail = self::lifterLmsGetQuizDetail($quiz_id);
 
         $finalData = [
-            'user_id' => $user_id,
-            'quiz_id' => $quiz_id,
+            'user_id'    => $user_id,
+            'quiz_id'    => $quiz_id,
             'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
+            'last_name'  => $userInfo['last_name'],
+            'nickname'   => $userInfo['nickname'],
             'avatar_url' => $userInfo['avatar_url'],
             'user_email' => $userInfo['user_email'],
             'quiz_title' => $quizDetail[0]->post_title,
@@ -3375,11 +3324,11 @@ final class TriggerFallback
         $quizDetail = self::lifterLmsGetQuizDetail($quiz_id);
 
         $finalData = [
-            'user_id' => $user_id,
-            'quiz_id' => $quiz_id,
+            'user_id'    => $user_id,
+            'quiz_id'    => $quiz_id,
             'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
+            'last_name'  => $userInfo['last_name'],
+            'nickname'   => $userInfo['nickname'],
             'avatar_url' => $userInfo['avatar_url'],
             'user_email' => $userInfo['user_email'],
             'quiz_title' => $quizDetail[0]->post_title,
@@ -3398,8 +3347,8 @@ final class TriggerFallback
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT ID, post_title FROM $wpdb->posts
-                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'lesson' AND $wpdb->posts.ID = %d",
+                "SELECT ID, post_title FROM {$wpdb->posts}
+                WHERE {$wpdb->posts}.post_status = 'publish' AND {$wpdb->posts}.post_type = 'lesson' AND {$wpdb->posts}.ID = %d",
                 $lessonId
             )
         );
@@ -3416,14 +3365,14 @@ final class TriggerFallback
         $lessonDetail = self::lifterLmsGetLessonDetail($lesson_id);
 
         $finalData = [
-            'user_id' => $user_id,
-            'lesson_id' => $lesson_id,
+            'user_id'      => $user_id,
+            'lesson_id'    => $lesson_id,
             'lesson_title' => $lessonDetail[0]->post_title,
-            'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
-            'avatar_url' => $userInfo['avatar_url'],
-            'user_email' => $userInfo['user_email'],
+            'first_name'   => $userInfo['first_name'],
+            'last_name'    => $userInfo['last_name'],
+            'nickname'     => $userInfo['nickname'],
+            'avatar_url'   => $userInfo['avatar_url'],
+            'user_email'   => $userInfo['user_email'],
         ];
 
         return ['triggered_entity' => 'LifterLms', 'triggered_entity_id' => 4, 'data' => $finalData, 'flows' => $flows];
@@ -3435,8 +3384,8 @@ final class TriggerFallback
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT ID, post_title FROM $wpdb->posts
-                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'course' AND $wpdb->posts.ID = %d",
+                "SELECT ID, post_title FROM {$wpdb->posts}
+                WHERE {$wpdb->posts}.post_status = 'publish' AND {$wpdb->posts}.post_type = 'course' AND {$wpdb->posts}.ID = %d",
                 $courseId
             )
         );
@@ -3453,15 +3402,16 @@ final class TriggerFallback
         $courseDetail = self::lifterLmsGetCourseDetail($course_id);
 
         $finalData = [
-            'user_id' => $user_id,
-            'course_id' => $course_id,
+            'user_id'      => $user_id,
+            'course_id'    => $course_id,
             'course_title' => $courseDetail[0]->post_title,
-            'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
-            'avatar_url' => $userInfo['avatar_url'],
-            'user_email' => $userInfo['user_email'],
+            'first_name'   => $userInfo['first_name'],
+            'last_name'    => $userInfo['last_name'],
+            'nickname'     => $userInfo['nickname'],
+            'avatar_url'   => $userInfo['avatar_url'],
+            'user_email'   => $userInfo['user_email'],
         ];
+
         return ['triggered_entity' => 'LifterLms', 'triggered_entity_id' => 5, 'data' => $finalData, 'flows' => $flows];
     }
 
@@ -3476,15 +3426,16 @@ final class TriggerFallback
         $courseDetail = self::lifterLmsGetCourseDetail($product_id);
 
         $finalData = [
-            'user_id' => $user_id,
-            'course_id' => $product_id,
+            'user_id'      => $user_id,
+            'course_id'    => $product_id,
             'course_title' => $courseDetail[0]->post_title,
-            'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
-            'avatar_url' => $userInfo['avatar_url'],
-            'user_email' => $userInfo['user_email'],
+            'first_name'   => $userInfo['first_name'],
+            'last_name'    => $userInfo['last_name'],
+            'nickname'     => $userInfo['nickname'],
+            'avatar_url'   => $userInfo['avatar_url'],
+            'user_email'   => $userInfo['user_email'],
         ];
+
         return ['triggered_entity' => 'LifterLms', 'triggered_entity_id' => 6, 'data' => $finalData, 'flows' => $flows];
     }
 
@@ -3500,15 +3451,16 @@ final class TriggerFallback
         $courseDetail = self::lifterLmsGetCourseDetail($course_id);
 
         $finalData = [
-            'user_id' => $student_id,
-            'course_id' => $course_id,
+            'user_id'      => $student_id,
+            'course_id'    => $course_id,
             'course_title' => $courseDetail[0]->post_title,
-            'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
-            'avatar_url' => $userInfo['avatar_url'],
-            'user_email' => $userInfo['user_email'],
+            'first_name'   => $userInfo['first_name'],
+            'last_name'    => $userInfo['last_name'],
+            'nickname'     => $userInfo['nickname'],
+            'avatar_url'   => $userInfo['avatar_url'],
+            'user_email'   => $userInfo['user_email'],
         ];
+
         return ['triggered_entity' => 'LifterLms', 'triggered_entity_id' => 7, 'data' => $finalData, 'flows' => $flows];
     }
 
@@ -3518,8 +3470,8 @@ final class TriggerFallback
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT ID, post_title FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'llms_membership' AND $wpdb->posts.ID = %d",
+                "SELECT ID, post_title FROM {$wpdb->posts}
+        WHERE {$wpdb->posts}.post_status = 'publish' AND {$wpdb->posts}.post_type = 'llms_membership' AND {$wpdb->posts}.ID = %d",
                 $membershipId
             )
         );
@@ -3538,15 +3490,16 @@ final class TriggerFallback
         $membershipDetail = self::lifterLmsGetMembershipDetail($product_id);
 
         $finalData = [
-            'user_id' => $user_id,
+            'user_id'          => $user_id,
             'membership_title' => $product_id,
-            'membership_id' => $membershipDetail[0]->post_title,
-            'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
-            'avatar_url' => $userInfo['avatar_url'],
-            'user_email' => $userInfo['user_email'],
+            'membership_id'    => $membershipDetail[0]->post_title,
+            'first_name'       => $userInfo['first_name'],
+            'last_name'        => $userInfo['last_name'],
+            'nickname'         => $userInfo['nickname'],
+            'avatar_url'       => $userInfo['avatar_url'],
+            'user_email'       => $userInfo['user_email'],
         ];
+
         return ['triggered_entity' => 'LifterLms', 'triggered_entity_id' => 8, 'data' => $finalData, 'flows' => $flows];
     }
 
@@ -3555,39 +3508,39 @@ final class TriggerFallback
     public static function mailPoetHandleDateField($item)
     {
         if (
-            array_key_exists('year', $item)
-            && array_key_exists('month', $item)
-            && array_key_exists('day', $item)
+            \array_key_exists('year', $item)
+            && \array_key_exists('month', $item)
+            && \array_key_exists('day', $item)
             && (!empty($item['year']) || !empty($item['month']) || !empty($item['day']))
         ) {
-            $year  = (int) !empty($item['year']) ? $item['year'] : date('Y');
+            $year = (int) !empty($item['year']) ? $item['year'] : date('Y');
             $month = (int) !empty($item['month']) ? $item['month'] : 1;
-            $day   = (int) !empty($item['day']) ? $item['day'] : 1;
+            $day = (int) !empty($item['day']) ? $item['day'] : 1;
         } elseif (
-            array_key_exists('year', $item)
-            && array_key_exists('month', $item)
+            \array_key_exists('year', $item)
+            && \array_key_exists('month', $item)
             && (!empty($item['year']) || !empty($item['month']))
         ) {
-            $year  = (int) !empty($item['year']) ? $item['year'] : date('Y');
+            $year = (int) !empty($item['year']) ? $item['year'] : date('Y');
             $month = (int) !empty($item['month']) ? $item['month'] : 1;
-            $day   = 1;
-        } elseif (array_key_exists('year', $item) && !empty($item['year'])) {
-            $year  = $item['year'];
+            $day = 1;
+        } elseif (\array_key_exists('year', $item) && !empty($item['year'])) {
+            $year = $item['year'];
             $month = 1;
-            $day   = 1;
-        } elseif (array_key_exists('month', $item) && !empty($item['month'])) {
-            $year  = date('Y');
+            $day = 1;
+        } elseif (\array_key_exists('month', $item) && !empty($item['month'])) {
+            $year = date('Y');
             $month = $item['month'];
-            $day   = 1;
+            $day = 1;
         }
 
         if (isset($year, $month, $day)) {
             $date = new DateTime();
             $date->setDate($year, $month, $day);
+
             return $date->format('Y-m-d');
         }
 
-        return null;
     }
 
     public static function handleMailpoetSubmit($data, $segmentIds, $form)
@@ -3598,13 +3551,13 @@ final class TriggerFallback
             $keySeparated = explode('_', $key);
 
             if ($keySeparated[0] === 'cf') {
-                if (is_array($item)) {
+                if (\is_array($item)) {
                     $formData[$keySeparated[1]] = self::mailPoetHandleDateField($item);
                 } else {
                     $formData[$keySeparated[1]] = $item;
                 }
             } else {
-                if (is_array($item)) {
+                if (\is_array($item)) {
                     $formData[$key] = self::mailPoetHandleDateField($item);
                 } else {
                     $formData[$key] = $item;
@@ -3630,12 +3583,13 @@ final class TriggerFallback
             $user_meta = get_user_meta($user_id);
             $user = [
                 'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
+                'last_name'  => $user_meta['last_name'][0],
                 'user_email' => $userData->user_email,
-                'nickname' => $userData->user_nicename,
+                'nickname'   => $userData->user_nicename,
                 'avatar_url' => get_avatar_url($user_id),
             ];
         }
+
         return $user;
     }
 
@@ -3645,8 +3599,8 @@ final class TriggerFallback
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT ID, post_title,post_content FROM $wpdb->posts
-                WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-courses' AND $wpdb->posts.ID = %d",
+                "SELECT ID, post_title,post_content FROM {$wpdb->posts}
+                WHERE {$wpdb->posts}.post_status = 'publish' AND {$wpdb->posts}.post_type = 'stm-courses' AND {$wpdb->posts}.ID = %d",
                 $courseId
             )
         );
@@ -3663,15 +3617,15 @@ final class TriggerFallback
         $courseDetails = self::masterStudyGetCourseDetail($course_id);
 
         $finalData = [
-            'user_id' => $user_id,
-            'course_id' => $course_id,
-            'course_title' => $courseDetails[0]->post_title,
+            'user_id'            => $user_id,
+            'course_id'          => $course_id,
+            'course_title'       => $courseDetails[0]->post_title,
             'course_description' => $courseDetails[0]->post_content,
-            'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
-            'avatar_url' => $userInfo['avatar_url'],
-            'user_email' => $userInfo['user_email'],
+            'first_name'         => $userInfo['first_name'],
+            'last_name'          => $userInfo['last_name'],
+            'nickname'           => $userInfo['nickname'],
+            'avatar_url'         => $userInfo['avatar_url'],
+            'user_email'         => $userInfo['user_email'],
         ];
 
         $flowDetails = json_decode($flows[0]->flow_details);
@@ -3692,15 +3646,15 @@ final class TriggerFallback
         $courseDetails = self::masterStudyGetCourseDetail($course_id);
 
         $finalData = [
-            'user_id' => $user_id,
-            'course_id' => $course_id,
-            'course_title' => $courseDetails[0]->post_title,
+            'user_id'            => $user_id,
+            'course_id'          => $course_id,
+            'course_title'       => $courseDetails[0]->post_title,
             'course_description' => $courseDetails[0]->post_content,
-            'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
-            'avatar_url' => $userInfo['avatar_url'],
-            'user_email' => $userInfo['user_email'],
+            'first_name'         => $userInfo['first_name'],
+            'last_name'          => $userInfo['last_name'],
+            'nickname'           => $userInfo['nickname'],
+            'avatar_url'         => $userInfo['avatar_url'],
+            'user_email'         => $userInfo['user_email'],
         ];
 
         $flowDetails = json_decode($flows[0]->flow_details);
@@ -3716,8 +3670,8 @@ final class TriggerFallback
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT ID, post_title,post_content FROM $wpdb->posts
-        WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-lessons' AND $wpdb->posts.ID = %d",
+                "SELECT ID, post_title,post_content FROM {$wpdb->posts}
+        WHERE {$wpdb->posts}.post_status = 'publish' AND {$wpdb->posts}.post_type = 'stm-lessons' AND {$wpdb->posts}.ID = %d",
                 $lessonId
             )
         );
@@ -3734,15 +3688,15 @@ final class TriggerFallback
         $lessonDetails = self::masterStudyGetLessonDetail($lesson_id);
 
         $finalData = [
-            'user_id' => $user_id,
-            'lesson_id' => $lesson_id,
-            'lesson_title' => $lessonDetails[0]->post_title,
+            'user_id'            => $user_id,
+            'lesson_id'          => $lesson_id,
+            'lesson_title'       => $lessonDetails[0]->post_title,
             'lesson_description' => $lessonDetails[0]->post_content,
-            'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
-            'avatar_url' => $userInfo['avatar_url'],
-            'user_email' => $userInfo['user_email'],
+            'first_name'         => $userInfo['first_name'],
+            'last_name'          => $userInfo['last_name'],
+            'nickname'           => $userInfo['nickname'],
+            'avatar_url'         => $userInfo['avatar_url'],
+            'user_email'         => $userInfo['user_email'],
         ];
 
         $flowDetails = json_decode($flows[0]->flow_details);
@@ -3758,8 +3712,8 @@ final class TriggerFallback
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT ID, post_title,post_content FROM $wpdb->posts
-                 WHERE $wpdb->posts.post_status = 'publish' AND $wpdb->posts.post_type = 'stm-quizzes' AND $wpdb->posts.ID = %d",
+                "SELECT ID, post_title,post_content FROM {$wpdb->posts}
+                 WHERE {$wpdb->posts}.post_status = 'publish' AND {$wpdb->posts}.post_type = 'stm-quizzes' AND {$wpdb->posts}.ID = %d",
                 $quiz_id
             )
         );
@@ -3780,18 +3734,18 @@ final class TriggerFallback
         $courseDetails = self::masterStudyGetCourseDetail($selectedCourse);
 
         $finalData = [
-            'user_id' => $user_id,
-            'course_id' => $selectedCourse,
-            'course_title' => $courseDetails[0]->post_title,
+            'user_id'            => $user_id,
+            'course_id'          => $selectedCourse,
+            'course_title'       => $courseDetails[0]->post_title,
             'course_description' => $courseDetails[0]->post_content,
-            'quiz_id' => $quiz_id,
-            'quiz_title' => $quizDetails[0]->post_title,
-            'quiz_description' => $quizDetails[0]->post_content,
-            'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
-            'avatar_url' => $userInfo['avatar_url'],
-            'user_email' => $userInfo['user_email'],
+            'quiz_id'            => $quiz_id,
+            'quiz_title'         => $quizDetails[0]->post_title,
+            'quiz_description'   => $quizDetails[0]->post_content,
+            'first_name'         => $userInfo['first_name'],
+            'last_name'          => $userInfo['last_name'],
+            'nickname'           => $userInfo['nickname'],
+            'avatar_url'         => $userInfo['avatar_url'],
+            'user_email'         => $userInfo['user_email'],
         ];
 
         $selectedQuiz = !empty($flowDetails->selectedQuiz) ? $flowDetails->selectedQuiz : [];
@@ -3816,18 +3770,18 @@ final class TriggerFallback
         $courseDetails = self::masterStudyGetCourseDetail($selectedCourse);
 
         $finalData = [
-            'user_id' => $user_id,
-            'course_id' => $selectedCourse,
-            'course_title' => $courseDetails[0]->post_title,
+            'user_id'            => $user_id,
+            'course_id'          => $selectedCourse,
+            'course_title'       => $courseDetails[0]->post_title,
             'course_description' => $courseDetails[0]->post_content,
-            'quiz_id' => $quiz_id,
-            'quiz_title' => $quizDetails[0]->post_title,
-            'quiz_description' => $quizDetails[0]->post_content,
-            'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
-            'avatar_url' => $userInfo['avatar_url'],
-            'user_email' => $userInfo['user_email'],
+            'quiz_id'            => $quiz_id,
+            'quiz_title'         => $quizDetails[0]->post_title,
+            'quiz_description'   => $quizDetails[0]->post_content,
+            'first_name'         => $userInfo['first_name'],
+            'last_name'          => $userInfo['last_name'],
+            'nickname'           => $userInfo['nickname'],
+            'avatar_url'         => $userInfo['avatar_url'],
+            'user_email'         => $userInfo['user_email'],
         ];
 
         $selectedQuiz = !empty($flowDetails->selectedQuiz) ? $flowDetails->selectedQuiz : [];
@@ -3847,18 +3801,19 @@ final class TriggerFallback
             $userData = $userInfo->data;
             $user_meta = get_user_meta($user_id);
             $user = [
-                'user_id' => $user_id,
+                'user_id'    => $user_id,
                 'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
+                'last_name'  => $user_meta['last_name'][0],
                 'user_email' => $userData->user_email,
-                'nickname' => $userData->user_nicename,
+                'nickname'   => $userData->user_nicename,
                 'avatar_url' => get_avatar_url($user_id),
             ];
         }
+
         return $user;
     }
 
-    public static function meprOneTimeMembershipSubscribe(\MeprEvent $event)
+    public static function meprOneTimeMembershipSubscribe(MeprEvent $event)
     {
         $transaction = $event->get_data();
         $product = $transaction->product();
@@ -3870,14 +3825,14 @@ final class TriggerFallback
 
         $postData = get_post($product_id);
         $userData = self::MemberpressGetUserInfo($user_id);
-        $finalData = array_merge((array)$postData, $userData);
+        $finalData = array_merge((array) $postData, $userData);
 
         if ($user_id && $flows = Flow::exists('Memberpress', 1)) {
             return ['triggered_entity' => 'Memberpress', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $flows];
         }
     }
 
-    public static function meprRecurringMembershipSubscribe(\MeprEvent $event)
+    public static function meprRecurringMembershipSubscribe(MeprEvent $event)
     {
         $transaction = $event->get_data();
         $product = $transaction->product();
@@ -3889,7 +3844,7 @@ final class TriggerFallback
 
         $postData = get_post($product_id);
         $userData = self::MemberpressGetUserInfo($user_id);
-        $finalData = array_merge((array)$postData, $userData);
+        $finalData = array_merge((array) $postData, $userData);
 
         if ($user_id && $flows = Flow::exists('Memberpress', 2)) {
             return ['triggered_entity' => 'Memberpress', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $flows];
@@ -3906,9 +3861,9 @@ final class TriggerFallback
         }
 
         $product_id = $subscription->rec->product_id;
-        $user_id = intval($subscription->rec->user_id);
+        $user_id = \intval($subscription->rec->user_id);
         $userData = self::MemberpressGetUserInfo($user_id);
-        $finalData = array_merge((array)$subscription->rec, $userData);
+        $finalData = array_merge((array) $subscription->rec, $userData);
 
         $flows = Flow::exists('Memberpress', 3);
         if (!$flows) {
@@ -3932,9 +3887,9 @@ final class TriggerFallback
             return;
         }
         $product_id = $subscription->rec->product_id;
-        $user_id = intval($subscription->rec->user_id);
+        $user_id = \intval($subscription->rec->user_id);
         $userData = self::MemberpressGetUserInfo($user_id);
-        $finalData = array_merge((array)$subscription->rec, $userData);
+        $finalData = array_merge((array) $subscription->rec, $userData);
 
         $flows = Flow::exists('Memberpress', 5);
         if (!$flows) {
@@ -3949,7 +3904,7 @@ final class TriggerFallback
         }
     }
 
-    public static function meprMembershipSubscribePaused(\MeprEvent $event)
+    public static function meprMembershipSubscribePaused(MeprEvent $event)
     {
         $transaction = $event->get_data();
         $product = $transaction->product();
@@ -3958,7 +3913,7 @@ final class TriggerFallback
 
         $postData = get_post($product_id);
         $userData = self::MemberpressGetUserInfo($user_id);
-        $finalData = array_merge((array)$postData, $userData);
+        $finalData = array_merge((array) $postData, $userData);
 
         $flows = Flow::exists('Memberpress', 4);
         if (!$flows) {
@@ -3985,24 +3940,9 @@ final class TriggerFallback
         self::handle_submit_data($form_id, $form_data);
     }
 
-    private static function handle_submit_data($form_id, $form_data)
-    {
-        if (!$form_id) {
-            return;
-        }
-        $flows = Flow::exists('Met', $form_id);
-        if (!$flows) {
-            return;
-        }
-
-        unset($form_data['action'], $form_data['form_nonce'], $form_data['id']);
-        $data = $form_data;
-        return ['triggered_entity' => 'Met', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
-    }
-
     public static function metaBoxFields($form_id)
     {
-        if (function_exists('rwmb_meta')) {
+        if (\function_exists('rwmb_meta')) {
             $meta_box_registry = rwmb_get_registry('meta_box');
             $fileUploadTypes = ['file_upload', 'single_image', 'file'];
             $form = $meta_box_registry->get($form_id);
@@ -4011,12 +3951,13 @@ final class TriggerFallback
             foreach ($fieldDetails as $field) {
                 if (!empty($field['id']) && $field['type'] !== 'submit') {
                     $fields[] = [
-                        'name' => $field['id'],
-                        'type' => in_array($field['type'], $fileUploadTypes) ? 'file' : $field['type'],
+                        'name'  => $field['id'],
+                        'type'  => \in_array($field['type'], $fileUploadTypes) ? 'file' : $field['type'],
                         'label' => $field['name'],
                     ];
                 }
             }
+
             return $fields;
         }
     }
@@ -4036,7 +3977,7 @@ final class TriggerFallback
                 } elseif ($field['type'] === 'file') {
                     if (isset($fieldValues['path'])) {
                         $metaBoxFieldValues[$field['name']] = $fieldValues['path'];
-                    } elseif (gettype($fieldValues) === 'array') {
+                    } elseif (\gettype($fieldValues) === 'array') {
                         foreach (array_values($fieldValues) as $index => $file) {
                             if (isset($file['path'])) {
                                 $metaBoxFieldValues[$field['name']][$index] = $file['path'];
@@ -4062,9 +4003,9 @@ final class TriggerFallback
             return;
         }
         global $wpdb;
-        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $level_id));
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->pmpro_membership_levels} WHERE id = %d", $level_id));
         $userData = self::paidMembershipProgetUserInfo($user_id);
-        $finalData = array_merge($userData, (array)$levels[0]);
+        $finalData = array_merge($userData, (array) $levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 1);
         if (!$flows) {
             return;
@@ -4074,7 +4015,7 @@ final class TriggerFallback
         if ($level_id === $selectedMembershipLevel || $selectedMembershipLevel === 'any') {
             return ['triggered_entity' => 'PaidMembershipPro', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $flows];
         }
-        return;
+
     }
 
     public static function paidMembershipProgetUserInfo($user_id)
@@ -4085,14 +4026,15 @@ final class TriggerFallback
             $userData = $userInfo->data;
             $user_meta = get_user_meta($user_id);
             $user = [
-                'user_id' => $user_id,
+                'user_id'    => $user_id,
                 'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
+                'last_name'  => $user_meta['last_name'][0],
                 'user_email' => $userData->user_email,
-                'nickname' => $userData->user_nicename,
+                'nickname'   => $userData->user_nicename,
                 'avatar_url' => get_avatar_url($user_id),
             ];
         }
+
         return $user;
     }
 
@@ -4102,9 +4044,9 @@ final class TriggerFallback
             return;
         }
         global $wpdb;
-        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $cancel_level));
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->pmpro_membership_levels} WHERE id = %d", $cancel_level));
         $userData = self::paidMembershipProgetUserInfo($user_id);
-        $finalData = array_merge($userData, (array)$levels[0]);
+        $finalData = array_merge($userData, (array) $levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 2);
         if (!$flows) {
             return;
@@ -4114,7 +4056,7 @@ final class TriggerFallback
         if (($cancel_level == $selectedMembershipLevel || $selectedMembershipLevel === 'any')) {
             return ['triggered_entity' => 'PaidMembershipPro', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $flows];
         }
-        return;
+
     }
 
     public static function perchesMembershipLevel($user_id, $morder)
@@ -4125,9 +4067,9 @@ final class TriggerFallback
         $membership_id = $membership->id;
 
         global $wpdb;
-        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $membership_id));
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->pmpro_membership_levels} WHERE id = %d", $membership_id));
         $userData = self::paidMembershipProgetUserInfo($user_id);
-        $finalData = array_merge($userData, (array)$levels[0]);
+        $finalData = array_merge($userData, (array) $levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 3);
         if (!$flows) {
             return;
@@ -4138,15 +4080,14 @@ final class TriggerFallback
             return ['triggered_entity' => 'PaidMembershipPro', 'triggered_entity_id' => 3, 'data' => $finalData, 'flows' => $flows];
         }
 
-        return;
     }
 
     public static function expiryMembershipLevel($user_id, $membership_id)
     {
         global $wpdb;
-        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels WHERE id = %d", $membership_id));
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->pmpro_membership_levels} WHERE id = %d", $membership_id));
         $userData = self::paidMembershipProgetUserInfo($user_id);
-        $finalData = array_merge($userData, (array)$levels[0]);
+        $finalData = array_merge($userData, (array) $levels[0]);
         $flows = Flow::exists('PaidMembershipPro', 4);
         if (!$flows) {
             return;
@@ -4156,13 +4097,12 @@ final class TriggerFallback
         if (($membership_id == $selectedMembershipLevel || $selectedMembershipLevel === 'any')) {
             return ['triggered_entity' => 'PaidMembershipPro', 'triggered_entity_id' => 4, 'data' => $finalData, 'flows' => $flows];
         }
-        return;
+
     }
 
-    //PiotnetAddon all functions
+    // PiotnetAddon all functions
     public static function handlePiotnetAddonSubmit($form_submission)
     {
-
         $form_id = $form_submission['form']['id'];
 
         $flows = Flow::exists('PiotnetAddon', $form_id);
@@ -4179,11 +4119,10 @@ final class TriggerFallback
         return ['triggered_entity' => 'PiotnetAddon', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
     }
 
-    //PiotnetAddonForm all functions
+    // PiotnetAddonForm all functions
     public static function handlePiotnetAddonFormSubmit($form_submission)
     {
         $form_id = $form_submission['form']['id'];
-
 
         $flows = Flow::exists('PiotnetAddonForm', $form_id);
         if (!$flows) {
@@ -4199,7 +4138,7 @@ final class TriggerFallback
         return ['triggered_entity' => 'PiotnetAddonForm', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
     }
 
-    //PiotnetForms all functions
+    // PiotnetForms all functions
     public static function handlePiotnetSubmit($fields)
     {
         $post_id = sanitize_text_field($_REQUEST['post_id']);
@@ -4220,8 +4159,8 @@ final class TriggerFallback
         return ['triggered_entity' => 'PiotnetAddonForm', 'triggered_entity_id' => $post_id, 'data' => $data, 'flows' => $flows];
     }
 
-    //RestrictContent all functions
-    public static function rcpPurchasesMembershipLevel($membership_id, \RCP_Membership $RCP_Membership)
+    // RestrictContent all functions
+    public static function rcpPurchasesMembershipLevel($membership_id, RCP_Membership $RCP_Membership)
     {
         $flows = Flow::exists('RestrictContent', 1);
         if (!$flows) {
@@ -4235,7 +4174,7 @@ final class TriggerFallback
         $level_id = $RCP_Membership->get_object_id();
 
         foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
+            if (\is_string($flow->flow_details)) {
                 $flow->flow_details = json_decode($flow->flow_details);
                 $flowDetails = $flow->flow_details;
             }
@@ -4247,8 +4186,8 @@ final class TriggerFallback
                 $membership = rcp_get_membership($membership_id);
                 if (false !== $membership) {
                     $organizedData = [
-                        'membership_level' => $membership->get_membership_level_name(),
-                        'membership_payment' => $membership->get_initial_amount(),
+                        'membership_level'             => $membership->get_membership_level_name(),
+                        'membership_payment'           => $membership->get_initial_amount(),
                         'membership_recurring_payment' => $membership->get_recurring_amount(),
                     ];
                 }
@@ -4265,14 +4204,14 @@ final class TriggerFallback
             return;
         }
         foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
+            if (\is_string($flow->flow_details)) {
                 $flow->flow_details = json_decode($flow->flow_details);
                 $flowDetails = $flow->flow_details;
             }
         }
         $membership = rcp_get_membership($membership_id);
         $membership_level = rcp_get_membership_level($membership->get_object_id());
-        $level_id = (string)$membership_level->get_id();
+        $level_id = (string) $membership_level->get_id();
 
         if ($level_id == $flowDetails->selectedMembership || 'any' == $flowDetails->selectedMembership) {
             $organizedData = [];
@@ -4282,8 +4221,8 @@ final class TriggerFallback
 
                 if (false !== $membership) {
                     $organizedData = [
-                        'membership_level' => $membership->get_membership_level_name(),
-                        'membership_payment' => $membership->get_initial_amount(),
+                        'membership_level'             => $membership->get_membership_level_name(),
+                        'membership_payment'           => $membership->get_initial_amount(),
                         'membership_recurring_payment' => $membership->get_recurring_amount(),
                     ];
                 }
@@ -4306,7 +4245,7 @@ final class TriggerFallback
         $level_id = $membership_level->get_id();
 
         foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
+            if (\is_string($flow->flow_details)) {
                 $flow->flow_details = json_decode($flow->flow_details);
                 $flowDetails = $flow->flow_details;
             }
@@ -4318,8 +4257,8 @@ final class TriggerFallback
 
                 if (false !== $membership) {
                     $organizedData = [
-                        'membership_level' => $membership->get_membership_level_name(),
-                        'membership_payment' => $membership->get_initial_amount(),
+                        'membership_level'             => $membership->get_membership_level_name(),
+                        'membership_payment'           => $membership->get_initial_amount(),
                         'membership_recurring_payment' => $membership->get_recurring_amount(),
                     ];
                 }
@@ -4329,7 +4268,7 @@ final class TriggerFallback
         }
     }
 
-    //SliceWp all functions
+    // SliceWp all functions
     public static function newAffiliateCreated($affiliate_id, $affiliate_data)
     {
         $userData = self::sliceWpgetUserInfo($affiliate_data['user_id']);
@@ -4343,6 +4282,7 @@ final class TriggerFallback
         if (!$affiliate_data['user_id'] || !$flows) {
             return;
         }
+
         return ['triggered_entity' => 'SliceWp', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $flows];
     }
 
@@ -4359,7 +4299,7 @@ final class TriggerFallback
         if (($commission_data['type'] == $selectedCommissionType || $selectedCommissionType === 'any')) {
             return ['triggered_entity' => 'SliceWp', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $flows];
         }
-        return;
+
     }
 
     public static function sliceWpgetUserInfo($user_id)
@@ -4370,18 +4310,19 @@ final class TriggerFallback
             $userData = $userInfo->data;
             $user_meta = get_user_meta($user_id);
             $user = [
-                'user_id' => $user_id,
+                'user_id'    => $user_id,
                 'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
+                'last_name'  => $user_meta['last_name'][0],
                 'user_email' => $userData->user_email,
-                'nickname' => $userData->user_nicename,
+                'nickname'   => $userData->user_nicename,
                 'avatar_url' => get_avatar_url($user_id),
             ];
         }
+
         return $user;
     }
 
-    //NewSolidAffiliate all functions
+    // NewSolidAffiliate all functions
     public static function newSolidAffiliateCreated($affiliate)
     {
         $attributes = $affiliate->__get('attributes');
@@ -4401,10 +4342,11 @@ final class TriggerFallback
         if (!$flows) {
             return;
         }
+
         return ['triggered_entity' => 'SolidAffiliate', 'triggered_entity_id' => 2, 'data' => $affiliateReferralData, 'flows' => $flows];
     }
 
-    //Spectra all functions
+    // Spectra all functions
     public static function spectraHandler(...$args)
     {
         if (get_option('btcbi_test_uagb_form_success') !== false) {
@@ -4412,7 +4354,6 @@ final class TriggerFallback
         }
 
         if ($flows = Flow::exists('Spectra', current_action())) {
-
             foreach ($flows as $flow) {
                 $flowDetails = json_decode($flow->flow_details);
                 if (!isset($flowDetails->primaryKey)) {
@@ -4421,14 +4362,14 @@ final class TriggerFallback
 
                 $primaryKeyValue = self::extractValueFromPath($args, $flowDetails->primaryKey->key);
                 if ($flowDetails->primaryKey->value === $primaryKeyValue) {
-                    $fieldKeys      = [];
-                    $formatedData   = [];
+                    $fieldKeys = [];
+                    $formatedData = [];
 
-                    if ($flowDetails->body->data && is_array($flowDetails->body->data)) {
+                    if ($flowDetails->body->data && \is_array($flowDetails->body->data)) {
                         $fieldKeys = array_map(function ($field) use ($args) {
                             return $field->key;
                         }, $flowDetails->body->data);
-                    } elseif (isset($flowDetails->field_map) && is_array($flowDetails->field_map)) {
+                    } elseif (isset($flowDetails->field_map) && \is_array($flowDetails->field_map)) {
                         $fieldKeys = array_map(function ($field) use ($args) {
                             return $field->formField;
                         }, $flowDetails->field_map);
@@ -4437,7 +4378,8 @@ final class TriggerFallback
                     foreach ($fieldKeys as $key) {
                         $formatedData[$key] = self::extractValueFromPath($args, $key);
                     }
-                    return ['triggered_entity' => 'Spectra', 'triggered_entity_id' => current_action(), 'data' => $formatedData, 'flows' => array($flow)];
+
+                    return ['triggered_entity' => 'Spectra', 'triggered_entity_id' => current_action(), 'data' => $formatedData, 'flows' => [$flow]];
                 }
             }
         }
@@ -4445,38 +4387,12 @@ final class TriggerFallback
         return rest_ensure_response(['status' => 'success']);
     }
 
-    private static function extractValueFromPath($data, $path)
-    {
-        $parts = is_array($path) ? $path : explode('.', $path);
-        if (count($parts) === 0) {
-            return $data;
-        }
-
-        $currentPart = array_shift($parts);
-
-        if (is_array($data)) {
-            if (!isset($data[$currentPart])) {
-                wp_send_json_error(new WP_Error('Spectra', __('Index out of bounds or invalid', 'bit-integrations')));
-            }
-            return self::extractValueFromPath($data[$currentPart], $parts);
-        }
-
-        if (is_object($data)) {
-            if (!property_exists($data, $currentPart)) {
-                wp_send_json_error(new WP_Error('Spectra', __('Invalid path', 'bit-integrations')));
-            }
-            return self::extractValueFromPath($data->$currentPart, $parts);
-        }
-
-        wp_send_json_error(new WP_Error('Spectra', __('Invalid path', 'bit-integrations')));
-    }
-
     public static function studiocartNewOrderCreated($status, $order_data, $order_type = 'main')
     {
         $studiocartActions = [
-            "newOrderCreated" => [
-                "id" => 2,
-                "title" => "New Order Created"
+            'newOrderCreated' => [
+                'id'    => 2,
+                'title' => 'New Order Created'
             ],
         ];
 
@@ -4514,37 +4430,37 @@ final class TriggerFallback
             return ['triggered_entity' => 'SureCart', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $flows];
         }
 
-        return;
     }
 
     public static function SureCartDataProcess($data, $product, $accountDetails)
     {
         $purchaseFinalData = self::surecartPurchaseDataProcess($data['id']);
+
         return [
-            'store_name' => $accountDetails['name'],
-            'store_url' => $accountDetails['url'],
-            'product_name' => $product['name'],
-            'product_id' => $product['id'],
+            'store_name'          => $accountDetails['name'],
+            'store_url'           => $accountDetails['url'],
+            'product_name'        => $product['name'],
+            'product_id'          => $product['id'],
             'product_description' => $product['description'],
-            'product_thumb_id' => $purchaseFinalData['product_thumb_id'],
-            'product_thumb' => $purchaseFinalData['product_thumb'],
-            'product_price' => $product->price,
-            'product_price_id' => $purchaseFinalData['product_price_id'],
-            'product_quantity' => $data['quantity'],
-            'max_price_amount' => $product['metrics']->max_price_amount,
-            'min_price_amount' => $product['metrics']->min_price_amount,
-            'order_id' => $purchaseFinalData['order_id'],
-            'order_paid_amount' => $data['order_paid_amount'],
-            'payment_currency' => $accountDetails['currency'],
-            'payment_method' => $purchaseFinalData['payment_method'],
-            'customer_id' => $data['customer_id'],
-            'subscriptions_id' => $purchaseFinalData['subscriptions_id'],
-            'order_number' => $purchaseFinalData['order_number'],
-            'order_date' => $purchaseFinalData['order_date'],
-            'order_status' => $purchaseFinalData['order_status'],
-            'order_paid_amount' => $purchaseFinalData['order_paid_amount'],
-            'order_subtotal' => $purchaseFinalData['order_subtotal'],
-            'order_total' => $purchaseFinalData['order_total'],
+            'product_thumb_id'    => $purchaseFinalData['product_thumb_id'],
+            'product_thumb'       => $purchaseFinalData['product_thumb'],
+            'product_price'       => $product->price,
+            'product_price_id'    => $purchaseFinalData['product_price_id'],
+            'product_quantity'    => $data['quantity'],
+            'max_price_amount'    => $product['metrics']->max_price_amount,
+            'min_price_amount'    => $product['metrics']->min_price_amount,
+            'order_id'            => $purchaseFinalData['order_id'],
+            'order_paid_amount'   => $data['order_paid_amount'],
+            'payment_currency'    => $accountDetails['currency'],
+            'payment_method'      => $purchaseFinalData['payment_method'],
+            'customer_id'         => $data['customer_id'],
+            'subscriptions_id'    => $purchaseFinalData['subscriptions_id'],
+            'order_number'        => $purchaseFinalData['order_number'],
+            'order_date'          => $purchaseFinalData['order_date'],
+            'order_status'        => $purchaseFinalData['order_status'],
+            'order_paid_amount'   => $purchaseFinalData['order_paid_amount'],
+            'order_subtotal'      => $purchaseFinalData['order_subtotal'],
+            'order_total'         => $purchaseFinalData['order_total'],
 
         ];
     }
@@ -4554,23 +4470,23 @@ final class TriggerFallback
         $purchase_data = self::surecartPurchaseDetails($id);
         $price = self::surecartGetPrice($purchase_data);
         $chekout = $purchase_data->initial_order->checkout;
-        $sanitizeData = [
-            'product' => $purchase_data->product->name,
-            'product_id' => $purchase_data->product->id,
-            'product_thumb_id' => isset($purchase_data->product->image) ? $purchase_data->product->image : '',
-            'product_thumb' => isset($purchase_data->product->image_url) ? $purchase_data->product->image_url : '',
-            'product_price_id' => isset($price->id) ? $price->id : '',
-            'order_id' => $purchase_data->initial_order->id,
-            'subscription_id' => isset($purchase_data->subscription->id) ? $purchase_data->subscription->id : '',
-            'order_number' => $purchase_data->initial_order->number,
-            'order_date' => date(get_option('date_format', 'F j, Y'), $purchase_data->initial_order->created_at),
-            'order_status' => $purchase_data->initial_order->status,
+
+        return [
+            'product'           => $purchase_data->product->name,
+            'product_id'        => $purchase_data->product->id,
+            'product_thumb_id'  => isset($purchase_data->product->image) ? $purchase_data->product->image : '',
+            'product_thumb'     => isset($purchase_data->product->image_url) ? $purchase_data->product->image_url : '',
+            'product_price_id'  => isset($price->id) ? $price->id : '',
+            'order_id'          => $purchase_data->initial_order->id,
+            'subscription_id'   => isset($purchase_data->subscription->id) ? $purchase_data->subscription->id : '',
+            'order_number'      => $purchase_data->initial_order->number,
+            'order_date'        => date(get_option('date_format', 'F j, Y'), $purchase_data->initial_order->created_at),
+            'order_status'      => $purchase_data->initial_order->status,
             'order_paid_amount' => self::surecartFormatAmount($chekout->charge->amount),
-            'order_subtotal' => self::surecartFormatAmount($chekout->subtotal_amount),
-            'order_total' => self::surecartFormatAmount($chekout->total_amount),
-            'payment_method' => isset($chekout->payment_method->processor_type) ? $chekout->payment_method->processor_type : '',
+            'order_subtotal'    => self::surecartFormatAmount($chekout->subtotal_amount),
+            'order_total'       => self::surecartFormatAmount($chekout->total_amount),
+            'payment_method'    => isset($chekout->payment_method->processor_type) ? $chekout->payment_method->processor_type : '',
         ];
-        return $sanitizeData;
     }
 
     public static function surecartPurchaseDetails($id)
@@ -4599,6 +4515,7 @@ final class TriggerFallback
         if (is_plugin_active('surecart/surecart.php')) {
             return $option === 'get_name' ? 'surecart/surecart.php' : true;
         }
+
         return false;
     }
 
@@ -4606,17 +4523,17 @@ final class TriggerFallback
     {
         $accountDetails = \SureCart\Models\Account::find();
         $finalData = [
-            'store_name' => $accountDetails['name'],
-            'store_url' => $accountDetails['url'],
-            'purchase_id' => $data->id,
-            'revoke_date' => $data->revoked_at,
-            'customer_id' => $data->customer,
-            'product_id' => $data->product->id,
+            'store_name'          => $accountDetails['name'],
+            'store_url'           => $accountDetails['url'],
+            'purchase_id'         => $data->id,
+            'revoke_date'         => $data->revoked_at,
+            'customer_id'         => $data->customer,
+            'product_id'          => $data->product->id,
             'product_description' => $data->product->description,
-            'product_name' => $data->product->name,
-            'product_image_id' => $data->product->image,
-            'product_price' => ($data->product->prices->data[0]->full_amount) / 100,
-            'product_currency' => $data->product->prices->data[0]->currency,
+            'product_name'        => $data->product->name,
+            'product_image_id'    => $data->product->image,
+            'product_price'       => ($data->product->prices->data[0]->full_amount) / 100,
+            'product_currency'    => $data->product->prices->data[0]->currency,
 
         ];
 
@@ -4633,24 +4550,23 @@ final class TriggerFallback
             return ['triggered_entity' => 'SureCart', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $flows];
         }
 
-        return;
     }
 
     public static function surecartPurchaseUnrevoked($data)
     {
         $accountDetails = \SureCart\Models\Account::find();
         $finalData = [
-            'store_name' => $accountDetails['name'],
-            'store_url' => $accountDetails['url'],
-            'purchase_id' => $data->id,
-            'revoke_date' => $data->revoked_at,
-            'customer_id' => $data->customer,
-            'product_id' => $data->product->id,
+            'store_name'          => $accountDetails['name'],
+            'store_url'           => $accountDetails['url'],
+            'purchase_id'         => $data->id,
+            'revoke_date'         => $data->revoked_at,
+            'customer_id'         => $data->customer,
+            'product_id'          => $data->product->id,
             'product_description' => $data->product->description,
-            'product_name' => $data->product->name,
-            'product_image_id' => $data->product->image,
-            'product_price' => ($data->product->prices->data[0]->full_amount) / 100,
-            'product_currency' => $data->product->prices->data[0]->currency,
+            'product_name'        => $data->product->name,
+            'product_image_id'    => $data->product->image,
+            'product_price'       => ($data->product->prices->data[0]->full_amount) / 100,
+            'product_currency'    => $data->product->prices->data[0]->currency,
         ];
 
         $flows = Flow::exists('SureCart', 3);
@@ -4666,13 +4582,12 @@ final class TriggerFallback
             return ['triggered_entity' => 'SureCart', 'triggered_entity_id' => 3, 'data' => $finalData, 'flows' => $flows];
         }
 
-        return;
     }
 
     // main function was empty in the orginal file
     public static function handleThemifySubmit()
     {
-        return;
+
     }
 
     public static function thriveApprenticeHandleCourseComplete($course_details, $user_details)
@@ -4685,14 +4600,14 @@ final class TriggerFallback
         $userInfo = self::thriveApprenticeGetUserInfo($user_details['user_id']);
 
         $finalData = [
-            'user_id' => $user_details['user_id'],
-            'course_id' => $course_details['course_id'],
+            'user_id'      => $user_details['user_id'],
+            'course_id'    => $course_details['course_id'],
             'course_title' => $course_details['course_title'],
-            'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
-            'avatar_url' => $userInfo['avatar_url'],
-            'user_email' => $userInfo['user_email'],
+            'first_name'   => $userInfo['first_name'],
+            'last_name'    => $userInfo['last_name'],
+            'nickname'     => $userInfo['nickname'],
+            'avatar_url'   => $userInfo['avatar_url'],
+            'user_email'   => $userInfo['user_email'],
         ];
 
         $flowDetails = json_decode($flows[0]->flow_details);
@@ -4702,13 +4617,12 @@ final class TriggerFallback
             return ['triggered_entity' => 'ThriveApprentice', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $flows];
         }
 
-        return;
     }
 
     // main function was unavailable in the orginal file
     public static function thriveApprenticeHandleLessonComplete()
     {
-        return;
+
     }
 
     public static function thriveApprenticeHandleModuleComplete($module_details, $user_details)
@@ -4721,14 +4635,14 @@ final class TriggerFallback
         $userInfo = self::thriveApprenticeGetUserInfo($user_details['user_id']);
 
         $finalData = [
-            'user_id' => $user_details['user_id'],
-            'module_id' => $module_details['module_id'],
+            'user_id'      => $user_details['user_id'],
+            'module_id'    => $module_details['module_id'],
             'module_title' => $module_details['module_title'],
-            'first_name' => $userInfo['first_name'],
-            'last_name' => $userInfo['last_name'],
-            'nickname' => $userInfo['nickname'],
-            'avatar_url' => $userInfo['avatar_url'],
-            'user_email' => $userInfo['user_email'],
+            'first_name'   => $userInfo['first_name'],
+            'last_name'    => $userInfo['last_name'],
+            'nickname'     => $userInfo['nickname'],
+            'avatar_url'   => $userInfo['avatar_url'],
+            'user_email'   => $userInfo['user_email'],
         ];
 
         $flowDetails = json_decode($flows[0]->flow_details);
@@ -4738,7 +4652,6 @@ final class TriggerFallback
             return ['triggered_entity' => 'ThriveApprentice', 'triggered_entity_id' => 3, 'data' => $finalData, 'flows' => $flows];
         }
 
-        return;
     }
 
     public static function thriveApprenticeGetUserInfo($user_id)
@@ -4750,9 +4663,9 @@ final class TriggerFallback
             $user_meta = get_user_meta($user_id);
             $user = [
                 'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
+                'last_name'  => $user_meta['last_name'][0],
                 'user_email' => $userData->user_email,
-                'nickname' => $userData->user_nicename,
+                'nickname'   => $userData->user_nicename,
                 'avatar_url' => get_avatar_url($user_id),
             ];
         }
@@ -4768,27 +4681,27 @@ final class TriggerFallback
             return;
         }
 
-        $author_id      = get_post_field('post_author', $course_id);
-        $author_name    = get_the_author_meta('display_name', $author_id);
-        $student_id     = get_post_field('post_author', $enrollment_id);
-        $userData       = get_userdata($student_id);
+        $author_id = get_post_field('post_author', $course_id);
+        $author_name = get_the_author_meta('display_name', $author_id);
+        $student_id = get_post_field('post_author', $enrollment_id);
+        $userData = get_userdata($student_id);
         $result_student = [];
 
         if ($student_id && $userData) {
             $result_student = [
-                'student_id'            => $student_id,
-                'student_name'          => $userData->display_name,
-                'student_first_name'    => $userData->user_firstname,
-                'student_last_name'     => $userData->user_lastname,
-                'student_email'         => $userData->user_email,
+                'student_id'         => $student_id,
+                'student_name'       => $userData->display_name,
+                'student_first_name' => $userData->user_firstname,
+                'student_last_name'  => $userData->user_lastname,
+                'student_email'      => $userData->user_email,
             ];
         }
 
         $result_course = [];
         $course = get_post($course_id);
         $result_course = [
-            'course_id' => $course->ID,
-            'course_title' => $course->post_title,
+            'course_id'     => $course->ID,
+            'course_title'  => $course->post_title,
             'course_author' => $author_name,
         ];
         $result = $result_student + $result_course;
@@ -4796,7 +4709,7 @@ final class TriggerFallback
         $courseInfo = get_post_meta($course_id);
         $course_temp = [];
         foreach ($courseInfo as $key => $val) {
-            if (is_array($val)) {
+            if (\is_array($val)) {
                 $val = maybe_unserialize($val[0]);
             }
             $course_temp[$key] = $val;
@@ -4833,13 +4746,13 @@ final class TriggerFallback
         $attempt_info = [];
 
         foreach ($attempt as $key => $val) {
-            if (is_array($val)) {
+            if (\is_array($val)) {
                 $val = maybe_unserialize($val[0]);
             }
             $attempt_details[$key] = maybe_unserialize($val);
         }
 
-        if (array_key_exists('attempt_info', $attempt_details)) {
+        if (\array_key_exists('attempt_info', $attempt_details)) {
             $attempt_info_tmp = $attempt_details['attempt_info'];
             unset($attempt_details['attempt_info']);
 
@@ -4877,35 +4790,35 @@ final class TriggerFallback
 
         $lessonData = [];
         $lessonData = [
-            'lesson_id' => $lessonPost->ID,
-            'lesson_title' => $lessonPost->post_title,
+            'lesson_id'          => $lessonPost->ID,
+            'lesson_title'       => $lessonPost->post_title,
             'lesson_description' => $lessonPost->post_content,
-            'lesson_url' => $lessonPost->guid,
+            'lesson_url'         => $lessonPost->guid,
         ];
 
         $user = self::TutorLmsGetUserInfo(get_current_user_id());
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
         $courseData = [];
         $topicPost = get_post($lessonPost->post_parent);
         $topicData = [
-            'topic_id' => $topicPost->ID,
-            'topic_title' => $topicPost->post_title,
+            'topic_id'          => $topicPost->ID,
+            'topic_title'       => $topicPost->post_title,
             'topic_description' => $topicPost->post_content,
-            'topic_url' => $topicPost->guid,
+            'topic_url'         => $topicPost->guid,
         ];
         $coursePost = get_post($topicPost->post_parent);
         $courseData = [
-            'course_id' => $coursePost->ID,
-            'course_name' => $coursePost->post_title,
+            'course_id'          => $coursePost->ID,
+            'course_name'        => $coursePost->post_title,
             'course_description' => $coursePost->post_content,
-            'course_url' => $coursePost->guid,
+            'course_url'         => $coursePost->guid,
         ];
 
         $lessonDataFinal = $lessonData + $topicData + $courseData + $current_user;
@@ -4927,17 +4840,17 @@ final class TriggerFallback
 
         $courseData = [];
         $courseData = [
-            'course_id' => $coursePost->ID,
+            'course_id'    => $coursePost->ID,
             'course_title' => $coursePost->post_title,
-            'course_url' => $coursePost->guid,
+            'course_url'   => $coursePost->guid,
         ];
 
         $user = self::TutorLmsGetUserInfo(get_current_user_id());
         $current_user = [
             'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
+            'last_name'  => $user['last_name'],
             'user_email' => $user['user_email'],
-            'nickname' => $user['nickname'],
+            'nickname'   => $user['nickname'],
             'avatar_url' => $user['avatar_url'],
         ];
 
@@ -4972,13 +4885,13 @@ final class TriggerFallback
         $attempt_info = [];
 
         foreach ($attempt as $key => $val) {
-            if (is_array($val)) {
+            if (\is_array($val)) {
                 $val = maybe_unserialize($val[0]);
             }
             $attempt_details[$key] = maybe_unserialize($val);
         }
 
-        if (array_key_exists('attempt_info', $attempt_details)) {
+        if (\array_key_exists('attempt_info', $attempt_details)) {
             $attempt_info_tmp = $attempt_details['attempt_info'];
             unset($attempt_details['attempt_info']);
 
@@ -5012,21 +4925,6 @@ final class TriggerFallback
             }
         }
 
-        return;
-    }
-
-    protected static function TutorLmsFlowFilter($flows, $key, $value)
-    {
-        $filteredFlows = [];
-        foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
-                $flow->flow_details = json_decode($flow->flow_details);
-            }
-            if (!isset($flow->flow_details->$key) || $flow->flow_details->$key === 'any' || $flow->flow_details->$key == $value || $flow->flow_details->$key === '') {
-                $filteredFlows[] = $flow;
-            }
-        }
-        return $filteredFlows;
     }
 
     public static function TutorLmsGetUserInfo($user_id)
@@ -5038,12 +4936,13 @@ final class TriggerFallback
             $user_meta = get_user_meta($user_id);
             $user = [
                 'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
+                'last_name'  => $user_meta['last_name'][0],
                 'user_email' => $userData->user_email,
-                'nickname' => $userData->user_nicename,
+                'nickname'   => $userData->user_nicename,
                 'avatar_url' => get_avatar_url($user_id),
             ];
         }
+
         return $user;
     }
 
@@ -5076,6 +4975,7 @@ final class TriggerFallback
                 $res = 'Achived';
             }
         }
+
         return $res;
     }
 
@@ -5095,7 +4995,6 @@ final class TriggerFallback
             return ['triggered_entity' => 'UltimateMember', 'triggered_entity_id' => $form_id, 'data' => $finalData, 'flows' => $flows];
         }
 
-        return;
     }
 
     public static function ultimateMemberHandleUserRoleChange($user_id, $role, $old_roles)
@@ -5112,7 +5011,6 @@ final class TriggerFallback
             return ['triggered_entity' => 'UltimateMember', 'triggered_entity_id' => $form_id, 'data' => $finalData, 'flows' => $flows];
         }
 
-        return;
     }
 
     public static function ultimateMemberHandleUserRegisViaForm($user_id, $um_args)
@@ -5128,12 +5026,11 @@ final class TriggerFallback
             return ['triggered_entity' => 'UltimateMember', 'triggered_entity_id' => $form_id, 'data' => $um_args['submitted'], 'flows' => $flows];
         }
 
-        return;
     }
 
     public static function ultimateMemberHandleUserLogViaForm($um_args)
     {
-        if (!isset($um_args['form_id']) || !function_exists('um_user')) {
+        if (!isset($um_args['form_id']) || !\function_exists('um_user')) {
             return;
         }
         $user_id = um_user('ID');
@@ -5149,7 +5046,6 @@ final class TriggerFallback
             return ['triggered_entity' => 'UltimateMember', 'triggered_entity_id' => $form_id, 'data' => $finalData, 'flows' => $flows];
         }
 
-        return;
     }
 
     public static function ultimateMemberGetUserInfo($user_id)
@@ -5160,14 +5056,15 @@ final class TriggerFallback
             $userData = $userInfo->data;
             $user_meta = get_user_meta($user_id);
             $user = [
-                'user_id' => $user_id,
+                'user_id'    => $user_id,
                 'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
+                'last_name'  => $user_meta['last_name'][0],
                 'user_email' => $userData->user_email,
-                'nickname' => $userData->user_nicename,
+                'nickname'   => $userData->user_nicename,
                 'avatar_url' => get_avatar_url($user_id),
             ];
         }
+
         return $user;
     }
 
@@ -5179,7 +5076,7 @@ final class TriggerFallback
             return;
         }
 
-        $dataAll = \weforms_get_entry_data($entry_id);
+        $dataAll = weforms_get_entry_data($entry_id);
 
         foreach ($dataAll['fields'] as $key => $field) {
             if ($field['type'] === 'image_upload' || $field['type'] === 'file_upload') {
@@ -5190,23 +5087,23 @@ final class TriggerFallback
         $submittedData = $dataAll['data'];
 
         foreach ($submittedData as $key => $value) {
-            $str = "$key";
-            $pattern = "/name/i";
+            $str = "{$key}";
+            $pattern = '/name/i';
             $isName = preg_match($pattern, $str);
             if ($isName) {
                 unset($submittedData[$key]);
                 $nameValues = explode('|', $value);
-                if (count($nameValues) == 2) {
+                if (\count($nameValues) == 2) {
                     $nameOrganized = [
                         'first_name' => $nameValues[0],
-                        'last_name' => $nameValues[1]
+                        'last_name'  => $nameValues[1]
 
                     ];
                 } else {
                     $nameOrganized = [
-                        'first_name' => $nameValues[0],
+                        'first_name'  => $nameValues[0],
                         'middle_name' => $nameValues[1],
-                        'last_name' => $nameValues[2]
+                        'last_name'   => $nameValues[2]
                     ];
                 }
             }
@@ -5222,7 +5119,7 @@ final class TriggerFallback
         $user = get_user_by('id', $userId);
         $flows = Flow::exists('WPCourseware', 'userEnrolledCourse');
 
-        if (!$flows || !$user || !function_exists('WPCW_courses_getCourseDetails')) {
+        if (!$flows || !$user || !\function_exists('WPCW_courses_getCourseDetails')) {
             return;
         }
 
@@ -5314,35 +5211,21 @@ final class TriggerFallback
         }
 
         $data = [
-            'enroll_user_id' => $userId,
-            'enroll_user_name' => $user->display_name,
+            'enroll_user_id'    => $userId,
+            'enroll_user_name'  => $user->display_name,
             'enroll_user_email' => $user->user_email,
-            'unit_id' => $unitId,
-            'unit_title' => $unit->post_title,
-            'module_title' => $unitData->module_title,
-            'course_title' => $unitData->course_title,
+            'unit_id'           => $unitId,
+            'unit_title'        => $unit->post_title,
+            'module_title'      => $unitData->module_title,
+            'course_title'      => $unitData->course_title,
         ];
 
         return ['triggered_entity' => 'WPCourseware', 'triggered_entity_id' => 'unitCompleted', 'data' => $data, 'flows' => $flows];
     }
 
-    protected static function wpcwFlowFilter($flows, $key, $value)
-    {
-        $filteredFlows = [];
-        foreach ($flows as $flow) {
-            if (is_string($flow->flow_details)) {
-                $flow->flow_details = json_decode($flow->flow_details);
-            }
-            if (!isset($flow->flow_details->$key) || $flow->flow_details->$key === 'any' || $flow->flow_details->$key == $value || $flow->flow_details->$key === '') {
-                $filteredFlows[] = $flow;
-            }
-        }
-        return $filteredFlows;
-    }
-
     public static function wpefHandleSubmission($data)
     {
-        if (!($data instanceof \IPT_FSQM_Form_Elements_Data)) {
+        if (!($data instanceof IPT_FSQM_Form_Elements_Data)) {
             return;
         }
         $form_id = $data->form_id;
@@ -5375,27 +5258,27 @@ final class TriggerFallback
 
         foreach ($fields as $index => $field) {
             if ($field['type'] == 'datetime') {
-                $processedValues["{$field['m_type']}.$index"] =  self::wpefProcessDateFieldValue($index, $field, $data);
-            } else if ($field['type'] == 'feedback_matrix') {
-                $processedValues["{$field['m_type']}.$index"] =   $field['rows'];
-            } else if ($field['type'] == 'gps') {
-                $processedValues["{$field['m_type']}.$index"] =   $field['lat'] . ", " .  $field['long'];
-            } else if ($field['type'] == 'upload') {
-                $processedValues["{$field['m_type']}.$index"] = self::wpefProcessUploadFieldValue($index, $field, $data);
-            } else if ($field['type'] == 'address') {
+                $processedValues["{$field['m_type']}.{$index}"] = self::wpefProcessDateFieldValue($index, $field, $data);
+            } elseif ($field['type'] == 'feedback_matrix') {
+                $processedValues["{$field['m_type']}.{$index}"] = $field['rows'];
+            } elseif ($field['type'] == 'gps') {
+                $processedValues["{$field['m_type']}.{$index}"] = $field['lat'] . ', ' . $field['long'];
+            } elseif ($field['type'] == 'upload') {
+                $processedValues["{$field['m_type']}.{$index}"] = self::wpefProcessUploadFieldValue($index, $field, $data);
+            } elseif ($field['type'] == 'address') {
                 $processedValues = array_merge($processedValues, self::wpefProcessAddressFieldValue($index, $field, $data));
             } else {
-                $processedValues["{$field['m_type']}.$index"] =   '';
+                $processedValues["{$field['m_type']}.{$index}"] = '';
                 if (isset($field['value'])) {
-                    $processedValues["{$field['m_type']}.$index"] =   $field['value'];
-                } else if (isset($field['values'])) {
-                    $processedValues["{$field['m_type']}.$index"] =   $field['values'];
-                } else if (isset($field['options'])) {
-                    $processedValues["{$field['m_type']}.$index"] =   is_array($field['options']) && count($field['options']) == 1 ? $field['options'][0] : $field['options'];
-                } else if (isset($field['rows'])) {
-                    $processedValues["{$field['m_type']}.$index"] =   $field['rows'];
-                } else if (isset($field['order'])) {
-                    $processedValues["{$field['m_type']}.$index"] =   $field['order'];
+                    $processedValues["{$field['m_type']}.{$index}"] = $field['value'];
+                } elseif (isset($field['values'])) {
+                    $processedValues["{$field['m_type']}.{$index}"] = $field['values'];
+                } elseif (isset($field['options'])) {
+                    $processedValues["{$field['m_type']}.{$index}"] = \is_array($field['options']) && \count($field['options']) == 1 ? $field['options'][0] : $field['options'];
+                } elseif (isset($field['rows'])) {
+                    $processedValues["{$field['m_type']}.{$index}"] = $field['rows'];
+                } elseif (isset($field['order'])) {
+                    $processedValues["{$field['m_type']}.{$index}"] = $field['order'];
                 }
             }
         }
@@ -5406,15 +5289,15 @@ final class TriggerFallback
     public static function wpefProcessDateFieldValue($index, $field, $data)
     {
         $processedValue = '';
-        $fieldInfo =  $data->{$field['m_type']}[$index];
+        $fieldInfo = $data->{$field['m_type']}[$index];
         $dateTimeHelper = new DateTimeHelper();
         $f_date_format = $fieldInfo['settings']['date_format'];
         $f_time_format = $fieldInfo['settings']['time_format'];
         if ($f_date_format == 'mm/dd/yy') {
             $date_format = 'm/d/Y';
-        } else if ($f_date_format == 'yy-mm-dd') {
+        } elseif ($f_date_format == 'yy-mm-dd') {
             $date_format = 'Y-m-d';
-        } else if ($f_date_format == 'dd.mm.yy') {
+        } elseif ($f_date_format == 'dd.mm.yy') {
             $date_format = 'd.m.Y';
         } else {
             $date_format = 'd-m-Y';
@@ -5426,15 +5309,15 @@ final class TriggerFallback
             $time_format = 'h:i:s A';
         }
 
-        $date_time_format = "$date_format $time_format";
-        $processedValue = $dateTimeHelper->getFormated($field['value'], $date_time_format, wp_timezone(), 'Y-m-d\TH:i', null);
-        return $processedValue;
+        $date_time_format = "{$date_format} {$time_format}";
+
+        return $dateTimeHelper->getFormated($field['value'], $date_time_format, wp_timezone(), 'Y-m-d\TH:i', null);
     }
 
     public static function wpefProcessUploadFieldValue($index, $field, $data)
     {
         $processedValue = [];
-        $elementValueHelper = new \IPT_EForm_Form_Elements_Values($data->data_id, $data->form_id);
+        $elementValueHelper = new IPT_EForm_Form_Elements_Values($data->data_id, $data->form_id);
         $elementValueHelper->reassign($data->data_id, $data);
         foreach ($field['id'] as $value) {
             $fileInfo = $elementValueHelper->value_upload($data->{$field['m_type']}[$index], $field, 'json', 'label', $value);
@@ -5444,6 +5327,7 @@ final class TriggerFallback
                 }
             }
         }
+
         return $processedValue;
     }
 
@@ -5451,8 +5335,9 @@ final class TriggerFallback
     {
         $processedValue = [];
         foreach ($field['values'] as $key => $value) {
-            $processedValue["{$field['m_type']}.$index.$key"] = $value;
+            $processedValue["{$field['m_type']}.{$index}.{$key}"] = $value;
         }
+
         return $processedValue;
     }
 
@@ -5468,7 +5353,7 @@ final class TriggerFallback
         $data = [];
         if (isset($submit->meta)) {
             foreach ($submit->meta as $key => $field_value) {
-                if (empty($field_value) || (is_array($field_value) && !array_key_exists('id', $field_value))) {
+                if (empty($field_value) || (\is_array($field_value) && !\array_key_exists('id', $field_value))) {
                     continue;
                 }
                 $value = wsf_submit_get_value($submit, $key);
@@ -5478,21 +5363,198 @@ final class TriggerFallback
                     $files = $value;
                     $value = [];
 
-                    if (is_array($files)) {
+                    if (\is_array($files)) {
                         foreach ($files as $k => $file) {
-                            if (array_key_exists('hash', $file)) {
+                            if (\array_key_exists('hash', $file)) {
                                 continue;
                             }
                             $value[$k] = $upDir['basedir'] . '/' . $file['path'];
                         }
                     }
                 } elseif ($field_value['type'] == 'radio') {
-                    $value = is_array($value) ? $value[0] : $value;
+                    $value = \is_array($value) ? $value[0] : $value;
                 }
                 $data[$key] = $value;
             }
         }
 
         return ['triggered_entity' => 'WSForm', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
+    }
+
+    protected static function academyLmsFlowFilter($flows, $key, $value)
+    {
+        $filteredFlows = [];
+        foreach ($flows as $flow) {
+            if (\is_string($flow->flow_details)) {
+                $flow->flow_details = json_decode($flow->flow_details);
+            }
+            if (!isset($flow->flow_details->{$key}) || $flow->flow_details->{$key} === 'any' || $flow->flow_details->{$key} == $value || $flow->flow_details->{$key} === '') {
+                $filteredFlows[] = $flow;
+            }
+        }
+
+        return $filteredFlows;
+    }
+
+    protected static function BuddyBossFlowFilter($flows, $key, $value)
+    {
+        $filteredFlows = [];
+        foreach ($flows as $flow) {
+            if (\is_string($flow->flow_details)) {
+                $flow->flow_details = json_decode($flow->flow_details);
+            }
+            if (!isset($flow->flow_details->{$key}) || $flow->flow_details->{$key} === 'any' || $flow->flow_details->{$key} == $value || $flow->flow_details->{$key} === '') {
+                $filteredFlows[] = $flow;
+            }
+        }
+
+        return $filteredFlows;
+    }
+
+    protected static function fluentcrmFlowFilter($flows, $key, $value)
+    {
+        $filteredFlows = [];
+        if (\is_array($flows) || \is_object($flows)) {
+            foreach ($flows as $flow) {
+                if (\is_string($flow->flow_details)) {
+                    $flow->flow_details = json_decode($flow->flow_details);
+                }
+                if (!isset($flow->flow_details->{$key}) || $flow->flow_details->{$key} === 'any' || \in_array($flow->flow_details->{$key}, $value) || $flow->flow_details->{$key} === '') {
+                    $filteredFlows[] = $flow;
+                }
+            }
+        }
+
+        return $filteredFlows;
+    }
+
+    // LearnDash
+
+    protected static function flowFilter($flows, $key, $value)
+    {
+        $filteredFlows = [];
+        foreach ($flows as $flow) {
+            if (\is_string($flow->flow_details)) {
+                $flow->flow_details = json_decode($flow->flow_details);
+            }
+            if (!isset($flow->flow_details->{$key}) || $flow->flow_details->{$key} === 'any' || $flow->flow_details->{$key} == $value || $flow->flow_details->{$key} === '') {
+                $filteredFlows[] = $flow;
+            }
+        }
+
+        return $filteredFlows;
+    }
+
+    protected static function TutorLmsFlowFilter($flows, $key, $value)
+    {
+        $filteredFlows = [];
+        foreach ($flows as $flow) {
+            if (\is_string($flow->flow_details)) {
+                $flow->flow_details = json_decode($flow->flow_details);
+            }
+            if (!isset($flow->flow_details->{$key}) || $flow->flow_details->{$key} === 'any' || $flow->flow_details->{$key} == $value || $flow->flow_details->{$key} === '') {
+                $filteredFlows[] = $flow;
+            }
+        }
+
+        return $filteredFlows;
+    }
+
+    protected static function wpcwFlowFilter($flows, $key, $value)
+    {
+        $filteredFlows = [];
+        foreach ($flows as $flow) {
+            if (\is_string($flow->flow_details)) {
+                $flow->flow_details = json_decode($flow->flow_details);
+            }
+            if (!isset($flow->flow_details->{$key}) || $flow->flow_details->{$key} === 'any' || $flow->flow_details->{$key} == $value || $flow->flow_details->{$key} === '') {
+                $filteredFlows[] = $flow;
+            }
+        }
+
+        return $filteredFlows;
+    }
+
+    private static function evfFieldType($type)
+    {
+        switch ($type) {
+            case 'first-name':
+            case 'last-name':
+            case 'range-slider':
+            case 'payment-quantity':
+            case 'payment-total':
+            case 'rating':
+                return 'text';
+            case 'phone':
+                return 'tel';
+            case 'privacy-policy':
+            case 'payment-checkbox':
+            case 'payment-multiple':
+                return 'checkbox';
+            case 'payment-single':
+                return 'radio';
+            case 'image-upload':
+            case 'file-upload':
+            case 'signature':
+                return 'file';
+
+            default:
+                return $type;
+        }
+    }
+
+    private static function groundhoggSetTagNames($tag_ids)
+    {
+        $tags = new Tags();
+        $tag_list = [];
+        foreach ($tag_ids as $tag_id) {
+            $tag_list[] = $tags->get_tag($tag_id)->tag_name;
+        }
+
+        return implode(',', $tag_list);
+    }
+
+    private static function handle_submit_data($form_id, $form_data)
+    {
+        if (!$form_id) {
+            return;
+        }
+        $flows = Flow::exists('Met', $form_id);
+        if (!$flows) {
+            return;
+        }
+
+        unset($form_data['action'], $form_data['form_nonce'], $form_data['id']);
+        $data = $form_data;
+
+        return ['triggered_entity' => 'Met', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
+    }
+
+    private static function extractValueFromPath($data, $path)
+    {
+        $parts = \is_array($path) ? $path : explode('.', $path);
+        if (\count($parts) === 0) {
+            return $data;
+        }
+
+        $currentPart = array_shift($parts);
+
+        if (\is_array($data)) {
+            if (!isset($data[$currentPart])) {
+                wp_send_json_error(new WP_Error('Spectra', __('Index out of bounds or invalid', 'bit-integrations')));
+            }
+
+            return self::extractValueFromPath($data[$currentPart], $parts);
+        }
+
+        if (\is_object($data)) {
+            if (!property_exists($data, $currentPart)) {
+                wp_send_json_error(new WP_Error('Spectra', __('Invalid path', 'bit-integrations')));
+            }
+
+            return self::extractValueFromPath($data->{$currentPart}, $parts);
+        }
+
+        wp_send_json_error(new WP_Error('Spectra', __('Invalid path', 'bit-integrations')));
     }
 }

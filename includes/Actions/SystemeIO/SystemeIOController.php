@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SystemeIO;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for SystemeIO integration
@@ -15,34 +15,20 @@ use BitCode\FI\Core\Util\HttpHelper;
 class SystemeIOController
 {
     protected $_defaultHeader;
+
     protected $_apiEndpoint;
 
     public function __construct()
     {
-        $this->_apiEndpoint = "https://api.systeme.io/api";
-    }
-
-    private function checkValidation($fieldsRequestParams, $customParam = '**')
-    {
-        if (empty($fieldsRequestParams->api_key) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
-        }
-    }
-
-    private function setHeaders($apiKey)
-    {
-        $this->_defaultHeader = [
-            "x-api-key"       => $apiKey,
-            "Content-Type"  => "application/json"
-        ];
+        $this->_apiEndpoint = 'https://api.systeme.io/api';
     }
 
     public function authentication($fieldsRequestParams)
     {
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key);
-        $apiEndpoint  = $this->_apiEndpoint . "/contacts";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $apiEndpoint = $this->_apiEndpoint . '/contacts';
+        $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
 
         if (isset($response->items)) {
             wp_send_json_success('Authentication successful', 200);
@@ -55,19 +41,19 @@ class SystemeIOController
     {
         $this->checkValidation($fieldsRequestParams);
         $this->setHeaders($fieldsRequestParams->api_key);
-        $apiEndpoint  = $this->_apiEndpoint . "/tags";
-        $response     = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $apiEndpoint = $this->_apiEndpoint . '/tags';
+        $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
 
         if (!isset($response->errors)) {
             $tags = [];
             foreach ($response->items as $tag) {
-                array_push(
-                    $tags,
-                    (object) [
-                        'id'    => $tag->id,
-                        'name'  => $tag->name
-                    ]
-                );
+
+                $tags[]
+                = (object) [
+                    'id'   => $tag->id,
+                    'name' => $tag->name
+                ]
+                ;
             }
             wp_send_json_success($tags, 200);
         } else {
@@ -78,21 +64,37 @@ class SystemeIOController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-        $integId            = $integrationData->id;
-        $apiKey             = $integrationDetails->api_key;
-        $fieldMap           = $integrationDetails->field_map;
-        $actionName         = $integrationDetails->actionName;
+        $integId = $integrationData->id;
+        $apiKey = $integrationDetails->api_key;
+        $fieldMap = $integrationDetails->field_map;
+        $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($actionName) || empty($apiKey)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for SystemeIO api', 'bit-integrations'));
         }
 
-        $recordApiHelper    = new RecordApiHelper($integrationDetails, $integId, $apiKey);
-        $systemeIOApiResponse   = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
+        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey);
+        $systemeIOApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
 
         if (is_wp_error($systemeIOApiResponse)) {
             return $systemeIOApiResponse;
         }
+
         return $systemeIOApiResponse;
+    }
+
+    private function checkValidation($fieldsRequestParams, $customParam = '**')
+    {
+        if (empty($fieldsRequestParams->api_key) || empty($customParam)) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+    }
+
+    private function setHeaders($apiKey)
+    {
+        $this->_defaultHeader = [
+            'x-api-key'    => $apiKey,
+            'Content-Type' => 'application/json'
+        ];
     }
 }

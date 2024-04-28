@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\FreshSales;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -16,8 +16,11 @@ use BitCode\FI\Core\Util\HttpHelper;
 class RecordApiHelper
 {
     private $_integrationDetails;
+
     private $_integrationID;
+
     private $_defaultHeader;
+
     private $baseUrl;
 
     public function __construct($integrationDetails, $integId)
@@ -26,8 +29,8 @@ class RecordApiHelper
         $this->_integrationID = $integId;
         $this->baseUrl = $this->_integrationDetails->bundle_alias;
         $this->_defaultHeader = [
-            'Content-Type' => 'application/json',
-            "Authorization" => "Token token=" . $this->_integrationDetails->api_key
+            'Content-Type'  => 'application/json',
+            'Authorization' => 'Token token=' . $this->_integrationDetails->api_key
         ];
     }
 
@@ -44,21 +47,19 @@ class RecordApiHelper
         }
 
         if ($module === 'account') {
-            $module = "sales_account";
+            $module = 'sales_account';
         }
 
         if ($module === 'product') {
-            $apiEndpoints =   "https://" . $this->baseUrl . "/api/cpq/" . $module . "s";
+            $apiEndpoints = 'https://' . $this->baseUrl . '/api/cpq/' . $module . 's';
         } else {
-            $apiEndpoints =   "https://" . $this->baseUrl . "/api/" . $module . "s";
+            $apiEndpoints = 'https://' . $this->baseUrl . '/api/' . $module . 's';
         }
 
         $actions = $this->_integrationDetails->actions;
         $body = wp_json_encode([$module => $finalData]);
 
-        $response = HttpHelper::post($apiEndpoints, $body, $this->_defaultHeader);
-
-        return $response;
+        return HttpHelper::post($apiEndpoints, $body, $this->_defaultHeader);
     }
 
     public function addRelatedList($freshSalesApiResponse, $integrationDetails, $fieldValues, $parentModule)
@@ -84,11 +85,11 @@ class RecordApiHelper
                 $participants = explode(',', $moduleData->activities_participants);
                 $allParticipants = [];
                 foreach ($participants as $participant) {
-                    array_push($allParticipants, (object)[
+                    $allParticipants[] = (object) [
                         'contact_id'   => (int) $participant,
                         'primary_flag' => false
-                    ]);
-                };
+                    ];
+                }
                 $finalData['participants'] = $allParticipants;
             }
             $apiEndpoints = $this->baseUrl . $module . '?api_token=' . $this->_integrationDetails->api_key;
@@ -99,15 +100,14 @@ class RecordApiHelper
                 $finalData['deal_id'] = (int) $parendId;
             }
 
-            $response = HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $this->_defaultHeader);
-            return $response;
+            return HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $this->_defaultHeader);
         }
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
-        $dataFinal      = [];
-        $customFields   = [];
+        $dataFinal = [];
+        $customFields = [];
 
         foreach ($fieldMap as $key => $value) {
             $triggerValue = $value->formField;
@@ -118,7 +118,7 @@ class RecordApiHelper
                 $customFields[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
             } elseif ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }

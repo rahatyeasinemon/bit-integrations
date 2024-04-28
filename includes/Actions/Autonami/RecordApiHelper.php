@@ -18,7 +18,7 @@ class RecordApiHelper
     public function insertRecord($data, $actions)
     {
         $contact_obj = BWF_Contacts::get_instance();
-        $contact  = $contact_obj->get_contact_by('email', $data['email']);
+        $contact = $contact_obj->get_contact_by('email', $data['email']);
         $userExist = (absint($contact->get_id()) > 0);
 
         if ($userExist && isset($actions->skip_if_exists) && $actions->skip_if_exists) {
@@ -26,14 +26,14 @@ class RecordApiHelper
         } else {
             foreach ($data as $key => $item) {
                 $obj = 'set_' . $key;
-                $contact->$obj($item);
+                $contact->{$obj}($item);
             }
             $contact->set_status(1);
             $contact->save();
 
-            $customContact = new BWFCRM_Contact( $data['email'] );
+            $customContact = new BWFCRM_Contact($data['email']);
             foreach ($data as $key => $item) {
-                if($key == 'address') {
+                if ($key == 'address') {
                     $key = 'address-1';
                 }
                 $customContact->set_field_by_slug($key, $item);
@@ -46,6 +46,7 @@ class RecordApiHelper
                 $response = ['success' => false, 'messages' => 'Something wrong!'];
             }
         }
+
         return $response;
     }
 
@@ -57,7 +58,7 @@ class RecordApiHelper
                 if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
                     $fieldData[$fieldPair->autonamiField] = $fieldPair->customValue;
                 } else {
-                    $fieldData[$fieldPair->autonamiField] = is_array($fieldValues[$fieldPair->formField]) ? json_encode($fieldValues[$fieldPair->formField]) : $fieldValues[$fieldPair->formField];
+                    $fieldData[$fieldPair->autonamiField] = \is_array($fieldValues[$fieldPair->formField]) ? json_encode($fieldValues[$fieldPair->formField]) : $fieldValues[$fieldPair->formField];
                 }
             }
         }
@@ -67,10 +68,11 @@ class RecordApiHelper
         $recordApiResponse = $this->insertRecord($fieldData, $actions);
 
         if ($recordApiResponse['success']) {
-            LogHandler::save($this->_integrationID, ['type' =>  'record', 'type_name' => 'insert'], 'success', $recordApiResponse);
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'success', $recordApiResponse);
         } else {
-            LogHandler::save($this->_integrationID, ['type' =>  'record', 'type_name' => 'insert'], 'error', $recordApiResponse);
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', $recordApiResponse);
         }
+
         return $recordApiResponse;
     }
 }

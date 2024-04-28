@@ -15,25 +15,29 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_defaultHeader;
+
     private $_integrationID;
+
     private $_apiEndPoint = 'https://api.sendinblue.com/v3/contacts';
 
     public function __construct($api_key, $integId)
     {
-        $this->_defaultHeader["Content-Type"] = 'application/json';
-        $this->_defaultHeader["api-key"] = $api_key;
+        $this->_defaultHeader['Content-Type'] = 'application/json';
+        $this->_defaultHeader['api-key'] = $api_key;
         $this->_integrationID = $integId;
     }
 
     /**
-     Email template must be activate as double optin, button link = {{ params.DOIur }}
+     * Email template must be activate as double optin, button link = {{ params.DOIur }}
+     *
+     * @param mixed $data
+     * @param mixed $integrationDetails
      */
-
     public function insertRecordDoubleOpt($data, $integrationDetails)
     {
         $templateId = $integrationDetails->templateId;
         $redirectionUrl = $integrationDetails->redirectionUrl;
-        $data['templateId'] = (int)$templateId;
+        $data['templateId'] = (int) $templateId;
         $data['redirectionUrl'] = $redirectionUrl;
         if ($data['listIds']) {
             $data['includeListIds'] = $data['listIds'];
@@ -42,19 +46,21 @@ class RecordApiHelper
 
         $data = wp_json_encode($data);
         $insertRecordEndpoint = "{$this->_apiEndPoint}/doubleOptinConfirmation";
-        $response = HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
-        return $response;
+
+        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
     }
 
     public function insertRecord($data)
     {
         $insertRecordEndpoint = "{$this->_apiEndPoint}";
+
         return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
     }
 
     public function updateRecord($id, $data)
     {
         $updateRecordEndpoint = "{$this->_apiEndPoint}/{$id}";
+
         return HttpHelper::request($updateRecordEndpoint, 'PUT', $data, $this->_defaultHeader);
     }
 
@@ -78,17 +84,16 @@ class RecordApiHelper
         $fieldData['attributes'] = (object) $attributes;
 
         foreach ($lists as $index => $value) {
-            //code to be executed; 
-            $lists[$index] = (int)$value;
+            // code to be executed;
+            $lists[$index] = (int) $value;
         }
         $fieldData['listIds'] = $lists;
 
         if (property_exists($actions, 'double_optin') && $actions->double_optin) {
-            $recordApiResponse = $this->insertRecordDoubleOpt(($fieldData),  $integrationDetails);
+            $recordApiResponse = $this->insertRecordDoubleOpt(($fieldData), $integrationDetails);
         } else {
             $recordApiResponse = $this->insertRecord(wp_json_encode($fieldData));
         }
-
 
         $type = 'insert';
 
@@ -102,10 +107,11 @@ class RecordApiHelper
         }
 
         if ($recordApiResponse && isset($recordApiResponse->code)) {
-            LogHandler::save($this->_integrationID, ['type' =>  'record', 'type_name' => $type], 'error', $recordApiResponse);
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', $recordApiResponse);
         } else {
-            LogHandler::save($this->_integrationID, ['type' =>  'record', 'type_name' => $type], 'success', $recordApiResponse);
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', $recordApiResponse);
         }
+
         return $recordApiResponse;
     }
 }

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\AgiledCRM;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for AgiledCRM integration
@@ -22,10 +22,10 @@ class AgiledCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $brand       = $fieldsRequestParams->brand;
-        $apiKey      = $fieldsRequestParams->auth_token;
-        $apiEndpoint = "https://my.agiled.app/api/v1/users?api_token=$apiKey";
-        $header      = [
+        $brand = $fieldsRequestParams->brand;
+        $apiKey = $fieldsRequestParams->auth_token;
+        $apiEndpoint = "https://my.agiled.app/api/v1/users?api_token={$apiKey}";
+        $header = [
             'Brand' => $brand
         ];
 
@@ -44,10 +44,10 @@ class AgiledCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->auth_token;
-        $brand       = $fieldsRequestParams->brand;
-        $apiEndpoint = "https://my.agiled.app/api/v1/sales-agents?api_token=$apiKey";
-        $header      = [
+        $apiKey = $fieldsRequestParams->auth_token;
+        $brand = $fieldsRequestParams->brand;
+        $apiEndpoint = "https://my.agiled.app/api/v1/sales-agents?api_token={$apiKey}";
+        $header = [
             'Brand' => $brand
         ];
 
@@ -72,10 +72,10 @@ class AgiledCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->auth_token;
-        $brand       = $fieldsRequestParams->brand;
-        $apiEndpoint = "https://my.agiled.app/api/v1/accounts?api_token=$apiKey";
-        $header      = [
+        $apiKey = $fieldsRequestParams->auth_token;
+        $brand = $fieldsRequestParams->brand;
+        $apiEndpoint = "https://my.agiled.app/api/v1/accounts?api_token={$apiKey}";
+        $header = [
             'Brand' => $brand
         ];
 
@@ -100,10 +100,10 @@ class AgiledCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->auth_token;
-        $brand       = $fieldsRequestParams->brand;
-        $apiEndpoint = "https://my.agiled.app/api/v1/crm-sources?api_token=$apiKey";
-        $header      = [
+        $apiKey = $fieldsRequestParams->auth_token;
+        $brand = $fieldsRequestParams->brand;
+        $apiEndpoint = "https://my.agiled.app/api/v1/crm-sources?api_token={$apiKey}";
+        $header = [
             'Brand' => $brand
         ];
 
@@ -128,10 +128,10 @@ class AgiledCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->auth_token;
-        $brand       = $fieldsRequestParams->brand;
-        $apiEndpoint = "https://my.agiled.app/api/v1/crm-statuses?api_token=$apiKey";
-        $header      = [
+        $apiKey = $fieldsRequestParams->auth_token;
+        $brand = $fieldsRequestParams->brand;
+        $apiEndpoint = "https://my.agiled.app/api/v1/crm-statuses?api_token={$apiKey}";
+        $header = [
             'Brand' => $brand
         ];
 
@@ -156,10 +156,10 @@ class AgiledCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->auth_token;
-        $brand       = $fieldsRequestParams->brand;
-        $apiEndpoint = "https://my.agiled.app/api/v1/crm-stages?api_token=$apiKey";
-        $header      = [
+        $apiKey = $fieldsRequestParams->auth_token;
+        $brand = $fieldsRequestParams->brand;
+        $apiEndpoint = "https://my.agiled.app/api/v1/crm-stages?api_token={$apiKey}";
+        $header = [
             'Brand' => $brand
         ];
 
@@ -184,10 +184,10 @@ class AgiledCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->auth_token;
-        $brand       = $fieldsRequestParams->brand;
-        $apiEndpoint = "https://my.agiled.app/api/v1/crm/pipelines?api_token=$apiKey";
-        $header      = [
+        $apiKey = $fieldsRequestParams->auth_token;
+        $brand = $fieldsRequestParams->brand;
+        $apiEndpoint = "https://my.agiled.app/api/v1/crm/pipelines?api_token={$apiKey}";
+        $header = [
             'Brand' => $brand
         ];
 
@@ -212,11 +212,11 @@ class AgiledCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->auth_token;
-        $brand       = $fieldsRequestParams->brand;
-        $pipeline    = $fieldsRequestParams->selectedCRMPipeline;
-        $apiEndpoint = "https://my.agiled.app/api/v1/crm/pipeline-stages?api_token=$apiKey";
-        $header      = [
+        $apiKey = $fieldsRequestParams->auth_token;
+        $brand = $fieldsRequestParams->brand;
+        $pipeline = $fieldsRequestParams->selectedCRMPipeline;
+        $apiEndpoint = "https://my.agiled.app/api/v1/crm/pipeline-stages?api_token={$apiKey}";
+        $header = [
             'Brand' => $brand
         ];
 
@@ -240,21 +240,22 @@ class AgiledCRMController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-        $integId            = $integrationData->id;
-        $authToken          = $integrationDetails->auth_token;
-        $fieldMap           = $integrationDetails->field_map;
-        $actionName         = $integrationDetails->actionName;
+        $integId = $integrationData->id;
+        $authToken = $integrationDetails->auth_token;
+        $fieldMap = $integrationDetails->field_map;
+        $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Agiled CRM api', 'bit-integrations'));
         }
 
-        $recordApiHelper   = new RecordApiHelper($integrationDetails, $integId);
+        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $agiledApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
 
         if (is_wp_error($agiledApiResponse)) {
             return $agiledApiResponse;
         }
+
         return $agiledApiResponse;
     }
 }

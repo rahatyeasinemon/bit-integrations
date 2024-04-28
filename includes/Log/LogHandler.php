@@ -22,7 +22,7 @@ final class LogHandler
             wp_send_json_success(
                 [
                     'count' => 0,
-                    'data' => [],
+                    'data'  => [],
                 ]
             );
         }
@@ -31,7 +31,7 @@ final class LogHandler
             wp_send_json_success(
                 [
                     'count' => 0,
-                    'data' => [],
+                    'data'  => [],
                 ]
             );
         }
@@ -52,14 +52,14 @@ final class LogHandler
             wp_send_json_success(
                 [
                     'count' => 0,
-                    'data' => [],
+                    'data'  => [],
                 ]
             );
         }
         wp_send_json_success(
             [
-                'count' => intval($count),
-                'data' => $result,
+                'count' => \intval($count),
+                'data'  => $result,
             ]
         );
     }
@@ -69,11 +69,11 @@ final class LogHandler
         $logModel = new LogModel();
         $logModel->insert(
             [
-                'flow_id' => $flow_id,
-                'api_type' => is_string($api_type) ? $api_type : json_encode($api_type),
-                'response_type' => is_string($response_type) ? $response_type : json_encode($response_type),
-                'response_obj' => is_string($response_obj) ? $response_obj : json_encode($response_obj),
-                'created_at' => current_time("mysql")
+                'flow_id'       => $flow_id,
+                'api_type'      => \is_string($api_type) ? $api_type : json_encode($api_type),
+                'response_type' => \is_string($response_type) ? $response_type : json_encode($response_type),
+                'response_obj'  => \is_string($response_obj) ? $response_obj : json_encode($response_obj),
+                'created_at'    => current_time('mysql')
             ]
         );
     }
@@ -94,9 +94,9 @@ final class LogHandler
     {
         $condition = null;
         if (!empty($data->id)) {
-            if (is_array($data->id)) {
+            if (\is_array($data->id)) {
                 $condition = [
-                    'id' =>  $data->id
+                    'id' => $data->id
                 ];
             } else {
                 $condition = [
@@ -110,13 +110,15 @@ final class LogHandler
             ];
         }
         $logModel = new LogModel();
+
         return $logModel->bulkDelete($condition);
     }
 
     public static function logAutoDelte($intervalDate)
     {
-        $condition = "DATE_ADD(date(created_at), INTERVAL $intervalDate DAY) < CURRENT_DATE";
+        $condition = "DATE_ADD(date(created_at), INTERVAL {$intervalDate} DAY) < CURRENT_DATE";
         $logModel = new LogModel();
+
         return $logModel->autoLogDelete($condition);
     }
 }

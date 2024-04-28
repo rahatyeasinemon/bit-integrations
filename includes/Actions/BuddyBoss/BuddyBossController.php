@@ -33,15 +33,13 @@ class BuddyBossController
 
     public static function pluginActive($option = null)
     {
-        if (class_exists('BuddyPress')) {
-            return true;
-        }
+        return (bool) (class_exists('BuddyPress'))
+
         //  elseif (is_plugin_active('buddyboss-platform-pro/buddyboss-platform-pro.php')) {
         //     return $option === 'get_name' ? 'buddyboss-platform-pro/buddyboss-platform-pro.php' : true;
         // }
-        else {
-            return false;
-        }
+
+        ;
     }
 
     public static function authorizeBuddyBoss()
@@ -79,11 +77,11 @@ class BuddyBossController
     public static function getAllForums()
     {
         $forum_args = [
-            'post_type' => bbp_get_forum_post_type(),
+            'post_type'      => bbp_get_forum_post_type(),
             'posts_per_page' => 999,
-            'orderby' => 'title',
-            'order' => 'ASC',
-            'post_status' => ['publish', 'private'],
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+            'post_status'    => ['publish', 'private'],
         ];
 
         $forumList = get_posts($forum_args);
@@ -95,7 +93,7 @@ class BuddyBossController
 
         foreach ($forumList as $key => $val) {
             $forums[] = [
-                'forum_id' => $val->ID,
+                'forum_id'    => $val->ID,
                 'forum_title' => $val->post_title,
             ];
         }
@@ -103,28 +101,27 @@ class BuddyBossController
         return $forums;
     }
 
-
     public static function getAllTopics($requestParams)
     {
         $forum_id = $requestParams->forumID;
 
         $topic_args = [
-            'post_type' => bbp_get_topic_post_type(),
+            'post_type'      => bbp_get_topic_post_type(),
             'posts_per_page' => -1,
-            'orderby' => 'title',
-            'order' => 'ASC',
-            'post_parent' => $forum_id,
-            'post_status' => 'publish',
-            ];
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+            'post_parent'    => $forum_id,
+            'post_status'    => 'publish',
+        ];
 
         $topic_list = get_posts($topic_args);
         $topics = [];
 
         foreach ($topic_list as $key => $val) {
             $topics[] = [
-                    'topic_id' => $val->ID,
-                    'topic_title' => $val->post_title,
-                ];
+                'topic_id'    => $val->ID,
+                'topic_title' => $val->post_title,
+            ];
         }
 
         wp_send_json_success($topics);
@@ -134,8 +131,8 @@ class BuddyBossController
 
     public static function registerComponents($component_names, $active_components)
     {
-        $component_names = ! is_array($component_names) ? array() : $component_names;
-        array_push($component_names, 'bit-integrations');
+        $component_names = ! \is_array($component_names) ? [] : $component_names;
+        $component_names[] = 'bit-integrations';
 
         return $component_names;
     }
@@ -144,27 +141,22 @@ class BuddyBossController
     {
         if ('bit_integrations_send_notification' === $component_action_name) {
             $notification_content = bp_notifications_get_meta($id, 'uo_notification_content');
-            $notification_link    = bp_notifications_get_meta($id, 'uo_notification_link');
+            $notification_link = bp_notifications_get_meta($id, 'uo_notification_link');
 
             if ('string' === $format) {
                 return $notification_content;
             } elseif ('object' === $format) {
-                return array(
+                return [
                     'text' => $notification_content,
                     'link' => $notification_link,
-                );
+                ];
             }
         }
 
         return $content;
     }
 
-
     // end action 11
-
-
-
-
 
     public function execute($integrationData, $fieldValues)
     {
@@ -173,8 +165,8 @@ class BuddyBossController
         $mainAction = $integrationDetails->mainAction;
         $fieldMap = $integrationDetails->field_map;
         if (
-            empty($integId) ||
-            empty($mainAction)
+            empty($integId)
+            || empty($mainAction)
         ) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for BuddyBoss api', 'bit-integrations'));
         }
@@ -189,6 +181,7 @@ class BuddyBossController
         if (is_wp_error($buddyBossApiResponse)) {
             return $buddyBossApiResponse;
         }
+
         return $buddyBossApiResponse;
     }
 }

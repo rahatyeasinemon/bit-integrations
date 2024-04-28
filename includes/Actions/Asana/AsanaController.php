@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Asana;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Asana integration
@@ -15,11 +15,12 @@ use BitCode\FI\Core\Util\HttpHelper;
 class AsanaController
 {
     protected $_defaultHeader;
+
     protected $apiEndpoint;
 
     public function __construct()
     {
-        $this->apiEndpoint = "https://app.asana.com/api/1.0/";
+        $this->apiEndpoint = 'https://app.asana.com/api/1.0/';
     }
 
     public function authentication($fieldsRequestParams)
@@ -28,10 +29,10 @@ class AsanaController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."users/me";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . 'users/me';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -49,23 +50,23 @@ class AsanaController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $action      = $fieldsRequestParams->action;
-        $projectId      = $fieldsRequestParams->project_id;
+        $apiKey = $fieldsRequestParams->api_key;
+        $action = $fieldsRequestParams->action;
+        $projectId = $fieldsRequestParams->project_id;
         if ($action == 'task') {
-            $apiEndpoint = $this->apiEndpoint."projects/".$projectId."/custom_field_settings";
+            $apiEndpoint = $this->apiEndpoint . 'projects/' . $projectId . '/custom_field_settings';
         }
 
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
         if (isset($response->data)) {
             foreach ($response->data as $customField) {
                 $customFields[] = [
-                    'key' => $customField->custom_field->gid,
-                    'label' => $customField->custom_field->name,
+                    'key'      => $customField->custom_field->gid,
+                    'label'    => $customField->custom_field->name,
                     'required' => false,
                 ];
             }
@@ -81,10 +82,10 @@ class AsanaController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."/tasks";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . '/tasks';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -102,17 +103,16 @@ class AsanaController
         }
     }
 
-
     public function getAllProjects($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."projects";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . 'projects';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -130,18 +130,17 @@ class AsanaController
         }
     }
 
-
     public function getAllSections($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
+        $apiKey = $fieldsRequestParams->api_key;
 
-        $apiEndpoint = $this->apiEndpoint."projects/".$fieldsRequestParams->selected_project."/sections";
+        $apiEndpoint = $this->apiEndpoint . 'projects/' . $fieldsRequestParams->selected_project . '/sections';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
@@ -161,21 +160,22 @@ class AsanaController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-        $integId            = $integrationData->id;
-        $authToken          = $integrationDetails->api_key;
-        $fieldMap           = $integrationDetails->field_map;
-        $actionName         = $integrationDetails->actionName;
+        $integId = $integrationData->id;
+        $authToken = $integrationDetails->api_key;
+        $fieldMap = $integrationDetails->field_map;
+        $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Asana api', 'bit-integrations'));
         }
 
-        $recordApiHelper   = new RecordApiHelper($integrationDetails, $integId);
+        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $asanaApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
 
         if (is_wp_error($asanaApiResponse)) {
             return $asanaApiResponse;
         }
+
         return $asanaApiResponse;
     }
 }

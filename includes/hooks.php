@@ -1,8 +1,6 @@
 <?php
 
-/***
- * If try to direct access  plugin folder it will Exit
- **/
+// If try to direct access  plugin folder it will Exit
 
 use BitCode\FI\Core\Util\Activation;
 use BitCode\FI\Core\Util\Hooks;

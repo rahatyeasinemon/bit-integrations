@@ -6,16 +6,17 @@
 
 namespace BitCode\FI\Actions\MailBluster;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for MailBluster integration
  */
 class MailBlusterController
 {
-    private $baseUrl = 'https://api.mailbluster.com/api/';
     protected $_defaultHeader;
+
+    private $baseUrl = 'https://api.mailbluster.com/api/';
 
     public function authentication($fieldsRequestParams)
     {
@@ -30,12 +31,12 @@ class MailBlusterController
         }
 
         $apiEndpoints = $this->baseUrl . 'fields';
-        $apiKey       = $fieldsRequestParams->auth_token;
-        $header       = [
+        $apiKey = $fieldsRequestParams->auth_token;
+        $header = [
             'Authorization' => $apiKey,
         ];
 
-        $response     = HttpHelper::get($apiEndpoints, null, $header);
+        $response = HttpHelper::get($apiEndpoints, null, $header);
         $customFields = [];
 
         foreach ($response->fields as $field) {
@@ -56,11 +57,11 @@ class MailBlusterController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-        $integId            = $integrationData->id;
-        $auth_token         = $integrationDetails->auth_token;
-        $selectedTags       = $integrationDetails->selectedTags;
-        $fieldMap           = $integrationDetails->field_map;
-        $subscribed         = $integrationDetails->subscribed;
+        $integId = $integrationData->id;
+        $auth_token = $integrationDetails->auth_token;
+        $selectedTags = $integrationDetails->selectedTags;
+        $fieldMap = $integrationDetails->field_map;
+        $subscribed = $integrationDetails->subscribed;
 
         if (
             empty($fieldMap)
@@ -79,6 +80,7 @@ class MailBlusterController
         if (is_wp_error($mailBlusterApiResponse)) {
             return $mailBlusterApiResponse;
         }
+
         return $mailBlusterApiResponse;
     }
 }

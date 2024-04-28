@@ -6,7 +6,9 @@ namespace BitCode\FI\Core\Util;
  * Class handling plugin deactivation.
  *
  * @since 1.0.0
+ *
  * @access private
+ *
  * @ignore
  */
 final class Deactivation

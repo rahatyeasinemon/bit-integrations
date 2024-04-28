@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Triggers\Webhook;
 
+use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Flow\Flow;
 use WP_Error;
 use WP_REST_Request;
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Core\Util\Helper;
 
 class WebhookController
 {
@@ -23,11 +23,11 @@ class WebhookController
     public static function info()
     {
         return [
-            'name' => 'Webhook',
-            'title' => 'Get callback data through an URL',
-            'type' => 'webhook',
+            'name'      => 'Webhook',
+            'title'     => 'Get callback data through an URL',
+            'type'      => 'webhook',
             'is_active' => true,
-            'isPro' => false
+            'isPro'     => false
         ];
     }
 
@@ -47,9 +47,9 @@ class WebhookController
         $missing_field = null;
 
         if (!property_exists($data, 'hook_id') || (property_exists($data, 'hook_id') && !wp_is_uuid($data->hook_id))) {
-            $missing_field = is_null($missing_field) ? 'Webhook ID' : $missing_field . ', Webhook ID';
+            $missing_field = \is_null($missing_field) ? 'Webhook ID' : $missing_field . ', Webhook ID';
         }
-        if (!is_null($missing_field)) {
+        if (!\is_null($missing_field)) {
             wp_send_json_error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
@@ -68,9 +68,9 @@ class WebhookController
         $missing_field = null;
 
         if (!property_exists($data, 'hook_id') || (property_exists($data, 'hook_id') && !wp_is_uuid($data->hook_id))) {
-            $missing_field = is_null($missing_field) ? 'Webhook ID' : $missing_field . ', Webhook ID';
+            $missing_field = \is_null($missing_field) ? 'Webhook ID' : $missing_field . ', Webhook ID';
         }
-        if (!is_null($missing_field)) {
+        if (!\is_null($missing_field)) {
             wp_send_json_error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
@@ -88,7 +88,7 @@ class WebhookController
     public static function makeNonNestedRecursive(array &$out, $key, array $in)
     {
         foreach ($in as $k => $v) {
-            if (is_array($v)) {
+            if (\is_array($v)) {
                 self::makeNonNestedRecursive($out, $key . $k . '_', $v);
             } else {
                 $out[$key . $k] = $v;
@@ -100,12 +100,13 @@ class WebhookController
     {
         $out = [];
         self::makeNonNestedRecursive($out, '', $in);
+
         return $out;
     }
 
     public static function testDataFormat($data)
     {
-        if (!is_array($data)) {
+        if (!\is_array($data)) {
             return $data;
         }
 
@@ -113,7 +114,7 @@ class WebhookController
         foreach ($data as $k => $v) {
             $rootAraVal = [];
             $flatAra = [];
-            if (is_array($v)) {
+            if (\is_array($v)) {
                 $rootAraVal[$k] = json_encode($v);
                 $flatAra = self::makeNonNested([$k => $v]);
                 $rootAraVal = array_merge($flatAra, $rootAraVal);
@@ -122,13 +123,14 @@ class WebhookController
             }
             $out = array_merge($out, $rootAraVal);
         }
+
         return $out;
     }
 
     public function handle(WP_REST_Request $request)
     {
         $data = (array) $request->get_headers();
-        $content_type = is_array($request->get_content_type()) ? $request->get_content_type()['value'] : '';
+        $content_type = \is_array($request->get_content_type()) ? $request->get_content_type()['value'] : '';
         if (Helper::isJson($request->get_body())) {
             $data = $data + (array) json_decode($request->get_body(), true);
         } else {
@@ -137,7 +139,7 @@ class WebhookController
 
         $data = (array) $data + $request->get_query_params();
 
-        if (is_array($request->get_file_params())) {
+        if (\is_array($request->get_file_params())) {
             $data = (array) $data + $request->get_file_params();
         }
         $hook_id = $request->get_params()['hook_id'];
@@ -151,6 +153,7 @@ class WebhookController
         if ($flows = Flow::exists($this->webhookIntegrationsList, $hook_id)) {
             Flow::execute('Webhook', $hook_id, $formatedData, $flows);
         }
+
         return rest_ensure_response(['status' => 'success']);
     }
 }

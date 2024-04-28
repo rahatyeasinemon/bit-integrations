@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Zendesk;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Zendesk integration
@@ -15,11 +15,12 @@ use BitCode\FI\Core\Util\HttpHelper;
 class ZendeskController
 {
     protected $_defaultHeader;
+
     protected $apiEndpoint;
 
     public function __construct()
     {
-        $this->apiEndpoint = "https://api.getbase.com/v2/";
+        $this->apiEndpoint = 'https://api.getbase.com/v2/';
     }
 
     public function authentication($fieldsRequestParams)
@@ -28,10 +29,10 @@ class ZendeskController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."accounts/self";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . 'accounts/self';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -49,28 +50,26 @@ class ZendeskController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $action      = $fieldsRequestParams->action;
+        $apiKey = $fieldsRequestParams->api_key;
+        $action = $fieldsRequestParams->action;
         if ($action == 'contact' || $action == 'organization') {
-            $apiEndpoint = $this->apiEndpoint."contact/custom_fields";
+            $apiEndpoint = $this->apiEndpoint . 'contact/custom_fields';
         } elseif ($action == 'lead') {
-            $apiEndpoint = $this->apiEndpoint."lead/custom_fields";
+            $apiEndpoint = $this->apiEndpoint . 'lead/custom_fields';
         } elseif ($action == 'deal') {
-            $apiEndpoint = $this->apiEndpoint."deal/custom_fields";
+            $apiEndpoint = $this->apiEndpoint . 'deal/custom_fields';
         }
 
-
-
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
         if (isset($response->items)) {
             foreach ($response->items as $customField) {
                 $customFields[] = [
-                    'key' => $customField->data->id,
-                    'label' => $customField->data->name,
+                    'key'      => $customField->data->id,
+                    'label'    => $customField->data->name,
                     'required' => false,
                 ];
             }
@@ -86,10 +85,10 @@ class ZendeskController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."/leads";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . '/leads';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -113,10 +112,10 @@ class ZendeskController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."contacts";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . 'contacts';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -142,10 +141,10 @@ class ZendeskController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."/teams";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . '/teams';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -169,12 +168,11 @@ class ZendeskController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."/currencies";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . '/currencies';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
-
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
@@ -197,12 +195,11 @@ class ZendeskController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."stages";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . 'stages';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
-
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
@@ -225,10 +222,10 @@ class ZendeskController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."contacts";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . 'contacts';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -254,10 +251,10 @@ class ZendeskController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."contacts";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . 'contacts';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -281,15 +278,15 @@ class ZendeskController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
+        $apiKey = $fieldsRequestParams->api_key;
 
         if ($fieldsRequestParams->action_name == 'lead') {
-            $apiEndpoint = $this->apiEndpoint."lead_sources";
+            $apiEndpoint = $this->apiEndpoint . 'lead_sources';
         } elseif ($fieldsRequestParams->action_name == 'deal') {
-            $apiEndpoint = $this->apiEndpoint."deal_sources";
+            $apiEndpoint = $this->apiEndpoint . 'deal_sources';
         }
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -310,21 +307,22 @@ class ZendeskController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-        $integId            = $integrationData->id;
-        $authToken          = $integrationDetails->api_key;
-        $fieldMap           = $integrationDetails->field_map;
-        $actionName         = $integrationDetails->actionName;
+        $integId = $integrationData->id;
+        $authToken = $integrationDetails->api_key;
+        $fieldMap = $integrationDetails->field_map;
+        $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Zendesk api', 'bit-integrations'));
         }
 
-        $recordApiHelper   = new RecordApiHelper($integrationDetails, $integId);
+        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $zendeskApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
 
         if (is_wp_error($zendeskApiResponse)) {
             return $zendeskApiResponse;
         }
+
         return $zendeskApiResponse;
     }
 }

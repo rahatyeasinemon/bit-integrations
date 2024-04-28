@@ -3,7 +3,6 @@
 namespace BitCode\FI\Triggers\Registration;
 
 use BitCode\FI\Flow\Flow;
-use BitCode\FI\Core\Util\Hooks;
 
 final class RegistrationController
 {
@@ -87,7 +86,7 @@ final class RegistrationController
             ],
         ];
 
-        if (in_array($triggerId, [3, 4, 5])) {
+        if (\in_array($triggerId, [3, 4, 5])) {
             unset($fields[4], $fields[5], $fields[7]);
 
             array_unshift($fields, [
@@ -98,6 +97,7 @@ final class RegistrationController
 
             $fields = array_values($fields);
         }
+
         return $fields;
     }
 
@@ -115,7 +115,7 @@ final class RegistrationController
 
     public static function userCreate()
     {
-        $newUserData = func_get_args()[1];
+        $newUserData = \func_get_args()[1];
 
         $userCreateFlow = Flow::exists('Registration', 1);
 
@@ -126,7 +126,7 @@ final class RegistrationController
 
     public static function profileUpdate()
     {
-        $userdata = func_get_args()[2];
+        $userdata = \func_get_args()[2];
 
         $userUpdateFlow = Flow::exists('Registration', 2);
 
@@ -175,7 +175,7 @@ final class RegistrationController
 
     public static function wpUserDeleted()
     {
-        $data = func_get_args()[2];
+        $data = \func_get_args()[2];
 
         $userDeleteFlow = Flow::exists('Registration', 5);
 

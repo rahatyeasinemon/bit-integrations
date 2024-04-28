@@ -8,15 +8,15 @@ namespace BitCode\FI;
  * @since 1.0.0-alpha
  */
 
-use BitCode\FI\Core\Database\DB;
 use BitCode\FI\Admin\Admin_Bar;
-use BitCode\FI\Core\Util\Request;
-use BitCode\FI\Core\Util\Activation;
-use BitCode\FI\Core\Util\Deactivation;
-use BitCode\FI\Core\Util\UnInstallation;
+use BitCode\FI\Core\Database\DB;
 use BitCode\FI\Core\Hooks\HookService;
+use BitCode\FI\Core\Util\Activation;
 use BitCode\FI\Core\Util\Capabilities;
+use BitCode\FI\Core\Util\Deactivation;
 use BitCode\FI\Core\Util\Hooks;
+use BitCode\FI\Core\Util\Request;
+use BitCode\FI\Core\Util\UnInstallation;
 use BitCode\FI\Log\LogHandler;
 
 final class Plugin
@@ -25,9 +25,10 @@ final class Plugin
      * Main instance of the plugin.
      *
      * @since 1.0.0-alpha
-     * @var   Plugin|null
+     *
+     * @var Plugin|null
      */
-    private static $_instance = null;
+    private static $_instance;
 
     /**
      * Initialize the hooks
@@ -66,7 +67,7 @@ final class Plugin
     /**
      * Plugin action links
      *
-     * @param  array $links
+     * @param array $links
      *
      * @return array
      */
@@ -101,19 +102,19 @@ final class Plugin
         }
     }
 
-
     /**
      * Loads the plugin main instance and initializes it.
      *
      * @since 1.0.0-alpha
      *
      * @param string $main_file Absolute path to the plugin main file.
+     *
      * @return bool True if the plugin main instance could be loaded, false otherwise./
      */
     public static function integrationlogDelete()
     {
         $option = get_option('btcbi_app_conf');
-        if (isset($option->enable_log_del) && isset($option->day)) {
+        if (isset($option->enable_log_del, $option->day)) {
             LogHandler::logAutoDelte($option->day);
         }
     }
@@ -125,6 +126,7 @@ final class Plugin
         }
         static::$_instance = new static($main_file);
         static::$_instance->initialize();
+
         return true;
     }
 }

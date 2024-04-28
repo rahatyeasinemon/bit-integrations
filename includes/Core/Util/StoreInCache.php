@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Core\Util;
 
 use BitCode\FI\Flow\FlowController;
@@ -15,7 +16,7 @@ class StoreInCache
                 'status',
             ]
         );
-        if (empty($integrations) || !is_array($integrations)) {
+        if (empty($integrations) || !\is_array($integrations)) {
             return false;
         }
         foreach ($integrations as $integration) {
@@ -23,6 +24,7 @@ class StoreInCache
         }
         $activeTriggerLists = array_unique($activeFlowTrigger);
         self::setTransient('activeCurrentTrigger', $activeTriggerLists, DAY_IN_SECONDS);
+
         return $activeTriggerLists;
     }
 
@@ -43,6 +45,7 @@ class StoreInCache
         if (empty($transientData)) {
             return false;
         }
+
         return $transientData;
     }
 }

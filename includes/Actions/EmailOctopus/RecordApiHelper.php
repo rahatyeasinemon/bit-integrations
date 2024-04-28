@@ -16,13 +16,14 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_integrationID;
+
     private $_requestStoringType;
 
     public function __construct($integrationDetails, $integId)
     {
         $this->_integrationDetails = $integrationDetails;
-        $this->_integrationID      = $integId;
-        $this->_authToken          = $this->_integrationDetails->auth_token;
+        $this->_integrationID = $integId;
+        $this->_authToken = $this->_integrationDetails->auth_token;
     }
 
     public function addContact($selectedTags, $finalData, $selectedList)
@@ -59,7 +60,7 @@ class RecordApiHelper
 
         if (!empty($this->_integrationDetails->actions->status)) {
             $data['status'] = 'UNSUBSCRIBED';
-        }else{
+        } else {
             $data['status'] = 'SUBSCRIBED';
         }
 
@@ -79,7 +80,7 @@ class RecordApiHelper
                     if (empty($selectedTags)) {
                         $tagsUpdateRemove[$existingTag] = false;
                     } else {
-                        if (!array_key_exists($existingTag, $tagsUpdate)) {
+                        if (!\array_key_exists($existingTag, $tagsUpdate)) {
                             $tagsUpdateRemove[$existingTag] = false;
                         }
                     }
@@ -92,11 +93,13 @@ class RecordApiHelper
 
             $apiEndpoint = 'https://emailoctopus.com/api/1.6/lists/' . $selectedList . '/contacts/' . $isContactExist->id;
             $this->_requestStoringType = 'updated';
+
             return HttpHelper::request($apiEndpoint, 'PUT', $data, null);
         }
 
         $this->_requestStoringType = 'created';
-        return HttpHelper::post($apiEndpoint,  $data, null);
+
+        return HttpHelper::post($apiEndpoint, $data, null);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -104,20 +107,21 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->emailOctopusFormField;
+            $actionValue = $value->emailOctopusFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
 
     public function execute($selectedTags, $fieldValues, $fieldMap, $selectedList)
     {
-        $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $apiResponse = $this->addContact($selectedTags,  $finalData, $selectedList);
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        $apiResponse = $this->addContact($selectedTags, $finalData, $selectedList);
 
         if ($apiResponse->id) {
             $successMessage = ['message' => 'Contact ' . $this->_requestStoringType . ' successfully'];
@@ -125,18 +129,20 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'Adding Contact']), 'error', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 
     public function isExist($listId, $EmailAddress)
     {
         $md5encodedEmail = md5($EmailAddress);
-        $apiEndpoint     = 'https://emailoctopus.com/api/1.6/lists/' . $listId . '/contacts/' . $md5encodedEmail . '?api_key=' . $this->_authToken;
-        $response        = HttpHelper::get($apiEndpoint, null, null);
+        $apiEndpoint = 'https://emailoctopus.com/api/1.6/lists/' . $listId . '/contacts/' . $md5encodedEmail . '?api_key=' . $this->_authToken;
+        $response = HttpHelper::get($apiEndpoint, null, null);
 
         if (isset($response->id)) {
             return $response;
         }
+
         return false;
     }
 }

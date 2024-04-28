@@ -3,11 +3,11 @@
 /**
  * Trello Integration
  */
+
 namespace BitCode\FI\Actions\Trello;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\Trello\RecordApiHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Trello integration
@@ -15,7 +15,9 @@ use BitCode\FI\Actions\Trello\RecordApiHelper;
 class TrelloController
 {
     private $baseUrl = 'https://api.trello.com/1/';
+
     private $_integrationID;
+
     private $accessToken;
 
     public function fetchAllBoards($queryParams)
@@ -43,7 +45,7 @@ class TrelloController
             $boardLists = $allBoardResponse;
             foreach ($boardLists as $boardList) {
                 $allList[] = (object) [
-                    'boardId' => $boardList->id,
+                    'boardId'   => $boardList->id,
                     'boardName' => $boardList->name
                 ];
             }
@@ -82,7 +84,7 @@ class TrelloController
             $singleBoardLists = $getListsResponse;
             foreach ($singleBoardLists as $singleBoardList) {
                 $allList[] = (object) [
-                    'listId' => $singleBoardList->id,
+                    'listId'   => $singleBoardList->id,
                     'listName' => $singleBoardList->name
                 ];
             }
@@ -100,8 +102,8 @@ class TrelloController
     /**
      * Save updated access_token to avoid unnecessary token generation
      *
-     * @param Object $integrationData Details of flow
-     * @param Array  $fieldValues     Data to send Mail Chimp
+     * @param object $integrationData Details of flow
+     * @param array  $fieldValues     Data to send Mail Chimp
      *
      * @return null
      */
@@ -135,6 +137,7 @@ class TrelloController
         if (is_wp_error($trelloApiResponse)) {
             return $trelloApiResponse;
         }
+
         return $trelloApiResponse;
     }
 }

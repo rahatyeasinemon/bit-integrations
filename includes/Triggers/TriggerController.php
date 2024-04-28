@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Triggers;
 
-use WP_Error;
-use FilesystemIterator;
-use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Core\Util\AllTriggersName;
+use BitCode\FI\Core\Util\Hooks;
+use FilesystemIterator;
+use WP_Error;
 
 final class TriggerController
 {
@@ -28,7 +28,7 @@ final class TriggerController
             }
         }
 
-        if (!function_exists('btcbi_pro_activate_plugin')) {
+        if (!\function_exists('btcbi_pro_activate_plugin')) {
             $triggers = array_merge($triggers, AllTriggersName::$allTriggersName);
         }
 
@@ -44,6 +44,7 @@ final class TriggerController
 
             if (method_exists($trigger_controller, 'get_a_form')) {
                 $trigger = new $trigger_controller();
+
                 return $trigger::fields($data->id);
             }
         } else {
@@ -69,7 +70,7 @@ final class TriggerController
 
     public static function removeTestData($data, $triggerName)
     {
-        if (is_object($data) && property_exists($data, 'reset') && $data->reset) {
+        if (\is_object($data) && property_exists($data, 'reset') && $data->reset) {
             $testData = update_option("btcbi_{$triggerName}_test", []);
         } else {
             $testData = delete_option("btcbi_{$triggerName}_test");

@@ -8,7 +8,7 @@ final class PostHelper
 {
     public static function commentFields()
     {
-        $commentFields = [
+        return [
             [
                 'name'  => 'comment_id',
                 'type'  => 'text',
@@ -76,12 +76,11 @@ final class PostHelper
             ],
 
         ];
-        return $commentFields;
     }
 
     public static function postFields()
     {
-        $postFields = [
+        return [
             [
                 'name'  => 'ID',
                 'type'  => 'text',
@@ -153,7 +152,6 @@ final class PostHelper
                 'label' => 'Post Permalink',
             ],
         ];
-        return $postFields;
     }
 
     public static function getPostTypes()
@@ -171,6 +169,7 @@ final class PostHelper
             $lists[$key]['id'] = $type->name;
             $lists[$key]['title'] = $type->label;
         }
+
         return $lists;
     }
 

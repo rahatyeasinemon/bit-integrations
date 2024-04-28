@@ -6,9 +6,8 @@
 
 namespace BitCode\FI\Actions\Drip;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\Drip\RecordApiHelper;
+use WP_Error;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -42,9 +41,9 @@ class DripController
             );
         }
 
-        $header['Authorization'] = 'Basic ' . base64_encode("$requestsParams->api_token:");
+        $header['Authorization'] = 'Basic ' . base64_encode("{$requestsParams->api_token}:");
 
-        $apiEndpoint = "https://api.getdrip.com/v2/accounts";
+        $apiEndpoint = 'https://api.getdrip.com/v2/accounts';
 
         $response = HttpHelper::get($apiEndpoint, null, $header);
 
@@ -78,7 +77,7 @@ class DripController
             );
         }
         $accountId = $queryParams->account_id;
-        $header['Authorization'] = 'Basic ' . base64_encode("$queryParams->api_token:");
+        $header['Authorization'] = 'Basic ' . base64_encode("{$queryParams->api_token}:");
 
         $apiEndpoint = "https://api.getdrip.com/v2/{$accountId}/broadcasts";
 
@@ -88,9 +87,9 @@ class DripController
         if (!is_wp_error($dripResponse->broadcasts)) {
             $allCampaigns = ($dripResponse->broadcasts);
 
-            foreach ($allCampaigns as $key=>$broadcast) {
+            foreach ($allCampaigns as $key => $broadcast) {
                 $campaigns[$broadcast->name] = (object) [
-                    'campaignId' => $broadcast->id,
+                    'campaignId'   => $broadcast->id,
                     'campaignName' => $broadcast->name,
                 ];
             }
@@ -122,12 +121,11 @@ class DripController
 
         $campaignId = $queryParams->campaign_id;
 
-        $apiEndpoint = "https://rest.directiq.com/subscription/fields";
+        $apiEndpoint = 'https://rest.directiq.com/subscription/fields';
 
-        $authorizationHeader['authorization'] = 'Basic ' . base64_encode(":$queryParams->api_token");
+        $authorizationHeader['authorization'] = 'Basic ' . base64_encode(":{$queryParams->api_token}");
 
         $dripResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
-
 
         $customFields = [];
         if (!is_wp_error($dripResponse)) {
@@ -135,16 +133,16 @@ class DripController
 
             foreach ($allFields as $field) {
                 $customFields[] = (object) [
-                    'fieldName' => $field->name,
+                    'fieldName'  => $field->name,
                     'fieldValue' => strtolower(str_replace(' ', '_', $field->name)),
                 ];
             }
 
-            $defaultFields = array(
-                (object)array('fieldValue' => 'email', 'fieldName' => 'Email', 'required' => true),
-                (object)array('fieldValue' => 'first_name', 'fieldName' => 'First Name', 'required' => false),
-                (object)array('fieldValue' => 'last_name', 'fieldName' => 'Last Name', 'required' => false),
-            );
+            $defaultFields = [
+                (object) ['fieldValue' => 'email', 'fieldName' => 'Email', 'required' => true],
+                (object) ['fieldValue' => 'first_name', 'fieldName' => 'First Name', 'required' => false],
+                (object) ['fieldValue' => 'last_name', 'fieldName' => 'Last Name', 'required' => false],
+            ];
 
             $fields = array_merge($defaultFields, $customFields);
 
@@ -181,6 +179,7 @@ class DripController
         if (is_wp_error($dripApiResponse)) {
             return $dripApiResponse;
         }
+
         return $dripApiResponse;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Actions\GoogleContacts;
 
 use BitCode\FI\Core\Util\Common;
@@ -18,7 +19,7 @@ class RecordApiHelper
     {
         $apiEndpoint = 'https://people.googleapis.com/v1/people:createContact';
         $headers = [
-            'Content-Type' => 'application/json',
+            'Content-Type'  => 'application/json',
             'Authorization' => 'Bearer ' . $this->token,
         ];
 
@@ -36,7 +37,7 @@ class RecordApiHelper
             ],
             'addresses' => [
                 [
-                    'city' => !empty($data['city']) ? $data['city'] : '',
+                    'city'    => !empty($data['city']) ? $data['city'] : '',
                     'country' => !empty($data['country']) ? $data['country'] : '',
                 ]
             ],
@@ -79,12 +80,12 @@ class RecordApiHelper
     {
         $apiEndpoint = 'https://people.googleapis.com/v1/people:searchContacts';
         $headers = [
-            'Content-Type' => 'application/json',
+            'Content-Type'  => 'application/json',
             'Authorization' => 'Bearer ' . $this->token,
         ];
 
         $data = [
-            'query' => $data['name'],
+            'query'    => $data['name'],
             'readMask' => 'emailAddresses',
         ];
 
@@ -95,12 +96,12 @@ class RecordApiHelper
     {
         $apiEndpoint = "https://people.googleapis.com/v1/{$resourceName}:updateContact?updatePersonFields=phoneNumbers,names,emailAddresses";
         $headers = [
-            'Content-Type' => 'application/json',
+            'Content-Type'  => 'application/json',
             'Authorization' => 'Bearer ' . $this->token,
         ];
 
         $dataNew = [
-            'etag' => $eTag,
+            'etag'         => $eTag,
             'phoneNumbers' => [
                 [
                     'value' => !empty($data['phoneNumber']) ? $data['phoneNumber'] : '',
@@ -126,7 +127,7 @@ class RecordApiHelper
     {
         $apiEndpoint = "https://people.googleapis.com/v1/{$resourceName}:updateContactPhoto";
         $headers = [
-            'Content-Type' => 'application/json',
+            'Content-Type'  => 'application/json',
             'Authorization' => 'Bearer ' . $this->token,
         ];
 
@@ -136,7 +137,7 @@ class RecordApiHelper
         // ];
 
         $dataNew = [
-            'photoBytes' => base64_encode(file_get_contents($imageLocation)),
+            'photoBytes'   => base64_encode(file_get_contents($imageLocation)),
             'personFields' => 'addresses,biographies,emailAddresses,names,phoneNumbers'
         ];
 
@@ -151,7 +152,7 @@ class RecordApiHelper
                 if ($value->formField === 'custom' && isset($value->customValue) && Common::replaceFieldWithValue($value->customValue, $fieldValues)) {
                     $fieldData[$value->googleContactsFormField] = Common::replaceFieldWithValue($value->customValue, $fieldValues);
                 } else {
-                    $fieldData[$value->googleContactsFormField] = is_array($fieldValues[$value->formField]) ? json_encode($fieldValues[$value->formField]) : $fieldValues[$value->formField];
+                    $fieldData[$value->googleContactsFormField] = \is_array($fieldValues[$value->formField]) ? json_encode($fieldValues[$value->formField]) : $fieldValues[$value->formField];
                 }
             }
         }
@@ -168,6 +169,7 @@ class RecordApiHelper
             } else {
                 LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'insert']), 'error', json_encode('Fail to add contact'));
             }
+
             return;
         }
 
@@ -187,12 +189,13 @@ class RecordApiHelper
                     if (!empty($imageLocation)) {
                         $this->handleUploadPhoto($imageLocation, $resourceName);
                     }
+
                     return;
                 }
             } else {
                 LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'update']), 'error', json_encode('Contact not found, please check the name'));
             }
         }
-        return;
+
     }
 }

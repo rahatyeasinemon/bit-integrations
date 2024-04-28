@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\MoxieCRM;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for MoxieCRM integration
@@ -15,6 +15,7 @@ use BitCode\FI\Core\Util\HttpHelper;
 class MoxieCRMController
 {
     protected $_defaultHeader;
+
     protected $apiEndpoint;
 
     // public function __construct()
@@ -28,11 +29,11 @@ class MoxieCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = 'https://'.$fieldsRequestParams->api_url . "/api/public/action/users/list";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = 'https://' . $fieldsRequestParams->api_url . '/api/public/action/users/list';
         $headers = [
-            "X-API-KEY"  => $apiKey,
-            "Content-Type"      => "application/json"
+            'X-API-KEY'    => $apiKey,
+            'Content-Type' => 'application/json'
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -82,10 +83,10 @@ class MoxieCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint . "/opportunities";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . '/opportunities';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -108,14 +109,13 @@ class MoxieCRMController
         if (empty($fieldsRequestParams->api_key)) {
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiUrl     = $fieldsRequestParams->api_url;
-        $apiEndpoint = 'https://'. $apiUrl . "/api/public/action/clients/list";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiUrl = $fieldsRequestParams->api_url;
+        $apiEndpoint = 'https://' . $apiUrl . '/api/public/action/clients/list';
         $headers = [
-            "X-API-KEY"  => $apiKey,
-            "Content-Type"      => "application/json"
+            'X-API-KEY'    => $apiKey,
+            'Content-Type' => 'application/json'
         ];
-
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
@@ -132,18 +132,17 @@ class MoxieCRMController
         }
     }
 
-
     public function getAllPipelineStages($fieldsRequestParams)
     {
         if (empty($fieldsRequestParams->api_key)) {
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = 'https://'.$fieldsRequestParams->api_url . "/api/public/action/pipelineStages/list";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = 'https://' . $fieldsRequestParams->api_url . '/api/public/action/pipelineStages/list';
         $headers = [
-            "X-API-KEY"  => $apiKey,
-            "Content-Type"      => "application/json"
+            'X-API-KEY'    => $apiKey,
+            'Content-Type' => 'application/json'
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -167,12 +166,12 @@ class MoxieCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiUrl     = $fieldsRequestParams->api_url;
-        $apiEndpoint = $this->apiEndpoint . "/people/search";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiUrl = $fieldsRequestParams->api_url;
+        $apiEndpoint = $this->apiEndpoint . '/people/search';
         $headers = [
-            "X-API-KEY"  => $apiKey,
-            "Content-Type"      => "application/json"
+            'X-API-KEY'    => $apiKey,
+            'Content-Type' => 'application/json'
         ];
 
         $response = HttpHelper::post($apiEndpoint, null, $headers);
@@ -196,12 +195,12 @@ class MoxieCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiUrl     = $fieldsRequestParams->api_url;
-        $apiEndpoint = $this->apiEndpoint . "/pipelines";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiUrl = $fieldsRequestParams->api_url;
+        $apiEndpoint = $this->apiEndpoint . '/pipelines';
         $headers = [
-            "X-API-KEY"  => $apiKey,
-            "Content-Type"      => "application/json"
+            'X-API-KEY'    => $apiKey,
+            'Content-Type' => 'application/json'
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -222,21 +221,22 @@ class MoxieCRMController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-        $integId            = $integrationData->id;
-        $authToken          = $integrationDetails->api_key;
-        $fieldMap           = $integrationDetails->field_map;
-        $actionName         = $integrationDetails->actionName;
+        $integId = $integrationData->id;
+        $authToken = $integrationDetails->api_key;
+        $fieldMap = $integrationDetails->field_map;
+        $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for MoxieCRM api', 'bit-integrations'));
         }
 
-        $recordApiHelper   = new RecordApiHelper($integrationDetails, $integId);
+        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $moxiecrmApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
 
         if (is_wp_error($moxiecrmApiResponse)) {
             return $moxiecrmApiResponse;
         }
+
         return $moxiecrmApiResponse;
     }
 }

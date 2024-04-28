@@ -18,7 +18,6 @@ class RecordApiHelper
         $this->_integrationID = $integrationId;
     }
 
-
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -28,21 +27,22 @@ class RecordApiHelper
             $actionValue = $value->kirimEmailFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
 
     public function addSubscriber($api_key, $userName, $listId, $finalData)
     {
         $time = time();
-        $generated_token = hash_hmac("sha256", "{$userName}"."::"."{$api_key}"."::".$time, "{$api_key}");
+        $generated_token = hash_hmac('sha256', "{$userName}" . '::' . "{$api_key}" . '::' . $time, "{$api_key}");
         $header = [
-            'Auth-Id' => $userName,
-            'Auth-Token' => $generated_token,
-            'Timestamp' => $time,
+            'Auth-Id'      => $userName,
+            'Auth-Token'   => $generated_token,
+            'Timestamp'    => $time,
             'Content-Type' => 'application/x-www-form-urlencoded'
         ];
 
@@ -56,11 +56,11 @@ class RecordApiHelper
     public function deleteSubscriber($api_key, $userName, $listId, $finalData)
     {
         $time = time();
-        $generated_token = hash_hmac("sha256", "{$userName}"."::"."{$api_key}"."::".$time, "{$api_key}");
+        $generated_token = hash_hmac('sha256', "{$userName}" . '::' . "{$api_key}" . '::' . $time, "{$api_key}");
         $header = [
-            'Auth-Id' => $userName,
+            'Auth-Id'    => $userName,
             'Auth-Token' => $generated_token,
-            'Timestamp' => $time,
+            'Timestamp'  => $time,
         ];
 
         $apiEndpoint = "https://api.kirim.email/v3/subscriber/email/{$finalData['email']}";
@@ -70,16 +70,18 @@ class RecordApiHelper
             $subscriberId = $apiRes->data->id;
             $listIdBySearchMail = $apiRes->data->list[0]->id;
             $time = time();
-            $generated_token = hash_hmac("sha256", "{$userName}"."::"."{$api_key}"."::".$time, "{$api_key}");
+            $generated_token = hash_hmac('sha256', "{$userName}" . '::' . "{$api_key}" . '::' . $time, "{$api_key}");
             $header = [
-            'Auth-Id' => $userName,
-            'Auth-Token' => $generated_token,
-            'Timestamp' => $time,
-            'List-Id' => $listIdBySearchMail,
-        ];
+                'Auth-Id'    => $userName,
+                'Auth-Token' => $generated_token,
+                'Timestamp'  => $time,
+                'List-Id'    => $listIdBySearchMail,
+            ];
             $apiEndpointDelete = "https://api.kirim.email/v3/subscriber/{$subscriberId}";
+
             return HttpHelper::request($apiEndpointDelete, 'DELETE', null, $header);
         }
+
         return false;
     }
 
@@ -111,6 +113,7 @@ class RecordApiHelper
                 LogHandler::save($this->_integrationID, json_encode(['type' => 'delete', 'type_name' => 'delete-subscriber']), 'error', json_encode('Subscriber not found , failed to delete subscriber'));
             }
         }
+
         return $apiResponse;
     }
 }

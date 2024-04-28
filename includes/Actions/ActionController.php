@@ -38,7 +38,7 @@ final class ActionController
     {
         $state = $request->get_param('state');
         $parsed_url = parse_url(get_site_url());
-        $site_url = $parsed_url['scheme'] . "://" . $parsed_url['host'];
+        $site_url = $parsed_url['scheme'] . '://' . $parsed_url['host'];
         $site_url .= empty($parsed_url['port']) ? null : ':' . $parsed_url['port'];
         if (strpos($state, $site_url) === false) {
             return new WP_Error('404');

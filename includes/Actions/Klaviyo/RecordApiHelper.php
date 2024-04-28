@@ -6,10 +6,9 @@
 
 namespace BitCode\FI\Actions\Klaviyo;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record Add Member
@@ -17,8 +16,8 @@ use BitCode\FI\Core\Util\HttpHelper;
 class RecordApiHelper
 {
     private $_integrationID;
-    private $baseUrl = 'https://a.klaviyo.com/api/';
 
+    private $baseUrl = 'https://a.klaviyo.com/api/';
 
     public function __construct($integrationDetails, $integId)
     {
@@ -29,9 +28,9 @@ class RecordApiHelper
     public function addMember($authKey, $listId, $data)
     {
         $data = [
-            "data" => (object)[
-                "type" => "profile",
-                "attributes" => $data
+            'data' => (object) [
+                'type'       => 'profile',
+                'attributes' => $data
             ]
         ];
 
@@ -42,20 +41,21 @@ class RecordApiHelper
             'revision'      => '2024-02-15'
         ];
 
-        $apiEndpoints   = "{$this->baseUrl}profiles";
-        $apiResponse    = HttpHelper::post($apiEndpoints, json_encode($data), $headers);
+        $apiEndpoints = "{$this->baseUrl}profiles";
+        $apiResponse = HttpHelper::post($apiEndpoints, json_encode($data), $headers);
         if (!isset($apiResponse->data)) {
             return $apiResponse;
         }
 
         $data = [
-            "data" => [(object)[
-                "type"  => "profile",
-                "id"    => $apiResponse->data->id
+            'data' => [(object) [
+                'type' => 'profile',
+                'id'   => $apiResponse->data->id
             ]]
         ];
 
         $apiEndpoints = "{$this->baseUrl}lists/{$listId}/relationships/profiles";
+
         return HttpHelper::post($apiEndpoints, json_encode($data), $headers);
     }
 
@@ -67,10 +67,11 @@ class RecordApiHelper
             $actionValue = $value->klaviyoFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
 
@@ -89,6 +90,7 @@ class RecordApiHelper
             $res = ['success' => true, 'message' => $apiResponse, 'code' => 200];
             LogHandler::save($this->_integrationID, json_encode(['type' => 'members', 'type_name' => 'add-members']), 'success', json_encode($res));
         }
+
         return $apiResponse;
     }
 }

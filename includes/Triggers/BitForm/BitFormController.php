@@ -6,30 +6,26 @@ use BitCode\FI\Flow\Flow;
 
 final class BitFormController
 {
-    private static function isPluginActive()
-    {
-        return class_exists("BitCode\\BitForm\\Plugin");
-    }
-
     public static function info()
     {
         $plugin_path = 'bitform/bitforms.php';
+
         return [
-            'name' => 'Bit Form',
-            'title' => 'Contact Form Plugin - Fastest Contact Form Builder Plugin for WordPress by Bit Forms.',
-            'slug' => $plugin_path,
-            'type' => 'form',
-            'is_active' => self::isPluginActive(),
+            'name'           => 'Bit Form',
+            'title'          => 'Contact Form Plugin - Fastest Contact Form Builder Plugin for WordPress by Bit Forms.',
+            'slug'           => $plugin_path,
+            'type'           => 'form',
+            'is_active'      => self::isPluginActive(),
             'activation_url' => wp_nonce_url(self_admin_url('plugins.php?action=activate&amp;plugin=' . $plugin_path . '&amp;plugin_status=all&amp;paged=1&amp;s'), 'activate-plugin_' . $plugin_path),
-            'install_url' => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
-            'list' => [
+            'install_url'    => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
+            'list'           => [
                 'action' => 'bitform/get',
                 'method' => 'get',
             ],
             'fields' => [
                 'action' => 'bitform/get/form',
                 'method' => 'post',
-                'data' => ['id']
+                'data'   => ['id']
             ]
         ];
     }
@@ -43,8 +39,8 @@ final class BitFormController
         $forms = \BitCode\BitForm\API\BitForm_Public\BitForm_Public::getForms();
         $all_forms = [];
         foreach ($forms as $form) {
-            $all_forms[] = (object)[
-                'id' => $form->id,
+            $all_forms[] = (object) [
+                'id'    => $form->id,
                 'title' => $form->form_name
             ];
         }
@@ -81,25 +77,26 @@ final class BitFormController
             if (isset($field->lbl) && !isset($field->txt) && $field->typ !== 'repeater') {
                 if ($field->typ === 'file-up') {
                     $fields[] = [
-                        'name' => $key,
-                        'type' => 'file',
+                        'name'  => $key,
+                        'type'  => 'file',
                         'label' => $field->lbl
                     ];
                 } elseif ($field->typ === 'decision-box') {
                     $fields[] = [
-                        'name' => $key,
-                        'type' => $field->typ,
+                        'name'  => $key,
+                        'type'  => $field->typ,
                         'label' => $field->adminLbl
                     ];
                 } else {
                     $fields[] = [
-                        'name' => $key,
-                        'type' => $field->typ,
+                        'name'  => $key,
+                        'type'  => $field->typ,
                         'label' => $field->lbl
                     ];
                 }
             }
         }
+
         return $fields;
     }
 
@@ -111,7 +108,7 @@ final class BitFormController
                 $data['entry_id'] = $entryId;
             }
             foreach ($formData as $key => $value) {
-                if (is_string($value) && str_contains($value, '__bf__')) {
+                if (\is_string($value) && str_contains($value, '__bf__')) {
                     $data[$key] = explode('__bf__', $value);
                 } else {
                     $data[$key] = $value;
@@ -121,5 +118,10 @@ final class BitFormController
                 Flow::execute('FormBitForminator', $formId, $data, $flows);
             }
         }
+    }
+
+    private static function isPluginActive()
+    {
+        return class_exists('BitCode\\BitForm\\Plugin');
     }
 }

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Clickup;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -15,20 +15,25 @@ use BitCode\FI\Core\Util\HttpHelper;
 class RecordApiHelper
 {
     private $integrationDetails;
+
     private $integrationId;
+
     private $apiUrl;
+
     private $defaultHeader;
+
     private $type;
+
     private $typeName;
 
     public function __construct($integrationDetails, $integId)
     {
         $this->integrationDetails = $integrationDetails;
-        $this->integrationId      = $integId;
-        $this->apiUrl             = "https://api.clickup.com/api/v2/";
-        $this->defaultHeader      = [
-            "Authorization" => $integrationDetails->api_key,
-            'content-type' => 'application/json'
+        $this->integrationId = $integId;
+        $this->apiUrl = 'https://api.clickup.com/api/v2/';
+        $this->defaultHeader = [
+            'Authorization' => $integrationDetails->api_key,
+            'content-type'  => 'application/json'
         ];
     }
 
@@ -37,10 +42,10 @@ class RecordApiHelper
         if (!isset($finalData['name'])) {
             return ['success' => false, 'message' => 'Required field task name is empty', 'code' => 400];
         }
-        $staticFieldsKeys = ['name', 'description', "start_date", 'due_date'];
+        $staticFieldsKeys = ['name', 'description', 'start_date', 'due_date'];
 
         foreach ($finalData as $key => $value) {
-            if (in_array($key, $staticFieldsKeys)) {
+            if (\in_array($key, $staticFieldsKeys)) {
                 if ($key === 'start_date' || $key === 'due_date') {
                     $requestParams[$key] = strtotime($value) * 1000;
                 } else {
@@ -48,13 +53,13 @@ class RecordApiHelper
                 }
             } else {
                 $requestParams['custom_fields'][] = (object) [
-                    'id' => $key,
+                    'id'    => $key,
                     'value' => $value,
                 ];
             }
         }
 
-        $this->type     = 'Task';
+        $this->type = 'Task';
         $this->typeName = 'Task created';
         $listId = $this->integrationDetails->selectedList;
         $apiEndpoint = $this->apiUrl . "list/{$listId}/task";
@@ -67,14 +72,14 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->clickupFormField;
+            $actionValue = $value->clickupFormField;
             if ($triggerValue === 'custom') {
                 if ($actionValue === 'fields') {
                     $dataFinal[$value->customFieldKey] = self::formatPhoneNumber($value->customValue);
                 } else {
                     $dataFinal[$actionValue] = self::formatPhoneNumber($value->customValue);
                 }
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 if ($actionValue === 'fields') {
                     $dataFinal[$value->customFieldKey] = self::formatPhoneNumber($data[$triggerValue]);
                 } else {
@@ -82,23 +87,13 @@ class RecordApiHelper
                 }
             }
         }
+
         return $dataFinal;
-    }
-
-    private static function formatPhoneNumber($field)
-    {
-        if (!preg_match('/^\+?[0-9\s\-\(\)]+$/', $field)) {
-            return $field;
-        }
-
-        $leadingPlus      = $field[0] === '+' ? '+' : '';
-        $cleanedNumber    = preg_replace('/[^\d]/', '', $field);
-        return $leadingPlus . trim($cleanedNumber);
     }
 
     public function execute($fieldValues, $fieldMap, $actionName)
     {
-        $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         if ($actionName === 'task') {
             $apiResponse = $this->addTask($finalData);
         }
@@ -109,6 +104,19 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
         }
+
         return $apiResponse;
+    }
+
+    private static function formatPhoneNumber($field)
+    {
+        if (!preg_match('/^\+?[0-9\s\-\(\)]+$/', $field)) {
+            return $field;
+        }
+
+        $leadingPlus = $field[0] === '+' ? '+' : '';
+        $cleanedNumber = preg_replace('/[^\d]/', '', $field);
+
+        return $leadingPlus . trim($cleanedNumber);
     }
 }
