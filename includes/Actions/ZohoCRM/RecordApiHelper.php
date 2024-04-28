@@ -46,7 +46,7 @@ class RecordApiHelper
     public function searchRecord($module, $searchCriteria)
     {
         $searchRecordEndpoint = "{$this->_apiDomain}/{$module}/search";
-        return HttpHelper::get($searchRecordEndpoint, ["criteria" => "({$searchCriteria})"], $this->_defaultHeader);
+        return HttpHelper::get($searchRecordEndpoint, ['criteria' => "({$searchCriteria})"], $this->_defaultHeader);
     }
 
     public function execute($integId, $defaultConf, $module, $layout, $fieldValues, $fieldMap, $actions, $required, $fileMap = [], $isRelated = false)
@@ -116,7 +116,7 @@ class RecordApiHelper
             } elseif (isset($fieldValues['zc_gad'])) {
                 $gclid = $fieldValues['zc_gad'];
             } elseif (isset($_REQUEST['zc_gad'])) {
-                $gclid = $_REQUEST['zc_gad'];
+                $gclid = sanitize_text_field($_REQUEST['zc_gad']);
             }
             if (!empty($gclid)) {
                 $fieldData['$gclid'] = $gclid;
@@ -191,7 +191,7 @@ class RecordApiHelper
         ) {
             if (!empty($actions->tag_rec) && class_exists('BitCode\FI\Actions\ZohoCRM\TagApiHelper')) {
                 $tags = '';
-                $tag_rec = \explode(",", $actions->tag_rec);
+                $tag_rec = \explode(',', $actions->tag_rec);
                 foreach ($tag_rec as $tag) {
                     if (is_string($tag) && substr($tag, 0, 2) === '${' && $tag[strlen($tag) - 1] === '}') {
                         $tags .= (!empty($tags) ? ',' : '') . $fieldValues[substr($tag, 2, strlen($tag) - 3)];
@@ -211,7 +211,7 @@ class RecordApiHelper
                 $fileFound = 0;
                 $responseType = 'success';
                 $attachmentApiResponses = [];
-                $attachment = explode(",", $actions->attachment);
+                $attachment = explode(',', $actions->attachment);
                 foreach ($attachment as $fileField) {
                     if (isset($fieldValues[$fileField]) && !empty($fieldValues[$fileField])) {
                         $fileFound = 1;
@@ -278,25 +278,25 @@ class RecordApiHelper
                     $formatedValue = (object) $formatedValue;
                 }
             } elseif ($apiFormat === 'string' && $formatSpecs->data_type !== 'datetime' && $formatSpecs->data_type !== 'date') {
-                $formatedValue = is_array($value) || is_object($value) ? implode(",", (array)$value) : html_entity_decode($value);
+                $formatedValue = is_array($value) || is_object($value) ? implode(',', (array)$value) : html_entity_decode($value);
             } elseif ($formatSpecs->data_type === 'datetime') {
-                $getDateFormat  = self::setDateFormat($value);
-                $date_format    = $getDateFormat['date_format'];
-                $value          = $getDateFormat['value'];
+                $getDateFormat = self::setDateFormat($value);
+                $date_format = $getDateFormat['date_format'];
+                $value = $getDateFormat['value'];
 
                 $dateTimeHelper = new DateTimeHelper();
-                $formatedValue  = $dateTimeHelper->getFormated($value, $date_format, wp_timezone(), 'Y-m-d\TH:i:sP', null);
-                $formatedValue  = !$formatedValue ? null : $formatedValue;
+                $formatedValue = $dateTimeHelper->getFormated($value, $date_format, wp_timezone(), 'Y-m-d\TH:i:sP', null);
+                $formatedValue = !$formatedValue ? null : $formatedValue;
             } elseif ($formatSpecs->data_type === 'date') {
-                $getDateFormat  = self::setDateFormat($value);
-                $date_format    = $getDateFormat['date_format'];
-                $value          = $getDateFormat['value'];
+                $getDateFormat = self::setDateFormat($value);
+                $date_format = $getDateFormat['date_format'];
+                $value = $getDateFormat['value'];
 
                 $dateTimeHelper = new DateTimeHelper();
-                $formatedValue  = $dateTimeHelper->getFormated($value, $date_format, wp_timezone(), 'Y-m-d', null);
-                $formatedValue  = !$formatedValue ? null : $formatedValue;
+                $formatedValue = $dateTimeHelper->getFormated($value, $date_format, wp_timezone(), 'Y-m-d', null);
+                $formatedValue = !$formatedValue ? null : $formatedValue;
             } else {
-                $stringyfieldValue = is_array($value) || is_object($value) ? implode(",", (array)$value) : $value;
+                $stringyfieldValue = is_array($value) || is_object($value) ? implode(',', (array)$value) : $value;
 
                 switch ($apiFormat) {
                     case 'double':

@@ -21,12 +21,16 @@ final class Activation
     {
         if ($network_wide && function_exists('is_multisite') && is_multisite()) {
             $sites = Multisite::all_blog_ids();
+
             foreach ($sites as $site) {
                 switch_to_blog($site);
+
                 $this->installAsSingleSite();
+
                 if ($network_wide) {
-                    activate_plugin(plugin_basename(BTCBI_PLUGIN_MAIN_FILE));
+                    // activate_plugin(plugin_basename(BTCBI_PLUGIN_MAIN_FILE));
                 }
+
                 restore_current_blog();
             }
         } else {
@@ -37,13 +41,16 @@ final class Activation
     public function installAsSingleSite()
     {
         $installed = get_option('btcbi_installed');
+
         if ($installed) {
             $oldVersion = get_option('btcbi_version');
         }
+
         if (!$installed || version_compare($oldVersion, BTCBI_VERSION, '!=')) {
             DB::migrate();
             update_option('btcbi_installed', time());
         }
+
         update_option('btcbi_version', BTCBI_VERSION);
 
         // disable free version if pro version is active
@@ -55,12 +62,15 @@ final class Activation
     public static function handle_new_site(WP_Site $new_site)
     {
         switch_to_blog($new_site->blog_id);
+
         $plugin = plugin_basename(BTCBI_PLUGIN_MAIN_FILE);
+
         if (is_plugin_active_for_network($plugin)) {
-            activate_plugin($plugin);
+            // activate_plugin($plugin);
         } else {
             do_action('btcbi_activation');
         }
+
         restore_current_blog();
     }
 }
