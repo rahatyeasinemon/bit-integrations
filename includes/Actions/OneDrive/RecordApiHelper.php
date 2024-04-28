@@ -28,24 +28,18 @@ class RecordApiHelper
         $apiEndpoint = 'https://api.onedrive.com/v1.0/drives/' . $ids[0] . '/items/' . $parentId . ':/' . basename($filePath) . ':/content';
 
         $headers = [
-            'Authorization: Bearer ' . $this->token,
-            'Content-Type: application/octet-stream',
-            'Content-Length: ' . filesize($filePath),
-            'Prefer: respond-async',
-            'X-HTTP-Method: PUT'
+            'Authorization'  => 'Bearer ' . $this->token,
+            'Content-Type'   => 'application/octet-stream',
+            'Content-Length' => filesize($filePath),
+            'Prefer'         => 'respond-async',
+            'X-HTTP-Method'  => 'PUT'
         ];
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $apiEndpoint);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, file_get_contents($filePath));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        $response = HttpHelper::post(
+            $apiEndpoint,
+            file_get_contents($filePath),
+            $headers
+        );
 
         return $response;
     }
@@ -71,8 +65,8 @@ class RecordApiHelper
 
     protected function storeInState($response)
     {
-        // Response test (string|object)
-        $response = json_decode($response);
+        $response = is_string($response) ? json_decode($response) : $response;
+
         if (isset($response->id)) {
             $this->successApiResponse[] = $response;
         } else {
