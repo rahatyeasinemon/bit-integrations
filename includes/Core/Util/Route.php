@@ -23,7 +23,7 @@ final class Route
     {
         // var_dump('request', $method, $hook, $invokeable);
         // die;
-        if ($_SERVER['REQUEST_METHOD'] != $method || !isset($_REQUEST['action']) || strpos($_REQUEST['action'], $hook) === false) {
+        if (sanitize_text_field($_SERVER['REQUEST_METHOD']) != $method || !isset($_REQUEST['action']) || strpos(sanitize_text_field($_REQUEST['action']), $hook) === false) {
             if (static::$_no_auth) {
                 static::$_no_auth = false;
             }
@@ -47,7 +47,8 @@ final class Route
     public static function action()
     {
         $action = sanitize_text_field($_REQUEST['action']);
-        $requestMethod = in_array($_SERVER['REQUEST_METHOD'], ['GET', 'POST']) ? $_SERVER['REQUEST_METHOD'] : 'POST';
+        $sanitizedMethod = sanitize_text_field($_SERVER['REQUEST_METHOD']);
+        $requestMethod = in_array($sanitizedMethod, ['GET', 'POST']) ? $sanitizedMethod : 'POST';
         if (
             isset(static::$_invokeable[$action][$requestMethod . '_ignore_token'])
             || isset($_REQUEST['_ajax_nonce']) && wp_verify_nonce(sanitize_text_field($_REQUEST['_ajax_nonce']), 'btcbi_nonce')
@@ -56,7 +57,7 @@ final class Route
             unset($_POST['_ajax_nonce'], $_POST['action'], $_GET['_ajax_nonce'], $_GET['action']);
             if (method_exists($invokeable[0], $invokeable[1])) {
                 if ($requestMethod == 'POST') {
-                    if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'form-data') === false && strpos($_SERVER['CONTENT_TYPE'], 'x-www-form-urlencoded') === false) {
+                    if (isset($_SERVER['CONTENT_TYPE']) && strpos(sanitize_text_field($_SERVER['CONTENT_TYPE']), 'form-data') === false && strpos(sanitize_text_field($_SERVER['CONTENT_TYPE']), 'x-www-form-urlencoded') === false) {
                         $inputJSON = file_get_contents('php://input');
                         $data = is_string($inputJSON) ? \json_decode($inputJSON) : $inputJSON;
                     } else {
