@@ -6,6 +6,8 @@
 
 namespace BitCode\FI\Actions\Telegram;
 
+use BitCode\FI\Core\Util\HttpHelper;
+
 /**
  * Provide functionality for Upload files
  */
@@ -60,28 +62,18 @@ final class FilesApiHelper
         if ($param != 'photo') {
             unset($data['photo']);
         }
-        $curl = curl_init();
-        curl_setopt_array(
-            $curl,
-            array(
-                CURLOPT_URL => $uploadFileEndpoint,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => $data,
-            )
+
+        $response = HttpHelper::post(
+            $uploadFileEndpoint,
+            $data,
+            [
+                'Content-Type'  => 'multipart/form-data',
+            ]
         );
 
-        $uploadResponse = curl_exec($curl);
-
-        curl_close($curl);
-
-        return $uploadResponse;
+        return $response;
     }
+
     public function uploadMultipleFiles($apiEndPoint, $data)
     {
         $param =  'media';
@@ -121,27 +113,14 @@ final class FilesApiHelper
             unset($data['media']);
         }
 
-        $curl = curl_init();
-        curl_setopt_array(
-            $curl,
-            array(
-                CURLOPT_URL => $uploadMultipleFileEndpoint,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => $postFields,
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: multipart/form-data'
-                ),
-            )
+        $response = HttpHelper::post(
+            $uploadMultipleFileEndpoint,
+            $postFields,
+            [
+                'Content-Type'  => 'multipart/form-data',
+            ]
         );
 
-        $uploadResponse = curl_exec($curl);
-        curl_close($curl);
-        return $uploadResponse;
+        return $response;
     }
 }

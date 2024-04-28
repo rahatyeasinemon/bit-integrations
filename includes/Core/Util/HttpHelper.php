@@ -32,7 +32,10 @@ final class HttpHelper
             $contentType = $headers['content-type'];
         }
 
-        if (strpos(strtolower($contentType), 'form')) {
+        if (
+            $type !== 'GET'
+            && strpos(strtolower($contentType), 'form')
+        ) {
             $boundary = wp_generate_password(24);
             $headers[$contentHeaderName] = 'multipart/form-data; boundary=' . $boundary;
             $data = self::processFormData($data, $boundary);
