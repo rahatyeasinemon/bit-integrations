@@ -59,7 +59,7 @@ class RecordApiHelper
     public function slicewp_get_user_affiliate_id($user_id)
     {
         global $wpdb;
-        $affiliate = $wpdb->get_results($wpdb->prepare("SELECT id FROM %s WHERE %s = %d", "{$wpdb->prefix}slicewp_affiliates", "{$wpdb->prefix}slicewp_affiliates.user_id", $user_id));
+        $affiliate = $wpdb->get_results($wpdb->prepare("SELECT id FROM {$wpdb->prefix}slicewp_affiliates WHERE {$wpdb->prefix}slicewp_affiliates.user_id = %d", $user_id));
         return $affiliate[0]->id;
     }
 

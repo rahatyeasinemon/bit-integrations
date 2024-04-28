@@ -22,13 +22,12 @@ class ElementorHelper
         global $wpdb;
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT * FROM %s
+                "SELECT * FROM {$wpdb->prefix}btcbi_flow
                 WHERE status = true 
                 AND triggered_entity = %s 
                 AND (triggered_entity_id = %s
                 OR triggered_entity_id = %s
                 OR triggered_entity_id = %s)",
-                "{$wpdb->prefix}btcbi_flow",
                 'Elementor',
                 'elementor_pro/forms/new_record',
                 $formId,

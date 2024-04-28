@@ -617,12 +617,12 @@ class RecordApiHelper
         delete_user_meta($user_id, 'course_completed_' . $course_id);
         delete_user_meta($user_id, 'learndash_course_expired_' . $course_id);
 
-        $activity_ids = $wpdb->get_results($wpdb->prepare("SELECT activity_id FROM %s WHERE course_id = %d AND user_id = %d", "{$wpdb->prefix}learndash_user_activity", $course_id, $user_id));
+        $activity_ids = $wpdb->get_results($wpdb->prepare("SELECT activity_id FROM ' . $wpdb->prefix . 'learndash_user_activity WHERE course_id = %d AND user_id = %d", $course_id, $user_id));
 
         if ($activity_ids) {
             foreach ($activity_ids as $activity_id) {
-                $wpdb->query($wpdb->prepare("DELETE FROM  %s WHERE activity_id = %d", "{$wpdb->prefix}learndash_user_activity_meta", $activity_id->activity_id));
-                $wpdb->query($wpdb->prepare("DELETE FROM %s WHERE activity_id = %d", "{$wpdb->prefix}learndash_user_activity", $activity_id->activity_id));
+                $wpdb->query($wpdb->prepare("DELETE FROM  {$wpdb->prefix}learndash_user_activity_meta WHERE activity_id = %d", $activity_id->activity_id));
+                $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->prefix}learndash_user_activity WHERE activity_id = %d", $activity_id->activity_id));
             }
         }
     }

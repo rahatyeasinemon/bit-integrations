@@ -25,7 +25,7 @@ class PaidMembershipProController
     public static function getAllPaidMembershipProLevel()
     {
         global $wpdb;
-        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM %s ORDER BY id ASC", $wpdb->pmpro_membership_levels));
+        $levels = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->pmpro_membership_levels ORDER BY id ASC"));
         $allLevels = [];
         if ($levels) {
             foreach ($levels as $level) {

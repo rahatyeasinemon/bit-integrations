@@ -58,7 +58,7 @@ class BuddyBossController
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (self::pluginActive()) {
             global $wpdb;
-            $groups = $wpdb->get_results($wpdb->prepare("select id,name from %s", "{$wpdb->prefix}bp_groups"));
+            $groups = $wpdb->get_results("select id,name from {$wpdb->prefix}bp_groups");
 
             wp_send_json_success($groups, 200);
         }
@@ -70,7 +70,7 @@ class BuddyBossController
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (self::pluginActive()) {
             global $wpdb;
-            $users = $wpdb->get_results($wpdb->prepare("select ID,display_name from %s", "{$wpdb->prefix}users"));
+            $users = $wpdb->get_results("select ID,display_name from {$wpdb->prefix}users");
             wp_send_json_success($users, 200);
         }
         wp_send_json_error(__('BuddyBoss must be activated!', 'bit-integrations'));
@@ -115,16 +115,16 @@ class BuddyBossController
             'order' => 'ASC',
             'post_parent' => $forum_id,
             'post_status' => 'publish',
-        ];
+            ];
 
         $topic_list = get_posts($topic_args);
         $topics = [];
 
         foreach ($topic_list as $key => $val) {
             $topics[] = [
-                'topic_id' => $val->ID,
-                'topic_title' => $val->post_title,
-            ];
+                    'topic_id' => $val->ID,
+                    'topic_title' => $val->post_title,
+                ];
         }
 
         wp_send_json_success($topics);
@@ -134,7 +134,7 @@ class BuddyBossController
 
     public static function registerComponents($component_names, $active_components)
     {
-        $component_names = !is_array($component_names) ? array() : $component_names;
+        $component_names = ! is_array($component_names) ? array() : $component_names;
         array_push($component_names, 'bit-integrations');
 
         return $component_names;

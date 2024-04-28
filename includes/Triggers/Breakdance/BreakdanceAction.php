@@ -43,11 +43,10 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
 
             global $wpdb;
             $flows = $wpdb->get_results($wpdb->prepare(
-                "SELECT * FROM %s 
+                "SELECT * FROM {$wpdb->prefix}btcbi_flow 
                     WHERE status = true 
                     AND triggered_entity = 'Breakdance' 
                     AND (triggered_entity_id = 'BreakdanceHook' OR triggered_entity_id = %s)",
-                "{$wpdb->prefix}btcbi_flow",
                 $reOrganizeId
             ));
 
