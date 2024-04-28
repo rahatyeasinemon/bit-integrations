@@ -3,6 +3,7 @@
 /**
  * Slack Record Api
  */
+
 namespace BitCode\FI\Actions\Slack;
 
 use BitCode\FI\Core\Util\HttpHelper;
@@ -50,11 +51,7 @@ class RecordApiHelper
                 }
             }
 
-            if (
-                !empty($file)
-                && (
-                    (is_array($file))
-                )) {
+            if (!empty($file)) {
                 $data = [
                     'channels' => $integrationDetails->channel_id,
                     'initial_comment' => $messagesBody,
