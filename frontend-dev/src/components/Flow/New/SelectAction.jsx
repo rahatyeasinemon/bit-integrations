@@ -57,7 +57,6 @@ export default function SelectAction() {
     { type: 'Getgist' },
     { type: 'ElasticEmail' },
     { type: 'WP Courseware' },
-    { type: 'WishList' },
     { type: 'RestrictContent' },
     { type: 'Mautic' },
     { type: 'Keap' },
