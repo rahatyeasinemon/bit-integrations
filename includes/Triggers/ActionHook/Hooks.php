@@ -11,14 +11,11 @@ use BitCode\FI\Triggers\ActionHook\ActionHookController;
 
 global $wpdb;
 $hook = $wpdb->get_results(
-    $wpdb->prepare(
-        "SELECT option_name
+    "SELECT option_name
             FROM $wpdb->options
-            WHERE option_name LIKE %s
+            WHERE option_name LIKE 'btcbi_action_hook_test\_%'
             ORDER BY option_id DESC
-            LIMIT 1",
-        'btcbi_action_hook_test\_%'
-    )
+            LIMIT 1"
 );
 
 if (!empty($hook) && isset($hook[0]->option_name)) {

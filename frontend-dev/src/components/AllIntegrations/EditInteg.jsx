@@ -51,7 +51,6 @@ const EditIntegromat = lazy(() => import('./Integromat/EditIntegromat'))
 const EditSlack = lazy(() => import('./Slack/EditSlack'))
 const EditElasticEmail = lazy(() => import('./ElasticEmail/EditElasticEmail'))
 const EditWPCourseware = lazy(() => import('./WPCourseware/EditWPCourseware'))
-const EditWishList = lazy(() => import('./WishList/EditWishList'))
 const EditMautic = lazy(() => import('./Mautic/EditMautic'))
 const EditTrello = lazy(() => import('./Trello/EditTrello'))
 const EditHubspot = lazy(() => import('./Hubspot/EditHubspot'))
@@ -310,8 +309,6 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditWPCourseware allIntegURL={allIntegURL} />
     case 'Tutor Lms':
       return <EditTutorLms allIntegURL={allIntegURL} />
-    case 'WishList':
-      return <EditWishList allIntegURL={allIntegURL} />
     case 'Mautic':
       return <EditMautic allIntegURL={allIntegURL} />
     case 'Trello':
