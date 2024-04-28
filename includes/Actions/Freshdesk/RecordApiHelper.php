@@ -44,7 +44,7 @@ class RecordApiHelper
         ];
 
         if ($fileTicket) {
-            $data = $data + ['attachments' => [$fileTicket]];
+            $data = $data + ['attachments' => $fileTicket];
 
             $sendPhotoApiHelper = new AllFilesApiHelper();
             return $sendPhotoApiHelper->allUploadFiles($apiEndpoint, $data, $api_key);
@@ -139,12 +139,23 @@ class RecordApiHelper
         $data = $finalDataContact;
         $apiEndpoint = $app_base_domamin . '/api/v2/contacts/';
         if ($avatar) {
-            $data = $finalDataContact + ['avatar' => $avatar[0][0]];
+            $data = $finalDataContact + ['avatar' => static::getAvatar($avatar)];
             $sendPhotoApiHelper = new FilesApiHelper();
             return $sendPhotoApiHelper->uploadFiles($apiEndpoint, $data, $api_key);
         }
 
         return HttpHelper::post($apiEndpoint, $data, $header);
+    }
+
+    private static function getAvatar($avatar)
+    {
+        foreach ($avatar as $value) {
+            if (is_array($value)) {
+                return static::getAvatar($value);
+            } else {
+                return $value;
+            }
+        }
     }
 
     public function updateContact($app_base_domamin, $finalDataContact, $api_key, $contactId)
@@ -222,8 +233,8 @@ class RecordApiHelper
                 $apiResponseContact = $this->insertContact($app_base_domamin, $finalDataContact, $integrationDetails->api_key, $avatar);
             }
         };
-        $attachmentsFieldName = $integrationDetails->actions->attachments;
-        $fileTicket = $fieldValues[$attachmentsFieldName][0];
+        $attachmentsFieldName = $integrationDetails->actions->file;
+        $fileTicket = $fieldValues[$attachmentsFieldName];
         $apiResponse = $this->insertTicket($apiEndpoint, $finalData, $integrationDetails->api_key, $fileTicket);
 
         if (property_exists($apiResponse, 'errors')) {

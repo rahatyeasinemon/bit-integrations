@@ -72,11 +72,17 @@ final class HttpHelper
     {
         $payload = '';
 
+        $count = 0;
+
         foreach ($data as $name => $value) {
-            if ($value instanceof CURLFile) {
-                $payload .= self::localFile($payload, $boundary, $name, $value);
+            if (is_iterable($value)) {
+                foreach ($value as $singleValue) {
+                    $count++;
+                    $payload .= self::processFormField($boundary, $name . "[]", $singleValue);
+                }
             } else {
-                $payload .= self::formField($payload, $boundary, $name, $value);
+                $count++;
+                $payload .= self::processFormField($boundary, $name, $value);
             }
         }
 
@@ -85,9 +91,22 @@ final class HttpHelper
         return $payload;
     }
 
-    public static function formField($payload, $boundary, $name, $value)
+
+    public static function processFormField($boundary, $name, $value)
     {
-        $payload .= '--' . $boundary;
+        $payload = '';
+        if ($value instanceof CURLFile) {
+            $payload .= self::localFile($boundary, $name, $value);
+        } else {
+            $payload .= self::formField($boundary, $name, $value);
+        }
+
+        return $payload;
+    }
+
+    public static function formField($boundary, $name, $value)
+    {
+        $payload = '--' . $boundary;
         $payload .= "\r\n";
         $payload .= 'Content-Disposition: form-data; name="' . $name .
             '"' . "\r\n\r\n";
@@ -97,9 +116,9 @@ final class HttpHelper
         return $payload;
     }
 
-    public static function localFile($payload, $boundary, $name, CURLFile $file)
+    public static function localFile($boundary, $name, CURLFile $file)
     {
-        $payload .= '--' . $boundary;
+        $payload = '--' . $boundary;
         $payload .= "\r\n";
         $payload .= 'Content-Disposition: form-data; name="' . $name .
             '"; filename="' . basename($file->getFilename()) . '"' . "\r\n";
