@@ -15,15 +15,6 @@ import Loader from '../components/Loaders/Loader'
 
 function DocSupport() {
   const [snack, setSnackbar] = useState({ show: false })
-  // const [products, setProducts] = useState([])
-
-  // useEffect(() => {
-  //   fetch('https://raw.githubusercontent.com/Bit-Apps-Pro/products/main/lists.json')
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setProducts(data.product)
-  //     })
-  // }, [])
 
   const products = [
     {
@@ -32,13 +23,6 @@ function DocSupport() {
       "slug": "bit-form",
       "url": "https://wordpress.org/plugins/bit-form/",
       "image": bitForm
-    },
-    {
-      "name": "Bit Integrations",
-      "description": "Integrations for wordpress.",
-      "slug": "bit-integrations",
-      "url": "https://wordpress.org/plugins/bit-integrations/",
-      "image": "https://ps.w.org/bit-integrations/assets/icon.svg"
     },
     {
       "name": "Bit Assist",
@@ -115,7 +99,7 @@ function DocSupport() {
           <span>
             <MailIcn size="18" />
           </span>
-          <span className="m-3">
+          <span className="ml-2">
             <a href="mailto:support@bitapps.pro" rel="noreferrer">
               support@bitapps.pro
             </a>
@@ -125,7 +109,7 @@ function DocSupport() {
           <span>
             <MessagesCircle size="20" />
           </span>
-          <span className="m-3">
+          <span className="ml-2">
             <a href="https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e" target="_blank" rel="noreferrer">
               Chat here
               {' '}
@@ -137,7 +121,7 @@ function DocSupport() {
           <span>
             <YoutubeIcn size="20" />
           </span>
-          <span className="m-3">
+          <span className="ml-2">
             <a href="https://www.youtube.com/channel/UCjUl8UGn-G6zXZ-Wpd7Sc3g" target="_blank" rel="noreferrer">
               You tube channel
               {' '}
@@ -147,9 +131,9 @@ function DocSupport() {
         </div>
         <div className="flx">
           <span>
-            <FacebookIcn size="15" />
+            <FacebookIcn size="20" />
           </span>
-          <span className="m-3">
+          <span className="ml-2">
             <a href="https://www.facebook.com/groups/3308027439209387" target="_blank" rel="noreferrer">
               Facebook support group
               {' '}
@@ -159,9 +143,9 @@ function DocSupport() {
         </div>
         <div className="flx">
           <span>
-            <ReviewStarIcn size="15" />
+            <ReviewStarIcn size="20" />
           </span>
-          <span className="m-3">
+          <span className="ml-2">
             <a href="https://wordpress.org/support/plugin/bit-form/reviews/#new-post" target="_blank" rel="noreferrer">
               Rate us on WordPress
               {' '}
