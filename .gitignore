@@ -12,3 +12,5 @@ pnpm-lock.yaml
 yarn.lock
 yarn-error.log
 
+.php-cs-fixer.cache
+
