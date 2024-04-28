@@ -2047,8 +2047,8 @@ final class TriggerFallback
 
         foreach ($fields as $index => $field) {
             $methodName = 'process' . str_replace(' ', '', ucwords(str_replace('-', ' ', self::evfFieldType($field['type'])))) . 'FieldValue';
-            if (method_exists(new self, $methodName)) {
-                $processedValues =  array_merge($processedValues, call_user_func_array([new self, $methodName], [$index, $field, $form_data]));
+            if (method_exists(new self(), $methodName)) {
+                $processedValues =  array_merge($processedValues, call_user_func_array([new self(), $methodName], [$index, $field, $form_data]));
             } else {
                 $processedValues["$index"] =   $entry['form_fields'][$index];
             }
@@ -4220,6 +4220,282 @@ final class TriggerFallback
         return ['triggered_entity' => 'PiotnetAddonForm', 'triggered_entity_id' => $post_id, 'data' => $data, 'flows' => $flows];
     }
 
+    // Wp Post All Functions
+
+    public static function createPost($postId, $newPostData, $update, $beforePostData)
+    {
+        if ('publish' !== $newPostData->post_status || 'revision' === $newPostData->post_type || (!empty($beforePostData->post_status) && 'publish' === $beforePostData->post_status)) {
+            return false;
+        }
+
+        $postCreateFlow = Flow::exists('Post', 1);
+
+        if ($postCreateFlow) {
+            $flowDetails = $postCreateFlow[0]->flow_details;
+
+            if (is_string($postCreateFlow[0]->flow_details)) {
+                $flowDetails = json_decode($postCreateFlow[0]->flow_details);
+            }
+
+            if (isset($newPostData->post_content)) {
+                $newPostData->post_content = trim(strip_tags($newPostData->post_content));
+                $newPostData->post_permalink = get_permalink($newPostData);
+            }
+
+            if (isset($flowDetails->selectedPostType) && ($flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $newPostData->post_type)) {
+                if (has_post_thumbnail($postId)) {
+                    $featured_image_url = get_the_post_thumbnail_url($postId, 'full');
+                    $newPostData->featured_image = $featured_image_url;
+                }
+                if (!$update) {
+                    Flow::execute('Post', 1, (array) $newPostData, $postCreateFlow);
+                } else {
+                    Flow::execute('Post', 1, (array) $newPostData, $postCreateFlow);
+                }
+            }
+        }
+    }
+
+    public static function postComment($cmntId, $status, $cmntData)
+    {
+        $cmntTrigger = Flow::exists('Post', 5);
+
+        if ($cmntTrigger) {
+            $flowDetails = $cmntTrigger[0]->flow_details;
+
+            if (is_string($cmntTrigger[0]->flow_details)) {
+                $flowDetails = json_decode($cmntTrigger[0]->flow_details);
+            }
+
+            if (isset($flowDetails->selectedPostId) && $flowDetails->selectedPostId == 'any-post' || $flowDetails->selectedPostId == $cmntData['comment_post_ID']) {
+                $cmntData['comment_id'] = $cmntId;
+
+                Flow::execute('Post', 5, (array) $cmntData, $cmntTrigger);
+            }
+        }
+    }
+
+    public static function deletePost($postId, $deletedPost)
+    {
+        $postDeleteTrigger = Flow::exists('Post', 3);
+
+        if ($postDeleteTrigger) {
+            $flowDetails = $postDeleteTrigger[0]->flow_details;
+
+            if (is_string($postDeleteTrigger[0]->flow_details)) {
+                $flowDetails = json_decode($postDeleteTrigger[0]->flow_details);
+            }
+
+            if (isset($deletedPost->post_content)) {
+                $deletedPost->post_content = trim(strip_tags($deletedPost->post_content));
+                $deletedPost->post_permalink = get_permalink($deletedPost);
+            }
+
+            if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $deletedPost->post_type) {
+                Flow::execute('Post', 5, (array) $deletedPost, $postDeleteTrigger);
+            }
+        }
+    }
+
+    public static function viewPost($content)
+    {
+        $postViewTrigger = Flow::exists('Post', 4);
+
+        if (is_single() && !empty($GLOBALS['post'])) {
+            if (isset($postViewTrigger[0]->selectedPostId) && $postViewTrigger[0]->selectedPostId == 'any-post' || $GLOBALS['post']->ID == get_the_ID()) {
+                Flow::execute('Post', 5, (array) $GLOBALS['post'], $postViewTrigger);
+            }
+        }
+
+        return $content;
+    }
+
+    public static function postUpdated($postId, $updatedPostData)
+    {
+        $postUpdateFlow = Flow::exists('Post', 2);
+        if ($postUpdateFlow) {
+            $flowDetails = $postUpdateFlow[0]->flow_details;
+            if (is_string($postUpdateFlow[0]->flow_details)) {
+                $flowDetails = json_decode($postUpdateFlow[0]->flow_details);
+            }
+            if (isset($updatedPostData->post_content)) {
+                $updatedPostData->post_content = trim(strip_tags($updatedPostData->post_content));
+                $updatedPostData->post_permalink = get_permalink($updatedPostData);
+            }
+
+            if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $updatedPostData->post_type) {
+                if (has_post_thumbnail($postId)) {
+                    $featured_image_url = get_the_post_thumbnail_url($postId, 'full');
+                    $updatedPostData->featured_image = $featured_image_url;
+                }
+                Flow::execute('Post', 2, (array) $updatedPostData, $postUpdateFlow);
+            }
+        }
+    }
+
+    public static function changePostStatus($newStatus, $oldStatus, $post)
+    {
+        $statusChangeTrigger = Flow::exists('Post', 6);
+
+        if ($statusChangeTrigger) {
+            $flowDetails = $statusChangeTrigger[0]->flow_details;
+
+            if (is_string($statusChangeTrigger[0]->flow_details)) {
+                $flowDetails = json_decode($statusChangeTrigger[0]->flow_details);
+            }
+
+            if (isset($post->post_content)) {
+                $post->post_content = trim(strip_tags($post->post_content));
+                $post->post_permalink = get_permalink($post);
+            }
+            if (has_post_thumbnail($post->id)) {
+                $post->featured_image = get_the_post_thumbnail_url($post->id, 'full');
+            }
+
+            if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $post->post_type && $newStatus != $oldStatus) {
+                Flow::execute('Post', 6, (array) $post, $statusChangeTrigger);
+            }
+        }
+    }
+
+    public static function trashComment($cmntId, $cmntData)
+    {
+        $cmntTrigger = Flow::exists('Post', 7);
+        if ($cmntTrigger) {
+            $flowDetails = $cmntTrigger[0]->flow_details;
+
+            if (is_string($cmntTrigger[0]->flow_details)) {
+                $flowDetails = json_decode($cmntTrigger[0]->flow_details);
+            }
+
+            $cmntData = (array)$cmntData;
+            if (isset($flowDetails->selectedPostId) && $flowDetails->selectedPostId == 'any-post' || $flowDetails->selectedPostId == $cmntData['comment_post_ID']) {
+                $cmntData['comment_id'] = $cmntId;
+                Flow::execute('Post', 7, (array) $cmntData, $cmntTrigger);
+            }
+        }
+    }
+
+    public static function updateComment($cmntId, $cmntData)
+    {
+        $cmntTrigger = Flow::exists('Post', 8);
+        if ($cmntTrigger) {
+            $flowDetails = $cmntTrigger[0]->flow_details;
+
+            if (is_string($cmntTrigger[0]->flow_details)) {
+                $flowDetails = json_decode($cmntTrigger[0]->flow_details);
+            }
+
+            $cmntData = (array)$cmntData;
+            if (isset($flowDetails->selectedPostId) && $flowDetails->selectedPostId == 'any-post' || $flowDetails->selectedPostId == $cmntData['comment_post_ID']) {
+                $cmntData['comment_id'] = $cmntId;
+                Flow::execute('Post', 8, (array) $cmntData, $cmntTrigger);
+            }
+        }
+    }
+
+    public static function trashPost($trashPostId)
+    {
+        $postUpdateFlow = Flow::exists('Post', 9);
+        $postData = get_post($trashPostId);
+        $postData->post_permalink = get_permalink($postData);
+
+        if ($postUpdateFlow) {
+            $flowDetails = $postUpdateFlow[0]->flow_details;
+
+            if (is_string($postUpdateFlow[0]->flow_details)) {
+                $flowDetails = json_decode($postUpdateFlow[0]->flow_details);
+            }
+            $postData = (array)$postData;
+            if (isset($flowDetails->selectedPostType) && $flowDetails->selectedPostType == 'any-post-type' || $flowDetails->selectedPostType == $postData['ID']) {
+                Flow::execute('Post', 9, (array) $postData, $postUpdateFlow);
+            }
+        }
+    }
+
+// Wp Registration All Functions
+
+    public static function userCreate()
+    {
+        $newUserData = func_get_args()[1];
+
+        $userCreateFlow = Flow::exists('Registration', 1);
+
+        if ($userCreateFlow) {
+            Flow::execute('Registration', 1, $newUserData, $userCreateFlow);
+        }
+    }
+
+    public static function profileUpdate()
+    {
+        $userdata = func_get_args()[2];
+
+        $userUpdateFlow = Flow::exists('Registration', 2);
+
+        if ($userUpdateFlow) {
+            Flow::execute('Registration', 2, $userdata, $userUpdateFlow);
+        }
+    }
+
+    public static function wpLogin($userId, $data)
+    {
+        $userLoginFlow = Flow::exists('Registration', 3);
+
+        if ($userLoginFlow) {
+            $user = [];
+
+            if (isset($data->data)) {
+                $user['user_id'] = $userId;
+                $user['user_login'] = $data->data->user_login;
+                $user['user_email'] = $data->data->user_email;
+                $user['user_url'] = $data->data->user_url;
+                $user['nickname'] = $data->data->user_nicename;
+                $user['display_name'] = $data->data->display_name;
+            }
+            Flow::execute('Registration', 3, $user, $userLoginFlow);
+        }
+    }
+
+    public static function wpResetPassword($data)
+    {
+        $userResetPassFlow = Flow::exists('Registration', 4);
+
+        if ($userResetPassFlow) {
+            $user = [];
+            if (isset($data->data)) {
+                $user['user_id'] = $data->data->ID;
+                $user['user_login'] = $data->data->user_login;
+                $user['user_email'] = $data->data->user_email;
+                $user['user_url'] = $data->data->user_url;
+                $user['nickname'] = $data->data->user_nicename;
+                $user['display_name'] = $data->data->display_name;
+            }
+
+            Flow::execute('Registration', 4, $user, $userResetPassFlow);
+        }
+    }
+
+    public static function wpUserDeleted()
+    {
+        $data = func_get_args()[2];
+
+        $userDeleteFlow = Flow::exists('Registration', 5);
+
+        if ($userDeleteFlow) {
+            $user = [];
+            if (isset($data->data)) {
+                $user['user_id'] = $data->data->ID;
+                $user['user_login'] = $data->data->user_login;
+                $user['user_email'] = $data->data->user_email;
+                $user['user_url'] = $data->data->user_url;
+                $user['nickname'] = $data->data->user_nicename;
+                $user['display_name'] = $data->data->display_name;
+            }
+
+            Flow::execute('Registration', 5, $user, $userDeleteFlow);
+        }
+    }
+
     //RestrictContent all functions
     public static function rcpPurchasesMembershipLevel($membership_id, \RCP_Membership $RCP_Membership)
     {
@@ -5376,25 +5652,25 @@ final class TriggerFallback
         foreach ($fields as $index => $field) {
             if ($field['type'] == 'datetime') {
                 $processedValues["{$field['m_type']}.$index"] =  self::wpefProcessDateFieldValue($index, $field, $data);
-            } else if ($field['type'] == 'feedback_matrix') {
+            } elseif ($field['type'] == 'feedback_matrix') {
                 $processedValues["{$field['m_type']}.$index"] =   $field['rows'];
-            } else if ($field['type'] == 'gps') {
+            } elseif ($field['type'] == 'gps') {
                 $processedValues["{$field['m_type']}.$index"] =   $field['lat'] . ", " .  $field['long'];
-            } else if ($field['type'] == 'upload') {
+            } elseif ($field['type'] == 'upload') {
                 $processedValues["{$field['m_type']}.$index"] = self::wpefProcessUploadFieldValue($index, $field, $data);
-            } else if ($field['type'] == 'address') {
+            } elseif ($field['type'] == 'address') {
                 $processedValues = array_merge($processedValues, self::wpefProcessAddressFieldValue($index, $field, $data));
             } else {
                 $processedValues["{$field['m_type']}.$index"] =   '';
                 if (isset($field['value'])) {
                     $processedValues["{$field['m_type']}.$index"] =   $field['value'];
-                } else if (isset($field['values'])) {
+                } elseif (isset($field['values'])) {
                     $processedValues["{$field['m_type']}.$index"] =   $field['values'];
-                } else if (isset($field['options'])) {
+                } elseif (isset($field['options'])) {
                     $processedValues["{$field['m_type']}.$index"] =   is_array($field['options']) && count($field['options']) == 1 ? $field['options'][0] : $field['options'];
-                } else if (isset($field['rows'])) {
+                } elseif (isset($field['rows'])) {
                     $processedValues["{$field['m_type']}.$index"] =   $field['rows'];
-                } else if (isset($field['order'])) {
+                } elseif (isset($field['order'])) {
                     $processedValues["{$field['m_type']}.$index"] =   $field['order'];
                 }
             }
@@ -5412,9 +5688,9 @@ final class TriggerFallback
         $f_time_format = $fieldInfo['settings']['time_format'];
         if ($f_date_format == 'mm/dd/yy') {
             $date_format = 'm/d/Y';
-        } else if ($f_date_format == 'yy-mm-dd') {
+        } elseif ($f_date_format == 'yy-mm-dd') {
             $date_format = 'Y-m-d';
-        } else if ($f_date_format == 'dd.mm.yy') {
+        } elseif ($f_date_format == 'dd.mm.yy') {
             $date_format = 'd.m.Y';
         } else {
             $date_format = 'd-m-Y';
