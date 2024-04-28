@@ -29,7 +29,7 @@ class GravitecController
             "payload" => [
                 "title"         => "Authorization",
                 "message"       => "Authorized successfully",
-                "icon"          => "https://push.gravitec.net/img/gravitecBig.jpg",
+                "icon"          => BTCBI_ASSET_URI . "/gravitec.jpg",
                 "redirect_url"  => $fieldsRequestParams->site_url
             ]
         ];

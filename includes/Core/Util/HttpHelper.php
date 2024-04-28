@@ -110,7 +110,7 @@ final class HttpHelper
         $payload .= "\r\n";
         $payload .= 'Content-Disposition: form-data; name="' . $name .
             '"' . "\r\n\r\n";
-        $payload .= $value;
+        $payload .= is_string($value) ? $value : wp_json_encode($value);
         $payload .= "\r\n";
 
         return $payload;

@@ -265,6 +265,9 @@ devDependencies:
   vite:
     specifier: ^4.5.2
     version: 4.5.2(sass@1.70.0)
+  vite-plugin-static-copy:
+    specifier: ^1.0.3
+    version: 1.0.3(vite@4.5.2)
 
 packages:
 
@@ -7855,6 +7858,15 @@ packages:
       readable-stream: 2.3.8
     dev: true
 
+  /fs-extra@11.2.0:
+    resolution: {integrity: sha512-PmDi3uwK5nFuXh7XDTlVnS17xJS7vW36is2+w3xcv8SVxiB4NyATf4ctkVY5bkSjX0Y4nbvZCq1/EjtEyr9ktw==}
+    engines: {node: '>=14.14'}
+    dependencies:
+      graceful-fs: 4.2.11
+      jsonfile: 6.1.0
+      universalify: 2.0.1
+    dev: true
+
   /fs-extra@7.0.1:
     resolution: {integrity: sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==}
     engines: {node: '>=6 <7 || >=8'}
@@ -15098,6 +15110,19 @@ packages:
 
   /vendors@1.0.4:
     resolution: {integrity: sha512-/juG65kTL4Cy2su4P8HjtkTxk6VmJDiOPBufWniqQ6wknac6jNiXS9vU+hO3wgusiyqWlzTbVHi0dyJqRONg3w==}
+    dev: true
+
+  /vite-plugin-static-copy@1.0.3(vite@4.5.2):
+    resolution: {integrity: sha512-hBCCz6T0uNI3oF5oJ/Ju73rhoR+ADrJ2iLAea5+wA7kpQ8clYgY8BD+GL0w0BrqsYCbgBITOByBP/3y9Y+h93A==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    peerDependencies:
+      vite: ^5.0.0
+    dependencies:
+      chokidar: 3.5.3
+      fast-glob: 3.3.2
+      fs-extra: 11.2.0
+      picocolors: 1.0.0
+      vite: 4.5.2(sass@1.70.0)
     dev: true
 
   /vite@4.5.2(sass@1.70.0):
