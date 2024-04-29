@@ -3,6 +3,7 @@
 /**
  * ZohoDesk Integration
  */
+
 namespace BitCode\FI\Actions\ZohoDesk;
 
 use BitCode\FI\Core\Util\HttpHelper;
@@ -24,6 +25,8 @@ class ZohoDeskController
     /**
      * Process ajax request for generate_token
      *
+     * @param mixed $requestsParams
+     *
      * @return JSON zoho crm api response and status
      */
     public static function generateTokens($requestsParams)
@@ -34,7 +37,7 @@ class ZohoDeskController
                 || empty($requestsParams->clientSecret)
                 || empty($requestsParams->redirectURI)
                 || empty($requestsParams->code)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -44,13 +47,13 @@ class ZohoDeskController
             );
         }
 
-        $apiEndpoint = \urldecode($requestsParams->{'accounts-server'}) . '/oauth/v2/token';
+        $apiEndpoint = urldecode($requestsParams->{'accounts-server'}) . '/oauth/v2/token';
         $requestParams = [
-            'grant_type' => 'authorization_code',
-            'client_id' => $requestsParams->clientId,
+            'grant_type'    => 'authorization_code',
+            'client_id'     => $requestsParams->clientId,
             'client_secret' => $requestsParams->clientSecret,
-            'redirect_uri' => \urldecode($requestsParams->redirectURI),
-            'code' => $requestsParams->code
+            'redirect_uri'  => urldecode($requestsParams->redirectURI),
+            'code'          => $requestsParams->code
         ];
         $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
 
@@ -60,7 +63,7 @@ class ZohoDeskController
                 400
             );
         }
-        $apiResponse->generates_on = \time();
+        $apiResponse->generates_on = time();
         wp_send_json_success($apiResponse, 200);
     }
 
@@ -70,7 +73,7 @@ class ZohoDeskController
                 || empty($queryParams->dataCenter)
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -80,7 +83,7 @@ class ZohoDeskController
             );
         }
         $response = [];
-        if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = self::refreshAccessToken($queryParams);
         }
 
@@ -93,10 +96,10 @@ class ZohoDeskController
             $allOrganizations = [];
             $organizations = $organizationsMetaResponse->data;
 
-            if (count($organizations) > 0) {
+            if (\count($organizations) > 0) {
                 foreach ($organizations as $organization) {
                     $allOrganizations[$organization->companyName] = (object) [
-                        'orgId' => $organization->id,
+                        'orgId'      => $organization->id,
                         'portalName' => $organization->companyName
                     ];
                 }
@@ -127,6 +130,8 @@ class ZohoDeskController
     /**
      * Process ajax request for refresh crm modules
      *
+     * @param mixed $queryParams
+     *
      * @return JSON crm module data
      */
     public static function refreshDepartments($queryParams)
@@ -136,7 +141,7 @@ class ZohoDeskController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->orgId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -146,7 +151,7 @@ class ZohoDeskController
             );
         }
         $response = [];
-        if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = self::refreshAccessToken($queryParams);
         }
 
@@ -160,10 +165,10 @@ class ZohoDeskController
             $allDepartments = [];
             $departments = $departmentsMetaResponse->data;
 
-            if (count($departments) > 0) {
+            if (\count($departments) > 0) {
                 foreach ($departments as $department) {
                     $allDepartments[$department->name] = (object) [
-                        'departmentId' => $department->id,
+                        'departmentId'   => $department->id,
                         'departmentName' => $department->name
                     ];
                 }
@@ -185,7 +190,7 @@ class ZohoDeskController
     /**
      * Process ajax request for refresh crm layouts
      *
-     * @param  Object $queryParams Params to fetch fields
+     * @param object $queryParams Params to fetch fields
      *
      * @return JSON crm layout data
      */
@@ -196,7 +201,7 @@ class ZohoDeskController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->orgId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -206,7 +211,7 @@ class ZohoDeskController
             );
         }
         $response = [];
-        if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = self::refreshAccessToken($queryParams);
         }
 
@@ -219,18 +224,18 @@ class ZohoDeskController
         if (!is_wp_error($fieldsMetaResponse)) {
             $fields = $fieldsMetaResponse->data;
 
-            if (count($fields) > 0) {
+            if (\count($fields) > 0) {
                 $response['fields']['Contact Name - Last Name'] = (object) [
-                    'apiName' => 'lastName',
-                    'displayLabel' => 'Contact Name - Last Name',
+                    'apiName'       => 'lastName',
+                    'displayLabel'  => 'Contact Name - Last Name',
                     'isCustomField' => false,
-                    'required' => true
+                    'required'      => true
                 ];
                 $response['fields']['Contact Name - First Name'] = (object) [
-                    'apiName' => 'firstName',
-                    'displayLabel' => 'Contact Name - First Name',
+                    'apiName'       => 'firstName',
+                    'displayLabel'  => 'Contact Name - First Name',
                     'isCustomField' => false,
-                    'required' => false
+                    'required'      => false
                 ];
                 $response['required'][] = 'lastName';
                 foreach ($fields as $field) {
@@ -238,10 +243,10 @@ class ZohoDeskController
                         continue;
                     }
                     $response['fields'][$field->displayLabel] = (object) [
-                        'apiName' => $field->apiName,
-                        'displayLabel' => $field->displayLabel,
+                        'apiName'       => $field->apiName,
+                        'displayLabel'  => $field->displayLabel,
                         'isCustomField' => $field->isCustomField,
-                        'required' => $field->isMandatory
+                        'required'      => $field->isMandatory
                     ];
 
                     if ($field->isMandatory) {
@@ -267,7 +272,7 @@ class ZohoDeskController
     /**
      * Process ajax request for refresh crm modules
      *
-     * @param  Object $queryParams Params to refresh ticket owner
+     * @param object $queryParams Params to refresh ticket owner
      *
      * @return JSON crm module data
      */
@@ -278,7 +283,7 @@ class ZohoDeskController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->orgId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -288,7 +293,7 @@ class ZohoDeskController
             );
         }
         $response = [];
-        if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = self::refreshAccessToken($queryParams);
         }
 
@@ -301,10 +306,10 @@ class ZohoDeskController
         if (!is_wp_error($ownersMetaResponse)) {
             $owners = $ownersMetaResponse->data;
 
-            if (count($owners) > 0) {
+            if (\count($owners) > 0) {
                 foreach ($owners as $owner) {
                     $response['owners'][] = (object) [
-                        'ownerId' => $owner->id,
+                        'ownerId'   => $owner->id,
                         'ownerName' => $owner->name
                     ];
                 }
@@ -324,7 +329,7 @@ class ZohoDeskController
     /**
      * Process ajax request for refresh crm modules
      *
-     * @param  Object $queryParams Params to refresh ticket Products
+     * @param object $queryParams Params to refresh ticket Products
      *
      * @return JSON crm module data
      */
@@ -336,7 +341,7 @@ class ZohoDeskController
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->orgId)
                 || empty($queryParams->departmentId)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -347,7 +352,7 @@ class ZohoDeskController
         }
 
         $response = [];
-        if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = self::refreshAccessToken($queryParams);
         }
 
@@ -360,10 +365,10 @@ class ZohoDeskController
         if (!is_wp_error($productsMetaResponse)) {
             $products = $productsMetaResponse->data;
 
-            if (count($products) > 0) {
+            if (\count($products) > 0) {
                 foreach ($products as $product) {
                     $response['products'][] = (object) [
-                        'productId' => $product->id,
+                        'productId'   => $product->id,
                         'productName' => $product->productName
                     ];
                 }
@@ -380,15 +385,65 @@ class ZohoDeskController
         wp_send_json_success($response, 200);
     }
 
+    public function execute($integrationData, $fieldValues)
+    {
+        $integrationDetails = $integrationData->flow_details;
+
+        $tokenDetails = $integrationDetails->tokenDetails;
+        $orgId = $integrationDetails->orgId;
+        $department = $integrationDetails->department;
+        $dataCenter = $integrationDetails->dataCenter;
+        $fieldMap = $integrationDetails->field_map;
+        $required = $integrationDetails->default->fields->{$orgId}->required;
+        $actions = $integrationDetails->actions;
+        if (empty($tokenDetails)
+        || empty($orgId)
+        || empty($department)
+        || empty($fieldMap)
+        ) {
+            return new WP_Error('REQ_FIELD_EMPTY', __('list are required for zoho desk api', 'bit-integrations'));
+        }
+
+        if ((\intval($tokenDetails->generates_on) + (55 * 60)) < time()) {
+            $requiredParams['clientId'] = $integrationDetails->clientId;
+            $requiredParams['clientSecret'] = $integrationDetails->clientSecret;
+            $requiredParams['dataCenter'] = $integrationDetails->dataCenter;
+            $requiredParams['tokenDetails'] = $tokenDetails;
+            $newTokenDetails = self::refreshAccessToken((object) $requiredParams);
+            if ($newTokenDetails) {
+                self::saveRefreshedToken($this->_integrationID, $newTokenDetails);
+                $tokenDetails = $newTokenDetails;
+            }
+        }
+        // $actions = $integrationDetails->actions;
+        $recordApiHelper = new RecordApiHelper($tokenDetails, $orgId, $this->_integrationID);
+
+        $zdeskApiResponse = $recordApiHelper->execute(
+            $department,
+            $dataCenter,
+            $fieldValues,
+            $fieldMap,
+            $required,
+            $actions
+        );
+
+        if (is_wp_error($zdeskApiResponse)) {
+            return $zdeskApiResponse;
+        }
+
+        return $zdeskApiResponse;
+    }
+
     /**
      * Helps to refresh zoho crm access_token
      *
-     * @param  Array $apiData Contains required data for refresh access token
-     * @return JSON  $tokenDetails API token details
+     * @param array $apiData Contains required data for refresh access token
+     *
+     * @return JSON $tokenDetails API token details
      */
     protected static function refreshAccessToken($apiData)
     {
-        if (!is_object($apiData)
+        if (!\is_object($apiData)
             || empty($apiData->dataCenter)
             || empty($apiData->clientId)
             || empty($apiData->clientSecret)
@@ -401,8 +456,8 @@ class ZohoDeskController
         $dataCenter = $apiData->dataCenter;
         $apiEndpoint = "https://accounts.zoho.{$dataCenter}/oauth/v2/token";
         $requestParams = [
-            'grant_type' => 'refresh_token',
-            'client_id' => $apiData->clientId,
+            'grant_type'    => 'refresh_token',
+            'client_id'     => $apiData->clientId,
             'client_secret' => $apiData->clientSecret,
             'refresh_token' => $tokenDetails->refresh_token,
         ];
@@ -411,17 +466,19 @@ class ZohoDeskController
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }
-        $tokenDetails->generates_on = \time();
+        $tokenDetails->generates_on = time();
         $tokenDetails->access_token = $apiResponse->access_token;
+
         return $tokenDetails;
     }
 
     /**
      * Save updated access_token to avoid unnecessary token generation
      *
-     * @param Integer $formID        ID of Integration related form
-     * @param Integer $integrationID ID of Zoho crm Integration
-     * @param Obeject $tokenDetails  refreshed token info
+     * @param int        $formID        ID of Integration related form
+     * @param int        $integrationID ID of Zoho crm Integration
+     * @param Obeject    $tokenDetails  refreshed token info
+     * @param null|mixed $others
      *
      * @return null
      */
@@ -444,54 +501,6 @@ class ZohoDeskController
             $newDetails->default->organizations = $others['organizations'];
         }
 
-        $flow->update($integrationID, ['flow_details' => \json_encode($newDetails)]);
-    }
-
-    public function execute($integrationData, $fieldValues)
-    {
-        $integrationDetails = $integrationData->flow_details;
-
-        $tokenDetails = $integrationDetails->tokenDetails;
-        $orgId = $integrationDetails->orgId;
-        $department = $integrationDetails->department;
-        $dataCenter = $integrationDetails->dataCenter;
-        $fieldMap = $integrationDetails->field_map;
-        $required = $integrationDetails->default->fields->{$orgId}->required;
-        $actions = $integrationDetails->actions;
-        if (empty($tokenDetails)
-        || empty($orgId)
-        || empty($department)
-        || empty($fieldMap)
-        ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('list are required for zoho desk api', 'bit-integrations'));
-        }
-
-        if ((intval($tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $requiredParams['clientId'] = $integrationDetails->clientId;
-            $requiredParams['clientSecret'] = $integrationDetails->clientSecret;
-            $requiredParams['dataCenter'] = $integrationDetails->dataCenter;
-            $requiredParams['tokenDetails'] = $tokenDetails;
-            $newTokenDetails = self::refreshAccessToken((object)$requiredParams);
-            if ($newTokenDetails) {
-                self::saveRefreshedToken($this->_integrationID, $newTokenDetails);
-                $tokenDetails = $newTokenDetails;
-            }
-        }
-        // $actions = $integrationDetails->actions;
-        $recordApiHelper = new RecordApiHelper($tokenDetails, $orgId, $this->_integrationID);
-
-        $zdeskApiResponse = $recordApiHelper->execute(
-            $department,
-            $dataCenter,
-            $fieldValues,
-            $fieldMap,
-            $required,
-            $actions
-        );
-
-        if (is_wp_error($zdeskApiResponse)) {
-            return $zdeskApiResponse;
-        }
-        return $zdeskApiResponse;
+        $flow->update($integrationID, ['flow_details' => json_encode($newDetails)]);
     }
 }

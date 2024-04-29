@@ -3,11 +3,12 @@
 /**
  * ZohoRecruit Integration
  */
+
 namespace BitCode\FI\Actions\ZohoRecruit;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Flow\FlowController;
+use WP_Error;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -24,7 +25,7 @@ class ZohoRecruitController
     /**
      * Process ajax request for generate_token
      *
-     * @param Object $requestsParams Params to generate token
+     * @param object $requestsParams Params to generate token
      *
      * @return JSON zoho recruit api response and status
      */
@@ -46,13 +47,13 @@ class ZohoRecruitController
             );
         }
 
-        $apiEndpoint = \urldecode($requestsParams->{'accounts-server'}) . '/oauth/v2/token';
+        $apiEndpoint = urldecode($requestsParams->{'accounts-server'}) . '/oauth/v2/token';
         $requestParams = [
-            'grant_type' => 'authorization_code',
-            'client_id' => $requestsParams->clientId,
+            'grant_type'    => 'authorization_code',
+            'client_id'     => $requestsParams->clientId,
             'client_secret' => $requestsParams->clientSecret,
-            'redirect_uri' => \urldecode($requestsParams->redirectURI),
-            'code' => $requestsParams->code
+            'redirect_uri'  => urldecode($requestsParams->redirectURI),
+            'code'          => $requestsParams->code
         ];
         $apiResponse = HttpHelper::post($apiEndpoint, $requestParams);
 
@@ -62,14 +63,14 @@ class ZohoRecruitController
                 400
             );
         }
-        $apiResponse->generates_on = \time();
+        $apiResponse->generates_on = time();
         wp_send_json_success($apiResponse, 200);
     }
 
     /**
      * Process ajax request for refresh recruit modules
      *
-     * @param Object $queryParams Params to refresh module
+     * @param object $queryParams Params to refresh module
      *
      * @return JSON recruit module data
      */
@@ -89,7 +90,7 @@ class ZohoRecruitController
             );
         }
         $response = [];
-        if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = self::refreshAccessToken($queryParams);
         }
         $zohosIntegratedModules = [
@@ -107,22 +108,22 @@ class ZohoRecruitController
             $allModules = [
                 'Tasks' => (object) [
                     'aMod' => 'Tasks',
-                    'pl' => 'Tasks'
+                    'pl'   => 'Tasks'
                 ],
                 'Events' => (object) [
                     'aMod' => 'Events',
-                    'pl' => 'Events'
+                    'pl'   => 'Events'
                 ],
                 'Calls' => (object) [
                     'aMod' => 'Calls',
-                    'pl' => 'Calls'
+                    'pl'   => 'Calls'
                 ],
             ];
             foreach ($retriveModuleData as $value) {
                 if (preg_match('/CustomModule/', $value->aMod) || preg_match('/Candidates/', $value->aMod)) {
                     $allModules[$value->aMod] = (object) [
                         'aMod' => $value->aMod,
-                        'pl' => $value->pl
+                        'pl'   => $value->pl
                     ];
                 }
             }
@@ -156,7 +157,7 @@ class ZohoRecruitController
             );
         }
         $response = [];
-        if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = self::refreshAccessToken($queryParams);
         }
 
@@ -172,7 +173,7 @@ class ZohoRecruitController
             $allNoteTypes = [];
             foreach ($retriveModuleData as $value) {
                 $allNoteTypes[$value->FL[0]->dv] = (object) [
-                    'noteTypeId' => $value->FL[1]->content,
+                    'noteTypeId'   => $value->FL[1]->content,
                     'noteTypeName' => $value->FL[0]->dv
                 ];
             }
@@ -193,6 +194,8 @@ class ZohoRecruitController
     /**
      * Process ajax request for refresh recruit modules
      *
+     * @param mixed $queryParams
+     *
      * @return JSON recruit module data
      */
     public static function refreshRelatedModules($queryParams)
@@ -202,7 +205,7 @@ class ZohoRecruitController
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
                 || empty($queryParams->module)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -216,15 +219,15 @@ class ZohoRecruitController
         $allModules = [
             'Tasks' => (object) [
                 'aMod' => 'Tasks',
-                'pl' => 'Tasks'
+                'pl'   => 'Tasks'
             ],
             'Events' => (object) [
                 'aMod' => 'Events',
-                'pl' => 'Events'
+                'pl'   => 'Events'
             ],
             'Calls' => (object) [
                 'aMod' => 'Calls',
-                'pl' => 'Calls'
+                'pl'   => 'Calls'
             ],
             // 'Notes' => (object) array(
             //     'aMod' => 'Notes',
@@ -235,7 +238,7 @@ class ZohoRecruitController
             if ($module->aMod !== $queryParams->module) {
                 $relatedModules[$module->aMod] = (object) [
                     'aMod' => $module->aMod,
-                    'pl' => $module->pl
+                    'pl'   => $module->pl
                 ];
             }
         }
@@ -251,6 +254,8 @@ class ZohoRecruitController
     /**
      * Process ajax request for refesh recruit layouts
      *
+     * @param mixed $queryParams
+     *
      * @return JSON recruit layout data
      */
     public static function getFields($queryParams)
@@ -260,7 +265,7 @@ class ZohoRecruitController
                 || empty($queryParams->dataCenter)
                 || empty($queryParams->clientId)
                 || empty($queryParams->clientSecret)
-            ) {
+        ) {
             wp_send_json_error(
                 __(
                     'Requested parameter is empty',
@@ -270,7 +275,7 @@ class ZohoRecruitController
             );
         }
         $response = [];
-        if ((intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = self::refreshAccessToken($queryParams);
         }
         $fieldsMetaApiEndpoint = "https://recruit.zoho.{$queryParams->dataCenter}/recruit/private/json/{$queryParams->module}/getFields?authtoken={$queryParams->tokenDetails->access_token}&scope=recruitapi&version=2";
@@ -280,7 +285,7 @@ class ZohoRecruitController
 
         if (!is_wp_error($fieldsMetaResponse) && (empty($fieldsMetaResponse->status) || (!empty($fieldsMetaResponse->status) && $fieldsMetaResponse->status !== 'error'))) {
             $retriveFieldsData = $fieldsMetaResponse->{$queryParams->module}->section;
-            if (!is_array($retriveFieldsData)) {
+            if (!\is_array($retriveFieldsData)) {
                 $retriveFieldsData = [$retriveFieldsData];
             }
             $fields = [];
@@ -290,12 +295,12 @@ class ZohoRecruitController
             if ($queryParams->module === 'Candidates') {
                 $fileUploadFields['Candidate Photo'] = (object) [
                     'display_label' => 'Candidate Profile Photo',
-                    'length' => 1000,
-                    'data_type' => 'UploadText',
-                    'required' => 'false'
+                    'length'        => 1000,
+                    'data_type'     => 'UploadText',
+                    'required'      => 'false'
                 ];
             }
-            if (count($retriveFieldsData)) {
+            if (\count($retriveFieldsData)) {
                 foreach ($retriveFieldsData as $fieldValue) {
                     foreach ($fieldValue->FL as $sectionValue) {
                         if ($sectionValue->dv === null) {
@@ -304,9 +309,9 @@ class ZohoRecruitController
                         if ($sectionValue->type === 'UploadText') {
                             $fileUploadFields[$sectionValue->dv] = (object) [
                                 'display_label' => $sectionValue->dv,
-                                'length' => $sectionValue->maxlength,
-                                'data_type' => $sectionValue->type,
-                                'required' => $sectionValue->req
+                                'length'        => $sectionValue->maxlength,
+                                'data_type'     => $sectionValue->type,
+                                'required'      => $sectionValue->req
                             ];
                             if ($sectionValue->req === 'true') {
                                 $requiredFileUploadFiles[] = $sectionValue->dv;
@@ -314,9 +319,9 @@ class ZohoRecruitController
                         } else {
                             $fields[$sectionValue->dv] = (object) [
                                 'display_label' => $sectionValue->dv,
-                                'length' => $sectionValue->maxlength,
-                                'data_type' => $sectionValue->type,
-                                'required' => $sectionValue->req
+                                'length'        => $sectionValue->maxlength,
+                                'data_type'     => $sectionValue->type,
+                                'required'      => $sectionValue->req
                             ];
                             if ($sectionValue->req === 'true') {
                                 $requiredFields[] = $sectionValue->dv;
@@ -332,17 +337,17 @@ class ZohoRecruitController
                     if ($sectionValue->aMod === 'Candidates') {
                         $fileUploadFields[$sectionValue->dv] = (object) [
                             'display_label' => 'Candidate Profile Photo',
-                            'length' => 1000,
-                            'data_type' => 'UploadText',
-                            'required' => 'false'
+                            'length'        => 1000,
+                            'data_type'     => 'UploadText',
+                            'required'      => 'false'
                         ];
                     }
                     if ($sectionValue->type === 'UploadText') {
                         $fileUploadFields[$sectionValue->dv] = (object) [
                             'display_label' => $sectionValue->dv,
-                            'length' => $sectionValue->maxlength,
-                            'data_type' => $sectionValue->type,
-                            'required' => $sectionValue->req
+                            'length'        => $sectionValue->maxlength,
+                            'data_type'     => $sectionValue->type,
+                            'required'      => $sectionValue->req
                         ];
                         if ($sectionValue->req === 'true') {
                             $requiredFileUploadFiles[] = $sectionValue->dv;
@@ -350,9 +355,9 @@ class ZohoRecruitController
                     } else {
                         $fields[$sectionValue->dv] = (object) [
                             'display_label' => $sectionValue->dv,
-                            'length' => $sectionValue->maxlength,
-                            'data_type' => $sectionValue->type,
-                            'required' => $sectionValue->req
+                            'length'        => $sectionValue->maxlength,
+                            'data_type'     => $sectionValue->type,
+                            'required'      => $sectionValue->req
                         ];
                         if ($sectionValue->req === 'true') {
                             $requiredFields[] = $sectionValue->dv;
@@ -372,9 +377,9 @@ class ZohoRecruitController
             usort($requiredFileUploadFiles, 'strnatcasecmp');
 
             $fieldDetails = (object) [
-                'fields' => $fields,
-                'fileUploadFields' => $fileUploadFields,
-                'required' => $requiredFields,
+                'fields'                   => $fields,
+                'fileUploadFields'         => $fileUploadFields,
+                'required'                 => $requiredFields,
                 'requiredFileUploadFields' => $requiredFileUploadFiles
             ];
             $response['fieldDetails'] = $fieldDetails;
@@ -400,12 +405,112 @@ class ZohoRecruitController
         // }
     }
 
+    public function execute($integrationData, $fieldValues)
+    {
+        $integrationDetails = $integrationData->flow_details;
+        $tokenDetails = $integrationDetails->tokenDetails;
+        $module = $integrationDetails->module;
+        $fieldMap = $integrationDetails->field_map;
+        $actions = $integrationDetails->actions;
+        $defaultDataConf = $integrationDetails->default;
+        if (empty($tokenDetails)
+            || empty($module)
+            || empty($fieldMap)
+        ) {
+            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for zoho recruit api', 'bit-integrations'));
+        }
+        if (empty($defaultDataConf->moduleData->{$module}->fields) || empty($defaultDataConf->modules->{$module})) {
+            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for zoho recruit api', 'bit-integrations'));
+        }
+        if ((\intval($tokenDetails->generates_on) + (55 * 60)) < time()) {
+            $requiredParams['clientId'] = $integrationDetails->clientId;
+            $requiredParams['clientSecret'] = $integrationDetails->clientSecret;
+            $requiredParams['dataCenter'] = $integrationDetails->dataCenter;
+            $requiredParams['tokenDetails'] = $tokenDetails;
+            $newTokenDetails = self::refreshAccessToken((object) $requiredParams);
+            if ($newTokenDetails) {
+                self::saveRefreshedToken($this->_integrationID, $newTokenDetails);
+                $tokenDetails = $newTokenDetails;
+            }
+        }
+
+        $required = !empty($defaultDataConf->moduleData->{$module}->required)
+            ? $defaultDataConf->moduleData->{$module}->required : [];
+
+        $actions = $integrationDetails->actions;
+        $fileMap = $integrationDetails->upload_field_map;
+        $dataCenter = $integrationDetails->dataCenter;
+        $recordApiHelper = new RecordApiHelper($dataCenter, $tokenDetails, $this->_integrationID);
+        $zRecruitApiResponse = $recordApiHelper->execute(
+            $defaultDataConf,
+            $module,
+            $fieldValues,
+            $fieldMap,
+            $actions,
+            $required,
+            $fileMap
+        );
+        if (is_wp_error($zRecruitApiResponse)) {
+            return $zRecruitApiResponse;
+        }
+
+        if (\count($integrationDetails->relatedlists)
+            && !empty($zRecruitApiResponse->response->result->row->success->details->FL[0])
+            && $zRecruitApiResponse->response->result->row->success->details->FL[0]->val === 'Id'
+        ) {
+            foreach ($integrationDetails->relatedlists as $relatedlist) {
+                if (!empty($relatedlist->module)) {
+                    $recordID = $zRecruitApiResponse->response->result->row->success->details->FL[0]->content;
+                    $relatedListModule = $relatedlist->module;
+                    $defaultDataConf->moduleData->{$relatedListModule}->fields->{'SEMODULE'} = (object) [
+                        'length'    => \strlen($relatedListModule),
+                        'required'  => true,
+                        'data_type' => 'string',
+                    ];
+                    $fieldValues['SEMODULE'] = $relatedListModule;
+                    $relatedlist->field_map[] = (object)
+                    [
+                        'formField'     => 'SEMODULE',
+                        'zohoFormField' => 'SEMODULE'
+                    ];
+
+                    $defaultDataConf->moduleData->{$relatedListModule}->fields->{'SEID'} = (object) [
+                        'length'    => \strlen($recordID),
+                        'required'  => true,
+                        'data_type' => 'string',
+                    ];
+                    $fieldValues['SEID'] = $recordID;
+                    $relatedlist->field_map[] = (object)
+                    [
+                        'formField'     => 'SEID',
+                        'zohoFormField' => 'SEID'
+                    ];
+
+                    $zRecruitRelatedRecResp = $recordApiHelper->execute(
+                        $this->_formID,
+                        $entryID,
+                        $defaultDataConf,
+                        $relatedListModule,
+                        $fieldValues,
+                        $relatedlist->field_map,
+                        $relatedlist->actions,
+                        !empty($defaultDataConf->moduleData->{$relatedListModule}->required)
+                            ? $defaultDataConf->moduleData->{$relatedListModule}->required : [],
+                        $relatedlist->upload_field_map
+                    );
+                }
+            }
+        }
+
+        return $zRecruitApiResponse;
+    }
+
     /**
      * Helps to refresh zoho recruit access_token
      *
-     * @param Object $apiData Contains required data for refresh access token
+     * @param object $apiData Contains required data for refresh access token
      *
-     * @return JSON  $tokenDetails API token details
+     * @return JSON $tokenDetails API token details
      */
     protected static function refreshAccessToken($apiData)
     {
@@ -421,8 +526,8 @@ class ZohoRecruitController
         $dataCenter = $apiData->dataCenter;
         $apiEndpoint = "https://accounts.zoho.{$dataCenter}/oauth/v2/token";
         $requestParams = [
-            'grant_type' => 'refresh_token',
-            'client_id' => $apiData->clientId,
+            'grant_type'    => 'refresh_token',
+            'client_id'     => $apiData->clientId,
             'client_secret' => $apiData->clientSecret,
             'refresh_token' => $tokenDetails->refresh_token,
         ];
@@ -431,16 +536,18 @@ class ZohoRecruitController
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }
-        $tokenDetails->generates_on = \time();
+        $tokenDetails->generates_on = time();
         $tokenDetails->access_token = $apiResponse->access_token;
+
         return $tokenDetails;
     }
 
     /**
      * Save updated access_token to avoid unnecessary token generation
      *
-     * @param Integer $integrationID ID of Zoho recruit Integration
-     * @param Object  $tokenDetails  refreshed token info
+     * @param int        $integrationID ID of Zoho recruit Integration
+     * @param object     $tokenDetails  refreshed token info
+     * @param null|mixed $others
      *
      * @return null
      */
@@ -466,105 +573,6 @@ class ZohoRecruitController
             $newDetails->default->relatedlist['modules'] = $others['related_modules'];
         }
 
-        $flow->update($integrationID, ['flow_details' => \json_encode($newDetails)]);
-    }
-
-    public function execute($integrationData, $fieldValues)
-    {
-        $integrationDetails = $integrationData->flow_details;
-        $tokenDetails = $integrationDetails->tokenDetails;
-        $module = $integrationDetails->module;
-        $fieldMap = $integrationDetails->field_map;
-        $actions = $integrationDetails->actions;
-        $defaultDataConf = $integrationDetails->default;
-        if (empty($tokenDetails)
-            || empty($module)
-            || empty($fieldMap)
-        ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for zoho recruit api', 'bit-integrations'));
-        }
-        if (empty($defaultDataConf->moduleData->{$module}->fields) || empty($defaultDataConf->modules->{$module})) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for zoho recruit api', 'bit-integrations'));
-        }
-        if ((intval($tokenDetails->generates_on) + (55 * 60)) < time()) {
-            $requiredParams['clientId'] = $integrationDetails->clientId;
-            $requiredParams['clientSecret'] = $integrationDetails->clientSecret;
-            $requiredParams['dataCenter'] = $integrationDetails->dataCenter;
-            $requiredParams['tokenDetails'] = $tokenDetails;
-            $newTokenDetails = self::refreshAccessToken((object)$requiredParams);
-            if ($newTokenDetails) {
-                self::saveRefreshedToken($this->_integrationID, $newTokenDetails);
-                $tokenDetails = $newTokenDetails;
-            }
-        }
-
-        $required = !empty($defaultDataConf->moduleData->{$module}->required) ?
-            $defaultDataConf->moduleData->{$module}->required : [];
-
-        $actions = $integrationDetails->actions;
-        $fileMap = $integrationDetails->upload_field_map;
-        $dataCenter = $integrationDetails->dataCenter;
-        $recordApiHelper = new RecordApiHelper($dataCenter, $tokenDetails, $this->_integrationID);
-        $zRecruitApiResponse = $recordApiHelper->execute(
-            $defaultDataConf,
-            $module,
-            $fieldValues,
-            $fieldMap,
-            $actions,
-            $required,
-            $fileMap
-        );
-        if (is_wp_error($zRecruitApiResponse)) {
-            return $zRecruitApiResponse;
-        }
-
-        if (count($integrationDetails->relatedlists)
-            && !empty($zRecruitApiResponse->response->result->row->success->details->FL[0])
-            && $zRecruitApiResponse->response->result->row->success->details->FL[0]->val === 'Id'
-        ) {
-            foreach ($integrationDetails->relatedlists as $relatedlist) {
-                if (!empty($relatedlist->module)) {
-                    $recordID = $zRecruitApiResponse->response->result->row->success->details->FL[0]->content;
-                    $relatedListModule = $relatedlist->module;
-                    $defaultDataConf->moduleData->{$relatedListModule}->fields->{'SEMODULE'} = (object) [
-                        'length' => \strlen($relatedListModule),
-                        'required' => true,
-                        'data_type' => 'string',
-                    ];
-                    $fieldValues['SEMODULE'] = $relatedListModule;
-                    $relatedlist->field_map[] = (object)
-                    [
-                        'formField' => 'SEMODULE',
-                        'zohoFormField' => 'SEMODULE'
-                    ];
-
-                    $defaultDataConf->moduleData->{$relatedListModule}->fields->{'SEID'} = (object) [
-                        'length' => \strlen($recordID),
-                        'required' => true,
-                        'data_type' => 'string',
-                    ];
-                    $fieldValues['SEID'] = $recordID;
-                    $relatedlist->field_map[] = (object)
-                    [
-                        'formField' => 'SEID',
-                        'zohoFormField' => 'SEID'
-                    ];
-
-                    $zRecruitRelatedRecResp = $recordApiHelper->execute(
-                        $this->_formID,
-                        $entryID,
-                        $defaultDataConf,
-                        $relatedListModule,
-                        $fieldValues,
-                        $relatedlist->field_map,
-                        $relatedlist->actions,
-                        !empty($defaultDataConf->moduleData->{$relatedListModule}->required) ?
-                            $defaultDataConf->moduleData->{$relatedListModule}->required : [],
-                        $relatedlist->upload_field_map
-                    );
-                }
-            }
-        }
-        return $zRecruitApiResponse;
+        $flow->update($integrationID, ['flow_details' => json_encode($newDetails)]);
     }
 }

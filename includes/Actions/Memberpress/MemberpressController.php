@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\Memberpress;
 
-use WP_Error;
 use MeprOptions;
+use WP_Error;
 
 class MemberpressController
 {
@@ -18,9 +18,9 @@ class MemberpressController
     {
         if (is_plugin_active('memberpress/memberpress.php')) {
             return $option === 'get_name' ? 'memberpress/memberpress.php' : true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     public static function authorizeMemberpress()
@@ -37,19 +37,19 @@ class MemberpressController
         include_once ABSPATH . 'wp-admin/includes/plugin.php';
         if (self::pluginActive()) {
             $posts = get_posts([
-                'post_type' => 'memberpressproduct',
+                'post_type'      => 'memberpressproduct',
                 'posts_per_page' => 999,
-                'post_status' => 'publish',
-                'meta_query' => [
+                'post_status'    => 'publish',
+                'meta_query'     => [
                     'relation' => 'OR',
                     [
-                        'key' => '_mepr_product_period_type',
-                        'value' => 'lifetime',
+                        'key'     => '_mepr_product_period_type',
+                        'value'   => 'lifetime',
                         'compare' => '!=',
                     ],
                     [
-                        'key' => '_mepr_product_period_type',
-                        'value' => 'lifetime',
+                        'key'     => '_mepr_product_period_type',
+                        'value'   => 'lifetime',
                         'compare' => '=',
                     ],
                 ],
@@ -57,7 +57,7 @@ class MemberpressController
 
             foreach ($posts as $post) {
                 $allMembership[] = [
-                    'membershipId' => $post->ID,
+                    'membershipId'    => $post->ID,
                     'membershipTitle' => $post->post_title,
                 ];
             }
@@ -73,19 +73,18 @@ class MemberpressController
         }
         $mepr_options = MeprOptions::fetch();
 
-
         $pms = array_keys($mepr_options->integrations);
         $initGateways[] = [
-            "paymentId" => 'manual',
-            "paymentTitle" => 'Manual',
-          ];
+            'paymentId'    => 'manual',
+            'paymentTitle' => 'Manual',
+        ];
         $gateways = [];
 
-        if(!empty($pms) && is_array($pms)) {
+        if (!empty($pms) && \is_array($pms)) {
             foreach ($pms as $pm_id) {
                 $obj = $mepr_options->payment_method($pm_id);
                 $gateways[] = [
-                    'paymentId' => $obj->id,
+                    'paymentId'    => $obj->id,
                     'paymentTitle' => $obj->name,
                 ];
             }
@@ -102,8 +101,8 @@ class MemberpressController
         $fieldMap = $integrationDetails->field_map;
         $selectedMembership = $integrationDetails->selectedMembership;
         if (
-            empty($integId) ||
-            empty($mainAction) || empty($selectedMembership)
+            empty($integId)
+            || empty($mainAction) || empty($selectedMembership)
         ) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for memberpress api', 'bit-integrations'));
         }
@@ -118,6 +117,7 @@ class MemberpressController
         if (is_wp_error($memberpressApiResponse)) {
             return $memberpressApiResponse;
         }
+
         return $memberpressApiResponse;
     }
 }

@@ -6,21 +6,20 @@
 
 namespace BitCode\FI\Actions\SendinBlue;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
-
-use BitCode\FI\Actions\SendinBlue\RecordApiHelper;
+use WP_Error;
 
 /**
  * Provide functionality for ZohoCrm integration
  */
 class SendinBlueController
 {
-    const APIENDPOINT = 'https://api.sendinblue.com/v3';
+    public const APIENDPOINT = 'https://api.sendinblue.com/v3';
+
     /**
      * Process ajax request for generate_token
      *
-     * @param Object $requestsParams Params to Authorize
+     * @param object $requestsParams Params to Authorize
      *
      * @return JSON zoho crm api response and status
      */
@@ -37,8 +36,8 @@ class SendinBlueController
         }
 
         $apiEndpoint = self::APIENDPOINT . '/account';
-        $authorizationHeader["Accept"] = 'application/json';
-        $authorizationHeader["api-key"] = $requestsParams->api_key;
+        $authorizationHeader['Accept'] = 'application/json';
+        $authorizationHeader['api-key'] = $requestsParams->api_key;
         $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || $apiResponse->code === 'unauthorized') {
@@ -50,10 +49,11 @@ class SendinBlueController
 
         wp_send_json_success(true);
     }
+
     /**
      * Process ajax request for refresh crm modules
      *
-     * @param Object $requestsParams Params to refresh list
+     * @param object $requestsParams Params to refresh list
      *
      * @return JSON crm module data
      */
@@ -66,14 +66,14 @@ class SendinBlueController
             );
         }
 
-        $allList    = [];
-        $limit      = 50; // Maximum limit allowed by the API
-        $offset     = 0;
-        $hasMore    = true;
+        $allList = [];
+        $limit = 50; // Maximum limit allowed by the API
+        $offset = 0;
+        $hasMore = true;
 
         $authorizationHeader = [
-            "Accept"    => 'application/json',
-            "api-key"   => $requestsParams->api_key
+            'Accept'  => 'application/json',
+            'api-key' => $requestsParams->api_key
         ];
 
         while ($hasMore) {
@@ -84,18 +84,20 @@ class SendinBlueController
                 $sblueList = $apiResponse->lists;
                 if (empty($sblueList)) {
                     $hasMore = false;
+
                     break;
                 }
 
                 foreach ($sblueList as $list) {
-                    $allList[$list->name] = (object)[
-                        'id'    => $list->id,
-                        'name'  => $list->name
+                    $allList[$list->name] = (object) [
+                        'id'   => $list->id,
+                        'name' => $list->name
                     ];
                 }
                 $offset += $limit;
             } else {
                 wp_send_json_error($apiResponse->message, 400);
+
                 return;
             }
         }
@@ -117,8 +119,8 @@ class SendinBlueController
             );
         }
         $apiEndpoint = self::APIENDPOINT . '/smtp/templates';
-        $authorizationHeader["Accept"] = 'application/json';
-        $authorizationHeader["api-key"] = $requestsParams->api_key;
+        $authorizationHeader['Accept'] = 'application/json';
+        $authorizationHeader['api-key'] = $requestsParams->api_key;
         $sblueResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 
         $allList = [];
@@ -127,7 +129,7 @@ class SendinBlueController
 
             foreach ($sblueTemplates as $list) {
                 $allList[$list->name] = (object) [
-                    'id' => $list->id,
+                    'id'   => $list->id,
                     'name' => ucfirst($list->name)
                 ];
             }
@@ -143,6 +145,7 @@ class SendinBlueController
         }
         wp_send_json_success($response, 200);
     }
+
     public static function sendinblueHeaders($queryParams)
     {
         if (empty($queryParams->api_key)) {
@@ -155,8 +158,8 @@ class SendinBlueController
             );
         }
         $apiEndpoint = self::APIENDPOINT . '/contacts/attributes';
-        $authorizationHeader["Accept"] = 'application/json';
-        $authorizationHeader["api-key"] = $queryParams->api_key;
+        $authorizationHeader['Accept'] = 'application/json';
+        $authorizationHeader['api-key'] = $queryParams->api_key;
         $sblueResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
         $fields = [];
         if (!is_wp_error($sblueResponse)) {
@@ -164,7 +167,7 @@ class SendinBlueController
             foreach ($allFields as $field) {
                 if ($field->type !== 'float' && !empty($field->type)) {
                     $fields[$field->name] = (object) [
-                        'fieldId' => $field->name,
+                        'fieldId'   => $field->name,
                         'fieldName' => $field->name
                     ];
                 }
@@ -207,6 +210,7 @@ class SendinBlueController
         if (is_wp_error($sendinBlueApiResponse)) {
             return $sendinBlueApiResponse;
         }
+
         return $sendinBlueApiResponse;
     }
 }

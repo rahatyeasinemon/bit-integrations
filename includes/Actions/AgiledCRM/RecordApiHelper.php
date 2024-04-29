@@ -15,23 +15,27 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $integrationDetails;
+
     private $integrationId;
+
     private $authToken;
+
     private $defaultHeader;
+
     private $type;
+
     private $typeName;
 
     public function __construct($integrationDetails, $integId)
     {
         $this->integrationDetails = $integrationDetails;
-        $this->integrationId      = $integId;
-        $this->authToken          = $integrationDetails->auth_token;
-        $this->defaultHeader      = [
+        $this->integrationId = $integId;
+        $this->authToken = $integrationDetails->auth_token;
+        $this->defaultHeader = [
             'Brand'        => $integrationDetails->brand,
             'Content-Type' => 'application/json'
         ];
     }
-
 
     public function addAccount($finalData)
     {
@@ -39,12 +43,12 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
         }
 
-        $apiEndpoint = "https://my.agiled.app/api/v1/accounts?api_token=$this->authToken";
+        $apiEndpoint = "https://my.agiled.app/api/v1/accounts?api_token={$this->authToken}";
 
         $staticFieldsKeys = ['name', 'description', 'size', 'email', 'phone', 'website', 'facebook', 'linkedin', 'twitter', 'skype', 'note', 'tax_no'];
 
         foreach ($finalData as $key => $value) {
-            if (in_array($key, $staticFieldsKeys)) {
+            if (\in_array($key, $staticFieldsKeys)) {
                 $requestParams[$key] = $value;
             } else {
                 $requestParams['custom_fields'][] = (object) [
@@ -58,10 +62,10 @@ class RecordApiHelper
             $requestParams['owner_id'] = $this->integrationDetails->selectedOwner;
         }
 
-        $this->type     = 'Account';
+        $this->type = 'Account';
         $this->typeName = 'Account created';
 
-        return HttpHelper::post($apiEndpoint,  json_encode($requestParams), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -70,12 +74,12 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field Name or Email is empty', 'code' => 400];
         }
 
-        $apiEndpoint = "https://my.agiled.app/api/v1/contacts?api_token=$this->authToken";
+        $apiEndpoint = "https://my.agiled.app/api/v1/contacts?api_token={$this->authToken}";
 
         $staticFieldsKeys = ['first_name', 'email', 'last_name', 'phone', 'job_title', 'facebook', 'linkedin', 'twitter', 'skype', 'note', 'tax_no', 'last_contacted'];
 
         foreach ($finalData as $key => $value) {
-            if (in_array($key, $staticFieldsKeys)) {
+            if (\in_array($key, $staticFieldsKeys)) {
                 $requestParams[$key] = $value;
             } else {
                 $requestParams['custom_fields'][] = (object) [
@@ -113,10 +117,10 @@ class RecordApiHelper
             $requestParams['next_follow_up'] = $this->integrationDetails->selectedFollowUp;
         }
 
-        $this->type     = 'Contact';
+        $this->type = 'Contact';
         $this->typeName = 'Contact created';
 
-        return HttpHelper::post($apiEndpoint,  json_encode($requestParams), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
 
     public function addDeal($finalData)
@@ -125,10 +129,10 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field deal name is empty', 'code' => 400];
         }
 
-        $apiEndpoint = "https://my.agiled.app/api/v1/crm/pipeline-deals?api_token=$this->authToken";
+        $apiEndpoint = "https://my.agiled.app/api/v1/crm/pipeline-deals?api_token={$this->authToken}";
 
         $requestParams['pipeline_id'] = (int) $this->integrationDetails->selectedCRMPipeline;
-        $requestParams['stage_id']    = (int) $this->integrationDetails->selectedCRMPipelineStages;
+        $requestParams['stage_id'] = (int) $this->integrationDetails->selectedCRMPipelineStages;
 
         foreach ($finalData as $key => $value) {
             $requestParams[$key] = $value;
@@ -142,10 +146,10 @@ class RecordApiHelper
             $requestParams['deal_type'] = $this->integrationDetails->selectedDealType;
         }
 
-        $this->type     = 'Deal';
+        $this->type = 'Deal';
         $this->typeName = 'Deal created';
 
-        return HttpHelper::post($apiEndpoint,  json_encode($requestParams), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -153,14 +157,14 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->agiledFormField;
+            $actionValue = $value->agiledFormField;
             if ($triggerValue === 'custom') {
                 if ($actionValue === 'customFieldKey') {
                     $dataFinal[$value->customFieldKey] = $value->customValue;
                 } else {
                     $dataFinal[$actionValue] = $value->customValue;
                 }
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 if ($actionValue === 'customFieldKey') {
                     $dataFinal[$value->customFieldKey] = $data[$triggerValue];
                 } else {
@@ -168,6 +172,7 @@ class RecordApiHelper
                 }
             }
         }
+
         return $dataFinal;
     }
 
@@ -176,26 +181,27 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->agiledFormField;
+            $actionValue = $value->agiledFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = $value->customValue;
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
 
     public function execute($fieldValues, $fieldMap, $actionName)
     {
         if ($actionName === 'account') {
-            $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+            $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = $this->addAccount($finalData);
         } elseif ($actionName === 'contact') {
-            $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+            $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = $this->addContact($finalData);
         } elseif ($actionName === 'deal') {
-            $finalData   = $this->generateDealFieldMap($fieldValues, $fieldMap);
+            $finalData = $this->generateDealFieldMap($fieldValues, $fieldMap);
             $apiResponse = $this->addDeal($finalData);
         }
 
@@ -205,6 +211,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }

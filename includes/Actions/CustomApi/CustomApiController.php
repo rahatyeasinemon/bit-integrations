@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\CustomApi;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for webhooks
@@ -28,28 +28,31 @@ class CustomApiController
 
         if ($details->authType === 'apikey') {
             if ($details->apiKeyAddTo === 'query') {
-                $url = "$url" . "$details->key=$details->value";
+                $url = "{$url}" . "{$details->key}={$details->value}";
             } else {
                 $headers = array_merge($headers, [$details->key => $details->value]);
             }
         } elseif ($details->authType === 'bearer') {
             $headers = array_merge($headers, [$details->key => $details->token]);
         } elseif ($details->authType === 'basic') {
-            $headers = array_merge($headers, [$details->key => 'Basic ' . base64_encode("$details->username:$details->password")]);
+            $headers = array_merge($headers, [$details->key => 'Basic ' . base64_encode("{$details->username}:{$details->password}")]);
         }
 
         if ($url) {
             switch (strtoupper($method)) {
                 case 'GET':
                     $response = HttpHelper::get($url, $payload, $headers);
+
                     break;
 
                 case 'POST':
                     $response = HttpHelper::post($url, $payload, $headers);
+
                     break;
 
                 default:
                     $response = HttpHelper::request($url, $method, $payload, $headers);
+
                     break;
             }
         }
@@ -78,9 +81,9 @@ class CustomApiController
         $Port = isset($parsedURL['port']) ? ':' . $parsedURL['port'] : null;
         $Path = isset($parsedURL['path']) ? $parsedURL['path'] : null;
         $Query = isset($parsedURL['query']) ? $parsedURL['query'] : null;
-        $Pass = ($Pass || $Usr) ? "$Pass@" : null;
+        $Pass = ($Pass || $Usr) ? "{$Pass}@" : null;
 
-        $cleanURL = "$Scheme$Usr$Pass$Host$Port$Path";
+        $cleanURL = "{$Scheme}{$Usr}{$Pass}{$Host}{$Port}{$Path}";
         $params = [];
         foreach (explode('&', $Query) as $keyValue) {
             if (empty($keyValue)) {
@@ -104,7 +107,7 @@ class CustomApiController
         $params = Common::replaceFieldWithValue($params, $fieldValues);
         $params = http_build_query($params);
         if (!empty($params)) {
-            $cleanURL .= "?$params";
+            $cleanURL .= "?{$params}";
         }
 
         return $cleanURL;
@@ -116,6 +119,7 @@ class CustomApiController
         if (isset($details->body->type)) {
             $headers['Content-Type'] = $details->body->type === 'raw' ? 'application/json' : $details->body->type;
         }
+
         return $headers;
     }
 
@@ -134,6 +138,7 @@ class CustomApiController
         if (isset($details->body->type) && ($details->body->type === 'application/json' || $details->body->type === 'raw')) {
             $payload = json_encode((object) $payload, JSON_PRETTY_PRINT);
         }
+
         return $payload;
     }
 
@@ -144,6 +149,7 @@ class CustomApiController
                 $fieldValues[$field->key] = '';
             }
         }
+
         return $fieldValues;
     }
 
@@ -153,21 +159,23 @@ class CustomApiController
         foreach ($data as $keyValuePair) {
             $processedData[$keyValuePair->key] = Common::replaceFieldWithValue(sanitize_text_field($keyValuePair->value), $fieldValues);
         }
+
         return $processedData;
     }
 
     private static function iterate($array)
     {
         $ar = [];
-        if (is_array($array)) {
+        if (\is_array($array)) {
             foreach ($array as $k => $v) {
-                if (is_string($v)) {
+                if (\is_string($v)) {
                     $ar[$k] = str_replace("\'", "'", $v);
                 } else {
                     $ar[$k] = $v;
                 }
             }
         }
+
         return $ar;
     }
 }

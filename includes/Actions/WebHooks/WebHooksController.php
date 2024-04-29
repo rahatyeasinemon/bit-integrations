@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\WebHooks;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for webhooks
@@ -43,14 +43,17 @@ class WebHooksController
             switch (strtoupper($method)) {
                 case 'GET':
                     $response = HttpHelper::get($url, [], $headers);
+
                     break;
 
                 case 'POST':
                     $response = HttpHelper::post($url, $payload, $headers);
+
                     break;
 
                 default:
                     $response = HttpHelper::request($url, $method, $payload, $headers);
+
                     break;
             }
         }
@@ -79,9 +82,9 @@ class WebHooksController
         $Port = isset($parsedURL['port']) ? ':' . $parsedURL['port'] : null;
         $Path = isset($parsedURL['path']) ? $parsedURL['path'] : null;
         $Query = isset($parsedURL['query']) ? $parsedURL['query'] : null;
-        $Pass = ($Pass || $Usr) ? "$Pass@" : null;
+        $Pass = ($Pass || $Usr) ? "{$Pass}@" : null;
 
-        $cleanURL = "$Scheme$Usr$Pass$Host$Port$Path";
+        $cleanURL = "{$Scheme}{$Usr}{$Pass}{$Host}{$Port}{$Path}";
         $params = [];
         foreach (explode('&', $Query) as $keyValue) {
             if (empty($keyValue)) {
@@ -104,7 +107,7 @@ class WebHooksController
 
         $params = Common::replaceFieldWithValue($params, $fieldValues);
         $params = http_build_query($params);
-        $cleanURL .= "?$params";
+        $cleanURL .= "?{$params}";
 
         return $cleanURL;
     }
@@ -119,6 +122,7 @@ class WebHooksController
                 $headers['Content-Type'] = $details->body->type === 'raw' ? 'application/json' : $details->body->type;
             }
         }
+
         return $headers;
     }
 
@@ -141,15 +145,17 @@ class WebHooksController
                 foreach ($payload as $key => $value) {
                     $payloadString .= '--' . $boundary;
                     $payloadString .= "\r\n";
-                    $payloadString .= 'Content-Disposition: form-data; name="' . $key .
-                        '"' . "\r\n\r\n";
+                    $payloadString .= 'Content-Disposition: form-data; name="' . $key
+                        . '"' . "\r\n\r\n";
                     $payloadString .= $value;
                     $payloadString .= "\r\n";
                 }
                 $payloadString .= '--' . $boundary . '--';
+
                 return $payloadString;
             }
         }
+
         return $payload;
     }
 
@@ -160,6 +166,7 @@ class WebHooksController
                 $fieldValues[$field->key] = '';
             }
         }
+
         return $fieldValues;
     }
 
@@ -169,21 +176,23 @@ class WebHooksController
         foreach ($data as $keyValuePair) {
             $processedData[$keyValuePair->key] = Common::replaceFieldWithValue(sanitize_text_field($keyValuePair->value), $fieldValues);
         }
+
         return $processedData;
     }
 
     private static function iterate($array)
     {
         $ar = [];
-        if (is_array($array)) {
+        if (\is_array($array)) {
             foreach ($array as $k => $v) {
-                if (is_string($v)) {
+                if (\is_string($v)) {
                     $ar[$k] = str_replace("\'", "'", $v);
                 } else {
                     $ar[$k] = $v;
                 }
             }
         }
+
         return $ar;
     }
 }

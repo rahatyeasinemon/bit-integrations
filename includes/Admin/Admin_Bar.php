@@ -2,15 +2,13 @@
 
 namespace BitCode\FI\Admin;
 
-use BitCode\FI\Core\Util\DateTimeHelper;
 use BitCode\FI\Core\Util\Capabilities;
+use BitCode\FI\Core\Util\DateTimeHelper;
 use BitCode\FI\Core\Util\Hooks;
-use BitCode\FI\Plugin;
 
 /**
  * The admin menu and page handler class
  */
-
 class Admin_Bar
 {
     public function register()
@@ -41,7 +39,8 @@ class Admin_Bar
     /**
      * Filter variables for admin script
      *
-     * @param Array $previousValue Current values
+     * @param array $previousValue  Current values
+     * @param mixed $current_screen
      *
      * @return $previousValue Filtered Values
      */
@@ -77,13 +76,13 @@ class Admin_Bar
         //     BTCBI_VERSION,
         //     true
         // );
-        if (defined('BITAPPS_DEV') && BITAPPS_DEV) {
+        if (\defined('BITAPPS_DEV') && BITAPPS_DEV) {
             wp_enqueue_script('vite-client-helper-BTCBI-MODULE', BTCBI_BIT_DEV_URL . '/config/devHotModule.js', [], null);
             wp_enqueue_script('vite-client-BTCBI-MODULE', BTCBI_BIT_DEV_URL . '/@vite/client', [], null);
             wp_enqueue_script('index-BTCBI-MODULE', BTCBI_BIT_DEV_URL . '/main.jsx', [], null);
         }
 
-        if (!defined('BITAPPS_DEV')) {
+        if (!\defined('BITAPPS_DEV')) {
             $build_hash = file_get_contents(BTCBI_PLUGIN_DIR_PATH . '/build-hash.txt');
             wp_enqueue_script('index-BTCBI-MODULE', BTCBI_ASSET_URI . "/main-{$build_hash}.js", [], null);
             // wp_enqueue_style('bf-css', BTCBI_ASSET_URI . "/main-{$build_hash}.css");
@@ -96,7 +95,7 @@ class Admin_Bar
         if (wp_script_is('wp-i18n')) {
             $deps = ['btcbi-vendors', 'btcbi-runtime', 'wp-i18n'];
         } else {
-            $deps = ['btcbi-vendors', 'btcbi-runtime', ];
+            $deps = ['btcbi-vendors', 'btcbi-runtime'];
         }
 
         wp_enqueue_script(
@@ -176,6 +175,7 @@ class Admin_Bar
         if (preg_match('/BTCBI-MODULE/', $handle)) {
             $newTag = preg_replace('/<script /', '<script type="module" ', $newTag);
         }
+
         return $newTag;
     }
 }

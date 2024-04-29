@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\NutshellCRM;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for NutshellCRM integration
@@ -15,43 +15,22 @@ use BitCode\FI\Core\Util\HttpHelper;
 class NutshellCRMController
 {
     protected $_defaultHeader;
+
     protected $apiEndpoint;
-
-    private function setApiEndpoint()
-    {
-        return $this->apiEndpoint = "https://app.nutshell.com/api/v1/json";
-    }
-
-    private function checkValidation($fieldsRequestParams, $customParam = '**')
-    {
-        if (empty($fieldsRequestParams->user_name) || empty($fieldsRequestParams->api_token) || empty($customParam)) {
-            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
-        }
-    }
-
-    private function setHeaders($userName, $apiToken)
-    {
-        return
-            [
-                "Authorization" => 'Basic ' . base64_encode("$userName:$apiToken"),
-                "Content-type"  => "application/json",
-            ];
-    }
 
     public function authentication($fieldsRequestParams)
     {
         $this->checkValidation($fieldsRequestParams);
-        $userName       = $fieldsRequestParams->user_name;
-        $apiToken       = $fieldsRequestParams->api_token;
-        $apiEndpoint    = $this->setApiEndpoint();
-        $headers        = $this->setHeaders($userName, $apiToken);
+        $userName = $fieldsRequestParams->user_name;
+        $apiToken = $fieldsRequestParams->api_token;
+        $apiEndpoint = $this->setApiEndpoint();
+        $headers = $this->setHeaders($userName, $apiToken);
         $body = [
-            'method'    => 'getUser',
-            'id'        => 'randomstring',
+            'method' => 'getUser',
+            'id'     => 'randomstring',
         ];
 
-        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
-
+        $response = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
 
         if (isset($response->result)) {
             wp_send_json_success('Authentication successful', 200);
@@ -66,16 +45,16 @@ class NutshellCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $userName       = $fieldsRequestParams->user_name;
-        $apiToken       = $fieldsRequestParams->api_token;
-        $apiEndpoint    = $this->setApiEndpoint();
-        $headers        = $this->setHeaders($userName, $apiToken);
+        $userName = $fieldsRequestParams->user_name;
+        $apiToken = $fieldsRequestParams->api_token;
+        $apiEndpoint = $this->setApiEndpoint();
+        $headers = $this->setHeaders($userName, $apiToken);
         $body = [
-            'method'    => 'findAccounts',
-            'id'        => 'randomstring',
+            'method' => 'findAccounts',
+            'id'     => 'randomstring',
         ];
 
-        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $company) {
@@ -96,16 +75,16 @@ class NutshellCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $userName       = $fieldsRequestParams->user_name;
-        $apiToken       = $fieldsRequestParams->api_token;
-        $apiEndpoint    = $this->setApiEndpoint();
-        $headers        = $this->setHeaders($userName, $apiToken);
+        $userName = $fieldsRequestParams->user_name;
+        $apiToken = $fieldsRequestParams->api_token;
+        $apiEndpoint = $this->setApiEndpoint();
+        $headers = $this->setHeaders($userName, $apiToken);
         $body = [
-            'method'    => 'findContacts',
-            'id'        => 'randomstring',
+            'method' => 'findContacts',
+            'id'     => 'randomstring',
         ];
 
-        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $contact) {
@@ -126,16 +105,16 @@ class NutshellCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $userName       = $fieldsRequestParams->user_name;
-        $apiToken       = $fieldsRequestParams->api_token;
-        $apiEndpoint    = $this->setApiEndpoint();
-        $headers        = $this->setHeaders($userName, $apiToken);
+        $userName = $fieldsRequestParams->user_name;
+        $apiToken = $fieldsRequestParams->api_token;
+        $apiEndpoint = $this->setApiEndpoint();
+        $headers = $this->setHeaders($userName, $apiToken);
         $body = [
-            'method'    => 'findProducts',
-            'id'        => 'randomstring',
+            'method' => 'findProducts',
+            'id'     => 'randomstring',
         ];
 
-        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $product) {
@@ -156,16 +135,16 @@ class NutshellCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $userName       = $fieldsRequestParams->user_name;
-        $apiToken       = $fieldsRequestParams->api_token;
-        $apiEndpoint    = $this->setApiEndpoint();
-        $headers        = $this->setHeaders($userName, $apiToken);
+        $userName = $fieldsRequestParams->user_name;
+        $apiToken = $fieldsRequestParams->api_token;
+        $apiEndpoint = $this->setApiEndpoint();
+        $headers = $this->setHeaders($userName, $apiToken);
         $body = [
-            'method'    => 'findSources',
-            'id'        => 'randomstring',
+            'method' => 'findSources',
+            'id'     => 'randomstring',
         ];
 
-        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $source) {
@@ -186,16 +165,16 @@ class NutshellCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $userName       = $fieldsRequestParams->user_name;
-        $apiToken       = $fieldsRequestParams->api_token;
-        $apiEndpoint    = $this->setApiEndpoint();
-        $headers        = $this->setHeaders($userName, $apiToken);
+        $userName = $fieldsRequestParams->user_name;
+        $apiToken = $fieldsRequestParams->api_token;
+        $apiEndpoint = $this->setApiEndpoint();
+        $headers = $this->setHeaders($userName, $apiToken);
         $body = [
-            'method'    => 'findTags',
-            'id'        => 'randomstring',
+            'method' => 'findTags',
+            'id'     => 'randomstring',
         ];
 
-        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result->Leads as $tag) {
@@ -216,16 +195,16 @@ class NutshellCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $userName       = $fieldsRequestParams->user_name;
-        $apiToken       = $fieldsRequestParams->api_token;
-        $apiEndpoint    = $this->setApiEndpoint();
-        $headers        = $this->setHeaders($userName, $apiToken);
+        $userName = $fieldsRequestParams->user_name;
+        $apiToken = $fieldsRequestParams->api_token;
+        $apiEndpoint = $this->setApiEndpoint();
+        $headers = $this->setHeaders($userName, $apiToken);
         $body = [
-            'method'    => 'findAccountTypes',
-            'id'        => 'randomstring',
+            'method' => 'findAccountTypes',
+            'id'     => 'randomstring',
         ];
 
-        $response       = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $companyType) {
@@ -243,22 +222,44 @@ class NutshellCRMController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-        $integId            = $integrationData->id;
-        $userName             = $integrationDetails->user_name;
-        $apiToken          = $integrationDetails->api_token;
-        $fieldMap           = $integrationDetails->field_map;
-        $actionName         = $integrationDetails->actionName;
+        $integId = $integrationData->id;
+        $userName = $integrationDetails->user_name;
+        $apiToken = $integrationDetails->api_token;
+        $fieldMap = $integrationDetails->field_map;
+        $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($userName) || empty($apiToken) || empty($actionName)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for NutshellCRM api', 'bit-integrations'));
         }
 
-        $recordApiHelper        = new RecordApiHelper($integrationDetails, $integId, $userName, $apiToken);
-        $nutshellCRMApiResponse  = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
+        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $userName, $apiToken);
+        $nutshellCRMApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
 
         if (is_wp_error($nutshellCRMApiResponse)) {
             return $nutshellCRMApiResponse;
         }
+
         return $nutshellCRMApiResponse;
+    }
+
+    private function setApiEndpoint()
+    {
+        return $this->apiEndpoint = 'https://app.nutshell.com/api/v1/json';
+    }
+
+    private function checkValidation($fieldsRequestParams, $customParam = '**')
+    {
+        if (empty($fieldsRequestParams->user_name) || empty($fieldsRequestParams->api_token) || empty($customParam)) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+    }
+
+    private function setHeaders($userName, $apiToken)
+    {
+        return
+            [
+                'Authorization' => 'Basic ' . base64_encode("{$userName}:{$apiToken}"),
+                'Content-type'  => 'application/json',
+            ];
     }
 }

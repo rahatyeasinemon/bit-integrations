@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\CapsuleCRM;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for CapsuleCRM integration
@@ -15,11 +15,12 @@ use BitCode\FI\Core\Util\HttpHelper;
 class CapsuleCRMController
 {
     protected $_defaultHeader;
+
     protected $apiEndpoint;
 
     public function __construct()
     {
-        $this->apiEndpoint = "https://api.capsulecrm.com/api/v2";
+        $this->apiEndpoint = 'https://api.capsulecrm.com/api/v2';
     }
 
     public function authentication($fieldsRequestParams)
@@ -28,10 +29,10 @@ class CapsuleCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."/users";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . '/users';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -49,18 +50,18 @@ class CapsuleCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $action      = $fieldsRequestParams->action;
+        $apiKey = $fieldsRequestParams->api_key;
+        $action = $fieldsRequestParams->action;
         if ($action == 'person' || $action == 'organisation') {
-            $apiEndpoint = $this->apiEndpoint."/parties/fields/definitions";
+            $apiEndpoint = $this->apiEndpoint . '/parties/fields/definitions';
         } elseif ($action == 'opportunity') {
-            $apiEndpoint = $this->apiEndpoint."/opportunities/fields/definitions";
+            $apiEndpoint = $this->apiEndpoint . '/opportunities/fields/definitions';
         } elseif ($action == 'project') {
-            $apiEndpoint = $this->apiEndpoint."/kases/fields/definitions";
+            $apiEndpoint = $this->apiEndpoint . '/kases/fields/definitions';
         }
 
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -68,8 +69,8 @@ class CapsuleCRMController
         if (isset($response->definitions)) {
             foreach ($response->definitions as $customField) {
                 $customFields[] = [
-                    'key' => $customField->id,
-                    'label' => $customField->name,
+                    'key'      => $customField->id,
+                    'label'    => $customField->name,
                     'required' => $customField->important,
                 ];
             }
@@ -85,10 +86,10 @@ class CapsuleCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."/opportunities";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . '/opportunities';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -112,10 +113,10 @@ class CapsuleCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."/users";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . '/users';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -139,10 +140,10 @@ class CapsuleCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."/teams";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . '/teams';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -166,12 +167,11 @@ class CapsuleCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."/currencies";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . '/currencies';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
-
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
@@ -194,18 +194,17 @@ class CapsuleCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."/parties";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . '/parties';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
-
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (!empty($response->parties)) {
             foreach ($response->parties as $party) {
-                if ($party->type == "organisation") {
+                if ($party->type == 'organisation') {
                     $parties[] = [
                         'id'   => (string) $party->id,
                         'name' => $party->name
@@ -213,7 +212,7 @@ class CapsuleCRMController
                 } else {
                     $parties[] = [
                         'id'   => (string) $party->id,
-                        'name' => $party->firstName." ".$party->lastName
+                        'name' => $party->firstName . ' ' . $party->lastName
                     ];
                 }
             }
@@ -229,10 +228,10 @@ class CapsuleCRMController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiKey      = $fieldsRequestParams->api_key;
-        $apiEndpoint = $this->apiEndpoint."/milestones";
+        $apiKey = $fieldsRequestParams->api_key;
+        $apiEndpoint = $this->apiEndpoint . '/milestones';
         $headers = [
-            "Authorization" => 'Bearer ' . $apiKey,
+            'Authorization' => 'Bearer ' . $apiKey,
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $headers);
@@ -253,21 +252,22 @@ class CapsuleCRMController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-        $integId            = $integrationData->id;
-        $authToken          = $integrationDetails->api_key;
-        $fieldMap           = $integrationDetails->field_map;
-        $actionName         = $integrationDetails->actionName;
+        $integId = $integrationData->id;
+        $authToken = $integrationDetails->api_key;
+        $fieldMap = $integrationDetails->field_map;
+        $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for CapsuleCRM api', 'bit-integrations'));
         }
 
-        $recordApiHelper   = new RecordApiHelper($integrationDetails, $integId);
+        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $capsulecrmApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $actionName);
 
         if (is_wp_error($capsulecrmApiResponse)) {
             return $capsulecrmApiResponse;
         }
+
         return $capsulecrmApiResponse;
     }
 }

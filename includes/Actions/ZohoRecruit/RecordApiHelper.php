@@ -6,14 +6,11 @@
 
 namespace BitCode\FI\Actions\ZohoRecruit;
 
-use WP_Error;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Core\Util\FieldValueHandler;
-use BitCode\FI\Core\Util\ApiResponse as UtilApiResponse;
-use BitCode\FI\Actions\ZohoRecruit\FilesApiHelper;
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\DateTimeHelper;
+use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use WP_Error;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -21,6 +18,7 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_defaultHeader;
+
     private $_tokenDetails;
 
     public function __construct($dataCenter, $tokenDetails, $integId)
@@ -34,6 +32,7 @@ class RecordApiHelper
     public function insertRecord($module, $data)
     {
         $insertRecordEndpoint = "https://recruit.zoho.{$this->_dataCenter}/recruit/private/json/{$module}/addRecords";
+
         return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
     }
 
@@ -55,42 +54,41 @@ class RecordApiHelper
                 if (empty($fieldData[$fieldPair->zohoFormField]) && \in_array($fieldPair->zohoFormField, $required)) {
                     $error = new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('%s is required for zoho recruit, %s module', 'bit-integrations'), $fieldPair->zohoFormField, $module));
                     LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'field'], 'validation', $error);
+
                     return $error;
                 }
             }
         }
 
-        $xmlData = "<$module><row no='1'>";
+        $xmlData = "<{$module}><row no='1'>";
 
         foreach ($fieldData as $field => $value) {
-            $xmlData .= "<FL val='$field'>$value</FL>";
+            $xmlData .= "<FL val='{$field}'>{$value}</FL>";
         }
 
         if (!empty($actions->recordOwner)) {
-            $xmlData .= "<FL val='SMOWNERID'>$actions->recordOwner</FL>";
+            $xmlData .= "<FL val='SMOWNERID'>{$actions->recordOwner}</FL>";
         }
-        $xmlData .= "</row></$module>";
+        $xmlData .= "</row></{$module}>";
         $requestParams['scope'] = 'ZohoRecruit.modules.all';
         $requestParams['version'] = 4;
 
-
         $requestParams['xmlData'] = $xmlData;
         if (!empty($actions->workflow)) {
-            $requestParams['wfTrigger'] = 'true'; //api accept string true | false
+            $requestParams['wfTrigger'] = 'true'; // api accept string true | false
         }
         if (!empty($actions->upsert)) {
             $requestParams['duplicateCheck'] = 2;
         }
         if (!empty($actions->approval)) {
-            $requestParams['isApproval'] = 'true'; //api accept string true | false
+            $requestParams['isApproval'] = 'true'; // api accept string true | false
         }
 
         $recordApiResponse = $this->insertRecord($module, $requestParams);
         if (isset($recordApiResponse->response->error)) {
             return LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $module], 'error', $recordApiResponse);
-        } else {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $module], 'success', $recordApiResponse);
         }
+        LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $module], 'success', $recordApiResponse);
 
         if (isset($recordApiResponse->response->error)) {
             return new WP_Error('INSERT_ERROR', $recordApiResponse->response->error->message);
@@ -99,15 +97,15 @@ class RecordApiHelper
             $recordID = $recordApiResponse->response->result->row->success->details->FL[0]->content;
             if (isset($actions->note) && !empty($actions->note->type)) {
                 $noteDetails = $actions->note;
-                $typeDetails = explode("__", $noteDetails->type);
+                $typeDetails = explode('__', $noteDetails->type);
                 $content = Common::replaceFieldWithValue($noteDetails->content, $fieldValues);
                 $xmlData = "<Notes><row no='1'>";
-                $xmlData .= "<FL val='entityId'>$recordID</FL>";
-                $xmlData .= "<FL val='Note Type'>$typeDetails[1]</FL>";
-                $xmlData .= "<FL val='Type Id'>$typeDetails[0]</FL>";
-                $xmlData .= "<FL val='Note Content'>$content</FL>";
-                $xmlData .= "<FL val='Parent Module'>$module</FL>";
-                $xmlData .= "</row></Notes>";
+                $xmlData .= "<FL val='entityId'>{$recordID}</FL>";
+                $xmlData .= "<FL val='Note Type'>{$typeDetails[1]}</FL>";
+                $xmlData .= "<FL val='Type Id'>{$typeDetails[0]}</FL>";
+                $xmlData .= "<FL val='Note Content'>{$content}</FL>";
+                $xmlData .= "<FL val='Parent Module'>{$module}</FL>";
+                $xmlData .= '</row></Notes>';
                 $requestParams['version'] = 2;
                 $requestParams['xmlData'] = $xmlData;
 
@@ -120,7 +118,7 @@ class RecordApiHelper
             }
 
             $filesApiHelper = new FilesApiHelper($module, $this->_dataCenter, $this->_tokenDetails);
-            if (count($fileMap)) {
+            if (\count($fileMap)) {
                 $fileFound = 0;
                 $responseType = 'success';
                 $fileUpResponses = [];
@@ -152,47 +150,54 @@ class RecordApiHelper
         }
 
         switch ($formatSpecs->data_type) {
-        case 'AutoNumber':
-            $apiFormat = 'integer';
-            break;
+            case 'AutoNumber':
+                $apiFormat = 'integer';
 
-        case 'Text':
-        case 'Picklist':
-        case 'Email':
-        case 'Website':
-        case 'Currency':
-        case 'TextArea':
-            $apiFormat = 'string';
-            break;
+                break;
 
-        case 'Date':
-            $apiFormat = 'date';
-            break;
+            case 'Text':
+            case 'Picklist':
+            case 'Email':
+            case 'Website':
+            case 'Currency':
+            case 'TextArea':
+                $apiFormat = 'string';
 
-        case 'DateTime':
-            $apiFormat = 'datetime';
-            break;
+                break;
 
-        case 'Double':
-            $apiFormat = 'double';
-            break;
+            case 'Date':
+                $apiFormat = 'date';
 
-        case 'Boolean':
-            $apiFormat = 'boolean';
-            break;
+                break;
 
-        default:
-            $apiFormat = $formatSpecs->data_type;
-            break;
+            case 'DateTime':
+                $apiFormat = 'datetime';
+
+                break;
+
+            case 'Double':
+                $apiFormat = 'double';
+
+                break;
+
+            case 'Boolean':
+                $apiFormat = 'boolean';
+
+                break;
+
+            default:
+                $apiFormat = $formatSpecs->data_type;
+
+                break;
         }
 
         $formatedValue = '';
-        $fieldFormat = gettype($value);
+        $fieldFormat = \gettype($value);
         if ($fieldFormat === $apiFormat && $formatSpecs->data_type !== 'datetime') {
             $formatedValue = $value;
         } else {
             if ($apiFormat === 'string' && $formatSpecs->data_type !== 'datetime') {
-                $formatedValue = !is_string($value) ? json_encode($value) : $value;
+                $formatedValue = !\is_string($value) ? json_encode($value) : $value;
             } elseif ($apiFormat === 'datetime') {
                 $dateTimeHelper = new DateTimeHelper();
                 $formatedValue = $dateTimeHelper->getFormated($value, 'Y-m-d\TH:i', DateTimeHelper::wp_timezone(), 'Y-m-d H:i:s', null);
@@ -200,30 +205,34 @@ class RecordApiHelper
                 $dateTimeHelper = new DateTimeHelper();
                 $formatedValue = $dateTimeHelper->getFormated($value, 'Y-m-d', DateTimeHelper::wp_timezone(), 'm/d/Y', null);
             } else {
-                $stringyfiedValue = !is_string($value) ? json_encode($value) : $value;
+                $stringyfiedValue = !\is_string($value) ? json_encode($value) : $value;
 
                 switch ($apiFormat) {
-                case 'double':
-                    $formatedValue = (float) $stringyfiedValue;
-                    break;
+                    case 'double':
+                        $formatedValue = (float) $stringyfiedValue;
 
-                case 'boolean':
-                    $formatedValue = (bool) $stringyfiedValue;
-                    break;
+                        break;
 
-                case 'integer':
-                    $formatedValue = (int) $stringyfiedValue;
-                    break;
+                    case 'boolean':
+                        $formatedValue = (bool) $stringyfiedValue;
 
-                default:
-                    $formatedValue = $stringyfiedValue;
-                    break;
+                        break;
+
+                    case 'integer':
+                        $formatedValue = (int) $stringyfiedValue;
+
+                        break;
+
+                    default:
+                        $formatedValue = $stringyfiedValue;
+
+                        break;
                 }
             }
         }
-        $formatedValueLenght = $apiFormat === 'array' || $apiFormat === 'object' ? (is_countable($formatedValue) ? \count($formatedValue) : @count($formatedValue)) : \strlen($formatedValue);
+        $formatedValueLenght = $apiFormat === 'array' || $apiFormat === 'object' ? (is_countable($formatedValue) ? \count($formatedValue) : @\count($formatedValue)) : \strlen($formatedValue);
         if ($formatedValueLenght > $formatSpecs->length) {
-            $formatedValue = $apiFormat === 'array' || $apiFormat === 'object' ? array_slice($formatedValue, 0, $formatSpecs->length) : substr($formatedValue, 0, $formatSpecs->length);
+            $formatedValue = $apiFormat === 'array' || $apiFormat === 'object' ? \array_slice($formatedValue, 0, $formatSpecs->length) : substr($formatedValue, 0, $formatSpecs->length);
         }
 
         return $formatedValue;

@@ -4,6 +4,7 @@ namespace BitCode\FI\Actions\GiveWp;
 
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
+use Give_Donor;
 
 class RecordApiHelper
 {
@@ -16,18 +17,19 @@ class RecordApiHelper
             $actionValue = $value->giveWpFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
 
     public function createGiveWpDonar($finalData)
     {
-        $donor = new \Give_Donor();
-        $donor_id = $donor->create($finalData);
-        return $donor_id;
+        $donor = new Give_Donor();
+
+        return $donor->create($finalData);
     }
 
     public function execute(

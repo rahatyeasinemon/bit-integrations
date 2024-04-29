@@ -15,17 +15,18 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_integrationID;
+
     private $_requestStoringTypes;
 
     public function __construct($integrationDetails, $integId)
     {
         $this->_integrationDetails = $integrationDetails;
-        $this->_integrationID      = $integId;
-        $this->_subDomainName      = $this->_integrationDetails->subdomain;
-        $this->apiUserName         = $this->_integrationDetails->api_user_name;
-        $this->apiUserPassword     = $this->_integrationDetails->api_user_password;
-        $this->_defaultHeader      = [
-            'Authorization' => 'Basic ' . base64_encode("$this->apiUserName:$this->apiUserPassword"),
+        $this->_integrationID = $integId;
+        $this->_subDomainName = $this->_integrationDetails->subdomain;
+        $this->apiUserName = $this->_integrationDetails->api_user_name;
+        $this->apiUserPassword = $this->_integrationDetails->api_user_password;
+        $this->_defaultHeader = [
+            'Authorization' => 'Basic ' . base64_encode("{$this->apiUserName}:{$this->apiUserPassword}"),
             'Content-Type'  => 'application/json'
         ];
     }
@@ -36,16 +37,16 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
         }
 
-        $apiEndpoint = "https://$this->_subDomainName.sendsmaily.net/api/contact.php";
+        $apiEndpoint = "https://{$this->_subDomainName}.sendsmaily.net/api/contact.php";
 
         foreach ($finalData as $key => $value) {
             $requestParams[$key] = $value;
         }
 
         $requestParams['is_unsubscribed'] = $this->_integrationDetails->actions->unsubscribe ? 1 : 0;
-        $this->_requestStoringTypes       = $this->isExist($apiEndpoint, $finalData['email']) ? 'updated' : 'created';
+        $this->_requestStoringTypes = $this->isExist($apiEndpoint, $finalData['email']) ? 'updated' : 'created';
 
-        return HttpHelper::post($apiEndpoint,  json_encode($requestParams), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -53,14 +54,14 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->smailyFormField;
+            $actionValue = $value->smailyFormField;
             if ($triggerValue === 'custom') {
                 if ($actionValue === 'customFieldKey') {
                     $dataFinal[$value->customFieldKey] = $value->customValue;
                 } else {
                     $dataFinal[$actionValue] = $value->customValue;
                 }
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 if ($actionValue === 'customFieldKey') {
                     $dataFinal[$value->customFieldKey] = $data[$triggerValue];
                 } else {
@@ -68,12 +69,13 @@ class RecordApiHelper
                 }
             }
         }
+
         return $dataFinal;
     }
 
     public function execute($fieldValues, $fieldMap)
     {
-        $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $apiResponse = $this->addSubscriber($finalData);
 
         if ($apiResponse->code === 101) {
@@ -82,13 +84,14 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->_integrationID, json_encode(['type' => 'subscriber', 'type_name' => 'Adding Subscriber']), 'error', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 
     public function isExist($apiEndpoint, $email)
     {
-        $apiEndpoint = "$apiEndpoint?email=$email";
-        $response    = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+        $apiEndpoint = "{$apiEndpoint}?email={$email}";
+        $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
 
         return isset($response->email) ? true : false;
     }

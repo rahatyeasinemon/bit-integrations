@@ -2,13 +2,15 @@
 
 namespace BitCode\FI\Actions\OneDrive;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 class RecordApiHelper
 {
     protected $token;
+
     protected $errorApiResponse = [];
+
     protected $successApiResponse = [];
 
     public function __construct($token)
@@ -18,13 +20,14 @@ class RecordApiHelper
 
     public function uploadFile($folder, $filePath, $folderId, $parentId)
     {
-
-        if (is_null($parentId)) {
+        if (\is_null($parentId)) {
             // $parentId = 'root';
             $parentId = $folderId;
         }
         $ids = explode('!', $folderId);
-        if ($filePath === '') return false;
+        if ($filePath === '') {
+            return false;
+        }
         $apiEndpoint = 'https://api.onedrive.com/v1.0/drives/' . $ids[0] . '/items/' . $parentId . ':/' . basename($filePath) . ':/content';
 
         $headers = [
@@ -35,22 +38,24 @@ class RecordApiHelper
             'X-HTTP-Method'  => 'PUT'
         ];
 
-        $response = HttpHelper::post(
+        return HttpHelper::post(
             $apiEndpoint,
             file_get_contents($filePath),
             $headers
         );
-
-        return $response;
     }
 
     public function handleAllFiles($folderWithFile, $actions, $folderId, $parentId)
     {
         foreach ($folderWithFile as $folder => $filePath) {
-            if ($filePath == '') continue;
-            if (is_array($filePath)) {
+            if ($filePath == '') {
+                continue;
+            }
+            if (\is_array($filePath)) {
                 foreach ($filePath as $singleFilePath) {
-                    if ($singleFilePath == '') continue;
+                    if ($singleFilePath == '') {
+                        continue;
+                    }
                     $response = $this->uploadFile($folder, $singleFilePath, $folderId, $parentId);
                     $this->storeInState($response);
                     $this->deleteFile($singleFilePath, $actions);
@@ -60,17 +65,6 @@ class RecordApiHelper
                 $this->storeInState($response);
                 $this->deleteFile($filePath, $actions);
             }
-        }
-    }
-
-    protected function storeInState($response)
-    {
-        $response = is_string($response) ? json_decode($response) : $response;
-
-        if (isset($response->id)) {
-            $this->successApiResponse[] = $response;
-        } else {
-            $this->errorApiResponse[] = $response;
         }
     }
 
@@ -86,28 +80,39 @@ class RecordApiHelper
     public function executeRecordApi($integrationId, $fieldValues, $fieldMap, $actions, $folderId, $parentId)
     {
         $folderWithFile = [];
-        $actionsAttachments = explode(",", "$actions->attachments");
-        if (is_array($actionsAttachments)) {
+        $actionsAttachments = explode(',', "{$actions->attachments}");
+        if (\is_array($actionsAttachments)) {
             foreach ($actionsAttachments as $actionAttachment) {
-                if (is_array($fieldValues[$actionAttachment])) {
+                if (\is_array($fieldValues[$actionAttachment])) {
                     foreach ($fieldValues[$actionAttachment] as $value) {
                         // key need correction
-                        $folderWithFile = ["$actionsAttachments" => $value];
+                        $folderWithFile = ["{$actionsAttachments}" => $value];
                     }
                     $this->handleAllFiles($folderWithFile, $actions, $folderId, $parentId);
                 } else {
-                    $folderWithFile = ["$actionsAttachments" => $fieldValues[$actionAttachment]];
+                    $folderWithFile = ["{$actionsAttachments}" => $fieldValues[$actionAttachment]];
                     $this->handleAllFiles($folderWithFile, $actions, $folderId, $parentId);
                 }
             }
         }
 
-        if (count($this->successApiResponse) > 0) {
-            LogHandler::save($integrationId, wp_json_encode(['type' => 'OneDrive', 'type_name' => "file_upload"]), 'success', 'All Files Uploaded. ' . json_encode($this->successApiResponse));
+        if (\count($this->successApiResponse) > 0) {
+            LogHandler::save($integrationId, wp_json_encode(['type' => 'OneDrive', 'type_name' => 'file_upload']), 'success', 'All Files Uploaded. ' . json_encode($this->successApiResponse));
         }
-        if (count($this->errorApiResponse) > 0) {
-            LogHandler::save($integrationId, wp_json_encode(['type' => 'OneDrive', 'type_name' => "file_upload"]), 'error', 'Some Files Can\'t Upload. ' . json_encode($this->errorApiResponse));
+        if (\count($this->errorApiResponse) > 0) {
+            LogHandler::save($integrationId, wp_json_encode(['type' => 'OneDrive', 'type_name' => 'file_upload']), 'error', 'Some Files Can\'t Upload. ' . json_encode($this->errorApiResponse));
         }
-        return;
+
+    }
+
+    protected function storeInState($response)
+    {
+        $response = \is_string($response) ? json_decode($response) : $response;
+
+        if (isset($response->id)) {
+            $this->successApiResponse[] = $response;
+        } else {
+            $this->errorApiResponse[] = $response;
+        }
     }
 }

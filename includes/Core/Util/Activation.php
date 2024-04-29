@@ -19,7 +19,7 @@ final class Activation
 
     public function install($network_wide)
     {
-        if ($network_wide && function_exists('is_multisite') && is_multisite()) {
+        if ($network_wide && \function_exists('is_multisite') && is_multisite()) {
             $sites = Multisite::all_blog_ids();
 
             foreach ($sites as $site) {

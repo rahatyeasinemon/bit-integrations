@@ -2,23 +2,23 @@
 
 namespace BitCode\FI\Actions\WPCourseware;
 
-use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Log\LogHandler;
 use WP_Error;
 
 class WPCoursewareController
 {
-    private $integrationID;
     protected static $actions = [
-        "enroll" => [
-            "id" => "enroll",
-            "title" => "Enroll user in a Course"
+        'enroll' => [
+            'id'    => 'enroll',
+            'title' => 'Enroll user in a Course'
         ],
-        "unroll" => [
-            "id" => "unroll",
-            "title" => "Unroll user in a Course"
+        'unroll' => [
+            'id'    => 'unroll',
+            'title' => 'Unroll user in a Course'
         ],
     ];
+
+    private $integrationID;
 
     public function __construct($integrationID)
     {
@@ -42,7 +42,7 @@ class WPCoursewareController
 
         $actions = [];
         foreach (self::$actions as $action) {
-            $actions[] = (object)[
+            $actions[] = (object) [
                 'id'    => $action['id'],
                 'title' => $action['title']
             ];
@@ -58,15 +58,15 @@ class WPCoursewareController
             wp_send_json_error(__('WP Courseware Plugin is not active or installed', 'bit-integrations'), 400);
         }
 
-        $wpcwCourses = function_exists('wpcw_get_courses') ? wpcw_get_courses() : [];
+        $wpcwCourses = \function_exists('wpcw_get_courses') ? wpcw_get_courses() : [];
 
-        $courses = [(object)[
+        $courses = [(object) [
             'id'    => 'select_all_course',
             'title' => 'All Courses'
         ]];
 
         foreach ($wpcwCourses as $course) {
-            $courses[] = (object)[
+            $courses[] = (object) [
                 'id'    => $course->course_id,
                 'title' => $course->course_title
             ];
@@ -80,6 +80,7 @@ class WPCoursewareController
     {
         if (!is_plugin_active('wp-courseware/wp-courseware.php')) {
             LogHandler::save($this->integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', 'WP Courseware Plugins not found');
+
             return false;
         }
 
@@ -94,6 +95,7 @@ class WPCoursewareController
         }
 
         $recordApiHelper = new RecordApiHelper($this->integrationID);
+
         return $recordApiHelper->execute($action, $course, $userId, $allCourse);
     }
 }

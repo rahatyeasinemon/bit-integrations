@@ -15,27 +15,32 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $integrationDetails;
+
     private $integrationId;
+
     private $apiUrl;
+
     private $defaultHeader;
+
     private $type;
+
     private $typeName;
 
     public function __construct($integrationDetails, $integId, $apiSecret, $apiKey)
     {
         $this->integrationDetails = $integrationDetails;
-        $this->integrationId      = $integId;
-        $this->apiUrl             = "https://my.demio.com/api/v1";
-        $this->defaultHeader      = [
-            "Api-Key"       => $apiKey,
-            "Api-Secret"    => $apiSecret,
-            "Content-Type"  => "application/json"
+        $this->integrationId = $integId;
+        $this->apiUrl = 'https://my.demio.com/api/v1';
+        $this->defaultHeader = [
+            'Api-Key'      => $apiKey,
+            'Api-Secret'   => $apiSecret,
+            'Content-Type' => 'application/json'
         ];
     }
 
     public function registration($finalData)
     {
-        $this->type     = 'Register People to Wabinar';
+        $this->type = 'Register People to Wabinar';
         $this->typeName = 'Register People to Wabinar';
 
         if (empty($finalData['name'])) {
@@ -54,7 +59,8 @@ class RecordApiHelper
             $finalData['date_id'] = $this->integrationDetails->selectedSession;
         }
 
-        $apiEndpoint = $this->apiUrl . "/event/register";
+        $apiEndpoint = $this->apiUrl . '/event/register';
+
         return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
@@ -63,15 +69,16 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->demioFormField;
+            $actionValue = $value->demioFormField;
             $dataFinal[$actionValue] = ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue];
         }
+
         return $dataFinal;
     }
 
     public function execute($fieldValues, $fieldMap, $actionName)
     {
-        $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $apiResponse = $this->registration($finalData);
 
         if (!isset($apiResponse->errors)) {
@@ -80,6 +87,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }

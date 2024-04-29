@@ -7,6 +7,7 @@
 namespace BitCode\FI\Actions\Freshdesk;
 
 use BitCode\FI\Core\Util\HttpHelper;
+use CURLFile;
 
 /**
  * Provide functionality for Upload files
@@ -14,6 +15,7 @@ use BitCode\FI\Core\Util\HttpHelper;
 final class FilesApiHelper
 {
     private $_defaultHeader;
+
     private $_payloadBoundary;
 
     public function __construct()
@@ -25,22 +27,23 @@ final class FilesApiHelper
     /**
      * Helps to execute upload files api
      *
-     * @param String            $apiEndPoint    FreshDesk API base URL
-     * @param Array             $data           Data to pass to API
+     * @param string $apiEndPoint FreshDesk API base URL
+     * @param array  $data        Data to pass to API
+     * @param mixed  $api_key
      *
-     * @return Array | Boolean  $uploadResponse FreshDesk API response
+     * @return array|bool $uploadResponse FreshDesk API response
      */
     public function uploadFiles($apiEndPoint, $data, $api_key)
     {
-        $data['avatar'] = new \CURLFILE("{$data['avatar']}");
-        $uploadResponse = HttpHelper::post(
+        $data['avatar'] = new CURLFile("{$data['avatar']}");
+
+        return HttpHelper::post(
             $apiEndPoint,
             $data,
             [
-                'Authorization' => base64_encode("$api_key"),
+                'Authorization' => base64_encode("{$api_key}"),
                 'Content-Type'  => 'multipart/form-data',
             ]
         );
-        return $uploadResponse;
     }
 }

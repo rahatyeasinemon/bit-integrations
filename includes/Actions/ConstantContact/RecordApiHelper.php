@@ -3,6 +3,7 @@
 /**
  * ConstantContact    Record Api
  */
+
 namespace BitCode\FI\Actions\ConstantContact;
 
 use BitCode\FI\Core\Util\Common;
@@ -16,6 +17,7 @@ use Requests;
 class RecordApiHelper
 {
     private $_integrationID;
+
     private $baseUrl = 'https://api.cc.email/v3/';
 
     public function __construct($integrationDetails, $integId)
@@ -49,7 +51,7 @@ class RecordApiHelper
         }
 
         $requestParams = [
-            'email_address' => (object)[
+            'email_address' => (object) [
                 'address'            => $finalData['email_address'],
                 'permission_to_send' => 'implicit'
             ],
@@ -62,10 +64,10 @@ class RecordApiHelper
             if ($key !== 'email_address') {
                 if (str_contains($key, 'custom-')) {
                     $replacedStr = str_replace('custom-', '', $key);
-                    array_push($customFields, [
+                    $customFields[] = [
                         'custom_field_id' => $replacedStr,
                         'value'           => $value
-                    ]);
+                    ];
                 } else {
                     $requestParams[$key] = $value;
                 }
@@ -75,9 +77,9 @@ class RecordApiHelper
 
         $apiResponse = HttpHelper::post($apiEndpoints, json_encode((object) $requestParams), $this->_defaultHeader);
 
-        if (gettype($apiResponse) === 'array' && isset($apiResponse[0]->error_key) && $apiResponse[0]->error_key === 'contacts.api.conflict') {
+        if (\gettype($apiResponse) === 'array' && isset($apiResponse[0]->error_key) && $apiResponse[0]->error_key === 'contacts.api.conflict') {
             $startIndx = strpos($apiResponse[0]->error_message, 'contact');
-            $strLength = strlen($apiResponse[0]->error_message);
+            $strLength = \strlen($apiResponse[0]->error_message);
             $contactId = substr($apiResponse[0]->error_message, $startIndx + 8, $strLength);
             $apiEndpoints = $this->baseUrl . 'contacts/' . $contactId;
             unset($requestParams['create_source']);
@@ -96,7 +98,7 @@ class RecordApiHelper
             $actionValue = $value->constantContactFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
@@ -154,7 +156,7 @@ class RecordApiHelper
             $finalData
         );
 
-        if (isset($apiResponse->error_key) || (gettype($apiResponse) === 'array' && $apiResponse[0]->error_key)) {
+        if (isset($apiResponse->error_key) || (\gettype($apiResponse) === 'array' && $apiResponse[0]->error_key)) {
             LogHandler::save($this->_integrationID, json_encode(['source_type' => 'contact', 'type_name' => 'add-contact']), 'error', json_encode($apiResponse));
         } else {
             if (isset($apiResponse->contact_id)) {
@@ -163,6 +165,7 @@ class RecordApiHelper
                 LogHandler::save($this->_integrationID, json_encode(['source_type' => 'contact', 'type_name' => 'update-contact']), 'success', json_encode($apiResponse));
             }
         }
+
         return $apiResponse;
     }
 }

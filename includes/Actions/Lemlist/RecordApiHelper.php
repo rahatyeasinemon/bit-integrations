@@ -8,15 +8,17 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_integrationID;
+
     private $_integrationDetails;
+
     private $_defaultHeader;
 
     public function __construct($integrationDetails, $integId, $apiKey)
     {
         $this->_integrationDetails = $integrationDetails;
-        $this->_integrationID      = $integId;
-        $this->_defaultHeader      = [
-            'Authorization' => 'Basic ' . base64_encode(":$apiKey"),
+        $this->_integrationID = $integId;
+        $this->_defaultHeader = [
+            'Authorization' => 'Basic ' . base64_encode(":{$apiKey}"),
             'Content-Type'  => 'application/json'
         ];
     }
@@ -25,14 +27,15 @@ class RecordApiHelper
     {
         $contactData = $data;
         $apiEndpoints = "https://api.lemlist.com/api/campaigns/{$selectedCampaign}/leads/{$email}";
-        return  HttpHelper::request($apiEndpoints, 'PATCH', json_encode($contactData), $this->_defaultHeader);
+
+        return HttpHelper::request($apiEndpoints, 'PATCH', json_encode($contactData), $this->_defaultHeader);
     }
 
     public function addLead($selectedCampaign, $finalData)
     {
         $apiEndpoints = "https://api.lemlist.com/api/campaigns/{$selectedCampaign}/leads";
-        $res =  HttpHelper::post($apiEndpoints, json_encode($finalData), $this->_defaultHeader);
-        return $res;
+
+        return HttpHelper::post($apiEndpoints, json_encode($finalData), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -40,11 +43,11 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->lemlistField;
+            $actionValue = $value->lemlistField;
 
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = $value->customValue;
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
@@ -52,15 +55,9 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    private function existLead($selectedCampaign, $email)
-    {
-        $apiEndpoints = "https://api.lemlist.com/api/leads/{$email}?campaignId={$selectedCampaign}";
-        return HttpHelper::get($apiEndpoints, null, $this->_defaultHeader);
-    }
-
     public function execute($selectedCampaign, $fieldValues, $fieldMap, $actions)
     {
-        $finalData   = (object) $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        $finalData = (object) $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $existLead = $this->existLead($selectedCampaign, $finalData->email);
 
         if (!$existLead->_id) {
@@ -89,5 +86,12 @@ class RecordApiHelper
         }
 
         return $apiResponse;
+    }
+
+    private function existLead($selectedCampaign, $email)
+    {
+        $apiEndpoints = "https://api.lemlist.com/api/leads/{$email}?campaignId={$selectedCampaign}";
+
+        return HttpHelper::get($apiEndpoints, null, $this->_defaultHeader);
     }
 }

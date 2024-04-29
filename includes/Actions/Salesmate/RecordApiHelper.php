@@ -15,25 +15,29 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $integrationDetails;
+
     private $integrationId;
+
     private $apiUrl;
+
     private $defaultHeader;
+
     private $type;
+
     private $typeName;
 
     public function __construct($integrationDetails, $integId, $sessionToken, $linkName)
     {
         $this->integrationDetails = $integrationDetails;
-        $this->integrationId      = $integId;
-        $this->apiUrl             = "https://{$linkName}.salesmate.io/apis/";
-        $this->defaultHeader      =
-            [
-                "Content-type" => "application/json",
-                "accessToken"  => $sessionToken,
-                "x-linkname"   => $linkName . ".salesmate.io",
+        $this->integrationId = $integId;
+        $this->apiUrl = "https://{$linkName}.salesmate.io/apis/";
+        $this->defaultHeader
+            = [
+                'Content-type' => 'application/json',
+                'accessToken'  => $sessionToken,
+                'x-linkname'   => $linkName . '.salesmate.io',
             ];
     }
-
 
     public function addProduct($finalData)
     {
@@ -53,9 +57,10 @@ class RecordApiHelper
             $finalData['owner'] = ($this->integrationDetails->selectedCRMOwner);
         }
 
-        $this->type     = 'Product';
+        $this->type = 'Product';
         $this->typeName = 'Product created';
-        $apiEndpoint = $this->apiUrl . "v1/products";
+        $apiEndpoint = $this->apiUrl . 'v1/products';
+
         return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
@@ -75,9 +80,10 @@ class RecordApiHelper
             $finalData['owner'] = ($this->integrationDetails->selectedCRMOwner);
         }
 
-        $this->type     = 'Contact';
+        $this->type = 'Contact';
         $this->typeName = 'Contact created';
-        $apiEndpoint = $this->apiUrl . "contact/v4";
+        $apiEndpoint = $this->apiUrl . 'contact/v4';
+
         return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
@@ -99,9 +105,10 @@ class RecordApiHelper
             $finalData['owner'] = ($this->integrationDetails->selectedCRMOwner);
         }
 
-        $this->type     = 'Company';
+        $this->type = 'Company';
         $this->typeName = 'Company created';
-        $apiEndpoint = $this->apiUrl . "company/v4";
+        $apiEndpoint = $this->apiUrl . 'company/v4';
+
         return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
@@ -135,9 +142,10 @@ class RecordApiHelper
             $finalData['stage'] = ($this->integrationDetails->selectedCRMStage);
         }
 
-        $this->type     = 'Deal';
+        $this->type = 'Deal';
         $this->typeName = 'Deal created';
-        $apiEndpoint = $this->apiUrl . "deal/v4";
+        $apiEndpoint = $this->apiUrl . 'deal/v4';
+
         return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
@@ -146,22 +154,23 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->salesmateFormField;
+            $actionValue = $value->salesmateFormField;
             $dataFinal[$actionValue] = ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue];
         }
+
         return $dataFinal;
     }
 
     public function execute($fieldValues, $fieldMap, $actionId)
     {
-        $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        if ((int)$actionId === 1) {
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        if ((int) $actionId === 1) {
             $apiResponse = $this->addContact($finalData);
-        } elseif ((int)$actionId === 4) {
+        } elseif ((int) $actionId === 4) {
             $apiResponse = $this->addDeal($finalData);
-        } elseif ((int)$actionId === 5) {
+        } elseif ((int) $actionId === 5) {
             $apiResponse = $this->addCompany($finalData);
-        } elseif ((int)$actionId === 6) {
+        } elseif ((int) $actionId === 6) {
             $apiResponse = $this->addProduct($finalData);
         }
 
@@ -171,6 +180,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }

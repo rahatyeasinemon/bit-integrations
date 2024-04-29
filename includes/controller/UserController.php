@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\controller;
 
 final class UserController

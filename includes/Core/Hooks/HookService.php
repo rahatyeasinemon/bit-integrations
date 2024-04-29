@@ -2,11 +2,11 @@
 
 namespace BitCode\FI\Core\Hooks;
 
-use FilesystemIterator;
 use BitCode\FI\Admin\AdminAjax;
 use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Core\Util\Request;
 use BitCode\FI\Core\Util\StoreInCache;
+use FilesystemIterator;
 
 class HookService
 {
@@ -28,6 +28,28 @@ class HookService
     public function loadAdminAjax()
     {
         (new AdminAjax())->register();
+    }
+
+    /**
+     * Helps to register integration ajax
+     *
+     * @return void
+     */
+    public function loadActionsHooks()
+    {
+        $this->_includeActionTaskHooks('Actions');
+    }
+
+    /**
+     * Loads API routes
+     *
+     * @return null
+     */
+    public function loadApi()
+    {
+        if (is_readable(BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'api.php')) {
+            include BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'api.php';
+        }
     }
 
     /**
@@ -64,22 +86,12 @@ class HookService
         $listedTriggers = ['CustomTrigger', 'ActionHook', 'Spectra', 'EssentialBlocks', 'Elementor'];
         $activeTrigger = array_merge($activeTrigger, $listedTriggers);
 
-        if (empty($activeTrigger) || !is_array($activeTrigger)) {
+        if (empty($activeTrigger) || !\is_array($activeTrigger)) {
             return;
         }
         foreach ($activeTrigger as $key => $triggerName) {
             $this->_includeTriggerTaskHooks($triggerName);
         }
-    }
-
-    /**
-     * Helps to register integration ajax
-     *
-     * @return void
-     */
-    public function loadActionsHooks()
-    {
-        $this->_includeActionTaskHooks('Actions');
     }
 
     /**
@@ -128,18 +140,6 @@ class HookService
                     include $task_path . 'Hooks.php';
                 }
             }
-        }
-    }
-
-    /**
-     * Loads API routes
-     *
-     * @return null
-     */
-    public function loadApi()
-    {
-        if (is_readable(BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'api.php')) {
-            include BTCBI_PLUGIN_BASEDIR . 'includes' . DIRECTORY_SEPARATOR . 'Routes' . DIRECTORY_SEPARATOR . 'api.php';
         }
     }
 }

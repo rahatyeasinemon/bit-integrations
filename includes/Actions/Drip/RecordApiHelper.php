@@ -15,15 +15,17 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_defaultHeader;
+
     private $_integrationID;
+
     private $_apiEndpoint;
 
     public function __construct($api_token, $integId)
     {
-        $this->_defaultHeader['Authorization'] = 'Basic ' . base64_encode("$api_token:");
-        ;
+        $this->_defaultHeader['Authorization'] = 'Basic ' . base64_encode("{$api_token}:");
+
         $this->_integrationID = $integId;
-        $this->_apiEndpoint = "https://api.getdrip.com/v2";
+        $this->_apiEndpoint = 'https://api.getdrip.com/v2';
     }
 
     // for adding a contact to a campaign.
@@ -31,8 +33,7 @@ class RecordApiHelper
     {
         $insertRecordEndpoint = "{$this->_apiEndpoint}/{$account_id}/{$method}";
 
-        $res = HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
-        return $res;
+        return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -44,10 +45,11 @@ class RecordApiHelper
             $actionValue = $value->dripField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = $value->customValue;
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
 
@@ -65,9 +67,9 @@ class RecordApiHelper
         $type = 'insert';
 
         if ($recordApiResponse !== 200) {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', "There is an error while inserting record");
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', 'There is an error while inserting record');
         } else {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', "Record inserted successfully");
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', 'Record inserted successfully');
         }
 
         return $recordApiResponse;

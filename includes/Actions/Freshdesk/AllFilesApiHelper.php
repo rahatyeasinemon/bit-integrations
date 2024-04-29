@@ -7,6 +7,7 @@
 namespace BitCode\FI\Actions\Freshdesk;
 
 use BitCode\FI\Core\Util\HttpHelper;
+use CURLFile;
 
 /**
  * Provide functionality for Upload files
@@ -14,6 +15,7 @@ use BitCode\FI\Core\Util\HttpHelper;
 final class AllFilesApiHelper
 {
     private $_defaultHeader;
+
     private $_payloadBoundary;
 
     public function __construct()
@@ -25,10 +27,11 @@ final class AllFilesApiHelper
     /**
      * Helps to execute upload files api
      *
-     * @param String $apiEndPoint Telegram API base URL
-     * @param Array  $data        Data to pass to API
+     * @param string $apiEndPoint Telegram API base URL
+     * @param array  $data        Data to pass to API
+     * @param mixed  $api_key
      *
-     * @return Array $uploadResponse Telegram API response
+     * @return array $uploadResponse Telegram API response
      */
     public function allUploadFiles($apiEndPoint, $data, $api_key)
     {
@@ -38,10 +41,11 @@ final class AllFilesApiHelper
             $apiEndPoint,
             $data,
             [
-                'Authorization' => base64_encode("$api_key"),
+                'Authorization' => base64_encode("{$api_key}"),
                 'Content-Type'  => 'multipart/form-data',
             ]
         );
+
         return $uploadResponse;
     }
 
@@ -49,12 +53,12 @@ final class AllFilesApiHelper
     {
         $attachments = [];
         foreach ($files as $file) {
-            if (is_array($file)) {
+            if (\is_array($file)) {
                 return static::setAttachment($file);
-            } else {
-                $attachments[] = new \CURLFile($file);
             }
+            $attachments[] = new CURLFile($file);
         }
+
         return $attachments;
     }
 }

@@ -6,10 +6,8 @@
 
 namespace BitCode\FI\Actions\KirimEmail;
 
-use WP_Error;
-use BitCode\FI\Core\Util\IpTool;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\KirimEmail\RecordApiHelper;
+use WP_Error;
 
 /**
  * Provide functionality for KirimEmail integration
@@ -105,8 +103,8 @@ class KirimEmailController
         $mainAction = $integrationDetails->mainAction;
 
         if (
-            empty($api_key) ||
-            empty($integrationDetails)
+            empty($api_key)
+            || empty($integrationDetails)
             || empty($userName)
             || empty($fieldMap)
 
@@ -126,6 +124,7 @@ class KirimEmailController
         if (is_wp_error($kirinEmailApiResponse)) {
             return $kirinEmailApiResponse;
         }
+
         return $kirinEmailApiResponse;
     }
 }

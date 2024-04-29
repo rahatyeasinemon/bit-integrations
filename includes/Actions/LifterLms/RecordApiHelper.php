@@ -1,15 +1,16 @@
 <?php
+
 namespace BitCode\FI\Actions\LifterLms;
 
-use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
-use WP_Error;
 use LLMS_Course;
 use LLMS_Section;
+use WP_Error;
 
 class RecordApiHelper
 {
     private $integrationID;
+
     private $_integrationDetails;
 
     public function __construct($integrationDetails, $integId)
@@ -24,9 +25,10 @@ class RecordApiHelper
         if (empty($user_id)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('User not logged in', 'bit-integrations'));
         }
-        if (!function_exists('llms_mark_complete')) {
+        if (!\function_exists('llms_mark_complete')) {
             return false;
         }
+
         return llms_mark_complete($user_id, $lessonId, 'lesson');
     }
 
@@ -36,7 +38,7 @@ class RecordApiHelper
         if (empty($user_id)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('User not logged in', 'bit-integrations'));
         }
-        if (!function_exists('llms_mark_complete')) {
+        if (!\function_exists('llms_mark_complete')) {
             return false;
         }
 
@@ -57,7 +59,7 @@ class RecordApiHelper
         if (empty($user_id)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('User not logged in', 'bit-integrations'));
         }
-        if (!function_exists('llms_enroll_student')) {
+        if (!\function_exists('llms_enroll_student')) {
             return false;
         }
 
@@ -70,7 +72,7 @@ class RecordApiHelper
         if (empty($user_id)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('User not logged in', 'bit-integrations'));
         }
-        if (!function_exists('llms_mark_complete')) {
+        if (!\function_exists('llms_mark_complete')) {
             return false;
         }
 
@@ -90,6 +92,7 @@ class RecordApiHelper
                 llms_mark_complete($user_id, $section->id, 'section');
             }
         }
+
         return llms_mark_complete($user_id, $course_id, 'course');
     }
 
@@ -99,7 +102,7 @@ class RecordApiHelper
         if (empty($user_id)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('User not logged in', 'bit-integrations'));
         }
-        if (!function_exists('llms_unenroll_student')) {
+        if (!\function_exists('llms_unenroll_student')) {
             return false;
         }
 
@@ -112,33 +115,33 @@ class RecordApiHelper
         if (empty($user_id)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('User not logged in', 'bit-integrations'));
         }
-        if (!function_exists('llms_enroll_student')) {
+        if (!\function_exists('llms_enroll_student')) {
             return false;
         }
 
         return llms_enroll_student($user_id, $membershipId);
-    } 
+    }
 
     public function unEnrollUserFromMembership($membershipId)
     {
         $user_id = 30;
-        if ( ! function_exists( 'llms_unenroll_student' ) && empty( $user_id ) && empty($membershipId)) {
-			return false;
-		}
+        if (! \function_exists('llms_unenroll_student') && empty($user_id) && empty($membershipId)) {
+            return false;
+        }
 
-		if ( 'All' === intval( $membershipId ) ) {
-			$student     = llms_get_student( $user_id );
-			$memberships = $student->get_memberships( array( 'limit' => 999 ) );
-			if ( isset( $memberships['results'] ) && ! empty( $memberships['results'] ) ) {
-				foreach ( $memberships['results'] as $membership ) {
-					llms_unenroll_student( $user_id, $membership, 'expired' );
-				}
+        if ('All' === \intval($membershipId)) {
+            $student = llms_get_student($user_id);
+            $memberships = $student->get_memberships(['limit' => 999]);
+            if (isset($memberships['results']) && ! empty($memberships['results'])) {
+                foreach ($memberships['results'] as $membership) {
+                    llms_unenroll_student($user_id, $membership, 'expired');
+                }
+
                 return true;
-			}
-		} else {
-		    return llms_unenroll_student( $user_id, $membershipId, 'expired' );
-		}
-
+            }
+        } else {
+            return llms_unenroll_student($user_id, $membershipId, 'expired');
+        }
     }
 
     public function execute(
@@ -198,7 +201,7 @@ class RecordApiHelper
             } else {
                 LogHandler::save($this->integrationID, json_encode(['type' => 'course-unenroll', 'type_name' => 'user-course-unenroll']), 'error', 'Failed to unenroll user from course.');
             }
-        } elseif ($mainAction == 7){
+        } elseif ($mainAction == 7) {
             $membershipId = $integrationDetails->membershipId;
             $response = $this->unEnrollUserFromMembership($membershipId);
             if ($response) {

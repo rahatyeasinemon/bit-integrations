@@ -6,34 +6,35 @@
 
 namespace BitCode\FI\Actions\MailChimp;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
-
+use WP_Error;
 
 /**
  * Provide functionality for MailChimp integration
  */
 class MailChimpController
 {
-
     private $_integrationID;
 
     public function __construct($integrationID)
     {
         $this->_integrationID = $integrationID;
     }
+
     /**
      * MailChimp API Endpoint
+     *
+     * @param mixed $dc
      */
     public static function apiEndPoint($dc)
     {
-        return "https://$dc.api.mailchimp.com/3.0";
+        return "https://{$dc}.api.mailchimp.com/3.0";
     }
 
     /**
      * Process ajax request for generate_token
      *
-     * @param Object $requestsParams Params for generate token
+     * @param object $requestsParams Params for generate token
      *
      * @return JSON zoho crm api response and status
      */
@@ -55,19 +56,19 @@ class MailChimpController
         }
 
         $apiEndpoint = 'https://login.mailchimp.com/oauth2/token';
-        $authorizationHeader["Content-Type"] = 'application/x-www-form-urlencoded';
-        $requestParams = array(
-            'code' => $requestsParams->code,
-            'client_id' => $requestsParams->clientId,
+        $authorizationHeader['Content-Type'] = 'application/x-www-form-urlencoded';
+        $requestParams = [
+            'code'          => $requestsParams->code,
+            'client_id'     => $requestsParams->clientId,
             'client_secret' => $requestsParams->clientSecret,
-            'redirect_uri' => $requestsParams->redirectURI,
-            'grant_type' => 'authorization_code'
-        );
+            'redirect_uri'  => $requestsParams->redirectURI,
+            'grant_type'    => 'authorization_code'
+        ];
         $apiResponse = HttpHelper::post($apiEndpoint, $requestParams, $authorizationHeader);
 
         $metaDataEndPoint = 'https://login.mailchimp.com/oauth2/metadata';
 
-        $authorizationHeader["Authorization"] = "Bearer {$apiResponse->access_token}";
+        $authorizationHeader['Authorization'] = "Bearer {$apiResponse->access_token}";
         $metaData = HttpHelper::post($metaDataEndPoint, null, $authorizationHeader);
 
         $apiResponse->dc = $metaData->dc;
@@ -78,9 +79,10 @@ class MailChimpController
                 400
             );
         }
-        $apiResponse->generates_on = \time();
+        $apiResponse->generates_on = time();
         wp_send_json_success($apiResponse, 200);
     }
+
     /**
      * Process ajax request for refresh MailChimp Audience list
      *
@@ -105,9 +107,9 @@ class MailChimpController
             );
         }
         $response = [];
-        $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . "/lists";
+        $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . '/lists';
 
-        $authorizationHeader["Authorization"] = "Bearer {$queryParams->tokenDetails->access_token}";
+        $authorizationHeader['Authorization'] = "Bearer {$queryParams->tokenDetails->access_token}";
         $audienceResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 
         $allList = [];
@@ -115,10 +117,10 @@ class MailChimpController
             $audienceLists = $audienceResponse->lists;
             // wp_send_json_success($audienceLists);
             foreach ($audienceLists as $audienceList) {
-                $allList[$audienceList->name] = (object) array(
-                    'listId' => $audienceList->id,
+                $allList[$audienceList->name] = (object) [
+                    'listId'   => $audienceList->id,
                     'listName' => $audienceList->name
-                );
+                ];
             }
             uksort($allList, 'strnatcasecmp');
 
@@ -131,6 +133,7 @@ class MailChimpController
         }
         wp_send_json_success($response, 200);
     }
+
     /**
      * Process ajax request for refresh MailChimp Audience Fields
      *
@@ -153,8 +156,8 @@ class MailChimpController
                 400
             );
         }
-        $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . "/lists/$queryParams->listId/merge-fields";
-        $authorizationHeader["Authorization"] = "Bearer {$queryParams->tokenDetails->access_token}";
+        $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . "/lists/{$queryParams->listId}/merge-fields";
+        $authorizationHeader['Authorization'] = "Bearer {$queryParams->tokenDetails->access_token}";
         $mergeFieldResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 
         $fields = [];
@@ -164,17 +167,18 @@ class MailChimpController
                 if ($field->name === 'Address') {
                     continue;
                 }
-                $fields[$field->tag] = (object) array(
-                    'tag' => $field->tag,
-                    'name' => $field->name,
+                $fields[$field->tag] = (object) [
+                    'tag'      => $field->tag,
+                    'name'     => $field->name,
                     'required' => $field->required ?? false
-                );
+                ];
             }
-            $fields['Email'] = (object) array('tag' => 'email_address', 'name' => 'Email', 'required' => true);
+            $fields['Email'] = (object) ['tag' => 'email_address', 'name' => 'Email', 'required' => true];
             $response['audienceField'] = $fields;
             wp_send_json_success($response);
         }
     }
+
     /**
      * Process ajax request for refresh MailChimp Tags
      *
@@ -197,18 +201,18 @@ class MailChimpController
                 400
             );
         }
-        $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . "/lists/$queryParams->listId/segments?count=1000";
-        $authorizationHeader["Authorization"] = "Bearer {$queryParams->tokenDetails->access_token}";
+        $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . "/lists/{$queryParams->listId}/segments?count=1000";
+        $authorizationHeader['Authorization'] = "Bearer {$queryParams->tokenDetails->access_token}";
         $tagsList = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 
         $allList = [];
         foreach ($tagsList->segments as $tag) {
-            $allList[$tag->name] = (object) array(
-                'tagId' => $tag->id,
+            $allList[$tag->name] = (object) [
+                'tagId'   => $tag->id,
                 'tagName' => $tag->name
-            );
+            ];
         }
-        uksort($allList, "strnatcasecmp");
+        uksort($allList, 'strnatcasecmp');
         $response['audienceTags'] = $allList;
         wp_send_json_success($response);
     }
@@ -216,8 +220,8 @@ class MailChimpController
     /**
      * Save updated access_token to avoid unnecessary token generation
      *
-     * @param Object $integrationData Details of flow
-     * @param Array  $fieldValues     Data to send Mail Chimp
+     * @param object $integrationData Details of flow
+     * @param array  $fieldValues     Data to send Mail Chimp
      *
      * @return null
      */
@@ -255,6 +259,7 @@ class MailChimpController
         if (is_wp_error($mChimpApiResponse)) {
             return $mChimpApiResponse;
         }
+
         return $mChimpApiResponse;
     }
 }

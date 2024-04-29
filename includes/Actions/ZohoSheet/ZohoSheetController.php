@@ -2,10 +2,9 @@
 
 namespace BitCode\FI\Actions\ZohoSheet;
 
-use WP_Error;
-use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\ZohoSheet\RecordApiHelper;
+use BitCode\FI\Flow\FlowController;
+use WP_Error;
 
 class ZohoSheetController
 {
@@ -25,12 +24,12 @@ class ZohoSheetController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiEndpoint   = \urldecode($requestParams->{'accounts-server'}) . '/oauth/v2/token';
+        $apiEndpoint = urldecode($requestParams->{'accounts-server'}) . '/oauth/v2/token';
         $requestParams = [
             'grant_type'    => 'authorization_code',
             'client_id'     => $requestParams->clientId,
             'client_secret' => $requestParams->clientSecret,
-            'redirect_uri'  => \urldecode($requestParams->redirectURI),
+            'redirect_uri'  => urldecode($requestParams->redirectURI),
             'code'          => $requestParams->code
         ];
 
@@ -40,7 +39,7 @@ class ZohoSheetController
             wp_send_json_error(empty($apiResponse->error) ? 'Unknown' : $apiResponse->error, 400);
         }
 
-        $apiResponse->generates_on = \time();
+        $apiResponse->generates_on = time();
         wp_send_json_success($apiResponse, 200);
     }
 
@@ -53,7 +52,7 @@ class ZohoSheetController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret, $requestParams->dataCenter);
+        $token = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret, $requestParams->dataCenter);
         $headers = [
             'Authorization' => 'Zoho-oauthtoken ' . $token->access_token,
         ];
@@ -83,7 +82,7 @@ class ZohoSheetController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret, $requestParams->dataCenter);
+        $token = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret, $requestParams->dataCenter);
         $headers = [
             'Authorization' => 'Zoho-oauthtoken ' . $token->access_token,
         ];
@@ -114,7 +113,7 @@ class ZohoSheetController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $token   = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret, $requestParams->dataCenter);
+        $token = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret, $requestParams->dataCenter);
         $headers = [
             'Authorization' => 'Zoho-oauthtoken ' . $token->access_token,
         ];
@@ -124,7 +123,7 @@ class ZohoSheetController
 
         if (isset($apiResponse->records)) {
             if (!empty($apiResponse->records)) {
-                $allHeaders  = array_diff(array_keys((array) $apiResponse->records[0]), ['row_index']);
+                $allHeaders = array_diff(array_keys((array) $apiResponse->records[0]), ['row_index']);
                 foreach ($allHeaders as $header) {
                     $sheetHeaders[] = [
                         'key'      => $header,
@@ -141,21 +140,46 @@ class ZohoSheetController
         }
     }
 
+    public function execute($integrationData, $fieldValues)
+    {
+        $integrationDetails = $integrationData->flow_details;
+        $integId = $integrationData->id;
+        $fieldMap = $integrationDetails->field_map;
+        $tokenDetails = self::tokenExpiryCheck($integrationDetails->tokenDetails, $integrationDetails->clientId, $integrationDetails->clientSecret, $integrationDetails->dataCenter);
+        if ($tokenDetails->access_token !== $integrationDetails->tokenDetails->access_token) {
+            $this->saveRefreshedToken($this->integrationID, $tokenDetails);
+        }
+
+        if (empty($fieldMap) || empty($tokenDetails)) {
+            return new WP_Error('REQ_FIELD_EMPTY', __('Field map, token details are required for ZohoSheet api', 'bit-integrations'));
+        }
+
+        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $tokenDetails->access_token);
+        $zohoSheetApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap);
+
+        if (is_wp_error($zohoSheetApiResponse)) {
+            return $zohoSheetApiResponse;
+        }
+
+        return $zohoSheetApiResponse;
+    }
+
     protected static function tokenExpiryCheck($token, $clientId, $clientSecret, $dataCenter)
     {
         if (!$token) {
             return false;
         }
 
-        if ((intval($token->generates_on) + (55 * 60)) < time()) {
+        if ((\intval($token->generates_on) + (55 * 60)) < time()) {
             $refreshToken = self::refreshToken($token->refresh_token, $clientId, $clientSecret, $dataCenter);
             if (is_wp_error($refreshToken) || !empty($refreshToken->error)) {
                 return false;
             }
             $token->access_token = $refreshToken->access_token;
-            $token->expires_in   = $refreshToken->expires_in;
+            $token->expires_in = $refreshToken->expires_in;
             $token->generates_on = $refreshToken->generates_on;
         }
+
         return $token;
     }
 
@@ -174,7 +198,8 @@ class ZohoSheetController
             return false;
         }
         $token = $apiResponse;
-        $token->generates_on = \time();
+        $token->generates_on = time();
+
         return $token;
     }
 
@@ -192,29 +217,6 @@ class ZohoSheetController
 
         $newDetails = json_decode($zohoSheetDetails[0]->flow_details);
         $newDetails->tokenDetails = $tokenDetails;
-        $flow->update($integrationID, ['flow_details' => \json_encode($newDetails)]);
-    }
-
-    public function execute($integrationData, $fieldValues)
-    {
-        $integrationDetails = $integrationData->flow_details;
-        $integId            = $integrationData->id;
-        $fieldMap           = $integrationDetails->field_map;
-        $tokenDetails       = self::tokenExpiryCheck($integrationDetails->tokenDetails, $integrationDetails->clientId, $integrationDetails->clientSecret, $integrationDetails->dataCenter);
-        if ($tokenDetails->access_token !== $integrationDetails->tokenDetails->access_token) {
-            $this->saveRefreshedToken($this->integrationID, $tokenDetails);
-        }
-
-        if (empty($fieldMap) || empty($tokenDetails)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('Field map, token details are required for ZohoSheet api', 'bit-integrations'));
-        }
-
-        $recordApiHelper   = new RecordApiHelper($integrationDetails, $integId, $tokenDetails->access_token);
-        $zohoSheetApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap);
-
-        if (is_wp_error($zohoSheetApiResponse)) {
-            return $zohoSheetApiResponse;
-        }
-        return $zohoSheetApiResponse;
+        $flow->update($integrationID, ['flow_details' => json_encode($newDetails)]);
     }
 }

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Acumbamail;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Trello integration
@@ -87,16 +87,16 @@ class AcumbamailController
 
         $requestParams = [
             'auth_token' => $refreshFieldsRequestParams->auth_token,
-            'list_id' => $refreshFieldsRequestParams->list_id,
+            'list_id'    => $refreshFieldsRequestParams->list_id,
         ];
 
         $response = HttpHelper::post($apiEndpoints, $requestParams);
         $formattedResponse = [];
         foreach ($response->fields as $value) {
             $formattedResponse[$value->name] = [
-                "key"       => $value->tag,
-                "label"     => $value->label,
-                'required'  => $value->type === 'email' ? true : false,
+                'key'      => $value->tag,
+                'label'    => $value->label,
+                'required' => $value->type === 'email' ? true : false,
             ];
         }
 
@@ -140,6 +140,7 @@ class AcumbamailController
         if (is_wp_error($acumbamailApiResponse)) {
             return $acumbamailApiResponse;
         }
+
         return $acumbamailApiResponse;
     }
 }

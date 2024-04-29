@@ -6,19 +6,17 @@
 
 namespace BitCode\FI\Actions\Telegram;
 
-use WP_Error;
-use BitCode\FI\Core\Util\IpTool;
 use BitCode\FI\Core\Util\HttpHelper;
-
-use BitCode\FI\Actions\Telegram\RecordApiHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Telegram integration
  */
 class TelegramController
 {
-    private $_integrationID;
     public const APIENDPOINT = 'https://api.telegram.org/bot';
+
+    private $_integrationID;
 
     // public function __construct($integrationID=0)
     // {
@@ -28,7 +26,7 @@ class TelegramController
     /**
      * Process ajax request for generate_token
      *
-     * @param Object $requestsParams Params to authorize
+     * @param object $requestsParams Params to authorize
      *
      * @return JSON zoho crm api response and status
      */
@@ -45,7 +43,7 @@ class TelegramController
         }
 
         $apiEndpoint = self::APIENDPOINT . $requestsParams->bot_api_key . '/getMe';
-        $authorizationHeader["Accept"] = 'application/x-www-form-urlencoded';
+        $authorizationHeader['Accept'] = 'application/x-www-form-urlencoded';
         $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 
         if (is_wp_error($apiResponse) || !$apiResponse->ok) {
@@ -55,9 +53,8 @@ class TelegramController
             );
         }
         $apiEndpoint = self::APIENDPOINT . $requestsParams->bot_api_key . '/getUpdates';
-        $authorizationHeader["Accept"] = 'application/x-www-form-urlencoded';
+        $authorizationHeader['Accept'] = 'application/x-www-form-urlencoded';
         $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
-
 
         if (is_wp_error($apiResponse) || !$apiResponse->ok) {
             wp_send_json_error(
@@ -68,14 +65,14 @@ class TelegramController
 
         wp_send_json_success(true);
     }
+
     /**
      * Process ajax request for refresh telegram get Updates
      *
-     * @param Object $requestsParams Params to get update
+     * @param object $requestsParams Params to get update
      *
      * @return JSON telegram get Updates data
      */
-
     public static function refreshGetUpdates($requestsParams)
     {
         if (empty($requestsParams->bot_api_key)) {
@@ -88,7 +85,7 @@ class TelegramController
             );
         }
         $apiEndpoint = self::APIENDPOINT . $requestsParams->bot_api_key . '/getUpdates';
-        $authorizationHeader["Accept"] = 'application/json';
+        $authorizationHeader['Accept'] = 'application/json';
         $telegramResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 
         $allList = [];
@@ -97,7 +94,7 @@ class TelegramController
 
             foreach ($telegramChatLists as $list) {
                 $allList[$list->my_chat_member->chat->title] = (object) [
-                    'id' => $list->my_chat_member->chat->id,
+                    'id'   => $list->my_chat_member->chat->id,
                     'name' => $list->my_chat_member->chat->title,
                 ];
             }
@@ -140,6 +137,7 @@ class TelegramController
         if (is_wp_error($telegramApiResponse)) {
             return $telegramApiResponse;
         }
+
         return $telegramApiResponse;
     }
 }

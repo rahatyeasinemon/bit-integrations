@@ -8,14 +8,16 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_integrationID;
+
     private $_integrationDetails;
+
     private $_defaultHeader;
 
     public function __construct($integrationDetails, $integId, $access_token)
     {
         $this->_integrationDetails = $integrationDetails;
-        $this->_integrationID      = $integId;
-        $this->_defaultHeader      = [
+        $this->_integrationID = $integId;
+        $this->_defaultHeader = [
             'Authorization' => 'Bearer ' . $access_token,
             'Content-Type'  => 'application/json'
         ];
@@ -35,8 +37,7 @@ class RecordApiHelper
                     }]
                 }';
 
-        $res =  HttpHelper::post($apiEndpoints, $body, $this->_defaultHeader);
-        return $res;
+        return HttpHelper::post($apiEndpoints, $body, $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -44,11 +45,11 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->sendPulseField;
+            $actionValue = $value->sendPulseField;
 
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = $value->customValue;
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
@@ -58,7 +59,7 @@ class RecordApiHelper
 
     public function execute($selectedList, $fieldValues, $fieldMap)
     {
-        $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
 
         $apiResponse = $this->addContact($selectedList, $finalData);
 
@@ -68,6 +69,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'Adding Contact']), 'error', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }

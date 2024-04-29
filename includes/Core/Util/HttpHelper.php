@@ -6,7 +6,7 @@ use CURLFile;
 
 final class HttpHelper
 {
-    public static $responseCode = null;
+    public static $responseCode;
 
     public static function post($url, $data, $headers = null, $options = null)
     {
@@ -42,14 +42,14 @@ final class HttpHelper
         }
 
         static::$responseCode = null;
-        $defaultOptions       = [
-            'method'    => $type,
-            'headers'   => $headers,
-            'body'      => $data,
-            "timeout"   => 30
+        $defaultOptions = [
+            'method'  => $type,
+            'headers' => $headers,
+            'body'    => $data,
+            'timeout' => 30
         ];
 
-        $options        = wp_parse_args($options, $defaultOptions);
+        $options = wp_parse_args($options, $defaultOptions);
         $requestReponse = wp_remote_request($url, $options);
 
         if (is_wp_error($requestReponse)) {
@@ -62,8 +62,8 @@ final class HttpHelper
         // }
 
         static::$responseCode = wp_remote_retrieve_response_code($requestReponse);
-        $responseBody         = wp_remote_retrieve_body($requestReponse);
-        $jsonData             = json_decode($responseBody);
+        $responseBody = wp_remote_retrieve_body($requestReponse);
+        $jsonData = json_decode($responseBody);
 
         return \is_null($jsonData) ? $responseBody : $jsonData;
     }
@@ -78,7 +78,7 @@ final class HttpHelper
             if (is_iterable($value)) {
                 foreach ($value as $singleValue) {
                     $count++;
-                    $payload .= self::processFormField($boundary, $name . "[]", $singleValue);
+                    $payload .= self::processFormField($boundary, $name . '[]', $singleValue);
                 }
             } else {
                 $count++;
@@ -90,7 +90,6 @@ final class HttpHelper
 
         return $payload;
     }
-
 
     public static function processFormField($boundary, $name, $value)
     {
@@ -108,9 +107,9 @@ final class HttpHelper
     {
         $payload = '--' . $boundary;
         $payload .= "\r\n";
-        $payload .= 'Content-Disposition: form-data; name="' . $name .
-            '"' . "\r\n\r\n";
-        $payload .= is_string($value) ? $value : wp_json_encode($value);
+        $payload .= 'Content-Disposition: form-data; name="' . $name
+            . '"' . "\r\n\r\n";
+        $payload .= \is_string($value) ? $value : wp_json_encode($value);
         $payload .= "\r\n";
 
         return $payload;
@@ -120,8 +119,8 @@ final class HttpHelper
     {
         $payload = '--' . $boundary;
         $payload .= "\r\n";
-        $payload .= 'Content-Disposition: form-data; name="' . $name .
-            '"; filename="' . basename($file->getFilename()) . '"' . "\r\n";
+        $payload .= 'Content-Disposition: form-data; name="' . $name
+            . '"; filename="' . basename($file->getFilename()) . '"' . "\r\n";
         $payload .= 'Content-Type: ' . $file->getMimeType() . "\r\n";
         $payload .= "\r\n";
         $payload .= file_get_contents($file->getFilename());

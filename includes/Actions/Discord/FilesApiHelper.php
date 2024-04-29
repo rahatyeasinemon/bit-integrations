@@ -15,6 +15,7 @@ use CURLFile;
 final class FilesApiHelper
 {
     private $_defaultHeader;
+
     private $_payloadBoundary;
 
     public function __construct()
@@ -26,16 +27,18 @@ final class FilesApiHelper
     /**
      * Helps to execute upload files api
      *
-     * @param String $apiEndPoint discord API base URL
-     * @param Array  $data        Data to pass to API
+     * @param string $apiEndPoint  discord API base URL
+     * @param array  $data         Data to pass to API
+     * @param mixed  $_accessToken
+     * @param mixed  $channel_id
      *
-     * @return Array $uploadResponse discord API response
+     * @return array $uploadResponse discord API response
      */
     public function uploadFiles($apiEndPoint, $data, $_accessToken, $channel_id)
     {
         $uploadFileEndpoint = $apiEndPoint . '/channels/' . $channel_id . '/messages';
 
-        if (is_array($data['file'])) {
+        if (\is_array($data['file'])) {
             $file = $data['file'][0];
         } else {
             $file = $data['file'];
@@ -45,7 +48,7 @@ final class FilesApiHelper
             return false;
         }
 
-        $response = HttpHelper::post(
+        return HttpHelper::post(
             $uploadFileEndpoint,
             [
                 'filename' => new CURLFile($file)
@@ -55,7 +58,5 @@ final class FilesApiHelper
                 'Authorization' => 'Bot ' . $_accessToken
             ]
         );
-
-        return $response;
     }
 }

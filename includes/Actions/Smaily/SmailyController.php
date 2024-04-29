@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Smaily;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Smaily integration
@@ -20,12 +20,12 @@ class SmailyController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $subdomain       = $fieldsRequestParams->subdomain;
-        $apiEndpoint     = "https://$subdomain.sendsmaily.net/api/organizations/users.php";
-        $apiUserName     = $fieldsRequestParams->api_user_name;
+        $subdomain = $fieldsRequestParams->subdomain;
+        $apiEndpoint = "https://{$subdomain}.sendsmaily.net/api/organizations/users.php";
+        $apiUserName = $fieldsRequestParams->api_user_name;
         $apiUserPassword = $fieldsRequestParams->api_user_password;
-        $header          = [
-            'Authorization' => 'Basic ' . base64_encode("$apiUserName:$apiUserPassword")
+        $header = [
+            'Authorization' => 'Basic ' . base64_encode("{$apiUserName}:{$apiUserPassword}")
         ];
 
         $response = HttpHelper::get($apiEndpoint, null, $header);
@@ -40,19 +40,20 @@ class SmailyController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-        $integId            = $integrationData->id;
-        $fieldMap           = $integrationDetails->field_map;
+        $integId = $integrationData->id;
+        $fieldMap = $integrationDetails->field_map;
 
         if (empty($fieldMap) || empty($integrationDetails->subdomain) || empty($integrationDetails->api_user_name) || empty($integrationDetails->api_user_password)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('fields are required for Smaily api', 'bit-integrations'));
         }
 
-        $recordApiHelper   = new RecordApiHelper($integrationDetails, $integId);
+        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $smailyApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap);
 
         if (is_wp_error($smailyApiResponse)) {
             return $smailyApiResponse;
         }
+
         return $smailyApiResponse;
     }
 }
