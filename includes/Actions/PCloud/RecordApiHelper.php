@@ -56,7 +56,6 @@ class RecordApiHelper
             if ($folderWithFile == '') continue;
             foreach ($folderWithFile as $folder => $singleFilePath) {
                 if ($singleFilePath == '') continue;
-                error_log(print_r($singleFilePath, true));
                 $response = $this->uploadFile($folder, is_array($singleFilePath) ? $singleFilePath[0] : $singleFilePath);
                 $this->storeInState($response);
                 $this->deleteFile($singleFilePath[0], $actions);

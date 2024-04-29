@@ -62,9 +62,8 @@ final class Common
             } else {
                 $stringToReplaceField = str_replace($value, '', $stringToReplaceField);
             }
-            // error_log(print_r($stringToReplaceField, true));
         }
-        // die;
+
         return $stringToReplaceField;
     }
 
