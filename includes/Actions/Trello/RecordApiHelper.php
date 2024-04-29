@@ -3,6 +3,7 @@
 /**
  * trello Record Api
  */
+
 namespace BitCode\FI\Actions\Trello;
 
 use BitCode\FI\Core\Util\Common;
@@ -15,6 +16,7 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_integrationID;
+
     private $_integrationDetails;
 
     public function __construct($integrationDetails, $integId)
@@ -26,6 +28,7 @@ class RecordApiHelper
     public function insertCard($data)
     {
         $insertRecordEndpoint = 'https://api.trello.com/1/cards/?idList=' . $this->_integrationDetails->listId . '&key=' . $this->_integrationDetails->clientId . '&token=' . $this->_integrationDetails->accessToken;
+
         return HttpHelper::post($insertRecordEndpoint, $data);
     }
 
@@ -38,10 +41,11 @@ class RecordApiHelper
             $actionValue = $value->trelloFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue(Common::replaceFieldWithValue($value->customValue, $data), $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
 
@@ -63,6 +67,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->_integrationID, json_encode(['type' => 'record', 'type_name' => 'add-contact']), 'success', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }

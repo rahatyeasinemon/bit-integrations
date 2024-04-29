@@ -8,54 +8,35 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_integrationID;
+
     private $_integrationDetails;
+
     private $_defaultHeader;
+
     private $baseUrl;
 
     public function __construct($integrationDetails, $integId, $apiKey)
     {
         $this->_integrationDetails = $integrationDetails;
-        $this->_integrationID      = $integId;
-        $this->baseUrl             = "https://api.createsend.com/api/v3.3";
-        $this->_defaultHeader      = [
+        $this->_integrationID = $integId;
+        $this->baseUrl = 'https://api.createsend.com/api/v3.3';
+        $this->_defaultHeader = [
             'Authorization' => 'Basic ' . base64_encode("{$apiKey}:"),
             'Content-Type'  => 'application/json'
         ];
     }
 
-    private function setSubscriberData($finalData)
-    {
-        $customParams  = [];
-        $requestPerams = ["ConsentToTrack" => "Yes"];
-
-        foreach ($finalData as $key => $value) {
-
-            if (stripos($key, '[') > -1) {
-                array_push(
-                    $customParams,
-                    (object)[
-                        'Key'   => $key,
-                        'Value' => $value
-                    ]
-                );
-            } else {
-                $requestPerams[$key] = $value;
-            }
-        }
-
-        $requestPerams["CustomFields"] = $customParams;
-        return json_encode($requestPerams);
-    }
-
     public function updateSubscriber($email, $finalData, $selectedList)
     {
         $apiEndpoints = $this->baseUrl . "/subscribers/{$selectedList}.json?email={$email}";
-        return  HttpHelper::request($apiEndpoints, 'PUT', $this->setSubscriberData($finalData), $this->_defaultHeader);
+
+        return HttpHelper::request($apiEndpoints, 'PUT', $this->setSubscriberData($finalData), $this->_defaultHeader);
     }
 
     public function addSubscriber($selectedList, $finalData)
     {
         $apiEndpoints = $this->baseUrl . "/subscribers/{$selectedList}.json";
+
         return HttpHelper::post($apiEndpoints, $this->setSubscriberData($finalData), $this->_defaultHeader);
     }
 
@@ -64,21 +45,16 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->campaignMonitorField;
+            $actionValue = $value->campaignMonitorField;
             $dataFinal[$actionValue] = ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue];
         }
-        return $dataFinal;
-    }
 
-    private function existSubscriber($selectedList, $email)
-    {
-        $apiEndpoints = $this->baseUrl . "/subscribers/{$selectedList}.json?email={$email}&includetrackingpreference=true";
-        return HttpHelper::get($apiEndpoints, null, $this->_defaultHeader);
+        return $dataFinal;
     }
 
     public function execute($selectedList, $fieldValues, $fieldMap, $actions)
     {
-        $finalData   = (object) $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        $finalData = (object) $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $existSubscriber = $this->existSubscriber($selectedList, $finalData->EmailAddress);
 
         if (!isset($existSubscriber->EmailAddress)) {
@@ -107,5 +83,36 @@ class RecordApiHelper
         }
 
         return $apiResponse;
+    }
+
+    private function setSubscriberData($finalData)
+    {
+        $customParams = [];
+        $requestPerams = ['ConsentToTrack' => 'Yes'];
+
+        foreach ($finalData as $key => $value) {
+            if (stripos($key, '[') > -1) {
+
+                $customParams[]
+                = (object) [
+                    'Key'   => $key,
+                    'Value' => $value
+                ]
+                ;
+            } else {
+                $requestPerams[$key] = $value;
+            }
+        }
+
+        $requestPerams['CustomFields'] = $customParams;
+
+        return json_encode($requestPerams);
+    }
+
+    private function existSubscriber($selectedList, $email)
+    {
+        $apiEndpoints = $this->baseUrl . "/subscribers/{$selectedList}.json?email={$email}&includetrackingpreference=true";
+
+        return HttpHelper::get($apiEndpoints, null, $this->_defaultHeader);
     }
 }

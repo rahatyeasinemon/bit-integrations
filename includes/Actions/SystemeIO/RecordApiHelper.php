@@ -15,33 +15,38 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $integrationDetails;
+
     private $integrationId;
+
     private $apiUrl;
+
     private $defaultHeader;
+
     private $type;
+
     private $typeName;
 
     public function __construct($integrationDetails, $integId, $apiKey)
     {
         $this->integrationDetails = $integrationDetails;
-        $this->integrationId      = $integId;
-        $this->apiUrl             = "https://api.systeme.io/api";
-        $this->defaultHeader      = [
-            "x-api-key"       => $apiKey,
-            "Content-Type"  => "application/json"
+        $this->integrationId = $integId;
+        $this->apiUrl = 'https://api.systeme.io/api';
+        $this->defaultHeader = [
+            'x-api-key'    => $apiKey,
+            'Content-Type' => 'application/json'
         ];
     }
 
     public function addContact($finalData)
     {
-        $this->type     = 'Add People to Contacts';
+        $this->type = 'Add People to Contacts';
         $this->typeName = 'Add People to Contacts';
 
         if (empty($finalData['email'])) {
             return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
         }
 
-        $apiEndpoint = $this->apiUrl . "/contacts";
+        $apiEndpoint = $this->apiUrl . '/contacts';
 
         $response = HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
 
@@ -50,8 +55,6 @@ class RecordApiHelper
         } else {
             return $response;
         }
-
-
     }
 
     public function addTag($contactId, $tag)
@@ -63,11 +66,11 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field tag is empty', 'code' => 400];
         }
 
-        $apiEndpoint = $this->apiUrl . "/contacts/" . $contactId . "/tags";
+        $apiEndpoint = $this->apiUrl . '/contacts/' . $contactId . '/tags';
 
         $data['tagId'] = (int) $tag;
-        return $response = HttpHelper::post($apiEndpoint, json_encode($data), $this->defaultHeader);
 
+        return $response = HttpHelper::post($apiEndpoint, json_encode($data), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -75,15 +78,16 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->systemeIOFormField;
+            $actionValue = $value->systemeIOFormField;
             $dataFinal[$actionValue] = ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue];
         }
+
         return $dataFinal;
     }
 
     public function execute($fieldValues, $fieldMap, $actionName)
     {
-        $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $apiResponse = $this->addContact($finalData);
 
         if (!isset($apiResponse->errors)) {
@@ -92,6 +96,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }

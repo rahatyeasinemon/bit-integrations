@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Actions\Sendy;
 
 use BitCode\FI\Core\Util\Common;
@@ -11,7 +12,9 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_defaultHeader;
+
     private $_tokenDetails;
+
     private $_integrationID;
 
     public function __construct($integId)
@@ -22,8 +25,9 @@ class RecordApiHelper
     public function insertRecord($data, $sendyUrl)
     {
         $header['Content-Type'] = 'application/x-www-form-urlencoded';
-        $insertRecordEndpoint = "$sendyUrl/subscribe";
+        $insertRecordEndpoint = "{$sendyUrl}/subscribe";
         $data['boolean'] = 'true';
+
         return HttpHelper::post($insertRecordEndpoint, $data, $header);
     }
 
@@ -36,10 +40,11 @@ class RecordApiHelper
             $actionValue = $value->sendyField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
 
@@ -62,6 +67,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->_integrationID, ['type' => 'subscriber', 'type_name' => 'add-subscriber'], 'error', json_encode('Failed to add subscriber'));
         }
+
         return $apiResponse;
     }
 }

@@ -2,8 +2,9 @@
 
 namespace BitCode\FI\Core\Util;
 
-use WP_Error;
 use BitCode\FI\Triggers\TriggerController;
+use stdClass;
+use WP_Error;
 
 /**
  * bit-integration helper class
@@ -14,17 +15,19 @@ final class Helper
 {
     /**
      * string to array convert with separator
+     *
+     * @param mixed $data
      */
     public static function splitStringToarray($data)
     {
-        $params = new \stdClass();
+        $params = new stdClass();
         $params->id = $data['bit-integrator%trigger_data%']['triggered_entity_id'];
         $trigger = $data['bit-integrator%trigger_data%']['triggered_entity'];
         $fields = TriggerController::getTriggerField($trigger, $params);
-        if (count($fields) > 0) {
+        if (\count($fields) > 0) {
             foreach ($fields as $field) {
                 if (isset($data[$field['name']])) {
-                    if (gettype($data[$field['name']]) === 'string' && isset($field['separator'])) {
+                    if (\gettype($data[$field['name']]) === 'string' && isset($field['separator'])) {
                         if (!empty($field['separator'])) {
                             $data[$field['name']] = $field['separator'] === 'str_array' ? json_decode($data[$field['name']]) : explode($field['separator'], $data[$field['name']]);
                         }
@@ -32,17 +35,18 @@ final class Helper
                 }
             }
         }
+
         return $data;
     }
 
     public static function uploadFeatureImg($filePath, $postID)
     {
         require_once ABSPATH . 'wp-load.php';
-        $file = is_array($filePath) ? $filePath[0] : $filePath;
+        $file = \is_array($filePath) ? $filePath[0] : $filePath;
         $imgFileName = basename($file);
 
         if (file_exists($file)) {
-            //prepare upload image to WordPress Media Library
+            // prepare upload image to WordPress Media Library
             $upload = wp_upload_bits($imgFileName, null, file_get_contents($file, FILE_USE_INCLUDE_PATH));
             // check and return file type
             $imageFile = $upload['file'];
@@ -50,9 +54,9 @@ final class Helper
             // Attachment attributes for file
             $attachment = [
                 'post_mime_type' => $wpFileType['type'],
-                'post_title' => sanitize_file_name($imgFileName), // sanitize and use image name as file name
-                'post_content' => '',
-                'post_status' => 'inherit',
+                'post_title'     => sanitize_file_name($imgFileName), // sanitize and use image name as file name
+                'post_content'   => '',
+                'post_status'    => 'inherit',
             ];
             // insert and return attachment id
             $attachmentId = wp_insert_attachment($attachment, $imageFile, $postID);
@@ -72,7 +76,7 @@ final class Helper
 
         if (file_exists($filePath)) {
             $imgFileName = basename($filePath);
-            //prepare upload image to WordPress Media Library
+            // prepare upload image to WordPress Media Library
             $upload = wp_upload_bits($imgFileName, null, file_get_contents($filePath, FILE_USE_INCLUDE_PATH));
 
             $imageFile = $upload['file'];
@@ -80,10 +84,10 @@ final class Helper
             // Attachment attributes for file
             $attachment = [
                 'post_mime_type' => $wpFileType['type'],
-                'post_title' => sanitize_file_name($imgFileName), // sanitize and use image name as file name
-                'post_content' => '',
-                'post_status' => 'inherit',
-                'post_parent' => $postId,
+                'post_title'     => sanitize_file_name($imgFileName), // sanitize and use image name as file name
+                'post_content'   => '',
+                'post_status'    => 'inherit',
+                'post_parent'    => $postId,
             ];
             // insert and return attachment id
             $attachmentId = wp_insert_attachment($attachment, $imageFile, $postId);
@@ -91,6 +95,7 @@ final class Helper
             // insert and return attachment metadata
             $attachmentData = wp_generate_attachment_metadata($attachmentId, $imageFile);
             wp_update_attachment_metadata($attachmentId, $attachmentData);
+
             return $attachmentId;
         }
     }
@@ -103,7 +108,7 @@ final class Helper
         foreach ($files as $file) {
             if (file_exists($file)) {
                 $imgFileName = basename($file);
-                //prepare upload image to WordPress Media Library
+                // prepare upload image to WordPress Media Library
                 $upload = wp_upload_bits($imgFileName, null, file_get_contents($file, FILE_USE_INCLUDE_PATH));
 
                 $imageFile = $upload['file'];
@@ -112,15 +117,15 @@ final class Helper
                 // Attachment attributes for file
                 $attachment = [
                     'post_mime_type' => $wpFileType['type'],
-                    'post_title' => sanitize_file_name($imgFileName), // sanitize and use image name as file name
-                    'post_content' => '',
-                    'post_status' => 'inherit',
-                    'post_parent' => $postId,
+                    'post_title'     => sanitize_file_name($imgFileName), // sanitize and use image name as file name
+                    'post_content'   => '',
+                    'post_status'    => 'inherit',
+                    'post_parent'    => $postId,
                 ];
                 // insert and return attachment id
                 $attachmentId = wp_insert_attachment($attachment, $imageFile, $postId);
                 // $attachMentId[]=$attachmentId;
-                array_push($attachMentId, $attachmentId);
+                $attachMentId[] = $attachmentId;
 
                 // insert and return attachment metadata
                 $attachmentData = wp_generate_attachment_metadata($attachmentId, $imageFile);
@@ -128,6 +133,7 @@ final class Helper
                 wp_update_attachment_metadata($attachmentId, $attachmentData);
             }
         }
+
         return $attachMentId;
     }
 
@@ -141,29 +147,32 @@ final class Helper
     public static function isJson($string)
     {
         json_decode($string);
+
         return json_last_error() === JSON_ERROR_NONE;
     }
 
     public static function extractValueFromPath($data, $path)
     {
-        $parts = is_array($path) ? $path : explode('.', $path);
-        if (count($parts) === 0) {
+        $parts = \is_array($path) ? $path : explode('.', $path);
+        if (\count($parts) === 0) {
             return $data;
         }
 
         $currentPart = array_shift($parts);
-        if (is_array($data)) {
+        if (\is_array($data)) {
             if (!isset($data[$currentPart])) {
                 wp_send_json_error(new WP_Error('Breakdance', __('Index out of bounds or invalid', 'bit-integrations')));
             }
+
             return self::extractValueFromPath($data[$currentPart], $parts);
         }
 
-        if (is_object($data)) {
+        if (\is_object($data)) {
             if (!property_exists($data, $currentPart)) {
                 wp_send_json_error(new WP_Error('Breakdance', __('Invalid path', 'bit-integrations')));
             }
-            return self::extractValueFromPath($data->$currentPart, $parts);
+
+            return self::extractValueFromPath($data->{$currentPart}, $parts);
         }
 
         wp_send_json_error(new WP_Error('Breakdance', __('Invalid path', 'bit-integrations')));

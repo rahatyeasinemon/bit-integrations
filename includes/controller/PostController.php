@@ -11,18 +11,18 @@ final class PostController
 
     public function getPostTypes()
     {
-        $cptArguments = array(
-            'public'   => true,
+        $cptArguments = [
+            'public'          => true,
             'capability_type' => 'post',
-        );
-    
-        $types = get_post_types( $cptArguments, 'object' );
+        ];
+
+        $types = get_post_types($cptArguments, 'object');
 
         $lists = [];
 
         foreach ($types as $key => $type) {
-                $lists[$key]['id'] = $type->name;
-                $lists[$key]['title'] = $type->label;
+            $lists[$key]['id'] = $type->name;
+            $lists[$key]['title'] = $type->label;
         }
         wp_send_json_success(array_values($lists));
     }
@@ -33,27 +33,27 @@ final class PostController
         $acfFiles = [];
         $filterFile = ['file', 'image', 'gallery'];
         if (class_exists('ACF')) {
-            $groups = acf_get_field_groups(array('post_type' => $postType));
+            $groups = acf_get_field_groups(['post_type' => $postType]);
             foreach ($groups as $group) {
                 foreach (acf_get_fields($group['key']) as $acfField) {
-                    if (in_array($acfField['type'], $filterFile)) {
-                        array_push($acfFiles, [
-                            'key' => $acfField['key'],
-                            'name' => $acfField['label'],
+                    if (\in_array($acfField['type'], $filterFile)) {
+                        $acfFiles[] = [
+                            'key'      => $acfField['key'],
+                            'name'     => $acfField['label'],
                             'required' => $acfField['required'] == 1 ? true : false,
-                        ]);
+                        ];
                     } else {
-                        array_push($acfFields, [
-                            'key' => $acfField['key'],
-                            'name' => $acfField['label'],
+                        $acfFields[] = [
+                            'key'      => $acfField['key'],
+                            'name'     => $acfField['label'],
                             'required' => $acfField['required'] == 1 ? true : false,
-                        ]);
+                        ];
                     }
                 }
             }
         }
-        return ['fields' => $acfFields, 'files' => $acfFiles];
 
+        return ['fields' => $acfFields, 'files' => $acfFiles];
     }
 
     public static function getMetaboxFields($postType)
@@ -61,21 +61,20 @@ final class PostController
         $metaboxFields = [];
         $metaboxFile = [];
         $fileTypes = [
-            "image",
-            "image_upload",
-            "file_advanced",
-            "file_upload",
-            "single_image",
-            "file",
-            "image_advanced",
-            "video",
+            'image',
+            'image_upload',
+            'file_advanced',
+            'file_upload',
+            'single_image',
+            'file',
+            'image_advanced',
+            'video',
         ];
 
-        if (function_exists('rwmb_meta')) {
+        if (\function_exists('rwmb_meta')) {
             $fields = rwmb_get_object_fields($postType);
             foreach ($fields as $index => $field) {
-
-                if (!in_array($field['type'], $fileTypes)) {
+                if (!\in_array($field['type'], $fileTypes)) {
                     // if (!in_array($field['type'], $filterTypes)) {
                     //     $metaboxFields[$index]['name'] = $field['name'];
                     // }
@@ -89,6 +88,7 @@ final class PostController
                 }
             }
         }
+
         return ['fields' => array_values($metaboxFields), 'files' => $metaboxFile];
     }
 
@@ -99,29 +99,29 @@ final class PostController
         $metabox = self::getMetaboxFields($data->post_type);
         $fields = [
             'acf_fields' => $acf['fields'],
-            'acf_files' => $acf['files'],
-            'mb_fields' => $metabox['fields'],
-            'mb_files' => $metabox['files'],
+            'acf_files'  => $acf['files'],
+            'mb_fields'  => $metabox['fields'],
+            'mb_files'   => $metabox['files'],
         ];
 
         wp_send_json_success($fields, 200);
-
     }
 
     public function getPages()
     {
-        $pages = get_pages(array('post_status' => 'publish', 'sort_column' => 'post_date', 'sort_order' => 'desc'));
-        $allPages = array();
+        $pages = get_pages(['post_status' => 'publish', 'sort_column' => 'post_date', 'sort_order' => 'desc']);
+        $allPages = [];
         foreach ($pages as $pageKey => $pageDetails) {
             $allPages[$pageKey]['title'] = $pageDetails->post_title;
             $allPages[$pageKey]['url'] = get_page_link($pageDetails->ID);
         }
+
         return $allPages;
     }
 
     public function getPodsPostType()
     {
-        $users = get_users(array('fields' => array('ID', 'display_name')));
+        $users = get_users(['fields' => ['ID', 'display_name']]);
         $pods = [];
         $podsAdminExists = is_plugin_active('pods/init.php');
 
@@ -146,19 +146,18 @@ final class PostController
             $i = 0;
             foreach (array_values($pods->fields) as $field) {
                 $i++;
-                if($field['type'] === 'file'){
+                if ($field['type'] === 'file') {
                     $podFile[$i]['key'] = $field['name'];
                     $podFile[$i]['name'] = $field['label'];
                     $podFile[$i]['required'] = $field['options']['required'] == 1 ? true : false;
-                 }else{
+                } else {
                     $podField[$i]['key'] = $field['name'];
                     $podField[$i]['name'] = $field['label'];
                     $podField[$i]['required'] = $field['options']['required'] == 1 ? true : false;
-                  }
-               
+                }
             }
         }
         // echo json_encode(array_values($pods->fields) );
-        wp_send_json_success(['podFields'=>$podField, 'podFiles'=>$podFile], 200);
+        wp_send_json_success(['podFields' => $podField, 'podFiles' => $podFile], 200);
     }
 }

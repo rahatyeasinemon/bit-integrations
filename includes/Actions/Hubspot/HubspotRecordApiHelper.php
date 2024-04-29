@@ -7,14 +7,12 @@
 namespace BitCode\FI\Actions\Hubspot;
 
 use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\DateTimeHelper;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
  */
-
 class HubspotRecordApiHelper
 {
     private $defaultHeader;
@@ -23,14 +21,14 @@ class HubspotRecordApiHelper
     {
         $this->defaultHeader = [
             'Content-Type'  => 'application/json',
-            'authorization' => "Bearer $accessToken"
+            'authorization' => "Bearer {$accessToken}"
         ];
     }
 
     public function insertContact($data)
     {
         $finalData['properties'] = $data;
-        $apiEndpoint             = 'https://api.hubapi.com/crm/v3/objects/contacts';
+        $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/contacts';
 
         return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
@@ -60,7 +58,7 @@ class HubspotRecordApiHelper
 
     public function insertTicket($finalData)
     {
-        $data        = json_encode(['properties' => $finalData]);
+        $data = json_encode(['properties' => $finalData]);
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/tickets';
 
         return HttpHelper::post($apiEndpoint, $data, $this->defaultHeader);
@@ -72,10 +70,10 @@ class HubspotRecordApiHelper
 
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->hubspotField;
+            $actionValue = $value->hubspotField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
@@ -106,10 +104,10 @@ class HubspotRecordApiHelper
 
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->hubspotField;
+            $actionValue = $value->hubspotField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 if (strtotime($data[$triggerValue])) {
                     $formated = strtotime($data[$triggerValue]);
                     $dataFinal[$actionValue] = $formated;
@@ -120,11 +118,15 @@ class HubspotRecordApiHelper
         }
 
         $pipeline = $integrationDetails->pipeline;
-        $stage    = $integrationDetails->stage;
-        $action   = $integrationDetails->actions;
+        $stage = $integrationDetails->stage;
+        $action = $integrationDetails->actions;
 
-        if (!empty($pipeline)) $dataFinal['pipeline'] = $pipeline;
-        if (!empty($stage)) $dataFinal['dealstage']   = $stage;
+        if (!empty($pipeline)) {
+            $dataFinal['pipeline'] = $pipeline;
+        }
+        if (!empty($stage)) {
+            $dataFinal['dealstage'] = $stage;
+        }
 
         $dataForAssosciations = [];
 
@@ -156,7 +158,9 @@ class HubspotRecordApiHelper
         $finalData = [];
         $finalData['properties'] = $dataFinal;
 
-        if (!empty($dataForAssosciations)) $finalData['associations'] = $dataForAssosciations;
+        if (!empty($dataForAssosciations)) {
+            $finalData['associations'] = $dataForAssosciations;
+        }
 
         return $finalData;
     }
@@ -167,19 +171,19 @@ class HubspotRecordApiHelper
 
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->hubspotField;
+            $actionValue = $value->hubspotField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
 
         $pipeline = $integrationDetails->pipeline;
-        $stage    = $integrationDetails->stage;
-        $action   = $integrationDetails->actions;
+        $stage = $integrationDetails->stage;
+        $action = $integrationDetails->actions;
 
-        $dataFinal['hs_pipeline']       = $pipeline;
+        $dataFinal['hs_pipeline'] = $pipeline;
         $dataFinal['hs_pipeline_stage'] = $stage;
 
         if (property_exists($action, 'contact_owner')) {
@@ -205,24 +209,24 @@ class HubspotRecordApiHelper
     public function executeRecordApi($integId, $integrationDetails, $fieldValues, $fieldMap)
     {
         $actionName = $integrationDetails->actionName;
-        $type       = '';
-        $typeName   = '';
+        $type = '';
+        $typeName = '';
 
         if ($actionName === 'contact') {
-            $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap, $integrationDetails);
+            $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap, $integrationDetails);
             $apiResponse = $this->insertContact($finalData);
-            $type        = 'contact';
-            $typeName    = 'contact-add';
+            $type = 'contact';
+            $typeName = 'contact-add';
         } elseif ($actionName === 'deal') {
-            $finalData   = $this->formatDealFieldMap($fieldValues, $fieldMap, $integrationDetails);
+            $finalData = $this->formatDealFieldMap($fieldValues, $fieldMap, $integrationDetails);
             $apiResponse = $this->insertDeal($finalData);
-            $type        = 'deal';
-            $typeName    = 'deal-add';
+            $type = 'deal';
+            $typeName = 'deal-add';
         } elseif ($actionName === 'ticket') {
-            $finalData   = $this->formatTicketFieldMap($fieldValues, $fieldMap, $integrationDetails);
+            $finalData = $this->formatTicketFieldMap($fieldValues, $fieldMap, $integrationDetails);
             $apiResponse = $this->insertTicket($finalData);
-            $type        = 'ticket';
-            $typeName    = 'ticket-add';
+            $type = 'ticket';
+            $typeName = 'ticket-add';
         }
 
         if (!isset($apiResponse->properties)) {

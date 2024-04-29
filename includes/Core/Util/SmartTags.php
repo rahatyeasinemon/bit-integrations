@@ -2,14 +2,11 @@
 
 namespace BitCode\FI\Core\Util;
 
-use BitCode\FI\Core\Util\IpTool;
-
 /**
  * handling Special mail-tags
  *
  * @since 1.0.0
  */
-
 final class SmartTags
 {
     public static function getPostUserData($isReferer)
@@ -28,7 +25,7 @@ final class SmartTags
         $user = wp_get_current_user();
         $user_roles = $user->roles;
 
-        if (!is_wp_error($user_roles) && count($user_roles) > 0) {
+        if (!is_wp_error($user_roles) && \count($user_roles) > 0) {
             $user->current_user_role = $user_roles[0];
         }
 
@@ -46,7 +43,7 @@ final class SmartTags
         $userDetail = IpTool::getUserDetail();
         $device = explode('|', $userDetail['device']);
 
-        if (is_array($device)) {
+        if (\is_array($device)) {
             $browser = $device[0];
             $operating = $device[1];
         }
@@ -81,17 +78,17 @@ final class SmartTags
             '_bi_site_description'   => get_bloginfo('description'),
             '_bi_site_url'           => get_bloginfo('url'),
             '_bi_wp_local_codes'     => get_bloginfo('language'),
-            '_bi_post_id'            => (is_object($data['post']) ? $data['post']->ID : ''),
-            '_bi_post_name'          => (is_object($data['post']) ? $data['post']->post_name : ''),
-            '_bi_post_title'         => (is_object($data['post']) ? $data['post']->post_title : ''),
-            '_bi_post_date'          => (is_object($data['post']) ? $data['post']->post_date : ''),
-            '_bi_post_modified_date' => (is_object($data['post']) ? $data['post']->post_modified : ''),
-            '_bi_post_url'           => (is_object($data['post']) ? get_permalink($data['post']->ID) : ''),
+            '_bi_post_id'            => (\is_object($data['post']) ? $data['post']->ID : ''),
+            '_bi_post_name'          => (\is_object($data['post']) ? $data['post']->post_name : ''),
+            '_bi_post_title'         => (\is_object($data['post']) ? $data['post']->post_title : ''),
+            '_bi_post_date'          => (\is_object($data['post']) ? $data['post']->post_date : ''),
+            '_bi_post_modified_date' => (\is_object($data['post']) ? $data['post']->post_modified : ''),
+            '_bi_post_url'           => (\is_object($data['post']) ? get_permalink($data['post']->ID) : ''),
         ];
         if (isset($smartTags[$key])) {
             return $smartTags[$key];
-        } else {
-            return '';
         }
+
+        return '';
     }
 }

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SendGrid;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for SendGrid integration
@@ -21,8 +21,8 @@ class SendGridController
         }
 
         $apiEndpoints = 'https://api.sendgrid.com/v3/marketing/field_definitions';
-        $apiKey       = $fieldsRequestParams->apiKey;
-        $header       = [
+        $apiKey = $fieldsRequestParams->apiKey;
+        $header = [
             'Authorization' => 'Bearer ' . $apiKey
         ];
 
@@ -48,8 +48,8 @@ class SendGridController
         }
 
         $apiEndpoints = 'https://api.sendgrid.com/v3/marketing/lists';
-        $apiKey       = $fieldsRequestParams->apiKey;
-        $header       = [
+        $apiKey = $fieldsRequestParams->apiKey;
+        $header = [
             'Authorization' => 'Bearer ' . $apiKey
         ];
 
@@ -72,16 +72,16 @@ class SendGridController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-        $integId            = $integrationData->id;
-        $apiKey             = $integrationDetails->apiKey;
-        $selectedLists      = $integrationDetails->selectedLists;
-        $fieldMap           = $integrationDetails->field_map;
+        $integId = $integrationData->id;
+        $apiKey = $integrationDetails->apiKey;
+        $selectedLists = $integrationDetails->selectedLists;
+        $fieldMap = $integrationDetails->field_map;
 
         if (empty($fieldMap) || empty($apiKey)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for SendGrid api', 'bit-integrations'));
         }
 
-        $recordApiHelper    = new RecordApiHelper($integrationDetails, $integId);
+        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $sendGridApiResponse = $recordApiHelper->execute(
             $selectedLists,
             $fieldValues,
@@ -91,6 +91,7 @@ class SendGridController
         if (is_wp_error($sendGridApiResponse)) {
             return $sendGridApiResponse;
         }
+
         return $sendGridApiResponse;
     }
 }

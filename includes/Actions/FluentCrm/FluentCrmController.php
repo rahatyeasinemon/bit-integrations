@@ -6,25 +6,22 @@
 
 namespace BitCode\FI\Actions\FluentCrm;
 
-use WP_Error;
-
-use BitCode\FI\Actions\FluentCrm\RecordApiHelper;
-use FluentCrm\App\Models\Lists;
-use FluentCrm\App\Models\Tag;
-use FluentCrm\App\Models\Subscriber;
 use FluentCrm\App\Models\CustomContactField;
+
+use FluentCrm\App\Models\Lists;
+use FluentCrm\App\Models\Subscriber;
+use FluentCrm\App\Models\Tag;
+use WP_Error;
 
 /**
  * Provide functionality for ZohoCrm integration
  */
 class FluentCrmController
 {
-
     private $_integrationID;
 
     public function __construct($integrationID)
     {
-
         $this->_integrationID = $integrationID;
     }
 
@@ -60,7 +57,7 @@ class FluentCrmController
         $fluentCrmList = [];
         foreach ($lists as $list) {
             $fluentCrmList[$list->title] = (object) [
-                'id' => $list->id,
+                'id'    => $list->id,
                 'title' => $list->title
             ];
         }
@@ -68,7 +65,7 @@ class FluentCrmController
         $fluentCrmTags = [];
         foreach ($tags as $tag) {
             $fluentCrmTags[$tag->title] = (object) [
-                'id' => $tag->id,
+                'id'    => $tag->id,
                 'title' => $tag->title
             ];
         }
@@ -85,7 +82,7 @@ class FluentCrmController
         $fluentCrmTags = [];
         foreach ($tags as $tag) {
             $fluentCrmTags[$tag->title] = (object) [
-                'id' => $tag->id,
+                'id'    => $tag->id,
                 'title' => $tag->title
             ];
         }
@@ -100,34 +97,34 @@ class FluentCrmController
         $primaryField = ['first_name', 'last_name', 'full_name', 'email'];
 
         foreach (Subscriber::mappables() as $key => $column) {
-            if (in_array($key, $primaryField)) {
+            if (\in_array($key, $primaryField)) {
                 if ($key === 'email') {
                     $fieldOptions[$column] = (object) [
-                        'key'     => $key,
-                        'label'   => $column,
-                        'type'    => 'primary',
+                        'key'      => $key,
+                        'label'    => $column,
+                        'type'     => 'primary',
                         'required' => true
                     ];
                 } else {
                     $fieldOptions[$column] = (object) [
-                        'key'     => $key,
-                        'label'   => $column,
-                        'type'    => 'primary'
+                        'key'   => $key,
+                        'label' => $column,
+                        'type'  => 'primary'
                     ];
                 }
             } else {
                 $fieldOptions[$column] = (object) [
-                    'key'       => $key,
-                    'label'     => $column,
-                    'type'      => 'custom'
+                    'key'   => $key,
+                    'label' => $column,
+                    'type'  => 'custom'
                 ];
             }
         }
-        foreach ((new CustomContactField)->getGlobalFields()['fields'] as $field) {
+        foreach ((new CustomContactField())->getGlobalFields()['fields'] as $field) {
             $fieldOptions[$field['label']] = (object) [
-                'key'         => $field['slug'],
-                'label'       => $field['label'],
-                'type'        => 'custom'
+                'key'   => $field['slug'],
+                'label' => $field['label'],
+                'type'  => 'custom'
             ];
         }
         $response['fluentCrmFlelds'] = $fieldOptions;
@@ -135,7 +132,7 @@ class FluentCrmController
     }
 
     /**
-     * @return True Fluent crm are exists
+     * @return true Fluent crm are exists
      */
     public static function fluentCrmAuthorize()
     {
@@ -156,13 +153,12 @@ class FluentCrmController
     {
         $integrationDetails = $integrationData->flow_details;
 
-
-        $fieldMap         = $integrationDetails->field_map;
-        $defaultDataConf  = $integrationDetails->default;
-        $list_id          = isset($integrationDetails->list_id) ? $integrationDetails->list_id : null;
-        $tags             = $integrationDetails->tags;
-        $actions          = $integrationDetails->actions;
-        $actionName          = $integrationDetails->actionName;
+        $fieldMap = $integrationDetails->field_map;
+        $defaultDataConf = $integrationDetails->default;
+        $list_id = isset($integrationDetails->list_id) ? $integrationDetails->list_id : null;
+        $tags = $integrationDetails->tags;
+        $actions = $integrationDetails->actions;
+        $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Fluent CRM api', 'bit-integrations'));
@@ -182,6 +178,7 @@ class FluentCrmController
         if (is_wp_error($fluentCrmApiResponse)) {
             return $fluentCrmApiResponse;
         }
+
         return $fluentCrmApiResponse;
     }
 }

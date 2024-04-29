@@ -3,6 +3,7 @@
 /**
  * WhatsApp Record Api
  */
+
 namespace BitCode\FI\Actions\WhatsApp;
 
 use BitCode\FI\Core\Util\Common;
@@ -15,6 +16,7 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_integrationID;
+
     private $_integrationDetails;
 
     public function __construct($integrationDetails, $integId)
@@ -34,17 +36,17 @@ class RecordApiHelper
         $apiEndPoint = "https://graph.facebook.com/v13.0/{$numberId}/messages";
         $header = [
             'Authorization' => 'Bearer ' . $token,
-            'Accept' => '*/*',
-            'verify' => false,
-            'Content-Type' => 'application/json'
+            'Accept'        => '*/*',
+            'verify'        => false,
+            'Content-Type'  => 'application/json'
         ];
 
         $data = [
             'messaging_product' => 'whatsapp',
-            'to' => "{$phoneNumber}",
-            'type' => 'template',
-            'template' => [
-                'name' => $templateName,
+            'to'                => "{$phoneNumber}",
+            'type'              => 'template',
+            'template'          => [
+                'name'     => $templateName,
                 'language' => [
                     'code' => 'en_US'
                 ]
@@ -65,9 +67,9 @@ class RecordApiHelper
         $apiEndPoint = "https://graph.facebook.com/v13.0/{$numberId}/messages";
         $header = [
             'Authorization' => 'Bearer ' . $token,
-            'Accept' => '*/*',
-            'verify' => false,
-            'Content-Type' => 'application/json'
+            'Accept'        => '*/*',
+            'verify'        => false,
+            'Content-Type'  => 'application/json'
         ];
         $sanitizingSpace = rtrim($messagesBody, '&nbsp; ');
 
@@ -75,8 +77,8 @@ class RecordApiHelper
 
         $data = [
             'messaging_product' => 'whatsapp',
-            'to' => "{$phoneNumber}",
-            'text' => [
+            'to'                => "{$phoneNumber}",
+            'text'              => [
                 'body' => $planMessage
             ]
         ];
@@ -93,10 +95,11 @@ class RecordApiHelper
             $actionValue = $value->whatsAppFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
 
@@ -142,6 +145,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->_integrationID, json_encode(['type' => 'record', 'type_name' => 'send-message']), 'success', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }

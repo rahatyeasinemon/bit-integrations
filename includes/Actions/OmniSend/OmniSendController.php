@@ -3,19 +3,20 @@
 /**
  * OmniSend Integration
  */
+
 namespace BitCode\FI\Actions\OmniSend;
 
-use BitCode\FI\Actions\OmniSend\RecordApiHelper;
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for OmniSend integration
  */
 class OmniSendController
 {
-    private $baseUrl = 'https://api.omnisend.com/v3/';
     protected $_defaultHeader;
+
+    private $baseUrl = 'https://api.omnisend.com/v3/';
 
     public function authorization($requestParams)
     {
@@ -75,6 +76,7 @@ class OmniSendController
         if (is_wp_error($omniSendApiResponse)) {
             return $omniSendApiResponse;
         }
+
         return $omniSendApiResponse;
     }
 }

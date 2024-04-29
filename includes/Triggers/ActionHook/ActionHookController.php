@@ -2,23 +2,22 @@
 
 namespace BitCode\FI\Triggers\ActionHook;
 
-use WP_Error;
-use BitCode\FI\Flow\Flow;
-use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Hooks\FallbackHooks;
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\TriggerFallback;
-use BitCode\FI\Triggers\Formidable\FormidableController;
+use BitCode\FI\Flow\Flow;
+use WP_Error;
 
 class ActionHookController
 {
     public static function info()
     {
         return [
-            'name' => 'Action Hook',
-            'title' => 'Get callback data through an URL',
-            'type' => 'action_hook',
+            'name'      => 'Action Hook',
+            'title'     => 'Get callback data through an URL',
+            'type'      => 'action_hook',
             'is_active' => true,
-            'isPro' => false
+            'isPro'     => false
         ];
     }
 
@@ -27,9 +26,9 @@ class ActionHookController
         $missing_field = null;
 
         if (!property_exists($data, 'hook_id')) {
-            $missing_field = is_null($missing_field) ? 'ActionHook ID' : $missing_field . ', ActionHook ID';
+            $missing_field = \is_null($missing_field) ? 'ActionHook ID' : $missing_field . ', ActionHook ID';
         }
-        if (!is_null($missing_field)) {
+        if (!\is_null($missing_field)) {
             wp_send_json_error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
@@ -48,6 +47,7 @@ class ActionHookController
         if (get_option('btcbi_action_hook_test_' . current_action()) !== false) {
             update_option('btcbi_action_hook_test_' . current_action(), $args);
         }
+
         return rest_ensure_response(['status' => 'success']);
     }
 
@@ -55,9 +55,9 @@ class ActionHookController
     {
         $missing_field = null;
         if (!property_exists($data, 'hook_id') && !empty($data->hook_id)) {
-            $missing_field = is_null($missing_field) ? 'ActionHook ID' : $missing_field . ', ActionHook ID';
+            $missing_field = \is_null($missing_field) ? 'ActionHook ID' : $missing_field . ', ActionHook ID';
         }
-        if (!is_null($missing_field)) {
+        if (!\is_null($missing_field)) {
             wp_send_json_error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
@@ -88,14 +88,14 @@ class ActionHookController
 
                 $primaryKeyValue = Helper::extractValueFromPath($args, $flowDetails->primaryKey->key);
                 if ($flowDetails->primaryKey->value === $primaryKeyValue) {
-                    $fieldKeys      = [];
-                    $formatedData   = [];
+                    $fieldKeys = [];
+                    $formatedData = [];
 
-                    if ($flowDetails->body->data && is_array($flowDetails->body->data)) {
+                    if ($flowDetails->body->data && \is_array($flowDetails->body->data)) {
                         $fieldKeys = array_map(function ($field) use ($args) {
                             return $field->key;
                         }, $flowDetails->body->data);
-                    } elseif (isset($flowDetails->field_map) && is_array($flowDetails->field_map)) {
+                    } elseif (isset($flowDetails->field_map) && \is_array($flowDetails->field_map)) {
                         $fieldKeys = array_map(function ($field) use ($args) {
                             return $field->formField;
                         }, $flowDetails->field_map);
@@ -105,7 +105,7 @@ class ActionHookController
                         $formatedData[$key] = Helper::extractValueFromPath($args, $key);
                     }
 
-                    Flow::execute('ActionHook', current_action(), $formatedData, array($flow));
+                    Flow::execute('ActionHook', current_action(), $formatedData, [$flow]);
                 }
             }
         }
@@ -121,11 +121,11 @@ class ActionHookController
             return;
         }
 
-        $dynamicFunc    = $hook['function'];
-        $flowData       = TriggerFallback::$dynamicFunc(...$args);
+        $dynamicFunc = $hook['function'];
+        $flowData = TriggerFallback::$dynamicFunc(...$args);
 
         if (!empty($flowData) && !empty($flowData['triggered_entity'])) {
-            Flow::execute($flowData['triggered_entity'], $flowData['triggered_entity_id'], $flowData['data'], is_array($flowData['flows']) ? $flowData['flows'] : array($flowData['flows']));
+            Flow::execute($flowData['triggered_entity'], $flowData['triggered_entity_id'], $flowData['data'], \is_array($flowData['flows']) ? $flowData['flows'] : [$flowData['flows']]);
         }
 
         if ($hook['isFilterHook'] && isset($flowData['content'])) {

@@ -2,10 +2,9 @@
 
 namespace BitCode\FI\Triggers\Breakdance;
 
-use BitCode\FI\Flow\Flow;
 use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Flow\Flow;
 use Breakdance\Forms\Actions\Action;
-use BitCode\FI\Triggers\Breakdance\BreakdanceHelper;
 
 if (class_exists('Breakdance\Forms\Actions\Action')) {
     class BreakdanceAction extends Action
@@ -24,9 +23,10 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
         }
 
         /**
-         * @param FormData $form
+         * @param FormData     $form
          * @param FormSettings $settings
-         * @param FormExtra $extra
+         * @param FormExtra    $extra
+         *
          * @return ActionSuccess|ActionError|array<array-key, ActionSuccess|ActionError>
          */
         public function run($form, $settings, $extra)
@@ -59,10 +59,11 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
 
                 if (!isset($flowDetails->primaryKey) && $flow->triggered_entity_id == $reOrganizeId) {
                     Flow::execute('Breakdance', $reOrganizeId, $extra['fields'], [$flow]);
+
                     continue;
                 }
 
-                if (!is_array($flowDetails->primaryKey)) {
+                if (!\is_array($flowDetails->primaryKey)) {
                     continue;
                 }
 
@@ -72,6 +73,7 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
 
                     if ($primaryKey->value != $primaryKeyValue) {
                         $isPrimaryKeysMatch = false;
+
                         break;
                     }
                 }

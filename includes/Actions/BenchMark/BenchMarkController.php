@@ -6,9 +6,8 @@
 
 namespace BitCode\FI\Actions\BenchMark;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\BenchMark\RecordApiHelper;
+use WP_Error;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -89,11 +88,11 @@ class BenchMarkController
 
         $lists = [];
         if (!is_wp_error($benchMarkResponse)) {
-            $allLists = (object)($benchMarkResponse->Response->Data);
+            $allLists = (object) ($benchMarkResponse->Response->Data);
 
-            foreach ($allLists as $key=>$list) {
+            foreach ($allLists as $key => $list) {
                 $lists[$list->Name] = (object) [
-                    'listId' => $list->ID,
+                    'listId'   => $list->ID,
                     'listName' => $list->Name,
                 ];
             }
@@ -126,7 +125,6 @@ class BenchMarkController
 
         $apiEndpoint = "https://clientapi.benchmarkemail.com/Contact/{$listId}/Fields";
 
-
         $authorizationHeader['AuthToken'] = $queryParams->api_secret;
         $benchMarkResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 
@@ -134,13 +132,12 @@ class BenchMarkController
         if (!is_wp_error($benchMarkResponse)) {
             $allFields = $benchMarkResponse->Response->Data;
 
-
             foreach ($allFields as $field) {
                 $fields[$field] = (object) [
-                    'fieldId' => $field,
-                    'fieldName' => $field,
+                    'fieldId'    => $field,
+                    'fieldName'  => $field,
                     'fieldValue' => strtolower(str_replace(' ', '_', $field)),
-                    'required' =>  $field=='email' ? true : false
+                    'required'   => $field == 'email' ? true : false
                 ];
             }
 

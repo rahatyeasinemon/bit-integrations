@@ -6,9 +6,8 @@
 
 namespace BitCode\FI\Actions\ZagoMail;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\ZagoMail\RecordApiHelper;
+use WP_Error;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -50,7 +49,7 @@ class ZagoMailController
             'publicKey' => $requestsParams->api_public_key
         ];
 
-        $header["Content-Type"] = "application/json";
+        $header['Content-Type'] = 'application/json';
 
         $apiEndpoint = self::_apiEndpoint('lists/all-lists');
 
@@ -65,7 +64,6 @@ class ZagoMailController
 
         wp_send_json_success(true);
     }
-
 
     /**
      * Process ajax request for refresh Lists
@@ -90,12 +88,11 @@ class ZagoMailController
             'publicKey' => $queryParams->api_public_key
         ];
 
-        $header["Content-Type"] = "application/json";
+        $header['Content-Type'] = 'application/json';
 
         $apiEndpoint = self::_apiEndpoint('lists/all-lists');
 
         $zagoMailResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
-
 
         $lists = [];
         if ($zagoMailResponse->status == 'success') {
@@ -103,7 +100,7 @@ class ZagoMailController
 
             foreach ($allLists->records as $list) {
                 $lists[$list->general->name] = (object) [
-                    'listId' => $list->general->list_uid,
+                    'listId'   => $list->general->list_uid,
                     'listName' => $list->general->name,
                 ];
             }
@@ -134,12 +131,11 @@ class ZagoMailController
             'publicKey' => $queryParams->api_public_key
         ];
 
-        $header["Content-Type"] = "application/json";
+        $header['Content-Type'] = 'application/json';
 
         $apiEndpoint = self::_apiEndpoint('tags/get-tags');
 
         $zagoMailResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
-
 
         $tags = [];
         if ($zagoMailResponse->status == 'success') {
@@ -147,7 +143,7 @@ class ZagoMailController
 
             foreach ($allTags as $tag) {
                 $tags[] = [
-                    'tagId' => $tag->ztag_id,
+                    'tagId'   => $tag->ztag_id,
                     'tagName' => $tag->ztag_name,
                 ];
             }
@@ -179,9 +175,9 @@ class ZagoMailController
             'publicKey' => $queryParams->api_public_key
         ];
 
-        $header["Content-Type"] = "application/json";
+        $header['Content-Type'] = 'application/json';
 
-        $apiEndpoint =  self::_apiEndpoint('lists/get-fields?list_uid=' . $queryParams->listId);
+        $apiEndpoint = self::_apiEndpoint('lists/get-fields?list_uid=' . $queryParams->listId);
 
         $zagoMailResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
 
@@ -191,9 +187,9 @@ class ZagoMailController
 
             foreach ($allFields->records as $field) {
                 $fields[$field->tag] = (object) [
-                    'fieldId' => $field->tag,
+                    'fieldId'   => $field->tag,
                     'fieldName' => $field->label,
-                    'required' => $field->required == "yes" ? true : false
+                    'required'  => $field->required == 'yes' ? true : false
                 ];
             }
 
@@ -210,7 +206,7 @@ class ZagoMailController
         $actions = $integrationDetails->actions;
         $listId = $integrationDetails->listId;
         $tags = null;
-        if (count($integrationDetails->selectedTags) > 0) {
+        if (\count($integrationDetails->selectedTags) > 0) {
             $tags = explode(',', $integrationDetails->selectedTags);
         }
 
@@ -233,6 +229,7 @@ class ZagoMailController
         if (is_wp_error($zagoMailApiResponse)) {
             return $zagoMailApiResponse;
         }
+
         return $zagoMailApiResponse;
     }
 }

@@ -2,10 +2,9 @@
 
 namespace BitCode\FI\Actions\Hubspot;
 
-use WP_Error;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
+use WP_Error;
 
 final class HubspotController
 {
@@ -23,7 +22,7 @@ final class HubspotController
         }
 
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/contacts';
-        $header      = [
+        $header = [
             'authorization' => 'Bearer ' . $requestParams->api_key
         ];
 
@@ -42,8 +41,8 @@ final class HubspotController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiEndpoint = "https://api.hubapi.com/crm/v3/properties/$requestParams->type";
-        $header      = [
+        $apiEndpoint = "https://api.hubapi.com/crm/v3/properties/{$requestParams->type}";
+        $header = [
             'authorization' => 'Bearer ' . $requestParams->api_key
         ];
 
@@ -85,7 +84,7 @@ final class HubspotController
         }
 
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/owners';
-        $header      = [
+        $header = [
             'authorization' => 'Bearer ' . $requestParams->api_key
         ];
 
@@ -95,7 +94,7 @@ final class HubspotController
             foreach ($apiResponse->results as $owner) {
                 $owners[] = [
                     'ownerId'   => $owner->id,
-                    'ownerName' => "$owner->firstName $owner->lastName"
+                    'ownerName' => "{$owner->firstName} {$owner->lastName}"
                 ];
             }
             wp_send_json_success($owners, 200);
@@ -110,8 +109,8 @@ final class HubspotController
             wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
         }
 
-        $apiEndpoint = "https://api.hubapi.com/crm/v3/pipelines/$requestParams->type";
-        $header      = [
+        $apiEndpoint = "https://api.hubapi.com/crm/v3/pipelines/{$requestParams->type}";
+        $header = [
             'authorization' => 'Bearer ' . $requestParams->api_key
         ];
 
@@ -119,21 +118,21 @@ final class HubspotController
 
         if (isset($apiResponse->results) && !empty($apiResponse->results)) {
             $pipelines = $apiResponse->results;
-            $response  = [];
+            $response = [];
 
             foreach ($pipelines as $pipeline) {
                 $tempStage = [];
                 foreach ($pipeline->stages as $stage) {
-                    $tempStage[] = (object) array(
+                    $tempStage[] = (object) [
                         'stageId'   => $stage->id,
                         'stageName' => $stage->label
-                    );
+                    ];
                 }
-                $response[] = (object) array(
+                $response[] = (object) [
                     'pipelineId'   => $pipeline->id,
                     'pipelineName' => $pipeline->label,
                     'stages'       => $tempStage
-                );
+                ];
             }
             wp_send_json_success($response, 200);
         } else {
@@ -148,7 +147,7 @@ final class HubspotController
         }
 
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/contacts?limit=100';
-        $header      = [
+        $header = [
             'authorization' => 'Bearer ' . $requestParams->api_key
         ];
 
@@ -175,7 +174,7 @@ final class HubspotController
         }
 
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/companies?limit=100';
-        $header      = [
+        $header = [
             'authorization' => 'Bearer ' . $requestParams->api_key
         ];
 
@@ -197,13 +196,14 @@ final class HubspotController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-        $fieldMap           = $integrationDetails->field_map;
-        $integId            = $integrationData->id;
-        $apiKey             = $integrationDetails->api_key;
+        $fieldMap = $integrationDetails->field_map;
+        $integId = $integrationData->id;
+        $apiKey = $integrationDetails->api_key;
 
         if (empty($fieldMap) || empty($apiKey)) {
             $error = new WP_Error('REQ_FIELD_EMPTY', __('Access token, fields map are required for hubspot api', 'bit-integrations'));
             LogHandler::save($this->_integrationID, 'record', 'validation', $error);
+
             return $error;
         }
 
@@ -213,6 +213,7 @@ final class HubspotController
         if (is_wp_error($hubspotResponse)) {
             return $hubspotResponse;
         }
+
         return $hubspotResponse;
     }
 }

@@ -4,15 +4,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+use BitCode\FI\Core\Hooks\FallbackHooks;
 use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Core\Hooks\FallbackHooks;
 use BitCode\FI\Triggers\ActionHook\ActionHookController;
 
 global $wpdb;
 $hook = $wpdb->get_results(
     "SELECT option_name
-            FROM $wpdb->options
+            FROM {$wpdb->options}
             WHERE option_name LIKE 'btcbi_action_hook_test\_%'
             ORDER BY option_id DESC
             LIMIT 1"
@@ -26,13 +26,13 @@ $flowController = new FlowController();
 $flows = $flowController->get(
     [
         'triggered_entity' => 'ActionHook',
-        'status' => 1,
+        'status'           => 1,
     ],
     ['triggered_entity_id']
 );
 
 if (!is_wp_error($flows)) {
-    foreach ($flows as  $flow) {
+    foreach ($flows as $flow) {
         if (isset($flow->triggered_entity_id)) {
             Hooks::add($flow->triggered_entity_id, [ActionHookController::class, 'handle'], 10, PHP_INT_MAX);
         }
@@ -40,8 +40,7 @@ if (!is_wp_error($flows)) {
 }
 
 if (!function_exists('btcbi_pro_activate_plugin')) {
-
-    foreach (FallbackHooks::$triggerHookList as  $hook) {
+    foreach (FallbackHooks::$triggerHookList as $hook) {
         // if ($hook['hook'] == 'the_content') {
         //     continue;
         // }

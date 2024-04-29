@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\OmniSend;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -16,8 +16,11 @@ use BitCode\FI\Core\Util\HttpHelper;
 class RecordApiHelper
 {
     private $_integrationID;
+
     private $_integrationDetails;
+
     private $_defaultHeader;
+
     private $baseUrl = 'https://api.omnisend.com/v3/';
 
     public function __construct($integrationDetails, $integId)
@@ -46,21 +49,21 @@ class RecordApiHelper
         $phone = $finalData['phone_number'];
 
         $identifires = [];
-        if (count($splitChannels)) {
+        if (\count($splitChannels)) {
             foreach ($splitChannels as $channel) {
                 $status = $channel === 'email' ? $emailStatus : $smsStatus;
                 $type = $channel === 'email' ? 'email' : 'phone';
                 $id = $channel === 'email' ? $email : $phone;
-                array_push($identifires, (object) [
+                $identifires[] = (object) [
                     'channels' => [
                         $channel => [
                             'status' => $status
                         ]
                     ],
                     'type' => $type,
-                    'id'  => $id
+                    'id'   => $id
 
-                ]);
+                ];
             }
         }
 
@@ -76,8 +79,7 @@ class RecordApiHelper
             }
         }
 
-        $response = HttpHelper::post($apiEndpoints, json_encode($requestParams), $this->_defaultHeader);
-        return $response;
+        return HttpHelper::post($apiEndpoints, json_encode($requestParams), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -88,7 +90,7 @@ class RecordApiHelper
             $actionValue = $value->omniSendFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }

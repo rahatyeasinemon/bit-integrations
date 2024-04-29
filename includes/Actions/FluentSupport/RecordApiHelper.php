@@ -6,10 +6,10 @@
 
 namespace BitCode\FI\Actions\FluentSupport;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
-use FluentSupport\App\Models\Ticket;
+use BitCode\FI\Log\LogHandler;
 use FluentSupport\App\Models\Customer;
+use FluentSupport\App\Models\Ticket;
 use FluentSupport\App\Services\Helper;
 
 /**
@@ -17,7 +17,6 @@ use FluentSupport\App\Services\Helper;
  */
 class RecordApiHelper
 {
-
     private $_integrationID;
 
     public function __construct($integrationId)
@@ -34,10 +33,11 @@ class RecordApiHelper
             $actionValue = $value->fluentSupportFormField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } else if (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
+
         return $dataFinal;
     }
 
@@ -47,21 +47,22 @@ class RecordApiHelper
 
         if (isset($customer->id)) {
             $finalData['customer_id'] = $customer->id;
+
             return $this->createTicketByExistCustomer($finalData);
-        } else {
-            wp_send_json_error(
-                __(
-                    'Create Customer Failed!',
-                    'bit-integrations'
-                ),
-                400
-            );
         }
+        wp_send_json_error(
+            __(
+                'Create Customer Failed!',
+                'bit-integrations'
+            ),
+            400
+        );
     }
 
     public function getCustomerExits($customer_email)
     {
         $customer = Customer::where('email', $customer_email)->first();
+
         return isset($customer->id) ? $customer->id : null;
     }
 
@@ -75,15 +76,14 @@ class RecordApiHelper
 
         if (isset($ticket->id)) {
             return $ticket;
-        } else {
-            wp_send_json_error(
-                __(
-                    'Create Ticket Failed!',
-                    'bit-integrations'
-                ),
-                400
-            );
         }
+        wp_send_json_error(
+            __(
+                'Create Ticket Failed!',
+                'bit-integrations'
+            ),
+            400
+        );
     }
 
     public function execute(
@@ -91,10 +91,10 @@ class RecordApiHelper
         $fieldMap,
         $integrationDetails
     ) {
-        $finalData                      = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $customerExits                  = $this->getCustomerExits($finalData['email']);
-        $finalData['client_priority']   = !empty($integrationDetails->actions->client_priority) ? $integrationDetails->actions->client_priority : 'normal';
-        $finalData['agent_id']          = $integrationDetails->actions->support_staff;
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        $customerExits = $this->getCustomerExits($finalData['email']);
+        $finalData['client_priority'] = !empty($integrationDetails->actions->client_priority) ? $integrationDetails->actions->client_priority : 'normal';
+        $finalData['agent_id'] = $integrationDetails->actions->support_staff;
 
         if (isset($integrationDetails->actions->business_inbox) && !empty($integrationDetails->actions->business_inbox)) {
             $finalData['mailbox_id'] = $integrationDetails->actions->business_inbox;

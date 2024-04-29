@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\PerfexCRM;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -15,21 +15,26 @@ use BitCode\FI\Core\Util\HttpHelper;
 class RecordApiHelper
 {
     private $integrationDetails;
+
     private $integrationId;
+
     private $apiUrl;
+
     private $defaultHeader;
+
     private $type;
+
     private $typeName;
 
     public function __construct($integrationDetails, $integId, $apiToken, $domain)
     {
         $this->integrationDetails = $integrationDetails;
-        $this->integrationId      = $integId;
-        $this->apiUrl             = "{$domain}/api";
-        $this->defaultHeader      = [
-            "authtoken"     => $apiToken,
-            "Content-type"  => "application/json",
-            "Content-type"  => "application/x-www-form-urlencoded",
+        $this->integrationId = $integId;
+        $this->apiUrl = "{$domain}/api";
+        $this->defaultHeader = [
+            'authtoken'    => $apiToken,
+            'Content-type' => 'application/json',
+            'Content-type' => 'application/x-www-form-urlencoded',
         ];
     }
 
@@ -39,9 +44,10 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field Company is empty', 'code' => 400];
         }
 
-        $this->type     = 'Customer';
+        $this->type = 'Customer';
         $this->typeName = 'Customer created';
-        $apiEndpoint = $this->apiUrl . "/customers";
+        $apiEndpoint = $this->apiUrl . '/customers';
+
         return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
     }
 
@@ -70,9 +76,10 @@ class RecordApiHelper
             $finalData['is_primary'] = $this->integrationDetails->actions->contactIsPrimary ? 'on' : $this->integrationDetails->actions->contactIsPrimary;
         }
 
-        $this->type     = 'Contact';
+        $this->type = 'Contact';
         $this->typeName = 'Contact created';
-        $apiEndpoint = $this->apiUrl . "/contacts";
+        $apiEndpoint = $this->apiUrl . '/contacts';
+
         return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
     }
 
@@ -99,9 +106,10 @@ class RecordApiHelper
             $finalData['contacted_today'] = $this->integrationDetails->actions->contactedToday;
         }
 
-        $this->type     = 'Lead';
+        $this->type = 'Lead';
         $this->typeName = 'Lead created';
-        $apiEndpoint = $this->apiUrl . "/leads";
+        $apiEndpoint = $this->apiUrl . '/leads';
+
         return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
     }
 
@@ -121,10 +129,10 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field Customer is empty', 'code' => 400];
         }
 
-        $finalData['status']        = $this->integrationDetails->selectedProjectStatus;
-        $finalData['rel_type']      = $this->integrationDetails->selectedProjectType;
-        $finalData['billing_type']  = $this->integrationDetails->selectedbillingType;
-        $finalData['clientid']      = $this->integrationDetails->selectedCustomer;
+        $finalData['status'] = $this->integrationDetails->selectedProjectStatus;
+        $finalData['rel_type'] = $this->integrationDetails->selectedProjectType;
+        $finalData['billing_type'] = $this->integrationDetails->selectedbillingType;
+        $finalData['clientid'] = $this->integrationDetails->selectedCustomer;
 
         if ($this->integrationDetails->selectedbillingType === 1) {
             $finalData['project_cost'] = $this->integrationDetails->totalRate;
@@ -136,9 +144,10 @@ class RecordApiHelper
             $finalData['project_members'] = explode(',', $this->integrationDetails->selectedProjectMembers);
         }
 
-        $this->type     = 'Project';
+        $this->type = 'Project';
         $this->typeName = 'Project created';
-        $apiEndpoint = $this->apiUrl . "/projects";
+        $apiEndpoint = $this->apiUrl . '/projects';
+
         return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
     }
 
@@ -147,22 +156,23 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->perfexCRMFormField;
+            $actionValue = $value->perfexCRMFormField;
             $dataFinal[$actionValue] = ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue];
         }
+
         return $dataFinal;
     }
 
     public function execute($fieldValues, $fieldMap, $actionName)
     {
-        $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        if ($actionName === "customer") {
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        if ($actionName === 'customer') {
             $apiResponse = $this->addCustomer($finalData);
-        } elseif ($actionName === "contact") {
+        } elseif ($actionName === 'contact') {
             $apiResponse = $this->addContact($finalData);
-        } elseif ($actionName === "lead") {
+        } elseif ($actionName === 'lead') {
             $apiResponse = $this->addLead($finalData);
-        } elseif ($actionName === "project") {
+        } elseif ($actionName === 'project') {
             $apiResponse = $this->addProject($finalData);
         }
 
@@ -172,6 +182,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }

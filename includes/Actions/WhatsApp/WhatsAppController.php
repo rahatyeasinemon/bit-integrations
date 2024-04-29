@@ -3,10 +3,11 @@
 /**
  * WhatsApp Integration
  */
+
 namespace BitCode\FI\Actions\WhatsApp;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Trello integration
@@ -14,7 +15,9 @@ use BitCode\FI\Core\Util\HttpHelper;
 class WhatsAppController
 {
     private $baseUrl = 'https://api.trello.com/1/';
+
     private $_integrationID;
+
     private $accessToken;
 
     // public function fetchAllBoards($queryParams)
@@ -99,8 +102,8 @@ class WhatsAppController
     /**
      * Save updated access_token to avoid unnecessary token generation
      *
-     * @param Object $integrationData Details of flow
-     * @param Array  $fieldValues     Data to send Mail Chimp
+     * @param object $integrationData Details of flow
+     * @param array  $fieldValues     Data to send Mail Chimp
      *
      * @return null
      */
@@ -113,8 +116,8 @@ class WhatsAppController
         $actions = $integrationDetails->actions;
 
         if (
-            empty($messageTypeId) ||
-            empty($fieldMap)
+            empty($messageTypeId)
+            || empty($fieldMap)
         ) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for WhatsApp api', 'bit-integrations'));
         }
@@ -129,6 +132,7 @@ class WhatsAppController
         if (is_wp_error($whatsAppApiResponse)) {
             return $whatsAppApiResponse;
         }
+
         return $whatsAppApiResponse;
     }
 }

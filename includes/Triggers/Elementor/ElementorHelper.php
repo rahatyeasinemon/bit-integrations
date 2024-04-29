@@ -9,17 +9,18 @@ class ElementorHelper
     public static function extractRecordData($record)
     {
         return [
-            'id'            => $record->get_form_settings('id'),
-            'form_post_id'  => $record->get_form_settings('form_post_id'),
-            'edit_post_id'  => $record->get_form_settings('edit_post_id'),
-            'fields'        => $record->get('fields'),
-            'files'         => $record->get('files'),
+            'id'           => $record->get_form_settings('id'),
+            'form_post_id' => $record->get_form_settings('form_post_id'),
+            'edit_post_id' => $record->get_form_settings('edit_post_id'),
+            'fields'       => $record->get('fields'),
+            'files'        => $record->get('files'),
         ];
     }
 
     public static function fetchFlows($formId, $reOrganizeId)
     {
         global $wpdb;
+
         return $wpdb->get_results(
             $wpdb->prepare(
                 "SELECT * FROM {$wpdb->prefix}btcbi_flow
@@ -57,12 +58,13 @@ class ElementorHelper
                 $data[$field['id']] = $field['value'];
             }
         }
+
         return $data;
     }
 
     public static function setFields($formData)
     {
-        $allFields  = [
+        $allFields = [
             ['name' => 'id', 'type' => 'text', 'label' => "Form Id ({$formData['id']})", 'value' => $formData['id']],
             ['name' => 'form_post_id', 'type' => 'text', 'label' => "Form Post Id ({$formData['form_post_id']})", 'value' => $formData['form_post_id']],
             ['name' => 'edit_post_id', 'type' => 'text', 'label' => "Edit Post Id ({$formData['edit_post_id']})", 'value' => $formData['edit_post_id']],
@@ -71,11 +73,11 @@ class ElementorHelper
         // Process fields data
         foreach ($formData['fields'] as $key => $field) {
             if ($field['type'] != 'upload') {
-                $value      = $field['type'] == 'checkbox' && is_array($field['raw_value']) && count($field['raw_value']) == 1 ? $field['raw_value'][0] : $field['raw_value'];
-                $labelValue = is_string($value) && strlen($value) > 20 ? substr($value, 0, 20) . '...' : $value;
+                $value = $field['type'] == 'checkbox' && \is_array($field['raw_value']) && \count($field['raw_value']) == 1 ? $field['raw_value'][0] : $field['raw_value'];
+                $labelValue = \is_string($value) && \strlen($value) > 20 ? substr($value, 0, 20) . '...' : $value;
 
                 $allFields[] = [
-                    'name'  => "fields.$key.raw_value",
+                    'name'  => "fields.{$key}.raw_value",
                     'type'  => $field['type'],
                     'label' => $field['title'] . ' (' . $labelValue . ')',
                     'value' => $value
@@ -89,7 +91,7 @@ class ElementorHelper
                 $fieldTitle = !empty($formData['fields'][$key]['title']) ? $formData['fields'][$key]['title'] : 'Files';
 
                 $allFields[] = [
-                    'name'  => "files.$key.url",
+                    'name'  => "files.{$key}.url",
                     'type'  => 'file',
                     'label' => $fieldTitle,
                     'value' => $file['url']

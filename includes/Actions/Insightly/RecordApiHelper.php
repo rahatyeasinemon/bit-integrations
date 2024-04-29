@@ -15,23 +15,27 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $integrationDetails;
+
     private $integrationId;
+
     private $apiUrl;
+
     private $defaultHeader;
+
     private $type;
+
     private $typeName;
 
     public function __construct($integrationDetails, $integId)
     {
         $this->integrationDetails = $integrationDetails;
-        $this->integrationId      = $integId;
-        $this->apiUrl             = $integrationDetails->api_url;
-        $this->defaultHeader      = [
-            "Authorization" => 'Basic ' . base64_encode("$integrationDetails->api_key:"),
-            'Content-Type' => 'application/json'
+        $this->integrationId = $integId;
+        $this->apiUrl = $integrationDetails->api_url;
+        $this->defaultHeader = [
+            'Authorization' => 'Basic ' . base64_encode("{$integrationDetails->api_key}:"),
+            'Content-Type'  => 'application/json'
         ];
     }
-
 
     public function addOrganisation($finalData)
     {
@@ -42,21 +46,20 @@ class RecordApiHelper
         $staticFieldsKeys = ['ORGANISATION_NAME', 'PHONE', 'PHONE_FAX', 'WEBSITE', 'SOCIAL_FACEBOOK', 'SOCIAL_LINKEDIN', 'SOCIAL_TWITTER', 'ADDRESS_BILLING_STREET', 'ADDRESS_BILLING_CITY', 'ADDRESS_BILLING_STATE', 'ADDRESS_BILLING_COUNTRY', 'ADDRESS_BILLING_POSTCODE', 'ADDRESS_SHIP_STREET', 'ADDRESS_SHIP_STATE', 'ADDRESS_SHIP_POSTCODE', 'ADDRESS_SHIP_COUNTRY'];
 
         foreach ($finalData as $key => $value) {
-            if (in_array($key, $staticFieldsKeys)) {
+            if (\in_array($key, $staticFieldsKeys)) {
                 $requestParams[$key] = $value;
             } else {
                 $requestParams['CUSTOMFIELDS'][] = (object) [
-                    'FIELD_NAME'   => $key,
+                    'FIELD_NAME'  => $key,
                     'FIELD_VALUE' => $value
                 ];
             }
         }
 
-        $this->type     = 'Organisation';
+        $this->type = 'Organisation';
         $this->typeName = 'Organisation created';
 
-
-        $apiEndpoint = "https://api." . $this->apiUrl . "/v3.1/Organisations";
+        $apiEndpoint = 'https://api.' . $this->apiUrl . '/v3.1/Organisations';
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -67,14 +70,14 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field Name or Email is empty', 'code' => 400];
         }
 
-        $staticFieldsKeys = ['FIRST_NAME', 'LAST_NAME', "TITLE", 'EMAIL_ADDRESS', 'PHONE', 'DATE_OF_BIRTH', 'SOCIAL_FACEBOOK', 'SOCIAL_LINKEDIN', 'SOCIAL_TWITTER', "ADDRESS_MAIL_STREET", "ADDRESS_MAIL_CITY", "ADDRESS_MAIL_STATE", "ADDRESS_MAIL_COUNTRY", "ADDRESS_MAIL_POSTCODE", "ADDRESS_OTHER_STREET", "ADDRESS_OTHER_STATE", "ADDRESS_OTHER_POSTCODE", "ADDRESS_OTHER_COUNTRY"];
+        $staticFieldsKeys = ['FIRST_NAME', 'LAST_NAME', 'TITLE', 'EMAIL_ADDRESS', 'PHONE', 'DATE_OF_BIRTH', 'SOCIAL_FACEBOOK', 'SOCIAL_LINKEDIN', 'SOCIAL_TWITTER', 'ADDRESS_MAIL_STREET', 'ADDRESS_MAIL_CITY', 'ADDRESS_MAIL_STATE', 'ADDRESS_MAIL_COUNTRY', 'ADDRESS_MAIL_POSTCODE', 'ADDRESS_OTHER_STREET', 'ADDRESS_OTHER_STATE', 'ADDRESS_OTHER_POSTCODE', 'ADDRESS_OTHER_COUNTRY'];
 
         foreach ($finalData as $key => $value) {
-            if (in_array($key, $staticFieldsKeys)) {
+            if (\in_array($key, $staticFieldsKeys)) {
                 $requestParams[$key] = $value;
             } else {
                 $requestParams['CUSTOMFIELDS'][] = (object) [
-                    'FIELD_NAME'   => $key,
+                    'FIELD_NAME'  => $key,
                     'FIELD_VALUE' => $value
                 ];
             }
@@ -84,10 +87,10 @@ class RecordApiHelper
             $requestParams['ORGANISATION_ID'] = $this->integrationDetails->selectedOrganisation;
         }
 
-        $this->type     = 'Contact';
+        $this->type = 'Contact';
         $this->typeName = 'Contact created';
 
-        $apiEndpoint = "https://api." . $this->apiUrl . "/v3.1/Contacts";
+        $apiEndpoint = 'https://api.' . $this->apiUrl . '/v3.1/Contacts';
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -97,14 +100,14 @@ class RecordApiHelper
         if (empty($finalData['OPPORTUNITY_NAME'])) {
             return ['success' => false, 'message' => 'Required field opportunity name is empty', 'code' => 400];
         }
-        $staticFieldsKeys = ['OPPORTUNITY_NAME', 'OPPORTUNITY_DETAILS', "BID_AMOUNT", 'ACTUAL_CLOSE_DATE', 'PROBABILITY', 'FORECAST_CLOSE_DATE'];
+        $staticFieldsKeys = ['OPPORTUNITY_NAME', 'OPPORTUNITY_DETAILS', 'BID_AMOUNT', 'ACTUAL_CLOSE_DATE', 'PROBABILITY', 'FORECAST_CLOSE_DATE'];
 
         foreach ($finalData as $key => $value) {
-            if (in_array($key, $staticFieldsKeys)) {
+            if (\in_array($key, $staticFieldsKeys)) {
                 $requestParams[$key] = $value;
             } else {
                 $requestParams['CUSTOMFIELDS'][] = (object) [
-                    'FIELD_NAME'   => $key,
+                    'FIELD_NAME'  => $key,
                     'FIELD_VALUE' => $value
                 ];
             }
@@ -122,10 +125,10 @@ class RecordApiHelper
             $requestParams['STAGE_ID'] = $this->integrationDetails->selectedCRMPipelineStages;
         }
 
-        $this->type     = 'Opportunity';
+        $this->type = 'Opportunity';
         $this->typeName = 'Opportunity created';
 
-        $apiEndpoint = "https://api." . $this->apiUrl . "/v3.1/Opportunities";
+        $apiEndpoint = 'https://api.' . $this->apiUrl . '/v3.1/Opportunities';
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -135,14 +138,14 @@ class RecordApiHelper
         if (empty($finalData['PROJECT_NAME'])) {
             return ['success' => false, 'message' => 'Required field opportunity name is empty', 'code' => 400];
         }
-        $staticFieldsKeys = ['PROJECT_NAME', 'PROJECT_DETAILS', "BID_AMOUNT", 'ACTUAL_CLOSE_DATE', 'PROBABILITY', 'FORECAST_CLOSE_DATE'];
+        $staticFieldsKeys = ['PROJECT_NAME', 'PROJECT_DETAILS', 'BID_AMOUNT', 'ACTUAL_CLOSE_DATE', 'PROBABILITY', 'FORECAST_CLOSE_DATE'];
 
         foreach ($finalData as $key => $value) {
-            if (in_array($key, $staticFieldsKeys)) {
+            if (\in_array($key, $staticFieldsKeys)) {
                 $requestParams[$key] = $value;
             } else {
                 $requestParams['CUSTOMFIELDS'][] = (object) [
-                    'FIELD_NAME'   => $key,
+                    'FIELD_NAME'  => $key,
                     'FIELD_VALUE' => $value
                 ];
             }
@@ -160,11 +163,10 @@ class RecordApiHelper
             $requestParams['STAGE_ID'] = $this->integrationDetails->selectedCRMPipelineStages;
         }
 
-        $this->type     = 'Opportunity';
+        $this->type = 'Opportunity';
         $this->typeName = 'Opportunity created';
 
-
-        $apiEndpoint = "https://api." . $this->apiUrl . "/v3.1/Opportunities";
+        $apiEndpoint = 'https://api.' . $this->apiUrl . '/v3.1/Opportunities';
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -174,14 +176,14 @@ class RecordApiHelper
         if (empty($finalData['TITLE'])) {
             return ['success' => false, 'message' => 'Required field opportunity name is empty', 'code' => 400];
         }
-        $staticFieldsKeys = ['TITLE', 'DUE_DATE', "COMPLETED_DATE_UTC", 'DETAILS', 'PERCENT_COMPLETE', 'START_DATE'];
+        $staticFieldsKeys = ['TITLE', 'DUE_DATE', 'COMPLETED_DATE_UTC', 'DETAILS', 'PERCENT_COMPLETE', 'START_DATE'];
 
         foreach ($finalData as $key => $value) {
-            if (in_array($key, $staticFieldsKeys)) {
+            if (\in_array($key, $staticFieldsKeys)) {
                 $requestParams[$key] = $value;
             } else {
                 $requestParams['CUSTOMFIELDS'][] = (object) [
-                    'FIELD_NAME'   => $key,
+                    'FIELD_NAME'  => $key,
                     'FIELD_VALUE' => $value
                 ];
             }
@@ -191,11 +193,10 @@ class RecordApiHelper
             $requestParams['CATEGORY_ID'] = $this->integrationDetails->selectedCategory;
         }
 
-        $this->type     = 'Task';
+        $this->type = 'Task';
         $this->typeName = 'Task created';
 
-
-        $apiEndpoint = "https://api." . $this->apiUrl . "/v3.1/Tasks";
+        $apiEndpoint = 'https://api.' . $this->apiUrl . '/v3.1/Tasks';
 
         return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -205,14 +206,14 @@ class RecordApiHelper
         if (empty($finalData['LAST_NAME'])) {
             return ['success' => false, 'message' => 'Required field opportunity name is empty', 'code' => 400];
         }
-        $staticFieldsKeys = [ 'FIRST_NAME', 'LAST_NAME', 'TITLE', 'ORGANISATION_NAME', 'LEAD_RATING', 'EMAIL', 'PHONE', 'MOBILE', 'FAX', 'WEBSITE', 'INDUSTRY', 'EMPLOYEE_COUNT', 'ADDRESS_STREET', 'ADDRESS_CITY', 'ADDRESS_STATE', 'ADDRESS_POSTCODE', 'ADDRESS_COUNTRY', 'LEAD_DESCRIPTION'];
+        $staticFieldsKeys = ['FIRST_NAME', 'LAST_NAME', 'TITLE', 'ORGANISATION_NAME', 'LEAD_RATING', 'EMAIL', 'PHONE', 'MOBILE', 'FAX', 'WEBSITE', 'INDUSTRY', 'EMPLOYEE_COUNT', 'ADDRESS_STREET', 'ADDRESS_CITY', 'ADDRESS_STATE', 'ADDRESS_POSTCODE', 'ADDRESS_COUNTRY', 'LEAD_DESCRIPTION'];
 
         foreach ($finalData as $key => $value) {
-            if (in_array($key, $staticFieldsKeys)) {
+            if (\in_array($key, $staticFieldsKeys)) {
                 $requestParams[$key] = $value;
             } else {
                 $requestParams['CUSTOMFIELDS'][] = (object) [
-                    'FIELD_NAME'   => $key,
+                    'FIELD_NAME'  => $key,
                     'FIELD_VALUE' => $value
                 ];
             }
@@ -228,10 +229,10 @@ class RecordApiHelper
             $requestParams['LEAD_STATUS_ID'] = $this->integrationDetails->selectedLeadSource;
         }
 
-        $this->type     = 'Lead';
+        $this->type = 'Lead';
         $this->typeName = 'Lead created';
 
-        $apiEndpoint = "https://api." . $this->apiUrl . "/v3.1/Leads";
+        $apiEndpoint = 'https://api.' . $this->apiUrl . '/v3.1/Leads';
 
         return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -241,14 +242,14 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->insightlyFormField;
+            $actionValue = $value->insightlyFormField;
             if ($triggerValue === 'custom') {
                 if ($actionValue === 'CUSTOMFIELDS') {
                     $dataFinal[$value->customFieldKey] = $value->customValue;
                 } else {
                     $dataFinal[$actionValue] = $value->customValue;
                 }
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 if ($actionValue === 'CUSTOMFIELDS') {
                     $dataFinal[$value->customFieldKey] = $data[$triggerValue];
                 } else {
@@ -256,12 +257,13 @@ class RecordApiHelper
                 }
             }
         }
+
         return $dataFinal;
     }
 
     public function execute($fieldValues, $fieldMap, $actionName)
     {
-        $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         if ($actionName === 'organisation') {
             $apiResponse = $this->addOrganisation($finalData);
         } elseif ($actionName === 'contact') {
@@ -280,6 +282,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }

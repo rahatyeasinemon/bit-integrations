@@ -15,27 +15,32 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $integrationDetails;
+
     private $integrationId;
+
     private $apiUrl;
+
     private $defaultHeader;
+
     private $type;
+
     private $typeName;
 
     public function __construct($integrationDetails, $integId, $publicId, $secretKey)
     {
         $this->integrationDetails = $integrationDetails;
-        $this->integrationId      = $integId;
-        $this->apiUrl             = "https://app.suitedash.com/secure-api";
-        $this->defaultHeader      = [
-            "accept"       => "application/json",
-            "X-Public-ID"  => $publicId,
-            "X-Secret-Key" => $secretKey
+        $this->integrationId = $integId;
+        $this->apiUrl = 'https://app.suitedash.com/secure-api';
+        $this->defaultHeader = [
+            'accept'       => 'application/json',
+            'X-Public-ID'  => $publicId,
+            'X-Secret-Key' => $secretKey
         ];
     }
 
     public function addContact($finalData)
     {
-        $this->type     = 'Contact';
+        $this->type = 'Contact';
         $this->typeName = 'Contact created';
 
         if (empty($finalData['first_name'])) {
@@ -55,29 +60,30 @@ class RecordApiHelper
         $customField = [];
         $addressField = [];
         foreach ($finalData as $key => $value) {
-            if (stripos($key, "address-") === false && stripos($key, "custom-") === false) {
+            if (stripos($key, 'address-') === false && stripos($key, 'custom-') === false) {
                 $contactData[$key] = $value;
-            } elseif (stripos($key, "address-") > -1) {
+            } elseif (stripos($key, 'address-') > -1) {
                 $addressField[str_replace('address-', '', $key)] = $value;
-            } elseif (stripos($key, "custom-") > -1) {
+            } elseif (stripos($key, 'custom-') > -1) {
                 $customField[str_replace('custom-', '', $key)] = $value;
             }
         }
 
         if (isset($this->integrationDetails->selectedCompany) && !empty($this->integrationDetails->selectedCompany)) {
-            $contactData['company'] = (object)[
-                "name"                         => $this->integrationDetails->selectedCompany,
-                "create_company_if_not_exists" => true
+            $contactData['company'] = (object) [
+                'name'                         => $this->integrationDetails->selectedCompany,
+                'create_company_if_not_exists' => true
             ];
         }
-        if (count($customField)) {
-            $contactData["custom_fields"] = (object) $customField;
+        if (\count($customField)) {
+            $contactData['custom_fields'] = (object) $customField;
         }
-        if (count($addressField)) {
-            $contactData["address"] = (object) $addressField;
+        if (\count($addressField)) {
+            $contactData['address'] = (object) $addressField;
         }
 
-        $apiEndpoint = $this->apiUrl . "/contact";
+        $apiEndpoint = $this->apiUrl . '/contact';
+
         return HttpHelper::post($apiEndpoint, json_encode($contactData), $this->defaultHeader);
     }
 
@@ -86,15 +92,16 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->suiteDashFormField;
+            $actionValue = $value->suiteDashFormField;
             $dataFinal[$actionValue] = ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue];
         }
+
         return $dataFinal;
     }
 
     public function execute($fieldValues, $fieldMap, $actionName)
     {
-        $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         if ($actionName === 'contact') {
             $apiResponse = $this->addContact($finalData);
         }
@@ -105,6 +112,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }

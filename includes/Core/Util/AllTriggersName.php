@@ -4,8 +4,8 @@ namespace BitCode\FI\Core\Util;
 
 final class AllTriggersName
 {
-    public static $allTriggersName =
-        [
+    public static $allTriggersName
+        = [
             'AcademyLms'        => ['name' => 'Academy Lms', 'isPro' => true, 'is_active' => false],
             'Affiliate'         => ['name' => 'Affiliate', 'isPro' => true, 'is_active' => false],
             'Amelia'            => ['name' => 'Amelia', 'isPro' => true, 'is_active' => false],

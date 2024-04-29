@@ -3,29 +3,34 @@
 namespace BitCode\FI\Triggers\WC;
 
 use BitCode\FI\Flow\Flow;
+use WC_Booking;
+use WC_Checkout;
+use WC_Product_Simple;
+use WC_Subscriptions_Product;
 
 final class WCController
 {
     public static function info()
     {
         $plugin_path = 'woocommerce/woocommerce.php';
+
         return [
-            'name' => 'Woocommerce',
-            'title' => 'WooCommerce is the world’s most popular open-source eCommerce solution.',
-            'slug' => $plugin_path,
-            'pro' => 'woocommerce/woocommerce.php',
-            'type' => 'form',
-            'is_active' => is_plugin_active('woocommerce/woocommerce.php'),
+            'name'           => 'Woocommerce',
+            'title'          => 'WooCommerce is the world’s most popular open-source eCommerce solution.',
+            'slug'           => $plugin_path,
+            'pro'            => 'woocommerce/woocommerce.php',
+            'type'           => 'form',
+            'is_active'      => is_plugin_active('woocommerce/woocommerce.php'),
             'activation_url' => wp_nonce_url(self_admin_url('plugins.php?action=activate&amp;plugin=' . $plugin_path . '&amp;plugin_status=all&amp;paged=1&amp;s'), 'activate-plugin_' . $plugin_path),
-            'install_url' => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
-            'list' => [
+            'install_url'    => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
+            'list'           => [
                 'action' => 'wc/get',
                 'method' => 'get',
             ],
             'fields' => [
                 'action' => 'wc/get/form',
                 'method' => 'post',
-                'data' => ['id']
+                'data'   => ['id']
             ],
             'isPro' => false
         ];
@@ -42,8 +47,8 @@ final class WCController
         ];
         $wc_action = [];
         foreach ($types as $index => $type) {
-            $wc_action[] = (object)[
-                'id' => $index + 1,
+            $wc_action[] = (object) [
+                'id'    => $index + 1,
                 'title' => $type,
             ];
         }
@@ -83,13 +88,13 @@ final class WCController
             $anyStatus = [
                 'any_status' => 'Any Status',
             ];
-            if (function_exists('wcs_get_subscription_statuses')) {
+            if (\function_exists('wcs_get_subscription_statuses')) {
                 $allSubscriptionStatus = wcs_get_subscription_statuses();
                 $allSubscriptionStatus = array_merge($anyStatus, $allSubscriptionStatus);
             } else {
                 $allSubscriptionStatus = $anyStatus;
             }
-            $responseData['subscription_statuses'] = (array)$allSubscriptionStatus;
+            $responseData['subscription_statuses'] = (array) $allSubscriptionStatus;
         }
 
         if ($data->id == 17) {
@@ -97,8 +102,8 @@ final class WCController
             $order = 'asc';
             $hide_empty = false;
             $cat_args = [
-                'orderby' => $orderby,
-                'order' => $order,
+                'orderby'    => $orderby,
+                'order'      => $order,
                 'hide_empty' => $hide_empty,
             ];
 
@@ -108,8 +113,8 @@ final class WCController
             }
             foreach ($product_categories_list as $key => $category) {
                 $product_categories[] = [
-                    'term_id' => (string)$category->term_id,
-                    'name' => $category->name,
+                    'term_id' => (string) $category->term_id,
+                    'name'    => $category->name,
                 ];
             }
             $responseData['allProductCategories'] = $product_categories;
@@ -151,151 +156,151 @@ final class WCController
         if ($entity === 'product') {
             $fields = [
                 'Product Name' => (object) [
-                    'fieldKey' => 'post_title',
+                    'fieldKey'  => 'post_title',
                     'fieldName' => 'Product Name',
-                    'required' => true
+                    'required'  => true
                 ],
                 'Product Description' => (object) [
-                    'fieldKey' => 'post_content',
+                    'fieldKey'  => 'post_content',
                     'fieldName' => 'Product Description'
                 ],
                 'Product Short Description' => (object) [
-                    'fieldKey' => 'post_excerpt',
+                    'fieldKey'  => 'post_excerpt',
                     'fieldName' => 'Product Short Description'
                 ],
                 'Product ID' => (object) [
-                    'fieldKey' => 'post_id',
+                    'fieldKey'  => 'post_id',
                     'fieldName' => 'Product ID'
                 ],
                 'Post Date' => (object) [
-                    'fieldKey' => 'post_date',
+                    'fieldKey'  => 'post_date',
                     'fieldName' => 'Post Date'
                 ],
                 'Post Date GMT' => (object) [
-                    'fieldKey' => 'post_date_gmt',
+                    'fieldKey'  => 'post_date_gmt',
                     'fieldName' => 'Post Date GMT'
                 ],
                 'Product Status' => (object) [
-                    'fieldKey' => 'post_status',
+                    'fieldKey'  => 'post_status',
                     'fieldName' => 'Product Status'
                 ],
                 'Product Tag' => (object) [
-                    'fieldKey' => 'tags_input',
+                    'fieldKey'  => 'tags_input',
                     'fieldName' => 'Product Tag'
                 ],
                 'Product Category' => (object) [
-                    'fieldKey' => 'post_category',
+                    'fieldKey'  => 'post_category',
                     'fieldName' => 'Product Category'
                 ],
                 'Catalog Visibility' => (object) [
-                    'fieldKey' => '_visibility',
+                    'fieldKey'  => '_visibility',
                     'fieldName' => 'Catalog Visibility'
                 ],
                 'Featured Product' => (object) [
-                    'fieldKey' => '_featured',
+                    'fieldKey'  => '_featured',
                     'fieldName' => 'Featured Product'
                 ],
                 'Regular Price' => (object) [
-                    'fieldKey' => '_regular_price',
+                    'fieldKey'  => '_regular_price',
                     'fieldName' => 'Regular Price'
                 ],
                 'Sale Price' => (object) [
-                    'fieldKey' => '_sale_price',
+                    'fieldKey'  => '_sale_price',
                     'fieldName' => 'Sale Price'
                 ],
                 'Sale Price From Date' => (object) [
-                    'fieldKey' => '_sale_price_dates_from',
+                    'fieldKey'  => '_sale_price_dates_from',
                     'fieldName' => 'Sale Price From Date'
                 ],
                 'Sale Price To Date' => (object) [
-                    'fieldKey' => '_sale_price_dates_to',
+                    'fieldKey'  => '_sale_price_dates_to',
                     'fieldName' => 'Sale Price To Date'
                 ],
                 'SKU' => (object) [
-                    'fieldKey' => '_sku',
+                    'fieldKey'  => '_sku',
                     'fieldName' => 'SKU'
                 ],
                 'Manage Stock' => (object) [
-                    'fieldKey' => '_manage_stock',
+                    'fieldKey'  => '_manage_stock',
                     'fieldName' => 'Manage Stock'
                 ],
                 'Stock Quantity' => (object) [
-                    'fieldKey' => '_stock',
+                    'fieldKey'  => '_stock',
                     'fieldName' => 'Stock Quantity'
                 ],
                 'Allow Backorders' => (object) [
-                    'fieldKey' => '_backorders',
+                    'fieldKey'  => '_backorders',
                     'fieldName' => 'Allow Backorders'
                 ],
                 'Low Stock Threshold' => (object) [
-                    'fieldKey' => '_low_stock_amount',
+                    'fieldKey'  => '_low_stock_amount',
                     'fieldName' => 'Low Stock Threshold'
                 ],
                 'Stock Status' => (object) [
-                    'fieldKey' => '_stock_status',
+                    'fieldKey'  => '_stock_status',
                     'fieldName' => 'Stock Status'
                 ],
                 'Sold Individually' => (object) [
-                    'fieldKey' => '_sold_individually',
+                    'fieldKey'  => '_sold_individually',
                     'fieldName' => 'Sold Individually'
                 ],
                 'Weight' => (object) [
-                    'fieldKey' => '_weight',
+                    'fieldKey'  => '_weight',
                     'fieldName' => 'Weight'
                 ],
                 'Length' => (object) [
-                    'fieldKey' => '_length',
+                    'fieldKey'  => '_length',
                     'fieldName' => 'Length'
                 ],
                 'Width' => (object) [
-                    'fieldKey' => '_width',
+                    'fieldKey'  => '_width',
                     'fieldName' => 'Width'
                 ],
                 'Height' => (object) [
-                    'fieldKey' => '_height',
+                    'fieldKey'  => '_height',
                     'fieldName' => 'Height'
                 ],
                 'Purchase Note' => (object) [
-                    'fieldKey' => '_purchase_note',
+                    'fieldKey'  => '_purchase_note',
                     'fieldName' => 'Purchase Note'
                 ],
                 'Menu Order' => (object) [
-                    'fieldKey' => 'menu_order',
+                    'fieldKey'  => 'menu_order',
                     'fieldName' => 'Menu Order'
                 ],
                 'Enable Reviews' => (object) [
-                    'fieldKey' => 'comment_status',
+                    'fieldKey'  => 'comment_status',
                     'fieldName' => 'Enable Reviews'
                 ],
                 'Virtual' => (object) [
-                    'fieldKey' => '_virtual',
+                    'fieldKey'  => '_virtual',
                     'fieldName' => 'Virtual'
                 ],
                 'Downloadable' => (object) [
-                    'fieldKey' => '_downloadable',
+                    'fieldKey'  => '_downloadable',
                     'fieldName' => 'Downloadable'
                 ],
                 'Download Limit' => (object) [
-                    'fieldKey' => '_download_limit',
+                    'fieldKey'  => '_download_limit',
                     'fieldName' => 'Download Limit'
                 ],
                 'Download Expiry' => (object) [
-                    'fieldKey' => '_download_expiry',
+                    'fieldKey'  => '_download_expiry',
                     'fieldName' => 'Download Expiry'
                 ],
                 'Product Type' => (object) [
-                    'fieldKey' => 'product_type',
+                    'fieldKey'  => 'product_type',
                     'fieldName' => 'Product Type'
                 ],
                 'Product URL' => (object) [
-                    'fieldKey' => '_product_url',
+                    'fieldKey'  => '_product_url',
                     'fieldName' => 'Product URL'
                 ],
             ];
 
             $acfFieldGroups = self::acfGetFieldGroups(['product']);
             foreach ($acfFieldGroups as $group) {
-                $acfFields = acf_get_fields($group["ID"]);
+                $acfFields = acf_get_fields($group['ID']);
 
                 foreach ($acfFields as $field) {
                     $fields[$field['label']] = (object) [
@@ -309,11 +314,11 @@ final class WCController
 
             $uploadFields = [
                 'Product Image' => (object) [
-                    'fieldKey' => '_product_image',
+                    'fieldKey'  => '_product_image',
                     'fieldName' => 'Product Image'
                 ],
                 'Product Gallery' => (object) [
-                    'fieldKey' => '_product_gallery',
+                    'fieldKey'  => '_product_gallery',
                     'fieldName' => 'Product Gallery'
                 ],
             ];
@@ -324,158 +329,158 @@ final class WCController
             if ($id == 1) {
                 $fields = [
                     'First Name' => (object) [
-                        'fieldKey' => 'first_name',
+                        'fieldKey'  => 'first_name',
                         'fieldName' => 'First Name'
                     ],
                     'Last Name' => (object) [
-                        'fieldKey' => 'last_name',
+                        'fieldKey'  => 'last_name',
                         'fieldName' => 'Last Name'
                     ],
                     'Email' => (object) [
-                        'fieldKey' => 'user_email',
+                        'fieldKey'  => 'user_email',
                         'fieldName' => 'Email',
                     ],
                     'Username' => (object) [
-                        'fieldKey' => 'user_login',
+                        'fieldKey'  => 'user_login',
                         'fieldName' => 'Username',
                     ],
                     'Password' => (object) [
-                        'fieldKey' => 'user_pass',
+                        'fieldKey'  => 'user_pass',
                         'fieldName' => 'Password'
                     ],
                     'Display Name' => (object) [
-                        'fieldKey' => 'display_name',
+                        'fieldKey'  => 'display_name',
                         'fieldName' => 'Display Name'
                     ],
                     'Nickname' => (object) [
-                        'fieldKey' => 'nickname',
+                        'fieldKey'  => 'nickname',
                         'fieldName' => 'Nickname'
                     ],
                     'Website' => (object) [
-                        'fieldKey' => 'user_url',
+                        'fieldKey'  => 'user_url',
                         'fieldName' => 'Website'
                     ],
                 ];
             } else {
                 $fields = [
                     'Customer ID' => (object) [
-                        'fieldKey' => 'customer_id',
+                        'fieldKey'  => 'customer_id',
                         'fieldName' => 'Customer ID'
                     ],
                     'First Name' => (object) [
-                        'fieldKey' => 'first_name',
+                        'fieldKey'  => 'first_name',
                         'fieldName' => 'First Name'
                     ],
                     'Last Name' => (object) [
-                        'fieldKey' => 'last_name',
+                        'fieldKey'  => 'last_name',
                         'fieldName' => 'Last Name'
                     ],
                     'Email' => (object) [
-                        'fieldKey' => 'user_email',
+                        'fieldKey'  => 'user_email',
                         'fieldName' => 'Email',
                     ],
                     'Username' => (object) [
-                        'fieldKey' => 'user_login',
+                        'fieldKey'  => 'user_login',
                         'fieldName' => 'Username',
                     ],
                     'Password' => (object) [
-                        'fieldKey' => 'user_pass',
+                        'fieldKey'  => 'user_pass',
                         'fieldName' => 'Password'
                     ],
                     'Display Name' => (object) [
-                        'fieldKey' => 'display_name',
+                        'fieldKey'  => 'display_name',
                         'fieldName' => 'Display Name'
                     ],
                     'Nickname' => (object) [
-                        'fieldKey' => 'nickname',
+                        'fieldKey'  => 'nickname',
                         'fieldName' => 'Nickname'
                     ],
                     'Locale' => (object) [
-                        'fieldKey' => 'locale',
+                        'fieldKey'  => 'locale',
                         'fieldName' => 'Locale'
                     ],
                     'Website' => (object) [
-                        'fieldKey' => 'user_url',
+                        'fieldKey'  => 'user_url',
                         'fieldName' => 'Website'
                     ],
                     'Billing First Name' => (object) [
-                        'fieldKey' => 'billing_first_name',
+                        'fieldKey'  => 'billing_first_name',
                         'fieldName' => 'Billing First Name'
                     ],
                     'Billing Last Name' => (object) [
-                        'fieldKey' => 'billing_last_name',
+                        'fieldKey'  => 'billing_last_name',
                         'fieldName' => 'Billing Last Name'
                     ],
                     'Billing Company' => (object) [
-                        'fieldKey' => 'billing_company',
+                        'fieldKey'  => 'billing_company',
                         'fieldName' => 'Billing Company'
                     ],
                     'Billing Address 1' => (object) [
-                        'fieldKey' => 'billing_address_1',
+                        'fieldKey'  => 'billing_address_1',
                         'fieldName' => 'Billing Address 1'
                     ],
                     'Billing Address 2' => (object) [
-                        'fieldKey' => 'billing_address_2',
+                        'fieldKey'  => 'billing_address_2',
                         'fieldName' => 'Billing Address 2'
                     ],
                     'Billing City' => (object) [
-                        'fieldKey' => 'billing_city',
+                        'fieldKey'  => 'billing_city',
                         'fieldName' => 'Billing City'
                     ],
                     'Billing Post Code' => (object) [
-                        'fieldKey' => 'billing_postcode',
+                        'fieldKey'  => 'billing_postcode',
                         'fieldName' => 'Billing Post Code'
                     ],
                     'Billing Country' => (object) [
-                        'fieldKey' => 'billing_country',
+                        'fieldKey'  => 'billing_country',
                         'fieldName' => 'Billing Country'
                     ],
                     'Billing State' => (object) [
-                        'fieldKey' => 'billing_state',
+                        'fieldKey'  => 'billing_state',
                         'fieldName' => 'Billing State'
                     ],
                     'Billing Email' => (object) [
-                        'fieldKey' => 'billing_email',
+                        'fieldKey'  => 'billing_email',
                         'fieldName' => 'Billing Email'
                     ],
                     'Billing Phone' => (object) [
-                        'fieldKey' => 'billing_phone',
+                        'fieldKey'  => 'billing_phone',
                         'fieldName' => 'Billing Phone'
                     ],
                     'Shipping First Name' => (object) [
-                        'fieldKey' => 'shipping_first_name',
+                        'fieldKey'  => 'shipping_first_name',
                         'fieldName' => 'Shipping First Name'
                     ],
                     'Shipping Last Name' => (object) [
-                        'fieldKey' => 'shipping_last_name',
+                        'fieldKey'  => 'shipping_last_name',
                         'fieldName' => 'Shipping Last Name'
                     ],
                     'Shipping Company' => (object) [
-                        'fieldKey' => 'shipping_company',
+                        'fieldKey'  => 'shipping_company',
                         'fieldName' => 'Shipping Company'
                     ],
                     'Shipping Address 1' => (object) [
-                        'fieldKey' => 'shipping_address_1',
+                        'fieldKey'  => 'shipping_address_1',
                         'fieldName' => 'Shipping Address 1'
                     ],
                     'Shipping Address 2' => (object) [
-                        'fieldKey' => 'shipping_address_2',
+                        'fieldKey'  => 'shipping_address_2',
                         'fieldName' => 'Shipping Address 2'
                     ],
                     'Shipping City' => (object) [
-                        'fieldKey' => 'shipping_city',
+                        'fieldKey'  => 'shipping_city',
                         'fieldName' => 'Shipping City'
                     ],
                     'Shipping Post Code' => (object) [
-                        'fieldKey' => 'shipping_postcode',
+                        'fieldKey'  => 'shipping_postcode',
                         'fieldName' => 'Shipping Post Code'
                     ],
                     'Shipping Country' => (object) [
-                        'fieldKey' => 'shipping_country',
+                        'fieldKey'  => 'shipping_country',
                         'fieldName' => 'Shipping Country'
                     ],
                     'Shipping State' => (object) [
-                        'fieldKey' => 'shipping_state',
+                        'fieldKey'  => 'shipping_state',
                         'fieldName' => 'Shipping State'
                     ],
                 ];
@@ -483,200 +488,200 @@ final class WCController
         } elseif ($entity === 'order') {
             $fields = [
                 'Id' => (object) [
-                    'fieldKey' => 'id',
+                    'fieldKey'  => 'id',
                     'fieldName' => 'Order Id'
                 ],
                 'Order key' => (object) [
-                    'fieldKey' => 'order_key',
+                    'fieldKey'  => 'order_key',
                     'fieldName' => 'Order Key'
                 ],
                 'cart_tax' => (object) [
-                    'fieldKey' => 'cart_tax',
+                    'fieldKey'  => 'cart_tax',
                     'fieldName' => 'Cart Tax'
                 ],
                 'Currency' => (object) [
-                    'fieldKey' => 'currency',
+                    'fieldKey'  => 'currency',
                     'fieldName' => 'Currency'
                 ],
                 'discount tax' => (object) [
-                    'fieldKey' => 'discount_tax',
+                    'fieldKey'  => 'discount_tax',
                     'fieldName' => 'Discount Tax'
                 ],
                 'discount_to_display' => (object) [
-                    'fieldKey' => 'discount_to_display',
+                    'fieldKey'  => 'discount_to_display',
                     'fieldName' => 'Discount To Display'
                 ],
                 'discount total' => (object) [
-                    'fieldKey' => 'discount_total',
+                    'fieldKey'  => 'discount_total',
                     'fieldName' => 'Discount Total'
                 ],
                 'shipping_tax' => (object) [
-                    'fieldKey' => 'shipping_tax',
+                    'fieldKey'  => 'shipping_tax',
                     'fieldName' => 'Shipping Tax'
                 ],
                 'shipping total' => (object) [
-                    'fieldKey' => 'shipping_total',
+                    'fieldKey'  => 'shipping_total',
                     'fieldName' => 'Shipping Total'
                 ],
                 'total_tax' => (object) [
-                    'fieldKey' => 'total_tax',
+                    'fieldKey'  => 'total_tax',
                     'fieldName' => 'Total Tax'
                 ],
                 'total' => (object) [
-                    'fieldKey' => 'total',
+                    'fieldKey'  => 'total',
                     'fieldName' => 'Total'
                 ],
                 'total_refunded' => (object) [
-                    'fieldKey' => 'total_refunded',
+                    'fieldKey'  => 'total_refunded',
                     'fieldName' => 'Total Refunded'
                 ],
                 'tax_refunded' => (object) [
-                    'fieldKey' => 'tax_refunded',
+                    'fieldKey'  => 'tax_refunded',
                     'fieldName' => 'Tax Refunded'
                 ],
                 'total_shipping_refunded' => (object) [
-                    'fieldKey' => 'total_shipping_refunded',
+                    'fieldKey'  => 'total_shipping_refunded',
                     'fieldName' => 'Total Shipping Refunded'
                 ],
                 'total_qty_refunded' => (object) [
-                    'fieldKey' => 'total_qty_refunded',
+                    'fieldKey'  => 'total_qty_refunded',
                     'fieldName' => 'Total Qty Refunded'
                 ],
                 'remaining_refund_amount' => (object) [
-                    'fieldKey' => 'remaining_refund_amount',
+                    'fieldKey'  => 'remaining_refund_amount',
                     'fieldName' => 'remaining_refund_amount'
                 ],
                 'Status' => (object) [
-                    'fieldKey' => 'status',
+                    'fieldKey'  => 'status',
                     'fieldName' => 'Status'
                 ],
                 'shipping_method' => (object) [
-                    'fieldKey' => 'shipping_method',
+                    'fieldKey'  => 'shipping_method',
                     'fieldName' => 'shipping method'
                 ],
                 'Created via' => (object) [
-                    'fieldKey' => 'created_via',
+                    'fieldKey'  => 'created_via',
                     'fieldName' => 'Created Via'
                 ],
                 'Date created' => (object) [
-                    'fieldKey' => 'date_created',
+                    'fieldKey'  => 'date_created',
                     'fieldName' => 'Date created'
                 ],
                 'date modified' => (object) [
-                    'fieldKey' => 'date_modified',
+                    'fieldKey'  => 'date_modified',
                     'fieldName' => 'Date Modified'
                 ],
                 'date completed' => (object) [
-                    'fieldKey' => 'date_completed',
+                    'fieldKey'  => 'date_completed',
                     'fieldName' => 'Date completed'
                 ],
                 'date paid' => (object) [
-                    'fieldKey' => 'date_paid',
+                    'fieldKey'  => 'date_paid',
                     'fieldName' => 'Date paid'
                 ],
 
                 'prices_include_tax' => (object) [
-                    'fieldKey' => 'prices_include_tax',
+                    'fieldKey'  => 'prices_include_tax',
                     'fieldName' => 'Prices Include Tax'
                 ],
                 'customer_id' => (object) [
-                    'fieldKey' => 'customer_id',
+                    'fieldKey'  => 'customer_id',
                     'fieldName' => 'Customer Id'
                 ],
                 'Billing First Name' => (object) [
-                    'fieldKey' => 'billing_first_name',
+                    'fieldKey'  => 'billing_first_name',
                     'fieldName' => 'Billing First Name'
                 ],
                 'Billing Last Name' => (object) [
-                    'fieldKey' => 'billing_last_name',
+                    'fieldKey'  => 'billing_last_name',
                     'fieldName' => 'Billing Last Name'
                 ],
                 'Billing Company' => (object) [
-                    'fieldKey' => 'billing_company',
+                    'fieldKey'  => 'billing_company',
                     'fieldName' => 'Billing Company'
                 ],
                 'Billing Address 1' => (object) [
-                    'fieldKey' => 'billing_address_1',
+                    'fieldKey'  => 'billing_address_1',
                     'fieldName' => 'Billing Address 1'
                 ],
                 'Billing Address 2' => (object) [
-                    'fieldKey' => 'billing_address_2',
+                    'fieldKey'  => 'billing_address_2',
                     'fieldName' => 'Billing Address 2'
                 ],
                 'Billing City' => (object) [
-                    'fieldKey' => 'billing_city',
+                    'fieldKey'  => 'billing_city',
                     'fieldName' => 'Billing City'
                 ],
                 'Billing Post Code' => (object) [
-                    'fieldKey' => 'billing_postcode',
+                    'fieldKey'  => 'billing_postcode',
                     'fieldName' => 'Billing Post Code'
                 ],
                 'Billing Country' => (object) [
-                    'fieldKey' => 'billing_country',
+                    'fieldKey'  => 'billing_country',
                     'fieldName' => 'Billing Country'
                 ],
                 'Billing State' => (object) [
-                    'fieldKey' => 'billing_state',
+                    'fieldKey'  => 'billing_state',
                     'fieldName' => 'Billing State'
                 ],
                 'Billing Email' => (object) [
-                    'fieldKey' => 'billing_email',
+                    'fieldKey'  => 'billing_email',
                     'fieldName' => 'Billing Email'
                 ],
                 'Billing Phone' => (object) [
-                    'fieldKey' => 'billing_phone',
+                    'fieldKey'  => 'billing_phone',
                     'fieldName' => 'Billing Phone'
                 ],
                 'Shipping First Name' => (object) [
-                    'fieldKey' => 'shipping_first_name',
+                    'fieldKey'  => 'shipping_first_name',
                     'fieldName' => 'Shipping First Name'
                 ],
                 'Shipping Last Name' => (object) [
-                    'fieldKey' => 'shipping_last_name',
+                    'fieldKey'  => 'shipping_last_name',
                     'fieldName' => 'Shipping Last Name'
                 ],
                 'Shipping Company' => (object) [
-                    'fieldKey' => 'shipping_company',
+                    'fieldKey'  => 'shipping_company',
                     'fieldName' => 'Shipping Company'
                 ],
                 'Shipping Address 1' => (object) [
-                    'fieldKey' => 'shipping_address_1',
+                    'fieldKey'  => 'shipping_address_1',
                     'fieldName' => 'Shipping Address 1'
                 ],
                 'Shipping Address 2' => (object) [
-                    'fieldKey' => 'shipping_address_2',
+                    'fieldKey'  => 'shipping_address_2',
                     'fieldName' => 'Shipping Address 2'
                 ],
                 'Shipping City' => (object) [
-                    'fieldKey' => 'shipping_city',
+                    'fieldKey'  => 'shipping_city',
                     'fieldName' => 'Shipping City'
                 ],
                 'Shipping Post Code' => (object) [
-                    'fieldKey' => 'shipping_postcode',
+                    'fieldKey'  => 'shipping_postcode',
                     'fieldName' => 'Shipping Post Code'
                 ],
                 'Shipping Country' => (object) [
-                    'fieldKey' => 'shipping_country',
+                    'fieldKey'  => 'shipping_country',
                     'fieldName' => 'Shipping Country'
                 ],
                 'Payment Method' => (object) [
-                    'fieldKey' => 'payment_method',
+                    'fieldKey'  => 'payment_method',
                     'fieldName' => 'Payment Method'
                 ],
                 'Payment Method Title' => (object) [
-                    'fieldKey' => 'payment_method_title',
+                    'fieldKey'  => 'payment_method_title',
                     'fieldName' => 'Payment Method Title'
                 ],
                 'Line Items' => (object) [
-                    'fieldKey' => 'line_items',
+                    'fieldKey'  => 'line_items',
                     'fieldName' => 'Line Items'
                 ],
                 'Order Receive URl' => (object) [
-                    'fieldKey' => 'order_received_url',
+                    'fieldKey'  => 'order_received_url',
                     'fieldName' => 'order_received_url'
                 ],
                 'Customer Note' => (object) [
-                    'fieldKey' => 'customer_note',
+                    'fieldKey'  => 'customer_note',
                     'fieldName' => 'Customer Note'
                 ],
             ];
@@ -684,39 +689,39 @@ final class WCController
             if (version_compare(WC_VERSION, '8.5.1', '>=')) {
                 $fields += [
                     'Device Type' => (object) [
-                        'fieldKey' => '_wc_order_attribution_device_type',
+                        'fieldKey'  => '_wc_order_attribution_device_type',
                         'fieldName' => 'Device Type'
                     ],
                     'Referring source' => (object) [
-                        'fieldKey' => '_wc_order_attribution_referrer',
+                        'fieldKey'  => '_wc_order_attribution_referrer',
                         'fieldName' => 'Referring source'
                     ],
                     'Session Count' => (object) [
-                        'fieldKey' => '_wc_order_attribution_session_count',
+                        'fieldKey'  => '_wc_order_attribution_session_count',
                         'fieldName' => 'Session Count'
                     ],
                     'Session Entry' => (object) [
-                        'fieldKey' => '_wc_order_attribution_session_entry',
+                        'fieldKey'  => '_wc_order_attribution_session_entry',
                         'fieldName' => 'Session Entry'
                     ],
                     'Session page views' => (object) [
-                        'fieldKey' => '_wc_order_attribution_session_pages',
+                        'fieldKey'  => '_wc_order_attribution_session_pages',
                         'fieldName' => 'Session page views'
                     ],
                     'Session Start Time' => (object) [
-                        'fieldKey' => '_wc_order_attribution_session_start_time',
+                        'fieldKey'  => '_wc_order_attribution_session_start_time',
                         'fieldName' => 'Session Start Time'
                     ],
                     'Source Type' => (object) [
-                        'fieldKey' => '_wc_order_attribution_source_type',
+                        'fieldKey'  => '_wc_order_attribution_source_type',
                         'fieldName' => 'Source Type'
                     ],
                     'User Agent' => (object) [
-                        'fieldKey' => '_wc_order_attribution_user_agent',
+                        'fieldKey'  => '_wc_order_attribution_user_agent',
                         'fieldName' => 'User Agent'
                     ],
                     'Origin' => (object) [
-                        'fieldKey' => '_wc_order_attribution_utm_source',
+                        'fieldKey'  => '_wc_order_attribution_utm_source',
                         'fieldName' => 'Origin'
                     ],
                 ];
@@ -725,7 +730,7 @@ final class WCController
             $acfFieldGroups = self::acfGetFieldGroups(['shop_order']);
             $checkoutFields = WC()->checkout()->get_checkout_fields();
             foreach ($acfFieldGroups as $group) {
-                $acfFields = acf_get_fields($group["ID"]);
+                $acfFields = acf_get_fields($group['ID']);
 
                 foreach ($acfFields as $field) {
                     $fields[$field['label']] = (object) [
@@ -748,39 +753,39 @@ final class WCController
             if ($id == 10) {
                 $fieldProduct = [
                     'product_id' => (object) [
-                        'fieldKey' => 'product_id',
+                        'fieldKey'  => 'product_id',
                         'fieldName' => 'Product Id'
                     ],
                     'variation_id' => (object) [
-                        'fieldKey' => 'variation_id',
+                        'fieldKey'  => 'variation_id',
                         'fieldName' => 'Variation Id'
                     ],
                     'product_name' => (object) [
-                        'fieldKey' => 'product_name',
+                        'fieldKey'  => 'product_name',
                         'fieldName' => 'Product Name'
                     ],
                     'quantity' => (object) [
-                        'fieldKey' => 'quantity',
+                        'fieldKey'  => 'quantity',
                         'fieldName' => 'Quantity'
                     ],
                     'subtotal' => (object) [
-                        'fieldKey' => 'subtotal',
+                        'fieldKey'  => 'subtotal',
                         'fieldName' => 'Subtotal'
                     ],
                     'total' => (object) [
-                        'fieldKey' => 'total',
+                        'fieldKey'  => 'total',
                         'fieldName' => 'Total'
                     ],
                     'subtotal_tax' => (object) [
-                        'fieldKey' => 'subtotal_tax',
+                        'fieldKey'  => 'subtotal_tax',
                         'fieldName' => 'Subtotal Tax'
                     ],
                     'tax_class' => (object) [
-                        'fieldKey' => 'tax_class',
+                        'fieldKey'  => 'tax_class',
                         'fieldName' => 'Tax Class'
                     ],
                     'tax_status' => (object) [
-                        'fieldKey' => 'tax_status',
+                        'fieldKey'  => 'tax_status',
                         'fieldName' => 'Tax Status'
                     ],
                 ];
@@ -788,7 +793,7 @@ final class WCController
             } elseif ($id == 17) {
                 $fields = array_merge([
                     'specified_product_by_category' => (object) [
-                        'fieldKey' => 'specified_product_by_category',
+                        'fieldKey'  => 'specified_product_by_category',
                         'fieldName' => 'Specified Product By Category'
                     ],
                 ], $fields);
@@ -796,164 +801,164 @@ final class WCController
         } elseif ($entity === 'subscription') {
             $fields = [
                 'user_id' => (object) [
-                    'fieldKey' => 'user_id',
+                    'fieldKey'  => 'user_id',
                     'fieldName' => 'User Id'
                 ],
                 'product_id' => (object) [
-                    'fieldKey' => 'product_id',
+                    'fieldKey'  => 'product_id',
                     'fieldName' => 'Product Id'
                 ],
 
                 'product_title' => (object) [
-                    'fieldKey' => 'product_title',
+                    'fieldKey'  => 'product_title',
                     'fieldName' => 'Product Title'
                 ],
                 'product_url' => (object) [
-                    'fieldKey' => 'product_url',
+                    'fieldKey'  => 'product_url',
                     'fieldName' => 'Product Url'
                 ],
                 'product_featured_image_url' => (object) [
-                    'fieldKey' => 'product_featured_image_url',
+                    'fieldKey'  => 'product_featured_image_url',
                     'fieldName' => 'Product Featured Image Url'
                 ],
                 'product_featured_image_id' => (object) [
-                    'fieldKey' => 'product_featured_image_id',
+                    'fieldKey'  => 'product_featured_image_id',
                     'fieldName' => 'Product Featured Image Id'
                 ],
                 'product_quantity' => (object) [
-                    'fieldKey' => 'product_quantity',
+                    'fieldKey'  => 'product_quantity',
                     'fieldName' => 'Product Quantity'
                 ],
                 'order_total' => (object) [
-                    'fieldKey' => 'order_total',
+                    'fieldKey'  => 'order_total',
                     'fieldName' => 'Order Total'
                 ],
                 'subscription_id' => (object) [
-                    'fieldKey' => 'subscription_id',
+                    'fieldKey'  => 'subscription_id',
                     'fieldName' => 'Subscription Id'
                 ],
                 'subscription_status' => (object) [
-                    'fieldKey' => 'subscription_status',
+                    'fieldKey'  => 'subscription_status',
                     'fieldName' => 'Subscription Status'
                 ],
                 'subscription_trial_end_date' => (object) [
-                    'fieldKey' => 'subscription_trial_end_date',
+                    'fieldKey'  => 'subscription_trial_end_date',
                     'fieldName' => 'Subscription Trial End Date'
                 ],
                 'subscription_end_date' => (object) [
-                    'fieldKey' => 'subscription_end_date',
+                    'fieldKey'  => 'subscription_end_date',
                     'fieldName' => 'Subscription End Date'
                 ],
                 'subscription_next_payment_date' => (object) [
-                    'fieldKey' => 'subscription_next_payment_date',
+                    'fieldKey'  => 'subscription_next_payment_date',
                     'fieldName' => 'Subscription Next Payment Date'
                 ],
             ];
         } elseif ($entity === 'booking') {
             $fields = [
                 'Product Id' => (object) [
-                    'fieldKey' => 'product_id',
+                    'fieldKey'  => 'product_id',
                     'fieldName' => 'Product Id'
                 ],
                 'Product Name' => (object) [
-                    'fieldKey' => 'product_name',
+                    'fieldKey'  => 'product_name',
                     'fieldName' => 'Product Name'
                 ],
                 'Product Slug' => (object) [
-                    'fieldKey' => 'product_slug',
+                    'fieldKey'  => 'product_slug',
                     'fieldName' => 'Product Slug'
                 ],
                 'Product Type' => (object) [
-                    'fieldKey' => 'product_type',
+                    'fieldKey'  => 'product_type',
                     'fieldName' => 'Product Type'
                 ],
                 'Product status' => (object) [
-                    'fieldKey' => 'product_status',
+                    'fieldKey'  => 'product_status',
                     'fieldName' => 'Product status'
                 ],
                 'Product Featured' => (object) [
-                    'fieldKey' => 'product_featured',
+                    'fieldKey'  => 'product_featured',
                     'fieldName' => 'Product Featured'
                 ],
                 'Product Description' => (object) [
-                    'fieldKey' => 'product_description',
+                    'fieldKey'  => 'product_description',
                     'fieldName' => 'Product Description'
                 ],
                 'Product Short Description' => (object) [
-                    'fieldKey' => 'product_short_description',
+                    'fieldKey'  => 'product_short_description',
                     'fieldName' => 'Product Short Description'
                 ],
                 'Product Price' => (object) [
-                    'fieldKey' => 'product_price',
+                    'fieldKey'  => 'product_price',
                     'fieldName' => 'Product Price'
                 ],
                 'Product Regular Price' => (object) [
-                    'fieldKey' => 'product_regular_price',
+                    'fieldKey'  => 'product_regular_price',
                     'fieldName' => 'Product Regular Price'
                 ],
                 'Product Sale Price' => (object) [
-                    'fieldKey' => 'product_sale_price',
+                    'fieldKey'  => 'product_sale_price',
                     'fieldName' => 'Product Sale Price'
                 ],
                 'total Sales' => (object) [
-                    'fieldKey' => 'total_sales',
+                    'fieldKey'  => 'total_sales',
                     'fieldName' => 'Total Sales'
                 ],
                 'Product Quantity' => (object) [
-                    'fieldKey' => 'product_quantity',
+                    'fieldKey'  => 'product_quantity',
                     'fieldName' => 'Product quantity'
                 ],
                 'Product SKU' => (object) [
-                    'fieldKey' => 'product_sku',
+                    'fieldKey'  => 'product_sku',
                     'fieldName' => 'Product SKU'
                 ],
 
                 'Product Categories Ids' => (object) [
-                    'fieldKey' => 'product_categories_ids',
+                    'fieldKey'  => 'product_categories_ids',
                     'fieldName' => 'Product Categories Ids'
                 ],
                 'Stock Status' => (object) [
-                    'fieldKey' => 'stock_status',
+                    'fieldKey'  => 'stock_status',
                     'fieldName' => 'Stock Status'
                 ],
                 'Product Tags' => (object) [
-                    'fieldKey' => 'product_tags',
+                    'fieldKey'  => 'product_tags',
                     'fieldName' => 'Product Tags'
                 ],
                 'Image Url' => (object) [
-                    'fieldKey' => 'image_url',
+                    'fieldKey'  => 'image_url',
                     'fieldName' => 'Image Url'
                 ],
                 'Cost' => (object) [
-                    'fieldKey' => 'cost',
+                    'fieldKey'  => 'cost',
                     'fieldName' => 'Cost'
                 ],
                 'Display Cost' => (object) [
-                    'fieldKey' => 'display_cost',
+                    'fieldKey'  => 'display_cost',
                     'fieldName' => 'Display Cost'
                 ],
                 'Qty' => (object) [
-                    'fieldKey' => 'qty',
+                    'fieldKey'  => 'qty',
                     'fieldName' => 'Qty'
                 ],
                 'Customer Id' => (object) [
-                    'fieldKey' => 'customer_id',
+                    'fieldKey'  => 'customer_id',
                     'fieldName' => 'Customer Id'
                 ],
                 'Customer First Name' => (object) [
-                    'fieldKey' => 'customer_first_name',
+                    'fieldKey'  => 'customer_first_name',
                     'fieldName' => 'Customer First Name'
                 ],
                 'Customer Last Name' => (object) [
-                    'fieldKey' => 'customer_last_name',
+                    'fieldKey'  => 'customer_last_name',
                     'fieldName' => 'Customer Last Name'
                 ],
                 'Customer Email' => (object) [
-                    'fieldKey' => 'customer_email',
+                    'fieldKey'  => 'customer_email',
                     'fieldName' => 'Customer Email'
                 ],
                 'Customer Nickname' => (object) [
-                    'fieldKey' => 'customer_nickname',
+                    'fieldKey'  => 'customer_nickname',
                     'fieldName' => 'Customer Nickname'
                 ],
             ];
@@ -967,8 +972,8 @@ final class WCController
             uksort($uploadFields, 'strnatcasecmp');
             foreach ($uploadFields as $field) {
                 $fieldsNew[] = [
-                    'name' => $field->fieldKey,
-                    'type' => 'file',
+                    'name'  => $field->fieldKey,
+                    'type'  => 'file',
                     'label' => $field->fieldName,
                 ];
             }
@@ -977,18 +982,19 @@ final class WCController
         foreach ($fields as $field) {
             if ($field->fieldKey === 'user_email' || $field->fieldKey === 'shipping_email' || $field->fieldKey === 'billing_email') {
                 $fieldsNew[] = [
-                    'name' => $field->fieldKey,
-                    'type' => 'email',
+                    'name'  => $field->fieldKey,
+                    'type'  => 'email',
                     'label' => $field->fieldName,
                 ];
             } else {
                 $fieldsNew[] = [
-                    'name' => $field->fieldKey,
-                    'type' => 'text',
+                    'name'  => $field->fieldKey,
+                    'type'  => 'text',
                     'label' => $field->fieldName,
                 ];
             }
         }
+
         return $fieldsNew;
     }
 
@@ -1008,26 +1014,26 @@ final class WCController
         $metaboxFields = [];
         $metaboxUploadFields = [];
 
-        if (function_exists('rwmb_meta')) {
+        if (\function_exists('rwmb_meta')) {
             if ($module === 'customer') {
                 $field_registry = rwmb_get_registry('field');
                 $meta_boxes = $field_registry->get_by_object_type($object_type = 'user');
-                $metaFields = isset($meta_boxes['user']) && is_array($meta_boxes['user']) ? array_values($meta_boxes['user']) : [];
+                $metaFields = isset($meta_boxes['user']) && \is_array($meta_boxes['user']) ? array_values($meta_boxes['user']) : [];
             } else {
                 $metaFields = array_values(rwmb_get_object_fields($module));
             }
             foreach ($metaFields as $index => $field) {
-                if (!in_array($field['type'], $fileTypes)) {
+                if (!\in_array($field['type'], $fileTypes)) {
                     $metaboxFields[$index] = (object) [
-                        'fieldKey' => $field['id'],
+                        'fieldKey'  => $field['id'],
                         'fieldName' => 'Metabox Field - ' . $field['name'],
-                        'required' => $field['required'],
+                        'required'  => $field['required'],
                     ];
                 } else {
                     $metaboxUploadFields[$index] = (object) [
-                        'fieldKey' => $field['id'],
+                        'fieldKey'  => $field['id'],
                         'fieldName' => 'Metabox Field - ' . $field['name'],
-                        'required' => $field['required'],
+                        'required'  => $field['required'],
                     ];
                 }
             }
@@ -1042,6 +1048,7 @@ final class WCController
         foreach ($metadata as $key => $value) {
             $arr[$key] = $value[0];
         }
+
         return $arr;
     }
 
@@ -1068,10 +1075,10 @@ final class WCController
         $customer_metadata = self::formatUserMetaData(get_user_meta($customer_id));
         $newMeta = $customer_metadata;
         foreach ($customer_metadata as $key => $val) {
-            if (array_key_exists($key, $customer_data)) {
+            if (\array_key_exists($key, $customer_data)) {
                 unset($newMeta[$key]);
             }
-        };
+        }
         $customer_values = array_merge_recursive($customer_data, $newMeta);
 
         if (!empty($customer_id) && $flows = Flow::exists('WC', 2)) {
@@ -1083,7 +1090,7 @@ final class WCController
     {
         $user_meta = get_userdata($customer_id);
         $user_roles = $user_meta->roles;
-        if (isset($importType['role']) && in_array('customer', $user_roles)) {
+        if (isset($importType['role']) && \in_array('customer', $user_roles)) {
             return false;
         }
         $customer_data = ['customer_id' => $customer_id];
@@ -1126,12 +1133,12 @@ final class WCController
 
     public static function product_create($post_id)
     {
-        $productData    = wc_get_product($post_id);
-        $data           = self::accessProductData($productData);
+        $productData = wc_get_product($post_id);
+        $data = self::accessProductData($productData);
         $acfFieldGroups = self::acfGetFieldGroups(['product']);
 
         foreach ($acfFieldGroups as $group) {
-            $acfFields = acf_get_fields($group["ID"]);
+            $acfFields = acf_get_fields($group['ID']);
 
             foreach ($acfFields as $field) {
                 $data[$field['_name']] = get_post_meta($post_id, $field['_name'])[0];
@@ -1142,25 +1149,14 @@ final class WCController
         }
     }
 
-    private static function acfGetFieldGroups($type = [])
-    {
-        if (class_exists('ACF')) {
-            return array_filter(acf_get_field_groups(), function ($group) use ($type) {
-                return $group["active"] && isset($group["location"][0][0]["value"]) && is_array($type) && in_array($group["location"][0][0]["value"], $type);
-            });
-        } else {
-            return [];
-        }
-    }
-
     public static function product_update($post_id)
     {
-        $productData    = wc_get_product($post_id);
-        $data           = self::accessProductData($productData);
+        $productData = wc_get_product($post_id);
+        $data = self::accessProductData($productData);
         $acfFieldGroups = self::acfGetFieldGroups(['product']);
 
         foreach ($acfFieldGroups as $group) {
-            $acfFields = acf_get_fields($group["ID"]);
+            $acfFields = acf_get_fields($group['ID']);
 
             foreach ($acfFields as $field) {
                 $data[$field['_name']] = get_post_meta($post_id, $field['_name'])[0];
@@ -1173,7 +1169,7 @@ final class WCController
 
     public static function accessProductData($product)
     {
-        if (!$product instanceof \WC_Product_Simple) {
+        if (!$product instanceof WC_Product_Simple) {
             return [];
         }
         $image_id = $product->get_image_id();
@@ -1181,54 +1177,53 @@ final class WCController
 
         $productIds = $product->get_gallery_image_ids();
         $gallery_images = [];
-        if (count($productIds)) {
+        if (\count($productIds)) {
             foreach ($productIds as $id) {
                 $gallery_images[] = wp_get_attachment_image_url($id, 'full');
             }
         }
 
-        $data = [
-            'post_id' => $product->get_id(),
-            'post_title' => $product->get_name(),
-            'post_content' => $product->get_description(),
-            'post_excerpt' => $product->get_short_description(),
-            'post_date' => $product->get_date_created(),
-            'post_date_gmt' => $product->get_date_modified(),
-            'post_status' => $product->get_status(),
-            'tags_input' => $product->get_tag_ids(),
-            'post_category' => wc_get_product_category_list($product->get_id()),
-            '_visibility' => $product->get_catalog_visibility(),
-            '_featured' => $product->get_featured(),
-            '_regular_price' => $product->get_regular_price(),
-            '_sale_price' => $product->get_sale_price(),
+        return [
+            'post_id'                => $product->get_id(),
+            'post_title'             => $product->get_name(),
+            'post_content'           => $product->get_description(),
+            'post_excerpt'           => $product->get_short_description(),
+            'post_date'              => $product->get_date_created(),
+            'post_date_gmt'          => $product->get_date_modified(),
+            'post_status'            => $product->get_status(),
+            'tags_input'             => $product->get_tag_ids(),
+            'post_category'          => wc_get_product_category_list($product->get_id()),
+            '_visibility'            => $product->get_catalog_visibility(),
+            '_featured'              => $product->get_featured(),
+            '_regular_price'         => $product->get_regular_price(),
+            '_sale_price'            => $product->get_sale_price(),
             '_sale_price_dates_from' => $product->get_date_on_sale_from(),
-            '_sale_price_dates_to' => $product->get_date_on_sale_to(),
-            '_sku' => $product->get_sku(),
-            '_manage_stock' => $product->get_manage_stock(),
-            '_stock' => $product->get_stock_quantity(),
-            '_backorders' => $product->get_backorders(),
-            '_low_stock_amount' => 1,
-            '_stock_status' => $product->get_stock_status(),
-            '_sold_individually' => $product->get_sold_individually(),
-            '_weight' => $product->get_weight(),
-            '_length' => $product->get_length(),
-            '_width' => $product->get_width(),
-            '_height' => $product->get_height(),
-            '_purchase_note' => $product->get_purchase_note(),
-            'menu_order' => $product->get_menu_order(),
-            'comment_status' => $product->get_reviews_allowed(),
-            '_virtual' => $product->get_virtual(),
-            '_downloadable' => $product->get_downloadable(),
-            '_download_limit' => $product->get_download_limit(),
-            '_download_expiry' => $product->get_download_expiry(),
-            'product_type' => $product->get_type(),
-            '_product_url' => get_permalink($product->get_id()),
-            '_tax_status' => $product->get_tax_status(),
-            '_tax_class' => $product->get_tax_class(),
-            '_product_image' => $image_url,
-            '_product_gallery' => $gallery_images,
+            '_sale_price_dates_to'   => $product->get_date_on_sale_to(),
+            '_sku'                   => $product->get_sku(),
+            '_manage_stock'          => $product->get_manage_stock(),
+            '_stock'                 => $product->get_stock_quantity(),
+            '_backorders'            => $product->get_backorders(),
+            '_low_stock_amount'      => 1,
+            '_stock_status'          => $product->get_stock_status(),
+            '_sold_individually'     => $product->get_sold_individually(),
+            '_weight'                => $product->get_weight(),
+            '_length'                => $product->get_length(),
+            '_width'                 => $product->get_width(),
+            '_height'                => $product->get_height(),
+            '_purchase_note'         => $product->get_purchase_note(),
+            'menu_order'             => $product->get_menu_order(),
+            'comment_status'         => $product->get_reviews_allowed(),
+            '_virtual'               => $product->get_virtual(),
+            '_downloadable'          => $product->get_downloadable(),
+            '_download_limit'        => $product->get_download_limit(),
+            '_download_expiry'       => $product->get_download_expiry(),
+            'product_type'           => $product->get_type(),
+            '_product_url'           => get_permalink($product->get_id()),
+            '_tax_status'            => $product->get_tax_status(),
+            '_tax_class'             => $product->get_tax_class(),
+            '_product_image'         => $image_url,
+            '_product_gallery'       => $gallery_images,
         ];
-        return $data;
     }
 
     public static function accessOrderData($order)
@@ -1239,68 +1234,68 @@ final class WCController
         //     return [];
         // }
         $data = [
-            'id' => $order->get_id(),
-            'order_key' => $order->get_order_key(),
-            'card_tax' => $order->get_cart_tax(),
-            'currency' => $order->get_currency(),
-            'discount_tax' => $order->get_discount_tax(),
-            'discount_to_display' => $order->get_discount_to_display(),
-            'discount_total' => $order->get_discount_total(),
-            'fees' => $order->get_fees(),
-            'shipping_tax' => $order->get_shipping_tax(),
-            'shipping_total' => $order->get_shipping_total(),
-            'tax_totals' => $order->get_tax_totals(),
-            'total' => $order->get_total(),
-            'total_refunded' => $order->get_total_refunded(),
-            'total_tax_refunded' => $order->get_total_tax_refunded(),
-            'total_shipping_refunded' => $order->get_total_shipping_refunded(),
-            'total_qty_refunded' => $order->get_total_qty_refunded(),
-            'remaining_refund_amount' => $order->get_remaining_refund_amount(),
-            'shipping_method' => $order->get_shipping_method(),
-            'date_created' => is_null($order->get_date_created()) ? $order->get_date_created() : $order->get_date_created()->format('Y-m-d H:i:s'),
-            'date_modified' => is_null($order->get_date_modified()) ? $order->get_date_modified() : $order->get_date_modified()->format('Y-m-d H:i:s'),
-            'date_completed' => is_null($order->get_date_completed()) ? $order->get_date_completed() : $order->get_date_completed()->format('Y-m-d H:i:s'),
-            'date_paid' => is_null($order->get_date_paid()) ? $order->get_date_paid() : $order->get_date_paid()->format('Y-m-d H:i:s'),
-            'customer_id' => $order->get_customer_id(),
-            'created_via' => $order->get_created_via(),
-            'customer_note' => $order->get_customer_note(),
-            'billing_first_name' => $order->get_billing_first_name(),
-            'billing_last_name' => $order->get_billing_last_name(),
-            'billing_company' => $order->get_billing_company(),
-            'billing_address_1' => $order->get_billing_address_1(),
-            'billing_address_2' => $order->get_billing_address_2(),
-            'billing_city' => $order->get_billing_city(),
-            'billing_state' => $order->get_billing_state(),
-            'billing_postcode' => $order->get_billing_postcode(),
-            'billing_country' => $order->get_billing_country(),
-            'billing_email' => $order->get_billing_email(),
-            'billing_phone' => $order->get_billing_phone(),
-            'shipping_first_name' => $order->get_shipping_first_name(),
-            'shipping_last_name' => $order->get_shipping_last_name(),
-            'shipping_company' => $order->get_shipping_company(),
-            'shipping_address_1' => $order->get_shipping_address_1(),
-            'shipping_address_2' => $order->get_shipping_address_2(),
-            'shipping_city' => $order->get_shipping_city(),
-            'shipping_state' => $order->get_shipping_state(),
-            'shipping_postcode' => $order->get_shipping_postcode(),
-            'shipping_country' => $order->get_shipping_country(),
-            'payment_method' => $order->get_payment_method(),
-            'payment_method_title' => $order->get_payment_method_title(),
-            'status' => $order->get_status(),
+            'id'                          => $order->get_id(),
+            'order_key'                   => $order->get_order_key(),
+            'card_tax'                    => $order->get_cart_tax(),
+            'currency'                    => $order->get_currency(),
+            'discount_tax'                => $order->get_discount_tax(),
+            'discount_to_display'         => $order->get_discount_to_display(),
+            'discount_total'              => $order->get_discount_total(),
+            'fees'                        => $order->get_fees(),
+            'shipping_tax'                => $order->get_shipping_tax(),
+            'shipping_total'              => $order->get_shipping_total(),
+            'tax_totals'                  => $order->get_tax_totals(),
+            'total'                       => $order->get_total(),
+            'total_refunded'              => $order->get_total_refunded(),
+            'total_tax_refunded'          => $order->get_total_tax_refunded(),
+            'total_shipping_refunded'     => $order->get_total_shipping_refunded(),
+            'total_qty_refunded'          => $order->get_total_qty_refunded(),
+            'remaining_refund_amount'     => $order->get_remaining_refund_amount(),
+            'shipping_method'             => $order->get_shipping_method(),
+            'date_created'                => \is_null($order->get_date_created()) ? $order->get_date_created() : $order->get_date_created()->format('Y-m-d H:i:s'),
+            'date_modified'               => \is_null($order->get_date_modified()) ? $order->get_date_modified() : $order->get_date_modified()->format('Y-m-d H:i:s'),
+            'date_completed'              => \is_null($order->get_date_completed()) ? $order->get_date_completed() : $order->get_date_completed()->format('Y-m-d H:i:s'),
+            'date_paid'                   => \is_null($order->get_date_paid()) ? $order->get_date_paid() : $order->get_date_paid()->format('Y-m-d H:i:s'),
+            'customer_id'                 => $order->get_customer_id(),
+            'created_via'                 => $order->get_created_via(),
+            'customer_note'               => $order->get_customer_note(),
+            'billing_first_name'          => $order->get_billing_first_name(),
+            'billing_last_name'           => $order->get_billing_last_name(),
+            'billing_company'             => $order->get_billing_company(),
+            'billing_address_1'           => $order->get_billing_address_1(),
+            'billing_address_2'           => $order->get_billing_address_2(),
+            'billing_city'                => $order->get_billing_city(),
+            'billing_state'               => $order->get_billing_state(),
+            'billing_postcode'            => $order->get_billing_postcode(),
+            'billing_country'             => $order->get_billing_country(),
+            'billing_email'               => $order->get_billing_email(),
+            'billing_phone'               => $order->get_billing_phone(),
+            'shipping_first_name'         => $order->get_shipping_first_name(),
+            'shipping_last_name'          => $order->get_shipping_last_name(),
+            'shipping_company'            => $order->get_shipping_company(),
+            'shipping_address_1'          => $order->get_shipping_address_1(),
+            'shipping_address_2'          => $order->get_shipping_address_2(),
+            'shipping_city'               => $order->get_shipping_city(),
+            'shipping_state'              => $order->get_shipping_state(),
+            'shipping_postcode'           => $order->get_shipping_postcode(),
+            'shipping_country'            => $order->get_shipping_country(),
+            'payment_method'              => $order->get_payment_method(),
+            'payment_method_title'        => $order->get_payment_method_title(),
+            'status'                      => $order->get_status(),
             'checkout_order_received_url' => $order->get_checkout_order_received_url(),
-            'customer_note' => $order->get_customer_note()
+            'customer_note'               => $order->get_customer_note()
         ];
         if (version_compare(WC_VERSION, '8.5.1', '>=')) {
             $data += [
-                '_wc_order_attribution_referrer'            => $order->get_meta('_wc_order_attribution_referrer'),
-                '_wc_order_attribution_user_agent'          => $order->get_meta('_wc_order_attribution_user_agent'),
-                '_wc_order_attribution_utm_source'          => $order->get_meta('_wc_order_attribution_utm_source'),
-                '_wc_order_attribution_device_type'         => $order->get_meta('_wc_order_attribution_device_type'),
-                '_wc_order_attribution_source_type'         => $order->get_meta('_wc_order_attribution_source_type'),
-                '_wc_order_attribution_session_count'       => $order->get_meta('_wc_order_attribution_session_count'),
-                '_wc_order_attribution_session_entry'       => $order->get_meta('_wc_order_attribution_session_entry'),
-                '_wc_order_attribution_session_pages'       => $order->get_meta('_wc_order_attribution_session_pages'),
-                '_wc_order_attribution_session_start_time'  => $order->get_meta('_wc_order_attribution_session_start_time'),
+                '_wc_order_attribution_referrer'           => $order->get_meta('_wc_order_attribution_referrer'),
+                '_wc_order_attribution_user_agent'         => $order->get_meta('_wc_order_attribution_user_agent'),
+                '_wc_order_attribution_utm_source'         => $order->get_meta('_wc_order_attribution_utm_source'),
+                '_wc_order_attribution_device_type'        => $order->get_meta('_wc_order_attribution_device_type'),
+                '_wc_order_attribution_source_type'        => $order->get_meta('_wc_order_attribution_source_type'),
+                '_wc_order_attribution_session_count'      => $order->get_meta('_wc_order_attribution_session_count'),
+                '_wc_order_attribution_session_entry'      => $order->get_meta('_wc_order_attribution_session_entry'),
+                '_wc_order_attribution_session_pages'      => $order->get_meta('_wc_order_attribution_session_pages'),
+                '_wc_order_attribution_session_start_time' => $order->get_meta('_wc_order_attribution_session_start_time'),
             ];
         }
 
@@ -1323,22 +1318,22 @@ final class WCController
             $productSku = $product->get_sku();
             $count++;
             $itemData = [
-                'product_id' => $product_id,
-                'variation_id' => $variation_id,
-                'product_name' => $product_name,
-                'quantity' => $quantity,
-                'subtotal' => $subtotal,
-                'total' => $total,
-                'subtotal_tax' => $subtotal_tax,
-                'tax_class' => $taxclass,
-                'tax_status' => $taxstat,
-                'product_sku' => $productSku,
+                'product_id'         => $product_id,
+                'variation_id'       => $variation_id,
+                'product_name'       => $product_name,
+                'quantity'           => $quantity,
+                'subtotal'           => $subtotal,
+                'total'              => $total,
+                'subtotal_tax'       => $subtotal_tax,
+                'tax_class'          => $taxclass,
+                'tax_status'         => $taxstat,
+                'product_sku'        => $productSku,
                 'product_unit_price' => $product_unit_price,
             ];
             $acfFieldGroups = self::acfGetFieldGroups(['product']);
 
             foreach ($acfFieldGroups as $group) {
-                $acfFields = acf_get_fields($group["ID"]);
+                $acfFields = acf_get_fields($group['ID']);
 
                 foreach ($acfFields as $field) {
                     $itemData[$field['_name']] = get_post_meta($product_id, $field['_name'])[0];
@@ -1348,6 +1343,7 @@ final class WCController
             $line_items_all['line_items'][] = (object) $itemData;
         }
         $data += $line_items_all;
+
         return $data;
     }
 
@@ -1364,11 +1360,11 @@ final class WCController
         $checkoutFields = WC()->checkout()->get_checkout_fields();
 
         foreach ($acfFieldGroups as $group) {
-            $acfFields = acf_get_fields($group["ID"]);
+            $acfFields = acf_get_fields($group['ID']);
 
             foreach ($acfFields as $field) {
-                $meta                   = get_post_meta($order_id, $field['_name']);
-                $data[$field['_name']]  = is_array($meta) && !empty($meta) ? $meta[0] : $meta;
+                $meta = get_post_meta($order_id, $field['_name']);
+                $data[$field['_name']] = \is_array($meta) && !empty($meta) ? $meta[0] : $meta;
             }
         }
         foreach ($checkoutFields as $group) {
@@ -1380,7 +1376,7 @@ final class WCController
         }
 
         for ($i = 7; $i <= 17; $i++) {
-            if (in_array($i, $triggerd)) {
+            if (\in_array($i, $triggerd)) {
                 continue;
             }
             if ($i == 7) {
@@ -1389,11 +1385,11 @@ final class WCController
                     $orderedProducts = $data['line_items'];
                     $differId = 1;
                     foreach ($orderedProducts as $orderedProduct) {
-                        foreach ((array)$orderedProduct as $keys => $value) {
+                        foreach ((array) $orderedProduct as $keys => $value) {
                             $newItem["{$differId}_{$keys}"] = $value;
                         }
                         $differId = $differId + 1;
-                        $data = array_merge($data, (array)$newItem);
+                        $data = array_merge($data, (array) $newItem);
                     }
                     Flow::execute('WC', 7, $data, $flows);
                 }
@@ -1408,11 +1404,12 @@ final class WCController
                         $triggerData = $data;
 
                         foreach ($orderedProducts as $orderedProduct) {
-                            if ((int)$selectedProductId == $orderedProduct->product_id) {
+                            if ((int) $selectedProductId == $orderedProduct->product_id) {
                                 $triggerData['line_items'] = [$orderedProduct];
-                                $triggerData = $triggerData + (array)$orderedProduct;
+                                $triggerData = $triggerData + (array) $orderedProduct;
                                 $flowData = [0 => $flow];
                                 Flow::execute('WC', 10, $triggerData, $flowData);
+
                                 break;
                             }
                         }
@@ -1430,8 +1427,8 @@ final class WCController
                     foreach ($orderedProducts as $orderedProduct) {
                         $productCategory = wc_get_product($orderedProduct->product_id);
                         $productInfo = $productCategory->get_category_ids();
-                        if (in_array((int)$selectedProductCategory, $productInfo)) {
-                            array_push($filteredByCategory, $orderedProduct);
+                        if (\in_array((int) $selectedProductCategory, $productInfo)) {
+                            $filteredByCategory[] = $orderedProduct;
                         }
                     }
                     $data['specified_product_by_category'] = $filteredByCategory;
@@ -1457,7 +1454,7 @@ final class WCController
             return false; // not an order
         }
 
-        if (is_null($order->get_date_created())) {
+        if (\is_null($order->get_date_created())) {
             return false;
         }
         $post_status = get_post_status($order_id);
@@ -1478,7 +1475,7 @@ final class WCController
         $acfFieldGroups = self::acfGetFieldGroups(['product', 'shop_order']);
 
         foreach ($acfFieldGroups as $group) {
-            $acfFields = acf_get_fields($group["ID"]);
+            $acfFields = acf_get_fields($group['ID']);
 
             foreach ($acfFields as $field) {
                 $data[$field['_name']] = get_post_meta($order_id, $field['_name'])[0];
@@ -1520,7 +1517,7 @@ final class WCController
 
             if ($selectedOrderStatus === 'wc-on-hold') {
                 $spilited = explode('-', $selectedOrderStatus);
-                $selectedStatus = "$spilited[1]-$spilited[2]";
+                $selectedStatus = "{$spilited[1]}-{$spilited[2]}";
             } else {
                 // $selectedStatus = explode('-', $selectedOrderStatus)[1];
                 $selectedStatus = str_replace('wc-', '', $selectedOrderStatus);
@@ -1548,7 +1545,7 @@ final class WCController
                 $acfFieldGroups = self::acfGetFieldGroups(['product', 'shop_order']);
 
                 foreach ($acfFieldGroups as $group) {
-                    $acfFields = acf_get_fields($group["ID"]);
+                    $acfFields = acf_get_fields($group['ID']);
 
                     foreach ($acfFields as $field) {
                         $data[$field['_name']] = get_post_meta($order_id, $field['_name'])[0];
@@ -1568,13 +1565,13 @@ final class WCController
         $allSubscriptions = $wpdb->get_results(
             $wpdb->prepare(
                 "
-                    SELECT posts.ID, posts.post_title FROM $wpdb->posts as posts
-                    LEFT JOIN $wpdb->term_relationships as rel ON (posts.ID = rel.object_id)
-                    WHERE rel.term_taxonomy_id IN (SELECT term_id FROM $wpdb->terms WHERE slug IN ('subscription','variable-subscription'))
+                    SELECT posts.ID, posts.post_title FROM {$wpdb->posts} as posts
+                    LEFT JOIN {$wpdb->term_relationships} as rel ON (posts.ID = rel.object_id)
+                    WHERE rel.term_taxonomy_id IN (SELECT term_id FROM {$wpdb->terms} WHERE slug IN ('subscription','variable-subscription'))
                     AND posts.post_type = 'product'
                     AND posts.post_status = 'publish'
                     UNION ALL
-                    SELECT ID, post_title FROM $wpdb->posts
+                    SELECT ID, post_title FROM {$wpdb->posts}
                     WHERE post_type = 'shop_subscription'
                     AND post_status = 'publish'
                     ORDER BY post_title
@@ -1583,13 +1580,13 @@ final class WCController
         );
 
         $subscriptions[] = [
-            'id' => 'any',
+            'id'         => 'any',
             'post_title' => 'Any product',
         ];
 
         foreach ($allSubscriptions as $key => $val) {
             $subscriptions[] = [
-                'id' => $val->ID,
+                'id'         => $val->ID,
                 'post_title' => $val->post_title,
             ];
         }
@@ -1611,7 +1608,7 @@ final class WCController
 
         $items = $subscription->get_items();
 
-        if (!is_array($items)) {
+        if (!\is_array($items)) {
             return;
         }
 
@@ -1631,7 +1628,7 @@ final class WCController
                     Flow::execute('WC', 12, $data, $flows);
                 }
             }
-            if ($product_id === (int)$selectedSubscription) {
+            if ($product_id === (int) $selectedSubscription) {
                 if (!empty($user_id) && $flows = Flow::exists('WC', 12)) {
                     Flow::execute('WC', 12, $data, $flows);
                 }
@@ -1648,7 +1645,7 @@ final class WCController
 
         $items = $subscription->get_items();
 
-        if (!is_array($items)) {
+        if (!\is_array($items)) {
             return;
         }
 
@@ -1668,7 +1665,7 @@ final class WCController
                     Flow::execute('WC', 13, $data, $flows);
                 }
             }
-            if ($product_id === (int)$selectedSubscription) {
+            if ($product_id === (int) $selectedSubscription) {
                 if (!empty($user_id) && $flows = Flow::exists('WC', 13)) {
                     Flow::execute('WC', 13, $data, $flows);
                 }
@@ -1685,7 +1682,7 @@ final class WCController
 
         $items = $subscription->get_items();
 
-        if (!is_array($items)) {
+        if (!\is_array($items)) {
             return;
         }
 
@@ -1705,7 +1702,7 @@ final class WCController
                     Flow::execute('WC', 14, $data, $flows);
                 }
             }
-            if ($product_id === (int)$selectedSubscription) {
+            if ($product_id === (int) $selectedSubscription) {
                 if (!empty($user_id) && $flows = Flow::exists('WC', 14)) {
                     Flow::execute('WC', 14, $data, $flows);
                 }
@@ -1723,7 +1720,7 @@ final class WCController
 
         $items = $subscription->get_items();
 
-        if (!is_array($items)) {
+        if (!\is_array($items)) {
             return;
         }
 
@@ -1751,7 +1748,7 @@ final class WCController
                     }
                 }
             }
-            if ($product_id === (int)$selectedSubscription) {
+            if ($product_id === (int) $selectedSubscription) {
                 if ($selectedSubscriptionStatus === 'any_status') {
                     if (!empty($user_id) && $flows = Flow::exists('WC', 15)) {
                         Flow::execute('WC', 15, $data, $flows);
@@ -1768,7 +1765,7 @@ final class WCController
 
     public static function handle_subscription_trial_period_end($subscription_id)
     {
-        if (!function_exists('wcs_get_subscription')) {
+        if (!\function_exists('wcs_get_subscription')) {
             return;
         }
         $subscription = wcs_get_subscription($subscription_id);
@@ -1779,7 +1776,7 @@ final class WCController
 
         $items = $subscription->get_items();
 
-        if (!is_array($items)) {
+        if (!\is_array($items)) {
             return;
         }
 
@@ -1799,7 +1796,7 @@ final class WCController
                     Flow::execute('WC', 16, $data, $flows);
                 }
             }
-            if ($product_id === (int)$selectedSubscription) {
+            if ($product_id === (int) $selectedSubscription) {
                 if (!empty($user_id) && $flows = Flow::exists('WC', 16)) {
                     Flow::execute('WC', 16, $data, $flows);
                 }
@@ -1812,7 +1809,7 @@ final class WCController
         if (!is_plugin_active('woocommerce-bookings/woocommerce-bookings.php')) {
             return false;
         }
-        $booking = new \WC_Booking($booking_id);
+        $booking = new WC_Booking($booking_id);
         $product_id = $booking->get_product_id();
         $customer_id = $booking->get_customer_id();
         $userData = self::getUserInfo($customer_id);
@@ -1844,20 +1841,20 @@ final class WCController
         }
 
         $finalData = [
-            'product_id' => $comment->comment_post_ID,
-            'product_title' => get_the_title($comment->comment_post_ID),
-            'product_url' => get_permalink($comment->comment_post_ID),
-            'product_price' => get_post_meta($comment->comment_post_ID, '_price', true),
-            'product_review' => $comment->comment_content,
-            'product_sku' => get_post_meta($comment->comment_post_ID, '_sku', true),
-            'product_tags' => get_the_terms($comment->comment_post_ID, 'product_tag'),
+            'product_id'         => $comment->comment_post_ID,
+            'product_title'      => get_the_title($comment->comment_post_ID),
+            'product_url'        => get_permalink($comment->comment_post_ID),
+            'product_price'      => get_post_meta($comment->comment_post_ID, '_price', true),
+            'product_review'     => $comment->comment_content,
+            'product_sku'        => get_post_meta($comment->comment_post_ID, '_sku', true),
+            'product_tags'       => get_the_terms($comment->comment_post_ID, 'product_tag'),
             'product_categories' => get_the_terms($comment->comment_post_ID, 'product_cat'),
-            'product_rating' => get_comment_meta($comment_id, 'rating', true),
-            'review_id' => $comment->comment_ID,
-            'review_date' => $comment->comment_date,
-            'author_id' => $comment->user_id,
+            'product_rating'     => get_comment_meta($comment_id, 'rating', true),
+            'review_id'          => $comment->comment_ID,
+            'review_date'        => $comment->comment_date,
+            'author_id'          => $comment->user_id,
             'review_author_name' => $comment->comment_author,
-            'author_email' => $comment->comment_author_email,
+            'author_email'       => $comment->comment_author_email,
         ];
 
         $flowDetails = json_decode($flows[0]->flow_details);
@@ -1891,8 +1888,6 @@ final class WCController
             }
         }
 
-
-
         // $flowDetails = json_decode($flows[0]->flow_details);
         // $selectedVariableProduct = !empty($flowDetails->selectedVariableProduct) ? $flowDetails->selectedVariableProduct : [];
         // $selectedVariation = !empty($flowDetails->selectedVariation) ? $flowDetails->selectedVariation : [];
@@ -1912,7 +1907,7 @@ final class WCController
             return false;
         }
 
-        $checkout = new \WC_Checkout();
+        $checkout = new WC_Checkout();
         self::handle_order_create($order->id, $checkout->get_posted_data());
     }
 
@@ -1922,7 +1917,7 @@ final class WCController
         $product_names = [];
         foreach ($items as $item) {
             $product = $item->get_product();
-            if (class_exists('\WC_Subscriptions_Product') && \WC_Subscriptions_Product::is_subscription($product)) {
+            if (class_exists('\WC_Subscriptions_Product') && WC_Subscriptions_Product::is_subscription($product)) {
                 if (get_post_type($product->get_id()) === 'product_variation') {
                     $variation_product = get_post($product->get_id());
                     $product_names[] = !empty($variation_product->post_excerpt) ? $variation_product->post_excerpt : $variation_product->post_title;
@@ -1936,7 +1931,7 @@ final class WCController
         $product_names = [];
         foreach ($items as $item) {
             $product = $item->get_product();
-            if (class_exists('\WC_Subscriptions_Product') && \WC_Subscriptions_Product::is_subscription($product)) {
+            if (class_exists('\WC_Subscriptions_Product') && WC_Subscriptions_Product::is_subscription($product)) {
                 $product_names[] = $product->get_id();
             }
         }
@@ -1964,7 +1959,7 @@ final class WCController
         $product_urls = [];
         foreach ($items as $item) {
             $product = $item->get_product();
-            if (class_exists('\WC_Subscriptions_Product') && \WC_Subscriptions_Product::is_subscription($product)) {
+            if (class_exists('\WC_Subscriptions_Product') && WC_Subscriptions_Product::is_subscription($product)) {
                 $product_urls[] = get_permalink(wp_get_post_parent_id($product->get_id()));
             }
         }
@@ -1973,7 +1968,7 @@ final class WCController
         $product_thumb = [];
         foreach ($items as $item) {
             $product = $item->get_product();
-            if (class_exists('\WC_Subscriptions_Product') && \WC_Subscriptions_Product::is_subscription($product)) {
+            if (class_exists('\WC_Subscriptions_Product') && WC_Subscriptions_Product::is_subscription($product)) {
                 $product_thumb[] = get_post_thumbnail_id(wp_get_post_parent_id($product->get_id()));
             }
         }
@@ -1985,7 +1980,7 @@ final class WCController
         $product_thumburl = [];
         foreach ($items as $item) {
             $product = $item->get_product();
-            if (class_exists('\WC_Subscriptions_Product') && \WC_Subscriptions_Product::is_subscription($product)) {
+            if (class_exists('\WC_Subscriptions_Product') && WC_Subscriptions_Product::is_subscription($product)) {
                 $product_thumburl[] = get_the_post_thumbnail_url(wp_get_post_parent_id($product->get_id()));
             }
         }
@@ -1997,18 +1992,18 @@ final class WCController
         $user_id = $subscription->get_user_id();
 
         return $data = [
-            'user_id' => $user_id,
-            'product_id' => $product_id,
-            'product_title' => $product_name,
-            'product_url' => $product_url,
-            'product_featured_image_url' => $product_thumb_url,
-            'product_featured_image_id' => $product_thumb_id,
-            'order_total' => $order_total,
-            'product_quantity' => $quantity,
-            'subscription_id' => $subscription_id,
-            'subscription_status' => $subscription_status,
-            'subscription_trial_end_date' => $subscription_trial_end_time,
-            'subscription_end_date' => $subscription_end_time,
+            'user_id'                        => $user_id,
+            'product_id'                     => $product_id,
+            'product_title'                  => $product_name,
+            'product_url'                    => $product_url,
+            'product_featured_image_url'     => $product_thumb_url,
+            'product_featured_image_id'      => $product_thumb_id,
+            'order_total'                    => $order_total,
+            'product_quantity'               => $quantity,
+            'subscription_id'                => $subscription_id,
+            'subscription_status'            => $subscription_status,
+            'subscription_trial_end_date'    => $subscription_trial_end_time,
+            'subscription_end_date'          => $subscription_end_time,
             'subscription_next_payment_date' => $subscription_next_payment_time,
         ];
     }
@@ -2031,12 +2026,12 @@ final class WCController
             'any_status' => 'Any Status',
         ];
 
-        if (function_exists('wcs_get_subscription_statuses')) {
+        if (\function_exists('wcs_get_subscription_statuses')) {
             $allSubscriptionStatus = wcs_get_subscription_statuses();
             $allSubscriptionStatus = array_merge($anyStatus, $allSubscriptionStatus);
-            $subscription_statuses = (array)$allSubscriptionStatus;
+            $subscription_statuses = (array) $allSubscriptionStatus;
         } else {
-            $subscription_statuses = (array)$anyStatus;
+            $subscription_statuses = (array) $anyStatus;
         }
         wp_send_json_success($subscription_statuses);
     }
@@ -2052,11 +2047,11 @@ final class WCController
             $productType = $product->get_type();
             $productSku = $product->get_sku();
 
-            $allProducts[] = (object)[
-                'product_id' => $productId,
+            $allProducts[] = (object) [
+                'product_id'    => $productId,
                 'product_title' => $productTitle,
-                'product_type' => $productType,
-                'product_sku' => $productSku,
+                'product_type'  => $productType,
+                'product_sku'   => $productSku,
             ];
         }
         wp_send_json_success($allProducts);
@@ -2068,8 +2063,8 @@ final class WCController
         $order = 'asc';
         $hide_empty = false;
         $cat_args = [
-            'orderby' => $orderby,
-            'order' => $order,
+            'orderby'    => $orderby,
+            'order'      => $order,
             'hide_empty' => $hide_empty,
         ];
 
@@ -2079,8 +2074,8 @@ final class WCController
         }
         foreach ($product_categories_list as $key => $category) {
             $product_categories[] = [
-                'term_id' => (string)$category->term_id,
-                'name' => $category->name,
+                'term_id' => (string) $category->term_id,
+                'name'    => $category->name,
             ];
         }
         wp_send_json_success($product_categories, 200);
@@ -2095,12 +2090,13 @@ final class WCController
             $user_meta = get_user_meta($user_id);
             $user = [
                 'first_name' => $user_meta['first_name'][0],
-                'last_name' => $user_meta['last_name'][0],
+                'last_name'  => $user_meta['last_name'][0],
                 'user_email' => $userData->user_email,
-                'nickname' => $userData->user_nicename,
+                'nickname'   => $userData->user_nicename,
                 'avatar_url' => get_avatar_url($user_id),
             ];
         }
+
         return $user;
     }
 
@@ -2108,5 +2104,16 @@ final class WCController
     {
         $allVariation = WCHelper::getAllVariations($requestPrarams->product_id);
         wp_send_json_success($allVariation, 200);
+    }
+
+    private static function acfGetFieldGroups($type = [])
+    {
+        if (class_exists('ACF')) {
+            return array_filter(acf_get_field_groups(), function ($group) use ($type) {
+                return $group['active'] && isset($group['location'][0][0]['value']) && \is_array($type) && \in_array($group['location'][0][0]['value'], $type);
+            });
+        } else {
+            return [];
+        }
     }
 }

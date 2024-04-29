@@ -15,6 +15,7 @@ use CURLFile;
 final class FilesApiHelper
 {
     private $_defaultHeader;
+
     private $_payloadBoundary;
 
     public function __construct()
@@ -26,16 +27,17 @@ final class FilesApiHelper
     /**
      * Helps to execute upload files api
      *
-     * @param String $apiEndPoint slack API base URL
-     * @param Array  $data        Data to pass to API
+     * @param string $apiEndPoint  slack API base URL
+     * @param array  $data         Data to pass to API
+     * @param mixed  $_accessToken
      *
-     * @return Array $uploadResponse slack API response
+     * @return array $uploadResponse slack API response
      */
     public function uploadFiles($apiEndPoint, $data, $_accessToken)
     {
         $uploadFileEndpoint = $apiEndPoint . '/files.upload';
 
-        if (is_array($data['file'])) {
+        if (\is_array($data['file'])) {
             $file = $data['file'][0];
         } else {
             $file = $data['file'];
@@ -47,7 +49,7 @@ final class FilesApiHelper
 
         $data['file'] = new CURLFile($file);
 
-        $response = HttpHelper::post(
+        return HttpHelper::post(
             $uploadFileEndpoint,
             $data,
             [
@@ -55,7 +57,5 @@ final class FilesApiHelper
                 'Authorization' => 'Bearer ' . $_accessToken
             ]
         );
-
-        return $response;
     }
 }

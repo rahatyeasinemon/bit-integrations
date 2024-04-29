@@ -15,23 +15,27 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $integrationDetails;
+
     private $integrationId;
+
     private $apiUrl;
+
     private $defaultHeader;
+
     private $type;
+
     private $typeName;
 
     public function __construct($integrationDetails, $integId)
     {
         $this->integrationDetails = $integrationDetails;
-        $this->integrationId      = $integId;
-        $this->apiUrl             = "https://www.clinchpad.com/api/v1";
-        $this->defaultHeader      = [
-            "Authorization" => 'Basic ' . base64_encode("api-key:$integrationDetails->api_key"),
-            'Content-Type' => 'application/json'
+        $this->integrationId = $integId;
+        $this->apiUrl = 'https://www.clinchpad.com/api/v1';
+        $this->defaultHeader = [
+            'Authorization' => 'Basic ' . base64_encode("api-key:{$integrationDetails->api_key}"),
+            'Content-Type'  => 'application/json'
         ];
     }
-
 
     public function addOrganization($finalData)
     {
@@ -42,20 +46,19 @@ class RecordApiHelper
         $staticFieldsKeys = ['name', 'phone', 'email', 'website', 'address'];
 
         foreach ($finalData as $key => $value) {
-            if (in_array($key, $staticFieldsKeys)) {
+            if (\in_array($key, $staticFieldsKeys)) {
                 $requestParams[$key] = $value;
             } else {
                 $requestParams['fields'][] = (object) [
-                    '_id' => $key,
-                    'value'   => $value,
+                    '_id'   => $key,
+                    'value' => $value,
                 ];
             }
         }
-        $this->type     = 'Organization';
+        $this->type = 'Organization';
         $this->typeName = 'Organization created';
 
-
-        $apiEndpoint = $this->apiUrl . "/organizations";
+        $apiEndpoint = $this->apiUrl . '/organizations';
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -69,12 +72,12 @@ class RecordApiHelper
         $staticFieldsKeys = ['name', 'designation', 'phone', 'email', 'address'];
 
         foreach ($finalData as $key => $value) {
-            if (in_array($key, $staticFieldsKeys)) {
+            if (\in_array($key, $staticFieldsKeys)) {
                 $requestParams[$key] = $value;
             } else {
                 $requestParams['fields'][] = (object) [
-                    '_id' => $key,
-                    'value'   => $value,
+                    '_id'   => $key,
+                    'value' => $value,
                 ];
             }
         }
@@ -83,10 +86,10 @@ class RecordApiHelper
             $requestParams['organization_id'] = ($this->integrationDetails->selectedParentOrganization);
         }
 
-        $this->type     = 'Contact';
+        $this->type = 'Contact';
         $this->typeName = 'Contact created';
 
-        $apiEndpoint = $this->apiUrl . "/contacts";
+        $apiEndpoint = $this->apiUrl . '/contacts';
 
         return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
     }
@@ -96,15 +99,15 @@ class RecordApiHelper
         if (!isset($finalData['name'])) {
             return ['success' => false, 'message' => 'Required field lead name is empty', 'code' => 400];
         }
-        $staticFieldsKeys = ['name', 'size',];
+        $staticFieldsKeys = ['name', 'size'];
 
         foreach ($finalData as $key => $value) {
-            if (in_array($key, $staticFieldsKeys)) {
+            if (\in_array($key, $staticFieldsKeys)) {
                 $requestParams[$key] = $value;
             } else {
                 $requestParams['fields'][] = (object) [
-                    '_id' => $key,
-                    'value'   => $value,
+                    '_id'   => $key,
+                    'value' => $value,
                 ];
             }
         }
@@ -116,13 +119,10 @@ class RecordApiHelper
             $contactId = ($this->integrationDetails->selectedContact);
         }
 
-
-
-        $this->type     = 'Lead';
+        $this->type = 'Lead';
         $this->typeName = 'Lead created';
 
-
-        $apiEndpoint = $this->apiUrl . "/leads";
+        $apiEndpoint = $this->apiUrl . '/leads';
 
         $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
         $this->addContactToLead($response->_id, $contactId);
@@ -140,14 +140,14 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->clinchPadFormField;
+            $actionValue = $value->clinchPadFormField;
             if ($triggerValue === 'custom') {
                 if ($actionValue === 'fields') {
                     $dataFinal[$value->customFieldKey] = $value->customValue;
                 } else {
                     $dataFinal[$actionValue] = $value->customValue;
                 }
-            } elseif (!is_null($data[$triggerValue])) {
+            } elseif (!\is_null($data[$triggerValue])) {
                 if ($actionValue === 'fields') {
                     $dataFinal[$value->customFieldKey] = $data[$triggerValue];
                 } else {
@@ -155,12 +155,13 @@ class RecordApiHelper
                 }
             }
         }
+
         return $dataFinal;
     }
 
     public function execute($fieldValues, $fieldMap, $actionName)
     {
-        $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         if ($actionName === 'organization') {
             $apiResponse = $this->addOrganization($finalData);
         } elseif ($actionName === 'contact') {
@@ -175,6 +176,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }

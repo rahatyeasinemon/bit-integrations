@@ -1,4 +1,5 @@
 <?php
+
 namespace BitCode\FI\Actions\GiveWp;
 
 use WP_Error;
@@ -10,6 +11,7 @@ class GiveWpController
         if (is_plugin_active('give/give.php')) {
             return $option === 'get_name' ? 'give/give.php' : true;
         }
+
         return false;
     }
 
@@ -28,8 +30,8 @@ class GiveWpController
         $mainAction = $integrationDetails->mainAction;
         $fieldMap = $integrationDetails->field_map;
         if (
-            empty($integId) ||
-            empty($mainAction)
+            empty($integId)
+            || empty($mainAction)
         ) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for GiveWp api', 'bit-integrations'));
         }
@@ -45,6 +47,7 @@ class GiveWpController
         if (is_wp_error($giveWpApiResponse)) {
             return $giveWpApiResponse;
         }
+
         return $giveWpApiResponse;
     }
 }

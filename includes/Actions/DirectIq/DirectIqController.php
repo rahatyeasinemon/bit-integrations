@@ -6,9 +6,8 @@
 
 namespace BitCode\FI\Actions\DirectIq;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Actions\DirectIq\RecordApiHelper;
+use WP_Error;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -48,8 +47,8 @@ class DirectIqController
             );
         }
 
-        $endpoint   = "https://rest.directiq.com/subscription/authorize";
-        $header     = ["Authorization" => 'Basic ' . base64_encode("$requestsParams->client_id:$requestsParams->client_secret")];
+        $endpoint = 'https://rest.directiq.com/subscription/authorize';
+        $header = ['Authorization' => 'Basic ' . base64_encode("{$requestsParams->client_id}:{$requestsParams->client_secret}")];
         HttpHelper::get($endpoint, null, $header);
 
         if (HttpHelper::$responseCode !== 200) {
@@ -83,9 +82,9 @@ class DirectIqController
             );
         }
 
-        $apiEndpoint = "https://rest.directiq.com/contacts/lists/list";
+        $apiEndpoint = 'https://rest.directiq.com/contacts/lists/list';
 
-        $authorizationHeader['authorization'] = 'Basic ' . base64_encode("$queryParams->client_id:$queryParams->client_secret");
+        $authorizationHeader['authorization'] = 'Basic ' . base64_encode("{$queryParams->client_id}:{$queryParams->client_secret}");
         $directIqResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 
         $lists = [];
@@ -94,7 +93,7 @@ class DirectIqController
 
             foreach ($allLists as $key => $list) {
                 $lists[$list->name] = (object) [
-                    'listId' => $list->id,
+                    'listId'   => $list->id,
                     'listName' => $list->name,
                 ];
             }
@@ -127,9 +126,9 @@ class DirectIqController
 
         $listId = $queryParams->list_id;
 
-        $apiEndpoint = "https://rest.directiq.com/subscription/fields";
+        $apiEndpoint = 'https://rest.directiq.com/subscription/fields';
 
-        $authorizationHeader['authorization'] = 'Basic ' . base64_encode("$queryParams->client_id:$queryParams->client_secret");
+        $authorizationHeader['authorization'] = 'Basic ' . base64_encode("{$queryParams->client_id}:{$queryParams->client_secret}");
         $directIqResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 
         $fields = [];
@@ -138,10 +137,10 @@ class DirectIqController
 
             foreach ($allFields as $field) {
                 $fields[$field->shortCode] = (object) [
-                    'fieldId' => $field->shortCode,
-                    'fieldName' => $field->name,
+                    'fieldId'    => $field->shortCode,
+                    'fieldName'  => $field->name,
                     'fieldValue' => strtolower(str_replace(' ', '_', $field->name)),
-                    'required' =>  strtolower($field->name) == 'email' ? true : false
+                    'required'   => strtolower($field->name) == 'email' ? true : false
                 ];
             }
 
@@ -178,6 +177,7 @@ class DirectIqController
         if (is_wp_error($directIqApiResponse)) {
             return $directIqApiResponse;
         }
+
         return $directIqApiResponse;
     }
 }

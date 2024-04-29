@@ -3,50 +3,54 @@
 namespace BitCode\FI\Triggers\CF7;
 
 use BitCode\FI\Flow\Flow;
+use WPCF7_ContactForm;
+use WPCF7_FormTagsManager;
+use WPCF7_ShortcodeManager;
+use WPCF7_Submission;
 
 final class CF7Controller
 {
-
     public static function info()
     {
         $plugin_path = 'contact-form-7/wp-contact-form-7.php';
+
         return [
-            'name' => 'Contact Form 7',
-            'title' => 'Just another contact form plugin. Simple but flexible.',
-            'slug' => $plugin_path,
-            'type' => 'form',
-            'is_active' => class_exists('WPCF7_ContactForm'),
+            'name'           => 'Contact Form 7',
+            'title'          => 'Just another contact form plugin. Simple but flexible.',
+            'slug'           => $plugin_path,
+            'type'           => 'form',
+            'is_active'      => class_exists('WPCF7_ContactForm'),
             'activation_url' => wp_nonce_url(self_admin_url('plugins.php?action=activate&amp;plugin=' . $plugin_path . '&amp;plugin_status=all&amp;paged=1&amp;s'), 'activate-plugin_' . $plugin_path),
-            'install_url' => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
-            'list' => [
+            'install_url'    => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
+            'list'           => [
                 'action' => 'cf7/get',
                 'method' => 'get',
             ],
             'fields' => [
                 'action' => 'cf7/get/form',
                 'method' => 'post',
-                'data' => ['id']
+                'data'   => ['id']
             ],
             'isPro' => false
         ];
     }
-
 
     public function getAll()
     {
         if (!class_exists('WPCF7_ContactForm')) {
             wp_send_json_error(__('Contact Form 7 is not installed or activated', 'bit-integrations'));
         }
-        $forms = \WPCF7_ContactForm::find();
+        $forms = WPCF7_ContactForm::find();
         $all_forms = [];
         foreach ($forms as $form) {
-            $all_forms[] = (object)[
-                'id' => $form->id(),
+            $all_forms[] = (object) [
+                'id'    => $form->id(),
                 'title' => $form->title()
             ];
         }
         wp_send_json_success($all_forms);
     }
+
     public function get_a_form($data)
     {
         $fields = self::fields($data->id);
@@ -54,7 +58,7 @@ final class CF7Controller
         if (!property_exists($data, 'id')) {
             $missing_field = 'Form ID';
         }
-        if (!is_null($missing_field)) {
+        if (!\is_null($missing_field)) {
             wp_send_json_error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         if (empty($fields)) {
@@ -67,14 +71,14 @@ final class CF7Controller
 
     public static function fields($form_id)
     {
-        $form_text = \get_post_meta($form_id, '_form', true);
+        $form_text = get_post_meta($form_id, '_form', true);
 
         if (method_exists('WPCF7_FormTagsManager', 'get_instance')) {
-            $formManager = \WPCF7_FormTagsManager::get_instance();
+            $formManager = WPCF7_FormTagsManager::get_instance();
             $formManager->scan($form_text);
             $fieldDetails = $formManager->get_scanned_tags();
         } elseif (method_exists('WPCF7_ShortcodeManager', 'get_instance')) { //
-            $formManager = \WPCF7_ShortcodeManager::get_instance();
+            $formManager = WPCF7_ShortcodeManager::get_instance();
             $formManager->do_shortcode($form_text);
             $fieldDetails = $formManager->get_scanned_tags();
         }
@@ -87,21 +91,21 @@ final class CF7Controller
         foreach ($fieldDetails as $field) {
             if (!empty($field->name) && $field->type !== 'submit') {
                 $fields[] = [
-                    'name' => $field->name,
-                    'type' => $field->basetype,
+                    'name'  => $field->name,
+                    'type'  => $field->basetype,
                     'label' => $field->name,
                 ];
             }
         }
+
         return $fields;
     }
 
     public static function handle_wpcf7_submit()
     {
-        $submission = \WPCF7_Submission::get_instance();
+        $submission = WPCF7_Submission::get_instance();
 
         $postID = (int) $submission->get_meta('container_post_id');
-
 
         if (!$submission || !$posted_data = $submission->get_posted_data()) {
             return;
@@ -110,7 +114,7 @@ final class CF7Controller
         if (isset($posted_data['_wpcf7'])) {
             $form_id = $posted_data['_wpcf7'];
         } else {
-            $current_form = \WPCF7_ContactForm::get_current();
+            $current_form = WPCF7_ContactForm::get_current();
             $form_id = $current_form->id();
         }
         $files = $submission->uploaded_files();
@@ -123,7 +127,7 @@ final class CF7Controller
         // array to string conversion for radio and select fields
         $data = [];
         foreach ($posted_data as $key => $value) {
-            if (is_array($value) && count($value) == 1) {
+            if (\is_array($value) && \count($value) == 1) {
                 $data[$key] = $posted_data[$key][0];
             } else {
                 $data[$key] = $posted_data[$key];

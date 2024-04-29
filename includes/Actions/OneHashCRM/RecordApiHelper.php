@@ -15,20 +15,25 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $integrationDetails;
+
     private $integrationId;
+
     private $apiUrl;
+
     private $defaultHeader;
+
     private $type;
+
     private $typeName;
 
     public function __construct($integrationDetails, $integId, $apiKey, $apiSecret, $domain)
     {
         $this->integrationDetails = $integrationDetails;
-        $this->integrationId      = $integId;
-        $this->apiUrl             = "{$domain}/api/resource";
-        $this->defaultHeader      = [
-            "Authorization" => "token {$apiKey}:$apiSecret",
-            "Content-type"  => "application/json",
+        $this->integrationId = $integId;
+        $this->apiUrl = "{$domain}/api/resource";
+        $this->defaultHeader = [
+            'Authorization' => "token {$apiKey}:{$apiSecret}",
+            'Content-type'  => 'application/json',
         ];
     }
 
@@ -40,12 +45,13 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field Customer Type is empty', 'code' => 400];
         }
 
-        $finalData['customer_type']     = $this->integrationDetails->selectedCustomerType;
-        $finalData['customer_group']    = "All Customer Groups";
-        $finalData['territory']         = "All Territories";
-        $this->type                     = 'Customer';
-        $this->typeName                 = 'Customer created';
-        $apiEndpoint                    = $this->apiUrl . "/Customer";
+        $finalData['customer_type'] = $this->integrationDetails->selectedCustomerType;
+        $finalData['customer_group'] = 'All Customer Groups';
+        $finalData['territory'] = 'All Territories';
+        $this->type = 'Customer';
+        $this->typeName = 'Customer created';
+        $apiEndpoint = $this->apiUrl . '/Customer';
+
         return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
@@ -60,29 +66,30 @@ class RecordApiHelper
         }
 
         if (isset($finalData['email_id'])) {
-            $finalData["email_ids"] = [
+            $finalData['email_ids'] = [
                 (object) [
-                    "email_id"      => $finalData['email_id'],
-                    "is_primary"    => true
+                    'email_id'   => $finalData['email_id'],
+                    'is_primary' => true
                 ]
             ];
         }
         if (isset($finalData['phone'])) {
-            $finalData["phone_nos"][] = (object) [
-                "phone"             => $finalData['phone'],
-                "is_primary_phone"  => true
+            $finalData['phone_nos'][] = (object) [
+                'phone'            => $finalData['phone'],
+                'is_primary_phone' => true
             ];
         }
         if (isset($finalData['mobile_no'])) {
-            $finalData["phone_nos"][] = (object) [
-                "phone"                 => $finalData['mobile_no'],
-                "is_primary_mobile_no"  => true
+            $finalData['phone_nos'][] = (object) [
+                'phone'                => $finalData['mobile_no'],
+                'is_primary_mobile_no' => true
             ];
         }
 
-        $this->type                         = 'Contact';
-        $this->typeName                     = 'Contact created';
-        $apiEndpoint                        = $this->apiUrl . "/Contact";
+        $this->type = 'Contact';
+        $this->typeName = 'Contact created';
+        $apiEndpoint = $this->apiUrl . '/Contact';
+
         return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
@@ -115,11 +122,12 @@ class RecordApiHelper
             $finalData['market_segment'] = $this->integrationDetails->selectedMarketSegment;
         }
 
-        $finalData['status']    = $this->integrationDetails->selectedLeadStatus;
-        $finalData['territory'] = "All Territories";
-        $this->type             = 'Lead';
-        $this->typeName         = 'Lead created';
-        $apiEndpoint            = $this->apiUrl . "/Lead";
+        $finalData['status'] = $this->integrationDetails->selectedLeadStatus;
+        $finalData['territory'] = 'All Territories';
+        $this->type = 'Lead';
+        $this->typeName = 'Lead created';
+        $apiEndpoint = $this->apiUrl . '/Lead';
+
         return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
     }
 
@@ -128,20 +136,21 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue  = $value->oneHashCRMFormField;
+            $actionValue = $value->oneHashCRMFormField;
             $dataFinal[$actionValue] = ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue];
         }
+
         return $dataFinal;
     }
 
     public function execute($fieldValues, $fieldMap, $actionName)
     {
-        $finalData   = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        if ($actionName === "customer") {
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        if ($actionName === 'customer') {
             $apiResponse = $this->addCustomer($finalData);
-        } elseif ($actionName === "contact") {
+        } elseif ($actionName === 'contact') {
             $apiResponse = $this->addContact($finalData);
-        } elseif ($actionName === "lead") {
+        } elseif ($actionName === 'lead') {
             $apiResponse = $this->addLead($finalData);
         }
 
@@ -151,6 +160,7 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
         }
+
         return $apiResponse;
     }
 }
