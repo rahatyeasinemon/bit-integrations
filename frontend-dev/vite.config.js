@@ -81,14 +81,19 @@ function absPath(relativePath) {
 }
 
 function copyStatics(mode) {
-  if (mode === "development") {
-    return null;
-  }
+  return {
+    name: 'copy-static-files',
+    closeBundle() {
+      if (!fs.existsSync(path.resolve('../assets'))) {
+        fs.mkdirSync(path.resolve('../assets'))
+      }
 
-  fs.readdirSync(path.resolve("./static")).forEach((file) => {
-    fs.copyFileSync(
-      path.resolve(`./static/${file}`),
-      path.resolve(`../assets/${file}`)
-    );
-  });
+      fs.readdirSync(path.resolve("./static")).forEach((file) => {
+        fs.copyFileSync(
+          path.resolve(`./static/${file}`),
+          path.resolve(`../assets/${file}`)
+        );
+      });
+    }
+  }
 }
