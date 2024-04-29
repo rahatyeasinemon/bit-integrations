@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Slack;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -50,7 +50,7 @@ class RecordApiHelper
 
         if (!empty($integrationDetails->actions->attachments)) {
             foreach ($fieldValues as $fieldKey => $fieldValue) {
-                if ($integrationDetails->actions->attachments === $fieldKey) {
+                if ($integrationDetails->actions->attachments == $fieldKey) {
                     $file = $fieldValue;
                 }
             }
@@ -59,12 +59,13 @@ class RecordApiHelper
                 $data = [
                     'channels'        => $integrationDetails->channel_id,
                     'initial_comment' => $messagesBody,
-                    'parse_mode'      => $integrationDetails->parse_mode,
-                    'file'            => \is_array($file) ? $file[0] : $file
+                    'text' => $messagesBody,
+                    'parse_mode' => $integrationDetails->parse_mode,
+                    'file' => is_array($file) ? $file[0] : $file
                 ];
 
                 $sendPhotoApiHelper = new FilesApiHelper($this->_accessToken);
-                $recordApiResponse = $sendPhotoApiHelper->uploadFiles($this->_apiEndPoint, $data, $this->_accessToken);
+                $recordApiResponse  = $sendPhotoApiHelper->uploadFiles($this->_apiEndPoint, $data, $this->_accessToken);
             } else {
                 $data = [
                     'channel'    => $integrationDetails->channel_id,

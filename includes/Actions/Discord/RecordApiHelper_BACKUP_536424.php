@@ -6,6 +6,11 @@
 
 namespace BitCode\FI\Actions\Discord;
 
+<<<<<<< HEAD
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\HttpHelper;
+=======
+>>>>>>> origin/rishad-dev-tmp
 use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
@@ -40,7 +45,10 @@ class RecordApiHelper
         ];
 
         $insertRecordEndpoint = $this->_apiEndPoint . '/channels/' . $channel_id . '/messages';
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/rishad-dev-tmp
         return HttpHelper::post($insertRecordEndpoint, $data, $header);
     }
 
@@ -60,9 +68,14 @@ class RecordApiHelper
             if (
                 !empty($file)
                 && (
+<<<<<<< HEAD
                     (\is_array($file))
+                )) {
+=======
+                    (is_array($file))
                 )
             ) {
+>>>>>>> origin/rishad-dev-tmp
                 $data = [
                     'content'    => $messagesBody,
                     'parse_mode' => $integrationDetails->parse_mode,

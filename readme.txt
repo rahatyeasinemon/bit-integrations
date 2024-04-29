@@ -20,7 +20,7 @@ You can see below what WPTuts say about Bit Integrations
 https://youtu.be/hgMkLvV-r6k
 
 **Useful Links**
-🚀[Try Demo](https://form.bitapps.pro/demo/wp-admin/) | 🚀[Docs](https://docs.bit-integrations.bitapps.pro/) | 🚀[Video Tutorials](https://youtube.com/playlist?list=PL7c6CDwwm-ALMEsKLYKebKb5XLGPWMNue) | 🚀[Support](https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e) | 🚀[Facebook Group](https://www.facebook.com/groups/3308027439209387) | 🚀[Upgrade to Pro](https://www.bitapps.pro/bit-integrations) | 🚀[Frontend source code](https://github.com/Bit-Apps-Pro/bit-integrations-frontend/)
+🚀[Try Demo](https://form.bitapps.pro/demo/wp-admin/) | 🚀[Docs](https://docs.bit-integrations.bitapps.pro/) | 🚀[Video Tutorials](https://youtube.com/playlist?list=PL7c6CDwwm-ALMEsKLYKebKb5XLGPWMNue) | 🚀[Support](https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e) | 🚀[Facebook Group](https://www.facebook.com/groups/3308027439209387) | 🚀[Upgrade to Pro](https://www.bitapps.pro/bit-integrations) | 🚀[Bit Integrations Repository](https://github.com/Bit-Apps-Pro/bit-integrations)
 
 📢 **Join our community [Bit Integrations](https://www.facebook.com/groups/bitapps) & get updates on our plugins.**
 
@@ -958,12 +958,8 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
         3. **Contact Form 7**
         4. **Bit Form**
         5. **WP Forms**
-        6. **Bit Assist**
-        7. **Webhook**
-        8. **Custom Trigger**
-        9. **WP Post**
-        10. **WP User Registration**
-        11. **Actionhook**
+        6. **Custom Trigger**
+        7. **Actionhook**
         
 - **Compatibility Update :**
   - Existing Integrations: Users who have created integrations using triggers other than those listed above in the previous version of the plugin need not worry. This update will not affect their existing integrations, and they will continue to run properly. However, they will be unable to edit these integrations unless they are using one of the newly added triggers.

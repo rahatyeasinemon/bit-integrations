@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Slack;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use CURLFile;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Upload files
@@ -43,12 +43,11 @@ final class FilesApiHelper
             $file = $data['file'];
         }
 
-        if (!file_exists($file)) {
+        if (empty($file)) {
             return false;
         }
 
         $data['file'] = new CURLFile($file);
-
         return HttpHelper::post(
             $uploadFileEndpoint,
             $data,

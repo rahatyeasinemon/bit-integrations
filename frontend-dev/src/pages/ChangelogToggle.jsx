@@ -59,11 +59,7 @@ export default function ChangelogToggle() {
                                         <li>Contact Form 7</li>
                                         <li>Bit Form</li>
                                         <li>WP Forms</li>
-                                        <li>Bit Assist</li>
-                                        <li>Webhook</li>
                                         <li>Custom Trigger</li>
-                                        <li>WP Post</li>
-                                        <li>WP User Registration</li>
                                         <li>Actionhook</li>
                                     </ul>
                                 </li>

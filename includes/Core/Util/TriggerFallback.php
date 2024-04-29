@@ -905,7 +905,7 @@ final class TriggerFallback
     public static function handleBrizySubmit($fields, $form)
     {
         if (!method_exists($form, 'getId')) {
-            return;
+            return ['content' => $fields];
         }
         $form_id = $form->getId();
         $flows = Flow::exists('Brizy', $form_id);
@@ -4246,7 +4246,7 @@ final class TriggerFallback
             }
         }
 
-        return $content;
+        return ['content' => $content];
     }
 
     public static function postUpdated($postId, $updatedPostData)

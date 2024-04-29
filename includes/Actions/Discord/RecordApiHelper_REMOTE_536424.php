@@ -16,11 +16,8 @@ use BitCode\FI\Core\Util\HttpHelper;
 class RecordApiHelper
 {
     private $_defaultHeader;
-
     private $_integrationID;
-
     private $_apiEndPoint;
-
     private $_accessToken;
 
     public function __construct($apiEndPoint, $access_token, $integId)
@@ -36,11 +33,10 @@ class RecordApiHelper
     {
         $header = [
             'Authorization' => 'Bot ' . $this->_accessToken,
-            'Accept'        => 'application/json',
+            'Accept' => 'application/json',
         ];
 
         $insertRecordEndpoint = $this->_apiEndPoint . '/channels/' . $channel_id . '/messages';
-
         return HttpHelper::post($insertRecordEndpoint, $data, $header);
     }
 
@@ -60,13 +56,13 @@ class RecordApiHelper
             if (
                 !empty($file)
                 && (
-                    (\is_array($file))
+                    (is_array($file))
                 )
             ) {
                 $data = [
-                    'content'    => $messagesBody,
+                    'content' => $messagesBody,
                     'parse_mode' => $integrationDetails->parse_mode,
-                    'file'       => \is_array($file) ? $file[0] : $file
+                    'file' => is_array($file) ? $file[0] : $file
                 ];
 
                 $sendPhotoApiHelper = new FilesApiHelper($this->_accessToken);
@@ -74,7 +70,7 @@ class RecordApiHelper
                 $recordApiResponse  = $this->sendMessages($data, $integrationDetails->selectedChannel);
             } else {
                 $data = [
-                    'content'    => $messagesBody,
+                    'content' => $messagesBody,
                     'parse_mode' => $integrationDetails->parse_mode
                 ];
                 $recordApiResponse = $this->sendMessages($data, $integrationDetails->selectedChannel);
@@ -82,21 +78,20 @@ class RecordApiHelper
             $type = 'insert';
         } else {
             $data = [
-                'content'    => $messagesBody,
+                'content' => $messagesBody,
                 'parse_mode' => $integrationDetails->parse_mode
             ];
 
             $recordApiResponse = $this->sendMessages($data, $integrationDetails->selectedChannel);
             $type = 'insert';
         }
-        $recordApiResponse = \is_string($recordApiResponse) ? json_decode($recordApiResponse) : $recordApiResponse;
+        $recordApiResponse = is_string($recordApiResponse) ? json_decode($recordApiResponse) : $recordApiResponse;
 
         if (isset($recordApiResponse->id)) {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', $recordApiResponse);
         } else {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', $recordApiResponse);
         }
-
         return $recordApiResponse;
     }
 }

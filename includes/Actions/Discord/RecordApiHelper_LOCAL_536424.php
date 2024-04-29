@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Discord;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -52,7 +52,7 @@ class RecordApiHelper
         $recordApiResponse = '';
         if (!empty($integrationDetails->actions->attachments)) {
             foreach ($fieldValues as $fieldKey => $fieldValue) {
-                if ($integrationDetails->actions->attachments == $fieldKey) {
+                if ($integrationDetails->actions->attachments === $fieldKey) {
                     $file = $fieldValue;
                 }
             }
@@ -61,8 +61,7 @@ class RecordApiHelper
                 !empty($file)
                 && (
                     (\is_array($file))
-                )
-            ) {
+                )) {
                 $data = [
                     'content'    => $messagesBody,
                     'parse_mode' => $integrationDetails->parse_mode,
@@ -70,8 +69,7 @@ class RecordApiHelper
                 ];
 
                 $sendPhotoApiHelper = new FilesApiHelper($this->_accessToken);
-                $recordApiResponse  = $sendPhotoApiHelper->uploadFiles($this->_apiEndPoint, $data, $this->_accessToken, $integrationDetails->selectedChannel);
-                $recordApiResponse  = $this->sendMessages($data, $integrationDetails->selectedChannel);
+                $recordApiResponse = $sendPhotoApiHelper->uploadFiles($this->_apiEndPoint, $data, $this->_accessToken, $integrationDetails->selectedChannel);
             } else {
                 $data = [
                     'content'    => $messagesBody,
