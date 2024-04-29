@@ -129,7 +129,7 @@ class ActionHookController
         }
 
         if ($hook['isFilterHook'] && isset($flowData['content'])) {
-            return $flowData['content'];
+            return $flowData['content'] ?? $flowData;
         }
     }
 }
