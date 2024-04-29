@@ -48,7 +48,7 @@ class RecordApiHelper
         $recordApiResponse = '';
         if (!empty($integrationDetails->actions->attachments)) {
             foreach ($fieldValues as $fieldKey => $fieldValue) {
-                if ($integrationDetails->actions->attachments === $fieldKey) {
+                if ($integrationDetails->actions->attachments == $fieldKey) {
                     $file = $fieldValue;
                 }
             }
