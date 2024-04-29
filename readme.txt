@@ -958,9 +958,8 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
         3. **Contact Form 7**
         4. **Bit Form**
         5. **WP Forms**
-        6. **Webhook**
-        7. **Custom Trigger**
-        8. **Actionhook**
+        6. **Custom Trigger**
+        7. **Actionhook**
         
 - **Compatibility Update :**
   - Existing Integrations: Users who have created integrations using triggers other than those listed above in the previous version of the plugin need not worry. This update will not affect their existing integrations, and they will continue to run properly. However, they will be unable to edit these integrations unless they are using one of the newly added triggers.
