@@ -21,16 +21,31 @@ class RecordApiHelper
     {
         if ($filePath === '') return false;
 
-        $response = HttpHelper::post(
-            'https://api.pcloud.com/uploadfile?folderid=' . $folder,
-            [
-                'filename' => new CURLFile($filePath)
-            ],
-            [
-                'Content-Type'  => 'multipart/form-data',
-                'Authorization' => 'Bearer ' . $this->token
-            ]
-        );
+        if (is_array($filePath)) {
+            foreach ($filePath as $item) {
+                $response = HttpHelper::post(
+                    'https://api.pcloud.com/uploadfile?folderid=' . $folder,
+                    [
+                        'filename' => new CURLFile($item)
+                    ],
+                    [
+                        'Content-Type'  => 'multipart/form-data',
+                        'Authorization' => 'Bearer ' . $this->token
+                    ]
+                );
+            }
+        } else {
+            $response = HttpHelper::post(
+                'https://api.pcloud.com/uploadfile?folderid=' . $folder,
+                [
+                    'filename' => new CURLFile($filePath)
+                ],
+                [
+                    'Content-Type'  => 'multipart/form-data',
+                    'Authorization' => 'Bearer ' . $this->token
+                ]
+            );
+        }
 
         return $response;
     }
@@ -41,7 +56,8 @@ class RecordApiHelper
             if ($folderWithFile == '') continue;
             foreach ($folderWithFile as $folder => $singleFilePath) {
                 if ($singleFilePath == '') continue;
-                $response = $this->uploadFile($folder, $singleFilePath[0]);
+                error_log(print_r($singleFilePath, true));
+                $response = $this->uploadFile($folder, is_array($singleFilePath) ? $singleFilePath[0] : $singleFilePath);
                 $this->storeInState($response);
                 $this->deleteFile($singleFilePath[0], $actions);
             }

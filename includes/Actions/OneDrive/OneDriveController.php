@@ -34,7 +34,7 @@ class OneDriveController
         $apiEndpoint = 'https://login.live.com/oauth20_token.srf';
         $header["Content-Type"] = 'application/x-www-form-urlencoded';
         $apiResponse = HttpHelper::post($apiEndpoint, $body, $header);
-        if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
+        if (is_wp_error($apiResponse) || !empty($apiResponse->error) || HttpHelper::$responseCode !== 200) {
             wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }
         $apiResponse->generates_on = \time();
