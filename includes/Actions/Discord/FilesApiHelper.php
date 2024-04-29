@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Discord;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use CURLFile;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Upload files
@@ -41,7 +41,7 @@ final class FilesApiHelper
             $file = $data['file'];
         }
 
-        if (!file_exists($file)) {
+        if (empty($file)) {
             return false;
         }
 
