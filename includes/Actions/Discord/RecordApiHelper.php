@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Discord;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -38,7 +38,6 @@ class RecordApiHelper
 
         $insertRecordEndpoint = $this->_apiEndPoint . '/channels/' . $channel_id . '/messages';
         return HttpHelper::post($insertRecordEndpoint, $data, $header);
-
     }
 
     public function execute($integrationDetails, $fieldValues)
@@ -58,7 +57,8 @@ class RecordApiHelper
                 !empty($file)
                 && (
                     (is_array($file))
-                )) {
+                )
+            ) {
                 $data = [
                     'content' => $messagesBody,
                     'parse_mode' => $integrationDetails->parse_mode,
@@ -66,7 +66,8 @@ class RecordApiHelper
                 ];
 
                 $sendPhotoApiHelper = new FilesApiHelper($this->_accessToken);
-                $recordApiResponse = $sendPhotoApiHelper->uploadFiles($this->_apiEndPoint, $data, $this->_accessToken, $integrationDetails->selectedChannel);
+                $recordApiResponse  = $sendPhotoApiHelper->uploadFiles($this->_apiEndPoint, $data, $this->_accessToken, $integrationDetails->selectedChannel);
+                $recordApiResponse  = $this->sendMessages($data, $integrationDetails->selectedChannel);
             } else {
                 $data = [
                     'content' => $messagesBody,
@@ -75,7 +76,6 @@ class RecordApiHelper
                 $recordApiResponse = $this->sendMessages($data, $integrationDetails->selectedChannel);
             }
             $type = 'insert';
-
         } else {
             $data = [
                 'content' => $messagesBody,
