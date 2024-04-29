@@ -6,19 +6,17 @@
 
 namespace BitCode\FI\Actions\MailerLite;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for MailerLite integration
  */
 class MailerLiteController
 {
-    protected $_defaultHeader;
-
     private static $_baseUrlV1 = 'https://api.mailerlite.com/api/v2/';
-
     private static $_baseUrlV2 = 'https://connect.mailerlite.com/api/';
+    protected $_defaultHeader;
 
     public function fetchAllGroups($refreshFieldsRequestParams)
     {
@@ -34,33 +32,16 @@ class MailerLiteController
         // var_dump('fjkasfhjklas');
         // die;
         if ('v2' === $refreshFieldsRequestParams->version) {
-            $apiEndpoints = self::$_baseUrlV2 . 'groups/';
-            $apiKey = $refreshFieldsRequestParams->auth_token;
-            $header = [
-                'Authorization: Bearer ' . $apiKey
-            ];
-
-            $curl = curl_init();
-            curl_setopt_array($curl, [
-                CURLOPT_URL            => $apiEndpoints,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING       => '',
-                CURLOPT_MAXREDIRS      => 10,
-                CURLOPT_TIMEOUT        => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST  => 'GET',
-                CURLOPT_HTTPHEADER     => $header,
-            ]);
-            $data = curl_exec($curl);
-            curl_close($curl);
-            $response = json_decode($data);
+            $apiKey     = $refreshFieldsRequestParams->auth_token;
+            $endpoint   = self::$_baseUrlV2 . 'groups/';
+            $header     = ["Authorization" => "Bearer {$apiKey}"];
+            $response   = HttpHelper::get($endpoint, null, $header);
 
             $formattedResponse = [];
 
             foreach ($response->data as $value) {
-                $formattedResponse[]
-                    = [
+                $formattedResponse[] =
+                    [
                         'group_id' => $value->id,
                         'name'     => $value->name,
                     ];
@@ -76,8 +57,8 @@ class MailerLiteController
             $formattedResponse = [];
 
             foreach ($response as $value) {
-                $formattedResponse[]
-                    = [
+                $formattedResponse[] =
+                    [
                         'group_id' => $value->id,
                         'name'     => $value->name,
                     ];
@@ -111,7 +92,7 @@ class MailerLiteController
 
             $apiKey = $refreshFieldsRequestParams->auth_token;
             $header = [
-                'Authorization' => 'Bearer ' . $apiKey,
+                'Authorization' => "Bearer " . $apiKey,
             ];
 
             $response = HttpHelper::get($apiEndpoints, null, $header);
@@ -165,7 +146,7 @@ class MailerLiteController
                 ];
             }
         }
-        if (\count($response) > 0) {
+        if (count($response) > 0) {
             wp_send_json_success($formattedResponse, 200);
         } else {
             wp_send_json_error(
@@ -188,7 +169,7 @@ class MailerLiteController
 
         if (
             empty($fieldMap)
-             || empty($auth_token)
+            || empty($auth_token)
         ) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for MailerLite api', 'bit-integrations'));
         }
@@ -204,7 +185,6 @@ class MailerLiteController
         if (is_wp_error($mailerliteApiResponse)) {
             return $mailerliteApiResponse;
         }
-
         return $mailerliteApiResponse;
     }
 }

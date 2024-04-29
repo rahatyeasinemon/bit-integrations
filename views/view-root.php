@@ -1,7 +1,12 @@
 <?php
-if (!defined('ABSPATH') || !defined('BTCBI_ASSET_URI')) {
+if (!defined('ABSPATH')) {
     exit;
 }
+
+if (!defined('BTCBI_ASSET_URI')) {
+    exit;
+}
+
 ?>
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="btcd-app">

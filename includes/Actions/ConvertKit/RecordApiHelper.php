@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\ConvertKit;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,update, exist
@@ -15,9 +15,7 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_defaultHeader;
-
     private $_integrationID;
-
     private $_apiEndpoint;
 
     public function __construct($api_secret, $integId)
@@ -40,7 +38,7 @@ class RecordApiHelper
         foreach ($data as $key => $value) {
             $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
             $array_keys = array_keys($query);
-            if (!(\in_array($key, $array_keys))) {
+            if (!(in_array($key, $array_keys))) {
                 $query['fields'] = [
                     $key => $value,
                 ];
@@ -51,17 +49,18 @@ class RecordApiHelper
 
         $insertRecordEndpoint = "{$this->_apiEndpoint}/forms/{$formId}/{$method}?{$queries}";
 
-        return HttpHelper::post($insertRecordEndpoint, null);
+        $res = HttpHelper::post($insertRecordEndpoint, null);
+        return $res;
     }
 
-    // for updating subscribers data through email id.
+    //for updating subscribers data through email id.
     public function updateRecord($id, $data, $existSubscriber)
     {
         $subscriberData = $data;
 
         foreach ($subscriberData as $key => $value) {
             if ($value === '') {
-                $subscriberData->{$key} = $existSubscriber->subscribers[0]->{$key};
+                $subscriberData->$key = $existSubscriber->subscribers[0]->$key;
             }
         }
 
@@ -74,7 +73,7 @@ class RecordApiHelper
         foreach ($data as $key => $value) {
             $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
             $array_keys = array_keys($query);
-            if (!(\in_array($key, $array_keys))) {
+            if (!(in_array($key, $array_keys))) {
                 $query['fields'] = [
                     $key => $value,
                 ];
@@ -85,10 +84,10 @@ class RecordApiHelper
 
         $updateRecordEndpoint = "{$this->_apiEndpoint}/subscribers/{$id}?" . $queries;
 
-        return HttpHelper::request($updateRecordEndpoint, 'PUT', null);
+        return  HttpHelper::request($updateRecordEndpoint, 'PUT', null);
     }
 
-    // add tag to a subscriber
+    //add tag to a subscriber
     public function addTagToSubscriber($email, $tags)
     {
         $queries = http_build_query([
@@ -102,6 +101,18 @@ class RecordApiHelper
         }
     }
 
+    //Check if a subscriber exists through email.
+    private function existSubscriber($email)
+    {
+        $queries = http_build_query([
+            'api_secret'    => $this->_defaultHeader,
+            'email_address' => $email,
+        ]);
+        $searchEndPoint = "{$this->_apiEndpoint}/subscribers?{$queries}";
+
+        return HttpHelper::get($searchEndPoint, null);
+    }
+
     public function execute($fieldValues, $fieldMap, $actions, $formId, $tags)
     {
         $fieldData = [];
@@ -112,9 +123,9 @@ class RecordApiHelper
                 if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue) && !is_numeric($fieldPair->convertKitField)) {
                     $fieldData[$fieldPair->convertKitField] = $fieldPair->customValue;
                 } elseif (is_numeric($fieldPair->convertKitField) && $fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
-                    $customFields[] = ['field' => (int) $fieldPair->convertKitField, 'value' => $fieldPair->customValue];
+                    array_push($customFields, ['field' => (int) $fieldPair->convertKitField, 'value' => $fieldPair->customValue]);
                 } elseif (is_numeric($fieldPair->convertKitField)) {
-                    $customFields[] = ['field' => (int) $fieldPair->convertKitField, 'value' => $fieldValues[$fieldPair->formField]];
+                    array_push($customFields, ['field' => (int) $fieldPair->convertKitField, 'value' => $fieldValues[$fieldPair->formField]]);
                 } else {
                     $fieldData[$fieldPair->convertKitField] = $fieldValues[$fieldPair->formField];
                 }
@@ -128,9 +139,9 @@ class RecordApiHelper
 
         $existSubscriber = $this->existSubscriber($convertKit->email);
 
-        if ((\count($existSubscriber->subscribers)) !== 1) {
+        if ((count($existSubscriber->subscribers)) !== 1) {
             $recordApiResponse = $this->storeOrModifyRecord('subscribe', $formId, $convertKit);
-            if (isset($tags) && (\count($tags)) > 0 && $recordApiResponse) {
+            if (isset($tags) && (count($tags)) > 0 && $recordApiResponse) {
                 $this->addTagToSubscriber($convertKit->email, $tags);
             }
             $type = 'insert';
@@ -142,13 +153,10 @@ class RecordApiHelper
                 LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', 'Email address already exists in the system');
 
                 wp_send_json_error(
-                    __(
-                        [
-                            'type'    => 'error',
-                            'message' => 'Check your email for confirmation.'
-                        ],
-                        'bit-integrations'
-                    ),
+                    [
+                        'type'    => 'error',
+                        'message' => __('Check your email for confirmation.', 'bit-integrations')
+                    ],
                     400
                 );
             }
@@ -159,19 +167,6 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', $recordApiResponse);
         }
-
         return $recordApiResponse;
-    }
-
-    // Check if a subscriber exists through email.
-    private function existSubscriber($email)
-    {
-        $queries = http_build_query([
-            'api_secret'    => $this->_defaultHeader,
-            'email_address' => $email,
-        ]);
-        $searchEndPoint = "{$this->_apiEndpoint}/subscribers?{$queries}";
-
-        return HttpHelper::get($searchEndPoint, null);
     }
 }

@@ -4,14 +4,15 @@ namespace BitCode\FI\Core\Util;
 
 final class AllTriggersName
 {
-    public static $allTriggersName
-        = [
+    public static $allTriggersName =
+        [
             'AcademyLms'        => ['name' => 'Academy Lms', 'isPro' => true, 'is_active' => false],
             'Affiliate'         => ['name' => 'Affiliate', 'isPro' => true, 'is_active' => false],
             'Amelia'            => ['name' => 'Amelia', 'isPro' => true, 'is_active' => false],
             'ARForm'            => ['name' => 'ARForm', 'isPro' => true, 'is_active' => false],
             'ARMember'          => ['name' => 'ARMember', 'isPro' => true, 'is_active' => false],
             'Beaver'            => ['name' => 'Beaver', 'isPro' => true, 'is_active' => false],
+            'BitAssist'         => ['name' => 'Bit  Assist', 'isPro' => true, 'is_active' => false],
             'Breakdance'        => ['name' => 'Breakdance', 'isPro' => true, 'is_active' => false],
             'Bricks'            => ['name' => 'Bricks', 'isPro' => true, 'is_active' => false],
             'Brizy'             => ['name' => 'Brizy', 'isPro' => true, 'is_active' => false],
@@ -49,7 +50,10 @@ final class AllTriggersName
             'PiotnetAddon'      => ['name' => 'PiotnetAddon', 'isPro' => true, 'is_active' => false],
             'PiotnetAddonForm'  => ['name' => 'PiotnetAddonForm', 'isPro' => true, 'is_active' => false],
             'PiotnetForms'      => ['name' => 'Piotnet Forms', 'isPro' => true, 'is_active' => false],
+            'Post'              => ['name' => 'Post', 'isPro' => true, 'is_active' => false],
             'Rafflepress'       => ['name' => 'Rafflepress', 'isPro' => true, 'is_active' => false],
+            'Rafflepress'       => ['name' => 'Rafflepress', 'isPro' => true, 'is_active' => false],
+            'Registration'      => ['name' => 'User Registration', 'isPro' => true, 'is_active' => false],
             'RestrictContent'   => ['name' => 'Restrict Content', 'isPro' => true, 'is_active' => false],
             'SliceWp'           => ['name' => 'SliceWp', 'isPro' => true, 'is_active' => false],
             'SolidAffiliate'    => ['name' => 'Solid Affiliate', 'isPro' => true, 'is_active' => false],
@@ -60,6 +64,7 @@ final class AllTriggersName
             'Tripetto'          => ['name' => 'Tripetto', 'isPro' => true, 'is_active' => false],
             'TutorLms'          => ['name' => 'Tutor LMS', 'isPro' => true, 'is_active' => false],
             'UltimateMember'    => ['name' => 'UltimateMember', 'isPro' => true, 'is_active' => false],
+            'Webhook'           => ['name' => 'Webhook', 'isPro' => true, 'is_active' => false],
             'WeForms'           => ['name' => 'WeForms', 'isPro' => true, 'is_active' => false],
             'WPCourseware'      => ['name' => 'WP Courseware', 'isPro' => true, 'is_active' => false],
             'WPEF'              => ['name' => 'eForm', 'isPro' => true, 'is_active' => false],

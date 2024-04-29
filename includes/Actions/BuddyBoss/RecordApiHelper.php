@@ -779,8 +779,8 @@ class RecordApiHelper
         if (empty($reply_id) || is_wp_error($reply_id)) {
             $append_error = (
                 (is_wp_error($reply_id) && $reply_id->get_error_message())
-                ? __('The following problems have been found with your reply: ') . $reply_id->get_error_message()
-                : __('We are facing a problem to creating a reply.')
+                ? __('The following problems have been found with your reply: ', 'bit-integrations') . $reply_id->get_error_message()
+                : __('We are facing a problem to creating a reply.', 'bit-integrations')
             );
 
             LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode($append_error));

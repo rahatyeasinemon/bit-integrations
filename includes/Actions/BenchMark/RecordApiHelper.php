@@ -15,7 +15,6 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_defaultHeader;
-
     private $_integrationID;
 
     public function __construct($api_secret, $integId)
@@ -69,10 +68,10 @@ class RecordApiHelper
             }
         }';
 
-        return HttpHelper::post($apiEndpoint, $body, $headers);
+        return  HttpHelper::post($apiEndpoint, $body, $headers);
     }
 
-    // for updating contacts data through email id.
+    //for updating contacts data through email id.
     public function updateRecord($data, $existContact)
     {
         $id = $existContact->Response->Data[0]->ID;
@@ -120,7 +119,20 @@ class RecordApiHelper
 
         $updateRecordEndpoint = "https://clientapi.benchmarkemail.com/Contact/{$listId}/ContactDetails/{$id}";
 
-        return HttpHelper::request($updateRecordEndpoint, 'PATCH', $body, $headers);
+        return  HttpHelper::request($updateRecordEndpoint, 'PATCH', $body, $headers);
+    }
+
+    //Check if a contact exists through email.
+    private function existContact($email)
+    {
+        $queries = http_build_query([
+            'Search' => $email,
+        ]);
+
+        $apiEndpoint = 'https://clientapi.benchmarkemail.com/Contact/ContactDetails?' . $queries;
+
+        $authorizationHeader['AuthToken'] = $this->_defaultHeader;
+        return HttpHelper::get($apiEndpoint, null, $authorizationHeader);
     }
 
     public function execute($fieldValues, $fieldMap, $actions, $listId)
@@ -133,9 +145,9 @@ class RecordApiHelper
                 if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue) && !is_numeric($fieldPair->benchMarkField)) {
                     $fieldData[$fieldPair->benchMarkField] = $fieldPair->customValue;
                 } elseif (is_numeric($fieldPair->benchMarkField) && $fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
-                    $customFields[] = ['field' => (int) $fieldPair->benchMarkField, 'value' => $fieldPair->customValue];
+                    array_push($customFields, ['field' => (int) $fieldPair->benchMarkField, 'value' => $fieldPair->customValue]);
                 } elseif (is_numeric($fieldPair->benchMarkField)) {
-                    $customFields[] = ['field' => (int) $fieldPair->benchMarkField, 'value' => $fieldValues[$fieldPair->formField]];
+                    array_push($customFields, ['field' => (int) $fieldPair->benchMarkField, 'value' => $fieldValues[$fieldPair->formField]]);
                 } else {
                     $fieldData[$fieldPair->benchMarkField] = $fieldValues[$fieldPair->formField];
                 }
@@ -161,35 +173,17 @@ class RecordApiHelper
                 LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', 'Email address already exists in the system');
 
                 wp_send_json_error(
-                    __(
-                        $this->_errorMessage,
-                        'bit-integrations'
-                    ),
+                    __('Email address already exists in the system', 'bit-integrations'),
                     400
                 );
             }
         }
 
-        if (($recordApiResponse && isset($recordApiResponse->errors)) || isset($this->_errorMessage)) {
+        if (($recordApiResponse && isset($recordApiResponse->errors))) {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', $recordApiResponse->errors);
         } else {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', $recordApiResponse);
         }
-
         return $recordApiResponse;
-    }
-
-    // Check if a contact exists through email.
-    private function existContact($email)
-    {
-        $queries = http_build_query([
-            'Search' => $email,
-        ]);
-
-        $apiEndpoint = 'https://clientapi.benchmarkemail.com/Contact/ContactDetails?' . $queries;
-
-        $authorizationHeader['AuthToken'] = $this->_defaultHeader;
-
-        return HttpHelper::get($apiEndpoint, null, $authorizationHeader);
     }
 }

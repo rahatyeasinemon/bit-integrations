@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\ZagoMail;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,update, exist
@@ -15,11 +15,8 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_defaultHeader;
-
     private $_integrationID;
-
     private $_apiEndpoint;
-
     private $_apiPublicKey;
 
     public function __construct($api_public_key, $integId)
@@ -41,10 +38,12 @@ class RecordApiHelper
 
         $insertRecordEndpoint = "{$this->_apiEndpoint}lists/subscriber-create?list_uid={$listId}";
 
-        return HttpHelper::post($insertRecordEndpoint, json_encode($requestParams), $this->_defaultHeader);
+        $res = HttpHelper::post($insertRecordEndpoint, json_encode($requestParams), $this->_defaultHeader);
+
+        return $res;
     }
 
-    // for updating subscribers data through email id.
+    //for updating subscribers data through email id.
     public function updateRecord($subscriberId, $listId, $data)
     {
         $requestParams['publicKey'] = $this->_apiPublicKey;
@@ -55,10 +54,12 @@ class RecordApiHelper
 
         $insertRecordEndpoint = "{$this->_apiEndpoint}lists/subscriber-update?list_uid={$listId}&subscriber_uid={$subscriberId}";
 
-        return HttpHelper::post($insertRecordEndpoint, json_encode($requestParams), $this->_defaultHeader);
+        $res = HttpHelper::post($insertRecordEndpoint, json_encode($requestParams), $this->_defaultHeader);
+
+        return $res;
     }
 
-    // add tag to a subscriber
+    //add tag to a subscriber
     public function addTagToSubscriber($subscriberId, $listId, $tags)
     {
         $requestParams['publicKey'] = $this->_apiPublicKey;
@@ -70,6 +71,19 @@ class RecordApiHelper
         }
     }
 
+    //Check if a subscriber exists through email.
+    private function existSubscriber($email, $listId)
+    {
+        $body = [
+            'publicKey' => $this->_apiPublicKey,
+            'email'     => $email,
+        ];
+
+        $searchEndPoint = "{$this->_apiEndpoint}lists/search-by-email?list_uid={$listId}";
+
+        return $res = HttpHelper::post($searchEndPoint, json_encode($body), $this->_defaultHeader);
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -79,11 +93,10 @@ class RecordApiHelper
             $actionValue = $value->zagoMailField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = $value->customValue;
-            } elseif (!\is_null($data[$triggerValue])) {
+            } elseif (!is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
-
         return $dataFinal;
     }
 
@@ -104,7 +117,7 @@ class RecordApiHelper
 
                 wp_send_json_error(
                     __(
-                        $this->_errorMessage,
+                        'Email address already exists in the system',
                         'bit-integrations'
                     ),
                     400
@@ -112,7 +125,7 @@ class RecordApiHelper
             }
         } else {
             $recordApiResponse = $this->storeOrModifyRecord($listId, $zagoMail);
-            if (isset($tags) && (\count($tags)) > 0 && $recordApiResponse->status !== 'error') {
+            if (isset($tags) && (count($tags)) > 0 && $recordApiResponse->status !== 'error') {
                 $this->addTagToSubscriber($recordApiResponse->data->record->subscriber_uid, $listId, $tags);
             }
             $type = 'insert';
@@ -123,20 +136,6 @@ class RecordApiHelper
         } else {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', $recordApiResponse);
         }
-
         return $recordApiResponse;
-    }
-
-    // Check if a subscriber exists through email.
-    private function existSubscriber($email, $listId)
-    {
-        $body = [
-            'publicKey' => $this->_apiPublicKey,
-            'email'     => $email,
-        ];
-
-        $searchEndPoint = "{$this->_apiEndpoint}lists/search-by-email?list_uid={$listId}";
-
-        return $res = HttpHelper::post($searchEndPoint, json_encode($body), $this->_defaultHeader);
     }
 }

@@ -6,7 +6,7 @@
 
 namespace BitCode\FI\Actions\Freshdesk;
 
-use CURLFile;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Upload files
@@ -14,7 +14,6 @@ use CURLFile;
 final class FilesApiHelper
 {
     private $_defaultHeader;
-
     private $_payloadBoundary;
 
     public function __construct()
@@ -26,44 +25,22 @@ final class FilesApiHelper
     /**
      * Helps to execute upload files api
      *
-     * @param string $apiEndPoint FreshDesk API base URL
-     * @param array  $data        Data to pass to API
-     * @param mixed  $api_key
+     * @param String            $apiEndPoint    FreshDesk API base URL
+     * @param Array             $data           Data to pass to API
      *
-     * @return array|bool $uploadResponse FreshDesk API response
+     * @return Array | Boolean  $uploadResponse FreshDesk API response
      */
     public function uploadFiles($apiEndPoint, $data, $api_key)
     {
-        $data['avatar'] = new CURLFile("{$data['avatar']}");
-        $curl = curl_init();
-        curl_setopt_array(
-            $curl,
+        $data['avatar'] = new \CURLFILE("{$data['avatar']}");
+        $uploadResponse = HttpHelper::post(
+            $apiEndPoint,
+            $data,
             [
-                CURLOPT_URL            => $apiEndPoint,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING       => '',
-                CURLOPT_MAXREDIRS      => 10,
-                CURLOPT_TIMEOUT        => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_FAILONERROR    => true,
-                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-                CURLOPT_SSL_VERIFYPEER => false,
-                CURLOPT_SSL_VERIFYHOST => false,
-                CURLOPT_CUSTOMREQUEST  => 'POST',
-                CURLOPT_POSTFIELDS     => $data,
-                CURLOPT_HTTPHEADER     => [
-                    'Content-Type: multipart/form-data',
-                    'Authorization: ' . base64_encode("{$api_key}")
-                ]
+                'Authorization' => base64_encode("$api_key"),
+                'Content-Type'  => 'multipart/form-data',
             ]
         );
-
-        $uploadResponse = curl_exec($curl);
-        if (curl_errno($curl)) {
-            $uploadResponse = curl_error($curl);
-        }
-        curl_close($curl);
-
         return $uploadResponse;
     }
 }

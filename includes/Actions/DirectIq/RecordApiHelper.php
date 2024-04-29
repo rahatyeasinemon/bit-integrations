@@ -7,6 +7,7 @@
 namespace BitCode\FI\Actions\DirectIq;
 
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,update, exist
@@ -14,44 +15,36 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_defaultHeader;
-
     private $_integrationID;
+
 
     public function __construct($client_id, $client_secret, $integId)
     {
-        $this->_defaultHeader = 'Basic ' . base64_encode("{$client_id}:{$client_secret}");
+        $this->_defaultHeader = 'Basic ' . base64_encode("$client_id:$client_secret");
         $this->_integrationID = $integId;
     }
 
     // for adding a contact to a list.
     public function storeOrModifyRecord($method, $listId, $data)
     {
-        $finalData = "{\"contacts\":[{\"email\":\"{$data->email}\",\"fistName\":\"{$data->first_name}\",\"lastName\":\"{$data->last_name}\"}]}";
-        $curl = curl_init();
+        $apiEndpoint = "https://rest.directiq.com/contacts/lists/importcontacts/{$listId}";
+        $headers = [
+            "accept" => "application/json",
+            "Authorization" => $this->_defaultHeader,
+            "content-type" => "application/*+json"
+        ];
+        $finalData = [
+            'contacts' => [
+                [
+                    'email' => $data->email ?? '',
+                    'fistName' => $data->first_name ?? '',
+                    'lastName' => $data->last_name ?? ''
+                ],
+            ]
+        ];
 
-        curl_setopt_array($curl, [
-            CURLOPT_URL            => "https://rest.directiq.com/contacts/lists/importcontacts/{$listId}",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING       => '',
-            CURLOPT_MAXREDIRS      => 10,
-            CURLOPT_TIMEOUT        => 30,
-            CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST  => 'POST',
-            CURLOPT_POSTFIELDS     => $finalData,
-            CURLOPT_HTTPHEADER     => [
-                'accept: application/json',
-                "authorization: {$this->_defaultHeader}",
-                'content-type: application/*+json'
-            ],
-        ]);
-
-        $response = curl_exec($curl);
-        $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        return $statusCode;
+        HttpHelper::post($apiEndpoint, json_encode($finalData), $headers);
+        return HttpHelper::$responseCode;
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -63,11 +56,10 @@ class RecordApiHelper
             $actionValue = $value->directIqField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = $value->customValue;
-            } elseif (!\is_null($data[$triggerValue])) {
+            } elseif (!is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
         }
-
         return $dataFinal;
     }
 
@@ -85,9 +77,9 @@ class RecordApiHelper
         $type = 'insert';
 
         if ($recordApiResponse !== 200) {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', 'There is an error while inserting record');
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', "There is an error while inserting record");
         } else {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', 'Record inserted successfully');
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', "Record inserted successfully");
         }
 
         return $recordApiResponse;
