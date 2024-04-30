@@ -19,7 +19,7 @@ class RecordApiHelper
 
     public function createContact($data)
     {
-        $data = \is_string($data) ? $data : json_encode((object) $data);
+        $data = \is_string($data) ? $data : wp_json_encode((object) $data);
         $insertRecordEndpoint = 'https://api.getgist.com/contacts';
 
         return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);

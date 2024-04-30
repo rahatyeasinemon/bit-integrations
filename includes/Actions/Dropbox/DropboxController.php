@@ -85,7 +85,7 @@ class DropboxController
             'include_mounted_folders'        => true,
             'include_non_downloadable_files' => true
         ];
-        $options = json_encode($options);
+        $options = wp_json_encode($options);
 
         $apiEndpoint = self::$apiBaseUri . '/2/files/list_folder';
         $apiResponse = HttpHelper::post($apiEndpoint, $options, $headers);
@@ -176,6 +176,6 @@ class DropboxController
 
         $newDetails = json_decode($dropboxDetails[0]->flow_details);
         $newDetails->tokenDetails = $tokenDetails;
-        $flow->update($integrationID, ['flow_details' => json_encode($newDetails)]);
+        $flow->update($integrationID, ['flow_details' => wp_json_encode($newDetails)]);
     }
 }

@@ -986,6 +986,6 @@ class ZohoProjectsController
             $newDetails->default->portals = $others['portals'];
         }
 
-        $integrationHandler->updateIntegration($integrationID, $zprojectsDetails[0]->integration_name, 'Zoho Projects', json_encode($newDetails), 'form');
+        $integrationHandler->updateIntegration($integrationID, $zprojectsDetails[0]->integration_name, 'Zoho Projects', wp_json_encode($newDetails), 'form');
     }
 }

@@ -25,7 +25,7 @@ class RecordApiHelper
 
     public function insertRecord($data)
     {
-        $data = \is_string($data) ? $data : json_encode((object) $data);
+        $data = \is_string($data) ? $data : wp_json_encode((object) $data);
         $insertRecordEndpoint = "{$this->_baseUrl}/api/contacts/new";
 
         return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
@@ -60,9 +60,9 @@ class RecordApiHelper
         $apiResponse = $this->insertRecord($finalData);
 
         if (isset($apiResponse->errors)) {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', wp_json_encode($apiResponse));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'success', json_encode('Contact Added Successfully'));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'success', wp_json_encode('Contact Added Successfully'));
         }
 
         return $apiResponse;

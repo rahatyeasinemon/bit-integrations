@@ -48,7 +48,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . '/contacts';
 
-        $response = HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
 
         if (isset($this->integrationDetails->selectedTag) || !empty($this->integrationDetails->selectedTag)) {
             $this->addTag($response->id, $this->integrationDetails->selectedTag);
@@ -70,7 +70,7 @@ class RecordApiHelper
 
         $data['tagId'] = (int) $tag;
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode($data), $this->defaultHeader);
+        return $response = HttpHelper::post($apiEndpoint, wp_json_encode($data), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -92,9 +92,9 @@ class RecordApiHelper
 
         if (!isset($apiResponse->errors)) {
             $res = [$this->typeName . '  successfully'];
-            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

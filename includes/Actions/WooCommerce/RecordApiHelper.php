@@ -498,7 +498,7 @@ class RecordApiHelper
 
                 return $response;
             }
-            LogHandler::save($this->_integrationID, ['type' => 'order-create', 'type_name' => 'order'], 'success', json_encode("Your order id is: {$order->get_id()}"));
+            LogHandler::save($this->_integrationID, ['type' => 'order-create', 'type_name' => 'order'], 'success', wp_json_encode("Your order id is: {$order->get_id()}"));
         }
 
         if ($module === 'changestatus') {
@@ -529,9 +529,9 @@ class RecordApiHelper
             $productId = $integrationDetails->productId;
             $response = $this->cancelSubscription($productId);
             if ($response) {
-                LogHandler::save($this->_integrationID, ['type' => 'cancelSubscription', 'type_name' => 'cancelSubscription'], 'success', json_encode('Subscription cancelled successfully'));
+                LogHandler::save($this->_integrationID, ['type' => 'cancelSubscription', 'type_name' => 'cancelSubscription'], 'success', wp_json_encode('Subscription cancelled successfully'));
             } else {
-                LogHandler::save($this->_integrationID, ['type' => 'cancelSubscription', 'type_name' => 'cancelSubscription'], 'error', json_encode('Subscription not cancelled'));
+                LogHandler::save($this->_integrationID, ['type' => 'cancelSubscription', 'type_name' => 'cancelSubscription'], 'error', wp_json_encode('Subscription not cancelled'));
             }
         }
 

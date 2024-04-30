@@ -73,9 +73,9 @@ class RecordApiHelper
         if ($mainAction == '1') {
             $apiResponse = $this->createCustomer($finalData, $api_key);
             if ($apiResponse[1] === 200) {
-                LogHandler::save($this->_integrationID, json_encode(['type' => 'create', 'type_name' => 'create-customer']), 'success', $apiResponse[0]);
+                LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'create', 'type_name' => 'create-customer']), 'success', $apiResponse[0]);
             } else {
-                LogHandler::save($this->_integrationID, json_encode(['type' => 'create', 'type_name' => 'create-customer']), 'error', $apiResponse[0]);
+                LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'create', 'type_name' => 'create-customer']), 'error', $apiResponse[0]);
             }
         }
 

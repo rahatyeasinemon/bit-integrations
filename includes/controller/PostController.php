@@ -157,7 +157,7 @@ final class PostController
                 }
             }
         }
-        // echo json_encode(array_values($pods->fields) );
+        // echo wp_json_encode(array_values($pods->fields) );
         wp_send_json_success(['podFields' => $podField, 'podFiles' => $podFile], 200);
     }
 }

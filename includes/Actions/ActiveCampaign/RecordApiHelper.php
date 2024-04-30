@@ -47,7 +47,7 @@ class RecordApiHelper
 
         $updateRecordEndpoint = "{$this->_apiEndpoint}/contacts/{$id}";
 
-        return HttpHelper::request($updateRecordEndpoint, 'PUT', json_encode($data), $this->_defaultHeader);
+        return HttpHelper::request($updateRecordEndpoint, 'PUT', wp_json_encode($data), $this->_defaultHeader);
     }
 
     public function execute($integrationDetails, $fieldValues, $fieldMap, $actions, $listId, $tags)

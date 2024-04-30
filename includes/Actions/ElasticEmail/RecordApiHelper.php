@@ -21,7 +21,7 @@ class RecordApiHelper
 
     public function createContact($data, $listName, $apiKey)
     {
-        $tmpData = \is_string($data) ? $data : json_encode([(object) $data]);
+        $tmpData = \is_string($data) ? $data : wp_json_encode([(object) $data]);
         $header = [
             'X-ElasticEmail-ApiKey' => $apiKey,
             'Content-Type'          => 'application/json'

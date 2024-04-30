@@ -40,7 +40,7 @@ class RecordApiHelper
         $current_level = pmpro_getMembershipLevelForUser($user_id);
 
         if (!empty($current_level) && absint($current_level->ID) == absint($membership_level)) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership level']), 'error', json_encode('User is already a member of the specified level.'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership level']), 'error', wp_json_encode('User is already a member of the specified level.'));
 
             return;
         }
@@ -48,7 +48,7 @@ class RecordApiHelper
         $pmpro_membership_level = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->pmpro_membership_levels} WHERE id = %d", $membership_level));
 
         if (null === $pmpro_membership_level) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership level']), 'error', json_encode('There is no membership level with the specified ID.'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership level']), 'error', wp_json_encode('There is no membership level with the specified ID.'));
 
             return;
         }
@@ -74,11 +74,11 @@ class RecordApiHelper
         }
 
         if ($isAssigned === true) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership level']), 'success', json_encode('User membership level added successfully.'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership level']), 'success', wp_json_encode('User membership level added successfully.'));
 
             return;
         }
-        LogHandler::save(self::$integrationID, json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership level']), 'error', json_encode('Failed to add membership level.'));
+        LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership level']), 'error', wp_json_encode('Failed to add membership level.'));
 
     }
 
@@ -89,25 +89,25 @@ class RecordApiHelper
 
         if ('any' === $membership_level) {
             if (empty($user_membership_levels)) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'remove user', 'type_name' => 'Remove the user to all membership level']), 'error', json_encode('User does not belong to any membership levels.'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'remove user', 'type_name' => 'Remove the user to all membership level']), 'error', wp_json_encode('User does not belong to any membership levels.'));
 
                 return;
             }
 
             foreach ($user_membership_levels as $membership_level) {
                 $cancel_level = pmpro_cancelMembershipLevel(absint($membership_level), absint($user_id));
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'remove user', 'type_name' => 'Remove the user to a membership level']), 'success', json_encode('User removed from all membership level successfully.'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'remove user', 'type_name' => 'Remove the user to a membership level']), 'success', wp_json_encode('User removed from all membership level successfully.'));
             }
         }
 
         if (!\in_array($membership_level, $user_membership_levels, true)) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'remove user', 'type_name' => 'Remove the user to all membership level']), 'error', json_encode('User was not a member of the specified level.'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'remove user', 'type_name' => 'Remove the user to all membership level']), 'error', wp_json_encode('User was not a member of the specified level.'));
 
             return;
         }
 
         if (pmpro_cancelMembershipLevel(absint($membership_level), absint($user_id))) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'remove user', 'type_name' => 'Remove the user to a membership level']), 'success', json_encode('User removed from membership level successfully.'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'remove user', 'type_name' => 'Remove the user to a membership level']), 'success', wp_json_encode('User removed from membership level successfully.'));
 
             return;
         }

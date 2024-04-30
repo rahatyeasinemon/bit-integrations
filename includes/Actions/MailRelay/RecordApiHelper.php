@@ -71,7 +71,7 @@ class RecordApiHelper
             $requestParams['group_ids'] = $groups;
         }
 
-        $apiRequestBody = json_encode($requestParams);
+        $apiRequestBody = wp_json_encode($requestParams);
 
         if ($isSubscriberExist && !empty($this->_integrationDetails->actions->update)) {
             $apiEndpoints = $baseUrl . 'subscribers/' . $isSubscriberExist;
@@ -108,9 +108,9 @@ class RecordApiHelper
 
         if ($apiResponse->id) {
             $res = ['message' => 'Subscriber ' . $this->_requestStoringTypes . ' successfully'];
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber ' . $this->_requestStoringTypes]), 'success', json_encode($res));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber ' . $this->_requestStoringTypes]), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'subscriber', 'type_name' => 'Adding Subscriber']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Adding Subscriber']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

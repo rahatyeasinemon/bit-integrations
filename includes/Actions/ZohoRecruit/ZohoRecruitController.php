@@ -573,6 +573,6 @@ class ZohoRecruitController
             $newDetails->default->relatedlist['modules'] = $others['related_modules'];
         }
 
-        $flow->update($integrationID, ['flow_details' => json_encode($newDetails)]);
+        $flow->update($integrationID, ['flow_details' => wp_json_encode($newDetails)]);
     }
 }

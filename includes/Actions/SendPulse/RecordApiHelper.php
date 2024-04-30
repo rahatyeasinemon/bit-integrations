@@ -65,9 +65,9 @@ class RecordApiHelper
 
         if ($apiResponse->result == true) {
             $res = ['message' => 'Contact added successfully'];
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'Contact added']), 'success', json_encode($res));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'Contact added']), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'Adding Contact']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'Adding Contact']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

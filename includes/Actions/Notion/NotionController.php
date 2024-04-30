@@ -28,7 +28,7 @@ class NotionController
         $header['Content-Type'] = 'application/json';
         $header['Authorization'] = 'Basic ' . base64_encode("{$clientId}:{$clientSecret}");
 
-        $apiResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
+        $apiResponse = HttpHelper::post($apiEndpoint, wp_json_encode($body), $header);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(empty($apiResponse->error_description) ? 'Unknown' : $apiResponse->error_description, 400);
         }

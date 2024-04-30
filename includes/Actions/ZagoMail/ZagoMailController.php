@@ -53,7 +53,7 @@ class ZagoMailController
 
         $apiEndpoint = self::_apiEndpoint('lists/all-lists');
 
-        $apiResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
+        $apiResponse = HttpHelper::post($apiEndpoint, wp_json_encode($body), $header);
 
         if ($apiResponse->status == 'error' || $apiResponse->status !== 'success') {
             wp_send_json_error(
@@ -92,7 +92,7 @@ class ZagoMailController
 
         $apiEndpoint = self::_apiEndpoint('lists/all-lists');
 
-        $zagoMailResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
+        $zagoMailResponse = HttpHelper::post($apiEndpoint, wp_json_encode($body), $header);
 
         $lists = [];
         if ($zagoMailResponse->status == 'success') {
@@ -135,7 +135,7 @@ class ZagoMailController
 
         $apiEndpoint = self::_apiEndpoint('tags/get-tags');
 
-        $zagoMailResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
+        $zagoMailResponse = HttpHelper::post($apiEndpoint, wp_json_encode($body), $header);
 
         $tags = [];
         if ($zagoMailResponse->status == 'success') {
@@ -179,7 +179,7 @@ class ZagoMailController
 
         $apiEndpoint = self::_apiEndpoint('lists/get-fields?list_uid=' . $queryParams->listId);
 
-        $zagoMailResponse = HttpHelper::post($apiEndpoint, json_encode($body), $header);
+        $zagoMailResponse = HttpHelper::post($apiEndpoint, wp_json_encode($body), $header);
 
         $fields = [];
         if ($zagoMailResponse->status == 'success') {

@@ -111,7 +111,13 @@ final class FilesApiHelper
             $nameK = "{$key}.path";
             $postFields[$nameK] = new CURLFile(empty(realpath($value)) ? "{$value}" : realpath($value));
         }
-        $postFields['media'] = json_encode($media);
+        $postFields['media'] = wp_json_encode($media);
+
+        $t1 = wp_json_encode($media);
+        $t2 = wp_json_encode($media);
+
+        error_log(print_r(['wp_json_encode', $t1], true));
+        error_log(print_r(['wp_json_encode', $t2], true));
 
         if ($param != 'media') {
             unset($data['media']);
