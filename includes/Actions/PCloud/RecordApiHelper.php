@@ -73,7 +73,7 @@ class RecordApiHelper
     {
         if (isset($actions->delete_from_wp) && $actions->delete_from_wp) {
             if (file_exists($filePath)) {
-                unlink($filePath);
+                wp_delete_file($filePath);
             }
         }
     }
