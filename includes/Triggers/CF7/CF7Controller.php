@@ -2,11 +2,12 @@
 
 namespace BitCode\FI\Triggers\CF7;
 
-use BitCode\FI\Flow\Flow;
+use WPCF7_Submission;
 use WPCF7_ContactForm;
+use BitCode\FI\Flow\Flow;
 use WPCF7_FormTagsManager;
 use WPCF7_ShortcodeManager;
-use WPCF7_Submission;
+use BitCode\FI\Core\Util\Common;
 
 final class CF7Controller
 {
@@ -117,7 +118,8 @@ final class CF7Controller
             $current_form = WPCF7_ContactForm::get_current();
             $form_id = $current_form->id();
         }
-        $files = $submission->uploaded_files();
+
+        $files = static::setFileRoot($submission->uploaded_files());
         $posted_data = array_merge($posted_data, $files);
 
         if ($postID) {
@@ -137,5 +139,20 @@ final class CF7Controller
         if (!empty($form_id) && $flows = Flow::exists('CF7', $form_id)) {
             Flow::execute('CF7', $form_id, $data, $flows);
         }
+    }
+
+    private static function setFileRoot($files)
+    {
+        $allFiles = [];
+
+        foreach ($files as $key => $file) {
+            if (\is_array($file)) {
+                $allFiles[$key] = static::setFileRoot($file);
+            } else {
+                $allFiles[$key] = Common::fileUrl($file);
+            }
+        }
+
+        return $allFiles;
     }
 }
