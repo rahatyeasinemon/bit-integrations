@@ -35,7 +35,7 @@ class GravitecController
         ];
 
         $apiEndpoint = 'https://uapi.gravitec.net/api/v3/push';
-        $response = HttpHelper::post($apiEndpoint, json_encode($data), $headers);
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($data), $headers);
 
         if (isset($response->id)) {
             wp_send_json_success('Authentication successful', 200);

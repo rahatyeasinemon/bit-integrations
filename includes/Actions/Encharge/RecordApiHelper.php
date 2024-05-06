@@ -56,7 +56,7 @@ class RecordApiHelper
         if ($tags !== null) {
             $fieldData['tags'] = $tags;
         }
-        $recordApiResponse = $this->insertRecord(json_encode($fieldData));
+        $recordApiResponse = $this->insertRecord(wp_json_encode($fieldData));
         $type = 'insert';
 
         if ($recordApiResponse && isset($recordApiResponse->user)) {

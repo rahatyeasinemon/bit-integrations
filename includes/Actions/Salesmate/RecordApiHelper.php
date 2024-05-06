@@ -61,7 +61,7 @@ class RecordApiHelper
         $this->typeName = 'Product created';
         $apiEndpoint = $this->apiUrl . 'v1/products';
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -84,7 +84,7 @@ class RecordApiHelper
         $this->typeName = 'Contact created';
         $apiEndpoint = $this->apiUrl . 'contact/v4';
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
     }
 
     public function addCompany($finalData)
@@ -109,7 +109,7 @@ class RecordApiHelper
         $this->typeName = 'Company created';
         $apiEndpoint = $this->apiUrl . 'company/v4';
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
     }
 
     public function addDeal($finalData)
@@ -146,7 +146,7 @@ class RecordApiHelper
         $this->typeName = 'Deal created';
         $apiEndpoint = $this->apiUrl . 'deal/v4';
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -176,9 +176,9 @@ class RecordApiHelper
 
         if ($apiResponse->Status === 'success') {
             $res = [$this->typeName . '  successfully'];
-            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

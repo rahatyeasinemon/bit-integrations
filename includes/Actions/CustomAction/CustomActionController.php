@@ -55,7 +55,7 @@ class CustomActionController
             return;
         }
         if ($isSuccessfullyRun) {
-            LogHandler::save($integId, wp_json_encode(['type' => 'custom_action', 'type_name' => 'custom action']), 'success', wp_json_encode('Custom action successfully run' . !empty($additionalData) ? json_encode($additionalData) : ''));
+            LogHandler::save($integId, wp_json_encode(['type' => 'custom_action', 'type_name' => 'custom action']), 'success', wp_json_encode('Custom action successfully run' . !empty($additionalData) ? wp_json_encode($additionalData) : ''));
         }
 
         return true;

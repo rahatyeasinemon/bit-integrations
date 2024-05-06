@@ -30,7 +30,7 @@ class NutshellCRMController
             'id'     => 'randomstring',
         ];
 
-        $response = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($body), $headers);
 
         if (isset($response->result)) {
             wp_send_json_success('Authentication successful', 200);
@@ -54,7 +54,7 @@ class NutshellCRMController
             'id'     => 'randomstring',
         ];
 
-        $response = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $company) {
@@ -84,7 +84,7 @@ class NutshellCRMController
             'id'     => 'randomstring',
         ];
 
-        $response = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $contact) {
@@ -114,7 +114,7 @@ class NutshellCRMController
             'id'     => 'randomstring',
         ];
 
-        $response = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $product) {
@@ -144,7 +144,7 @@ class NutshellCRMController
             'id'     => 'randomstring',
         ];
 
-        $response = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $source) {
@@ -174,7 +174,7 @@ class NutshellCRMController
             'id'     => 'randomstring',
         ];
 
-        $response = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result->Leads as $tag) {
@@ -204,7 +204,7 @@ class NutshellCRMController
             'id'     => 'randomstring',
         ];
 
-        $response = HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($body), $headers);
 
         if (isset($response->result)) {
             foreach ($response->result as $companyType) {

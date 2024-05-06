@@ -141,9 +141,9 @@ class RecordApiHelper
             );
         }
         if (property_exists($apiResponse, 'error')) {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'send-message']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'send-message']), 'error', wp_json_encode($apiResponse));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'record', 'type_name' => 'send-message']), 'success', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'send-message']), 'success', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

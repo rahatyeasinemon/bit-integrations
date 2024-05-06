@@ -708,6 +708,6 @@ final class ZohoCRMController
             $newDetails->default->layouts->{$others['queryModule']} = $others['layouts'];
         }
 
-        $flow->update($integrationID, ['flow_details' => json_encode($newDetails)]);
+        $flow->update($integrationID, ['flow_details' => wp_json_encode($newDetails)]);
     }
 }

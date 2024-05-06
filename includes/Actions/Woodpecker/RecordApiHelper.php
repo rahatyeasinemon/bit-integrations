@@ -63,7 +63,7 @@ class RecordApiHelper
         $requestData['prospects'] = [(object) $finalData];
         $this->type = 'Prospects';
 
-        return HttpHelper::post($apiEndpoint, json_encode($requestData), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($requestData), $this->defaultHeader);
     }
 
     public function addCompany($finalData)
@@ -76,7 +76,7 @@ class RecordApiHelper
         $this->typeName = 'Company created';
         $apiEndpoint = $this->apiUrl . '/agency/companies/add';
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -101,10 +101,10 @@ class RecordApiHelper
         }
 
         if (isset($apiResponse->status) && $apiResponse->status->status === 'ERROR') {
-            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', wp_json_encode($apiResponse));
         } else {
             $res = [$this->typeName . '  successfully'];
-            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', wp_json_encode($res));
         }
 
         return $apiResponse;

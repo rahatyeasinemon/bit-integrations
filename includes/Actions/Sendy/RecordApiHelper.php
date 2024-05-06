@@ -63,9 +63,9 @@ class RecordApiHelper
         $apiResponse = $this->insertRecord($finalData, $sendyUrl);
 
         if ($apiResponse) {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'add-subscriber'], 'success', json_encode('Subscriber added successfully'));
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'add-subscriber'], 'success', wp_json_encode('Subscriber added successfully'));
         } else {
-            LogHandler::save($this->_integrationID, ['type' => 'subscriber', 'type_name' => 'add-subscriber'], 'error', json_encode('Failed to add subscriber'));
+            LogHandler::save($this->_integrationID, ['type' => 'subscriber', 'type_name' => 'add-subscriber'], 'error', wp_json_encode('Failed to add subscriber'));
         }
 
         return $apiResponse;

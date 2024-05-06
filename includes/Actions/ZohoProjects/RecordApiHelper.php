@@ -76,7 +76,7 @@ class RecordApiHelper
             }
 
             if (isset($fieldData[$sEvent]['custom_fields'])) {
-                $fieldData[$sEvent]['custom_fields'] = json_encode($fieldData[$sEvent]['custom_fields']);
+                $fieldData[$sEvent]['custom_fields'] = wp_json_encode($fieldData[$sEvent]['custom_fields']);
             }
 
             // Actions Mapping

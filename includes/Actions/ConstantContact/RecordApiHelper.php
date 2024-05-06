@@ -75,7 +75,7 @@ class RecordApiHelper
         }
         $requestParams['custom_fields'] = $customFields;
 
-        $apiResponse = HttpHelper::post($apiEndpoints, json_encode((object) $requestParams), $this->_defaultHeader);
+        $apiResponse = HttpHelper::post($apiEndpoints, wp_json_encode((object) $requestParams), $this->_defaultHeader);
 
         if (\gettype($apiResponse) === 'array' && isset($apiResponse[0]->error_key) && $apiResponse[0]->error_key === 'contacts.api.conflict') {
             $startIndx = strpos($apiResponse[0]->error_message, 'contact');
@@ -84,7 +84,7 @@ class RecordApiHelper
             $apiEndpoints = $this->baseUrl . 'contacts/' . $contactId;
             unset($requestParams['create_source']);
             $requestParams['update_source'] = $source_type;
-            $apiResponse = Requests::PUT($apiEndpoints, $this->_defaultHeader, json_encode((object) $requestParams));
+            $apiResponse = Requests::PUT($apiEndpoints, $this->_defaultHeader, wp_json_encode((object) $requestParams));
         }
 
         return $apiResponse;
@@ -157,12 +157,12 @@ class RecordApiHelper
         );
 
         if (isset($apiResponse->error_key) || (\gettype($apiResponse) === 'array' && $apiResponse[0]->error_key)) {
-            LogHandler::save($this->_integrationID, json_encode(['source_type' => 'contact', 'type_name' => 'add-contact']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['source_type' => 'contact', 'type_name' => 'add-contact']), 'error', wp_json_encode($apiResponse));
         } else {
             if (isset($apiResponse->contact_id)) {
-                LogHandler::save($this->_integrationID, json_encode(['source_type' => 'contact', 'type_name' => 'add-contact']), 'success', json_encode($apiResponse));
+                LogHandler::save($this->_integrationID, wp_json_encode(['source_type' => 'contact', 'type_name' => 'add-contact']), 'success', wp_json_encode($apiResponse));
             } else {
-                LogHandler::save($this->_integrationID, json_encode(['source_type' => 'contact', 'type_name' => 'update-contact']), 'success', json_encode($apiResponse));
+                LogHandler::save($this->_integrationID, wp_json_encode(['source_type' => 'contact', 'type_name' => 'update-contact']), 'success', wp_json_encode($apiResponse));
             }
         }
 

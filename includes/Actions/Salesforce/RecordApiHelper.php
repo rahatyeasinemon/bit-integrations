@@ -45,28 +45,28 @@ class RecordApiHelper
     {
         $apiEndpoint = $this->_apiDomain . '/services/data/v37.0/sobjects/Contact';
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->_defaultHeader);
     }
 
     public function insertLead($finalData)
     {
         $apiEndpoint = $this->_apiDomain . '/services/data/v37.0/sobjects/Lead';
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->_defaultHeader);
     }
 
     public function createAccount($finalData)
     {
         $apiEndpoint = $this->_apiDomain . '/services/data/v37.0/sobjects/Account';
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->_defaultHeader);
     }
 
     public function createCampaign($finalData)
     {
         $apiEndpoint = $this->_apiDomain . '/services/data/v37.0/sobjects/Campaign';
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->_defaultHeader);
     }
 
     public function insertCampaignMember($campaignId, $leadId, $contactId, $statusId)
@@ -79,7 +79,7 @@ class RecordApiHelper
             'Status'     => $statusId
         ];
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->_defaultHeader);
     }
 
     public function createTask($contactId, $accountId, $subjectId, $priorityId, $statusId)
@@ -93,7 +93,7 @@ class RecordApiHelper
             'Status'   => $statusId
         ];
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->_defaultHeader);
     }
 
     public function createOpportunity($finalData, $opportunityTypeId, $opportunityStageId, $opportunityLeadSourceId, $accountId, $campaignId)
@@ -105,7 +105,7 @@ class RecordApiHelper
         $finalData['StageName'] = $opportunityStageId;
         $finalData['LeadSource'] = $opportunityLeadSourceId;
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->_defaultHeader);
     }
 
     public function createEvent($finalData, $contactId, $accountId, $eventSubjectId)
@@ -115,7 +115,7 @@ class RecordApiHelper
         $finalData['WhatId'] = $accountId;
         $finalData['Subject'] = $eventSubjectId;
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->_defaultHeader);
     }
 
     public function createCase($finalData, $contactId, $accountId, $caseStatusId, $caseOriginId, $casePriorityId, $potentialLiabilityId, $slaViolationId)
@@ -129,7 +129,7 @@ class RecordApiHelper
         $finalData['PotentialLiability__c'] = $potentialLiabilityId;
         $finalData['SLAViolation__c'] = $slaViolationId;
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->_defaultHeader);
     }
 
     public function execute(

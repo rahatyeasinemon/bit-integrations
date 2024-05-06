@@ -102,12 +102,12 @@ class RecordApiHelper
         $apiResponse = $this->addContact($auth_token, $listId, $contactStatus, $finalData, $emailId);
         if ($apiResponse->response->data->id) {
             $res = ['success' => true, 'message' => $apiResponse->update ? 'Your contact has been updated successfully.' : 'Your contact has been created successfully.', 'code' => 200];
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'success', json_encode($res));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'success', wp_json_encode($res));
         } elseif ($apiResponse->update) {
             $res = ['success' => true, 'message' => 'Your contact has been updated successfully.', 'code' => 200];
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'success', json_encode($res));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

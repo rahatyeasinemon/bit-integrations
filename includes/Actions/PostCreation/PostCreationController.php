@@ -50,7 +50,7 @@ final class PostCreationController
                         $attachMentId = Helper::singleFileMoveWpMedia($filePath, $postId);
                         if (!empty($attachMentId)) {
                             update_post_meta($postId, '_' . $actionValue, $fieldObject['key']);
-                            update_post_meta($postId, $fieldObject['name'], json_encode($attachMentId));
+                            update_post_meta($postId, $fieldObject['name'], wp_json_encode($attachMentId));
                         }
                     } else {
                         $attachMentId = Helper::multiFileMoveWpMedia($fieldValues[$triggerValue], $postId);

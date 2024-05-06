@@ -52,7 +52,7 @@ class RecordApiHelper
             }
         }
         if ($isMatched) {
-            return json_encode($values);
+            return wp_json_encode($values);
         }
 
         return implode(',', $values);

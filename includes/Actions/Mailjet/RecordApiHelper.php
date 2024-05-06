@@ -66,7 +66,7 @@ class RecordApiHelper
         $requestParams['Contacts'][] = (object) $contacts;
         $requestParams['ContactsLists'] = $contactsLists;
 
-        $response = HttpHelper::post($apiEndpoints, json_encode($requestParams), $this->_defaultHeader);
+        $response = HttpHelper::post($apiEndpoints, wp_json_encode($requestParams), $this->_defaultHeader);
 
         return $this->jobMonitoring($response);
     }
@@ -94,9 +94,9 @@ class RecordApiHelper
 
         if (empty($apiResponse)) {
             $res = ['message' => 'Contact ' . $this->_responseType . ' successfully'];
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'Contact ' . $this->_responseType]), 'success', json_encode($res));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'Contact ' . $this->_responseType]), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => '', 'type_name' => 'Adding contact']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => '', 'type_name' => 'Adding contact']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

@@ -46,7 +46,7 @@ class RecordApiHelper
         $requestParams['is_unsubscribed'] = $this->_integrationDetails->actions->unsubscribe ? 1 : 0;
         $this->_requestStoringTypes = $this->isExist($apiEndpoint, $finalData['email']) ? 'updated' : 'created';
 
-        return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($requestParams), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -80,9 +80,9 @@ class RecordApiHelper
 
         if ($apiResponse->code === 101) {
             $res = ['message' => 'Subscriber ' . $this->_requestStoringTypes . ' successfully'];
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber ' . $this->_requestStoringTypes]), 'success', json_encode($res));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber ' . $this->_requestStoringTypes]), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'subscriber', 'type_name' => 'Adding Subscriber']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Adding Subscriber']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

@@ -45,9 +45,9 @@ class RecordApiHelper
         if ($mainAction === '1') {
             $response = $this->createGiveWpDonar($finalData);
             if (!empty($response)) {
-                LogHandler::save($integId, json_encode(['type' => 'create-donar', 'type_name' => 'create-donar-giveWp']), 'success', json_encode('Donar crated successfully and id is' . $response));
+                LogHandler::save($integId, wp_json_encode(['type' => 'create-donar', 'type_name' => 'create-donar-giveWp']), 'success', wp_json_encode('Donar crated successfully and id is' . $response));
             } else {
-                LogHandler::save($integId, json_encode(['type' => 'create-donar', 'type_name' => 'create-donar-giveWp']), 'error', json_encode('Failed to create donar'));
+                LogHandler::save($integId, wp_json_encode(['type' => 'create-donar', 'type_name' => 'create-donar-giveWp']), 'error', wp_json_encode('Failed to create donar'));
             }
         }
 

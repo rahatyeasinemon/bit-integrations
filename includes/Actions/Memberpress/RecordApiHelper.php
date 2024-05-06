@@ -158,17 +158,17 @@ class RecordApiHelper
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = $this->crateMember($integrationDetails, $finalData);
             if (!empty($apiResponse) && \gettype($apiResponse) !== 'integer') {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership']), 'error', json_encode('Failed to add user to membership'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership']), 'error', wp_json_encode('Failed to add user to membership'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership']), 'success', json_encode("Successfully user added to the membership and id is: {$apiResponse}"));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership']), 'success', wp_json_encode("Successfully user added to the membership and id is: {$apiResponse}"));
             }
         } elseif ($mainAction === '2') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = $this->removeUserFormMembership($integrationDetails, $finalData);
             if ($apiResponse) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership']), 'success', json_encode('Successfully user removed form membership'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership']), 'success', wp_json_encode('Successfully user removed form membership'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'remove user', 'type_name' => 'Remove user to a membership']), 'error', json_encode('Failed to remove user form membership'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'remove user', 'type_name' => 'Remove user to a membership']), 'error', wp_json_encode('Failed to remove user form membership'));
             }
         }
 

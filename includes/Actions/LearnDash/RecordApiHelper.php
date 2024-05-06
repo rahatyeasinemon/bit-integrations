@@ -330,7 +330,7 @@ class RecordApiHelper
         $user_id = get_current_user_id();
         $check_group = learndash_validate_groups([$group_id]);
         if (empty($check_group)) {
-            LogHandler::save(self::getIntegrationId(), json_encode(['type' => 'group', 'type_name' => 'Add-the-user-to-a-group']), 'error', json_encode('Group not found'));
+            LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'group', 'type_name' => 'Add-the-user-to-a-group']), 'error', wp_json_encode('Group not found'));
         }
 
         return ld_update_group_access($user_id, $group_id);
@@ -505,7 +505,7 @@ class RecordApiHelper
         $user_id = get_current_user_id();
         if (!self::is_group_hierarchy_enabled()) {
             $error_message = 'The LearnDash Group hierarchy setting is not enabled.';
-            LogHandler::save(self::getIntegrationId(), json_encode(['type' => 'group', 'type_name' => 'remove-leader-from-group']), 'error', json_encode($error_message));
+            LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'group', 'type_name' => 'remove-leader-from-group']), 'error', wp_json_encode($error_message));
 
             return;
         }
@@ -517,7 +517,7 @@ class RecordApiHelper
 
         if (!$common) {
             $error_message = 'The Group Leader is not an admin of any of the groups in hierarchy.';
-            LogHandler::save(self::getIntegrationId(), json_encode(['type' => 'group', 'type_name' => 'remove-leader-from-group']), 'error', json_encode($error_message));
+            LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'group', 'type_name' => 'remove-leader-from-group']), 'error', wp_json_encode($error_message));
 
             return;
         }
@@ -580,7 +580,7 @@ class RecordApiHelper
 
         if (!self::is_group_hierarchy_enabled()) {
             $error_message = 'The LearnDash Group hierarchy setting is not enabled.';
-            LogHandler::save(self::getIntegrationId(), json_encode(['type' => 'group', 'type_name' => 'remove-user-from-group']), 'error', json_encode($error_message));
+            LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'group', 'type_name' => 'remove-user-from-group']), 'error', wp_json_encode($error_message));
 
             return;
         }
@@ -590,7 +590,7 @@ class RecordApiHelper
         $common = array_intersect($all_hierarchy_groups, $all_current_user_groups);
         if (!$common) {
             $error_message = 'The user does not belong to any of the groups in the hierarchy.';
-            LogHandler::save(self::getIntegrationId(), json_encode(['type' => 'group', 'type_name' => 'remove-user-from-group']), 'error', json_encode($error_message));
+            LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'group', 'type_name' => 'remove-user-from-group']), 'error', wp_json_encode($error_message));
 
             return;
         }
@@ -787,9 +787,9 @@ class RecordApiHelper
             );
             if (is_wp_error($apiResponse)) {
                 $error_message = $apiResponse->get_error_message();
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'create-group']), 'error', json_encode($error_message));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'create-group']), 'error', wp_json_encode($error_message));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'create-group']), 'success', json_encode($apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'create-group']), 'success', wp_json_encode($apiResponse));
             }
         }
 
@@ -798,9 +798,9 @@ class RecordApiHelper
             $apiResponse = self::addUserToGroup($groupId);
             if (is_wp_error($apiResponse)) {
                 $error_message = $apiResponse->get_error_message();
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Add-the-user-to-a-group']), 'error', json_encode($error_message));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Add-the-user-to-a-group']), 'error', wp_json_encode($error_message));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Add-the-user-to-a-group']), 'success', json_encode($apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Add-the-user-to-a-group']), 'success', wp_json_encode($apiResponse));
             }
         }
 
@@ -810,9 +810,9 @@ class RecordApiHelper
             $apiResponse = self::enrollTheUserInACourse($courseIds);
             if (is_wp_error($apiResponse)) {
                 $error_message = $apiResponse->get_error_message();
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'enroll-user-in-course']), 'error', json_encode($error_message));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'enroll-user-in-course']), 'error', wp_json_encode($error_message));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'enroll-user-in-course']), 'success', json_encode($apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'enroll-user-in-course']), 'success', wp_json_encode($apiResponse));
             }
         }
 
@@ -823,9 +823,9 @@ class RecordApiHelper
             $apiResponse = self::makeThUserTheLeaderOfGroup($leaderRole, $leaderOfGroup);
             if (is_wp_error($apiResponse)) {
                 $error_message = $apiResponse->get_error_message();
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Make-the-user-the-leader-of-group']), 'error', json_encode($error_message));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Make-the-user-the-leader-of-group']), 'error', wp_json_encode($error_message));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Make-the-user-the-leader-of-group']), 'success', json_encode($apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Make-the-user-the-leader-of-group']), 'success', wp_json_encode($apiResponse));
             }
         }
         if ($mainAction === '5') {
@@ -833,9 +833,9 @@ class RecordApiHelper
             $apiResponse = self::markACourseCompleteForTheUser($courseIds);
             if (is_wp_error($apiResponse)) {
                 $error_message = $apiResponse->get_error_message();
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Mark-a-course-complete-for-the-user']), 'error', json_encode($error_message));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Mark-a-course-complete-for-the-user']), 'error', wp_json_encode($error_message));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Mark-a-course-complete-for-the-user']), 'success', json_encode($apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Mark-a-course-complete-for-the-user']), 'success', wp_json_encode($apiResponse));
             }
         }
 
@@ -849,9 +849,9 @@ class RecordApiHelper
 
             if (is_wp_error($apiResponse)) {
                 $error_message = $apiResponse->get_error_message();
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Mark-a-lesson-complete-for-the-user']), 'error', json_encode($error_message));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Mark-a-lesson-complete-for-the-user']), 'error', wp_json_encode($error_message));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Mark-a-lesson-complete-for-the-user']), 'success', json_encode($apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Mark-a-lesson-complete-for-the-user']), 'success', wp_json_encode($apiResponse));
             }
         }
         if ($mainAction === '7') {
@@ -864,9 +864,9 @@ class RecordApiHelper
 
             if (is_wp_error($apiResponse)) {
                 $error_message = 'failed lesson not complete';
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Mark-a-lesson-complete-for-the-user']), 'error', json_encode($error_message));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Mark-a-lesson-complete-for-the-user']), 'error', wp_json_encode($error_message));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Mark-a-lesson-complete-for-the-user']), 'success', json_encode($apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Mark-a-lesson-complete-for-the-user']), 'success', wp_json_encode($apiResponse));
             }
         }
 
@@ -881,9 +881,9 @@ class RecordApiHelper
             );
             if (is_wp_error($apiResponse)) {
                 $error_message = $apiResponse->get_error_message();
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'topic-complete-for-the-user']), 'error', json_encode($error_message));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'topic-complete-for-the-user']), 'error', wp_json_encode($error_message));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'topic-complete-for-the-user']), 'success', json_encode($apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'topic-complete-for-the-user']), 'success', wp_json_encode($apiResponse));
             }
         }
         if ($mainAction === '9') {
@@ -897,9 +897,9 @@ class RecordApiHelper
             );
             if (is_wp_error($apiResponse)) {
                 $error_message = $apiResponse->get_error_message();
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'topic-not-complete-for-the-user']), 'error', json_encode($error_message));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'topic-not-complete-for-the-user']), 'error', wp_json_encode($error_message));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'topic-not-complete-for-the-user']), 'success', json_encode($apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'topic-not-complete-for-the-user']), 'success', wp_json_encode($apiResponse));
             }
         }
 
@@ -907,9 +907,9 @@ class RecordApiHelper
             $group_id = $integrationDetails->groupId10;
             $apiResponse = self::removeGroupLeaderAndChildren($group_id);
             if ($apiResponse) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Remove-Leader-from-group-and-its-children']), 'success', json_encode('Remove Leader from group and its children successfully'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Remove-Leader-from-group-and-its-children']), 'success', wp_json_encode('Remove Leader from group and its children successfully'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Remove-Leader-from-group-and-its-children']), 'error', json_encode('Failed to remove leader from group and its children'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Remove-Leader-from-group-and-its-children']), 'error', wp_json_encode('Failed to remove leader from group and its children'));
             }
         }
 
@@ -917,9 +917,9 @@ class RecordApiHelper
             $groupId = $integrationDetails->groupId11;
             $apiResponse = self::removeUserToGroup($groupId);
             if (is_wp_error($apiResponse)) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Remove-the-user-from-a-group']), 'error', json_encode('Fail to remove user from group'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Remove-the-user-from-a-group']), 'error', wp_json_encode('Fail to remove user from group'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Remove-the-user-from-a-group']), 'success', json_encode('User removed from group successfully'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Remove-the-user-from-a-group']), 'success', wp_json_encode('User removed from group successfully'));
             }
         }
 
@@ -927,9 +927,9 @@ class RecordApiHelper
             $group_id = $integrationDetails->groupId12;
             $apiResponse = self::removeUserAndChildrenFromGroup($group_id);
             if ($apiResponse) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Remove-user-from-group-and-its-children']), 'error', json_encode('Remove user from group and its children successfully'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Remove-user-from-group-and-its-children']), 'error', wp_json_encode('Remove user from group and its children successfully'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'Remove-user-from-group-and-its-children']), 'success', json_encode('Failed to remove user from group and its children'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'Remove-user-from-group-and-its-children']), 'success', wp_json_encode('Failed to remove user from group and its children'));
             }
         }
 
@@ -937,9 +937,9 @@ class RecordApiHelper
             $quiz_id = $integrationDetails->quizId;
             $apiResponse = self::resetQuiz($quiz_id);
             if (is_wp_error($apiResponse)) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'quiz', 'type_name' => 'Reset-users-attempts-for-quiz']), 'error', json_encode('Fail to reset quiz'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'quiz', 'type_name' => 'Reset-users-attempts-for-quiz']), 'error', wp_json_encode('Fail to reset quiz'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'quiz', 'type_name' => 'Reset-users-attempts-for-quiz']), 'success', json_encode('Quiz reset successfully'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'quiz', 'type_name' => 'Reset-users-attempts-for-quiz']), 'success', wp_json_encode('Quiz reset successfully'));
             }
         }
 
@@ -949,9 +949,9 @@ class RecordApiHelper
             $apiResponse = self::resetUserProgressInCourse($courseIds);
             if (is_wp_error($apiResponse)) {
                 $error_message = $apiResponse->get_error_message();
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'enroll-user-in-course']), 'error', json_encode($error_message));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'enroll-user-in-course']), 'error', wp_json_encode($error_message));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'enroll-user-in-course']), 'success', json_encode($apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'enroll-user-in-course']), 'success', wp_json_encode($apiResponse));
             }
         }
 
@@ -963,9 +963,9 @@ class RecordApiHelper
             $course_id = $integrationDetails->courseId;
             $apiResponse = self::UnenrollUserFromCourse($course_id);
             if ($apiResponse) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'quiz', 'type_name' => 'users-unEnroll-course']), 'success', json_encode('users-unenroll-course-successfully'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'quiz', 'type_name' => 'users-unEnroll-course']), 'success', wp_json_encode('users-unenroll-course-successfully'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'quiz', 'type_name' => 'users-unEnroll-course']), 'error', json_encode('users-unenroll-course-failed'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'quiz', 'type_name' => 'users-unEnroll-course']), 'error', wp_json_encode('users-unenroll-course-failed'));
             }
         }
 

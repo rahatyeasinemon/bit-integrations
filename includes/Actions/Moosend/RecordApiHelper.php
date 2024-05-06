@@ -45,7 +45,7 @@ class RecordApiHelper
     public function response($status, $code, $type, $typeName, $apiResponse)
     {
         $res = ['success' => $code === 200 ? true : false, 'message' => $apiResponse, 'code' => $code];
-        LogHandler::save($this->_integrationID, json_encode(['type' => $type, 'type_name' => $typeName]), $status, json_encode($res));
+        LogHandler::save($this->_integrationID, wp_json_encode(['type' => $type, 'type_name' => $typeName]), $status, wp_json_encode($res));
 
         return $res;
     }
@@ -58,7 +58,7 @@ class RecordApiHelper
             'Content-Type' => 'application/json'
         ];
 
-        return HttpHelper::post($apiEndpoints, json_encode($formData), $headers);
+        return HttpHelper::post($apiEndpoints, wp_json_encode($formData), $headers);
     }
 
     public function unsubscribe($authKey, $formData)
@@ -68,7 +68,7 @@ class RecordApiHelper
             'Content-Type' => 'application/json'
         ];
 
-        return HttpHelper::post($apiEndpoints, json_encode($formData), $headers);
+        return HttpHelper::post($apiEndpoints, wp_json_encode($formData), $headers);
     }
 
     public function unsubscribeFromList($authKey, $listId, $formData)
@@ -78,7 +78,7 @@ class RecordApiHelper
             'Content-Type' => 'application/json'
         ];
 
-        return HttpHelper::post($apiEndpoints, json_encode($formData), $headers);
+        return HttpHelper::post($apiEndpoints, wp_json_encode($formData), $headers);
     }
 
     public function execute(

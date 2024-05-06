@@ -2,12 +2,12 @@
 Contributors: bitpressadmin
 Tags: automation,integration,automator,form builder integration,webhook
 Requires at least: 5.1
-Tested up to: 6.5
+Tested up to: 6.5.2
 Requires PHP: 7.0
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 
-Automation Plugin for WordPress; Integration of 65+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
+Automation Plugin for WordPress like Zapier; Integration of 65+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
 
 == Description ==
 
@@ -946,6 +946,13 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.0.1  =
+*Release Date - *6th May 2024\*
+
+- **Fixes :**
+  - Woocommerce: specific task order change issue 
+
 
 = 2.0.0  =
 *Release Date - *25th April 2024\*

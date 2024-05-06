@@ -50,7 +50,7 @@ class RecordApiHelper
 
         $data = array_merge($finalData, ['lists' => $listId]);
 
-        return HttpHelper::post($apiEndpoint, json_encode($data), $header);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($data), $header);
     }
 
     public function deleteSubscriber($api_key, $userName, $listId, $finalData)
@@ -99,18 +99,18 @@ class RecordApiHelper
             $listId = $integrationDetails->listId;
             $apiResponse = $this->addSubscriber($api_key, $userName, $listId, $finalData);
             if (isset($apiResponse->code) && $apiResponse->code == 200) {
-                LogHandler::save($this->_integrationID, json_encode(['type' => 'insert', 'type_name' => 'add-subscriber']), 'success', json_encode($apiResponse));
+                LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'insert', 'type_name' => 'add-subscriber']), 'success', wp_json_encode($apiResponse));
             } else {
-                LogHandler::save($this->_integrationID, json_encode(['type' => 'insert', 'type_name' => 'add-subscriber']), 'error', json_encode($apiResponse));
+                LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'insert', 'type_name' => 'add-subscriber']), 'error', wp_json_encode($apiResponse));
             }
         }
         if ($mainAction == '2') {
             $listId = $integrationDetails->listId;
             $apiResponse = $this->deleteSubscriber($api_key, $userName, $listId, $finalData);
             if (isset($apiResponse->code) && $apiResponse->code == 200) {
-                LogHandler::save($this->_integrationID, json_encode(['type' => 'delete', 'type_name' => 'delete-subscriber']), 'success', json_encode($apiResponse->message));
+                LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'delete', 'type_name' => 'delete-subscriber']), 'success', wp_json_encode($apiResponse->message));
             } else {
-                LogHandler::save($this->_integrationID, json_encode(['type' => 'delete', 'type_name' => 'delete-subscriber']), 'error', json_encode('Subscriber not found , failed to delete subscriber'));
+                LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'delete', 'type_name' => 'delete-subscriber']), 'error', wp_json_encode('Subscriber not found , failed to delete subscriber'));
             }
         }
 

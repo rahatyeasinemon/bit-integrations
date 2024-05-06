@@ -99,7 +99,7 @@ class RecordApiHelper
         if ($affiliate_user_id && affwp_is_affiliate($affiliate_user_id)) {
             return affwp_add_referral($finalData);
         }
-        LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'create-referral']), 'error', json_encode('User are not affiliate'));
+        LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'create-referral']), 'error', wp_json_encode('User are not affiliate'));
     }
 
     public static function createAffiliateFortheUser($statusId, $referralId, $finalData)
@@ -151,7 +151,7 @@ class RecordApiHelper
         if ($affiliate_user_id && affwp_is_affiliate($affiliate_user_id)) {
             return affwp_add_referral($finalData);
         }
-        LogHandler::save(self::$integrationID, json_encode(['type' => 'referral', 'type_name' => 'create-referral']), 'error', json_encode('User are not affiliate'));
+        LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'referral', 'type_name' => 'create-referral']), 'error', wp_json_encode('User are not affiliate'));
     }
 
     public function execute(
@@ -174,9 +174,9 @@ class RecordApiHelper
                 $finalData
             );
             if ($apiResponse !== 0) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'referral', 'type_name' => 'create-referral']), 'success', json_encode('Created Referral id ' . $apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'referral', 'type_name' => 'create-referral']), 'success', wp_json_encode('Created Referral id ' . $apiResponse));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'referral', 'type_name' => 'create-referral']), 'error', json_encode('Error in creating referral'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'referral', 'type_name' => 'create-referral']), 'error', wp_json_encode('Error in creating referral'));
             }
 
             return $apiResponse;
@@ -192,9 +192,9 @@ class RecordApiHelper
                 $finalData
             );
             if ($apiResponse !== 0) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'referral', 'type_name' => 'create-referral']), 'success', json_encode('Created Referral id ' . $apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'referral', 'type_name' => 'create-referral']), 'success', wp_json_encode('Created Referral id ' . $apiResponse));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'referral', 'type_name' => 'create-referral']), 'error', json_encode('Error in creating referral'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'referral', 'type_name' => 'create-referral']), 'error', wp_json_encode('Error in creating referral'));
             }
 
             return $apiResponse;

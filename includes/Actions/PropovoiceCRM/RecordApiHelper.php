@@ -65,7 +65,7 @@ class RecordApiHelper
             if (!$apiResponse) {
                 LogHandler::save($this->_integrationID, 'Lead', 'success', 'Lead Created Successfully');
             } else {
-                LogHandler::save($this->_integrationID, 'Lead', 'error', json_encode($apiResponse));
+                LogHandler::save($this->_integrationID, 'Lead', 'error', wp_json_encode($apiResponse));
             }
         }
 

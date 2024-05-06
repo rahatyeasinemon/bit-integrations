@@ -411,6 +411,6 @@ class ZohoAnalyticsController
             $newDetails->default->tables->headers->{$others['table']} = $others['table_headers'];
         }
 
-        $integrationHandler->updateIntegration($integrationID, $zanalyticsDetails[0]->integration_name, 'Zoho Analytics', json_encode($newDetails), 'form');
+        $integrationHandler->updateIntegration($integrationID, $zanalyticsDetails[0]->integration_name, 'Zoho Analytics', wp_json_encode($newDetails), 'form');
     }
 }

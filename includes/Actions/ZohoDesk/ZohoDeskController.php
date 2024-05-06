@@ -501,6 +501,6 @@ class ZohoDeskController
             $newDetails->default->organizations = $others['organizations'];
         }
 
-        $flow->update($integrationID, ['flow_details' => json_encode($newDetails)]);
+        $flow->update($integrationID, ['flow_details' => wp_json_encode($newDetails)]);
     }
 }

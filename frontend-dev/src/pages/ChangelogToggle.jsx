@@ -10,7 +10,7 @@ import Modal from '../components/Utilities/Modal'
 export default function ChangelogToggle() {
     const btcbi = useRecoilValue($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const version = btcbi.isPro ? '2.0.0' : '2.0.0'
+    const version = btcbi.isPro ? '2.0.2' : '2.0.1'
     return (
         <div className="changelog-toggle">
             <button
@@ -27,7 +27,7 @@ export default function ChangelogToggle() {
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
                         <h3>What's New in {version}?</h3>
-                        <small className='date'> <b>25th April 2024</b></small>
+                        <small className='date'> <b>6th May 2024</b></small>
                     </div>
                     <div className='changelog-content'>
                         {/* <h4>New Integration</h4> */}
@@ -40,7 +40,7 @@ export default function ChangelogToggle() {
                             </ul>
                         </div> */}
 
-                        <span className='new-feature'><b>Compatibility Update:</b></span>
+                        {/* <span className='new-feature'><b>Compatibility Update:</b></span>
 
                         <div className='feature-list'>
                             <ul>
@@ -64,16 +64,16 @@ export default function ChangelogToggle() {
                                     </ul>
                                 </li>
                             </ul>
-                        </div>
+                        </div> */}
 
 
-                        {/* <span className='fixes'><b>Fixed</b></span>
+                        <span className='fixes'><b>Fixed</b></span>
 
                         <div className='fixes-list'>
                             <ul>
-                                <li>MailChimp: Field Mapping visibility </li>
+                                <li> Woocommerce: specific task order change issue </li>
                             </ul>
-                        </div> */}
+                        </div>
                     </div>
                     <div>
                         <span className='footer'>{__('For more details,')}</span>

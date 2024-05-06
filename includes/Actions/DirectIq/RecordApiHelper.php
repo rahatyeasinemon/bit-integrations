@@ -43,7 +43,7 @@ class RecordApiHelper
             ]
         ];
 
-        HttpHelper::post($apiEndpoint, json_encode($finalData), $headers);
+        HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $headers);
 
         return HttpHelper::$responseCode;
     }
