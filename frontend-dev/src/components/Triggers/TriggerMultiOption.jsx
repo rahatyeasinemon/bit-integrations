@@ -48,7 +48,7 @@ const TriggerMultiOption = ({ flow, setFlowData, edit = false }) => (
     {flow?.triggered_entity === 'ThriveApprentice' && <ThriveApprenticeHelper flow={flow} setFlowData={setFlowData} edit={edit} />}
     {flow?.triggered_entity === 'UltimateMember' && <UltimateMemberHelper flow={flow} setFlowData={setFlowData} edit={edit} />}
     {flow?.triggered_entity === 'AcademyLms' && <AcademyLmsHelper flow={flow} setFlowData={setFlowData} />}
-    {flow?.triggered_entity === 'FluentBooking' && <FluentBookingHelper flow={flow} setFlowData={setFlowData} />}
+    {flow?.triggered_entity === 'FluentBooking' && <FluentBookingHelper flow={flow} setFlowData={setFlowData} edit={edit} />}
   </div>
 )
 

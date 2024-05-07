@@ -366,6 +366,17 @@ export const fluentCrmStateIH = (tmpConf, flowData, triggered_entity_id) => {
   return tmpConf;
 };
 
+export const fluentBookingStateIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id;
+
+  if (formId) {
+    tmpConf.selectedEvent = flowData.selectedEvent;
+    tmpConf.events = flowData.events
+  }
+
+  return tmpConf;
+};
+
 export const tutorlmsStateIH = (tmpConf, flowData) => {
   if (flowData.formID === "2") {
     tmpConf.selectedQuiz = flowData.selectedQuiz;
