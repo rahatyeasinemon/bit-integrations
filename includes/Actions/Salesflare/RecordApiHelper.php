@@ -48,7 +48,7 @@ class RecordApiHelper
         $formData = $this->setData($finalData);
         $apiEndpoint = $this->apiUrl . '/accounts';
 
-        return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($formData), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -65,7 +65,7 @@ class RecordApiHelper
         $formData = $this->setData($finalData);
         $apiEndpoint = $this->apiUrl . '/contacts';
 
-        return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($formData), $this->defaultHeader);
     }
 
     public function addOpprtunity($finalData)
@@ -87,7 +87,7 @@ class RecordApiHelper
         $formData['stage'] = $this->integrationDetails->selectedStage;
         $apiEndpoint = $this->apiUrl . '/opportunities';
 
-        return HttpHelper::post($apiEndpoint, json_encode($formData), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($formData), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -115,9 +115,9 @@ class RecordApiHelper
 
         if (isset($apiResponse->id)) {
             $res = [$this->typeName . '  successfully'];
-            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

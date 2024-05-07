@@ -31,7 +31,7 @@ class RecordApiHelper
     {
         $send_activationmail = $send_activationmail ? 'yes' : 'no';
         $insertRecordEndpoint = self::$apiBaseUri . "/recipients?send_activationmail={$send_activationmail}";
-        $data = \is_string($data) ? $data : json_encode((object) $data);
+        $data = \is_string($data) ? $data : wp_json_encode((object) $data);
 
         return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
     }
@@ -111,7 +111,7 @@ class RecordApiHelper
                     $formatedValue = (object) $formatedValue;
                 }
             } elseif ($apiFormat === 'string' && $formatSpecs->data_type !== 'datetime' && $formatSpecs->data_type !== 'date') {
-                $formatedValue = !\is_string($value) ? json_encode($value) : html_entity_decode($value);
+                $formatedValue = !\is_string($value) ? wp_json_encode($value) : html_entity_decode($value);
             } elseif ($formatSpecs->data_type === 'datetime') {
                 if (\is_array($value)) {
                     if (isset($value['date'])) {
@@ -155,7 +155,7 @@ class RecordApiHelper
                 $formatedValue = $dateTimeHelper->getFormated($value, $date_format, wp_timezone(), 'Y-m-d', null);
                 $formatedValue = !$formatedValue ? null : $formatedValue;
             } else {
-                $stringyfieldValue = !\is_string($value) ? json_encode($value) : $value;
+                $stringyfieldValue = !\is_string($value) ? wp_json_encode($value) : $value;
 
                 switch ($apiFormat) {
                     case 'double':

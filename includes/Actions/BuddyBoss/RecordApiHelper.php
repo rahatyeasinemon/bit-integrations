@@ -89,12 +89,12 @@ class RecordApiHelper
         if (\function_exists('groups_join_group')) {
             $response = groups_join_group($groupId, $user_id);
             if ($response) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'add-user-to-group']), 'success', json_encode('Successfully add user to group'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'add-user-to-group']), 'success', wp_json_encode('Successfully add user to group'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'add-user-to-group']), 'error', json_encode('Unauthorized user'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'add-user-to-group']), 'error', wp_json_encode('Unauthorized user'));
             }
         } else {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'add-user-to-group']), 'error', json_encode('Failed to add user to group'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'add-user-to-group']), 'error', wp_json_encode('Failed to add user to group'));
         }
     }
 
@@ -103,9 +103,9 @@ class RecordApiHelper
         $user_id = get_current_user_id();
         if (\function_exists('friends_remove_friend')) {
             friends_remove_friend($user_id, $friendId);
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'friend', 'type_name' => 'end-friendship-with-user']), 'success', json_encode('Successfully end friendship with user'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'friend', 'type_name' => 'end-friendship-with-user']), 'success', wp_json_encode('Successfully end friendship with user'));
         } else {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'friend', 'type_name' => 'end-friendship-with-user']), 'error', json_encode('Failed to end friendship with user'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'friend', 'type_name' => 'end-friendship-with-user']), 'error', wp_json_encode('Failed to end friendship with user'));
         }
     }
 
@@ -119,7 +119,7 @@ class RecordApiHelper
         ];
 
         if ($user_id === $friendId) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'friend', 'type_name' => 'follow-user']), 'error', json_encode('A user can not follow itself. '));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'friend', 'type_name' => 'follow-user']), 'error', wp_json_encode('A user can not follow itself. '));
 
             return;
         }
@@ -130,9 +130,9 @@ class RecordApiHelper
             $following = bp_start_following($data);
         }
         if ($following) {
-            return LogHandler::save(self::$integrationID, json_encode(['type' => 'friend', 'type_name' => 'follow-user']), 'success', json_encode('The user successfully start following a member ID - ' . $friendId));
+            return LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'friend', 'type_name' => 'follow-user']), 'success', wp_json_encode('The user successfully start following a member ID - ' . $friendId));
         }
-        LogHandler::save(self::$integrationID, json_encode(['type' => 'friend', 'type_name' => 'follow-user']), 'error', json_encode('The user was already following a member ID - ' . $friendId));
+        LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'friend', 'type_name' => 'follow-user']), 'error', wp_json_encode('The user was already following a member ID - ' . $friendId));
 
     }
 
@@ -149,12 +149,12 @@ class RecordApiHelper
 
         if (!empty($forum_id)) {
             if (bbp_is_forum_category($forum_id)) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', json_encode('Sorry, This forum is a category. No discussions can be created in this forum. '));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', wp_json_encode('Sorry, This forum is a category. No discussions can be created in this forum. '));
 
                 return;
             }
             if (bbp_is_forum_closed($forum_id) && !current_user_can('edit_forum', $forum_id)) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', json_encode('Sorry, This forum has been closed to new discussions. '));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', wp_json_encode('Sorry, This forum has been closed to new discussions. '));
 
                 return;
             }
@@ -179,7 +179,7 @@ class RecordApiHelper
                     (empty($group_ids) && !current_user_can('read_private_forums'))
                     || (!empty($group_ids) && !$is_member)
                 ) {
-                    LogHandler::save(self::$integrationID, json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', json_encode('Sorry, This forum is private and you do not have the capability to read or create new discussions in it. '));
+                    LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', wp_json_encode('Sorry, This forum is private and you do not have the capability to read or create new discussions in it. '));
 
                     return;
                 }
@@ -188,7 +188,7 @@ class RecordApiHelper
                     (empty($group_ids) && !current_user_can('read_hidden_forums'))
                     || (!empty($group_ids) && !$is_member)
                 ) {
-                    LogHandler::save(self::$integrationID, json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', json_encode('Sorry, This forum is hidden and you do not have the capability to read or create new discussions in it.'));
+                    LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', wp_json_encode('Sorry, This forum is hidden and you do not have the capability to read or create new discussions in it.'));
 
                     return;
                 }
@@ -202,13 +202,13 @@ class RecordApiHelper
                 'post_content' => do_shortcode($finalData['topic_content'])
             ]
         )) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', json_encode('Duplicate discussion detected; it looks as though you\'ve already said that!'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', wp_json_encode('Duplicate discussion detected; it looks as though you\'ve already said that!'));
 
             return;
         }
 
         if (!bbp_check_for_blacklist(null, $user_id, do_shortcode($finalData['topic_title']), do_shortcode($finalData['topic_content']))) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', json_encode('Sorry, Your discussion cannot be created at this time.'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', wp_json_encode('Sorry, Your discussion cannot be created at this time.'));
 
             return;
         }
@@ -230,11 +230,11 @@ class RecordApiHelper
         $topic_id = wp_insert_post($topic_data);
 
         if (empty($topic_id) || is_wp_error($topic_id)) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', json_encode('We are facing a problem to creating a topic.'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', wp_json_encode('We are facing a problem to creating a topic.'));
 
             return;
         }
-        LogHandler::save(self::$integrationID, json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'success', json_encode('Post created successfully and id is' . $topic_id));
+        LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'success', wp_json_encode('Post created successfully and id is' . $topic_id));
 
         if (
             (bbp_get_trash_status_id() === get_post_field('post_status', $forum_id))
@@ -490,9 +490,9 @@ class RecordApiHelper
                 }
                 if ($following == false) {
                     $message .= 'The user was not following a member id is - ' . $follower_id . '. ';
-                    LogHandler::save(self::$integrationID, json_encode(['type' => 'follow', 'type_name' => 'stop-follow-user']), 'error', json_encode($message));
+                    LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'follow', 'type_name' => 'stop-follow-user']), 'error', wp_json_encode($message));
                 } else {
-                    LogHandler::save(self::$integrationID, json_encode(['type' => 'follow', 'type_name' => 'stop-follow-user']), 'success', json_encode('Stop following users successfully .'));
+                    LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'follow', 'type_name' => 'stop-follow-user']), 'success', wp_json_encode('Stop following users successfully .'));
                 }
             }
         }
@@ -512,7 +512,7 @@ class RecordApiHelper
                 $success = false;
 
                 if (true === $is_subscription) {
-                    LogHandler::save(self::$integrationID, json_encode(['type' => 'subscribed', 'type_name' => 'subscribe-forum']), 'error', json_encode('The user is already subscribed to the specified forum.'));
+                    LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'subscribed', 'type_name' => 'subscribe-forum']), 'error', wp_json_encode('The user is already subscribed to the specified forum.'));
 
                     return;
                 }
@@ -520,7 +520,7 @@ class RecordApiHelper
                 do_action('buddyBoss_subscriptions_handler', $success, $user_id, (int) $forum_id, 'bbp_subscribe');
 
                 if ($success === false && $is_subscription === false) {
-                    LogHandler::save(self::$integrationID, json_encode(['type' => 'subscribed', 'type_name' => 'subscribe-forum']), 'error', json_encode('There was a problem subscribing to that forum!'));
+                    LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'subscribed', 'type_name' => 'subscribe-forum']), 'error', wp_json_encode('There was a problem subscribing to that forum!'));
 
                     return;
                 }
@@ -663,24 +663,24 @@ class RecordApiHelper
         ];
 
         if (!bbp_get_topic($topic_id)) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode('Sorry, Discussion does not exist.'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', wp_json_encode('Sorry, Discussion does not exist.'));
 
             return;
         }
 
         if (!bbp_get_forum($forum_id)) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode('Sorry, Forum does not exist.'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', wp_json_encode('Sorry, Forum does not exist.'));
 
             return;
         }
         if (!empty($forum_id)) {
             if (bbp_is_forum_category($forum_id)) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode('Sorry, This forum is a category. No discussions can be created in this forum.'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', wp_json_encode('Sorry, This forum is a category. No discussions can be created in this forum.'));
 
                 return;
             }
             if (bbp_is_forum_closed($forum_id) && !current_user_can('edit_forum', $forum_id)) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode('Sorry, This forum has been closed to new discussions.'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', wp_json_encode('Sorry, This forum has been closed to new discussions.'));
 
                 return;
             }
@@ -705,7 +705,7 @@ class RecordApiHelper
                     (empty($group_ids) && !current_user_can('read_private_forums'))
                     || (!empty($group_ids) && !$is_member)
                 ) {
-                    LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode('Sorry, This forum is private and you do not have the capability to read or create new discussions in it.'));
+                    LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', wp_json_encode('Sorry, This forum is private and you do not have the capability to read or create new discussions in it.'));
 
                     return;
                 }
@@ -714,7 +714,7 @@ class RecordApiHelper
                     (empty($group_ids) && !current_user_can('read_hidden_forums'))
                     || (!empty($group_ids) && !$is_member)
                 ) {
-                    LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode('Sorry, This forum is hidden and you do not have the capability to read or create new discussions in it.'));
+                    LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', wp_json_encode('Sorry, This forum is hidden and you do not have the capability to read or create new discussions in it.'));
 
                     return;
                 }
@@ -732,19 +732,19 @@ class RecordApiHelper
                 'anonymous_data' => $data['anonymous_data'],
             ]
         )) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode("Duplicate reply detected; it looks as though you've already said that!"));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', wp_json_encode("Duplicate reply detected; it looks as though you've already said that!"));
 
             return;
         }
 
         if (bbp_is_topic_closed($topic_id) && !current_user_can('moderate')) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode('Sorry, Discussion is closed.'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', wp_json_encode('Sorry, Discussion is closed.'));
 
             return;
         }
 
         if (!bbp_check_for_blacklist($data['anonymous_data'], $data['reply_author'], $data['reply_title'], $reply_content)) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode('Sorry, Your reply cannot be created at this time.'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', wp_json_encode('Sorry, Your reply cannot be created at this time.'));
 
             return;
         }
@@ -756,7 +756,7 @@ class RecordApiHelper
         }
 
         if (bbp_is_topic_closed($topic_id) && !current_user_can('moderate')) {
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode('Sorry, Discussion is closed.'));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', wp_json_encode('Sorry, Discussion is closed.'));
 
             return;
         }
@@ -783,7 +783,7 @@ class RecordApiHelper
                 : __('We are facing a problem to creating a reply.', 'bit-integrations')
             );
 
-            LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode($append_error));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', wp_json_encode($append_error));
 
             return;
         }
@@ -852,9 +852,9 @@ class RecordApiHelper
                 $finalData
             );
             if ($apiResponse !== 0) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'create-group']), 'success', json_encode('Group created successfully and is is ' . $apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'create-group']), 'success', wp_json_encode('Group created successfully and is is ' . $apiResponse));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'group', 'type_name' => 'create-group']), 'error', json_encode($apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'create-group']), 'error', wp_json_encode($apiResponse));
             }
         }
         if ($mainAction === '2') {
@@ -889,9 +889,9 @@ class RecordApiHelper
                 $groupId
             );
             if ($apiResponse) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'user', 'type_name' => 'user-remove-group']), 'success', json_encode('User removed from group successfully .'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'user', 'type_name' => 'user-remove-group']), 'success', wp_json_encode('User removed from group successfully .'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'user', 'type_name' => 'user-remove-group']), 'error', json_encode('Failed to remove user form group .'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'user', 'type_name' => 'user-remove-group']), 'error', wp_json_encode('Failed to remove user form group .'));
             }
         }
         if ($mainAction === '7') {
@@ -900,9 +900,9 @@ class RecordApiHelper
                 $friendId
             );
             if ($apiResponse) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'user', 'type_name' => 'send-friend-request']), 'success', json_encode('Send friend request successfully .'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'user', 'type_name' => 'send-friend-request']), 'success', wp_json_encode('Send friend request successfully .'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'user', 'type_name' => 'send-friend-request']), 'error', json_encode('Failed to send friend request to user .'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'user', 'type_name' => 'send-friend-request']), 'error', wp_json_encode('Failed to send friend request to user .'));
             }
         }
         if ($mainAction === '8') {
@@ -911,9 +911,9 @@ class RecordApiHelper
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = self::sendNotificationMembersGroup($group_id, $friendId, $finalData);
             if ($apiResponse) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'notification', 'type_name' => 'send-notification-allMember']), 'success', json_encode('Notification are send successfully .'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'notification', 'type_name' => 'send-notification-allMember']), 'success', wp_json_encode('Notification are send successfully .'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'notification', 'type_name' => 'send-notification-allMember']), 'error', json_encode('BuddyBoss notification module is not active.'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'notification', 'type_name' => 'send-notification-allMember']), 'error', wp_json_encode('BuddyBoss notification module is not active.'));
             }
         }
         if ($mainAction === '9') {
@@ -922,9 +922,9 @@ class RecordApiHelper
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = self::SendPrivateMessageMembersGroup($group_id, $friendId, $finalData);
             if ($apiResponse) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'message', 'type_name' => 'send-private-message']), 'success', json_encode('Send private message to all group member successfully .'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'message', 'type_name' => 'send-private-message']), 'success', wp_json_encode('Send private message to all group member successfully .'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'message', 'type_name' => 'send-private-message']), 'error', json_encode('BuddyBoss message module is not active.'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'message', 'type_name' => 'send-private-message']), 'error', wp_json_encode('BuddyBoss message module is not active.'));
             }
         }
         if ($mainAction === '10') {
@@ -932,18 +932,18 @@ class RecordApiHelper
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = self::SendPrivateMessageUser($friendId, $finalData);
             if ($apiResponse) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'message', 'type_name' => 'send-private-message']), 'success', json_encode('Send private message to user successfully .'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'message', 'type_name' => 'send-private-message']), 'success', wp_json_encode('Send private message to user successfully .'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'message', 'type_name' => 'send-private-message']), 'error', json_encode('BuddyBoss message module is not active.'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'message', 'type_name' => 'send-private-message']), 'error', wp_json_encode('BuddyBoss message module is not active.'));
             }
         }
         if ($mainAction === '11') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = self::sendNotificationUser($finalData);
             if ($apiResponse) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'notification', 'type_name' => 'send-notification-allMember']), 'success', json_encode('Notification are send successfully .'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'notification', 'type_name' => 'send-notification-allMember']), 'success', wp_json_encode('Notification are send successfully .'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'notification', 'type_name' => 'send-notification-allMember']), 'error', json_encode('BuddyBoss message module is not active.'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'notification', 'type_name' => 'send-notification-allMember']), 'error', wp_json_encode('BuddyBoss message module is not active.'));
             }
         }
         if ($mainAction === '12') {
@@ -958,9 +958,9 @@ class RecordApiHelper
                 $forum_id
             );
             if ($apiResponse) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'subscribe', 'type_name' => 'subscribe-forum']), 'success', json_encode('Forum subscribe successfully .'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'subscribe', 'type_name' => 'subscribe-forum']), 'success', wp_json_encode('Forum subscribe successfully .'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'subscribe', 'type_name' => 'subscribe-forum']), 'error', json_encode('Failed to subscribe Forum .'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'subscribe', 'type_name' => 'subscribe-forum']), 'error', wp_json_encode('Failed to subscribe Forum .'));
             }
         }
         if ($mainAction === '14') {
@@ -969,9 +969,9 @@ class RecordApiHelper
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = self::addPostToGroup($group_id, $friendId, $finalData);
             if (\gettype($apiResponse) === 'integer') {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'post', 'type_name' => 'add-post-to-group']), 'success', json_encode('Post added to group successfully and id is -> ' . $apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-to-group']), 'success', wp_json_encode('Post added to group successfully and id is -> ' . $apiResponse));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'post', 'type_name' => 'add-post-to-group']), 'error', json_encode($apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-to-group']), 'error', wp_json_encode($apiResponse));
             }
         }
         if ($mainAction === '15') {
@@ -979,9 +979,9 @@ class RecordApiHelper
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = self::postActivityStream($friendId, $finalData);
             if (\gettype($apiResponse) === 'integer') {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'post', 'type_name' => 'add-post-sitewide-activity']), 'success', json_encode('Post added to sitewide activity stream successfully and id is -> ' . $apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-sitewide-activity']), 'success', wp_json_encode('Post added to sitewide activity stream successfully and id is -> ' . $apiResponse));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'post', 'type_name' => 'add-post-sitewide-activity']), 'error', json_encode($apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-sitewide-activity']), 'error', wp_json_encode($apiResponse));
             }
         }
         if ($mainAction === '16') {
@@ -989,9 +989,9 @@ class RecordApiHelper
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = self::postActivityUsersStream($friendId, $finalData);
             if (\gettype($apiResponse) === 'integer') {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'post', 'type_name' => 'add-post-user-activity']), 'success', json_encode('Post added to Users activity stream successfully and id is -> ' . $apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-user-activity']), 'success', wp_json_encode('Post added to Users activity stream successfully and id is -> ' . $apiResponse));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'post', 'type_name' => 'add-post-user-activity']), 'error', json_encode($apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-user-activity']), 'error', wp_json_encode($apiResponse));
             }
         }
         if ($mainAction === '17') {
@@ -1000,18 +1000,18 @@ class RecordApiHelper
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = self::postReplyTopicForum($forum_id, $topic_id, $finalData);
             if (\gettype($apiResponse) === 'integer') {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'success', json_encode('Reply forum topic successfully and id is -> ' . $apiResponse));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'success', wp_json_encode('Reply forum topic successfully and id is -> ' . $apiResponse));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', json_encode('Failed to reply forum topic.'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', wp_json_encode('Failed to reply forum topic.'));
             }
         }
         if ($mainAction === '18') {
             $userStatusId = $integrationDetails->userStatusId;
             $apiResponse = self::setUserStatus($userStatusId);
             if ($apiResponse) {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'user', 'type_name' => 'user-specific-status']), 'success', json_encode('Change user status successfully .'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'user', 'type_name' => 'user-specific-status']), 'success', wp_json_encode('Change user status successfully .'));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'user', 'type_name' => 'user-specific-status']), 'error', json_encode('To change members status in your network, please activate the Moderation component.'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'user', 'type_name' => 'user-specific-status']), 'error', wp_json_encode('To change members status in your network, please activate the Moderation component.'));
             }
         }
 

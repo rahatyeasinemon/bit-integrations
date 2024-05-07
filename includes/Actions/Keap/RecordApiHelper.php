@@ -30,7 +30,7 @@ class RecordApiHelper
 
     public function insertCard($data)
     {
-        $data = \is_string($data) ? $data : json_encode((object) $data);
+        $data = \is_string($data) ? $data : wp_json_encode((object) $data);
 
         $header['Authorization'] = "Bearer {$this->_tokenDetails->access_token}";
         $header['Content-Type'] = 'application/json';
@@ -53,7 +53,7 @@ class RecordApiHelper
         $header['Content-Type'] = 'application/json';
         $insertTagEndpoint = 'https://api.infusionsoft.com/crm/rest/v1/contacts/' . $contactId . '/tags';
 
-        return $response = HttpHelper::post($insertTagEndpoint, json_encode($data), $header);
+        return $response = HttpHelper::post($insertTagEndpoint, wp_json_encode($data), $header);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

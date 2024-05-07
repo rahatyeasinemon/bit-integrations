@@ -65,7 +65,7 @@ class MailercloudController
             'limit' => 100,
             'page'  => 1
         ];
-        $response = HttpHelper::post($apiEndpoints, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoints, wp_json_encode($body), $headers);
 
         if ($response->code === 'invalid_api_key') {
             wp_send_json_error(
@@ -100,7 +100,7 @@ class MailercloudController
             'limit' => 100,
             'page'  => 1
         ];
-        $response = HttpHelper::post($apiEndpoints, json_encode($body), $headers);
+        $response = HttpHelper::post($apiEndpoints, wp_json_encode($body), $headers);
 
         if ($response->code === 'invalid_api_key') {
             wp_send_json_error(

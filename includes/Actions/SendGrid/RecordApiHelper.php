@@ -63,7 +63,7 @@ class RecordApiHelper
 
         $requestParams['contacts'][] = (object) $contacts;
 
-        return HttpHelper::request($apiEndpoints, 'PUT', json_encode($requestParams), $this->_defaultHeader);
+        return HttpHelper::request($apiEndpoints, 'PUT', wp_json_encode($requestParams), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -89,9 +89,9 @@ class RecordApiHelper
 
         if (!isset($apiResponse->errors)) {
             $res = ['message' => 'Contact ' . $this->_responseType . ' successfully'];
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'Contact ' . $this->_responseType]), 'success', json_encode($res));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'Contact ' . $this->_responseType]), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => '', 'type_name' => 'Adding contact']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => '', 'type_name' => 'Adding contact']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;
@@ -101,7 +101,7 @@ class RecordApiHelper
     {
         $apiEndpoint = 'https://api.sendgrid.com/v3/marketing/contacts/search/emails';
         $emails['emails'] = (array) $email;
-        $response = HttpHelper::post($apiEndpoint, json_encode($emails), $this->_defaultHeader);
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($emails), $this->_defaultHeader);
 
         return empty($response) ? 'created' : 'updated';
     }

@@ -61,7 +61,7 @@ class RecordApiHelper
 
         $apiEndpoint = 'https://api.' . $this->apiUrl . '/v3.1/Organisations';
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        return $response = HttpHelper::post($apiEndpoint, wp_json_encode($requestParams), $this->defaultHeader);
     }
 
     public function addContact($finalData)
@@ -92,7 +92,7 @@ class RecordApiHelper
 
         $apiEndpoint = 'https://api.' . $this->apiUrl . '/v3.1/Contacts';
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        return $response = HttpHelper::post($apiEndpoint, wp_json_encode($requestParams), $this->defaultHeader);
     }
 
     public function addOpportunity($finalData)
@@ -130,7 +130,7 @@ class RecordApiHelper
 
         $apiEndpoint = 'https://api.' . $this->apiUrl . '/v3.1/Opportunities';
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        return $response = HttpHelper::post($apiEndpoint, wp_json_encode($requestParams), $this->defaultHeader);
     }
 
     public function addProject($finalData)
@@ -168,7 +168,7 @@ class RecordApiHelper
 
         $apiEndpoint = 'https://api.' . $this->apiUrl . '/v3.1/Opportunities';
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        return $response = HttpHelper::post($apiEndpoint, wp_json_encode($requestParams), $this->defaultHeader);
     }
 
     public function addTask($finalData)
@@ -198,7 +198,7 @@ class RecordApiHelper
 
         $apiEndpoint = 'https://api.' . $this->apiUrl . '/v3.1/Tasks';
 
-        return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($requestParams), $this->defaultHeader);
     }
 
     public function addLead($finalData)
@@ -234,7 +234,7 @@ class RecordApiHelper
 
         $apiEndpoint = 'https://api.' . $this->apiUrl . '/v3.1/Leads';
 
-        return HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($requestParams), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -278,9 +278,9 @@ class RecordApiHelper
 
         if ($apiResponse->CONTACT_ID || $apiResponse->status === 'success') {
             $res = [$this->typeName . ' successfully'];
-            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

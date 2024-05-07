@@ -41,7 +41,7 @@ class RecordApiHelper
 
         $insertRecordEndpoint = "{$this->_apiEndpoint}lists/subscriber-create?list_uid={$listId}";
 
-        return HttpHelper::post($insertRecordEndpoint, json_encode($requestParams), $this->_defaultHeader);
+        return HttpHelper::post($insertRecordEndpoint, wp_json_encode($requestParams), $this->_defaultHeader);
     }
 
     // for updating subscribers data through email id.
@@ -55,7 +55,7 @@ class RecordApiHelper
 
         $insertRecordEndpoint = "{$this->_apiEndpoint}lists/subscriber-update?list_uid={$listId}&subscriber_uid={$subscriberId}";
 
-        return HttpHelper::post($insertRecordEndpoint, json_encode($requestParams), $this->_defaultHeader);
+        return HttpHelper::post($insertRecordEndpoint, wp_json_encode($requestParams), $this->_defaultHeader);
     }
 
     // add tag to a subscriber
@@ -66,7 +66,7 @@ class RecordApiHelper
         foreach ($tags as $tagId) {
             $tagEndPoint = "{$this->_apiEndpoint}lists/add-tag?ztag_id={$tagId}&subscriber_uid={$subscriberId}&list_uid={$listId}";
 
-            $res = HttpHelper::post($tagEndPoint, json_encode($requestParams), $this->_defaultHeader);
+            $res = HttpHelper::post($tagEndPoint, wp_json_encode($requestParams), $this->_defaultHeader);
         }
     }
 
@@ -137,6 +137,6 @@ class RecordApiHelper
 
         $searchEndPoint = "{$this->_apiEndpoint}lists/search-by-email?list_uid={$listId}";
 
-        return $res = HttpHelper::post($searchEndPoint, json_encode($body), $this->_defaultHeader);
+        return $res = HttpHelper::post($searchEndPoint, wp_json_encode($body), $this->_defaultHeader);
     }
 }

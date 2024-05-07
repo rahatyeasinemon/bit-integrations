@@ -364,7 +364,7 @@ final class Flow
                     && !Common::checkCondition($flowData->flow_details->condition->logics, $data)
                 ) {
                     // echo "status: " . !Common::checkCondition($flowData->flow_details->condition->logics, $data) . "<br>";
-                    // print_r(json_encode($flowData->flow_details->condition->logics));
+                    // print_r(wp_json_encode($flowData->flow_details->condition->logics));
 
                     $error = new WP_Error('Conditional Logic False', __('Conditional Logic not matched', 'bit-integrations'));
                     if (isset($flowData->id)) {

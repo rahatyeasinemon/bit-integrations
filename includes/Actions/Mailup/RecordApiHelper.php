@@ -54,7 +54,7 @@ class RecordApiHelper
             $requestParams['Fields'] = $customFields;
         }
 
-        return HttpHelper::post($apiEndpoints, json_encode($requestParams), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoints, wp_json_encode($requestParams), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -80,9 +80,9 @@ class RecordApiHelper
 
         if (\gettype($apiResponse) === 'integer') {
             $res = ['message' => 'Subscriber added successfully'];
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber added']), 'success', json_encode($res));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber added']), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'subscriber', 'type_name' => 'Adding Subscriber']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Adding Subscriber']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

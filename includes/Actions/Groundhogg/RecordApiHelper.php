@@ -97,7 +97,7 @@ class RecordApiHelper
             $noteData[0]['object_id'] = $response->contact->ID;
             $apiEndpoint = $integrationDetails->domainName . '/index.php?rest_route=/gh/v4/notes/';
 
-            return $response = HttpHelper::post($apiEndpoint, json_encode(['data' => $noteData]), $authorizationHeader);
+            return $response = HttpHelper::post($apiEndpoint, wp_json_encode(['data' => $noteData]), $authorizationHeader);
         }
 
         return $response;

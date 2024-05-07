@@ -125,9 +125,9 @@ class RecordApiHelper
 
         if ($apiResponse->id) {
             $successMessage = ['message' => 'Contact ' . $this->_requestStoringType . ' successfully'];
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'Contact ' . $this->_requestStoringType]), 'success', json_encode($successMessage));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'Contact ' . $this->_requestStoringType]), 'success', wp_json_encode($successMessage));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'Adding Contact']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'Adding Contact']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

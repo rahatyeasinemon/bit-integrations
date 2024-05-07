@@ -403,6 +403,6 @@ class ZohoCreatorController
             $newDetails->default->organizations = $others['organizations'];
         }
 
-        $integrationHandler->updateIntegration($integrationID, $zcreatorDetails[0]->integration_name, 'Zoho Creator', json_encode($newDetails), 'form');
+        $integrationHandler->updateIntegration($integrationID, $zcreatorDetails[0]->integration_name, 'Zoho Creator', wp_json_encode($newDetails), 'form');
     }
 }

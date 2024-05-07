@@ -72,7 +72,7 @@ class RecordApiHelper
     {
         if (isset($actions->delete_from_wp) && $actions->delete_from_wp) {
             if (file_exists($filePath)) {
-                unlink($filePath);
+                wp_delete_file($filePath);
             }
         }
     }
@@ -97,10 +97,10 @@ class RecordApiHelper
         }
 
         if (\count($this->successApiResponse) > 0) {
-            LogHandler::save($integrationId, wp_json_encode(['type' => 'OneDrive', 'type_name' => 'file_upload']), 'success', 'All Files Uploaded. ' . json_encode($this->successApiResponse));
+            LogHandler::save($integrationId, wp_json_encode(['type' => 'OneDrive', 'type_name' => 'file_upload']), 'success', 'All Files Uploaded. ' . wp_json_encode($this->successApiResponse));
         }
         if (\count($this->errorApiResponse) > 0) {
-            LogHandler::save($integrationId, wp_json_encode(['type' => 'OneDrive', 'type_name' => 'file_upload']), 'error', 'Some Files Can\'t Upload. ' . json_encode($this->errorApiResponse));
+            LogHandler::save($integrationId, wp_json_encode(['type' => 'OneDrive', 'type_name' => 'file_upload']), 'error', 'Some Files Can\'t Upload. ' . wp_json_encode($this->errorApiResponse));
         }
 
     }

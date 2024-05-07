@@ -57,7 +57,7 @@ class RecordApiHelper
 
     public function createMeetingRegistrant($meetingId, $data, $tokenDetails)
     {
-        $data = \is_string($data) ? $data : json_encode((object) $data);
+        $data = \is_string($data) ? $data : wp_json_encode((object) $data);
         $header['Authorization'] = 'Bearer ' . $tokenDetails->access_token;
         $header['Content-Type'] = 'application/json';
         $createMeetingRegistrantEndpoint = 'https://api.zoom.us/v2/meetings/' . $meetingId . '/registrants';
@@ -97,7 +97,7 @@ class RecordApiHelper
                 'type'       => 1
             ]
         ];
-        $data = \is_string($dataCreateUser) ? $dataCreateUser : json_encode((object) $dataCreateUser);
+        $data = \is_string($dataCreateUser) ? $dataCreateUser : wp_json_encode((object) $dataCreateUser);
         $header['Authorization'] = 'Bearer ' . $tokenDetails->access_token;
         $header['Content-Type'] = 'application/json';
         $createUserEndpoint = 'https://api.zoom.us/v2/users';

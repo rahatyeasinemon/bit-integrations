@@ -202,7 +202,7 @@ class RecordApiHelper
             $formatedValue = $value;
         } else {
             if ($apiFormat === 'string' && $formatSpecs->data_type !== 'datetime') {
-                $formatedValue = !\is_string($value) ? json_encode($value) : $value;
+                $formatedValue = !\is_string($value) ? wp_json_encode($value) : $value;
             } elseif ($apiFormat === 'datetime') {
                 $dateTimeHelper = new DateTimeHelper();
                 $formatedValue = $dateTimeHelper->getFormated($value, 'Y-m-d\TH:i', DateTimeHelper::wp_timezone(), 'Y-m-d H:i:s', null);
@@ -210,7 +210,7 @@ class RecordApiHelper
                 $dateTimeHelper = new DateTimeHelper();
                 $formatedValue = $dateTimeHelper->getFormated($value, 'Y-m-d', DateTimeHelper::wp_timezone(), 'm/d/Y', null);
             } else {
-                $stringyfiedValue = !\is_string($value) ? json_encode($value) : $value;
+                $stringyfiedValue = !\is_string($value) ? wp_json_encode($value) : $value;
 
                 switch ($apiFormat) {
                     case 'double':

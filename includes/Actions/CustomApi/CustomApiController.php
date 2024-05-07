@@ -136,7 +136,7 @@ class CustomApiController
         }
 
         if (isset($details->body->type) && ($details->body->type === 'application/json' || $details->body->type === 'raw')) {
-            $payload = json_encode((object) $payload, JSON_PRETTY_PRINT);
+            $payload = wp_json_encode((object) $payload, JSON_PRETTY_PRINT);
         }
 
         return $payload;
