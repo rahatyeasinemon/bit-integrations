@@ -111,6 +111,9 @@ final class Flow
                     'postId' => $integration->flow_details->postId,
                 ];
                 $integration->fields = $trigger::fields($data);
+            } elseif (method_exists($trigger, 'formattedParam')) {
+                $data = $trigger::formattedParam($integration);
+                $integration->fields = $trigger::fields($data);
             } else {
                 $integration->fields = $trigger::fields($integration->triggered_entity_id);
             }
@@ -118,6 +121,7 @@ final class Flow
         if (property_exists($integration->flow_details, 'fields')) {
             $integration->fields = $integration->flow_details->fields;
         }
+
         wp_send_json_success(['integration' => $integration]);
     }
 

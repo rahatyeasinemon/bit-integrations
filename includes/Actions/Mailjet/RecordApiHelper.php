@@ -49,7 +49,7 @@ class RecordApiHelper
             }
         }
 
-        $contacts['IsExcludedFromCampaigns'] = $this->_integrationDetails->actions->IsExcludedFromCampaigns ? true : false;
+        $contacts['IsExcludedFromCampaigns'] = !empty($this->_integrationDetails->actions->IsExcludedFromCampaigns) ? true : false;
 
         foreach ($finalData as $key => $value) {
             if ($key == 'Email') {
