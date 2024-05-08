@@ -130,7 +130,7 @@ const CustomFormSubmission = () => {
   const info = `<h4>Please follow the simple steps below to setup ${newFlow?.triggerDetail?.name}</h4>
             <ul>
               <li>Click <b>Fetch</b></li>
-              <li>Submit <b>Integrable Form</b></li>
+              <li>Submit <b>The Form</b></li>
               <li>Click <b>Next</b> and <b>Go</b></b></li>
             </ul>
             <h5>
