@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Klaviyo;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Klaviyo integration
@@ -18,36 +18,48 @@ class KlaviyoController
 
     public function handleAuthorize($requestParams)
     {
-        if (empty($requestParams->authKey)) {
-            wp_send_json_error(
-                __(
-                    'Requested parameter is empty',
-                    'bit-integrations'
-                ),
-                400
-            );
-        }
+      if (empty($requestParams->authKey)) {
+        wp_send_json_error(
+          __(
 
-        $headers = [
-            'Authorization' => "Klaviyo-API-Key {$requestParams->authKey}",
-            'accept'        => 'application/json',
-            'revision'      => '2024-02-15',
-        ];
+            'Requested parameter is empty',
+            'bit-integrations'
+          ),
+          400
+        );
+      }
 
-        $apiEndpoints = $this->baseUrl . 'lists';
-        $response = HttpHelper::get($apiEndpoints, null, $headers);
+      $response = static::fetchLists($requestParams->authKey, $this->baseUrl . 'lists');
 
-        if (!isset($response->data)) {
-            wp_send_json_error(
-                __(
-                    'Invalid token',
-                    'bit-integrations'
-                ),
-                400
-            );
-        }
+      if (empty($response)) {
+        wp_send_json_error(
+          __(
+            'Invalid token',
+            'bit-integrations'
+          ),
+          400
+        );
+      }
 
-        wp_send_json_success($response->data, 200);
+      wp_send_json_success($response, 200);
+    }
+
+    private static function fetchLists($authKey, $apiEndpoints, $data = [])
+    {
+      $headers = [
+        'Authorization' => "Klaviyo-API-Key {$authKey}",
+        'accept'        => 'application/json',
+        'revision'      => '2024-02-15',
+      ];
+
+      $response = HttpHelper::get($apiEndpoints, null, $headers);
+      $data = array_merge($data, $response->data);
+
+      if (!empty($response->links->next)) {
+        return static::fetchLists($authKey, $response->links->next, $data);
+      }
+
+      return $data;
     }
 
     public function execute($integrationData, $fieldValues)

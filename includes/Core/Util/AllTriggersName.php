@@ -23,7 +23,7 @@ final class AllTriggersName
             'EssentialBlocks'   => ['name' => 'Essential Blocks', 'isPro' => true, 'is_active' => false],
             'EVF'               => ['name' => 'Everest Forms', 'isPro' => true, 'is_active' => false],
             'FF'                => ['name' => 'Fluent Forms', 'isPro' => true, 'is_active' => false],
-            
+            'FluentBooking'     => ['name' => 'Fluent Booking', 'isPro' => true, 'is_active' => false],
             'FluentCrm'         => ['name' => 'Fluent CRM', 'isPro' => true, 'is_active' => false],
             'FluentSupport'     => ['name' => 'Fluent Support', 'isPro' => true, 'is_active' => false],
             'FormCraft'         => ['name' => 'FormCraft3', 'isPro' => true, 'is_active' => false],

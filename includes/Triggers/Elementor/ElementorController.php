@@ -21,6 +21,7 @@ final class ElementorController
             'activation_url'      => wp_nonce_url(self_admin_url('plugins.php?action=activate&amp;plugin=' . $plugin_path . '&amp;plugin_status=all&amp;paged=1&amp;s'), 'activate-plugin_' . $plugin_path),
             'install_url'         => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
             'documentation_url'   => 'https://bitapps.pro/docs/bit-integrations/trigger/elementor-form-integrations',
+            'tutorial_url'        => 'https://youtube.com/playlist?list=PL7c6CDwwm-ALGg0fZNLDIHjh1QJPcDSXp&si=HIKa9m0-yjPSXP2p',
             'triggered_entity_id' => 'elementor_pro/forms/new_record', // Form submission hook act as triggered_entity_id
             'fetch'               => [
                 'action' => 'elementor/test',

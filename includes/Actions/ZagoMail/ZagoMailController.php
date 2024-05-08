@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\ZagoMail;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -206,7 +206,7 @@ class ZagoMailController
         $actions = $integrationDetails->actions;
         $listId = $integrationDetails->listId;
         $tags = null;
-        if (\count($integrationDetails->selectedTags) > 0) {
+        if (isset($integrationDetails->selectedTags)) {
             $tags = explode(',', $integrationDetails->selectedTags);
         }
 

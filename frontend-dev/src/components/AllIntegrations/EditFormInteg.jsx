@@ -27,6 +27,7 @@ import { getAllThriveApprenticeCourse, getAllThriveApprenticeLesson, getAllThriv
 import { getAllUMrole } from '../Triggers/TriggerHelpers/UltimateMemberHelper/UltimatedMemberCommonFunction'
 import { getAllGroundhoggTags } from '../Triggers/TriggerHelpers/GroundhoggHelper/GroundhoggCommonFunction'
 import { create } from 'mutative'
+import { getFluentBookingEvents } from '../Triggers/TriggerHelpers/FluentBookingHelper/FluentBookingCommonFunction.js'
 
 function EditFormInteg({ setSnackbar, className = '' }) {
   const [forms, setForms] = useState([])
@@ -43,7 +44,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       draftFlow.flow_details[type] = val
     }))
   }
-  // console.log(flow.flow_details)
+
   const handle = (e) => {
     const tmpInteg = { ...flow }
     const { name, value } = e.target
@@ -62,17 +63,19 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       baseDataLoad(flow.triggered_entity, tmpInteg)
     }
 
-    const loadFormFields = bitsFetch(queryData, `${flow.triggered_entity.toLowerCase()}/get/form`).then((res) => {
-      if (res.success) {
-        setFormFields(res.data.fields)
-      }
-      return res.data
-    })
-    toast.promise(loadFormFields, {
-      success: __('Form fields Refresh successfully', 'bit-integrations'),
-      error: __('Error Occurred', 'bit-integrations'),
-      loading: __('Loading Form Fields...'),
-    })
+    if (flow.triggered_entity !== 'FluentBooking') {
+      const loadFormFields = bitsFetch(queryData, `${flow.triggered_entity.toLowerCase()}/get/form`).then((res) => {
+        if (res.success) {
+          setFormFields(res.data.fields)
+        }
+        return res.data
+      })
+      toast.promise(loadFormFields, {
+        success: __('Form fields Refresh successfully', 'bit-integrations'),
+        error: __('Error Occurred', 'bit-integrations'),
+        loading: __('Loading Form Fields...'),
+      })
+    }
   }
 
   const baseDataLoad = (trigger, data) => {
@@ -235,6 +238,9 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       if (data.triggered_entity_id == 'roleSpecificChange') {
         getAllUMrole(data, setFlow)
       }
+    }
+    if (trigger = 'fluentBooking') {
+      getFluentBookingEvents(data, setFlow)
     }
   }
 
