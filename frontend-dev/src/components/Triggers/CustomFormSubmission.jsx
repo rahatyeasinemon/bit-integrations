@@ -127,10 +127,17 @@ const CustomFormSubmission = () => {
     }
   }, [])
 
-  const info = `<h4>Setup ${newFlow?.triggerDetail?.name}</h4>
-            <a className="btcd-link" href=${newFlow?.triggerDetail?.documentation_url} target="_blank" rel="noreferrer">${__('More Details on Documentation', 'bit-integrations')}</a>
+  const info = `<h4>Please follow the simple steps below to setup ${newFlow?.triggerDetail?.name}</h4>
+            <h5>
+              More Details on 
+              <a className="btcd-link" href=${newFlow?.triggerDetail?.documentation_url} target="_blank" rel="noreferrer">${__('Documentation', 'bit-integrations')}</a>
+              or
+              <a className="btcd-link" href=${newFlow?.triggerDetail?.tutorial_url} target="_blank" rel="noreferrer">${__('Youtube Tutorials', 'bit-integrations')}</a>
+            </h5>
             <ul>
-                <li>Click on the <b>Fetch</b> button then Submit your <b>Form</b> to get the form data</li>
+              <li>Click <b>Fetch</b></li>
+              <li>Submit <b>Integrable Form</b></li>
+              <li>Click <b>Next</b> and <b>Go</b></b></li>
             </ul>`
 
   return (

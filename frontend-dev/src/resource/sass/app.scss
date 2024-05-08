@@ -477,7 +477,7 @@ input[type="checkbox"].disabled:checked:before {
   max-width: 400px;
 
   .note-text {
-    color: #888;
+    color: #333333;
 
     & * {
       line-height: 22px !important;
@@ -489,7 +489,7 @@ input[type="checkbox"].disabled:checked:before {
     }
 
     b {
-      color: #777;
+      color: #292929;
     }
   }
 }
