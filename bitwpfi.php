@@ -8,16 +8,14 @@
  * Author:    Automation & Integration Plugin - Bit Apps
  * Author URI:  https://bitapps.pro
  * Text Domain: bit-integrations
- * Requires PHP: 7.0
+ * Requires PHP: 5.6
  * Requires at least: 5.1
- * Tested up to: 6.4.3
+ * Tested up to: 6.5.2
  * Domain Path: /languages
- * License: gpl2+
+ * License:  GPLv2 or later
  */
 
-/***
- * If try to direct access  plugin folder it will Exit
- **/
+// If try to direct access  plugin folder it will Exit
 if (!defined('ABSPATH')) {
     exit;
 }
