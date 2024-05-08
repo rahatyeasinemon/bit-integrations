@@ -10,7 +10,7 @@
  * Text Domain: bit-integrations
  * Requires PHP: 7.0
  * Requires at least: 5.1
- * Tested up to: 6.5.2
+ * Tested up to: 6.5.3
  * Domain Path: /languages
  * License:  GPLv2 or later
  */
