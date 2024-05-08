@@ -38,7 +38,7 @@ function btcbi_activate_plugin($network_wide)
     }
     if (version_compare(PHP_VERSION, '7.0', '<')) {
         wp_die(
-            esc_html__('Forms Integrationsw requires PHP version 5.6.', 'bit-integrations'),
+            esc_html__('Forms Integrationsw requires PHP version 7.0.', 'bit-integrations'),
             esc_html__('Error Activating', 'bit-integrations')
         );
     }
