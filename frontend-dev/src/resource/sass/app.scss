@@ -247,7 +247,7 @@ input[type="checkbox"].disabled:checked:before {
 }
 
 .txt-pro {
-  color: crimson;
+  color: rgb(255, 255, 255);
 }
 
 .bg-pro {
@@ -358,6 +358,14 @@ input[type="checkbox"].disabled:checked:before {
 
   &:hover {
     background: #67cbf0;
+  }
+}
+
+.green {
+  background-color: #20c588 !important;
+
+  &:hover {
+    background: #20c588;
   }
 }
 
@@ -1265,7 +1273,8 @@ input[type="checkbox"].disabled:checked:before {
   overflow: hidden;
   border-radius: 15px;
   outline: none;
-  box-shadow: 0px 2px 3px #d7e0ed;
+  border: 1px solid #dce7ff;
+  // box-shadow: 0px 2px 3px #d7e0ed;
   background-color: aliceblue;
   transition: box-shadow 0.2s, transform 0.3s;
 
@@ -1357,7 +1366,8 @@ input[type="checkbox"].disabled:checked:before {
     max-width: 100px;
     max-height: 100px;
     object-fit: contain;
-    margin: 0 auto;
+    // margin: 0 auto;
+    margin-top: 8px;
     padding: 12px;
   }
 
@@ -1416,13 +1426,13 @@ input[type="checkbox"].disabled:checked:before {
 
   & .pro-filter {
     display: flex;
-    background: #4e5a9447;
+    // background: #4e5a9447;
     position: absolute;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 100%;
+    text-align: right;
+    align-items: right;
+    justify-content: right;
+    flex-direction: row;
+    // height: 100%;
     width: 100%;
     z-index: 9;
 
@@ -1436,14 +1446,16 @@ input[type="checkbox"].disabled:checked:before {
     }
 
     & .txt-pro {
-      background: transparentize(white, 0.1);
-      padding: 8px;
+      background: transparentize(rgb(133, 86, 233), 0.1);
+      padding: 7px;
       pointer-events: all;
-      font-size: 14px;
+      font-size: 10px;
       font-weight: 600;
-      margin-top: 5px;
-      border-radius: 5px;
-      z-index: 4;
+      margin-top: 0px;
+      border-radius: 22px 15px 12px 30px;;
+      z-index: 1;
+      box-shadow: 0px 2px 4px #e1d4ff;
+      transition: box-shadow 0.2s, transform 0.3s;
     }
   }
 }
@@ -1667,7 +1679,7 @@ nav.top-nav {
 }
 
 .nav-wrp {
-  background: $dp-bg;
+  background: #240742;
   height: 230px;
   padding: 20px;
 }
@@ -1687,7 +1699,7 @@ nav.top-nav {
 
 .top-nav>a {
   display: inline-flex;
-  background: $dp-bg;
+  background: #44297c;
   color: #fff;
   align-items: center;
   justify-content: center;
@@ -2724,6 +2736,14 @@ nav.top-nav {
   color: #0e112f !important;
   font-weight: bold !important;
 }
+.blink{
+  animation: blink 2s linear infinite;
+}
+@keyframes blink{
+  0%{opacity: 0;}
+  50%{opacity: .5;}
+  100%{opacity: 1;}
+  }
 
 .btcd-f-settings {
   background-color: $light-bg;

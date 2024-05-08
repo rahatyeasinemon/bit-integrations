@@ -138,7 +138,7 @@ export default function SelectTrigger() {
                   >
                     {(allTriggers?.data[inte]?.isPro && !isPro) && (
                       <div className="pro-filter">
-                        <span className="txt-pro"><a href="https://bitapps.pro/bit-integrations" target="_blank" rel="noreferrer">{__('Premium', 'bit-integrations')}</a></span>
+                        <span className="txt-pro"><a href="https://bitapps.pro/bit-integrations" target="_blank" rel="noreferrer">{__('Pro', 'bit-integrations')}</a></span>
                       </div>
                     )}
                     <GetLogo name={inte} extension="webp" />

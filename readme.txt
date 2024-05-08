@@ -4,7 +4,7 @@ Tags: automation,integration,automator,form builder integration,webhook
 Requires at least: 5.1
 Tested up to: 6.5.2
 Requires PHP: 7.0
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 65+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -947,15 +947,28 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 
 == Changelog ==
 
+= 2.0.2  =
+_Release Date -6th May 2024_
+
+- **New Features :**
+  - ClickUp: Attachment action added
+  
+- **Improvements :**
+  - Contact Form 7: converted file path into file URL
+
+- **Fixes :**
+  - ZagoMail: Tag explode
+  - Klaviyo: List limitation
+  - MailerLite: Group fetch
+
 = 2.0.1  =
-*Release Date - *6th May 2024\*
+_Release Date -6th May 2024_
 
 - **Fixes :**
   - Woocommerce: specific task order change issue 
 
-
 = 2.0.0  =
-*Release Date - *25th April 2024\*
+_Release Date -25th April 2024_
 
 - **New Improvements :**
   - Expanded Integration Options: In compliance with WordPress guidelines, we have updated the plugin to offer unlimited integration possibilities. Previously, users were limited to creating only one integration, but now they can create unlimited integrations using a wide range of triggers.
@@ -972,13 +985,13 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Existing Integrations: Users who have created integrations using triggers other than those listed above in the previous version of the plugin need not worry. This update will not affect their existing integrations, and they will continue to run properly. However, they will be unable to edit these integrations unless they are using one of the newly added triggers.
 
 = 1.6.5  =
-*Release Date - *22th April 2024\*
+_Release Date -22th April 2024_
 
 - **Improvements :**
   - Unusefull code removed.
 
 = 1.6.4  =
-*Release Date - *18th April 2024\*
+_Release Date -18th April 2024_
 
 - **New Triggers :**
   - Mailpoet
@@ -990,7 +1003,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - MailChimp: Field Mapping visibility 
 
 = 1.6.3  =
-*Release Date - *6th April 2024\*
+_Release Date -6th April 2024_
 
 - **New Features :**
   - Keap: Custom Fields Added
@@ -1015,7 +1028,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - ActionHook: Remove test option hook
 
 = 1.6.2  =
-*Release Date - *19th March 2024\*
+_Release Date -19th March 2024_
 
 - **New Features :**
   - WooCommerce: Order Attribution Tracking fields
@@ -1042,7 +1055,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Telegram: file attachment upload
 
 = 1.6.1  =
-*Release Date - *21th February 2024\*
+_Release Date -21th February 2024_
 
 - **New Features :**
   - WooCommerce: Order module checkout custom field & customer Note
@@ -1057,7 +1070,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Pipedrive: Multiple label
 
 = 1.6.0  =
-*Release Date - *5th February 2024\*
+_Release Date -5th February 2024_
 
 - **New Triggers :**
   - Spectra
@@ -1079,7 +1092,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - WooCommerce: custom field mapping
 
 = 1.5.9  =
-*Release Date - *21th January 2024\*
+_Release Date -21th January 2024_
 
 - **New Actions :**
   - Action Hook
@@ -1102,7 +1115,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Goggle Sheet: checkbox array data
 
 = 1.5.8  =
-*Release Date - *11th January 2024\*
+_Release Date -11th January 2024_
 
 - **New Actions :**
   - Zagomail - Email marketing & Automation -  Zagomail Integration & Automation
@@ -1120,7 +1133,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Notion: file attachment issue
 
 = 1.5.7  =
-*Release Date - *1st January 2024\*
+_Release Date -1st January 2024_
 
 - **New Actions :**
   - Discord | Your Place to Talk and Hang Out -  Discord Integration & Automation
@@ -1134,7 +1147,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Zoho Desk: Fixed Custom multi-select field and multiple attachment store
 
 = 1.5.6  =
-*Release Date - *20th December 2023\*
+_Release Date -20th December 2023_
 
 - **New Actions :**
   - Systeme.io - The only tool you need to launch your online business -  Systeme.io Integration & Automation
@@ -1152,7 +1165,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Hubspot custom field issue fixed
 
 = 1.5.5  =
-*Release Date - *5th December 2023\*
+_Release Date -5th December 2023_
 
 - **New Actions :**
   - Nutshell CRM: Simple Pipeline & Contact Management - Nutshell CRM Integration & Automation
@@ -1165,7 +1178,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Salesforce custom field issue fixed
 
 = 1.5.4  =
-*Release Date - *20th November 2023\*
+_Release Date -20th November 2023_
 
 - **Fixes :**
   - Brizy global footer form issue fixed
@@ -1177,7 +1190,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Formidable section fields issue fixed
 
 = 1.5.3  =
-*Release Date - *7th November 2023\*
+_Release Date -7th November 2023_
 
 - **Fixes :**
   - Woocommerce multiple image upload issue fixed
@@ -1188,7 +1201,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Tripetto form issue fixed
 
 = 1.5.2  =
-*Release Date - *30th October 2023\*
+_Release Date -30th October 2023_
 
 - **Fixes :**
   - Acumbamail data submission issue fixed
@@ -1201,7 +1214,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Custom Action validation issue fixed
 
 = 1.5.1  =
-*Release Date - *18th October 2023\*
+_Release Date -18th October 2023_
 
 - **Fixes :**
   - Post create isssue fixed.
@@ -1219,7 +1232,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - BuddyBoss logHandler message issue fixed
 
 = 1.5.0  =
-*Release Date - *3rd October 2023\*
+_Release Date -3rd October 2023_
 
 - **New Triggers :**
   - Academy LMS: eLearning and online course solution for WordPress
@@ -1240,7 +1253,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Woocommerse order create issue fixed
 
 = 1.4.3  =
-*Release Date - *6th September 2023\*
+_Release Date -6th September 2023_
 
 - **Fixes :**
   - FluentSupport business inbox issue fixed
@@ -1252,7 +1265,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Custom field blank screen issue fixed
 
 = 1.4.0 - 1.4.2  =
-*Release Date - *29th August 2023\*
+_Release Date -29th August 2023_
 
 - **New Actions :**
   - Perfex CRM: Customer Relationship & Project Management - Perfex CRM Integration & Automation
@@ -1266,7 +1279,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Fluent CRM issues Fixed
 
 = 1.3.9 =
-*Release Date - *27th July 2023\*
+_Release Date -27th July 2023_
 
 - **New Actions :**
   - CRM Software To Grow Your Business | Try Nimble Free - Nimble Integration & Automation
@@ -1290,7 +1303,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Notion file upload issue fixed
 
 = 1.3.8 =
-*Release Date - *4th July 2023\*
+_Release Date -4th July 2023_
 
 - **New Actions :**
   - CompanyHub: A Sales Automation CRM for Sales Teams - CompanyHub Integration & Automation
@@ -1303,7 +1316,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Mautic Field Fetch Issue Fixed
 
 = 1.3.7 =
-*Release Date - *13th June 2023\*
+_Release Date -13th June 2023_
 
 - **New Actions :**
   - LionDesk(R) - Integrated CRM Platform & Marketing Automation - LionDesk Integration & Automation
@@ -1324,7 +1337,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
   - Accumbamail note field added.
 
 = 1.3.5 - 1.3.6 =
-_Release Date - _ May 2023\*
+_Release Date - May 2023_
 
 - **New Actions :**
   - All-in-one solution for your marketing communications - Sarbacane(Mailify) Integration & Automation
@@ -1344,7 +1357,7 @@ _Release Date - _ May 2023\*
   - Custom Action: If server have exec function then custom code are validate , otherwise function are not validated .But user can create integration & Automation. If code crush or error then Bit Integration & Automation are not responsible.
 
 = 1.3.4 =
-_Release Date - _ April 2023\*
+_Release Date - April 2023_
 
 - **New Triggers :**
   - Powerful Elementor Addons - Piotnet Addons For Elementor (PAFE) - Piotnet Addons For Elementor(PAFE only form) Integration & Automation
@@ -1561,7 +1574,7 @@ _Release Date - 24 September 2022_
   - WooCommerce 'Order specific product' issue fixed.
 
 = 1.1.7 =
-_Release Date - _ September 2022\*
+_Release Date - September 2022_
 
 - **New Actions :**
   - Salesforce: The Customer Company - Salesforce.com US - Salesforce (pro) Integration & Automation

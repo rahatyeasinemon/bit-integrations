@@ -90,9 +90,10 @@ function App() {
               <a
                 target="_blank"
                 href="https://wordpress.org/plugins/bit-integrations/#reviews"
-                className="app-link"
+                className="app-link green blink"
                 rel="noreferrer"
               >
+                {/* <marquee behavior="scroll" direction="up"></marquee> */}
                 {__('Review us', 'bit-integrations')}
               </a>
 
