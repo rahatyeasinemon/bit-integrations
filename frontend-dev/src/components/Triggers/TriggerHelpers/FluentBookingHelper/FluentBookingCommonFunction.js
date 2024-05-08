@@ -3,7 +3,7 @@ import bitsFetch from '../../../../Utils/bitsFetch'
 import { __ } from '../../../../Utils/i18nwrap'
 
 export const getFluentFluentBookingFields = (setFlowData, value, edit, setFormFields) => {
-    bitsFetch(
+    const loadFields = bitsFetch(
         { id: value },
         'fluentbooking/get/fields',
         null,
@@ -20,6 +20,12 @@ export const getFluentFluentBookingFields = (setFlowData, value, edit, setFormFi
         }
 
         return 'Fields fetching failed. please try again'
+    })
+
+    toast.promise(loadFields, {
+        success: (data) => data,
+        error: __('Error Occurred', 'bit-integrations'),
+        loading: __('Loading fields...'),
     })
 }
 
