@@ -4,7 +4,7 @@ Tags: automation,integration,automator,form builder integration,webhook
 Requires at least: 5.1
 Tested up to: 6.5.3
 Requires PHP: 7.0
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 65+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -947,8 +947,15 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 
 == Changelog ==
 
+= 2.0.3  =
+_Release Date -9th May 2024_
+
+- **Fixes :**
+  - Notion: Custom Input Vissible
+  - Notion: ISO 8601 Date Format
+
 = 2.0.2  =
-_Release Date -6th May 2024_
+_Release Date -8th May 2024_
 
 - **New Features :**
   - ClickUp: Attachment action added

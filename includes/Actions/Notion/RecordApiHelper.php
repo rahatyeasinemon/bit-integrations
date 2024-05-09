@@ -7,6 +7,7 @@
 namespace BitCode\FI\Actions\Notion;
 
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
 
@@ -34,6 +35,8 @@ class RecordApiHelper
             $actionValue = $value->notionFormFields;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
+            } elseif (!\is_null($value->customValue)) {
+                $dataFinal[$actionValue] = $value->customValue;
             } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
@@ -79,7 +82,7 @@ class RecordApiHelper
 
                 break;
             case 'date':
-                return ['start' => $value];
+                return ['start' => Helper::formatToISO8601($value)];
             case 'checkbox':
                 return settype($value, 'boolean');
             case 'select':
