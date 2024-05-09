@@ -10,7 +10,7 @@ import Modal from '../components/Utilities/Modal'
 export default function ChangelogToggle() {
     const btcbi = useRecoilValue($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const version = btcbi.isPro ? '2.0.2' : '2.0.2'
+    const version = btcbi.isPro ? '2.0.3' : '2.0.3'
     return (
         <div className="changelog-toggle">
             <button
@@ -27,18 +27,18 @@ export default function ChangelogToggle() {
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
                         <h3>What's New in {version}?</h3>
-                        <small className='date'> <b>8th May 2024</b></small>
+                        <small className='date'> <b>9th May 2024</b></small>
                     </div>
                     <div className='changelog-content'>
                         {/* <h4>New Integration</h4> */}
                         {/* <p>New Integration</p> */}
-                        <span className='new-feature' ><b>New Features</b></span>
+                        {/* <span className='new-feature' ><b>New Features</b></span>
 
                         <div className='integration-list'>
                             <ul>
                                 <li>ClickUp: Attachment action added</li>
                             </ul>
-                        </div>
+                        </div> */}
 
                         {/* <span className='new-feature'><b>Compatibility Update:</b></span>
 
@@ -47,23 +47,22 @@ export default function ChangelogToggle() {
                                 <li><b>Existing Integrations:</b> Users who have created integrations using triggers other than those listed above in the previous version of the plugin need not worry. This update will not affect their existing integrations, and they will continue to run properly. However, they will be unable to edit these integrations unless they are using one of the newly added triggers.</li>
                             </ul>
                         </div> */}
-                        <span className='new-integration' style={{ background: "cornflowerblue" }}><b>New Improvements</b></span>
+                        {/* <span className='new-integration' style={{ background: "cornflowerblue" }}><b>New Improvements</b></span>
 
                         <div className='integration-list'>
                             <ul>
                                 <li>Contact Form 7: converted file path into file URL</li>
 
                             </ul>
-                        </div>
+                        </div> */}
 
 
                         <span className='fixes'><b>Fixed</b></span>
 
                         <div className='fixes-list'>
                             <ul>
-                                <li> ZagoMail: Tag explode </li>
-                                <li> Klaviyo: List limitation </li>
-                                <li> MailerLite: Group fetch </li>
+                                <li> Notion: Custom Input Vissible </li>
+                                <li> Notion: ISO 8601 Date Format </li>
                             </ul>
                         </div>
                     </div>
