@@ -3,6 +3,8 @@
 namespace BitCode\FI\Core\Util;
 
 use BitCode\FI\Triggers\TriggerController;
+use DateTime;
+use Exception;
 use stdClass;
 use WP_Error;
 
@@ -37,6 +39,17 @@ final class Helper
         }
 
         return $data;
+    }
+
+    public static function formatToISO8601($dateString)
+    {
+        try {
+            $date = new DateTime($dateString);
+
+            return $date->format(DateTime::ATOM); // DateTime::ATOM is the ISO-8601 format
+        } catch (Exception $e) {
+            return $dateString;
+        }
     }
 
     public static function uploadFeatureImg($filePath, $postID)
