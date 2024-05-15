@@ -228,19 +228,6 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
 
   return (
     <div className="pos-rel">
-      {!isPro && (
-        <div className="pro-blur flx w-10" style={{ top: -25 }}>
-          <div className="pro">
-            {__('Available On', 'bit-integrations')}
-            <a href="https://bitapps.pro/" target="_blank" rel="noreferrer">
-              <span className="txt-pro">
-                {' '}
-                {__('Premium', 'bit-integrations')}
-              </span>
-            </a>
-          </div>
-        </div>
-      )}
       <div className="d-flx flx-wrp">
         <TableCheckBox onChange={(e) => actionHandler(e, 'workflow')} checked={tab === 0 ? 'workflow' in crmConf.actions : 'workflow' in crmConf.relatedlists[tab - 1].actions} className="wdt-200 mt-4 mr-2" value="Workflow" title={__('Workflow', 'bit-integrations')} subTitle={__('Trigger CRM workflows', 'bit-integrations')} />
         <TableCheckBox onChange={() => setActionMdl({ show: 'attachment' })} checked={tab === 0 ? 'attachment' in crmConf.actions : 'attachment' in crmConf.relatedlists[tab - 1].actions} className="wdt-200 mt-4 mr-2" value="Attachment" title={__('Attachment', 'bit-integrations')} subTitle={__('Add attachments or signatures from Trigger to CRM.', 'bit-integrations')} />
