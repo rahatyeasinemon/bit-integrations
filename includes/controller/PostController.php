@@ -2,6 +2,8 @@
 
 namespace BitCode\FI\controller;
 
+use BitCode\FI\Core\Util\Capabilities;
+
 final class PostController
 {
     public function __construct()
@@ -11,6 +13,9 @@ final class PostController
 
     public function getPostTypes()
     {
+        if (Capabilities::Check('manage_options') || Capabilities::Check('edit_posts') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations')) {
+            wp_send_json_error();
+        }
         $cptArguments = [
             'public'          => true,
             'capability_type' => 'post',
@@ -94,6 +99,10 @@ final class PostController
 
     public function getCustomFields($data)
     {
+        if (Capabilities::Check('manage_options') || Capabilities::Check('edit_posts') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations')) {
+            wp_send_json_error();
+        }
+
         $acf = self::getAcfFields($data->post_type);
 
         $metabox = self::getMetaboxFields($data->post_type);
@@ -109,6 +118,9 @@ final class PostController
 
     public function getPages()
     {
+        if (Capabilities::Check('manage_options') || Capabilities::Check('edit_posts') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations')) {
+            wp_send_json_error();
+        }
         $pages = get_pages(['post_status' => 'publish', 'sort_column' => 'post_date', 'sort_order' => 'desc']);
         $allPages = [];
         foreach ($pages as $pageKey => $pageDetails) {
@@ -121,6 +133,9 @@ final class PostController
 
     public function getPodsPostType()
     {
+        if (Capabilities::Check('manage_options') || Capabilities::Check('edit_posts') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations')) {
+            wp_send_json_error();
+        }
         $users = get_users(['fields' => ['ID', 'display_name']]);
         $pods = [];
         $podsAdminExists = is_plugin_active('pods/init.php');

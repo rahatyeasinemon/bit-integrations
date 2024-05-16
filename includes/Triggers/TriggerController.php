@@ -3,6 +3,7 @@
 namespace BitCode\FI\Triggers;
 
 use BitCode\FI\Core\Util\AllTriggersName;
+use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\Hooks;
 use FilesystemIterator;
 use WP_Error;
@@ -11,6 +12,9 @@ final class TriggerController
 {
     public static function triggerList()
     {
+        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations')) {
+            wp_send_json_error();
+        }
         $triggers = [];
         $dirs = new FilesystemIterator(__DIR__);
 

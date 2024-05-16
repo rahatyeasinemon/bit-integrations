@@ -2,6 +2,7 @@
 
 namespace BitCode\FI\Flow;
 
+use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\CustomFuncValidator;
 use BitCode\FI\Core\Util\IpTool;
@@ -48,6 +49,9 @@ final class Flow
 
     public function flowList()
     {
+        if (Capabilities::Check('list_users') || Capabilities::Check('bit_integrations_manage_integrations')) {
+            wp_send_json_error();
+        }
         $integrationHandler = new FlowController();
         $triggers = $this->triggers();
         $integrations = $integrationHandler->get(
@@ -76,6 +80,9 @@ final class Flow
 
     public function get($data)
     {
+        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations')) {
+            wp_send_json_error();
+        }
         $missing_field = null;
         if (!property_exists($data, 'id')) {
             $missing_field = 'Integration ID';
@@ -123,6 +130,9 @@ final class Flow
 
     public function save($data)
     {
+        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations')) {
+            wp_send_json_error();
+        }
         $missing_field = null;
         if (!property_exists($data, 'trigger')) {
             $missing_field = 'Trigger';
@@ -163,6 +173,9 @@ final class Flow
 
     public function flowClone($data)
     {
+        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations')) {
+            wp_send_json_error();
+        }
         $missingId = null;
         $user_details = IpTool::getUserDetail();
         if (!property_exists($data, 'id')) {
@@ -198,6 +211,9 @@ final class Flow
 
     public function update($data)
     {
+        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_edit_integrations')) {
+            wp_send_json_error();
+        }
         $missing_field = null;
         if (empty($data->id)) {
             $missing_field = 'Integration id';
@@ -232,6 +248,9 @@ final class Flow
 
     public function delete($data)
     {
+        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_delete_integrations')) {
+            wp_send_json_error();
+        }
         $missing_field = null;
         if (empty($data->id)) {
             $missing_field = 'Integration id';
@@ -245,10 +264,14 @@ final class Flow
             wp_send_json_error($deleteStatus->get_error_message());
         }
         wp_send_json_success(__('Integration deleted successfully', 'bit-integrations'));
+        // }
     }
 
     public function bulkDelete($param)
     {
+        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_delete_integrations')) {
+            wp_send_json_error();
+        }
         if (!\is_array($param->flowID) || $param->flowID === []) {
             wp_send_json_error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), 'Integration id'));
         }
@@ -264,6 +287,9 @@ final class Flow
 
     public function toggle_status($data)
     {
+        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_edit_integrations')) {
+            wp_send_json_error();
+        }
         $missing_field = null;
         if (!property_exists($data, 'status')) {
             $missing_field = 'status';

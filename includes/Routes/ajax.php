@@ -1,4 +1,5 @@
 <?php
+
 // If try to direct access  plugin folder it will Exit
 if (!defined('ABSPATH')) {
     exit;
@@ -28,9 +29,9 @@ Route::post('flow/clone', [Flow::class, 'flowClone']);
 // Controller
 Route::post('customfield/list', [PostController::class, 'getCustomFields']);
 Route::get('pods/list', [PostController::class, 'getPodsPostType']);
+Route::get('page/list', [PostController::class, 'getPages']);
+Route::post('post-types/list', [PostController::class, 'getPostTypes']);
 Route::post('pods/fields', [PostController::class, 'getPodsField']);
 Route::post('user/list', [UserController::class, 'getWpUsers']);
 Route::get('role/list', [UserController::class, 'getUserRoles']);
-Route::get('page/list', [PostController::class, 'getPages']);
-Route::post('post-types/list', [PostController::class, 'getPostTypes']);
 // Controller

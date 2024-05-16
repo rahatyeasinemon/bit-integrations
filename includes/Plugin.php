@@ -47,6 +47,8 @@ final class Plugin
     {
         Hooks::add('init', [$this, 'init_classes'], 8);
         Hooks::add('init', [$this, 'integrationlogDelete'], 11);
+        Hooks::add('init', [$this, 'add_capability_to_administrator'], 11);
+        Hooks::add('init', [$this, 'remove_capability_to_administrator'], 11);
         Hooks::filter('plugin_action_links_' . plugin_basename(BTCBI_PLUGIN_MAIN_FILE), [$this, 'plugin_action_links']);
     }
 
@@ -62,6 +64,24 @@ final class Plugin
             (new Admin_Bar())->register();
         }
         new HookService();
+    }
+
+    public function add_capability_to_administrator()
+    {
+        $role = get_role('administrator');
+        $role->add_cap('bit_integrations_manage_integrations');
+        $role->add_cap('bit_integrations_create_integrations');
+        $role->add_cap('bit_integrations_edit_integrations');
+        $role->add_cap('bit_integrations_delete_integrations');
+    }
+
+    public function remove_capability_to_administrator()
+    {
+        $role = get_role('administrator');
+        $role->remove_cap('bit_integrations_manage_integrations');
+        $role->remove_cap('bit_integrations_create_integrations');
+        $role->remove_cap('bit_integrations_edit_integrations');
+        $role->remove_cap('bit_integrations_delete_integrations');
     }
 
     /**

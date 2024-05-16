@@ -2,12 +2,12 @@
 Contributors: bitpressadmin
 Tags: automation,integration,automator,form builder integration,webhook
 Requires at least: 5.1
-Tested up to: 6.5
+Tested up to: 6.5.2
 Requires PHP: 7.0
 Stable tag: 2.0.0
 License: GPLv2 or later
 
-Automation Plugin for WordPress; Integration of 65+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
+Automation Plugin for WordPress like Zapier; Integration of 65+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
 
 == Description ==
 
