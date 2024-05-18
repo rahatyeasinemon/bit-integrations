@@ -49,7 +49,7 @@ final class Flow
 
     public function flowList()
     {
-        if (Capabilities::Check('list_users') || Capabilities::Check('bit_integrations_manage_integrations')) {
+        if (!Capabilities::Check('list_users') || !Capabilities::Check('bit_integrations_manage_integrations')) {
             wp_send_json_error();
         }
         $integrationHandler = new FlowController();
@@ -80,7 +80,7 @@ final class Flow
 
     public function get($data)
     {
-        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations')) {
+        if (!Capabilities::Check('manage_options') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_create_integrations')) {
             wp_send_json_error();
         }
         $missing_field = null;
@@ -130,7 +130,7 @@ final class Flow
 
     public function save($data)
     {
-        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations')) {
+        if (!Capabilities::Check('manage_options') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_create_integrations')) {
             wp_send_json_error();
         }
         $missing_field = null;
@@ -173,7 +173,7 @@ final class Flow
 
     public function flowClone($data)
     {
-        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations')) {
+        if (!Capabilities::Check('manage_options') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_create_integrations')) {
             wp_send_json_error();
         }
         $missingId = null;
@@ -211,7 +211,7 @@ final class Flow
 
     public function update($data)
     {
-        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_edit_integrations')) {
+        if (!Capabilities::Check('manage_options') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_edit_integrations')) {
             wp_send_json_error();
         }
         $missing_field = null;
@@ -248,7 +248,7 @@ final class Flow
 
     public function delete($data)
     {
-        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_delete_integrations')) {
+        if (!Capabilities::Check('manage_options') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_delete_integrations')) {
             wp_send_json_error();
         }
         $missing_field = null;
@@ -269,7 +269,7 @@ final class Flow
 
     public function bulkDelete($param)
     {
-        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_delete_integrations')) {
+        if (!Capabilities::Check('manage_options') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_delete_integrations')) {
             wp_send_json_error();
         }
         if (!\is_array($param->flowID) || $param->flowID === []) {
@@ -287,7 +287,7 @@ final class Flow
 
     public function toggle_status($data)
     {
-        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_edit_integrations')) {
+        if (!Capabilities::Check('manage_options') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_edit_integrations')) {
             wp_send_json_error();
         }
         $missing_field = null;

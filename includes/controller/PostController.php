@@ -13,7 +13,7 @@ final class PostController
 
     public function getPostTypes()
     {
-        if (Capabilities::Check('manage_options') || Capabilities::Check('edit_posts') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations')) {
+        if (!Capabilities::Check('manage_options') || !Capabilities::Check('edit_posts') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_create_integrations') || !Capabilities::Check('bit_integrations_edit_integrations')) {
             wp_send_json_error();
         }
         $cptArguments = [
@@ -99,7 +99,7 @@ final class PostController
 
     public function getCustomFields($data)
     {
-        if (Capabilities::Check('manage_options') || Capabilities::Check('edit_posts') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations')) {
+        if (!Capabilities::Check('manage_options') || !Capabilities::Check('edit_posts') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_create_integrations') || !Capabilities::Check('bit_integrations_edit_integrations')) {
             wp_send_json_error();
         }
 
@@ -118,7 +118,7 @@ final class PostController
 
     public function getPages()
     {
-        if (Capabilities::Check('manage_options') || Capabilities::Check('edit_posts') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations')) {
+        if (!Capabilities::Check('manage_options') || !Capabilities::Check('edit_posts') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_create_integrations')) {
             wp_send_json_error();
         }
         $pages = get_pages(['post_status' => 'publish', 'sort_column' => 'post_date', 'sort_order' => 'desc']);
@@ -133,7 +133,7 @@ final class PostController
 
     public function getPodsPostType()
     {
-        if (Capabilities::Check('manage_options') || Capabilities::Check('edit_posts') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations')) {
+        if (!Capabilities::Check('manage_options') || !Capabilities::Check('edit_posts') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_create_integrations') || !Capabilities::Check('bit_integrations_edit_integrations')) {
             wp_send_json_error();
         }
         $users = get_users(['fields' => ['ID', 'display_name']]);

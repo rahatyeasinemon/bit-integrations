@@ -13,7 +13,7 @@ final class UserController
 
     public function getWpUsers()
     {
-        if (Capabilities::Check('list_users') || Capabilities::Check('bit_integrations_manage_integrations')) {
+        if (!Capabilities::Check('list_users') || !Capabilities::Check('bit_integrations_manage_integrations')) {
             wp_send_json_error();
         }
 
@@ -24,7 +24,7 @@ final class UserController
 
     public function getUserRoles()
     {
-        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations')) {
+        if (!Capabilities::Check('manage_options') || !Capabilities::Check('bit_integrations_manage_integrations')) {
             wp_send_json_error();
         }
         global $wp_roles;

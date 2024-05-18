@@ -14,7 +14,7 @@ final class LogHandler
 
     public function get($data)
     {
-        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations')) {
+        if (!Capabilities::Check('manage_options') || !Capabilities::Check('bit_integrations_manage_integrations')) {
             wp_send_json_error();
         }
 
@@ -97,7 +97,7 @@ final class LogHandler
 
     public static function delete($data)
     {
-        if (Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations')) {
+        if (!Capabilities::Check('manage_options') || !Capabilities::Check('bit_integrations_manage_integrations')) {
             wp_send_json_error();
         }
         $condition = null;
