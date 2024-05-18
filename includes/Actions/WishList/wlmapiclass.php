@@ -18,7 +18,7 @@ class wlmapiclass
 
     public $key;
 
-    public $return_format = 'xml';
+    public $return_format = 'json';
 
     public $authenticated = 0;
 
@@ -29,8 +29,6 @@ class wlmapiclass
     public $method_emulation = 0;
 
     public $cookie_file;
-
-    public $lock;
 
     /**
      * Initailize wlmapi
@@ -107,10 +105,6 @@ class wlmapiclass
             return false;
         }
 
-        $url = $this->url . $this->return_format . $resource;
-        $output = HttpHelper::get($url, $data, null, ['sslverify' => false,  'cookies' => ['lock' => $this->lock]]);
-        error_log(print_r(['get req output' => $output], true));
-
         return $this->_request('GET', $this->_resourcefix($resource), $data);
     }
 
@@ -154,6 +148,11 @@ class wlmapiclass
         return $this->_request('DELETE', $this->_resourcefix($resource), $data);
     }
 
+    public function addCookieJar($handle, $r, $url)
+    {
+        curl_setopt($handle, CURLOPT_COOKIEFILE, $this->cookie_file);
+        curl_setopt($handle, CURLOPT_COOKIEJAR, $this->cookie_file);
+    }
     private function _request($method, $resource, $data = '')
     {
         if (\defined('WLMAPICLASS_PASS_NOCACHE_DATA') && WLMAPICLASS_PASS_NOCACHE_DATA) {
@@ -166,79 +165,11 @@ class wlmapiclass
 
         $data = empty($data) ? '' : http_build_query($data);
         $url = $this->url . $this->return_format . $resource;
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie_file);
-        curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie_file);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        add_action('http_api_curl', [$this, 'addCookieJar'], 10, 3);
+        $response = HttpHelper::request($url, strtoupper($method), $data, null, ['cookies' => ['lock' => $this->lock]]);
+        remove_action('http_api_curl', [$this, 'addCookieJar'], 10);
 
-        switch ($method) {
-            case 'PUT':
-            case 'DELETE':
-                if (!empty($this->fake) or !empty($this->method_emulation)) {
-                    $fake = urlencode('____FAKE____') . '=' . $method;
-                    $fake2 = urlencode('____METHOD_EMULATION____') . '=' . $method;
-                    if (empty($data)) {
-                        $data = $fake . '&' . $fake2;
-                    } else {
-                        $data .= '&' . $fake . '&' . $fake2;
-                    }
-                    curl_setopt($ch, CURLOPT_POST, 1);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-                } else {
-                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Length: ' . \strlen($data)]);
-                }
-
-                break;
-            case 'POST':
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-
-                break;
-            case 'GET':
-                if ($data) {
-                    $url .= '/&' . $data;
-                }
-
-                break;
-            default:
-                exit('Invalid Method: ' . $method);
-        }
-        // set the curl URL
-        curl_setopt($ch, CURLOPT_URL, $url);
-
-        // set user agent
-        curl_setopt($ch, CURLOPT_USERAGENT, 'WLMAPIClass');
-
-        // execute and grab the return data
-        $out = curl_exec($ch);
-        error_log(print_r(['req URL' => $url, 'response' => $out, 'method' => $method], true));
-        error_log(print_r(curl_error($ch), true));
-        curl_close($ch);
-
-        if (\defined('WLMAPICLASS_DEBUG')) {
-            $log = "-- WLMAPICLASS_DEBUG_START --\nURL: {$url}\nMETHOD: {$method}\nDATA: {$data}\nRESULT: {$out}\n-- WLMAPICLASS_DEBUG_END --\n";
-
-            if (filter_var(WLMAPICLASS_DEBUG, FILTER_VALIDATE_EMAIL)) {
-                $log_type = 1;
-            } elseif (file_exists(WLMAPICLASS_DEBUG)) {
-                $log_type = 3;
-            } else {
-                $log_type = 0;
-            }
-            $log_dest = $log_type ? WLMAPICLASS_DEBUG : null;
-        }
-
-        // remove \0 characters if return format is json
-        if (strtolower($this->return_format) == 'json') {
-            $out = str_replace('\\u0000', '', $out);
-        }
-
-        return $out;
+        return $response;
     }
 
     private function _resourcefix($resource)
@@ -258,38 +189,29 @@ class wlmapiclass
         $m = $this->return_format;
         $this->return_format = 'php';
 
-        $url = $this->url . $this->return_format . '/auth';
-        $output = HttpHelper::get($url, null, null, ['sslverify' => false]);
-        error_log(print_r(['raw output' => $output], true));
+        $output = $this->_request('GET', '/auth');
+
         $output = isset($output) ? unserialize($output) : '';
+
         if ($output['success'] != 1 || empty($output['lock'])) {
             $this->auth_error = 'No auth lock to open';
 
             return false;
         }
-        $hash = md5('WLMAPI2' . $output['lock'] . $this->key);
-        error_log('hash1 :  ' . $hash);
+
         $hash = md5($output['lock'] . $this->key);
-        $this->lock = $output['lock'];
+
         $this->authenticated = 1;
 
-        $this->return_format = $m;
-
-        return true;
-
-        error_log('hash2 :  ' . $hash);
-        // $hash = md5('WLMAPI2' . md5($output['lock'] . $this->key));
         $data = [
             'key'               => $hash,
             'support_emulation' => 1,
         ];
-        // error_log(print_r(['data' => $data, 'cookie_file' => file_get_contents($this->cookie_file), 'output' => $output], true));
-        // exit;
-        // $output = unserialize($this->_request('POST', '/auth', $data));
-        $output = HttpHelper::post($url, $data, null, ['sslverify' => false, 'timeout' => 500,  'cookies' => ['lock' => $output['lock']]]);
 
-        error_log(print_r(['output---->> success' => $output], true));
-        $output = \is_string($output) ? maybe_unserialize($output) : $output;
+        $output = $this->_request('POST', '/auth', $data);
+
+        $output = \is_string($output) ? unserialize($output) : $output;
+        error_log(print_r(['---->>' => $output, \is_string($output) ? 'ye': 'na'], true));
         if ($output['success'] == 1) {
             $this->authenticated = 1;
             if (!empty($output['support_emulation'])) {

@@ -34,9 +34,7 @@ final class WishListController
         $api = new wlmapiclass($base_url, $api_key);
         $api->return_format = 'json';
         $apiResponse = $api->get('/levels');
-        error_log(print_r($apiResponse, true));
-        
-        $apiResponse = json_decode($apiResponse);
+
         if (!(property_exists($apiResponse, 'success'))) {
             wp_send_json_error(
                 'Unauthorize',
@@ -76,7 +74,7 @@ final class WishListController
         $api = new wlmapiclass($base_url, $api_key);
         $api->return_format = 'json';
         $apiResponse = $api->get('/levels');
-        $apiResponse = json_decode($apiResponse)->levels->level;
+        $apiResponse = $apiResponse->levels->level;
 
         foreach ($apiResponse as $level) {
             $data[] = (object) [
@@ -108,7 +106,7 @@ final class WishListController
         $api = new wlmapiclass($base_url, $api_key);
         $api->return_format = 'json';
         $apiResponse = $api->get('/members');
-        $apiResponse = json_decode($apiResponse)->members->member;
+
 
         foreach ($apiResponse as $member) {
             $data[] = (object) [

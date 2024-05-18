@@ -64,6 +64,7 @@ final class HttpHelper
         // }
 
         static::$responseCode = wp_remote_retrieve_response_code($requestReponse);
+        error_log('COOKIE::::' . print_r($requestReponse['cookie'], true));
         $responseBody = wp_remote_retrieve_body($requestReponse);
         $jsonData = json_decode($responseBody);
 
