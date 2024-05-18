@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
-import { systemeIOAuthentication, getAllTags } from './SystemeIOCommonFunc'
+import { systemeIOAuthentication, getAllTags, getAllFields } from './SystemeIOCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 
@@ -17,10 +17,11 @@ export default function SystemeIOAuthorization({ systemeIOConf, setSystemeIOConf
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
+    getAllFields(systemeIOConf, setSystemeIOConf, setLoading)
+    getAllTags(systemeIOConf, setSystemeIOConf, setLoading)
 
     !systemeIOConf?.default
     setStep(2)
-    getAllTags(systemeIOConf, setSystemeIOConf, setLoading)
   }
 
   const handleInput = e => {
