@@ -48,6 +48,7 @@ const Getgist = lazy(() => import('./Getgist/Getgist'))
 const ElasticEmail = lazy(() => import('./ElasticEmail/ElasticEmail'))
 const WPCourseware = lazy(() => import('./WPCourseware/WPCourseware'))
 const TutorLms = lazy(() => import('./TutorLms/TutorLms'))
+const WishList = lazy(() => import('./WishList/WishList'))
 const Autonami = lazy(() => import('./Autonami/Autonami'))
 const Dropbox = lazy(() => import('./Dropbox/Dropbox'))
 const GoogleDrive = lazy(() => import('./GoogleDrive/GoogleDrive'))
@@ -236,6 +237,8 @@ export default function NewInteg({ allIntegURL }) {
         return <WPCourseware allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'Tutor Lms':
         return <TutorLms allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
+      case 'WishList':
+        return <WishList allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'RestrictContent':
         return <RestrictContent allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'Post Creation':

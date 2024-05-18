@@ -155,6 +155,7 @@ export default function SelectAction() {
     { type: 'SystemeIO' },
     { type: 'Discord' },
     { type: 'ZagoMail' },
+    { type: 'WishList' },
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(sortByField(integs, 'type', 'ASC') || integs)

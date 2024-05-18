@@ -44,6 +44,7 @@ const EnchargeAuthorization = lazy(() => import('./Encharge/EnchargeAuthorizatio
 const GetgistAuthorization = lazy(() => import('./Getgist/GetgistAuthorization'))
 const ElasticEmailAuthorization = lazy(() => import('./ElasticEmail/ElasticEmailAuthorization'))
 const WPCourseware = lazy(() => import('./WPCourseware/WPCoursewareAuthorization'))
+const WishListAuthorization = lazy(() => import('./WishList/WishListAuthorization'))
 const RestrictContentAuthorization = lazy(() => import('./RestrictContent/RestrictContentAuthorization'))
 const Slack = lazy(() => import('./Slack/SlackAuthorization'))
 const Trello = lazy(() => import('./Trello/TrelloAuthorization'))
@@ -239,6 +240,8 @@ export default function IntegInfo() {
         return <ElasticEmailAuthorization elasticEmailConf={integrationConf} step={1} isInfo />
       case 'WP Courseware':
         return <WPCourseware autonamiConf={integrationConf} step={1} isInfo />
+      case 'WishList':
+        return <WishListAuthorization wishlistConf={integrationConf} step={1} isInfo />
       case 'RestrictContent':
         return <RestrictContentAuthorization restrictConf={integrationConf} step={1} isInfo />
       case 'Mautic':
