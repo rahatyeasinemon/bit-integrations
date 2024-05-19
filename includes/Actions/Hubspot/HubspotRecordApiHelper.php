@@ -74,7 +74,7 @@ class HubspotRecordApiHelper
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
             } elseif (!\is_null($data[$triggerValue])) {
-                $dataFinal[$actionValue] = $data[$triggerValue];
+                $dataFinal[$actionValue] = \is_array($data[$triggerValue]) ? implode(';', $data[$triggerValue]) : $data[$triggerValue];
             }
         }
 
@@ -112,7 +112,7 @@ class HubspotRecordApiHelper
                     $formated = strtotime($data[$triggerValue]);
                     $dataFinal[$actionValue] = $formated;
                 } else {
-                    $dataFinal[$actionValue] = $data[$triggerValue];
+                    $dataFinal[$actionValue] = \is_array($data[$triggerValue]) ? implode(';', $data[$triggerValue]) : $data[$triggerValue];
                 }
             }
         }
@@ -175,7 +175,7 @@ class HubspotRecordApiHelper
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
             } elseif (!\is_null($data[$triggerValue])) {
-                $dataFinal[$actionValue] = $data[$triggerValue];
+                $dataFinal[$actionValue] = \is_array($data[$triggerValue]) ? implode(';', $data[$triggerValue]) : $data[$triggerValue];
             }
         }
 
