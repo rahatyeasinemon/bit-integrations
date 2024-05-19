@@ -48,7 +48,7 @@ final class TwilioController
         $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
 
         $xml = simplexml_load_string($apiResponse);
-        $json = json_encode($xml);
+        $json = wp_json_encode($xml);
         $response = json_decode($json, true);
 
         if (\array_key_exists('RestException', $response)) {

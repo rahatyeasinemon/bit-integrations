@@ -48,7 +48,7 @@ class RecordApiHelper
             'Authorization' => $authKey
         ];
 
-        return HttpHelper::post($apiEndpoints, json_encode($finalData), $headers);
+        return HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $headers);
     }
 
     public function generateReqDataFromFieldMap($data, $field_map)
@@ -71,7 +71,7 @@ class RecordApiHelper
     public function response($status, $code, $type, $typeName, $apiResponse)
     {
         $res = ['success' => $code === 200 ? true : false, 'message' => $apiResponse, 'code' => $code];
-        LogHandler::save($this->_integrationID, json_encode(['type' => $type, 'type_name' => $typeName]), $status, json_encode($res));
+        LogHandler::save($this->_integrationID, wp_json_encode(['type' => $type, 'type_name' => $typeName]), $status, wp_json_encode($res));
 
         return $res;
     }

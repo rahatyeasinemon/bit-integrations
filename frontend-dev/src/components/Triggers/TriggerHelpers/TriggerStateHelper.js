@@ -51,6 +51,8 @@ export const FormPluginStateHelper = (val, tmpNewFlow, resp, setNewFlow) => {
     UltimateMemberStateFP(val, tmpNewFlow, resp, setNewFlow);
   } else if (tmpNewFlow?.triggered_entity === "AcademyLms") {
     academylmsStateFP(val, tmpNewFlow, resp, setNewFlow);
+  } else if (tmpNewFlow?.triggered_entity === 'FluentBooking') {
+    fluentBookingStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else {
     setNewFlow(tmpNewFlow);
   }
@@ -92,6 +94,13 @@ export const tutorlmsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   }
   setNewFlow(tmpNewFlow);
 };
+
+export const fluentBookingStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
+  if (val) {
+    tmpNewFlow.triggerData.events = resp.data.events
+  }
+  setNewFlow(tmpNewFlow)
+}
 
 export const WooCommerceStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   if (val === "10" || val === "19") {
@@ -354,6 +363,17 @@ export const fluentCrmStateIH = (tmpConf, flowData, triggered_entity_id) => {
     tmpConf.selectedStatus = flowData?.selectedStatus;
     tmpConf.status = flowData.status;
   }
+  return tmpConf;
+};
+
+export const fluentBookingStateIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id;
+
+  if (formId) {
+    tmpConf.selectedEvent = flowData.selectedEvent;
+    tmpConf.events = flowData.events
+  }
+
   return tmpConf;
 };
 

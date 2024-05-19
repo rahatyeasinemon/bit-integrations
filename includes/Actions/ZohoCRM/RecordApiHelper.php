@@ -33,7 +33,7 @@ class RecordApiHelper
     public function upsertRecord($module, $data)
     {
         $insertRecordEndpoint = "{$this->_apiDomain}/{$module}/upsert";
-        $data = \is_string($data) ? $data : json_encode($data);
+        $data = \is_string($data) ? $data : wp_json_encode($data);
 
         return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
     }
@@ -41,7 +41,7 @@ class RecordApiHelper
     public function insertRecord($module, $data)
     {
         $insertRecordEndpoint = "{$this->_apiDomain}/{$module}";
-        $data = \is_string($data) ? $data : json_encode($data);
+        $data = \is_string($data) ? $data : wp_json_encode($data);
 
         return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
     }

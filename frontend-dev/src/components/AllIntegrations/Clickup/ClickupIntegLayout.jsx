@@ -222,7 +222,7 @@ export default function ClickupIntegLayout({ formFields, handleInput, clickupCon
           <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(clickupConf.field_map.length, clickupConf, setClickupConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
           <br />
           <br />
-          {/* <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
+          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
           <div className="btcd-hr mt-1" />
           <ClickupActions
             clickupConf={clickupConf}
@@ -230,7 +230,7 @@ export default function ClickupIntegLayout({ formFields, handleInput, clickupCon
             formFields={formFields}
             loading={loading}
             setLoading={setLoading}
-          /> */}
+          />
         </div>
       )}
     </>

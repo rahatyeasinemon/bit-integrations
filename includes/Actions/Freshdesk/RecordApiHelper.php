@@ -51,7 +51,7 @@ class RecordApiHelper
 
             return $sendPhotoApiHelper->allUploadFiles($apiEndpoint, $data, $api_key);
         }
-        $data = json_encode($data);
+        $data = wp_json_encode($data);
         $apiResponse = HttpHelper::post($apiEndpoint, $data, $header);
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             wp_send_json_error(
@@ -173,7 +173,7 @@ class RecordApiHelper
             'Authorization' => base64_encode("{$api_key}"),
             'Content-Type'  => 'application/json'
         ];
-        $data = json_encode($finalDataContact);
+        $data = wp_json_encode($finalDataContact);
         $apiEndpoint = $app_base_domamin . '/api/v2/contacts/' . $contactId;
 
         return HttpHelper::request($apiEndpoint, 'PUT', $data, $header);
@@ -234,9 +234,9 @@ class RecordApiHelper
         $apiResponse = $this->insertTicket($apiEndpoint, $finalData, $integrationDetails->api_key, $fileTicket);
 
         if (property_exists($apiResponse, 'errors')) {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', wp_json_encode($apiResponse));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'record', 'type_name' => 'add-contact']), 'success', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'add-contact']), 'success', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

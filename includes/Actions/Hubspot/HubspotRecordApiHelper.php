@@ -30,7 +30,7 @@ class HubspotRecordApiHelper
         $finalData['properties'] = $data;
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/contacts';
 
-        return HttpHelper::post($apiEndpoint, json_encode($finalData), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
     }
 
     public function insertDeal($finalData)
@@ -53,12 +53,12 @@ class HubspotRecordApiHelper
 
         $apiEndpoint = 'https://api.hubapi.com/deals/v1/deal';
 
-        return HttpHelper::post($apiEndpoint, json_encode($data), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($data), $this->defaultHeader);
     }
 
     public function insertTicket($finalData)
     {
-        $data = json_encode(['properties' => $finalData]);
+        $data = wp_json_encode(['properties' => $finalData]);
         $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/tickets';
 
         return HttpHelper::post($apiEndpoint, $data, $this->defaultHeader);

@@ -138,7 +138,7 @@ class WebHooksController
             $payload = self::processKeyValue($details->body->data, $fieldValues);
         }
         if (isset($details->body->type) && $details->body->type === 'application/json' || $details->body->type === 'raw') {
-            $payload = json_encode((object) $payload, JSON_PRETTY_PRINT);
+            $payload = wp_json_encode((object) $payload, JSON_PRETTY_PRINT);
         } elseif ('multipart/form-data' === $details->body->type) {
             if (!empty($payload)) {
                 $payloadString = '';

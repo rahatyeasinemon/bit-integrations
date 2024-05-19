@@ -133,14 +133,14 @@ final class PodsController
                         $attachmentId = Helper::multiFileMoveWpMedia($fieldValues[$triggerValue], $postId);
                         if (!empty($attachmentId)) {
                             update_post_meta($postId, $actionValue, $attachmentId);
-                            update_post_meta($postId, '_pods_' . $actionValue, json_encode($attachmentId));
+                            update_post_meta($postId, '_pods_' . $actionValue, wp_json_encode($attachmentId));
                         }
                     } else {
                         $file = \is_array($fieldValues[$triggerValue]) ? $fieldValues[$triggerValue][0] : $fieldValues[$triggerValue];
                         $attachmentId = Helper::singleFileMoveWpMedia($file, $postId);
                         if (!empty($attachmentId)) {
                             update_post_meta($postId, $actionValue, $attachmentId);
-                            update_post_meta($postId, '_pods_' . $actionValue, json_encode($attachmentId));
+                            update_post_meta($postId, '_pods_' . $actionValue, wp_json_encode($attachmentId));
                         }
                     }
                 }

@@ -118,6 +118,9 @@ final class Flow
                     'postId' => $integration->flow_details->postId,
                 ];
                 $integration->fields = $trigger::fields($data);
+            } elseif (method_exists($trigger, 'formattedParam')) {
+                $data = $trigger::formattedParam($integration);
+                $integration->fields = $trigger::fields($data);
             } else {
                 $integration->fields = $trigger::fields($integration->triggered_entity_id);
             }
@@ -125,6 +128,7 @@ final class Flow
         if (property_exists($integration->flow_details, 'fields')) {
             $integration->fields = $integration->flow_details->fields;
         }
+
         wp_send_json_success(['integration' => $integration]);
     }
 
@@ -390,7 +394,7 @@ final class Flow
                     && !Common::checkCondition($flowData->flow_details->condition->logics, $data)
                 ) {
                     // echo "status: " . !Common::checkCondition($flowData->flow_details->condition->logics, $data) . "<br>";
-                    // print_r(json_encode($flowData->flow_details->condition->logics));
+                    // print_r(wp_json_encode($flowData->flow_details->condition->logics));
 
                     $error = new WP_Error('Conditional Logic False', __('Conditional Logic not matched', 'bit-integrations'));
                     if (isset($flowData->id)) {

@@ -35,10 +35,12 @@ class MailerLiteController
         // die;
         if ('v2' === $refreshFieldsRequestParams->version) {
             $apiKey = $refreshFieldsRequestParams->auth_token;
-            $endpoint = self::$_baseUrlV2 . 'groups/';
-            $header = ['Authorization' => "Bearer {$apiKey}"];
+            $endpoint = self::$_baseUrlV2 . 'groups';
+            $header = [
+                'Authorization' => "Bearer {$apiKey}",
+                'Accept'        => 'application/json',
+            ];
             $response = HttpHelper::get($endpoint, null, $header);
-
             $formattedResponse = [];
 
             foreach ($response->data as $value) {

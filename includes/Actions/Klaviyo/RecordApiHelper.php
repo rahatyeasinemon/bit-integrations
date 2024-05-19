@@ -42,7 +42,7 @@ class RecordApiHelper
         ];
 
         $apiEndpoints = "{$this->baseUrl}profiles";
-        $apiResponse = HttpHelper::post($apiEndpoints, json_encode($data), $headers);
+        $apiResponse = HttpHelper::post($apiEndpoints, wp_json_encode($data), $headers);
         if (!isset($apiResponse->data)) {
             return $apiResponse;
         }
@@ -56,7 +56,7 @@ class RecordApiHelper
 
         $apiEndpoints = "{$this->baseUrl}lists/{$listId}/relationships/profiles";
 
-        return HttpHelper::post($apiEndpoints, json_encode($data), $headers);
+        return HttpHelper::post($apiEndpoints, wp_json_encode($data), $headers);
     }
 
     public function generateReqDataFromFieldMap($data, $field_map)
@@ -85,10 +85,10 @@ class RecordApiHelper
         $apiResponse = $this->addMember($authKey, $listId, (object) $finalData);
         if (isset($apiResponse->errors)) {
             $res = ['success' => false, 'message' => $apiResponse->errors[0]->detail, 'code' => 400];
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'members', 'type_name' => 'add-members']), 'error', json_encode($res));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'members', 'type_name' => 'add-members']), 'error', wp_json_encode($res));
         } else {
             $res = ['success' => true, 'message' => $apiResponse, 'code' => 200];
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'members', 'type_name' => 'add-members']), 'success', json_encode($res));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'members', 'type_name' => 'add-members']), 'success', wp_json_encode($res));
         }
 
         return $apiResponse;

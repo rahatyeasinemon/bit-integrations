@@ -73,7 +73,7 @@ class RecordApiHelper
             ],
         ];
 
-        return HttpHelper::post($apiEndpoint, json_encode($dataNew), $headers);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($dataNew), $headers);
     }
 
     public function searchContact($data)
@@ -120,7 +120,7 @@ class RecordApiHelper
             ],
         ];
 
-        return HttpHelper::request($apiEndpoint, 'PATCH', json_encode($dataNew), $headers);
+        return HttpHelper::request($apiEndpoint, 'PATCH', wp_json_encode($dataNew), $headers);
     }
 
     public function handleUploadPhoto($imageLocation, $resourceName)
@@ -141,7 +141,7 @@ class RecordApiHelper
             'personFields' => 'addresses,biographies,emailAddresses,names,phoneNumbers'
         ];
 
-        return HttpHelper::request($apiEndpoint, 'PATCH', json_encode($dataNew), $headers);
+        return HttpHelper::request($apiEndpoint, 'PATCH', wp_json_encode($dataNew), $headers);
     }
 
     public function executeRecordApi($integrationId, $fieldValues, $fieldMap, $actions, $mainAction)
@@ -152,7 +152,7 @@ class RecordApiHelper
                 if ($value->formField === 'custom' && isset($value->customValue) && Common::replaceFieldWithValue($value->customValue, $fieldValues)) {
                     $fieldData[$value->googleContactsFormField] = Common::replaceFieldWithValue($value->customValue, $fieldValues);
                 } else {
-                    $fieldData[$value->googleContactsFormField] = \is_array($fieldValues[$value->formField]) ? json_encode($fieldValues[$value->formField]) : $fieldValues[$value->formField];
+                    $fieldData[$value->googleContactsFormField] = \is_array($fieldValues[$value->formField]) ? wp_json_encode($fieldValues[$value->formField]) : $fieldValues[$value->formField];
                 }
             }
         }
@@ -165,9 +165,9 @@ class RecordApiHelper
                 $this->handleUploadPhoto($fieldData, $imageLocation, $resourceName);
             }
             if (!property_exists($contactResponse, 'error')) {
-                LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'insert']), 'success', json_encode($contactResponse));
+                LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'insert']), 'success', wp_json_encode($contactResponse));
             } else {
-                LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'insert']), 'error', json_encode('Fail to add contact'));
+                LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'insert']), 'error', wp_json_encode('Fail to add contact'));
             }
 
             return;
@@ -181,9 +181,9 @@ class RecordApiHelper
                 if (!empty($resourceName) && !empty($eTag)) {
                     $updateResponse = $this->handleUpdateContact($fieldData, $resourceName, $eTag);
                     if (!property_exists($updateResponse, 'error')) {
-                        LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'update']), 'success', json_encode($updateResponse));
+                        LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'update']), 'success', wp_json_encode($updateResponse));
                     } else {
-                        LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'update']), 'error', json_encode('Fail to update contact'));
+                        LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'update']), 'error', wp_json_encode('Fail to update contact'));
                     }
                     $imageLocation = $fieldValues[$actions->attachments][0];
                     if (!empty($imageLocation)) {
@@ -193,7 +193,7 @@ class RecordApiHelper
                     return;
                 }
             } else {
-                LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'update']), 'error', json_encode('Contact not found, please check the name'));
+                LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'update']), 'error', wp_json_encode('Contact not found, please check the name'));
             }
         }
 

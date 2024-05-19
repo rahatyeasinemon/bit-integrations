@@ -28,14 +28,14 @@ class RecordApiHelper
         $contactData = $data;
         $apiEndpoints = "https://api.lemlist.com/api/campaigns/{$selectedCampaign}/leads/{$email}";
 
-        return HttpHelper::request($apiEndpoints, 'PATCH', json_encode($contactData), $this->_defaultHeader);
+        return HttpHelper::request($apiEndpoints, 'PATCH', wp_json_encode($contactData), $this->_defaultHeader);
     }
 
     public function addLead($selectedCampaign, $finalData)
     {
         $apiEndpoints = "https://api.lemlist.com/api/campaigns/{$selectedCampaign}/leads";
 
-        return HttpHelper::post($apiEndpoints, json_encode($finalData), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -65,9 +65,9 @@ class RecordApiHelper
 
             if ($apiResponse->_id) {
                 $res = ['message' => 'Lead added successfully'];
-                LogHandler::save($this->_integrationID, json_encode(['type' => 'Lead', 'type_name' => 'Lead added']), 'success', json_encode($res));
+                LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Lead', 'type_name' => 'Lead added']), 'success', wp_json_encode($res));
             } else {
-                LogHandler::save($this->_integrationID, json_encode(['type' => 'Lead', 'type_name' => 'Adding Lead']), 'error', json_encode($apiResponse));
+                LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Lead', 'type_name' => 'Adding Lead']), 'error', wp_json_encode($apiResponse));
             }
         } else {
             if ($actions->update) {
@@ -75,9 +75,9 @@ class RecordApiHelper
 
                 if ($apiResponse->_id) {
                     $res = ['message' => 'Lead updated successfully'];
-                    LogHandler::save($this->_integrationID, json_encode(['type' => 'Lead', 'type_name' => 'Lead updated']), 'success', json_encode($res));
+                    LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Lead', 'type_name' => 'Lead updated']), 'success', wp_json_encode($res));
                 } else {
-                    LogHandler::save($this->_integrationID, json_encode(['type' => 'Lead', 'type_name' => 'updating Lead']), 'error', json_encode($apiResponse));
+                    LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Lead', 'type_name' => 'updating Lead']), 'error', wp_json_encode($apiResponse));
                 }
             } else {
                 LogHandler::save($this->_integrationID, ['type' => 'Lead', 'type_name' => 'Adding Lead'], 'error', 'Email address already exists in the system');

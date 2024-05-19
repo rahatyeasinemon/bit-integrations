@@ -37,7 +37,7 @@ final class ActionController
     public function handleRedirect(WP_REST_Request $request)
     {
         $state = $request->get_param('state');
-        $parsed_url = parse_url(get_site_url());
+        $parsed_url = wp_parse_url(get_site_url());
         $site_url = $parsed_url['scheme'] . '://' . $parsed_url['host'];
         $site_url .= empty($parsed_url['port']) ? null : ':' . $parsed_url['port'];
         if (strpos($state, $site_url) === false) {

@@ -20,6 +20,7 @@ final class HttpHelper
 
     public static function request($url, $type, $data, $headers = null, $options = null)
     {
+        $headers['user-agent'] = 'wordpress/bit-integrations';
         $contentType = 'application/json';
 
         if (isset($headers['Content-Type'])) {

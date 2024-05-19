@@ -81,9 +81,9 @@ class RecordApiHelper
             $typeId = $integrationDetails->typeId;
             $response = $this->addCommissionToUser($finalData, $statusId, $typeId);
             if ($response && \gettype($response) === 'integer') {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'add commission', 'type_name' => 'add-commission-to-user']), 'success', json_encode($response));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add commission', 'type_name' => 'add-commission-to-user']), 'success', wp_json_encode($response));
             } else {
-                LogHandler::save(self::$integrationID, json_encode(['type' => 'add commission', 'type_name' => 'add-commission-to-user']), 'error', json_encode('Failed to add commission'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add commission', 'type_name' => 'add-commission-to-user']), 'error', wp_json_encode('Failed to add commission'));
             }
         }
 

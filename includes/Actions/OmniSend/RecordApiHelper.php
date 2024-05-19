@@ -79,7 +79,7 @@ class RecordApiHelper
             }
         }
 
-        return HttpHelper::post($apiEndpoints, json_encode($requestParams), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoints, wp_json_encode($requestParams), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -114,9 +114,9 @@ class RecordApiHelper
         );
 
         if (isset($apiResponse->error)) {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', wp_json_encode($apiResponse));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'success', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'success', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

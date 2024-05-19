@@ -56,7 +56,7 @@ class Admin_Bar
             return;
         }
 
-        $parsed_url = parse_url(get_admin_url());
+        $parsed_url = wp_parse_url(get_admin_url());
         $site_url = $parsed_url['scheme'] . '://' . $parsed_url['host'];
         $site_url .= empty($parsed_url['port']) ? null : ':' . $parsed_url['port'];
         $base_path_admin = str_replace($site_url, '', get_admin_url());

@@ -6,8 +6,9 @@
 
 namespace BitCode\FI\Actions\Clickup;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -37,7 +38,7 @@ class RecordApiHelper
         ];
     }
 
-    public function addTask($finalData)
+    public function addTask($finalData, $fieldValues)
     {
         if (!isset($finalData['name'])) {
             return ['success' => false, 'message' => 'Required field task name is empty', 'code' => 400];
@@ -63,8 +64,9 @@ class RecordApiHelper
         $this->typeName = 'Task created';
         $listId = $this->integrationDetails->selectedList;
         $apiEndpoint = $this->apiUrl . "list/{$listId}/task";
+        $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
 
-        return $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        return empty($this->integrationDetails->attachment) ? $response : $this->uploadFile($fieldValues[$this->integrationDetails->attachment], $response->id);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -95,10 +97,11 @@ class RecordApiHelper
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         if ($actionName === 'task') {
-            $apiResponse = $this->addTask($finalData);
+            $apiResponse = $this->addTask($finalData, $fieldValues);
+            $apiResponse = \is_string($apiResponse) ? json_decode($apiResponse) : $apiResponse;
         }
 
-        if ($apiResponse->id) {
+        if (!empty($apiResponse->id)) {
             $res = [$this->typeName . ' successfully'];
             LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
         } else {
@@ -108,9 +111,31 @@ class RecordApiHelper
         return $apiResponse;
     }
 
+    private function uploadFile($files, $taskId)
+    {
+        $result = null;
+        foreach ($files as $file) {
+            if (\is_array($file)) {
+                $result = static::uploadFile($file, $taskId);
+            } else {
+                $file = Common::filePath($file);
+                $result = HttpHelper::post(
+                    $this->apiUrl . "task/{$taskId}/attachment",
+                    ['attachment' => curl_file_create($file)],
+                    [
+                        'Authorization' => $this->integrationDetails->api_key,
+                        'Content-Type'  => 'multipart/form-data',
+                    ]
+                );
+            }
+        }
+
+        return $result;
+    }
+
     private static function formatPhoneNumber($field)
     {
-        if (!preg_match('/^\+?[0-9\s\-\(\)]+$/', $field)) {
+        if (\is_array($field) || \is_object($field) || !preg_match('/^\+?[0-9\s\-\(\)]+$/', $field)) {
             return $field;
         }
 

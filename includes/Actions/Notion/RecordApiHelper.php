@@ -7,6 +7,7 @@
 namespace BitCode\FI\Actions\Notion;
 
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
 
@@ -34,6 +35,8 @@ class RecordApiHelper
             $actionValue = $value->notionFormFields;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
+            } elseif (!\is_null($value->customValue)) {
+                $dataFinal[$actionValue] = $value->customValue;
             } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
@@ -45,7 +48,7 @@ class RecordApiHelper
     public function response($status, $code, $type, $typeName, $apiResponse)
     {
         $res = ['success' => $code === 200 ? true : false, 'message' => $apiResponse, 'code' => $code];
-        LogHandler::save($this->_integrationID, json_encode(['type' => $type, 'type_name' => $typeName]), $status, json_encode($res));
+        LogHandler::save($this->_integrationID, wp_json_encode(['type' => $type, 'type_name' => $typeName]), $status, wp_json_encode($res));
 
         return $res;
     }
@@ -68,7 +71,7 @@ class RecordApiHelper
             'properties' => $data
         ];
 
-        return HttpHelper::post($apiEndpoints, json_encode($body), $headers);
+        return HttpHelper::post($apiEndpoints, wp_json_encode($body), $headers);
     }
 
     public function valueFormat($type, $value)
@@ -79,7 +82,7 @@ class RecordApiHelper
 
                 break;
             case 'date':
-                return ['start' => $value];
+                return ['start' => Helper::formatToISO8601($value)];
             case 'checkbox':
                 return settype($value, 'boolean');
             case 'select':

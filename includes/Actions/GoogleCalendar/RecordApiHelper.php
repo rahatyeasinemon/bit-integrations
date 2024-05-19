@@ -31,7 +31,7 @@ class RecordApiHelper
             'Authorization' => 'Bearer ' . $this->token,
         ];
 
-        return HttpHelper::post($apiEndpoint, json_encode($data), $headers);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($data), $headers);
     }
 
     public function freeSlotCheck($startTime, $endTime)
@@ -50,7 +50,7 @@ class RecordApiHelper
             ]],
         ];
 
-        return HttpHelper::post($apiEndpoint, json_encode($body), $headers);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($body), $headers);
     }
 
     public function handleInsert($fieldData, $reminderFieldMap, $actions)
@@ -107,7 +107,7 @@ class RecordApiHelper
                         $fieldData[$value->googleCalendarFormField] = $replaceFieldWithValue;
                     }
                 } else {
-                    $fieldData[$value->googleCalendarFormField] = \is_array($fieldValues[$value->formField]) ? json_encode($fieldValues[$value->formField]) : $fieldValues[$value->formField];
+                    $fieldData[$value->googleCalendarFormField] = \is_array($fieldValues[$value->formField]) ? wp_json_encode($fieldValues[$value->formField]) : $fieldValues[$value->formField];
                 }
             }
         }

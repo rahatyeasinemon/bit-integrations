@@ -39,31 +39,6 @@ final class Common
         return (bool) (empty($val) && !\in_array($val, ['0', 0, 0.0], true));
     }
 
-    private static function replaceFieldWithValueHelper($stringToReplaceField, $fieldValues)
-    {
-
-        if (empty($stringToReplaceField)) {
-            return $stringToReplaceField;
-        }
-        $fieldPattern = '/\${\w[^ ${}]*}/';
-        preg_match_all($fieldPattern, $stringToReplaceField, $matchedField);
-        $uniqueFieldsInStr = array_unique($matchedField[0]);
-        foreach ($uniqueFieldsInStr as $key => $value) {
-            $fieldName = substr($value, 2, strlen($value) - 3);
-            $smartTagValue = SmartTags::getSmartTagValue($fieldName, true);
-            if (isset($fieldValues[$fieldName]) && !self::isEmpty($fieldValues[$fieldName])) {
-                $stringToReplaceField = !is_array($fieldValues[$fieldName]) ? str_replace($value, $fieldValues[$fieldName], $stringToReplaceField) :
-                    str_replace($value, wp_json_encode($fieldValues[$fieldName]), $stringToReplaceField);
-            } elseif (!empty($smartTagValue)) {
-                $stringToReplaceField = str_replace($value, $smartTagValue, $stringToReplaceField);
-            } else {
-                $stringToReplaceField = str_replace($value, '', $stringToReplaceField);
-            }
-        }
-
-        return $stringToReplaceField;
-    }
-
     /**
      * Replaces file url with dir path
      *
@@ -83,6 +58,30 @@ final class Common
             }
         } else {
             $path = str_replace($fileBaseURL, $fileBasePath, $file);
+        }
+
+        return $path;
+    }
+
+    /**
+     * Replaces dir path with url
+     *
+     * @param array|string $file Single or multiple files path
+     *
+     * @return string|array
+     */
+    public static function fileUrl($file)
+    {
+        $upDir = wp_upload_dir();
+        $fileBaseURL = $upDir['baseurl'];
+        $fileBasePath = $upDir['basedir'];
+        if (\is_array($file)) {
+            $path = [];
+            foreach ($file as $fileIndex => $fileUrl) {
+                $path[$fileIndex] = str_replace($fileBaseURL, $fileBasePath, $fileUrl);
+            }
+        } else {
+            $path = str_replace($fileBasePath, $fileBaseURL, $file);
         }
 
         return $path;
@@ -288,5 +287,29 @@ final class Common
             default:
                 return false;
         }
+    }
+
+    private static function replaceFieldWithValueHelper($stringToReplaceField, $fieldValues)
+    {
+        if (empty($stringToReplaceField)) {
+            return $stringToReplaceField;
+        }
+        $fieldPattern = '/\${\w[^ ${}]*}/';
+        preg_match_all($fieldPattern, $stringToReplaceField, $matchedField);
+        $uniqueFieldsInStr = array_unique($matchedField[0]);
+        foreach ($uniqueFieldsInStr as $key => $value) {
+            $fieldName = substr($value, 2, \strlen($value) - 3);
+            $smartTagValue = SmartTags::getSmartTagValue($fieldName, true);
+            if (isset($fieldValues[$fieldName]) && !self::isEmpty($fieldValues[$fieldName])) {
+                $stringToReplaceField = !\is_array($fieldValues[$fieldName]) ? str_replace($value, $fieldValues[$fieldName], $stringToReplaceField)
+                    : str_replace($value, wp_json_encode($fieldValues[$fieldName]), $stringToReplaceField);
+            } elseif (!empty($smartTagValue)) {
+                $stringToReplaceField = str_replace($value, $smartTagValue, $stringToReplaceField);
+            } else {
+                $stringToReplaceField = str_replace($value, '', $stringToReplaceField);
+            }
+        }
+
+        return $stringToReplaceField;
     }
 }

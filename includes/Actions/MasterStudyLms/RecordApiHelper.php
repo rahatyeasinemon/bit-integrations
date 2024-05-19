@@ -311,44 +311,44 @@ class RecordApiHelper
             $courseId = $integrationDetails->courseId;
             $response = self::complete_course($courseId);
             if ($response) {
-                LogHandler::save($this->integrationID, json_encode(['type' => 'course-complete', 'type_name' => 'user-course-complete']), 'success', 'Course completed successfully');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'course-complete', 'type_name' => 'user-course-complete']), 'success', 'Course completed successfully');
             } else {
-                LogHandler::save($this->integrationID, json_encode(['type' => 'course-complete', 'type_name' => 'user-course-complete']), 'error', 'Failed to completed course');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'course-complete', 'type_name' => 'user-course-complete']), 'error', 'Failed to completed course');
             }
         } elseif ($mainAction == 2) {
             $courseId = $integrationDetails->courseId;
             $lessonId = $integrationDetails->lessonId;
             $response = self::complete_lesson($courseId, $lessonId);
             if ($response) {
-                LogHandler::save($this->integrationID, json_encode(['type' => 'lesson-complete', 'type_name' => 'user-lesson-complete']), 'success', 'Lesson completed successfully');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'lesson-complete', 'type_name' => 'user-lesson-complete']), 'success', 'Lesson completed successfully');
             } else {
-                LogHandler::save($this->integrationID, json_encode(['type' => 'lesson-complete', 'type_name' => 'user-lesson-complete']), 'error', 'Failed to completed lesson');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'lesson-complete', 'type_name' => 'user-lesson-complete']), 'error', 'Failed to completed lesson');
             }
         } elseif ($mainAction == 3) {
             $courseId = $integrationDetails->courseId;
             $quizId = $integrationDetails->quizId;
             $response = self::complete_quiz($courseId, $quizId);
             if ($response) {
-                LogHandler::save($this->integrationID, json_encode(['type' => 'quiz-complete', 'type_name' => 'user-quiz-complete']), 'success', 'quiz completed successfully');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'quiz-complete', 'type_name' => 'user-quiz-complete']), 'success', 'quiz completed successfully');
             } else {
-                LogHandler::save($this->integrationID, json_encode(['type' => 'quiz-complete', 'type_name' => 'user-quiz-complete']), 'error', 'Failed to completed quiz');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'quiz-complete', 'type_name' => 'user-quiz-complete']), 'error', 'Failed to completed quiz');
             }
         } elseif ($mainAction == 4) {
             $courseId = $integrationDetails->courseId;
             $response = self::reset_course($courseId);
             if ($response) {
-                LogHandler::save($this->integrationID, json_encode(['type' => 'course-reset', 'type_name' => 'user-course-reset']), 'success', 'Course reset successfully');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'course-reset', 'type_name' => 'user-course-reset']), 'success', 'Course reset successfully');
             } else {
-                LogHandler::save($this->integrationID, json_encode(['type' => 'course-reset', 'type_name' => 'user-course-reset']), 'error', 'Failed to reset course');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'course-reset', 'type_name' => 'user-course-reset']), 'error', 'Failed to reset course');
             }
         } elseif ($mainAction == 5) {
             $course_id = $integrationDetails->courseId;
             $lesson_id = $integrationDetails->lessonId;
             $response = self::reset_lesson($course_id, $lesson_id);
             if ($response) {
-                LogHandler::save($this->integrationID, json_encode(['type' => 'lesson-reset', 'type_name' => 'user-lesson-reset']), 'success', 'Lesson reset successfully');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'lesson-reset', 'type_name' => 'user-lesson-reset']), 'success', 'Lesson reset successfully');
             } else {
-                LogHandler::save($this->integrationID, json_encode(['type' => 'lesson-reset', 'type_name' => 'user-lesson-reset']), 'error', 'Failed to reset lesson');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'lesson-reset', 'type_name' => 'user-lesson-reset']), 'error', 'Failed to reset lesson');
             }
         }
 

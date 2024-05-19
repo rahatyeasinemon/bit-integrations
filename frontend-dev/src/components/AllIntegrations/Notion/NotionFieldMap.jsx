@@ -60,7 +60,7 @@ function NotionFieldMap({ i, field, formFields, notionConf, setNotionConf }) {
 
           {/* When user select custom field */}
 
-          {field.formField === 'custom' && <TagifyInput onChange={e => handleCustomValue(e, i, notionConf, setNotionConf)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bit-integrations')} formFields={formFields} />}
+          {field.formFields === 'custom' && <TagifyInput onChange={e => handleCustomValue(e, i, notionConf, setNotionConf)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bit-integrations')} formFields={formFields} />}
 
           <select
             className="btcd-paper-inp"

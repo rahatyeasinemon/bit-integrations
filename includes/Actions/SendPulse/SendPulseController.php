@@ -197,6 +197,6 @@ class SendPulseController
 
         $newDetails = json_decode($sendPulseDetails[0]->flow_details);
         $newDetails->tokenDetails = $tokenDetails;
-        $flow->update($integrationID, ['flow_details' => json_encode($newDetails)]);
+        $flow->update($integrationID, ['flow_details' => wp_json_encode($newDetails)]);
     }
 }

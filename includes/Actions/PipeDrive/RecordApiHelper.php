@@ -204,9 +204,9 @@ class RecordApiHelper
         );
 
         if (isset($apiResponse->error)) {
-            LogHandler::save($this->_integrationID, json_encode(['type' => $module, 'type_name' => 'add-' . $module]), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => $module, 'type_name' => 'add-' . $module]), 'error', wp_json_encode($apiResponse));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => $module, 'type_name' => 'add-' . $module]), 'success', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => $module, 'type_name' => 'add-' . $module]), 'success', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

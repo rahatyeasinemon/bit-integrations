@@ -173,7 +173,7 @@ class RecordApiHelper
             $apiResponse = $this->createContact($selectedList, $selectedTags, $selectedSubStatus, $finalData);
 
             if ($apiResponse && \gettype($apiResponse) === 'integer') {
-                LogHandler::save(self::$integrationID, ['type' => 'create', 'type_name' => 'create contact'], 'success', json_encode('Contact created successfully and id is ' . $apiResponse));
+                LogHandler::save(self::$integrationID, ['type' => 'create', 'type_name' => 'create contact'], 'success', wp_json_encode('Contact created successfully and id is ' . $apiResponse));
             } else {
                 LogHandler::save(self::$integrationID, ['type' => 'create', 'type_name' => 'create contact'], 'error', 'Failed to create contact');
             }

@@ -1519,11 +1519,9 @@ final class WCController
                 $spilited = explode('-', $selectedOrderStatus);
                 $selectedStatus = "{$spilited[1]}-{$spilited[2]}";
             } else {
-                // $selectedStatus = explode('-', $selectedOrderStatus)[1];
                 $selectedStatus = str_replace('wc-', '', $selectedOrderStatus);
             }
 
-            // ltrim($selectedOrderStatus, 'wc-')
             if ($to_status === $selectedStatus) {
                 $order = wc_get_order($order_id);
 
@@ -1537,7 +1535,8 @@ final class WCController
 
                 $post_status = get_post_status($order_id);
                 $post_type = get_post_type($order_id);
-                if ($post_status === 'trash' || $post_type !== 'shop_order') {
+
+                if ($post_status === 'trash' || $post_type !== 'shop_order_placehold') {
                     return false;
                 }
 

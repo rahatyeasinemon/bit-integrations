@@ -60,7 +60,7 @@ class RecordApiHelper
             'fields' => (object) $fields
         ];
 
-        return HttpHelper::post($apiEndpoint, json_encode($data), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode($data), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -86,9 +86,9 @@ class RecordApiHelper
 
         if (isset($apiResponse->records)) {
             $successMessage = ['message' => 'Record created successfully'];
-            LogHandler::save($this->integrationID, json_encode(['type' => 'record', 'type_name' => 'Record created']), 'success', json_encode($successMessage));
+            LogHandler::save($this->integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'Record created']), 'success', wp_json_encode($successMessage));
         } else {
-            LogHandler::save($this->integrationID, json_encode(['type' => 'record', 'type_name' => 'Creating record']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'Creating record']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

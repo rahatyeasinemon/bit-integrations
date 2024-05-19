@@ -75,9 +75,9 @@ final class LogHandler
         $logModel->insert(
             [
                 'flow_id'       => $flow_id,
-                'api_type'      => \is_string($api_type) ? $api_type : json_encode($api_type),
-                'response_type' => \is_string($response_type) ? $response_type : json_encode($response_type),
-                'response_obj'  => \is_string($response_obj) ? $response_obj : json_encode($response_obj),
+                'api_type'      => \is_string($api_type) ? $api_type : wp_json_encode($api_type),
+                'response_type' => \is_string($response_type) ? $response_type : wp_json_encode($response_type),
+                'response_obj'  => \is_string($response_obj) ? $response_obj : wp_json_encode($response_obj),
                 'created_at'    => current_time('mysql')
             ]
         );

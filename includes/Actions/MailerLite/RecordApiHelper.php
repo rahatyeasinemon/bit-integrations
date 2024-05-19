@@ -194,9 +194,9 @@ class RecordApiHelper
 
         if (isset($apiResponse->data->id) || isset($apiResponse->id)) {
             $res = ['success' => true, 'message' => isset($apiResponse->update) ? 'Subscriber updated successfully' : 'Subscriber created successfully', 'code' => 200];
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'subscriber', 'type_name' => 'add-subscriber']), 'success', json_encode($res));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'add-subscriber']), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'subscriber', 'type_name' => 'add-subscriber']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'add-subscriber']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

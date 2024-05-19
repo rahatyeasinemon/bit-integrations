@@ -58,7 +58,7 @@ class RecordApiHelper
                 if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
                     $fieldData[$fieldPair->autonamiField] = $fieldPair->customValue;
                 } else {
-                    $fieldData[$fieldPair->autonamiField] = \is_array($fieldValues[$fieldPair->formField]) ? json_encode($fieldValues[$fieldPair->formField]) : $fieldValues[$fieldPair->formField];
+                    $fieldData[$fieldPair->autonamiField] = \is_array($fieldValues[$fieldPair->formField]) ? wp_json_encode($fieldValues[$fieldPair->formField]) : $fieldValues[$fieldPair->formField];
                 }
             }
         }

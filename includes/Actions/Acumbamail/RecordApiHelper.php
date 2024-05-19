@@ -93,9 +93,9 @@ class RecordApiHelper
             $apiResponse = $this->deleteSubscriber($auth_token, $listId, $finalData);
         }
         if (property_exists($apiResponse, 'error')) {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', wp_json_encode($apiResponse));
         } else {
-            LogHandler::save($this->_integrationID, json_encode(['type' => 'record', 'type_name' => 'add-contact']), 'success', json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'add-contact']), 'success', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;
