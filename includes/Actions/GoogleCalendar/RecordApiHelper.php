@@ -2,11 +2,12 @@
 
 namespace BitCode\FI\Actions\GoogleCalendar;
 
+use DateTime;
+use Exception;
+use DateTimeZone;
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
-use DateTime;
-use DateTimeZone;
 
 class RecordApiHelper
 {
@@ -64,7 +65,7 @@ class RecordApiHelper
                     $data[$title]['date'] = $date->format('Y-m-d');
                     $dateType = 'date';
                 } else {
-                    $data[$title]['dateTime'] = $date->format('Y-m-d\TH:i:sP');
+                    $data[$title]['dateTime'] = self::convertToISO8601($value);
                 }
                 $data[$title]['timeZone'] = $this->timeZone;
 
@@ -79,7 +80,6 @@ class RecordApiHelper
                 'overrides'  => $reminderFieldMap
             ];
         }
-
         if (isset($actions->skipIfSlotNotEmpty)) {
             $apiResponse = $this->freeSlotCheck($data['start'][$dateType], $data['end'][$dateType]);
 
@@ -123,6 +123,25 @@ class RecordApiHelper
         } else {
             LogHandler::save($integrationId, wp_json_encode(['type' => 'record', 'type_name' => 'insert']), 'success', $apiResponse);
         }
+    }
 
+    private static function convertToISO8601($input)
+    {
+        try {
+            if (is_numeric($input)) {
+                if ($input > 10000000000) {
+                    $input = $input / 1000;
+                }
+                $date = new DateTime("@{$input}");
+            } else {
+                $date = new DateTime($input);
+            }
+
+            $date->setTimezone(new DateTimeZone('UTC'));
+
+            return $date->format('Y-m-d\TH:i:sP');
+        } catch (Exception $e) {
+            return 'Invalid date or format: ' . $e->getMessage();
+        }
     }
 }
