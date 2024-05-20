@@ -45,7 +45,27 @@ function btcbi_activate_plugin($network_wide)
     do_action('btcbi_activation', $network_wide);
 }
 
+function btcbi_deactivate_plugin($network_wide)
+{
+    global $wp_version;
+    if (version_compare($wp_version, '5.1', '<')) {
+        wp_die(
+            esc_html__('This plugin requires WordPress version 5.1 or higher.', 'bit-integrations'),
+            esc_html__('Error Deactivating', 'bit-integrations')
+        );
+    }
+    if (version_compare(PHP_VERSION, '7.0', '<')) {
+        wp_die(
+            esc_html__('Forms Integrationsw requires PHP version 7.0.', 'bit-integrations'),
+            esc_html__('Error Deactivating', 'bit-integrations')
+        );
+    }
+    do_action('btcbi_deactivation', $network_wide);
+}
+
 register_activation_hook(__FILE__, 'btcbi_activate_plugin');
+
+register_deactivation_hook(__FILE__, 'btcbi_deactivate_plugin');
 
 function btcbi_uninstall_plugin()
 {

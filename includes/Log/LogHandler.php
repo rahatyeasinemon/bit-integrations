@@ -3,6 +3,7 @@
 namespace BitCode\FI\Log;
 
 use BitCode\FI\Core\Database\LogModel;
+use BitCode\FI\Core\Util\Capabilities;
 
 final class LogHandler
 {
@@ -13,6 +14,10 @@ final class LogHandler
 
     public function get($data)
     {
+        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations'))) {
+            wp_send_json_error('User don\'t have permission to access this page');
+        }
+
         if (!isset($data->id)) {
             wp_send_json_error('Integration Id cann\'t be empty');
         }
@@ -92,6 +97,9 @@ final class LogHandler
 
     public static function delete($data)
     {
+        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations'))) {
+            wp_send_json_error('User don\'t have permission to access this page');
+        }
         $condition = null;
         if (!empty($data->id)) {
             if (\is_array($data->id)) {
