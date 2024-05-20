@@ -1,6 +1,7 @@
 import bitsFetch from "../../../Utils/bitsFetch";
 import { deepCopy } from "../../../Utils/Helpers";
 import { sprintf, __ } from "../../../Utils/i18nwrap";
+import { create } from "mutative";
 
 export const handleInput = (
   e,
@@ -68,6 +69,57 @@ export const supportStaff = (
     .catch(() => setIsLoading(false));
 };
 
+export const getCustomFields = (
+  fluentSupportConf,
+  setFluentSupportConf,
+  setIsLoading,
+  setSnackbar
+) => {
+  setIsLoading(true);
+
+  bitsFetch(null, "fluent_support_get_custom_fields")
+    .then((result) => {
+      setFluentSupportConf((prevConf) =>
+        create(prevConf, (draftConf) => {
+          if (result && result.success&&result.data) {
+            draftConf.fluentSupportFields = [
+              ...draftConf.basicFields,
+              ...result.data,
+            ];
+            draftConf.field_map = generateMappedField([
+              ...draftConf.basicFields,
+              ...result.data,
+            ]);
+
+            result.data.length > 0
+          ? setSnackbar({
+              show: true,
+              msg: __("Custom Ticket Fields refreshed", "bit-integrations"),
+            })
+          : setSnackbar({
+              show: true,
+              msg: __("Custom Ticket Fields not found!", "bit-integrations"),
+            });
+          }else{
+            draftConf.fluentSupportFields = draftConf.basicFields;
+            draftConf.field_map = generateMappedField(draftConf.basicFields);
+
+            setSnackbar({
+              show: true,
+              msg: __(
+                result?.data||"Custom Ticket Fields failed. please try again",
+                "bit-integrations"
+              ),
+            });
+          }
+        })
+      );
+
+      setIsLoading(false);
+    })
+    .catch(() => setIsLoading(false));
+};
+
 export const getAllBusinessInboxes = (
   formID,
   fluentSupportConf,
@@ -76,8 +128,8 @@ export const getAllBusinessInboxes = (
   setSnackbar
 ) => {
   setIsLoading(true);
-  
-  bitsFetch('',"fluent_support_get_all_business_inboxes")
+
+  bitsFetch("", "fluent_support_get_all_business_inboxes")
     .then((result) => {
       if (result && result.success) {
         const newConf = { ...fluentSupportConf };
@@ -106,8 +158,9 @@ export const getAllBusinessInboxes = (
     .catch(() => setIsLoading(false));
 };
 
-export const generateMappedField = (fluentSupportConf) => {
-  const requiredFlds = fluentSupportConf?.fluentSupportFields.filter(
+export const generateMappedField = (fluentSupportFields) => {
+  console.log(fluentSupportFields);
+  const requiredFlds = fluentSupportFields.filter(
     (fld) => fld.required === true
   );
   return requiredFlds.length > 0

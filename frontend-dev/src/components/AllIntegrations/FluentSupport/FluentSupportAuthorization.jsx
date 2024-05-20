@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
-import { handleAuthorize } from './FluentSupportCommonFunc'
+import { getCustomFields, handleAuthorize } from './FluentSupportCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 
@@ -23,6 +23,7 @@ export default function FluentSupportAuthorization({ formID,
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
 
+    getCustomFields(fluentSupportConf, setFluentSupportConf, setIsLoading, setSnackbar)
     setstep(2)
   }
   const handleInput = (e) => {

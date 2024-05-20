@@ -6,9 +6,13 @@
 
 namespace BitCode\FI\Actions\FluentSupport;
 
-use FluentSupport\App\Models\Agent;
-use FluentSupport\App\Models\MailBox;
 use WP_Error;
+use BitCode\FI\Core\Util\IpTool;
+use FluentSupport\App\Models\Agent;
+use BitCode\FI\Core\Util\HttpHelper;
+
+use FluentSupport\App\Models\MailBox;
+use BitCode\FI\Actions\FluentSupport\RecordApiHelper;
 
 /**
  * Provide functionality for Fluent Support integration
@@ -30,6 +34,28 @@ class FluentSupportController
         }
     }
 
+    public function getCustomFields()
+    {
+        if (!class_exists(\FluentSupportPro\App\Services\CustomFieldsService::class)) {
+            wp_send_json_error(
+                __(
+                    'Fluent Support pro Plugin is not active or not installed',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+
+        $customFields   = [];
+        $response       = \FluentSupportPro\App\Services\CustomFieldsService::getCustomFields();
+
+        foreach ($response as $field) {
+            $customFields[] = (object) ['key' => $field['slug'], 'label' => $field['label'], 'required' => $field['required'] == 'yes' ? true : false];
+        }
+
+        wp_send_json_success($customFields, 200);
+    }
+
     public function getAllSupportStaff($tokenRequestParams)
     {
         $supportStaff = Agent::get();
@@ -40,7 +66,7 @@ class FluentSupportController
                 400
             );
         }
-        wp_send_json_success(\is_string($supportStaff) ? json_decode($supportStaff) : $supportStaff, 200);
+        wp_send_json_success(is_string($supportStaff) ? json_decode($supportStaff) : $supportStaff, 200);
     }
 
     public function getAllBusinessInboxes()
@@ -53,7 +79,7 @@ class FluentSupportController
                 400
             );
         }
-        wp_send_json_success(\is_string($businessInboxes) ? json_decode($businessInboxes) : $businessInboxes, 200);
+        wp_send_json_success(is_string($businessInboxes) ? json_decode($businessInboxes) : $businessInboxes, 200);
     }
 
     public function execute($integrationData, $fieldValues)
@@ -75,7 +101,6 @@ class FluentSupportController
         if (is_wp_error($fluentSupportApiResponse)) {
             return $fluentSupportApiResponse;
         }
-
         return $fluentSupportApiResponse;
     }
 }
