@@ -2,12 +2,12 @@
 
 namespace BitCode\FI\Actions\GoogleCalendar;
 
-use DateTime;
-use Exception;
-use DateTimeZone;
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
+use DateTime;
+use DateTimeZone;
 
 class RecordApiHelper
 {
@@ -60,12 +60,12 @@ class RecordApiHelper
         $dateType = 'dateTime';
         foreach ($fieldData as $title => $value) {
             if ($title === 'start' || $title === 'end') {
-                $date = new DateTime($value, new DateTimeZone($this->timeZone));
+                $date = new DateTime(Helper::formatToISO8601($value), new DateTimeZone($this->timeZone));
                 if (isset($actions->allDayEvent)) {
                     $data[$title]['date'] = $date->format('Y-m-d');
                     $dateType = 'date';
                 } else {
-                    $data[$title]['dateTime'] = self::convertToISO8601($value);
+                    $data[$title]['dateTime'] = Helper::formatToISO8601($value);
                 }
                 $data[$title]['timeZone'] = $this->timeZone;
 
@@ -122,26 +122,6 @@ class RecordApiHelper
             LogHandler::save($integrationId, wp_json_encode(['type' => 'record', 'type_name' => 'insert']), 'error', 'Please check if your have access to insert event in this selected calendar.');
         } else {
             LogHandler::save($integrationId, wp_json_encode(['type' => 'record', 'type_name' => 'insert']), 'success', $apiResponse);
-        }
-    }
-
-    private static function convertToISO8601($input)
-    {
-        try {
-            if (is_numeric($input)) {
-                if ($input > 10000000000) {
-                    $input = $input / 1000;
-                }
-                $date = new DateTime("@{$input}");
-            } else {
-                $date = new DateTime($input);
-            }
-
-            $date->setTimezone(new DateTimeZone('UTC'));
-
-            return $date->format('Y-m-d\TH:i:sP');
-        } catch (Exception $e) {
-            return 'Invalid date or format: ' . $e->getMessage();
         }
     }
 }
