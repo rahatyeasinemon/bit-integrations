@@ -7,6 +7,7 @@ import HubspotFieldMap from './HubspotFieldMap'
 import { getAllPipelines, getFields } from './HubspotCommonFunc'
 import HubspotActions from './HubspotActions'
 import Loader from '../../Loaders/Loader'
+import { create } from 'mutative'
 
 export default function HubspotIntegLayout({ formFields, handleInput, hubspotConf, setHubspotConf, setSnackbar, loading, setLoading }) {
   const action = [
@@ -25,15 +26,14 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
     }
 
     if (e.target.name === 'pipeline') {
-      const newConf = { ...hubspotConf }
-      if (e.target.value !== '') {
-        newConf[e.target.name] = e.target.value
-      } else {
-        delete newConf[e.target.name]
-      }
-      const stagesTmp = hubspotConf?.default?.pipelines.filter(({ pipelineId }) => pipelineId === e.target.value).map(({ stages }) => stages)
-      newConf.stageTmp = stagesTmp
-      setHubspotConf({ ...newConf })
+      setHubspotConf(prevConf => create(prevConf, draftConf => {
+        if (e.target.value !== '') {
+          draftConf[e.target.name] = e.target.value
+        } else {
+          delete draftConf[e.target.name]
+        }
+        draftConf.stageTmp = hubspotConf?.default?.pipelines.filter(({ pipelineId }) => pipelineId === e.target.value).map(({ stages }) => stages)
+      }))
     }
   }
 
