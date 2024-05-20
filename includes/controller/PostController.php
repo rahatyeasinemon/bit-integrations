@@ -13,8 +13,8 @@ final class PostController
 
     public function getPostTypes()
     {
-        if (!Capabilities::Check('manage_options') || !Capabilities::Check('edit_posts') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_create_integrations') || !Capabilities::Check('bit_integrations_edit_integrations')) {
-            wp_send_json_error();
+        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
+            wp_send_json_error('User don\'t have permission to access this page');
         }
         $cptArguments = [
             'public'          => true,
@@ -99,8 +99,8 @@ final class PostController
 
     public function getCustomFields($data)
     {
-        if (!Capabilities::Check('manage_options') || !Capabilities::Check('edit_posts') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_create_integrations') || !Capabilities::Check('bit_integrations_edit_integrations')) {
-            wp_send_json_error();
+        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
+            wp_send_json_error('User don\'t have permission to access this page');
         }
 
         $acf = self::getAcfFields($data->post_type);
@@ -118,8 +118,8 @@ final class PostController
 
     public function getPages()
     {
-        if (!Capabilities::Check('manage_options') || !Capabilities::Check('edit_posts') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_create_integrations')) {
-            wp_send_json_error();
+        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations'))) {
+            wp_send_json_error('User don\'t have permission to access this page');
         }
         $pages = get_pages(['post_status' => 'publish', 'sort_column' => 'post_date', 'sort_order' => 'desc']);
         $allPages = [];
@@ -133,8 +133,8 @@ final class PostController
 
     public function getPodsPostType()
     {
-        if (!Capabilities::Check('manage_options') || !Capabilities::Check('edit_posts') || !Capabilities::Check('bit_integrations_manage_integrations') || !Capabilities::Check('bit_integrations_create_integrations') || !Capabilities::Check('bit_integrations_edit_integrations')) {
-            wp_send_json_error();
+        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
+            wp_send_json_error('User don\'t have permission to access this page');
         }
         $users = get_users(['fields' => ['ID', 'display_name']]);
         $pods = [];

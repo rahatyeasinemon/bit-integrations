@@ -195,7 +195,7 @@ export default function EditInteg({ allIntegURL }) {
   }
 
   if (!data.success) {
-    return <div style={loaderStyle}>{data.data}</div>
+    return <div style={loaderStyle}><h1 className="txt-center mt-5">{data?.data}</h1></div>
   }
   return (
     <div>

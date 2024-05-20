@@ -13,8 +13,8 @@ final class UserController
 
     public function getWpUsers()
     {
-        if (!Capabilities::Check('list_users') || !Capabilities::Check('bit_integrations_manage_integrations')) {
-            wp_send_json_error();
+        if (!(Capabilities::Check('bit_integrations_manage_integrations'))) {
+            wp_send_json_error('User don\'t have permission to access this page');
         }
 
         $users = get_users(['fields' => ['display_name', 'ID']]);
@@ -24,8 +24,8 @@ final class UserController
 
     public function getUserRoles()
     {
-        if (!Capabilities::Check('manage_options') || !Capabilities::Check('bit_integrations_manage_integrations')) {
-            wp_send_json_error();
+        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations'))) {
+            wp_send_json_error('User don\'t have permission to access this page');
         }
         global $wp_roles;
         $roles = [];

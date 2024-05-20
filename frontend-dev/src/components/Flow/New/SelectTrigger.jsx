@@ -35,10 +35,11 @@ export default function SelectTrigger() {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
 
 
-
-  useEffect(() => {
-    setAllTriggers({ data: sortFeaturedProducts(data?.data) })
-  }, [data])
+  if (data?.success === true) {
+    useEffect(() => {
+      setAllTriggers({ data: sortFeaturedProducts(data?.data) })
+    }, [data])
+  }
 
   const featuredProducts = ['BitForm']
 
@@ -93,8 +94,7 @@ export default function SelectTrigger() {
   if (data?.success === false) {
     return (
       <div>
-        <h1 className="txt-center mt-5">License is not active </h1>
-        <h3 className="txt-center mt-5">Make unlimited integration you need license active first. </h3>
+        <h1 className="txt-center mt-5">{data?.data}</h1>
       </div>
     )
   }

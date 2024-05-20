@@ -21,9 +21,9 @@ final class Activation
 
     public function add_capability_to_administrator()
     {
-        error_log('adding');
         $role = get_role('administrator');
         $role->add_cap('bit_integrations_manage_integrations');
+        $role->add_cap('bit_integrations_view_integrations');
         $role->add_cap('bit_integrations_create_integrations');
         $role->add_cap('bit_integrations_edit_integrations');
         $role->add_cap('bit_integrations_delete_integrations');

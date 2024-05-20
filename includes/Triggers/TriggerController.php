@@ -12,8 +12,8 @@ final class TriggerController
 {
     public static function triggerList()
     {
-        if (!Capabilities::Check('manage_options') || !Capabilities::Check('bit_integrations_manage_integrations')) {
-            wp_send_json_error();
+        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_view_integrations'))) {
+            wp_send_json_error('User don\'t have permission to access this page');
         }
         $triggers = [];
         $dirs = new FilesystemIterator(__DIR__);
