@@ -35,11 +35,6 @@ function EditFormInteg({ setSnackbar, className = '' }) {
   const [flow, setFlow] = useRecoilState($newFlow)
   const setFormFields = useSetRecoilState($formFields)
   const setFlowData = (val, type) => {
-    // const tmpFlow = deepCopy(flow)
-    // const tmpFlow = { ...flow }
-    // tmpFlow.flow_details[type] = val
-    // console.log(tmpFlow.flow_details)
-    // setFlow({ ...tmpFlow })
     setFlow(prevFlow => create(prevFlow, (draftFlow) => {
       draftFlow.flow_details[type] = val
     }))
