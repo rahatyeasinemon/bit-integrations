@@ -1,6 +1,7 @@
 === Webhook Automator & Form Integration to Automate 210+ Platforms – Bit Integrations ===
 Contributors: bitpressadmin
 Tags: automation,forms,integration,automator,webhooks
+Requires at least: 5.1
 Tested up to: 6.5.3
 Requires PHP: 7.0
 Stable tag: 2.0.4
