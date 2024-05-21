@@ -69,19 +69,6 @@ export default function ZohoCRMNewRecord({ tab, settab, formID, formFields, crmC
             <br />
             {Object.keys(crmConf.default.layouts[crmConf.module][crmConf.layout]?.fileUploadFields).length !== 0 && (
               <div className="pos-rel">
-                {!isPro && (
-                  <div className="pro-blur flx">
-                    <div className="pro">
-                      Available On
-                      <a href="https://bitapps.pro/" target="_blank" rel="noreferrer">
-                        <span className="txt-pro">
-                          {' '}
-                          {__('Premium', 'bit-integrations')}
-                        </span>
-                      </a>
-                    </div>
-                  </div>
-                )}
                 <div className="mt-4"><b className="wdt-100">{__('Map File Upload Fields', 'bit-integrations')}</b></div>
                 <div className="btcd-hr mt-1" />
                 <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">

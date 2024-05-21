@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\MailerLite;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -109,11 +109,7 @@ class RecordApiHelper
 
         foreach ($finalData as $key => $value) {
             if ('email' !== $key) {
-                if ('name' === $key) {
-                    $requestParams[$key] = $value;
-                } else {
-                    $requestParams['fields'][$key] = $value;
-                }
+                $requestParams['fields'][$key] = $value;
             }
         }
         $requestParams['fields'] = !empty($requestParams['fields']) ? (object) $requestParams['fields'] : [];

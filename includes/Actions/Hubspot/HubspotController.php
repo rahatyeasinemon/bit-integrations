@@ -56,7 +56,7 @@ final class HubspotController
                         'label'    => $field->label,
                         'required' => $field->name == 'email' ? true : false
                     ];
-                } elseif ($requestParams->type == 'deal' && $field->formField === true) {
+                } elseif ($requestParams->type == 'deal' && ($field->name == 'dealname' || $field->formField === true)) {
                     $fields[] = [
                         'key'      => $field->name,
                         'label'    => $field->label,

@@ -476,6 +476,7 @@ export default function NewInteg({ allIntegURL }) {
     setFlow(tmpFlow)
     navigate(-1)
   }
+
   return (
     <div>
       <div className="flx">

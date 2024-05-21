@@ -110,3 +110,27 @@ export const getAllTags = (confTmp, setConf, setLoading) => {
     toast.error(__("Tags fetching failed", "bit-integrations"));
   });
 };
+
+export const getAllFields = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, fields: true });
+
+  const requestParams = {
+    api_key: confTmp.api_key,
+  };
+
+  bitsFetch(requestParams, "systemeIO_fetch_all_fields").then((result) => {
+    if (result && result.success) {
+      setConf((prevConf) => {
+        prevConf.systemeIOFields = result.data;
+        prevConf.field_map= generateMappedField(prevConf.systemeIOFields);
+        return prevConf;
+      });
+
+      setLoading({ ...setLoading, fields: false });
+      toast.success(__("Contact Field fetched successfully", "bit-integrations"));
+      return;
+    }
+    setLoading({ ...setLoading, fields: false });
+    toast.error(__("Contact Field fetching failed", "bit-integrations"));
+  });
+};

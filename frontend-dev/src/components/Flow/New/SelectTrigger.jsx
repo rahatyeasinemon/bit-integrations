@@ -28,19 +28,10 @@ export default function SelectTrigger() {
     alignItems: 'center',
   }
   const { data, isLoading } = useFetch({ payload: {}, action: 'trigger/list', method: 'GET' })
-  // const { data, isLoading } = useFetch({ payload: {}, action: 'trigger/list', method: 'GET' })
   const [allTriggers, setAllTriggers] = useState(data || {})
   const [searchValue, setSearchValue] = useState('')
   const flowStep = useRecoilValue($flowStep)
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
-
-
-
-  useEffect(() => {
-    setAllTriggers({ data: sortFeaturedProducts(data?.data) })
-  }, [data])
-
-  const featuredProducts = ['BitForm']
 
   const sortFeaturedProducts = (dataObj = {}) => {
     if (dataObj) {
@@ -63,6 +54,15 @@ export default function SelectTrigger() {
 
     return dataObj
   }
+  // console.log('data', data)
+  useEffect(() => {
+    if (data?.success === true) {
+      setAllTriggers({ data: sortFeaturedProducts(data?.data) })
+    }
+  }, [data])
+
+  const featuredProducts = ['BitForm']
+
 
   const searchInteg = (e) => {
     const { value } = e.target
@@ -89,12 +89,12 @@ export default function SelectTrigger() {
       <Loader style={loaderStyle} />
     )
   }
+  // console.log('data', data)
 
   if (data?.success === false) {
     return (
       <div>
-        <h1 className="txt-center mt-5">License is not active </h1>
-        <h3 className="txt-center mt-5">Make unlimited integration you need license active first. </h3>
+        <h1 className="txt-center mt-5">{data?.data}</h1>
       </div>
     )
   }

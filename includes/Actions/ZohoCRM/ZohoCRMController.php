@@ -178,13 +178,14 @@ final class ZohoCRMController
         $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
         $requiredParams['module'] = $queryParams->module;
         $layoutsMetaResponse = HttpHelper::get($layoutsMetaApiEndpoint, $requiredParams, $authorizationHeader);
+        error_log(print_r($layoutsMetaResponse, true));
         if (!is_wp_error($layoutsMetaResponse) && (empty($layoutsMetaResponse->status) || (!empty($layoutsMetaResponse->status) && $layoutsMetaResponse->status !== 'error'))) {
             $retriveLayoutsData = $layoutsMetaResponse->layouts;
             $layouts = [];
             foreach ($retriveLayoutsData as $layoutKey => $layoutValue) {
-                if ($layoutValue->name !== 'Standard') {
-                    continue;
-                }
+                // if ($layoutValue->name !== 'Standard') {
+                //     continue;
+                // }
                 $fields = [];
                 $fileUploadFields = [];
                 $requiredFields = [];
@@ -194,9 +195,9 @@ final class ZohoCRMController
 
                 foreach ($layoutValue->sections as $sectionKey => $sectionValue) {
                     foreach ($sectionValue->fields as $fieldKey => $fieldDetails) {
-                        if (!\in_array($fieldDetails->api_name, $fieldToShow)) {
-                            continue;
-                        }
+                        // if (!\in_array($fieldDetails->api_name, $fieldToShow)) {
+                        //     continue;
+                        // }
                         if (
                             empty($fieldDetails->subform)
                             && !empty($fieldDetails->api_name)

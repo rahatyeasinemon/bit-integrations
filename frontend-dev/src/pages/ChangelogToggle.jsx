@@ -10,7 +10,7 @@ import Modal from '../components/Utilities/Modal'
 export default function ChangelogToggle() {
     const btcbi = useRecoilValue($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const version = btcbi.isPro ? '2.0.3' : '2.0.3'
+    const version = btcbi.isPro ? '2.0.5' : '2.0.4'
     return (
         <div className="changelog-toggle">
             <button
@@ -27,18 +27,25 @@ export default function ChangelogToggle() {
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
                         <h3>What's New in {version}?</h3>
-                        <small className='date'> <b>9th May 2024</b></small>
+                        <small className='date'> <b>21th May 2024</b></small>
                     </div>
                     <div className='changelog-content'>
                         {/* <h4>New Integration</h4> */}
                         {/* <p>New Integration</p> */}
-                        {/* <span className='new-feature' ><b>New Features</b></span>
+                        <span className='new-feature' ><b>New Features</b></span>
 
                         <div className='integration-list'>
                             <ul>
-                                <li>ClickUp: Attachment action added</li>
+                                <li>ZohoCRM: Pro Actions and Upload fields, previously exclusive to our premium versions, are now available in the free version of our product! This update provides all users with enhanced functionality and greater flexibility at no extra cost. </li>
+                                <li>ClickUp: custom Tagify input added </li>
+                                <li>SystemeIO: Contact Fields added </li>
+                                <li>Metform: File upload added (Pro) </li>
+                                <li>MasterStudy: Course Enroll: 'add_user_course' hook added (Pro) </li>
+                                <li>Fluent support: Custom fields added </li>
+                                <li>PipeDrive: Multiple options showing beside field map </li>
+                                <li>PipeDrive: Multiple options issue</li>
                             </ul>
-                        </div> */}
+                        </div>
 
                         {/* <span className='new-feature'><b>Compatibility Update:</b></span>
 
@@ -61,8 +68,12 @@ export default function ChangelogToggle() {
 
                         <div className='fixes-list'>
                             <ul>
-                                <li> Notion: Custom Input Vissible </li>
-                                <li> Notion: ISO 8601 Date Format </li>
+                                <li> MailerLite: Name field </li>
+                                <li> Google Calendar: ISO8601 DateTime format </li>
+                                <li> Hubspot: Multiple select and Dropdown custom field </li>
+                                <li> Hubspot: Deal: Freezing screen </li>
+                                <li> WooCommerce: Order-Specific-Product: Select a Product Dropdown Update </li>
+                                <li> Bricks: CPT Form Type (Pro) </li>
                             </ul>
                         </div>
                     </div>

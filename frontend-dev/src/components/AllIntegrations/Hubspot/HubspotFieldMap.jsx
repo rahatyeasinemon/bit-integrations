@@ -10,13 +10,6 @@ import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 import { sortByField } from '../../../Utils/Helpers'
 
 export default function HubspotFieldMap({ i, formFields, field, hubspotConf, setHubspotConf }) {
-  if (hubspotConf?.field_map?.length === 1 && field.hubspotField === '') {
-    const newConf = { ...hubspotConf }
-    const tmp = generateMappedField(newConf)
-    newConf.field_map = tmp
-    setHubspotConf(newConf)
-  }
-
   const requiredFlds = hubspotConf?.hubSpotFields?.filter(fld => fld.required === true) || []
   const nonRequiredFlds = hubspotConf?.hubSpotFields?.filter(fld => fld.required === false) || []
 

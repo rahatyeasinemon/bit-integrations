@@ -92,7 +92,7 @@ final class Plugin
 
     public static function update_tables()
     {
-        if (!Capabilities::Check('manage_options')) {
+        if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
             return;
         }
         global $btcbi_db_version;

@@ -9,16 +9,8 @@ import TagifyInput from '../../Utilities/TagifyInput'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
 export default function FluentSupportFieldMap({ i, formFields, field, fluentSupportConf, setFluentSupportConf }) {
-  if (fluentSupportConf?.field_map?.length === 1 && field.fluentSupportFormField === '') {
-    const newConf = { ...fluentSupportConf }
-    const tmp = generateMappedField(newConf)
-    newConf.field_map = tmp
-    setFluentSupportConf(newConf)
-  }
-
   const requiredFlds = fluentSupportConf?.fluentSupportFields.filter(fld => fld.required === true) || []
   const nonRequiredFlds = fluentSupportConf?.fluentSupportFields.filter(fld => fld.required === false) || []
-
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
 
