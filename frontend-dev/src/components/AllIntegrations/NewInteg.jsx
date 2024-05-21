@@ -477,14 +477,6 @@ export default function NewInteg({ allIntegURL }) {
     navigate(-1)
   }
 
-
-  if (data?.success === false) {
-    return (
-      <div>
-        <h1 className="txt-center mt-5">{data?.data}</h1>
-      </div>
-    )
-  }
   return (
     <div>
       <div className="flx">
