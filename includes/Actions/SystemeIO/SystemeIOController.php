@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SystemeIO;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for SystemeIO integration
@@ -47,7 +47,6 @@ class SystemeIOController
         if (!isset($response->errors)) {
             $tags = [];
             foreach ($response->items as $tag) {
-
                 $tags[]
                 = (object) [
                     'id'   => $tag->id,
@@ -58,6 +57,30 @@ class SystemeIOController
             wp_send_json_success($tags, 200);
         } else {
             wp_send_json_error('Tags fetching failed', 400);
+        }
+    }
+
+    public function getAllFields($fieldsRequestParams)
+    {
+        $this->checkValidation($fieldsRequestParams);
+        $this->setHeaders($fieldsRequestParams->api_key);
+        $apiEndpoint = $this->_apiEndpoint . '/contact_fields';
+        $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
+
+        if (!isset($response->errors)) {
+            $allFields = [];
+
+            foreach ($response->items as $field) {
+                $allFields[] = (object) [
+                    'label'    => $field->fieldName,
+                    'key'      => $field->slug,
+                    'required' => $field->slug == 'email'
+                ];
+            }
+
+            wp_send_json_success($allFields, 200);
+        } else {
+            wp_send_json_error('Contact Field fetching failed', 400);
         }
     }
 

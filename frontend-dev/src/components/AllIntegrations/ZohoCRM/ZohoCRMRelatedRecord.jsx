@@ -29,19 +29,6 @@ export default function ZohoCRMRelatedRecord({ indx, tab, settab, formID, formFi
       <br />
       <br />
       <div className="pos-rel">
-        {!isPro && (
-          <div className="pro-blur flx w-9">
-            <div className="pro">
-              {__('Available On', 'bit-integrations')}
-              <a href="https://bitapps.pro/" target="_blank" rel="noreferrer">
-                <span className="txt-pro">
-                  {' '}
-                  {__('Premium', 'bit-integrations')}
-                </span>
-              </a>
-            </div>
-          </div>
-        )}
         <b className="wdt-100 d-in-b">{__('Related List:', 'bit-integrations')}</b>
         <select onChange={handleInput} name="module" value={crmConf?.relatedlists?.[tab - 1]?.module} className="btcd-paper-inp w-7" disabled={!crmConf.module}>
           <option value="">{__('Select Related Module', 'bit-integrations')}</option>

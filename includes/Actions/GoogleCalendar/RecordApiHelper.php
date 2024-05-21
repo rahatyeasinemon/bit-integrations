@@ -3,6 +3,7 @@
 namespace BitCode\FI\Actions\GoogleCalendar;
 
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
 use DateTime;
@@ -59,12 +60,12 @@ class RecordApiHelper
         $dateType = 'dateTime';
         foreach ($fieldData as $title => $value) {
             if ($title === 'start' || $title === 'end') {
-                $date = new DateTime($value, new DateTimeZone($this->timeZone));
+                $date = new DateTime(Helper::formatToISO8601($value), new DateTimeZone($this->timeZone));
                 if (isset($actions->allDayEvent)) {
                     $data[$title]['date'] = $date->format('Y-m-d');
                     $dateType = 'date';
                 } else {
-                    $data[$title]['dateTime'] = $date->format('Y-m-d\TH:i:sP');
+                    $data[$title]['dateTime'] = Helper::formatToISO8601($value);
                 }
                 $data[$title]['timeZone'] = $this->timeZone;
 
@@ -79,7 +80,6 @@ class RecordApiHelper
                 'overrides'  => $reminderFieldMap
             ];
         }
-
         if (isset($actions->skipIfSlotNotEmpty)) {
             $apiResponse = $this->freeSlotCheck($data['start'][$dateType], $data['end'][$dateType]);
 
@@ -123,6 +123,5 @@ class RecordApiHelper
         } else {
             LogHandler::save($integrationId, wp_json_encode(['type' => 'record', 'type_name' => 'insert']), 'success', $apiResponse);
         }
-
     }
 }

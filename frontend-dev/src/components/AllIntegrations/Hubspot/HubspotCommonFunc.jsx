@@ -6,6 +6,7 @@
 import toast from 'react-hot-toast'
 import { sprintf, __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
+import { create } from 'mutative'
 
 export const handleInput = (e, hubspotConf, setHubspotConf, setIsLoading) => {
   const newConf = { ...hubspotConf }
@@ -62,22 +63,23 @@ export const getAllPipelines = (confTmp, setConf, setLoading, type, loading) => 
 
   bitsFetch(requestParams, 'hubspot_pipeline')
     .then(result => {
-      if (result && result.success) {
-        const newConf = { ...confTmp }
-        if (result.data) {
-          if (!newConf.default) newConf.default = {}
-          newConf.default.pipelines = result.data
-          newConf.actionName = type
-          getFields(newConf, setConf, setLoading, type, loading)
-        }
-        setConf(newConf)
-        setLoading({ ...setLoading, pipelines: false })
+      if (result.data) {
+        setConf(prevConf => create(prevConf, draftConf => {
+          if (!draftConf.default) draftConf.default = {}
 
+          draftConf.default.pipelines = result.data
+          draftConf.actionName = type
+
+          getFields(draftConf, setConf, setLoading, type, loading)
+        }))
+
+        setLoading({ ...setLoading, pipelines: false })
         toast.success(__('pipelines fetched successfully', 'bit-integrations'))
         return
+      } else {
+        setLoading({ ...setLoading, pipelines: false })
+        toast.error(__('pipelines fetching failed', 'bit-integrations'))
       }
-      setLoading({ ...setLoading, pipelines: false })
-      toast.error(__('pipelines fetching failed', 'bit-integrations'))
     })
 }
 
@@ -161,12 +163,14 @@ export const getFields = (confTmp, setConf, setLoading, type, loading, refreshCu
   bitsFetch(requestParams, 'getFields')
     .then(result => {
       if (result && result.success) {
-        const newConf = { ...confTmp }
         if (result.data) {
-          newConf.hubSpotFields = result.data
-          newConf.actionName = type
+          setConf(prevConf => create(prevConf, draftConf => {
+            draftConf.hubSpotFields = result.data
+            draftConf.actionName = type
+            draftConf.field_map = generateMappedField(draftConf)
+          }))
         }
-        setConf(newConf)
+
         setLoading({ ...setLoading, customFields: false })
         setLoading({ ...setLoading, hubSpotFields: true })
 

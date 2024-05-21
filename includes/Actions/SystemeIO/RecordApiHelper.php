@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SystemeIO;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -47,7 +47,6 @@ class RecordApiHelper
         }
 
         $apiEndpoint = $this->apiUrl . '/contacts';
-
         $response = HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
 
         if (isset($this->integrationDetails->selectedTag) || !empty($this->integrationDetails->selectedTag)) {
@@ -79,7 +78,14 @@ class RecordApiHelper
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
             $actionValue = $value->systemeIOFormField;
-            $dataFinal[$actionValue] = ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue];
+            if ($actionValue == 'email') {
+                $dataFinal[$actionValue] = ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue];
+            } else {
+                $dataFinal['fields'][] = (object) [
+                    'slug'  => $actionValue,
+                    'value' => ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue]
+                ];
+            }
         }
 
         return $dataFinal;
