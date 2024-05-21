@@ -42,6 +42,8 @@ export default function ChangelogToggle() {
                                 <li>Metform: File upload added (Pro) </li>
                                 <li>MasterStudy: Course Enroll: 'add_user_course' hook added (Pro) </li>
                                 <li>Fluent support: Custom fields added </li>
+                                <li>PipeDrive: Multiple options showing beside field map </li>
+                                <li>PipeDrive: Multiple options issue</li>
                             </ul>
                         </div>
 

@@ -957,6 +957,7 @@ _Release Date -21th May 2024_
   - Metform: File upload added (Pro)
   - MasterStudy: Course Enroll: 'add_user_course' hook added (Pro)
   - Fluent support: Custom fields added
+  - PipeDrive: Multiple options showing beside field map
 
 - **Fixes :**
   - MailerLite: Name field
@@ -965,6 +966,7 @@ _Release Date -21th May 2024_
   - Hubspot: Deal: Freezing screen
   - WooCommerce: Order-Specific-Product: Select a Product Dropdown Update
   - Bricks: CPT Form Type (Pro)
+  - PipeDrive: Multiple options issue
 
 = 2.0.3  =
 _Release Date -9th May 2024_
