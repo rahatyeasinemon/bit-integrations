@@ -24,7 +24,7 @@ final class UserController
 
     public function getUserRoles()
     {
-        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations'))) {
+        if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations'))) {
             wp_send_json_error('User don\'t have permission to access this page');
         }
         global $wp_roles;

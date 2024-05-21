@@ -12,7 +12,7 @@ final class TriggerController
 {
     public static function triggerList()
     {
-        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_view_integrations'))) {
+        if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_view_integrations'))) {
             wp_send_json_error('User don\'t have permission to access this page');
         }
         $triggers = [];
@@ -33,10 +33,10 @@ final class TriggerController
         }
 
         if (!\function_exists('btcbi_pro_activate_plugin')) {
-            $triggers = array_merge($triggers, AllTriggersName::$allTriggersName);
+            $alltriggers = array_merge($triggers, AllTriggersName::$allTriggersName);
         }
 
-        return Hooks::apply('bit_integrations_triggers', $triggers);
+        return Hooks::apply('bit_integrations_triggers', $alltriggers);
     }
 
     public static function getTriggerField($triggerName, $data)

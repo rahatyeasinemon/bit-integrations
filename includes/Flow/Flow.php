@@ -49,8 +49,7 @@ final class Flow
 
     public function flowList()
     {
-
-        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_view_integrations'))) {
+        if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations'))) {
             wp_send_json_error('User don\'t have permission to access this page');
         }
         $integrationHandler = new FlowController();
@@ -81,7 +80,7 @@ final class Flow
 
     public function get($data)
     {
-        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
+        if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
             wp_send_json_error('User don\'t have permission to access this page');
         }
         $missing_field = null;
@@ -135,7 +134,7 @@ final class Flow
 
     public function save($data)
     {
-        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations'))) {
+        if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations'))) {
             wp_send_json_error('User don\'t have permission to access this page');
         }
         $missing_field = null;
@@ -178,7 +177,7 @@ final class Flow
 
     public function flowClone($data)
     {
-        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations'))) {
+        if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations'))) {
             wp_send_json_error('User don\'t have permission to access this page');
         }
         $missingId = null;
@@ -216,7 +215,7 @@ final class Flow
 
     public function update($data)
     {
-        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
+        if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
             wp_send_json_error('User don\'t have permission to access this page');
         }
         $missing_field = null;
@@ -253,7 +252,7 @@ final class Flow
 
     public function delete($data)
     {
-        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_delete_integrations'))) {
+        if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_delete_integrations'))) {
             wp_send_json_error('User don\'t have permission to Delete Integration');
         }
         $missing_field = null;
@@ -274,7 +273,7 @@ final class Flow
 
     public function bulkDelete($param)
     {
-        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_delete_integrations'))) {
+        if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_delete_integrations'))) {
             wp_send_json_error('User don\'t have permission to access this page');
         }
         if (!\is_array($param->flowID) || $param->flowID === []) {
@@ -292,7 +291,7 @@ final class Flow
 
     public function toggle_status($data)
     {
-        if (!Capabilities::Check('manage_options') || !(Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
+        if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
             wp_send_json_error('User don\'t have permission to access this page');
         }
         $missing_field = null;

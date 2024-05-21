@@ -1,10 +1,9 @@
-=== Webhook Automator & Form Integration to Automate 200+ Platforms – Bit Integrations ===
+=== Webhook Automator & Form Integration to Automate 210+ Platforms – Bit Integrations ===
 Contributors: bitpressadmin
-Tags: automation,integration,automator,form builder integration,webhook
-Requires at least: 5.1
+Tags: automation,forms,integration,automator,webhooks
 Tested up to: 6.5.3
 Requires PHP: 7.0
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 65+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -13,7 +12,7 @@ Automation Plugin for WordPress like Zapier; Integration of 65+ Triggers & 135+ 
 
 <strong> Best Automation Plugin for WordPress. Automate 210+ (highest in WordPress) Individual Platforms.</strong>
 
-Automate your WordPress workflow with **Bit**: the all-in-one plugin for WooCommerce, form builders, CRM, LMS, bookings, spreadsheets, [**webhooks**](https://webhook.is/difference-between-webhook-and-api), social media, and email marketing. No technical knowledge needed. Automate tasks across 200+ platforms effortlessly.
+Automate your WordPress workflow with **Bit Integration**: the all-in-one plugin for WooCommerce, form builders, CRM, LMS, bookings, spreadsheets, [**webhooks**](https://webhook.is/difference-between-webhook-and-api), social media, and email marketing. No technical knowledge needed. Automate tasks across 210+ platforms effortlessly.
 
 You can see below what WPTuts say about Bit Integrations
 
@@ -24,30 +23,10 @@ https://youtu.be/hgMkLvV-r6k
 
 📢 **Join our community [Bit Integrations](https://www.facebook.com/groups/bitapps) & get updates on our plugins.**
 
-**Some use cases below for more understanding about this plugin**
-
-1. When users submit forms like Bit Form, [Contact Form 7](https://wordpress.org/plugins/contact-form-7/), [Elementor Form](https://wordpress.org/plugins/elementor/), [Ninja Form](https://wordpress.org/plugins/ninja-forms/), [Forminator](https://wordpress.org/plugins/forminator/), [WS Forms](https://wordpress.org/plugins/ws-form/), etc. then you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
-
-2. When a user WooCommerce orders a product, you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
-
-3. When a user enrolls in a course in [LearnDash](https://www.learndash.com/), [LifterLMS](https://wordpress.org/plugins/lifterlms/), [Tutor LMS ](https://wordpress.org/plugins/tutor/), etc. then you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
-
-4. When a user registers on your site, you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
-
-5. When a user Donates to GiveWP,you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
-
-6. User can receive data via incoming [**webhook**](https://webhook.is/difference-between-webhook-and-api) from other platforms and send also data to other platform via outgoing [**webhook**](https://webhook.is/difference-between-webhook-and-api) as well.
-
 Mak says about Bit Integrations in his youtube channel
 
 https://youtu.be/UhTu6LCmh8A
 
-
-## ♻ How does this plugin work?
-
-This plugin acts as a bridge between platforms, using Triggers and Actions. Triggers capture data, like form submissions (Contact Form 7, WP Forms, etc.), while Actions send it to CRM, Email Marketing Software, Project Management Tools, Data Collection Tools, and other WordPress plugins.
-For example, a contact form (Bit Form, WP Forms, etc.)
-is submitted, and you want to send data in your CRM, Email Marketing Software, Project Management Tools, Data Collection Tools, and Other WordPress plugins.
 
 "WP Simple Hacks - Wordpress tips and tricks" youtube channels thoughts about Bit Integrations
 
@@ -269,6 +248,27 @@ https://youtu.be/eFuficjF_F4
 * [**Zoho Recruit**](https://www.zoho.com/recruit/)
 * [**Zoom Meeting**](https://zoom.us/)
 * [**Zoom Webinar**](https://www.zoom.com/en/products/webinars/)
+
+
+**Some use cases below for more understanding about this plugin**
+
+1. When users submit forms like Bit Form, [Contact Form 7](https://wordpress.org/plugins/contact-form-7/), [Elementor Form](https://wordpress.org/plugins/elementor/), [Ninja Form](https://wordpress.org/plugins/ninja-forms/), [Forminator](https://wordpress.org/plugins/forminator/), [WS Forms](https://wordpress.org/plugins/ws-form/), etc. then you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
+
+2. When a user WooCommerce orders a product, you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
+
+3. When a user enrolls in a course in [LearnDash](https://www.learndash.com/), [LifterLMS](https://wordpress.org/plugins/lifterlms/), [Tutor LMS ](https://wordpress.org/plugins/tutor/), etc. then you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
+
+4. When a user registers on your site, you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
+
+5. When a user Donates to GiveWP,you can send data to your **CRM, Email Marketing Software, Spreadsheets, and Other WordPress plugins**.
+
+6. User can receive data via incoming [**webhook**](https://webhook.is/difference-between-webhook-and-api) from other platforms and send also data to other platform via outgoing [**webhook**](https://webhook.is/difference-between-webhook-and-api) as well.
+
+## ♻ How does this plugin work?
+
+This plugin acts as a bridge between platforms, using Triggers and Actions. Triggers capture data, like form submissions (Contact Form 7, WP Forms, etc.), while Actions send it to CRM, Email Marketing Software, Project Management Tools, Data Collection Tools, and other WordPress plugins.
+For example, a contact form (Bit Form, WP Forms, etc.)
+is submitted, and you want to send data in your CRM, Email Marketing Software, Project Management Tools, Data Collection Tools, and Other WordPress plugins.
 
 == ❣ What our customer say about Bit Integrations : ==
 
@@ -895,9 +895,9 @@ With the pro version, you have the ability to create **Unlimited active** Please
 ## FAQ
 
 = 1. What is Bit Integrations? =
-Bit Integrations is a wordpress plugin that allows you to connect your WordPress site with over 200 popular platforms, such as CRMs, marketing tools, and more.
+Bit Integrations is a wordpress plugin that allows you to connect your WordPress site with over 210 popular platforms, such as CRMs, marketing tools, and more.
 = 2. What kind of tasks does Bit Integrations automate?=
-Bit Integrations provide automated solutions for form submissions, data transfer between platforms, and more. With the integration of over 200 popular platforms, users can effortlessly manage their connections to their WordPress site in one place.
+Bit Integrations provide automated solutions for form submissions, data transfer between platforms, and more. With the integration of over 210 popular platforms, users can effortlessly manage their connections to their WordPress site in one place.
 = 3. Is Bit integrations easy to use?=
 Yes, Bit integrations easy to use without require coding knowledge and without read documentation.
 = 4. Bit Integrations support Multisite?=
@@ -911,7 +911,7 @@ Yes, you can send data when user complete course/lesson , create course etc.
 = 8. Can I automate with WooCommerce, WooCommerce subscription, WooCommerce booking, Studiocart and Easy Digital Downloads?=
 Yes, you can send data when user complete order, create order, create subscription, create booking etc.
 = 9. Do I need coding skills to use Bit Integrations?=
-No, you don't need any coding skills to use Bit Integrations. You can easily connect your WordPress site with over 200 popular platforms, such as CRMs, marketing tools, and more.
+No, you don't need any coding skills to use Bit Integrations. You can easily connect your WordPress site with over 210 popular platforms, such as CRMs, marketing tools, and more.
 = 10. Can I automate with WhatsApp?=
 Yes, you can automate with WhatsApp.
 = 11. Best WordPress Automation Tools and Plugins Compared (2023)?=
@@ -919,7 +919,7 @@ Yes, Bit Integrations is one of the best WordPress Automation Tools and Plugins 
 = 12. Can I automate with Google Sheets, Google Calendar, Google Drive, Google Contact?=
 Yes, you can automate with Google Sheets, Google Calendar, Google Drive, Google Contact.
 = 13. What users say about Bit Integrations?=
-Bit Integrations is self hosted Zapier with chepest price. You can automate with over 200 popular platforms, such as CRMs, marketing tools, and more.
+Bit Integrations is self hosted Zapier with chepest price. You can automate with over 210 popular platforms, such as CRMs, marketing tools, and more.
 = 14. Can I automate WordPress?=
 Yes, you can automate WordPress with 60+ trigger and 140+ actions.
 = 15. Can Bit Integrations connect plugins with external services like Zapier, Pabbly, N8N?=
@@ -947,8 +947,30 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 
 == Changelog ==
 
+= 2.0.4  =
+_Release Date -21th May 2024_
+
+- **New Features :**
+  - ZohoCRM: Pro Actions and Upload fields, previously exclusive to our premium versions, are now available in the free version of our product! This update provides all users with enhanced functionality and greater flexibility at no extra cost.
+  - ClickUp: custom Tagify input added
+  - SystemeIO: Contact Fields added
+  - Metform: File upload added (Pro)
+  - MasterStudy: Course Enroll: 'add_user_course' hook added (Pro)
+  - Fluent support: Custom fields added
+
+- **Fixes :**
+  - MailerLite: Name field
+  - Google Calendar: ISO8601 DateTime format
+  - Hubspot: Multiple select and Dropdown custom field
+  - Hubspot: Deal: Freezing screen
+  - WooCommerce: Order-Specific-Product: Select a Product Dropdown Update
+  - Bricks: CPT Form Type (Pro)
+
 = 2.0.3  =
 _Release Date -9th May 2024_
+
+- **New Triggers :**
+  - Fluent Booking
 
 - **Fixes :**
   - Notion: Custom Input Vissible
@@ -1427,7 +1449,7 @@ _Release Date - 21 February 2023_
   - WooCommerce order specific product issue fixed.
   - WS Form issue fixed.
 
-= 1.3 =
+= 1.3.0 =
 _Release Date - 6 February 2023_
 
 - **Note :**
@@ -1550,253 +1572,5 @@ _Release Date - 18 October 2022_
 - **Note :**
   - Zoho all platforms authorization updated according to current auth system.
 
-= 1.1.9 =
-_Release Date - 9 October 2022_
-
-- **New Actions :**
-  - Klaviyo: Marketing Automation for Email Marketing & SMS - Klaviyo(Pro) Integration & Automation
-- **Features :**
-  - WooCommerce
-    - Booking create(trigger).
-- **Fixes :**
-  - Sendy Widget issue fixed(Pro).
-  - Order status change issue fixed(trigger).
-
-= 1.1.8 =
-_Release Date - 24 September 2022_
-
-- **Features :**
-  - Multisite.
-  - WooCommerce
-    - Order specific category.
-    - Cancel subscription product(Pro).
-  - BuddyBoss profile custom field map-able.
-  - Elementor Popup form added.
-  - Post
-    - Post trashed.
-    - Comment trashed.
-    - Comment updated.
-- **Fixes :**
-  - Twilio issue fixed(pro).
-  - WooCommerce 'Order specific product' issue fixed.
-
-= 1.1.7 =
-_Release Date - September 2022_
-
-- **New Actions :**
-  - Salesforce: The Customer Company - Salesforce.com US - Salesforce (pro) Integration & Automation
-- **Features :**
-  - Able to map password when creating user in User Registration Trigger.
-  - able to map user data when complete course and lesson in Tutor LMS Trigger.
-- **Fixes :**
-  - WooCommerce to GoogleSheet order create issue fixed (when line item field mapped).
-
-= 1.1.6 =
-_Release Date - 21 August 2022_
-
-- **Notice :**
-  - MailChimp contact default email formate not changed.
-
-= 1.1.5 =
-_Release Date - 20 August 2022_
-
-- **New Triggers :**
-  - Breakdance - Website Builder for WordPress- Breakdance Integration & Automation : Website Builder for WordPress
-  - GamiPress | Gamification for WordPress - GamiPress Integration & Automation
-- **New Actions :**
-  - Google contacts (pro) Integration & Automation
-  - Email Infrastructure For Business On The Internet - kirim.email - Kirim.Email (pro) Integration & Automation
-  - GamiPress | Gamification for WordPress - GamiPress (pro) Integration & Automation
-- **Features :**
-  - Trigger
-    - Elementor
-      - Show inner section form.
-- **Fixes :**
-  - WPForms Name field simple variation support.
-  - Post Creation(trigger) issue fixed.
-
-= 1.1.4 =
-_Release Date - 4 August 2022_
-
-- **New Trigger :**
-
-  - Better Contact Forms for your WordPress Website | weForms Pro - WeForms Integration & Automation
-  - Powerful Elementor Addons - Piotnet Addons For Elementor (PAFE) - Piotnet Addon (form) Integration & Automation
-
-- **Features :**
-  - Trigger
-    - Bricks Integration & Automation
-      - Show bricks template form.
-    - Elementor Integration & Automation
-      - Show elementor template form.
-    - FluentCRM Integration & Automation
-      - Added FluentCRM edit option
-- **Fixes :**
-  - Tutor Lms edit option loading issue fixed.
-  - BuddyBoss issue fixed.
-
-= 1.1.3 =
-_Release Date - 24 July 2022_
-
-- **Features :**
-  - Trigger
-    - WooCommerce - Open Source Ecommerce Platform - WooCommerce Integration & Automation
-      - User order status change Specific status.
-      - User subscribe product.
-      - User unsubscribe/cancel product.
-      - user subscription product time expire.
-      - User subscription product status change.
-      - user subscription product trial period end.
-    - Post Integration & Automation
-      - Added post edit option.
-    - User Registration Integration & Automation
-      - User Login.
-      - User reset password.
-      - User delete account.
-- **Fixes :**
-  - First name and last name are not visible for field map on FluentCRM issue fixed.
-
-= 1.1.2 =
-_Release Date - 5 July 2022_
-
-- **New Actions :**
-  - AffiliateWP - Affiliate Plugin for WordPress - AffiliateWP(pro) Integration & Automation
-  - BuddyBoss: The #1 course & community platform for WordPress - BuddyBoss(18 type actions added)(pro) Integration & Automation
-- **Added: New smart tag **
-  - WordPress Locale Code Integration & Automation
-  - Post Publish Date Integration & Automation
-  - Post Modified Date Integration & Automation
-  - Current User Role Integration & Automation
-  - Post Author ID Integration & Automation
-  - Post Author Display Name Integration & Automation
-  - Post Author Email Integration & Automation
-- **Fixes :**
-  - Amelia data are not fetching .
-- ** Note :**
-  - All smart tag available in pro.
-
-= 1.1.1 =
-_Release Date - 28 June 2022_
-
-- **Fixes :**
-  - WooCommerce field are not fetching properly.
-
-= 1.1.0 =
-_Release Date - 26 June 2022_
-
-- **New Triggers :**
-  - The easy membership plugin for WordPress - Restrict Content Integration & Automation
-  - LearnDash Learning Management System. Sell Courses using WordPress | LearnDash - LearnDash Integration & Automation
-  - BuddyBoss: The #1 course & community platform for WordPress. - BuddyBoss Integration & Automation
-  - AffiliateWP - Affiliate Plugin for WordPress - AffiliateWP Integration & Automation
-
-= 1.0.9 =
-_Release Date - 13 June 2022_
-
-- **New Actions :**
-  - The easy membership plugin for WordPress - Restrict Content (Pro) Integration & Automation
-  - LearnDash Learning Management System. Sell Courses using WordPress | LearnDash - LearnDash (Pro) Integration & Automation
-
-= 1.0.8 =
-_Release Date - 04 June 2022_
-
-- **New Triggers :**
-  - LearnDash Learning Management System. Sell Courses using WordPress | LearnDash - LearnDash Integration & Automation
-- **Features :**
-  - Specific a product order in wooCommerce trigger Integration & Automation
-
-= 1.0.7 =
-_Release Date - 24 May 2022_
-
-- **New Triggers :**
-  - Elementor Contact Form Builder plugin Metform - Metform Integration & Automation
-  - Kadence Blocks - Create Stunning WordPress Websites - Kadence Blocks Form Integration & Automation
-  - n8n.io - a powerful workflow automation tool - N8N Integration & Automation
-- **Fixes :**
-  - BitForm edit bug fixed (Action)
-  - Conditional logic error status not added timeline issue fixed
-
-= 1.0.6 =
-_Release Date - 14 May 2022_
-
-- **Fixes :**
-  - Webhooks data format error issue fixed
-
-= 1.0.5 =
-_Release Date - 30 April 2022_
-
-- **Features :**
-  - Added more theme support for Divi
-- **Fixes :**
-  - Fluent Forms container fields not showing in field map fixed
-
-= 1.0.4 =
-_Release Date - 24 April 2022_
-
-- **New Actions :**
-  - Ultimate Form Builder In WordPress - Bit Form - Bit Form Integration & Automation
-  - Zapier.com - Automate Your Work — Fast - Zapier Integration & Automation
-  - Make | Work the way you imagine - Integromat Integration & Automation
-  - Integrately: 8 Million+ Ready Automations For 1100+ Apps - Integrately Integration & Automation
-  - Pabbly - Online Marketing & Sales Software - Pabbly Integration & Automation
-  - SyncSpider: eCommerce automation and integration - SyncSpider Integration & Automation
-  - KonnectzIT - Smart Way to Connect & Automate Applications - KonnectzIT Integration & Automation
-  - Ant Apps Integration & Automation
-  - Trello: Manage Your Team's Projects From Anywhere - Trello Integration & Automation
-- **New Triggers :**
-  - WP Post Integration & Automation
-- **Features :**
-  - Added search facility for triggers
-- **Fixes :**
-  - WP Courseware bug fixed (Trigger)
-  - Mail integration & Automation edit bug fixed
-
-= 1.0.3 =
-_Release Date - 4 April 2022_
-
-- **New Triggers :**
-  - Divi — The Ultimate WordPress Theme & Visual Page Builder - Divi Integration & Automation
-  - Bricks – Visual Site Builder for WordPress - Bricks Integration & Automation
-  - Beaver Builder – WordPress Page Builder - Beaver Builder Integration & Automation
-  - Course Builder for WordPress | WP Courseware - WP Courseware Integration & Automation
-  - Tutor LMS - Most Powerful WordPress LMS Plugin - Tutor LMS Integration & Automation
-  - FluentCRM: Marketing Automation For WordPress - FluentCRM Integration & Automation
-  - Optimized checkout pages and sales funnels on your own website. No coding necessary - Studiocart Integration & Automation
-  - Happyforms: The easiest form builder for WordPress — Happyforms - HappyForms Integration & Automation
-  - Formidable Forms - The Most Advanced WordPress Forms Plugin - Formidable Forms Integration & Automation
-  - JetFormBuilder - Best WordPress Form Builder Plugin - JetForm Integration & Automation
-  - Amelia, Global Leader in Conversational AI | Amelia - Amelia Integration & Automation
-  - Meet Kali Forms - The Best WordPress Forms Builder Plugin - KaliForms Integration & Automation
-  - WPFunnels - Drag & Drop Sales Funnel Builder for WordPress - WPFunnels Integration & Automation
-- **Fixes :**
-  - WebHook bug fixed (Trigger)
-
-= 1.0.2 =
-_Release Date - 7 February 2022_
-
-- **New Triggers :**
-  - Everest Forms - Best WordPress Form Plugin - Everest Forms Integration & Automation
-
-= 1.0.1 =
-_Release Date - 2 February 2022_
-
-- **New Triggers :**
-  - WooCommerce - Open Source Ecommerce Platform - WooCommerce Integration & Automation
-  - Elementor: The Best Free Website Builder for WordPress - Elementor Integration & Automation
-  - Forminator – Easy-to-create pro WordPress forms for every site and situation - Forminator Integration & Automation
-  - WS Form - WordPress Form Plugin – Build Better WordPress Forms - WS Form Integration & Automation
-  - Piotnet Forms - Highly Customizable WordPress Form Builder - Piotnet Forms Integration & Automation
-  - eForm - Ultimate WordPress Form Builder Solution - eForm Integration & Automation
-  - User Registration Integration & Automation
-  - Contact Form Plugin – Fastest Contact Form Builder Plugin for WordPress by Fluent Forms - Fluent Forms Integration & Automation
-  - Gravity Forms | The Best WordPress Form Plugin | Form Builder - Gravity Forms Integration & Automation
-  - Ninja Forms - Your Drag & Drop WordPress Form Builder - Ninja Forms Integration & Automation
-  - WPForms - The World's Best Drag & Drop WordPress Forms Plugin - WPForms Integration & Automation
-  - Webhooks Integration & Automation
-- **Fixes :**
-  - Google Sheet MultiSelect, Checkbox & Radio field issue fixed
-  - MailChimp Date field issue fixed
-
-= 1.0.0 =
-
-- Initial release
+- **For Older Changelogs :**
+  - [Click Here](https://bitapps.pro/docs/bit-integrations/free-changelogs/)
