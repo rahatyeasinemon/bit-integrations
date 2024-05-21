@@ -31,8 +31,12 @@ class RecordApiHelper
         foreach ($fieldMap as $key => $value) {
             $triggerValue = $value->formField;
             $actionValue = $value->fluentSupportFormField;
-            if ($triggerValue === 'custom') {
+            if ($triggerValue === 'custom' && str_starts_with($actionValue, 'cf_')) {
+                $dataFinal['custom_fields'][$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
+            } elseif ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
+            } elseif (str_starts_with($actionValue, 'cf_')) {
+                $dataFinal['custom_fields'][$actionValue] = $data[$triggerValue];
             } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
@@ -75,6 +79,8 @@ class RecordApiHelper
         $ticket = Ticket::create($finalData);
 
         if (isset($ticket->id)) {
+            $ticket->syncCustomFields($finalData['custom_fields']);
+
             return $ticket;
         }
         wp_send_json_error(

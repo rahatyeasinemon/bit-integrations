@@ -392,40 +392,43 @@ export const tutorlmsStateIH = (tmpConf, flowData) => {
   return tmpConf;
 };
 
-export const wooCommerceStateIH = (tmpConf, flowData) => {
-  if (flowData.formID === "10" || flowData.formID === "19") {
+export const wooCommerceStateIH = (tmpConf, flowData,triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id;
+
+  if (formId === "10" || formId === "19") {
     tmpConf.selectedProduct = flowData.selectedProduct;
     tmpConf.products = flowData.products;
   }
-  if (flowData.formID === "11") {
+  if (formId === "11") {
     tmpConf.selectedOrderStatus = flowData.selectedOrderStatus;
     tmpConf.orderStatus = flowData.orderStatus;
   }
 
   if (
-    flowData.formID === "12" ||
-    flowData.formID === "13" ||
-    flowData.formID === "14" ||
-    flowData.formID === "15" ||
-    flowData.formID === "16"
+    formId === "12" ||
+    formId === "13" ||
+    formId === "14" ||
+    formId === "15" ||
+    formId === "16"
   ) {
     tmpConf.selectedSubscription = flowData.selectedSubscription;
     tmpConf.subscriptions = flowData.subscriptions;
   }
-  if (flowData.formID === "15") {
+  if (formId === "15") {
     tmpConf.selectedSubscriptionStatus = flowData.selectedSubscriptionStatus;
     tmpConf.subscriptionStatus = flowData.subscriptionStatus;
   }
-  if (flowData.formID === "17") {
+  if (formId === "17") {
     tmpConf.selectedProductCategory = flowData.selectedProductCategory;
     tmpConf.allProductCategories = flowData.allProductCategories;
   }
-  if (flowData.formID === "20") {
+  if (formId === "20") {
     tmpConf.selectedVariableProduct = flowData.selectedVariableProduct;
     tmpConf.allVariableProduct = flowData.allVariableProduct;
     tmpConf.selectedVariation = flowData.selectedVariation;
     tmpConf.allVariation = flowData.allVariation;
   }
+  
   return tmpConf;
 };
 

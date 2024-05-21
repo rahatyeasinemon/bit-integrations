@@ -2,7 +2,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import FluentSupportActions from './FluentSupportActions'
-import { } from './FluentSupportCommonFunc'
+import { getCustomFields } from './FluentSupportCommonFunc'
 import FluentSupportFieldMap from './FluentSupportFieldMap'
 
 export default function FluentSupportIntegLayout({ formID, formFields, handleInput, fluentSupportConf, setFluentSupportConf, isLoading, setIsLoading, setSnackbar }) {
@@ -21,8 +21,21 @@ export default function FluentSupportIntegLayout({ formID, formFields, handleInp
         />
       )}
 
-      {fluentSupportConf.field_map && (
+      {!isLoading && fluentSupportConf.field_map && (
         <>
+          <div className="mt-4">
+            <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
+            <button
+              onClick={() => getCustomFields(fluentSupportConf, setFluentSupportConf, setIsLoading, setSnackbar)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh Custom Ticket Fields', 'bit-integrations')}'` }}
+              type="button"
+              disabled={isLoading}
+            >
+              &#x21BB;
+            </button>
+          </div>
+          <div className="btcd-hr mt-1" />
           <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
             <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
             <div className="txt-dp"><b>{__('fluentSupport Fields', 'bit-integrations')}</b></div>

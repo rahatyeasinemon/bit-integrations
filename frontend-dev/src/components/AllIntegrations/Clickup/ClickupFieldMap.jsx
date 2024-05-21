@@ -6,6 +6,8 @@ import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import { $btcbi } from '../../../GlobalStates'
 import { generateMappedField } from './ClickupCommonFunc'
 import CustomField from './CustomField'
+import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
+import TagifyInput from '../../Utilities/TagifyInput'
 
 export default function ClickupFieldMap({ i, formFields, field, clickupConf, setClickupConf }) {
   let allFields = []
@@ -55,17 +57,7 @@ export default function ClickupFieldMap({ i, formFields, field, clickupConf, set
             </optgroup>
           </select>
 
-          {field.formField === 'custom' && (
-            <CustomField
-              field={field}
-              index={i}
-              conf={clickupConf}
-              setConf={setClickupConf}
-              fieldValue="customValue"
-              fieldLabel="Custom Value"
-              className="mr-2"
-            />
-          )}
+          {field.formField === 'custom' && <TagifyInput onChange={e => handleCustomValue(e, i, clickupConf, setClickupConf)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bit-integrations')} formFields={formFields} />}
 
           <select className="btcd-paper-inp" disabled={i < requiredFields.length} name="clickupFormField" value={i < requiredFields ? (requiredFields[i].label || '') : (field.clickupFormField || '')} onChange={(ev) => handleFieldMapping(ev, i, clickupConf, setClickupConf)}>
             <option value="">{__('Select Field', 'bit-integrations')}</option>

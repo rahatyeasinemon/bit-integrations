@@ -3,7 +3,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
-import { getAllTags } from './SystemeIOCommonFunc'
+import { getAllFields, getAllTags } from './SystemeIOCommonFunc'
 import SystemeIOFieldMap from './SystemeIOFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
 
@@ -20,7 +20,7 @@ export default function SystemeIOIntegLayout({ formFields, systemeIOConf, setSys
 
   return (
     <>
-      {(isLoading || loading.tag || loading.session) && (
+      {(isLoading || loading.tag || loading.session || loading.fields) && (
         <Loader style={{
           display: 'flex',
           justifyContent: 'center',
@@ -31,7 +31,7 @@ export default function SystemeIOIntegLayout({ formFields, systemeIOConf, setSys
         />
       )}
 
-      {systemeIOConf.actionName && !loading.tag
+      {systemeIOConf.actionName && !loading.tag && !loading.fields
         && (
           <>
             <br />
@@ -67,9 +67,11 @@ export default function SystemeIOIntegLayout({ formFields, systemeIOConf, setSys
               {__('Field Map', 'bit-integrations')}
             </b>
             <button
+              onClick={() => getAllFields(systemeIOConf, setSystemeIOConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh Fields', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh Contact Fields', 'bit-integrations')}'` }}
               type="button"
+              disabled={loading.fields}
             >
               &#x21BB;
             </button>

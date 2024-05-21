@@ -44,7 +44,14 @@ final class Helper
     public static function formatToISO8601($dateString)
     {
         try {
-            $date = new DateTime($dateString);
+            if (is_numeric($dateString)) {
+                if ($dateString > 10000000000) {
+                    $dateString = $dateString / 1000;
+                }
+                $date = new DateTime("@{$dateString}");
+            } else {
+                $date = new DateTime($dateString);
+            }
 
             return $date->format(DateTime::ATOM); // DateTime::ATOM is the ISO-8601 format
         } catch (Exception $e) {

@@ -17,7 +17,7 @@ function FluentSupport({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
-  const fluentSupportFields = [
+  const basicFields = [
     { key: 'title', label: 'Title', required: true },
     { key: 'content', label: 'Content', required: true },
     { key: 'first_name', label: 'First Name', required: true },
@@ -36,7 +36,8 @@ function FluentSupport({ formFields, setFlow, flow, allIntegURL }) {
     field_map: [
       { formField: '', fluentSupportFormField: '' },
     ],
-    fluentSupportFields,
+    basicFields,
+    fluentSupportFields: [],
     address_field: [],
     actions: {},
   })

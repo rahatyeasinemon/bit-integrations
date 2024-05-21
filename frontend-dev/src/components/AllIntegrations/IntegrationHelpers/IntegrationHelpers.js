@@ -31,6 +31,7 @@ import {
   wooCommerceStateIH,
   wpCoursewareStateIH,
 } from "../../Triggers/TriggerHelpers/TriggerStateHelper";
+import c from "react-multiple-select-dropdown-lite";
 
 export const checkWebhookIntegrationsExist = (entity) => {
   const integrations = webhookIntegrations;
@@ -88,7 +89,7 @@ export const saveIntegConfig = async (
     tmpConf = fluentBookingStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
   } else if (flow.triggered_entity === "WC") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
-    tmpConf = wooCommerceStateIH(tmpConf, dataFlow);
+    tmpConf = wooCommerceStateIH(tmpConf, dataFlow,flow.triggered_entity_id);
   } else if (flow.triggered_entity === "Groundhogg") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = groundhoggStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
@@ -256,7 +257,7 @@ export const saveActionConf = async ({
     tmpConf = fluentBookingStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
   } else if (flow.triggered_entity === "WC") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
-    tmpConf = wooCommerceStateIH(tmpConf, dataFlow);
+    tmpConf = wooCommerceStateIH(tmpConf, dataFlow,flow.triggered_entity_id);
   } else if (flow.triggered_entity === "Groundhogg") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = groundhoggStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
