@@ -33,10 +33,10 @@ final class TriggerController
         }
 
         if (!\function_exists('btcbi_pro_activate_plugin')) {
-            $alltriggers = array_merge($triggers, AllTriggersName::$allTriggersName);
+            $triggers = array_merge($triggers, AllTriggersName::$allTriggersName);
         }
 
-        return Hooks::apply('bit_integrations_triggers', $alltriggers);
+        return Hooks::apply('bit_integrations_triggers', $triggers);
     }
 
     public static function getTriggerField($triggerName, $data)

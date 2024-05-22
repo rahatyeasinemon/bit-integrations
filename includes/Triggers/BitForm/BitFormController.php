@@ -74,24 +74,24 @@ final class BitFormController
 
         $fields = [];
         foreach ($fieldDetails as $key => $field) {
-            if (isset($field->lbl) && !isset($field->txt) && $field->typ !== 'repeater') {
+            if (isset($field->fieldName) && !isset($field->txt) && $field->typ !== 'repeater') {
                 if ($field->typ === 'file-up') {
                     $fields[] = [
                         'name'  => $key,
                         'type'  => 'file',
-                        'label' => $field->lbl
+                        'label' => $field->lbl ?? $field->fieldName
                     ];
                 } elseif ($field->typ === 'decision-box') {
                     $fields[] = [
                         'name'  => $key,
                         'type'  => $field->typ,
-                        'label' => $field->adminLbl
+                        'label' => $field->adminLbl ?? $field->fieldName
                     ];
                 } else {
                     $fields[] = [
                         'name'  => $key,
                         'type'  => $field->typ,
-                        'label' => $field->lbl
+                        'label' => $field->lbl ?? $field->fieldName
                     ];
                 }
             }
