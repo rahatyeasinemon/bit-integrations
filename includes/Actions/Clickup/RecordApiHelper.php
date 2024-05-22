@@ -76,13 +76,13 @@ class RecordApiHelper
             $triggerValue = $value->formField;
             $actionValue = $value->clickupFormField;
             if ($triggerValue === 'custom') {
-                if ($actionValue === 'fields') {
+                if ($actionValue === 'customFieldKey') {
                     $dataFinal[$value->customFieldKey] = self::formatPhoneNumber($value->customValue);
                 } else {
                     $dataFinal[$actionValue] = self::formatPhoneNumber($value->customValue);
                 }
             } elseif (!\is_null($data[$triggerValue])) {
-                if ($actionValue === 'fields') {
+                if ($actionValue === 'customFieldKey') {
                     $dataFinal[$value->customFieldKey] = self::formatPhoneNumber($data[$triggerValue]);
                 } else {
                     $dataFinal[$actionValue] = self::formatPhoneNumber($data[$triggerValue]);
