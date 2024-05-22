@@ -7,6 +7,7 @@ import { $btcbi } from '../../../GlobalStates'
 import { generateMappedField } from './SendyCommonFunc'
 import TagifyInput from '../../Utilities/TagifyInput'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
+import CustomFieldKey from '../../Utilities/CustomFieldKey'
 
 export default function SendyFieldMap({ i, formFields, field, sendyConf, setSendyConf }) {
   if (sendyConf?.field_map?.length === 1 && field.sendyField === '') {
@@ -67,7 +68,20 @@ export default function SendyFieldMap({ i, formFields, field, sendyConf, setSend
                 ))
               )
             }
+            <option value="customFieldKey">{__('Custom Field', 'bit-integrations')}</option>
           </select>
+          {field.sendyField === 'customFieldKey'
+            && (
+              <CustomFieldKey
+                field={field}
+                index={i}
+                conf={sendyConf}
+                setConf={setSendyConf}
+                fieldValue="customFieldKey"
+                fieldLabel="Custom Field Key"
+                className="ml-2"
+              />
+            )}
         </div>
         {
           i >= requiredFlds.length && (
