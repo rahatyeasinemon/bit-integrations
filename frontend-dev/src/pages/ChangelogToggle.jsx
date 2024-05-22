@@ -27,7 +27,7 @@ export default function ChangelogToggle() {
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
                         <h3>What's New in {version}?</h3>
-                        <small className='date'> <b>21th May 2024</b></small>
+                        <small className='date'> <b>22th May 2024</b></small>
                     </div>
                     <div className='changelog-content'>
                         {/* <h4>New Integration</h4> */}
@@ -43,7 +43,6 @@ export default function ChangelogToggle() {
                                 <li>MasterStudy: Course Enroll: 'add_user_course' hook added (Pro) </li>
                                 <li>Fluent support: Custom fields added </li>
                                 <li>PipeDrive: Multiple options showing beside field map </li>
-                                <li>PipeDrive: Multiple options issue</li>
                             </ul>
                         </div>
 
@@ -74,6 +73,7 @@ export default function ChangelogToggle() {
                                 <li> Hubspot: Deal: Freezing screen </li>
                                 <li> WooCommerce: Order-Specific-Product: Select a Product Dropdown Update </li>
                                 <li> Bricks: CPT Form Type (Pro) </li>
+                                <li>PipeDrive: Multiple options issue</li>
                             </ul>
                         </div>
                     </div>
