@@ -10,7 +10,7 @@ import Modal from '../components/Utilities/Modal'
 export default function ChangelogToggle() {
     const btcbi = useRecoilValue($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const version = btcbi.isPro ? '2.0.4' : '2.0.4'
+    const version = btcbi.isPro ? '2.0.5' : '2.0.4'
     return (
         <div className="changelog-toggle">
             <button
