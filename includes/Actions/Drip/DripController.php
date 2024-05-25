@@ -21,13 +21,6 @@ class DripController
         $this->_integrationID = $integrationID;
     }
 
-    /**
-     * Process ajax request
-     *
-     * @param $requestsParams Params to authorize
-     *
-     * @return JSON Drip api response and status
-     */
     public static function dripAuthorize($requestsParams)
     {
         if (empty($requestsParams->api_token)
@@ -54,7 +47,16 @@ class DripController
             );
         }
 
-        wp_send_json_success($response);
+        $accounts = [];
+
+        foreach ($response->accounts as $account) {
+            $accounts[] = [
+                'accountId'   => $account->id,
+                'accountName' => $account->name . ' (' . $account->url . ')'
+            ];
+        }
+
+        wp_send_json_success($accounts);
     }
 
     /**

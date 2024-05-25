@@ -2,47 +2,56 @@
 import { __ } from '@wordpress/i18n'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
-import { refreshDripHeader, refreshDripCampaign } from './DripCommonFunc'
+import { refreshDripHeader, refreshDripCampaign, dripAuthentication } from './DripCommonFunc'
 import DripFieldMap from './DripFieldMap'
+import { useState } from 'react'
 
-export default function DripIntegLayout({ formFields, dripConf, setDripConf, isLoading, setIsLoading, setSnackbar }) {
+export default function DripIntegLayout({ formFields, dripConf, setDripConf, isLoading, setIsLoading, setSnackbar, loading, setLoading }) {
+  const [error, setError] = useState({ name: '', api_token: '' })
+  const [isAuthorized, setisAuthorized] = useState(false)
 
   const handleInput = (e) => {
-    const campaignid = e.target.value
+    const accountId = e.target.value
     const newConf = { ...dripConf }
-    if (campaignid) {
-      newConf.campaignId = campaignid
+
+    if (accountId) {
+      newConf.selectedAccountId = accountId
     } else {
-      delete newConf.campaignId
+      newConf.selectedAccountId = accountId
     }
 
-    refreshDripHeader(newConf, setDripConf, setIsLoading, setSnackbar)
+    setDripConf({ ...newConf })
+
+    // refreshDripHeader(newConf, setDripConf, setIsLoading, setSnackbar)
   }
+
+  // console.log(dripConf, 'dc')
+
   return (
     <>
       <br />
-      <b className="wdt-200 d-in-b">{__('Campaign:', 'bit-integrations')}</b>
-      <select value={dripConf?.campaignId} name="campaignId" id="" className="btcd-paper-inp w-5" onChange={handleInput}>
-        <option value="">{__('Select Campaign', 'bit-integrations')}</option>
+      <b className="wdt-200 d-in-b">{__('Account:', 'bit-integrations')}</b>
+      <select value={dripConf?.selectedAccountId} name="accountId" id="" className="btcd-paper-inp w-5" onChange={handleInput}>
+        <option value="">{__('Select an account', 'bit-integrations')}</option>
         {
-          dripConf?.default?.dripCampaigns && Object.keys(dripConf.default.dripCampaigns).map(campaignname => (
-            <option key={`${campaignname + 1}`} value={dripConf.default.dripCampaigns[campaignname].campaignId}>
-              {dripConf.default.dripCampaigns[campaignname].campaignName}
+          dripConf?.accounts.map(account => (
+            <option key={account.accountId} value={account.accountId}>
+              {account.accountName}
             </option>
           ))
         }
       </select>
-      <button onClick={() => refreshDripCampaign(dripConf, setDripConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Drip campaign"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => dripAuthentication(dripConf, setDripConf, setError, setisAuthorized, loading, setLoading, 'accounts')} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh accounts"' }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <br />
 
-      {isLoading && (
+      {loading.accounts && (
         <Loader style={{
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           height: 100,
-          transcampaign: 'scale(0.7)',
+          transform: 'scale(0.7)',
         }}
         />
       )}
@@ -53,11 +62,11 @@ export default function DripIntegLayout({ formFields, dripConf, setDripConf, isL
       </div>
       {
 
-        (dripConf?.campaignId || dripConf?.default?.fields) && (
+        (dripConf?.selectedAccountId || dripConf?.default?.fields) && (
           <>
             <div className="btcd-hr mt-1" />
             <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-              <div className="txt-dp"><b>{__('Campaign Fields', 'bit-integrations')}</b></div>
+              <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
               <div className="txt-dp"><b>{__('Drip Fields', 'bit-integrations')}</b></div>
             </div>
 

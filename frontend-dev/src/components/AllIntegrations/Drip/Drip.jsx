@@ -11,6 +11,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import DripAuthorization from './DripAuthorization'
 import { checkMappedFields } from './DripCommonFunc'
 import DripIntegLayout from './DripIntegLayout'
+import toast from 'react-hot-toast'
 
 function Drip({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -18,6 +19,11 @@ function Drip({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
+  const [loading, setLoading] = useState({
+    auth: false,
+    customFields: false,
+    accounts: false
+  })
   // const fields = [
   //   { fieldName: 'email', fieldName: 'Email', required: true },
   //   { fieldName: 'first_name', fieldName: 'First Name', required: false },
@@ -26,28 +32,31 @@ function Drip({ formFields, setFlow, flow, allIntegURL }) {
   const [dripConf, setDripConf] = useState({
     name: 'Drip',
     type: 'Drip',
-    api_token: process.env.NODE_ENV === 'development' ? '8cac39208b7aadb09e625a380140bf62' : '',
+    api_token: process.env.NODE_ENV === 'development' ? 'fa2e5034e01d8e8f4f95b31ba8739918' : '',
+    accounts: [],
     field_map: [
       { formField: '', dripField: '' },
     ],
     actions: {},
+    selectedAccountId: '',
     // default: {
     //   fields: fields,
     // },
   })
 
+  // console.log(dripConf, 'dripConf')
+
   const nextPage = (val) => {
-    // setIsLoading(true)
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
     if (val === 3) {
       if (!checkMappedFields(dripConf)) {
-        setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
+        toast.error('Please map all required fields to continue.')
         return
       }
-      if (!dripConf?.campaignId) {
-        setSnackbar({ show: true, msg: 'Please select campaign to continue.' })
+      if (!dripConf?.selectedAccountId) {
+        toast.error('Please select account to continue.')
         return
       }
       if (dripConf.name !== '' && dripConf.field_map.length > 0) {
@@ -67,9 +76,8 @@ function Drip({ formFields, setFlow, flow, allIntegURL }) {
         setDripConf={setDripConf}
         step={step}
         setstep={setstep}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-        setSnackbar={setSnackbar}
+        loading={loading}
+        setLoading={setLoading}
       />
       {/* STEP 2 */}
       <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
@@ -82,10 +90,12 @@ function Drip({ formFields, setFlow, flow, allIntegURL }) {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           setSnackbar={setSnackbar}
+          loading={loading}
+          setLoading={setLoading}
         />
         <button
           onClick={() => nextPage(3)}
-          disabled={!dripConf?.campaignId || dripConf.field_map.length < 1}
+          disabled={!dripConf?.selectedAccountId || !checkMappedFields(dripConf) || dripConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg green sh-sm flx"
           type="button"
         >
