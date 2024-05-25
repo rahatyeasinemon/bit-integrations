@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\Salesforce;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -45,6 +45,7 @@ class RecordApiHelper
     {
         $apiEndpoint = $this->_apiDomain . '/services/data/v37.0/sobjects/Contact';
 
+        error_log(print_r([$apiEndpoint,$finalData, $this->_defaultHeader]), true);
         return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->_defaultHeader);
     }
 
