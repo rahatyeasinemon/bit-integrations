@@ -2,11 +2,11 @@
 import { __ } from '@wordpress/i18n'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
-import { refreshDripHeader, refreshDripCampaign, dripAuthentication } from './DripCommonFunc'
+import { dripAuthentication, getCustomFields, staticFields } from './DripCommonFunc'
 import DripFieldMap from './DripFieldMap'
 import { useState } from 'react'
 
-export default function DripIntegLayout({ formFields, dripConf, setDripConf, isLoading, setIsLoading, setSnackbar, loading, setLoading }) {
+export default function DripIntegLayout({ formFields, dripConf, setDripConf, loading, setLoading }) {
   const [error, setError] = useState({ name: '', api_token: '' })
   const [isAuthorized, setisAuthorized] = useState(false)
 
@@ -16,16 +16,14 @@ export default function DripIntegLayout({ formFields, dripConf, setDripConf, isL
 
     if (accountId) {
       newConf.selectedAccountId = accountId
+      getCustomFields(newConf, setDripConf, setLoading)
     } else {
       newConf.selectedAccountId = accountId
+      newConf.dripFormFields = staticFields
     }
 
     setDripConf({ ...newConf })
-
-    // refreshDripHeader(newConf, setDripConf, setIsLoading, setSnackbar)
   }
-
-  // console.log(dripConf, 'dc')
 
   return (
     <>
@@ -41,11 +39,11 @@ export default function DripIntegLayout({ formFields, dripConf, setDripConf, isL
           ))
         }
       </select>
-      <button onClick={() => dripAuthentication(dripConf, setDripConf, setError, setisAuthorized, loading, setLoading, 'accounts')} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh accounts"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+      <button onClick={() => dripAuthentication(dripConf, setDripConf, setError, setisAuthorized, loading, setLoading, 'accounts')} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh accounts"' }} type="button" disabled={loading?.accounts}>&#x21BB;</button>
       <br />
       <br />
 
-      {loading.accounts && (
+      {(loading.accounts || loading.customFields) && (
         <Loader style={{
           display: 'flex',
           justifyContent: 'center',
@@ -58,33 +56,30 @@ export default function DripIntegLayout({ formFields, dripConf, setDripConf, isL
 
       <div className="mt-4">
         <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
-        <button onClick={() => refreshDripHeader(dripConf, setDripConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Drip Field', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+        {dripConf?.selectedAccountId && <button onClick={() => getCustomFields(dripConf, setDripConf, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Custom Fields', 'bit-integrations')}'` }} type="button" disabled={loading?.customFields}>&#x21BB;</button>}
       </div>
-      {
+      {dripConf?.selectedAccountId && (
+        <>
+          <div className="btcd-hr mt-1" />
+          <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
+            <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
+            <div className="txt-dp"><b>{__('Drip Fields', 'bit-integrations')}</b></div>
+          </div>
 
-        (dripConf?.selectedAccountId || dripConf?.default?.fields) && (
-          <>
-            <div className="btcd-hr mt-1" />
-            <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-              <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
-              <div className="txt-dp"><b>{__('Drip Fields', 'bit-integrations')}</b></div>
-            </div>
-
-            {dripConf.field_map.map((itm, i) => (
-              <DripFieldMap
-                key={`Drip-m-${i + 9}`}
-                i={i}
-                field={itm}
-                dripConf={dripConf}
-                formFields={formFields}
-                setDripConf={setDripConf}
-              />
-            ))}
-            <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(dripConf.field_map.length, dripConf, setDripConf)} className="icn-btn sh-sm" type="button">+</button></div>
-            <br />
-          </>
-        )
-      }
+          {dripConf.field_map.map((itm, i) => (
+            <DripFieldMap
+              key={`Drip-m-${i + 9}`}
+              i={i}
+              field={itm}
+              dripConf={dripConf}
+              formFields={formFields}
+              setDripConf={setDripConf}
+            />
+          ))}
+          <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(dripConf.field_map.length, dripConf, setDripConf)} className="icn-btn sh-sm" type="button">+</button></div>
+          <br />
+        </>
+      )}
     </>
   )
 }

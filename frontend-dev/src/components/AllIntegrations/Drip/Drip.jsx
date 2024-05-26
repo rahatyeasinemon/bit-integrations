@@ -4,12 +4,11 @@ import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import BackIcn from '../../../Icons/BackIcn'
-import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import DripAuthorization from './DripAuthorization'
-import { checkMappedFields } from './DripCommonFunc'
+import { checkMappedFields, staticFields } from './DripCommonFunc'
 import DripIntegLayout from './DripIntegLayout'
 import toast from 'react-hot-toast'
 
@@ -18,17 +17,12 @@ function Drip({ formFields, setFlow, flow, allIntegURL }) {
   const { formID } = useParams()
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
-  const [snack, setSnackbar] = useState({ show: false })
   const [loading, setLoading] = useState({
     auth: false,
     customFields: false,
     accounts: false
   })
-  // const fields = [
-  //   { fieldName: 'email', fieldName: 'Email', required: true },
-  //   { fieldName: 'first_name', fieldName: 'First Name', required: false },
-  //   { fieldName: 'last_name', fieldName: 'Last Name', required: false }, ,
-  // ]
+
   const [dripConf, setDripConf] = useState({
     name: 'Drip',
     type: 'Drip',
@@ -39,12 +33,8 @@ function Drip({ formFields, setFlow, flow, allIntegURL }) {
     ],
     actions: {},
     selectedAccountId: '',
-    // default: {
-    //   fields: fields,
-    // },
+    dripFormFields: staticFields
   })
-
-  // console.log(dripConf, 'dripConf')
 
   const nextPage = (val) => {
     setTimeout(() => {
@@ -66,7 +56,6 @@ function Drip({ formFields, setFlow, flow, allIntegURL }) {
   }
   return (
     <div>
-      <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
 
       {/* STEP 1 */}
@@ -87,9 +76,6 @@ function Drip({ formFields, setFlow, flow, allIntegURL }) {
           formFields={formFields}
           dripConf={dripConf}
           setDripConf={setDripConf}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-          setSnackbar={setSnackbar}
           loading={loading}
           setLoading={setLoading}
         />

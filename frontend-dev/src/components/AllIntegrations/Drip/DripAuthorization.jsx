@@ -4,7 +4,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
-import { dripAuthentication, refreshDripCampaign } from './DripCommonFunc'
+import { dripAuthentication } from './DripCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 import toast from 'react-hot-toast'
@@ -68,7 +68,7 @@ export default function DripAuthorization({ formID, dripConf, setDripConf, step,
       </small>
       <br />
       <br />
-      {loading.auth && (
+      {loading?.auth && (
         <div className="flx mt-5">
           <LoaderSm size={25} clr="#022217" className="mr-2" />
           Checking Api Token Key!!!
