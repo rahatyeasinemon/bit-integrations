@@ -15,7 +15,7 @@ class RecordApiHelper
         $this->_integrationID = $integrationId;
     }
 
-    public function insertRecord($data, $actions)
+    public function insertRecord($data, $actions, $lists, $tags)
     {
         $contact_obj = BWF_Contacts::get_instance();
         $contact = $contact_obj->get_contact_by('email', $data['email']);
@@ -31,6 +31,8 @@ class RecordApiHelper
             $contact->set_status(1);
             $contact->save();
 
+            static::addTags($data['email'], $tags);
+            static::addLists($data['email'], $lists);
             $customContact = new BWFCRM_Contact($data['email']);
             foreach ($data as $key => $item) {
                 if ($key == 'address') {
@@ -62,10 +64,8 @@ class RecordApiHelper
                 }
             }
         }
-        $fieldData['lists'] = $lists;
-        $fieldData['tags'] = $tags;
 
-        $recordApiResponse = $this->insertRecord($fieldData, $actions);
+        $recordApiResponse = $this->insertRecord($fieldData, $actions, $lists, $tags);
 
         if ($recordApiResponse['success']) {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'success', $recordApiResponse);
@@ -74,5 +74,25 @@ class RecordApiHelper
         }
 
         return $recordApiResponse;
+    }
+
+    private static function addTags($email, $tags)
+    {
+        $customContact = new BWFCRM_Contact($email);
+        foreach ($tags as $tag_id) {
+            $tags_to_add[] = ['id' => $tag_id];
+        }
+
+        $customContact->add_tags($tags_to_add);
+    }
+
+    private static function addLists($email, $lists)
+    {
+        $customContact = new BWFCRM_Contact($email);
+        foreach ($lists as $list_id) {
+            $lists_to_add[] = ['id' => $list_id];
+        }
+
+        $customContact->add_lists($lists_to_add);
     }
 }
