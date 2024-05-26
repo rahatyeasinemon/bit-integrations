@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\Salesforce;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -155,8 +155,7 @@ class RecordApiHelper
             } else {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Contact', 'type_name' => 'Contact-create']), 'error', wp_json_encode($insertContactResponse));
             }
-        }
-        if ($actionName === 'lead-create') {
+        } elseif ($actionName === 'lead-create') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $insertLeadResponse = $this->insertLead($finalData);
             if (\is_object($insertLeadResponse) && property_exists($insertLeadResponse, 'id')) {
