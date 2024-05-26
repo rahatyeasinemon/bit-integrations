@@ -287,6 +287,8 @@ export const getAllCustomFields = (formID, actionName, salesforceConf, setSalesf
               ...draftConf.caseFields,
               ...customFields
             ];
+          }else{
+            draftConf['selesforceFields'] = customFields
           }
         }
         draftConf.field_map = generateMappedField(draftConf);

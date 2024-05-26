@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Salesforce;
 
-use WP_Error;
-use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Flow\FlowController;
+use WP_Error;
 
 class SalesforceController
 {
@@ -127,6 +127,7 @@ class SalesforceController
             $response['tokenDetails'] = self::refreshAccessToken($customFieldRequestParams);
         }
 
+        $isCustomAction = false;
         switch ($customFieldRequestParams->actionName) {
             case 'contact-create':
                 $action = 'Contact';
@@ -159,7 +160,8 @@ class SalesforceController
                 break;
 
             default:
-                $action = '';
+                $action = $customFieldRequestParams->actionName;
+                $isCustomAction = true;
 
                 break;
         }
@@ -168,26 +170,32 @@ class SalesforceController
         $authorizationHeader['Authorization'] = "Bearer {$customFieldRequestParams->tokenDetails->access_token}";
         $authorizationHeader['Content-Type'] = 'application/json';
         $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
-        error_log(print_r([$apiEndpoint, $authorizationHeader], true));
         if (!property_exists((object) $apiResponse, 'fields')) {
             wp_send_json_error($apiResponse, 400);
         }
 
-        $customFields = array_filter($apiResponse->fields, function ($field) {
-            if ($field->custom) {
-                return true;
-            }
-        });
+        if ($isCustomAction) {
+            $unusualFields = ['Id', 'OwnerId', 'IsDeleted', 'CreatedDate', 'CreatedById', 'LastModifiedDate', 'LastModifiedById', 'SystemModstamp', 'LastViewedDate', 'LastReferencedDate'];
+            $customFields = array_filter($apiResponse->fields, function ($field) use ($unusualFields) {
+                if (!\in_array($field->name, $unusualFields) || $field->custom) {
+                    return true;
+                }
+            });
+        } else {
+            $customFields = array_filter($apiResponse->fields, function ($field) {
+                if ($field->custom) {
+                    return true;
+                }
+            });
+        }
 
         $fieldMap = [];
         foreach ($customFields as $field) {
-            $fieldMap[]
-            = (object) [
+            $fieldMap[] = (object) [
                 'key'      => $field->name,
                 'label'    => $field->label,
-                'required' => false
-            ]
-            ;
+                'required' => (boolean) ($field->name == 'Name')
+            ];
         }
 
         if (!empty($response['tokenDetails'])) {

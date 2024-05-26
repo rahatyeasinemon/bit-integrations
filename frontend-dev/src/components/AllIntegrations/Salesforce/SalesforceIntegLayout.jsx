@@ -44,6 +44,8 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
         getAllCustomFields(formID, 'event-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
       } else if (actName === 'case-create') {
         getAllCustomFields(formID, 'case-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else {
+        getAllCustomFields(formID, actName, newConf, setSalesforceConf, setIsLoading, setSnackbar)
       }
     } else {
       delete newConf[name]
@@ -197,7 +199,7 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
         />
       )}
 
-      {['contact-create', 'lead-create', 'account-create', 'campaign-create', 'opportunity-create', 'event-create', 'case-create'].includes(salesforceConf?.actionName)
+      {salesforceConf?.actionName
         && !isLoading && (
           <>
             <br />
