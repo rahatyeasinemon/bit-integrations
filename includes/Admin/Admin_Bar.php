@@ -142,6 +142,14 @@ class Admin_Bar
                 'userMail'   => $userMails,
             ]
         );
+
+        if (\defined('BTCBI_VERSION')) {
+            $btcbi['version'] = BTCBI_VERSION;
+        }
+
+        $changelogVersion = get_option('btcbi_changelog_version', '0.0.0');
+        $btcbi['changelogVersion'] = $changelogVersion;
+
         if (get_locale() !== 'en_US' && file_exists(BTCBI_PLUGIN_BASEDIR . '/languages/generatedString.php')) {
             include_once BTCBI_PLUGIN_BASEDIR . '/languages/generatedString.php';
             $btcbi['translations'] = $bit_integrations_i18n_strings;

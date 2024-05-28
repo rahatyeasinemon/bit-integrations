@@ -1,16 +1,37 @@
 
 import { useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { $btcbi } from '../GlobalStates'
 import ChangelogIcn from '../Icons/ChangeLogIcn'
 import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 import { __ } from '../Utils/i18nwrap'
 import Modal from '../components/Utilities/Modal'
+import changelogInfo from '../Utils/StaticData/changelogInfo'
+
+import bitsFetch from '../Utils/bitsFetch'
 
 export default function ChangelogToggle() {
-    const btcbi = useRecoilValue($btcbi)
+    const [btcbi, setBtcbi] = useRecoilState($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const version = btcbi.isPro ? '2.0.5' : '2.0.5'
+    const currentChangelog = '2.0.5'
+    const currenChangelog = changelogInfo[currentChangelog]
+
+    // const version = btcbi.isPro ? '2.0.5' : '2.0.5'
+    // console.log('btcbi.version', btcbi.version)
+    const setChangeLogVersion = (val) => {
+        console.log('btcbi Version', val)
+        setShow(val)
+        if (!val) {
+            bitsFetch({
+                version: btcbi.version,
+            }, 'changelog_version')
+                .then(() => {
+                    setBtcbi(prevBtcbi => ({ ...prevBtcbi, changelogVersion: prevBtcbi.version }))
+                })
+        }
+    }
+    // if (!currenChangelog) return
+
     return (
         <div className="changelog-toggle">
             <button
@@ -22,11 +43,11 @@ export default function ChangelogToggle() {
                 {/* <QuestionIcn size={25} /> */}
                 <ChangelogIcn size={25} />
             </button>
-            <Modal sm show={show} setModal={setShow} >
+            <Modal sm show={show} setModal={setChangeLogVersion}>
                 <div className='changelog'>
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
-                        <h3>What's New in {version}?</h3>
+                        <h3>What's New in {currentChangelog}?</h3>
                         <small className='date'> <b>22th May 2024</b></small>
                     </div>
                     <div className='changelog-content'>

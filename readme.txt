@@ -319,7 +319,7 @@ My typical use-case: Adding WooCommerce orders to Gsheets and then sending the l
 
 -by @vaishakdamu
 
-### 💥 In the free version, you can create one integration, while the pro version offers unlimited integration capabilities.
+### 💥 In the free version, you can create unlimited integrations using free triggers, while the pro version offers unlimited integration capabilities using all triggers.
 
 ### ⚡ Key Features:
 
