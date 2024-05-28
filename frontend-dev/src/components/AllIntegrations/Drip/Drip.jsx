@@ -20,7 +20,8 @@ function Drip({ formFields, setFlow, flow, allIntegURL }) {
   const [loading, setLoading] = useState({
     auth: false,
     customFields: false,
-    accounts: false
+    accounts: false,
+    tags: false,
   })
 
   const [dripConf, setDripConf] = useState({
@@ -32,8 +33,11 @@ function Drip({ formFields, setFlow, flow, allIntegURL }) {
       { formField: '', dripField: '' },
     ],
     actions: {},
+    tags: [],
     selectedAccountId: '',
-    dripFormFields: staticFields
+    dripFormFields: staticFields,
+    selectedTags: '',
+    selectedStatus: ''
   })
 
   const nextPage = (val) => {

@@ -5,6 +5,7 @@ import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import { dripAuthentication, getCustomFields, staticFields } from './DripCommonFunc'
 import DripFieldMap from './DripFieldMap'
 import { useState } from 'react'
+import DripActions from './DripActions'
 
 export default function DripIntegLayout({ formFields, dripConf, setDripConf, loading, setLoading }) {
   const [error, setError] = useState({ name: '', api_token: '' })
@@ -78,6 +79,15 @@ export default function DripIntegLayout({ formFields, dripConf, setDripConf, loa
           ))}
           <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(dripConf.field_map.length, dripConf, setDripConf)} className="icn-btn sh-sm" type="button">+</button></div>
           <br />
+          <br />
+          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
+          <div className="btcd-hr mt-1" />
+          <DripActions
+            dripConf={dripConf}
+            setDripConf={setDripConf}
+            loading={loading}
+            setLoading={setLoading}
+          />
         </>
       )}
     </>

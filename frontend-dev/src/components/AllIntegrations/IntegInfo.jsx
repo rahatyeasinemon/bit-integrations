@@ -429,8 +429,6 @@ export default function IntegInfo() {
         return <DiscordAuthorization discordConf={integrationConf} step={1} isInfo />
       case 'ZagoMail':
         return <ZagoMailAuthorization zagoMailConf={integrationConf} step={1} isInfo />
-      case 'Drip':
-        return <DripAuthorization dripConf={integrationConf} step={1} isInfo />
       default:
         return <></>
     }

@@ -94,12 +94,37 @@ class DripController
         wp_send_json_success($customFields, 200);
     }
 
+    public static function getAllTags($fieldsRequestParams)
+    {
+        if (empty($fieldsRequestParams->apiToken) || empty($fieldsRequestParams->selectedAccountId)) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+
+        $apiToken = $fieldsRequestParams->apiToken;
+        $accountId = $fieldsRequestParams->selectedAccountId;
+        $apiEndpoints = 'https://api.getdrip.com/v2/' . $accountId . '/tags';
+        $header = [
+            'Authorization' => 'Basic ' . base64_encode("{$apiToken}:")
+        ];
+
+        $response = HttpHelper::get($apiEndpoints, null, $header);
+
+        if (isset($response->tags)) {
+            wp_send_json_success($response->tags, 200);
+        }
+
+        wp_send_json_error('Tags fetching failed', 400);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
         $api_token = $integrationDetails->api_token;
         $fieldMap = $integrationDetails->field_map;
         $accountId = $integrationDetails->selectedAccountId;
+        $actions = $integrationDetails->actions;
+        $selectedStatus = $integrationDetails->selectedStatus;
+        $selectedTags = $integrationDetails->selectedTags;
 
         if (empty($api_token) || empty($fieldMap) || empty($accountId)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Drip api', 'bit-integrations'));
@@ -110,7 +135,10 @@ class DripController
         $dripApiResponse = $recordApiHelper->execute(
             $fieldValues,
             $fieldMap,
-            $accountId
+            $accountId,
+            $actions,
+            $selectedStatus,
+            $selectedTags
         );
 
         if (is_wp_error($dripApiResponse)) {

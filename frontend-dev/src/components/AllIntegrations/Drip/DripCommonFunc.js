@@ -94,6 +94,27 @@ export const getCustomFields = (confTmp, setConf, setLoading) => {
       toast.error(__('Custom fields fetch failed', 'bit-integrations'))
     })
 }
+export const getAllTags = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, tags: true })
+
+  const requestParams = { apiToken: confTmp.api_token, selectedAccountId: confTmp.selectedAccountId }
+
+  bitsFetch(requestParams, 'drip_fetch_all_tags')
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...confTmp }
+        if (result.data) {
+          newConf.tags = result.data
+        }
+        setConf(newConf)
+        setLoading({ ...setLoading, tags: false })
+        toast.success(__('Tags fetched successfully', 'bit-integrations'))
+        return
+      }
+      setLoading({ ...setLoading, customFields: false })
+      toast.error(__('Tags fetching failed', 'bit-integrations'))
+    })
+}
 
 export const staticFields = [
   { key: 'email', label: 'Email', required: true },
