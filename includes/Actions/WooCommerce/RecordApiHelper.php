@@ -549,11 +549,10 @@ class RecordApiHelper
                     }
 
                     $attach_ids = '';
-
                     if (!empty($fieldValues[$uploadField->formField])) {
                         $uplaodFiles = $fieldValues[$uploadField->formField];
                         if (\gettype($fieldValues[$uploadField->formField]) === 'string') {
-                            $uplaodFiles = json_decode($fieldValues[$uploadField->formField]);
+                            $uplaodFiles = json_decode($fieldValues[$uploadField->formField]) ?? $fieldValues[$uploadField->formField];
                         }
                         if (\is_array($uplaodFiles)) {
                             foreach ($uplaodFiles as $file) {
@@ -576,6 +575,7 @@ class RecordApiHelper
                         } else {
                             $filename = $uplaodFiles;
                             $url = $filename;
+
                             $this->attach_product_attachments($product_id, $flag, $url, $filename);
                         }
                     }
@@ -591,7 +591,6 @@ class RecordApiHelper
     public function upload_attachment($product_id, $url)
     {
         include_once ABSPATH . 'wp-admin/includes/image.php';
-
         $image_url = $url;
         $url_array = explode('/', $url);
         $image_name = $url_array[\count($url_array) - 1];
@@ -618,7 +617,6 @@ class RecordApiHelper
         ];
 
         $attach_id = wp_insert_attachment($attachment, $file, $product_id);
-
         $attach_data = wp_generate_attachment_metadata($attach_id, $file);
 
         wp_update_attachment_metadata($attach_id, $attach_data);
@@ -628,23 +626,22 @@ class RecordApiHelper
 
     public function attach_product_attachments($product_id, $flag, $url, $filename)
     {
-        $attach_id = $this->upload_attachment($product_id, $url);
-        if ($flag === 0) {
-            set_post_thumbnail($product_id, $attach_id);
-        }
-
-        if ($flag === 1) {
-            return $attach_id;
-        }
-
-        if ($flag === 2) {
+        if ($flag != 2) {
+            $attach_id = $this->upload_attachment($product_id, $url);
+            if ($flag === 0) {
+                set_post_thumbnail($product_id, $attach_id);
+            }
+            if ($flag === 1) {
+                return $attach_id;
+            }
+        } else {
             $this->attach_downloadable_attachments($product_id, $url, $filename);
         }
     }
 
     public function attach_downloadable_attachments($product_id, $url, $filename)
     {
-        if (get_post_meta($product_id, '_downloadable', true) !== 'yes') {
+        if (get_post_meta($product_id, '_downloadable', true) != 'yes' && get_post_meta($product_id, '_downloadable', true) != true) {
             return false;
         }
 
@@ -653,10 +650,12 @@ class RecordApiHelper
         $attach_id = $this->upload_attachment($product_id, $url);
         $download_id = md5($url);
         $file_url = wp_get_attachment_url($attach_id);
+        $url_array = explode('/', $url);
+        $image_name = $url_array[\count($url_array) - 1];
 
         $pd_object = new WC_Product_Download();
         $pd_object->set_id($download_id);
-        $pd_object->set_name($filename);
+        $pd_object->set_name($image_name);
         $pd_object->set_file($file_url);
 
         $product = wc_get_product($product_id);
