@@ -29,7 +29,7 @@ class RecordApiHelper
         $this->_integrationID = $integId;
     }
 
-    public function upsertSubscriber($accountId, $finalData, $actions, $selectedStatus, $selectedTags)
+    public function upsertSubscriber($accountId, $finalData, $selectedStatus, $selectedTags, $selectedRemoveTags)
     {
         if (empty($accountId)) {
             return ['success' => false, 'message' => 'Account id is Required', 'code' => 400];
@@ -56,12 +56,16 @@ class RecordApiHelper
             $subscriberData['custom_fields'] = (object) $customFieldsData;
         }
 
-        if ($actions->status && !empty($selectedStatus)) {
+        if (!empty($selectedStatus)) {
             $subscriberData['status'] = $selectedStatus;
         }
 
-        if ($actions->tagsAdd && !empty($selectedTags)) {
+        if (!empty($selectedTags)) {
             $subscriberData['tags'] = explode(',', $selectedTags);
+        }
+
+        if (!empty($selectedRemoveTags)) {
+            $subscriberData['remove_tags'] = explode(',', $selectedRemoveTags);
         }
 
         $requestParams = (object) [
@@ -89,10 +93,10 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $accountId, $actions, $selectedStatus, $selectedTags)
+    public function execute($fieldValues, $fieldMap, $accountId, $selectedStatus, $selectedTags, $selectedRemoveTags)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $apiResponse = $this->upsertSubscriber($accountId, $finalData, $actions, $selectedStatus, $selectedTags);
+        $apiResponse = $this->upsertSubscriber($accountId, $finalData, $selectedStatus, $selectedTags, $selectedRemoveTags);
 
         if (isset($apiResponse->subscribers)) {
             $res = ['message' => 'Subscriber upserted successfully'];

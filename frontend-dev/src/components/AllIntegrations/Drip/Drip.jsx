@@ -37,7 +37,8 @@ function Drip({ formFields, setFlow, flow, allIntegURL }) {
     selectedAccountId: '',
     dripFormFields: staticFields,
     selectedTags: '',
-    selectedStatus: ''
+    selectedStatus: '',
+    selectedRemoveTags: '',
   })
 
   const nextPage = (val) => {

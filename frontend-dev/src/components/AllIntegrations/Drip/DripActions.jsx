@@ -25,12 +25,15 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
       }
       setActionMdl({ show: 'tagsAdd' })
     }
-    if (type === 'update') {
-      if (e.target.checked) {
-        newConf.actions.update = true
+    if (type === 'tagsRemove') {
+      if (e.target?.checked) {
+        getAllTags(dripConf, setDripConf, setLoading)
+        newConf.actions.tagsRemove = true
       } else {
-        delete newConf.actions.update
+        setActionMdl({ show: false })
+        delete newConf.actions.tagsRemove
       }
+      setActionMdl({ show: 'tagsRemove' })
     }
     if (type === 'status') {
       if (e.target.checked) {
@@ -58,7 +61,7 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
     <div className="pos-rel d-flx w-8">
       <TableCheckBox checked={dripConf?.selectedStatus || false} onChange={(e) => actionHandler(e, 'status')} className="wdt-200 mt-4 mr-2" value="status" title={__('Status', 'bit-integrations')} subTitle={__('Set the subscriber status', 'bit-integrations')} />
       <TableCheckBox checked={dripConf?.selectedTags?.length || false} onChange={(e) => actionHandler(e, 'tagsAdd')} className="wdt-200 mt-4 mr-2" value="tagsAdd" title={__('Add Tags', 'bit - integrations')} subTitle={__('Select tags for subscriber')} />
-      <TableCheckBox checked={dripConf.actions?.update || false} onChange={(e) => actionHandler(e, 'update')} className="wdt-200 mt-4 mr-2" value="update_contact" title={__('Update contact', 'bit-integrations')} subTitle={__('Update an existing contact\'s info by responses.', 'bit-integrations')} />
+      <TableCheckBox checked={dripConf?.selectedRemoveTags?.length || false} onChange={(e) => actionHandler(e, 'tagsRemove')} className="wdt-200 mt-4 mr-2" value="tagsRemove" title={__('Remove Tags', 'bit - integrations')} subTitle={__('Remove tags from subscriber')} />
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
@@ -72,7 +75,7 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2 flx">
           {__('Select subscriber status', 'bit-integrations')}
-          <Cooltip width={250} icnSize={17} className="ml-2">
+          <Cooltip width={250} icnSize={17} className="ml-1">
             <div className="txt-body">
               If omitted, the status will be set to active.
             </div>
@@ -103,8 +106,14 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
         title={__('Add Tags', 'bit-integrations')}
       >
         <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">
+        <div className="mt-2 flx">
           {__('Select tags', 'bit-integrations')}
+          <Cooltip width={350} icnSize={17} className="ml-1">
+            <div className="txt-body">
+              Choose from the existing tags,
+              or create and add new ones by typing them and pressing enter or comma (,).
+            </div>
+          </Cooltip>
         </div>
         {
           loading.tags ? (
@@ -124,6 +133,45 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
                   className="msl-wrp-options"
                   defaultValue={dripConf?.selectedTags}
                   onChange={val => setChanges(val, 'selectedTags')}
+                  customValue
+                />
+                <button onClick={() => getAllTags(dripConf, setDripConf, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Tags', 'bit-integrations')}'` }} type="button">&#x21BB;</button>
+              </div>
+            )
+        }
+      </ConfirmModal>
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="blue"
+        btnTxt={__('Ok', 'bit-integrations')}
+        show={actionMdl.show === 'tagsRemove'}
+        close={clsActionMdl}
+        action={clsActionMdl}
+        title={__('Remove Tags', 'bit-integrations')}
+      >
+        <div className="btcd-hr mt-2 mb-2" />
+        <div className="mt-2 flx">
+          {__('Select tags for remove', 'bit-integrations')}
+        </div>
+        {
+          loading.tags ? (
+            <Loader style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 45,
+              transform: 'scale(0.5)',
+            }}
+            />
+          )
+            : (
+              <div className="flx flx-between mt-2">
+                <MultiSelect
+                  options={dripConf?.tags?.map(tag => ({ label: tag, value: tag }))}
+                  className="msl-wrp-options"
+                  defaultValue={dripConf?.selectedRemoveTags}
+                  onChange={val => setChanges(val, 'selectedRemoveTags')}
                 />
                 <button onClick={() => getAllTags(dripConf, setDripConf, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Tags', 'bit-integrations')}'` }} type="button">&#x21BB;</button>
               </div>

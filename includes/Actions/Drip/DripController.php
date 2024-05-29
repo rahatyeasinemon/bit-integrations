@@ -10,7 +10,7 @@ use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
 
 /**
- * Provide functionality for ZohoCrm integration
+ * Provide functionality for Drip integration
  */
 class DripController
 {
@@ -122,9 +122,9 @@ class DripController
         $api_token = $integrationDetails->api_token;
         $fieldMap = $integrationDetails->field_map;
         $accountId = $integrationDetails->selectedAccountId;
-        $actions = $integrationDetails->actions;
         $selectedStatus = $integrationDetails->selectedStatus;
         $selectedTags = $integrationDetails->selectedTags;
+        $selectedRemoveTags = $integrationDetails->selectedRemoveTags;
 
         if (empty($api_token) || empty($fieldMap) || empty($accountId)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Drip api', 'bit-integrations'));
@@ -136,9 +136,9 @@ class DripController
             $fieldValues,
             $fieldMap,
             $accountId,
-            $actions,
             $selectedStatus,
-            $selectedTags
+            $selectedTags,
+            $selectedRemoveTags
         );
 
         if (is_wp_error($dripApiResponse)) {
