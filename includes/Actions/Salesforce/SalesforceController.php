@@ -57,6 +57,55 @@ class SalesforceController
         wp_send_json_success($apiResponse, 200);
     }
 
+    public function customActions($customFieldRequestParams)
+    {
+        if (
+            empty($customFieldRequestParams->tokenDetails)
+            || empty($customFieldRequestParams->clientId)
+            || empty($customFieldRequestParams->clientSecret)
+        ) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+        $response = [];
+        if ((\intval($customFieldRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+            $response['tokenDetails'] = self::refreshAccessToken($customFieldRequestParams);
+        }
+
+        $apiEndpoint = "{$customFieldRequestParams->tokenDetails->instance_url}/services/data/v37.0/sobjects";
+        $authorizationHeader['Authorization'] = "Bearer {$customFieldRequestParams->tokenDetails->access_token}";
+        $authorizationHeader['Content-Type'] = 'application/json';
+        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+
+        if (!property_exists((object) $apiResponse, 'sobjects')) {
+            wp_send_json_error($apiResponse, 400);
+        }
+
+        $customActions = array_filter($apiResponse->sobjects, function ($action) {
+            if ($action->custom) {
+                return true;
+            }
+        });
+
+        $allCustomActions = [];
+        foreach ($customActions as $action) {
+            $allCustomActions[] = (object) [
+                'label' => $action->label,
+                'value' => $action->name
+            ];
+        }
+
+        if (!empty($response['tokenDetails'])) {
+            self::saveRefreshedToken($customFieldRequestParams->flowID, $response['tokenDetails'], $response['organizations']);
+        }
+        wp_send_json_success($allCustomActions, 200);
+    }
+
     public function customFields($customFieldRequestParams)
     {
         if (
@@ -78,6 +127,7 @@ class SalesforceController
             $response['tokenDetails'] = self::refreshAccessToken($customFieldRequestParams);
         }
 
+        $isCustomAction = false;
         switch ($customFieldRequestParams->actionName) {
             case 'contact-create':
                 $action = 'Contact';
@@ -110,7 +160,8 @@ class SalesforceController
                 break;
 
             default:
-                $action = '';
+                $action = $customFieldRequestParams->actionName;
+                $isCustomAction = true;
 
                 break;
         }
@@ -119,27 +170,32 @@ class SalesforceController
         $authorizationHeader['Authorization'] = "Bearer {$customFieldRequestParams->tokenDetails->access_token}";
         $authorizationHeader['Content-Type'] = 'application/json';
         $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
-
         if (!property_exists((object) $apiResponse, 'fields')) {
             wp_send_json_error($apiResponse, 400);
         }
 
-        $customFields = array_filter($apiResponse->fields, function ($field) {
-            if ($field->custom) {
-                return true;
-            }
-        });
+        if ($isCustomAction) {
+            $unusualFields = ['Id', 'OwnerId', 'IsDeleted', 'CreatedDate', 'CreatedById', 'LastModifiedDate', 'LastModifiedById', 'SystemModstamp', 'LastViewedDate', 'LastReferencedDate'];
+            $customFields = array_filter($apiResponse->fields, function ($field) use ($unusualFields) {
+                if (!\in_array($field->name, $unusualFields) || $field->custom) {
+                    return true;
+                }
+            });
+        } else {
+            $customFields = array_filter($apiResponse->fields, function ($field) {
+                if ($field->custom) {
+                    return true;
+                }
+            });
+        }
 
         $fieldMap = [];
         foreach ($customFields as $field) {
-
-            $fieldMap[]
-            = (object) [
+            $fieldMap[] = (object) [
                 'key'      => $field->name,
                 'label'    => $field->label,
-                'required' => false
-            ]
-            ;
+                'required' => (boolean) ($field->name == 'Name')
+            ];
         }
 
         if (!empty($response['tokenDetails'])) {

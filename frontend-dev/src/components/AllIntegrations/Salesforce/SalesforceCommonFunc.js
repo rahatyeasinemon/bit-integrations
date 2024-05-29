@@ -1,6 +1,7 @@
 import toast from 'react-hot-toast'
 import { __, sprintf } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
+import { create } from 'mutative'
 
 export const handleInput = (e, salesforceConf, setSalesforceConf, formID, setIsLoading, setSnackbar, isNew, error, setError) => {
   const newConf = { ...salesforceConf }
@@ -286,6 +287,8 @@ export const getAllCustomFields = (formID, actionName, salesforceConf, setSalesf
               ...draftConf.caseFields,
               ...customFields
             ];
+          }else{
+            draftConf['selesforceFields'] = customFields
           }
         }
         draftConf.field_map = generateMappedField(draftConf);
@@ -299,6 +302,29 @@ export const getAllCustomFields = (formID, actionName, salesforceConf, setSalesf
     error: __('Error Occurred', 'bit-integrations'),
     loading: __(`Loading ${actionName} list...`),
   })
+}
+
+export const getAllCustomActionModules = (salesforceConf, setSalesforceConf, setIsLoading, setSnackbar) => {
+  const customFieldRequestParams = {
+    clientId: salesforceConf.clientId,
+    clientSecret: salesforceConf.clientSecret,
+    tokenDetails: salesforceConf.tokenDetails,
+  }
+  setIsLoading(true)
+  bitsFetch(customFieldRequestParams, 'selesforce_custom_action')
+    .then(result => {
+      setIsLoading(false)
+      setSalesforceConf((prevConf) => create(prevConf, draftConf => {
+        if (result.success) {
+          draftConf['selesforceActionModules'] = [
+            ...draftConf.action_modules,
+            ...result?.data
+          ];
+        }
+      }))
+
+      toast.success(result && result.success ? 'Custom Action refresh successfully.' : result?.data[0]?.message ? 'Custom Action: ' + result?.data[0]?.message : 'Custom Action refresh failed. please try again')
+    })
 }
 
 // export const getAllAccountList = (formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar) => {
