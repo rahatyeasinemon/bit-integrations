@@ -10,6 +10,7 @@ import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
 import toast from 'react-hot-toast'
+import { deepCopy } from '../../Utils/Helpers'
 
 function EditCustomFormSubmissionInteg({ setSnackbar }) {
   const [flow, setFlow] = useRecoilState($newFlow)
@@ -34,11 +35,15 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
       bitsFetch(null, fetchAction, null, fetchMethod).then((resp) => {
         if (resp.success) {
           clearInterval(intervalRef.current)
-          setFlow(prevFlow => create(prevFlow, draftFlow => {
+          setFlow(prevFlow => {
+            const draftFlow = deepCopy(prevFlow)
+
             draftFlow.flow_details.fields = resp.data?.formData
             draftFlow.flow_details.primaryKey.key = resp.data?.primaryKey?.key
             draftFlow.flow_details.primaryKey.value = resp.data?.primaryKey?.value
-          }))
+
+            return draftFlow
+          })
           setFormFields(resp.data?.formData)
           setIsLoading(false)
           bitsFetch({ reset: true }, removeAction, null, removeMethod)
@@ -46,6 +51,7 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
       })
     }, 1500)
   }
+  console.log(isLoading)
 
   const primaryKeySet = (key) => {
     setFlow(prevFlow => create(prevFlow, draftFlow => {
