@@ -138,6 +138,7 @@ const NutshellCRMAuthorization = lazy(() => import('./NutshellCRM/NutshellCRMAut
 const SystemeIOAuthorization = lazy(() => import('./SystemeIO/SystemeIOAuthorization'))
 const DiscordAuthorization = lazy(() => import('./Discord/DiscordAuthorization'))
 const ZagoMailAuthorization = lazy(() => import('./ZagoMail/ZagoMailAuthorization'))
+const WhatsAppAuthorization = lazy(() => import('./WhatsApp/WhatsAppAuthorization'))
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -429,6 +430,8 @@ export default function IntegInfo() {
         return <DiscordAuthorization discordConf={integrationConf} step={1} isInfo />
       case 'ZagoMail':
         return <ZagoMailAuthorization zagoMailConf={integrationConf} step={1} isInfo />
+      case 'WhatsApp':
+        return <WhatsAppAuthorization whatsAppConf={integrationConf} step={1} isInfo />
       default:
         return <></>
     }
