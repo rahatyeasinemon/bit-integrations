@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -12,8 +12,9 @@ import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents
 import EditWebhookInteg from '../EditWebhookInteg'
 import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, handleInput } from './SalesforceCommonFunc'
+import { checkMappedFields, getAllCustomActionModules, handleInput } from './SalesforceCommonFunc'
 import SelesforceIntegLayout from './SalesforceIntegLayout'
+import { create } from 'mutative'
 
 function EditSalesforce({ allIntegURL }) {
   const navigate = useNavigate()
@@ -22,6 +23,28 @@ function EditSalesforce({ allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)
+
+  useEffect(() => {
+    if (!salesforceConf.action_modules) {
+      setSalesforceConf(prevConf => create(prevConf, draftConf => {
+        const action_modules = [
+          { label: 'Create Contact', value: 'contact-create' },
+          { label: 'Create lead', value: 'lead-create' },
+          { label: 'Create Account', value: 'account-create' },
+          { label: 'Create Campaign', value: 'campaign-create' },
+          { label: 'Add campaign member', value: 'add-campaign-member' },
+          { label: 'Create Task', value: 'task-create' },
+          { label: 'Oportunity Create', value: 'opportunity-create' },
+          { label: 'Event Create', value: 'event-create' },
+          { label: 'Create Case', value: 'case-create' },
+        ]
+        draftConf['action_modules'] = action_modules
+        draftConf['selesforceActionModules'] = action_modules
+      }))
+      getAllCustomActionModules(salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
+    }
+  }, [])
+
 
   const checkedActionFieldsMapType = ['contact-create', 'lead-create', 'account-create', 'campaign-create', 'opportunity-create', 'event-create', 'case-create'].includes(salesforceConf?.actionName)
   const saveConfig = () => {

@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Sendy;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for MailChimp integration
@@ -113,6 +113,7 @@ class SendyController
             'api_key'  => $apiKey,
             'brand_id' => $brand_id
         ];
+        error_log(print_r(['apiEndpoint' => $apiEndpoint, 'requestsParams' => $requestsParams, 'authorizationHeader' => $authorizationHeader], true));
         $apiResponse = HttpHelper::post($apiEndpoint, $requestsParams, $authorizationHeader);
 
         $response = [];

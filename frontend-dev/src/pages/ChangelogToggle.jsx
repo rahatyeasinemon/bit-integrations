@@ -1,16 +1,34 @@
 
 import { useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { $btcbi } from '../GlobalStates'
 import ChangelogIcn from '../Icons/ChangeLogIcn'
 import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 import { __ } from '../Utils/i18nwrap'
 import Modal from '../components/Utilities/Modal'
+import changelogInfo from '../Utils/StaticData/changelogInfo'
+
+import bitsFetch from '../Utils/bitsFetch'
 
 export default function ChangelogToggle() {
-    const btcbi = useRecoilValue($btcbi)
+    const [btcbi, setBtcbi] = useRecoilState($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const version = btcbi.isPro ? '2.0.5' : '2.0.5'
+    const currentChangelog = '2.0.6'
+    const currenChangelog = changelogInfo[currentChangelog]
+
+    const setChangeLogVersion = (val) => {
+        setShow(val)
+        if (!val) {
+            bitsFetch({
+                version: btcbi.version,
+            }, 'changelog_version')
+                .then(() => {
+                    setBtcbi(prevBtcbi => ({ ...prevBtcbi, changelogVersion: prevBtcbi.version }))
+                })
+        }
+    }
+    // if (!currenChangelog) return
+
     return (
         <div className="changelog-toggle">
             <button
@@ -22,24 +40,32 @@ export default function ChangelogToggle() {
                 {/* <QuestionIcn size={25} /> */}
                 <ChangelogIcn size={25} />
             </button>
-            <Modal sm show={show} setModal={setShow} >
+            <Modal sm show={show} setModal={setChangeLogVersion}>
                 <div className='changelog'>
                     {/* <h4 className='changelog-notif'> From 1.4.1 update,To use pro plugin free version is required. </h4> */}
                     <div className="flx flx-col flx-center whats-new">
-                        <h3>What's New in {version}?</h3>
-                        <small className='date'> <b>22th May 2024</b></small>
+                        <h3>What's New in {btcbi.version}?</h3>
+                        <small className='date'> <b>1st June 2024</b></small>
                     </div>
                     <div className='changelog-content'>
-                        {/* <h4>New Integration</h4> */}
-                        {/* <p>New Integration</p> */}
-                        {/* <span className='new-feature' ><b>New Features</b></span>
+                        <span className='new-integration' ><b>New Integration</b></span>
 
                         <div className='integration-list'>
                             <ul>
-                                <li>Bitform: FIeld label </li>
-                                <li>Klaviyo: List limitation </li>
+                                <li>CoBlocks (Trigger) </li>
+                                <li>Drip (Action) </li>
                             </ul>
-                        </div> */}
+                        </div>
+
+                        <span className='new-feature' ><b>New Features</b></span>
+
+                        <div className='integration-list'>
+                            <ul>
+                                <li>Sendy: Custom Field: Key added </li>
+                                <li>Autonami: Store new list & tag with existing record feature added </li>
+                                <li>Salesforce: Custom Module added </li>
+                            </ul>
+                        </div>
 
                         {/* <span className='new-feature'><b>Compatibility Update:</b></span>
 
@@ -62,8 +88,17 @@ export default function ChangelogToggle() {
 
                         <div className='fixes-list'>
                             <ul>
-                                <li>Bitform: Field label </li>
-                                <li>Klaviyo: List limitation </li>
+                                <li>ClickUp: Custom Field Key </li>
+                                <li>Mailchimp: Audience List: Limitation </li>
+                                <li>ZagoMail: Tag explode </li>
+                                <li>GoogleCalender: Authorization </li>
+                                <li>SystemIO: Api Response </li>
+                                <li>Breakdance: Double Form Submission </li>
+                                <li>WooCommerce: Downloadable attachment </li>
+                                <li>WhatsApp: Info Page Blank </li>
+                                <li>Custom Form Submission: Edit state immutable </li>
+                                <li>Breakdance: Field Label (Pro) </li>
+                                <li>Licence Expired Value (Pro) </li>
                             </ul>
                         </div>
                     </div>

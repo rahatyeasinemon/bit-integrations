@@ -107,7 +107,7 @@ class MailChimpController
             );
         }
         $response = [];
-        $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . '/lists';
+        $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . '/lists?count=1000&offset=0';
 
         $authorizationHeader['Authorization'] = "Bearer {$queryParams->tokenDetails->access_token}";
         $audienceResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
@@ -201,7 +201,7 @@ class MailChimpController
                 400
             );
         }
-        $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . "/lists/{$queryParams->listId}/segments?count=1000";
+        $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . "/lists/{$queryParams->listId}/segments?count=1000&offset=0";
         $authorizationHeader['Authorization'] = "Bearer {$queryParams->tokenDetails->access_token}";
         $tagsList = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
 

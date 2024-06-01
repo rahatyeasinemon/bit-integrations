@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\Sendy;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -38,8 +38,12 @@ class RecordApiHelper
         foreach ($fieldMap as $key => $value) {
             $triggerValue = $value->formField;
             $actionValue = $value->sendyField;
-            if ($triggerValue === 'custom') {
+            if ($triggerValue == 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
+            } elseif ($triggerValue == 'custom' && $actionValue == 'customFieldKey' && !empty($value->customFieldKey)) {
+                $dataFinal[$value->customFieldKey] = Common::replaceFieldWithValue($value->customValue, $data);
+            } elseif ($actionValue == 'customFieldKey' && !empty($value->customFieldKey)) {
+                $dataFinal[$value->customFieldKey] = $data[$triggerValue];
             } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }

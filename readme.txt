@@ -4,10 +4,10 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.5.3
 Requires PHP: 7.0
-Stable tag: 2.0.5
+Stable tag: 2.0.6
 License: GPLv2 or later
 
-Automation Plugin for WordPress like Zapier; Integration of 65+ Triggers & 135+ Actions.The #1 highest no-code platform Automator plugin in WordPress
+Automation Plugin for WordPress like Zapier; Integration of 65+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
 
 == Description ==
 
@@ -52,17 +52,18 @@ https://youtu.be/eFuficjF_F4
 * [**BuddyBoss**](https://www.buddyboss.com/)
 * [**Brizy**](https://wordpress.org/plugins/brizy/)
 * [**Breakdance**](https://breakdance.com/)
-* [**Custom Trigger**]()
-* [**Contact Form 7**](https://wordpress.org/plugins/contact-form-7/)
 * [**CartFlows**](https://wordpress.org/plugins/cartflows/)
+* [**Contact Form 7**](https://wordpress.org/plugins/contact-form-7/)
+* [**CoBlocks**](https://wordpress.org/plugins/coblocks/)
+* [**Custom Trigger**]()
 * [**Divi**](https://www.elegantthemes.com/gallery/divi/)
 * [**Everest Forms**](https://wordpress.org/plugins/everest-forms/)
 * [**Elementor**](https://wordpress.org/plugins/elementor/)
 * [**Easy Digital Downloads**](https://wordpress.org/plugins/easy-digital-downloads/)
 * [**eForm**](https://eform.live/)
 * [**Essential Blocks**](https://wordpress.org/plugins/essential-blocks/)
+* [**FluentBooking**](https://fluentbooking.com/)
 * [**Fluent Forms**](https://wordpress.org/plugins/fluentform/)
-* [**FluentCRM**](https://wordpress.org/plugins/fluent-crm/)
 * [**Fluent Support**](https://wordpress.org/plugins/fluent-support/)
 * [**Formidable**](https://wordpress.org/plugins/formidable/)
 * [**Forminator**](https://wordpress.org/plugins/forminator/)
@@ -136,6 +137,7 @@ https://youtu.be/eFuficjF_F4
 * [**Demio**](https://www.demio.com/)
 * [**Discord**](https://discord.com/)
 * [**DirectIQ**](https://www.directiq.com/)
+* [**Drip**](https://www.drip.com/)
 * [**Dropbox**](https://www.dropbox.com/)
 * [**Elastic Email**](https://elasticemail.com/)
 * [**Encharge**](https://encharge.io/)
@@ -319,7 +321,7 @@ My typical use-case: Adding WooCommerce orders to Gsheets and then sending the l
 
 -by @vaishakdamu
 
-### 💥 In the free version, you can create one integration, while the pro version offers unlimited integration capabilities.
+### 💥 In the free version, you can create unlimited integrations using free triggers, while the pro version offers unlimited integration capabilities using all triggers.
 
 ### ⚡ Key Features:
 
@@ -733,6 +735,8 @@ With the pro version, you have the ability to create **Unlimited active** Please
 
 * [**DirectIQ**](https://bitapps.pro/docs/bit-integrations/trigger/directiq/)
 
+* [**Drip**]()
+
 * [**Dropbox**](https://bitapps.pro/docs/bit-integrations/trigger/dropbox/)
 
 * [**Elastic Email**](https://bitapps.pro/docs/bit-integrations/trigger/elastic-email/)
@@ -947,6 +951,33 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.0.6  =
+_Release Date -1st June 2024_
+
+- **New Triggers :**
+  - CoBlocks
+
+- **New Actions :**
+  - Drip
+
+- **New Features :**
+  - Sendy: Custom Field: Key added
+  - Autonami: Store new list & tag with existing record feature added
+  - Salesforce: Custom Module added
+
+- **New Fixes :**
+  - ClickUp: Custom Field Key
+  - Mailchimp: Audience List: Limitation
+  - ZagoMail: Tag explode
+  - GoogleCalender: Authorization
+  - SystemIO: Api Response
+  - Breakdance: Double Form Submission
+  - WooCommerce: Downloadable attachment
+  - WhatsApp: Info Page Blank
+  - Custom Form Submission: Edit state immutable
+  - Breakdance: Field Label (Pro)
+  - Licence Expired Value (Pro)
 
 = 2.0.5  =
 _Release Date -22th May 2024_
