@@ -271,7 +271,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
           defaultValue={tab === 0 ? crmConf.actions.attachment : crmConf.relatedlists[tab - 1].actions.attachment}
           className="mt-2 w-9"
           onChange={(val) => actionHandler(val, 'attachment')}
-          options={formFields.filter(itm => (itm.type === 'file')).map(itm => ({ label: itm.label, value: itm.name }))}
+          options={formFields.filter(itm => (itm.type === 'file')).map(itm => ({ label: itm.label, value: String(itm.name) }))}
         />
       </ConfirmModal>
 
