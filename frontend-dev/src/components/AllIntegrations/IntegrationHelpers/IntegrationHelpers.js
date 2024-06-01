@@ -161,12 +161,22 @@ export const saveIntegConfig = async (
     tmpConf["primaryKey"] = !edit
       ? flow.triggerData.primaryKey
       : flow?.flow_details?.primaryKey;
+
     tmpConf["fields"] = !edit
       ? flow?.triggerData?.fields
       : flow?.flow_details?.fields;
+
     tmpConf["rawData"] = !edit
       ? flow?.triggerData?.rawData
       : flow?.flow_details?.rawData;
+
+    tmpConf["fetch"] = !edit
+      ? flow?.triggerData?.fetch
+      : flow?.flow_details?.fetch;
+
+    tmpConf["fetch_remove"] = !edit
+      ? flow?.triggerData?.fetch_remove
+      : flow?.flow_details?.fetch_remove;
   } else if (
     flow?.triggerData?.trigger_type === "custom_form_submission" ||
     flow?.flow_details?.trigger_type === "custom_form_submission"

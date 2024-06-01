@@ -11,96 +11,123 @@ import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
 import toast from 'react-hot-toast'
 import { deepCopy } from '../../Utils/Helpers'
+import CloseIcn from '../../Icons/CloseIcn'
+import EyeIcn from '../Utilities/EyeIcn'
+import EyeOffIcn from '../Utilities/EyeOffIcn'
+import TreeViewer from '../Utilities/treeViewer/TreeViewer'
 
 function EditActionHook({ setSnackbar }) {
   const [flow, setFlow] = useRecoilState($newFlow)
   const setFormFields = useSetRecoilState($formFields)
+  const [hookID, setHookID] = useState('')
+  const [selectedHook, setSelectedHook] = useState('custom')
+  const [customHook, setCustomHook] = useState(true)
+  const [primaryKey, setPrimaryKey] = useState()
+  const [primaryKeyModal, setPrimaryKeyModal] = useState(false)
+  const [selectedFields, setSelectedFields] = useState([])
+  const [showResponse, setShowResponse] = useState(true)
+  const [showSelectedFields, setShowSelectedFields] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const intervalRef = useRef(null)
-  const fetchAction = flow?.flow_details?.fetch?.action || ''
-  const fetchMethod = flow?.flow_details?.fetch?.method || ''
-  const removeAction = flow?.flow_details?.fetch_remove?.action || ''
-  const removeMethod = flow?.flow_details?.fetch_remove?.method || ''
 
-  const handleFetch = () => {
-    if (isLoading) {
-      clearInterval(intervalRef.current)
-      removeTestData()
-      setIsLoading(false)
-      return
-    }
+  console.log(flow)
 
-    setIsLoading(true)
-    intervalRef.current = setInterval(() => {
-      bitsFetch(null, fetchAction, null, fetchMethod).then((resp) => {
-        if (resp.success) {
-          clearInterval(intervalRef.current)
-          setFlow(prevFlow => {
-            const draftFlow = deepCopy(prevFlow)
+  // const handleFetch = () => {
+  //   if (isLoading) {
+  //     clearInterval(intervalRef.current)
+  //     removeTestData()
+  //     setIsLoading(false)
+  //     return
+  //   }
 
-            draftFlow.flow_details.fields = resp.data?.formData
-            draftFlow.flow_details.primaryKey.key = resp.data?.primaryKey?.key
-            draftFlow.flow_details.primaryKey.value = resp.data?.primaryKey?.value
+  //   setIsLoading(true)
+  //   intervalRef.current = setInterval(() => {
+  //     bitsFetch(null, fetchAction, null, fetchMethod).then((resp) => {
+  //       if (resp.success) {
+  //         clearInterval(intervalRef.current)
+  //         setFlow(prevFlow => {
+  //           const draftFlow = deepCopy(prevFlow)
 
-            return draftFlow
-          })
-          setFormFields(resp.data?.formData)
-          setIsLoading(false)
-          bitsFetch({ reset: true }, removeAction, null, removeMethod)
-        }
-      })
-    }, 1500)
-  }
+  //           draftFlow.flow_details.fields = resp.data?.formData
+  //           draftFlow.flow_details.primaryKey.key = resp.data?.primaryKey?.key
+  //           draftFlow.flow_details.primaryKey.value = resp.data?.primaryKey?.value
 
-  const primaryKeySet = (key) => {
-    setFlow(prevFlow => create(prevFlow, draftFlow => {
-      const keys = key?.split(',') || []
-      const primaryKey = keys.map(k => (
-        {
-          key: k,
-          value: flow.flow_details.fields?.find(item => item.name === k)?.value
-        }
-      ))
+  //           return draftFlow
+  //         })
+  //         setFormFields(resp.data?.formData)
+  //         setIsLoading(false)
+  //         bitsFetch({ reset: true }, removeAction, null, removeMethod)
+  //       }
+  //     })
+  //   }, 1500)
+  // }
 
-      const hasEmptyValues = primaryKey.some(item => !item.value);
-      if (key && hasEmptyValues) {
-        draftFlow.flow_details.primaryKey = null
+  // const primaryKeySet = (key) => {
+  //   setFlow(prevFlow => create(prevFlow, draftFlow => {
+  //     const keys = key?.split(',') || []
+  //     const primaryKey = keys.map(k => (
+  //       {
+  //         key: k,
+  //         value: flow.flow_details.fields?.find(item => item.name === k)?.value
+  //       }
+  //     ))
 
-        toast.error('Unique value not found!')
-        return
-      }
+  //     const hasEmptyValues = primaryKey.some(item => !item.value);
+  //     if (key && hasEmptyValues) {
+  //       draftFlow.flow_details.primaryKey = null
 
-      draftFlow.flow_details.primaryKey = primaryKey
-    }))
-  }
+  //       toast.error('Unique value not found!')
+  //       return
+  //     }
 
-  const removeTestData = () => {
-    bitsFetch(null, removeAction, null, removeMethod).then(
-      (resp) => {
-        intervalRef.current && clearInterval(intervalRef.current)
-      },
-    )
-  }
+  //     draftFlow.flow_details.primaryKey = primaryKey
+  //   }))
+  // }
 
-  useEffect(() => {
-    return () => {
-      removeTestData()
-    }
-  }, [])
+  // const removeTestData = (hookID) => {
+  //   bitsFetch({ hook_id: hookID }, 'action_hook/test/remove').then(
+  //     (resp) => {
+  //       delete window.hook_id
+  //       intervalRef.current && clearInterval(intervalRef.current)
+  //     },
+  //   )
+  // }
+
+  // useEffect(() => {
+  //   return () => {
+  //     removeTestData()
+  //   }
+  // }, [])
 
   return (
-    <div className="flx">
-      <b className="wdt-200 d-in-b">{__('Unique Key:', 'bit-integrations')}</b>
-      <div className="w-5 flx flx-between">
+    <div className='trigger-custom-width'>
+      <div className="flx flx-between">
+        <div className="wdt-100 d-in-b">
+          <b>{__('Hook:', 'bit-integrations')}</b>
+        </div>
+        <input className="btcd-paper-inp mt-1" onChange={e => setHook(e.target.value, 'custom')} name="custom" value={flow?.triggered_entity_id || ''} type="text" placeholder={__('Enter Hook...', 'bit-integrations')} disabled={isLoading} />
+
+      </div>
+      <div className="flx mt-1 flx-between">
+        <b className="wdt-100 d-in-b">{__('Unique Key:', 'bit-integrations')}</b>
         <MultiSelect
           options={flow.flow_details.fields?.map(field => ({ label: field?.label, value: field?.name }))}
           className="msl-wrp-options"
-          defaultValue={Array.isArray(flow?.flow_details?.primaryKey) ? flow?.flow_details?.primaryKey.map(item => item.key).join(',') : ''}
-          onChange={primaryKeySet}
+          defaultValue={Array.isArray(flow?.flow_details?.primaryKey) ? flow?.flow_details?.primaryKey.map(item => item.key).join(',') : flow?.flow_details?.primaryKey?.key || ''}
+          // onChange={primaryKeySet}
           disabled={isLoading}
           closeOnSelect
         />
-        <button onClick={handleFetch} className={`btn btcd-btn-lg sh-sm flx ml-1 ${isLoading ? 'red' : 'green'}`} type="button">
+        {/* <button onClick={handleFetch} className={`btn btcd-btn-lg sh-sm flx ml-1 ${isLoading ? 'red' : 'green'}`} type="button">
+          {isLoading
+            ? __('Stop', 'bit-integrations')
+            : (flow.flow_details.fields
+              ? __('Fetched ✔', 'bit-integrations')
+              : __('Fetch', 'bit-integrations'))
+          }
+          {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
+        </button> */}
+        <button className={`btn btcd-btn-lg sh-sm flx ml-1 ${isLoading ? 'red' : 'green'}`} type="button">
           {isLoading
             ? __('Stop', 'bit-integrations')
             : (flow.flow_details.fields
@@ -109,9 +136,107 @@ function EditActionHook({ setSnackbar }) {
           }
           {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
         </button>
+
       </div>
+      {flow.flow_details?.fields &&
+        <>
+          <div className="flx flx-between">
+            <div className="my-3">
+              <b>{__('Selected Fields:', 'bit-integrations')}</b>
+            </div>
+            <button
+              onClick={() => setShowSelectedFields(prev => !prev)}
+              className="btn btcd-btn-md sh-sm flx"
+            >
+              <span className="txt-actionHook-resbtn font-inter-500">
+                {showSelectedFields ? 'Hide Selected Fields' : 'View Selected Fields'}
+              </span>
+              {!showSelectedFields ? (
+                <EyeIcn
+                  width="20"
+                  height="20"
+                  strokeColor="#000000"
+                />
+              ) : (
+                <EyeOffIcn
+                  width="20"
+                  height="20"
+                  strokeColor="#000000"
+                />
+              )}
+            </button>
+          </div>
+          {showSelectedFields &&
+            <div className="bg-white rounded border my-1 table-webhook-div p-2" style={{ minHeight: '40px', maxHeight: '14rem' }}>
+              {flow.flow_details?.fields.map((field, index) => (
+                <div key={index} style={{ position: "relative" }}>
+                  <input
+                    key={index}
+                    className="btcd-paper-inp w-100 m-1"
+                    type='text'
+                    // onChange={e => setSelectedFieldsData(e.target.value, index)} 
+                    value={field?.name.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')}
+                    disabled={isLoading}
+                  />
+                  <button
+                    className="btn btcd-btn-lg sh-sm"
+                    // onClick={() => removeSelectedField(index)}
+                    style={
+                      {
+                        position: 'absolute',
+                        top: -5,
+                        right: -5,
+                        color: '#ff4646',
+                        padding: '2px'
+                      }
+                    }
+                  >
+                    <CloseIcn size={12} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          }
+        </>
+      }
+      <div className="flx flx-between">
+        <div className="my-3">
+          <b>{__('Select Fields:', 'bit-integrations')}</b>
+        </div>
+        <button
+          onClick={() => setShowResponse(prev => !prev)}
+          className="btn btcd-btn-md sh-sm flx"
+        >
+          <span className="txt-actionHook-resbtn font-inter-500">
+            {showResponse ? 'Hide Response' : 'View Response'}
+          </span>
+          {!showResponse ? (
+            <EyeIcn
+              width="20"
+              height="20"
+              strokeColor="#000000"
+            />
+          ) : (
+            <EyeOffIcn
+              width="20"
+              height="20"
+              strokeColor="#000000"
+            />
+          )}
+        </button>
+      </div>
+      {
+        flow.flow_details?.rawData && showResponse && (
+          <>
+            <TreeViewer
+              data={flow?.flow_details?.rawData}
+            // onChange={setSelectedFieldsData} 
+            />
+          </>
+        )
+      }
     </div>
   )
 }
 
-export default EditCustomFormSubmissionInteg
+export default EditActionHook

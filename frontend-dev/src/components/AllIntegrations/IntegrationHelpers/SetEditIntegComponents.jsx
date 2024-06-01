@@ -5,6 +5,7 @@ import EditWebhookInteg from "../EditWebhookInteg";
 import EditActionHook from "../EditActionHook"
 
 export default function SetEditIntegComponents({ entity, setSnackbar }) {
+    console.log(entity)
     const EditInteg = () => {
         if (customFormIntegrations.includes(entity)) {
             return <EditCustomFormSubmissionInteg setSnackbar={setSnackbar} />

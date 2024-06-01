@@ -2,22 +2,32 @@
 
 namespace BitCode\FI\Triggers\ActionHook;
 
-use BitCode\FI\Core\Hooks\FallbackHooks;
-use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Core\Util\TriggerFallback;
-use BitCode\FI\Flow\Flow;
 use WP_Error;
+use BitCode\FI\Flow\Flow;
+use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Core\Hooks\FallbackHooks;
+use BitCode\FI\Core\Util\TriggerFallback;
 
 class ActionHookController
 {
     public static function info()
     {
         return [
-            'name'      => 'Action Hook',
-            'title'     => 'Get callback data through an URL',
-            'type'      => 'action_hook',
-            'is_active' => true,
-            'isPro'     => false
+            'name'              => 'Action Hook',
+            'title'             => 'Get callback data through an URL',
+            'type'              => 'action_hook',
+            'is_active'         => true,
+            'documentation_url' => 'https://bitapps.pro/docs/bit-integrations/trigger/action-hook-integrations',
+            'tutorial_url'      => 'https://youtu.be/pZ-8JuZfIco?si=Xxv857hJjv6p5Tcu',
+            'fetch'             => [
+                'action' => 'elementor/test',
+                'method' => 'post',
+            ],
+            'fetch_remove'      => [
+                'action' => 'elementor/test/remove',
+                'method' => 'post',
+            ],
+            'isPro'             => false
         ];
     }
 

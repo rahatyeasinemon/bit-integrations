@@ -10,4 +10,4 @@ export const webhookIntegrations = [
 ];
 
 export const customFormIntegrations = ["Breakdance", "Elementor"];
-export const actionHookIntegrations = ["action_hook"];
+export const actionHookIntegrations = ["ActionHook"];

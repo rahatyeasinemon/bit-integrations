@@ -190,7 +190,7 @@ const ActionHook = () => {
               More Details on 
               <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/action-hook-integrations" target="_blank" rel="noreferrer">${__('Documentation', 'bit-integrations')}</a>
               or
-              <a className="btcd-link" href="#" target="_blank" rel="noreferrer">${__('Youtube Tutorials', 'bit-integrations')}</a>
+              <a className="btcd-link" href="https://youtu.be/pZ-8JuZfIco?si=Xxv857hJjv6p5Tcu" target="_blank" rel="noreferrer">${__('Youtube Tutorials', 'bit-integrations')}</a>
             </h5>`
 
   return (
