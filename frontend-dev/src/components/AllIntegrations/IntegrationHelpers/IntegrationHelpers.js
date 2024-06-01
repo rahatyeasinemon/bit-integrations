@@ -89,7 +89,7 @@ export const saveIntegConfig = async (
     tmpConf = fluentBookingStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
   } else if (flow.triggered_entity === "WC") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
-    tmpConf = wooCommerceStateIH(tmpConf, dataFlow,flow.triggered_entity_id);
+    tmpConf = wooCommerceStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
   } else if (flow.triggered_entity === "Groundhogg") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = groundhoggStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
@@ -156,7 +156,8 @@ export const saveIntegConfig = async (
   } else if (
     flow.triggered_entity === "ActionHook" ||
     flow.triggered_entity === "Spectra" ||
-    flow.triggered_entity === "EssentialBlocks"
+    flow.triggered_entity === "EssentialBlocks" ||
+    flow.triggered_entity === "Coblocks"
   ) {
     tmpConf["primaryKey"] = flow.triggerData.primaryKey;
   } else if (
@@ -257,7 +258,7 @@ export const saveActionConf = async ({
     tmpConf = fluentBookingStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
   } else if (flow.triggered_entity === "WC") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
-    tmpConf = wooCommerceStateIH(tmpConf, dataFlow,flow.triggered_entity_id);
+    tmpConf = wooCommerceStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
   } else if (flow.triggered_entity === "Groundhogg") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = groundhoggStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
@@ -315,7 +316,8 @@ export const saveActionConf = async ({
   } else if (
     flow.triggered_entity === "ActionHook" ||
     flow.triggered_entity === "Spectra" ||
-    flow.triggered_entity === "EssentialBlocks"
+    flow.triggered_entity === "EssentialBlocks" ||
+    flow.triggered_entity === "Coblocks"
   ) {
     tmpConf["primaryKey"] = flow.triggerData.primaryKey;
   } else if (

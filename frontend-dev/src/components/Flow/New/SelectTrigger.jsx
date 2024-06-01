@@ -17,6 +17,7 @@ import EssentialBlocksHelper from '../../Triggers/TriggerHelpers/EssentialBlocks
 import SpectraHelper from '../../Triggers/TriggerHelpers/SpectraHelper'
 import CustomFormSubmission from '../../Triggers/CustomFormSubmission'
 import { allTriggersName } from '../../../Utils/AllTriggersName'
+import CoblocksHelper from '../../Triggers/TriggerHelpers/CoblocksHelper'
 
 export default function SelectTrigger() {
   // const data = allTriggersName
@@ -118,6 +119,7 @@ export default function SelectTrigger() {
               {newFlow.triggerDetail?.type === 'action_hook' && flowStep === 1 && <ActionHook />}
               {newFlow.triggerDetail?.type === 'spectra' && flowStep === 1 && <SpectraHelper />}
               {newFlow.triggerDetail?.type === 'essentialBlocks' && flowStep === 1 && <EssentialBlocksHelper />}
+              {newFlow.triggerDetail?.type === 'coblocks' && flowStep === 1 && <CoblocksHelper />}
               {newFlow.triggerDetail?.type === 'custom_form_submission' && flowStep === 1 && <CustomFormSubmission />}
             </div>
           </>
