@@ -12,7 +12,7 @@ import LoaderSm from '../Loaders/LoaderSm'
 import toast from 'react-hot-toast'
 import { deepCopy } from '../../Utils/Helpers'
 
-function EditCustomFormSubmissionInteg({ setSnackbar }) {
+function EditActionHook({ setSnackbar }) {
   const [flow, setFlow] = useRecoilState($newFlow)
   const setFormFields = useSetRecoilState($formFields)
   const [isLoading, setIsLoading] = useState(false)
