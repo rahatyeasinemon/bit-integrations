@@ -17,7 +17,11 @@ class BreakdanceHelper
         foreach ($data['fields'] as $key => $value) {
             $formKey = "fields[{$key}]";
             if (isset($formFields[$formKey]) && $formFields[$formKey]['type'] != 'file') {
-                $label = \strlen($value) > 20 ? substr($value, 0, 20) . '...' : $value;
+                if (!\is_string($value)) {
+                    $label = $formFields[$formKey]['type'];
+                } else {
+                    $label = \strlen($value) > 20 ? substr($value, 0, 20) . '...' : $value;
+                }
 
                 $allFields[] = [
                     'name'  => self::findKeyPath($data['fields'], $key, ['fields']),
@@ -65,6 +69,5 @@ class BreakdanceHelper
                 }
             }
         }
-
     }
 }

@@ -122,6 +122,7 @@ class PipeDriveController
                         'key'      => $value->key,
                         'label'    => $value->name,
                         'required' => $required,
+                        'options'  => isset($value->options) ? $value->options : [],
                     ];
                 }
             }

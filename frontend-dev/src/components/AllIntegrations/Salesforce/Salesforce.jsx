@@ -115,7 +115,6 @@ function Salesforce({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'EndDateTime', label: 'End Date', required: true },
     { key: 'Location', label: 'Location', required: false },
     { key: 'Description', label: 'Description', required: false },
-
   ]
 
   const caseFields = [
@@ -125,7 +124,18 @@ function Salesforce({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'SuppliedCompany', label: 'Company', required: false },
     { key: 'Subject', label: 'Subject', required: false },
     { key: 'Description', label: 'Description', required: false },
+  ]
 
+  const action_modules = [
+    { label: 'Create Contact', value: 'contact-create' },
+    { label: 'Create lead', value: 'lead-create' },
+    { label: 'Create Account', value: 'account-create' },
+    { label: 'Create Campaign', value: 'campaign-create' },
+    { label: 'Add campaign member', value: 'add-campaign-member' },
+    { label: 'Create Task', value: 'task-create' },
+    { label: 'Oportunity Create', value: 'opportunity-create' },
+    { label: 'Event Create', value: 'event-create' },
+    { label: 'Create Case', value: 'case-create' },
   ]
 
   const [salesforceConf, setSalesforceConf] = useState({
@@ -136,6 +146,8 @@ function Salesforce({ formFields, setFlow, flow, allIntegURL }) {
     field_map: [
       { formField: '', selesforceField: '' },
     ],
+    selesforceActionModules: action_modules,
+    action_modules,
     contactFields,
     leadFields,
     accountFields,

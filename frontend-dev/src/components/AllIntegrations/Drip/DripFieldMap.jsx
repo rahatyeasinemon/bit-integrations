@@ -4,12 +4,21 @@ import { useRecoilValue } from 'recoil'
 import { $btcbi } from '../../../GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
-import MtInput from '../../Utilities/MtInput'
+import TagifyInput from '../../Utilities/TagifyInput'
+import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
+import { generateMappedField } from './DripCommonFunc'
 
 export default function DripFieldMap({ i, formFields, field, dripConf, setDripConf }) {
+  const requiredFields = dripConf?.dripFormFields.filter(fld => fld.required === true) || []
+  const notResquiredField = dripConf?.dripFormFields?.filter(fld => fld.required === false) || []
 
-  const isRequired = field.required
-  const notResquiredField = dripConf?.default?.fields && Object.values(dripConf?.default?.fields).filter((f => !f.required))
+  if (dripConf?.field_map?.length === 1 && field.dripField === '') {
+    const newConf = { ...dripConf }
+    const tmp = generateMappedField(newConf)
+    newConf.field_map = tmp
+    setDripConf(newConf)
+  }
+
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
   const addFieldMap = (indx) => {
@@ -33,12 +42,6 @@ export default function DripFieldMap({ i, formFields, field, dripConf, setDripCo
     if (event.target.value === 'custom') {
       newConf.field_map[indx].customValue = ''
     }
-    setDripConf(newConf)
-  }
-
-  const handleCustomValue = (event, indx) => {
-    const newConf = { ...dripConf }
-    newConf.field_map[indx].customValue = event.target.value
     setDripConf(newConf)
   }
 
@@ -67,22 +70,26 @@ export default function DripFieldMap({ i, formFields, field, dripConf, setDripCo
 
         </select>
 
-        {field.formField === 'custom' && <MtInput onChange={e => handleCustomValue(e, i)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bit-integrations')} />}
+        {field.formField === 'custom' && <TagifyInput onChange={e => handleCustomValue(e, i, dripConf, setDripConf)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bit-integrations')} formFields={formFields} />}
 
-        <select className="btcd-paper-inp" name="dripField" value={field.dripField} onChange={(ev) => handleFieldMapping(ev, i)} disabled={isRequired}>
+        <select className="btcd-paper-inp" name="dripField" value={i < requiredFields ? (requiredFields[i].label || '') : (field.dripField || '')} onChange={(ev) => handleFieldMapping(ev, i)} disabled={i < requiredFields.length}>
           <option value="">{__('Select Field', 'bit-integrations')}</option>
-          {isRequired ? dripConf?.default?.fields && (dripConf.default.fields).map(fld => (
-            <option key={`${fld.fieldValue}`} value={fld.fieldValue}>
-              {fld.fieldName}
-            </option>
-          )) : notResquiredField && notResquiredField.map(fld => (
-            <option key={`${fld.fieldValue}`} value={fld.fieldValue}>
-              {fld.fieldName}
-            </option>
-          ))}
+          {
+            i < requiredFields.length ? (
+              <option key={requiredFields[i].key} value={requiredFields[i].key}>
+                {requiredFields[i].label}
+              </option>
+            ) : (
+              notResquiredField.map(({ key, label }) => (
+                <option key={key} value={key}>
+                  {label}
+                </option>
+              ))
+            )
+          }
         </select>
       </div>
-      {!isRequired
+      {i >= requiredFields.length
         && (
           <>
             <button onClick={() => addFieldMap(i)} className="icn-btn sh-sm ml-2" type="button">

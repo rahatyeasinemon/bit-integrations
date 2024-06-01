@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Clickup;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -64,7 +64,7 @@ class RecordApiHelper
         $this->typeName = 'Task created';
         $listId = $this->integrationDetails->selectedList;
         $apiEndpoint = $this->apiUrl . "list/{$listId}/task";
-        $response = HttpHelper::post($apiEndpoint, json_encode($requestParams), $this->defaultHeader);
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($requestParams), $this->defaultHeader);
 
         return empty($this->integrationDetails->attachment) ? $response : $this->uploadFile($fieldValues[$this->integrationDetails->attachment], $response->id);
     }
@@ -76,13 +76,13 @@ class RecordApiHelper
             $triggerValue = $value->formField;
             $actionValue = $value->clickupFormField;
             if ($triggerValue === 'custom') {
-                if ($actionValue === 'fields') {
+                if ($actionValue === 'customFieldKey') {
                     $dataFinal[$value->customFieldKey] = self::formatPhoneNumber($value->customValue);
                 } else {
                     $dataFinal[$actionValue] = self::formatPhoneNumber($value->customValue);
                 }
             } elseif (!\is_null($data[$triggerValue])) {
-                if ($actionValue === 'fields') {
+                if ($actionValue === 'customFieldKey') {
                     $dataFinal[$value->customFieldKey] = self::formatPhoneNumber($data[$triggerValue]);
                 } else {
                     $dataFinal[$actionValue] = self::formatPhoneNumber($data[$triggerValue]);
@@ -103,9 +103,9 @@ class RecordApiHelper
 
         if (!empty($apiResponse->id)) {
             $res = [$this->typeName . ' successfully'];
-            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', json_encode($res));
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->integrationId, json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', json_encode($apiResponse));
+            LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->type . ' creating']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;

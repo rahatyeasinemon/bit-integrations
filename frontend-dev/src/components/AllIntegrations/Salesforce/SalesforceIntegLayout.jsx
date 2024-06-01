@@ -3,7 +3,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
-import { getAllAccountList, getAllCampaignList, getAllContactList, getAllCustomFields, getAllLeadList } from './SalesforceCommonFunc'
+import { getAllAccountList, getAllCampaignList, getAllContactList, getAllCustomActionModules, getAllCustomFields, getAllLeadList } from './SalesforceCommonFunc'
 import SelesforceFieldMap from './SalesforceFieldMap'
 import { taskSubject, taskPriority, taskStatus } from './SalesforceDataStore'
 import SalesforceActions from './SalesforceActions'
@@ -21,18 +21,6 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
       getAllAccountList(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
     }
   }, [salesforceConf?.actionName])
-
-  const action = [
-    { label: 'Create Contact', value: 'contact-create' },
-    { label: 'Create lead', value: 'lead-create' },
-    { label: 'Create Account', value: 'account-create' },
-    { label: 'Create Campaign', value: 'campaign-create' },
-    { label: 'Add campaign member', value: 'add-campaign-member' },
-    { label: 'Create Task', value: 'task-create' },
-    { label: 'Oportunity Create', value: 'opportunity-create' },
-    { label: 'Event Create', value: 'event-create' },
-    { label: 'Create Case', value: 'case-create' },
-  ]
 
   const handleInputP = (e) => {
     const newConf = { ...salesforceConf }
@@ -56,6 +44,8 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
         getAllCustomFields(formID, 'event-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
       } else if (actName === 'case-create') {
         getAllCustomFields(formID, 'case-create', newConf, setSalesforceConf, setIsLoading, setSnackbar)
+      } else {
+        getAllCustomFields(formID, actName, newConf, setSalesforceConf, setIsLoading, setSnackbar)
       }
     } else {
       delete newConf[name]
@@ -67,7 +57,6 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
     newConf[status] = val
     setSalesforceConf({ ...newConf })
   }
-
   return (
     <>
       <br />
@@ -76,13 +65,14 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
         <select onChange={handleInputP} name="actionName" value={salesforceConf?.actionName} className="btcd-paper-inp w-5">
           <option value="">{__('Select Action', 'bit-integrations')}</option>
           {
-            action.map(({ label, value }) => (
+            salesforceConf?.selesforceActionModules?.map(({ label, value }) => (
               <option key={label} value={value}>
                 {label}
               </option>
             ))
           }
         </select>
+        <button onClick={() => getAllCustomActionModules(salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh Custom Action', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
       </div>
       <br />
       <br />
@@ -209,7 +199,7 @@ export default function SalesforceIntegLayout({ formID, formFields, handleInput,
         />
       )}
 
-      {['contact-create', 'lead-create', 'account-create', 'campaign-create', 'opportunity-create', 'event-create', 'case-create'].includes(salesforceConf?.actionName)
+      {salesforceConf?.actionName
         && !isLoading && (
           <>
             <br />

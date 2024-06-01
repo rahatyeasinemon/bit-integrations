@@ -31,6 +31,10 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
          */
         public function run($form, $settings, $extra)
         {
+            if (\function_exists('btcbi_pro_activate_plugin')) {
+                return;
+            }
+
             $reOrganizeId = "{$extra['formId']}-{$extra['postId']}";
             $formData = BreakdanceHelper::setFields($extra, $form);
 

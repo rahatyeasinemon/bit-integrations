@@ -23,6 +23,12 @@ function EditDrip({ allIntegURL }) {
   const formFields = useRecoilValue($formFields)
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
+  const [loading, setLoading] = useState({
+    auth: false,
+    customFields: false,
+    accounts: false,
+    tags: false,
+  })
 
   return (
     <div style={{ width: 900 }}>
@@ -40,9 +46,8 @@ function EditDrip({ allIntegURL }) {
         formFields={formFields}
         dripConf={dripConf}
         setDripConf={setDripConf}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-        setSnackbar={setSnackbar}
+        loading={loading}
+        setLoading={setLoading}
       />
 
       <IntegrationStepThree
