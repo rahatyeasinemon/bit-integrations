@@ -2,12 +2,12 @@
 
 namespace BitCode\FI\Actions\MailMint;
 
-use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
-use Mint\MRM\Admin\API\Controllers\MessageController;
-use Mint\MRM\DataBase\Models\ContactGroupModel;
-use Mint\MRM\DataBase\Models\ContactModel;
+use BitCode\FI\Core\Util\Common;
 use Mint\MRM\DataStores\ContactData;
+use Mint\MRM\DataBase\Models\ContactModel;
+use Mint\MRM\DataBase\Models\ContactGroupModel;
+use Mint\MRM\Admin\API\Controllers\MessageController;
 
 class RecordApiHelper
 {
@@ -184,7 +184,7 @@ class RecordApiHelper
             $selectedTags = $integrationDetails->selectedTags;
             $selectedSubStatus = $integrationDetails->selectedSubStatus;
             $apiResponse = $this->updateContact($selectedList, $selectedTags, $selectedSubStatus, $finalData, $contactExist);
-            if ($apiResponse && \gettype($apiResponse) === 'integer') {
+            if ($apiResponse && (\gettype($apiResponse) == 'integer' || (\gettype($apiResponse) == 'boolean' && $apiResponse == true))) {
                 LogHandler::save(self::$integrationID, ['type' => 'update', 'type_name' => 'update contact'], 'success', 'Contact updated successfully');
             } else {
                 LogHandler::save(self::$integrationID, ['type' => 'update', 'type_name' => 'update contact'], 'error', 'Failed to create contact');
