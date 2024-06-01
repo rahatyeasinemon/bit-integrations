@@ -51,7 +51,8 @@ const ActionHook = () => {
     tmpNewFlow.triggerData = {
       formID: hookID,
       primaryKey: primaryKey,
-      fields: selectedFields.map(field => ({ label: field, name: field }))
+      fields: selectedFields.map(field => ({ label: field, name: field })),
+      rawData: newFlow.triggerDetail?.data
     }
     tmpNewFlow.triggered_entity_id = hookID
     setFields(selectedFields)
