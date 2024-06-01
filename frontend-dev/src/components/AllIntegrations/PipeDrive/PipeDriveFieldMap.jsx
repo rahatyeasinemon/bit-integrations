@@ -1,10 +1,10 @@
 import { useRecoilValue } from 'recoil'
 import { __ } from '../../../Utils/i18nwrap'
-import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/IntegrationHelpers'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import { $btcbi } from '../../../GlobalStates'
 import TagifyInput from '../../Utilities/TagifyInput'
+import Cooltip from '../../Utilities/Cooltip'
 
 export default function PipeDriveFieldMap({ i, formFields, uploadFields, field, pipeDriveConf, setPipeDriveConf, tab }) {
   const module = tab === 0 ? pipeDriveConf.moduleData.module : pipeDriveConf.relatedlists?.[tab - 1]?.module
@@ -12,6 +12,16 @@ export default function PipeDriveFieldMap({ i, formFields, uploadFields, field, 
   const nonRequiredFlds = pipeDriveConf.default.modules?.[module]?.fields?.filter(fld => fld.required === false) || []
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
+
+  let options = []
+
+  if (field?.pipeDriveFormField) {
+    const filteredNonRequiredFlds = nonRequiredFlds.filter(nonRequiredFld => nonRequiredFld.key === field?.pipeDriveFormField)
+    if (filteredNonRequiredFlds.length && filteredNonRequiredFlds[0].hasOwnProperty('options') && filteredNonRequiredFlds[0].options.length) {
+      options = filteredNonRequiredFlds[0].options
+    }
+  }
+
   return (
     <div
       className="flx mt-2 mb-2 btcbi-field-map"
@@ -60,7 +70,20 @@ export default function PipeDriveFieldMap({ i, formFields, uploadFields, field, 
           </select>
         </div>
         <div className="flx integ-fld-wrp">
-
+          {options.length > 0 &&
+            <div>
+              <Cooltip width={250} icnSize={17} className="ml-2">
+                <div className="txt-body">
+                  <p>
+                    Custom field options with id
+                  </p>
+                  {options.map(option => (
+                    <li key={option.id}>{option?.label} - {option?.id}</li>
+                  ))}
+                </div>
+              </Cooltip>
+            </div>
+          }
           {
             i >= requiredFlds.length && (
               <>
