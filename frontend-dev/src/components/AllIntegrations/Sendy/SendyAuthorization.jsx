@@ -31,8 +31,7 @@ export default function SendyAuthorization({ sendyConf, setSendyConf, step, sets
     const values = { api_key: newConf.api_key, sendy_url: newConf.sendy_url }
     bitsFetch(values, 'sendy_authorize')
       .then(result => {
-        const { data } = result
-        if (data) {
+        if (result.success) {
           setisAuthorized(true)
         }
         setShowAuthMsg(true)
