@@ -10,27 +10,28 @@ import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
 import toast from 'react-hot-toast'
-import { deepCopy } from '../../Utils/Helpers'
+import { deepCopy, extractValueFromPath } from '../../Utils/Helpers'
 import CloseIcn from '../../Icons/CloseIcn'
 import EyeIcn from '../Utilities/EyeIcn'
 import EyeOffIcn from '../Utilities/EyeOffIcn'
 import TreeViewer from '../Utilities/treeViewer/TreeViewer'
 
-function EditActionHook({ setSnackbar }) {
+function EditActionHook() {
   const [flow, setFlow] = useRecoilState($newFlow)
   const setFormFields = useSetRecoilState($formFields)
-  const [hookID, setHookID] = useState('')
-  const [selectedHook, setSelectedHook] = useState('custom')
-  const [customHook, setCustomHook] = useState(true)
-  const [primaryKey, setPrimaryKey] = useState()
-  const [primaryKeyModal, setPrimaryKeyModal] = useState(false)
-  const [selectedFields, setSelectedFields] = useState([])
-  const [showResponse, setShowResponse] = useState(true)
+  // const [hookID, setHookID] = useState('')
+  // const [selectedHook, setSelectedHook] = useState('custom')
+  // const [customHook, setCustomHook] = useState(true)
+  // const [primaryKey, setPrimaryKey] = useState()
+  // const [primaryKeyModal, setPrimaryKeyModal] = useState(false)
+  // const [selectedFields, setSelectedFields] = useState([])
+  const [showResponse, setShowResponse] = useState(false)
   const [showSelectedFields, setShowSelectedFields] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const intervalRef = useRef(null)
 
   console.log(flow)
+  console.log('showSelectedFields: ', showSelectedFields)
 
   // const handleFetch = () => {
   //   if (isLoading) {
@@ -99,6 +100,35 @@ function EditActionHook({ setSnackbar }) {
   //   }
   // }, [])
 
+  const primaryKeySet = (val) => {
+    setFlow(prevFlow => create(prevFlow, (draftFlow) => {
+      draftFlow.flow_details['primaryKey'] = !val ? undefined : { key: val, value: extractValueFromPath(flow.flow_details?.rawData, val) }
+    }))
+  }
+
+  const setSelectedFieldsData = (value = null, remove = false, index = null) => {
+    if (remove) {
+      index = index ? index : flow.flow_details.fields.findIndex(field => field.name === value)
+      if (index !== -1) {
+        removeSelectedField(index)
+      }
+      return
+    }
+    addSelectedField(value)
+  }
+
+  const addSelectedField = value => {
+    setFlow(prevFlow => create(prevFlow, (draftFlow) => {
+      draftFlow.flow_details['fields'].push({ label: value, name: value })
+    }))
+  }
+
+  const removeSelectedField = index => {
+    setFlow(prevFlow => create(prevFlow, (draftFlow) => {
+      draftFlow.flow_details.fields.splice(index, 1)
+    }))
+  }
+
   return (
     <div className='trigger-custom-width'>
       <div className="flx flx-between">
@@ -112,10 +142,10 @@ function EditActionHook({ setSnackbar }) {
         <b className="wdt-100 d-in-b">{__('Unique Key:', 'bit-integrations')}</b>
         <MultiSelect
           options={flow.flow_details.fields?.map(field => ({ label: field?.label, value: field?.name }))}
-          className="msl-wrp-options"
           defaultValue={Array.isArray(flow?.flow_details?.primaryKey) ? flow?.flow_details?.primaryKey.map(item => item.key).join(',') : flow?.flow_details?.primaryKey?.key || ''}
-          // onChange={primaryKeySet}
-          disabled={isLoading}
+          className="msl-wrp-options"
+          onChange={primaryKeySet}
+          singleSelect
           closeOnSelect
         />
         {/* <button onClick={handleFetch} className={`btn btcd-btn-lg sh-sm flx ml-1 ${isLoading ? 'red' : 'green'}`} type="button">
@@ -174,13 +204,13 @@ function EditActionHook({ setSnackbar }) {
                     key={index}
                     className="btcd-paper-inp w-100 m-1"
                     type='text'
-                    // onChange={e => setSelectedFieldsData(e.target.value, index)} 
-                    value={field?.name.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')}
+                    onChange={e => setSelectedFieldsData(e.target.value, index)}
+                    value={field?.name?.replace(/[,]/gi, '.')?.replace(/["{\}[\](\)]/gi, '')}
                     disabled={isLoading}
                   />
                   <button
                     className="btn btcd-btn-lg sh-sm"
-                    // onClick={() => removeSelectedField(index)}
+                    onClick={() => removeSelectedField(index)}
                     style={
                       {
                         position: 'absolute',
@@ -227,12 +257,10 @@ function EditActionHook({ setSnackbar }) {
       </div>
       {
         flow.flow_details?.rawData && showResponse && (
-          <>
-            <TreeViewer
-              data={flow?.flow_details?.rawData}
-            // onChange={setSelectedFieldsData} 
-            />
-          </>
+          <TreeViewer
+            data={flow?.flow_details?.rawData}
+            onChange={setSelectedFieldsData}
+          />
         )
       }
     </div>
