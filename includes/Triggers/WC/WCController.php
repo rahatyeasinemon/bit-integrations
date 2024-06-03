@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Triggers\WC;
 
-use BitCode\FI\Flow\Flow;
 use WC_Booking;
 use WC_Checkout;
 use WC_Product_Simple;
+use BitCode\FI\Flow\Flow;
 use WC_Subscriptions_Product;
 
 final class WCController
@@ -1536,7 +1536,7 @@ final class WCController
                 $post_status = get_post_status($order_id);
                 $post_type = get_post_type($order_id);
 
-                if ($post_status === 'trash' || $post_type !== 'shop_order_placehold') {
+                if ($post_status == 'trash' || ($post_type != 'shop_order_placehold' && $post_type != 'shop_order')) {
                     return false;
                 }
 
