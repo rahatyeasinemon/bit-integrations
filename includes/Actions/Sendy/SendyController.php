@@ -114,7 +114,6 @@ class SendyController
             'api_key'  => $apiKey,
             'brand_id' => $brand_id
         ];
-        error_log(print_r(['apiEndpoint' => $apiEndpoint, 'requestsParams' => $requestsParams, 'authorizationHeader' => $authorizationHeader], true));
         $apiResponse = HttpHelper::post($apiEndpoint, $requestsParams, $authorizationHeader);
 
         $response = [];
