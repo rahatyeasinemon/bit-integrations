@@ -31,8 +31,8 @@ class RecordApiHelper
             ],
             'names' => [
                 [
-                    'givenName' => !empty($data['name']) ? $data['name'] : '',
-
+                    'givenName'  => !empty($data['name']) ? $data['name'] : '',
+                    'familyName' => !empty($data['lastName']) ? $data['lastName'] : '',
                 ]
             ],
             'addresses' => [
@@ -161,6 +161,7 @@ class RecordApiHelper
             $contactResponse = $this->handleInsertContact($fieldData);
             $imageLocation = $fieldValues[$actions->attachments][0];
             $resourceName = $contactResponse->resourceName;
+
             if (!empty($imageLocation)) {
                 $this->handleUploadPhoto($fieldData, $imageLocation, $resourceName);
             }
@@ -196,6 +197,5 @@ class RecordApiHelper
                 LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'update']), 'error', wp_json_encode('Contact not found, please check the name'));
             }
         }
-
     }
 }
