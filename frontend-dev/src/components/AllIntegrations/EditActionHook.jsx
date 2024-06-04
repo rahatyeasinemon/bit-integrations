@@ -51,6 +51,7 @@ function EditActionHook() {
           setFormFields([])
           setIsLoading(false)
           setShowResponse(true)
+          setShowSelectedFields(true)
           removeTestData(flow?.triggered_entity_id, true)
         }
       })
@@ -105,13 +106,35 @@ function EditActionHook() {
     }))
   }
 
+  const setHook = (val) => {
+    if (flow?.triggered_entity_id) {
+      removeTestData(flow?.triggered_entity_id)
+    }
+
+    setFlow(prevFlow => create(prevFlow, (draftFlow) => {
+      draftFlow.triggered_entity_id = val
+      draftFlow.flow_details['rawData'] = []
+      draftFlow.flow_details['fields'] = []
+      draftFlow.flow_details['primaryKey'] = undefined
+
+      if (draftFlow.flow_details?.body?.data) {
+        draftFlow.flow_details.body.data = []
+      } else {
+        draftFlow.flow_details.field_map = []
+      }
+    }))
+    setFormFields([])
+    setShowResponse(false)
+    setShowSelectedFields(false)
+  }
+
   return (
     <div className='trigger-custom-width'>
       <div className="flx flx-between">
         <div className="wdt-100 d-in-b">
           <b>{__('Hook:', 'bit-integrations')}</b>
         </div>
-        <input className="btcd-paper-inp mt-1" onChange={e => setHook(e.target.value, 'custom')} name="custom" value={flow?.triggered_entity_id || ''} type="text" placeholder={__('Enter Hook...', 'bit-integrations')} disabled={true} />
+        <input className="btcd-paper-inp mt-1" onChange={e => setHook(e.target.value)} name="custom" value={flow?.triggered_entity_id || ''} type="text" placeholder={__('Enter Hook...', 'bit-integrations')} disabled={isLoading} />
 
       </div>
       <div className="flx mt-1 flx-between">
