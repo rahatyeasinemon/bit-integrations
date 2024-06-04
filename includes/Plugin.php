@@ -8,6 +8,8 @@ namespace BitCode\FI;
  * @since 1.0.0-alpha
  */
 
+use BitApps\WPTelemetry\Telemetry\Telemetry;
+use BitApps\WPTelemetry\Telemetry\TelemetryConfig;
 use BitCode\FI\Admin\Admin_Bar;
 use BitCode\FI\Core\Database\DB;
 use BitCode\FI\Core\Hooks\HookService;
@@ -41,6 +43,8 @@ final class Plugin
         (new Activation())->activate();
         (new Deactivation())->register();
         (new UnInstallation())->register();
+
+        $this->initWPTelemetry();
     }
 
     public function init_plugin()
@@ -48,6 +52,21 @@ final class Plugin
         Hooks::add('init', [$this, 'init_classes'], 8);
         Hooks::add('init', [$this, 'integrationlogDelete'], 11);
         Hooks::filter('plugin_action_links_' . plugin_basename(BTCBI_PLUGIN_MAIN_FILE), [$this, 'plugin_action_links']);
+    }
+
+    public function initWPTelemetry()
+    {
+        TelemetryConfig::setSlug(Config::SLUG);
+        TelemetryConfig::setTitle(Config::TITLE);
+        TelemetryConfig::setVersion(Config::VERSION);
+        TelemetryConfig::setPrefix(Config::VAR_PREFIX);
+
+        TelemetryConfig::setServerBaseUrl('https://wp-api.bitapps.pro/public/');
+        TelemetryConfig::setTermsUrl('https://bitapps.pro/terms-of-service/');
+        TelemetryConfig::setPolicyUrl('https://bitapps.pro/privacy-policy/');
+
+        Telemetry::report()->init();
+        Telemetry::feedback()->init();
     }
 
     /**

@@ -624,6 +624,8 @@ With the pro version, you have the ability to create **Unlimited active** Please
 
 * [**Elementor Form**](https://bitapps.pro/docs/bit-integrations/trigger/elementor-form/)
 
+* [**FluentBooking**](https://bitapps.pro/docs/bit-integrations/trigger/fluentbooking-integrations/)
+
 * [**Fluent CRM**](https://bitapps.pro/docs/bit-integrations/trigger/fluent-crm/)
 
 * [**Fluent Forms**](https://bitapps.pro/docs/bit-integrations/trigger/fluent-forms/)
