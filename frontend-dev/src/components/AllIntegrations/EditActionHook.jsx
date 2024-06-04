@@ -219,39 +219,43 @@ function EditActionHook() {
           }
         </>
       }
-      <div className="flx flx-between">
-        <div className="my-3">
-          <b>{__('Select Fields:', 'bit-integrations')}</b>
-        </div>
-        <button
-          onClick={() => setShowResponse(prev => !prev)}
-          className="btn btcd-btn-md sh-sm flx"
-        >
-          <span className="txt-actionHook-resbtn font-inter-500">
-            {showResponse ? 'Hide Response' : 'View Response'}
-          </span>
-          {!showResponse ? (
-            <EyeIcn
-              width="20"
-              height="20"
-              strokeColor="#000000"
-            />
-          ) : (
-            <EyeOffIcn
-              width="20"
-              height="20"
-              strokeColor="#000000"
-            />
-          )}
-        </button>
-      </div>
-      {
-        flow.flow_details?.rawData && showResponse && (
-          <TreeViewer
-            data={flow?.flow_details?.rawData}
-            onChange={setSelectedFieldsData}
-          />
-        )
+      {flow.flow_details?.rawData &&
+        <>
+          <div className="flx flx-between">
+            <div className="my-3">
+              <b>{__('Select Fields:', 'bit-integrations')}</b>
+            </div>
+            <button
+              onClick={() => setShowResponse(prev => !prev)}
+              className="btn btcd-btn-md sh-sm flx"
+            >
+              <span className="txt-actionHook-resbtn font-inter-500">
+                {showResponse ? 'Hide Response' : 'View Response'}
+              </span>
+              {!showResponse ? (
+                <EyeIcn
+                  width="20"
+                  height="20"
+                  strokeColor="#000000"
+                />
+              ) : (
+                <EyeOffIcn
+                  width="20"
+                  height="20"
+                  strokeColor="#000000"
+                />
+              )}
+            </button>
+          </div>
+          {
+            flow.flow_details?.rawData && showResponse && (
+              <TreeViewer
+                data={flow?.flow_details?.rawData}
+                onChange={setSelectedFieldsData}
+              />
+            )
+          }
+        </>
       }
     </div>
   )
