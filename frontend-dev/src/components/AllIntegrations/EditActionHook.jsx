@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $formFields, $newFlow } from '../../GlobalStates'
+import { $actionConf, $formFields, $newFlow } from '../../GlobalStates'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
@@ -17,6 +17,7 @@ import EyeOffIcn from '../Utilities/EyeOffIcn'
 import TreeViewer from '../Utilities/treeViewer/TreeViewer'
 
 function EditActionHook() {
+  const [actionConf, setActionConf] = useRecoilState($actionConf)
   const [flow, setFlow] = useRecoilState($newFlow)
   const setFormFields = useSetRecoilState($formFields)
   const [showResponse, setShowResponse] = useState(false)
@@ -48,6 +49,17 @@ function EditActionHook() {
               draftFlow.flow_details.field_map = []
             }
           }))
+          setActionConf(prevConf => create(prevConf, (draftConf) => {
+            draftConf['rawData'] = resp.data.actionHook
+            draftConf['fields'] = []
+            draftConf['primaryKey'] = undefined
+
+            if (draftConf?.body?.data) {
+              draftConf.body.data = []
+            } else {
+              draftConf.field_map = []
+            }
+          }))
           setFormFields([])
           setIsLoading(false)
           setShowResponse(true)
@@ -70,6 +82,9 @@ function EditActionHook() {
     setFlow(prevFlow => create(prevFlow, (draftFlow) => {
       draftFlow.flow_details['primaryKey'] = !val ? undefined : { key: val, value: extractValueFromPath(flow.flow_details?.rawData, val) }
     }))
+    setActionConf(prevConf => create(prevConf, (draftConf) => {
+      draftConf['primaryKey'] = !val ? undefined : { key: val, value: extractValueFromPath(flow.flow_details?.rawData, val) }
+    }))
   }
 
   const setSelectedFieldsData = (value = null, remove = false, index = null) => {
@@ -89,6 +104,11 @@ function EditActionHook() {
         draftFlow.flow_details['fields'].push({ label: value, name: value })
       }
     }))
+    setActionConf(prevConf => create(prevConf, (draftConf) => {
+      if (draftConf.fields.findIndex(field => field.name === value) === -1) {
+        draftConf['fields'].push({ label: value, name: value })
+      }
+    }))
     setFormFields(prevFields => create(prevFields, draftFields => {
       if (draftFields.findIndex(field => field.name === value) === -1) {
         draftFields.push({ label: value, name: value })
@@ -103,6 +123,9 @@ function EditActionHook() {
     }))
     setFlow(prevFlow => create(prevFlow, (draftFlow) => {
       draftFlow.flow_details.fields.splice(index, 1)
+    }))
+    setActionConf(prevConf => create(prevConf, (draftConf) => {
+      draftConf.fields.splice(index, 1)
     }))
   }
 
@@ -121,6 +144,17 @@ function EditActionHook() {
         draftFlow.flow_details.body.data = []
       } else {
         draftFlow.flow_details.field_map = []
+      }
+    }))
+    setActionConf(prevConf => create(prevConf, (draftConf) => {
+      draftConf['rawData'] = []
+      draftConf['fields'] = []
+      draftConf['primaryKey'] = undefined
+
+      if (draftConf?.body?.data) {
+        draftConf.body.data = []
+      } else {
+        draftConf.field_map = []
       }
     }))
     setFormFields([])
