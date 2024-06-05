@@ -3,15 +3,20 @@ import toast from 'react-hot-toast'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { sprintf, __ } from '../../../Utils/i18nwrap'
+import {create} from 'mutative'
 
-export const handleInput = (e, mailupConf, setMailupConf) => {
+export const handleInput = (e, mailupConf, setMailupConf, setIsLoading, setSnackbar) => {
   const newConf = { ...mailupConf }
   const { name } = e.target
+  
   if (e.target.value !== '') {
     newConf[name] = e.target.value
+    fetchAllGroup(newConf, setMailupConf, setIsLoading, setSnackbar)
+    fetchAllField(newConf, setMailupConf, setIsLoading, setSnackbar)
   } else {
     delete newConf[name]
   }
+  
   setMailupConf({ ...newConf })
 }
 
@@ -33,6 +38,29 @@ export const fetchAllList = (mailupConf, setMailupConf, setIsLoading, setSnackba
         setMailupConf({ ...newConf })
       } else {
         setSnackbar({ show: true, msg: __('Mailup lists fetching failed. please try again', 'bit-integrations') })
+      }
+      setIsLoading(false)
+    })
+    .catch(() => setIsLoading(false))
+}
+
+export const fetchAllField = (mailupConf, setMailupConf, setIsLoading, setSnackbar) => {
+  setIsLoading(true)
+  const requestParams = {
+    tokenDetails: mailupConf.tokenDetails,
+    clientId: mailupConf.clientId,
+    clientSecret: mailupConf.clientSecret,
+  }
+  bitsFetch(requestParams, 'mailup_fetch_all_field')
+    .then(result => {
+      if (result && result.success) {
+        setMailupConf(prevConf => create(prevConf, draftConf => {
+          draftConf.staticFields = result.data
+          draftConf.field_map = generateMappedField(draftConf)
+        }))
+        setSnackbar({ show: true, msg: __('Mailup all fields fetched successfully', 'bit-integrations') })
+      } else {
+        setSnackbar({ show: true, msg: __('Mailup fields fetching failed. please try again', 'bit-integrations') })
       }
       setIsLoading(false)
     })

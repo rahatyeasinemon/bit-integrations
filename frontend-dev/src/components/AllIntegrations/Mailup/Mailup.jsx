@@ -18,26 +18,12 @@ function Mailup({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
-  const staticFields = [
-    { key: 'Email', label: 'Email', required: true },
-    { key: '1', label: 'First Name', required: false },
-    { key: '2', label: 'Last Name', required: false },
-    { key: '3', label: 'Company', required: false },
-    { key: '4', label: 'City', required: false },
-    { key: '5', label: 'Province', required: false },
-    { key: '6', label: 'ZIP', required: false },
-    { key: '7', label: 'State', required: false },
-    { key: '8', label: 'Region', required: false },
-    { key: '9', label: 'Address', required: false },
-    { key: '10', label: 'Gender', required: false },
-    { key: '11', label: 'Phone', required: false },
-  ]
 
   const [mailupConf, setMailupConf] = useState({
     name: 'Mailup',
     type: 'Mailup',
-    clientId: process.env.NODE_ENV === 'development' ? '' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? '' : '',
+    clientId: process.env.NODE_ENV === 'development' ? '85e59098-8c70-46c6-b2a2-a95bf9c0a356' : '',
+    clientSecret: process.env.NODE_ENV === 'development' ? '4e8c54cf-3c07-4c18-8d9c-47e0aa8ed6c1' : '',
     allList: [],
     allGroup: [],
     listId: '',
@@ -45,7 +31,7 @@ function Mailup({ formFields, setFlow, flow, allIntegURL }) {
     field_map: [
       { formField: '', mailupFormField: '' },
     ],
-    staticFields,
+    staticFields: [],
     actions: {},
   })
 

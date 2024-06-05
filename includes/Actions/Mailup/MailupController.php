@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\Mailup;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
 use WP_Error;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class MailupController
 {
@@ -40,6 +40,47 @@ class MailupController
         }
         $apiResponse->generates_on = time();
         wp_send_json_success($apiResponse, 200);
+    }
+
+    public static function getAllField($requestParams)
+    {
+        if (empty($requestParams->tokenDetails) || empty($requestParams->clientId) || empty($requestParams->clientSecret)) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+
+        $token = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->clientId, $requestParams->clientSecret);
+        $headers = [
+            'Authorization' => 'Bearer ' . $token->access_token,
+        ];
+        $apiEndpoint = 'https://services.mailup.com/API/v1.1/Rest/ConsoleService.svc/Console/Recipient/DynamicFields?PageNumber=0&PageSize=1000';
+        $apiResponse = HttpHelper::get($apiEndpoint, null, $headers);
+        $excludedFields = ['allorderedproductids', 'totalorderedlast30d', 'totalorderedlast12m', 'totalordered', 'latestabandonedcartid', 'latestabandonedcarttotal', 'latestabandonedcartdate', 'latestshippedorderid', 'latestshippedorderdate', 'latestordercategoryids', 'latestorderproductids', 'latestorderamount', 'latestorderdate', 'latestorderid', 'customerid'];
+        $fields = [
+            (object) [
+                'key'      => 'Email',
+                'label'    => 'Email',
+                'required' => true
+            ]
+        ];
+        error_log(print_r($apiResponse, true));
+
+        if (!property_exists($apiResponse, 'Items')) {
+            wp_send_json_error('List fetching failed', 400);
+
+            return;
+        }
+
+        foreach ($apiResponse->Items as $item) {
+            if (!\in_array($item->Description, $excludedFields)) {
+                $fields[] = (object) [
+                    'key'      => $item->Id,
+                    'label'    => $item->Description,
+                    'required' => false
+                ];
+            }
+        }
+
+        wp_send_json_success($fields, 200);
     }
 
     public static function getAllList($requestParams)
