@@ -58,6 +58,7 @@ final class AllTriggersName
             'Rafflepress'       => ['name' => 'Rafflepress', 'isPro' => true, 'is_active' => false],
             'Registration'      => ['name' => 'User Registration', 'isPro' => true, 'is_active' => false],
             'RestrictContent'   => ['name' => 'Restrict Content', 'isPro' => true, 'is_active' => false],
+            'SiteOriginWidgets' => ['name' => 'SiteOrigin Widgets', 'isPro' => true, 'is_active' => false], 
             'SliceWp'           => ['name' => 'SliceWp', 'isPro' => true, 'is_active' => false],
             'SolidAffiliate'    => ['name' => 'Solid Affiliate', 'isPro' => true, 'is_active' => false],
             'Spectra'           => ['name' => 'Spectra', 'isPro' => true, 'is_active' => false],
