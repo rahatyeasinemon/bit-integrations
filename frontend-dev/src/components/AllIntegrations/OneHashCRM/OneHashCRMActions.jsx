@@ -90,7 +90,7 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'leadSource'}
         close={clsActionMdl}
@@ -117,7 +117,7 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'LeadAddressType'}
         close={clsActionMdl}
@@ -144,7 +144,7 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'LeadType'}
         close={clsActionMdl}
@@ -172,7 +172,7 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'RequestType'}
         close={clsActionMdl}
@@ -200,7 +200,7 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'MarketSegment'}
         close={clsActionMdl}
@@ -228,7 +228,7 @@ export default function OneHashCRMActions({ oneHashCRMConf, setOneHashCRMConf, l
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'ContactStatus'}
         close={clsActionMdl}

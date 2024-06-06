@@ -65,7 +65,7 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
@@ -98,7 +98,7 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'tagsAdd'}
         close={clsActionMdl}
@@ -143,7 +143,7 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'tagsRemove'}
         close={clsActionMdl}

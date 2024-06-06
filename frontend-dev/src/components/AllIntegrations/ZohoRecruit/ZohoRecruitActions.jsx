@@ -111,7 +111,7 @@ export default function ZohoRecruitActions({ tab, formID, formFields, recruitCon
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt="Ok"
         show={recOwnerMdl}
         close={() => setrecOwnerMdl(false)}
@@ -131,7 +131,7 @@ export default function ZohoRecruitActions({ tab, formID, formFields, recruitCon
           <ConfirmModal
             className="custom-conf-mdl"
             mainMdlCls="o-v"
-            btnClass="blue"
+            btnClass="purple"
             btnTxt="Ok"
             show={notesMdl}
             close={() => setNotesMdl(false)}

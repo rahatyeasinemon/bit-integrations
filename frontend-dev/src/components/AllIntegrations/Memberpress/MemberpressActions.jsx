@@ -70,7 +70,7 @@ export default function MemberpressActions({ memberpressConf, setMemberpressConf
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
@@ -109,7 +109,7 @@ export default function MemberpressActions({ memberpressConf, setMemberpressConf
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'gateway'}
         close={clsActionMdl}

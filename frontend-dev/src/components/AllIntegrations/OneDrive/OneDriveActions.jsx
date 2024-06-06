@@ -166,7 +166,7 @@ export default function OneDriveActions({ oneDriveConf, setOneDriveConf, formFie
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt="Ok"
         show={actionMdl.show === 'attachments'}
         close={() => setActionMdl({ show: false })}

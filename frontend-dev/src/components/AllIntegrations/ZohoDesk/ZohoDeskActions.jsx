@@ -69,7 +69,7 @@ export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFie
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'ticket_owner'}
         close={clsActionMdl}
@@ -105,7 +105,7 @@ export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFie
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'product'}
         close={clsActionMdl}
@@ -140,7 +140,7 @@ export default function ZohoDeskActions({ deskConf, setDeskConf, formID, formFie
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'attachments'}
         close={clsActionMdl}

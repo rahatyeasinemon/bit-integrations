@@ -45,7 +45,7 @@ export default function LionDeskActions({ lionDeskConf, setLionDeskConf, loading
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'tag'}
         close={clsActionMdl}

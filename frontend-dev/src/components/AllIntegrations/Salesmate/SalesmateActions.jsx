@@ -116,7 +116,7 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'tag'}
         close={clsActionMdl}
@@ -155,7 +155,7 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'type'}
         close={clsActionMdl}
@@ -195,7 +195,7 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'lostReason'}
         close={clsActionMdl}
@@ -235,7 +235,7 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'source'}
         close={clsActionMdl}
@@ -275,7 +275,7 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
@@ -315,7 +315,7 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'priority'}
         close={clsActionMdl}
@@ -355,7 +355,7 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'currency'}
         close={clsActionMdl}
@@ -395,7 +395,7 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'isActive'}
         close={clsActionMdl}
@@ -434,7 +434,7 @@ export default function SalesmateActions({ salesmateConf, setSalesmateConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'company'}
         close={clsActionMdl}

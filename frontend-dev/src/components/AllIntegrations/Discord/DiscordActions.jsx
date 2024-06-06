@@ -25,7 +25,7 @@ export default function DiscordActions({ formFields, discordConf, setDiscordConf
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt="Ok"
         show={actionMdl.show === 'attachments'}
         close={() => setActionMdl({ show: false })}

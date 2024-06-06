@@ -95,7 +95,7 @@ export default function GroundhoggActions({ groundhoggConf, setGroundhoggConf, f
         <ConfirmModal
           className="custom-conf-mdl"
           mainMdlCls="o-v"
-          btnClass="blue"
+          btnClass="purple"
           btnTxt={__('Ok', 'bit-integrations')}
           show={actionMdl.show === 'tag'}
           close={clsActionMdl}
@@ -137,7 +137,7 @@ export default function GroundhoggActions({ groundhoggConf, setGroundhoggConf, f
         <ConfirmModal
           className="custom-conf-mdl"
           mainMdlCls="o-v"
-          btnClass="blue"
+          btnClass="purple"
           btnTxt={__('Ok', 'bit-integrations')}
           show={actionMdl.show === 'optin_status'}
           close={clsActionMdl}

@@ -86,7 +86,7 @@ export default function ZohoBiginActions({ tab, formID, formFields, biginConf, s
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt="Ok"
         show={actionMdl.show === 'attachments'}
         close={clsActionMdl}
@@ -106,7 +106,7 @@ export default function ZohoBiginActions({ tab, formID, formFields, biginConf, s
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt="Ok"
         show={actionMdl.show === 'photo'}
         close={clsActionMdl}
@@ -127,7 +127,7 @@ export default function ZohoBiginActions({ tab, formID, formFields, biginConf, s
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt="Ok"
         show={recOwnerMdl}
         close={() => setrecOwnerMdl(false)}
@@ -163,7 +163,7 @@ export default function ZohoBiginActions({ tab, formID, formFields, biginConf, s
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt="Ok"
         show={actionMdl.show === 'tag_rec'}
         close={clsActionMdl}
@@ -204,7 +204,7 @@ export default function ZohoBiginActions({ tab, formID, formFields, biginConf, s
           <ConfirmModal
             className="custom-conf-mdl"
             mainMdlCls="o-v"
-            btnClass="blue"
+            btnClass="purple"
             btnTxt="Ok"
             show={notesMdl}
             close={() => setNotesMdl(false)}

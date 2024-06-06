@@ -92,44 +92,44 @@ function Table(props) {
     state: { pageIndex, pageSize, sortBy, filters, globalFilter, hiddenColumns },
     setColumnOrder,
     setHiddenColumns } = useTable(
-    {
-      debug: true,
-      fetchData,
-      columns,
-      data,
-      manualPagination: typeof props.pageCount !== 'undefined',
-      pageCount: props.pageCount,
-      autoResetPage: false,
-      autoResetHiddenColumns: false,
-      autoResetSortBy: false,
-      autoResetFilters: false,
-      autoResetGlobalFilter: false,
-    },
-    useFilters,
-    useGlobalFilter,
-    useSortBy,
-    usePagination,
-    useSticky,
-    useColumnOrder,
-    // useBlockLayout,
-    useFlexLayout,
-    props.resizable ? useResizeColumns : '', // resize
-    props.rowSeletable ? useRowSelect : '', // row select
-    props.rowSeletable ? (hooks => {
-      hooks.allColumns.push(cols => [
-        {
-          id: 'selection',
-          width: 50,
-          maxWidth: 50,
-          minWidth: 67,
-          sticky: 'left',
-          Header: ({ getToggleAllRowsSelectedProps }) => <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />,
-          Cell: ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
-        },
-        ...cols,
-      ])
-    }) : '',
-  )
+      {
+        debug: true,
+        fetchData,
+        columns,
+        data,
+        manualPagination: typeof props.pageCount !== 'undefined',
+        pageCount: props.pageCount,
+        autoResetPage: false,
+        autoResetHiddenColumns: false,
+        autoResetSortBy: false,
+        autoResetFilters: false,
+        autoResetGlobalFilter: false,
+      },
+      useFilters,
+      useGlobalFilter,
+      useSortBy,
+      usePagination,
+      useSticky,
+      useColumnOrder,
+      // useBlockLayout,
+      useFlexLayout,
+      props.resizable ? useResizeColumns : '', // resize
+      props.rowSeletable ? useRowSelect : '', // row select
+      props.rowSeletable ? (hooks => {
+        hooks.allColumns.push(cols => [
+          {
+            id: 'selection',
+            width: 50,
+            maxWidth: 50,
+            minWidth: 67,
+            sticky: 'left',
+            Header: ({ getToggleAllRowsSelectedProps }) => <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />,
+            Cell: ({ row }) => <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />,
+          },
+          ...cols,
+        ])
+      }) : '',
+    )
   const [search, setSearch] = useState(globalFilter)
   useEffect(() => {
     if (fetchData) {
@@ -146,7 +146,7 @@ function Table(props) {
     confMdl.action = () => { props.duplicateData(selectedFlatRows, data, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter: search } }); closeConfMdl() }
     confMdl.btnTxt = __('Clone', 'bit-integrations')
     confMdl.btn2Txt = null
-    confMdl.btnClass = 'blue'
+    confMdl.btnClass = 'purple'
     confMdl.body = `${__('Do You want Deplicate these', 'bit-integrations')} ${selectedFlatRows.length} ${__('item', 'bit-integrations')} ?`
     confMdl.show = true
     setconfMdl({ ...confMdl })

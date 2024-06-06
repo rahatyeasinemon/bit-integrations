@@ -69,7 +69,7 @@ function DocSupport() {
               <span>{product.description}</span>
             </div>
             <div className="flx flx-center">
-              <a href={product.url} target="_blank" rel="noopener noreferrer" className="btn btcd-btn-o-blue btcd-btn-sm">
+              <a href={product.url} target="_blank" rel="noopener noreferrer" className="btn btcd-btn-o-purple btcd-btn-sm">
                 <i className="fas fa-external-link-alt" />
                 <span className="pl-1">Go to plugin</span>
               </a>
