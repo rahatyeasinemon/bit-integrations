@@ -24,6 +24,8 @@ function EditActionHook() {
   const [showSelectedFields, setShowSelectedFields] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const intervalRef = useRef(null)
+  let controller = new AbortController();
+  const signal = controller.signal;
 
   const handleFetch = () => {
     if (isLoading) {
@@ -35,9 +37,10 @@ function EditActionHook() {
 
     setIsLoading(true)
     intervalRef.current = setInterval(() => {
-      bitsFetch({ hook_id: flow?.triggered_entity_id }, 'action_hook/test').then((resp) => {
+      bitsFetch({ hook_id: flow?.triggered_entity_id }, 'action_hook/test', null, 'POST', signal).then((resp) => {
         if (resp.success) {
           clearInterval(intervalRef.current)
+          controller.abort();
           setFlow(prevFlow => create(prevFlow, (draftFlow) => {
             draftFlow.flow_details['rawData'] = resp.data.actionHook
             draftFlow.flow_details['fields'] = []
@@ -66,7 +69,11 @@ function EditActionHook() {
           setShowSelectedFields(true)
           removeTestData(flow?.triggered_entity_id, true)
         }
-      })
+      }).catch(err => {
+        if (err.name === 'AbortError') {
+          console.log('AbortError: Fetch request aborted');
+        }
+      });
     }, 1500)
   }
 

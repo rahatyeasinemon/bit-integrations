@@ -36,6 +36,8 @@ const ActionHook = () => {
   const [snack, setSnackbar] = useState({ show: false })
   const [showResponse, setShowResponse] = useState(false)
   const intervalRef = useRef(null)
+  let controller = new AbortController();
+  const signal = controller.signal;
 
   const setTriggerData = () => {
     if (!selectedFields.length) {
@@ -107,9 +109,10 @@ const ActionHook = () => {
     setIsLoading(true)
     window.hook_id = hookID
     intervalRef.current = setInterval(() => {
-      bitsFetch({ hook_id: hookID }, 'action_hook/test').then((resp) => {
+      bitsFetch({ hook_id: hookID }, 'action_hook/test', null, 'POST', signal).then((resp) => {
         if (resp.success) {
           clearInterval(intervalRef.current)
+          controller.abort();
           const tmpNewFlow = { ...newFlow }
 
           tmpNewFlow.triggerDetail.tmp = resp.data.actionHook
@@ -124,7 +127,11 @@ const ActionHook = () => {
             'action_hook/test/remove',
           )
         }
-      })
+      }).catch(err => {
+        if (err.name === 'AbortError') {
+          console.log('AbortError: Fetch request aborted');
+        }
+      });
     }, 1500)
   }
 
