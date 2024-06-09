@@ -8,6 +8,7 @@ import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 import SnackMsg from '../Utilities/SnackMsg'
 import EditCustomApi from './CustomApi/EditCustomApi'
+import EditNewsletter from './Newsletter/EditNewsletter'
 
 const EditOmniSend = lazy(() => import('./OmniSend/EditOmniSend'))
 const EditSliceWp = lazy(() => import('./SliceWp/EditSliceWp'))
@@ -511,6 +512,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditDiscord allIntegURL={allIntegURL} />
     case 'ZagoMail':
       return <EditZagoMail allIntegURL={allIntegURL} />
+    case 'Newsletter':
+      return <EditNewsletter allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }
