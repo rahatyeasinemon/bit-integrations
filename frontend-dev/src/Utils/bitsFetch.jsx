@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-undef */
 
-export default async function bitsFetch(data, action, queryParam = null, method = 'POST') {
+export default async function bitsFetch(data, action, queryParam = null, method = 'POST', signal) {
   const uri = new URL(typeof btcbi === 'undefined' ? bitFromsFront?.ajaxURL : btcbi.ajaxURL)
   uri.searchParams.append('action', `btcbi_${action}`)
   uri.searchParams.append('_ajax_nonce', typeof btcbi === 'undefined' ? '' : btcbi.nonce)
@@ -17,6 +17,7 @@ export default async function bitsFetch(data, action, queryParam = null, method 
   const options = {
     method,
     headers: {},
+    signal
   }
 
   if (method.toLowerCase() === 'post') {

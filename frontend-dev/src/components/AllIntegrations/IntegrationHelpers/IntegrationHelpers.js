@@ -159,7 +159,33 @@ export const saveIntegConfig = async (
     flow.triggered_entity === "EssentialBlocks" ||
     flow.triggered_entity === "Coblocks"
   ) {
-    tmpConf["primaryKey"] = flow.triggerData.primaryKey;
+    tmpConf["primaryKey"] = !edit
+      ? flow.triggerData.primaryKey
+      : flow?.flow_details?.primaryKey;
+
+    tmpConf["fields"] = !edit
+      ? flow?.triggerData?.fields
+      : flow?.flow_details?.fields;
+
+    tmpConf["rawData"] = !edit
+      ? flow?.triggerData?.rawData
+      : flow?.flow_details?.rawData;
+
+    tmpConf["fetch"] = !edit
+      ? flow?.triggerData?.fetch
+      : flow?.flow_details?.fetch;
+
+    tmpConf["fetch_remove"] = !edit
+      ? flow?.triggerData?.fetch_remove
+      : flow?.flow_details?.fetch_remove;
+
+    tmpConf["fetch"] = !edit
+      ? flow?.triggerData?.fetch
+      : flow?.flow_details?.fetch||'';
+
+    tmpConf["fetch_remove"] = !edit
+      ? flow?.triggerData?.fetch_remove
+      : flow?.flow_details?.fetch_remove || '';
   } else if (
     flow?.triggerData?.trigger_type === "custom_form_submission" ||
     flow?.flow_details?.trigger_type === "custom_form_submission"
@@ -319,7 +345,25 @@ export const saveActionConf = async ({
     flow.triggered_entity === "EssentialBlocks" ||
     flow.triggered_entity === "Coblocks"
   ) {
-    tmpConf["primaryKey"] = flow.triggerData.primaryKey;
+    tmpConf["primaryKey"] = !edit
+      ? flow.triggerData.primaryKey
+      : flow?.flow_details?.primaryKey;
+
+    tmpConf["fields"] = !edit
+      ? flow?.triggerData?.fields
+      : flow?.flow_details?.fields;
+
+    tmpConf["rawData"] = !edit
+      ? flow?.triggerData?.rawData
+      : flow?.flow_details?.rawData || '';
+
+    tmpConf["fetch"] = !edit
+      ? flow?.triggerData?.fetch
+      : flow?.flow_details?.fetch;
+
+    tmpConf["fetch_remove"] = !edit
+      ? flow?.triggerData?.fetch_remove
+      : flow?.flow_details?.fetch_remove || '';
   } else if (
     flow?.triggerData?.trigger_type === "custom_form_submission" ||
     flow?.flow_details?.trigger_type === "custom_form_submission"
@@ -327,12 +371,15 @@ export const saveActionConf = async ({
     tmpConf["primaryKey"] = !edit
       ? flow.triggerData.primaryKey
       : flow?.flow_details?.primaryKey;
+
     tmpConf["fields"] = !edit
       ? flow?.triggerData?.fields
       : flow?.flow_details?.fields;
+
     tmpConf["fetch"] = !edit
       ? flow?.triggerData?.fetch
       : flow?.flow_details?.fetch;
+      
     tmpConf["fetch_remove"] = !edit
       ? flow?.triggerData?.fetch_remove
       : flow?.flow_details?.fetch_remove;
@@ -438,11 +485,13 @@ export const handleAuthorize = (
     return;
   }
   setIsLoading(true);
-  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter
-    }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId
-    }&prompt=Consent&access_type=offline&state=${encodeURIComponent(
-      window.location.href
-    )}/redirect&redirect_uri=${encodeURIComponent(`${btcbi.api.base}`)}/redirect`;
+  const apiEndpoint = `https://accounts.zoho.${
+    confTmp.dataCenter
+  }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${
+    confTmp.clientId
+  }&prompt=Consent&access_type=offline&state=${encodeURIComponent(
+    window.location.href
+  )}/redirect&redirect_uri=${encodeURIComponent(`${btcbi.api.base}`)}/redirect`;
   const authWindow = window.open(
     apiEndpoint,
     integ,
@@ -529,8 +578,9 @@ const tokenHelper = (
       ) {
         setSnackbar({
           show: true,
-          msg: `${__("Authorization failed Cause:", "bit-integrations")}${result.data.data || result.data
-            }. ${__("please try again", "bit-integrations")}`,
+          msg: `${__("Authorization failed Cause:", "bit-integrations")}${
+            result.data.data || result.data
+          }. ${__("please try again", "bit-integrations")}`,
         });
       } else {
         setSnackbar({
