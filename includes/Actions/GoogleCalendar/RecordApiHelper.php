@@ -81,7 +81,6 @@ class RecordApiHelper
                 'overrides'  => $reminderFieldMap
             ];
         }
-        error_log(print_r([$fieldData, $data], true));
         if (isset($actions->skipIfSlotNotEmpty)) {
             $apiResponse = $this->freeSlotCheck($data['start'][$dateType], $data['end'][$dateType]);
 
