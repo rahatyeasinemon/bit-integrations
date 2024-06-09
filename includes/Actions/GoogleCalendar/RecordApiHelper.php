@@ -2,12 +2,12 @@
 
 namespace BitCode\FI\Actions\GoogleCalendar;
 
+use DateTime;
+use DateTimeZone;
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
-use DateTime;
-use DateTimeZone;
 
 class RecordApiHelper
 {
@@ -62,7 +62,8 @@ class RecordApiHelper
             if ($title === 'start' || $title === 'end') {
                 $date = new DateTime(Helper::formatToISO8601($value), new DateTimeZone($this->timeZone));
                 if (isset($actions->allDayEvent)) {
-                    $data[$title]['date'] = $date->format('Y-m-d');
+                    // $data[$title]['date'] = $date->format('Y-m-d');
+                    $data[$title]['dateTime'] = Helper::formatToISO8601($value);
                     $dateType = 'date';
                 } else {
                     $data[$title]['dateTime'] = Helper::formatToISO8601($value);
@@ -80,6 +81,7 @@ class RecordApiHelper
                 'overrides'  => $reminderFieldMap
             ];
         }
+        error_log(print_r([$fieldData, $data], true));
         if (isset($actions->skipIfSlotNotEmpty)) {
             $apiResponse = $this->freeSlotCheck($data['start'][$dateType], $data['end'][$dateType]);
 
