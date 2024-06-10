@@ -25,10 +25,11 @@ class HubspotRecordApiHelper
         ];
     }
 
-    public function insertContact($data)
+    public function insertContact($data, $actionName)
     {
         $finalData['properties'] = $data;
-        $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/contacts';
+        $actionName = $actionName === 'contact' ? 'contacts' : 'companies';
+        $apiEndpoint = "https://api.hubapi.com/crm/v3/objects/{$actionName}";
 
         return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
     }
@@ -93,6 +94,16 @@ class HubspotRecordApiHelper
         if (property_exists($action, 'contact_owner')) {
             $owner = $integrationDetails->contact_owner;
             $dataFinal['hubspot_owner_id'] = $owner;
+        }
+
+        if (property_exists($action, 'company_type')) {
+            $type = $integrationDetails->company_type;
+            $dataFinal['type'] = $type;
+        }
+
+        if (property_exists($action, 'industry')) {
+            $industry = $integrationDetails->industry;
+            $dataFinal['industry'] = $industry;
         }
 
         return $dataFinal;
@@ -212,11 +223,11 @@ class HubspotRecordApiHelper
         $type = '';
         $typeName = '';
 
-        if ($actionName === 'contact') {
+        if ($actionName === 'contact' || $actionName === 'company') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap, $integrationDetails);
-            $apiResponse = $this->insertContact($finalData);
-            $type = 'contact';
-            $typeName = 'contact-add';
+            $apiResponse = $this->insertContact($finalData, $actionName);
+            $type = $actionName;
+            $typeName = "{$actionName}-add";
         } elseif ($actionName === 'deal') {
             $finalData = $this->formatDealFieldMap($fieldValues, $fieldMap, $integrationDetails);
             $apiResponse = $this->insertDeal($finalData);

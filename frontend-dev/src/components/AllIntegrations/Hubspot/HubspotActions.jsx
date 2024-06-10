@@ -410,6 +410,7 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
                 customValue
                 singleSelect
               />
+              <button onClick={() => getAllIndustry(hubspotConf, setHubspotConf, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh Industry', 'bit-integrations')}'` }} type="button" disabled={loading.industry}>&#x21BB;</button>
             </div>
           )}
       </ConfirmModal>
