@@ -693,6 +693,11 @@ const tutorialLinks = {
     title: "How to Setup AffiliateWP integration",
     youTubeLink: "",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/affiliatewp-integrations/",
+  },
+  newsletter: {
+    title: "How to setup Newsletter integration",
+    youTubeLink: "#",
+    docLink: "#",
   }
 };
 export default tutorialLinks;
