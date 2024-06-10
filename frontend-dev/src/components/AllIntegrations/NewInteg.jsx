@@ -445,8 +445,8 @@ export default function NewInteg({ allIntegURL }) {
         return <Discord allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'ZagoMail':
         return <ZagoMail allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
-      case 'Newsletter':
-        return <Newsletter allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
+      // case 'Newsletter':
+      //   return <Newsletter allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       default:
         return <></>
     }
