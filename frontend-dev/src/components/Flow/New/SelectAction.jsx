@@ -156,7 +156,7 @@ export default function SelectAction() {
     { type: 'Discord' },
     { type: 'ZagoMail' },
     { type: 'Drip' },
-    { type: 'Newsletter' },
+    // { type: 'Newsletter' },
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(sortByField(integs, 'type', 'ASC') || integs)
