@@ -57,7 +57,7 @@ export default function MailRelayActions({ mailRelayConf, setMailRelayConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'group'}
         close={clsActionMdl}

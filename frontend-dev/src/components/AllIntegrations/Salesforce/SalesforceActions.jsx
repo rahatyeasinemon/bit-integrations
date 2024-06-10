@@ -138,7 +138,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'campaign'}
         close={clsActionMdl}
@@ -175,7 +175,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'account'}
         close={clsActionMdl}
@@ -212,7 +212,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'opportunityStage'}
         close={clsActionMdl}
@@ -248,7 +248,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'opportunityType'}
         close={clsActionMdl}
@@ -284,7 +284,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'opportunityLeadSource'}
         close={clsActionMdl}
@@ -320,7 +320,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'contact'}
         close={clsActionMdl}
@@ -357,7 +357,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'eventSubject'}
         close={clsActionMdl}
@@ -393,7 +393,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'caseStatus'}
         close={clsActionMdl}
@@ -429,7 +429,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'caseOrigin'}
         close={clsActionMdl}
@@ -465,7 +465,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'casePriority'}
         close={clsActionMdl}
@@ -501,7 +501,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'potentialLiability'}
         close={clsActionMdl}
@@ -537,7 +537,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'slaViolation'}
         close={clsActionMdl}
@@ -573,7 +573,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'accType'}
         close={clsActionMdl}
@@ -607,7 +607,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'ownership'}
         close={clsActionMdl}
@@ -641,7 +641,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'caseType'}
         close={clsActionMdl}
@@ -675,7 +675,7 @@ export default function SalesforceActions({ salesforceConf, setSalesforceConf, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'caseReason'}
         close={clsActionMdl}

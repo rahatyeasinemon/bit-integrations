@@ -59,7 +59,7 @@ export default function PropovoiceCrmActions({ propovoiceCrmConf, setPropovoiceC
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'tags'}
         close={clsActionMdl}
@@ -96,7 +96,7 @@ export default function PropovoiceCrmActions({ propovoiceCrmConf, setPropovoiceC
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'label'}
         close={clsActionMdl}

@@ -245,7 +245,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'attachment'}
         close={clsActionMdl}
@@ -265,7 +265,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'assignment_rules'}
         close={clsActionMdl}
@@ -303,7 +303,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'tag_rec'}
         close={clsActionMdl}
@@ -342,7 +342,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'rec_owner'}
         close={clsActionMdl}

@@ -24,7 +24,7 @@ export default function SuiteDashActions({ suiteDashConf, setSuiteDashConf, load
         setActionMdl({ show: false })
         delete newConf.actions.company
       }
-    } 
+    }
 
     setActionMdl({ show: type })
     setSuiteDashConf({ ...newConf })
@@ -48,7 +48,7 @@ export default function SuiteDashActions({ suiteDashConf, setSuiteDashConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'company'}
         close={clsActionMdl}

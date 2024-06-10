@@ -104,7 +104,7 @@ export default function MailerLiteActions({ mailerLiteConf, setMailerLiteConf, l
             <ConfirmModal
                 className="custom-conf-mdl"
                 mainMdlCls="o-v"
-                btnClass="blue"
+                btnClass="purple"
                 btnTxt={__('Ok', 'bit-integrations')}
                 show={actionMdl.show === 'group'}
                 close={clsActionMdl}
@@ -141,7 +141,7 @@ export default function MailerLiteActions({ mailerLiteConf, setMailerLiteConf, l
             <ConfirmModal
                 className="custom-conf-mdl"
                 mainMdlCls="o-v"
-                btnClass="blue"
+                btnClass="purple"
                 btnTxt={__('Ok', 'bit-integrations')}
                 show={actionMdl.show === 'mailer_lite_type'}
                 close={clsActionMdl}

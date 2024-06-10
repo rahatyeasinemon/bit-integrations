@@ -108,7 +108,7 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'owner'}
         close={clsActionMdl}
@@ -148,7 +148,7 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'account'}
         close={clsActionMdl}
@@ -188,7 +188,7 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'source'}
         close={clsActionMdl}
@@ -228,7 +228,7 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
@@ -268,7 +268,7 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'followUp'}
         close={clsActionMdl}
@@ -290,7 +290,7 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'lifeCycleStage'}
         close={clsActionMdl}
@@ -330,7 +330,7 @@ export default function AgiledActions({ agiledConf, setAgiledConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'dealType'}
         close={clsActionMdl}

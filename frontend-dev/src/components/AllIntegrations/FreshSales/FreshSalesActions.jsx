@@ -225,7 +225,7 @@ export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf, t
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'owner'}
         close={clsActionMdl}
@@ -273,7 +273,7 @@ export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf, t
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'lead_label'}
         close={clsActionMdl}
@@ -320,7 +320,7 @@ export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf, t
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'deal_stage'}
         close={clsActionMdl}
@@ -367,7 +367,7 @@ export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf, t
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'activities_type'}
         close={clsActionMdl}
@@ -405,7 +405,7 @@ export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf, t
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'currency'}
         close={clsActionMdl}
@@ -443,7 +443,7 @@ export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf, t
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'deal_status'}
         close={clsActionMdl}
@@ -480,7 +480,7 @@ export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf, t
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'visible_to'}
         close={clsActionMdl}
@@ -517,7 +517,7 @@ export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf, t
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'activities_participants'}
         close={clsActionMdl}

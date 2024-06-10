@@ -93,7 +93,7 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
         <ConfirmModal
           className="custom-conf-mdl"
           mainMdlCls="o-v"
-          btnClass="blue"
+          btnClass="purple"
           btnTxt={__('Ok', 'bit-integrations')}
           show={actionMdl.show === 'status'}
           close={clsActionMdl}
@@ -134,7 +134,7 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
         <ConfirmModal
           className="custom-conf-mdl"
           mainMdlCls="o-v"
-          btnClass="blue"
+          btnClass="purple"
           btnTxt={__('Ok', 'bit-integrations')}
           show={actionMdl.show === 'priority'}
           close={clsActionMdl}
@@ -178,7 +178,7 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
         <ConfirmModal
           className="custom-conf-mdl"
           mainMdlCls="o-v"
-          btnClass="blue"
+          btnClass="purple"
           btnTxt="Ok"
           show={actionMdl.show === 'attachments'}
           close={() => setActionMdl({ show: false })}
@@ -208,7 +208,7 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
         <ConfirmModal
           className="custom-conf-mdl"
           mainMdlCls="o-v"
-          btnClass="blue"
+          btnClass="purple"
           btnTxt="Ok"
           show={actionMdl.show === 'file'}
           close={() => setActionMdl({ show: false })}

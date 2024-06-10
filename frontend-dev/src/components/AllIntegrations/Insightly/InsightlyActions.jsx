@@ -88,7 +88,7 @@ export default function InsightlyActions({ insightlyConf, setInsightlyConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'organisation'}
         close={clsActionMdl}
@@ -128,7 +128,7 @@ export default function InsightlyActions({ insightlyConf, setInsightlyConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'category'}
         close={clsActionMdl}
@@ -168,7 +168,7 @@ export default function InsightlyActions({ insightlyConf, setInsightlyConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
@@ -208,7 +208,7 @@ export default function InsightlyActions({ insightlyConf, setInsightlyConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'followUp'}
         close={clsActionMdl}
@@ -230,7 +230,7 @@ export default function InsightlyActions({ insightlyConf, setInsightlyConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'opportunityType'}
         close={clsActionMdl}

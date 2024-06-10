@@ -123,7 +123,7 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'contact_owner'}
         close={clsActionMdl}
@@ -160,7 +160,7 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'lifecycle_stage'}
         close={clsActionMdl}
@@ -183,7 +183,7 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'lead_status'}
         close={clsActionMdl}
@@ -206,7 +206,7 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'contact'}
         close={clsActionMdl}
@@ -242,7 +242,7 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'company'}
         close={clsActionMdl}
@@ -278,7 +278,7 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'deal_type'}
         close={clsActionMdl}
@@ -301,7 +301,7 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'priority'}
         close={clsActionMdl}

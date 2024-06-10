@@ -149,7 +149,7 @@ function AllIntegrations({ isValidUser }) {
     confMdl.action = () => { handleClone(formID); closeConfMdl() }
     confMdl.btnTxt = __('Clone', 'bit-integration')
     confMdl.btn2Txt = null
-    confMdl.btnClass = 'blue'
+    confMdl.btnClass = 'purple'
     confMdl.body = __('Are you sure to clone this Integration ?', 'bitform')
     confMdl.show = true
     setconfMdl({ ...confMdl })
@@ -187,7 +187,7 @@ function AllIntegrations({ isValidUser }) {
           <div className="af-header flx flx-between">
             <h2>{__('Integrations', 'bit-integrations')}</h2>
 
-            <Link to="/flow/new" className="btn round btcd-btn-lg blue blue-sh">
+            <Link to="/flow/new" className="btn round btcd-btn-lg purple purple-sh">
               {__('Create Integration', 'bit-integrations')}
             </Link>
 

@@ -144,7 +144,7 @@ class Admin_Bar
         );
 
         if (\defined('BTCBI_VERSION')) {
-            $btcbi['version'] = BTCBI_VERSION;
+            $btcbi['version'] = \function_exists('btcbi_pro_activate_plugin') ? BTCBI_PRO_VERSION : BTCBI_VERSION;
         }
 
         $changelogVersion = get_option('btcbi_changelog_version', '0.0.0');
