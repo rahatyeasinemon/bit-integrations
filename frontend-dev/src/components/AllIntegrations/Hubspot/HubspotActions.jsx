@@ -66,12 +66,6 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
       } else {
         delete newConf.actions.company_type
       }
-    } else if (type === 'lifecyclestage') {
-      if (e.target.checked) {
-        newConf.actions.lifecyclestage = true
-      } else {
-        delete newConf.actions.lifecyclestage
-      }
     } else if (type === 'industry') {
       if (e.target.checked) {
         newConf.actions.industry = true
@@ -151,14 +145,13 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
 
     <div className="pos-rel d-flx w-8">
       {hubspotConf?.actionName && <TableCheckBox checked={hubspotConf?.contact_owner?.length || false} onChange={(e) => actionHandler(e, 'contact_owner')} className="wdt-200 mt-4 mr-2" value="contact_owner" title={__('Contact Owner', 'bit-integrations')} subTitle={__('Add a contact owner', 'bit-integrations')} />}
-      {hubspotConf?.actionName === 'contact' && <TableCheckBox checked={hubspotConf?.lifecycle_stage || false} onChange={(e) => actionHandler(e, 'lifecycle_stage')} className="wdt-200 mt-4 mr-2" value="lifecycle_stage" title={__('Lifecycle Stage', 'bit-integrations')} subTitle={__('Add a lifecycle stage', 'bit-integrations')} />}
+      {(hubspotConf?.actionName === 'contact' || hubspotConf?.actionName === 'company') && <TableCheckBox checked={hubspotConf?.lifecycle_stage || false} onChange={(e) => actionHandler(e, 'lifecycle_stage')} className="wdt-200 mt-4 mr-2" value="lifecycle_stage" title={__('Lifecycle Stage', 'bit-integrations')} subTitle={__('Add a lifecycle stage', 'bit-integrations')} />}
       {(hubspotConf?.actionName === 'contact' || hubspotConf?.actionName === 'company') && <TableCheckBox checked={hubspotConf?.lead_status || false} onChange={(e) => actionHandler(e, 'lead_status')} className="wdt-200 mt-4 mr-2" value="lead_status" title={__('Lead Status', 'bit-integrations')} subTitle={__('Add lead status', 'bit-integrations')} />}
       {hubspotConf?.actionName === 'deal' && <TableCheckBox checked={hubspotConf?.contact || false} onChange={(e) => actionHandler(e, 'contact')} className="wdt-200 mt-4 mr-2" value="contact" title={__('Contact', 'bit-integrations')} subTitle={__('Associate deal with contacts', 'bit-integrations')} />}
       {hubspotConf?.actionName === 'deal' && <TableCheckBox checked={hubspotConf?.company || false} onChange={(e) => actionHandler(e, 'company')} className="wdt-200 mt-4 mr-2" value="company" title={__('Company', 'bit-integrations')} subTitle={__('Associate deal with company', 'bit-integrations')} />}
       {hubspotConf?.actionName === 'deal' && <TableCheckBox checked={hubspotConf?.deal_type || false} onChange={(e) => actionHandler(e, 'deal_type')} className="wdt-200 mt-4 mr-2" value="deal_type" title={__('Deal Type', 'bit-integrations')} subTitle={__('Add type to deal', 'bit-integrations')} />}
       {hubspotConf?.actionName !== 'contact' && hubspotConf?.actionName !== 'company' && <TableCheckBox checked={hubspotConf?.priority || false} onChange={(e) => actionHandler(e, 'priority')} className="wdt-200 mt-4 mr-2" value="deal_type" title={__('Priority', 'bit-integrations')} subTitle={__('Add priority', 'bit-integrations')} />}
       {hubspotConf?.actionName === 'company' && <TableCheckBox checked={hubspotConf?.company_type || false} onChange={(e) => actionHandler(e, 'company_type')} className="wdt-200 mt-4 mr-2" value="company_type" title={__('Type', 'bit-integrations')} subTitle={__('The optional classification of this company record - prospect, partner, etc.', 'bit-integrations')} />}
-      {hubspotConf?.actionName === 'company' && <TableCheckBox checked={hubspotConf?.lifecyclestage || false} onChange={(e) => actionHandler(e, 'lifecyclestage')} className="wdt-200 mt-4 mr-2" value="lifecyclestage" title={__('Lifecycle Stage', 'bit-integrations')} subTitle={__('The qualification of companies to sales readiness throughout the buying journey', 'bit-integrations')} />}
       {hubspotConf?.actionName === 'company' && <TableCheckBox checked={hubspotConf?.industry || false} onChange={(e) => actionHandler(e, 'industry')} className="wdt-200 mt-4 mr-2" value="industry" title={__('Industry', 'bit-integrations')} subTitle={__('The type of business the company performs. By default, this property has approximately 150 pre-defined options to select from.', 'bit-integrations')} />}
 
       <ConfirmModal
@@ -379,29 +372,6 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
             defaultValue={hubspotConf?.company_type}
             options={companyTypes?.map(list => ({ label: list.label, value: list.value }))}
             onChange={val => setChanges(val, 'company_type')}
-            customValue
-            singleSelect
-          />
-        </div>
-      </ConfirmModal>
-
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="blue"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'lifecyclestage'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Lifecycle Stage', 'bit-integrations')}
-      >
-        <div className="btcd-hr mt-2 mb-2" />
-        <div className="flx flx-center mt-2">
-          <MultiSelect
-            className="msl-wrp-options"
-            defaultValue={hubspotConf?.lifecyclestage}
-            options={lifecycleStages?.map(list => ({ label: list.label, value: list.value }))}
-            onChange={val => setChanges(val, 'lifecyclestage')}
             customValue
             singleSelect
           />
