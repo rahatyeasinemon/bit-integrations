@@ -2,6 +2,7 @@
 
 namespace BitCode\FI\controller;
 
+use BitApps\WPTelemetry\Telemetry\Telemetry;
 use BitCode\FI\Config;
 
 final class BtcbiAnalyticsController
@@ -31,5 +32,19 @@ final class BtcbiAnalyticsController
         // error_log(print_r($additional_data['flows'], true));
 
         return $additional_data;
+    }
+
+    public function analyticsOptIn($data)
+    {
+        if ($data->isChecked === true) {
+            Telemetry::report()->trackingOptIn();
+        }
+    }
+
+    public function analyticsCheck()
+    {
+        $check = Telemetry::report()->isTrackingAllowed();
+
+        return (bool) ($check);
     }
 }

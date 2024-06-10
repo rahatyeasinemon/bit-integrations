@@ -21,12 +21,14 @@ import { __ } from './Utils/i18nwrap'
 import { $btcbi } from './GlobalStates'
 import ChangelogToggle from './pages/ChangelogToggle'
 import CashbackModal from './pages/CashbackModal'
+import { useRecoilValue } from 'recoil'
 
 const AllIntegrations = lazy(() => import('./pages/AllIntegrations'))
 const Error404 = lazy(() => import('./pages/Error404'))
 
 function App() {
   const loaderStyle = { height: '82vh' }
+  const btcbi = useRecoilValue($btcbi)
 
   // check if integrations are available
   const { data, isLoading } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
@@ -87,15 +89,18 @@ function App() {
               >
                 {__('Doc & Support', 'bit-integrations')}
               </NavLink>
-              <a
-                target="_blank"
-                href="https://wordpress.org/plugins/bit-integrations/#reviews"
-                className="app-link green blink"
-                rel="noreferrer"
-              >
-                {/* <marquee behavior="scroll" direction="up"></marquee> */}
-                {__('Review us', 'bit-integrations')}
-              </a>
+              {btcbi.isPro ? '' :
+                <a
+                  target="_blank"
+                  href="https://wordpress.org/plugins/bit-integrations/#reviews"
+                  className="app-link green blink"
+                  rel="noreferrer"
+                >
+                  {/* <marquee behavior="scroll" direction="up"></marquee> */}
+                  {__('Review us', 'bit-integrations')}
+                </a>
+
+              }
 
             </nav>
             <div className="flx flx-center" style={{ marginLeft: 'auto' }}>

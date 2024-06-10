@@ -5,6 +5,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+use BitCode\FI\controller\BtcbiAnalyticsController;
 use BitCode\FI\controller\PostController;
 use BitCode\FI\controller\UserController;
 use BitCode\FI\Core\Util\Route;
@@ -35,3 +36,5 @@ Route::post('pods/fields', [PostController::class, 'getPodsField']);
 Route::post('user/list', [UserController::class, 'getWpUsers']);
 Route::get('role/list', [UserController::class, 'getUserRoles']);
 // Controller
+Route::post('analytics/optIn', [BtcbiAnalyticsController::class, 'analyticsOptIn']);
+Route::get('analytics/check', [BtcbiAnalyticsController::class, 'analyticsCheck']);

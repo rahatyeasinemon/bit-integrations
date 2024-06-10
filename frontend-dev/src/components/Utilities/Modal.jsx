@@ -1,9 +1,9 @@
 import { CSSTransition } from 'react-transition-group'
 import CloseIcn from '../../Icons/CloseIcn'
 
-export default function Modal({ show, setModal, sm, lg, style, cssTransStyle, className, title, warning, hdrActn, children, subTitle, noPadding }) {
+export default function Modal({ show, setModal, sm, lg, style, cssTransStyle, className, title, warning, hdrActn, children, subTitle, noPadding, closeIcon }) {
   const handleClickOutside = e => {
-    if (e.target.classList.contains('btcd-modal-wrp')) {
+    if (e.target.classList.contains('btcd-modal-wrp') && closeIcon !== false) {
       setModal(false)
     }
   }
@@ -29,7 +29,8 @@ export default function Modal({ show, setModal, sm, lg, style, cssTransStyle, cl
         >
           <div className={`btcd-modal-content ${noPadding ? 'no-padding' : ''}  `}>
             {hdrActn}
-            <button onClick={() => setModal(false)} className="icn-btn btcd-mdl-close" aria-label="modal-close" type="button"><CloseIcn size={16} stroke={3} /></button>
+            {!closeIcon ? '' : <button onClick={() => setModal(false)} className="icn-btn btcd-mdl-close" aria-label="modal-close" type="button"><CloseIcn size={16} stroke={3} /></button>
+            }
             {title ? <h2 className="btcd-mdl-title flx" style={{ color: warning ? 'red' : '' }}>{title}</h2> : ''}
             <small className="btcd-mdl-subtitle">{subTitle}</small>
             {!sm && <div className="btcd-mdl-div" />}
