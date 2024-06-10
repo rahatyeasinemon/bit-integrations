@@ -56,9 +56,6 @@ class RecordApiHelper
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $response = $this->addSubscriber($finalData, $selectedLists);
 
-        error_log(print_r(['res' => $response->id], true));
-        // exit;
-
         if (isset($response->id)) {
             $res = ['message' => 'Subscriber added successfully'];
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber add']), 'success', wp_json_encode($res));
