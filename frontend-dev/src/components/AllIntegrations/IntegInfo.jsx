@@ -7,7 +7,6 @@ import { Link, useParams } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
 import { __ } from '../../Utils/i18nwrap'
 import SnackMsg from '../Utilities/SnackMsg'
-import NewsletterAuthorization from './Newsletter/NewsletterAuthorization'
 
 const Loader = lazy(() => import('../Loaders/Loader'))
 const PaidMembershipProAuthorization = lazy(() => import('./PaidMembershipPro/PaidMembershipProAuthorization'))
@@ -140,6 +139,7 @@ const SystemeIOAuthorization = lazy(() => import('./SystemeIO/SystemeIOAuthoriza
 const DiscordAuthorization = lazy(() => import('./Discord/DiscordAuthorization'))
 const ZagoMailAuthorization = lazy(() => import('./ZagoMail/ZagoMailAuthorization'))
 const WhatsAppAuthorization = lazy(() => import('./WhatsApp/WhatsAppAuthorization'))
+const NewsletterAuthorization = lazy(() => import('./Newsletter/NewsletterAuthorization'))
 
 export default function IntegInfo() {
   const { id, type } = useParams()

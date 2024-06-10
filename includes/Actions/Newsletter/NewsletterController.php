@@ -50,18 +50,19 @@ class NewsletterController
         $integrationDetails = $integrationData->flow_details;
         $integId = $integrationData->id;
         $fieldMap = $integrationDetails->field_map;
+        $selectedLists = $integrationDetails->selectedLists;
 
         if (empty($fieldMap)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('fields map are required for Newsletter', 'bit-integrations'));
         }
 
-        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
-        $newsletterApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap);
+        $recordApiHelper = new RecordApiHelper($integId);
+        $newsletterResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedLists);
 
-        if (is_wp_error($newsletterApiResponse)) {
-            return $newsletterApiResponse;
+        if (is_wp_error($newsletterResponse)) {
+            return $newsletterResponse;
         }
 
-        return $newsletterApiResponse;
+        return $newsletterResponse;
     }
 }

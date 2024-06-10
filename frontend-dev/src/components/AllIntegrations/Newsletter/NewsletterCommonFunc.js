@@ -81,3 +81,13 @@ export const staticFields = [
   { key: 'profile_19', label: 'Custom Field 19', required: false },
   { key: 'profile_20', label: 'Custom Field 20', required: false },
 ]
+
+export const listsOptions = () => {
+  const options = []
+
+  for (let i = 1; i <= 40; i++) {
+    options.push({ label: 'List ' + i, value: i.toString() })
+  }
+
+  return options
+}
