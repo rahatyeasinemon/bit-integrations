@@ -98,7 +98,7 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'opportunity'}
         close={clsActionMdl}
@@ -138,7 +138,7 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'owner'}
         close={clsActionMdl}
@@ -178,7 +178,7 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'company'}
         close={clsActionMdl}
@@ -218,7 +218,7 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'pipelineStage'}
         close={clsActionMdl}
@@ -258,7 +258,7 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
       {/* <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
@@ -298,7 +298,7 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'followUp'}
         close={clsActionMdl}
@@ -320,7 +320,7 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'opportunityType'}
         close={clsActionMdl}

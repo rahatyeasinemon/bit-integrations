@@ -11,6 +11,7 @@ import { create } from 'mutative'
 
 export default function HubspotIntegLayout({ formFields, handleInput, hubspotConf, setHubspotConf, setSnackbar, loading, setLoading }) {
   const action = [
+    { label: 'Create Company', value: 'company' },
     { label: 'Create Contact', value: 'contact' },
     { label: 'Create Deal', value: 'deal' },
     { label: 'Create Ticket', value: 'ticket' },
@@ -21,7 +22,7 @@ export default function HubspotIntegLayout({ formFields, handleInput, hubspotCon
       getAllPipelines(hubspotConf, setHubspotConf, setLoading, e.target.value, loading)
     }
 
-    if (e.target.value === 'contact') {
+    if (e.target.value === 'contact' || e.target.value === 'company') {
       getFields(hubspotConf, setHubspotConf, setLoading, e.target.value, loading)
     }
 

@@ -26,7 +26,8 @@ function GoogleContacts({ formFields, setFlow, flow, allIntegURL }) {
 
   const defaultContactsFields = [
     { key: 'phoneNumber', label: 'Phone Number', required: true },
-    { key: 'name', label: 'Name', required: true },
+    { key: 'name', label: 'First Name', required: true },
+    { key: 'lastName', label: 'Last Name', required: true },
     { key: 'biographies', label: 'Biographies', required: false },
     { key: 'nickname', label: 'Nickname', required: false },
     { key: 'city', label: 'City', required: false },

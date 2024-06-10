@@ -36,6 +36,8 @@ const ActionHook = () => {
   const [snack, setSnackbar] = useState({ show: false })
   const [showResponse, setShowResponse] = useState(false)
   const intervalRef = useRef(null)
+  let controller = new AbortController();
+  const signal = controller.signal;
 
   const setTriggerData = () => {
     if (!selectedFields.length) {
@@ -51,7 +53,8 @@ const ActionHook = () => {
     tmpNewFlow.triggerData = {
       formID: hookID,
       primaryKey: primaryKey,
-      fields: selectedFields.map(field => ({ label: field, name: field }))
+      fields: selectedFields.map(field => ({ label: field, name: field })),
+      rawData: newFlow.triggerDetail?.data
     }
     tmpNewFlow.triggered_entity_id = hookID
     setFields(selectedFields)
@@ -106,9 +109,10 @@ const ActionHook = () => {
     setIsLoading(true)
     window.hook_id = hookID
     intervalRef.current = setInterval(() => {
-      bitsFetch({ hook_id: hookID }, 'action_hook/test').then((resp) => {
+      bitsFetch({ hook_id: hookID }, 'action_hook/test', null, 'POST', signal).then((resp) => {
         if (resp.success) {
           clearInterval(intervalRef.current)
+          controller.abort();
           const tmpNewFlow = { ...newFlow }
 
           tmpNewFlow.triggerDetail.tmp = resp.data.actionHook
@@ -123,7 +127,11 @@ const ActionHook = () => {
             'action_hook/test/remove',
           )
         }
-      })
+      }).catch(err => {
+        if (err.name === 'AbortError') {
+          console.log('AbortError: Fetch request aborted');
+        }
+      });
     }, 1500)
   }
 
@@ -189,7 +197,7 @@ const ActionHook = () => {
               More Details on 
               <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/action-hook-integrations" target="_blank" rel="noreferrer">${__('Documentation', 'bit-integrations')}</a>
               or
-              <a className="btcd-link" href="#" target="_blank" rel="noreferrer">${__('Youtube Tutorials', 'bit-integrations')}</a>
+              <a className="btcd-link" href="https://youtu.be/pZ-8JuZfIco?si=Xxv857hJjv6p5Tcu" target="_blank" rel="noreferrer">${__('Youtube Tutorials', 'bit-integrations')}</a>
             </h5>`
 
   return (
@@ -275,7 +283,7 @@ const ActionHook = () => {
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={primaryKeyModal}
         close={() => setPrimaryKeyModal(false)}

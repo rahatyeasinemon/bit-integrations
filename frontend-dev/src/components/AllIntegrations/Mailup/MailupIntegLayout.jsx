@@ -4,15 +4,16 @@ import Loader from '../../Loaders/Loader'
 import Cooltip from '../../Utilities/Cooltip'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import MailupActions from './MailupActions'
-import { fetchAllGroup, fetchAllList } from './MailupCommonFunc'
+import { fetchAllField, fetchAllGroup, fetchAllList } from './MailupCommonFunc'
 import MailupFieldMap from './MailupFieldMap'
 
 export default function MailupIntegLayout({ formFields, handleInput, mailupConf, setMailupConf, isLoading, setIsLoading, setSnackbar }) {
-  useEffect(() => {
-    // eslint-disable-next-line no-unused-expressions
-    mailupConf?.listId && fetchAllGroup(mailupConf, setMailupConf, setIsLoading, setSnackbar)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mailupConf?.listId])
+  // useEffect(() => {
+  //   // eslint-disable-next-line no-unused-expressions
+  //   mailupConf?.listId && fetchAllGroup(mailupConf, setMailupConf, setIsLoading, setSnackbar)
+  //   mailupConf?.listId && fetchAllField(mailupConf, setMailupConf, setIsLoading, setSnackbar)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [mailupConf?.listId])
 
 
   return (
@@ -66,7 +67,10 @@ export default function MailupIntegLayout({ formFields, handleInput, mailupConf,
           <button onClick={() => fetchAllGroup(mailupConf, setMailupConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Fetch All Groups', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
           <br />
           <br />
-          <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bit-integrations')}</b></div>
+          <div className="mt-5">
+            <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
+            <button onClick={() => fetchAllField(mailupConf, setMailupConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Fetch All Fields', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
+          </div>
           <div className="btcd-hr mt-1" />
           <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
             <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>

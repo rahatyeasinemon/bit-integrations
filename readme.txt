@@ -2,9 +2,9 @@
 Contributors: bitpressadmin
 Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
-Tested up to: 6.5.3
+Tested up to: 6.5.4
 Requires PHP: 7.0
-Stable tag: 2.0.6
+Stable tag: 2.0.7
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 65+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -71,6 +71,7 @@ https://youtu.be/eFuficjF_F4
 * [**Gravity Forms**](https://www.gravityforms.com/)
 * [**GamiPress**](https://wordpress.org/plugins/gamipress/)
 * [**GiveWP**](https://wordpress.org/plugins/give/)
+* [**Gutena Forms**](https://wordpress.org/plugins/gutena-forms/)
 * [**Happyforms**](https://wordpress.org/plugins/happyforms/)
 * [**JetFormBuilder**](https://wordpress.org/plugins/jetformbuilder/)
 * [**JetEngine**](https://crocoblock.com/plugins/jetengine/)
@@ -91,6 +92,7 @@ https://youtu.be/eFuficjF_F4
 * [**RafflePress**](https://wordpress.org/plugins/rafflepress/)
 * [**User Registration**]()
 * [**Ultimate Member**](https://wordpress.org/plugins/ultimate-member/)
+* [**SiteOrigin Widgets Bundle**](https://wordpress.org/plugins/so-widgets-bundle/)
 * [**Studiocart**](https://wordpress.org/plugins/studiocart/)
 * [**SliceWP Affiliate**](https://wordpress.org/plugins/slicewp/)
 * [**Solid Affiliate**](https://solidaffiliate.com/)
@@ -624,6 +626,8 @@ With the pro version, you have the ability to create **Unlimited active** Please
 
 * [**Elementor Form**](https://bitapps.pro/docs/bit-integrations/trigger/elementor-form/)
 
+* [**FluentBooking**](https://bitapps.pro/docs/bit-integrations/trigger/fluentbooking-integrations/)
+
 * [**Fluent CRM**](https://bitapps.pro/docs/bit-integrations/trigger/fluent-crm/)
 
 * [**Fluent Forms**](https://bitapps.pro/docs/bit-integrations/trigger/fluent-forms/)
@@ -951,6 +955,26 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.0.7  =
+_Release Date -10th June 2024_
+
+- **New Triggers :**
+  - Gutena Forms – Contact Forms Block
+  - SiteOrigin Widgets Bundle (Form only)
+
+- **New Improvements :**
+  - Action Hook: Edit/Update Integration page added
+
+- **New Fixes :**
+  - MailMint: LogHandler
+  - Sendy: Custom Form Fields Value
+  - WooCommerce: Order-Status-Change-Specific-Status module post type 
+  - Google Contacts: Names Field
+  - Action Hook: State Reset
+  - Google Calender: TimeZone 
+  - Tutor LMS: Quiz attempt status (Pro)
+  - Integration Table Navigation Button
 
 = 2.0.6  =
 _Release Date -1st June 2024_

@@ -74,7 +74,7 @@ export default function FluentSupportActions({ fluentSupportConf, setFluentSuppo
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'support_staff'}
         close={clsActionMdl}
@@ -110,7 +110,7 @@ export default function FluentSupportActions({ fluentSupportConf, setFluentSuppo
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'client_priority'}
         close={clsActionMdl}
@@ -131,7 +131,7 @@ export default function FluentSupportActions({ fluentSupportConf, setFluentSuppo
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'business_inboxes'}
         close={clsActionMdl}

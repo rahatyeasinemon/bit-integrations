@@ -98,7 +98,7 @@ export default function NutshellCRMActions({ nutshellCRMConf, setNutshellCRMConf
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'Company'}
         close={clsActionMdl}
@@ -135,7 +135,7 @@ export default function NutshellCRMActions({ nutshellCRMConf, setNutshellCRMConf
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'Contact'}
         close={clsActionMdl}
@@ -172,7 +172,7 @@ export default function NutshellCRMActions({ nutshellCRMConf, setNutshellCRMConf
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'Product'}
         close={clsActionMdl}
@@ -209,7 +209,7 @@ export default function NutshellCRMActions({ nutshellCRMConf, setNutshellCRMConf
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'Source'}
         close={clsActionMdl}
@@ -246,7 +246,7 @@ export default function NutshellCRMActions({ nutshellCRMConf, setNutshellCRMConf
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'Tag'}
         close={clsActionMdl}
@@ -283,7 +283,7 @@ export default function NutshellCRMActions({ nutshellCRMConf, setNutshellCRMConf
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'CompanyType'}
         close={clsActionMdl}

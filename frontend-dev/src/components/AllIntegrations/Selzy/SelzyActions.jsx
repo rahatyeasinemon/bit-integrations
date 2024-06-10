@@ -47,7 +47,7 @@ function SelzyActions({ selzyConf, setSelzyConf }) {
         <ConfirmModal
           className="custom-conf-mdl"
           mainMdlCls="o-v"
-          btnClass="blue"
+          btnClass="purple"
           btnTxt={__('Ok')}
           show={actionModel.show === 'option'}
           close={closeModel}
@@ -80,7 +80,7 @@ function SelzyActions({ selzyConf, setSelzyConf }) {
         <ConfirmModal
           className="custom-conf-mdl"
           mainMdlCls="o-v"
-          btnClass="blue"
+          btnClass="purple"
           btnTxt={__('Ok')}
           show={actionModel.show === 'overwrite'}
           close={closeModel}

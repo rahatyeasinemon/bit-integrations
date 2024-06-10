@@ -51,7 +51,6 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
       })
     }, 1500)
   }
-  console.log(isLoading)
 
   const primaryKeySet = (key) => {
     setFlow(prevFlow => create(prevFlow, draftFlow => {

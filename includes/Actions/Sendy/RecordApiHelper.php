@@ -38,10 +38,11 @@ class RecordApiHelper
         foreach ($fieldMap as $key => $value) {
             $triggerValue = $value->formField;
             $actionValue = $value->sendyField;
-            if ($triggerValue == 'custom') {
-                $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif ($triggerValue == 'custom' && $actionValue == 'customFieldKey' && !empty($value->customFieldKey)) {
+
+            if ($triggerValue == 'custom' && $actionValue == 'customFieldKey' && !empty($value->customFieldKey)) {
                 $dataFinal[$value->customFieldKey] = Common::replaceFieldWithValue($value->customValue, $data);
+            } elseif ($triggerValue == 'custom') {
+                $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
             } elseif ($actionValue == 'customFieldKey' && !empty($value->customFieldKey)) {
                 $dataFinal[$value->customFieldKey] = $data[$triggerValue];
             } elseif (!\is_null($data[$triggerValue])) {

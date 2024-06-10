@@ -41,7 +41,7 @@ export default function SendGridActions({ sendGridConf, setSendGridConf, loading
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'lists'}
         close={clsActionMdl}

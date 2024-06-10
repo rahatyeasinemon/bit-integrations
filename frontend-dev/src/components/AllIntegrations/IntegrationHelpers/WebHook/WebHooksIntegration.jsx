@@ -103,7 +103,7 @@ export default function WebHooksIntegration({ formFields, webHooks, setWebHooks,
         </small>
       )}
       {!isInfo && (
-        <Button onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)} className="btn btcd-btn-o-blue">
+        <Button onClick={() => testWebHook(webHooks, setIsLoading, setSnackbar)} className="btn btcd-btn-o-purple">
           {__('Test Webhook', 'bit-integrations')}
           {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
         </Button>

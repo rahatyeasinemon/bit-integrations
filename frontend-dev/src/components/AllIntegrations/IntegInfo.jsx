@@ -7,6 +7,7 @@ import { Link, useParams } from 'react-router-dom'
 import useFetch from '../../hooks/useFetch'
 import { __ } from '../../Utils/i18nwrap'
 import SnackMsg from '../Utilities/SnackMsg'
+import NewsletterAuthorization from './Newsletter/NewsletterAuthorization'
 
 const Loader = lazy(() => import('../Loaders/Loader'))
 const PaidMembershipProAuthorization = lazy(() => import('./PaidMembershipPro/PaidMembershipProAuthorization'))
@@ -432,6 +433,8 @@ export default function IntegInfo() {
         return <ZagoMailAuthorization zagoMailConf={integrationConf} step={1} isInfo />
       case 'WhatsApp':
         return <WhatsAppAuthorization whatsAppConf={integrationConf} step={1} isInfo />
+      case 'Newsletter':
+        return <NewsletterAuthorization newsletterConf={integrationConf} step={1} isInfo />
       default:
         return <></>
     }

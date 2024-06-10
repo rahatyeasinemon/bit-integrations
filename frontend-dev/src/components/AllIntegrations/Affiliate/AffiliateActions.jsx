@@ -50,7 +50,7 @@ export default function AffiliateActions({ affiliateConf, setAffiliateConf, form
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
@@ -89,7 +89,7 @@ export default function AffiliateActions({ affiliateConf, setAffiliateConf, form
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'type'}
         close={clsActionMdl}

@@ -46,7 +46,8 @@ class SendyController
         $authorizationHeader['Accept'] = 'application/json';
         // $authorizationHeader["api-key"] = $requestsParams->api_key;
         $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
-        if (is_wp_error($apiResponse) || $apiResponse->status === 'error' || !\count($apiResponse)) {
+
+        if (is_wp_error($apiResponse) || !\is_array($apiResponse)) {
             wp_send_json_error(
                 empty($apiResponse->code) ? 'Unknown' : $apiResponse->message,
                 400
@@ -113,7 +114,6 @@ class SendyController
             'api_key'  => $apiKey,
             'brand_id' => $brand_id
         ];
-        error_log(print_r(['apiEndpoint' => $apiEndpoint, 'requestsParams' => $requestsParams, 'authorizationHeader' => $authorizationHeader], true));
         $apiResponse = HttpHelper::post($apiEndpoint, $requestsParams, $authorizationHeader);
 
         $response = [];

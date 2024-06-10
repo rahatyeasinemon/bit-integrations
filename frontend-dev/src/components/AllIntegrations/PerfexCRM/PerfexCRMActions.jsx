@@ -103,7 +103,7 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'direction'}
         close={clsActionMdl}
@@ -129,7 +129,7 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'leadStatus'}
         close={clsActionMdl}
@@ -146,7 +146,7 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'leadSource'}
         close={clsActionMdl}
@@ -164,7 +164,7 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'permission'}
         close={clsActionMdl}
@@ -189,7 +189,7 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'projectMembers'}
         close={clsActionMdl}

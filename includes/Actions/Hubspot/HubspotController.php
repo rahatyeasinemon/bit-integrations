@@ -68,6 +68,12 @@ final class HubspotController
                         'label'    => $field->label,
                         'required' => $field->name == 'subject' ? true : false
                     ];
+                } elseif ($requestParams->type == 'company' && $field->formField === true && $field->fieldType != 'radio' && $field->fieldType != 'select') {
+                    $fields[] = [
+                        'key'      => $field->name,
+                        'label'    => $field->label,
+                        'required' => $field->name == 'name' ? true : false
+                    ];
                 }
             }
 

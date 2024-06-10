@@ -47,7 +47,7 @@ export default function ZagoMailActions({ zagoMailConf, setZagoMailConf, isLoadi
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'tag'}
         close={clsActionMdl}

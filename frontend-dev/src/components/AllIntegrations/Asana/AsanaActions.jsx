@@ -105,7 +105,7 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'task'}
         close={clsActionMdl}
@@ -145,7 +145,7 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'parentOrganization'}
         close={clsActionMdl}
@@ -185,7 +185,7 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'team'}
         close={clsActionMdl}
@@ -225,7 +225,7 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'currency'}
         close={clsActionMdl}
@@ -264,7 +264,7 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'stage'}
         close={clsActionMdl}
@@ -304,7 +304,7 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
       {/* <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
@@ -344,7 +344,7 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'followUp'}
         close={clsActionMdl}
@@ -366,7 +366,7 @@ export default function AsanaActions({ asanaConf, setAsanaConf, loading, setLoad
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'taskType'}
         close={clsActionMdl}
