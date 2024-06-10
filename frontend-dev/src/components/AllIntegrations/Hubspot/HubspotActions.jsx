@@ -118,7 +118,7 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
       {hubspotConf?.actionName === 'deal' && <TableCheckBox checked={hubspotConf?.contact || false} onChange={(e) => actionHandler(e, 'contact')} className="wdt-200 mt-4 mr-2" value="contact" title={__('Contact', 'bit-integrations')} subTitle={__('Associate deal with contacts', 'bit-integrations')} />}
       {hubspotConf?.actionName === 'deal' && <TableCheckBox checked={hubspotConf?.company || false} onChange={(e) => actionHandler(e, 'company')} className="wdt-200 mt-4 mr-2" value="company" title={__('Company', 'bit-integrations')} subTitle={__('Associate deal with company', 'bit-integrations')} />}
       {hubspotConf?.actionName === 'deal' && <TableCheckBox checked={hubspotConf?.deal_type || false} onChange={(e) => actionHandler(e, 'deal_type')} className="wdt-200 mt-4 mr-2" value="deal_type" title={__('Deal Type', 'bit-integrations')} subTitle={__('Add type to deal', 'bit-integrations')} />}
-      {hubspotConf?.actionName !== 'contact' && <TableCheckBox checked={hubspotConf?.priority || false} onChange={(e) => actionHandler(e, 'priority')} className="wdt-200 mt-4 mr-2" value="deal_type" title={__('Priority', 'bit-integrations')} subTitle={__('Add priority', 'bit-integrations')} />}
+      {hubspotConf?.actionName !== 'contact' && hubspotConf?.actionName !== 'company' && <TableCheckBox checked={hubspotConf?.priority || false} onChange={(e) => actionHandler(e, 'priority')} className="wdt-200 mt-4 mr-2" value="deal_type" title={__('Priority', 'bit-integrations')} subTitle={__('Add priority', 'bit-integrations')} />}
 
       <ConfirmModal
         className="custom-conf-mdl"
