@@ -70,7 +70,7 @@ export default function CompanyHubActions({ companyHubConf, setCompanyHubConf, l
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'company'}
         close={clsActionMdl}
@@ -111,7 +111,7 @@ export default function CompanyHubActions({ companyHubConf, setCompanyHubConf, l
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'source'}
         close={clsActionMdl}
@@ -138,7 +138,7 @@ export default function CompanyHubActions({ companyHubConf, setCompanyHubConf, l
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'contact'}
         close={clsActionMdl}

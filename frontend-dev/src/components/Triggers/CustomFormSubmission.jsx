@@ -175,7 +175,7 @@ const CustomFormSubmission = () => {
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={primaryKeyModal}
         close={() => setPrimaryKeyModal(false)}

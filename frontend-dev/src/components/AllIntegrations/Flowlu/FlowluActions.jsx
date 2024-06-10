@@ -117,7 +117,7 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'category'}
         close={clsActionMdl}
@@ -158,7 +158,7 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'industry'}
         close={clsActionMdl}
@@ -198,7 +198,7 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'source'}
         close={clsActionMdl}
@@ -238,7 +238,7 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'customer'}
         close={clsActionMdl}
@@ -278,7 +278,7 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'manager'}
         close={clsActionMdl}
@@ -318,7 +318,7 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'projectStage'}
         close={clsActionMdl}
@@ -358,7 +358,7 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'portfolio'}
         close={clsActionMdl}
@@ -398,7 +398,7 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'priority'}
         close={clsActionMdl}
@@ -437,7 +437,7 @@ export default function FlowluActions({ flowluConf, setFlowluConf, loading, setL
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'projectOpportunity'}
         close={clsActionMdl}

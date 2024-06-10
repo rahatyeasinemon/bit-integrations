@@ -58,7 +58,7 @@ export default function CashbackModal() {
                     </div>
                 </div>
                 <div className="footer-wrapper">
-                    <a className="footer-btn blue" href={REVIEW_URL} target="_blank" rel="noreferrer">
+                    <a className="footer-btn purple" href={REVIEW_URL} target="_blank" rel="noreferrer">
                         {__('Review us')}
                         <ExternalLinkIcn size={16} className="" />
                     </a>

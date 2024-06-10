@@ -92,7 +92,7 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'client'}
         close={clsActionMdl}
@@ -131,7 +131,7 @@ export default function MoxieCRMActions({ moxiecrmConf, setMoxieCRMConf, loading
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'pipelineStage'}
         close={clsActionMdl}

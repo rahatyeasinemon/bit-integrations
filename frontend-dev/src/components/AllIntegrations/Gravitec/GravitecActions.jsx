@@ -49,7 +49,7 @@ export default function GravitecActions({ gravitecConf, setGravitecConf, loading
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'button'}
         close={clsActionMdl}

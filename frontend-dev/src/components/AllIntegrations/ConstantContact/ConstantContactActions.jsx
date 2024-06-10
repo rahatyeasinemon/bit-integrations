@@ -192,7 +192,7 @@ export default function ConstantContactActions({ id, constantContactConf, setCon
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'address_type'}
         close={clsActionMdl}
@@ -218,7 +218,7 @@ export default function ConstantContactActions({ id, constantContactConf, setCon
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'phone_type'}
         close={clsActionMdl}
@@ -244,7 +244,7 @@ export default function ConstantContactActions({ id, constantContactConf, setCon
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'list_ids'}
         close={clsActionMdl}
@@ -296,7 +296,7 @@ export default function ConstantContactActions({ id, constantContactConf, setCon
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
-        btnClass="blue"
+        btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
         show={actionMdl.show === 'tag_ids'}
         close={clsActionMdl}

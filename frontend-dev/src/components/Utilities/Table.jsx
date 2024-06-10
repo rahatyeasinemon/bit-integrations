@@ -146,7 +146,7 @@ function Table(props) {
     confMdl.action = () => { props.duplicateData(selectedFlatRows, data, { fetchData, data: { pageIndex, pageSize, sortBy, filters, globalFilter: search } }); closeConfMdl() }
     confMdl.btnTxt = __('Clone', 'bit-integrations')
     confMdl.btn2Txt = null
-    confMdl.btnClass = 'blue'
+    confMdl.btnClass = 'purple'
     confMdl.body = `${__('Do You want Deplicate these', 'bit-integrations')} ${selectedFlatRows.length} ${__('item', 'bit-integrations')} ?`
     confMdl.show = true
     setconfMdl({ ...confMdl })

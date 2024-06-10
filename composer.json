@@ -19,5 +19,8 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
+    },
+    "require": {
+        "bitapps/wp-telemetry": "^0.0.8"
     }
 }
