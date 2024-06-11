@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\controller;
 
-use BitApps\WPTelemetry\Telemetry\Telemetry;
 use BitCode\FI\Config;
+use BTCBI\Deps\BitApps\WPTelemetry\Telemetry\Telemetry;
 
 final class BtcbiAnalyticsController
 {

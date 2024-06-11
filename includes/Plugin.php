@@ -8,8 +8,6 @@ namespace BitCode\FI;
  * @since 1.0.0-alpha
  */
 
-use BitApps\WPTelemetry\Telemetry\Telemetry;
-use BitApps\WPTelemetry\Telemetry\TelemetryConfig;
 use BitCode\FI\Admin\Admin_Bar;
 use BitCode\FI\Core\Database\DB;
 use BitCode\FI\Core\Hooks\HookService;
@@ -20,6 +18,8 @@ use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Core\Util\Request;
 use BitCode\FI\Core\Util\UnInstallation;
 use BitCode\FI\Log\LogHandler;
+use BTCBI\Deps\BitApps\WPTelemetry\Telemetry\Telemetry;
+use BTCBI\Deps\BitApps\WPTelemetry\Telemetry\TelemetryConfig;
 
 final class Plugin
 {
