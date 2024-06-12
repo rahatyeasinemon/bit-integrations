@@ -16,6 +16,7 @@ import {
   RestrictContentStateIH,
   SliceWpStateIH,
   SureCartStateIH,
+  SureMembersStateIH,
   ThriveApprenticeStateIH,
   UltimateMemberStateIH,
   affiliateStateIH,
@@ -84,9 +85,13 @@ export const saveIntegConfig = async (
   } else if (flow.triggered_entity === "TutorLms") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = tutorlmsStateIH(tmpConf, dataFlow);
-  } else if (flow.triggered_entity === "FluentBooking") {
+  }
+  else if (flow.triggered_entity === "FluentBooking") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = fluentBookingStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
+  } else if (flow.triggered_entity === "SureMembers") {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
+    tmpConf = SureMembersStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
   } else if (flow.triggered_entity === "WC") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = wooCommerceStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
@@ -181,7 +186,7 @@ export const saveIntegConfig = async (
 
     tmpConf["fetch"] = !edit
       ? flow?.triggerData?.fetch
-      : flow?.flow_details?.fetch||'';
+      : flow?.flow_details?.fetch || '';
 
     tmpConf["fetch_remove"] = !edit
       ? flow?.triggerData?.fetch_remove
@@ -279,9 +284,13 @@ export const saveActionConf = async ({
   } else if (flow.triggered_entity === "TutorLms") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = tutorlmsStateIH(tmpConf, dataFlow);
-  } else if (flow.triggered_entity === "FluentBooking") {
+  }
+  else if (flow.triggered_entity === "FluentBooking") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = fluentBookingStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
+  } else if (flow.triggered_entity === "SureMembers") {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
+    tmpConf = SureMembersStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
   } else if (flow.triggered_entity === "WC") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = wooCommerceStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
@@ -379,7 +388,7 @@ export const saveActionConf = async ({
     tmpConf["fetch"] = !edit
       ? flow?.triggerData?.fetch
       : flow?.flow_details?.fetch;
-      
+
     tmpConf["fetch_remove"] = !edit
       ? flow?.triggerData?.fetch_remove
       : flow?.flow_details?.fetch_remove;
@@ -485,13 +494,11 @@ export const handleAuthorize = (
     return;
   }
   setIsLoading(true);
-  const apiEndpoint = `https://accounts.zoho.${
-    confTmp.dataCenter
-  }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${
-    confTmp.clientId
-  }&prompt=Consent&access_type=offline&state=${encodeURIComponent(
-    window.location.href
-  )}/redirect&redirect_uri=${encodeURIComponent(`${btcbi.api.base}`)}/redirect`;
+  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter
+    }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId
+    }&prompt=Consent&access_type=offline&state=${encodeURIComponent(
+      window.location.href
+    )}/redirect&redirect_uri=${encodeURIComponent(`${btcbi.api.base}`)}/redirect`;
   const authWindow = window.open(
     apiEndpoint,
     integ,
@@ -578,9 +585,8 @@ const tokenHelper = (
       ) {
         setSnackbar({
           show: true,
-          msg: `${__("Authorization failed Cause:", "bit-integrations")}${
-            result.data.data || result.data
-          }. ${__("please try again", "bit-integrations")}`,
+          msg: `${__("Authorization failed Cause:", "bit-integrations")}${result.data.data || result.data
+            }. ${__("please try again", "bit-integrations")}`,
         });
       } else {
         setSnackbar({
