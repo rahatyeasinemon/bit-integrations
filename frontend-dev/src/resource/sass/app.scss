@@ -424,6 +424,26 @@ input[type="checkbox"].disabled:checked:before {
   }
 }
 
+.gray {
+  //background: $purple !important;
+  background: linear-gradient(145deg, $gray, #e1dcfc) !important;
+  color: rgb(94, 88, 88) !important;
+
+  &:hover {
+    //background: #016fcf !important;
+    background: linear-gradient(145deg,
+        darken($gray, 2),
+        darken($gray, 5)) !important;
+  }
+
+  &:active {
+    // background: #0062b8;
+    background: linear-gradient(145deg,
+        darken($gray, 4),
+        darken($gray, 7)) !important;
+  }
+}
+
 .dp-purple {
   background: $dp-bg !important;
   color: white !important;
@@ -498,6 +518,15 @@ input[type="checkbox"].disabled:checked:before {
 
   &:hover {
     box-shadow: 2px 2px 4px 0 rgba(125, 73, 255, 0.4);
+  }
+}
+
+.gray-sh {
+  box-shadow: 3px 3px 7px -2px rgba(252, 250, 254, 0.4);
+  transition: box-shadow 0.3s !important;
+
+  &:hover {
+    box-shadow: 2px 2px 4px 0 rgba(229, 219, 253, 0.4);
   }
 }
 
@@ -4586,6 +4615,10 @@ _:-ms-fullscreen,
 
 .m-1 {
   margin: 5px;
+}
+
+.m-2 {
+  margin: 10px;
 }
 
 .m-0 {

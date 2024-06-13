@@ -616,6 +616,8 @@ With the pro version, you have the ability to create **Unlimited active** Please
 
 * [**Cart Flow**](https://bitapps.pro/docs/bit-integrations/trigger/cart-flow/)
 
+* [**CoBlocks**](https://bitapps.pro/docs/bit-integrations/trigger/coblocks-integrations/)
+
 * [**Contact Form 7**](https://bitapps.pro/docs/bit-integrations/trigger/contact-form/)
 
 * [**Divi**](https://bitapps.pro/docs/bit-integrations/trigger/divi/)
@@ -647,6 +649,8 @@ With the pro version, you have the ability to create **Unlimited active** Please
 * [**Gravity Forms**](https://bitapps.pro/docs/bit-integrations/trigger/gravity-forms/)
 
 * [**Groundhogg**](https://bitapps.pro/docs/bit-integrations/trigger/groundhogg/)
+
+* [**Gutena Forms**](https://bitapps.pro/docs/bit-integrations/trigger/gutena-forms-integration/)
 
 * [**Happy Forms**](https://bitapps.pro/docs/bit-integrations/trigger/happy-forms/)
 
@@ -961,7 +965,7 @@ _Release Date -10th June 2024_
 
 - **New Triggers :**
   - Gutena Forms – Contact Forms Block
-  - SiteOrigin Widgets Bundle (Form only)
+  - SiteOrigin Widgets Bundle (Contact Form only)
 
 - **New Improvements :**
   - Action Hook: Edit/Update Integration page added
