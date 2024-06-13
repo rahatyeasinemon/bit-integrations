@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.5.4
 Requires PHP: 7.0
-Stable tag: 2.0.7
+Stable tag: 2.0.8
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 65+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -189,6 +189,7 @@ https://youtu.be/eFuficjF_F4
 * [**MailUp**](https://mailup.com/)
 * [**Mail Mint**](https://wordpress.org/plugins/mail-mint/)
 * [**Moxie**](https://www.withmoxie.com/)
+* [**Newsletter**](https://wordpress.org/plugins/newsletter/)
 * [**Nimble**](https://www.nimble.com/)
 * [**Notion**](https://www.notion.so/)
 * [**Nutshell CRM**](https://www.nutshell.com/)
@@ -959,6 +960,19 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.0.8  =
+_Release Date -13th June 2024_
+
+- **New Actions :**
+  - Newsletter
+
+- **New Improvements :**
+  - MailUp: Custom field added
+  - Hubspot: Company module added
+
+- **New Fixes :**
+  - PipeDrive: Integration name update issue
 
 = 2.0.7  =
 _Release Date -10th June 2024_

@@ -14,7 +14,7 @@ export default function ChangelogToggle() {
     const [btcbi, setBtcbi] = useRecoilState($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
     const [showAnalyticsOptin, setShowAnalyticsOptin] = useState([])
-    const currentChangelog = '2.0.7'
+    const currentChangelog = '2.0.8'
     const currenChangelog = changelogInfo[currentChangelog]
     const [loading, setLoading] = useState('')
 
@@ -84,15 +84,14 @@ export default function ChangelogToggle() {
                             <div className='changelog'>
                                 <div className="flx flx-col flx-center whats-new">
                                     <h3>What's New in {btcbi.version}?</h3>
-                                    <small className='date'> <b>10th June 2024</b></small>
+                                    <small className='date'> <b>13th June 2024</b></small>
                                 </div>
                                 <div className='changelog-content'>
-                                    <span className='new-integration' ><b>New Integration</b></span>
+                                    <span className='new-integration' ><b>New Actions</b></span>
 
                                     <div className='integration-list'>
                                         <ul>
-                                            <li>Gutena Forms – Contact Forms Block </li>
-                                            <li>SiteOrigin Widgets Bundle (Form only) </li>
+                                            <li>Newsletter </li>
                                         </ul>
                                     </div>
 
@@ -100,7 +99,8 @@ export default function ChangelogToggle() {
 
                                     <div className='integration-list'>
                                         <ul>
-                                            <li>Action Hook: Edit Integration page added </li>
+                                            <li>MailUp: Custom field added </li>
+                                            <li>Hubspot: Company module added </li>
                                         </ul>
                                     </div>
 
@@ -108,9 +108,7 @@ export default function ChangelogToggle() {
 
                                     <div className='fixes-list'>
                                         <ul>
-                                            <li>Sendy: Custom Form Fields Value </li>
-                                            <li>Google Calender: TimeZone  </li>
-                                            <li>Tutor LMS: Quiz attempt status (Pro) </li>
+                                            <li>PipeDrive: Integration name update issue </li>
                                             <a href="https://bitapps.pro/docs/bit-integrations/free-changelogs/">Click here to see all</a>
                                         </ul>
                                     </div>
@@ -118,7 +116,7 @@ export default function ChangelogToggle() {
                                 {!showAnalyticsOptin &&
                                     <div>
                                         <div className='m-2 txt-body'>
-                                            Opt-in to share usage data for improvements, or skip and continue using the plugin.
+                                            <b>Note:</b> Opt-in to share usage data for improvements, or skip and continue using the plugin.
                                             <br />
                                             <a className='app-link-active' href='https://bitapps.pro/terms-of-service/'>Click here to see terms</a>
                                         </div>
