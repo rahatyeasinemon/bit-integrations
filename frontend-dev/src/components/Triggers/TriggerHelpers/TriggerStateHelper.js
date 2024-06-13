@@ -53,7 +53,10 @@ export const FormPluginStateHelper = (val, tmpNewFlow, resp, setNewFlow) => {
     academylmsStateFP(val, tmpNewFlow, resp, setNewFlow);
   } else if (tmpNewFlow?.triggered_entity === 'FluentBooking') {
     fluentBookingStateFP(val, tmpNewFlow, resp, setNewFlow)
-  } else {
+  } else if (tmpNewFlow?.triggered_entity === 'SureMembers') {
+    SureMembersStateFP(val, tmpNewFlow, resp, setNewFlow)
+  }
+  else {
     setNewFlow(tmpNewFlow);
   }
 };
@@ -98,6 +101,12 @@ export const tutorlmsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
 export const fluentBookingStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   if (val) {
     tmpNewFlow.triggerData.events = resp.data.events
+  }
+  setNewFlow(tmpNewFlow)
+}
+export const SureMembersStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
+  if (val) {
+    tmpNewFlow.triggerData.groups = resp.data.groups
   }
   setNewFlow(tmpNewFlow)
 }
@@ -377,6 +386,17 @@ export const fluentBookingStateIH = (tmpConf, flowData, triggered_entity_id) => 
   return tmpConf;
 };
 
+export const SureMembersStateIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id;
+
+  if (formId) {
+    tmpConf.selectedGroup = flowData.selectedGroup;
+    tmpConf.groups = flowData.groups
+  }
+
+  return tmpConf;
+};
+
 export const tutorlmsStateIH = (tmpConf, flowData) => {
   if (flowData.formID === "2") {
     tmpConf.selectedQuiz = flowData.selectedQuiz;
@@ -392,7 +412,7 @@ export const tutorlmsStateIH = (tmpConf, flowData) => {
   return tmpConf;
 };
 
-export const wooCommerceStateIH = (tmpConf, flowData,triggered_entity_id) => {
+export const wooCommerceStateIH = (tmpConf, flowData, triggered_entity_id) => {
   const formId = flowData.formID ? flowData.formID : triggered_entity_id;
 
   if (formId === "10" || formId === "19") {
@@ -428,7 +448,7 @@ export const wooCommerceStateIH = (tmpConf, flowData,triggered_entity_id) => {
     tmpConf.selectedVariation = flowData.selectedVariation;
     tmpConf.allVariation = flowData.allVariation;
   }
-  
+
   return tmpConf;
 };
 
