@@ -116,7 +116,7 @@ export default function ChangelogToggle() {
                                 {!showAnalyticsOptin &&
                                     <div>
                                         <div className='m-2 txt-body'>
-                                            <b>Note:</b> Opt-in to share usage data for improvements, or skip and continue using the plugin.
+                                            <b>Note:</b> Accept and continue to share usage data for improvements, or skip for using the plugin.
                                             <br />
                                             <a className='app-link-active' href='https://bitapps.pro/terms-of-service/'>Click here to see terms</a>
                                         </div>
