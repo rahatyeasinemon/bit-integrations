@@ -17,24 +17,22 @@ class RecordApiHelper
 {
     private $_integrationID;
 
-    private $_responseType;
-
-    public function __construct($integrationDetails, $integId)
+    public function __construct($integId)
     {
-        $this->_integrationDetails = $integrationDetails;
         $this->_integrationID = $integId;
     }
 
-    public function addSubscriber($finalData)
+    public function addSubscriber($finalData, $selectedLists)
     {
         if (empty($finalData['email'])) {
             return ['success' => false, 'message' => 'Required field email is empty', 'code' => 400];
         }
 
-        $try = TNP::add_subscriber($finalData);
+        if (!empty($selectedLists)) {
+            $finalData['lists'] = explode(',', $selectedLists);
+        }
 
-        error_log(print_r(['try' => $try], true));
-        exit;
+        return TNP::add_subscriber($finalData);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -53,18 +51,18 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap)
+    public function execute($fieldValues, $fieldMap, $selectedLists)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $apiResponse = $this->addSubscriber($finalData);
+        $response = $this->addSubscriber($finalData, $selectedLists);
 
-        if (empty($apiResponse)) {
-            $res = ['message' => 'Contact ' . $this->_responseType . ' successfully'];
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'Contact ' . $this->_responseType]), 'success', wp_json_encode($res));
+        if (isset($response->id)) {
+            $res = ['message' => 'Subscriber added successfully'];
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber add']), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => '', 'type_name' => 'Adding contact']), 'error', wp_json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => '', 'type_name' => 'Adding subscriber']), 'error', wp_json_encode($response));
         }
 
-        return $apiResponse;
+        return $response;
     }
 }

@@ -31,6 +31,7 @@ function Newsletter({ formFields, setFlow, flow, allIntegURL }) {
     ],
     staticFields,
     lists: [],
+    selectedLists: '',
     groups: [],
     actions: {},
   })

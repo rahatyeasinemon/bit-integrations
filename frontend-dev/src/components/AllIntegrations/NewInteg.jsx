@@ -7,7 +7,6 @@ import { useRecoilState } from 'recoil'
 import { $newFlow } from '../../GlobalStates'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
-import Newsletter from './Newsletter/Newsletter'
 
 const CustomAction = lazy(() => import('./CustomAction/CustomAction'))
 const PaidMembershipPro = lazy(() => import('./PaidMembershipPro/PaidMembershipPro'))
@@ -151,6 +150,7 @@ const NutshellCRM = lazy(() => import('./NutshellCRM/NutshellCRM'))
 const SystemeIO = lazy(() => import('./SystemeIO/SystemeIO'))
 const Discord = lazy(() => import('./Discord/Discord'))
 const ZagoMail = lazy(() => import('./ZagoMail/ZagoMail'))
+const Newsletter = lazy(() => import('./Newsletter/Newsletter'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
@@ -445,8 +445,8 @@ export default function NewInteg({ allIntegURL }) {
         return <Discord allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'ZagoMail':
         return <ZagoMail allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
-      // case 'Newsletter':
-      //   return <Newsletter allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
+      case 'Newsletter':
+        return <Newsletter allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       default:
         return <></>
     }

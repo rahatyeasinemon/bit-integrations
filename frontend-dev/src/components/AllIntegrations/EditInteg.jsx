@@ -8,7 +8,6 @@ import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 import SnackMsg from '../Utilities/SnackMsg'
 import EditCustomApi from './CustomApi/EditCustomApi'
-import EditNewsletter from './Newsletter/EditNewsletter'
 
 const EditOmniSend = lazy(() => import('./OmniSend/EditOmniSend'))
 const EditSliceWp = lazy(() => import('./SliceWp/EditSliceWp'))
@@ -151,6 +150,7 @@ const EditNutshellCRM = lazy(() => import('./NutshellCRM/EditNutshellCRM'))
 const EditSystemeIO = lazy(() => import('./SystemeIO/EditSystemeIO'))
 const EditDiscord = lazy(() => import('./Discord/EditDiscord'))
 const EditZagoMail = lazy(() => import('./ZagoMail/EditZagoMail'))
+const EditNewsletter = lazy(() => import('./Newsletter/EditNewsletter'))
 
 const loaderStyle = {
   display: 'flex',
