@@ -36,15 +36,21 @@ final class BtcbiAnalyticsController
 
     public function analyticsOptIn($data)
     {
-        if ($data->isChecked === true) {
+        if ($data->isChecked == true) {
             Telemetry::report()->trackingOptIn();
+
+            return true;
         }
+
+        Telemetry::report()->trackingOptOut();
+
+        return false;
     }
 
     public function analyticsCheck()
     {
-        $check = Telemetry::report()->isTrackingAllowed();
+        return (bool) (Telemetry::report()->isTrackingAllowed() == true)
 
-        return (bool) ($check);
+        ;
     }
 }

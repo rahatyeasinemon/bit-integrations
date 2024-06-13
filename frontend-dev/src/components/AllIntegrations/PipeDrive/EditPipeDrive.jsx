@@ -14,6 +14,7 @@ import EditWebhookInteg from '../EditWebhookInteg'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { checkMappedFields, checkRequired, handleInput } from './PipeDriveCommonFunc'
 import PipeDriveIntegLayout from './PipeDriveIntegLayout'
+import { create } from 'mutative'
 
 function EditPipeDrive({ allIntegURL }) {
   const navigate = useNavigate()
@@ -42,13 +43,20 @@ function EditPipeDrive({ allIntegURL }) {
 
     saveActionConf({ flow, setFlow, allIntegURL, conf: pipeDriveConf, navigate, id, edit: 1, setIsLoading, setSnackbar })
   }
+
+  const handleEditIntegName = (e) => {
+    setPipeDriveConf(prevConf => create(prevConf, draftConF => {
+      draftConF[e.target.name] = e.target.value
+    }))
+  }
+
   return (
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="flx mt-3">
         <b className="wdt-200 ">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, tab, pipeDriveConf, setPipeDriveConf)} name="name" value={pipeDriveConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input className="btcd-paper-inp w-5" onChange={e => handleEditIntegName} name="name" value={pipeDriveConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
       </div>
       <br />
 

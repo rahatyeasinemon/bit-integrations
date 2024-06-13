@@ -14,7 +14,7 @@ export default function ChangelogToggle() {
     const [btcbi, setBtcbi] = useRecoilState($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
     const [showAnalyticsOptin, setShowAnalyticsOptin] = useState([])
-    const currentChangelog = '2.0.7'
+    const currentChangelog = '2.0.8'
     const currenChangelog = changelogInfo[currentChangelog]
     const [loading, setLoading] = useState('')
 
@@ -31,7 +31,7 @@ export default function ChangelogToggle() {
     }
 
     const handleSubmit = () => {
-        bitsFetch({ isChecked: isChecked }, 'analytics/optIn')
+        bitsFetch({ isChecked: true }, 'analytics/optIn')
         setShow(false)
     }
 
@@ -42,16 +42,18 @@ export default function ChangelogToggle() {
     };
 
     useEffect(() => {
-        setLoading(true)
-        bitsFetch(
-            {},
-            'analytics/check',
-            '',
-            'GET',
-        ).then((res) => {
-            setShowAnalyticsOptin(res.data)
-            setLoading(false)
-        })
+        if (show) {
+            setLoading(true)
+            bitsFetch(
+                {},
+                'analytics/check',
+                '',
+                'GET',
+            ).then((res) => {
+                setShowAnalyticsOptin(res.data)
+                setLoading(false)
+            })
+        }
     }, [show])
 
 
@@ -82,15 +84,14 @@ export default function ChangelogToggle() {
                             <div className='changelog'>
                                 <div className="flx flx-col flx-center whats-new">
                                     <h3>What's New in {btcbi.version}?</h3>
-                                    <small className='date'> <b>10th June 2024</b></small>
+                                    <small className='date'> <b>13th June 2024</b></small>
                                 </div>
                                 <div className='changelog-content'>
-                                    <span className='new-integration' ><b>New Integration</b></span>
+                                    <span className='new-integration' ><b>New Actions</b></span>
 
                                     <div className='integration-list'>
                                         <ul>
-                                            <li>Gutena Forms – Contact Forms Block </li>
-                                            <li>SiteOrigin Widgets Bundle (Form only) </li>
+                                            <li>Newsletter </li>
                                         </ul>
                                     </div>
 
@@ -98,7 +99,8 @@ export default function ChangelogToggle() {
 
                                     <div className='integration-list'>
                                         <ul>
-                                            <li>Action Hook: Edit Integration page added </li>
+                                            <li>MailUp: Custom field added </li>
+                                            <li>Hubspot: Company module added </li>
                                         </ul>
                                     </div>
 
@@ -106,32 +108,33 @@ export default function ChangelogToggle() {
 
                                     <div className='fixes-list'>
                                         <ul>
-                                            <li>Sendy: Custom Form Fields Value </li>
-                                            <li>Google Calender: TimeZone  </li>
-                                            <li>Tutor LMS: Quiz attempt status (Pro) </li>
+                                            <li>PipeDrive: Integration name update issue </li>
                                             <a href="https://bitapps.pro/docs/bit-integrations/free-changelogs/">Click here to see all</a>
                                         </ul>
                                     </div>
                                 </div>
                                 {!showAnalyticsOptin &&
                                     <div>
-                                        <div>
-                                            <CheckBox checked={isChecked}
-                                                onChange={handleCheckboxChange}
-                                                className="mt-1 font-sm"
-                                                radio={false}
-                                                title={__("Help us improve your experience ", 'bit-integrations')}
-                                                name="telemetry" />
+                                        <div className='m-2 txt-body'>
+                                            <b>Note:</b> Accept and continue to share usage data for improvements, or skip for using the plugin.
                                             <br />
-                                            <a className='terms' href='https://bitapps.pro/terms-of-service/'>terms</a>
+                                            <a className='app-link-active' href='https://bitapps.pro/terms-of-service/'>Click here to see terms</a>
                                         </div>
+                                        <button
+                                            type="button"
+                                            className="btn round btn-md gray gray-sh"
+                                            onClick={() => setShow(false)
+                                            }
+                                        >
+                                            Skip
+                                        </button>
                                         <button
                                             type="button"
                                             className="btn round btcd-btn-lg purple purple-sh submit-btn"
                                             onClick={() => handleSubmit()
                                             }
                                         >
-                                            Got it
+                                            Accept and continue
                                         </button>
                                     </div>
                                 }

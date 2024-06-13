@@ -152,6 +152,28 @@ export const getAllCompany = (confTmp, setConf, setLoading) => {
     })
 }
 
+export const getAllIndustry = (confTmp, setConf, setLoading) => {
+  setLoading(prevLoading => ({ ...prevLoading, industry: true }))
+  const requestParams = { api_key: confTmp.api_key, type: 'company' }
+
+  bitsFetch(requestParams, 'hubspot_industry')
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...confTmp }
+        if (result.data) {
+          newConf.industries = result.data
+        }
+        setConf(newConf)
+        setLoading(prevLoading => ({ ...prevLoading, industry: false }))
+
+        toast.success(__('industry fetched successfully', 'bit-integrations'))
+        return
+      }
+      setLoading(prevLoading => ({ ...prevLoading, industry: false }))
+      toast.error(__('industry fetching failed', 'bit-integrations'))
+    })
+}
+
 export const getFields = (confTmp, setConf, setLoading, type, loading, refreshCustomFields = false) => {
   if (refreshCustomFields) {
     setLoading({ ...loading, customFieldsRefresh: true })

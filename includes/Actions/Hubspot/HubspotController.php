@@ -83,6 +83,37 @@ final class HubspotController
         }
     }
 
+    public static function getAllIndustry($requestParams)
+    {
+        if (empty($requestParams->api_key)) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+
+        $apiEndpoint = 'https://api.hubapi.com/crm/v3/properties/company';
+        $header = [
+            'authorization' => 'Bearer ' . $requestParams->api_key
+        ];
+
+        $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
+
+        if (isset($apiResponse->results) && !empty($apiResponse->results)) {
+            $options = [];
+            $industries = array_filter($apiResponse->results, function ($item) {
+                return $item->name == 'industry' && $item->fieldType == 'select';
+            });
+
+            foreach (array_column($industries, null)[0]->options as $option) {
+                $options[] = (object) [
+                    'value' => $option->value,
+                    'label' => $option->label
+                ];
+            }
+            wp_send_json_success($options, 200);
+        } else {
+            wp_send_json_error('fields fetching failed', 400);
+        }
+    }
+
     public static function getAllOwners($requestParams)
     {
         if (empty($requestParams->api_key)) {
