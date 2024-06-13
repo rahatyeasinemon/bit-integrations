@@ -31,7 +31,7 @@ export default function ChangelogToggle() {
     }
 
     const handleSubmit = () => {
-        bitsFetch({ isChecked: isChecked }, 'analytics/optIn')
+        bitsFetch({ isChecked: true }, 'analytics/optIn')
         setShow(false)
     }
 
@@ -42,16 +42,18 @@ export default function ChangelogToggle() {
     };
 
     useEffect(() => {
-        setLoading(true)
-        bitsFetch(
-            {},
-            'analytics/check',
-            '',
-            'GET',
-        ).then((res) => {
-            setShowAnalyticsOptin(res.data)
-            setLoading(false)
-        })
+        if (show) {
+            setLoading(true)
+            bitsFetch(
+                {},
+                'analytics/check',
+                '',
+                'GET',
+            ).then((res) => {
+                setShowAnalyticsOptin(res.data)
+                setLoading(false)
+            })
+        }
     }, [show])
 
 
@@ -115,23 +117,26 @@ export default function ChangelogToggle() {
                                 </div>
                                 {!showAnalyticsOptin &&
                                     <div>
-                                        <div>
-                                            <CheckBox checked={isChecked}
-                                                onChange={handleCheckboxChange}
-                                                className="mt-1 font-sm"
-                                                radio={false}
-                                                title={__("Help us improve your experience ", 'bit-integrations')}
-                                                name="telemetry" />
+                                        <div className='m-2 txt-body'>
+                                            Opt-in to share usage data for improvements, or skip and continue using the plugin.
                                             <br />
-                                            <a className='terms' href='https://bitapps.pro/terms-of-service/'>terms</a>
+                                            <a className='app-link-active' href='https://bitapps.pro/terms-of-service/'>Click here to see terms</a>
                                         </div>
+                                        <button
+                                            type="button"
+                                            className="btn round btn-md gray gray-sh"
+                                            onClick={() => setShow(false)
+                                            }
+                                        >
+                                            Skip
+                                        </button>
                                         <button
                                             type="button"
                                             className="btn round btcd-btn-lg purple purple-sh submit-btn"
                                             onClick={() => handleSubmit()
                                             }
                                         >
-                                            Got it
+                                            Accept and continue
                                         </button>
                                     </div>
                                 }
