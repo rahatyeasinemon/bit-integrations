@@ -101,6 +101,7 @@ const ActionHook = () => {
   const handleFetch = () => {
     if (isLoading) {
       clearInterval(intervalRef.current)
+      controller.abort();
       removeTestData(hookID)
       setIsLoading(false)
       return
