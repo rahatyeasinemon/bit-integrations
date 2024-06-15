@@ -79,7 +79,7 @@ class RecordApiHelper
         $ticket = Ticket::create($finalData);
 
         if (isset($ticket->id)) {
-            $ticket->syncCustomFields($finalData['custom_fields']);
+            isset($finalData['custom_fields']) ? $ticket->syncCustomFields($finalData['custom_fields']) : null;
 
             return $ticket;
         }
