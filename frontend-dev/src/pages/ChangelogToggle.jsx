@@ -14,7 +14,7 @@ export default function ChangelogToggle() {
     const [btcbi, setBtcbi] = useRecoilState($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
     const [showAnalyticsOptin, setShowAnalyticsOptin] = useState([])
-    const currentChangelog = '2.0.8'
+    const currentChangelog = '2.0.9'
     const currenChangelog = changelogInfo[currentChangelog]
     const [loading, setLoading] = useState('')
 
