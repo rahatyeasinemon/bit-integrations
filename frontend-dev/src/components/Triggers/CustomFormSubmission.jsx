@@ -55,7 +55,8 @@ const CustomFormSubmission = () => {
       trigger_type: newFlow?.triggerDetail?.type,
       fields: tmpNewFlow.triggerDetail.data,
       fetch: newFlow?.triggerDetail?.fetch,
-      fetch_remove: newFlow?.triggerDetail?.fetch_remove
+      fetch_remove: newFlow?.triggerDetail?.fetch_remove,
+      multi_form: newFlow.triggerDetail?.multi_form
     }
 
     tmpNewFlow.triggered_entity_id = newFlow?.triggerDetail?.triggered_entity_id
@@ -92,7 +93,11 @@ const CustomFormSubmission = () => {
           setShowResponse(true)
           bitsFetch({ reset: true }, removeAction, null, removeMethod)
         }
-      })
+      }).catch(err => {
+        if (err.name === 'AbortError') {
+          console.log('AbortError: Fetch request aborted');
+        }
+      });
     }, 1500)
   }
 
