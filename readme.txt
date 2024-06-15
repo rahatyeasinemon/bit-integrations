@@ -276,6 +276,12 @@ This plugin acts as a bridge between platforms, using Triggers and Actions. Trig
 For example, a contact form (Bit Form, WP Forms, etc.)
 is submitted, and you want to send data in your CRM, Email Marketing Software, Project Management Tools, Data Collection Tools, and Other WordPress plugins.
 
+## Telemetry Data
+
+Bit Integrations uses [wp-telemetry](https://packagist.org/packages/bitapps/wp-telemetry) to collect some telemetry data upon user’s confirmation. This helps us to troubleshoot problems faster & make product improvements.
+
+Wp-Telemetry **DOES NOT IMMEDIATELY** start gathering data, rather it will gather basic telemetry data when a user allows it. We collect the data to ensure great user experience for all our users
+
 == ❣ What our customer say about Bit Integrations : ==
 
 [` 💠 Best of class`](https://wordpress.org/support/topic/best-of-class-with-few-glitches/)
