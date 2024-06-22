@@ -47,7 +47,7 @@ function Salesforce({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'Mobile', label: 'Mobile', required: false },
     { key: 'Fax', label: 'Fax', required: false },
     { key: 'Street', label: 'Street', required: false },
-    { key: 'Zip', label: 'Zip', required: false },
+    { key: 'PostalCode', label: 'Zip/Postal Code', required: false },
     { key: 'Country', label: 'Country', required: false },
     { key: 'Description', label: 'Description', required: false },
     { key: 'LeadSource', label: 'Lead source', required: false },
