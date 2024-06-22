@@ -9,6 +9,7 @@ import changelogInfo from '../Utils/StaticData/changelogInfo'
 import bitsFetch from '../Utils/bitsFetch'
 import CheckBox from '../components/Utilities/CheckBox'
 import Loader from '../components/Loaders/Loader'
+import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 
 export default function ChangelogToggle() {
     const [btcbi, setBtcbi] = useRecoilState($btcbi)
@@ -103,22 +104,24 @@ export default function ChangelogToggle() {
                                             <li>Hubspot: Company module added </li>
                                         </ul>
                                     </div>
-
-                                    <span className='fixes'><b>Fixed</b></span>
-
-                                    <div className='fixes-list'>
-                                        <ul>
-                                            <li>PipeDrive: Integration name update issue </li>
-                                            <a href="https://bitapps.pro/docs/bit-integrations/free-changelogs/">Click here to see all</a>
-                                        </ul>
+                                    <div>
+                                        <span className='footer'>{__('For more details,')}</span>
+                                        <a href="https://bitapps.pro/docs/bit-integrations/free-changelogs/" target="_blank" rel="noreferrer">
+                                            {__('Click here ')}
+                                            <ExternalLinkIcn size="14" />
+                                        </a>
                                     </div>
                                 </div>
                                 {!showAnalyticsOptin &&
                                     <div>
+                                        <div className='btcd-hr mt-2'></div>
+                                        <div className="flx flx-col flx-center">
+                                            <h4 className='mt-2 mb-0'>Opt-In For Plugin Improvement</h4>
+                                        </div>
                                         <div className='m-2 txt-body'>
-                                            <b>Note:</b> Accept and continue to share usage data for improvements, or skip for using the plugin.
+                                            Accept and continue to share usage data to help us improve the plugin, or skip for using the plugin.
                                             <br />
-                                            <a className='app-link-active' href='https://bitapps.pro/terms-of-service/'>Click here to see terms</a>
+                                            <a className='app-link-active' target='blank' href='https://bitapps.pro/terms-of-service/'>Click here to see terms</a>
                                         </div>
                                         <button
                                             type="button"
@@ -138,13 +141,7 @@ export default function ChangelogToggle() {
                                         </button>
                                     </div>
                                 }
-                                {/* <div>
-                                    <span className='footer'>{__('For more details,')}</span>
-                                    <a href="https://bitapps.pro/docs/bit-integrations/free-changelogs/" target="_blank" rel="noreferrer">
-                                        {__('Click here ')}
-                                        <ExternalLinkIcn size="14" />
-                                    </a>
-                                </div> */}
+
                             </div >)}
             </Modal >
         </div >
