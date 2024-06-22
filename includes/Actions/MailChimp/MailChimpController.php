@@ -6,6 +6,7 @@
 
 namespace BitCode\FI\Actions\MailChimp;
 
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
 
@@ -34,36 +35,39 @@ class MailChimpController
     /**
      * MailChimp Actions
      *
-     * @return array
+     * @return array $allModules
      */
     public static function refreshModules()
     {
-        return [
+        $allModules = [
             [
                 'name'  => 'add_a_member_to_an_audience',
                 'label' => 'Add a member to an audience',
-            ],
-            [
-                'name'  => 'add_a_segment_to_an_audience',
-                'label' => 'Add a segment to an audience',
-            ],
-            [
-                'name'  => 'add_a_member_to_a_segment',
-                'label' => 'Add a member to a segment',
-            ],
-            [
-                'name'  => 'add_a_note_to_a_member',
-                'label' => 'Add a note to a member',
-            ],
-            [
-                'name'  => 'add_tag_to_a_member',
-                'label' => 'Add tag to a member',
-            ],
-            [
-                'name'  => 'remove_tag_from_a_member',
-                'label' => 'Remove tag from a member',
-            ],
+            ]
         ];
+
+        if (Helper::isProActivate()) {
+            $allModules += [
+                [
+                    'name'  => 'add_a_segment_to_an_audience',
+                    'label' => 'Add a segment to an audience',
+                ],
+                [
+                    'name'  => 'add_a_member_to_a_segment',
+                    'label' => 'Add a member to a segment',
+                ],
+                [
+                    'name'  => 'add_tag_to_a_member',
+                    'label' => 'Add tag to a member',
+                ],
+                [
+                    'name'  => 'remove_tag_from_a_member',
+                    'label' => 'Remove tag from a member',
+                ],
+            ];
+        }
+
+        return $allModules;
     }
 
     /**
