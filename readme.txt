@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.5.4
 Requires PHP: 7.0
-Stable tag: 2.0.8
+Stable tag: 2.0.9
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 65+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -275,6 +275,12 @@ https://youtu.be/eFuficjF_F4
 This plugin acts as a bridge between platforms, using Triggers and Actions. Triggers capture data, like form submissions (Contact Form 7, WP Forms, etc.), while Actions send it to CRM, Email Marketing Software, Project Management Tools, Data Collection Tools, and other WordPress plugins.
 For example, a contact form (Bit Form, WP Forms, etc.)
 is submitted, and you want to send data in your CRM, Email Marketing Software, Project Management Tools, Data Collection Tools, and Other WordPress plugins.
+
+## Telemetry Data
+
+Bit Integrations uses [wp-telemetry](https://packagist.org/packages/bitapps/wp-telemetry) to collect some telemetry data upon user’s confirmation. This helps us to troubleshoot problems faster & make product improvements.
+
+Wp-Telemetry **DOES NOT IMMEDIATELY** start gathering data, rather it will gather basic telemetry data when a user allows it. We collect the data to ensure great user experience for all our users
 
 == ❣ What our customer say about Bit Integrations : ==
 
@@ -961,7 +967,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 
 == Changelog ==
 
-= 2.0.8  =
+= 2.0.8 - 2.0.9  =
 _Release Date -13th June 2024_
 
 - **New Actions :**
