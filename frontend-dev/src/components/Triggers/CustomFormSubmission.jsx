@@ -160,127 +160,131 @@ const CustomFormSubmission = () => {
             </h5>`
 
   return (
-    <div className="trigger-custom-width">
-      {newFlow?.triggerDetail?.multi_form &&
-        <div className='w-8 m-a'>
-          <h4>Select a Form/Task Name</h4>
-          <MultiSelect
-            className="msl-wrp-options"
-            defaultValue={newFlow?.triggerDetail?.triggered_entity_id}
-            options={newFlow.triggerDetail?.multi_form?.map(field => ({ label: field?.form_name, value: field?.triggered_entity_id }))}
-            onChange={(val) => setTriggerEntityId(val)}
-            singleSelect
-            style={{ width: '100%', minWidth: 400, maxWidth: 450 }}
-          />
-        </div>
-      }
-      {newFlow?.triggerDetail?.triggered_entity_id &&
-        <>
-          <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-          <div className={`flx mt-2 flx-${newFlow.triggerDetail?.data ? 'between' : 'around'}`}>
-            <button
-              onClick={handleFetch}
-              className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'green'}`}
-              type="button"
-            >
-              {isLoading
-                ? __('Stop', 'bit-integrations')
-                : newFlow.triggerDetail?.data
-                  ? __('Fetched ✔', 'bit-integrations')
-                  : __('Fetch', 'bit-integrations')
-              }
-              {isLoading && (
-                <LoaderSm size="20" clr="#022217" className="ml-2" />
-              )}
-            </button>
-            {newFlow.triggerDetail?.data?.length > 0 &&
-              <button
-                onClick={() => setPrimaryKeyModal(true)}
-                className={`btn btcd-btn-lg sh-sm flx ${newFlow.triggerDetail?.data?.length > 0 && 'green'}`}
-                type="button"
-                disabled={!newFlow.triggerDetail?.data?.length > 0}
-              >
-                {primaryKey
-                  ? __('Unique Key ✔', 'bit-integrations')
-                  : __('Unique Key', 'bit-integrations')}
-              </button>
-            }
-          </div>
-          <ConfirmModal
-            className="custom-conf-mdl"
-            mainMdlCls="o-v"
-            btnClass="purple"
-            btnTxt={__('Ok', 'bit-integrations')}
-            show={primaryKeyModal}
-            close={() => setPrimaryKeyModal(false)}
-            action={() => setPrimaryKeyModal(false)}
-            title={__('Unique Key', 'bit-integrations')}
-            cssTransStyle={{ zIndex: 99999 }}
-          >
-            <div className="btcd-hr mt-2 mb-2" />
-            <div className="mt-2">
-              {__('Select Unique Key', 'bit-integrations')}
-            </div>
-            <div className="flx flx-between mt-2">
+    !newFlow?.triggerDetail?.is_active ?
+      (<span className='mt-3'>{newFlow?.triggerDetail?.name} is not installed or activated.</span>)
+      : (
+        <div className="trigger-custom-width">
+          {newFlow?.triggerDetail?.multi_form &&
+            <div className='w-8 m-a'>
+              <h4>Select a Form/Task Name</h4>
               <MultiSelect
-                options={newFlow.triggerDetail?.data?.map(field => ({ label: field?.label, value: field?.name }))}
                 className="msl-wrp-options"
-                defaultValue={Array.isArray(primaryKey) ? primaryKey.map(item => item.key).join(',') : ''}
-                onChange={primaryKeySet}
-                closeOnSelect
+                defaultValue={newFlow?.triggerDetail?.triggered_entity_id}
+                options={newFlow.triggerDetail?.multi_form?.map(field => ({ label: field?.form_name, value: field?.triggered_entity_id }))}
+                onChange={(val) => setTriggerEntityId(val)}
+                singleSelect
+                style={{ width: '100%', minWidth: 400, maxWidth: 450 }}
               />
             </div>
-          </ConfirmModal>
+          }
+          {newFlow?.triggerDetail?.triggered_entity_id &&
+            <>
+              <SnackMsg snack={snack} setSnackbar={setSnackbar} />
+              <div className={`flx mt-2 flx-${newFlow.triggerDetail?.data ? 'between' : 'around'}`}>
+                <button
+                  onClick={handleFetch}
+                  className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'green'}`}
+                  type="button"
+                >
+                  {isLoading
+                    ? __('Stop', 'bit-integrations')
+                    : newFlow.triggerDetail?.data
+                      ? __('Fetched ✔', 'bit-integrations')
+                      : __('Fetch', 'bit-integrations')
+                  }
+                  {isLoading && (
+                    <LoaderSm size="20" clr="#022217" className="ml-2" />
+                  )}
+                </button>
+                {newFlow.triggerDetail?.data?.length > 0 &&
+                  <button
+                    onClick={() => setPrimaryKeyModal(true)}
+                    className={`btn btcd-btn-lg sh-sm flx ${newFlow.triggerDetail?.data?.length > 0 && 'green'}`}
+                    type="button"
+                    disabled={!newFlow.triggerDetail?.data?.length > 0}
+                  >
+                    {primaryKey
+                      ? __('Unique Key ✔', 'bit-integrations')
+                      : __('Unique Key', 'bit-integrations')}
+                  </button>
+                }
+              </div>
+              <ConfirmModal
+                className="custom-conf-mdl"
+                mainMdlCls="o-v"
+                btnClass="purple"
+                btnTxt={__('Ok', 'bit-integrations')}
+                show={primaryKeyModal}
+                close={() => setPrimaryKeyModal(false)}
+                action={() => setPrimaryKeyModal(false)}
+                title={__('Unique Key', 'bit-integrations')}
+                cssTransStyle={{ zIndex: 99999 }}
+              >
+                <div className="btcd-hr mt-2 mb-2" />
+                <div className="mt-2">
+                  {__('Select Unique Key', 'bit-integrations')}
+                </div>
+                <div className="flx flx-between mt-2">
+                  <MultiSelect
+                    options={newFlow.triggerDetail?.data?.map(field => ({ label: field?.label, value: field?.name }))}
+                    className="msl-wrp-options"
+                    defaultValue={Array.isArray(primaryKey) ? primaryKey.map(item => item.key).join(',') : ''}
+                    onChange={primaryKeySet}
+                    closeOnSelect
+                  />
+                </div>
+              </ConfirmModal>
 
-          {
-            newFlow.triggerDetail?.data && showResponse && (
-              <WebhookDataTable
-                data={newFlow?.triggerDetail?.data}
-                flow={newFlow}
-                setFlow={setNewFlow}
-              />
-            )
-          }
-          {
-            newFlow.triggerDetail?.data &&
-            <div className="flx flx-between">
-              <button
-                onClick={showResponseTable}
-                className="btn btcd-btn-lg sh-sm flx"
-              >
-                <span className="txt-essentialBlocks-resbtn font-inter-500">
-                  {showResponse ? 'Hide Response' : 'View Response'}
-                </span>
-                {!showResponse ? (
-                  <EyeIcn
-                    width="20"
-                    height="20"
-                    strokeColor="#000000"
+              {
+                newFlow.triggerDetail?.data && showResponse && (
+                  <WebhookDataTable
+                    data={newFlow?.triggerDetail?.data}
+                    flow={newFlow}
+                    setFlow={setNewFlow}
                   />
-                ) : (
-                  <EyeOffIcn
-                    width="20"
-                    height="20"
-                    strokeColor="#000000"
-                  />
-                )}
-              </button>
-              <button
-                onClick={setTriggerData}
-                className="btn btcd-btn-lg green sh-sm flx"
-                type="button"
-                disabled={!newFlow.triggerDetail.data.length || !primaryKey}
-              >
-                Set Action
-              </button>
-            </div>
+                )
+              }
+              {
+                newFlow.triggerDetail?.data &&
+                <div className="flx flx-between">
+                  <button
+                    onClick={showResponseTable}
+                    className="btn btcd-btn-lg sh-sm flx"
+                  >
+                    <span className="txt-essentialBlocks-resbtn font-inter-500">
+                      {showResponse ? 'Hide Response' : 'View Response'}
+                    </span>
+                    {!showResponse ? (
+                      <EyeIcn
+                        width="20"
+                        height="20"
+                        strokeColor="#000000"
+                      />
+                    ) : (
+                      <EyeOffIcn
+                        width="20"
+                        height="20"
+                        strokeColor="#000000"
+                      />
+                    )}
+                  </button>
+                  <button
+                    onClick={setTriggerData}
+                    className="btn btcd-btn-lg green sh-sm flx"
+                    type="button"
+                    disabled={!newFlow.triggerDetail.data.length || !primaryKey}
+                  >
+                    Set Action
+                  </button>
+                </div>
+              }
+            </>
           }
-        </>
-      }
-      <div className="flx flx-center">
-        <Note note={info} />
-      </div>
-    </div >
+          <div className="flx flx-center">
+            <Note note={info} />
+          </div>
+        </div >
+      )
   )
 }
 export default CustomFormSubmission
