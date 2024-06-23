@@ -35,11 +35,11 @@ export const handleInput = (
           setIsLoading,
           setSnackbar
         );
-      } else if (
+      }
+
+      if (
         (e.target.name === "listId" && e.target.value) ||
-        (e.target.name === "module" &&
-          (e.target.value === "add_tag_to_a_member" ||
-            e.target.value === "remove_tag_from_a_member"))
+        e.target.name === "module"
       ) {
         refreshTags(
           formID,
