@@ -425,10 +425,10 @@ const tokenHelper = (
     });
 };
 
-export const checkMappedFields = (sheetconf) => {
-  const mappedFleld = sheetconf.field_map
-    ? sheetconf.field_map.filter(
-        (mapped) => !mapped.formField && !mapped.mailChimpField
+export const checkMappedFields = (mailChimpConf) => {
+  const mappedFleld = mailChimpConf.field_map
+    ? mailChimpConf.field_map.filter(
+        (mapped) => !mapped.formField || !mapped.mailChimpField
       )
     : [];
   if (mappedFleld.length > 0) {

@@ -274,6 +274,7 @@ class MailChimpController
 
         $tokenDetails = $integrationDetails->tokenDetails;
         $listId = $integrationDetails->listId;
+        $module = isset($integrationDetails->module) ? $integrationDetails->module : '';
         $tags = $integrationDetails->tags;
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;
@@ -291,6 +292,7 @@ class MailChimpController
         $recordApiHelper = new RecordApiHelper($tokenDetails, $this->_integrationID);
         $mChimpApiResponse = $recordApiHelper->execute(
             $listId,
+            $module,
             $tags,
             $defaultDataConf,
             $fieldValues,

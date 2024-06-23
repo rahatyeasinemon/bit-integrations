@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput } from './MailChimpCommonFunc'
+import { checkMappedFields, handleInput } from './MailChimpCommonFunc'
 import MailChimpIntegLayout from './MailChimpIntegLayout'
 import EditFormInteg from '../EditFormInteg'
 import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
@@ -51,7 +51,7 @@ function EditMailChimp({ allIntegURL }) {
       <IntegrationStepThree
         edit
         saveConfig={() => saveActionConf({ flow, setFlow, allIntegURL, conf: mailChimpConf, navigate, edit: 1, setIsLoading, setSnackbar })}
-        disabled={mailChimpConf.listId === '' || mailChimpConf.field_map.length < 1}
+        disabled={mailChimpConf.module === '' || mailChimpConf.listId === '' || mailChimpConf.field_map.length < 1 || !checkMappedFields(mailChimpConf)}
         isLoading={isLoading}
         dataConf={mailChimpConf}
         setDataConf={setMailChimpConf}
