@@ -24,10 +24,7 @@ export const handleInput = (
         setError({ ...rmError });
       }
       draftConf[e.target.name] = e.target.value;
-      if (
-        e.target.name === "module" &&
-        e.target.value === "add_a_member_to_an_audience"
-      ) {
+      if (e.target.name === "module" && e.target.value) {
         refreshAudience(
           formID,
           mailChimpConf,
@@ -39,7 +36,8 @@ export const handleInput = (
 
       if (
         (e.target.name === "listId" && e.target.value) ||
-        e.target.name === "module"
+        (e.target.name === "module" &&
+          e.target.value === "add_a_member_to_an_audience")
       ) {
         refreshTags(
           formID,

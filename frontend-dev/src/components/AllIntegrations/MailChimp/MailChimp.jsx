@@ -30,7 +30,7 @@ function MailChimp({ formFields, setFlow, flow, allIntegURL }) {
       { formField: '', mailChimpField: '' },
     ],
     address_field: [],
-    module: 'add_a_member_to_an_audience',
+    module: '',
     actions: {},
     moduleLists: []
   })
@@ -79,7 +79,7 @@ function MailChimp({ formFields, setFlow, flow, allIntegURL }) {
         <MailChimpIntegLayout
           formID={formID}
           formFields={formFields}
-          handleInput={(e) => handleInput(e, mailChimpConf, setMailChimpConf, formID, loading, setLoading, setSnackbar, isLoading)}
+          handleInput={(e) => handleInput(e, mailChimpConf, setMailChimpConf, formID, loading, setLoading, setSnackbar, setIsLoading)}
           mailChimpConf={mailChimpConf}
           setMailChimpConf={setMailChimpConf}
           isLoading={isLoading}

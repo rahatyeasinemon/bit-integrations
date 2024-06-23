@@ -198,7 +198,7 @@ export default function IntegInfo() {
       case 'Google Sheet':
         return <GoogleSheetAuthorization sheetConf={integrationConf} step={1} redirectLocation={location} isInfo />
       case 'Mail Chimp':
-        return <MailChimpAuthorization sheetConf={integrationConf} step={1} redirectLocation={location} isInfo />
+        return <MailChimpAuthorization mailChimpConf={integrationConf} step={1} redirectLocation={location} isInfo />
       case 'Mail Poet':
         return <MailPoetAuthorization mailPoetConf={integrationConf} step={1} isInfo />
       case 'SendinBlue': case 'Brevo(Sendinblue)':
