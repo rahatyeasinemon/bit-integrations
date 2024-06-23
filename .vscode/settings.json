@@ -13,15 +13,8 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-  "stylelint.snippet": [
-    "css",
-    "scss"
-  ],
-  "stylelint.validate": [
-    "css",
-    "scss",
-    "postcss"
-  ],
+  "stylelint.snippet": ["css", "scss"],
+  "stylelint.validate": ["css", "scss", "postcss"],
   "files.eol": "\n",
   "search.exclude": {
     "**/.git": true,
@@ -41,12 +34,10 @@
     "**/tmp": true,
     "**/yarn.lock": true,
     "**/vendor": true,
-    "**/tests/__libs": true,
+    "**/tests/__libs": true
   },
   "typescript.tsdk": "frontend-dev\\node_modules\\typescript\\lib",
-  "css.lint.validProperties": [
-    "composes"
-  ],
+  "css.lint.validProperties": ["composes"],
   "cSpell.words": [
     "ABSPATH",
     "antd",
@@ -80,5 +71,5 @@
   },
   "[php]": {
     "editor.defaultFormatter": "junstyle.php-cs-fixer"
-  },
+  }
 }
