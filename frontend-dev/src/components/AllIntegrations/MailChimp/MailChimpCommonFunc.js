@@ -14,7 +14,7 @@ export const handleInput = (
   setIsLoading,
   isNew,
   error,
-  setError,
+  setError
 ) => {
   setMailChimpConf((prevConf) =>
     create(prevConf, (draftConf) => {
@@ -24,9 +24,23 @@ export const handleInput = (
         setError({ ...rmError });
       }
       draftConf[e.target.name] = e.target.value;
-      if (e.target.name === "module" && e.target.value) {
-        refreshAudience(formID, mailChimpConf, setMailChimpConf, setIsLoading, setSnackbar)
-      }else if (e.target.name === "listId" && e.target.value) {
+      if (
+        e.target.name === "module" &&
+        e.target.value === "add_a_member_to_an_audience"
+      ) {
+        refreshAudience(
+          formID,
+          mailChimpConf,
+          setMailChimpConf,
+          setIsLoading,
+          setSnackbar
+        );
+      } else if (
+        (e.target.name === "listId" && e.target.value) ||
+        (e.target.name === "module" &&
+          (e.target.value === "add_tag_to_a_member" ||
+            e.target.value === "remove_tag_from_a_member"))
+      ) {
         refreshTags(
           formID,
           draftConf,
@@ -63,23 +77,21 @@ export const checkAddressFieldMapRequired = (mailChimpConf) => {
   return true;
 };
 
-export const refreshModules = (
-  setMailChimpConf,
-  setIsLoading,
-  setSnackbar
-) => {
+export const refreshModules = (setMailChimpConf, setIsLoading, setSnackbar) => {
   setIsLoading(true);
   bitsFetch(null, "mChimp_refresh_modules")
     .then((result) => {
       if (result && result.success) {
-        setMailChimpConf(prevConf => create(prevConf, (draftConf) => {
-          draftConf.moduleLists = result.data
-        }))
+        setMailChimpConf((prevConf) =>
+          create(prevConf, (draftConf) => {
+            draftConf.moduleLists = result.data;
+          })
+        );
         setSnackbar({
           show: true,
           msg: __("Module list refreshed", "bit-integrations"),
         });
-        setMailChimpConf({ ...newConf });
+        // setMailChimpConf({ ...newConf });
       } else {
         setSnackbar({
           show: true,
@@ -108,21 +120,23 @@ export const refreshAudience = (
   bitsFetch(refreshModulesRequestParams, "mChimp_refresh_audience")
     .then((result) => {
       if (result && result.success) {
-        const newConf = { ...mailChimpConf };
-        if (!newConf.default) {
-          newConf.default = {};
-        }
-        if (result.data.audiencelist) {
-          newConf.default.audiencelist = result.data.audiencelist;
-        }
-        if (result.data.tokenDetails) {
-          newConf.tokenDetails = result.data.tokenDetails;
-        }
+        setMailChimpConf((prevConf) =>
+          create(prevConf, (draftConf) => {
+            if (!draftConf.default) {
+              draftConf.default = {};
+            }
+            if (result.data.audiencelist) {
+              draftConf.default.audiencelist = result.data.audiencelist;
+            }
+            if (result.data.tokenDetails) {
+              draftConf.tokenDetails = result.data.tokenDetails;
+            }
+          })
+        );
         setSnackbar({
           show: true,
           msg: __("Audience list refreshed", "bit-integrations"),
         });
-        setMailChimpConf({ ...newConf });
       } else if (
         (result && result.data && result.data.data) ||
         (!result.success && typeof result.data === "string")
@@ -220,6 +234,7 @@ export const refreshFields = (
   const refreshSpreadsheetsRequestParams = {
     formID,
     listId,
+    module: mailChimpConf?.module,
     clientId: mailChimpConf.clientId,
     clientSecret: mailChimpConf.clientSecret,
     tokenDetails: mailChimpConf.tokenDetails,

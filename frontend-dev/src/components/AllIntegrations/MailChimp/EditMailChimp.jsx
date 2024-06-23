@@ -44,6 +44,8 @@ function EditMailChimp({ allIntegURL }) {
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         setSnackbar={setSnackbar}
+        loading={loading}
+        setLoading={setLoading}
       />
 
       <IntegrationStepThree

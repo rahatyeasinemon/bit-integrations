@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\MailChimp;
 
+use WP_Error;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
-use WP_Error;
 
 /**
  * Provide functionality for MailChimp integration
@@ -47,24 +47,19 @@ class MailChimpController
         ];
 
         if (Helper::isProActivate()) {
-            $allModules += [
+            $allModules = array_merge(
+                $allModules,
                 [
-                    'name'  => 'add_a_segment_to_an_audience',
-                    'label' => 'Add a segment to an audience',
-                ],
-                [
-                    'name'  => 'add_a_member_to_a_segment',
-                    'label' => 'Add a member to a segment',
-                ],
-                [
-                    'name'  => 'add_tag_to_a_member',
-                    'label' => 'Add tag to a member',
-                ],
-                [
-                    'name'  => 'remove_tag_from_a_member',
-                    'label' => 'Remove tag from a member',
-                ],
-            ];
+                    [
+                        'name'  => 'add_tag_to_a_member',
+                        'label' => 'Add tag to a member',
+                    ],
+                    [
+                        'name'  => 'remove_tag_from_a_member',
+                        'label' => 'Remove tag from a member',
+                    ],
+                ]
+            );
         }
 
         return $allModules;
@@ -195,6 +190,15 @@ class MailChimpController
                 400
             );
         }
+
+        if (isset($queryParams->module) && ($queryParams->module == 'add_tag_to_a_member' || $queryParams->module == 'remove_tag_from_a_member')) {
+            $fields['Email'] = (object) ['tag' => 'email_address', 'name' => 'Email', 'required' => true];
+            $response['audienceField'] = $fields;
+            wp_send_json_success($response);
+
+            return;
+        }
+
         $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . "/lists/{$queryParams->listId}/merge-fields";
         $authorizationHeader['Authorization'] = "Bearer {$queryParams->tokenDetails->access_token}";
         $mergeFieldResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);

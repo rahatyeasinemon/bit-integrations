@@ -38,6 +38,7 @@ function MailChimp({ formFields, setFlow, flow, allIntegURL }) {
   useEffect(() => {
     window.opener && setGrantTokenResponse('mailChimp')
   }, [])
+
   const nextPage = () => {
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0

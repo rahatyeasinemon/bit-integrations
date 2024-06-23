@@ -43,21 +43,24 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
       <button onClick={() => refreshModules(setMailChimpConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh module list"' }} type="button" disabled={isLoading}>&#x21BB;</button>
       <br />
       <br />
-      <br />
-      <b className="wdt-200 d-in-b">{__('Audience List:', 'bit-integrations')}</b>
-      <select onChange={handleInput} name="listId" value={mailChimpConf.listId} className="btcd-paper-inp w-5">
-        <option value="">{__('Select Audience List', 'bit-integrations')}</option>
-        {
-          mailChimpConf?.default?.audiencelist && Object.keys(mailChimpConf.default.audiencelist).map(audiencelistName => (
-            <option key={audiencelistName} value={mailChimpConf.default.audiencelist[audiencelistName].listId}>
-              {mailChimpConf.default.audiencelist[audiencelistName].listName}
-            </option>
-          ))
-        }
-      </select>
-      <button onClick={() => refreshAudience(formID, mailChimpConf, setMailChimpConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Audience list"' }} type="button" disabled={isLoading}>&#x21BB;</button>
-      <br />
-      <br />
+      {(!mailChimpConf?.module || mailChimpConf?.module === 'add_a_member_to_an_audience') && <>
+        <br />
+        <b className="wdt-200 d-in-b">{__('Audience List:', 'bit-integrations')}</b>
+        <select onChange={handleInput} name="listId" value={mailChimpConf.listId} className="btcd-paper-inp w-5">
+          <option value="">{__('Select Audience List', 'bit-integrations')}</option>
+          {
+            mailChimpConf?.default?.audiencelist && Object.keys(mailChimpConf.default.audiencelist).map(audiencelistName => (
+              <option key={audiencelistName} value={mailChimpConf.default.audiencelist[audiencelistName].listId}>
+                {mailChimpConf.default.audiencelist[audiencelistName].listName}
+              </option>
+            ))
+          }
+        </select>
+        <button onClick={() => refreshAudience(formID, mailChimpConf, setMailChimpConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh Audience list"' }} type="button" disabled={isLoading}>&#x21BB;</button>
+        <br />
+        <br />
+      </>
+      }
       <div className="d-flx">
         <b style={{ marginTop: '15px' }} className="wdt-200 d-in-b">{__('Tags: ', 'bit-integrations')}</b>
         <MultiSelect
@@ -66,7 +69,7 @@ export default function MailChimpIntegLayout({ formID, formFields, handleInput, 
           options={mailChimpConf?.default?.audienceTags && Object.keys(mailChimpConf.default.audienceTags).map(tag => ({ label: mailChimpConf.default.audienceTags[tag].tagName, value: mailChimpConf.default.audienceTags[tag].tagName }))}
           onChange={val => setTags(val)}
         />
-        <button onClick={() => refreshTags(formID, mailChimpConf, setMailChimpConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MailChimp Tags', 'bit-integrations')}'` }} type="button" disabled={loading?.tags}>&#x21BB;</button>
+        <button onClick={() => refreshTags(formID, mailChimpConf, setMailChimpConf, setSnackbar, loading, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh MailChimp Tags', 'bit-integrations')}'` }} type="button" disabled={loading?.tags}>&#x21BB;</button>
       </div>
       {(isLoading || loading?.tags || loading?.refreshFields) && (
         <Loader style={{
