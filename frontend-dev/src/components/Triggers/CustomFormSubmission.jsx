@@ -146,12 +146,13 @@ const CustomFormSubmission = () => {
     }))
   }
 
-  const info = `<h4>Please follow the simple steps below to setup ${newFlow?.triggerDetail?.name}</h4>
+  const info = `<h4>Follow these simple steps to set up the ${newFlow?.triggerDetail?.name}:</h4>
             <ul>
-              <li>Click <b>Fetch</b></li>
-              <li>Submit <b>The Form</b></li>
-              <li>Click <b>Next</b> and <b>Go</b></b></li>
+              <li>Click the <b>Fetch</b> button.</li>
+              <li>Submit <b>The Form</b> while the Fetch button is <b>spinning</b>.</li>
+              <li>After submitting the form, Click <b>Next</b> and then <b>Go</b></b></li>
             </ul>
+            <h5>Important: The Fetch button will keep spinning until you submit the form.</h5>
             <h5>
               More Details on 
               <a className="btcd-link" href=${newFlow?.triggerDetail?.documentation_url} target="_blank" rel="noreferrer">${__('Documentation', 'bit-integrations')}</a>
@@ -187,7 +188,7 @@ const CustomFormSubmission = () => {
                   type="button"
                 >
                   {isLoading
-                    ? __('Stop', 'bit-integrations')
+                    ? __('Waiting for form submission...', 'bit-integrations')
                     : newFlow.triggerDetail?.data
                       ? __('Fetched ✔', 'bit-integrations')
                       : __('Fetch', 'bit-integrations')
@@ -281,7 +282,7 @@ const CustomFormSubmission = () => {
             </>
           }
           <div className="flx flx-center">
-            <Note note={info} />
+            <Note note={info} isInstruction={true} />
           </div>
         </div >
       )
