@@ -17,6 +17,8 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
   const setFormFields = useSetRecoilState($formFields)
   const [isLoading, setIsLoading] = useState(false)
   const intervalRef = useRef(null)
+  let controller = new AbortController();
+  const signal = controller.signal;
   const fetchAction = flow?.flow_details?.fetch?.action || ''
   const fetchMethod = flow?.flow_details?.fetch?.method || ''
   const removeAction = flow?.flow_details?.fetch_remove?.action || ''
@@ -25,32 +27,33 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
   const handleFetch = () => {
     if (isLoading) {
       clearInterval(intervalRef.current)
+      controller.abort();
       removeTestData()
       setIsLoading(false)
       return
     }
-
     setIsLoading(true)
     intervalRef.current = setInterval(() => {
-      bitsFetch(null, fetchAction, null, fetchMethod).then((resp) => {
+      bitsFetch(null, fetchAction, null, fetchMethod, signal).then((resp) => {
         if (resp.success) {
           clearInterval(intervalRef.current)
-          setFlow(prevFlow => {
-            const draftFlow = deepCopy(prevFlow)
-
+          controller.abort();
+          setFlow(prevFlow => create(prevFlow, draftFlow => {
             draftFlow.flow_details.fields = resp.data?.formData
-            draftFlow.flow_details.primaryKey.key = resp.data?.primaryKey?.key
-            draftFlow.flow_details.primaryKey.value = resp.data?.primaryKey?.value
-
-            return draftFlow
-          })
+            draftFlow.flow_details.primaryKey = resp.data?.primaryKey
+          }))
           setFormFields(resp.data?.formData)
           setIsLoading(false)
           bitsFetch({ reset: true }, removeAction, null, removeMethod)
         }
-      })
+      }).catch(err => {
+        if (err.name === 'AbortError') {
+          console.log('AbortError: Fetch request aborted');
+        }
+      });
     }, 1500)
   }
+
 
   const primaryKeySet = (key) => {
     setFlow(prevFlow => create(prevFlow, draftFlow => {
@@ -88,28 +91,66 @@ function EditCustomFormSubmissionInteg({ setSnackbar }) {
     }
   }, [])
 
+  const setTriggerEntityId = (val) => {
+    if (flow?.triggered_entity_id) {
+      removeTestData()
+    }
+
+    setFlow(prevFlow => create(prevFlow, (draftFlow) => {
+      draftFlow.triggered_entity_id = val
+      draftFlow.flow_details['fields'] = []
+      draftFlow.flow_details['primaryKey'] = undefined
+
+      if (draftFlow.flow_details?.body?.data) {
+        draftFlow.flow_details.body.data = []
+      } else {
+        draftFlow.flow_details.field_map = []
+      }
+    }))
+    setFormFields([])
+  }
+
   return (
-    <div className="flx">
-      <b className="wdt-200 d-in-b">{__('Unique Key:', 'bit-integrations')}</b>
-      <div className="w-5 flx flx-between">
-        <MultiSelect
-          options={flow.flow_details.fields?.map(field => ({ label: field?.label, value: field?.name }))}
-          className="msl-wrp-options"
-          defaultValue={Array.isArray(flow?.flow_details?.primaryKey) ? flow?.flow_details?.primaryKey.map(item => item.key).join(',') : ''}
-          onChange={primaryKeySet}
-          disabled={isLoading}
-          closeOnSelect
-        />
-        <button onClick={handleFetch} className={`btn btcd-btn-lg sh-sm flx ml-1 ${isLoading ? 'red' : 'green'}`} type="button">
-          {isLoading
-            ? __('Stop', 'bit-integrations')
-            : (flow.flow_details.fields
-              ? __('Fetched ✔', 'bit-integrations')
-              : __('Fetch', 'bit-integrations'))
-          }
-          {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
-        </button>
-      </div>
+    <div>
+      {flow?.flow_details?.multi_form &&
+        <div className="flx">
+          <b className="wdt-200 d-in-b">{__('Select a Form/Task Name:', 'bit-integrations')}</b>
+          <div className='w-5 flx flx-between'>
+            <MultiSelect
+              className="msl-wrp-options"
+              defaultValue={flow?.triggered_entity_id}
+              options={flow.flow_details?.multi_form?.map(field => ({ label: field?.form_name, value: field?.triggered_entity_id }))}
+              onChange={(val) => setTriggerEntityId(val)}
+              singleSelect
+              style={{ width: '100%', minWidth: 400, maxWidth: 450 }}
+            />
+          </div>
+        </div>
+      }
+      {flow?.triggered_entity_id &&
+        <div className="flx">
+          <b className="wdt-200 d-in-b">{__('Unique Key:', 'bit-integrations')}</b>
+          <div className="w-5 flx flx-between">
+            <MultiSelect
+              options={flow.flow_details.fields?.map(field => ({ label: field?.label, value: field?.name }))}
+              className="msl-wrp-options"
+              defaultValue={Array.isArray(flow?.flow_details?.primaryKey) ? flow?.flow_details?.primaryKey.map(item => item.key).join(',') : ''}
+              onChange={primaryKeySet}
+              disabled={isLoading}
+              closeOnSelect
+            />
+            <button onClick={handleFetch} className={`btn btcd-btn-lg sh-sm flx ml-1 ${isLoading ? 'red' : 'green'}`} type="button">
+              {isLoading
+                ? __('Stop', 'bit-integrations')
+                : (flow.flow_details.fields
+                  ? __('Fetched ✔', 'bit-integrations')
+                  : __('Fetch', 'bit-integrations'))
+              }
+              {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
+            </button>
+          </div>
+        </div>
+      }
     </div>
   )
 }

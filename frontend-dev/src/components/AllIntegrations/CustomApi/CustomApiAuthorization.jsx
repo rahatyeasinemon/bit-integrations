@@ -161,7 +161,7 @@ export default function CustomApiAuthorization({ formID, customApiConf, setCusto
         <button
           onClick={() => setStep(2)}
           disabled={isDisabled(customApiConf.authType) || isLoading}
-          className="btn btcd-btn-lg green sh-sm "
+          className="btn btcd-btn-lg purple sh-sm "
           type="button"
         >
           {__('Next', 'bit-integrations')}

@@ -98,7 +98,7 @@ function ZoomWebinar({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           disabled={zoomWebinarConf.field_map.length < 2 || isLoading || !zoomWebinarConf.id || !checkMappedFields(zoomWebinarConf) || zoomWebinarConf.selectedActions == null}
-          className="btn f-right btcd-btn-lg green sh-sm flx"
+          className="btn f-right btcd-btn-lg purple sh-sm flx"
           type="button"
         >
           {__('Next', 'bit-integrations')}

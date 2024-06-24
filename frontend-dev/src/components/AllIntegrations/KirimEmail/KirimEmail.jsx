@@ -91,7 +91,7 @@ function KirimEmail({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           disabled={!checkMappedFields(kirimEmailConf?.field_map) || kirimEmailConf.mainAction === '' || isLoading || (kirimEmailConf.mainAction === '1' && (kirimEmailConf.listId === '' || kirimEmailConf.listId === undefined))}
-          className="btn f-right btcd-btn-lg green sh-sm flx"
+          className="btn f-right btcd-btn-lg purple sh-sm flx"
           type="button"
         >
           {__('Next', 'bit-integrations')}

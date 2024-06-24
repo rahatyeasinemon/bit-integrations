@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import surprise from '../resource/img/surprise.svg'
 import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 import { __ } from '../Utils/i18nwrap'
 import { $btcbi } from '../GlobalStates'
@@ -21,7 +22,10 @@ export default function CashbackModal() {
                 className="cashback-btn"
                 onClick={() => setShow(true)}
             >
-                Get $10 Cashback
+                <img src={surprise} style={{ marginRight: '8px', width: '25px' }} />
+
+                <span>$10 Cashback</span>
+
             </button>
             <Modal sm show={show} setModal={() => setShow(false)} noPadding={true}>
                 <div>

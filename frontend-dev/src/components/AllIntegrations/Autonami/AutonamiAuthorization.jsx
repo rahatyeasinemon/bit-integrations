@@ -70,12 +70,12 @@ export default function AutonamiAuthorization({ formID, autonamiConf, setAutonam
         )}
         {!isInfo && (
           <>
-            <button onClick={handleAuthorize} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized || isLoading}>
+            <button onClick={handleAuthorize} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isAuthorized || isLoading}>
               {isAuthorized ? __('Connected ✔', 'bit-integrations') : __('Connect to Autonami', 'bit-integrations')}
               {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
             </button>
             <br />
-            <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
+            <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button" disabled={!isAuthorized}>
               {__('Next', 'bit-integrations')}
               <BackIcn className="ml-1 rev-icn" />
             </button>
