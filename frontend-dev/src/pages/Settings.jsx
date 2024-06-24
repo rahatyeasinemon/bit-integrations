@@ -96,8 +96,6 @@ function Settings() {
       });
   };
 
-  console.log('showAnalyticsOptin', showAnalyticsOptin);
-
   return (
     <div className="btcd-f-settings">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
