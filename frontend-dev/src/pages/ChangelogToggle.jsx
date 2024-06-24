@@ -38,9 +38,10 @@ export default function ChangelogToggle() {
 
     const [isChecked, setIsChecked] = useState(true)
 
-    const handleCheckboxChange = e => {
-        setIsChecked(!isChecked);
-    };
+    const closeModal = () => {
+        setShow(false)
+        setChangeLogVersion()
+    }
 
     useEffect(() => {
         if (show) {
@@ -126,8 +127,7 @@ export default function ChangelogToggle() {
                                         <button
                                             type="button"
                                             className="btn round btn-md gray gray-sh"
-                                            onClick={() => setShow(false)
-                                            }
+                                            onClick={() => closeModal()}
                                         >
                                             Skip
                                         </button>
