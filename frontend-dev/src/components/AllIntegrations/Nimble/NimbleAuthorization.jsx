@@ -73,12 +73,12 @@ export default function NimbleAuthorization({ nimbleConf, setNimbleConf, step, s
 
       {!isInfo && (
         <div>
-          <button onClick={() => nimbleAuthentication(nimbleConf, setNimbleConf, setError, setIsAuthorized, loading, setLoading)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized || loading.auth}>
+          <button onClick={() => nimbleAuthentication(nimbleConf, setNimbleConf, setError, setIsAuthorized, loading, setLoading)} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isAuthorized || loading.auth}>
             {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
             {loading.auth && <LoaderSm size="20" clr="#022217" className="ml-2" />}
           </button>
           <br />
-          <button onClick={nextPage} className="btn ml-auto btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
+          <button onClick={nextPage} className="btn ml-auto btcd-btn-lg purple sh-sm flx" type="button" disabled={!isAuthorized}>
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

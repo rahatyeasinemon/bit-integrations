@@ -233,7 +233,7 @@ const CustomFormSubmission = () => {
           </button>
           <button
             onClick={setTriggerData}
-            className="btn btcd-btn-lg green sh-sm flx"
+            className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
             disabled={!newFlow.triggerDetail.data.length || !primaryKey}
           >

@@ -56,7 +56,7 @@ function EditCustomAction({ allIntegURL }) {
           <button
             onClick={() => checkFunctionValidity(customActionConf, setCustomActionConf, loading, setLoading)}
             disabled={!customActionConf.value || loading?.validate}
-            className="btn f-left btcd-btn-lg green sh-sm flx mt-5"
+            className="btn f-left btcd-btn-lg purple sh-sm flx mt-5"
             type="button"
           >
             {customActionConf?.isValid && !loading?.validate ? __('Validated ✔', 'bit-integrations') : __('Validated', 'bit-integrations')}

@@ -87,12 +87,12 @@ export default function ZohoAnalyticsAuthorization({ formID, analyticsConf, setA
 
       {!isInfo && (
         <>
-          <button onClick={() => handleAuthorize(analyticsConf, setAnalyticsConf, setError, setisAuthorized, setIsLoading, setSnackbar)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized || isLoading}>
+          <button onClick={() => handleAuthorize(analyticsConf, setAnalyticsConf, setError, setisAuthorized, setIsLoading, setSnackbar)} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isAuthorized || isLoading}>
             {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
           <br />
-          <button onClick={nextPage} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
+          <button onClick={nextPage} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button" disabled={!isAuthorized}>
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

@@ -108,7 +108,7 @@ export default function PipeDriveAuthorization({ pipeDriveConf, setPipeDriveConf
               setisAuthorized,
               setIsLoading,
             )}
-            className="btn btcd-btn-lg green sh-sm flx"
+            className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
             disabled={isAuthorized || isLoading}
           >
@@ -122,7 +122,7 @@ export default function PipeDriveAuthorization({ pipeDriveConf, setPipeDriveConf
           <br />
           <button
             onClick={nextPage}
-            className="btn ml-auto btcd-btn-lg green sh-sm flx"
+            className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
             disabled={!isAuthorized}
           >

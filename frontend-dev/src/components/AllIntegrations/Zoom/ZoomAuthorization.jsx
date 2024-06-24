@@ -83,12 +83,12 @@ export default function ZoomAuthorization({ formID, zoomConf, setZoomConf, step,
       <div style={{ color: 'red', fontSize: '15px' }}>{error.clientSecret}</div>
       {!isInfo && (
         <>
-          <button onClick={() => handleAuthorize(zoomConf, setZoomConf, setError, setisAuthorized, setIsLoading, setSnackbar)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized}>
+          <button onClick={() => handleAuthorize(zoomConf, setZoomConf, setError, setisAuthorized, setIsLoading, setSnackbar)} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isAuthorized}>
             {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
           <br />
-          <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
+          <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button" disabled={!isAuthorized}>
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

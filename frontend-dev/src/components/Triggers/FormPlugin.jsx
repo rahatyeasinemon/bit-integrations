@@ -103,7 +103,7 @@ const FormPlugin = () => {
               />
               <TriggerMultiOption flow={newFlow} setFlowData={setFlowData} />
               <div>
-                <button type="button" onClick={updatedStep} className="btn ml-auto btcd-btn-lg green sh-sm flx mt-4" disabled={!newFlow?.triggerData?.formID}>
+                <button type="button" onClick={updatedStep} className="btn ml-auto btcd-btn-lg purple sh-sm flx mt-4" disabled={!newFlow?.triggerData?.formID}>
                   &nbsp;Next
                   <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
                   {isLoad && <LoaderSm size={20} clr="#fff" className="ml-2" />}

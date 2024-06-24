@@ -90,13 +90,13 @@ export default function RestrictContentAuthorization({ formID, restrictConf, set
       )}
 
       {!isAuthorized && (
-        <button onClick={authorizeHandler} className="btn btcd-btn-lg green sh-sm flx mt-5" type="button">
+        <button onClick={authorizeHandler} className="btn btcd-btn-lg purple sh-sm flx mt-5" type="button">
           {__('Connect', 'bit-integrations')}
         </button>
       )}
 
       {isAuthorized && (
-        <button onClick={() => nextPage(2)} className="btn btcd-btn-lg green sh-sm flx mt-5" type="button" disabled={!isAuthorized}>
+        <button onClick={() => nextPage(2)} className="btn btcd-btn-lg purple sh-sm flx mt-5" type="button" disabled={!isAuthorized}>
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

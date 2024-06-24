@@ -251,7 +251,7 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
 
         <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap('post_map', postConf.post_map.length, postConf, setPostConf)} className="icn-btn sh-sm" type="button">+</button></div>
 
-        <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button">
+        <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button">
           {__('Next', 'bit-integrations')}
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
@@ -271,7 +271,7 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
           mbFields={mb}
         />
 
-        <button onClick={() => nextPage(3)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button">
+        <button onClick={() => nextPage(3)} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button">
           {__('Next', 'bit-integrations')}
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>

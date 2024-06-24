@@ -154,7 +154,7 @@ export default function ConstantContactAuthorization({ constantContactConf, setC
               setSnackbar,
               btcbi,
             )}
-            className="btn btcd-btn-lg green sh-sm flx"
+            className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
             disabled={isAuthorized || isLoading.auth}
           >
@@ -168,7 +168,7 @@ export default function ConstantContactAuthorization({ constantContactConf, setC
           <br />
           <button
             onClick={nextPage}
-            className="btn f-right btcd-btn-lg green sh-sm flx"
+            className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
             disabled={!isAuthorized}
           >
