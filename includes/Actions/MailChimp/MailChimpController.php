@@ -6,8 +6,9 @@
 
 namespace BitCode\FI\Actions\MailChimp;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for MailChimp integration
@@ -29,6 +30,39 @@ class MailChimpController
     public static function apiEndPoint($dc)
     {
         return "https://{$dc}.api.mailchimp.com/3.0";
+    }
+
+    /**
+     * MailChimp Actions
+     *
+     * @return array $allModules
+     */
+    public static function refreshModules()
+    {
+        $allModules = [
+            [
+                'name'  => 'add_a_member_to_an_audience',
+                'label' => 'Add a member to an audience',
+            ]
+        ];
+
+        if (Helper::isProActivate()) {
+            $allModules = array_merge(
+                $allModules,
+                [
+                    [
+                        'name'  => 'add_tag_to_a_member',
+                        'label' => 'Add tag to a member',
+                    ],
+                    [
+                        'name'  => 'remove_tag_from_a_member',
+                        'label' => 'Remove tag from a member',
+                    ],
+                ]
+            );
+        }
+
+        return $allModules;
     }
 
     /**
@@ -156,6 +190,15 @@ class MailChimpController
                 400
             );
         }
+
+        if (isset($queryParams->module) && ($queryParams->module == 'add_tag_to_a_member' || $queryParams->module == 'remove_tag_from_a_member')) {
+            $fields['Email'] = (object) ['tag' => 'email_address', 'name' => 'Email', 'required' => true];
+            $response['audienceField'] = $fields;
+            wp_send_json_success($response);
+
+            return;
+        }
+
         $apiEndpoint = self::apiEndPoint($queryParams->tokenDetails->dc) . "/lists/{$queryParams->listId}/merge-fields";
         $authorizationHeader['Authorization'] = "Bearer {$queryParams->tokenDetails->access_token}";
         $mergeFieldResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
@@ -231,6 +274,7 @@ class MailChimpController
 
         $tokenDetails = $integrationDetails->tokenDetails;
         $listId = $integrationDetails->listId;
+        $module = isset($integrationDetails->module) ? $integrationDetails->module : '';
         $tags = $integrationDetails->tags;
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;
@@ -248,6 +292,7 @@ class MailChimpController
         $recordApiHelper = new RecordApiHelper($tokenDetails, $this->_integrationID);
         $mChimpApiResponse = $recordApiHelper->execute(
             $listId,
+            $module,
             $tags,
             $defaultDataConf,
             $fieldValues,

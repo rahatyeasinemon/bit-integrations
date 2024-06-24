@@ -47,7 +47,7 @@ function Salesforce({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'Mobile', label: 'Mobile', required: false },
     { key: 'Fax', label: 'Fax', required: false },
     { key: 'Street', label: 'Street', required: false },
-    { key: 'Zip', label: 'Zip', required: false },
+    { key: 'PostalCode', label: 'Zip/Postal Code', required: false },
     { key: 'Country', label: 'Country', required: false },
     { key: 'Description', label: 'Description', required: false },
     { key: 'LeadSource', label: 'Lead source', required: false },
@@ -217,7 +217,7 @@ function Salesforce({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           disabled={isDisabled() || isLoading}
-          className="btn f-right btcd-btn-lg green sh-sm flx"
+          className="btn f-right btcd-btn-lg purple sh-sm flx"
           type="button"
         >
           {__('Next', 'bit-integrations')}

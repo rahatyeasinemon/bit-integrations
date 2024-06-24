@@ -192,7 +192,7 @@ function PerfexCRM({ formFields, setFlow, flow, allIntegURL }) {
           <button
             onClick={() => nextPage(3)}
             disabled={!(checkMappedFields(perfexCRMConf))}
-            className="btn f-right btcd-btn-lg green sh-sm flx"
+            className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
           >
             {__('Next', 'bit-integrations')}

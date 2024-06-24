@@ -198,6 +198,10 @@ export const saveIntegConfig = async (
     tmpConf["primaryKey"] = !edit
       ? flow.triggerData.primaryKey
       : flow?.flow_details?.primaryKey;
+    
+    tmpConf["multi_form"] = !edit
+      ? flow.triggerData.multi_form || ''
+      : flow?.flow_details?.multi_form || '';
 
     tmpConf["fields"] = !edit
       ? flow?.triggerData?.fields
@@ -380,6 +384,10 @@ export const saveActionConf = async ({
     tmpConf["primaryKey"] = !edit
       ? flow.triggerData.primaryKey
       : flow?.flow_details?.primaryKey;
+    
+    tmpConf["multi_form"] = !edit
+      ? flow.triggerData.multi_form || ''
+      : flow?.flow_details?.multi_form || '';
 
     tmpConf["fields"] = !edit
       ? flow?.triggerData?.fields

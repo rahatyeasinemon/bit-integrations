@@ -160,7 +160,7 @@ function ConstantContact({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           disabled={constantContactConf?.source_type === '' || constantContactConf.field_map.length < 1}
-          className="btn f-right btcd-btn-lg green sh-sm flx"
+          className="btn f-right btcd-btn-lg purple sh-sm flx"
           type="button"
         >
           {__('Next', 'bit-integrations')}

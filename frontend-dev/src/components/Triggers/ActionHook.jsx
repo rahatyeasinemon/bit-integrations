@@ -101,6 +101,7 @@ const ActionHook = () => {
   const handleFetch = () => {
     if (isLoading) {
       clearInterval(intervalRef.current)
+      controller.abort();
       removeTestData(hookID)
       setIsLoading(false)
       return
@@ -343,7 +344,7 @@ const ActionHook = () => {
           </button>
           <button
             onClick={setTriggerData}
-            className="btn btcd-btn-lg green sh-sm flx"
+            className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
             disabled={!selectedFields.length || !primaryKey}
           >

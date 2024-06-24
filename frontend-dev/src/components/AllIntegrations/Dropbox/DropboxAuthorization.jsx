@@ -84,12 +84,12 @@ export default function DropboxAuthorization({ flowID, dropboxConf, setDropboxCo
 
       {!isInfo && (
         <>
-          <button onClick={() => handleAuthorize(dropboxConf, setDropboxConf, setIsAuthorized, setIsLoading, setError)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized || isLoading}>
+          <button onClick={() => handleAuthorize(dropboxConf, setDropboxConf, setIsAuthorized, setIsLoading, setError)} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isAuthorized || isLoading}>
             {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
             {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
           </button>
           <br />
-          <button onClick={nextPage} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
+          <button onClick={nextPage} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button" disabled={!isAuthorized}>
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

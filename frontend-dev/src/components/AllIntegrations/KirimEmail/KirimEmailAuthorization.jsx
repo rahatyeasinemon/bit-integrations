@@ -120,7 +120,7 @@ export default function KirmilEmailAuthorization({ formID,
               setIsLoading,
               setSnackbar,
             )}
-            className="btn btcd-btn-lg green sh-sm flx"
+            className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
             disabled={isAuthorized || isLoading}
           >
@@ -132,7 +132,7 @@ export default function KirmilEmailAuthorization({ formID,
           <br />
           <button
             onClick={nextPage}
-            className="btn f-right btcd-btn-lg green sh-sm flx"
+            className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
             disabled={!isAuthorized}
           >

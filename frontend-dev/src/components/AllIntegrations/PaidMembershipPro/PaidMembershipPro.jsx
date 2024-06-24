@@ -78,7 +78,7 @@ function PaidMembershipPro({ formFields, setFlow, flow, allIntegURL, isInfo, edi
         <button
           onClick={() => nextPage(3)}
           disabled={!paidMembershipProConf.mainAction || isLoading || paidMembershipProConf.selectedMembership === undefined}
-          className="btn f-left btcd-btn-lg green sh-sm flx"
+          className="btn f-left btcd-btn-lg purple sh-sm flx"
           type="button"
         >
           {__('Next', 'bit-integrations')}

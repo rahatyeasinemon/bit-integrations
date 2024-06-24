@@ -164,6 +164,11 @@ final class Helper
         echo '</pre>';
     }
 
+    public static function isProActivate()
+    {
+        return \function_exists('btcbi_pro_activate_plugin');
+    }
+
     public static function isJson($string)
     {
         json_decode($string);

@@ -6,8 +6,9 @@
 
 namespace BitCode\FI\Actions\MailChimp;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -35,6 +36,19 @@ class RecordApiHelper
         return HttpHelper::post($insertRecordEndpoint, $data, $this->_defaultHeader);
     }
 
+    public function addRemoveTag($module, $listId, $data)
+    {
+        if (Helper::isProActivate()) {
+            $subscriber_hash = md5(strtolower(trim($data['email_address'])));
+            $endpoint = $this->_apiEndPoint() . "/lists/{$listId}/members/{$subscriber_hash}/tags";
+
+            return \BitApps\BTCBI_PRO\Actions\MailChimp\MailChimpRecordHelper::addRemoveTag($module, $data, $endpoint, $this->_defaultHeader);
+        }
+        LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $module], 'error', 'Bit Integration Pro plugin is not installed or activate');
+
+        return (object) ['status' => 400, 'message' => 'Bit Integration Pro plugin is not installed or activate'];
+    }
+
     public function updateRecord($listId, $contactId, $data)
     {
         $updateRecordEndpoint = $this->_apiEndPoint() . "/lists/{$listId}/members/{$contactId}";
@@ -49,7 +63,37 @@ class RecordApiHelper
         return HttpHelper::get($existSearchEnpoint, null, $this->_defaultHeader);
     }
 
-    public function execute($listId, $tags, $defaultConf, $fieldValues, $fieldMap, $actions, $addressFields)
+    public function execute($listId, $module, $tags, $defaultConf, $fieldValues, $fieldMap, $actions, $addressFields)
+    {
+        $fieldData = static::generateFieldMap($fieldMap, $fieldValues, $actions, $addressFields, $tags);
+        if (empty($module) || $module == 'add_a_member_to_an_audience') {
+            $recordApiResponse = $this->insertRecord($listId, wp_json_encode($fieldData));
+            $type = 'insert';
+
+            if (!empty($actions->update) && !empty($recordApiResponse->title) && $recordApiResponse->title === 'Member Exists') {
+                $contactEmail = $fieldData['email_address'];
+                $foundContact = $this->existContact($listId, $contactEmail);
+                if (\count($foundContact->exact_matches->members)) {
+                    $contactId = $foundContact->exact_matches->members[0]->id;
+                    $recordApiResponse = $this->updateRecord($listId, $contactId, wp_json_encode($fieldData));
+                    $type = 'update';
+                }
+            }
+        } elseif ($module == 'add_tag_to_a_member' || $module == 'remove_tag_from_a_member') {
+            $type = $module;
+            $recordApiResponse = $this->addRemoveTag($module, $listId, $fieldData);
+        }
+
+        if (isset($recordApiResponse->status) && $recordApiResponse->status === 400) {
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', json_encode($recordApiResponse));
+        } else {
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', json_encode($recordApiResponse));
+        }
+
+        return $recordApiResponse;
+    }
+
+    private static function generateFieldMap($fieldMap, $fieldValues, $actions, $addressFields, $tags)
     {
         $fieldData = [];
         $mergeFields = [];
@@ -87,24 +131,7 @@ class RecordApiHelper
             $fieldData['merge_fields']->ADDRESS = (object) $fvalue;
         }
 
-        $recordApiResponse = $this->insertRecord($listId, wp_json_encode($fieldData));
-        $type = 'insert';
-        if (!empty($actions->update) && !empty($recordApiResponse->title) && $recordApiResponse->title === 'Member Exists') {
-            $contactEmail = $fieldData['email_address'];
-            $foundContact = $this->existContact($listId, $contactEmail);
-            if (\count($foundContact->exact_matches->members)) {
-                $contactId = $foundContact->exact_matches->members[0]->id;
-                $recordApiResponse = $this->updateRecord($listId, $contactId, wp_json_encode($fieldData));
-                $type = 'update';
-            }
-        }
-        if ($recordApiResponse->status === 400) {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', $recordApiResponse);
-        } else {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', $recordApiResponse->id);
-        }
-
-        return $recordApiResponse;
+        return $fieldData;
     }
 
     private function _apiEndPoint()

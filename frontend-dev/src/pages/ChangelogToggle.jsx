@@ -9,12 +9,13 @@ import changelogInfo from '../Utils/StaticData/changelogInfo'
 import bitsFetch from '../Utils/bitsFetch'
 import CheckBox from '../components/Utilities/CheckBox'
 import Loader from '../components/Loaders/Loader'
+import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 
 export default function ChangelogToggle() {
     const [btcbi, setBtcbi] = useRecoilState($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
     const [showAnalyticsOptin, setShowAnalyticsOptin] = useState([])
-    const currentChangelog = '2.0.7'
+    const currentChangelog = '2.1.0'
     const currenChangelog = changelogInfo[currentChangelog]
     const [loading, setLoading] = useState('')
 
@@ -31,7 +32,7 @@ export default function ChangelogToggle() {
     }
 
     const handleSubmit = () => {
-        bitsFetch({ isChecked: isChecked }, 'analytics/optIn')
+        bitsFetch({ isChecked: true }, 'analytics/optIn')
         setShow(false)
     }
 
@@ -42,16 +43,18 @@ export default function ChangelogToggle() {
     };
 
     useEffect(() => {
-        setLoading(true)
-        bitsFetch(
-            {},
-            'analytics/check',
-            '',
-            'GET',
-        ).then((res) => {
-            setShowAnalyticsOptin(res.data)
-            setLoading(false)
-        })
+        if (show) {
+            setLoading(true)
+            bitsFetch(
+                {},
+                'analytics/check',
+                '',
+                'GET',
+            ).then((res) => {
+                setShowAnalyticsOptin(res.data)
+                setLoading(false)
+            })
+        }
     }, [show])
 
 
@@ -82,66 +85,63 @@ export default function ChangelogToggle() {
                             <div className='changelog'>
                                 <div className="flx flx-col flx-center whats-new">
                                     <h3>What's New in {btcbi.version}?</h3>
-                                    <small className='date'> <b>10th June 2024</b></small>
+                                    <small className='date'> <b>13th June 2024</b></small>
                                 </div>
                                 <div className='changelog-content'>
-                                    <span className='new-integration' ><b>New Integration</b></span>
+                                    <span className='new-integration' ><b>New Features</b></span>
 
                                     <div className='integration-list'>
                                         <ul>
-                                            <li>Gutena Forms – Contact Forms Block </li>
-                                            <li>SiteOrigin Widgets Bundle (Form only) </li>
+                                            <li>Mailchimp: Add & Remove tag module added (pro)</li>
                                         </ul>
                                     </div>
 
-                                    <span className='new-feature' ><b>New Features</b></span>
+                                    <span className='new-feature' ><b>New Improvements</b></span>
 
                                     <div className='integration-list'>
                                         <ul>
-                                            <li>Action Hook: Edit Integration page added </li>
+                                            <li>Kadence Block Form: Upgraded with Advanced Form Block & Form Block (pro) </li>
+                                            <li>Custom Form Submission Triggers: Active plugin checker added </li>
                                         </ul>
                                     </div>
-
-                                    <span className='fixes'><b>Fixed</b></span>
-
-                                    <div className='fixes-list'>
-                                        <ul>
-                                            <li>Sendy: Custom Form Fields Value </li>
-                                            <li>Google Calender: TimeZone  </li>
-                                            <li>Tutor LMS: Quiz attempt status (Pro) </li>
-                                            <a href="https://bitapps.pro/docs/bit-integrations/free-changelogs/">Click here to see all</a>
-                                        </ul>
+                                    <div>
+                                        <span className='footer'>{__('For more details,')}</span>
+                                        <a href="https://bitapps.pro/docs/bit-integrations/free-changelogs/" target="_blank" rel="noreferrer">
+                                            {__('Click here ')}
+                                            <ExternalLinkIcn size="14" />
+                                        </a>
                                     </div>
                                 </div>
                                 {!showAnalyticsOptin &&
                                     <div>
-                                        <div>
-                                            <CheckBox checked={isChecked}
-                                                onChange={handleCheckboxChange}
-                                                className="mt-1 font-sm"
-                                                radio={false}
-                                                title={__("Help us improve your experience ", 'bit-integrations')}
-                                                name="telemetry" />
-                                            <br />
-                                            <a className='terms' href='https://bitapps.pro/terms-of-service/'>terms</a>
+                                        <div className='btcd-hr mt-2'></div>
+                                        <div className="flx flx-col flx-center">
+                                            <h4 className='mt-2 mb-0'>Opt-In For Plugin Improvement</h4>
                                         </div>
+                                        <div className='m-2 txt-sm'>
+                                            Accept and continue to share usage data to help us improve the plugin, the plugin will still function if you skip.
+                                            <br />
+                                            <a className='app-link-active' target='blank' href='https://bitapps.pro/terms-of-service/'>Click here to see terms</a>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            className="btn round btn-md gray gray-sh"
+                                            onClick={() => setShow(false)
+                                            }
+                                        >
+                                            Skip
+                                        </button>
                                         <button
                                             type="button"
                                             className="btn round btcd-btn-lg purple purple-sh submit-btn"
                                             onClick={() => handleSubmit()
                                             }
                                         >
-                                            Got it
+                                            Accept and continue
                                         </button>
                                     </div>
                                 }
-                                {/* <div>
-                                    <span className='footer'>{__('For more details,')}</span>
-                                    <a href="https://bitapps.pro/docs/bit-integrations/free-changelogs/" target="_blank" rel="noreferrer">
-                                        {__('Click here ')}
-                                        <ExternalLinkIcn size="14" />
-                                    </a>
-                                </div> */}
+
                             </div >)}
             </Modal >
         </div >

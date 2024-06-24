@@ -26,9 +26,7 @@ final class Route
 
     public static function request($method, $hook, $invokeable)
     {
-        // var_dump('request', $method, $hook, $invokeable);
-        // die;
-        if (sanitize_text_field($_SERVER['REQUEST_METHOD']) != $method || !isset($_REQUEST['action']) || strpos(sanitize_text_field($_REQUEST['action']), $hook) === false) {
+        if ((isset($_SERVER['REQUEST_METHOD']) && sanitize_text_field($_SERVER['REQUEST_METHOD']) != $method) || !isset($_REQUEST['action']) || (isset($_REQUEST['action']) && strpos(sanitize_text_field($_REQUEST['action']), $hook) === false)) {
             if (static::$_no_auth) {
                 static::$_no_auth = false;
             }

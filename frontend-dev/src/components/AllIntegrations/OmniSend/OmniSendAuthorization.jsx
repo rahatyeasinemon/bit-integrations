@@ -117,7 +117,7 @@ export default function OmniSendAuthorization({ omniSendConf,
               loading,
               setLoading,
             )}
-            className="btn btcd-btn-lg green sh-sm flx"
+            className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
             disabled={isAuthorized || loading.auth}
           >
@@ -131,7 +131,7 @@ export default function OmniSendAuthorization({ omniSendConf,
           <br />
           <button
             onClick={nextPage}
-            className="btn ml-auto btcd-btn-lg green sh-sm flx"
+            className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
             disabled={!isAuthorized}
           >

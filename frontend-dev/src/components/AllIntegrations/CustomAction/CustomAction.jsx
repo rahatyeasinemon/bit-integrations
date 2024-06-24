@@ -84,7 +84,7 @@ const CustomAction = ({ formFields, setFlow, flow, allIntegURL }) => {
         <button
           onClick={() => checkFunctionValidity(customActionConf, setCustomActionConf, loading, setLoading)}
           disabled={!customActionConf.value || loading?.validate}
-          className="btn f-left btcd-btn-lg green sh-sm flx mt-5"
+          className="btn f-left btcd-btn-lg purple sh-sm flx mt-5"
           type="button"
         >
           {customActionConf?.isValid ? __('Validated ✔', 'bit-integrations') : __('Validated', 'bit-integrations')}
@@ -93,7 +93,7 @@ const CustomAction = ({ formFields, setFlow, flow, allIntegURL }) => {
         <button
           onClick={() => nextPage(2)}
           disabled={!customActionConf.isValid}
-          className="btn f-right btcd-btn-lg green sh-sm flx mt-5"
+          className="btn f-right btcd-btn-lg purple sh-sm flx mt-5"
           type="button"
         >
           {__('Next', 'bit-integrations')}

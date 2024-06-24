@@ -79,7 +79,7 @@ function Mailify({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           disabled={!mailifyConf?.listId || mailifyConf.field_map.length < 1}
-          className="btn f-right btcd-btn-lg green sh-sm flx"
+          className="btn f-right btcd-btn-lg purple sh-sm flx"
           type="button"
         >
           {__('Next', 'bit-integrations')}

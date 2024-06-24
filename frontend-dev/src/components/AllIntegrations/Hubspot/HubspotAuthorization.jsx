@@ -65,12 +65,12 @@ export default function HubspotAuthorization({ hubspotConf, setHubspotConf, step
 
       {!isInfo && (
         <>
-          <button onClick={() => hubspotAuthorization(hubspotConf, setError, setisAuthorized, loading, setLoading)} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isAuthorized || loading.auth}>
+          <button onClick={() => hubspotAuthorization(hubspotConf, setError, setisAuthorized, loading, setLoading)} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isAuthorized || loading.auth}>
             {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
             {loading.auth && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
           <br />
-          <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
+          <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button" disabled={!isAuthorized}>
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>
