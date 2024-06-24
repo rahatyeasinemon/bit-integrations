@@ -69,12 +69,12 @@ function KlaviyoAuthorization({ klaviyoConf, setKlaviyoConf, step, setStep, isIn
         </small>
         {!isInfo && (
           <div className="w-6 d-flx flx-between ">
-            <button onClick={() => handleAuthorize(klaviyoConf, setKlaviyoConf, setError, setisAuthorized, loading, setLoading)} className="btn btcd-btn-lg green sh-sm" type="button" disabled={isAuthorized || loading.auth}>
+            <button onClick={() => handleAuthorize(klaviyoConf, setKlaviyoConf, setError, setisAuthorized, loading, setLoading)} className="btn btcd-btn-lg purple sh-sm" type="button" disabled={isAuthorized || loading.auth}>
               {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
               {loading.auth && <LoaderSm size="20" clr="#022217" className="ml-2" />}
             </button>
             <br />
-            <button onClick={nextPage} className="btn btcd-btn-lg green sh-sm" type="button" disabled={!isAuthorized}>
+            <button onClick={nextPage} className="btn btcd-btn-lg purple sh-sm" type="button" disabled={!isAuthorized}>
               {__('Next', 'bit-integrations')}
               <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
             </button>

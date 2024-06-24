@@ -250,6 +250,29 @@ final class Flow
         wp_send_json_success(__('Integration updated successfully', 'bit-integrations'));
     }
 
+    public function authorizationStatusChange($data)
+    {
+        var_dump($data);
+        exit;
+        $missing_field = null;
+
+        $name = !empty($data->name) ? $data->name : '';
+        $integrationHandler = new FlowController();
+        $updateStatus = $integrationHandler->update(
+            $data->id,
+            [
+                'name'                => $name,
+                'triggered_entity'    => $data->trigger,
+                'triggered_entity_id' => $data->triggered_entity_id,
+                'flow_details'        => \is_string($data->flow_details) ? $data->flow_details : wp_json_encode($data->flow_details),
+            ]
+        );
+        if (is_wp_error($updateStatus) && $updateStatus->get_error_code() !== 'result_empty') {
+            wp_send_json_error($updateStatus->get_error_message());
+        }
+        wp_send_json_success(__('Integration updated successfully', 'bit-integrations'));
+    }
+
     public function delete($data)
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_delete_integrations'))) {

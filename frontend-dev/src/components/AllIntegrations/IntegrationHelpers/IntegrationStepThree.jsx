@@ -63,7 +63,7 @@ export default function IntegrationStepThree({ step, saveConfig, edit, disabled,
         edit
           ? (
             <div className="txt-center w-9 mt-3">
-              <button onClick={saveConfig} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isLoading || disabled}>
+              <button onClick={saveConfig} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isLoading || disabled}>
                 {__('Update', 'bit-integrations')}
                 {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
               </button>
@@ -72,7 +72,7 @@ export default function IntegrationStepThree({ step, saveConfig, edit, disabled,
           : (
             <div className="btcd-stp-page txt-center" style={{ width: step === 3 && '100%', height: step === 3 && 'auto' }}>
               <h2 className="ml-3">{__('Successfully Integrated', 'bit-integrations')}</h2>
-              <button onClick={saveConfig} className="btn btcd-btn-lg green sh-sm" type="button" disabled={isLoading}>
+              <button onClick={saveConfig} className="btn btcd-btn-lg purple sh-sm" type="button" disabled={isLoading}>
                 {__('Finish & Save ', 'bit-integrations')}
                 ✔
                 {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}

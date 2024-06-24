@@ -67,7 +67,7 @@ export default function WhatsAppAuthorization({ formID, whatsAppConf, setWhatsAp
               setIsLoading,
               setSnackbar,
             )}
-            className="btn btcd-btn-lg green sh-sm flx"
+            className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
             disabled={isAuthorized || isLoading}
           >
@@ -75,7 +75,7 @@ export default function WhatsAppAuthorization({ formID, whatsAppConf, setWhatsAp
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
           <br />
-          <button onClick={nextPage} className="btn f-right btcd-btn-lg green sh-sm flx" type="button" disabled={!isAuthorized}>
+          <button onClick={nextPage} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button" disabled={!isAuthorized}>
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

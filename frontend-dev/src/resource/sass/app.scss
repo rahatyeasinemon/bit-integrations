@@ -1593,7 +1593,7 @@ input[type="checkbox"].disabled:checked:before {
 
 .btn {
   display: inline-flex;
-  color: inherit;
+  color: white;
   border: none;
   padding: 7px 10px;
   border-radius: 8px;
@@ -1622,6 +1622,18 @@ input[type="checkbox"].disabled:checked:before {
 
   &:hover {
     background: $blue;
+    color: white !important;
+  }
+}
+
+.btcd-btn-o-purple {
+  background: transparent;
+  color: $purple !important;
+  border: 1px solid $purple;
+  transition: background 0.2s !important;
+
+  &:hover {
+    background: $purple;
     color: white !important;
   }
 }
@@ -5337,6 +5349,12 @@ _:-ms-fullscreen,
           list-style-type: disc;
         }
       }
+    }
+    .txt-sm {
+      line-height: 1.5;
+      font-weight: 20;
+      font-size: small;
+      font-family: "Titillium Web", sans-serif;
     }
 
     .footer {

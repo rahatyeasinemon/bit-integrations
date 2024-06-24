@@ -9,12 +9,13 @@ import changelogInfo from '../Utils/StaticData/changelogInfo'
 import bitsFetch from '../Utils/bitsFetch'
 import CheckBox from '../components/Utilities/CheckBox'
 import Loader from '../components/Loaders/Loader'
+import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 
 export default function ChangelogToggle() {
     const [btcbi, setBtcbi] = useRecoilState($btcbi)
     const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
     const [showAnalyticsOptin, setShowAnalyticsOptin] = useState([])
-    const currentChangelog = '2.0.9'
+    const currentChangelog = '2.1.0'
     const currenChangelog = changelogInfo[currentChangelog]
     const [loading, setLoading] = useState('')
 
@@ -87,38 +88,40 @@ export default function ChangelogToggle() {
                                     <small className='date'> <b>13th June 2024</b></small>
                                 </div>
                                 <div className='changelog-content'>
-                                    <span className='new-integration' ><b>New Actions</b></span>
+                                    <span className='new-integration' ><b>New Features</b></span>
 
                                     <div className='integration-list'>
                                         <ul>
-                                            <li>Newsletter </li>
+                                            <li>Mailchimp: Add & Remove tag module added (pro)</li>
                                         </ul>
                                     </div>
 
-                                    <span className='new-feature' ><b>New Features</b></span>
+                                    <span className='new-feature' ><b>New Improvements</b></span>
 
                                     <div className='integration-list'>
                                         <ul>
-                                            <li>MailUp: Custom field added </li>
-                                            <li>Hubspot: Company module added </li>
+                                            <li>Kadence Block Form: Upgraded with Advanced Form Block & Form Block (pro) </li>
+                                            <li>Custom Form Submission Triggers: Active plugin checker added </li>
                                         </ul>
                                     </div>
-
-                                    <span className='fixes'><b>Fixed</b></span>
-
-                                    <div className='fixes-list'>
-                                        <ul>
-                                            <li>PipeDrive: Integration name update issue </li>
-                                            <a href="https://bitapps.pro/docs/bit-integrations/free-changelogs/">Click here to see all</a>
-                                        </ul>
+                                    <div>
+                                        <span className='footer'>{__('For more details,')}</span>
+                                        <a href="https://bitapps.pro/docs/bit-integrations/free-changelogs/" target="_blank" rel="noreferrer">
+                                            {__('Click here ')}
+                                            <ExternalLinkIcn size="14" />
+                                        </a>
                                     </div>
                                 </div>
                                 {!showAnalyticsOptin &&
                                     <div>
-                                        <div className='m-2 txt-body'>
-                                            <b>Note:</b> Accept and continue to share usage data for improvements, or skip for using the plugin.
+                                        <div className='btcd-hr mt-2'></div>
+                                        <div className="flx flx-col flx-center">
+                                            <h4 className='mt-2 mb-0'>Opt-In For Plugin Improvement</h4>
+                                        </div>
+                                        <div className='m-2 txt-sm'>
+                                            Accept and continue to share usage data to help us improve the plugin, the plugin will still function if you skip.
                                             <br />
-                                            <a className='app-link-active' href='https://bitapps.pro/terms-of-service/'>Click here to see terms</a>
+                                            <a className='app-link-active' target='blank' href='https://bitapps.pro/terms-of-service/'>Click here to see terms</a>
                                         </div>
                                         <button
                                             type="button"
@@ -138,13 +141,7 @@ export default function ChangelogToggle() {
                                         </button>
                                     </div>
                                 }
-                                {/* <div>
-                                    <span className='footer'>{__('For more details,')}</span>
-                                    <a href="https://bitapps.pro/docs/bit-integrations/free-changelogs/" target="_blank" rel="noreferrer">
-                                        {__('Click here ')}
-                                        <ExternalLinkIcn size="14" />
-                                    </a>
-                                </div> */}
+
                             </div >)}
             </Modal >
         </div >

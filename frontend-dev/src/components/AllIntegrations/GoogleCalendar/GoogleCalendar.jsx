@@ -100,7 +100,7 @@ function GoogleCalendar({ formFields, setFlow, flow, allIntegURL }) {
             || !googleCalendarConf?.timeZone
             || !checkMappedFields(googleCalendarConf?.field_map)
           }
-          className="btn ml-auto btcd-btn-lg green sh-sm flx"
+          className="btn ml-auto btcd-btn-lg purple sh-sm flx"
           type="button"
         >
           {__('Next', 'bit-integrations')}

@@ -326,7 +326,7 @@ const SaveButton = ({ saveConfig, edit, isLoading }) => (
   edit
     ? (
       <div className="txt-center w-9 mt-3">
-        <button onClick={saveConfig} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={isLoading}>
+        <button onClick={saveConfig} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isLoading}>
           {__('Update', 'bit-integrations')}
           {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
         </button>
@@ -334,7 +334,7 @@ const SaveButton = ({ saveConfig, edit, isLoading }) => (
     )
     : (
       <div className="btcd-stp-page txt-center" style={{ width: '100%', height: 'auto' }}>
-        <button onClick={saveConfig} className="btn btcd-btn-lg green sh-sm" type="button" disabled={isLoading}>
+        <button onClick={saveConfig} className="btn btcd-btn-lg purple sh-sm" type="button" disabled={isLoading}>
           {__('Save ', 'bit-integrations')}
           ✔
           {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}

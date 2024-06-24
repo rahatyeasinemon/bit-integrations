@@ -184,7 +184,7 @@ const CustomFormSubmission = () => {
               <div className={`flx mt-2 flx-${newFlow.triggerDetail?.data ? 'between' : 'around'}`}>
                 <button
                   onClick={handleFetch}
-                  className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'green'}`}
+                  className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'purple'}`}
                   type="button"
                 >
                   {isLoading
@@ -200,7 +200,7 @@ const CustomFormSubmission = () => {
                 {newFlow.triggerDetail?.data?.length > 0 &&
                   <button
                     onClick={() => setPrimaryKeyModal(true)}
-                    className={`btn btcd-btn-lg sh-sm flx ${newFlow.triggerDetail?.data?.length > 0 && 'green'}`}
+                    className={`btn btcd-btn-lg sh-sm flx ${newFlow.triggerDetail?.data?.length > 0 && 'purple'}`}
                     type="button"
                     disabled={!newFlow.triggerDetail?.data?.length > 0}
                   >
@@ -271,7 +271,7 @@ const CustomFormSubmission = () => {
                   </button>
                   <button
                     onClick={setTriggerData}
-                    className="btn btcd-btn-lg green sh-sm flx"
+                    className="btn btcd-btn-lg purple sh-sm flx"
                     type="button"
                     disabled={!newFlow.triggerDetail.data.length || !primaryKey}
                   >

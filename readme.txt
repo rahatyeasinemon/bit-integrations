@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.5.4
 Requires PHP: 7.0
-Stable tag: 2.0.9
+Stable tag: 2.1.0
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 65+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -824,6 +824,8 @@ With the pro version, you have the ability to create **Unlimited active** Please
 
 * [**Moosend**](https://bitapps.pro/docs/bit-integrations/trigger/moosend/)
 
+* [**Newsletter**](https://bitapps.pro/docs/bit-integrations/actions/newsletter-integration/)
+
 * [**OmniSend**](https://bitapps.pro/docs/bit-integrations/trigger/omnisend/)
 
 * [**OneDrive**](https://bitapps.pro/docs/bit-integrations/trigger/onedrive/)
@@ -966,6 +968,21 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.1.0  =
+_Release Date -24th June 2024_
+
+- **New Features :**
+  - Mailchimp: Add & Remove tag module added (pro)
+
+- **New Improvements :**
+  - Kadence Block Form: Upgraded with Advanced Form Block & Form Block (pro)
+  - Custom Form Submission Triggers: Active plugin checker added
+
+- **New Fixes :**
+  - Fluent Support: Undefined "custom_fields" issue fixed
+  - Salesforce: Zip code input field issue fixed
+  - Core: Undefined array key "REQUEST_METHOD" issue fixed
 
 = 2.0.8 - 2.0.9  =
 _Release Date -13th June 2024_

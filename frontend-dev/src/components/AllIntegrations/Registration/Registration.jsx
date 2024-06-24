@@ -164,7 +164,7 @@ export default function Registration({ formFields, setFlow, flow, allIntegURL })
         <Note note={userCreateInstruction} />
       )}
       <button
-        className="btn f-left btcd-btn-lg green sh-sm flx"
+        className="btn f-left btcd-btn-lg purple sh-sm flx"
         type="button"
         onClick={() => saveConfig()}
         disabled={isLoading}

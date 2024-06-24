@@ -65,8 +65,8 @@ function App() {
           <div className="flx">
             <div className="logo flx" title={__('Integrations for Forms')}>
               {/* <Link to="/" className="flx"> */}
-              <img src={logo} alt="logo" style={{ marginLeft: '8px' }} />
-              <span className="ml-2 mr-2  ">Bit Integrations</span>
+              <img src={logo} alt="logo" style={{ marginLeft: '8px', width: '170px' }} />
+              {/* <span className="ml-2 mr-2  ">Bit Integrations</span> */}
               {/* </Link> */}
             </div>
             <nav className="top-nav ml-2">
@@ -109,7 +109,6 @@ function App() {
             </div>
           </div>
         </div>
-
 
         <div className="route-wrp">
           <Routes>

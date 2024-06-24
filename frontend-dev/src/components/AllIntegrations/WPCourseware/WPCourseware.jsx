@@ -85,7 +85,7 @@ export default function WPCourseware({ formFields, setFlow, flow, allIntegURL })
         <button
           onClick={() => nextPage(3)}
           disabled={wpCoursewareConf.action === '' || wpCoursewareConf.course.length === 0}
-          className="btn f-right btcd-btn-lg green sh-sm flx"
+          className="btn f-right btcd-btn-lg purple sh-sm flx"
           type="button"
         >
           {__('Next', 'bit-integrations')}

@@ -6,7 +6,7 @@ export default function WebHooksStepTwo({ saveConfig, edit, disabled, isLoading 
     edit
       ? (
         <div className="txt-center w-9 mt-3">
-          <button onClick={saveConfig} className="btn btcd-btn-lg green sh-sm flx" type="button" disabled={disabled || isLoading}>
+          <button onClick={saveConfig} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={disabled || isLoading}>
             {__('Save', 'bit-integrations')}
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
@@ -15,7 +15,7 @@ export default function WebHooksStepTwo({ saveConfig, edit, disabled, isLoading 
       : (
         <div className="txt-center">
           <h2 className="ml-3">{__('Successfully Integrated', 'bit-integrations')}</h2>
-          <button onClick={saveConfig} className="btn btcd-btn-lg green sh-sm" type="button" disabled={isLoading}>
+          <button onClick={saveConfig} className="btn btcd-btn-lg purple sh-sm" type="button" disabled={isLoading}>
             {__('Finish & Save ', 'bit-integrations')}
             ✔
             {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
