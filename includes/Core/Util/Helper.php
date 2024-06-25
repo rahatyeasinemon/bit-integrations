@@ -202,4 +202,9 @@ final class Helper
 
         wp_send_json_error(new WP_Error('Breakdance', __('Invalid path', 'bit-integrations')));
     }
+
+    public static function parseFlowDetails($flowDetails)
+    {
+        return \is_string($flowDetails) ? json_decode($flowDetails) : $flowDetails;
+    }
 }
