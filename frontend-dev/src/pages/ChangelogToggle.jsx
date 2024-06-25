@@ -83,7 +83,7 @@ export default function ChangelogToggle() {
                             }}
                             />
                         ) : (
-                            <div className='changelog' style={{ overflow: 'hidden' }}>
+                            <div className='changelog'>
                                 <div className="flx flx-col flx-center whats-new">
                                     <h3>What's New in {btcbi.version}?</h3>
                                     <small className='date'> <b>25th June 2024</b></small>
