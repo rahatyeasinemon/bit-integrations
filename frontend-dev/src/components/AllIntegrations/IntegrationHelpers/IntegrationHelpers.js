@@ -72,7 +72,6 @@ export const saveIntegConfig = async (
    */
 
   if (
-    flow.triggered_entity === "Divi" ||
     flow.triggered_entity === "Bricks" ||
     flow.triggered_entity === "Brizy" ||
     flow.triggered_entity === "CartFlow"
@@ -85,8 +84,7 @@ export const saveIntegConfig = async (
   } else if (flow.triggered_entity === "TutorLms") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = tutorlmsStateIH(tmpConf, dataFlow);
-  }
-  else if (flow.triggered_entity === "FluentBooking") {
+  } else if (flow.triggered_entity === "FluentBooking") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = fluentBookingStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
   } else if (flow.triggered_entity === "SureMembers") {
@@ -186,11 +184,11 @@ export const saveIntegConfig = async (
 
     tmpConf["fetch"] = !edit
       ? flow?.triggerData?.fetch
-      : flow?.flow_details?.fetch || '';
+      : flow?.flow_details?.fetch || "";
 
     tmpConf["fetch_remove"] = !edit
       ? flow?.triggerData?.fetch_remove
-      : flow?.flow_details?.fetch_remove || '';
+      : flow?.flow_details?.fetch_remove || "";
   } else if (
     flow?.triggerData?.trigger_type === "custom_form_submission" ||
     flow?.flow_details?.trigger_type === "custom_form_submission"
@@ -198,10 +196,10 @@ export const saveIntegConfig = async (
     tmpConf["primaryKey"] = !edit
       ? flow.triggerData.primaryKey
       : flow?.flow_details?.primaryKey;
-    
+
     tmpConf["multi_form"] = !edit
-      ? flow.triggerData.multi_form || ''
-      : flow?.flow_details?.multi_form || '';
+      ? flow.triggerData.multi_form || ""
+      : flow?.flow_details?.multi_form || "";
 
     tmpConf["fields"] = !edit
       ? flow?.triggerData?.fields
@@ -275,7 +273,6 @@ export const saveActionConf = async ({
    * Have to move this to a better place
    */
   if (
-    flow.triggered_entity === "Divi" ||
     flow.triggered_entity === "Bricks" ||
     flow.triggered_entity === "Brizy" ||
     flow.triggered_entity === "CartFlow"
@@ -288,8 +285,7 @@ export const saveActionConf = async ({
   } else if (flow.triggered_entity === "TutorLms") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = tutorlmsStateIH(tmpConf, dataFlow);
-  }
-  else if (flow.triggered_entity === "FluentBooking") {
+  } else if (flow.triggered_entity === "FluentBooking") {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData;
     tmpConf = fluentBookingStateIH(tmpConf, dataFlow, flow.triggered_entity_id);
   } else if (flow.triggered_entity === "SureMembers") {
@@ -368,7 +364,7 @@ export const saveActionConf = async ({
 
     tmpConf["rawData"] = !edit
       ? flow?.triggerData?.rawData
-      : flow?.flow_details?.rawData || '';
+      : flow?.flow_details?.rawData || "";
 
     tmpConf["fetch"] = !edit
       ? flow?.triggerData?.fetch
@@ -376,7 +372,7 @@ export const saveActionConf = async ({
 
     tmpConf["fetch_remove"] = !edit
       ? flow?.triggerData?.fetch_remove
-      : flow?.flow_details?.fetch_remove || '';
+      : flow?.flow_details?.fetch_remove || "";
   } else if (
     flow?.triggerData?.trigger_type === "custom_form_submission" ||
     flow?.flow_details?.trigger_type === "custom_form_submission"
@@ -384,10 +380,10 @@ export const saveActionConf = async ({
     tmpConf["primaryKey"] = !edit
       ? flow.triggerData.primaryKey
       : flow?.flow_details?.primaryKey;
-    
+
     tmpConf["multi_form"] = !edit
-      ? flow.triggerData.multi_form || ''
-      : flow?.flow_details?.multi_form || '';
+      ? flow.triggerData.multi_form || ""
+      : flow?.flow_details?.multi_form || "";
 
     tmpConf["fields"] = !edit
       ? flow?.triggerData?.fields
@@ -502,11 +498,13 @@ export const handleAuthorize = (
     return;
   }
   setIsLoading(true);
-  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter
-    }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId
-    }&prompt=Consent&access_type=offline&state=${encodeURIComponent(
-      window.location.href
-    )}/redirect&redirect_uri=${encodeURIComponent(`${btcbi.api.base}`)}/redirect`;
+  const apiEndpoint = `https://accounts.zoho.${
+    confTmp.dataCenter
+  }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${
+    confTmp.clientId
+  }&prompt=Consent&access_type=offline&state=${encodeURIComponent(
+    window.location.href
+  )}/redirect&redirect_uri=${encodeURIComponent(`${btcbi.api.base}`)}/redirect`;
   const authWindow = window.open(
     apiEndpoint,
     integ,
@@ -593,8 +591,9 @@ const tokenHelper = (
       ) {
         setSnackbar({
           show: true,
-          msg: `${__("Authorization failed Cause:", "bit-integrations")}${result.data.data || result.data
-            }. ${__("please try again", "bit-integrations")}`,
+          msg: `${__("Authorization failed Cause:", "bit-integrations")}${
+            result.data.data || result.data
+          }. ${__("please try again", "bit-integrations")}`,
         });
       } else {
         setSnackbar({
