@@ -250,22 +250,23 @@ const CustomFormSubmission = () => {
                 <div className="flx flx-between">
                   <button
                     onClick={showResponseTable}
-                    className="btn btcd-btn-lg sh-sm flx"
+                    className="btn btcd-btn-lg sh-sm purple flx"
                   >
                     <span className="txt-essentialBlocks-resbtn font-inter-500">
                       {showResponse ? 'Hide Response' : 'View Response'}
                     </span>
+                    &nbsp;
                     {!showResponse ? (
                       <EyeIcn
                         width="20"
                         height="20"
-                        strokeColor="#000000"
+                        strokeColor="#fff"
                       />
                     ) : (
                       <EyeOffIcn
                         width="20"
                         height="20"
-                        strokeColor="#000000"
+                        strokeColor="#fff"
                       />
                     )}
                   </button>
