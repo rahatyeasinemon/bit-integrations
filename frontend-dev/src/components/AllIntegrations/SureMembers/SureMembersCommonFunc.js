@@ -18,11 +18,6 @@ export const handleInput = (e, sureMembersConf, setSureMembersConf) => {
   setSureMembersConf(newConf)
 }
 
-export const generateMappedField = (sureMembersConf) => {
-  const requiredFlds = sureMembersConf?.staticFields.filter(fld => fld.required === true)
-  return requiredFlds.length > 0 ? requiredFlds.map(field => ({ formField: '', sureMembersFormField: field.key })) : [{ formField: '', sureMembersFormField: '' }]
-}
-
 export const checkMappedFields = (sureMembersConf) => {
   const mappedFields = sureMembersConf?.field_map ? sureMembersConf.field_map.filter(mappedField => (!mappedField.formField || !mappedField.sureMembersFormField || (!mappedField.formField === 'custom' && !mappedField.customValue))) : []
   if (mappedFields.length > 0) {
@@ -51,16 +46,28 @@ export const sureMembersAuthentication = (confTmp, setError, setIsAuthorized, lo
     })
 }
 
+export const getSureMembersGroups = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, groups: true })
+
+  bitsFetch({}, 'sureMembers_fetch_groups')
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...confTmp }
+        if (result.data) {
+          newConf.groups = result.data
+        }
+        setConf(newConf)
+        setLoading({ ...setLoading, groups: false })
+
+        toast.success(__('Groups fetch successfully', 'bit-integrations'))
+        return
+      }
+      setLoading({ ...setLoading, groups: false })
+      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+    })
+}
+
 export const staticFields = [
-  { key: 'email', label: 'Email', required: true },
+  { key: 'email', label: 'User Email', required: true },
 ]
 
-export const listsOptions = () => {
-  const options = []
-
-  for (let i = 1; i <= 40; i++) {
-    options.push({ label: 'List ' + i, value: i.toString() })
-  }
-
-  return options
-}

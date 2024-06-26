@@ -15,7 +15,7 @@ export default function SureMembersIntegLayout({ formFields, sureMembersConf, se
 
   const setChanges = (val) => {
     const newConf = { ...sureMembersConf }
-    newConf.selectedAction = val
+    newConf.selectedTask = val
     setSureMembersConf({ ...newConf })
   }
 
@@ -23,11 +23,12 @@ export default function SureMembersIntegLayout({ formFields, sureMembersConf, se
     <>
       <div>
         <div className="flx mt-2">
-          <b className="wdt-200 d-in-b">{__('Select Action:', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Task:', 'bit-integrations')}</b>
           <MultiSelect
-            options={[]}
+            options={[{ label: 'Add User to Access Group', value: 'grantAccess' },
+            { label: 'Remove User from Access Group', value: 'revokeAccess' }]}
             className="msl-wrp-options"
-            defaultValue={sureMembersConf?.selectedAction}
+            defaultValue={sureMembersConf?.selectedTask}
             onChange={val => setChanges(val)}
             singleSelect
           />
@@ -45,7 +46,7 @@ export default function SureMembersIntegLayout({ formFields, sureMembersConf, se
           <div className="txt-dp"><b>{__('SureMembers Fields', 'bit-integrations')}</b></div>
         </div>
 
-        {sureMembersConf?.selectedAction && sureMembersConf?.field_map.map((itm, i) => (
+        {sureMembersConf?.selectedTask && sureMembersConf?.field_map.map((itm, i) => (
           <SureMembersFieldMap
             key={`rp-m-${i + 9}`}
             i={i}
@@ -56,16 +57,18 @@ export default function SureMembersIntegLayout({ formFields, sureMembersConf, se
             setSnackbar={setSnackbar}
           />
         ))}
-        {sureMembersConf?.selectedAction && <div>
+        {sureMembersConf?.selectedTask && <div>
           <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(sureMembersConf.field_map.length, sureMembersConf, setSureMembersConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
           <br />
-          {/* <br /> */}
-          {/* <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
+          <br />
+          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
           <div className="btcd-hr mt-1" />
           <SureMembersActions
             sureMembersConf={sureMembersConf}
             setSureMembersConf={setSureMembersConf}
-          /> */}
+            loading={loading}
+            setLoading={setLoading}
+          />
         </div>}
       </div>
     </>

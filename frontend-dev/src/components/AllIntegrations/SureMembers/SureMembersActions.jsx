@@ -7,18 +7,15 @@ import TableCheckBox from '../../Utilities/TableCheckBox'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Cooltip from '../../Utilities/Cooltip'
-import { listsOptions } from './SureMembersCommonFunc'
+import { getSureMembersGroups } from './SureMembersCommonFunc'
+import Loader from '../../Loaders/Loader'
 
-export default function SureMembersActions({ sureMembersConf, setSureMembersConf }) {
+export default function SureMembersActions({ sureMembersConf, setSureMembersConf, loading, setLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false })
   const actionHandler = (e) => {
+    getSureMembersGroups(sureMembersConf, setSureMembersConf, setLoading)
     const newConf = { ...sureMembersConf }
-    if (e.target.checked) {
-      newConf.actions.lists = true
-    } else {
-      delete newConf.actions.lists
-    }
-    setActionMdl({ show: 'lists' })
+    setActionMdl({ show: 'group' })
     setSureMembersConf({ ...newConf })
   }
 
@@ -32,46 +29,53 @@ export default function SureMembersActions({ sureMembersConf, setSureMembersConf
     setSureMembersConf({ ...newConf })
   }
 
-  const getListsOptions = listsOptions()
-
   return (
     <div className="pos-rel d-flx w-8">
       <TableCheckBox
-        checked={sureMembersConf.selectedLists || false}
+        checked={sureMembersConf.selectedGroup || false}
         onChange={(e) => actionHandler(e)}
         className="wdt-200 mt-4 mr-2"
-        value="select_lists"
-        title={__('Select Lists', 'bit-integrations')}
-        subTitle={__('Choose which lists to add subscribers to.', 'bit-integrations')}
+        value="select_group"
+        title={__('Select Group', 'bit-integrations')}
+        subTitle={__('Select a group to grant or revoke access.', 'bit-integrations')}
       />
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
         btnClass="blue"
         btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'lists'}
+        show={actionMdl.show === 'group'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Lists', 'bit-integrations')}
+        title={__('Groups', 'bit-integrations')}
       >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2 flx">
-          {__('Select lists', 'bit-integrations')}
+          {__('Select Group', 'bit-integrations')}
           <Cooltip width={250} icnSize={17} className="ml-1">
             <div className="txt-body">
-              Subscribers will be associated with the selected lists.
+              The user will be added or removed from the selected group.
             </div>
           </Cooltip>
         </div>
-        <div className="mt-2">
-          <MultiSelect
-            options={getListsOptions}
-            className="msl-wrp-options"
-            defaultValue={sureMembersConf?.selectedLists}
-            onChange={val => setChanges(val, 'selectedLists')}
-            style={{ width: '100%' }}
-          />
-        </div>
+        {loading.groups ?
+          (<Loader style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 45,
+            transform: 'scale(0.5)',
+          }} />)
+          : (<div className="mt-2">
+            <MultiSelect
+              options={sureMembersConf.groups}
+              className="msl-wrp-options"
+              defaultValue={sureMembersConf?.selectedGroup}
+              onChange={val => setChanges(val, 'selectedGroup')}
+              style={{ width: '100%' }}
+              singleSelect
+            />
+          </div>)}
       </ConfirmModal>
     </div>
   )

@@ -19,6 +19,7 @@ function EditSureMembers({ allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
     auth: false,
+    groups: false
   })
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)

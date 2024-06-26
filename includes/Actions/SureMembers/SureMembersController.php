@@ -6,6 +6,7 @@
 
 namespace BitCode\FI\Actions\SureMembers;
 
+use SureMembers\Inc\Access_Groups;
 use WP_Error;
 
 /**
@@ -30,8 +31,6 @@ class SureMembersController
 
     public static function checkedSureMembersExists()
     {
-        error_log(print_r(['plugin check' => is_plugin_active('suremembers/suremembers.php')], true));
-
         if (!is_plugin_active('suremembers/suremembers.php')) {
             wp_send_json_error(
                 __(
@@ -43,6 +42,29 @@ class SureMembersController
         } else {
             return true;
         }
+    }
+
+    public function getGroups()
+    {
+        self::checkedSureMembersExists();
+
+        $accessGroups = Access_Groups::get_active();
+
+        if (empty($accessGroups)) {
+            wp_send_json_error(
+                __(
+                    'No access groups found!',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+
+        foreach ($accessGroups as $key => $accessGroup) {
+            $groups[] = (object) ['label' => $accessGroup, 'value' => (string) $key];
+        }
+
+        wp_send_json_success($groups, 200);
     }
 
     public function execute($integrationData, $fieldValues)

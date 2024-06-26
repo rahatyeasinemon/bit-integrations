@@ -18,6 +18,7 @@ function SureMembers({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
     auth: false,
+    groups: false,
   })
 
   const [step, setStep] = useState(1)
@@ -27,14 +28,12 @@ function SureMembers({ formFields, setFlow, flow, allIntegURL }) {
     name: 'SureMembers',
     type: 'SureMembers',
     field_map: [
-      { formField: '', sureMembersFormField: '' },
+      { formField: '', sureMembersFormField: 'email' },
     ],
     staticFields,
-    lists: [],
-    selectedLists: '',
+    selectedTask: '',
     groups: [],
-    actions: {},
-    selectedAction: '',
+    selectedGroup: ''
   })
 
   const saveConfig = () => {
@@ -59,6 +58,12 @@ function SureMembers({ formFields, setFlow, flow, allIntegURL }) {
       toast.error('Please map mandatory fields')
       return
     }
+
+    if (!sureMembersConf.selectedGroup) {
+      toast.error('Please select a group.')
+      return
+    }
+
     sureMembersConf.field_map.length > 0 && setStep(pageNo)
   }
 
