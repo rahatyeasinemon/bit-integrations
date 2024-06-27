@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 
-import { memo, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
@@ -11,6 +11,7 @@ import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { checkMappedFields, handleInput } from './SureMembersCommonFunc'
 import SureMembersIntegLayout from './SureMembersIntegLayout'
+import toast from 'react-hot-toast'
 
 function EditSureMembers({ allIntegURL }) {
   const navigate = useNavigate()
@@ -26,9 +27,20 @@ function EditSureMembers({ allIntegURL }) {
 
   const saveConfig = () => {
     if (!checkMappedFields(sureMembersConf)) {
-      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
+      toast.error('Please map mandatory fields!')
       return
     }
+
+    if (!sureMembersConf.selectedTask) {
+      toast.error('Please select a task!')
+      return
+    }
+
+    if (!sureMembersConf.selectedGroup) {
+      toast.error('Please select a group!')
+      return
+    }
+
     saveActionConf({ flow, allIntegURL, conf: sureMembersConf, navigate, edit: 1, setLoading, setSnackbar })
   }
 

@@ -55,12 +55,12 @@ function SureMembers({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(sureMembersConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error('Please map mandatory fields!')
       return
     }
 
     if (!sureMembersConf.selectedGroup) {
-      toast.error('Please select a group.')
+      toast.error('Please select a group!')
       return
     }
 
