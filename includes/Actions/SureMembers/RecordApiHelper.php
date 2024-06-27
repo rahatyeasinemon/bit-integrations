@@ -41,6 +41,19 @@ class RecordApiHelper
 
     public function revokeAccessFromGroup($finalData, $selectedGroup)
     {
+        if (empty($finalData['email']) || empty($selectedGroup)) {
+            return ['success' => false, 'message' => 'Required field email or group is empty!', 'code' => 400];
+        }
+
+        $userId = self::getUserIdFromEmail($finalData['email']);
+
+        if (!$userId) {
+            return ['success' => false, 'message' => 'The user does not exist on your site, or the email is invalid!', 'code' => 400];
+        }
+
+        Access::revoke($userId, $selectedGroup);
+
+        return ['success' => true];
     }
 
     public static function getUserIdFromEmail($email)
@@ -88,7 +101,7 @@ class RecordApiHelper
 
         if ($response['success']) {
             $res = ['message' => $responseMessage];
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => $taskType, 'type_name' => $taskType]), 'success', wp_json_encode($res));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Access Group', 'type_name' => $taskType]), 'success', wp_json_encode($res));
         } else {
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Access Group', 'type_name' => 'Grant or revoke access']), 'error', wp_json_encode($response));
         }
