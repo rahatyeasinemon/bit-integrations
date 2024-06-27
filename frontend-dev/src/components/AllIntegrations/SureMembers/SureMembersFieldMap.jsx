@@ -36,7 +36,7 @@ export default function SureMembersFieldMap({ i, formFields, field, sureMembersC
 
           {field.formField === 'custom' && <TagifyInput onChange={e => handleCustomValue(e, i, sureMembersConf, setSureMembersConf)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bit-integrations')} formFields={formFields} />}
 
-          <select className="btcd-paper-inp" disabled={i < requiredFields.length} name="sureMembersFormField" value={i < requiredFields ? (requiredFields[i].label || '') : (field.sureMembersFormField || '')} onChange={(ev) => handleFieldMapping(ev, i, sureMembersConf, setSureMembersConf)}>
+          <select className="btcd-paper-inp" disabled={i < requiredFields.length} name="sureMembersField" value={i < requiredFields ? (requiredFields[i].label || '') : (field.sureMembersField || '')} onChange={(ev) => handleFieldMapping(ev, i, sureMembersConf, setSureMembersConf)}>
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {
               i < requiredFields.length ? (

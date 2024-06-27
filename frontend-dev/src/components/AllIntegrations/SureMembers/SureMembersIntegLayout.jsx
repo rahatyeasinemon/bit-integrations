@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
-import Loader from '../../Loaders/Loader'
 import SureMembersActions from './SureMembersActions'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 
@@ -10,8 +8,6 @@ import SureMembersFieldMap from './SureMembersFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
 
 export default function SureMembersIntegLayout({ formFields, sureMembersConf, setSureMembersConf, loading, setLoading, setSnackbar }) {
-  const [error, setError] = useState({ name: '', auth_token: '' })
-  const [isAuthorized, setIsAuthorized] = useState(false)
 
   const setChanges = (val) => {
     const newConf = { ...sureMembersConf }
@@ -22,9 +18,10 @@ export default function SureMembersIntegLayout({ formFields, sureMembersConf, se
   return (
     <>
       <div>
-        <div className="flx mt-2">
+        <div className="flx mt-3">
           <b className="wdt-200 d-in-b">{__('Select Task:', 'bit-integrations')}</b>
           <MultiSelect
+            style={{ width: '450px' }}
             options={[{ label: 'Add User to Access Group', value: 'grantAccess' },
             { label: 'Remove User from Access Group', value: 'revokeAccess' }]}
             className="msl-wrp-options"

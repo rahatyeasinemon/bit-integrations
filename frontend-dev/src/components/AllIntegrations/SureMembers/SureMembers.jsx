@@ -28,7 +28,7 @@ function SureMembers({ formFields, setFlow, flow, allIntegURL }) {
     name: 'SureMembers',
     type: 'SureMembers',
     field_map: [
-      { formField: '', sureMembersFormField: 'email' },
+      { formField: '', sureMembersField: 'email' },
     ],
     staticFields,
     selectedTask: '',

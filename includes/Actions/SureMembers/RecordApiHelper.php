@@ -8,7 +8,7 @@ namespace BitCode\FI\Actions\SureMembers;
 
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
-use TNP;
+use SureMembers\Inc\Access;
 
 /**
  * Provide functionality for Record insert, update
@@ -22,17 +22,36 @@ class RecordApiHelper
         $this->_integrationID = $integId;
     }
 
-    public function addSubscriber($finalData, $selectedLists)
+    public function grantAccessToGroup($finalData, $selectedGroup)
     {
-        if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field email is empty', 'code' => 400];
+        if (empty($finalData['email']) || empty($selectedGroup)) {
+            return ['success' => false, 'message' => 'Required field email or group is empty!', 'code' => 400];
         }
 
-        if (!empty($selectedLists)) {
-            $finalData['lists'] = explode(',', $selectedLists);
+        $userId = self::getUserIdFromEmail($finalData['email']);
+
+        if (!$userId) {
+            return ['success' => false, 'message' => 'The user does not exist on your site, or the email is invalid!', 'code' => 400];
         }
 
-        return TNP::add_subscriber($finalData);
+        Access::grant($userId, $selectedGroup);
+
+        return ['success' => true];
+    }
+
+    public function revokeAccessFromGroup($finalData, $selectedGroup)
+    {
+    }
+
+    public static function getUserIdFromEmail($email)
+    {
+        if (empty($email) || !is_email($email) || !email_exists($email)) {
+            return false;
+        }
+
+        $get_user = get_user_by('email', $email);
+
+        return $get_user->ID;
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -40,7 +59,7 @@ class RecordApiHelper
         $dataFinal = [];
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
-            $actionValue = $value->sureMembersFormField;
+            $actionValue = $value->sureMembersField;
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
             } elseif (!\is_null($data[$triggerValue])) {
@@ -51,16 +70,27 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedLists)
+    public function execute($fieldValues, $fieldMap, $selectedTask, $selectedGroup)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $response = $this->addSubscriber($finalData, $selectedLists);
 
-        if (isset($response->id)) {
-            $res = ['message' => 'Subscriber added successfully'];
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber add']), 'success', wp_json_encode($res));
+        $responseMessage = $taskType = '';
+
+        if ($selectedTask === 'grantAccess') {
+            $response = $this->grantAccessToGroup($finalData, $selectedGroup);
+            $responseMessage = 'User added to the access group.';
+            $taskType = 'Grant Access';
+        } elseif ($selectedTask === 'revokeAccess') {
+            $response = $this->revokeAccessFromGroup($finalData, $selectedGroup);
+            $responseMessage = 'User removed from the access group.';
+            $taskType = 'Revoke Access';
+        }
+
+        if ($response['success']) {
+            $res = ['message' => $responseMessage];
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => $taskType, 'type_name' => $taskType]), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => '', 'type_name' => 'Adding subscriber']), 'error', wp_json_encode($response));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Access Group', 'type_name' => 'Grant or revoke access']), 'error', wp_json_encode($response));
         }
 
         return $response;

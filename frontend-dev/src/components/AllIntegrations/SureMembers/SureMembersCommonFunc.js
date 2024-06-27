@@ -19,7 +19,7 @@ export const handleInput = (e, sureMembersConf, setSureMembersConf) => {
 }
 
 export const checkMappedFields = (sureMembersConf) => {
-  const mappedFields = sureMembersConf?.field_map ? sureMembersConf.field_map.filter(mappedField => (!mappedField.formField || !mappedField.sureMembersFormField || (!mappedField.formField === 'custom' && !mappedField.customValue))) : []
+  const mappedFields = sureMembersConf?.field_map ? sureMembersConf.field_map.filter(mappedField => (!mappedField.formField || !mappedField.sureMembersField || (!mappedField.formField === 'custom' && !mappedField.customValue))) : []
   if (mappedFields.length > 0) {
     return false
   }

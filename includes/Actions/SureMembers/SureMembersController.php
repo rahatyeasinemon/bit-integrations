@@ -74,14 +74,15 @@ class SureMembersController
         $integrationDetails = $integrationData->flow_details;
         $integId = $integrationData->id;
         $fieldMap = $integrationDetails->field_map;
-        $selectedLists = $integrationDetails->selectedLists;
+        $selectedTask = $integrationDetails->selectedTask;
+        $selectedGroup = $integrationDetails->selectedGroup;
 
-        if (empty($fieldMap)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('fields map are required for SureMembers', 'bit-integrations'));
+        if (empty($fieldMap) || empty($selectedTask) || empty($selectedGroup)) {
+            return new WP_Error('REQ_FIELD_EMPTY', __('Fields map, task and group are required for SureMembers', 'bit-integrations'));
         }
 
         $recordApiHelper = new RecordApiHelper($integId);
-        $sureMembersResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedLists);
+        $sureMembersResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $selectedGroup);
 
         if (is_wp_error($sureMembersResponse)) {
             return $sureMembersResponse;
