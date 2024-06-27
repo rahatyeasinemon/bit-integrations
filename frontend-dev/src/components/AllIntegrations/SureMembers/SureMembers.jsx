@@ -54,6 +54,11 @@ function SureMembers({ formFields, setFlow, flow, allIntegURL }) {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
 
+    if (!sureMembersConf.selectedTask) {
+      toast.error('Please select a task!')
+      return
+    }
+
     if (!checkMappedFields(sureMembersConf)) {
       toast.error('Please map mandatory fields!')
       return

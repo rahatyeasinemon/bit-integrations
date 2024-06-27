@@ -26,13 +26,13 @@ function EditSureMembers({ allIntegURL }) {
   const formField = useRecoilValue($formFields)
 
   const saveConfig = () => {
-    if (!checkMappedFields(sureMembersConf)) {
-      toast.error('Please map mandatory fields!')
+    if (!sureMembersConf.selectedTask) {
+      toast.error('Please select a task!')
       return
     }
 
-    if (!sureMembersConf.selectedTask) {
-      toast.error('Please select a task!')
+    if (!checkMappedFields(sureMembersConf)) {
+      toast.error('Please map mandatory fields!')
       return
     }
 
