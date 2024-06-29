@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Salesforce;
 
-use WP_Error;
-use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Flow\FlowController;
+use WP_Error;
 
 class SalesforceController
 {
@@ -400,6 +400,42 @@ class SalesforceController
         }
 
         wp_send_json_success($allOrigins, 200);
+    }
+
+    public static function selesforceCaseType($campaignRequestParams)
+    {
+        if (
+            empty($campaignRequestParams->tokenDetails)
+            || empty($campaignRequestParams->clientId)
+            || empty($campaignRequestParams->clientSecret)
+        ) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+        $response = [];
+        if ((\intval($campaignRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+            $response['tokenDetails'] = self::refreshAccessToken($campaignRequestParams);
+        }
+
+        $allTypes = [];
+        $query = 'SELECT Type FROM Case WHERE Type != NULL GROUP BY Type';
+        $apiEndpoint = "{$campaignRequestParams->tokenDetails->instance_url}/services/data/v52.0/queryAll?q=" . urlencode($query);
+        $authorizationHeader['Authorization'] = "Bearer {$campaignRequestParams->tokenDetails->access_token}";
+        $authorizationHeader['Content-Type'] = 'application/json';
+        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+
+        if (isset($apiResponse->records)) {
+            foreach ($apiResponse->records as $case) {
+                $allTypes[] = $case->Type;
+            }
+        }
+
+        wp_send_json_success($allTypes, 200);
     }
 
     public function execute($integrationData, $fieldValues)

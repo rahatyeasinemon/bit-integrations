@@ -131,15 +131,52 @@ export const getAllOrigin = (
         })
       );
       setIsLoading(false);
-      return "Campaign list refreshed";
+      return "Case Origin refreshed";
     }
     setIsLoading(false);
-    return "Campaign list refresh failed. please try again";
+    return "Case Origin refresh failed. please try again";
   });
   toast.promise(loadPostTypes, {
     success: (data) => data,
     error: __("Error Occurred", "bit-integrations"),
-    loading: __("Loading Campaign list..."),
+    loading: __("Loading Case Origin..."),
+  });
+};
+
+export const getAllType = (
+  formID,
+  salesforceConf,
+  setSalesforceConf,
+  setIsLoading,
+  setSnackbar
+) => {
+  setIsLoading(true);
+  const campaignRequestParams = {
+    formID,
+    clientId: salesforceConf.clientId,
+    clientSecret: salesforceConf.clientSecret,
+    tokenDetails: salesforceConf.tokenDetails,
+  };
+  const loadPostTypes = bitsFetch(
+    campaignRequestParams,
+    "selesforce_case_type"
+  ).then((result) => {
+    if (result && result.success) {
+      setSalesforceConf((prevConf) =>
+        create(prevConf, (draftConf) => {
+          draftConf["caseTypes"] = result.data;
+        })
+      );
+      setIsLoading(false);
+      return "Type refreshed";
+    }
+    setIsLoading(false);
+    return "Type refresh failed. please try again";
+  });
+  toast.promise(loadPostTypes, {
+    success: (data) => data,
+    error: __("Error Occurred", "bit-integrations"),
+    loading: __("Loading Type..."),
   });
 };
 

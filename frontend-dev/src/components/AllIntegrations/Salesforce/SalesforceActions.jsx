@@ -11,6 +11,7 @@ import {
   getAllCampaignList,
   getAllContactList,
   getAllOrigin,
+  getAllType,
 } from "./SalesforceCommonFunc";
 import {
   eventSubject,
@@ -85,6 +86,14 @@ export default function SalesforceActions({
   const openActionMdl = (modelName) => {
     if (modelName === "caseOrigin") {
       getAllOrigin(
+        formID,
+        salesforceConf,
+        setSalesforceConf,
+        setIsLoading,
+        setSnackbar
+      );
+    } else if (modelName === "caseType") {
+      getAllType(
         formID,
         salesforceConf,
         setSalesforceConf,
@@ -1009,18 +1018,29 @@ export default function SalesforceActions({
               onChange={(e) => actionHandler(e.target.value, "caseType")}
             >
               <option value="">{__("Select type", "bit-integrations")}</option>
-              {[
-                "Mechanical",
-                "Electrical",
-                "Electronic",
-                "Structural",
-                "Other",
-              ].map((item, key) => (
+              {salesforceConf?.caseTypes?.map((item, key) => (
                 <option key={key} value={item}>
                   {item}
                 </option>
               ))}
             </select>
+            <button
+              onClick={() =>
+                getAllType(
+                  formID,
+                  salesforceConf,
+                  setSalesforceConf,
+                  setIsLoading,
+                  setSnackbar
+                )
+              }
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ "--tooltip-txt": '"Refresh Case Origin"' }}
+              type="button"
+              disabled={isLoading}
+            >
+              &#x21BB;
+            </button>
           </div>
         )}
       </ConfirmModal>
