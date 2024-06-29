@@ -84,6 +84,7 @@ class MailsterController
         $integrationDetails = $integrationData->flow_details;
         $integId = $integrationData->id;
         $fieldMap = $integrationDetails->field_map;
+        $selectedStatus = $integrationDetails->selectedStatus;
         $selectedLists = $integrationDetails->selectedLists;
 
         if (empty($fieldMap)) {
@@ -91,7 +92,7 @@ class MailsterController
         }
 
         $recordApiHelper = new RecordApiHelper($integId);
-        $mailsterResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedLists);
+        $mailsterResponse = $recordApiHelper->execute($fieldValues, $fieldMap,$selectedStatus, $selectedLists);
 
         if (is_wp_error($mailsterResponse)) {
             return $mailsterResponse;

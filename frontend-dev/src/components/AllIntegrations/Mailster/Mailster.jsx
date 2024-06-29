@@ -29,9 +29,9 @@ function Mailster({ formFields, setFlow, flow, allIntegURL }) {
     type: 'Mailster',
     field_map: [{ formField: '', mailsterFormField: '' }],
     mailsterFields: [],
+    selectedStatus: '',
     lists: [],
-    selectedLists: '',
-    actions: {}
+    selectedLists: ''
   })
 
   const saveConfig = () => {

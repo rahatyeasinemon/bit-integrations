@@ -8,7 +8,7 @@ namespace BitCode\FI\Actions\Mailster;
 
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
-use TNP;
+use MailsterSubscribers;
 
 /**
  * Provide functionality for Record insert, update
@@ -22,17 +22,19 @@ class RecordApiHelper
         $this->_integrationID = $integId;
     }
 
-    public function addSubscriber($finalData, $selectedLists)
+    public function addSubscriber($finalData, $selectedStatus, $selectedLists)
     {
         if (empty($finalData['email'])) {
             return ['success' => false, 'message' => 'Required field email is empty', 'code' => 400];
         }
 
-        if (!empty($selectedLists)) {
-            $finalData['lists'] = explode(',', $selectedLists);
+        if (!empty($selectedStatus)) {
+            $finalData['status'] = $selectedStatus;
         }
 
-        return TNP::add_subscriber($finalData);
+        $mailsterSubscribers = new MailsterSubscribers();
+
+        return $mailsterSubscribers->add($finalData);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -44,19 +46,19 @@ class RecordApiHelper
             if ($triggerValue === 'custom') {
                 $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
             } elseif (!\is_null($data[$triggerValue])) {
-                $dataFinal[$actionValue] = $data[$triggerValue];
+                $dataFinal[$actionValue] = \is_array($data[$triggerValue]) ? implode(',', $data[$triggerValue]) : $data[$triggerValue];
             }
         }
 
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedLists)
+    public function execute($fieldValues, $fieldMap, $selectedStatus, $selectedLists)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $response = $this->addSubscriber($finalData, $selectedLists);
+        $response = $this->addSubscriber($finalData, $selectedStatus, $selectedLists);
 
-        if (isset($response->id)) {
+        if (!is_wp_error($response)) {
             $res = ['message' => 'Subscriber added successfully'];
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber add']), 'success', wp_json_encode($res));
         } else {
