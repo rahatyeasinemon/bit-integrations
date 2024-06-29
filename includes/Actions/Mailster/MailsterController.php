@@ -6,6 +6,7 @@
 
 namespace BitCode\FI\Actions\Mailster;
 
+use MailsterBlockForms;
 use WP_Error;
 
 /**
@@ -41,6 +42,39 @@ class MailsterController
         } else {
             return true;
         }
+    }
+
+    public function getMailsterFields()
+    {
+        self::checkedMailsterExists();
+
+        $mailsterBlockForms = new MailsterBlockForms();
+        $fields = $mailsterBlockForms->get_fields();
+
+        if (empty($fields) || is_wp_error($fields)) {
+            wp_send_json_error(__('Fields fetching failed!', 'bit-integrations'), 400);
+        }
+
+        $formattedFields = [];
+
+        foreach ($fields as $field) {
+            if ($field['id'] != 'submit') {
+                if (isset($field['values']) && !empty($field['values'][0])) {
+                    $options = $field['values'];
+                } else {
+                    $options = [];
+                }
+
+                $formattedFields[] = (object) [
+                    'key'      => $field['id'],
+                    'label'    => $field['name'],
+                    'required' => $field['id'] === 'email' ? true : false,
+                    'options'  => $options
+                ];
+            }
+        }
+
+        wp_send_json_success($formattedFields, 200);
     }
 
     public function execute($integrationData, $fieldValues)

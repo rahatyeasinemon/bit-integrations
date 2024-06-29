@@ -79,6 +79,7 @@ export default function MailsterAuthorization({
             onClick={() =>
               mailsterAuthentication(
                 mailsterConf,
+                setMailsterConf,
                 setError,
                 setIsAuthorized,
                 loading,

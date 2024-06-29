@@ -19,7 +19,7 @@ export const handleInput = (e, mailsterConf, setMailsterConf) => {
 }
 
 export const generateMappedField = (mailsterConf) => {
-  const requiredFlds = mailsterConf?.staticFields.filter(fld => fld.required === true)
+  const requiredFlds = mailsterConf?.mailsterFields.filter(fld => fld.required === true)
   return requiredFlds.length > 0 ? requiredFlds.map(field => ({ formField: '', mailsterFormField: field.key })) : [{ formField: '', mailsterFormField: '' }]
 }
 
@@ -31,7 +31,7 @@ export const checkMappedFields = (mailsterConf) => {
   return true
 }
 
-export const mailsterAuthentication = (confTmp, setError, setIsAuthorized, loading, setLoading) => {
+export const mailsterAuthentication = (confTmp, setConf, setError, setIsAuthorized, loading, setLoading) => {
   if (!confTmp.name) {
     setError({ name: !confTmp.name ? __('Name can\'t be empty', 'bit-integrations') : '' })
     return
@@ -44,6 +44,7 @@ export const mailsterAuthentication = (confTmp, setError, setIsAuthorized, loadi
         setIsAuthorized(true)
         toast.success(__('Connected Successfully', 'bit-integrations'))
         setLoading({ ...loading, auth: false })
+        mailsterFields(confTmp, setConf, loading, setLoading)
         return
       }
       setLoading({ ...loading, auth: false })
@@ -51,36 +52,23 @@ export const mailsterAuthentication = (confTmp, setError, setIsAuthorized, loadi
     })
 }
 
-export const staticFields = [
-  { key: 'email', label: 'Email', required: true },
-  { key: 'name', label: 'First Name', required: false },
-  { key: 'surname', label: 'Last Name', required: false },
-  { key: 'status', label: 'Status', required: false },
-  { key: 'gender', label: 'Gender', required: false },
-  { key: 'country', label: 'Country Code', required: false },
-  { key: 'region', label: 'Region', required: false },
-  { key: 'city', label: 'City', required: false },
-  { key: 'profile_1', label: 'Custom Field 1', required: false },
-  { key: 'profile_2', label: 'Custom Field 2', required: false },
-  { key: 'profile_3', label: 'Custom Field 3', required: false },
-  { key: 'profile_4', label: 'Custom Field 4', required: false },
-  { key: 'profile_5', label: 'Custom Field 5', required: false },
-  { key: 'profile_6', label: 'Custom Field 6', required: false },
-  { key: 'profile_7', label: 'Custom Field 7', required: false },
-  { key: 'profile_8', label: 'Custom Field 8', required: false },
-  { key: 'profile_9', label: 'Custom Field 9', required: false },
-  { key: 'profile_10', label: 'Custom Field 10', required: false },
-  { key: 'profile_11', label: 'Custom Field 11', required: false },
-  { key: 'profile_12', label: 'Custom Field 12', required: false },
-  { key: 'profile_13', label: 'Custom Field 13', required: false },
-  { key: 'profile_14', label: 'Custom Field 14', required: false },
-  { key: 'profile_15', label: 'Custom Field 15', required: false },
-  { key: 'profile_16', label: 'Custom Field 16', required: false },
-  { key: 'profile_17', label: 'Custom Field 17', required: false },
-  { key: 'profile_18', label: 'Custom Field 18', required: false },
-  { key: 'profile_19', label: 'Custom Field 19', required: false },
-  { key: 'profile_20', label: 'Custom Field 20', required: false },
-]
+export const mailsterFields = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, fields: true })
+
+  bitsFetch({}, 'mailster_fields')
+    .then(result => {
+      if (result.success && result.data) {
+        const newConf = { ...confTmp }
+        newConf.mailsterFields = result.data
+        setConf(newConf)
+        toast.success(__('Fields fetched successfully.', 'bit-integrations'))
+        setLoading({ ...loading, fields: false })
+        return
+      }
+      setLoading({ ...loading, fields: false })
+      toast.error(__('Fields fetching failed!', 'bit-integrations'))
+    })
+}
 
 export const listsOptions = () => {
   const options = []

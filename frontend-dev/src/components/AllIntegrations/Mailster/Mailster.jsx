@@ -9,7 +9,7 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, staticFields } from './MailsterCommonFunc'
+import { checkMappedFields } from './MailsterCommonFunc'
 import MailsterIntegLayout from './MailsterIntegLayout'
 import MailsterAuthorization from './MailsterAuthorization'
 
@@ -18,7 +18,7 @@ function Mailster({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
     auth: false,
-    fields: false,
+    fields: false
   })
 
   const [step, setStep] = useState(1)
@@ -27,20 +27,26 @@ function Mailster({ formFields, setFlow, flow, allIntegURL }) {
   const [mailsterConf, setMailsterConf] = useState({
     name: 'Mailster',
     type: 'Mailster',
-    field_map: [
-      { formField: '', mailsterFormField: '' },
-    ],
-    staticFields,
+    field_map: [{ formField: '', mailsterFormField: '' }],
+    mailsterFields: [],
     lists: [],
     selectedLists: '',
-    groups: [],
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, mailsterConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      mailsterConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -65,7 +71,9 @@ function Mailster({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <MailsterAuthorization
@@ -79,8 +87,9 @@ function Mailster({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <MailsterIntegLayout
           formFields={formFields}
           mailsterConf={mailsterConf}
@@ -93,11 +102,8 @@ function Mailster({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!checkMappedFields(mailsterConf)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
-          &nbsp;
+          type="button">
+          {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>
