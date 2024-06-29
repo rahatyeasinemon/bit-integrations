@@ -15,3 +15,4 @@ Route::post('selesforce_contact_list', [SalesforceController::class, 'selesforce
 Route::post('selesforce_custom_field', [SalesforceController::class, 'customFields']);
 
 Route::post('selesforce_account_list', [SalesforceController::class, 'selesforceAccountList']);
+Route::post('selesforce_case_origin', [SalesforceController::class, 'selesforceCaseOrigin']);
