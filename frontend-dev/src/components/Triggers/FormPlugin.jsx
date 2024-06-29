@@ -92,22 +92,24 @@ const FormPlugin = () => {
             <span>{data.data}</span>
           ) : (
             <>
-              <h4>Select a Form/Task Name</h4>
-              <MultiSelect
-                className="msl-wrp-options"
-                defaultValue={newFlow.triggerData?.formID}
-                options={data?.data?.map(form => ({ label: form.title, value: form.id.toString() }))}
-                onChange={(val) => setTriggerData(val)}
-                singleSelect
-                style={{ width: '100%', minWidth: 400, maxWidth: 450 }}
-              />
-              <TriggerMultiOption flow={newFlow} setFlowData={setFlowData} />
               <div>
-                <button type="button" onClick={updatedStep} className="btn ml-auto btcd-btn-lg purple sh-sm flx mt-4" disabled={!newFlow?.triggerData?.formID}>
-                  &nbsp;Next
-                  <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
-                  {isLoad && <LoaderSm size={20} clr="#fff" className="ml-2" />}
-                </button>
+                <h4>Select a Form/Task Name</h4>
+                <MultiSelect
+                  className="msl-wrp-options"
+                  defaultValue={newFlow.triggerData?.formID}
+                  options={data?.data?.map(form => ({ label: form.title, value: form.id.toString() }))}
+                  onChange={(val) => setTriggerData(val)}
+                  singleSelect
+                  style={{ width: '100%', minWidth: 400, maxWidth: 450 }}
+                />
+                <TriggerMultiOption flow={newFlow} setFlowData={setFlowData} />
+                <div>
+                  <button type="button" onClick={updatedStep} className="btn ml-auto btcd-btn-lg purple sh-sm flx mt-4" disabled={!newFlow?.triggerData?.formID}>
+                    &nbsp;Next
+                    <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
+                    {isLoad && <LoaderSm size={20} clr="#fff" className="ml-2" />}
+                  </button>
+                </div>
               </div>
 
               {newFlow.triggerDetail?.note && (

@@ -9,7 +9,7 @@ final class ElementorController
 {
     public static function info()
     {
-        $plugin_path = self::pluginActive('get_name');
+        $plugin_path = 'elementor-pro/elementor-pro.php';
 
         return [
             'name'                => 'Elementor',
@@ -17,7 +17,7 @@ final class ElementorController
             'slug'                => $plugin_path,
             'pro'                 => $plugin_path,
             'type'                => 'custom_form_submission',
-            'is_active'           => is_plugin_active($plugin_path),
+            'is_active'           => self::pluginActive(),
             'activation_url'      => wp_nonce_url(self_admin_url('plugins.php?action=activate&amp;plugin=' . $plugin_path . '&amp;plugin_status=all&amp;paged=1&amp;s'), 'activate-plugin_' . $plugin_path),
             'install_url'         => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
             'documentation_url'   => 'https://bitapps.pro/docs/bit-integrations/trigger/elementor-form-integrations',
@@ -37,9 +37,7 @@ final class ElementorController
 
     public static function pluginActive($option = null)
     {
-        return (bool) (is_plugin_active('elementor-pro/elementor-pro.php') || is_plugin_active('elementor/elementor.php'))
-
-        ;
+        return (bool) (is_plugin_active('elementor-pro/elementor-pro.php') || is_plugin_active('elementor/elementor.php'));
     }
 
     public function getTestData()

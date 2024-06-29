@@ -38,9 +38,10 @@ export default function ChangelogToggle() {
 
     const [isChecked, setIsChecked] = useState(true)
 
-    const handleCheckboxChange = e => {
-        setIsChecked(!isChecked);
-    };
+    const closeModal = () => {
+        setShow(false)
+        setChangeLogVersion()
+    }
 
     useEffect(() => {
         if (show) {
@@ -85,7 +86,7 @@ export default function ChangelogToggle() {
                             <div className='changelog'>
                                 <div className="flx flx-col flx-center whats-new">
                                     <h3>What's New in {btcbi.version}?</h3>
-                                    <small className='date'> <b>13th June 2024</b></small>
+                                    <small className='date'> <b>25th June 2024</b></small>
                                 </div>
                                 <div className='changelog-content'>
                                     <span className='new-integration' ><b>New Features</b></span>
@@ -126,8 +127,7 @@ export default function ChangelogToggle() {
                                         <button
                                             type="button"
                                             className="btn round btn-md gray gray-sh"
-                                            onClick={() => setShow(false)
-                                            }
+                                            onClick={() => closeModal()}
                                         >
                                             Skip
                                         </button>

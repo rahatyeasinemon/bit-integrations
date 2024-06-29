@@ -12,6 +12,7 @@ import bitAssist from '../resource/img/products/bitAssist.svg'
 import bitFileManager from '../resource/img/products/bitFileManager.png'
 import bitSmtp from '../resource/img/products/bitSmtp.gif'
 import Loader from '../components/Loaders/Loader'
+import SupportIcon from '../resource/img/supportIcon/SupportIcon'
 
 function DocSupport() {
   const [snack, setSnackbar] = useState({ show: false })
@@ -92,12 +93,12 @@ function DocSupport() {
         </div>
         <div />
       </div>
-      <div id="btcd-settings-wrp" style={{ padding: '0px 30px' }}>
+      <div id="btcd-settings-wrp" style={{ padding: '0px 30px', marginBottom: '25px' }}>
         <h2>Support</h2>
         <p>In Bit Apps, we provide all kind product support for any types of customer, it does not matter FREE or PRO user. We actively provide support through Email and Live Chat. Our support team is always ready to help you. We are here to answer your questions and help you with any issues you may have.</p>
         <div className="flx">
           <span>
-            <MailIcn size="18" />
+            <SupportIcon size="18" />
           </span>
           <span className="ml-2">
             <a href="mailto:support@bitapps.pro" rel="noreferrer">
@@ -154,7 +155,7 @@ function DocSupport() {
           </span>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 
