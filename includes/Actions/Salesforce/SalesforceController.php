@@ -438,6 +438,42 @@ class SalesforceController
         wp_send_json_success($allTypes, 200);
     }
 
+    public static function selesforceCaseReason($campaignRequestParams)
+    {
+        if (
+            empty($campaignRequestParams->tokenDetails)
+            || empty($campaignRequestParams->clientId)
+            || empty($campaignRequestParams->clientSecret)
+        ) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+        $response = [];
+        if ((\intval($campaignRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+            $response['tokenDetails'] = self::refreshAccessToken($campaignRequestParams);
+        }
+
+        $allReason = [];
+        $query = 'SELECT Reason FROM Case WHERE Reason != NULL GROUP BY Reason';
+        $apiEndpoint = "{$campaignRequestParams->tokenDetails->instance_url}/services/data/v52.0/queryAll?q=" . urlencode($query);
+        $authorizationHeader['Authorization'] = "Bearer {$campaignRequestParams->tokenDetails->access_token}";
+        $authorizationHeader['Content-Type'] = 'application/json';
+        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+
+        if (isset($apiResponse->records)) {
+            foreach ($apiResponse->records as $case) {
+                $allReason[] = $case->Reason;
+            }
+        }
+
+        wp_send_json_success($allReason, 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;

@@ -11,6 +11,7 @@ import {
   getAllCampaignList,
   getAllContactList,
   getAllOrigin,
+  getAllReason,
   getAllType,
 } from "./SalesforceCommonFunc";
 import {
@@ -94,6 +95,14 @@ export default function SalesforceActions({
       );
     } else if (modelName === "caseType") {
       getAllType(
+        formID,
+        salesforceConf,
+        setSalesforceConf,
+        setIsLoading,
+        setSnackbar
+      );
+    } else if (modelName === "caseReason") {
+      getAllReason(
         formID,
         salesforceConf,
         setSalesforceConf,
@@ -1035,7 +1044,7 @@ export default function SalesforceActions({
                 )
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ "--tooltip-txt": '"Refresh Case Origin"' }}
+              style={{ "--tooltip-txt": '"Refresh Case Type"' }}
               type="button"
               disabled={isLoading}
             >
@@ -1072,20 +1081,32 @@ export default function SalesforceActions({
               className="btcd-paper-inp"
               onChange={(e) => actionHandler(e.target.value, "caseReason")}
             >
-              <option value="">{__("Select type", "bit-integrations")}</option>
-              {[
-                "Installation",
-                "Equipment Complexity",
-                "Breakdown",
-                "Equipment Design",
-                "Feedback",
-                "Other",
-              ].map((item, key) => (
+              <option value="">
+                {__("Select Reason", "bit-integrations")}
+              </option>
+              {salesforceConf?.caseReasons?.map((item, key) => (
                 <option key={key} value={item}>
                   {item}
                 </option>
               ))}
             </select>
+            <button
+              onClick={() =>
+                getAllReason(
+                  formID,
+                  salesforceConf,
+                  setSalesforceConf,
+                  setIsLoading,
+                  setSnackbar
+                )
+              }
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ "--tooltip-txt": '"Refresh Case Reason"' }}
+              type="button"
+              disabled={isLoading}
+            >
+              &#x21BB;
+            </button>
           </div>
         )}
       </ConfirmModal>

@@ -17,3 +17,4 @@ Route::post('selesforce_custom_field', [SalesforceController::class, 'customFiel
 Route::post('selesforce_account_list', [SalesforceController::class, 'selesforceAccountList']);
 Route::post('selesforce_case_origin', [SalesforceController::class, 'selesforceCaseOrigin']);
 Route::post('selesforce_case_type', [SalesforceController::class, 'selesforceCaseType']);
+Route::post('selesforce_case_reason', [SalesforceController::class, 'selesforceCaseReason']);

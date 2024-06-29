@@ -180,6 +180,43 @@ export const getAllType = (
   });
 };
 
+export const getAllReason = (
+  formID,
+  salesforceConf,
+  setSalesforceConf,
+  setIsLoading,
+  setSnackbar
+) => {
+  setIsLoading(true);
+  const campaignRequestParams = {
+    formID,
+    clientId: salesforceConf.clientId,
+    clientSecret: salesforceConf.clientSecret,
+    tokenDetails: salesforceConf.tokenDetails,
+  };
+  const loadPostReasons = bitsFetch(
+    campaignRequestParams,
+    "selesforce_case_reason"
+  ).then((result) => {
+    if (result && result.success) {
+      setSalesforceConf((prevConf) =>
+        create(prevConf, (draftConf) => {
+          draftConf["caseReasons"] = result.data;
+        })
+      );
+      setIsLoading(false);
+      return "Reason refreshed";
+    }
+    setIsLoading(false);
+    return "Reason refresh failed. please try again";
+  });
+  toast.promise(loadPostReasons, {
+    success: (data) => data,
+    error: __("Error Occurred", "bit-integrations"),
+    loading: __("Loading Reason..."),
+  });
+};
+
 // export const getAllLeadList = (formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar) => {
 //   setIsLoading(true)
 //   const campaignRequestParams = {
