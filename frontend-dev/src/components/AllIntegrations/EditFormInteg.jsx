@@ -28,6 +28,7 @@ import { getAllUMrole } from '../Triggers/TriggerHelpers/UltimateMemberHelper/Ul
 import { getAllGroundhoggTags } from '../Triggers/TriggerHelpers/GroundhoggHelper/GroundhoggCommonFunction'
 import { create } from 'mutative'
 import { getFluentBookingEvents } from '../Triggers/TriggerHelpers/FluentBookingHelper/FluentBookingCommonFunction.js'
+import { getSureMembersGroups } from '../Triggers/TriggerHelpers/SureMembersHelper/SureMembersCommonFunction.js'
 
 function EditFormInteg({ setSnackbar, className = '' }) {
   const [forms, setForms] = useState([])
@@ -234,8 +235,11 @@ function EditFormInteg({ setSnackbar, className = '' }) {
         getAllUMrole(data, setFlow)
       }
     }
-    if (trigger = 'fluentBooking') {
+    if (trigger === 'FluentBooking') {
       getFluentBookingEvents(data, setFlow)
+    }
+    if (trigger === 'SureMembers') {
+      getSureMembersGroups(data, setFlow)
     }
   }
 

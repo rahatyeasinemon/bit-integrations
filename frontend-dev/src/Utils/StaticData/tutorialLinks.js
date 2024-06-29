@@ -698,6 +698,11 @@ const tutorialLinks = {
     title: "How to setup Newsletter integration",
     youTubeLink: "#",
     docLink: "#",
+  },
+  sureMembers: {
+    title: "How to setup SureMembers integration",
+    youTubeLink: "#",
+    docLink: "#",
   }
 };
 export default tutorialLinks;
