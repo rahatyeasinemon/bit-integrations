@@ -50,8 +50,28 @@ final class Plugin
     public function init_plugin()
     {
         Hooks::add('init', [$this, 'init_classes'], 8);
-        Hooks::add('init', [$this, 'integrationlogDelete'], 11);
+        Hooks::add('btcbi_delete_integ_log', [$this, 'integrationlogDelete'], PHP_INT_MAX);
         Hooks::filter('plugin_action_links_' . plugin_basename(BTCBI_PLUGIN_MAIN_FILE), [$this, 'plugin_action_links']);
+        Hooks::filter('cron_schedules', [$this, 'every_week_time_cron']);
+
+        $this->btcbi_delete_log_scheduler();
+    }
+
+    public function every_week_time_cron($schedules)
+    {
+        $schedules['every_week'] = [
+            'interval' => 604800, // 604800 seconds in 1 week
+            'display'  => esc_html__('Every Week', 'textdomain')
+        ];
+
+        return $schedules;
+    }
+
+    public function btcbi_delete_log_scheduler()
+    {
+        if (!wp_next_scheduled('btcbi_delete_integ_log')) {
+            wp_schedule_event(time(), 'every_week', 'btcbi_delete_integ_log');
+        }
     }
 
     public function initWPTelemetry()
