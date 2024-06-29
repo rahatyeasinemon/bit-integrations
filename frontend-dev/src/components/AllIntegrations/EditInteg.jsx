@@ -152,6 +152,7 @@ const EditDiscord = lazy(() => import('./Discord/EditDiscord'))
 const EditZagoMail = lazy(() => import('./ZagoMail/EditZagoMail'))
 const EditNewsletter = lazy(() => import('./Newsletter/EditNewsletter'))
 const EditSureMembers = lazy(() => import('./SureMembers/EditSureMembers'))
+const EditMailster = lazy(() => import('./Mailster/EditMailster'))
 
 const loaderStyle = {
   display: 'flex',
@@ -517,6 +518,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditNewsletter allIntegURL={allIntegURL} />
     case 'SureMembers':
       return <EditSureMembers allIntegURL={allIntegURL} />
+    case 'Mailster':
+      return <EditMailster allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }

@@ -141,6 +141,7 @@ const ZagoMailAuthorization = lazy(() => import('./ZagoMail/ZagoMailAuthorizatio
 const WhatsAppAuthorization = lazy(() => import('./WhatsApp/WhatsAppAuthorization'))
 const NewsletterAuthorization = lazy(() => import('./Newsletter/NewsletterAuthorization'))
 const SureMembersAuthorization = lazy(() => import('./SureMembers/SureMembersAuthorization'))
+const mailsterAuthentication = lazy(() => import('./Mailster/MailsterAuthorization'))
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -438,6 +439,8 @@ export default function IntegInfo() {
         return <NewsletterAuthorization newsletterConf={integrationConf} step={1} isInfo />
       case 'SureMembers':
         return <SureMembersAuthorization sureMembersConf={integrationConf} step={1} isInfo />
+      case 'Mailster':
+        return <mailsterAuthentication sureMembersConf={integrationConf} step={1} isInfo />
       default:
         return <></>
     }

@@ -152,6 +152,7 @@ const Discord = lazy(() => import('./Discord/Discord'))
 const ZagoMail = lazy(() => import('./ZagoMail/ZagoMail'))
 const Newsletter = lazy(() => import('./Newsletter/Newsletter'))
 const SureMembers = lazy(() => import('./SureMembers/SureMembers'))
+const Mailster = lazy(() => import('./Mailster/Mailster'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
@@ -450,6 +451,8 @@ export default function NewInteg({ allIntegURL }) {
         return <Newsletter allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'SureMembers':
         return <SureMembers allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
+      case 'Mailster':
+        return <Mailster allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       default:
         return <></>
     }
