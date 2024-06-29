@@ -7,6 +7,7 @@
 namespace BitCode\FI\Actions\MailRelay;
 
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
 
@@ -52,11 +53,13 @@ class RecordApiHelper
             'status' => $status
         ];
 
-        $staticFieldsKeys = ['email', 'name', 'address', 'city', 'state', 'country', 'birthday', 'website', 'locale', 'timezone'];
+        $staticFieldsKeys = ['email', 'name', 'sms_phone', 'address', 'city', 'state', 'country', 'birthday', 'website', 'locale', 'timezone'];
         $customFields = [];
 
         foreach ($finalData as $key => $value) {
-            if (\in_array($key, $staticFieldsKeys)) {
+            if (\in_array($key, $staticFieldsKeys) && $key == 'sms_phone') {
+                $requestParams[$key] = Helper::formatPhoneNumber($value);
+            } elseif (\in_array($key, $staticFieldsKeys)) {
                 $requestParams[$key] = $value;
             } else {
                 $customFields[$key] = $value;
