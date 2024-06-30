@@ -89,18 +89,14 @@ function App() {
               >
                 {__('Doc & Support', 'bit-integrations')}
               </NavLink>
-              {btcbi.isPro ? '' :
                 <a
                   target="_blank"
                   href="https://wordpress.org/plugins/bit-integrations/#reviews"
-                  className="app-link green blink"
+                  className={`app-link ${btcbi.isPro ? '' : 'green blink'} `}
                   rel="noreferrer"
                 >
-                  {/* <marquee behavior="scroll" direction="up"></marquee> */}
                   {__('Review us', 'bit-integrations')}
                 </a>
-
-              }
 
             </nav>
             <div className="flx flx-center" style={{ marginLeft: 'auto' }}>
