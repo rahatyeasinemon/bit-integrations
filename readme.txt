@@ -7,7 +7,7 @@ Requires PHP: 7.0
 Stable tag: 2.1.1
 License: GPLv2 or later
 
-Automation Plugin for WordPress like Zapier; Integration of 65+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
+Automation Plugin for WordPress like Zapier; Integration of 70+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
 
 == Description ==
 
