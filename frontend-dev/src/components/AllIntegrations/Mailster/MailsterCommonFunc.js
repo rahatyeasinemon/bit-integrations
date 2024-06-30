@@ -88,12 +88,20 @@ export const mailsterLists = (confTmp, setConf, loading, setLoading) => {
     })
 }
 
-export const listsOptions = () => {
-  const options = []
+export const mailsterTags = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, tags: true })
 
-  for (let i = 1; i <= 40; i++) {
-    options.push({ label: 'List ' + i, value: i.toString() })
-  }
-
-  return options
+  bitsFetch({}, 'mailster_tags')
+    .then(result => {
+      if (result.success && result.data) {
+        const newConf = { ...confTmp }
+        newConf.tags = result.data
+        setConf(newConf)
+        toast.success(__('tags fetched successfully.', 'bit-integrations'))
+        setLoading({ ...loading, tags: false })
+        return
+      }
+      setLoading({ ...loading, tags: false })
+      toast.error(__('tags fetching failed!', 'bit-integrations'))
+    })
 }

@@ -20,7 +20,8 @@ function EditMailster({ allIntegURL }) {
   const [loading, setLoading] = useState({
     auth: false,
     fields: false,
-    lists: false
+    lists: false,
+    tags: false
   })
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)

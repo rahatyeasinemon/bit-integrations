@@ -8,6 +8,7 @@ namespace BitCode\FI\Actions\Mailster;
 
 use MailsterBlockForms;
 use MailsterLists;
+use MailsterTags;
 use WP_Error;
 
 /**
@@ -97,6 +98,25 @@ class MailsterController
         wp_send_json_success($lists, 200);
     }
 
+    public function getMailsterTags()
+    {
+        self::checkedMailsterExists();
+
+        $mailsterTags = new MailsterTags();
+
+        $getTags = $mailsterTags->get();
+
+        if (empty($getTags) || is_wp_error($getTags)) {
+            wp_send_json_error(__('Tags fetching failed!', 'bit-integrations'), 400);
+        }
+
+        foreach ($getTags as $tag) {
+            $tags[] = (object) ['label' => $tag->name, 'value' => (string) $tag->ID];
+        }
+
+        wp_send_json_success($tags, 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         self::checkedMailsterExists();
@@ -106,13 +126,20 @@ class MailsterController
         $fieldMap = $integrationDetails->field_map;
         $selectedStatus = $integrationDetails->selectedStatus;
         $selectedLists = $integrationDetails->selectedLists;
+        $selectedTags = $integrationDetails->selectedTags;
 
         if (empty($fieldMap)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('fields map are required for Mailster', 'bit-integrations'));
         }
 
         $recordApiHelper = new RecordApiHelper($integId);
-        $mailsterResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedStatus, $selectedLists);
+        $mailsterResponse = $recordApiHelper->execute(
+            $fieldValues,
+            $fieldMap,
+            $selectedStatus,
+            $selectedLists,
+            $selectedTags
+        );
 
         if (is_wp_error($mailsterResponse)) {
             return $mailsterResponse;

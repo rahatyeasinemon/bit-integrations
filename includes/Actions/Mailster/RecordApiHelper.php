@@ -22,7 +22,7 @@ class RecordApiHelper
         $this->_integrationID = $integId;
     }
 
-    public function addSubscriber($finalData, $selectedStatus, $selectedLists)
+    public function addSubscriber($finalData, $selectedStatus, $selectedLists, $selectedTags)
     {
         if (empty($finalData['email'])) {
             return ['success' => false, 'message' => 'Required field email is empty', 'code' => 400];
@@ -44,6 +44,10 @@ class RecordApiHelper
             $mailsterSubscribers->assign_lists($subscriberAdd, explode(',', $selectedLists));
         }
 
+        if (!empty($selectedTags)) {
+            $mailsterSubscribers->assign_tags($subscriberAdd, explode(',', $selectedTags));
+        }
+
         return $subscriberAdd;
     }
 
@@ -63,10 +67,10 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedStatus, $selectedLists)
+    public function execute($fieldValues, $fieldMap, $selectedStatus, $selectedLists, $selectedTags)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $response = $this->addSubscriber($finalData, $selectedStatus, $selectedLists);
+        $response = $this->addSubscriber($finalData, $selectedStatus, $selectedLists, $selectedTags);
 
         if (!is_wp_error($response)) {
             $res = ['message' => 'Subscriber added successfully'];

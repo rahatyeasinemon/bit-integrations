@@ -19,7 +19,8 @@ function Mailster({ formFields, setFlow, flow, allIntegURL }) {
   const [loading, setLoading] = useState({
     auth: false,
     fields: false,
-    lists: false
+    lists: false,
+    tags: false
   })
 
   const [step, setStep] = useState(1)
@@ -32,7 +33,9 @@ function Mailster({ formFields, setFlow, flow, allIntegURL }) {
     mailsterFields: [],
     selectedStatus: '',
     lists: [],
-    selectedLists: ''
+    selectedLists: '',
+    tags: [],
+    selectedTags: ''
   })
 
   const saveConfig = () => {
