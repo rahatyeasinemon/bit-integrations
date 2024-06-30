@@ -7,6 +7,7 @@
 namespace BitCode\FI\Actions\Mailster;
 
 use MailsterBlockForms;
+use MailsterLists;
 use WP_Error;
 
 /**
@@ -77,6 +78,25 @@ class MailsterController
         wp_send_json_success($formattedFields, 200);
     }
 
+    public function getMailsterLists()
+    {
+        self::checkedMailsterExists();
+
+        $mailsterLists = new MailsterLists();
+
+        $getLists = $mailsterLists->get();
+
+        if (empty($getLists) || is_wp_error($getLists)) {
+            wp_send_json_error(__('Lists fetching failed!', 'bit-integrations'), 400);
+        }
+
+        foreach ($getLists as $list) {
+            $lists[] = (object) ['label' => $list->name, 'value' => (string) $list->ID];
+        }
+
+        wp_send_json_success($lists, 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         self::checkedMailsterExists();
@@ -92,7 +112,7 @@ class MailsterController
         }
 
         $recordApiHelper = new RecordApiHelper($integId);
-        $mailsterResponse = $recordApiHelper->execute($fieldValues, $fieldMap,$selectedStatus, $selectedLists);
+        $mailsterResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedStatus, $selectedLists);
 
         if (is_wp_error($mailsterResponse)) {
             return $mailsterResponse;

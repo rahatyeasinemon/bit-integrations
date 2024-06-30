@@ -95,7 +95,12 @@ export default function MailsterIntegLayout({
                 <b className="wdt-100">{__('Actions', 'bit-integrations')}</b>
               </div>
               <div className="btcd-hr mt-1" />
-              <MailsterActions mailsterConf={mailsterConf} setMailsterConf={setMailsterConf} />
+              <MailsterActions
+                mailsterConf={mailsterConf}
+                setMailsterConf={setMailsterConf}
+                loading={loading}
+                setLoading={setLoading}
+              />
             </div>
           </>
         )}

@@ -7,14 +7,20 @@ import TableCheckBox from '../../Utilities/TableCheckBox'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Cooltip from '../../Utilities/Cooltip'
-import { listsOptions } from './MailsterCommonFunc'
+import { listsOptions, mailsterLists } from './MailsterCommonFunc'
+import Loader from '../../Loaders/Loader'
 
-export default function MailsterActions({ mailsterConf, setMailsterConf }) {
+export default function MailsterActions({ mailsterConf, setMailsterConf, loading, setLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false })
   const actionHandler = (e, type) => {
     const newConf = { ...mailsterConf }
     if (type === 'status') {
       setActionMdl({ show: 'status' })
+    }
+
+    if (type === 'lists') {
+      setActionMdl({ show: 'lists' })
+      mailsterLists(mailsterConf, setMailsterConf, loading, setLoading)
     }
 
     setMailsterConf({ ...newConf })
@@ -30,8 +36,6 @@ export default function MailsterActions({ mailsterConf, setMailsterConf }) {
     setMailsterConf({ ...newConf })
   }
 
-  const getListsOptions = listsOptions()
-
   return (
     <div className="pos-rel d-flx w-8">
       <TableCheckBox
@@ -44,7 +48,7 @@ export default function MailsterActions({ mailsterConf, setMailsterConf }) {
       />
       <TableCheckBox
         checked={mailsterConf.selectedLists || false}
-        onChange={(e) => actionHandler(e)}
+        onChange={(e) => actionHandler(e, 'lists')}
         className="wdt-200 mt-4 mr-2"
         value="select_lists"
         title={__('Select Lists', 'bit-integrations')}
@@ -98,15 +102,27 @@ export default function MailsterActions({ mailsterConf, setMailsterConf }) {
             <div className="txt-body">Subscribers will be associated with the selected lists.</div>
           </Cooltip>
         </div>
-        <div className="mt-2">
-          <MultiSelect
-            options={getListsOptions}
-            className="msl-wrp-options"
-            defaultValue={mailsterConf?.selectedLists}
-            onChange={(val) => setChanges(val, 'selectedLists')}
-            style={{ width: '100%' }}
+        {loading.lists ? (
+          <Loader
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 45,
+              transform: 'scale(0.5)'
+            }}
           />
-        </div>
+        ) : (
+          <div className="mt-2">
+            <MultiSelect
+              options={mailsterConf.lists}
+              className="msl-wrp-options"
+              defaultValue={mailsterConf?.selectedLists}
+              onChange={(val) => setChanges(val, 'selectedLists')}
+              style={{ width: '100%' }}
+            />
+          </div>
+        )}
       </ConfirmModal>
     </div>
   )

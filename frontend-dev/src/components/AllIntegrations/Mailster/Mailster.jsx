@@ -18,7 +18,8 @@ function Mailster({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
     auth: false,
-    fields: false
+    fields: false,
+    lists: false
   })
 
   const [step, setStep] = useState(1)

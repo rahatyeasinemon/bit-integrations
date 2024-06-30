@@ -70,6 +70,24 @@ export const mailsterFields = (confTmp, setConf, loading, setLoading) => {
     })
 }
 
+export const mailsterLists = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, lists: true })
+
+  bitsFetch({}, 'mailster_lists')
+    .then(result => {
+      if (result.success && result.data) {
+        const newConf = { ...confTmp }
+        newConf.lists = result.data
+        setConf(newConf)
+        toast.success(__('lists fetched successfully.', 'bit-integrations'))
+        setLoading({ ...loading, lists: false })
+        return
+      }
+      setLoading({ ...loading, lists: false })
+      toast.error(__('lists fetching failed!', 'bit-integrations'))
+    })
+}
+
 export const listsOptions = () => {
   const options = []
 

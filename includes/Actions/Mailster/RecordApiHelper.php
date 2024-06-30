@@ -34,7 +34,17 @@ class RecordApiHelper
 
         $mailsterSubscribers = new MailsterSubscribers();
 
-        return $mailsterSubscribers->add($finalData);
+        $subscriberAdd = $mailsterSubscribers->add($finalData);
+
+        if (is_wp_error($subscriberAdd)) {
+            return $subscriberAdd;
+        }
+
+        if (!empty($selectedLists)) {
+            $mailsterSubscribers->assign_lists($subscriberAdd, explode(',', $selectedLists));
+        }
+
+        return $subscriberAdd;
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
