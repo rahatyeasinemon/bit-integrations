@@ -6,10 +6,10 @@
 
 namespace BitCode\FI\Actions\MailRelay;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -109,7 +109,7 @@ class RecordApiHelper
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $apiResponse = $this->addSubscriber($selectedGroups, $finalData, $status);
 
-        if ($apiResponse->id) {
+        if (isset($apiResponse->id)) {
             $res = ['message' => 'Subscriber ' . $this->_requestStoringTypes . ' successfully'];
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber ' . $this->_requestStoringTypes]), 'success', wp_json_encode($res));
         } else {
