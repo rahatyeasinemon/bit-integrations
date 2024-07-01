@@ -51,6 +51,8 @@ class RecordApiHelper
                 $fields[$fieldId] = (int) $value;
             } elseif ($fieldType === 'barcode') {
                 $fields[$fieldId] = (object) ['text' => $value];
+            } elseif ($fieldType === 'multipleAttachments') {
+                $fields[$fieldId] = static::parseAttachmentFile([$value]);
             } else {
                 $fields[$fieldId] = $value;
             }
@@ -60,7 +62,10 @@ class RecordApiHelper
             'fields' => (object) $fields
         ];
 
-        return HttpHelper::post($apiEndpoint, wp_json_encode($data), $this->defaultHeader);
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($data), $this->defaultHeader);
+        error_log(print_r(['finalData' => $finalData, 'data' => $data, 'response' => $response], true));
+
+        return $response;
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -87,10 +92,29 @@ class RecordApiHelper
         if (isset($apiResponse->records)) {
             $successMessage = ['message' => 'Record created successfully'];
             LogHandler::save($this->integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'Record created']), 'success', wp_json_encode($successMessage));
+
+            if (isset($apiResponse->details) && $apiResponse->details->message == 'partialSuccess') {
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'Creating record']), 'error', wp_json_encode($apiResponse->details));
+            }
         } else {
             LogHandler::save($this->integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'Creating record']), 'error', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;
+    }
+
+    private static function parseAttachmentFile(array $files)
+    {
+        $allFiles = [];
+
+        foreach ($files as $file) {
+            if (\is_array($file)) {
+                $allFiles = static::parseAttachmentFile($file);
+            } else {
+                $allFiles[] = (object) ['url' => Common::fileUrl($file)];
+            }
+        }
+
+        return $allFiles;
     }
 }
