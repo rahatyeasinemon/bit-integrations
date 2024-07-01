@@ -36,5 +36,6 @@ final class Deactivation
 
     public function deactive()
     {
+        wp_clear_scheduled_hook('btcbi_delete_integ_log');
     }
 }

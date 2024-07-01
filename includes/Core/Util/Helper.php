@@ -207,4 +207,17 @@ final class Helper
     {
         return \is_string($flowDetails) ? json_decode($flowDetails) : $flowDetails;
     }
+
+    public static function formatPhoneNumber($field, $split = false, $splitPerDig = 3)
+    {
+        if (!preg_match('/^\+?[0-9\s\-\(\)]+$/', $field)) {
+            return $field;
+        }
+
+        $leadingPlus = $field[0] === '+' ? '+' : '';
+        $cleanedNumber = preg_replace('/[^\d]/', '', $field);
+        $formattedDigits = $split ? trim(chunk_split($cleanedNumber, $splitPerDig, ' ')) : trim($cleanedNumber);
+
+        return $leadingPlus . $formattedDigits;
+    }
 }
