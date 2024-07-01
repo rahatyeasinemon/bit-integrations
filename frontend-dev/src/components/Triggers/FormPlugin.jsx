@@ -83,8 +83,8 @@ const FormPlugin = () => {
   let taskNote = ''
 
   if (newFlow.triggerData?.formID) {
-    const selectedTask = data.data.filter((item) => item.id == newFlow.triggerData?.formID)
-    if (selectedTask[0].hasOwnProperty('note')) {
+    const selectedTask = data?.data?.filter((item) => item.id == newFlow.triggerData?.formID)
+    if (selectedTask[0]?.hasOwnProperty('note')) {
       taskNote = selectedTask[0].note
     }
   }
