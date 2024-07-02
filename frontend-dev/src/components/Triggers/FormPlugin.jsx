@@ -124,7 +124,7 @@ const FormPlugin = () => {
                 />
                 {taskNote && (
                   <small className="trigger-task-note">
-                    <strong>Note: </strong>
+                    <strong>Task Details: </strong>
                     {taskNote}
                   </small>
                 )}
