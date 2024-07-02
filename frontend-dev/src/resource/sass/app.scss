@@ -1,5 +1,5 @@
 :root {
-  --tooltip-txt: "";
+  --tooltip-txt: '';
   --tt-left: 50%;
   --tt-width: auto;
   --tt-wrap: nowrap;
@@ -51,7 +51,7 @@ a:hover {
 #btcd-app {
   color: $dp-purple;
   direction: ltr !important;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: 'Montserrat', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 82vh;
@@ -146,7 +146,7 @@ button.check {
 
 .media-modal {
   & * {
-    font-family: "Montserrat", sans-serif !important;
+    font-family: 'Montserrat', sans-serif !important;
   }
 
   & a {
@@ -185,8 +185,8 @@ button.check {
   }
 }
 
-input[type="checkbox"]:disabled:checked:before,
-input[type="checkbox"].disabled:checked:before {
+input[type='checkbox']:disabled:checked:before,
+input[type='checkbox'].disabled:checked:before {
   opacity: 0 !important;
 }
 
@@ -352,7 +352,7 @@ input[type="checkbox"].disabled:checked:before {
 
 //scroll bar style end
 
-[draggable="true"] {
+[draggable='true'] {
   -khtml-user-drag: element;
   -webkit-user-drag: element;
 }
@@ -380,20 +380,12 @@ input[type="checkbox"].disabled:checked:before {
 
   &:hover {
     //background: #016fcf !important;
-    background: linear-gradient(
-      145deg,
-      darken($blue, 2),
-      darken($blue, 5)
-    ) !important;
+    background: linear-gradient(145deg, darken($blue, 2), darken($blue, 5)) !important;
   }
 
   &:active {
     // background: #0062b8;
-    background: linear-gradient(
-      145deg,
-      darken($blue, 4),
-      darken($blue, 7)
-    ) !important;
+    background: linear-gradient(145deg, darken($blue, 4), darken($blue, 7)) !important;
   }
 }
 
@@ -417,20 +409,12 @@ input[type="checkbox"].disabled:checked:before {
 
   &:hover {
     //background: #016fcf !important;
-    background: linear-gradient(
-      145deg,
-      darken($purple, 2),
-      darken($purple, 5)
-    ) !important;
+    background: linear-gradient(145deg, darken($purple, 2), darken($purple, 5)) !important;
   }
 
   &:active {
     // background: #0062b8;
-    background: linear-gradient(
-      145deg,
-      darken($purple, 4),
-      darken($purple, 7)
-    ) !important;
+    background: linear-gradient(145deg, darken($purple, 4), darken($purple, 7)) !important;
   }
 }
 
@@ -441,20 +425,12 @@ input[type="checkbox"].disabled:checked:before {
 
   &:hover {
     //background: #016fcf !important;
-    background: linear-gradient(
-      145deg,
-      darken($gray, 2),
-      darken($gray, 5)
-    ) !important;
+    background: linear-gradient(145deg, darken($gray, 2), darken($gray, 5)) !important;
   }
 
   &:active {
     // background: #0062b8;
-    background: linear-gradient(
-      145deg,
-      darken($gray, 4),
-      darken($gray, 7)
-    ) !important;
+    background: linear-gradient(145deg, darken($gray, 4), darken($gray, 7)) !important;
   }
 }
 
@@ -809,7 +785,7 @@ input[type="checkbox"].disabled:checked:before {
     justify-content: center;
   }
 
-  & input[type="number"] {
+  & input[type='number'] {
     width: 55px;
     line-height: 1 !important;
     outline: none;
@@ -873,14 +849,10 @@ input[type="checkbox"].disabled:checked:before {
     cursor: pointer;
     height: $thumb-height;
     width: $thumb-width;
-    @include shadow(
-      $thumb-shadow-size,
-      $thumb-shadow-blur,
-      $thumb-shadow-color
-    );
+    @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
   }
 
-  [type="range"] {
+  [type='range'] {
     background: transparent;
     -webkit-appearance: none;
     margin: calc($thumb-height / 2) 0;
@@ -925,18 +897,12 @@ input[type="checkbox"].disabled:checked:before {
       border: $track-border-width solid $track-border-color;
       border-radius: $track-radius;
       @include track;
-      @include shadow(
-        $track-shadow-size,
-        $track-shadow-blur,
-        $track-shadow-color
-      );
+      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
     }
 
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
-      margin-top: calc(
-        ($track-border-width * 2 + $track-height) / 2 - ($thumb-height / 2)
-      );
+      margin-top: calc(($track-border-width * 2 + $track-height) / 2 - ($thumb-height / 2));
       @include thumb;
     }
 
@@ -945,11 +911,7 @@ input[type="checkbox"].disabled:checked:before {
       border: $track-border-width solid $track-border-color;
       border-radius: $track-radius;
       height: calc($track-height / 2);
-      @include shadow(
-        $track-shadow-size,
-        $track-shadow-blur,
-        $track-shadow-color
-      );
+      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
       @include track;
     }
 
@@ -969,22 +931,14 @@ input[type="checkbox"].disabled:checked:before {
       background: $ie-bottom-track-color;
       border: $track-border-width solid $track-border-color;
       border-radius: calc($track-radius * 2);
-      @include shadow(
-        $track-shadow-size,
-        $track-shadow-blur,
-        $track-shadow-color
-      );
+      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
     }
 
     &::-ms-fill-upper {
       background: $track-color;
       border: $track-border-width solid $track-border-color;
       border-radius: calc($track-radius * 2);
-      @include shadow(
-        $track-shadow-size,
-        $track-shadow-blur,
-        $track-shadow-color
-      );
+      @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
     }
 
     &::-ms-thumb {
@@ -1008,7 +962,7 @@ input[type="checkbox"].disabled:checked:before {
 .btcd-mrk:after {
   display: none;
   position: absolute;
-  content: "";
+  content: '';
 }
 
 .btcd-ck-wrp input:checked ~ .btcd-mrk:after {
@@ -1071,7 +1025,7 @@ input[type="checkbox"].disabled:checked:before {
     position: absolute;
     top: 47vh;
     left: -2px;
-    content: "\02551";
+    content: '\02551';
     height: 64px;
     text-align: center;
   }
@@ -1087,7 +1041,7 @@ input[type="checkbox"].disabled:checked:before {
   pointer-events: none;
 
   &::before {
-    content: "";
+    content: '';
   }
 
   &:hover {
@@ -1481,7 +1435,7 @@ input[type="checkbox"].disabled:checked:before {
 
   &:hover:not(.btcd-inte-dis, .btcd-inte-pro, .pro-filter, .inte-edit) {
     &:before {
-      content: "+";
+      content: '+';
     }
   }
 }
@@ -1502,7 +1456,7 @@ input[type="checkbox"].disabled:checked:before {
     background: rgba(17, 27, 76, 0.67);
     position: absolute;
     z-index: 9;
-    content: "Coming Soon";
+    content: 'Coming Soon';
     font-size: 12px;
     font-weight: 500;
     text-shadow: 0px 0px 4px black;
@@ -1860,13 +1814,13 @@ nav.top-nav {
   font-size: 14px;
 }
 
-.f-table [data-sticky-first-right-td="true"],
-.f-table [data-sticky-last-left-td="true"] {
+.f-table [data-sticky-first-right-td='true'],
+.f-table [data-sticky-last-left-td='true'] {
   position: -webkit-sticky !important;
   position: sticky !important;
 }
 
-[data-sticky-first-right-td="true"] {
+[data-sticky-first-right-td='true'] {
   box-shadow: -5px 0px 6px -5px #cdcdcd;
 }
 
@@ -1997,11 +1951,7 @@ nav.top-nav {
   width: 100%;
 
   &:hover {
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 1) 27%
-    );
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 27%);
     width: 172px;
   }
 }
@@ -2340,7 +2290,7 @@ nav.top-nav {
     position: absolute;
     top: 110%;
     left: var(--tt-left);
-    font-family: "Montserrat", sans-serif;
+    font-family: 'Montserrat', sans-serif;
     line-height: 1;
     white-space: pre-wrap;
     font-size: 13px;
@@ -2484,7 +2434,7 @@ nav.top-nav {
   }
 
   &::after {
-    content: "\02261";
+    content: '\02261';
   }
 
   &:focus {
@@ -2493,7 +2443,7 @@ nav.top-nav {
   }
 
   &:focus::after {
-    content: "\000D7";
+    content: '\000D7';
   }
 }
 
@@ -2911,7 +2861,7 @@ nav.top-nav {
   &::before {
     position: absolute;
     right: -15px;
-    content: "";
+    content: '';
     height: 15px;
     width: 15px;
     background-color: transparent;
@@ -2956,7 +2906,7 @@ nav.top-nav {
     position: absolute;
     top: -18px;
     right: 0;
-    content: "";
+    content: '';
     width: 15px;
     height: 18px;
     border-radius: 0 0 15px 0;
@@ -2968,7 +2918,7 @@ nav.top-nav {
     position: absolute;
     right: 0;
     bottom: -18px;
-    content: "";
+    content: '';
     width: 15px;
     height: 18px;
     border-radius: 0 15px 0 0;
@@ -3001,7 +2951,7 @@ nav.top-nav {
     position: absolute;
     top: 100%;
     left: 50%;
-    content: "";
+    content: '';
     margin-left: -10px;
     border-width: 8px;
     border-style: solid;
@@ -3734,11 +3684,7 @@ select.btcd-paper-inp {
 
 .bit-logo {
   background: rgb(15, 16, 49);
-  background: linear-gradient(
-    43deg,
-    rgba(15, 16, 49, 1) 0%,
-    rgba(29, 58, 75, 1) 100%
-  );
+  background: linear-gradient(43deg, rgba(15, 16, 49, 1) 0%, rgba(29, 58, 75, 1) 100%);
   padding: 15px 15px 15px 19px;
   border-radius: 28px;
   box-shadow: 0 0 22px -7px #9498ce;
@@ -3752,7 +3698,7 @@ select.btcd-paper-inp {
     background: $purple;
     position: absolute;
     top: 94%;
-    content: "";
+    content: '';
     border-radius: 10px 10px 0 0;
     height: 4px;
     width: 85%;
@@ -3907,7 +3853,7 @@ select.btcd-paper-inp {
 .btcd-mt-inp > textarea + span::before,
 .btcd-mt-inp > textarea + span::after {
   display: block;
-  content: "";
+  content: '';
   box-sizing: border-box;
   margin-top: 6px;
   border-top: solid 1px;
@@ -4580,7 +4526,7 @@ select.btcd-ud-inp {
 // for IE11
 
 _:-ms-fullscreen,
-:root .f-table [data-sticky-first-right-td="true"] {
+:root .f-table [data-sticky-first-right-td='true'] {
   position: relative;
 }
 
@@ -4606,7 +4552,7 @@ _:-ms-fullscreen,
     background: white;
     position: absolute;
     top: 60%;
-    content: "Coming Soon";
+    content: 'Coming Soon';
     padding: 5px 7px;
     font-size: 15px;
     border-radius: 10px;
@@ -5030,7 +4976,7 @@ _:-ms-fullscreen,
 .txt-body {
   line-height: 1.3;
   font-weight: 100;
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
 }
 
 .cooltip-link {
@@ -5354,7 +5300,7 @@ _:-ms-fullscreen,
       line-height: 1.5;
       font-weight: 20;
       font-size: small;
-      font-family: "Titillium Web", sans-serif;
+      font-family: 'Titillium Web', sans-serif;
     }
 
     .footer {
@@ -5399,4 +5345,11 @@ _:-ms-fullscreen,
 
 .youtube a {
   color: #000;
+}
+
+.trigger-task-note {
+  padding: 5px 5px 0px 5px;
+  max-width: 400px;
+  display: inline-block;
+  word-break: break-all;
 }
