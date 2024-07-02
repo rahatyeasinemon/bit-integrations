@@ -4,6 +4,7 @@ namespace BitCode\FI\Log;
 
 use BitCode\FI\Core\Database\LogModel;
 use BitCode\FI\Core\Util\Capabilities;
+use BitCode\FI\Flow\Flow;
 
 final class LogHandler
 {
@@ -71,6 +72,9 @@ final class LogHandler
 
     public static function save($flow_id, $api_type, $response_type, $response_obj)
     {
+        $flow = new Flow();
+        $flow->authorizationStatusChange($flow_id, $response_type == 'success' ? true : false);
+
         $logModel = new LogModel();
         $logModel->insert(
             [

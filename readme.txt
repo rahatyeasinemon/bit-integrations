@@ -4,10 +4,10 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.5.5
 Requires PHP: 7.0
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 License: GPLv2 or later
 
-Automation Plugin for WordPress like Zapier; Integration of 65+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
+Automation Plugin for WordPress like Zapier; Integration of 70+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
 
 == Description ==
 
@@ -44,6 +44,7 @@ https://youtu.be/eFuficjF_F4
 * [**Bit Assist**](https://wordpress.org/plugins/bit-assist/)
 * [**Academy LMS**](https://wordpress.org/plugins/academy/)
 * [**Amelia**](https://wordpress.org/plugins/ameliabooking/)
+* [**Action Hook**](https://bitapps.pro/docs/bit-integrations/trigger/action-hook-integrations/)
 * [**AffiliateWP**](https://wordpress.org/plugins/affiliatewp-affiliate-area-shortcodes/)
 * [**ARForms**](https://wordpress.org/plugins/arforms-form-builder/)
 * [**ARMember**](https://wordpress.org/plugins/armember-membership/)
@@ -55,7 +56,7 @@ https://youtu.be/eFuficjF_F4
 * [**CartFlows**](https://wordpress.org/plugins/cartflows/)
 * [**Contact Form 7**](https://wordpress.org/plugins/contact-form-7/)
 * [**CoBlocks**](https://wordpress.org/plugins/coblocks/)
-* [**Custom Trigger**]()
+* [**Custom Trigger**](https://bitapps.pro/docs/bit-integrations/trigger/custom-trigger-integrations/)
 * [**Divi**](https://www.elegantthemes.com/gallery/divi/)
 * [**Everest Forms**](https://wordpress.org/plugins/everest-forms/)
 * [**Elementor**](https://wordpress.org/plugins/elementor/)
@@ -84,6 +85,7 @@ https://youtu.be/eFuficjF_F4
 * [**Metform**](https://wordpress.org/plugins/metform/)
 * [**MemberPress**](https://wordpress.org/plugins/members/)
 * [**MailPoet**](https://wordpress.org/plugins/mailpoet/)
+* [**Mailster**](https://wordpress.org/plugins/mailster/)
 * [**Ninja Forms**](https://wordpress.org/plugins/ninja-forms/)
 * [**Piotnet Forms**](https://wordpress.org/plugins/piotnetforms/)
 * [**Paid Memberships Pro**](https://wordpress.org/plugins/paid-memberships-pro/)
@@ -98,12 +100,13 @@ https://youtu.be/eFuficjF_F4
 * [**Solid Affiliate**](https://solidaffiliate.com/)
 * [**Spectra**](https://wordpress.org/plugins/ultimate-addons-for-gutenberg/)
 * [**SureCart**](https://wordpress.org/plugins/surecart/)
+* [**SureMembers**](https://suremembers.com/)
 * [**Tripetto**](https://wordpress.org/plugins/tripetto/)
 * [**Tutor LMS**](https://wordpress.org/plugins/tutor/)
 * [**Thrive Apprentice**](https://thrivethemes.com/apprentice/)
 * [**weForms**](https://wordpress.org/plugins/search/WeForms/)
 * [**WP Post**]()
-* [**WooCommerce**]()
+* [**WooCommerce**](https://wordpress.org/plugins/woocommerce/)
 * [**WP Courseware**](https://flyplugins.com/wp-courseware-wordpress-lms/)
 * [**WPForms**](https://wordpress.org/plugins/wpforms-lite/)
 * [**WPFunnels**](https://wordpress.org/plugins/wpfunnels/)
@@ -130,8 +133,8 @@ https://youtu.be/eFuficjF_F4
 * [**CompanyHub**](https://companyhub.com/)
 * [**Constant Contact**](https://www.constantcontact.com/)
 * [**ConvertKit**](https://convertkit.com/)
-* [**Custom Action**]()
-* [**Custom Api :**]()
+* [**Custom Action**](https://bitapps.pro/docs/bit-integrations/actions/custom-action-integrations/)
+* [**Custom Api :**](https://bitapps.pro/docs/bit-integrations/actions/customapi-integrations/)
 * [**Capsule CRM**](https://capsulecrm.com/)
 * [**ClinchPad**](https://clinchpad.com/)
 * [**ClickUp**](https://clickup.com/)
@@ -177,16 +180,17 @@ https://youtu.be/eFuficjF_F4
 * [**Mail**]()
 * [**MasterStudy LMS**](https://wordpress.org/plugins/masterstudy-lms-learning-management-system/)
 * [**MailBluster**](https://mailbluster.com/)
-* [**Mailrelay**](https://mailrelay.com/en/)
-* [**MailerLite**](https://www.mailerlite.com/)
+* [**Mailercloud**](https://www.mailercloud.com/)
 * [**Mailchimp**](https://mailchimp.com/)
+* [**MailerLite**](https://www.mailerlite.com/)
 * [**MailPoet**](https://wordpress.org/plugins/mailpoet/)
 * [**Mailjet**](https://www.mailjet.com/)
 * [**Mautic**](https://www.mautic.org/)
+* [**Mailrelay**](https://mailrelay.com/en/)
 * [**Moosend**](https://moosend.com/)
-* [**Mailercloud**](https://www.mailercloud.com/)
 * [**MemberPress**](https://wordpress.org/plugins/members/)
 * [**MailUp**](https://mailup.com/)
+* [**Mailster**](https://wordpress.org/plugins/mailster/)
 * [**Mail Mint**](https://wordpress.org/plugins/mail-mint/)
 * [**Moxie**](https://www.withmoxie.com/)
 * [**Newsletter**](https://wordpress.org/plugins/newsletter/)
@@ -227,6 +231,7 @@ https://youtu.be/eFuficjF_F4
 * [**SureCart**](https://wordpress.org/plugins/surecart/)
 * [**SuiteDash**](https://suitedash.com/)
 * [**SureTriggers**](https://wordpress.org/plugins/suretriggers/)
+* [**SureMembers**](https://suremembers.com/)
 * [**SystemeIO**](https://systeme.io/home)
 * [**Telegram**](https://telegram.org/)
 * [**Thrive Automator**](https://wordpress.org/plugins/thrive-automator/)
@@ -968,6 +973,31 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.1.2  =
+_Release Date -2nd July 2024_
+
+- **New Trigger :**
+  - SureMembers - #1 WordPress Membership Plugin (Pro)
+  - Mailster - Email Newsletter Plugin for WordPress (Pro)
+
+- **New Action :**
+  - SureMembers - #1 WordPress Membership Plugin
+  - Mailster - Email Newsletter Plugin for WordPress
+
+
+- **New Features :**
+  - Airtable: Multiple Attachment file upload added
+  - MailRelay: Phone number field added ( Note: Phone numbers from the following countries will work only in the Mailrelay phone number field: Ecuador, Peru, Argentina, Italy, Uruguay, Chile, Portugal, Brazil, Mexico, Colombia, Spain)
+
+- **New Improvements :**
+  - Divi: Upgraded with Contact Form Module (Pro)
+  - Kadence Block Form: Parse non-required fields to field-map improved (Pro)
+  - Core: Integration log delete schedule added
+  - Salesforce: Case Origin, Case reason & Case type action dynamically functioned
+
+- **New Fixes :**
+  - Core: Conditional Logic preg_match issue fixed 
 
 = 2.1.1  =
 _Release Date -24th June 2024_

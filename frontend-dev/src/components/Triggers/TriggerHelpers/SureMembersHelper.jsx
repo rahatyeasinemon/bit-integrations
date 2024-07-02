@@ -3,6 +3,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilState } from 'recoil'
 import { $newFlow } from '../../../GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
+import Cooltip from '../../Utilities/Cooltip'
 
 const SureMembersHelper = ({ flow, setFlowData, edit = false }) => {
   const id = !edit ? flow?.triggerData?.formID : flow.triggered_entity_id
@@ -13,7 +14,14 @@ const SureMembersHelper = ({ flow, setFlowData, edit = false }) => {
     <div>
       {id && (
         <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select Group</b>
+          <b className={edit ? 'wdt-200 d-in-b flx' : 'flx wdt-200 d-in-b mt-3 mb-3'}>
+            Select Group
+            {(id === 'sureMembers-1' || id === 'sureMembers-2') && <Cooltip width={250} icnSize={17} className="ml-2">
+              <div className="txt-body">
+                This integration won't work if a group isn't chosen.
+              </div>
+            </Cooltip>}
+          </b>
           <MultiSelect
             className="msl-wrp-options"
             defaultValue={triggerData?.selectedGroup}

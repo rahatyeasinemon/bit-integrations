@@ -128,13 +128,13 @@ class RecordApiHelper
 
         $existSubscriber = $this->existSubscriber($convertKit->email);
 
-        if ((\count($existSubscriber->subscribers)) !== 1) {
+        if (isset($existSubscriber->subscribers) && (\count($existSubscriber->subscribers)) !== 1 && !isset($existSubscriber->error)) {
             $recordApiResponse = $this->storeOrModifyRecord('subscribe', $formId, $convertKit);
             if (isset($tags) && (\count($tags)) > 0 && $recordApiResponse) {
                 $this->addTagToSubscriber($convertKit->email, $tags);
             }
             $type = 'insert';
-        } else {
+        } elseif (!isset($existSubscriber->error)) {
             if ($actions->update == 'true') {
                 $this->updateRecord($existSubscriber->subscribers[0]->id, $convertKit, $existSubscriber);
                 $type = 'update';
@@ -151,8 +151,10 @@ class RecordApiHelper
             }
         }
 
-        if (($recordApiResponse && isset($recordApiResponse->errors)) || isset($this->_errorMessage)) {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', $recordApiResponse->errors);
+        if (isset($existSubscriber->error)) {
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', $existSubscriber->error);
+        } elseif ($recordApiResponse && isset($recordApiResponse->error)) {
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', $recordApiResponse->error);
         } else {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', $recordApiResponse);
         }

@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom'
 import Loader from '../components/Loaders/Loader'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import MenuBtn from '../components/Utilities/MenuBtn'
-import Modal from '../components/Utilities/Modal'
 import SingleToggle2 from '../components/Utilities/SingleToggle2'
 import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
@@ -27,6 +26,7 @@ function AllIntegrations({ isValidUser }) {
     { width: 250, minWidth: 80, Header: __('Trigger', 'bit-integrations'), accessor: 'triggered_entity' },
     { width: 250, minWidth: 80, Header: __('Action Name', 'bit-integrations'), accessor: 'name' },
     { width: 200, minWidth: 200, Header: __('Created At', 'bit-integrations'), accessor: 'created_at' },
+    // { width: 150, minWidth: 130, Header: __('Authorization Status', 'bit-integrations'), accessor: 'isAuthorized', Cell: value => <Button className="flx" action={(e) => handleStatus(e, value.row.original.id)} checked={Number(value.row.original.status) === 1} > Not Authorized <RemoveIcn size="14" className="icn-rotate-45" /></Button>  },
     { width: 70, minWidth: 60, Header: __('Status', 'bit-integrations'), accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.id)} checked={Number(value.row.original.status) === 1} /> },
   ])
 

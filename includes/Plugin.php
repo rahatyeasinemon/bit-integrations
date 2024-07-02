@@ -14,6 +14,7 @@ use BitCode\FI\Core\Hooks\HookService;
 use BitCode\FI\Core\Util\Activation;
 use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\Deactivation;
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Core\Util\Request;
 use BitCode\FI\Core\Util\UnInstallation;
@@ -50,22 +51,43 @@ final class Plugin
     public function init_plugin()
     {
         Hooks::add('init', [$this, 'init_classes'], 8);
-        Hooks::add('init', [$this, 'integrationlogDelete'], 11);
+        Hooks::add('btcbi_delete_integ_log', [$this, 'integrationlogDelete'], PHP_INT_MAX);
         Hooks::filter('plugin_action_links_' . plugin_basename(BTCBI_PLUGIN_MAIN_FILE), [$this, 'plugin_action_links']);
+        Hooks::filter('cron_schedules', [$this, 'every_week_time_cron']);
+
+        $this->btcbi_delete_log_scheduler();
+    }
+
+    public function every_week_time_cron($schedules)
+    {
+        $schedules['every_week'] = [
+            'interval' => 604800, // 604800 seconds in 1 week
+            'display'  => esc_html__('Every Week', 'textdomain')
+        ];
+
+        return $schedules;
+    }
+
+    public function btcbi_delete_log_scheduler()
+    {
+        if (!wp_next_scheduled('btcbi_delete_integ_log')) {
+            wp_schedule_event(time(), 'every_week', 'btcbi_delete_integ_log');
+        }
     }
 
     public function initWPTelemetry()
     {
+        $varPrefix = Helper::isProActivate() ? Config::VAR_PREFIX . 'pro' : Config::VAR_PREFIX;
         TelemetryConfig::setSlug(Config::SLUG);
         TelemetryConfig::setTitle(Config::TITLE);
         TelemetryConfig::setVersion(Config::VERSION);
-        TelemetryConfig::setPrefix(Config::VAR_PREFIX);
+        TelemetryConfig::setPrefix($varPrefix);
 
         TelemetryConfig::setServerBaseUrl('https://wp-api.bitapps.pro/public/');
         TelemetryConfig::setTermsUrl('https://bitapps.pro/terms-of-service/');
         TelemetryConfig::setPolicyUrl('https://bitapps.pro/privacy-policy/');
 
-        Telemetry::report()->init();
+        Telemetry::report()->addPluginData()->init();
         Telemetry::feedback()->init();
     }
 

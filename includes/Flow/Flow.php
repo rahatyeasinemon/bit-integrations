@@ -250,27 +250,33 @@ final class Flow
         wp_send_json_success(__('Integration updated successfully', 'bit-integrations'));
     }
 
-    public function authorizationStatusChange($data)
+    public function authorizationStatusChange($data, $status)
     {
-        var_dump($data);
-        exit;
-        $missing_field = null;
-
-        $name = !empty($data->name) ? $data->name : '';
         $integrationHandler = new FlowController();
-        $updateStatus = $integrationHandler->update(
-            $data->id,
-            [
-                'name'                => $name,
-                'triggered_entity'    => $data->trigger,
-                'triggered_entity_id' => $data->triggered_entity_id,
-                'flow_details'        => \is_string($data->flow_details) ? $data->flow_details : wp_json_encode($data->flow_details),
+        $integrations = $integrationHandler->get(
+            ['id' => $data],
+            ['id',
+                'name',
+                'triggered_entity',
+                'triggered_entity_id',
+                'flow_details',
             ]
         );
-        if (is_wp_error($updateStatus) && $updateStatus->get_error_code() !== 'result_empty') {
-            wp_send_json_error($updateStatus->get_error_message());
-        }
-        wp_send_json_success(__('Integration updated successfully', 'bit-integrations'));
+        $integration = $integration = $integrations[0];
+        $flowDetails = json_decode($integration->flow_details);
+
+        $flowDetails->isAuthorized = $status;
+
+        $integrationHandler = new FlowController();
+        $updateStatus = $integrationHandler->update(
+            $integration->id,
+            [
+                'name'                => $integration->name,
+                'triggered_entity'    => $integration->triggered_entity,
+                'triggered_entity_id' => $integration->triggered_entity_id,
+                'flow_details'        => \is_string($flowDetails) ? $flowDetails : wp_json_encode($flowDetails),
+            ]
+        );
     }
 
     public function delete($data)
