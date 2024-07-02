@@ -36,7 +36,7 @@ export default function WoodpeckerAuthorization({ woodpeckerConf, setWoodpeckerC
             <ul>
                 <li> Log into your Woodpecker account on <a className="btcd-link" href="https://app.woodpecker.co/panel" target="_blank">app.woodpecker.co.</a></li>
                 <li>Go to the <b>Marketplace</b> → <b>INTEGRATIONS</b> → <b>API keys</b>.</li>
-                <li>Use the green button to <b>CREATE A KEY</b>.</li>
+                <li>Use the purple button to <b>CREATE A KEY</b>.</li>
             </ul>`
 
   return (

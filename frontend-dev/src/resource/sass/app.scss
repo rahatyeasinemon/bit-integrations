@@ -1616,6 +1616,18 @@ input[type='checkbox'].disabled:checked:before {
   }
 }
 
+.btcd-btn-o-white {
+  background: transparent;
+  color: #ffffff !important;
+  border: 1px solid #9c9c9c;
+  transition: background 0.2s !important;
+
+  &:hover {
+    background: #f7f7f7;
+    color: rgb(228, 228, 228) !important;
+  }
+}
+
 .msl-single-value {
   max-width: 100%;
 }
@@ -4376,7 +4388,7 @@ select.btcd-ud-inp {
 
   & img {
     margin-top: 10px;
-    width: 600px;
+    width: 500px;
   }
 
   & > h2 {
@@ -5211,7 +5223,7 @@ _:-ms-fullscreen,
 
   .changelog {
     max-height: calc(100vh - 210px);
-    overflow-y: auto;
+    // overflow-y: auto;
 
     .changelog-notif {
       background-color: #ff000012;

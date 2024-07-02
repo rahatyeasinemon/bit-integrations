@@ -188,7 +188,7 @@ function EditActionHook() {
           singleSelect
           closeOnSelect
         />
-        <button onClick={handleFetch} className={`btn btcd-btn-lg sh-sm flx ml-1 ${isLoading ? 'red' : 'green'}`} type="button">
+        <button onClick={handleFetch} className={`btn btcd-btn-lg sh-sm flx ml-1 ${isLoading ? 'red' : 'purple'}`} type="button">
           {isLoading
             ? __('Stop', 'bit-integrations')
             : (flow.flow_details.fields
