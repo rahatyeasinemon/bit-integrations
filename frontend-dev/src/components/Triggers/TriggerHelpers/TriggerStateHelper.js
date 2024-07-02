@@ -55,6 +55,8 @@ export const FormPluginStateHelper = (val, tmpNewFlow, resp, setNewFlow) => {
     fluentBookingStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else if (tmpNewFlow?.triggered_entity === 'SureMembers') {
     SureMembersStateFP(val, tmpNewFlow, resp, setNewFlow)
+  } else if (tmpNewFlow?.triggered_entity === 'WPForo') {
+    wpForoStateFP(val, tmpNewFlow, resp, setNewFlow)
   }
   else {
     setNewFlow(tmpNewFlow);
@@ -104,9 +106,21 @@ export const fluentBookingStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   }
   setNewFlow(tmpNewFlow)
 }
+
 export const SureMembersStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   if (val) {
     tmpNewFlow.triggerData.groups = resp.data.groups
+  }
+  setNewFlow(tmpNewFlow)
+}
+
+export const wpForoStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
+  if (val === 'wpforo-1') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      forums: resp.data.forums,
+      selectedForum: "any",
+    }
   }
   setNewFlow(tmpNewFlow)
 }
@@ -387,6 +401,17 @@ export const fluentBookingStateIH = (tmpConf, flowData, triggered_entity_id) => 
 };
 
 export const SureMembersStateIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id;
+
+  if (formId === 'wpforo-1') {
+    tmpConf.selectedForum = flowData.selectedForum;
+    tmpConf.forums = flowData.forums
+  }
+
+  return tmpConf;
+};
+
+export const wpForoStateIH = (tmpConf, flowData, triggered_entity_id) => {
   const formId = flowData.formID ? flowData.formID : triggered_entity_id;
 
   if (formId) {
