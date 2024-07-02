@@ -13,6 +13,8 @@ import Table from '../components/Utilities/Table'
 import useFetch from '../hooks/useFetch'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
+import { useRecoilState } from 'recoil'
+import { $flowStep, $newFlow } from '../GlobalStates'
 
 const Welcome = lazy(() => import('./Welcome'))
 
@@ -21,7 +23,15 @@ function AllIntegrations({ isValidUser }) {
   const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
   const [snack, setSnackbar] = useState({ show: false })
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
+  
+  const [newFlow, setNewFlow] = useRecoilState($newFlow)
+  const [flowStep, setFlowStep] = useRecoilState($flowStep)
 
+  useEffect(()=>{
+      setFlowStep(1)
+      setNewFlow({})
+  },[])
+  
   const [cols, setCols] = useState([
     { width: 250, minWidth: 80, Header: __('Trigger', 'bit-integrations'), accessor: 'triggered_entity' },
     { width: 250, minWidth: 80, Header: __('Action Name', 'bit-integrations'), accessor: 'name' },
@@ -33,6 +43,7 @@ function AllIntegrations({ isValidUser }) {
   useEffect(() => {
     !isLoading && setIntegrations(data.success ? data.data.integrations : [])
   }, [data])
+
 
   useEffect(() => {
     const ncols = cols.filter(itm => itm.accessor !== 't_action' && itm.accessor !== 'status')
