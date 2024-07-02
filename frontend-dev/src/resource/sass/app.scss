@@ -11,7 +11,7 @@
 
 //$blue: #0a8dff;
 //$blue: #0083f3;
-// $dp-blue: #0b1655;
+// $dp-purple: #0b1655;
 //$light-bg: #f2f3f7;
 //$light-bg: #eaf0f7;
 // $bg: #f2f3f7;
@@ -20,8 +20,8 @@ $purple: #7902f8;
 $bdr-rad: 0px;
 $prim: #99e3ff;
 $blue: #0069ff;
-$light-blue-bg: #06070a;
-$dp-blue: #031b4e;
+$light-purple-bg: #371f4a;
+$dp-purple: #391794;
 $dp-bg: #2a054f;
 $light-bg: #fff;
 $light-txt: #8fa4bd;
@@ -44,12 +44,12 @@ a {
 
 a:active,
 a:hover {
-  color: #005ca7;
+  color: #4000a7;
   box-shadow: none;
 }
 
 #btcd-app {
-  color: $dp-blue;
+  color: $dp-purple;
   direction: ltr !important;
   font-family: "Montserrat", sans-serif !important;
   -webkit-font-smoothing: antialiased;
@@ -397,16 +397,16 @@ input[type="checkbox"].disabled:checked:before {
   }
 }
 
-.dp-blue {
+.dp-purple {
   background: $dp-bg !important;
   color: white !important;
 
   &:hover {
-    background: rgb(28, 43, 83) !important;
+    background: rgb(57, 22, 109) !important;
   }
 
   &:active {
-    background: #0062b8;
+    background: #321e69;
   }
 }
 
@@ -458,18 +458,6 @@ input[type="checkbox"].disabled:checked:before {
   }
 }
 
-.dp-purple {
-  background: $dp-bg !important;
-  color: white !important;
-
-  &:hover {
-    background: rgb(28, 43, 83) !important;
-  }
-
-  &:active {
-    background: #0062b8;
-  }
-}
 
 .green {
   background: #00f8a4;
@@ -677,7 +665,7 @@ input[type="checkbox"].disabled:checked:before {
 .tools {
   display: flex;
   background: white;
-  color: $dp-blue;
+  color: $dp-purple;
   font-weight: 500;
   font-size: 15px;
   white-space: nowrap;
@@ -696,7 +684,7 @@ input[type="checkbox"].disabled:checked:before {
 
   & > span {
     display: flex;
-    color: $dp-blue;
+    color: $dp-purple;
     font-size: 25px;
     margin-right: 5px;
   }
@@ -840,7 +828,7 @@ input[type="checkbox"].disabled:checked:before {
 
 .btc-range {
   $track-color: #eceff1 !default;
-  $thumb-color: transparentize($dp-blue, 0.2) !default;
+  $thumb-color: transparentize($dp-purple, 0.2) !default;
 
   $thumb-radius: 12px !default;
   $thumb-height: 13px !default;
@@ -1259,11 +1247,11 @@ input[type="checkbox"].disabled:checked:before {
     width: 13px;
 
     & .line-icn {
-      stroke: $dp-blue;
+      stroke: $dp-purple;
     }
 
     & .fill-icn {
-      fill: $dp-blue;
+      fill: $dp-purple;
     }
   }
 }
@@ -1283,7 +1271,7 @@ input[type="checkbox"].disabled:checked:before {
 
   & > button {
     background: transparent;
-    color: $dp-blue;
+    color: $dp-purple;
     width: 22px;
     height: 22px;
     border-radius: 3px;
@@ -1906,7 +1894,7 @@ nav.top-nav {
 
   &:hover {
     background: #f0f2f8;
-    color: $dp-blue;
+    color: $dp-purple;
   }
 }
 
@@ -1982,7 +1970,7 @@ nav.top-nav {
 .btc-line-icn {
   & .line-icn {
     fill: none;
-    stroke: $dp-blue;
+    stroke: $dp-purple;
     stroke-width: 16px;
   }
 }
@@ -2092,7 +2080,7 @@ nav.top-nav {
       &:focus {
         background: transparentize($color: #fff, $amount: 0.4);
         color: black !important;
-        box-shadow: 0 0 0 1px transparentize($dp-blue, 0.8);
+        box-shadow: 0 0 0 1px transparentize($dp-purple, 0.8);
         padding: 0 4px;
       }
     }
@@ -2139,7 +2127,7 @@ nav.top-nav {
 
 .icn-btn {
   background: transparent;
-  color: $dp-blue;
+  color: $dp-purple;
   position: relative;
   cursor: pointer;
   font-size: 20px;
@@ -2273,7 +2261,7 @@ nav.top-nav {
 
   & input {
     background: whitesmoke;
-    color: $dp-blue;
+    color: $dp-purple;
     height: 22px;
     margin: 0;
     font-weight: normal;
@@ -2328,7 +2316,7 @@ nav.top-nav {
   }
 
   & button {
-    color: $dp-blue;
+    color: $dp-purple;
     position: relative;
     cursor: pointer;
     height: 39px;
@@ -2338,7 +2326,7 @@ nav.top-nav {
     border-radius: 0 8px 8px 0;
 
     &:hover {
-      background: $light-blue-bg;
+      background: $light-purple-bg;
       color: $purple;
     }
   }
@@ -2347,7 +2335,7 @@ nav.top-nav {
 .tooltip {
   &::after {
     display: block;
-    background: $dp-blue;
+    background: $dp-purple;
     color: white;
     position: absolute;
     top: 110%;
@@ -2960,7 +2948,7 @@ nav.top-nav {
 
 .btcd-f-a {
   background: $light-bg;
-  color: $dp-blue !important;
+  color: $dp-purple !important;
   box-shadow: -4px 2px 3px 0 black;
 
   &:before {
@@ -3143,7 +3131,7 @@ select.btcd-paper-inp {
 
   &:hover:not(:disabled),
   :focus {
-    color: $dp-blue !important;
+    color: $dp-purple !important;
     background-position-y: 12px;
   }
 }
@@ -3237,7 +3225,7 @@ select.btcd-paper-inp {
   }
 
   & > tbody > tr > td {
-    color: $dp-blue;
+    color: $dp-purple;
     padding: 10px 0 10px 10px;
     border-bottom: 1px solid #c9d6e2;
 
@@ -3252,11 +3240,11 @@ select.btcd-paper-inp {
   text-decoration: none;
 
   &:hover {
-    color: $dp-blue;
+    color: $dp-purple;
   }
 
   &:focus {
-    color: $dp-blue !important;
+    color: $dp-purple !important;
     outline: none !important;
     box-shadow: none !important;
   }
@@ -3568,7 +3556,7 @@ select.btcd-paper-inp {
 
 .btcd-pill {
   background: transparentize($purple, 0.8);
-  color: $dp-blue;
+  color: $dp-purple;
   padding: 5px;
   border-radius: 5px;
 }
@@ -3710,7 +3698,7 @@ select.btcd-paper-inp {
 
 .btcd-s-tab-link {
   background: transparent;
-  color: $dp-blue;
+  color: $dp-purple;
   position: relative;
   cursor: pointer;
   font-size: 15px;
@@ -3787,7 +3775,7 @@ select.btcd-paper-inp {
 
   & .lft-icn {
     background: #f5f5f5;
-    color: $dp-blue;
+    color: $dp-purple;
     min-width: 40px;
     min-height: 40px;
     border-radius: 30;
@@ -3798,7 +3786,7 @@ select.btcd-paper-inp {
     color: $purple;
 
     & .lft-icn {
-      background: $light-blue-bg;
+      background: $light-purple-bg;
       color: $purple;
 
       & .line-icn {
@@ -4278,7 +4266,7 @@ select.btcd-ud-inp {
       padding-left: 5px;
 
       & a:hover {
-        color: $dp-blue;
+        color: $dp-purple;
       }
 
       &:hover:not(:last-child) {

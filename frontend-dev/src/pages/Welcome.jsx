@@ -12,12 +12,12 @@ export default function Welcome({ setModal, isValidUser, integrations }) {
       <div className="sub">
         {__('Thank you for installing Bit Integrations.', 'bit-integrations')}
       </div>
-      {/* <Link to="/flow/new" className="btn round btcd-btn-lg dp-blue">
+      {/* <Link to="/flow/new" className="btn round btcd-btn-lg dp-purple">
         {__('Create Integration', 'bit-integrations')}
       </Link> */}
 
 
-      <Link to="/flow/new" className="btn round btcd-btn-lg dp-blue">
+      <Link to="/flow/new" className="btn round btcd-btn-lg dp-purple">
         {__('Create Integration', 'bit-integrations')}
       </Link>
     </div>
