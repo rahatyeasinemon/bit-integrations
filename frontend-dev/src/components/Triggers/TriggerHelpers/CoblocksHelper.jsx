@@ -172,7 +172,7 @@ const CoblocksHelper = () => {
       <div className="flx flx-around">
         <button
           onClick={handleFetch}
-          className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'green'}`}
+          className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'purple'}`}
           type="button"
         >
           {isLoading ? __('Stop', 'bit-integrations') : newFlow.triggerDetail?.data
@@ -185,7 +185,7 @@ const CoblocksHelper = () => {
         {selectedFields.length > 0 &&
           <button
             onClick={() => setPrimaryKeyModal(true)}
-            className={`btn btcd-btn-lg sh-sm flx ${selectedFields.length && 'green'}`}
+            className={`btn btcd-btn-lg sh-sm flx ${selectedFields.length && 'purple'}`}
             type="button"
             disabled={!selectedFields.length}
           >

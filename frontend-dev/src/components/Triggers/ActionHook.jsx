@@ -257,7 +257,7 @@ const ActionHook = () => {
       <div className="flx flx-between">
         <button
           onClick={handleFetch}
-          className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'green'}`}
+          className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'purple'}`}
           type="button"
           disabled={!hookID}
         >
@@ -271,7 +271,7 @@ const ActionHook = () => {
         {selectedFields.length > 0 &&
           <button
             onClick={() => setPrimaryKeyModal(true)}
-            className={`btn btcd-btn-lg sh-sm flx ${selectedFields.length && 'green'}`}
+            className={`btn btcd-btn-lg sh-sm flx ${selectedFields.length && 'purple'}`}
             type="button"
             disabled={!selectedFields.length}
           >

@@ -5277,7 +5277,7 @@ _:-ms-fullscreen,
 
   .changelog {
     max-height: calc(100vh - 210px);
-    overflow-y: auto;
+    // overflow-y: auto;
 
     .changelog-notif {
       background-color: #ff000012;

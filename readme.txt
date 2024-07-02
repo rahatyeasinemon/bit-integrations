@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.5.5
 Requires PHP: 7.0
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 70+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -968,6 +968,31 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.1.2  =
+_Release Date -2nd July 2024_
+
+- **New Trigger :**
+  - SureMembers - #1 WordPress Membership Plugin
+  - Mailster - Email Newsletter Plugin for WordPress
+
+- **New Action :**
+  - SureMembers - #1 WordPress Membership Plugin
+  - Mailster - Email Newsletter Plugin for WordPress
+
+
+- **New Features :**
+  - Airtable: Multiple Attachment file upload added
+  - MailRelay: Phone number field added ( Note: Phone numbers from the following countries will work only in the Mailrelay phone number field: Ecuador, Peru, Argentina, Italy, Uruguay, Chile, Portugal, Brazil, Mexico, Colombia, Spain)
+
+- **New Improvements :**
+  - Divi: Upgraded with Contact Form Module (pro)
+  - Kadence Block Form: Parse non-required fields to field-map improved (pro)
+  - Core: Integration log delete schedule added
+  - Salesforce: Case Origin, Case reason & Case type action dynamically functioned
+
+- **New Fixes :**
+  - Core: Conditional Logic preg_match issue fixed 
 
 = 2.1.1  =
 _Release Date -24th June 2024_

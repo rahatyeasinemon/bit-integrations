@@ -70,7 +70,9 @@ export default function ChangelogToggle() {
             >
                 <ChangelogIcn size={25} />
             </button>
-            <Modal sm show={show} setModal={setChangeLogVersion} closeIcon={showAnalyticsOptin}>
+            <Modal sm show={show} setModal={setChangeLogVersion} closeIcon={showAnalyticsOptin} 
+            style={{position: `absolute`,top: `60px`, left: `50%`,transform: `translateX(-50%)`}}
+            >
                 {
                     loading
                         ? (
@@ -86,23 +88,24 @@ export default function ChangelogToggle() {
                             <div className='changelog'>
                                 <div className="flx flx-col flx-center whats-new">
                                     <h3>What's New in {btcbi.version}?</h3>
-                                    <small className='date'> <b>25th June 2024</b></small>
+                                    <small className='date'> <b>2nd July 2024</b></small>
                                 </div>
                                 <div className='changelog-content'>
-                                    <span className='new-integration' ><b>New Features</b></span>
+                                    <span className='new-integration' ><b>New Triggers</b></span>
 
                                     <div className='integration-list'>
                                         <ul>
-                                            <li>Mailchimp: Add & Remove tag module added (pro)</li>
+                                            <li>SureMembers (pro)</li>
+                                            <li>Mailster (pro)</li>
                                         </ul>
                                     </div>
 
-                                    <span className='new-feature' ><b>New Improvements</b></span>
+                                    <span className='new-feature' ><b>New Actions</b></span>
 
                                     <div className='integration-list'>
                                         <ul>
-                                            <li>Kadence Block Form: Upgraded with Advanced Form Block & Form Block (pro) </li>
-                                            <li>Custom Form Submission Triggers: Active plugin checker added </li>
+                                        <li>SureMembers</li>
+                                        <li>Mailster</li>
                                         </ul>
                                     </div>
                                     <div>
