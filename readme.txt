@@ -978,8 +978,8 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 _Release Date -2nd July 2024_
 
 - **New Trigger :**
-  - SureMembers - #1 WordPress Membership Plugin
-  - Mailster - Email Newsletter Plugin for WordPress
+  - SureMembers - #1 WordPress Membership Plugin (Pro)
+  - Mailster - Email Newsletter Plugin for WordPress (Pro)
 
 - **New Action :**
   - SureMembers - #1 WordPress Membership Plugin
@@ -991,8 +991,8 @@ _Release Date -2nd July 2024_
   - MailRelay: Phone number field added ( Note: Phone numbers from the following countries will work only in the Mailrelay phone number field: Ecuador, Peru, Argentina, Italy, Uruguay, Chile, Portugal, Brazil, Mexico, Colombia, Spain)
 
 - **New Improvements :**
-  - Divi: Upgraded with Contact Form Module (pro)
-  - Kadence Block Form: Parse non-required fields to field-map improved (pro)
+  - Divi: Upgraded with Contact Form Module (Pro)
+  - Kadence Block Form: Parse non-required fields to field-map improved (Pro)
   - Core: Integration log delete schedule added
   - Salesforce: Case Origin, Case reason & Case type action dynamically functioned
 
