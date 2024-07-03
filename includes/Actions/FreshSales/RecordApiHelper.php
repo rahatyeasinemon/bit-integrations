@@ -62,6 +62,29 @@ class RecordApiHelper
         return HttpHelper::post($apiEndpoints, $body, $this->_defaultHeader);
     }
 
+    public function upsertRecord($module, $finalData)
+    {
+        if ($module === 'contact') {
+            $finalData['sales_accounts'] = [(object) ['id' => $this->_integrationDetails->moduleData->account_id, 'is_primary' => true]];
+            $identifier = (object) ['emails' => $finalData['emails']];
+        }
+
+        if ($module === 'deal') {
+            $finalData['contacts_added_list'] = [$this->_integrationDetails->moduleData->contact_id];
+            $identifier = (object) ['emails' => $finalData['emails']];
+        }
+
+        if ($module === 'account') {
+            $module = 'sales_account';
+            $identifier = (object) ['name' => $finalData['name']];
+        }
+
+        $apiEndpoints = 'https://' . $this->baseUrl . '/api/' . $module . 's/upsert';
+        $body = wp_json_encode(['unique_identifier' => $identifier, 'contact' => $finalData]);
+
+        return HttpHelper::post($apiEndpoints, $body, $this->_defaultHeader);
+    }
+
     public function addRelatedList($freshSalesApiResponse, $integrationDetails, $fieldValues, $parentModule)
     {
         $parendId = $freshSalesApiResponse->data->id;
@@ -133,13 +156,15 @@ class RecordApiHelper
     public function execute(
         $fieldValues,
         $fieldMap,
-        $module
+        $module,
+        $actions
     ) {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $apiResponse = $this->insertRecord(
-            $module,
-            $finalData
-        );
+        if (isset($actions->upsert) && $actions->upsert && $module === 'contact') {
+            $apiResponse = $this->upsertRecord($module, $finalData);
+        } else {
+            $apiResponse = $this->insertRecord($module, $finalData);
+        }
 
         if (isset($apiResponse->errors)) {
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => $module, 'type_name' => 'add-' . $module]), 'error', wp_json_encode($apiResponse));

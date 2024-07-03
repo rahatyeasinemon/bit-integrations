@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\FreshSales;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for FreshSales integration
@@ -212,6 +212,7 @@ class FreshSalesController
         $bundle_alias = $integrationDetails->bundle_alias;
         $fieldMap = $integrationDetails->field_map;
         $module = strtolower($integrationDetails->moduleData->module);
+        $actions = $integrationDetails->actions;
 
         if (
             empty($fieldMap)
@@ -224,7 +225,8 @@ class FreshSalesController
         $freshSalesApiResponse = $recordApiHelper->execute(
             $fieldValues,
             $fieldMap,
-            $module
+            $module,
+            $actions
         );
 
         if (is_wp_error($freshSalesApiResponse)) {
