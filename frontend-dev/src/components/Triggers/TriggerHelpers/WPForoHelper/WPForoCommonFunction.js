@@ -5,7 +5,6 @@ import { __ } from '../../../../Utils/i18nwrap'
 export const getWPForoForums = (data, setFlow) => {
   const loadForum = bitsFetch(null, 'wpforo/get/forums', null, 'GET')
     .then((result) => {
-      console.log(result)
       if (result && result.data) {
         const tmpFlow = { ...data }
         tmpFlow.flow_details.forums = result.data
