@@ -74,6 +74,7 @@ import { getAllGroundhoggTags } from '../Triggers/TriggerHelpers/GroundhoggHelpe
 import { create } from 'mutative'
 import { getFluentBookingEvents } from '../Triggers/TriggerHelpers/FluentBookingHelper/FluentBookingCommonFunction.js'
 import { getSureMembersGroups } from '../Triggers/TriggerHelpers/SureMembersHelper/SureMembersCommonFunction.js'
+import { getWPForoForums } from '../Triggers/TriggerHelpers/WPForoHelper/WPForoCommonFunction.js'
 
 function EditFormInteg({ setSnackbar, className = '' }) {
   const [forms, setForms] = useState([])
@@ -306,6 +307,11 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     }
     if (trigger === 'SureMembers') {
       getSureMembersGroups(data, setFlow)
+    }
+    if (trigger === 'WPForo') {
+      if (data.triggered_entity_id === 'wpforo-1') {
+        getWPForoForums(data, setFlow)
+      }
     }
   }
 
