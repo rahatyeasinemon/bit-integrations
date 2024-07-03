@@ -403,24 +403,24 @@ export const fluentBookingStateIH = (tmpConf, flowData, triggered_entity_id) => 
 export const SureMembersStateIH = (tmpConf, flowData, triggered_entity_id) => {
   const formId = flowData.formID ? flowData.formID : triggered_entity_id;
 
-  if (formId === 'wpforo-1') {
-    tmpConf.selectedForum = flowData.selectedForum;
-    tmpConf.forums = flowData.forums
-  }
-
-  return tmpConf;
-};
-
-export const wpForoStateIH = (tmpConf, flowData, triggered_entity_id) => {
-  const formId = flowData.formID ? flowData.formID : triggered_entity_id;
-
   if (formId) {
     tmpConf.selectedGroup = flowData.selectedGroup;
     tmpConf.groups = flowData.groups
   }
 
   return tmpConf;
-};
+}
+
+export const wpForoStateIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id;
+
+  if (formId === 'wpforo-1') {
+    tmpConf.selectedForum = flowData.selectedForum;
+    tmpConf.forums = flowData.forums
+  }
+
+  return tmpConf;
+}
 
 export const tutorlmsStateIH = (tmpConf, flowData) => {
   if (flowData.formID === "2") {
