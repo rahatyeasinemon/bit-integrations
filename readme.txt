@@ -975,7 +975,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 == Changelog ==
 
 = 2.1.2  =
-_Release Date -2nd July 2024_
+_Release Date -3rd July 2024_
 
 - **New Trigger :**
   - SureMembers - #1 WordPress Membership Plugin (Pro)

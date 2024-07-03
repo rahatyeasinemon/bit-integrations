@@ -88,7 +88,7 @@ export default function ChangelogToggle() {
                             <div className='changelog'>
                                 <div className="flx flx-col flx-center whats-new">
                                     <h3>What's New in {btcbi.version}?</h3>
-                                    <small className='date'> <b>2nd July 2024</b></small>
+                                    <small className='date'> <b>3rd July 2024</b></small>
                                 </div>
                                 <div className='changelog-content'>
                                     <span className='new-integration' ><b>New Triggers</b></span>
