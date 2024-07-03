@@ -13,7 +13,7 @@ const WPForoHelper = ({ flow, setFlowData, edit = false }) => {
     <div>
       {id === 'wpforo-1' && (
         <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select Tag</b>
+          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select Forum</b>
           <MultiSelect
             className="msl-wrp-options"
             defaultValue={triggerData?.selectedForum}

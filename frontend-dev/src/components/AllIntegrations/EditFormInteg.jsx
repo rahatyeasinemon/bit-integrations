@@ -6,24 +6,69 @@ import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import { deepCopy } from '../../Utils/Helpers'
 import getAllType from '../Triggers/TriggerHelpers/AffiliateHelper/AffiliateCommonFunction'
-import { getBuddybossForum, getBuddybossGroup, getBuddybossTopicByForum } from '../Triggers/TriggerHelpers/BuddybossHelper/BuddybossCommonFunction'
-import { getAllEDDDiscountCode, getAllEDDProduct } from '../Triggers/TriggerHelpers/EDDHelper/EDDCommonFunction.js'
-import { getFluentCrmLists, getFluentCrmStatus, getFluentCrmTags } from '../Triggers/TriggerHelpers/FluentCrmHelper/FluentCrmCommonFunction'
-import { getAllAchievementType, getAllRankType } from '../Triggers/TriggerHelpers/GamiPressHelper/GamiPressCommonFunction'
-import getAllDonationForms, { getAllRecurringDonationForms } from '../Triggers/TriggerHelpers/GiveWpHelper/GiveWpCommonFunction'
+import {
+  getBuddybossForum,
+  getBuddybossGroup,
+  getBuddybossTopicByForum
+} from '../Triggers/TriggerHelpers/BuddybossHelper/BuddybossCommonFunction'
+import {
+  getAllEDDDiscountCode,
+  getAllEDDProduct
+} from '../Triggers/TriggerHelpers/EDDHelper/EDDCommonFunction.js'
+import {
+  getFluentCrmLists,
+  getFluentCrmStatus,
+  getFluentCrmTags
+} from '../Triggers/TriggerHelpers/FluentCrmHelper/FluentCrmCommonFunction'
+import {
+  getAllAchievementType,
+  getAllRankType
+} from '../Triggers/TriggerHelpers/GamiPressHelper/GamiPressCommonFunction'
+import getAllDonationForms, {
+  getAllRecurringDonationForms
+} from '../Triggers/TriggerHelpers/GiveWpHelper/GiveWpCommonFunction'
 import { getAllPostTypeJetEngine } from '../Triggers/TriggerHelpers/JetEngineHelper/JetEngineCommonFunction'
-import { getAllCourses, getAllGroups, getAllQuizes } from '../Triggers/TriggerHelpers/LearndashHelper/LearnDashCommonFunction'
-import { getAllLifterLmsQuiz, getAllLifterLmsLesson, getAllLifterLmsCourse, getAllLifterLmsMembership } from '../Triggers/TriggerHelpers/LifterLmsHelper/LifterLmsCommonFunction.js'
-import { getAllMembership, getAllOneTimeMembership, getAllRecurringMembership } from '../Triggers/TriggerHelpers/MemberpressHelper/MemberpressCommonFunction'
+import {
+  getAllCourses,
+  getAllGroups,
+  getAllQuizes
+} from '../Triggers/TriggerHelpers/LearndashHelper/LearnDashCommonFunction'
+import {
+  getAllLifterLmsQuiz,
+  getAllLifterLmsLesson,
+  getAllLifterLmsCourse,
+  getAllLifterLmsMembership
+} from '../Triggers/TriggerHelpers/LifterLmsHelper/LifterLmsCommonFunction.js'
+import {
+  getAllMembership,
+  getAllOneTimeMembership,
+  getAllRecurringMembership
+} from '../Triggers/TriggerHelpers/MemberpressHelper/MemberpressCommonFunction'
 import getAllPaidMembershipProLevel from '../Triggers/TriggerHelpers/PaidMembershipProHelper/PaidMembershipProCommonFunction'
-import { getAllPostPosts, getAllPostType } from '../Triggers/TriggerHelpers/PostHelper/PostCommonFunction'
+import {
+  getAllPostPosts,
+  getAllPostType
+} from '../Triggers/TriggerHelpers/PostHelper/PostCommonFunction'
 import getAllLevels from '../Triggers/TriggerHelpers/RestrictContentHelper/RestrictContentCommonFunction'
 import getAllCommissionType from '../Triggers/TriggerHelpers/SliceWpHelper/SliceWpCommonFunction'
 import getSureCartAllProduct from '../Triggers/TriggerHelpers/SureCartHelper/SureCartCommonFunction'
-import { getAllOrderStatus, getAllSubscriptionProduct, getAllSubscriptionStatus, getAllWCProductCategory, getAllWCProducts } from '../Triggers/TriggerHelpers/WooCommerceHelper/WooCommerceCommonFunction'
+import {
+  getAllOrderStatus,
+  getAllSubscriptionProduct,
+  getAllSubscriptionStatus,
+  getAllWCProductCategory,
+  getAllWCProducts
+} from '../Triggers/TriggerHelpers/WooCommerceHelper/WooCommerceCommonFunction'
 import TriggerMultiOption from '../Triggers/TriggerMultiOption'
-import { getAllMasterStudyLmsCourse, getAllMasterStudyLmsLesson } from '../Triggers/TriggerHelpers/MasterStudyLmsHelper/MasterStudyLmsCommonFunction.js'
-import { getAllThriveApprenticeCourse, getAllThriveApprenticeLesson, getAllThriveApprenticeModule } from '../Triggers/TriggerHelpers/ThriveApprenticeHelper/ThriveApprenticeCommonFunction'
+import {
+  getAllMasterStudyLmsCourse,
+  getAllMasterStudyLmsLesson
+} from '../Triggers/TriggerHelpers/MasterStudyLmsHelper/MasterStudyLmsCommonFunction.js'
+import {
+  getAllThriveApprenticeCourse,
+  getAllThriveApprenticeLesson,
+  getAllThriveApprenticeModule
+} from '../Triggers/TriggerHelpers/ThriveApprenticeHelper/ThriveApprenticeCommonFunction'
 import { getAllUMrole } from '../Triggers/TriggerHelpers/UltimateMemberHelper/UltimatedMemberCommonFunction'
 import { getAllGroundhoggTags } from '../Triggers/TriggerHelpers/GroundhoggHelper/GroundhoggCommonFunction'
 import { create } from 'mutative'
@@ -36,9 +81,11 @@ function EditFormInteg({ setSnackbar, className = '' }) {
   const [flow, setFlow] = useRecoilState($newFlow)
   const setFormFields = useSetRecoilState($formFields)
   const setFlowData = (val, type) => {
-    setFlow(prevFlow => create(prevFlow, (draftFlow) => {
-      draftFlow.flow_details[type] = val
-    }))
+    setFlow((prevFlow) =>
+      create(prevFlow, (draftFlow) => {
+        draftFlow.flow_details[type] = val
+      })
+    )
   }
 
   const handle = (e) => {
@@ -48,11 +95,11 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     setFlow(tmpInteg)
     let queryData = { id: value }
     if (
-      flow.triggered_entity === 'Divi'
-      || flow.triggered_entity === 'Bricks'
-      || flow.triggered_entity === 'Brizy'
-      || flow.triggered_entity === 'PiotnetAddon'
-      || flow.triggered_entity === 'CartFlow'
+      flow.triggered_entity === 'Divi' ||
+      flow.triggered_entity === 'Bricks' ||
+      flow.triggered_entity === 'Brizy' ||
+      flow.triggered_entity === 'PiotnetAddon' ||
+      flow.triggered_entity === 'CartFlow'
     ) {
       queryData = { ...queryData, postId: formPost[value] ?? flow.flow_details.postId }
     } else {
@@ -60,7 +107,10 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     }
 
     if (flow.triggered_entity !== 'FluentBooking') {
-      const loadFormFields = bitsFetch(queryData, `${flow.triggered_entity.toLowerCase()}/get/form`).then((res) => {
+      const loadFormFields = bitsFetch(
+        queryData,
+        `${flow.triggered_entity.toLowerCase()}/get/form`
+      ).then((res) => {
         if (res.success) {
           setFormFields(res.data.fields)
         }
@@ -69,7 +119,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       toast.promise(loadFormFields, {
         success: __('Form fields Refresh successfully', 'bit-integrations'),
         error: __('Error Occurred', 'bit-integrations'),
-        loading: __('Loading Form Fields...'),
+        loading: __('Loading Form Fields...')
       })
     }
   }
@@ -77,15 +127,19 @@ function EditFormInteg({ setSnackbar, className = '' }) {
   const baseDataLoad = (trigger, data) => {
     if (trigger === 'LearnDash') {
       if (
-        data.triggered_entity_id === '1'
-        || data.triggered_entity_id === '2'
-        || data.triggered_entity_id === '3'
-        || data.triggered_entity_id === '4'
-        || data.triggered_entity_id === '5'
-        || data.triggered_entity_id === '11'
+        data.triggered_entity_id === '1' ||
+        data.triggered_entity_id === '2' ||
+        data.triggered_entity_id === '3' ||
+        data.triggered_entity_id === '4' ||
+        data.triggered_entity_id === '5' ||
+        data.triggered_entity_id === '11'
       ) {
         getAllCourses(data, setFlow)
-      } else if (data.triggered_entity_id === '6' || data.triggered_entity_id === '7' || data.triggered_entity_id === '8') {
+      } else if (
+        data.triggered_entity_id === '6' ||
+        data.triggered_entity_id === '7' ||
+        data.triggered_entity_id === '8'
+      ) {
         getAllQuizes(data, setFlow)
       } else if (data.triggered_entity_id === '9' || data.triggered_entity_id === '10') {
         getAllGroups(data, setFlow)
@@ -96,7 +150,13 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     }
 
     if (trigger === 'BuddyBoss') {
-      if (data.triggered_entity_id === '9' || data.triggered_entity_id === '10' || data.triggered_entity_id === '11' || data.triggered_entity_id === '12' || data.triggered_entity_id === '13') {
+      if (
+        data.triggered_entity_id === '9' ||
+        data.triggered_entity_id === '10' ||
+        data.triggered_entity_id === '11' ||
+        data.triggered_entity_id === '12' ||
+        data.triggered_entity_id === '13'
+      ) {
         getBuddybossGroup(data, setFlow)
       }
       if (data.triggered_entity_id === '3' || data.triggered_entity_id === '4') {
@@ -104,7 +164,11 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       }
     }
     if (trigger === 'Affiliate') {
-      if (data.triggered_entity_id === '3' || data.triggered_entity_id === '4' || data.triggered_entity_id === '5') {
+      if (
+        data.triggered_entity_id === '3' ||
+        data.triggered_entity_id === '4' ||
+        data.triggered_entity_id === '5'
+      ) {
         getAllType(data, setFlow)
       }
     }
@@ -135,12 +199,14 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     }
     if (trigger === 'FluentCrm') {
       if (
-        data.triggered_entity_id === 'fluentcrm-1'
-        || data.triggered_entity_id === 'fluentcrm-2'
+        data.triggered_entity_id === 'fluentcrm-1' ||
+        data.triggered_entity_id === 'fluentcrm-2'
       ) {
         getFluentCrmTags(data, setFlow)
-      } else if (data.triggered_entity_id === 'fluentcrm-3'
-        || data.triggered_entity_id === 'fluentcrm-4') {
+      } else if (
+        data.triggered_entity_id === 'fluentcrm-3' ||
+        data.triggered_entity_id === 'fluentcrm-4'
+      ) {
         getFluentCrmLists(data, setFlow)
       } else if (data.triggered_entity_id === 'fluentcrm-5') {
         getFluentCrmStatus(data, setFlow)
@@ -259,7 +325,11 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     <>
       <div className={`${className || 'flx'}`}>
         <b className="wdt-200 d-in-b">{__(' Form/Task Name:', 'bit-integrations')}</b>
-        <select name="triggered_entity_id" value={flow.triggered_entity_id} onChange={handle} className={`btcd-paper-inp w-5 ${className}`}>
+        <select
+          name="triggered_entity_id"
+          value={flow.triggered_entity_id}
+          onChange={handle}
+          className={`btcd-paper-inp w-5 ${className}`}>
           <option value="">{__('Select Form', 'bit-integrations')}</option>
           {forms?.map((form) => (
             <option key={form.id} value={form.id}>
