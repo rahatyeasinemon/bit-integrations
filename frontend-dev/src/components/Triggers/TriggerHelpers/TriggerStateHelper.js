@@ -122,6 +122,15 @@ export const wpForoStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
       selectedForum: "any",
     }
   }
+
+  if (val === 'wpforo-2') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      topics: resp.data.topics,
+      selectedForum: "any",
+    }
+  }
+
   setNewFlow(tmpNewFlow)
 }
 
@@ -417,6 +426,11 @@ export const wpForoStateIH = (tmpConf, flowData, triggered_entity_id) => {
   if (formId === 'wpforo-1') {
     tmpConf.selectedForum = flowData.selectedForum;
     tmpConf.forums = flowData.forums
+  }
+
+  if (formId === 'wpforo-2') {
+    tmpConf.selectedTopic = flowData.selectedTopic;
+    tmpConf.topics = flowData.topics
   }
 
   return tmpConf;
