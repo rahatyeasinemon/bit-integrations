@@ -74,7 +74,7 @@ class RecordApiHelper
     {
         if (!isset($finalData['mailbox_id']) || empty($finalData['mailbox_id'])) {
             $mailbox = Helper::getDefaultMailBox();
-            $finalData['mailbox_id'] = $mailbox->id;
+            $finalData['mailbox_id'] = $mailbox->id ?? null;
         }
         $ticket = Ticket::create($finalData);
 
