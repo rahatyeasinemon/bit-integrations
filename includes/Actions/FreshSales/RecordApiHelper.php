@@ -7,6 +7,7 @@
 namespace BitCode\FI\Actions\FreshSales;
 
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
 
@@ -64,67 +65,11 @@ class RecordApiHelper
 
     public function upsertRecord($module, $finalData)
     {
-        if ($module === 'contact') {
-            $finalData['sales_accounts'] = [(object) ['id' => $this->_integrationDetails->moduleData->account_id, 'is_primary' => true]];
-            $identifier = (object) ['emails' => $finalData['emails']];
+        if (Helper::isProActivate()) {
+            return \BitApps\BTCBI_PRO\Actions\FreshSales\FreshSalesRecordApiHelper::upsertRecord($module, $finalData, $this->_integrationDetails, $this->_defaultHeader, $this->baseUrl);
         }
 
-        if ($module === 'deal') {
-            $finalData['contacts_added_list'] = [$this->_integrationDetails->moduleData->contact_id];
-            $identifier = (object) ['emails' => $finalData['emails']];
-        }
-
-        if ($module === 'account') {
-            $module = 'sales_account';
-            $identifier = (object) ['name' => $finalData['name']];
-        }
-
-        $apiEndpoints = 'https://' . $this->baseUrl . '/api/' . $module . 's/upsert';
-        $body = wp_json_encode(['unique_identifier' => $identifier, 'contact' => $finalData]);
-
-        return HttpHelper::post($apiEndpoints, $body, $this->_defaultHeader);
-    }
-
-    public function addRelatedList($freshSalesApiResponse, $integrationDetails, $fieldValues, $parentModule)
-    {
-        $parendId = $freshSalesApiResponse->data->id;
-
-        foreach ($integrationDetails->relatedlists as $item) {
-            $fieldMap = $item->field_map;
-            $module = strtolower($item->module);
-            $moduleData = $item->moduleData;
-            $actions = $item->actions;
-            $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-            if (isset($moduleData->activities_type) && !empty($moduleData->activities_type)) {
-                $finalData['type'] = $moduleData->activities_type;
-            }
-            if (isset($actions->busy_flag) && !empty($actions->busy_flag)) {
-                $finalData['busy_flag'] = true;
-            }
-            if (isset($actions->active_flag) && !empty($actions->active_flag)) {
-                $finalData['active_flag'] = 0;
-            }
-            if (isset($actions->activities_participants) && !empty($actions->activities_participants)) {
-                $participants = explode(',', $moduleData->activities_participants);
-                $allParticipants = [];
-                foreach ($participants as $participant) {
-                    $allParticipants[] = (object) [
-                        'contact_id'   => (int) $participant,
-                        'primary_flag' => false
-                    ];
-                }
-                $finalData['participants'] = $allParticipants;
-            }
-            $apiEndpoints = $this->baseUrl . $module . '?api_token=' . $this->_integrationDetails->api_key;
-
-            if ($parentModule === 'leads') {
-                $finalData['lead_id'] = $parendId;
-            } else {
-                $finalData['deal_id'] = (int) $parendId;
-            }
-
-            return HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $this->_defaultHeader);
-        }
+        return $this->insertRecord($module, $finalData);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -160,7 +105,7 @@ class RecordApiHelper
         $actions
     ) {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        if (isset($actions->upsert) && $actions->upsert && $module === 'contact') {
+        if (isset($actions->upsert) && $actions->upsert && $module != 'Product') {
             $apiResponse = $this->upsertRecord($module, $finalData);
         } else {
             $apiResponse = $this->insertRecord($module, $finalData);

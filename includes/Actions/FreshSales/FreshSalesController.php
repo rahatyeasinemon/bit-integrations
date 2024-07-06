@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\FreshSales;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for FreshSales integration
@@ -231,10 +231,6 @@ class FreshSalesController
 
         if (is_wp_error($freshSalesApiResponse)) {
             return $freshSalesApiResponse;
-        }
-
-        if (isset($freshSalesApiResponse->success, $freshSalesApiResponse->data) && $freshSalesApiResponse->success && \count($integrationDetails->relatedlists)) {
-            $recordApiHelper->addRelatedList($freshSalesApiResponse, $integrationDetails, $fieldValues, $module);
         }
 
         return $freshSalesApiResponse;
