@@ -1,10 +1,8 @@
-import { useEffect } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import FreshSalesActions from './FreshSalesActions'
 import {
-  handleTabChange,
   accountRefreshViews,
   contactRefreshViews,
   refreshAccounts,
@@ -13,8 +11,6 @@ import {
 import FreshSalesFieldMap from './FreshSalesFieldMap'
 
 export default function FreshSalesNewRecord({
-  tab,
-  settab,
   formFields,
   freshSalesConf,
   setFreshSalesConf,
@@ -23,13 +19,6 @@ export default function FreshSalesNewRecord({
   setIsLoading,
   setSnackbar
 }) {
-  useEffect(() => {
-    handleTabChange(0, settab)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  // eslint-disable-next-line no-undef
-
   return (
     <>
       {isLoading && (
@@ -206,7 +195,6 @@ export default function FreshSalesNewRecord({
                 freshSalesConf={freshSalesConf}
                 formFields={formFields}
                 setFreshSalesConf={setFreshSalesConf}
-                tab={tab}
                 setSnackbar={setSnackbar}
               />
             ))}
@@ -217,8 +205,7 @@ export default function FreshSalesNewRecord({
                     freshSalesConf.field_map.length,
                     freshSalesConf,
                     setFreshSalesConf,
-                    false,
-                    tab
+                    false
                   )
                 }
                 className="icn-btn sh-sm"
@@ -235,7 +222,6 @@ export default function FreshSalesNewRecord({
             <FreshSalesActions
               freshSalesConf={freshSalesConf}
               setFreshSalesConf={setFreshSalesConf}
-              tab={tab}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
               setSnackbar={setSnackbar}

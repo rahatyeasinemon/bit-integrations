@@ -17,7 +17,6 @@ function FreshSales({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
-  const [tab, settab] = useState(0)
 
   const [freshSalesConf, setFreshSalesConf] = useState({
     name: 'FreshSales',
@@ -50,7 +49,6 @@ function FreshSales({ formFields, setFlow, flow, allIntegURL }) {
     },
     moduleData: { module: '' },
     field_map: [{ formField: '', freshSalesFormField: '' }],
-    relatedlists: [],
     actions: {}
   })
 
@@ -113,20 +111,10 @@ function FreshSales({ formFields, setFlow, flow, allIntegURL }) {
         className="btcd-stp-page"
         style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <FreshSalesIntegLayout
-          tab={tab}
-          settab={settab}
           formID={formID}
           formFields={formFields}
           handleInput={(e) =>
-            handleInput(
-              e,
-              tab,
-              freshSalesConf,
-              setFreshSalesConf,
-              formID,
-              setIsLoading,
-              setSnackbar
-            )
+            handleInput(e, freshSalesConf, setFreshSalesConf, formID, setIsLoading, setSnackbar)
           }
           freshSalesConf={freshSalesConf}
           setFreshSalesConf={setFreshSalesConf}
