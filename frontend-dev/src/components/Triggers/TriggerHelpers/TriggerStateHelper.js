@@ -127,7 +127,7 @@ export const wpForoStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       topics: resp.data.topics,
-      selectedForum: "any",
+      selectedTopic: "any",
     }
   }
 
