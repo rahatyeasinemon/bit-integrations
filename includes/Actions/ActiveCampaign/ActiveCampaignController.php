@@ -84,26 +84,10 @@ class ActiveCampaignController
             );
         }
 
-        $apiEndpoint = self::_apiEndpoint($queryParams->api_url, 'lists');
-        $authorizationHeader['Api-Token'] = $queryParams->api_key;
-        $requestParams = [
-            'limit' => 1000,
-        ];
-        $aCampaignResponse = HttpHelper::get($apiEndpoint, $requestParams, $authorizationHeader);
-
         $lists = [];
-        if (!is_wp_error($aCampaignResponse)) {
-            $allLists = $aCampaignResponse->lists;
-
-            foreach ($allLists as $list) {
-                $lists[$list->name] = (object) [
-                    'listId'   => $list->id,
-                    'listName' => $list->name,
-                ];
-            }
-            $response['activeCampaignLists'] = $lists;
-            wp_send_json_success($response);
-        }
+        static::fetchLists(0, $queryParams->api_url, $queryParams->api_key, $lists);
+        $response['activeCampaignLists'] = $lists;
+        wp_send_json_success($response);
     }
 
     /**
@@ -278,6 +262,34 @@ class ActiveCampaignController
         }
 
         return $activeCampaignApiResponse;
+    }
+
+    private static function fetchLists($offset, $api_url, $api_key, &$lists)
+    {
+        $limit = 100;
+        $apiEndpoint = self::_apiEndpoint($api_url, 'lists');
+        $requestParams = [
+            'limit'  => $limit,
+            'offset' => $offset,
+        ];
+
+        $authorizationHeader['Api-Token'] = $api_key;
+        $aCampaignResponse = HttpHelper::get($apiEndpoint, $requestParams, $authorizationHeader);
+
+        if (!is_wp_error($aCampaignResponse)) {
+            $allLists = $aCampaignResponse->lists;
+
+            foreach ($allLists as $list) {
+                $lists[$list->name] = (object) [
+                    'listId'   => $list->id,
+                    'listName' => $list->name,
+                ];
+            }
+
+            if (!empty($aCampaignResponse->meta) && !empty($aCampaignResponse->meta->total) && $aCampaignResponse->meta->total > $limit && $offset < $aCampaignResponse->meta->total) {
+                static::fetchLists($offset + $limit, $api_url, $api_key, $lists);
+            }
+        }
     }
 }
 

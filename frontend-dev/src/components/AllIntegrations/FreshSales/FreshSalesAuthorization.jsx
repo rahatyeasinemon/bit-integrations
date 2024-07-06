@@ -1,13 +1,21 @@
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import Note from '../../Utilities/Note'
-import { handleAuthorize } from './FreshSalesCommonFunc'
-import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
+import { handleAuthorize } from './FreshSalesCommonFunc'
 
-export default function FreshSalesAuthorization({ freshSalesConf, setFreshSalesConf, step, setstep, isLoading, setIsLoading, isInfo }) {
+export default function FreshSalesAuthorization({
+  freshSalesConf,
+  setFreshSalesConf,
+  step,
+  setstep,
+  isLoading,
+  setIsLoading,
+  isInfo
+}) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_key: '' })
   const { freshSales } = tutorialLinks
@@ -41,20 +49,13 @@ export default function FreshSalesAuthorization({ freshSalesConf, setFreshSalesC
       className="btcd-stp-page"
       style={{
         ...{ width: step === 1 && 900 },
-        ...{ height: step === 1 && 'auto' },
-      }}
-    >
+        ...{ height: step === 1 && 'auto' }
+      }}>
       {freshSales?.youTubeLink && (
-        <TutorialLink
-          title={freshSales?.title}
-          youTubeLink={freshSales?.youTubeLink}
-        />
+        <TutorialLink title={freshSales?.title} youTubeLink={freshSales?.youTubeLink} />
       )}
       {freshSales?.docLink && (
-        <TutorialLink
-          title={freshSales?.title}
-          docLink={freshSales?.docLink}
-        />
+        <TutorialLink title={freshSales?.title} docLink={freshSales?.docLink} />
       )}
 
       <div className="mt-3">
@@ -96,8 +97,7 @@ export default function FreshSalesAuthorization({ freshSalesConf, setFreshSalesC
             className="btcd-link"
             href={`https://${freshSalesConf.bundle_alias}/personal-settings/api-settings`}
             target="_blank"
-            rel="noreferrer"
-          >
+            rel="noreferrer">
             {__('FreshSales API Token', 'bit-integrations')}
           </a>
         </small>
@@ -108,30 +108,21 @@ export default function FreshSalesAuthorization({ freshSalesConf, setFreshSalesC
       {!isInfo && (
         <div>
           <button
-            onClick={() => handleAuthorize(
-              freshSalesConf,
-              setError,
-              setisAuthorized,
-              setIsLoading,
-            )}
+            onClick={() => handleAuthorize(freshSalesConf, setError, setisAuthorized, setIsLoading)}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}
-          >
+            disabled={isAuthorized || isLoading}>
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
-            {isLoading && (
-              <LoaderSm size="20" clr="#022217" className="ml-2" />
-            )}
+            {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
           </button>
           <br />
           <button
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}
-          >
+            disabled={!isAuthorized}>
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

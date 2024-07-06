@@ -212,6 +212,7 @@ class FreshSalesController
         $bundle_alias = $integrationDetails->bundle_alias;
         $fieldMap = $integrationDetails->field_map;
         $module = strtolower($integrationDetails->moduleData->module);
+        $actions = $integrationDetails->actions;
 
         if (
             empty($fieldMap)
@@ -224,15 +225,12 @@ class FreshSalesController
         $freshSalesApiResponse = $recordApiHelper->execute(
             $fieldValues,
             $fieldMap,
-            $module
+            $module,
+            $actions
         );
 
         if (is_wp_error($freshSalesApiResponse)) {
             return $freshSalesApiResponse;
-        }
-
-        if (isset($freshSalesApiResponse->success, $freshSalesApiResponse->data) && $freshSalesApiResponse->success && \count($integrationDetails->relatedlists)) {
-            $recordApiHelper->addRelatedList($freshSalesApiResponse, $integrationDetails, $fieldValues, $module);
         }
 
         return $freshSalesApiResponse;
