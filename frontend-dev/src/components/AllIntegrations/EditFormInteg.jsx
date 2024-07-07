@@ -318,7 +318,9 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       if (
         data.triggered_entity_id === 'wpforo-2' ||
         data.triggered_entity_id === 'wpforo-3' ||
-        data.triggered_entity_id === 'wpforo-4'
+        data.triggered_entity_id === 'wpforo-4' ||
+        data.triggered_entity_id === 'wpforo-5' ||
+        data.triggered_entity_id === 'wpforo-6'
       ) {
         getWPForoTopics(data, setFlow)
       }
