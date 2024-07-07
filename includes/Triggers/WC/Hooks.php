@@ -12,6 +12,7 @@ Hooks::add('profile_update', [WCController::class, 'handle_customer_update'], 10
 Hooks::add('delete_user', [WCController::class, 'handle_customer_delete'], 10, 1);
 
 Hooks::add('transition_post_status', [WCController::class, 'handle_product_action'], 10, 3);
+Hooks::add('save_post', [WCController::class, 'handle_product_save_post'], 10, 3);
 
 Hooks::add('woocommerce_checkout_order_processed', [WCController::class, 'handle_order_create'], 10, 2);
 Hooks::add('save_post', [WCController::class, 'handle_order_update'], 10, 3);

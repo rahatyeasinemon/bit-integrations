@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Triggers\WC;
 
+use BitCode\FI\Flow\Flow;
 use WC_Booking;
 use WC_Checkout;
 use WC_Product_Simple;
-use BitCode\FI\Flow\Flow;
 use WC_Subscriptions_Product;
 
 final class WCController
@@ -1128,6 +1128,19 @@ final class WCController
             }
         } else {
             return false;
+        }
+    }
+
+    public static function handle_product_save_post($post_id, $post, $update)
+    {
+        if (wc_get_product($post_id) == false || $post->post_type != 'product' || $post->post_status != 'publish') {
+            return false;
+        }
+
+        if ($update) {
+            static::product_update($post_id);
+        } else {
+            static::product_create($post_id);
         }
     }
 
