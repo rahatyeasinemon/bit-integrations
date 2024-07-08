@@ -12,6 +12,7 @@ import {
   getAllContactList,
   getAllOrigin,
   getAllReason,
+  getAllStatus,
   getAllType
 } from './SalesforceCommonFunc'
 import {
@@ -19,7 +20,6 @@ import {
   opportunityLeadSource,
   opportunityStage,
   opportunityType,
-  caseStatus,
   casePriority,
   potentialLiability,
   slaViolation
@@ -72,6 +72,8 @@ export default function SalesforceActions({
       getAllType(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
     } else if (modelName === 'caseReason') {
       getAllReason(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
+    } else if (modelName === 'caseStatus') {
+      getAllStatus(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
     }
 
     setActionMdl({ show: modelName })
@@ -603,7 +605,7 @@ export default function SalesforceActions({
         show={actionMdl.show === 'caseStatus'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Event Subject', 'bit-integrations')}>
+        title={__('Case Status', 'bit-integrations')}>
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader
@@ -622,12 +624,22 @@ export default function SalesforceActions({
               className="btcd-paper-inp"
               onChange={(e) => actionHandler(e.target.value, 'caseStatusId')}>
               <option value="">{__('Select Case status', 'bit-integrations')}</option>
-              {caseStatus.map((item) => (
-                <option key={item.value} value={item.value}>
-                  {item.label}
+              {salesforceConf?.caseStatus?.map((item, key) => (
+                <option key={key} value={item}>
+                  {item}
                 </option>
               ))}
             </select>
+            <button
+              onClick={() =>
+                getAllStatus(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
+              }
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': '"Refresh Case Status"' }}
+              type="button"
+              disabled={isLoading}>
+              &#x21BB;
+            </button>
           </div>
         )}
       </ConfirmModal>

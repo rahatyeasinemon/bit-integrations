@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Salesforce;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
 use WP_Error;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class SalesforceController
 {
@@ -472,6 +472,49 @@ class SalesforceController
         }
 
         wp_send_json_success($allReason, 200);
+    }
+
+    public static function selesforceCaseStatus($campaignRequestParams)
+    {
+        if (
+            empty($campaignRequestParams->tokenDetails)
+            || empty($campaignRequestParams->clientId)
+            || empty($campaignRequestParams->clientSecret)
+        ) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+        $response = [];
+        if ((\intval($campaignRequestParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
+            $response['tokenDetails'] = self::refreshAccessToken($campaignRequestParams);
+        }
+
+        $allStatus = [];
+        $query = 'SELECT Status FROM Case WHERE Status != NULL GROUP BY Status';
+        $apiEndpoint = "{$campaignRequestParams->tokenDetails->instance_url}/services/data/v52.0/queryAll?q=" . urlencode($query);
+        $authorizationHeader['Authorization'] = "Bearer {$campaignRequestParams->tokenDetails->access_token}";
+        $authorizationHeader['Content-Type'] = 'application/json';
+        $apiResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+
+        if (isset($apiResponse->records)) {
+            foreach ($apiResponse->records as $case) {
+                $allStatus[] = $case->Status;
+            }
+        }
+
+        if (!\in_array('Working', $allStatus)) {
+            $allStatus[] = 'Working';
+        }
+        if (!\in_array('Escalated', $allStatus)) {
+            $allStatus[] = 'Escalated';
+        }
+
+        wp_send_json_success($allStatus, 200);
     }
 
     public function execute($integrationData, $fieldValues)
