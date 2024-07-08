@@ -169,6 +169,11 @@ final class Helper
         return \function_exists('btcbi_pro_activate_plugin');
     }
 
+    public static function isUserLoggedIn()
+    {
+        return is_user_logged_in();
+    }
+
     public static function isJson($string)
     {
         json_decode($string);

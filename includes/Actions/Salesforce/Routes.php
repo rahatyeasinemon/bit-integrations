@@ -18,3 +18,4 @@ Route::post('selesforce_account_list', [SalesforceController::class, 'selesforce
 Route::post('selesforce_case_origin', [SalesforceController::class, 'selesforceCaseOrigin']);
 Route::post('selesforce_case_type', [SalesforceController::class, 'selesforceCaseType']);
 Route::post('selesforce_case_reason', [SalesforceController::class, 'selesforceCaseReason']);
+Route::post('selesforce_case_status', [SalesforceController::class, 'selesforceCaseStatus']);
