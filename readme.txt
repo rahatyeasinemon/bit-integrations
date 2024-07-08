@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.5.5
 Requires PHP: 7.0
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 70+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -974,6 +974,20 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 
 == Changelog ==
 
+= 2.1.3  =
+_Release Date -3rd July 2024_
+
+- **New Features :**
+  - FreshSales: Upsert Record Action added (Pro)
+
+- **New Improvements :**
+  - Core: Update flow trigger hooks in cache
+  - ActiveCampaign: List limitation extended
+
+- **New Fixes :**
+  - Ninja Form: Form submission issue Fixed (Pro)
+  - Fluent Support: Undefined mailbox id
+  
 = 2.1.2  =
 _Release Date -3rd July 2024_
 
@@ -984,7 +998,6 @@ _Release Date -3rd July 2024_
 - **New Action :**
   - SureMembers - #1 WordPress Membership Plugin
   - Mailster - Email Newsletter Plugin for WordPress
-
 
 - **New Features :**
   - Airtable: Multiple Attachment file upload added
