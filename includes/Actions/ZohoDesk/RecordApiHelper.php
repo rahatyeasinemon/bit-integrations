@@ -2,10 +2,11 @@
 
 namespace BitCode\FI\Actions\ZohoDesk;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 use DateTime;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -55,9 +56,9 @@ class RecordApiHelper
             if (!empty($fieldPair->zohoFormField)) {
                 if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
                     if (strtok($fieldPair->zohoFormField, '_') === 'cf') {
-                        $customFieldData[$fieldPair->zohoFormField] = $fieldPair->customValue;
+                        $customFieldData[$fieldPair->zohoFormField] = Common::replaceFieldWithValue($fieldPair->customValue, $fieldValues);
                     } else {
-                        $fieldData[$fieldPair->zohoFormField] = $fieldPair->customValue;
+                        $fieldData[$fieldPair->zohoFormField] = Common::replaceFieldWithValue($fieldPair->customValue, $fieldValues);
                     }
                 } else {
                     if (strtok($fieldPair->zohoFormField, '_') === 'cf') {
