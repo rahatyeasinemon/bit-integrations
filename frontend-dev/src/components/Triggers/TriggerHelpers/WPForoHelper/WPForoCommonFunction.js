@@ -37,3 +37,21 @@ export const getWPForoTopics = (data, setFlow) => {
     loading: __('Loading Topics...'),
   })
 }
+
+export const getWPForoUsers = (data, setFlow) => {
+  const loadForum = bitsFetch(null, 'wpforo/get/users', null, 'GET')
+    .then((result) => {
+      if (result && result.data) {
+        const tmpFlow = { ...data }
+        tmpFlow.flow_details.users = result.data
+        setFlow({ ...tmpFlow })
+        return 'Users fetched successfully'
+      }
+      return 'Users fetching failed. please try again'
+    })
+  toast.promise(loadForum, {
+    success: (data) => data,
+    error: __('Error Occurred', 'bit-integrations'),
+    loading: __('Loading Users...'),
+  })
+}

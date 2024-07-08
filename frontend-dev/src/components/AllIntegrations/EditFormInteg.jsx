@@ -76,7 +76,8 @@ import { getFluentBookingEvents } from '../Triggers/TriggerHelpers/FluentBooking
 import { getSureMembersGroups } from '../Triggers/TriggerHelpers/SureMembersHelper/SureMembersCommonFunction.js'
 import {
   getWPForoForums,
-  getWPForoTopics
+  getWPForoTopics,
+  getWPForoUsers
 } from '../Triggers/TriggerHelpers/WPForoHelper/WPForoCommonFunction.js'
 
 function EditFormInteg({ setSnackbar, className = '' }) {
@@ -323,6 +324,9 @@ function EditFormInteg({ setSnackbar, className = '' }) {
         data.triggered_entity_id === 'wpforo-6'
       ) {
         getWPForoTopics(data, setFlow)
+      }
+      if (data.triggered_entity_id === 'wpforo-7') {
+        getWPForoUsers(data, setFlow)
       }
     }
   }
