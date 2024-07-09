@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\WebHooks;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for webhooks
@@ -25,7 +25,7 @@ class WebHooksController
                 400
             );
         }
-        wp_send_json_success(__('webhook executed succcessfully', 'bit-integrations'), 200);
+        wp_send_json_success(__('Test webhook executed succcessfully', 'bit-integrations'), 200);
     }
 
     public static function execute($integrationDetails, $fieldValues)
