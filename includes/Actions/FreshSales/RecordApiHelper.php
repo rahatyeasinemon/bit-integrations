@@ -6,10 +6,11 @@
 
 namespace BitCode\FI\Actions\FreshSales;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Actions\FreshSales\FreshSalesRecordApiHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -65,8 +66,8 @@ class RecordApiHelper
 
     public function upsertRecord($module, $finalData)
     {
-        if (Helper::isProActivate()) {
-            return \BitApps\BTCBI_PRO\Actions\FreshSales\FreshSalesRecordApiHelper::upsertRecord($module, $finalData, $this->_integrationDetails, $this->_defaultHeader, $this->baseUrl);
+        if (Helper::pro_action_feat_exists('FreshSales', 'upsertRecord')) {
+            return FreshSalesRecordApiHelper::upsertRecord($module, $finalData, $this->_integrationDetails, $this->_defaultHeader, $this->baseUrl);
         }
 
         return $this->insertRecord($module, $finalData);
