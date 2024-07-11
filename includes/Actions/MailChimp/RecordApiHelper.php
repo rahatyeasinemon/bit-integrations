@@ -9,6 +9,7 @@ namespace BitCode\FI\Actions\MailChimp;
 use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitApps\BTCBI_PRO\Actions\MailChimp\MailChimpRecordHelper;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -38,11 +39,11 @@ class RecordApiHelper
 
     public function addRemoveTag($module, $listId, $data)
     {
-        if (Helper::isProActivate()) {
+        if (Helper::pro_action_feat_exists('MailChimp', 'addRemoveTag')) {
             $subscriber_hash = md5(strtolower(trim($data['email_address'])));
             $endpoint = $this->_apiEndPoint() . "/lists/{$listId}/members/{$subscriber_hash}/tags";
 
-            return \BitApps\BTCBI_PRO\Actions\MailChimp\MailChimpRecordHelper::addRemoveTag($module, $data, $endpoint, $this->_defaultHeader);
+            return MailChimpRecordHelper::addRemoveTag($module, $data, $endpoint, $this->_defaultHeader);
         }
         LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $module], 'error', 'Bit Integration Pro plugin is not installed or activate');
 

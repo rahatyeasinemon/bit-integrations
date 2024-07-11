@@ -9,7 +9,7 @@ import { $btcbi } from '../../../GlobalStates'
 
 export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf }) {
   const btcbi = useRecoilValue($btcbi)
-  const { isPro } = btcbi
+  const { isPro, version } = btcbi
 
   const actionHandler = (e, type) => {
     const newConf = { ...freshSalesConf }
@@ -27,7 +27,7 @@ export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf })
   return (
     <>
       <div className="pos-rel d-flx w-8">
-        {'Product' !== freshSalesConf.moduleData.module && (
+        {'Product' !== freshSalesConf.moduleData.module && isPro && version > '2.1.0' && (
           <TableCheckBox
             onChange={(e) => actionHandler(e, 'upsert')}
             checked={freshSalesConf?.actions?.upsert || false}

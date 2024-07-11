@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.5.5
 Requires PHP: 7.0
-Stable tag: 2.1.4
+Stable tag: 2.1.5
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 70+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -974,6 +974,12 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 
 == Changelog ==
 
+= 2.1.5  =
+_Release Date -11th July 2024_
+
+- **New Fixes :**
+  - Webhook: Test Webhook execute issue fixed
+  
 = 2.1.4  =
 _Release Date -8th July 2024_
 

@@ -260,7 +260,11 @@ final class Flow
                 'flow_details',
             ]
         );
-        $integration = $integration = $integrations[0];
+        if (is_wp_error($integrations)) {
+            wp_send_json_error($integrations->get_error_message());
+        }
+
+        $integration = $integrations[0];
         $flowDetails = json_decode($integration->flow_details);
 
         $flowDetails->isAuthorized = $status;
