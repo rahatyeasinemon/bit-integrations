@@ -123,7 +123,7 @@ export const wpForoStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
     }
   }
 
-  if (val === 'wpforo-2' || val === 'wpforo-3' || val === 'wpforo-4' || val === 'wpforo-5' || val === 'wpforo-6') {
+  if (val === 'wpforo-2' || val === 'wpforo-3' || val === 'wpforo-4' || val === 'wpforo-5' || val === 'wpforo-6' || val === 'wpforo-11') {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       topics: resp.data.topics,
@@ -436,7 +436,7 @@ export const wpForoStateIH = (tmpConf, flowData, triggered_entity_id) => {
     tmpConf.forums = flowData.forums
   }
 
-  if (formId === 'wpforo-2' || formId === 'wpforo-3' || formId === 'wpforo-4' || formId === 'wpforo-5' || formId === 'wpforo-6') {
+  if (formId === 'wpforo-2' || formId === 'wpforo-3' || formId === 'wpforo-4' || formId === 'wpforo-5' || formId === 'wpforo-6' || formId === 'wpforo-11') {
     tmpConf.selectedTopic = flowData.selectedTopic
     tmpConf.topics = flowData.topics
   }
