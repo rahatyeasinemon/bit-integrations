@@ -2,15 +2,15 @@
 
 namespace BitCode\FI\Flow;
 
-use BitCode\FI\Core\Util\Capabilities;
+use WP_Error;
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\CustomFuncValidator;
 use BitCode\FI\Core\Util\IpTool;
 use BitCode\FI\Core\Util\SmartTags;
+use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\StoreInCache;
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Triggers\TriggerController;
-use WP_Error;
+use BitCode\FI\Core\Util\CustomFuncValidator;
 
 /**
  * Provides details of available integration and helps to
@@ -161,12 +161,7 @@ final class Flow
         $name = !empty($data->name) ? $data->name : '';
         $integrationHandler = new FlowController();
         $saveStatus = $integrationHandler->save($name, $data->trigger, $data->triggered_entity_id, $data->flow_details);
-
-        if ($saveStatus) {
-            $storeInCacheInstance = new StoreInCache();
-            $activeFlowTrigger = $storeInCacheInstance::getActiveFlow();
-            $storeInCacheInstance::setTransient('activeCurrentTrigger', $activeFlowTrigger, DAY_IN_SECONDS);
-        }
+        static::updateFlowTrigger($saveStatus);
 
         if (is_wp_error($saveStatus)) {
             wp_send_json_error($saveStatus->get_error_message());
@@ -203,6 +198,7 @@ final class Flow
             $newInteg = $integrations[0];
             $newInteg->name = 'duplicate of ' . $newInteg->name;
             $saveStatus = $integrationHandler->save($newInteg->name, $newInteg->triggered_entity, $newInteg->triggered_entity_id, $newInteg->flow_details);
+            static::updateFlowTrigger($saveStatus);
 
             if (is_wp_error($saveStatus)) {
                 wp_send_json_error($saveStatus->get_error_message());
@@ -244,6 +240,8 @@ final class Flow
                 'flow_details'        => \is_string($data->flow_details) ? $data->flow_details : wp_json_encode($data->flow_details),
             ]
         );
+        static::updateFlowTrigger($updateStatus);
+
         if (is_wp_error($updateStatus) && $updateStatus->get_error_code() !== 'result_empty') {
             wp_send_json_error($updateStatus->get_error_message());
         }
@@ -262,7 +260,11 @@ final class Flow
                 'flow_details',
             ]
         );
-        $integration = $integration = $integrations[0];
+        if (is_wp_error($integrations)) {
+            wp_send_json_error($integrations->get_error_message());
+        }
+
+        $integration = $integrations[0];
         $flowDetails = json_decode($integration->flow_details);
 
         $flowDetails->isAuthorized = $status;
@@ -293,11 +295,12 @@ final class Flow
         }
         $integrationHandler = new FlowController();
         $deleteStatus = $integrationHandler->delete($data->id);
+        static::updateFlowTrigger($deleteStatus);
+
         if (is_wp_error($deleteStatus)) {
             wp_send_json_error($deleteStatus->get_error_message());
         }
         wp_send_json_success(__('Integration deleted successfully', 'bit-integrations'));
-        // }
     }
 
     public function bulkDelete($param)
@@ -311,6 +314,7 @@ final class Flow
 
         $integrationHandler = new FlowController();
         $deleteStatus = $integrationHandler->bulkDelete($param->flowID);
+        static::updateFlowTrigger($deleteStatus);
 
         if (is_wp_error($deleteStatus)) {
             wp_send_json_error($deleteStatus->get_error_message());
@@ -335,6 +339,8 @@ final class Flow
         }
         $integrationHandler = new FlowController();
         $toggleStatus = $integrationHandler->updateStatus($data->id, $data->status);
+        static::updateFlowTrigger($toggleStatus);
+
         if (is_wp_error($toggleStatus)) {
             wp_send_json_error($toggleStatus->get_error_message());
         }
@@ -505,5 +511,14 @@ final class Flow
         }
 
         return false;
+    }
+
+    private static function updateFlowTrigger($saveStatus)
+    {
+        if ($saveStatus) {
+            $storeInCacheInstance = new StoreInCache();
+            $activeFlowTrigger = $storeInCacheInstance::getActiveFlow();
+            $storeInCacheInstance::setTransient('activeCurrentTrigger', $activeFlowTrigger, DAY_IN_SECONDS);
+        }
     }
 }

@@ -88,24 +88,22 @@ export default function ChangelogToggle() {
                             <div className='changelog'>
                                 <div className="flx flx-col flx-center whats-new">
                                     <h3>What's New in {btcbi.version}?</h3>
-                                    <small className='date'> <b>2nd July 2024</b></small>
+                                    <small className='date'>Updated at: <b>11th July 2024</b></small>
                                 </div>
                                 <div className='changelog-content'>
-                                    <span className='new-integration' ><b>New Triggers</b></span>
+                                    {/* <span className='new-integration' ><b>New Features</b></span>
 
                                     <div className='integration-list'>
                                         <ul>
-                                            <li>SureMembers (pro)</li>
-                                            <li>Mailster (pro)</li>
+                                            <li>FreshSales: Upsert Record Action added (Pro)</li>
                                         </ul>
-                                    </div>
+                                    </div> */}
 
-                                    <span className='new-feature' ><b>New Actions</b></span>
+                                    <span className='new-feature' ><b>New Fixes</b></span>
 
                                     <div className='integration-list'>
                                         <ul>
-                                        <li>SureMembers</li>
-                                        <li>Mailster</li>
+                                        <li>Webhook: Test Webhook execute issue fixed </li>
                                         </ul>
                                     </div>
                                     <div>

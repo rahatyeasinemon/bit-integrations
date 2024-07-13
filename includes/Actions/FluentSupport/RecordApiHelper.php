@@ -74,12 +74,14 @@ class RecordApiHelper
     {
         if (!isset($finalData['mailbox_id']) || empty($finalData['mailbox_id'])) {
             $mailbox = Helper::getDefaultMailBox();
-            $finalData['mailbox_id'] = $mailbox->id;
+            $finalData['mailbox_id'] = $mailbox->id ?? null;
         }
         $ticket = Ticket::create($finalData);
 
         if (isset($ticket->id)) {
-            isset($finalData['custom_fields']) ? $ticket->syncCustomFields($finalData['custom_fields']) : null;
+            if (isset($finalData['custom_fields']) && \is_array($finalData['custom_fields'])) {
+                $ticket->syncCustomFields([$finalData['custom_fields']]);
+            }
 
             return $ticket;
         }

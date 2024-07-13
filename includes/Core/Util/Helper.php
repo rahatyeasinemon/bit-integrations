@@ -2,11 +2,11 @@
 
 namespace BitCode\FI\Core\Util;
 
-use BitCode\FI\Triggers\TriggerController;
 use DateTime;
-use Exception;
 use stdClass;
 use WP_Error;
+use Exception;
+use BitCode\FI\Triggers\TriggerController;
 
 /**
  * bit-integration helper class
@@ -167,6 +167,40 @@ final class Helper
     public static function isProActivate()
     {
         return \function_exists('btcbi_pro_activate_plugin');
+    }
+
+    public static function pro_action_feat_exists($keyName, $featName)
+    {
+        $feature = static::findFeature($keyName, $featName);
+
+        if (empty($feature)) {
+            return false;
+        }
+
+        return (bool) (!empty($feature) && static::isProActivate() && \defined('BTCBI_PRO_VERSION') && (BTCBI_PRO_VERSION >= $feature['pro_init_v']) && class_exists($feature['class']));
+    }
+
+    public static function findFeature($keyName, $featName)
+    {
+        $features = AllProActionFeat::$features;
+
+        if (!isset($features[$keyName])) {
+            return;
+        }
+
+        $featNames = array_column($features[$keyName], 'feat_name');
+        $index = array_search($featName, $featNames);
+
+        if ($index !== false) {
+            return $features[$keyName][$index];
+        }
+
+        return [];
+    }
+
+    public static function isUserLoggedIn()
+    {
+        return is_user_logged_in();
     }
 
     public static function isJson($string)
