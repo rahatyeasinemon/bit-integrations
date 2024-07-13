@@ -42,7 +42,11 @@ const WPForoHelper = ({ flow, setFlowData, edit = false }) => {
           />
         </div>
       )}
-      {(id === 'wpforo-7' || id === 'wpforo-8' || id === 'wpforo-9' || id === 'wpforo-10') && (
+      {(id === 'wpforo-7' ||
+        id === 'wpforo-8' ||
+        id === 'wpforo-9' ||
+        id === 'wpforo-10' ||
+        id === 'wpforo-12') && (
         <div className={edit ? 'flx mt-3' : ''}>
           <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select User</b>
           <MultiSelect
