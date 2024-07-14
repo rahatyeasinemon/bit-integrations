@@ -67,11 +67,19 @@ export const getWPForoReputations = (confTmp, setConf, setLoading) => {
     })
 }
 
-export const staticFields = [
-  { key: 'email', label: 'User Email', required: true },
+export const tasksOptions = [
+  { label: 'Set User Reputation', value: 'userReputation' },
+  { label: 'Add User to Group', value: 'addToGroup' },
 ]
 
-export const tasksOptions = [
-  { label: 'Set User Reputation', value: 'userReputation' }
-]
+export const wpforoStaticFields = (selectedTask) => {
+
+  if (selectedTask === 'userReputation' || selectedTask === 'addToGroup') {
+    return { staticFields: [{ key: 'email', label: 'User Email', required: true }], fieldMap: [{ formField: '', wpforoField: 'email' }] }
+  } else if (selectedTask === 'addToGroup') {
+
+  }
+
+  return { staticFields: [], fieldMap: [] }
+}
 

@@ -6,13 +6,23 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 import WPForoFieldMap from './WPForoFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
-import { tasksOptions } from './WPForoCommonFunc'
+import { tasksOptions, wpforoStaticFields } from './WPForoCommonFunc'
 
 export default function WPForoIntegLayout({ formFields, wpforoConf, setWPForoConf, loading, setLoading, setSnackbar }) {
 
   const setChanges = (val) => {
     const newConf = { ...wpforoConf }
     newConf.selectedTask = val
+
+    if (val) {
+      const fieldsAndFieldMap = wpforoStaticFields(val)
+      newConf.staticFields = fieldsAndFieldMap.staticFields
+      newConf.field_map = fieldsAndFieldMap.fieldMap
+    }else{
+      newConf.staticFields = []
+      newConf.field_map = []
+    }
+    
     setWPForoConf({ ...newConf })
   }
 

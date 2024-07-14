@@ -9,7 +9,7 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, staticFields } from './WPForoCommonFunc'
+import { checkMappedFields } from './WPForoCommonFunc'
 import WPForoIntegLayout from './WPForoIntegLayout'
 import WPForoAuthorization from './WPForoAuthorization'
 
@@ -27,8 +27,8 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
   const [wpforoConf, setWPForoConf] = useState({
     name: 'WPForo',
     type: 'WPForo',
-    field_map: [{ formField: '', wpforoField: 'email' }],
-    staticFields,
+    field_map: [],
+    staticFields: [],
     selectedTask: '',
     groups: [],
     selectedGroup: '',
