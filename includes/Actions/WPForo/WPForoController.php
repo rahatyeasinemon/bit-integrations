@@ -57,6 +57,26 @@ class WPForoController
         wp_send_json_success($levelsOptions, 200);
     }
 
+    public function getGroups()
+    {
+        self::checkedWPForoExists();
+
+        $groups = WPF()->usergroup->get_usergroups();
+
+        if (empty($groups)) {
+            wp_send_json_error(__('No groups found!', 'bit-integrations'), 400);
+        }
+
+        foreach ($groups as $group) {
+            $groupsOptions[] = (object) [
+                'label' => $group['name'],
+                'value' => (string) $group['groupid']
+            ];
+        }
+
+        wp_send_json_success($groupsOptions, 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         self::checkedWPForoExists();
@@ -66,13 +86,16 @@ class WPForoController
         $fieldMap = $integrationDetails->field_map;
         $selectedTask = $integrationDetails->selectedTask;
         $selectedReputation = $integrationDetails->selectedReputation;
+        $selectedGroup = $integrationDetails->selectedGroup;
 
-        if (empty($fieldMap) || empty($selectedTask) || ($selectedTask === 'userReputation' && empty($selectedReputation))) {
+        if (empty($fieldMap) || empty($selectedTask)
+        || ($selectedTask === 'userReputation' && empty($selectedReputation))
+        || ($selectedTask === 'addToGroup' && empty($selectedGroup))) {
             return new WP_Error('REQ_FIELD_EMPTY', __('Fields map, task and group are required for WPForo', 'bit-integrations'));
         }
 
         $recordApiHelper = new RecordApiHelper($integId);
-        $wpforoResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $selectedReputation);
+        $wpforoResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $selectedReputation, $selectedGroup);
 
         if (is_wp_error($wpforoResponse)) {
             return $wpforoResponse;

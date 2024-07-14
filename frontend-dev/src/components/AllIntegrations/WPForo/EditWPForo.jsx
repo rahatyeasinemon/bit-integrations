@@ -41,6 +41,11 @@ function EditWPForo({ allIntegURL }) {
       return
     }
 
+    if (wpforoConf.selectedTask === 'addToGroup' && !wpforoConf.selectedGroup) {
+      toast.error('Please select a group!')
+      return
+    }
+
     saveActionConf({
       flow,
       allIntegURL,
@@ -73,9 +78,7 @@ function EditWPForo({ allIntegURL }) {
       <WPForoIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) =>
-          handleInput(e, wpforoConf, setWPForoConf, setLoading, setSnackbar)
-        }
+        handleInput={(e) => handleInput(e, wpforoConf, setWPForoConf, setLoading, setSnackbar)}
         wpforoConf={wpforoConf}
         setWPForoConf={setWPForoConf}
         loading={loading}

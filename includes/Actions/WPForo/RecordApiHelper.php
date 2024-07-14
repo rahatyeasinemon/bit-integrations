@@ -8,7 +8,6 @@ namespace BitCode\FI\Actions\WPForo;
 
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
-use WPForo\Inc\Access;
 
 /**
  * Provide functionality for Record insert, update
@@ -25,7 +24,7 @@ class RecordApiHelper
     public function setUserReputation($finalData, $selectedReputation)
     {
         if (empty($finalData['email']) || empty($selectedReputation)) {
-            return ['success' => false, 'message' => 'Required field email or group is empty!', 'code' => 400];
+            return ['success' => false, 'message' => 'Required field email or reputation is empty!', 'code' => 400];
         }
 
         $userId = self::getUserIdFromEmail($finalData['email']);
@@ -43,7 +42,7 @@ class RecordApiHelper
         return ['success' => true, 'message' => 'User reputation changed.'];
     }
 
-    public function revokeAccessFromGroup($finalData, $selectedGroup)
+    public function addToGroup($finalData, $selectedGroup)
     {
         if (empty($finalData['email']) || empty($selectedGroup)) {
             return ['success' => false, 'message' => 'Required field email or group is empty!', 'code' => 400];
@@ -55,9 +54,9 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'The user does not exist on your site, or the email is invalid!', 'code' => 400];
         }
 
-        Access::revoke($userId, $selectedGroup);
+        WPF()->usergroup->set_users_groupid([$selectedGroup => [$userId]]);
 
-        return ['success' => true];
+        return ['success' => true, 'message' => 'User group changed.'];
     }
 
     public static function getUserIdFromEmail($email)
@@ -87,7 +86,7 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedTask, $selectedReputation)
+    public function execute($fieldValues, $fieldMap, $selectedTask, $selectedReputation, $selectedGroup)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
 
@@ -97,10 +96,10 @@ class RecordApiHelper
             $response = $this->setUserReputation($finalData, $selectedReputation);
             $type = 'Reputation';
             $typeName = 'Set User Reputation';
-        } elseif ($selectedTask === 'revokeAccess') {
-            $response = $this->revokeAccessFromGroup($finalData, $selectedGroup);
-            $responseMessage = 'User removed from the access group.';
-            $typeName = 'Revoke Access';
+        } elseif ($selectedTask === 'addToGroup') {
+            $response = $this->addToGroup($finalData, $selectedGroup);
+            $type = 'Group';
+            $typeName = 'Add User to Group';
         }
 
         if ($response['success']) {

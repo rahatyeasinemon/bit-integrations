@@ -67,6 +67,27 @@ export const getWPForoReputations = (confTmp, setConf, setLoading) => {
     })
 }
 
+export const getWPForoGroups = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, groups: true })
+
+  bitsFetch({}, 'wpforo_fetch_groups')
+    .then(result => {
+      if (result && result.success) {
+        const newConf = { ...confTmp }
+        if (result.data) {
+          newConf.groups = result.data
+        }
+        setConf(newConf)
+        setLoading({ ...setLoading, groups: false })
+
+        toast.success(__('groups fetch successfully', 'bit-integrations'))
+        return
+      }
+      setLoading({ ...setLoading, groups: false })
+      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+    })
+}
+
 export const tasksOptions = [
   { label: 'Set User Reputation', value: 'userReputation' },
   { label: 'Add User to Group', value: 'addToGroup' },

@@ -18,7 +18,8 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
     auth: false,
-    reputation: false
+    reputation: false,
+    groups: false
   })
 
   const [step, setStep] = useState(1)
@@ -75,6 +76,11 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
 
     if (wpforoConf.selectedTask === 'userReputation' && !wpforoConf.selectedReputation) {
       toast.error('Please select a reputation!')
+      return
+    }
+
+    if (wpforoConf.selectedTask === 'addToGroup' && !wpforoConf.selectedGroup) {
+      toast.error('Please select a group!')
       return
     }
 

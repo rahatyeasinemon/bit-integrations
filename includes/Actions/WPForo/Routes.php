@@ -9,3 +9,4 @@ use BitCode\FI\Core\Util\Route;
 
 Route::post('wpforo_authentication', [WPForoController::class, 'authentication']);
 Route::post('wpforo_fetch_reputations', [WPForoController::class, 'getReputations']);
+Route::post('wpforo_fetch_groups', [WPForoController::class, 'getGroups']);
