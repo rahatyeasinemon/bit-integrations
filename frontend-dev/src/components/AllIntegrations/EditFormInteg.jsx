@@ -48,8 +48,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     setFlow(tmpInteg)
     let queryData = { id: value }
     if (
-      flow.triggered_entity === 'Divi'
-      || flow.triggered_entity === 'Bricks'
+      flow.triggered_entity === 'Bricks'
       || flow.triggered_entity === 'Brizy'
       || flow.triggered_entity === 'PiotnetAddon'
       || flow.triggered_entity === 'CartFlow'
