@@ -6,10 +6,10 @@
 
 namespace BitCode\FI\Actions\MailChimp;
 
-use BitCode\FI\Log\LogHandler;
+use BitApps\BTCBI_PRO\Actions\MailChimp\MailChimpRecordHelper;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitApps\BTCBI_PRO\Actions\MailChimp\MailChimpRecordHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -39,7 +39,7 @@ class RecordApiHelper
 
     public function addRemoveTag($module, $listId, $data)
     {
-        if (Helper::pro_action_feat_exists('MailChimp', 'addRemoveTag')) {
+        if (Helper::proActionFeatExists('MailChimp', 'addRemoveTag')) {
             $subscriber_hash = md5(strtolower(trim($data['email_address'])));
             $endpoint = $this->_apiEndPoint() . "/lists/{$listId}/members/{$subscriber_hash}/tags";
 

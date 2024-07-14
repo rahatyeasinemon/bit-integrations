@@ -169,7 +169,7 @@ final class Helper
         return \function_exists('btcbi_pro_activate_plugin');
     }
 
-    public static function pro_action_feat_exists($keyName, $featName)
+    public static function proActionFeatExists($keyName, $featName)
     {
         $feature = static::findFeature($keyName, $featName);
 
@@ -177,7 +177,7 @@ final class Helper
             return false;
         }
 
-        return (bool) (!empty($feature) && static::isProActivate() && \defined('BTCBI_PRO_VERSION') && (BTCBI_PRO_VERSION >= $feature['pro_init_v']) && class_exists($feature['class']));
+        return (bool) (!empty($feature) && static::isProActivate() && \defined('BTCBI_PRO_VERSION') && version_compare(BTCBI_PRO_VERSION, $feature['pro_init_v'], '>=') && class_exists($feature['class']));
     }
 
     public static function findFeature($keyName, $featName)
