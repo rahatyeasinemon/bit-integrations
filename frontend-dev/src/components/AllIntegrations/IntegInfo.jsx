@@ -9,42 +9,60 @@ import { __ } from '../../Utils/i18nwrap'
 import SnackMsg from '../Utilities/SnackMsg'
 
 const Loader = lazy(() => import('../Loaders/Loader'))
-const PaidMembershipProAuthorization = lazy(() => import('./PaidMembershipPro/PaidMembershipProAuthorization'))
+const PaidMembershipProAuthorization = lazy(
+  () => import('./PaidMembershipPro/PaidMembershipProAuthorization')
+)
 const ZohoCRMAuthorization = lazy(() => import('./ZohoCRM/ZohoCRMAuthorization'))
 const DropboxAuthorization = lazy(() => import('./Dropbox/DropboxAuthorization'))
 const OneDriveAuthorization = lazy(() => import('./OneDrive/OneDriveAuthorization'))
 const GoogleDriveAuthorization = lazy(() => import('./GoogleDrive/GoogleDriveAuthorization'))
-const GoogleCalendarAuthorization = lazy(() => import('./GoogleCalendar/GoogleCalendarAuthorization'))
+const GoogleCalendarAuthorization = lazy(
+  () => import('./GoogleCalendar/GoogleCalendarAuthorization')
+)
 const AutonamiAuthorization = lazy(() => import('./Autonami/AutonamiAuthorization'))
 const RapidmailAuthorization = lazy(() => import('./Rapidmail/RapidmailAuthorization'))
 const ZohoBiginAuthorization = lazy(() => import('./ZohoBigin/ZohoBiginAuthorization'))
 const ZohoCampaignsAuthorization = lazy(() => import('./ZohoCampaigns/ZohoCampaignsAuthorization'))
-const ZohoMarketingHubAuthorization = lazy(() => import('./ZohoMarketingHub/ZohoMarketingHubAuthorization'))
+const ZohoMarketingHubAuthorization = lazy(
+  () => import('./ZohoMarketingHub/ZohoMarketingHubAuthorization')
+)
 const ZohoRecruitAuthorization = lazy(() => import('./ZohoRecruit/ZohoRecruitAuthorization'))
 const GoogleSheetAuthorization = lazy(() => import('./GoogleSheet/GoogleSheetAuthorization'))
 const MailChimpAuthorization = lazy(() => import('./MailChimp/MailChimpAuthorization'))
 const MailPoetAuthorization = lazy(() => import('./MailPoet/MailPoetAuthorization'))
 const SendinblueAuthorization = lazy(() => import('./SendinBlue/SendinBlueAuthorization'))
 const WooCommerceAuthorization = lazy(() => import('./WooCommerce/WooCommerceAuthorization'))
-const ActiveCampaignAuthorization = lazy(() => import('./ActiveCampaign/ActiveCampaignAuthorization'))
+const ActiveCampaignAuthorization = lazy(
+  () => import('./ActiveCampaign/ActiveCampaignAuthorization')
+)
 const ZohoFlowAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
 const WebHooksAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
 const ZapierAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
 const IFTTTAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
 const PabblyAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
 const N8nAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
-const SyncSpiderAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
-const KonnectzITAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
+const SyncSpiderAuthorization = lazy(
+  () => import('./IntegrationHelpers/WebHook/WebHooksIntegration')
+)
+const KonnectzITAuthorization = lazy(
+  () => import('./IntegrationHelpers/WebHook/WebHooksIntegration')
+)
 const AntAppsAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
-const IntegromatAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
-const IntegratelyAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
+const IntegromatAuthorization = lazy(
+  () => import('./IntegrationHelpers/WebHook/WebHooksIntegration')
+)
+const IntegratelyAuthorization = lazy(
+  () => import('./IntegrationHelpers/WebHook/WebHooksIntegration')
+)
 const TelegramAuthorization = lazy(() => import('./Telegram/TelegramAuthorization'))
 const FluentCrmAuthorization = lazy(() => import('./FluentCRM/FluentCrmAuthorization'))
 const EnchargeAuthorization = lazy(() => import('./Encharge/EnchargeAuthorization'))
 const GetgistAuthorization = lazy(() => import('./Getgist/GetgistAuthorization'))
 const ElasticEmailAuthorization = lazy(() => import('./ElasticEmail/ElasticEmailAuthorization'))
 const WPCourseware = lazy(() => import('./WPCourseware/WPCoursewareAuthorization'))
-const RestrictContentAuthorization = lazy(() => import('./RestrictContent/RestrictContentAuthorization'))
+const RestrictContentAuthorization = lazy(
+  () => import('./RestrictContent/RestrictContentAuthorization')
+)
 const Slack = lazy(() => import('./Slack/SlackAuthorization'))
 const Trello = lazy(() => import('./Trello/TrelloAuthorization'))
 const MauticAuthorization = lazy(() => import('./Mautic/MauticAuthorization'))
@@ -63,12 +81,16 @@ const TwilioAuthorization = lazy(() => import('./Twilio/TwilioAuthorization'))
 const MailerLiteAuthorization = lazy(() => import('./MailerLite/MailerLiteAuthorization'))
 const VboutAuthorization = lazy(() => import('./Vbout/VboutAuthorization'))
 const FreshdeskAuthorization = lazy(() => import('./Freshdesk/FreshdeskAuthorization'))
-const GoogleContactsAuthorization = lazy(() => import('./GoogleContacts/GoogleContactsAuthorization'))
+const GoogleContactsAuthorization = lazy(
+  () => import('./GoogleContacts/GoogleContactsAuthorization')
+)
 const KirimEmailAuthorization = lazy(() => import('./KirimEmail/KirimEmailAuthorization'))
 const SalesforceAuthorization = lazy(() => import('./Salesforce/SalesforceAuthorization'))
 const KlaviyoAuthorization = lazy(() => import('./Klaviyo/KlaviyoAuthorization'))
 const SelzyAuthorization = lazy(() => import('./Selzy/SelzyAuthorization'))
-const ConstantContactAuthorization = lazy(() => import('./ConstantContact/ConstantContactAuthorization'))
+const ConstantContactAuthorization = lazy(
+  () => import('./ConstantContact/ConstantContactAuthorization')
+)
 const OmniSendAuthorization = lazy(() => import('./OmniSend/OmniSendAuthorization'))
 const PipeDriveAuthorization = lazy(() => import('./PipeDrive/PipeDriveAuthorization'))
 const MailercloudAuthorization = lazy(() => import('./Mailercloud/MailercloudAuthorization'))
@@ -97,7 +119,9 @@ const ZohoSheetAuthorization = lazy(() => import('./ZohoSheet/ZohoSheetAuthoriza
 const FreshSalesAuthorization = lazy(() => import('./FreshSales/FreshSalesAuthorization'))
 const InsightlyAuthorization = lazy(() => import('./Insightly/InsightlyAuthorization'))
 const CapsuleCRMAuthorization = lazy(() => import('./CapsuleCRM/CapsuleCRMAuthorization'))
-const MasterStudyLmsAuthorization = lazy(() => import('./MasterStudyLms/MasterStudyLmsAuthorization'))
+const MasterStudyLmsAuthorization = lazy(
+  () => import('./MasterStudyLms/MasterStudyLmsAuthorization')
+)
 const ZendeskAuthorization = lazy(() => import('./Zendesk/ZendeskAuthorization'))
 const AsanaAuthorization = lazy(() => import('./Asana/AsanaAuthorization'))
 const PropovoiceCrmAuthorization = lazy(() => import('./PropovoiceCRM/PropovoiceCrmAuthorization'))
@@ -109,7 +133,9 @@ const DripAuthorization = lazy(() => import('./Drip/DripAuthorization'))
 const MailifyAuthorization = lazy(() => import('./Mailify/MailifyAuthorization'))
 const LemlistAuthorization = lazy(() => import('./Lemlist/LemlistAuthorization'))
 const LionDeskAuthorization = lazy(() => import('./LionDesk/LionDeskAuthorization'))
-const CampaignMonitorAuthorization = lazy(() => import('./CampaignMonitor/CampaignMonitorAuthorization'))
+const CampaignMonitorAuthorization = lazy(
+  () => import('./CampaignMonitor/CampaignMonitorAuthorization')
+)
 const SalesmateAuthorization = lazy(() => import('./Salesmate/SalesmateAuthorization'))
 const SuiteDashAuthorization = lazy(() => import('./SuiteDash/SuiteDashAuthorization'))
 const GravitecAuthorization = lazy(() => import('./Gravitec/GravitecAuthorization'))
@@ -120,14 +146,28 @@ const LivestormAuthorization = lazy(() => import('./Livestorm/LivestormAuthoriza
 const NimbleAuthorization = lazy(() => import('./Nimble/NimbleAuthorization'))
 const AlbatoAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
 const SperseIOAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
-const FlowMatticAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
-const AutomatorWPAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
-const UncannyAutomatorAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
-const ThriveAutomatorAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
-const WPWebhooksAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
-const AdvancedFormIntegrationAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
+const FlowMatticAuthorization = lazy(
+  () => import('./IntegrationHelpers/WebHook/WebHooksIntegration')
+)
+const AutomatorWPAuthorization = lazy(
+  () => import('./IntegrationHelpers/WebHook/WebHooksIntegration')
+)
+const UncannyAutomatorAuthorization = lazy(
+  () => import('./IntegrationHelpers/WebHook/WebHooksIntegration')
+)
+const ThriveAutomatorAuthorization = lazy(
+  () => import('./IntegrationHelpers/WebHook/WebHooksIntegration')
+)
+const WPWebhooksAuthorization = lazy(
+  () => import('./IntegrationHelpers/WebHook/WebHooksIntegration')
+)
+const AdvancedFormIntegrationAuthorization = lazy(
+  () => import('./IntegrationHelpers/WebHook/WebHooksIntegration')
+)
 const PerfexCRMAuthorization = lazy(() => import('./PerfexCRM/PerfexCRMAuthorization'))
-const SureTriggersAuthorization = lazy(() => import('./IntegrationHelpers/WebHook/WebHooksIntegration'))
+const SureTriggersAuthorization = lazy(
+  () => import('./IntegrationHelpers/WebHook/WebHooksIntegration')
+)
 const OneHashCRMAuthorization = lazy(() => import('./OneHashCRM/OneHashCRMAuthorization'))
 const SalesflareAuthorization = lazy(() => import('./Salesflare/SalesflareAuthorization'))
 const AcademyLmsAuthorization = lazy(() => import('./AcademyLms/AcademyLmsAuthorization'))
@@ -142,6 +182,7 @@ const WhatsAppAuthorization = lazy(() => import('./WhatsApp/WhatsAppAuthorizatio
 const NewsletterAuthorization = lazy(() => import('./Newsletter/NewsletterAuthorization'))
 const SureMembersAuthorization = lazy(() => import('./SureMembers/SureMembersAuthorization'))
 const MailsterAuthentication = lazy(() => import('./Mailster/MailsterAuthorization'))
+const WPForoAuthorization = lazy(() => import('./WPForo/WPForoAuthorization'))
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -150,7 +191,7 @@ export default function IntegInfo() {
   const { data, isLoading, isError } = useFetch({
     payload: { id },
     action: 'flow/get',
-    method: 'post',
+    method: 'post'
   })
 
   useEffect(() => {
@@ -161,8 +202,8 @@ export default function IntegInfo() {
         setSnackbar({
           ...{
             show: true,
-            msg: __('Failed to integration info', 'bit-integrations'),
-          },
+            msg: __('Failed to integration info', 'bit-integrations')
+          }
         })
       }
     }
@@ -176,7 +217,14 @@ export default function IntegInfo() {
   const IntegrationInfo = () => {
     switch (integrationConf.type) {
       case 'Zoho CRM':
-        return <ZohoCRMAuthorization crmConf={integrationConf} step={1} redirectLocation={location} isInfo />
+        return (
+          <ZohoCRMAuthorization
+            crmConf={integrationConf}
+            step={1}
+            redirectLocation={location}
+            isInfo
+          />
+        )
       case 'Autonami':
         return <AutonamiAuthorization autonamiConf={integrationConf} step={1} isInfo />
       case 'Dropbox':
@@ -184,26 +232,84 @@ export default function IntegInfo() {
       case 'OneDrive':
         return <OneDriveAuthorization oneDriveConf={integrationConf} step={1} isInfo />
       case 'Google Drive':
-        return <GoogleDriveAuthorization googleDriveConf={integrationConf} step={1} redirectLocation={location} isInfo />
+        return (
+          <GoogleDriveAuthorization
+            googleDriveConf={integrationConf}
+            step={1}
+            redirectLocation={location}
+            isInfo
+          />
+        )
       case 'Google Calendar':
-        return <GoogleCalendarAuthorization googleCalendarConf={integrationConf} step={1} redirectLocation={location} isInfo />
+        return (
+          <GoogleCalendarAuthorization
+            googleCalendarConf={integrationConf}
+            step={1}
+            redirectLocation={location}
+            isInfo
+          />
+        )
       case 'Rapidmail':
         return <RapidmailAuthorization rapidmailConf={integrationConf} step={1} isInfo />
       case 'Zoho Recruit':
-        return <ZohoRecruitAuthorization recruitConf={integrationConf} step={1} redirectLocation={location} isInfo />
+        return (
+          <ZohoRecruitAuthorization
+            recruitConf={integrationConf}
+            step={1}
+            redirectLocation={location}
+            isInfo
+          />
+        )
       case 'Zoho Campaigns':
-        return <ZohoCampaignsAuthorization campaignsConf={integrationConf} step={1} redirectLocation={location} isInfo />
-      case 'Zoho Marketing Hub': case 'Zoho Marketing Automation(Zoho Marketing Hub)':
-        return <ZohoMarketingHubAuthorization marketingHubConf={integrationConf} step={1} redirectLocation={location} isInfo />
+        return (
+          <ZohoCampaignsAuthorization
+            campaignsConf={integrationConf}
+            step={1}
+            redirectLocation={location}
+            isInfo
+          />
+        )
+      case 'Zoho Marketing Hub':
+      case 'Zoho Marketing Automation(Zoho Marketing Hub)':
+        return (
+          <ZohoMarketingHubAuthorization
+            marketingHubConf={integrationConf}
+            step={1}
+            redirectLocation={location}
+            isInfo
+          />
+        )
       case 'Zoho Bigin':
-        return <ZohoBiginAuthorization biginConf={integrationConf} step={1} redirectLocation={location} isInfo />
+        return (
+          <ZohoBiginAuthorization
+            biginConf={integrationConf}
+            step={1}
+            redirectLocation={location}
+            isInfo
+          />
+        )
       case 'Google Sheet':
-        return <GoogleSheetAuthorization sheetConf={integrationConf} step={1} redirectLocation={location} isInfo />
+        return (
+          <GoogleSheetAuthorization
+            sheetConf={integrationConf}
+            step={1}
+            redirectLocation={location}
+            isInfo
+          />
+        )
       case 'Mail Chimp':
-        return <MailChimpAuthorization mailChimpConf={integrationConf} step={1} redirectLocation={location} isInfo />
+        return (
+          <MailChimpAuthorization
+            mailChimpConf={integrationConf}
+            step={1}
+            redirectLocation={location}
+            isInfo
+          />
+        )
       case 'Mail Poet':
         return <MailPoetAuthorization mailPoetConf={integrationConf} step={1} isInfo />
-      case 'SendinBlue': case 'Brevo(Sendinblue)':
+      case 'SendinBlue':
+      case 'Brevo(Sendinblue)':
         return <SendinblueAuthorization sendinBlueConf={integrationConf} step={1} isInfo />
       case 'WooCommerce':
         return <WooCommerceAuthorization wcConf={integrationConf} step={1} isInfo />
@@ -215,7 +321,8 @@ export default function IntegInfo() {
         return <ZapierAuthorization webHooks={integrationConf} step={1} isInfo />
       case 'IFTTT':
         return <IFTTTAuthorization webHooks={integrationConf} step={1} isInfo />
-      case 'Integromat': case 'Make(Integromat)':
+      case 'Integromat':
+      case 'Make(Integromat)':
         return <IntegromatAuthorization webHooks={integrationConf} step={1} isInfo />
       case 'Integrately':
         return <IntegratelyAuthorization webHooks={integrationConf} step={1} isInfo />
@@ -300,7 +407,9 @@ export default function IntegInfo() {
       case 'GetResponse':
         return <GetResponseAuthentication getResponseConf={integrationConf} step={1} isInfo />
       case 'PaidMembershipPro':
-        return <PaidMembershipProAuthorization paidMembershipProConf={integrationConf} step={1} isInfo />
+        return (
+          <PaidMembershipProAuthorization paidMembershipProConf={integrationConf} step={1} isInfo />
+        )
       case 'MailBluster':
         return <MailBlusterAuthentication mailBlusterConf={integrationConf} step={1} isInfo />
       case 'MailRelay':
@@ -310,7 +419,9 @@ export default function IntegInfo() {
       case 'Notion':
         return <NotionAuthorization notionConf={integrationConf} step={1} isInfo />
       case 'ConstantContact':
-        return <ConstantContactAuthorization constantContactConf={integrationConf} step={1} isInfo />
+        return (
+          <ConstantContactAuthorization constantContactConf={integrationConf} step={1} isInfo />
+        )
       case 'OmniSend':
         return <OmniSendAuthorization omniSendConf={integrationConf} step={1} isInfo />
       case 'Mailjet':
@@ -338,7 +449,14 @@ export default function IntegInfo() {
       case 'DirectIq':
         return <DirectIqAuthorization directIqConf={integrationConf} step={1} isInfo />
       case 'SendPulse':
-        return <SendPulseAuthorization sendPulseConf={integrationConf} step={1} redirectLocation={location} isInfo />
+        return (
+          <SendPulseAuthorization
+            sendPulseConf={integrationConf}
+            step={1}
+            redirectLocation={location}
+            isInfo
+          />
+        )
       case 'GiveWp':
         return <GiveWpAuthorization giveWpConf={integrationConf} step={1} isInfo />
       case 'Airtable':
@@ -369,14 +487,17 @@ export default function IntegInfo() {
         return <CopperCRMAuthorization copperCRMConf={integrationConf} step={1} isInfo />
       case 'Drip':
         return <DripAuthorization dripConf={integrationConf} step={1} isInfo />
-      case 'Mailify': case 'Sarbacane(Mailify)':
+      case 'Mailify':
+      case 'Sarbacane(Mailify)':
         return <MailifyAuthorization mailifyConf={integrationConf} step={1} isInfo />
       case 'Lemlist':
         return <LemlistAuthorization lemlistConf={integrationConf} step={1} isInfo />
       case 'LionDesk':
         return <LionDeskAuthorization lionDeskConf={integrationConf} step={1} isInfo />
       case 'CampaignMonitor':
-        return <CampaignMonitorAuthorization campaignMonitorConf={integrationConf} step={1} isInfo />
+        return (
+          <CampaignMonitorAuthorization campaignMonitorConf={integrationConf} step={1} isInfo />
+        )
       case 'Salesmate':
         return <SalesmateAuthorization salesmateConf={integrationConf} step={1} isInfo />
       case 'SuiteDash':
@@ -441,6 +562,8 @@ export default function IntegInfo() {
         return <SureMembersAuthorization sureMembersConf={integrationConf} step={1} isInfo />
       case 'Mailster':
         return <MailsterAuthentication mailsterConf={integrationConf} step={1} isInfo />
+      case 'WPForo':
+        return <WPForoAuthorization wpforoConf={integrationConf} step={1} isInfo />
       default:
         return <></>
     }
@@ -460,9 +583,7 @@ export default function IntegInfo() {
         </div>
       </div>
 
-      <Suspense
-        fallback={<Loader className="g-c" style={{ height: '82vh' }} />}
-      >
+      <Suspense fallback={<Loader className="g-c" style={{ height: '82vh' }} />}>
         <IntegrationInfo />
       </Suspense>
     </>

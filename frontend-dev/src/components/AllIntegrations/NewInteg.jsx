@@ -153,6 +153,7 @@ const ZagoMail = lazy(() => import('./ZagoMail/ZagoMail'))
 const Newsletter = lazy(() => import('./Newsletter/Newsletter'))
 const SureMembers = lazy(() => import('./SureMembers/SureMembers'))
 const Mailster = lazy(() => import('./Mailster/Mailster'))
+const WPForo = lazy(() => import('./WPForo/WPForo'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
@@ -453,6 +454,8 @@ export default function NewInteg({ allIntegURL }) {
         return <SureMembers allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'Mailster':
         return <Mailster allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
+      case 'WPForo':
+        return <WPForo allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       default:
         return <></>
     }
