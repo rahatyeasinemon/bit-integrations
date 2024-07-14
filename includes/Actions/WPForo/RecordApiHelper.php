@@ -22,9 +22,9 @@ class RecordApiHelper
         $this->_integrationID = $integId;
     }
 
-    public function grantAccessToGroup($finalData, $selectedGroup)
+    public function setUserReputation($finalData, $selectedReputation)
     {
-        if (empty($finalData['email']) || empty($selectedGroup)) {
+        if (empty($finalData['email']) || empty($selectedReputation)) {
             return ['success' => false, 'message' => 'Required field email or group is empty!', 'code' => 400];
         }
 
@@ -34,9 +34,13 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'The user does not exist on your site, or the email is invalid!', 'code' => 400];
         }
 
-        Access::grant($userId, $selectedGroup);
+        $points = WPF()->member->rating($selectedReputation, 'points');
+        $data = ['custom_points' => $points];
 
-        return ['success' => true];
+        WPF()->member->update_profile_fields($userId, $data, false);
+        WPF()->member->reset($userId);
+
+        return ['success' => true, 'message' => 'User reputation changed.'];
     }
 
     public function revokeAccessFromGroup($finalData, $selectedGroup)
@@ -83,27 +87,27 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedTask, $selectedGroup)
+    public function execute($fieldValues, $fieldMap, $selectedTask, $selectedReputation)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
 
-        $responseMessage = $taskType = '';
+        $type = $typeName = '';
 
-        if ($selectedTask === 'grantAccess') {
-            $response = $this->grantAccessToGroup($finalData, $selectedGroup);
-            $responseMessage = 'User added to the access group.';
-            $taskType = 'Grant Access';
+        if ($selectedTask === 'userReputation') {
+            $response = $this->setUserReputation($finalData, $selectedReputation);
+            $type = 'Reputation';
+            $typeName = 'Set User Reputation';
         } elseif ($selectedTask === 'revokeAccess') {
             $response = $this->revokeAccessFromGroup($finalData, $selectedGroup);
             $responseMessage = 'User removed from the access group.';
-            $taskType = 'Revoke Access';
+            $typeName = 'Revoke Access';
         }
 
         if ($response['success']) {
-            $res = ['message' => $responseMessage];
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Access Group', 'type_name' => $taskType]), 'success', wp_json_encode($res));
+            $res = ['message' => $response['message']];
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => $type, 'type_name' => $typeName]), 'success', wp_json_encode($res));
         } else {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Access Group', 'type_name' => 'Grant or revoke access']), 'error', wp_json_encode($response));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => $type, 'type_name' => $typeName]), 'error', wp_json_encode($response));
         }
 
         return $response;

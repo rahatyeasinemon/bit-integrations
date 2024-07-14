@@ -6,6 +6,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 import WPForoFieldMap from './WPForoFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
+import { tasksOptions } from './WPForoCommonFunc'
 
 export default function WPForoIntegLayout({ formFields, wpforoConf, setWPForoConf, loading, setLoading, setSnackbar }) {
 
@@ -22,8 +23,7 @@ export default function WPForoIntegLayout({ formFields, wpforoConf, setWPForoCon
           <b className="wdt-200 d-in-b">{__('Select Task:', 'bit-integrations')}</b>
           <MultiSelect
             style={{ width: '450px' }}
-            options={[{ label: 'Add User to Access Group', value: 'grantAccess' },
-            { label: 'Remove User from Access Group', value: 'revokeAccess' }]}
+            options={tasksOptions}
             className="msl-wrp-options"
             defaultValue={wpforoConf?.selectedTask}
             onChange={val => setChanges(val)}

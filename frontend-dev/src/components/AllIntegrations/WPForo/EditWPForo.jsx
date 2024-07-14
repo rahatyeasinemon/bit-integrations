@@ -20,7 +20,7 @@ function EditWPForo({ allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
     auth: false,
-    groups: false
+    reputation: false
   })
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)
@@ -36,8 +36,8 @@ function EditWPForo({ allIntegURL }) {
       return
     }
 
-    if (!wpforoConf.selectedGroup) {
-      toast.error('Please select a group!')
+    if (wpforoConf.selectedTask === 'userReputation' && !wpforoConf.selectedReputation) {
+      toast.error('Please select a reputation!')
       return
     }
 

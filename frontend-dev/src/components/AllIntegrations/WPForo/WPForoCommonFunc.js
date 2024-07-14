@@ -46,28 +46,32 @@ export const wpforoAuthentication = (confTmp, setError, setIsAuthorized, loading
     })
 }
 
-export const getWPForoGroups = (confTmp, setConf, setLoading) => {
-  setLoading({ ...setLoading, groups: true })
+export const getWPForoReputations = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, reputation: true })
 
-  bitsFetch({}, 'wpforo_fetch_groups')
+  bitsFetch({}, 'wpforo_fetch_reputations')
     .then(result => {
       if (result && result.success) {
         const newConf = { ...confTmp }
         if (result.data) {
-          newConf.groups = result.data
+          newConf.reputations = result.data
         }
         setConf(newConf)
-        setLoading({ ...setLoading, groups: false })
+        setLoading({ ...setLoading, reputation: false })
 
-        toast.success(__('Groups fetch successfully', 'bit-integrations'))
+        toast.success(__('Reputations fetch successfully', 'bit-integrations'))
         return
       }
-      setLoading({ ...setLoading, groups: false })
+      setLoading({ ...setLoading, reputation: false })
       toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
     })
 }
 
 export const staticFields = [
   { key: 'email', label: 'User Email', required: true },
+]
+
+export const tasksOptions = [
+  { label: 'Set User Reputation', value: 'userReputation' }
 ]
 
