@@ -66,7 +66,6 @@ class RecordApiHelper
 
     public function upsertRecord($module, $finalData)
     {
-        error_log(print_r(['check' => Helper::proActionFeatExists('FreshSales', 'upsertRecord')], true));
         if (Helper::proActionFeatExists('FreshSales', 'upsertRecord')) {
             return FreshSalesRecordApiHelper::upsertRecord($module, $finalData, $this->_integrationDetails, $this->_defaultHeader, $this->baseUrl);
         }
