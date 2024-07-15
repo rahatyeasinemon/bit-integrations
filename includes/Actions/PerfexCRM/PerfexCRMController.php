@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\PerfexCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for PerfexCRM integration
@@ -29,8 +29,8 @@ class PerfexCRMController
         $headers = $this->setHeaders($apiToken);
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            wp_send_json_error('Please enter valid API Token or Access Api URL', 400);
+        if (\is_string($response) || isset($response->errors) || (isset($response->status) && !$response->status)) {
+            wp_send_json_error(\is_string($response) ? $response : (!empty($response->message) ? $response->message : 'Please enter valid API Token or Access Api URL'), 400);
         } else {
             wp_send_json_success('Authentication successful', 200);
         }
@@ -70,12 +70,11 @@ class PerfexCRMController
         $headers = $this->setHeaders($apiToken);
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            wp_send_json_error('Custom Fields fetching failed', 400);
+        if (\is_string($response) || isset($response->errors) || (isset($response->status) && !$response->status)) {
+            wp_send_json_error(\is_string($response) ? $response : (!empty($response->message) ? $response->message : 'Custom Fields fetching failed'), 400);
         } else {
             $fieldMap = [];
             foreach ($response as $field) {
-
                 $fieldMap[]
                 = (object) [
                     'key'      => $field->field_name,
@@ -97,18 +96,15 @@ class PerfexCRMController
         $headers = $this->setHeaders($apiToken);
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            wp_send_json_error('Customer fetching failed', 400);
+        if (\is_string($response) || isset($response->errors) || (isset($response->status) && !$response->status)) {
+            wp_send_json_error(\is_string($response) ? $response : (!empty($response->message) ? $response->message : 'Customer fetching failed'), 400);
         } else {
             $customers = [];
             foreach ($response as $customer) {
-
-                $customers[]
-                = (object) [
+                $customers[] = (object) [
                     'id'   => $customer->userid,
                     'name' => $customer->company
-                ]
-                ;
+                ];
             }
             wp_send_json_success($customers, 200);
         }
@@ -123,12 +119,11 @@ class PerfexCRMController
         $headers = $this->setHeaders($apiToken);
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            wp_send_json_error('Lead fetching failed', 400);
+        if (\is_string($response) || isset($response->errors) || (isset($response->status) && !$response->status)) {
+            wp_send_json_error(\is_string($response) ? $response : (!empty($response->message) ? $response->message : 'Lead fetching failed'), 400);
         } else {
             $leads = [];
             foreach ($response as $lead) {
-
                 $leads[]
                 = (object) [
                     'id'   => $lead->id,
@@ -149,12 +144,11 @@ class PerfexCRMController
         $headers = $this->setHeaders($apiToken);
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
-        if (isset($response->errors) || (isset($response->status) && !$response->status)) {
-            wp_send_json_error('Project Member fetching failed', 400);
+        if (\is_string($response) || isset($response->errors) || (isset($response->status) && !$response->status)) {
+            wp_send_json_error(\is_string($response) ? $response : (!empty($response->message) ? $response->message : 'Project Member fetching failed'), 400);
         } else {
             $staffs = [];
             foreach ($response as $staff) {
-
                 $staffs[]
                 = (object) [
                     'id'   => $staff->staffid,
@@ -173,7 +167,6 @@ class PerfexCRMController
         $apiToken = $integrationDetails->api_token;
         $fieldMap = $integrationDetails->field_map;
         $actionName = $integrationDetails->actionName;
-        $actionId = $integrationDetails->actionId;
         $domain = $integrationDetails->domain;
 
         if (empty($fieldMap) || empty($apiToken) || empty($actionName) || empty($domain)) {
