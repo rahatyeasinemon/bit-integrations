@@ -68,7 +68,7 @@ class RecordApiHelper
         if (Helper::proActionFeatExists('FreshSales', 'upsertRecord')) {
             $response = apply_filters('btcbi_freshsales_upsert_record', $module, $finalData, $this->_integrationDetails, $this->_defaultHeader, $this->baseUrl);
 
-            if (\is_string($response) && ($response == 'account' || $response == 'deal' || $response == 'contact')) {
+            if (\is_string($response) && $response == $module) {
                 return (object) ['errors' => 'Bit Integration Pro plugin is not installed or activate'];
             }
 
