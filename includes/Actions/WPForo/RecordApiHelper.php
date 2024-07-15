@@ -111,6 +111,12 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Forum id is required!', 'code' => 400];
         }
 
+        $userId = self::getUserIdFromEmail($finalData['email']);
+
+        if (!$userId) {
+            return ['success' => false, 'message' => 'The user does not exist on your site, or the email is invalid!', 'code' => 400];
+        }
+
         $actions = (array) $topicOptions['actions'];
         $privateTopic = 0;
 
@@ -118,7 +124,48 @@ class RecordApiHelper
             $privateTopic = 1;
         }
 
-        error_log(print_r(['topic options' => $topicOptions, empty((array) $topicOptions['actions'])], true));
+        $args['forumid'] = $topicOptions['selectedForum'];
+        $args['title'] = sanitize_title($finalData['topic_title']);
+        $args['body'] = preg_replace('#</pre>[\r\n\t\s\0]*<pre>#isu', "\r\n", (string) $finalData['topic_content']);
+        $args['userid'] = $userId;
+
+        if (!empty($topicOptions['selectedTags'])) {
+            $args['tags'] = $topicOptions['selectedTags'];
+        }
+
+        $args['private'] = $privateTopic;
+        WPF()->member->set_guest_cookies($args);
+        $min = wpforo_setting('posting', 'topic_body_min_length');
+
+        if ($min) {
+            if (wpfkey($args, 'body') && (int) $min > wpforo_length($args['body'])) {
+                return ['success' => false, 'message' => 'The content is too short', 'code' => 400];
+            }
+        }
+
+        if (!isset($args['forumid'])) {
+            return ['success' => false, 'message' => 'Add Topic error: No forum selected', 'code' => 400];
+        }
+
+        if (!WPF()->forum->get_forum($args['forumid'])) {
+            return ['success' => false, 'message' => 'Add Topic error: No forum selected', 'code' => 400];
+        }
+
+        if (!WPF()->perm->forum_can('ct', $args['forumid'])) {
+            return ['success' => false, 'message' => 'You don\'t have permission to create topic into this forum', 'code' => 400];
+        }
+
+        if (!WPF()->perm->can_post_now()) {
+            return ['success' => false, 'message' => 'You are posting too quickly. Slow down.', 'code' => 400];
+        }
+
+        $topicid = WPF()->topic->add($args);
+
+        if ($topicid) {
+            return ['success' => true, 'message' => 'New topic created, topic id: ' . $topicid];
+        }
+
+        return ['success' => false, 'message' => 'Something went wrong!'];
     }
 
     public static function getUserIdFromEmail($email)
@@ -168,6 +215,8 @@ class RecordApiHelper
             $typeName = 'Remove User from Group';
         } elseif ($selectedTask === 'createTopic') {
             $response = $this->createTopic($finalData, $topicOptions);
+            $type = 'Topic';
+            $typeName = 'Create Topic';
         }
 
         if ($response['success']) {
