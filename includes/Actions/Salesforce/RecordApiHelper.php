@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\Salesforce;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -125,16 +125,15 @@ class RecordApiHelper
         return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->_defaultHeader);
     }
 
-    public function createCase($finalData, $contactId, $accountId, $caseStatusId, $caseOriginId, $casePriorityId, $potentialLiabilityId, $slaViolationId)
+    public function createCase($finalData, $actionsData)
     {
         $apiEndpoint = $this->_apiDomain . '/services/data/v37.0/sobjects/Case';
-        $finalData['ContactId'] = $contactId;
-        $finalData['AccountId'] = $accountId;
-        $finalData['Status'] = $caseStatusId;
-        $finalData['Origin'] = $caseOriginId;
-        $finalData['Priority'] = $casePriorityId;
-        $finalData['PotentialLiability__c'] = $potentialLiabilityId;
-        $finalData['SLAViolation__c'] = $slaViolationId;
+
+        foreach ($actionsData as $key => $value) {
+            if (!empty($value)) {
+                $finalData[$key] = $value;
+            }
+        }
 
         return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->_defaultHeader);
     }
@@ -235,14 +234,14 @@ class RecordApiHelper
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Event', 'type_name' => 'Event-create']), 'error', wp_json_encode($createEventResponse));
             }
         } elseif ($actionName === 'case-create') {
-            $contactId = empty($integrationDetails->actions->contactId) ? null : $integrationDetails->actions->contactId;
-            $accountId = empty($integrationDetails->actions->accountId) ? null : $integrationDetails->actions->accountId;
-            $caseStatusId = empty($integrationDetails->actions->caseStatusId) ? null : $integrationDetails->actions->caseStatusId;
-            $caseOriginId = empty($integrationDetails->actions->caseOriginId) ? null : $integrationDetails->actions->caseOriginId;
-            $casePriorityId = empty($integrationDetails->actions->casePriorityId) ? null : $integrationDetails->actions->casePriorityId;
-            $potentialLiabilityId = empty($integrationDetails->actions->potentialLiabilityId) ? null : $integrationDetails->actions->potentialLiabilityId;
-            $slaViolationId = empty($integrationDetails->actions->slaViolationId) ? null : $integrationDetails->actions->slaViolationId;
-            $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+            $actionsData['ContactId'] = empty($integrationDetails->actions->contactId) ? null : $integrationDetails->actions->contactId;
+            $actionsData['AccountId'] = empty($integrationDetails->actions->accountId) ? null : $integrationDetails->actions->accountId;
+            $actionsData['Status'] = empty($integrationDetails->actions->caseStatusId) ? null : $integrationDetails->actions->caseStatusId;
+            $actionsData['Origin'] = empty($integrationDetails->actions->caseOriginId) ? null : $integrationDetails->actions->caseOriginId;
+            $actionsData['Priority'] = empty($integrationDetails->actions->casePriorityId) ? null : $integrationDetails->actions->casePriorityId;
+            $actionsData['PotentialLiability__c'] = empty($integrationDetails->actions->potentialLiabilityId) ? null : $integrationDetails->actions->potentialLiabilityId;
+            $actionsData['SLAViolation__c'] = empty($integrationDetails->actions->slaViolationId) ? null : $integrationDetails->actions->slaViolationId;
+            $data['finalData'] = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
 
             if (!empty($integrationDetails->actions->caseReason)) {
                 $finalData['Reason'] = $integrationDetails->actions->caseReason;
@@ -251,7 +250,7 @@ class RecordApiHelper
                 $finalData['Type'] = $integrationDetails->actions->caseType;
             }
 
-            $createCaseResponse = $this->createCase($finalData, $contactId, $accountId, $caseStatusId, $caseOriginId, $casePriorityId, $potentialLiabilityId, $slaViolationId);
+            $createCaseResponse = $this->createCase($finalData, $actionsData);
             if (\is_object($createCaseResponse) && property_exists($createCaseResponse, 'id')) {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Case', 'type_name' => 'Case-create']), 'success', wp_json_encode("Created case id is : {$createCaseResponse->id}"));
             } else {
