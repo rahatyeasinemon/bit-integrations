@@ -12,6 +12,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { checkMappedFields } from './WPForoCommonFunc'
 import WPForoIntegLayout from './WPForoIntegLayout'
 import WPForoAuthorization from './WPForoAuthorization'
+import { TASK_LIST_VALUES } from './wpforoConstants'
 
 function WPForo({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -74,12 +75,23 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (wpforoConf.selectedTask === 'userReputation' && !wpforoConf.selectedReputation) {
+    if (
+      wpforoConf.selectedTask === TASK_LIST_VALUES.USER_REPUTATION &&
+      !wpforoConf.selectedReputation
+    ) {
       toast.error('Please select a reputation!')
       return
     }
 
-    if (wpforoConf.selectedTask === 'addToGroup' && !wpforoConf.selectedGroup) {
+    if (wpforoConf.selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP && !wpforoConf.selectedGroup) {
+      toast.error('Please select a group!')
+      return
+    }
+
+    if (
+      wpforoConf.selectedTask === TASK_LIST_VALUES.REMOVE_FROM_GROUP &&
+      !wpforoConf.selectedGroup
+    ) {
       toast.error('Please select a group!')
       return
     }

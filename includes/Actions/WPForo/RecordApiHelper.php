@@ -59,6 +59,48 @@ class RecordApiHelper
         return ['success' => true, 'message' => 'User group changed.'];
     }
 
+    public function removeFromGroup($finalData, $selectedGroup)
+    {
+        if (empty($finalData['email']) || empty($selectedGroup)) {
+            return ['success' => false, 'message' => 'Required field email or group is empty!', 'code' => 400];
+        }
+
+        $userId = self::getUserIdFromEmail($finalData['email']);
+
+        if (!$userId) {
+            return ['success' => false, 'message' => 'The user does not exist on your site, or the email is invalid!', 'code' => 400];
+        }
+
+        WPF()->member->clear_db_cache();
+
+        if (\function_exists('wpforo_member')) {
+            $userGroupId = wpforo_member($userId, 'groupid');
+            $selectedGroup = (int) $selectedGroup;
+
+            if ($selectedGroup && $selectedGroup === $userGroupId) {
+                $defaultGroup = absint(WPF()->usergroup->default_groupid);
+                $sql = 'UPDATE `' . WPF()->tables->profiles . '` SET `groupid` = %d WHERE `userid` = %d';
+                if (false !== WPF()->db->query(WPF()->db->prepare($sql, $defaultGroup, $userId))) {
+                    if (\function_exists('wpforo_clean_cache')) {
+                        wpforo_clean_cache('avatar', $userId);
+                    }
+
+                    delete_user_meta(\intval($userId), '_wpf_member_obj');
+
+                    if (\function_exists('wpforo_setting')) {
+                        if (wpforo_setting('seo', 'seo_profile')) {
+                            WPF()->seo->clear_cache();
+                        }
+                    }
+                }
+            }
+
+            return ['success' => true, 'message' => 'User removed from group.'];
+        }
+
+        return ['success' => false, 'message' => 'Something went wrong!'];
+    }
+
     public static function getUserIdFromEmail($email)
     {
         if (empty($email) || !is_email($email) || !email_exists($email)) {
@@ -100,6 +142,10 @@ class RecordApiHelper
             $response = $this->addToGroup($finalData, $selectedGroup);
             $type = 'Group';
             $typeName = 'Add User to Group';
+        } elseif ($selectedTask === 'removeFromGroup') {
+            $response = $this->removeFromGroup($finalData, $selectedGroup);
+            $type = 'Group';
+            $typeName = 'Remove User from Group';
         }
 
         if ($response['success']) {

@@ -708,6 +708,11 @@ const tutorialLinks = {
     title: "How to setup Mailster integration",
     youTubeLink: "#",
     docLink: "#",
-  }
+  },
+  wpforo: {
+    title: "How to setup wpforo integration",
+    youTubeLink: "#",
+    docLink: "#",
+  },
 };
 export default tutorialLinks;

@@ -7,8 +7,9 @@ import TableCheckBox from '../../Utilities/TableCheckBox'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Cooltip from '../../Utilities/Cooltip'
-import { getWPForoGroups, getWPForoReputations } from './WPForoCommonFunc'
 import Loader from '../../Loaders/Loader'
+import { getWPForoGroups, getWPForoReputations } from './WPForoCommonFunc'
+import { TASK_LIST_VALUES } from './wpforoConstants'
 
 export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false })
@@ -38,7 +39,7 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
 
   return (
     <div className="pos-rel d-flx w-8">
-      {wpforoConf.selectedTask === 'userReputation' && (
+      {wpforoConf.selectedTask === TASK_LIST_VALUES.USER_REPUTATION && (
         <>
           <TableCheckBox
             checked={wpforoConf.selectedReputation || false}
@@ -91,7 +92,8 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
           </ConfirmModal>
         </>
       )}
-      {wpforoConf.selectedTask === 'addToGroup' && (
+      {(wpforoConf.selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP ||
+        wpforoConf.selectedTask === TASK_LIST_VALUES.REMOVE_FROM_GROUP) && (
         <>
           <TableCheckBox
             checked={wpforoConf.selectedGroup || false}
@@ -99,7 +101,10 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
             className="wdt-200 mt-4 mr-2"
             value="select_group"
             title={__('Select Group', 'bit-integrations')}
-            subTitle={__('Select a group to add a user to it.', 'bit-integrations')}
+            subTitle={__(
+              `Select a group to ${wpforoConf.selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP ? 'add a user to it' : 'remove a user from it'}.`,
+              'bit-integrations'
+            )}
           />
           <ConfirmModal
             className="custom-conf-mdl"
@@ -114,7 +119,13 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
             <div className="mt-2 flx">
               {__('Select Group', 'bit-integrations')}
               <Cooltip width={250} icnSize={17} className="ml-1">
-                <div className="txt-body">User will be added to the selected group.</div>
+                <div className="txt-body">
+                  The user will be{' '}
+                  {wpforoConf.selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP
+                    ? 'added to'
+                    : 'removed from'}{' '}
+                  the selected group.
+                </div>
               </Cooltip>
             </div>
             {loading.groups ? (

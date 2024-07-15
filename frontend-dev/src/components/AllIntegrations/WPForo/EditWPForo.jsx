@@ -9,9 +9,10 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, handleInput } from './WPForoCommonFunc'
 import WPForoIntegLayout from './WPForoIntegLayout'
 import toast from 'react-hot-toast'
+import { TASK_LIST_VALUES } from './wpforoConstants'
+import { checkMappedFields, handleInput } from './WPForoCommonFunc'
 
 function EditWPForo({ allIntegURL }) {
   const navigate = useNavigate()
@@ -36,12 +37,23 @@ function EditWPForo({ allIntegURL }) {
       return
     }
 
-    if (wpforoConf.selectedTask === 'userReputation' && !wpforoConf.selectedReputation) {
+    if (
+      wpforoConf.selectedTask === TASK_LIST_VALUES.USER_REPUTATION &&
+      !wpforoConf.selectedReputation
+    ) {
       toast.error('Please select a reputation!')
       return
     }
 
-    if (wpforoConf.selectedTask === 'addToGroup' && !wpforoConf.selectedGroup) {
+    if (wpforoConf.selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP && !wpforoConf.selectedGroup) {
+      toast.error('Please select a group!')
+      return
+    }
+
+    if (
+      wpforoConf.selectedTask === TASK_LIST_VALUES.REMOVE_FROM_GROUP &&
+      !wpforoConf.selectedGroup
+    ) {
       toast.error('Please select a group!')
       return
     }

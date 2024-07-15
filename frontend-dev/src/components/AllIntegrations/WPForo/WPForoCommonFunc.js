@@ -4,6 +4,7 @@ import toast from 'react-hot-toast'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import { create } from 'mutative'
+import { TASK_LIST_VALUES } from './wpforoConstants'
 
 export const handleInput = (e, wpforoConf, setWPForoConf) => {
   const newConf = create(wpforoConf, draftConf => {
@@ -88,17 +89,9 @@ export const getWPForoGroups = (confTmp, setConf, setLoading) => {
     })
 }
 
-export const tasksOptions = [
-  { label: 'Set User Reputation', value: 'userReputation' },
-  { label: 'Add User to Group', value: 'addToGroup' },
-]
-
 export const wpforoStaticFields = (selectedTask) => {
-
-  if (selectedTask === 'userReputation' || selectedTask === 'addToGroup') {
+  if (selectedTask === TASK_LIST_VALUES.USER_REPUTATION || selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP || selectedTask === TASK_LIST_VALUES.REMOVE_FROM_GROUP) {
     return { staticFields: [{ key: 'email', label: 'User Email', required: true }], fieldMap: [{ formField: '', wpforoField: 'email' }] }
-  } else if (selectedTask === 'addToGroup') {
-
   }
 
   return { staticFields: [], fieldMap: [] }
