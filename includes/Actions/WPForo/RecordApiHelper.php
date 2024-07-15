@@ -93,9 +93,9 @@ class RecordApiHelper
                         }
                     }
                 }
-            }
 
-            return ['success' => true, 'message' => 'User removed from group.'];
+                return ['success' => true, 'message' => 'User removed from group.'];
+            }
         }
 
         return ['success' => false, 'message' => 'Something went wrong!'];
