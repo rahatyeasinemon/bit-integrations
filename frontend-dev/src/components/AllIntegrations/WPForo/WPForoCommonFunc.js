@@ -81,7 +81,7 @@ export const getWPForoGroups = (confTmp, setConf, setLoading) => {
         setConf(newConf)
         setLoading({ ...setLoading, groups: false })
 
-        toast.success(__('groups fetch successfully', 'bit-integrations'))
+        toast.success(__('Groups fetch successfully', 'bit-integrations'))
         return
       }
       setLoading({ ...setLoading, groups: false })
@@ -89,9 +89,40 @@ export const getWPForoGroups = (confTmp, setConf, setLoading) => {
     })
 }
 
+export const getWPForoForums = (confTmp, setConf, setLoading) => {
+  setLoading({ ...setLoading, forums: true })
+
+  bitsFetch({}, 'wpforo_fetch_forums')
+    .then(result => {
+      if (result && result.data) {
+        const newConf = { ...confTmp }
+        newConf.forums = result.data
+        setConf(newConf)
+        setLoading({ ...setLoading, forums: false })
+        toast.success(__('Forums fetch successfully', 'bit-integrations'))
+        return
+      }
+      setLoading({ ...setLoading, forums: false })
+      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+    })
+}
+
 export const wpforoStaticFields = (selectedTask) => {
   if (selectedTask === TASK_LIST_VALUES.USER_REPUTATION || selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP || selectedTask === TASK_LIST_VALUES.REMOVE_FROM_GROUP) {
     return { staticFields: [{ key: 'email', label: 'User Email', required: true }], fieldMap: [{ formField: '', wpforoField: 'email' }] }
+  } else if (selectedTask === TASK_LIST_VALUES.CREATE_TOPIC) {
+    return {
+      staticFields: [
+        { key: 'email', label: 'User Email', required: true },
+        { key: 'topic_title', label: 'Topic Title', required: true },
+        { key: 'topic_content', label: 'Topic Content', required: true },
+      ],
+      fieldMap: [
+        { formField: '', wpforoField: 'email' },
+        { formField: '', wpforoField: 'topic_title' },
+        { formField: '', wpforoField: 'topic_content' },
+      ]
+    }
   }
 
   return { staticFields: [], fieldMap: [] }

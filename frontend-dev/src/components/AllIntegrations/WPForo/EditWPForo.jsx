@@ -21,7 +21,8 @@ function EditWPForo({ allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
     auth: false,
-    reputation: false
+    reputation: false,
+    forums: false
   })
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)
@@ -55,6 +56,11 @@ function EditWPForo({ allIntegURL }) {
       !wpforoConf.selectedGroup
     ) {
       toast.error('Please select a group!')
+      return
+    }
+
+    if (wpforoConf.selectedTask === TASK_LIST_VALUES.CREATE_TOPIC && !wpforoConf.selectedForum) {
+      toast.error('Please select a forum!')
       return
     }
 

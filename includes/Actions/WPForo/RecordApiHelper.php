@@ -101,6 +101,26 @@ class RecordApiHelper
         return ['success' => false, 'message' => 'Something went wrong!'];
     }
 
+    public function createTopic($finalData, $topicOptions)
+    {
+        if (empty($finalData['email']) || empty($finalData['topic_title']) || empty($finalData['topic_content'])) {
+            return ['success' => false, 'message' => 'Required fields are empty!', 'code' => 400];
+        }
+
+        if (empty($topicOptions['selectedForum'])) {
+            return ['success' => false, 'message' => 'Forum id is required!', 'code' => 400];
+        }
+
+        $actions = (array) $topicOptions['actions'];
+        $privateTopic = 0;
+
+        if (!empty($actions) && $actions['privateTopic']) {
+            $privateTopic = 1;
+        }
+
+        error_log(print_r(['topic options' => $topicOptions, empty((array) $topicOptions['actions'])], true));
+    }
+
     public static function getUserIdFromEmail($email)
     {
         if (empty($email) || !is_email($email) || !email_exists($email)) {
@@ -128,7 +148,7 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedTask, $selectedReputation, $selectedGroup)
+    public function execute($fieldValues, $fieldMap, $selectedTask, $selectedReputation, $selectedGroup, $topicOptions)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
 
@@ -146,6 +166,8 @@ class RecordApiHelper
             $response = $this->removeFromGroup($finalData, $selectedGroup);
             $type = 'Group';
             $typeName = 'Remove User from Group';
+        } elseif ($selectedTask === 'createTopic') {
+            $response = $this->createTopic($finalData, $topicOptions);
         }
 
         if ($response['success']) {

@@ -20,7 +20,8 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
   const [loading, setLoading] = useState({
     auth: false,
     reputation: false,
-    groups: false
+    groups: false,
+    forums: false
   })
 
   const [step, setStep] = useState(1)
@@ -35,7 +36,11 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
     groups: [],
     selectedGroup: '',
     reputations: [],
-    selectedReputation: ''
+    selectedReputation: '',
+    forums: [],
+    selectedForum: '',
+    selectedTags: '',
+    actions: {}
   })
 
   const saveConfig = () => {
@@ -93,6 +98,11 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
       !wpforoConf.selectedGroup
     ) {
       toast.error('Please select a group!')
+      return
+    }
+
+    if (wpforoConf.selectedTask === TASK_LIST_VALUES.CREATE_TOPIC && !wpforoConf.selectedForum) {
+      toast.error('Please select a forum!')
       return
     }
 

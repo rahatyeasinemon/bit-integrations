@@ -77,6 +77,26 @@ class WPForoController
         wp_send_json_success($groupsOptions, 200);
     }
 
+    public function getForums()
+    {
+        self::checkedWPForoExists();
+
+        $forums = WPF()->forum->get_forums(['type' => 'forum']);
+
+        if (empty($forums)) {
+            wp_send_json_error(__('No forums found!', 'bit-integrations'), 400);
+        }
+
+        foreach ($forums as $forum) {
+            $forumsOptions[] = (object) [
+                'label' => $forum['title'],
+                'value' => (string) $forum['forumid']
+            ];
+        }
+
+        wp_send_json_success($forumsOptions, 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         self::checkedWPForoExists();
@@ -87,15 +107,25 @@ class WPForoController
         $selectedTask = $integrationDetails->selectedTask;
         $selectedReputation = $integrationDetails->selectedReputation;
         $selectedGroup = $integrationDetails->selectedGroup;
+        $selectedForum = $integrationDetails->selectedForum;
+        $selectedTags = $integrationDetails->selectedTags;
+        $actions = $integrationDetails->actions;
 
         if (empty($fieldMap) || empty($selectedTask)
         || ($selectedTask === 'userReputation' && empty($selectedReputation))
-        || ($selectedTask === 'addToGroup' && empty($selectedGroup))) {
+        || ($selectedTask === 'addToGroup' && empty($selectedGroup))
+        || ($selectedTask === 'createTopic' && empty($selectedForum))) {
             return new WP_Error('REQ_FIELD_EMPTY', __('Fields map, task and group are required for WPForo', 'bit-integrations'));
         }
 
+        $topicOptions = [
+            'selectedForum' => $selectedForum,
+            'selectedTags'  => $selectedTags,
+            'actions'       => $actions
+        ];
+
         $recordApiHelper = new RecordApiHelper($integId);
-        $wpforoResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $selectedReputation, $selectedGroup);
+        $wpforoResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $selectedReputation, $selectedGroup, $topicOptions);
 
         if (is_wp_error($wpforoResponse)) {
             return $wpforoResponse;

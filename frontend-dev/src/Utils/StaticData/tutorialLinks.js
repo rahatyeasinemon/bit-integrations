@@ -712,7 +712,7 @@ const tutorialLinks = {
   wpforo: {
     title: "How to setup wpforo integration",
     youTubeLink: "#",
-    docLink: "#",
+    docLink: "https://bitapps.pro/docs/bit-integrations/actions/wpforo-integration/",
   },
 };
 export default tutorialLinks;

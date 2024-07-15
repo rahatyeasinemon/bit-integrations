@@ -8,7 +8,7 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Cooltip from '../../Utilities/Cooltip'
 import Loader from '../../Loaders/Loader'
-import { getWPForoGroups, getWPForoReputations } from './WPForoCommonFunc'
+import { getWPForoForums, getWPForoGroups, getWPForoReputations } from './WPForoCommonFunc'
 import { TASK_LIST_VALUES } from './wpforoConstants'
 
 export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setLoading }) {
@@ -22,6 +22,17 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
     } else if (type === 'groups') {
       getWPForoGroups(wpforoConf, setWPForoConf, setLoading)
       setActionMdl({ show: 'group' })
+    } else if (type === 'forums') {
+      getWPForoForums(wpforoConf, setWPForoConf, setLoading)
+      setActionMdl({ show: 'forum' })
+    } else if (type === 'tags') {
+      setActionMdl({ show: 'tags' })
+    } else if (type === 'privateTopic') {
+      if (e.target.checked) {
+        newConf.actions.privateTopic = true
+      } else {
+        delete newConf.actions.privateTopic
+      }
     }
 
     setWPForoConf({ ...newConf })
@@ -150,6 +161,102 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
                 />
               </div>
             )}
+          </ConfirmModal>
+        </>
+      )}
+      {wpforoConf.selectedTask === TASK_LIST_VALUES.CREATE_TOPIC && (
+        <>
+          <TableCheckBox
+            checked={wpforoConf.selectedForum || false}
+            onChange={(e) => actionHandler(e, 'forums')}
+            className="wdt-200 mt-4 mr-2"
+            value="select_forum"
+            title={__('Select Forum', 'bit-integrations')}
+            subTitle={__('Select a forum to create a topic in it', 'bit-integrations')}
+          />
+          <TableCheckBox
+            checked={wpforoConf.selectedTags || false}
+            onChange={(e) => actionHandler(e, 'tags')}
+            className="wdt-200 mt-4 mr-2"
+            value="select_tags"
+            title={__('Select Tags', 'bit-integrations')}
+            subTitle={__('Add tags for the topic', 'bit-integrations')}
+          />
+          <TableCheckBox
+            checked={wpforoConf.actions?.privateTopic || false}
+            onChange={(e) => actionHandler(e, 'privateTopic')}
+            className="wdt-200 mt-4 mr-2"
+            value="select_topic_is_private"
+            title={__('Private Topic', 'bit-integrations')}
+            subTitle={__('Make topic private', 'bit-integrations')}
+          />
+          <ConfirmModal
+            className="custom-conf-mdl"
+            mainMdlCls="o-v"
+            btnClass="blue"
+            btnTxt={__('Ok', 'bit-integrations')}
+            show={actionMdl.show === 'forum'}
+            close={clsActionMdl}
+            action={clsActionMdl}
+            title={__('Forums', 'bit-integrations')}>
+            <div className="btcd-hr mt-2 mb-2" />
+            <div className="mt-2 flx">
+              {__('Select Forum', 'bit-integrations')}
+              <Cooltip width={250} icnSize={17} className="ml-1">
+                <div className="txt-body">Topics will be added to the selected forum.</div>
+              </Cooltip>
+            </div>
+            {loading.forums ? (
+              <Loader
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 45,
+                  transform: 'scale(0.5)'
+                }}
+              />
+            ) : (
+              <div className="mt-2">
+                <MultiSelect
+                  options={wpforoConf.forums}
+                  className="msl-wrp-options"
+                  defaultValue={wpforoConf?.selectedForum}
+                  onChange={(val) => setChanges(val, 'selectedForum')}
+                  style={{ width: '100%' }}
+                  singleSelect
+                />
+              </div>
+            )}
+          </ConfirmModal>
+          <ConfirmModal
+            className="custom-conf-mdl"
+            mainMdlCls="o-v"
+            btnClass="blue"
+            btnTxt={__('Ok', 'bit-integrations')}
+            show={actionMdl.show === 'tags'}
+            close={clsActionMdl}
+            action={clsActionMdl}
+            title={__('Tags', 'bit-integrations')}>
+            <div className="btcd-hr mt-2 mb-2" />
+            <div className="mt-2 flx">
+              {__('Select Tags', 'bit-integrations')}
+              <Cooltip width={250} icnSize={17} className="ml-1">
+                <div className="txt-body">
+                  Separate tags by pressing enter or comma (,) after writing them.
+                </div>
+              </Cooltip>
+            </div>
+            <div className="mt-2">
+              <MultiSelect
+                options={wpforoConf.tags}
+                className="msl-wrp-options"
+                defaultValue={wpforoConf?.selectedTags}
+                onChange={(val) => setChanges(val, 'selectedTags')}
+                style={{ width: '100%' }}
+                customValue
+              />
+            </div>
           </ConfirmModal>
         </>
       )}
