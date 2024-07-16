@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Triggers\WC;
 
+use BitCode\FI\Flow\Flow;
 use WC_Booking;
 use WC_Checkout;
 use WC_Product_Simple;
-use BitCode\FI\Flow\Flow;
 use WC_Subscriptions_Product;
 
 final class WCController

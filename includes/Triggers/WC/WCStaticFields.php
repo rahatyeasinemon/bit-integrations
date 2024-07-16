@@ -6,7 +6,7 @@ class WCStaticFields
 {
     public static function getWCOrderFields($id)
     {
-        $fields = array_merge(static::checkoutBasicFields(), static::getOrderACFFields(), static::getCheckoutCustomFields());
+        $fields = array_merge(static::checkoutBasicFields(), static::getOrderACFFields(), static::getCheckoutCustomFields(), static::getFlexibleCheckoutFields());
 
         if (version_compare(WC_VERSION, '8.5.1', '>=')) {
             $fields = array_merge($fields, static::checkoutUpgradeFields());
@@ -62,6 +62,11 @@ class WCStaticFields
         }
 
         return $fields;
+    }
+
+    private static function getFlexibleCheckoutFields()
+    {
+        return apply_filters('btcbi_woocommerce_flexible_checkout_fields', []);
     }
 
     private static function checkoutBasicFields()
