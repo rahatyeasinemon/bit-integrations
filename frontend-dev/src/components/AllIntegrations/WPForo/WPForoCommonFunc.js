@@ -107,6 +107,24 @@ export const getWPForoForums = (confTmp, setConf, setLoading) => {
     })
 }
 
+export const getWPForoTopics = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, topics: true })
+
+  bitsFetch({}, 'wpforo_fetch_topics')
+    .then(result => {
+      if (result && result.data) {
+        const newConf = { ...confTmp }
+        newConf.topics = result.data
+        setConf(newConf)
+        setLoading({ ...loading, topics: false })
+        toast.success(__('Topics fetch successfully', 'bit-integrations'))
+        return
+      }
+      setLoading({ ...loading, topics: false })
+      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+    })
+}
+
 export const wpforoStaticFields = (selectedTask) => {
   if (selectedTask === TASK_LIST_VALUES.USER_REPUTATION || selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP || selectedTask === TASK_LIST_VALUES.REMOVE_FROM_GROUP) {
     return { staticFields: [{ key: 'email', label: 'User Email', required: true }], fieldMap: [{ formField: '', wpforoField: 'email' }] }
@@ -123,6 +141,8 @@ export const wpforoStaticFields = (selectedTask) => {
         { formField: '', wpforoField: 'topic_content' },
       ]
     }
+  } else if (selectedTask === TASK_LIST_VALUES.DELETE_TOPIC) {
+    return { staticFields: [{ key: 'topic_id', label: 'Topic ID', required: true }], fieldMap: [{ formField: '', wpforoField: 'topic_id' }] }
   }
 
   return { staticFields: [], fieldMap: [] }

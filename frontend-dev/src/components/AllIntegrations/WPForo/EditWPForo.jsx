@@ -22,7 +22,8 @@ function EditWPForo({ allIntegURL }) {
   const [loading, setLoading] = useState({
     auth: false,
     reputation: false,
-    forums: false
+    forums: false,
+    topics: false
   })
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)
@@ -33,7 +34,10 @@ function EditWPForo({ allIntegURL }) {
       return
     }
 
-    if (!checkMappedFields(wpforoConf)) {
+    if (
+      wpforoConf.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC &&
+      !checkMappedFields(wpforoConf)
+    ) {
       toast.error('Please map mandatory fields!')
       return
     }
@@ -61,6 +65,15 @@ function EditWPForo({ allIntegURL }) {
 
     if (wpforoConf.selectedTask === TASK_LIST_VALUES.CREATE_TOPIC && !wpforoConf.selectedForum) {
       toast.error('Please select a forum!')
+      return
+    }
+
+    if (
+      wpforoConf.selectedTask === TASK_LIST_VALUES.DELETE_TOPIC &&
+      !wpforoConf.selectedTopic &&
+      !checkMappedFields(wpforoConf)
+    ) {
+      toast.error('Please select a topic or map fields!')
       return
     }
 

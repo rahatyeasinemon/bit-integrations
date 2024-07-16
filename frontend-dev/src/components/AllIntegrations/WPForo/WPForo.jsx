@@ -21,7 +21,8 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
     auth: false,
     reputation: false,
     groups: false,
-    forums: false
+    forums: false,
+    topics: false
   })
 
   const [step, setStep] = useState(1)
@@ -40,7 +41,10 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
     forums: [],
     selectedForum: '',
     selectedTags: '',
-    actions: {}
+    actions: {},
+    selectedTopic: '',
+    topics: [],
+    deleteTopicFieldMap: false
   })
 
   const saveConfig = () => {
@@ -75,7 +79,10 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (!checkMappedFields(wpforoConf)) {
+    if (
+      wpforoConf.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC &&
+      !checkMappedFields(wpforoConf)
+    ) {
       toast.error('Please map mandatory fields!')
       return
     }
@@ -103,6 +110,15 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
 
     if (wpforoConf.selectedTask === TASK_LIST_VALUES.CREATE_TOPIC && !wpforoConf.selectedForum) {
       toast.error('Please select a forum!')
+      return
+    }
+
+    if (
+      wpforoConf.selectedTask === TASK_LIST_VALUES.DELETE_TOPIC &&
+      !wpforoConf.selectedTopic &&
+      !checkMappedFields(wpforoConf)
+    ) {
+      toast.error('Please select a topic or map fields!')
       return
     }
 
@@ -141,7 +157,10 @@ function WPForo({ formFields, setFlow, flow, allIntegURL }) {
         />
         <button
           onClick={() => nextPage(3)}
-          disabled={!checkMappedFields(wpforoConf)}
+          disabled={
+            wpforoConf?.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC &&
+            !checkMappedFields(wpforoConf)
+          }
           className="btn f-right btcd-btn-lg purple sh-sm flx"
           type="button">
           {__('Next', 'bit-integrations')} &nbsp;

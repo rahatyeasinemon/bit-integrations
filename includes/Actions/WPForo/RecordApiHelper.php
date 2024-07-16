@@ -159,10 +159,31 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'You are posting too quickly. Slow down.', 'code' => 400];
         }
 
-        $topicid = WPF()->topic->add($args);
+        $topicId = WPF()->topic->add($args);
 
-        if ($topicid) {
-            return ['success' => true, 'message' => 'New topic created, topic id: ' . $topicid];
+        if ($topicId) {
+            return ['success' => true, 'message' => 'New topic created, topic id: ' . $topicId];
+        }
+
+        return ['success' => false, 'message' => 'Something went wrong!'];
+    }
+
+    public function deleteTopic($finalData, $selectedTopic)
+    {
+        if (empty($selectedTopic) && empty($finalData['topic_id'])) {
+            return ['success' => false, 'message' => 'Topic id is required!', 'code' => 400];
+        }
+
+        if (!empty($selectedTopic)) {
+            $topic = $selectedTopic;
+        } else {
+            $topic = $finalData['topic_id'];
+        }
+
+        $topicId = WPF()->topic->delete($topic, true, false);
+
+        if ($topicId) {
+            return ['success' => true, 'message' => 'Topic deleted successfully'];
         }
 
         return ['success' => false, 'message' => 'Something went wrong!'];
@@ -195,9 +216,13 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedTask, $selectedReputation, $selectedGroup, $topicOptions)
+    public function execute($fieldValues, $fieldMap, $selectedTask, $selectedReputation, $selectedGroup, $topicOptions, $selectedTopic)
     {
-        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        if (isset($fieldMap[0]) && empty($fieldMap[0]->formField)) {
+            $finalData = [];
+        } else {
+            $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        }
 
         $type = $typeName = '';
 
@@ -217,6 +242,10 @@ class RecordApiHelper
             $response = $this->createTopic($finalData, $topicOptions);
             $type = 'Topic';
             $typeName = 'Create Topic';
+        } elseif ($selectedTask === 'deleteTopic') {
+            $response = $this->deleteTopic($finalData, $selectedTopic);
+            $type = 'Topic';
+            $typeName = 'Delete Topic';
         }
 
         if ($response['success']) {

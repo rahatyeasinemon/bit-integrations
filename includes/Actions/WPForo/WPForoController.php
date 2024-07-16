@@ -97,6 +97,26 @@ class WPForoController
         wp_send_json_success($forumsOptions, 200);
     }
 
+    public function getTopics()
+    {
+        self::checkedWPForoExists();
+
+        $topics = WPF()->topic->get_topics();
+
+        if (empty($topics)) {
+            wp_send_json_error(__('No topics found!', 'bit-integrations'), 400);
+        }
+
+        foreach ($topics as $topic) {
+            $topicList[] = (object) [
+                'label' => $topic['title'],
+                'value' => (string) $topic['topicid']
+            ];
+        }
+
+        wp_send_json_success($topicList, 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         self::checkedWPForoExists();
@@ -110,6 +130,7 @@ class WPForoController
         $selectedForum = $integrationDetails->selectedForum;
         $selectedTags = $integrationDetails->selectedTags;
         $actions = $integrationDetails->actions;
+        $selectedTopic = $integrationDetails->selectedTopic;
 
         if (empty($fieldMap) || empty($selectedTask)
         || ($selectedTask === 'userReputation' && empty($selectedReputation))
@@ -125,7 +146,7 @@ class WPForoController
         ];
 
         $recordApiHelper = new RecordApiHelper($integId);
-        $wpforoResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $selectedReputation, $selectedGroup, $topicOptions);
+        $wpforoResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $selectedReputation, $selectedGroup, $topicOptions, $selectedTopic);
 
         if (is_wp_error($wpforoResponse)) {
             return $wpforoResponse;
