@@ -19,3 +19,6 @@ Route::post('selesforce_case_origin', [SalesforceController::class, 'selesforceC
 Route::post('selesforce_case_type', [SalesforceController::class, 'selesforceCaseType']);
 Route::post('selesforce_case_reason', [SalesforceController::class, 'selesforceCaseReason']);
 Route::post('selesforce_case_status', [SalesforceController::class, 'selesforceCaseStatus']);
+Route::post('selesforce_case_priority', [SalesforceController::class, 'selesforceCasePriority']);
+Route::post('selesforce_case_potential_liability', [SalesforceController::class, 'selesforceCasePotentialLiability']);
+Route::post('selesforce_case_sla_violation', [SalesforceController::class, 'selesforceCaseSLAViolation']);
