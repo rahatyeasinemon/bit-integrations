@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\Salesforce;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -239,18 +239,14 @@ class RecordApiHelper
             $actionsData['Status'] = empty($integrationDetails->actions->caseStatusId) ? null : $integrationDetails->actions->caseStatusId;
             $actionsData['Origin'] = empty($integrationDetails->actions->caseOriginId) ? null : $integrationDetails->actions->caseOriginId;
             $actionsData['Priority'] = empty($integrationDetails->actions->casePriorityId) ? null : $integrationDetails->actions->casePriorityId;
+            $actionsData['Reason'] = empty($integrationDetails->actions->caseReason) ? null : $integrationDetails->actions->caseReason;
+            $actionsData['Type'] = empty($integrationDetails->actions->caseType) ? null : $integrationDetails->actions->caseType;
             $actionsData['PotentialLiability__c'] = empty($integrationDetails->actions->potentialLiabilityId) ? null : $integrationDetails->actions->potentialLiabilityId;
             $actionsData['SLAViolation__c'] = empty($integrationDetails->actions->slaViolationId) ? null : $integrationDetails->actions->slaViolationId;
-            $data['finalData'] = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
 
-            if (!empty($integrationDetails->actions->caseReason)) {
-                $finalData['Reason'] = $integrationDetails->actions->caseReason;
-            }
-            if (!empty($integrationDetails->actions->caseType)) {
-                $finalData['Type'] = $integrationDetails->actions->caseType;
-            }
-
+            $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $createCaseResponse = $this->createCase($finalData, $actionsData);
+
             if (\is_object($createCaseResponse) && property_exists($createCaseResponse, 'id')) {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Case', 'type_name' => 'Case-create']), 'success', wp_json_encode("Created case id is : {$createCaseResponse->id}"));
             } else {
