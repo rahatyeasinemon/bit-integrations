@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\MailChimp;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -44,7 +44,7 @@ class RecordApiHelper
             $endpoint = $this->_apiEndPoint() . "/lists/{$listId}/members/{$subscriber_hash}/tags";
 
             $response = apply_filters('btcbi_mailchimp_add_remove_tag', $module, $data, $endpoint, $this->_defaultHeader);
-            
+
             if (\is_string($response) && $response == $module) {
                 return (object) ['status' => 400, 'message' => $msg];
             }
@@ -92,9 +92,9 @@ class RecordApiHelper
         }
 
         if (isset($recordApiResponse->status) && ($recordApiResponse->status === 400 || $recordApiResponse->status === 404)) {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', json_encode($recordApiResponse));
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', wp_json_encode($recordApiResponse));
         } else {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', json_encode($recordApiResponse));
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', wp_json_encode($recordApiResponse));
         }
 
         return $recordApiResponse;
