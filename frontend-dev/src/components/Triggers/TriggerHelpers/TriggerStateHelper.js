@@ -55,6 +55,8 @@ export const FormPluginStateHelper = (val, tmpNewFlow, resp, setNewFlow) => {
     fluentBookingStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else if (tmpNewFlow?.triggered_entity === 'SureMembers') {
     SureMembersStateFP(val, tmpNewFlow, resp, setNewFlow)
+  } else if (tmpNewFlow?.triggered_entity === 'WPForo') {
+    wpForoStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else {
     setNewFlow(tmpNewFlow)
   }
@@ -103,10 +105,52 @@ export const fluentBookingStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   }
   setNewFlow(tmpNewFlow)
 }
+
 export const SureMembersStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   if (val) {
     tmpNewFlow.triggerData.groups = resp.data.groups
   }
+  setNewFlow(tmpNewFlow)
+}
+
+export const wpForoStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
+  if (val === 'wpforo-1') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      forums: resp.data.forums,
+      selectedForum: 'any'
+    }
+  }
+
+  if (
+    val === 'wpforo-2' ||
+    val === 'wpforo-3' ||
+    val === 'wpforo-4' ||
+    val === 'wpforo-5' ||
+    val === 'wpforo-6' ||
+    val === 'wpforo-11'
+  ) {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      topics: resp.data.topics,
+      selectedTopic: 'any'
+    }
+  }
+
+  if (
+    val === 'wpforo-7' ||
+    val === 'wpforo-8' ||
+    val === 'wpforo-9' ||
+    val === 'wpforo-10' ||
+    val === 'wpforo-12'
+  ) {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      users: resp.data.users,
+      selectedUser: 'any'
+    }
+  }
+
   setNewFlow(tmpNewFlow)
 }
 
@@ -376,6 +420,40 @@ export const SureMembersStateIH = (tmpConf, flowData, triggered_entity_id) => {
   if (formId) {
     tmpConf.selectedGroup = flowData.selectedGroup
     tmpConf.groups = flowData.groups
+  }
+
+  return tmpConf
+}
+
+export const wpForoStateIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id
+
+  if (formId === 'wpforo-1') {
+    tmpConf.selectedForum = flowData.selectedForum
+    tmpConf.forums = flowData.forums
+  }
+
+  if (
+    formId === 'wpforo-2' ||
+    formId === 'wpforo-3' ||
+    formId === 'wpforo-4' ||
+    formId === 'wpforo-5' ||
+    formId === 'wpforo-6' ||
+    formId === 'wpforo-11'
+  ) {
+    tmpConf.selectedTopic = flowData.selectedTopic
+    tmpConf.topics = flowData.topics
+  }
+
+  if (
+    formId === 'wpforo-7' ||
+    formId === 'wpforo-8' ||
+    formId === 'wpforo-9' ||
+    formId === 'wpforo-10' ||
+    formId === 'wpforo-12'
+  ) {
+    tmpConf.selectedUser = flowData.selectedUser
+    tmpConf.users = flowData.users
   }
 
   return tmpConf

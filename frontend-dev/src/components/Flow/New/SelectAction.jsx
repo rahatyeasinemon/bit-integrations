@@ -159,11 +159,14 @@ export default function SelectAction() {
     { type: 'Newsletter' },
     { type: 'SureMembers' },
     { type: 'Mailster' },
+    { type: 'WPForo' }
   ]
 
-  const [availableIntegs, setAvailableIntegs] = useState(sortByField(integs, 'type', 'ASC') || integs)
+  const [availableIntegs, setAvailableIntegs] = useState(
+    sortByField(integs, 'type', 'ASC') || integs
+  )
   const organizeIntegs = () => {
-    const bitformIndex = availableIntegs.findIndex(i => i.type === 'Bit Form')
+    const bitformIndex = availableIntegs.findIndex((i) => i.type === 'Bit Form')
     if (bitformIndex === -1) return availableIntegs
     const bitformData = availableIntegs[bitformIndex]
     availableIntegs.splice(bitformIndex, 1)
@@ -174,7 +177,9 @@ export default function SelectAction() {
 
   const searchInteg = (e) => {
     const { value } = e.target
-    const filtered = integs.filter((integ) => integ.type.toLowerCase().includes(value.toLowerCase()))
+    const filtered = integs.filter((integ) =>
+      integ.type.toLowerCase().includes(value.toLowerCase())
+    )
     setAvailableIntegs(filtered)
   }
 
@@ -205,10 +210,16 @@ export default function SelectAction() {
           &nbsp;Back
         </button>
         <h2 className="mt-0">Please select a Action</h2>
-        <input type="search" className="btcd-paper-inp w-5 mb-3" onChange={searchInteg} placeholder="Search Actions..." style={{ height: '50%' }} autoFocus />
+        <input
+          type="search"
+          className="btcd-paper-inp w-5 mb-3"
+          onChange={searchInteg}
+          placeholder="Search Actions..."
+          style={{ height: '50%' }}
+          autoFocus
+        />
       </div>
       <div className="btcd-inte-wrp txt-center">
-
         <div className="flx flx-center flx-wrp pb-3">
           {allOrganizeIntegs.map((inte, i) => (
             <div
@@ -217,18 +228,19 @@ export default function SelectAction() {
               onKeyPress={() => !inte.disable && !inte.pro && setAction(inte.type)}
               role="button"
               tabIndex="0"
-              className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && !inte.pro && 'btcd-inte-dis'} ${inte.pro && 'btcd-inte-pro'}`}
-            >
+              className={`btcd-inte-card inte-sm mr-4 mt-3 ${inte.disable && !inte.pro && 'btcd-inte-dis'} ${inte.pro && 'btcd-inte-pro'}`}>
               {inte.pro && (
                 <div className="pro-filter">
-                  <span className="txt-pro"><a href="https://www.bitapps.pro" target="_blank" rel="noreferrer">{__('Premium', 'bit-integrations')}</a></span>
+                  <span className="txt-pro">
+                    <a href="https://www.bitapps.pro" target="_blank" rel="noreferrer">
+                      {__('Premium', 'bit-integrations')}
+                    </a>
+                  </span>
                 </div>
               )}
               {/* <img loading="lazy" src={inte.logo} alt="" /> */}
               <GetLogo name={inte.type} extension="webp" />
-              <div className="txt-center">
-                {inte.type}
-              </div>
+              <div className="txt-center">{inte.type}</div>
             </div>
           ))}
         </div>

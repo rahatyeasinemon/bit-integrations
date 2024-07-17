@@ -30,7 +30,8 @@ import {
   postStateIH,
   tutorlmsStateIH,
   wooCommerceStateIH,
-  wpCoursewareStateIH
+  wpCoursewareStateIH,
+  wpForoStateIH
 } from '../../Triggers/TriggerHelpers/TriggerStateHelper'
 import c from 'react-multiple-select-dropdown-lite'
 
@@ -152,6 +153,9 @@ export const saveIntegConfig = async (
   } else if (flow.triggered_entity === 'ARMember') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = ARMemberStateIH(tmpConf, dataFlow)
+  } else if (flow.triggered_entity === 'WPForo') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = wpForoStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (
     flow.triggered_entity === 'ActionHook' ||
     flow.triggered_entity === 'Spectra' ||
@@ -281,6 +285,12 @@ export const saveActionConf = async ({
   } else if (flow.triggered_entity === 'LearnDash') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = learndashStateIH(tmpConf, dataFlow)
+  } else if (flow.triggered_entity === 'GamiPress') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = GamiPressStateIH(tmpConf, dataFlow)
+  } else if (flow.triggered_entity === 'Affiliate') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = affiliateStateIH(tmpConf, dataFlow)
   } else if (flow.triggered_entity === 'BuddyBoss') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = buddybossStateIH(tmpConf, dataFlow)
@@ -296,9 +306,6 @@ export const saveActionConf = async ({
   } else if (flow.triggered_entity === 'JetEngine') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = jetEngineStateIH(tmpConf, dataFlow)
-  } else if (flow.triggered_entity === 'Affiliate') {
-    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
-    tmpConf = affiliateStateIH(tmpConf, dataFlow)
   } else if (flow.triggered_entity === 'Memberpress') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = memberpressStateIH(tmpConf, dataFlow)
@@ -332,6 +339,9 @@ export const saveActionConf = async ({
   } else if (flow.triggered_entity === 'ARMember') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = ARMemberStateIH(tmpConf, dataFlow)
+  } else if (flow.triggered_entity === 'WPForo') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = wpForoStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (
     flow.triggered_entity === 'ActionHook' ||
     flow.triggered_entity === 'Spectra' ||

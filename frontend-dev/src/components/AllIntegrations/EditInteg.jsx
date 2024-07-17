@@ -137,7 +137,9 @@ const EditAutomatorWP = lazy(() => import('./AutomatorWP/EditAutomatorWP'))
 const EditUncannyAutomator = lazy(() => import('./UncannyAutomator/EditUncannyAutomator'))
 const EditThriveAutomator = lazy(() => import('./ThriveAutomator/EditThriveAutomator'))
 const EditWPWebhooks = lazy(() => import('./WPWebhooks/EditWPWebhooks'))
-const EditAdvancedFormIntegration = lazy(() => import('./AdvancedFormIntegration/EditAdvancedFormIntegration'))
+const EditAdvancedFormIntegration = lazy(
+  () => import('./AdvancedFormIntegration/EditAdvancedFormIntegration')
+)
 const EditPerfexCRM = lazy(() => import('./PerfexCRM/EditPerfexCRM'))
 const EditSureTriggers = lazy(() => import('./SureTriggers/EditSureTriggers'))
 const EditOneHashCRM = lazy(() => import('./OneHashCRM/EditOneHashCRM'))
@@ -153,19 +155,20 @@ const EditZagoMail = lazy(() => import('./ZagoMail/EditZagoMail'))
 const EditNewsletter = lazy(() => import('./Newsletter/EditNewsletter'))
 const EditSureMembers = lazy(() => import('./SureMembers/EditSureMembers'))
 const EditMailster = lazy(() => import('./Mailster/EditMailster'))
+const EditWPForo = lazy(() => import('./WPForo/EditWPForo'))
 
 const loaderStyle = {
   display: 'flex',
   height: '82vh',
   justifyContent: 'center',
-  alignItems: 'center',
+  alignItems: 'center'
 }
 
 export default function EditInteg({ allIntegURL }) {
   const { id } = useParams()
   const { data, isLoading, isError } = useFetch({
     payload: { id },
-    action: ['flow/get', id],
+    action: ['flow/get', id]
   })
   const [flow, setFlow] = useRecoilState($newFlow)
   const [actionConfig, setActionConfig] = useRecoilState($actionConf)
@@ -179,7 +182,7 @@ export default function EditInteg({ allIntegURL }) {
       if (data?.data?.integration?.fields?.length === 0) {
         setSnackbar({
           show: true,
-          msg: __('Trigger Form Is Deleted', 'bit-integrations'),
+          msg: __('Trigger Form Is Deleted', 'bit-integrations')
         })
       }
       setFlow(data.data?.integration)
@@ -198,7 +201,11 @@ export default function EditInteg({ allIntegURL }) {
   }
 
   if (!data.success) {
-    return <div style={loaderStyle}><h1 className="txt-center mt-5">{data?.data}</h1></div>
+    return (
+      <div style={loaderStyle}>
+        <h1 className="txt-center mt-5">{data?.data}</h1>
+      </div>
+    )
   }
   return (
     <div>
@@ -213,9 +220,7 @@ export default function EditInteg({ allIntegURL }) {
           <div>{__('Integration Settings', 'bit-integrations')}</div>
         </div>
       </div>
-      <Suspense
-        fallback={<Loader className="g-c" style={{ height: '82vh' }} />}
-      >
+      <Suspense fallback={<Loader className="g-c" style={{ height: '82vh' }} />}>
         {actionConfig && Object.keys(actionConfig).length && (
           <IntegType
             allIntegURL={allIntegURL}
@@ -244,7 +249,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditZohoRecruit allIntegURL={allIntegURL} />
     case 'Zoho Campaigns':
       return <EditZohoCampaigns allIntegURL={allIntegURL} />
-    case 'Zoho Marketing Hub': case 'Zoho Marketing Automation(Zoho Marketing Hub)':
+    case 'Zoho Marketing Hub':
+    case 'Zoho Marketing Automation(Zoho Marketing Hub)':
       return <EditZohoMarketingHub allIntegURL={allIntegURL} />
     case 'Zoho Bigin':
       return <EditZohoBigin allIntegURL={allIntegURL} />
@@ -258,7 +264,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditPod allIntegURL={allIntegURL} />
     case 'Mail Poet':
       return <EditMailPoet allIntegURL={allIntegURL} />
-    case 'SendinBlue': case 'Brevo(Sendinblue)':
+    case 'SendinBlue':
+    case 'Brevo(Sendinblue)':
       return <EditSendinBlue allIntegURL={allIntegURL} />
     case 'WooCommerce':
       return <EditWooCommerce allIntegURL={allIntegURL} />
@@ -282,7 +289,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditAntApps allIntegURL={allIntegURL} />
     case 'Integrately':
       return <EditIntegrately allIntegURL={allIntegURL} />
-    case 'Integromat': case 'Make(Integromat)':
+    case 'Integromat':
+    case 'Make(Integromat)':
       return <EditIntegromat allIntegURL={allIntegURL} />
     case 'Zoho Flow':
       return <EditZohoFlow allIntegURL={allIntegURL} />
@@ -450,7 +458,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditCustomApi allIntegURL={allIntegURL} />
     case 'Drip':
       return <EditDrip allIntegURL={allIntegURL} />
-    case 'Mailify': case 'Sarbacane(Mailify)':
+    case 'Mailify':
+    case 'Sarbacane(Mailify)':
       return <EditMailify allIntegURL={allIntegURL} />
     case 'Lemlist':
       return <EditLemlist allIntegURL={allIntegURL} />
@@ -520,6 +529,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditSureMembers allIntegURL={allIntegURL} />
     case 'Mailster':
       return <EditMailster allIntegURL={allIntegURL} />
+    case 'WPForo':
+      return <EditWPForo allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }
