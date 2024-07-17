@@ -14,3 +14,6 @@ yarn-error.log
 
 .php-cs-fixer.cache
 build-hash.txt
+
+.vscode/
+.gitattributes
