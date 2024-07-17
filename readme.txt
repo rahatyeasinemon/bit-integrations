@@ -109,6 +109,7 @@ https://youtu.be/eFuficjF_F4
 * [**WooCommerce**](https://wordpress.org/plugins/woocommerce/)
 * [**WP Courseware**](https://flyplugins.com/wp-courseware-wordpress-lms/)
 * [**WPForms**](https://wordpress.org/plugins/wpforms-lite/)
+* [**wpForo**](https://wordpress.org/plugins/wpforo/)
 * [**WPFunnels**](https://wordpress.org/plugins/wpfunnels/)
 * [**WS Form**](https://wordpress.org/plugins/ws-form/)
 * [**Webhooks**]()
@@ -246,6 +247,7 @@ https://youtu.be/eFuficjF_F4
 * [**WooCommerce**](https://wordpress.org/plugins/woocommerce/)
 * [**Woodpecker**](https://woodpecker.co/signup/?wpcr=jack15)
 * [**WP Courseware**](https://wordpress.org/plugins/woo-commerce-addon-for-wp-courseware/)
+* [**wpForo**](https://wpforo.com/)
 * [**WP Webhooks**](https://wordpress.org/plugins/wp-webhooks/)
 * [**Zapier**](https://zapier.com/)
 * [**Zendesk**](https://www.zendesk.com/)
@@ -880,6 +882,8 @@ With the pro version, you have the ability to create **Unlimited active** Please
 * [**Vbout**](https://bitapps.pro/docs/bit-integrations/trigger/vbout/)
 
 * [**Webhooks**](https://bitapps.pro/docs/bit-integrations/trigger/web-hooks/)
+
+* [**wpForo**](https://bitapps.pro/docs/bit-integrations/trigger/wpforo-integration/)
 
 * [**WhatsApp**](https://bitapps.pro/docs/bit-integrations/trigger/whatsapp/)
 
