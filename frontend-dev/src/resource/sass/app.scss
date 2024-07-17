@@ -434,7 +434,6 @@ input[type='checkbox'].disabled:checked:before {
   }
 }
 
-
 .green {
   background: #00f8a4;
   color: #022217;
@@ -5351,5 +5350,6 @@ _:-ms-fullscreen,
   padding: 5px 5px 0px 5px;
   max-width: 400px;
   display: inline-block;
-  word-break: break-all;
+  word-break: break-word;
+  text-align: justify;
 }

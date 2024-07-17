@@ -45,17 +45,30 @@ final class WCController
         if (!class_exists('WooCommerce')) {
             wp_send_json_error(__('WooCommerce is not installed or activated', 'bit-integrations'));
         }
-        $types = [
-            'Customer-Create', 'Customer-Edit', 'Customer-Delete', 'Product-Create', 'Product-Edit', 'Product-Delete', 'Order-Create', 'Order-Edit', 'Order-Delete', 'Order-Specific-Product', 'Order-Status-Change-Specific-Status', 'User-Subscribes-Product', 'User-Cancel-Subscription-Product', 'Expired-Subscription-Product', 'Subscription-Product-Status-Change', 'Subscription-Trial-Period-End', 'Order-Specific-Category', 'Booking-Created', 'User reviews a product',
-            'User purchases a variable product with selected variation'
+
+        $wc_action = [
+            (object) ['id' => 1, 'title' => 'Customer-Create'],
+            (object) ['id' => 2, 'title' => 'Customer-Edit'],
+            (object) ['id' => 3, 'title' => 'Customer-Delete'],
+            (object) ['id' => 4, 'title' => 'Product-Create'],
+            (object) ['id' => 5, 'title' => 'Product-Edit'],
+            (object) ['id' => 6, 'title' => 'Product-Delete'],
+            (object) ['id' => 7, 'title' => 'Order-Create', 'note' => 'Flexible Checkout Fields are a feature available in the Pro version.'],
+            (object) ['id' => 8, 'title' => 'Order-Edit', 'note' => 'Flexible Checkout Fields are a feature available in the Pro version.'],
+            (object) ['id' => 9, 'title' => 'Order-Delete', 'note' => 'Flexible Checkout Fields are a feature available in the Pro version.'],
+            (object) ['id' => 10, 'title' => 'Order-Specific-Product', 'note' => 'Flexible Checkout Fields are a feature available in the Pro version.'],
+            (object) ['id' => 11, 'title' => 'Order-Status-Change-Specific-Status', 'note' => 'Flexible Checkout Fields are a feature available in the Pro version.'],
+            (object) ['id' => 12, 'title' => 'User-Subscribes-Product'],
+            (object) ['id' => 13, 'title' => 'User-Cancel-Subscription-Product'],
+            (object) ['id' => 14, 'title' => 'Expired-Subscription-Product'],
+            (object) ['id' => 15, 'title' => 'Subscription-Product-Status-Change'],
+            (object) ['id' => 16, 'title' => 'Subscription-Trial-Period-End'],
+            (object) ['id' => 17, 'title' => 'Order-Specific-Category', 'note' => 'Flexible Checkout Fields are a feature available in the Pro version.'],
+            (object) ['id' => 18, 'title' => 'Booking-Created'],
+            (object) ['id' => 19, 'title' => 'User reviews a product'],
+            (object) ['id' => 20, 'title' => 'User purchases a variable product with selected variation', 'note' => 'Flexible Checkout Fields are a feature available in the Pro version.'],
         ];
-        $wc_action = [];
-        foreach ($types as $index => $type) {
-            $wc_action[] = (object) [
-                'id'    => $index + 1,
-                'title' => $type,
-            ];
-        }
+
         wp_send_json_success($wc_action);
     }
 
