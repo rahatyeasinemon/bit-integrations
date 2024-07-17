@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.5.5
 Requires PHP: 7.0
-Stable tag: 2.1.5
+Stable tag: 2.1.6
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 70+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -109,6 +109,7 @@ https://youtu.be/eFuficjF_F4
 * [**WooCommerce**](https://wordpress.org/plugins/woocommerce/)
 * [**WP Courseware**](https://flyplugins.com/wp-courseware-wordpress-lms/)
 * [**WPForms**](https://wordpress.org/plugins/wpforms-lite/)
+* [**wpForo**](https://wordpress.org/plugins/wpforo/)
 * [**WPFunnels**](https://wordpress.org/plugins/wpfunnels/)
 * [**WS Form**](https://wordpress.org/plugins/ws-form/)
 * [**Webhooks**]()
@@ -246,6 +247,7 @@ https://youtu.be/eFuficjF_F4
 * [**WooCommerce**](https://wordpress.org/plugins/woocommerce/)
 * [**Woodpecker**](https://woodpecker.co/signup/?wpcr=jack15)
 * [**WP Courseware**](https://wordpress.org/plugins/woo-commerce-addon-for-wp-courseware/)
+* [**wpForo**](https://wpforo.com/)
 * [**WP Webhooks**](https://wordpress.org/plugins/wp-webhooks/)
 * [**Zapier**](https://zapier.com/)
 * [**Zendesk**](https://www.zendesk.com/)
@@ -881,6 +883,8 @@ With the pro version, you have the ability to create **Unlimited active** Please
 
 * [**Webhooks**](https://bitapps.pro/docs/bit-integrations/trigger/web-hooks/)
 
+* [**wpForo**](https://bitapps.pro/docs/bit-integrations/trigger/wpforo-integration/)
+
 * [**WhatsApp**](https://bitapps.pro/docs/bit-integrations/trigger/whatsapp/)
 
 * [**WishList**](https://bitapps.pro/docs/bit-integrations/trigger/wishlist/)
@@ -973,6 +977,30 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.1.6  =
+_Release Date -17th July 2024_
+
+- **New Trigger :**
+  - wpForo Forum - #1 WordPress Forum Plugin (Pro)
+
+- **New Action :**
+  - wpForo Forum - #1 WordPress Forum Plugin
+  
+- **New Features :**
+  - WooCommerce (trigger): Flexible Checkout Fields for WooCommerce added (Pro)
+
+- **New Improvements :**
+  - Perfex CRM: Error Response handler imporved
+  - Salesforce: Case Status, Origin, Type & Reason action Api Improved
+  - Salesforce: Case Priority, SLA Violation & Potential Liability actions are dynamically functioned
+
+- **New Fixes :**
+  - Salesforce: Create Case mapped field issue fixed
+  - Ninja Forms: File Upload field type issue fixed (Pro)
+  - MasterStudy LMS (trigger): Integration update dependency issue fixed
+  - MasterStudy LMS (trigger): Quiz fetching by Course issue fixed (Pro)
+  - MasterStudy LMS (trigger): Lesson Complete trigger hook updated (Pro)
 
 = 2.1.5  =
 _Release Date -11th July 2024_

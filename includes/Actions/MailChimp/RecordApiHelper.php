@@ -6,10 +6,9 @@
 
 namespace BitCode\FI\Actions\MailChimp;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitApps\BTCBI_PRO\Actions\MailChimp\MailChimpRecordHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -39,15 +38,22 @@ class RecordApiHelper
 
     public function addRemoveTag($module, $listId, $data)
     {
-        if (Helper::pro_action_feat_exists('MailChimp', 'addRemoveTag')) {
+        $msg = 'Bit Integration Pro plugin is not installed or activate';
+        if (Helper::proActionFeatExists('MailChimp', 'addRemoveTag')) {
             $subscriber_hash = md5(strtolower(trim($data['email_address'])));
             $endpoint = $this->_apiEndPoint() . "/lists/{$listId}/members/{$subscriber_hash}/tags";
 
-            return MailChimpRecordHelper::addRemoveTag($module, $data, $endpoint, $this->_defaultHeader);
-        }
-        LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $module], 'error', 'Bit Integration Pro plugin is not installed or activate');
+            $response = apply_filters('btcbi_mailchimp_add_remove_tag', $module, $data, $endpoint, $this->_defaultHeader);
 
-        return (object) ['status' => 400, 'message' => 'Bit Integration Pro plugin is not installed or activate'];
+            if (\is_string($response) && $response == $module) {
+                return (object) ['status' => 400, 'message' => $msg];
+            }
+
+            return $response;
+        }
+        LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $module], 'error', $msg);
+
+        return (object) ['status' => 400, 'message' => $msg];
     }
 
     public function updateRecord($listId, $contactId, $data)
@@ -85,10 +91,10 @@ class RecordApiHelper
             $recordApiResponse = $this->addRemoveTag($module, $listId, $fieldData);
         }
 
-        if (isset($recordApiResponse->status) && $recordApiResponse->status === 400) {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', json_encode($recordApiResponse));
+        if (isset($recordApiResponse->status) && ($recordApiResponse->status === 400 || $recordApiResponse->status === 404)) {
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', wp_json_encode($recordApiResponse));
         } else {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', json_encode($recordApiResponse));
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', wp_json_encode($recordApiResponse));
         }
 
         return $recordApiResponse;

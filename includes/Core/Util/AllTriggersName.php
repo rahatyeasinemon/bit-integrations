@@ -43,6 +43,7 @@ final class AllTriggersName
             'LearnDash'         => ['name' => 'LearnDash LMS', 'isPro' => true, 'is_active' => false],
             'LifterLms'         => ['name' => 'LifterLMS', 'isPro' => true, 'is_active' => false],
             'MailPoet'          => ['name' => 'MailPoet', 'isPro' => true, 'is_active' => false],
+            'Mailster'          => ['name' => 'Mailster', 'isPro' => true, 'is_active' => false],
             'MasterStudyLms'    => ['name' => 'MasterStudyLms', 'isPro' => true, 'is_active' => false],
             'Memberpress'       => ['name' => 'Memberpress', 'isPro' => true, 'is_active' => false],
             'Met'               => ['name' => 'Met Form', 'isPro' => true, 'is_active' => false],
@@ -73,6 +74,7 @@ final class AllTriggersName
             'WeForms'           => ['name' => 'WeForms', 'isPro' => true, 'is_active' => false],
             'WPCourseware'      => ['name' => 'WP Courseware', 'isPro' => true, 'is_active' => false],
             'WPEF'              => ['name' => 'eForm', 'isPro' => true, 'is_active' => false],
+            'WPForo'            => ['name' => 'wpForo Forum', 'isPro' => true, 'is_active' => false],
             'WPFunnels'         => ['name' => 'WPFunnels', 'isPro' => true, 'is_active' => false],
             'WSForm'            => ['name' => 'WSForm', 'isPro' => true, 'is_active' => false],
         ];

@@ -247,6 +247,115 @@ export const getAllStatus = (
   })
 }
 
+export const getAllPriority = (
+  formID,
+  salesforceConf,
+  setSalesforceConf,
+  setIsLoading,
+  setSnackbar
+) => {
+  setIsLoading(true)
+  const campaignRequestParams = {
+    formID,
+    clientId: salesforceConf.clientId,
+    clientSecret: salesforceConf.clientSecret,
+    tokenDetails: salesforceConf.tokenDetails
+  }
+  const loadPostReasons = bitsFetch(campaignRequestParams, 'selesforce_case_priority').then(
+    (result) => {
+      if (result && result.success) {
+        setSalesforceConf((prevConf) =>
+          create(prevConf, (draftConf) => {
+            draftConf['casePriority'] = result.data
+          })
+        )
+        setIsLoading(false)
+        return 'Priority refreshed'
+      }
+      setIsLoading(false)
+      return 'Priority refresh failed. please try again'
+    }
+  )
+  toast.promise(loadPostReasons, {
+    success: (data) => data,
+    error: __('Error Occurred', 'bit-integrations'),
+    loading: __('Loading Priority...')
+  })
+}
+
+export const getAllPotentialLiability = (
+  formID,
+  salesforceConf,
+  setSalesforceConf,
+  setIsLoading,
+  setSnackbar
+) => {
+  setIsLoading(true)
+  const campaignRequestParams = {
+    formID,
+    clientId: salesforceConf.clientId,
+    clientSecret: salesforceConf.clientSecret,
+    tokenDetails: salesforceConf.tokenDetails
+  }
+  const loadPostReasons = bitsFetch(
+    campaignRequestParams,
+    'selesforce_case_potential_liability'
+  ).then((result) => {
+    if (result && result.success) {
+      setSalesforceConf((prevConf) =>
+        create(prevConf, (draftConf) => {
+          draftConf['casePotentialLiability'] = result.data
+        })
+      )
+      setIsLoading(false)
+      return 'Potential Liability refreshed'
+    }
+    setIsLoading(false)
+    return 'Potential Liability refresh failed. please try again'
+  })
+  toast.promise(loadPostReasons, {
+    success: (data) => data,
+    error: __('Error Occurred', 'bit-integrations'),
+    loading: __('Loading Potential Liability...')
+  })
+}
+
+export const getAllSLAViolation = (
+  formID,
+  salesforceConf,
+  setSalesforceConf,
+  setIsLoading,
+  setSnackbar
+) => {
+  setIsLoading(true)
+  const campaignRequestParams = {
+    formID,
+    clientId: salesforceConf.clientId,
+    clientSecret: salesforceConf.clientSecret,
+    tokenDetails: salesforceConf.tokenDetails
+  }
+  const loadPostReasons = bitsFetch(campaignRequestParams, 'selesforce_case_sla_violation').then(
+    (result) => {
+      if (result && result.success) {
+        setSalesforceConf((prevConf) =>
+          create(prevConf, (draftConf) => {
+            draftConf['caseSLAViolation'] = result.data
+          })
+        )
+        setIsLoading(false)
+        return 'SLA Violation refreshed'
+      }
+      setIsLoading(false)
+      return 'SLA Violation refresh failed. please try again'
+    }
+  )
+  toast.promise(loadPostReasons, {
+    success: (data) => data,
+    error: __('Error Occurred', 'bit-integrations'),
+    loading: __('Loading SLA Violation...')
+  })
+}
+
 // export const getAllLeadList = (formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar) => {
 //   setIsLoading(true)
 //   const campaignRequestParams = {

@@ -26,7 +26,7 @@ const MasterStudyLmsHelper = ({ flow, setFlowData, edit = false }) => {
 
   return (
     <>
-    {(id === '1' || id === '3') && (
+      {(id === '1' || id === '3') && (
         <div className={edit ? 'flx mt-3' : ''}>
           <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select a Course</b>
           <MultiSelect
@@ -60,19 +60,19 @@ const MasterStudyLmsHelper = ({ flow, setFlowData, edit = false }) => {
       )}
       {(id === '4' || id === '5') && (
         <div className={edit ? 'flx mt-3' : ''}>
-        <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select a Course</b>
-        <MultiSelect
-          className="msl-wrp-options"
-          defaultValue={triggerData?.selectedCourse}
-          options={triggerData?.allCourse?.map((list) => ({
-            label: list.title,
-            value: list.id.toString(),
-          }))}
-          onChange={(val) => setFlowDataDepend(val, 'selectedCourse')}
-          singleSelect
-          style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
-        />
-      </div>
+          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select a Course</b>
+          <MultiSelect
+            className="msl-wrp-options"
+            defaultValue={triggerData?.selectedCourse}
+            options={triggerData?.allCourse?.map((list) => ({
+              label: list.title,
+              value: list.id.toString(),
+            }))}
+            onChange={(val) => setFlowDataDepend(val, 'selectedCourse')}
+            singleSelect
+            style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
+          />
+        </div>
       )}
       {(id === '4' || id === '5') && (
         <div className={edit ? 'flx mt-3' : ''}>
