@@ -2,6 +2,8 @@
 
 namespace BitCode\FI\Triggers\WC;
 
+use BitCode\FI\Core\Util\Helper;
+
 class WCStaticFields
 {
     public static function getWCOrderFields($id)
@@ -66,7 +68,11 @@ class WCStaticFields
 
     private static function getFlexibleCheckoutFields()
     {
-        return apply_filters('btcbi_woocommerce_flexible_checkout_fields', []);
+        if (Helper::proActionFeatExists('WC', 'getFlexibleCheckoutFields')) {
+            return apply_filters('btcbi_woocommerce_flexible_checkout_fields', []);
+        }
+
+        return [];
     }
 
     private static function checkoutBasicFields()

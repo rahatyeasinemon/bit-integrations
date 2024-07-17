@@ -2,6 +2,7 @@
 
 namespace BitCode\FI\Triggers\WC;
 
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Flow\Flow;
 use WC_Booking;
 use WC_Checkout;
@@ -1061,7 +1062,7 @@ final class WCController
                 $acfFields = acf_get_fields($group['ID']);
 
                 foreach ($acfFields as $field) {
-                    $itemData[$field['_name']] = get_post_meta($product_id, $field['_name'])[0];
+                    $itemData[$field['_name']] = get_post_meta($product_id, $field['_name'])[0] ?? null;
                 }
             }
 
@@ -1098,6 +1099,11 @@ final class WCController
                     $data[$field['name']] = $fields[$field['name']];
                 }
             }
+        }
+
+        if (Helper::proActionFeatExists('WC', 'getFlexibleCheckoutFieldsValue')) {
+            $flexibleFields = apply_filters('btcbi_woocommerce_flexible_checkout_fields_value', $fields);
+            $data = array_merge($data, $flexibleFields);
         }
 
         for ($i = 7; $i <= 17; $i++) {

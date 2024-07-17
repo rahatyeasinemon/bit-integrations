@@ -2,11 +2,11 @@
 
 namespace BitCode\FI\Core\Util;
 
+use BitCode\FI\Triggers\TriggerController;
 use DateTime;
+use Exception;
 use stdClass;
 use WP_Error;
-use Exception;
-use BitCode\FI\Triggers\TriggerController;
 
 /**
  * bit-integration helper class
