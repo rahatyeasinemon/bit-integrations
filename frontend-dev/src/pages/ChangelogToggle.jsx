@@ -1,4 +1,3 @@
-
 import { Suspense, useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { $btcbi } from '../GlobalStates'
@@ -12,139 +11,159 @@ import Loader from '../components/Loaders/Loader'
 import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 
 export default function ChangelogToggle() {
-    const [btcbi, setBtcbi] = useRecoilState($btcbi)
-    const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
-    const [showAnalyticsOptin, setShowAnalyticsOptin] = useState([])
-    const currentChangelog = '2.1.0'
-    const currenChangelog = changelogInfo[currentChangelog]
-    const [loading, setLoading] = useState('')
+  const [btcbi, setBtcbi] = useRecoilState($btcbi)
+  const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
+  const [showAnalyticsOptin, setShowAnalyticsOptin] = useState([])
+  const currentChangelog = '2.1.0'
+  const currenChangelog = changelogInfo[currentChangelog]
+  const [loading, setLoading] = useState('')
 
-    const setChangeLogVersion = (val) => {
-        setShow(val)
-        if (!val) {
-            bitsFetch({
-                version: btcbi.version,
-            }, 'changelog_version')
-                .then(() => {
-                    setBtcbi(prevBtcbi => ({ ...prevBtcbi, changelogVersion: prevBtcbi.version }))
-                })
-        }
+  const setChangeLogVersion = (val) => {
+    setShow(val)
+    if (!val) {
+      bitsFetch(
+        {
+          version: btcbi.version
+        },
+        'changelog_version'
+      ).then(() => {
+        setBtcbi((prevBtcbi) => ({ ...prevBtcbi, changelogVersion: prevBtcbi.version }))
+      })
     }
+  }
 
-    const handleSubmit = () => {
-        bitsFetch({ isChecked: true }, 'analytics/optIn')
-        setShow(false)
+  const handleSubmit = () => {
+    bitsFetch({ isChecked: true }, 'analytics/optIn')
+    setShow(false)
+  }
+
+  const [isChecked, setIsChecked] = useState(true)
+
+  const closeModal = () => {
+    setShow(false)
+    setChangeLogVersion()
+  }
+
+  useEffect(() => {
+    if (show) {
+      setLoading(true)
+      bitsFetch({}, 'analytics/check', '', 'GET').then((res) => {
+        setShowAnalyticsOptin(res.data)
+        setLoading(false)
+      })
     }
+  }, [show])
 
-    const [isChecked, setIsChecked] = useState(true)
+  return (
+    <div className="changelog-toggle">
+      <button
+        title={"What's New"}
+        type="button"
+        className="changelog-btn"
+        onClick={() => setShow(true)}>
+        <ChangelogIcn size={25} />
+      </button>
+      <Modal
+        sm
+        show={show}
+        setModal={setChangeLogVersion}
+        closeIcon={showAnalyticsOptin}
+        style={{ position: `absolute`, top: `60px`, left: `50%`, transform: `translateX(-50%)` }}>
+        {loading ? (
+          <Loader
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 45,
+              transform: 'scale(0.5)'
+            }}
+          />
+        ) : (
+          <div className="changelog">
+            <div className="flx flx-col flx-center whats-new">
+              <h3>What's New in {btcbi.version}?</h3>
+              <small className="date">
+                Updated at: <b>17th July 2024</b>
+              </small>
+            </div>
+            <div className="changelog-content">
+              <span className="new-integration">
+                <b>New Trigger</b>
+              </span>
 
-    const closeModal = () => {
-        setShow(false)
-        setChangeLogVersion()
-    }
+              <div className="integration-list">
+                <ul>
+                  <li>wpForo Forum - #1 WordPress Forum Plugin (Pro)</li>
+                </ul>
+              </div>
 
-    useEffect(() => {
-        if (show) {
-            setLoading(true)
-            bitsFetch(
-                {},
-                'analytics/check',
-                '',
-                'GET',
-            ).then((res) => {
-                setShowAnalyticsOptin(res.data)
-                setLoading(false)
-            })
-        }
-    }, [show])
+              <span className="new-integration">
+                <b>New Action</b>
+              </span>
 
+              <div className="integration-list">
+                <ul>
+                  <li>wpForo Forum - #1 WordPress Forum Plugin</li>
+                </ul>
+              </div>
 
-    return (
+              <span className="new-feature">
+                <b>New Features</b>
+              </span>
 
-        <div className="changelog-toggle">
-            <button
-                title={('What\'s New')}
-                type="button"
-                className="changelog-btn"
-                onClick={() => setShow(true)}
-            >
-                <ChangelogIcn size={25} />
-            </button>
-            <Modal sm show={show} setModal={setChangeLogVersion} closeIcon={showAnalyticsOptin} 
-            style={{position: `absolute`,top: `60px`, left: `50%`,transform: `translateX(-50%)`}}
-            >
-                {
-                    loading
-                        ? (
-                            <Loader style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                height: 45,
-                                transform: 'scale(0.5)',
-                            }}
-                            />
-                        ) : (
-                            <div className='changelog'>
-                                <div className="flx flx-col flx-center whats-new">
-                                    <h3>What's New in {btcbi.version}?</h3>
-                                    <small className='date'>Updated at: <b>11th July 2024</b></small>
-                                </div>
-                                <div className='changelog-content'>
-                                    {/* <span className='new-integration' ><b>New Features</b></span>
-
-                                    <div className='integration-list'>
-                                        <ul>
-                                            <li>FreshSales: Upsert Record Action added (Pro)</li>
-                                        </ul>
-                                    </div> */}
-
-                                    <span className='new-feature' ><b>New Fixes</b></span>
-
-                                    <div className='integration-list'>
-                                        <ul>
-                                        <li>Webhook: Test Webhook execute issue fixed </li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <span className='footer'>{__('For more details,')}</span>
-                                        <a href="https://bitapps.pro/docs/bit-integrations/free-changelogs/" target="_blank" rel="noreferrer">
-                                            {__('Click here ')}
-                                            <ExternalLinkIcn size="14" />
-                                        </a>
-                                    </div>
-                                </div>
-                                {!showAnalyticsOptin &&
-                                    <div>
-                                        <div className='btcd-hr mt-2'></div>
-                                        <div className="flx flx-col flx-center">
-                                            <h4 className='mt-2 mb-0'>Opt-In For Plugin Improvement</h4>
-                                        </div>
-                                        <div className='m-2 txt-sm'>
-                                            Accept and continue to share usage data to help us improve the plugin, the plugin will still function if you skip.
-                                            <br />
-                                            <a className='app-link-active' target='blank' href='https://bitapps.pro/terms-of-service/'>Click here to see terms</a>
-                                        </div>
-                                        <button
-                                            type="button"
-                                            className="btn round btn-md gray gray-sh"
-                                            onClick={() => closeModal()}
-                                        >
-                                            Skip
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="btn round btcd-btn-lg purple purple-sh submit-btn"
-                                            onClick={() => handleSubmit()
-                                            }
-                                        >
-                                            Accept and continue
-                                        </button>
-                                    </div>
-                                }
-
-                            </div >)}
-            </Modal >
-        </div >
-    )
+              <div className="feature-list">
+                <ul>
+                  <li>
+                    WooCommerce (trigger): Flexible Checkout Fields for WooCommerce added (Pro)
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <span className="footer">{__('For more details,')}</span>
+                <a
+                  href="https://bitapps.pro/docs/bit-integrations/free-changelogs/"
+                  target="_blank"
+                  rel="noreferrer">
+                  {__('Click here ')}
+                  <ExternalLinkIcn size="14" />
+                </a>
+              </div>
+            </div>
+            {!showAnalyticsOptin && (
+              <div>
+                <div className="btcd-hr mt-2"></div>
+                <div className="flx flx-col flx-center">
+                  <h4 className="mt-2 mb-0">Opt-In For Plugin Improvement</h4>
+                </div>
+                <div className="m-2 txt-sm">
+                  Accept and continue to share usage data to help us improve the plugin, the plugin
+                  will still function if you skip.
+                  <br />
+                  <a
+                    className="app-link-active"
+                    target="blank"
+                    href="https://bitapps.pro/terms-of-service/">
+                    Click here to see terms
+                  </a>
+                </div>
+                <button
+                  type="button"
+                  className="btn round btn-md gray gray-sh"
+                  onClick={() => closeModal()}>
+                  Skip
+                </button>
+                <button
+                  type="button"
+                  className="btn round btcd-btn-lg purple purple-sh submit-btn"
+                  onClick={() => handleSubmit()}>
+                  Accept and continue
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </Modal>
+    </div>
+  )
 }
