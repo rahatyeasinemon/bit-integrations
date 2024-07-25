@@ -490,7 +490,7 @@ class RecordApiHelper
             }
 
             foreach ($fieldData as $key => $value) {
-                $order->update_meta_data('_' . $key, $value);
+                $order->update_meta_data('_' . $key, sanitize_text_field( wp_unslash( $value ) ));
             }
 
             $order->calculate_totals();
