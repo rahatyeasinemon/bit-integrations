@@ -489,12 +489,11 @@ class RecordApiHelper
                 $order->apply_coupon($fieldData['coupon_code']);
             }
 
-            $order->calculate_totals();
-
             foreach ($fieldData as $key => $value) {
                 $order->update_meta_data('_' . $key, $value);
             }
 
+            $order->calculate_totals();
             $order->save();
 
             if (is_wp_error($order) || !$order) {
