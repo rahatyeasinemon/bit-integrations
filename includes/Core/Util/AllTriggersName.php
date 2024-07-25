@@ -65,6 +65,7 @@ final class AllTriggersName
             'Spectra'           => ['name' => 'Spectra', 'isPro' => true, 'is_active' => false],
             'StudioCart'        => ['name' => 'StudioCart', 'isPro' => true, 'is_active' => false],
             'SureCart'          => ['name' => 'SureCart', 'isPro' => true, 'is_active' => false],
+            'SureForms'         => ['name' => 'SureForms', 'isPro' => true, 'is_active' => false],
             'SureMembers'       => ['name' => 'SureMembers', 'isPro' => true, 'is_active' => false],
             'ThriveApprentice'  => ['name' => 'ThriveApprentice', 'isPro' => true, 'is_active' => false],
             'Tripetto'          => ['name' => 'Tripetto', 'isPro' => true, 'is_active' => false],
