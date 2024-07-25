@@ -6,6 +6,8 @@
 
 namespace BitCode\FI\Actions\WooCommerce;
 
+use BitCode\FI\Core\Util\Helper;
+
 class WooCommerceMetaFields
 {
     public static function metaBoxFields($module)
@@ -57,9 +59,13 @@ class WooCommerceMetaFields
         $metaBoxOrder = static::metaBoxFields($module);
         $metaBoxCustomer = static::metaBoxFields('customer');
 
-        $fieldsOrder = array_merge(WooCommerceStaticFields::checkoutBasicFields(), $metaBoxOrder['meta_fields']);
+        $fieldsOrder = array_merge(WooCommerceStaticFields::checkoutBasicFields(), static::getFlexibleCheckoutFields(), $metaBoxOrder['meta_fields']);
         $fieldsCustomer = array_merge(WooCommerceStaticFields::customerFields(), $metaBoxCustomer['meta_fields']);
         $fieldLineItems = WooCommerceStaticFields::lineItemsFields();
+
+        uksort($fieldsOrder, 'strnatcasecmp');
+        uksort($fieldsCustomer, 'strnatcasecmp');
+        uksort($fieldLineItems, 'strnatcasecmp');
 
         $requiredCustomerFields = ['user_login', 'user_email'];
         $requiredLineItemFields = ['sku', 'quantity'];
@@ -82,5 +88,24 @@ class WooCommerceMetaFields
         ];
 
         return [$responseOrder, $responseCustomer, $responseLine];
+    }
+
+    private static function getFlexibleCheckoutFields()
+    {
+        if (Helper::proActionFeatExists('WC', 'getFlexibleCheckoutFields')) {
+            $checkoutFields = [];
+            $fields = apply_filters('btcbi_woocommerce_flexible_checkout_fields', []);
+
+            foreach ($fields as $field) {
+                $checkoutFields[$field->fieldName] = (object) [
+                    'fieldKey'  => $field->fieldKey,
+                    'fieldName' => $field->fieldName
+                ];
+            }
+
+            return $checkoutFields;
+        }
+
+        return [];
     }
 }

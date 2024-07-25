@@ -10,7 +10,7 @@ class WooCommerceStaticFields
 {
     public static function checkoutBasicFields()
     {
-        $fields = [
+        return [
             'customer_note' => (object) [
                 'fieldKey'  => 'customer_note',
                 'fieldName' => 'Customer Note'
@@ -105,15 +105,11 @@ class WooCommerceStaticFields
                 'fieldName' => 'Coupon Code'
             ],
         ];
-
-        uksort($fields, 'strnatcasecmp');
-
-        return $fields;
     }
 
     public static function customerFields()
     {
-        $fields = [
+        return [
             'First Name' => (object) [
                 'fieldKey'  => 'first_name',
                 'fieldName' => 'First Name'
@@ -237,15 +233,11 @@ class WooCommerceStaticFields
                 'fieldName' => 'Shipping State'
             ],
         ];
-
-        uksort($fields, 'strnatcasecmp');
-
-        return $fields;
     }
 
     public static function lineItemsFields()
     {
-        $fields = [
+        return [
             'Product Name' => (object) [
                 'fieldKey'  => 'name',
                 'fieldName' => 'Product Name',
@@ -283,9 +275,5 @@ class WooCommerceStaticFields
                 'fieldName' => 'Line Total'
             ],
         ];
-
-        uksort($fields, 'strnatcasecmp');
-
-        return $fields;
     }
 }
