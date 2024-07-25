@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\WooCommerce;
 
-use BitCode\FI\Log\LogHandler;
-use WC_Product_Download;
 use WP_Error;
+use WC_Product_Download;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert.
@@ -490,6 +490,11 @@ class RecordApiHelper
             }
 
             $order->calculate_totals();
+
+            foreach ($fieldData as $key => $value) {
+                $order->update_meta_data('_' . $key, $value);
+            }
+
             $order->save();
 
             if (is_wp_error($order) || !$order) {
