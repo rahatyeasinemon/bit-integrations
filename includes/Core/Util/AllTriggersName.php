@@ -15,6 +15,7 @@ final class AllTriggersName
             'BitAssist'         => ['name' => 'Bit  Assist', 'isPro' => true, 'is_active' => false],
             'Breakdance'        => ['name' => 'Breakdance', 'isPro' => true, 'is_active' => false],
             'Bricks'            => ['name' => 'Bricks', 'isPro' => true, 'is_active' => false],
+            'Bricksforge'       => ['name' => 'Bricksforge', 'isPro' => true, 'is_active' => false],
             'Brizy'             => ['name' => 'Brizy', 'isPro' => true, 'is_active' => false],
             'BuddyBoss'         => ['name' => 'BuddyBoss', 'isPro' => true, 'is_active' => false],
             'CartFlow'          => ['name' => 'CartFlow', 'isPro' => true, 'is_active' => false],
