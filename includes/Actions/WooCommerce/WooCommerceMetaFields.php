@@ -67,7 +67,7 @@ class WooCommerceMetaFields
         $flexibleCheckoutFields = static::getFlexibleCheckoutFields();
 
         $fieldsOrder = array_merge($checkoutFields, $billingFields, $ShippingFields, $flexibleCheckoutFields, $metaBoxOrder['meta_fields']);
-        $fieldsCustomer = array_merge($customerFields, $billingFields, $ShippingFields, $flexibleCheckoutFields, $metaBoxOrder['meta_fields']);
+        $fieldsCustomer = array_merge($customerFields, $billingFields, $ShippingFields, $flexibleCheckoutFields, $metaBoxCustomer['meta_fields']);
 
         uksort($fieldsOrder, 'strnatcasecmp');
         uksort($fieldsCustomer, 'strnatcasecmp');
