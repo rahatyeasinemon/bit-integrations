@@ -24,7 +24,8 @@ const CustomTrigger = () => {
   const { api } = useRecoilValue($btcbi)
   const [showResponse, setShowResponse] = useState(false)
   const fetchIntervalRef = useRef(0)
-
+  let controller = new AbortController()
+  const signal = controller.signal
 
   const triggerAbeleHook = `do_action(
     'bit_integrations_custom_trigger',
@@ -35,7 +36,7 @@ const CustomTrigger = () => {
     const tmpNewFlow = { ...newFlow }
     tmpNewFlow.triggerData = {
       formID: hookID,
-      fields: tmpNewFlow.triggerDetail.data,
+      fields: tmpNewFlow.triggerDetail.data
     }
     tmpNewFlow.triggered_entity_id = hookID
     setFields(tmpNewFlow.triggerDetail.data)
@@ -47,70 +48,99 @@ const CustomTrigger = () => {
       setHookID(newFlow.triggerDetail?.hook_id)
       window.hook_id = newFlow.triggerDetail?.hook_id
     } else {
-      bitsFetch({ hook_id: hookID }, 'custom_trigger/new', null, 'get').then(
-        (resp) => {
+      bitsFetch({ hook_id: hookID }, 'custom_trigger/new', null, 'get', signal)
+        .then((resp) => {
           if (resp.success) {
+            controller.abort()
             setHookID(resp.data.hook_id)
             window.hook_id = resp.data.hook_id
           }
-        },
-      )
+        })
+        .catch((err) => {
+          if (err.name === 'AbortError') {
+            console.log('AbortError: Fetch request aborted')
+          }
+        })
     }
     return () => {
-      bitsFetch({ hook_id: window.hook_id }, 'custom_trigger/test/remove').then(
-        (resp) => {
+      bitsFetch({ hook_id: window.hook_id }, 'custom_trigger/test/remove', null, 'post', signal)
+        .then((resp) => {
+          controller.abort()
           delete window.hook_id
-        },
-      )
+        })
+        .catch((err) => {
+          if (err.name === 'AbortError') {
+            console.log('AbortError: Fetch request aborted')
+          }
+        })
+      controller.abort()
       clearInterval(fetchIntervalRef.current)
     }
   }, [])
 
-
   const handleFetch = () => {
     setIsLoading(true)
     fetchIntervalRef.current = setInterval(() => {
-      bitsFetch({ hook_id: hookID }, 'custom_trigger/test').then((resp) => {
-        if (resp.success) {
-          clearInterval(fetchIntervalRef.current)
-          const tmpNewFlow = { ...newFlow }
-          const data = resp.data.custom_trigger
+      bitsFetch({ hook_id: hookID }, 'custom_trigger/test', null, 'post', signal)
+        .then((resp) => {
+          if (resp.success) {
+            controller.abort()
+            clearInterval(fetchIntervalRef.current)
+            const tmpNewFlow = { ...newFlow }
+            const data = resp.data.custom_trigger
 
-          let convertedData = data && Object.entries(data).reduce(
-            (outObj, item) => {
-              const [name, obj] = item
-              if (typeof obj === 'object' && obj !== null && obj !== undefined) {
-                const objArr = Object.entries(obj)
-                const inObj = objArr.reduce((out, [n, v]) => {
-                  const propName = `${name}_${n}`
+            let convertedData =
+              data &&
+              Object.entries(data).reduce((outObj, item) => {
+                const [name, obj] = item
+                if (typeof obj === 'object' && obj !== null && obj !== undefined) {
+                  const objArr = Object.entries(obj)
+                  const inObj = objArr.reduce((out, [n, v]) => {
+                    const propName = `${name}_${n}`
 
-                  return { ...out, [propName]: v }
-                }, {})
-                return { ...outObj, ...inObj }
-              }
-              return data
-            },
-            {},
-          )
+                    return { ...out, [propName]: v }
+                  }, {})
+                  return { ...outObj, ...inObj }
+                }
+                return data
+              }, {})
 
-          if (typeof resp.data.custom_trigger === 'object') {
-            convertedData = Object.keys(convertedData).map(fld => (
-              { name: fld, label: `${convertedData[fld]}-${fld}`, type: 'text' }
-            ))
+            if (typeof resp.data.custom_trigger === 'object') {
+              convertedData = Object.keys(convertedData).map((fld) => ({
+                name: fld,
+                label: `${convertedData[fld]}-${fld}`,
+                type: 'text'
+              }))
+            }
+
+            tmpNewFlow.triggerDetail.tmp = resp.data.custom_trigger
+            tmpNewFlow.triggerDetail.data = convertedData
+            tmpNewFlow.triggerDetail.hook_id = hookID
+            setNewFlow(tmpNewFlow)
+            setIsLoading(false)
+            setShowResponse(true)
+            bitsFetch(
+              { hook_id: window.hook_id, reset: true },
+              'custom_trigger/test/remove',
+              null,
+              'post',
+              signal
+            )
+              .then((resp) => {
+                controller.abort()
+              })
+              .catch((err) => {
+                if (err.name === 'AbortError') {
+                  console.log('AbortError: Fetch request aborted')
+                }
+              })
           }
-
-          tmpNewFlow.triggerDetail.tmp = resp.data.custom_trigger
-          tmpNewFlow.triggerDetail.data = convertedData
-          tmpNewFlow.triggerDetail.hook_id = hookID
-          setNewFlow(tmpNewFlow)
-          setIsLoading(false)
-          setShowResponse(true)
-          bitsFetch(
-            { hook_id: window.hook_id, reset: true },
-            'custom_trigger/test/remove',
-          )
-        }
-      })
+        })
+        .catch((err) => {
+          if (err.name === 'AbortError') {
+            console.log('AbortError: Fetch request aborted')
+          }
+        })
     }, 1500)
   }
 
@@ -137,60 +167,39 @@ const CustomTrigger = () => {
         className="flx mt-2"
         setSnackbar={setSnackbar}
         readOnly
-
-
       />
       <div className="flx flx-between">
         <button
           onClick={handleFetch}
           className="btn btcd-btn-lg purple sh-sm flx"
           type="button"
-          disabled={!hookID}
-        >
+          disabled={!hookID}>
           {newFlow.triggerDetail?.data
             ? __('Fetched ✔', 'bit-integrations')
             : __('Fetch', 'bit-integrations')}
-          {isLoading && (
-            <LoaderSm size="20" clr="#022217" className="ml-2" />
-          )}
+          {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
         </button>
         {newFlow.triggerDetail?.data && (
-          <button
-            onClick={showResponseTable}
-            className="btn btcd-btn-lg sh-sm flx"
-          >
+          <button onClick={showResponseTable} className="btn btcd-btn-lg sh-sm flx">
             <span className="txt-webhook-resbtn font-inter-500">
               {showResponse ? 'Hide Response' : 'View Response'}
             </span>
             {!showResponse ? (
-              <EyeIcn
-                width="20"
-                height="20"
-                strokeColor="#000000"
-              />
+              <EyeIcn width="20" height="20" strokeColor="#000000" />
             ) : (
-              <EyeOffIcn
-                width="20"
-                height="20"
-                strokeColor="#000000"
-              />
+              <EyeOffIcn width="20" height="20" strokeColor="#000000" />
             )}
           </button>
         )}
       </div>
       {showResponse && newFlow?.triggerDetail?.data && (
-        <WebhookDataTable
-          data={newFlow?.triggerDetail?.data}
-          flow={newFlow}
-          setFlow={setNewFlow}
-        />
+        <WebhookDataTable data={newFlow?.triggerDetail?.data} flow={newFlow} setFlow={setNewFlow} />
       )}
       <button
         onClick={setTriggerData}
         className="btn btcd-btn-lg purple sh-sm flx"
         type="button"
-        disabled={!newFlow.triggerDetail?.data}
-      >
+        disabled={!newFlow.triggerDetail?.data}>
         Set Action
       </button>
       <Note note={info} />
