@@ -13,16 +13,16 @@ import {
   getAllOrigin,
   getAllReason,
   getAllStatus,
-  getAllType
+  getAllType,
+  getAllPriority,
+  getAllPotentialLiability,
+  getAllSLAViolation
 } from './SalesforceCommonFunc'
 import {
   eventSubject,
   opportunityLeadSource,
   opportunityStage,
-  opportunityType,
-  casePriority,
-  potentialLiability,
-  slaViolation
+  opportunityType
 } from './SalesforceDataStore'
 
 export default function SalesforceActions({
@@ -74,6 +74,12 @@ export default function SalesforceActions({
       getAllReason(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
     } else if (modelName === 'caseStatus') {
       getAllStatus(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
+    } else if (modelName === 'casePriority') {
+      getAllPriority(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
+    } else if (modelName === 'potentialLiability') {
+      getAllPotentialLiability(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
+    } else if (modelName === 'slaViolation') {
+      getAllSLAViolation(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
     }
 
     setActionMdl({ show: modelName })
@@ -549,7 +555,7 @@ export default function SalesforceActions({
                 )
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': '"Refresh Campaign"' }}
+              style={{ '--tooltip-txt': '"Refresh Contact"' }}
               type="button"
               disabled={isLoading}>
               &#x21BB;
@@ -625,8 +631,8 @@ export default function SalesforceActions({
               onChange={(e) => actionHandler(e.target.value, 'caseStatusId')}>
               <option value="">{__('Select Case status', 'bit-integrations')}</option>
               {salesforceConf?.caseStatus?.map((item, key) => (
-                <option key={key} value={item}>
-                  {item}
+                <option key={key} value={item.value}>
+                  {item.label}
                 </option>
               ))}
             </select>
@@ -673,8 +679,8 @@ export default function SalesforceActions({
               onChange={(e) => actionHandler(e.target.value, 'caseOriginId')}>
               <option value="">{__('Select Case Origin', 'bit-integrations')}</option>
               {salesforceConf?.caseOrigins?.map((item, key) => (
-                <option key={key} value={item}>
-                  {item}
+                <option key={key} value={item.value}>
+                  {item.label}
                 </option>
               ))}
             </select>
@@ -720,12 +726,22 @@ export default function SalesforceActions({
               className="btcd-paper-inp"
               onChange={(e) => actionHandler(e.target.value, 'casePriorityId')}>
               <option value="">{__('Select Case Priority', 'bit-integrations')}</option>
-              {casePriority.map((item) => (
-                <option key={item.value} value={item.value}>
+              {salesforceConf?.casePriority?.map((item, key) => (
+                <option key={key} value={item.value}>
                   {item.label}
                 </option>
               ))}
             </select>
+            <button
+              onClick={() =>
+                getAllPriority(formID, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
+              }
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': '"Refresh Case Priority"' }}
+              type="button"
+              disabled={isLoading}>
+              &#x21BB;
+            </button>
           </div>
         )}
       </ConfirmModal>
@@ -758,12 +774,28 @@ export default function SalesforceActions({
               className="btcd-paper-inp"
               onChange={(e) => actionHandler(e.target.value, 'potentialLiabilityId')}>
               <option value="">{__('Select Case potential liability', 'bit-integrations')}</option>
-              {potentialLiability.map((item) => (
-                <option key={item.value} value={item.value}>
+              {salesforceConf?.casePotentialLiability?.map((item, key) => (
+                <option key={key} value={item.value}>
                   {item.label}
                 </option>
               ))}
             </select>
+            <button
+              onClick={() =>
+                getAllPotentialLiability(
+                  formID,
+                  salesforceConf,
+                  setSalesforceConf,
+                  setIsLoading,
+                  setSnackbar
+                )
+              }
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': '"Refresh potential liability"' }}
+              type="button"
+              disabled={isLoading}>
+              &#x21BB;
+            </button>
           </div>
         )}
       </ConfirmModal>
@@ -796,12 +828,28 @@ export default function SalesforceActions({
               className="btcd-paper-inp"
               onChange={(e) => actionHandler(e.target.value, 'slaViolationId')}>
               <option value="">{__('Select Case SLA violation', 'bit-integrations')}</option>
-              {potentialLiability.map((item) => (
-                <option key={item.value} value={item.value}>
+              {salesforceConf?.caseSLAViolation?.map((item, key) => (
+                <option key={key} value={item.value}>
                   {item.label}
                 </option>
               ))}
             </select>
+            <button
+              onClick={() =>
+                getAllSLAViolation(
+                  formID,
+                  salesforceConf,
+                  setSalesforceConf,
+                  setIsLoading,
+                  setSnackbar
+                )
+              }
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': '"Refresh SLA Violation"' }}
+              type="button"
+              disabled={isLoading}>
+              &#x21BB;
+            </button>
           </div>
         )}
       </ConfirmModal>
@@ -907,8 +955,8 @@ export default function SalesforceActions({
               onChange={(e) => actionHandler(e.target.value, 'caseType')}>
               <option value="">{__('Select type', 'bit-integrations')}</option>
               {salesforceConf?.caseTypes?.map((item, key) => (
-                <option key={key} value={item}>
-                  {item}
+                <option key={key} value={item.value}>
+                  {item.label}
                 </option>
               ))}
             </select>
@@ -953,8 +1001,8 @@ export default function SalesforceActions({
               onChange={(e) => actionHandler(e.target.value, 'caseReason')}>
               <option value="">{__('Select Reason', 'bit-integrations')}</option>
               {salesforceConf?.caseReasons?.map((item, key) => (
-                <option key={key} value={item}>
-                  {item}
+                <option key={key} value={item.value}>
+                  {item.label}
                 </option>
               ))}
             </select>

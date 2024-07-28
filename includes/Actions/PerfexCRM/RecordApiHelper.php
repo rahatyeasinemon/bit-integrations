@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\PerfexCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -176,7 +176,7 @@ class RecordApiHelper
             $apiResponse = $this->addProject($finalData);
         }
 
-        if ($apiResponse->status) {
+        if (!empty($apiResponse->status)) {
             $res = [$this->typeName . '  successfully'];
             LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', wp_json_encode($res));
         } else {
