@@ -55,6 +55,7 @@ final class AllTriggersName
             'PiotnetAddon'      => ['name' => 'PiotnetAddon', 'isPro' => true, 'is_active' => false],
             'PiotnetAddonForm'  => ['name' => 'PiotnetAddonForm', 'isPro' => true, 'is_active' => false],
             'PiotnetForms'      => ['name' => 'Piotnet Forms', 'isPro' => true, 'is_active' => false],
+            'PopupMaker'        => ['name' => 'Popup Maker', 'isPro' => true, 'is_active' => false],
             'Post'              => ['name' => 'Post', 'isPro' => true, 'is_active' => false],
             'Rafflepress'       => ['name' => 'Rafflepress', 'isPro' => true, 'is_active' => false],
             'Rafflepress'       => ['name' => 'Rafflepress', 'isPro' => true, 'is_active' => false],
