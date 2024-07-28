@@ -1714,7 +1714,8 @@ input[type=checkbox]:focus, input[type=color]:focus, input[type=date]:focus, inp
 }
 button:disabled {
   cursor: not-allowed;
-  background: $light-purple !important;
+  background: rgb(195, 194, 194) !important;
+  color:#ffffff;
   opacity: 50% ;
   // box-shadow: 0 0 0 1px $purple !important;
   outline: 2px solid transparent !important;
