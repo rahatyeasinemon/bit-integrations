@@ -86,7 +86,7 @@ class WebHooksController
 
         $cleanURL = "{$Scheme}{$Usr}{$Pass}{$Host}{$Port}{$Path}";
         $params = [];
-        foreach (explode('&', $Query) as $keyValue) {
+        foreach (explode('&', (string) $Query) as $keyValue) {
             if (empty($keyValue)) {
                 continue;
             }
