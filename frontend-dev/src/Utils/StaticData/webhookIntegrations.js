@@ -9,5 +9,5 @@ export const webhookIntegrations = [
   'FluentSupport'
 ]
 
-export const customFormIntegrations = ['Breakdance', 'Elementor', 'Kadence', 'Divi']
+export const customFormIntegrations = ['Breakdance', 'Elementor', 'Kadence', 'Divi', 'SiteOriginWidgets', 'Bricksforge']
 export const actionHookIntegrations = ['ActionHook']

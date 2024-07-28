@@ -90,7 +90,7 @@ class RecordApiHelper
         }
 
         $existUser = get_user_by('email', $fieldDataCustomer['user_email']);
-        if (\in_array('customer', (array) $existUser->roles)) {
+        if (isset($existUser->roles) && \in_array('customer', (array) $existUser->roles)) {
             return $existUser->ID;
         }
 
@@ -483,10 +483,18 @@ class RecordApiHelper
 
             $order->set_address($billingAddress, 'billing');
             $order->set_address($shippingAddress, 'shipping');
-            $order->set_customer_note($fieldData['customer_note']);
+            if (isset($fieldData['customer_note'])) {
+                $order->set_customer_note($fieldData['customer_note']);
+            }
 
             if (isset($fieldData['coupon_code'])) {
                 $order->apply_coupon($fieldData['coupon_code']);
+            }
+
+            foreach ($fieldData as $key => $value) {
+                if (strpos($key, 'shipping_') != 0 && strpos($key, 'billing_') != 0) {
+                    $order->update_meta_data('_' . $key, sanitize_text_field(wp_unslash($value)));
+                }
             }
 
             $order->calculate_totals();

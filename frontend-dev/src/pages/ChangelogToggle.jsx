@@ -84,7 +84,7 @@ export default function ChangelogToggle() {
             <div className="flx flx-col flx-center whats-new">
               <h3>What's New in {btcbi.version}?</h3>
               <small className="date">
-                Updated at: <b>17th July 2024</b>
+                Updated at: <b>28th July 2024</b>
               </small>
             </div>
             <div className="changelog-content">
@@ -94,17 +94,8 @@ export default function ChangelogToggle() {
 
               <div className="integration-list">
                 <ul>
-                  <li>wpForo Forum - #1 WordPress Forum Plugin (Pro)</li>
-                </ul>
-              </div>
-
-              <span className="new-integration">
-                <b>New Action</b>
-              </span>
-
-              <div className="integration-list">
-                <ul>
-                  <li>wpForo Forum - #1 WordPress Forum Plugin</li>
+                  <li>SureForms (Pro)</li>
+                  <li>Bricksforge (Pro)</li>
                 </ul>
               </div>
 
@@ -115,7 +106,7 @@ export default function ChangelogToggle() {
               <div className="feature-list">
                 <ul>
                   <li>
-                    WooCommerce (trigger): Flexible Checkout Fields for WooCommerce added (Pro)
+                  WooCommerce (action): Order modules Flexible Checkout Fields for WooCommerce added (Pro)
                   </li>
                 </ul>
               </div>
