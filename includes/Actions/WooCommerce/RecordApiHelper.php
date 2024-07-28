@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\WooCommerce;
 
-use WP_Error;
-use WC_Product_Download;
 use BitCode\FI\Log\LogHandler;
+use WC_Product_Download;
+use WP_Error;
 
 /**
  * Provide functionality for Record insert,upsert.
@@ -483,14 +483,16 @@ class RecordApiHelper
 
             $order->set_address($billingAddress, 'billing');
             $order->set_address($shippingAddress, 'shipping');
-            $order->set_customer_note($fieldData['customer_note']);
+            if (isset($fieldData['customer_note'])) {
+                $order->set_customer_note($fieldData['customer_note']);
+            }
 
             if (isset($fieldData['coupon_code'])) {
                 $order->apply_coupon($fieldData['coupon_code']);
             }
 
             foreach ($fieldData as $key => $value) {
-                $order->update_meta_data('_' . $key, sanitize_text_field( wp_unslash( $value ) ));
+                $order->update_meta_data('_' . $key, sanitize_text_field(wp_unslash($value)));
             }
 
             $order->calculate_totals();
