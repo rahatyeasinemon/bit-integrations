@@ -2,9 +2,9 @@
 Contributors: bitpressadmin
 Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
-Tested up to: 6.5.5
+Tested up to: 6.6.1
 Requires PHP: 7.0
-Stable tag: 2.1.6
+Stable tag: 2.1.7
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 70+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -50,6 +50,7 @@ https://youtu.be/eFuficjF_F4
 * [**ARMember**](https://wordpress.org/plugins/armember-membership/)
 * [**Beaver Builder**](https://wordpress.org/plugins/beaver-builder-lite-version/)
 * [**Bricks**](https://wordpress.org/plugins/bricksable/)
+* [**Bricksforge**](https://bricksforge.io/)
 * [**BuddyBoss**](https://www.buddyboss.com/)
 * [**Brizy**](https://wordpress.org/plugins/brizy/)
 * [**Breakdance**](https://breakdance.com/)
@@ -100,6 +101,7 @@ https://youtu.be/eFuficjF_F4
 * [**Solid Affiliate**](https://solidaffiliate.com/)
 * [**Spectra**](https://wordpress.org/plugins/ultimate-addons-for-gutenberg/)
 * [**SureCart**](https://wordpress.org/plugins/surecart/)
+* [**SureForms**](https://wordpress.org/plugins/sureforms/)
 * [**SureMembers**](https://suremembers.com/)
 * [**Tripetto**](https://wordpress.org/plugins/tripetto/)
 * [**Tutor LMS**](https://wordpress.org/plugins/tutor/)
@@ -322,12 +324,6 @@ I’ve been using the pro version to automate many tasks from Gravity Forms, Res
 
 -by @onedogsolutions
 
-[` 💠 Great Product and Great Support!!`](https://wordpress.org/support/topic/great-product-and-great-support-54/)
-Tech Support for Bit Integrations just helped me resolve a difficulty I was having getting started. The process of setting up an integration couldn’t be simpler but my Formidable Form wasn’t updating my WooCommerce Product. It turned out that I was doing the Formidable Form update in the Dashboard rather than in Preview mode. Support couldn’t have been nicer about working through discovering the problem.
-Not only am I a fan of the support, I’ve become a big fan of the integration product. What could be better, transparent synching of my Formidable Form with WooCommerce with absolutely minimal resource usage, just when I need to add or modify a Product. Perfect!
-
--by @jamesmarnell
-
 
 [` 💠 Pure Automation at Play!`](https://wordpress.org/support/topic/pure-automation-at-play/)
 
@@ -349,9 +345,10 @@ My typical use-case: Adding WooCommerce orders to Gsheets and then sending the l
 
 ### ✨ [**Bit Integrations Pro Version Features**](https://www.bitapps.pro/bit-integrations/) :
 
-Free version allows you to use all available actions and triggers,
-but you are limited to one active integration.
-With the pro version, you have the ability to create **Unlimited active** Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations/).
+Free version allows you to use all free triggers and all actions,
+also with unlimited active integrations.
+With the pro version, you have the ability to use all 210+ triggers and actions for unlimited active integrations.
+Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations/).
 
 
 ### 💥 Don't worry, we give you some video tutorials with use cases to help you get started with the plugin.
@@ -757,7 +754,7 @@ With the pro version, you have the ability to create **Unlimited active** Please
 
 * [**DirectIQ**](https://bitapps.pro/docs/bit-integrations/trigger/directiq/)
 
-* [**Drip**]()
+* [**Drip**](https://bitapps.pro/docs/bit-integrations/actions/drip-integrations/)
 
 * [**Dropbox**](https://bitapps.pro/docs/bit-integrations/trigger/dropbox/)
 
@@ -977,6 +974,25 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.1.7  =
+_Release Date -28th July 2024_
+
+- **New Trigger :**
+  - SureForms – Drag and Drop Form Builder for WordPress (Pro)
+  - Bricksforge – One Plugin. Countless Possibilities (Pro)
+  
+- **New Features :**
+  - WooCommerce (action): Order modules Flexible Checkout Fields for WooCommerce added (Pro)
+
+- **New Improvements :**
+  - Custom Trigger: Fetch data api improved
+  - MailPoet: Removed: All instances of deprecated \MailPoet\Models code.
+  - MailPoet: Updated: Replaced deprecated code with the MailPoet public API.
+
+- **New Fixes :**
+  - Hubspot: Actions value submission issue fixed
+  - WooCommerce: Undefined array key "customer_note" & is_internal_meta_key methods issue fixed
 
 = 2.1.6  =
 _Release Date -17th July 2024_

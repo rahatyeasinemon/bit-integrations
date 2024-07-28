@@ -16,10 +16,12 @@
 //$light-bg: #eaf0f7;
 // $bg: #f2f3f7;
 $purple: #7902f8;
+$light-purple: #6c11f9;
 // $purple: #7f57ef;
 $bdr-rad: 0px;
 $prim: #99e3ff;
 $blue: #0069ff;
+$green: #36fcb3;
 $light-purple-bg: #371f4a;
 $dp-purple: #391794;
 $dp-bg: #2a054f;
@@ -1532,6 +1534,22 @@ input[type='checkbox'].disabled:checked:before {
   border-radius: 8px;
 }
 
+input[type=radio]:checked::before {
+  content: "";
+  border-radius: 50%;
+  width: .5rem;
+  height: .5rem;
+  margin: .1875rem;
+  background-color: $purple !important;
+  line-height: 1.14285714;
+}
+
+input[type=checkbox]:focus, input[type=color]:focus, input[type=date]:focus, input[type=datetime-local]:focus, input[type=datetime]:focus, input[type=email]:focus, input[type=month]:focus, input[type=number]:focus, input[type=password]:focus, input[type=radio]:focus, input[type=search]:focus, input[type=tel]:focus, input[type=text]:focus, input[type=time]:focus, input[type=url]:focus, input[type=week]:focus, select:focus, textarea:focus {
+    border-color: $purple;
+    box-shadow: 0 0 0 1px $purple;
+    outline: 2px solid transparent;
+}
+
 .btn {
   display: inline-flex;
   color: white;
@@ -1693,6 +1711,14 @@ input[type='checkbox'].disabled:checked:before {
   font-weight: bold;
   padding: 5px 20px;
   height: 30px;
+}
+button:disabled {
+  cursor: not-allowed;
+  background: rgb(195, 194, 194) !important;
+  color:#ffffff;
+  opacity: 50% ;
+  // box-shadow: 0 0 0 1px $purple !important;
+  outline: 2px solid transparent !important;
 }
 
 .btn-lg {
@@ -2075,8 +2101,8 @@ nav.top-nav {
 }
 
 .icn-btn {
-  background: transparent;
-  color: $dp-purple;
+  background: #fffdfd;
+  color: #9736ff;
   position: relative;
   cursor: pointer;
   font-size: 20px;
@@ -2284,7 +2310,7 @@ nav.top-nav {
 .tooltip {
   &::after {
     display: block;
-    background: $dp-purple;
+    background: $purple;
     color: white;
     position: absolute;
     top: 110%;
@@ -5199,6 +5225,72 @@ _:-ms-fullscreen,
   .icn-btn {
     margin-right: 9%;
   }
+}
+
+.user-radio-input {
+  .auth-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .auth-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #f9f9f9;
+    position: relative;
+  }
+  
+  .auth-item.active {
+    border-color: purple;
+    background: #e0dff9;
+  }
+  
+  .auth-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .radio-input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .auth-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .user-name {
+    font-weight: bold;
+  }
+  
+  .user-email {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .delete-button {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: auto;
+  }  
 }
 
 .changelog-toggle {
