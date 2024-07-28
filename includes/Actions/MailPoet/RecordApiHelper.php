@@ -26,13 +26,13 @@ class RecordApiHelper
 
         try {
             // try to find if user is already a subscriber
-            $existing_subscriber = \MailPoet\Models\Subscriber::findOne($subscriber['email']);
+            $existing_subscriber = $mailpoet_api->getSubscriber($subscriber['email']);
             if (!$existing_subscriber) {
                 $response = $mailpoet_api->addSubscriber($subscriber, $lists);
                 $subscriber_id = $response['id'];
             } else {
-                $response = $mailpoet_api->subscribeToLists($existing_subscriber->id, $lists);
-                $subscriber_id = $existing_subscriber->id;
+                $response = $mailpoet_api->subscribeToLists($existing_subscriber['id'], $lists);
+                $subscriber_id = $existing_subscriber['id'];
             }
 
             $response = [
