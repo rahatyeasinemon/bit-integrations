@@ -54,6 +54,17 @@ class WooCommerceMetaFields
         return ['meta_fields' => $metaBoxFields, 'upload_fields' => $metaBoxUploadFields];
     }
 
+    public static function getProductModuleFields($module)
+    {
+        $metaBox = static::metaBoxFields($module);
+
+        return [
+            'fields'        => array_merge(WooCommerceStaticFields::productBasicFields(), $metaBox['meta_fields']),
+            'upload_fields' => array_merge(WooCommerceStaticFields::productUploadFields(), $metaBox['upload_fields']),
+            'required'      => ['post_title', '_sku']
+        ];
+    }
+
     public static function getOrderModuleFields($module)
     {
         $metaBoxOrder = static::metaBoxFields($module);
