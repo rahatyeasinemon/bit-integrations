@@ -60,8 +60,8 @@ class WooCommerceMetaFields
         $acfFields = static::getACFFields(['product']);
 
         return [
-            'fields'        => array_merge(WooCommerceStaticFields::productBasicFields(), $acfFields, $metaBox['meta_fields']),
-            'upload_fields' => array_merge(WooCommerceStaticFields::productUploadFields(), $metaBox['upload_fields']),
+            'fields'        => array_merge(WooCommerceStaticFields::productBasicFields(), $acfFields['fields'], $metaBox['meta_fields']),
+            'upload_fields' => array_merge(WooCommerceStaticFields::productUploadFields(), $acfFields['uploadFields'], $metaBox['upload_fields']),
             'required'      => ['post_title', '_sku']
         ];
     }
@@ -111,20 +111,31 @@ class WooCommerceMetaFields
     private static function getACFFields(array $types)
     {
         $fields = [];
+        $uploadFields = [];
+        $filterFile = ['file', 'image', 'gallery'];
         $acfFieldGroups = Helper::acfGetFieldGroups($types);
 
         foreach ($acfFieldGroups as $group) {
             $acfFields = acf_get_fields($group['ID']);
 
             foreach ($acfFields as $field) {
-                $fields[$field['label']] = (object) [
-                    'fieldKey'  => $field['_name'],
-                    'fieldName' => $field['label']
-                ];
+                if (\in_array($field['type'], $filterFile)) {
+                    $uploadFields[$field['label']] = (object) [
+                        'fieldKey'  => $field['_name'],
+                        'fieldName' => $field['label'],
+                        'required'  => $field['required'] == 1 ? true : false,
+                    ];
+                } else {
+                    $fields[$field['label']] = (object) [
+                        'fieldKey'  => $field['_name'],
+                        'fieldName' => $field['label'],
+                        'required'  => $field['required'] == 1 ? true : false,
+                    ];
+                }
             }
         }
 
-        return $fields;
+        return ['fields' => $fields, 'uploadFields' => $uploadFields];
     }
 
     private static function getFlexibleCheckoutFields()
