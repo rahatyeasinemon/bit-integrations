@@ -57,9 +57,10 @@ class WooCommerceMetaFields
     public static function getProductModuleFields($module)
     {
         $metaBox = static::metaBoxFields($module);
+        $acfFields = static::getACFFields(['product']);
 
         return [
-            'fields'        => array_merge(WooCommerceStaticFields::productBasicFields(), $metaBox['meta_fields']),
+            'fields'        => array_merge(WooCommerceStaticFields::productBasicFields(), $acfFields, $metaBox['meta_fields']),
             'upload_fields' => array_merge(WooCommerceStaticFields::productUploadFields(), $metaBox['upload_fields']),
             'required'      => ['post_title', '_sku']
         ];
@@ -105,6 +106,25 @@ class WooCommerceMetaFields
         ];
 
         return [$responseOrder, $responseCustomer, $responseLine];
+    }
+
+    private static function getACFFields(array $types)
+    {
+        $fields = [];
+        $acfFieldGroups = Helper::acfGetFieldGroups($types);
+
+        foreach ($acfFieldGroups as $group) {
+            $acfFields = acf_get_fields($group['ID']);
+
+            foreach ($acfFields as $field) {
+                $fields[$field['label']] = (object) [
+                    'fieldKey'  => $field['_name'],
+                    'fieldName' => $field['label']
+                ];
+            }
+        }
+
+        return $fields;
     }
 
     private static function getFlexibleCheckoutFields()
