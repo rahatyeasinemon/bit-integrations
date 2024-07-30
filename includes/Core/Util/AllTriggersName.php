@@ -37,6 +37,7 @@ final class AllTriggersName
             'Groundhogg'        => ['name' => 'Groundhogg', 'isPro' => true, 'is_active' => false],
             'gutenaForms'       => ['name' => 'Gutena Forms', 'isPro' => true, 'is_active' => false],
             'Happy'             => ['name' => 'Happy Forms', 'isPro' => true, 'is_active' => false],
+            'Hustle'            => ['name' => 'Hustle', 'isPro' => true, 'is_active' => false],
             'JetEngine'         => ['name' => 'JetEngine', 'isPro' => true, 'is_active' => false],
             'JetForm'           => ['name' => 'JetForm Builder', 'isPro' => true, 'is_active' => false],
             'Kadence'           => ['name' => 'Kadence Blocks Form', 'isPro' => true, 'is_active' => false],
