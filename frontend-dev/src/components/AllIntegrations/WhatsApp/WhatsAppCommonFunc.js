@@ -1,6 +1,6 @@
+import { create } from 'mutative'
 import bitsFetch from '../../../Utils/bitsFetch'
-import { deepCopy } from '../../../Utils/Helpers'
-import { sprintf, __ } from '../../../Utils/i18nwrap'
+import { __ } from '../../../Utils/i18nwrap'
 
 export const handleInput = (e, whatsAppConf, setWhatsAppConf) => {
   const newConf = { ...whatsAppConf }
@@ -44,6 +44,43 @@ export const handleAuthorize = (
   bitsFetch(requestParams, 'whats_app_authorization').then((result) => {
     setIsLoading(false)
     if (result && result.success) {
+      setIsAuthorized(true)
+      setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
+      return
+    }
+    setSnackbar({ show: true, msg: result?.data || __('Authorized failed', 'bit-integrations') })
+  })
+}
+
+export const getallTemplates = (confTmp, setConf, setIsLoading, setSnackbar) => {
+  if (!confTmp.numberID || !confTmp.businessAccountID || !confTmp.token) {
+    setError({
+      numberID: !confTmp.numberID
+        ? __("Phone number ID can't be empty or invalid", 'bit-integrations')
+        : '',
+      businessAccountID: !confTmp.businessAccountID
+        ? __("WhatsApp Business Account ID can't be empty or invalid", 'bit-integrations')
+        : '',
+      token: !confTmp.token ? __("Access Token can't be empty or invalid", 'bit-integrations') : ''
+    })
+    return
+  }
+
+  const requestParams = {
+    numberID: confTmp.numberID,
+    businessAccountID: confTmp.businessAccountID,
+    token: confTmp.token
+  }
+
+  setIsLoading(true)
+  bitsFetch(requestParams, 'whats_app_all_template').then((result) => {
+    setIsLoading(false)
+    if (result && result.success) {
+      setConf((prevConf) =>
+        create(prevConf, (draftConf) => {
+          draftConf['allTemplates'] = result.data
+        })
+      )
       setIsAuthorized(true)
       setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
       return

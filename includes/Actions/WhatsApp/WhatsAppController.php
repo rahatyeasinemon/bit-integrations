@@ -31,6 +31,21 @@ class WhatsAppController
         }
     }
 
+    public function getAllTemplate($requestParams)
+    {
+        static::checkValidation($requestParams);
+
+        $apiEndpoint = "{$this->baseUrl}{$requestParams->businessAccountID}/message_templates?limit=2";
+
+        $allTemplates = static::getTemplate($apiEndpoint, $requestParams->token);
+
+        if (is_wp_error($allTemplates)) {
+            wp_send_json_error(isset($allTemplates->error->message) ? $allTemplates->error->message : 'Template Fetching failed', 400);
+        } else {
+            wp_send_json_success($allTemplates, 200);
+        }
+    }
+
     /**
      * Save updated access_token to avoid unnecessary token generation
      *
@@ -66,6 +81,27 @@ class WhatsAppController
         }
 
         return $whatsAppApiResponse;
+    }
+
+    private static function getTemplate($apiEndpoint, $token)
+    {
+        $allTemplates = [];
+        $headers = static::setHeaders($token);
+        $response = HttpHelper::get($apiEndpoint, null, $headers);
+
+        if (is_wp_error($response) || !isset($response->data)) {
+            return $response;
+        }
+
+        foreach ($response->data as $template) {
+            $allTemplates[] = $template->name;
+        }
+
+        if (isset($response->paging->next)) {
+            $allTemplates = array_merge($allTemplates, static::getTemplate($response->paging->next, $token));
+        }
+
+        return $allTemplates;
     }
 
     private static function checkValidation($requestParams)
