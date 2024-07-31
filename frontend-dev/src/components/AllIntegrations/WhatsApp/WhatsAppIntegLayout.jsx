@@ -152,7 +152,7 @@ export default function WhatsAppIntegLayout({
       )}
       <br />
       <br />
-      {whatsAppConf?.messageTypeId === '2' && (
+      {/* {whatsAppConf?.messageTypeId === '2' && (
         <div className="flx mt-4">
           <b className="wdt-200 d-in-b">{__('Template Name: ', 'bit-integrations')}</b>
           <textarea
@@ -163,7 +163,7 @@ export default function WhatsAppIntegLayout({
             value={whatsAppConf.templateName}
           />
         </div>
-      )}
+      )} */}
     </>
   )
 }

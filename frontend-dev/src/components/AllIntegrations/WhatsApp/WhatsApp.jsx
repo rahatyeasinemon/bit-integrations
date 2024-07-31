@@ -51,8 +51,7 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
     setstep(3)
   }
 
-  const disabledButton =
-    whatsAppConf.messageTypeId === '1' ? whatsAppConf.body === '' : whatsAppConf.templateName === ''
+  const disabledButton = whatsAppConf.templateName === '' || checkMappedFields(whatsAppConf)
 
   return (
     <div>
