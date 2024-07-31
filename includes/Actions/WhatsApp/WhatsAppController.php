@@ -98,7 +98,8 @@ class WhatsAppController
         }
 
         if (isset($response->paging->next)) {
-            $allTemplates = array_merge($allTemplates, static::getTemplate($response->paging->next, $token));
+            $templates = static::getTemplate($response->paging->next, $token);
+            $allTemplates = array_merge($allTemplates, \is_array($templates) ? $templates : []);
         }
 
         return $allTemplates;

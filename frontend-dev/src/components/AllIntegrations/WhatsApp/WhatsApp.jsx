@@ -20,17 +20,13 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const whatsAppFields = [{ key: 'phone', label: 'Phone', required: true }]
-  const messageType = [
-    // { id: '1', label: 'Text' },
-    { id: '2', label: 'Template' }
-  ]
+  const messageTypes = [{ name: 'template', label: 'Template' }]
   const [whatsAppConf, setWhatsAppConf] = useState({
     name: 'WhatsApp',
     type: 'WhatsApp',
     numberID: process.env.NODE_ENV === 'development' ? '317160348154490' : '',
     businessAccountID: process.env.NODE_ENV === 'development' ? '101082419667133' : '',
-    messageType,
-    messageTypeId: '',
+    messageTypes,
     body: '',
     templateName: '',
     token:

@@ -1,79 +1,21 @@
-// import { useEffect } from 'react'
-// import { __ } from '../../../Utils/i18nwrap'
-// import Loader from '../../Loaders/Loader'
-// import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
-// // import TrelloActions from './TrelloActions'
-// // import { addFieldMap } from './IntegrationHelpers'
-// import WhatsAppFieldMap from './WhatsAppFieldMap'
-
-// export default function WhatsAppIntegLayout({ formFields, handleInput, whatsAppConf, setWhatsAppConf, isLoading, setIsLoading, setSnackbar }) {
-//   return (
-//     <>
-//       <b className="wdt-200 d-in-b">{__('Message Type:', 'bit-integrations')}</b>
-//       <select onChange={handleInput} name="messageTypeId" value={whatsAppConf.messageTypeId} className="btcd-paper-inp w-5">
-//         <option value="">{__('Select Message Type', 'bit-integrations')}</option>
-//         {
-//           whatsAppConf?.messageType.map(({ id, label }) => (
-//             <option key={id} value={id}>
-//               {label}
-//             </option>
-//           ))
-//         }
-//       </select>
-
-//       <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bit-integrations')}</b></div>
-//       <div className="btcd-hr mt-1" />
-//       <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-//         <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
-//         <div className="txt-dp"><b>{__('Trello Fields', 'bit-integrations')}</b></div>
-//       </div>
-
-//       {whatsAppConf?.field_map.map((itm, i) => (
-//         <WhatsAppFieldMap
-//           key={`rp-m-${i + 9}`}
-//           i={i}
-//           field={itm}
-//           whatsAppConf={whatsAppConf}
-//           formFields={formFields}
-//           setWhatsAppConf={setWhatsAppConf}
-//           setSnackbar={setSnackbar}
-//         />
-//       ))}
-//       <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(whatsAppConf.field_map.length, whatsAppConf, setWhatsAppConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
-
-//       <br />
-//       <br />
-//       <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
-//       <div className="btcd-hr mt-1" />
-//       {/* <TrelloActions
-//         whatsAppConf={whatsAppConf}
-//         setWhatsAppConf={setWhatsAppConf}
-//         formFields={formFields}
-//       /> */}
-
-//     </>
-//   )
-// }
-
+import { create } from 'mutative'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import TinyMCE from '../../Utilities/TinyMCE'
+import { getallTemplates } from './WhatsAppCommonFunc'
 import WhatsAppFieldMap from './WhatsAppFieldMap'
 
-export default function WhatsAppIntegLayout({ formFields, handleInput,
+export default function WhatsAppIntegLayout({
+  formFields,
+  handleInput,
   whatsAppConf,
   setWhatsAppConf,
   isLoading,
   setIsLoading,
-  setSnackbar }) {
-  // const handleInput = (e) => {
-  //   const newConf = { ...whatsAppConf }
-  //   newConf[e.target.name] = e.target.value
-  //   setWhatsAppConf(newConf)
-  // }
-
+  setSnackbar
+}) {
   const { id } = useParams()
 
   const setMessageBody = (val) => {
@@ -82,31 +24,67 @@ export default function WhatsAppIntegLayout({ formFields, handleInput,
     setWhatsAppConf(newConf)
   }
 
+  const setChange = (value, name) => {
+    setWhatsAppConf((prevConf) =>
+      create(prevConf, (draftConf) => {
+        draftConf[name] = value
+      })
+    )
+
+    if (name === 'messageType' && value === 'template') {
+      getallTemplates(whatsAppConf, setWhatsAppConf, setIsLoading, setSnackbar)
+    }
+  }
+
   return (
     <>
       <br />
       <div className="flx">
-        <b className="wdt-200 d-in-b">
-          {__('Message Type: ', 'bit-integrations')}
-        </b>
+        <b className="wdt-200 d-in-b">{__('Message Type: ', 'bit-integrations')}</b>
         <select
-          onChange={handleInput}
-          name="messageTypeId"
-          value={whatsAppConf.messageTypeId}
-          className="btcd-paper-inp w-5"
-        >
-          <option value="">
-            {__('Select Message Type', 'bit-integrations')}
-          </option>
-          {
-            whatsAppConf?.messageType.map(({ id, label }) => (
-              <option key={id} value={id}>
-                {label}
-              </option>
-            ))
-          }
+          onChange={(e) => setChange(e.target.value, 'messageType')}
+          name="messageType"
+          value={whatsAppConf?.messageType}
+          className="btcd-paper-inp w-5">
+          <option value="">{__('Select Message Type', 'bit-integrations')}</option>
+          {whatsAppConf?.messageTypes.map(({ name, label }) => (
+            <option key={name} value={name}>
+              {label}
+            </option>
+          ))}
         </select>
       </div>
+      {whatsAppConf.messageType === 'template' && whatsAppConf?.allTemplates && (
+        <>
+          <br />
+          <div className="flx">
+            <b className="wdt-200 d-in-b">{__('Select Template:', 'bit-integrations')}</b>
+            <select
+              onChange={(e) => setChange(e.target.value, 'templateName')}
+              name="templateName"
+              value={whatsAppConf?.templateName}
+              className="btcd-paper-inp w-5">
+              <option value="">{__('Select Template', 'bit-integrations')}</option>
+              {whatsAppConf?.allTemplates.map((templateName, key) => (
+                <option key={key} value={templateName}>
+                  {templateName}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={() =>
+                getallTemplates(whatsAppConf, setWhatsAppConf, setIsLoading, setSnackbar)
+              }
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh Template', 'bit-integrations')}'` }}
+              type="button"
+              disabled={isLoading}>
+              &#x21BB;
+            </button>
+          </div>
+        </>
+      )}
+
       {isLoading && (
         <Loader
           style={{
@@ -114,16 +92,22 @@ export default function WhatsAppIntegLayout({ formFields, handleInput,
             justifyContent: 'center',
             alignItems: 'center',
             height: 100,
-            transform: 'scale(0.7)',
+            transform: 'scale(0.7)'
           }}
         />
       )}
       <br />
-      <div className="mt-5"><b className="wdt-100">{__('Field Map', 'bit-integrations')}</b></div>
+      <div className="mt-5">
+        <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
+      </div>
       <div className="btcd-hr mt-1" />
       <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-        <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
-        <div className="txt-dp"><b>{__('WhatsApp Fields', 'bit-integrations')}</b></div>
+        <div className="txt-dp">
+          <b>{__('Form Fields', 'bit-integrations')}</b>
+        </div>
+        <div className="txt-dp">
+          <b>{__('WhatsApp Fields', 'bit-integrations')}</b>
+        </div>
       </div>
       <br />
 
@@ -140,9 +124,7 @@ export default function WhatsAppIntegLayout({ formFields, handleInput,
       ))}
       {whatsAppConf?.messageTypeId === '2' && (
         <div>
-          <b className="wdt-200 d-in-b mr-16 mb-4 mt-4">
-            {__('Messages: ', 'bit-integrations')}
-          </b>
+          <b className="wdt-200 d-in-b mr-16 mb-4 mt-4">{__('Messages: ', 'bit-integrations')}</b>
           {/* <textarea
               className="w-7"
               onChange={handleInput}
@@ -172,9 +154,7 @@ export default function WhatsAppIntegLayout({ formFields, handleInput,
       <br />
       {whatsAppConf?.messageTypeId === '2' && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">
-            {__('Template Name: ', 'bit-integrations')}
-          </b>
+          <b className="wdt-200 d-in-b">{__('Template Name: ', 'bit-integrations')}</b>
           <textarea
             className="w-5"
             onChange={handleInput}
