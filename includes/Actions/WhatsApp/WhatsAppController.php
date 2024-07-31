@@ -14,90 +14,22 @@ use WP_Error;
  */
 class WhatsAppController
 {
-    private $baseUrl = 'https://api.trello.com/1/';
+    private $baseUrl = 'https://graph.facebook.com/v20.0/';
 
-    private $_integrationID;
+    public function authorization($requestParams)
+    {
+        static::checkValidation($requestParams);
 
-    private $accessToken;
+        $headers = static::setHeaders($requestParams->token);
+        $apiEndpoint = "{$this->baseUrl}{$requestParams->businessAccountID}";
+        $response = HttpHelper::get($apiEndpoint, null, $headers);
 
-    // public function fetchAllBoards($queryParams)
-    // {
-    //     if (
-    //         empty($queryParams->accessToken)
-    //         || empty($queryParams->clientId)
-    //     ) {
-    //         wp_send_json_error(
-    //             __(
-    //                 'Requested parameter is empty',
-    //                 'bit-integrations'
-    //             ),
-    //             400
-    //         );
-    //     }
-    //     $response = [];
-    //     $apiEndpoint = $this->baseUrl . 'members/me?key=' . $queryParams->clientId . '&token=' . $queryParams->accessToken;
-    //     $getUserInfoResponse = HttpHelper::get($apiEndpoint, null);
-    //     $apiEndpoint = $this->baseUrl . 'members/' . $getUserInfoResponse->username . '/boards?key=' . $queryParams->clientId . '&token=' . $queryParams->accessToken;
-    //     $allBoardResponse = HttpHelper::get($apiEndpoint, null);
-
-    //     $allList = [];
-    //     if (!is_wp_error($allBoardResponse) && empty($allBoardResponse->response->error)) {
-    //         $boardLists = $allBoardResponse;
-    //         foreach ($boardLists as $boardList) {
-    //             $allList[] = (object) [
-    //                 'boardId' => $boardList->id,
-    //                 'boardName' => $boardList->name
-    //             ];
-    //         }
-    //         uksort($allList, 'strnatcasecmp');
-    //         $response['allBoardlist'] = $allList;
-    //     } else {
-    //         wp_send_json_error(
-    //             $allBoardResponse->response->error->message,
-    //             400
-    //         );
-    //     }
-    //     wp_send_json_success($response, 200);
-    // }
-
-    // public function fetchAllLists($queryParams)
-    // {
-    //     if (
-    //         empty($queryParams->accessToken)
-    //         || empty($queryParams->clientId)
-    //     ) {
-    //         wp_send_json_error(
-    //             __(
-    //                 'Requested parameter is empty',
-    //                 'bit-integrations'
-    //             ),
-    //             400
-    //         );
-    //     }
-    //     $response = [];
-
-    //     $apiEndpoint = $this->baseUrl . 'boards/' . $queryParams->boardId . '/lists?key=' . $queryParams->clientId . '&token=' . $queryParams->accessToken;
-    //     $getListsResponse = HttpHelper::get($apiEndpoint, null);
-
-    //     $allList = [];
-    //     if (!is_wp_error($getListsResponse) && empty($getListsResponse->response->error)) {
-    //         $singleBoardLists = $getListsResponse;
-    //         foreach ($singleBoardLists as $singleBoardList) {
-    //             $allList[] = (object) [
-    //                 'listId' => $singleBoardList->id,
-    //                 'listName' => $singleBoardList->name
-    //             ];
-    //         }
-    //         uksort($allList, 'strnatcasecmp');
-    //         $response['alllists'] = $allList;
-    //     } else {
-    //         wp_send_json_error(
-    //             $allBoardResponse->response->error->message,
-    //             400
-    //         );
-    //     }
-    //     wp_send_json_success($response, 200);
-    // }
+        if (is_wp_error($response) || !isset($response->id)) {
+            wp_send_json_error(isset($response->error->message) ? $response->error->message : 'Authentication failed', 400);
+        } else {
+            wp_send_json_success('Authentication successful', 200);
+        }
+    }
 
     /**
      * Save updated access_token to avoid unnecessary token generation
@@ -134,5 +66,21 @@ class WhatsAppController
         }
 
         return $whatsAppApiResponse;
+    }
+
+    private static function checkValidation($requestParams)
+    {
+        if (empty($requestParams->numberID) || empty($requestParams->businessAccountID || empty($requestParams->token))) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+    }
+
+    private static function setHeaders($token)
+    {
+        return
+            [
+                'Authorization' => "Bearer {$token}",
+                'Content-type'  => 'application/json',
+            ];
     }
 }

@@ -13,26 +13,56 @@ export const handleInput = (e, whatsAppConf, setWhatsAppConf) => {
   setWhatsAppConf({ ...newConf })
 }
 
-export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setIsLoading, setSnackbar) => {
+export const handleAuthorize = (
+  confTmp,
+  setConf,
+  setError,
+  setIsAuthorized,
+  setIsLoading,
+  setSnackbar
+) => {
   if (!confTmp.numberID || !confTmp.businessAccountID || !confTmp.token) {
-    setError({ clientId: !confTmp.clientId ? __('Number Id, Bussness Id and Access Token can\'t be empty or invalid', 'bit-integrations') : '' })
+    setError({
+      numberID: !confTmp.numberID
+        ? __("Phone number ID can't be empty or invalid", 'bit-integrations')
+        : '',
+      businessAccountID: !confTmp.businessAccountID
+        ? __("WhatsApp Business Account ID can't be empty or invalid", 'bit-integrations')
+        : '',
+      token: !confTmp.token ? __("Access Token can't be empty or invalid", 'bit-integrations') : ''
+    })
     return
   }
 
-  setError({})
+  const requestParams = {
+    numberID: confTmp.numberID,
+    businessAccountID: confTmp.businessAccountID,
+    token: confTmp.token
+  }
+
   setIsLoading(true)
-  setisAuthorized(true)
-  setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
-  setIsLoading(false)
+  bitsFetch(requestParams, 'whats_app_authorization').then((result) => {
+    setIsLoading(false)
+    if (result && result.success) {
+      setIsAuthorized(true)
+      setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
+      return
+    }
+    setSnackbar({ show: true, msg: result?.data || __('Authorized failed', 'bit-integrations') })
+  })
 }
 
 export const generateMappedField = (whatsAppConf) => {
-  const requiredFlds = whatsAppConf?.whatsAppFields.filter(fld => fld.required === true)
-  return requiredFlds.length > 0 ? requiredFlds.map(field => ({ formField: '', whatsAppFormField: field.key })) : [{ formField: '', whatsAppFormField: '' }]
+  const requiredFlds = whatsAppConf?.whatsAppFields.filter((fld) => fld.required === true)
+  return requiredFlds.length > 0
+    ? requiredFlds.map((field) => ({ formField: '', whatsAppFormField: field.key }))
+    : [{ formField: '', whatsAppFormField: '' }]
 }
 
 export const checkMappedFields = (whatsAppConf) => {
-  const mappedFleld = whatsAppConf.field_map ? whatsAppConf.field_map.filter(mapped => (mapped.formField && mapped.whatsAppFormField)) : []
+  const mappedFleld = whatsAppConf.field_map
+    ? whatsAppConf.field_map.filter((mapped) => mapped.formField && mapped.whatsAppFormField)
+    : []
   if (mappedFleld.length > 0) {
     return false
   }
