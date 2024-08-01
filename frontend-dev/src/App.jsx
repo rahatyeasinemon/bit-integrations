@@ -22,7 +22,7 @@ import { $btcbi } from './GlobalStates'
 import ChangelogToggle from './pages/ChangelogToggle'
 import CashbackModal from './pages/CashbackModal'
 import { useRecoilValue } from 'recoil'
-
+import "regenerator-runtime/runtime.js";
 const AllIntegrations = lazy(() => import('./pages/AllIntegrations'))
 const Error404 = lazy(() => import('./pages/Error404'))
 
