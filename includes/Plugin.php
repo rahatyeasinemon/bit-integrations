@@ -14,7 +14,6 @@ use BitCode\FI\Core\Hooks\HookService;
 use BitCode\FI\Core\Util\Activation;
 use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\Deactivation;
-use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Core\Util\Request;
 use BitCode\FI\Core\Util\UnInstallation;
@@ -77,11 +76,10 @@ final class Plugin
 
     public function initWPTelemetry()
     {
-        $varPrefix = Helper::isProActivate() ? Config::VAR_PREFIX . 'pro' : Config::VAR_PREFIX;
         TelemetryConfig::setSlug(Config::SLUG);
         TelemetryConfig::setTitle(Config::TITLE);
         TelemetryConfig::setVersion(Config::VERSION);
-        TelemetryConfig::setPrefix($varPrefix);
+        TelemetryConfig::setPrefix(Config::VAR_PREFIX);
 
         TelemetryConfig::setServerBaseUrl('https://wp-api.bitapps.pro/public/');
         TelemetryConfig::setTermsUrl('https://bitapps.pro/terms-of-service/');
