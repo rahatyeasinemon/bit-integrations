@@ -62,8 +62,7 @@ class RecordApiHelper
             if ($title === 'start' || $title === 'end') {
                 $date = new DateTime(Helper::formatToISO8601($value), new DateTimeZone($this->timeZone));
                 if (isset($actions->allDayEvent)) {
-                    // $data[$title]['date'] = $date->format('Y-m-d');
-                    $data[$title]['dateTime'] = Helper::formatToISO8601($value);
+                    $data[$title]['date'] = $title === 'end' ? $date->modify('+1 day')->format('Y-m-d') : $date->format('Y-m-d');
                     $dateType = 'date';
                 } else {
                     $data[$title]['dateTime'] = Helper::formatToISO8601($value);
@@ -74,7 +73,7 @@ class RecordApiHelper
             }
             $data[$title] = $value;
         }
-
+        
         if (isset($actions->reminders) && \count($reminderFieldMap) > 0) {
             $data['reminders'] = [
                 'useDefault' => false,

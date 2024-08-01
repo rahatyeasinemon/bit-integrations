@@ -548,12 +548,12 @@ class RecordApiHelper
                 if (!empty($uploadField->formField) && !empty($uploadField->wcField)) {
                     if ($uploadField->wcField === 'product_image') {
                         $flag = 0;
-                    }
-                    if ($uploadField->wcField === 'product_gallery') {
+                    } elseif ($uploadField->wcField === 'product_gallery') {
                         $flag = 1;
-                    }
-                    if ($uploadField->wcField === 'downloadable_files') {
+                    } elseif ($uploadField->wcField === 'downloadable_files') {
                         $flag = 2;
+                    } else {
+                        $flag = 3;
                     }
 
                     $attach_ids = '';
@@ -584,12 +584,14 @@ class RecordApiHelper
                             $filename = $uplaodFiles;
                             $url = $filename;
 
-                            $this->attach_product_attachments($product_id, $flag, $url, $filename);
+                            $attach_ids = $this->attach_product_attachments($product_id, $flag, $url, $filename);
                         }
                     }
 
                     if ($flag === 1) {
                         update_post_meta($product_id, '_product_image_gallery', $attach_ids);
+                    } elseif ($flag === 3) {
+                        update_post_meta($product_id, $uploadField->wcField, wp_json_encode($attach_ids));
                     }
                 }
             }
@@ -639,12 +641,10 @@ class RecordApiHelper
             if ($flag === 0) {
                 set_post_thumbnail($product_id, $attach_id);
             }
-            if ($flag === 1) {
-                return $attach_id;
-            }
-        } else {
-            $this->attach_downloadable_attachments($product_id, $url, $filename);
+
+            return $attach_id;
         }
+        $this->attach_downloadable_attachments($product_id, $url, $filename);
     }
 
     public function attach_downloadable_attachments($product_id, $url, $filename)
