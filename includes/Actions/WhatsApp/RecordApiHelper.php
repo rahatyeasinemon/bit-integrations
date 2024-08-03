@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\WhatsApp;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -64,11 +64,6 @@ class RecordApiHelper
         $phoneNumber
     ) {
         $apiEndPoint = "https://graph.facebook.com/v20.0/{$numberId}/messages";
-        $header = [
-            'Authorization' => 'Bearer ' . $token,
-            'Content-Type'  => 'application/json'
-        ];
-
         $sanitizingSpace = rtrim($messagesBody, '&nbsp; ');
         $planMessage = strip_tags($sanitizingSpace);
 
@@ -80,7 +75,7 @@ class RecordApiHelper
             'text'              => ['body' => $planMessage]
         ];
 
-        return HttpHelper::post($apiEndPoint, $data, $header);
+        return HttpHelper::post($apiEndPoint, $data, static::setHeaders($token));
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
