@@ -20,18 +20,22 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const whatsAppFields = [{ key: 'phone', label: 'Phone', required: true }]
-  const messageTypes = [{ name: 'template', label: 'Template' }]
+  const messageTypes = [
+    { name: 'template', label: 'Template Message' },
+    { name: 'text', label: 'Text Message' }
+  ]
   const [whatsAppConf, setWhatsAppConf] = useState({
     name: 'WhatsApp',
     type: 'WhatsApp',
-    numberID: process.env.NODE_ENV === 'development' ? '317160348154490' : '',
+    numberID: process.env.NODE_ENV === 'development' ? '115645968196230' : '',
     businessAccountID: process.env.NODE_ENV === 'development' ? '101082419667133' : '',
     messageTypes,
+    messageType: '',
     body: '',
     templateName: '',
     token:
       process.env.NODE_ENV === 'development'
-        ? 'EAALIMHqNYCEBOxoNUI73DcGVAhWu6VUMdbDAqsslBC5HlVaiu7W4CQ24VEXf8ljWhfA4P2xpayJ5KuaV4MrqlWE3RPyrirm8zFuUqrFB8SYxY6AJkcVvXYFuD8oruWBnAZBJ2PigADXprWm19AlYsXJb9ZBAzEBr615WTZCW9mVhH3JwXwh3dBgEHqvfeivSeIZATkI561wJICK4uJmltQUMIZBQmDfxJoOcZD'
+        ? 'EAALIMHqNYCEBOwSJNFkEA5dZBO1oLN1hc30hYVn7gJLoe6RZCbbZAVpYoKyZBsHiZCFeinQ4l9gDChxPCsDOXLa4ZADZBjDe67GcpZAUO6l6QiF1TxAA7NFygMsc5U4Cvpy1K46QacnrVHwAE0N5sd9Hv9BUPef3b2xVZBUkJxfSnhNpZCo7jZBkOVS9ZCbKI1P1ZCDkK89331YquMoS8pFvfY52wtPKg1vUZAHIJCM7CD'
         : '',
     field_map: [{ formField: '', whatsAppFormField: '' }],
     whatsAppFields,
@@ -51,7 +55,12 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
     setstep(3)
   }
 
-  const disabledButton = whatsAppConf.templateName === '' || checkMappedFields(whatsAppConf)
+  const disabledButton =
+    (whatsAppConf?.messageType === 'template' && whatsAppConf.templateName === '') ||
+    (whatsAppConf?.messageType === 'text' && whatsAppConf.body === '') ||
+    checkMappedFields(whatsAppConf)
+
+  console.log(disabledButton)
 
   return (
     <div>

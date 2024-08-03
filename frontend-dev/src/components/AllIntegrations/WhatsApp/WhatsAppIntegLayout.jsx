@@ -122,27 +122,12 @@ export default function WhatsAppIntegLayout({
           setSnackbar={setSnackbar}
         />
       ))}
-      {whatsAppConf?.messageTypeId === '2' && (
+      {whatsAppConf?.messageType === 'text' && (
         <div>
           <b className="wdt-200 d-in-b mr-16 mb-4 mt-4">{__('Messages: ', 'bit-integrations')}</b>
-          {/* <textarea
-              className="w-7"
-              onChange={handleInput}
-              name="body"
-              rows="5"
-              value={whatsAppConf.body}
-            />
-            <MultiSelect
-              options={formFields
-                .filter((f) => f.type !== 'file')
-                .map((f) => ({ label: f.label, value: `\${${f.name}}` }))}
-              className="btcd-paper-drpdwn wdt-600 ml-2"
-              onChange={(val) => setMessageBody(val)}
-            /> */}
-
           <TinyMCE
             formFields={formFields}
-            id={`telegram-message-${id}`}
+            id={`whatsapp-message-${id}`}
             value={whatsAppConf.body}
             onChangeHandler={setMessageBody}
             width="100%"

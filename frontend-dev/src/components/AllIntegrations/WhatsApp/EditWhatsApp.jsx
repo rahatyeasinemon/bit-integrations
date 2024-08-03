@@ -10,7 +10,7 @@ import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents
 import EditWebhookInteg from '../EditWebhookInteg'
 import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { handleInput } from './WhatsAppCommonFunc'
+import { checkMappedFields, handleInput } from './WhatsAppCommonFunc'
 import WhatsAppIntegLayout from './WhatsAppIntegLayout'
 
 function EditWhatsApp({ allIntegURL }) {
@@ -23,7 +23,10 @@ function EditWhatsApp({ allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
 
-  const disabledButton = whatsAppConf.messageTypeId === '1' ? whatsAppConf.body === '' : whatsAppConf.templateName === ''
+  const disabledButton =
+    (whatsAppConf?.messageType === 'template' && whatsAppConf.templateName === '') ||
+    (whatsAppConf?.messageType === 'text' && whatsAppConf.body === '') ||
+    checkMappedFields(whatsAppConf)
 
   return (
     <div style={{ width: 900 }}>
@@ -31,7 +34,14 @@ function EditWhatsApp({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, whatsAppConf, setWhatsAppConf)} name="name" value={whatsAppConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={(e) => handleInput(e, whatsAppConf, setWhatsAppConf)}
+          name="name"
+          value={whatsAppConf.name}
+          type="text"
+          placeholder={__('Integration Name...', 'bit-integrations')}
+        />
       </div>
       <br />
       <br />
@@ -40,7 +50,9 @@ function EditWhatsApp({ allIntegURL }) {
       <WhatsAppIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) => handleInput(e, whatsAppConf, setWhatsAppConf, setIsLoading, setSnackbar)}
+        handleInput={(e) =>
+          handleInput(e, whatsAppConf, setWhatsAppConf, setIsLoading, setSnackbar)
+        }
         whatsAppConf={whatsAppConf}
         setWhatsAppConf={setWhatsAppConf}
         isLoading={isLoading}
@@ -50,7 +62,17 @@ function EditWhatsApp({ allIntegURL }) {
 
       <IntegrationStepThree
         edit
-        saveConfig={() => saveActionConf({ flow, allIntegURL, conf: whatsAppConf, navigate, edit: 1, setIsLoading, setSnackbar })}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            allIntegURL,
+            conf: whatsAppConf,
+            navigate,
+            edit: 1,
+            setIsLoading,
+            setSnackbar
+          })
+        }
         disabled={disabledButton || isLoading}
         isLoading={isLoading}
         dataConf={whatsAppConf}

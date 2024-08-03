@@ -81,7 +81,6 @@ export const getallTemplates = (confTmp, setConf, setIsLoading, setSnackbar) => 
           draftConf['allTemplates'] = result.data
         })
       )
-      setIsAuthorized(true)
       setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
       return
     }
