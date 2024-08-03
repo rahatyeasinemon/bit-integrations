@@ -33,11 +33,9 @@ class RecordApiHelper
         $templateName,
         $phoneNumber
     ) {
-        $apiEndPoint = "https://graph.facebook.com/v13.0/{$numberId}/messages";
+        $apiEndPoint = "https://graph.facebook.com/v20.0/{$numberId}/messages";
         $header = [
             'Authorization' => 'Bearer ' . $token,
-            'Accept'        => '*/*',
-            'verify'        => false,
             'Content-Type'  => 'application/json'
         ];
 
@@ -64,23 +62,21 @@ class RecordApiHelper
         $messagesBody,
         $phoneNumber
     ) {
-        $apiEndPoint = "https://graph.facebook.com/v13.0/{$numberId}/messages";
+        $apiEndPoint = "https://graph.facebook.com/v20.0/{$numberId}/messages";
         $header = [
             'Authorization' => 'Bearer ' . $token,
-            'Accept'        => '*/*',
-            'verify'        => false,
             'Content-Type'  => 'application/json'
         ];
-        $sanitizingSpace = rtrim($messagesBody, '&nbsp; ');
 
+        $sanitizingSpace = rtrim($messagesBody, '&nbsp; ');
         $planMessage = strip_tags($sanitizingSpace);
 
         $data = [
             'messaging_product' => 'whatsapp',
+            'recipient_type'    => 'individual',
             'to'                => "{$phoneNumber}",
-            'text'              => [
-                'body' => $planMessage
-            ]
+            'type'              => 'text',
+            'text'              => ['body' => $planMessage]
         ];
 
         return HttpHelper::post($apiEndPoint, $data, $header);
@@ -106,10 +102,8 @@ class RecordApiHelper
     public function execute(
         $fieldValues,
         $fieldMap,
-        $messageTypeId,
-        $actions
+        $messageType,
     ) {
-        $fieldData = [];
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $phoneNumber = ltrim($finalData['phone'], '+');
         $templateName = $this->_integrationDetails->templateName;
@@ -118,7 +112,7 @@ class RecordApiHelper
         $businessAccountID = $this->_integrationDetails->businessAccountID;
         $token = $this->_integrationDetails->token;
 
-        if ($messageTypeId === '2') {
+        if ($messageType === 'template' || $messageType === '2') {
             $apiResponse = $this->sendMessageWithTemplate(
                 $numberId,
                 $businessAccountID,
@@ -127,7 +121,7 @@ class RecordApiHelper
                 $templateName,
                 $phoneNumber
             );
-        } else {
+        } elseif ($messageType === 'text') {
             $textBody = $this->_integrationDetails->body;
             $msg = Common::replaceFieldWithValue($textBody, $fieldValues);
             $messagesBody = str_replace(['<p>', '</p>'], ' ', $msg);
@@ -140,6 +134,7 @@ class RecordApiHelper
                 $phoneNumber
             );
         }
+
         if (property_exists($apiResponse, 'error')) {
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'send-message']), 'error', wp_json_encode($apiResponse));
         } else {

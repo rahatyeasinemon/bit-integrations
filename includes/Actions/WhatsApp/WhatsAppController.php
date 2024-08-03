@@ -58,12 +58,11 @@ class WhatsAppController
     {
         $integrationDetails = $integrationData->flow_details;
         $integId = $integrationData->id;
-        $messageTypeId = $integrationDetails->messageTypeId;
+        $messageType = isset($integrationDetails->messageTypeId) ? $integrationDetails->messageTypeId : $integrationDetails->messageType;
         $fieldMap = $integrationDetails->field_map;
-        $actions = $integrationDetails->actions;
 
         if (
-            empty($messageTypeId)
+            empty($messageType)
             || empty($fieldMap)
         ) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for WhatsApp api', 'bit-integrations'));
@@ -72,8 +71,7 @@ class WhatsAppController
         $whatsAppApiResponse = $recordApiHelper->execute(
             $fieldValues,
             $fieldMap,
-            $messageTypeId,
-            $actions
+            $messageType,
         );
 
         if (is_wp_error($whatsAppApiResponse)) {
