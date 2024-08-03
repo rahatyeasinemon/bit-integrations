@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\WhatsApp;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Trello integration
@@ -68,7 +68,7 @@ class WhatsAppController
         ) {
             return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for WhatsApp api', 'bit-integrations'));
         }
-        $recordApiHelper = new RecordApiHelper($integrationDetails, $integrationDetails->businessAccountID, $integId);
+        $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $whatsAppApiResponse = $recordApiHelper->execute(
             $fieldValues,
             $fieldMap,
@@ -87,7 +87,7 @@ class WhatsAppController
         $allTemplates = [];
         $headers = static::setHeaders($token);
         $response = HttpHelper::get($apiEndpoint, null, $headers);
-        
+
         if (is_wp_error($response) || !isset($response->data)) {
             return $response;
         }

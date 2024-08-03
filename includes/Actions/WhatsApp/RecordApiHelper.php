@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\WhatsApp;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -18,6 +18,8 @@ class RecordApiHelper
     private $_integrationID;
 
     private $_integrationDetails;
+
+    private $_baseUrl = 'https://graph.facebook.com/v20.0/';
 
     public function __construct($integrationDetails, $integId)
     {
@@ -33,12 +35,11 @@ class RecordApiHelper
         $templateName,
         $phoneNumber
     ) {
-        $apiEndPoint = "https://graph.facebook.com/v20.0/{$numberId}/messages";
-        $header = [
-            'Authorization' => 'Bearer ' . $token,
-            'Content-Type'  => 'application/json'
-        ];
+        $apiEndPoint = "{$this->_baseUrl}{$businessAccountID}/message_templates?fields=language&name={$templateName}";
+        $response = HttpHelper::get($apiEndPoint, null, static::setHeaders($token));
+        $language = $response->data[0]->language ?? 'en_US';
 
+        $apiEndPoint = "{$this->_baseUrl}{$numberId}/messages";
         $data = [
             'messaging_product' => 'whatsapp',
             'to'                => "{$phoneNumber}",
@@ -46,12 +47,12 @@ class RecordApiHelper
             'template'          => [
                 'name'     => $templateName,
                 'language' => [
-                    'code' => 'en_US'
+                    'code' => $language
                 ]
             ]
         ];
 
-        return HttpHelper::post($apiEndPoint, $data, $header);
+        return HttpHelper::post($apiEndPoint, $data, static::setHeaders($token));
     }
 
     public function sendMessageWithText(
@@ -142,5 +143,14 @@ class RecordApiHelper
         }
 
         return $apiResponse;
+    }
+
+    private static function setHeaders($token)
+    {
+        return
+            [
+                'Authorization' => "Bearer {$token}",
+                'Content-type'  => 'application/json',
+            ];
     }
 }
