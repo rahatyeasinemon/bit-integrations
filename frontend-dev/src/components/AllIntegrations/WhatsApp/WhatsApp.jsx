@@ -19,7 +19,7 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
-  const whatsAppFields = [{ key: 'phone', label: 'Phone', required: true }]
+  const whatsAppFields = [{ key: 'phone', label: "Recipient's Phone", required: true }]
   const messageTypes = [
     { name: 'template', label: 'Template Message' },
     { name: 'text', label: 'Text Message' }

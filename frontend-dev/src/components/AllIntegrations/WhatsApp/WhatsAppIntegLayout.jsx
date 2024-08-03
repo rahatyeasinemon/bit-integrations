@@ -6,6 +6,7 @@ import Loader from '../../Loaders/Loader'
 import TinyMCE from '../../Utilities/TinyMCE'
 import { getallTemplates } from './WhatsAppCommonFunc'
 import WhatsAppFieldMap from './WhatsAppFieldMap'
+import Note from '../../Utilities/Note'
 
 export default function WhatsAppIntegLayout({
   formFields,
@@ -28,6 +29,18 @@ export default function WhatsAppIntegLayout({
     setWhatsAppConf((prevConf) =>
       create(prevConf, (draftConf) => {
         draftConf[name] = value
+
+        if (name === 'messageType' && value === 'text') {
+          draftConf['taskNote'] =
+            `<p>To ensure successful message delivery using the WhatsApp Business API:</p>
+            <ul>
+                <li><strong>The conversation must be initiated by the user.</strong></li>
+                <li>To begin, <strong>send a message from your WhatsApp number to the recipient's number.</strong></li>
+                <li>Once the user has started the conversation, you can continue to communicate with the recipient normally.</li>
+            </ul>`
+        } else {
+          delete draftConf?.taskNote
+        }
       })
     )
 
@@ -84,6 +97,7 @@ export default function WhatsAppIntegLayout({
           </div>
         </>
       )}
+      {whatsAppConf?.taskNote && <Note note={whatsAppConf?.taskNote} />}
 
       {isLoading && (
         <Loader
@@ -124,7 +138,7 @@ export default function WhatsAppIntegLayout({
       ))}
       {whatsAppConf?.messageType === 'text' && (
         <div>
-          <b className="wdt-200 d-in-b mr-16 mb-4 mt-4">{__('Messages: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b mr-16 mb-4 mt-4">{__('Message: ', 'bit-integrations')}</b>
           <TinyMCE
             formFields={formFields}
             id={`whatsapp-message-${id}`}
