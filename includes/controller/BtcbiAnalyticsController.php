@@ -14,22 +14,31 @@ final class BtcbiAnalyticsController
         $logTable = $wpdb->prefix . Config::VAR_PREFIX . 'log';
 
         $flow = $wpdb->get_results("
-                    SELECT 
-                        flow.name as ActionName, 
-                        flow.triggered_entity as TriggerName, 
-                        flow.status,
+                    SELECT
+                        JSON_UNQUOTE(JSON_EXTRACT(flow.flow_details, '$.type')) AS ActionName,
+                        flow.triggered_entity as TriggerName,
+                        flow.status as status,
                         COUNT(log.flow_id) AS count
-                    FROM 
+                    FROM
                         {$flowTable} flow
-                    LEFT JOIN 
+                    LEFT JOIN
                         {$logTable} log ON flow.id = log.flow_id
                     GROUP BY
-                        log.flow_id
+                        log.flow_id, ActionName, TriggerName, status
                 ");
 
         $additional_data['flows'] = $flow;
+        if (\function_exists('btcbi_pro_activate_plugin')) {
+            $pro = [];
+            $integrateData = get_option('btcbi_integrate_key_data');
+            $pro['version'] = BTCBI_PRO_VERSION;
+            $pro['hasLicense'] = $integrateData['key'] ? true : false;
+            $pro['license'] = $integrateData['key'];
+            $pro['status'] = $integrateData['status'];
+            $pro['expireAt'] = $integrateData['expireIn'];
 
-        // error_log(print_r($additional_data['flows'], true));
+            $additional_data['pro'] = $pro;
+        }
 
         return $additional_data;
     }
