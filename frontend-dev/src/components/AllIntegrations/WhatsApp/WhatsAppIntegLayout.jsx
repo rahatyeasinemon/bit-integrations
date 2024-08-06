@@ -43,7 +43,7 @@ export default function WhatsAppIntegLayout({
             { key: 'caption', label: 'Caption', required: false },
             { key: 'filename', label: 'FileName', required: false }
           ]
-        } else {
+        } else if (name === 'messageType') {
           delete draftConf?.taskNote
         }
       })

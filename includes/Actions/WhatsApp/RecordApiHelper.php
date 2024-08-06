@@ -83,9 +83,8 @@ class RecordApiHelper
         $phoneNumber
     ) {
         if (Helper::proActionFeatExists('WhatsApp', 'sendMediaMessages')) {
-            error_log(print_r($this->_integrationDetails, true));
             $response = apply_filters('btcbi_whatsapp_send_media_messages', $this->_integrationDetails, $fieldValues, $numberId, $token, $phoneNumber);
-
+            
             if (isset($response->messages[0]->id) || isset($response->error) || is_wp_error($response)) {
                 return $response;
             }
@@ -130,7 +129,6 @@ class RecordApiHelper
             $apiResponse = $this->sendMessageWithText($numberId, $fieldValues, $token, $phoneNumber);
         } elseif ($messageType === 'media') {
             $apiResponse = $this->sendMessageWithMedia($numberId, $fieldValues, $token, $phoneNumber);
-            die;
         }
 
         if (property_exists($apiResponse, 'error')) {
