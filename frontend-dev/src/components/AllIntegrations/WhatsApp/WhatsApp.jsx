@@ -21,9 +21,12 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
   const whatsAppFields = [{ key: 'phone', label: "Recipient's Phone", required: true }]
   const messageTypes = [
-    { name: 'template', label: 'Template Message' },
-    { name: 'text', label: 'Text Message' }
+    { name: 'template', label: 'Template Message', is_pro: false },
+    { name: 'text', label: 'Text Message', is_pro: true },
+    { name: 'contact', label: 'Contact Message', is_pro: true },
+    { name: 'media', label: 'Media Message', is_pro: true }
   ]
+
   const [whatsAppConf, setWhatsAppConf] = useState({
     name: 'WhatsApp',
     type: 'WhatsApp',
@@ -35,7 +38,7 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
     templateName: '',
     token:
       process.env.NODE_ENV === 'development'
-        ? 'EAALIMHqNYCEBOwSJNFkEA5dZBO1oLN1hc30hYVn7gJLoe6RZCbbZAVpYoKyZBsHiZCFeinQ4l9gDChxPCsDOXLa4ZADZBjDe67GcpZAUO6l6QiF1TxAA7NFygMsc5U4Cvpy1K46QacnrVHwAE0N5sd9Hv9BUPef3b2xVZBUkJxfSnhNpZCo7jZBkOVS9ZCbKI1P1ZCDkK89331YquMoS8pFvfY52wtPKg1vUZAHIJCM7CD'
+        ? 'EAALIMHqNYCEBOZBJL7XzwhTlLrH0wZBcZCreAOHytAffarJFyZC4vXxTA3ECeywcPXlvJIqqU5W02bYVC3KtzQzzo3ZCZAvzsPv8glTOFtvdYTIigiFEQApUhSRUkoqG0Fq6Yz3tUWV9nMvbXcxxBAVZBWhVrrICGVAxn2M3dKMIwTRVl7uBJKSt0kBwOuSwyUwE6VuclaSTOZBjy1Vsd8b8HoNnjvaPmRkkelYZD'
         : '',
     field_map: [{ formField: '', whatsAppFormField: '' }],
     whatsAppFields,
