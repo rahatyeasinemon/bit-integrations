@@ -12,6 +12,8 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import WhatsAppAuthorization from './WhatsAppAuthorization'
 import { handleInput, checkMappedFields } from './WhatsAppCommonFunc'
 import WhatsAppIntegLayout from './WhatsAppIntegLayout'
+import { useRecoilValue } from 'recoil'
+import { $btcbi } from '../../../GlobalStates'
 
 function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -19,12 +21,35 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
+  const btcbi = useRecoilValue($btcbi)
+  const { isPro } = btcbi
   const whatsAppFields = [{ key: 'phone', label: "Recipient's Phone", required: true }]
   const messageTypes = [
     { name: 'template', label: 'Template Message', is_pro: false },
-    { name: 'text', label: 'Text Message', is_pro: true },
-    { name: 'contact', label: 'Contact Message', is_pro: true },
-    { name: 'media', label: 'Media Message', is_pro: true }
+    { name: 'text', label: `Text Message${!isPro ? ' (Pro)' : ''}`, is_pro: true },
+    { name: 'contact', label: `Contact Message${!isPro ? ' (Pro)' : ''}`, is_pro: true },
+    { name: 'media', label: `Media Message${!isPro ? ' (Pro)' : ''}`, is_pro: true }
+  ]
+  const mediaTypes = [
+    'image/jpeg',
+    'image/png',
+    'text/plain',
+    'application/pdf',
+    'application/vnd.ms-powerpoint',
+    'application/msword',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'audio/aac',
+    'audio/mp4',
+    'audio/mpeg',
+    'audio/amr',
+    'audio/ogg',
+    'audio/opus',
+    'video/mp4',
+    'video/3gp',
+    'image/webp'
   ]
 
   const [whatsAppConf, setWhatsAppConf] = useState({
@@ -33,6 +58,7 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
     numberID: process.env.NODE_ENV === 'development' ? '115645968196230' : '',
     businessAccountID: process.env.NODE_ENV === 'development' ? '101082419667133' : '',
     messageTypes,
+    mediaTypes,
     messageType: '',
     body: '',
     templateName: '',
@@ -62,8 +88,6 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
     (whatsAppConf?.messageType === 'template' && whatsAppConf.templateName === '') ||
     (whatsAppConf?.messageType === 'text' && whatsAppConf.body === '') ||
     checkMappedFields(whatsAppConf)
-
-  console.log(disabledButton)
 
   return (
     <div>
