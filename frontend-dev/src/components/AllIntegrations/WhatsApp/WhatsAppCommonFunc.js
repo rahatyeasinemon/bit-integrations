@@ -88,8 +88,8 @@ export const getallTemplates = (confTmp, setConf, setIsLoading, setSnackbar) => 
   })
 }
 
-export const generateMappedField = (whatsAppConf) => {
-  const requiredFlds = whatsAppConf?.whatsAppFields.filter((fld) => fld.required === true)
+export const generateMappedField = (whatsAppFields) => {
+  const requiredFlds = whatsAppFields.filter((fld) => fld.required === true)
   return requiredFlds.length > 0
     ? requiredFlds.map((field) => ({ formField: '', whatsAppFormField: field.key }))
     : [{ formField: '', whatsAppFormField: '' }]
@@ -103,4 +103,39 @@ export const checkMappedFields = (whatsAppConf) => {
     return false
   }
   return true
+}
+
+export const addFieldMap = (i, confTmp, setConf, mapKey = 'field_map') => {
+  const newConf = { ...confTmp }
+  newConf[mapKey].splice(i, 0, {})
+  setConf({ ...newConf })
+}
+
+export const delFieldMap = (i, confTmp, setConf, mapKey = 'field_map') => {
+  const newConf = { ...confTmp }
+  if (newConf[mapKey].length > 1) {
+    newConf[mapKey].splice(i, 1)
+  }
+
+  setConf({ ...newConf })
+}
+
+export const handleFieldMapping = (event, index, conftTmp, setConf, mapKey = 'field_map') => {
+  const newConf = { ...conftTmp }
+  newConf[mapKey][index][event.target.name] = event.target.value
+
+  if (event.target.value === 'custom') {
+    newConf[mapKey][index].customValue = ''
+  }
+  setConf({ ...newConf })
+}
+
+export const handleCustomValue = (event, index, conftTmp, setConf, tab, mapKey = 'field_map') => {
+  const newConf = { ...conftTmp }
+  if (tab) {
+    newConf.relatedlists[tab - 1][mapKey][index].customValue = event.target.value
+  } else {
+    newConf[mapKey][index].customValue = event
+  }
+  setConf({ ...newConf })
 }

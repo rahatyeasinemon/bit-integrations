@@ -38,7 +38,7 @@ export default function WhatsAppIntegLayout({
           draftConf['taskNote'] = textMsgNote
         } else if (name === 'messageType' && value === 'media') {
           draftConf['taskNote'] = textMediaNote
-          draftConf['media_field_map'] = [{ formField: '', woodpeckerFormField: '' }]
+          draftConf['media_field_map'] = [{ formField: '', whatsAppFormField: '' }]
           draftConf['media_fields'] = [
             { key: 'caption', label: 'Caption', required: false },
             { key: 'filename', label: 'FileName', required: false }
@@ -53,7 +53,7 @@ export default function WhatsAppIntegLayout({
       getallTemplates(whatsAppConf, setWhatsAppConf, setIsLoading, setSnackbar)
     }
   }
-  console.log(whatsAppConf?.messageTypes)
+
   return (
     <>
       <br />
@@ -174,7 +174,7 @@ export default function WhatsAppIntegLayout({
         />
       ))}
 
-      {whatsAppConf.messageType === 'media' && isPro && (
+      {whatsAppConf.messageType === 'media' && isPro && whatsAppConf?.media_fields && (
         <>
           <br />
           <div className="mt-5">
@@ -201,6 +201,7 @@ export default function WhatsAppIntegLayout({
               formFields={formFields}
               setWhatsAppConf={setWhatsAppConf}
               setSnackbar={setSnackbar}
+              mapKey="media_field_map"
             />
           ))}
         </>

@@ -1,12 +1,14 @@
 import { useRecoilValue } from 'recoil'
-import { __ } from '../../../Utils/i18nwrap'
-import MtInput from '../../Utilities/MtInput'
-import { addFieldMap, delFieldMap, handleFieldMapping } from './IntegrationHelpers'
-import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import { $btcbi } from '../../../GlobalStates'
-import { generateMappedField } from './WhatsAppCommonFunc'
+import { __ } from '../../../Utils/i18nwrap'
+import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import TagifyInput from '../../Utilities/TagifyInput'
-import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
+import {
+  addFieldMap,
+  delFieldMap,
+  handleCustomValue,
+  handleFieldMapping
+} from './WhatsAppCommonFunc'
 
 export default function WhatsAppFieldMap({
   key,
@@ -16,15 +18,9 @@ export default function WhatsAppFieldMap({
   whatsAppConf,
   formFields,
   setWhatsAppConf,
-  setSnackbar
+  setSnackbar,
+  mapKey
 }) {
-  if (whatsAppConf?.field_map?.length === 1 && field.whatsAppFormField === '') {
-    const newConf = { ...whatsAppConf }
-    const tmp = generateMappedField(newConf)
-    newConf.field_map = tmp
-    setWhatsAppConf(newConf)
-  }
-
   const requiredFlds = whatsAppFields.filter((fld) => fld.required === true) || []
   const nonRequiredFlds = whatsAppFields.filter((fld) => fld.required === false) || []
 
@@ -39,7 +35,7 @@ export default function WhatsAppFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, whatsAppConf, setWhatsAppConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, whatsAppConf, setWhatsAppConf, mapKey)}>
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label="Form Fields">
               {formFields?.map((f) => (
@@ -61,7 +57,9 @@ export default function WhatsAppFieldMap({
 
           {field.formField === 'custom' && (
             <TagifyInput
-              onChange={(e) => handleCustomValue(e, i, whatsAppConf, setWhatsAppConf)}
+              onChange={(e) =>
+                handleCustomValue(e, i, whatsAppConf, setWhatsAppConf, false, mapKey)
+              }
               label={__('Custom Value', 'bit-integrations')}
               className="mr-2"
               type="text"
@@ -78,7 +76,7 @@ export default function WhatsAppFieldMap({
             value={
               i < requiredFlds.length ? requiredFlds[i].key || '' : field.whatsAppFormField || ''
             }
-            onChange={(ev) => handleFieldMapping(ev, i, whatsAppConf, setWhatsAppConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, whatsAppConf, setWhatsAppConf, mapKey)}>
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -93,23 +91,23 @@ export default function WhatsAppFieldMap({
             )}
           </select>
         </div>
-        {/* {i >= requiredFlds.length && (
+        {i >= requiredFlds.length && (
           <>
             <button
-              onClick={() => addFieldMap(i, whatsAppConf, setWhatsAppConf)}
+              onClick={() => addFieldMap(i, whatsAppConf, setWhatsAppConf, mapKey)}
               className="icn-btn sh-sm ml-2 mr-1"
               type="button">
               +
             </button>
             <button
-              onClick={() => delFieldMap(i, whatsAppConf, setWhatsAppConf)}
+              onClick={() => delFieldMap(i, whatsAppConf, setWhatsAppConf, mapKey)}
               className="icn-btn sh-sm ml-1"
               type="button"
               aria-label="btn">
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>
-        )} */}
+        )}
       </div>
     </div>
   )

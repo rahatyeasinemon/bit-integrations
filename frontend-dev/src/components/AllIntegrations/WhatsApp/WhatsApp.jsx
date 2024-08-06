@@ -10,7 +10,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 // import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 // import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import WhatsAppAuthorization from './WhatsAppAuthorization'
-import { handleInput, checkMappedFields } from './WhatsAppCommonFunc'
+import { handleInput, checkMappedFields, generateMappedField } from './WhatsAppCommonFunc'
 import WhatsAppIntegLayout from './WhatsAppIntegLayout'
 import { useRecoilValue } from 'recoil'
 import { $btcbi } from '../../../GlobalStates'
@@ -66,7 +66,7 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
       process.env.NODE_ENV === 'development'
         ? 'EAALIMHqNYCEBOZBJL7XzwhTlLrH0wZBcZCreAOHytAffarJFyZC4vXxTA3ECeywcPXlvJIqqU5W02bYVC3KtzQzzo3ZCZAvzsPv8glTOFtvdYTIigiFEQApUhSRUkoqG0Fq6Yz3tUWV9nMvbXcxxBAVZBWhVrrICGVAxn2M3dKMIwTRVl7uBJKSt0kBwOuSwyUwE6VuclaSTOZBjy1Vsd8b8HoNnjvaPmRkkelYZD'
         : '',
-    field_map: [{ formField: '', whatsAppFormField: '' }],
+    field_map: generateMappedField(whatsAppFields),
     whatsAppFields,
     address_field: [],
     actions: {}
