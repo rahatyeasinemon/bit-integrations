@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\WhatsApp;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -57,25 +57,18 @@ class RecordApiHelper
 
     public function sendMessageWithText(
         $numberId,
-        $businessAccountID,
+        $fieldValues,
         $token,
-        $data,
-        $messagesBody,
         $phoneNumber
     ) {
-        $apiEndPoint = "https://graph.facebook.com/v20.0/{$numberId}/messages";
-        $sanitizingSpace = rtrim($messagesBody, '&nbsp; ');
-        $planMessage = strip_tags($sanitizingSpace);
+        $textBody = $this->_integrationDetails->body;
+        $response = apply_filters('btcbi_whatsapp_send_text_messages', $textBody, $fieldValues, $numberId, $token, $phoneNumber);
 
-        $data = [
-            'messaging_product' => 'whatsapp',
-            'recipient_type'    => 'individual',
-            'to'                => "{$phoneNumber}",
-            'type'              => 'text',
-            'text'              => ['body' => $planMessage]
-        ];
-
-        return HttpHelper::post($apiEndPoint, $data, static::setHeaders($token));
+        if (isset($response->messages[0]->id) || isset($response->error) || is_wp_error($response)) {
+            return $response;
+        } else {
+            return (object) ['error' => 'Bit Integration Pro plugin is not installed or activate'];
+        }
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -95,11 +88,9 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute(
-        $fieldValues,
-        $fieldMap,
-        $messageType,
-    ) {
+    public function execute($fieldValues, $messageType)
+    {
+        $fieldMap = $this->_integrationDetails->field_map;
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $phoneNumber = ltrim($finalData['phone'], '+');
         $templateName = $this->_integrationDetails->templateName;
@@ -109,26 +100,9 @@ class RecordApiHelper
         $token = $this->_integrationDetails->token;
 
         if ($messageType === 'template' || $messageType === '2') {
-            $apiResponse = $this->sendMessageWithTemplate(
-                $numberId,
-                $businessAccountID,
-                $token,
-                $finalData,
-                $templateName,
-                $phoneNumber
-            );
+            $apiResponse = $this->sendMessageWithTemplate($numberId, $businessAccountID, $token, $finalData, $templateName, $phoneNumber);
         } elseif ($messageType === 'text') {
-            $textBody = $this->_integrationDetails->body;
-            $msg = Common::replaceFieldWithValue($textBody, $fieldValues);
-            $messagesBody = str_replace(['<p>', '</p>'], ' ', $msg);
-            $apiResponse = $this->sendMessageWithText(
-                $numberId,
-                $businessAccountID,
-                $token,
-                $finalData,
-                $messagesBody,
-                $phoneNumber
-            );
+            $apiResponse = $this->sendMessageWithText($numberId, $fieldValues, $token, $phoneNumber);
         }
 
         if (property_exists($apiResponse, 'error')) {

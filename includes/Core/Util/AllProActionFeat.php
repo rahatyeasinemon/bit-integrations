@@ -15,6 +15,9 @@ final class AllProActionFeat
         'WC' => [
             ['feat_name' => 'getFlexibleCheckoutFields', 'class' => '\BitApps\BTCBI_PRO\Triggers\WC\WCHelperPro', 'pro_init_v' => '2.1.2'],
             ['feat_name' => 'getFlexibleCheckoutFieldsValue', 'class' => '\BitApps\BTCBI_PRO\Triggers\WC\WCHelperPro', 'pro_init_v' => '2.1.2']
+        ],
+        'WhatsApp' => [
+            ['feat_name' => 'textMessages', 'class' => '\BitApps\BTCBI_PRO\Triggers\WhatsApp\WhatsAppHelperPro', 'pro_init_v' => '2.1.6'],
         ]
     ];
 }
