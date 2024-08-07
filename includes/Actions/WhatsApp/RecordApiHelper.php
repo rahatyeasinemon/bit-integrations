@@ -35,10 +35,10 @@ class RecordApiHelper
         $data,
         $phoneNumber
     ) {
+        $templateName = $this->_integrationDetails->templateName;
         $apiEndPoint = "{$this->_baseUrl}{$businessAccountID}/message_templates?fields=language&name={$templateName}";
         $response = HttpHelper::get($apiEndPoint, null, static::setHeaders($token));
         $language = $response->data[0]->language ?? 'en_US';
-        $templateName = $this->_integrationDetails->templateName;
 
         $apiEndPoint = "{$this->_baseUrl}{$numberId}/messages";
         $data = [

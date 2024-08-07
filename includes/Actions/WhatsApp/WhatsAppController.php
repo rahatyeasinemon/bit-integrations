@@ -36,8 +36,6 @@ class WhatsAppController
         static::checkValidation($requestParams);
 
         $apiEndpoint = "{$this->baseUrl}{$requestParams->businessAccountID}/message_templates?fields=name";
-
-        error_log(print_r(HttpHelper::get("{$this->baseUrl}{$requestParams->businessAccountID}/message_templates?fields=language&name=template3", null, static::setHeaders($requestParams->token)), true));
         $allTemplates = static::getTemplate($apiEndpoint, $requestParams->token);
 
         if (is_wp_error($allTemplates)) {
@@ -112,7 +110,7 @@ class WhatsAppController
         return
             [
                 'Authorization' => "Bearer {$token}",
-                'Content-type'  => 'application/json',
+                'Content-Type'  => 'application/json',
             ];
     }
 }

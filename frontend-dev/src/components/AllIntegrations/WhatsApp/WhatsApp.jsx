@@ -64,7 +64,7 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
     templateName: '',
     token:
       process.env.NODE_ENV === 'development'
-        ? 'EAALIMHqNYCEBOZBJL7XzwhTlLrH0wZBcZCreAOHytAffarJFyZC4vXxTA3ECeywcPXlvJIqqU5W02bYVC3KtzQzzo3ZCZAvzsPv8glTOFtvdYTIigiFEQApUhSRUkoqG0Fq6Yz3tUWV9nMvbXcxxBAVZBWhVrrICGVAxn2M3dKMIwTRVl7uBJKSt0kBwOuSwyUwE6VuclaSTOZBjy1Vsd8b8HoNnjvaPmRkkelYZD'
+        ? 'EAALIMHqNYCEBO0GjcZCjmTRpZC9KAIc58pcuqIDoBZBy8CMSsdaZCqSwAPKRhaWKr7fypOJV2XmlO05j7FZCLt7MOMF7KTyLXnkJ9MqqdK7PZCdxFhmZB2Jv7v3ZBRQSoo2Y0ZBrKgyCl78nOM10ROLeg4ZCU2FI6VsEmcd7GcB76NDsHn3XGsRJkWnyMxbzLxIpaZCmmZAOtJVbWhZAyGkk1o5BjWBKrkEvDsHZASj8IZD'
         : '',
     field_map: generateMappedField(whatsAppFields),
     whatsAppFields,
