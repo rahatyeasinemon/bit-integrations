@@ -123,18 +123,20 @@ class RecordApiHelper
         $token = $this->_integrationDetails->token;
 
         if ($messageType === 'template' || $messageType === '2') {
-            $templateName = $this->_integrationDetails->templateName;
             $apiResponse = $this->sendMessageWithTemplate($numberId, $businessAccountID, $token, $finalData, $phoneNumber);
+            $typeName = 'Template Message';
         } elseif ($messageType === 'text') {
             $apiResponse = $this->sendMessageWithText($numberId, $fieldValues, $token, $phoneNumber);
+            $typeName = 'Text Message';
         } elseif ($messageType === 'media') {
             $apiResponse = $this->sendMessageWithMedia($numberId, $fieldValues, $token, $phoneNumber);
+            $typeName = 'Media Message';
         }
 
         if (property_exists($apiResponse, 'error')) {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'send-message']), 'error', wp_json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'message', 'type_name' => $typeName]), 'error', wp_json_encode($apiResponse));
         } else {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'send-message']), 'success', wp_json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'message', 'type_name' => $typeName]), 'success', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;
