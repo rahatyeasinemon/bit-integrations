@@ -10,7 +10,12 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 // import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 // import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import WhatsAppAuthorization from './WhatsAppAuthorization'
-import { handleInput, checkMappedFields, generateMappedField } from './WhatsAppCommonFunc'
+import {
+  handleInput,
+  checkMappedFields,
+  generateMappedField,
+  checkDisabledButton
+} from './WhatsAppCommonFunc'
 import WhatsAppIntegLayout from './WhatsAppIntegLayout'
 import { useRecoilValue } from 'recoil'
 import { $btcbi } from '../../../GlobalStates'
@@ -84,11 +89,6 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
     setstep(3)
   }
 
-  const disabledButton =
-    (whatsAppConf?.messageType === 'template' && whatsAppConf.templateName === '') ||
-    (whatsAppConf?.messageType === 'text' && whatsAppConf.body === '') ||
-    checkMappedFields(whatsAppConf)
-
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -126,7 +126,7 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
 
         <button
           onClick={() => nextPage(3)}
-          disabled={disabledButton}
+          disabled={checkDisabledButton(whatsAppConf)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
           type="button">
           {__('Next', 'bit-integrations')} &nbsp;

@@ -105,6 +105,23 @@ export const checkMappedFields = (whatsAppConf) => {
   return true
 }
 
+export const checkDisabledButton = (whatsAppConf) => {
+  if (whatsAppConf?.messageType === '') {
+    return true
+  } else if (whatsAppConf?.messageType === 'template' && whatsAppConf.templateName === '') {
+    return true
+  } else if (whatsAppConf?.messageType === 'text' && whatsAppConf.body === '') {
+    return true
+  } else if (
+    whatsAppConf?.messageType === 'media' &&
+    (whatsAppConf.upload_field === '' || whatsAppConf.mediaType === '')
+  ) {
+    return true
+  } else {
+    return checkMappedFields(whatsAppConf)
+  }
+}
+
 export const addFieldMap = (i, confTmp, setConf, mapKey = 'field_map') => {
   const newConf = { ...confTmp }
   newConf[mapKey].splice(i, 0, {})

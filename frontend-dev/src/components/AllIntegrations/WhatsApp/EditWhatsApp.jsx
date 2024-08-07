@@ -10,7 +10,7 @@ import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents
 import EditWebhookInteg from '../EditWebhookInteg'
 import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
-import { checkMappedFields, handleInput } from './WhatsAppCommonFunc'
+import { checkDisabledButton, checkMappedFields, handleInput } from './WhatsAppCommonFunc'
 import WhatsAppIntegLayout from './WhatsAppIntegLayout'
 
 function EditWhatsApp({ allIntegURL }) {
@@ -22,11 +22,6 @@ function EditWhatsApp({ allIntegURL }) {
   const formFields = useRecoilValue($formFields)
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
-
-  const disabledButton =
-    (whatsAppConf?.messageType === 'template' && whatsAppConf.templateName === '') ||
-    (whatsAppConf?.messageType === 'text' && whatsAppConf.body === '') ||
-    checkMappedFields(whatsAppConf)
 
   return (
     <div style={{ width: 900 }}>
@@ -73,7 +68,7 @@ function EditWhatsApp({ allIntegURL }) {
             setSnackbar
           })
         }
-        disabled={disabledButton || isLoading}
+        disabled={checkDisabledButton(whatsAppConf) || isLoading}
         isLoading={isLoading}
         dataConf={whatsAppConf}
         setDataConf={setWhatsAppConf}
