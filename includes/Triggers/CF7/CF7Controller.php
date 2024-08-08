@@ -8,6 +8,7 @@ use BitCode\FI\Flow\Flow;
 use WPCF7_FormTagsManager;
 use WPCF7_ShortcodeManager;
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 
 final class CF7Controller
 {
@@ -105,27 +106,11 @@ final class CF7Controller
 
     private static function getCustomHtmlFields($form_text)
     {
-        $fields = [];
+        if (Helper::proActionFeatExists('CF7', 'getAdvanceCustomHtmlFields')) {
+            $fields = apply_filters('btcbi_cf7_get_advance_custom_html_fields', $form_text);
 
-        preg_match_all('/<input[^>]*name="([^"]*)"[^>]*type="([^"]*)"|<input[^>]*type="([^"]*)"[^>]*name="([^"]*)"/is', $form_text, $inputMatches);
-        foreach ($inputMatches[0] as $index => $input) {
-            $name = !empty($inputMatches[1][$index]) ? $inputMatches[1][$index] : $inputMatches[4][$index];
-            $type = !empty($inputMatches[2][$index]) ? $inputMatches[2][$index] : $inputMatches[3][$index];
-
-            $fields[] = ['name'  => $name, 'type'  => $type, 'label' => $name];
+            return is_array($fields) ?  $fields : [];
         }
-
-        preg_match_all('/<select[^>]*name="([^"]*)"[^>]*>(.*?)<\/select>/is', $form_text, $selectMatches);
-        foreach ($selectMatches[1] as $name) {
-            $fields[] = ['name'  => $name, 'type'  => 'select', 'label' => $name];
-        }
-
-        preg_match_all('/<textarea[^>]*name="([^"]*)"[^>]*>(.*?)<\/textarea>/is', $form_text, $textareaMatches);
-        foreach ($textareaMatches[1] as $name) {
-            $fields[] = ['name'  => $name, 'type'  => 'textarea', 'label' => $name];
-        }
-
-        return $fields;
     }
 
     public static function handle_wpcf7_submit()

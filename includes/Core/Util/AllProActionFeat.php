@@ -15,6 +15,9 @@ final class AllProActionFeat
         'WC' => [
             ['feat_name' => 'getFlexibleCheckoutFields', 'class' => '\BitApps\BTCBI_PRO\Triggers\WC\WCHelperPro', 'pro_init_v' => '2.1.2'],
             ['feat_name' => 'getFlexibleCheckoutFieldsValue', 'class' => '\BitApps\BTCBI_PRO\Triggers\WC\WCHelperPro', 'pro_init_v' => '2.1.2']
+        ],
+        'CF7' => [
+            ['feat_name' => 'getAdvanceCustomHtmlFields', 'class' => '\BitApps\BTCBI_PRO\Triggers\CF7\CF7HelperPro', 'pro_init_v' => '2.1.6'],
         ]
     ];
 }
