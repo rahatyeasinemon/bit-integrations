@@ -223,7 +223,7 @@ final class Helper
                 wp_send_json_error(new WP_Error($triggerEntity, __('Index out of bounds or invalid', 'bit-integrations')));
             }
 
-            return self::extractValueFromPath($data[$currentPart], $parts);
+            return self::extractValueFromPath($data[$currentPart], $parts, $triggerEntity);
         }
 
         if (\is_object($data)) {
@@ -231,7 +231,7 @@ final class Helper
                 wp_send_json_error(new WP_Error($triggerEntity, __('Invalid path', 'bit-integrations')));
             }
 
-            return self::extractValueFromPath($data->{$currentPart}, $parts);
+            return self::extractValueFromPath($data->{$currentPart}, $parts, $triggerEntity);
         }
 
         wp_send_json_error(new WP_Error($triggerEntity, __('Invalid path', 'bit-integrations')));
