@@ -126,23 +126,37 @@ export const getDokanTopics = (confTmp, setConf, loading, setLoading) => {
 }
 
 export const dokanStaticFields = (selectedTask) => {
-  if (selectedTask === TASK_LIST_VALUES.USER_REPUTATION || selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP || selectedTask === TASK_LIST_VALUES.REMOVE_FROM_GROUP) {
-    return { staticFields: [{ key: 'email', label: 'User Email', required: true }], fieldMap: [{ formField: '', dokanField: 'email' }] }
-  } else if (selectedTask === TASK_LIST_VALUES.CREATE_TOPIC) {
+  if (selectedTask === TASK_LIST_VALUES.CREATE_VENDOR) {
     return {
       staticFields: [
-        { key: 'email', label: 'User Email', required: true },
-        { key: 'topic_title', label: 'Topic Title', required: true },
-        { key: 'topic_content', label: 'Topic Content', required: true },
+        { key: 'email', label: 'Email', required: true },
+        { key: 'user_login', label: 'Username', required: true },
+        { key: 'store_name', label: 'Store Name', required: true },
+        { key: 'first_name', label: 'First Name', required: false },
+        { key: 'last_name', label: 'Last Name', required: false },
+        { key: 'phone', label: 'Phone', required: false },
+        { key: 'payment_bank_ac_name', label: 'Account Name', required: false },
+        { key: 'payment_bank_ac_type', label: 'Account Type', required: false },
+        { key: 'payment_bank_ac_number', label: 'Account Number', required: false },
+        { key: 'payment_bank_bank_name', label: 'Bank Name', required: false },
+        { key: 'payment_bank_bank_addr', label: 'Bank Address', required: false },
+        { key: 'payment_bank_routing_number', label: 'Routing Number', required: false },
+        { key: 'payment_bank_iban', label: 'IBAN', required: false },
+        { key: 'payment_bank_swift', label: 'Swift', required: false },
+        { key: 'payment_paypal_email', label: 'PayPal Email', required: false },
+        { key: 'street_1', label: 'Street 1', required: false },
+        { key: 'street_2', label: 'Street 2', required: false },
+        { key: 'city', label: 'City', required: false },
+        { key: 'zip', label: 'Zip', required: false },
+        { key: 'state', label: 'State', required: false },
+        { key: 'country', label: 'Country', required: false },
       ],
       fieldMap: [
         { formField: '', dokanField: 'email' },
-        { formField: '', dokanField: 'topic_title' },
-        { formField: '', dokanField: 'topic_content' },
+        { formField: '', dokanField: 'user_login' },
+        { formField: '', dokanField: 'store_name' },
       ]
     }
-  } else if (selectedTask === TASK_LIST_VALUES.DELETE_TOPIC) {
-    return { staticFields: [{ key: 'topic_id', label: 'Topic ID', required: true }], fieldMap: [{ formField: '', dokanField: 'topic_id' }] }
   }
 
   return { staticFields: [], fieldMap: [] }

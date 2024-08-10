@@ -30,7 +30,7 @@ class DokanController
 
     public static function checkedDokanExists()
     {
-        if (!is_plugin_active('dokan/dokan.php')) {
+        if (!is_plugin_active('dokan-lite/dokan.php')) {
             wp_send_json_error(__('Dokan Plugin is not active or not installed', 'bit-integrations'), 400);
         } else {
             return true;
@@ -132,11 +132,8 @@ class DokanController
         $actions = $integrationDetails->actions;
         $selectedTopic = $integrationDetails->selectedTopic;
 
-        if (empty($fieldMap) || empty($selectedTask)
-        || ($selectedTask === 'userReputation' && empty($selectedReputation))
-        || ($selectedTask === 'addToGroup' && empty($selectedGroup))
-        || ($selectedTask === 'createTopic' && empty($selectedForum))) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('Fields map, task and group are required for Dokan', 'bit-integrations'));
+        if (empty($fieldMap) || empty($selectedTask)) {
+            return new WP_Error('REQ_FIELD_EMPTY', __('Fields map, task are required for Dokan', 'bit-integrations'));
         }
 
         $topicOptions = [

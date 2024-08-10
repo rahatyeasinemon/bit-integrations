@@ -1,13 +1,14 @@
 export const TASK_LIST_VALUES = {
+    CREATE_VENDOR: 'createVendor',
     USER_REPUTATION: 'userReputation',
     ADD_TO_GROUP: 'addToGroup',
     REMOVE_FROM_GROUP: 'removeFromGroup',
     CREATE_TOPIC: 'createTopic',
-    DELETE_TOPIC: 'deleteTopic'
-
+    DELETE_TOPIC: 'deleteTopic',
 }
 
 export const TASK_LIST = [
+    { label: 'Create A New Vendor', value: TASK_LIST_VALUES.CREATE_VENDOR },
     { label: 'Set User Reputation', value: TASK_LIST_VALUES.USER_REPUTATION },
     { label: 'Add User to Group', value: TASK_LIST_VALUES.ADD_TO_GROUP },
     { label: 'Remove User from Group', value: TASK_LIST_VALUES.REMOVE_FROM_GROUP },

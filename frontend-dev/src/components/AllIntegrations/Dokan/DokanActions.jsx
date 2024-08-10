@@ -27,11 +27,11 @@ export default function DokanActions({ dokanConf, setDokanConf, loading, setLoad
       setActionMdl({ show: 'forum' })
     } else if (type === 'tags') {
       setActionMdl({ show: 'tags' })
-    } else if (type === 'privateTopic') {
+    } else if (type === 'vendorCheckbox') {
       if (e.target.checked) {
-        newConf.actions.privateTopic = true
+        newConf.actions[e.target.value] = true
       } else {
-        delete newConf.actions.privateTopic
+        delete newConf.actions[e.target.value]
       }
     }
 
@@ -48,8 +48,46 @@ export default function DokanActions({ dokanConf, setDokanConf, loading, setLoad
     setDokanConf({ ...newConf })
   }
 
+  console.log(dokanConf)
+
   return (
     <div className="pos-rel d-flx w-8">
+      {dokanConf.selectedTask === TASK_LIST_VALUES.CREATE_VENDOR && (
+        <>
+          <TableCheckBox
+            checked={dokanConf.actions?.notifyVendor || false}
+            onChange={(e) => actionHandler(e, 'vendorCheckbox')}
+            className="wdt-200 mt-4 mr-2"
+            value="notifyVendor"
+            title={__('Notify Vendor', 'bit-integrations')}
+            subTitle={__('Send the vendor an email about their account', 'bit-integrations')}
+          />
+          <TableCheckBox
+            checked={dokanConf.actions?.enableSelling || false}
+            onChange={(e) => actionHandler(e, 'vendorCheckbox')}
+            className="wdt-200 mt-4 mr-2"
+            value="enableSelling"
+            title={__('Enable Selling', 'bit-integrations')}
+            subTitle={__('Enable selling for this vendor', 'bit-integrations')}
+          />
+          <TableCheckBox
+            checked={dokanConf.actions?.publishProduct || false}
+            onChange={(e) => actionHandler(e, 'vendorCheckbox')}
+            className="wdt-200 mt-4 mr-2"
+            value="publishProduct"
+            title={__('Publish Product Directly', 'bit-integrations')}
+            subTitle={__('Publish product of this vendor directly', 'bit-integrations')}
+          />
+          <TableCheckBox
+            checked={dokanConf.actions?.featureVendor || false}
+            onChange={(e) => actionHandler(e, 'vendorCheckbox')}
+            className="wdt-200 mt-4 mr-2"
+            value="featureVendor"
+            title={__(' Make Vendor Featured', 'bit-integrations')}
+            subTitle={__('Make this vendor featured', 'bit-integrations')}
+          />
+        </>
+      )}
       {dokanConf.selectedTask === TASK_LIST_VALUES.USER_REPUTATION && (
         <>
           <TableCheckBox

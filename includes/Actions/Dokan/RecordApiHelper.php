@@ -21,6 +21,38 @@ class RecordApiHelper
         $this->_integrationID = $integId;
     }
 
+    public function createVendor($finalData)
+    {
+        if (empty($finalData['email']) || empty($finalData['user_login']) || empty($finalData['store_name'])) {
+            return ['success' => false, 'message' => 'Required field email, username or store name is empty!', 'code' => 400];
+        }
+
+        $paymentBankKeys = ['payment_bank_ac_name', 'payment_bank_ac_type', 'payment_bank_ac_number', 'payment_bank_bank_name', 'payment_bank_bank_addr',
+            'payment_bank_routing_number', 'payment_bank_iban', 'payment_bank_swift'];
+
+        $addressKeys = ['street_1', 'street_2', 'city', 'zip', 'state', 'country'];
+
+        $data = [];
+
+        error_log(print_r(['final data' => $finalData], true));
+
+        foreach ($finalData as $key => $value) {
+            if ($key === 'payment_paypal_email') {
+                $data['payment']['paypal'] = ['email' => $value];
+            } elseif (\in_array($key, $paymentBankKeys)) {
+                $data['payment']['bank'][str_replace('payment_bank_', '', $key)] = $value;
+            } elseif (\in_array($key, $addressKeys)) {
+                $data['address'][$key] = $value;
+            } else {
+                $data[$key] = $value;
+            }
+        }
+
+        $store = dokan()->vendor->create($data);
+
+        error_log(print_r(['data' => $data, 'store' => $store], true));
+    }
+
     public function setUserReputation($finalData, $selectedReputation)
     {
         if (empty($finalData['email']) || empty($selectedReputation)) {
@@ -226,6 +258,9 @@ class RecordApiHelper
 
         $type = $typeName = '';
 
+        if ($selectedTask === 'createVendor') {
+            $response = $this->createVendor($finalData);
+        }
         if ($selectedTask === 'userReputation') {
             $response = $this->setUserReputation($finalData, $selectedReputation);
             $type = 'Reputation';
