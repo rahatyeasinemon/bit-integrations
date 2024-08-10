@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.1
 Requires PHP: 7.0
-Stable tag: 2.1.7
+Stable tag: 2.1.8
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 70+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -75,6 +75,7 @@ https://youtu.be/eFuficjF_F4
 * [**GiveWP**](https://wordpress.org/plugins/give/)
 * [**Gutena Forms**](https://wordpress.org/plugins/gutena-forms/)
 * [**Happyforms**](https://wordpress.org/plugins/happyforms/)
+* [**Hustle**](https://wordpress.org/plugins/wordpress-popup/)
 * [**JetFormBuilder**](https://wordpress.org/plugins/jetformbuilder/)
 * [**JetEngine**](https://crocoblock.com/plugins/jetengine/)
 * [**Kali Forms**](https://wordpress.org/plugins/kali-forms/)
@@ -88,6 +89,7 @@ https://youtu.be/eFuficjF_F4
 * [**MailPoet**](https://wordpress.org/plugins/mailpoet/)
 * [**Mailster**](https://wordpress.org/plugins/mailster/)
 * [**Ninja Forms**](https://wordpress.org/plugins/ninja-forms/)
+* [**Popup Maker**](https://wordpress.org/plugins/popup-maker/)
 * [**Piotnet Forms**](https://wordpress.org/plugins/piotnetforms/)
 * [**Paid Memberships Pro**](https://wordpress.org/plugins/paid-memberships-pro/)
 * [**Piotnet Addons For Elementor**](https://wordpress.org/plugins/piotnet-addons-for-elementor/)
@@ -665,6 +667,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 
 * [**Happy Forms**](https://bitapps.pro/docs/bit-integrations/trigger/happy-forms/)
 
+* [**Hustle**](https://bitapps.pro/docs/bit-integrations/trigger/hustle-integration/)
+
 * [**JetFormBuilder**](https://bitapps.pro/docs/bit-integrations/trigger/jetformbuilder/)
 
 * [**Kadence Blocks**](https://bitapps.pro/docs/bit-integrations/trigger/kadence-blocks-form/)
@@ -686,6 +690,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 * [**Piotnet Addon For Elementor**](https://bitapps.pro/docs/bit-integrations/trigger/piotnet-addon-for-elementor/)
 
 * [**Piotnet Forms**](https://bitapps.pro/docs/bit-integrations/trigger/piotnet-forms/)
+
+* [**Popup Maker**](https://bitapps.pro/docs/bit-integrations/trigger/popup-maker-integration/)
 
 * [**Rafflepress**](https://bitapps.pro/docs/bit-integrations/trigger/rafflepress/)
 
@@ -974,6 +980,23 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.1.8  =
+_Release Date -1st August 2024_
+
+- **New Trigger :**
+  - Popup Maker – Boost Sales, Conversions, Optins, Subscribers with the Ultimate WP Popups Builder (Pro)
+  - Hustle – Email Marketing, Lead Generation, Optins, Popups (Pro)
+  
+- **New Features :**
+  - WooCommerce: Product Module: ACF fields added
+
+- **New Improvements :**
+  - Campaign Monitor: Ajax error removed from existing email finder
+
+- **New Fixes :**
+  - Google Calender: AllDayEvent issue fixed
+  - GramiPress: DB query table prefix issue fixed (Pro)
 
 = 2.1.7  =
 _Release Date -28th July 2024_

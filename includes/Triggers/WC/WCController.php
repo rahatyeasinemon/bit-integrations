@@ -2,12 +2,12 @@
 
 namespace BitCode\FI\Triggers\WC;
 
-use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Flow\Flow;
 use WC_Booking;
 use WC_Checkout;
 use WC_Product_Simple;
+use BitCode\FI\Flow\Flow;
 use WC_Subscriptions_Product;
+use BitCode\FI\Core\Util\Helper;
 
 final class WCController
 {
@@ -316,7 +316,7 @@ final class WCController
                 ],
             ];
 
-            $acfFieldGroups = WCHelper::acfGetFieldGroups(['product']);
+            $acfFieldGroups = Helper::acfGetFieldGroups(['product']);
             foreach ($acfFieldGroups as $group) {
                 $acfFields = acf_get_fields($group['ID']);
 
@@ -861,7 +861,7 @@ final class WCController
     {
         $productData = wc_get_product($post_id);
         $data = self::accessProductData($productData);
-        $acfFieldGroups = WCHelper::acfGetFieldGroups(['product']);
+        $acfFieldGroups = Helper::acfGetFieldGroups(['product']);
 
         foreach ($acfFieldGroups as $group) {
             $acfFields = acf_get_fields($group['ID']);
@@ -879,7 +879,7 @@ final class WCController
     {
         $productData = wc_get_product($post_id);
         $data = self::accessProductData($productData);
-        $acfFieldGroups = WCHelper::acfGetFieldGroups(['product']);
+        $acfFieldGroups = Helper::acfGetFieldGroups(['product']);
 
         foreach ($acfFieldGroups as $group) {
             $acfFields = acf_get_fields($group['ID']);
@@ -1056,7 +1056,7 @@ final class WCController
                 'product_sku'        => $productSku,
                 'product_unit_price' => $product_unit_price,
             ];
-            $acfFieldGroups = WCHelper::acfGetFieldGroups(['product']);
+            $acfFieldGroups = Helper::acfGetFieldGroups(['product']);
 
             foreach ($acfFieldGroups as $group) {
                 $acfFields = acf_get_fields($group['ID']);
@@ -1082,7 +1082,7 @@ final class WCController
         $order = wc_get_order($order_id);
         $data = self::accessOrderData($order);
         $triggerd = [8, 9, 11, 12, 13, 14, 15, 16];
-        $acfFieldGroups = WCHelper::acfGetFieldGroups(['shop_order']);
+        $acfFieldGroups = Helper::acfGetFieldGroups(['shop_order']);
         $checkoutFields = WC()->checkout()->get_checkout_fields();
 
         foreach ($acfFieldGroups as $group) {
@@ -1203,7 +1203,7 @@ final class WCController
         }
 
         $data = self::accessOrderData($order);
-        $acfFieldGroups = WCHelper::acfGetFieldGroups(['product', 'shop_order']);
+        $acfFieldGroups = Helper::acfGetFieldGroups(['product', 'shop_order']);
 
         foreach ($acfFieldGroups as $group) {
             $acfFields = acf_get_fields($group['ID']);
@@ -1272,7 +1272,7 @@ final class WCController
                 }
 
                 $data = self::accessOrderData($order);
-                $acfFieldGroups = WCHelper::acfGetFieldGroups(['product', 'shop_order']);
+                $acfFieldGroups = Helper::acfGetFieldGroups(['product', 'shop_order']);
 
                 foreach ($acfFieldGroups as $group) {
                     $acfFields = acf_get_fields($group['ID']);

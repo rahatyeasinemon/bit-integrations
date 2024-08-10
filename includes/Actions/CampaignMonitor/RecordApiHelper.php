@@ -78,7 +78,6 @@ class RecordApiHelper
                 }
             } else {
                 LogHandler::save($this->_integrationID, ['type' => 'Subscriber', 'type_name' => 'Adding Subscriber'], 'error', 'Email address already exists in the system');
-                wp_send_json_error('Email address already exists in the system', 400);
             }
         }
 
@@ -92,7 +91,6 @@ class RecordApiHelper
 
         foreach ($finalData as $key => $value) {
             if (stripos($key, '[') > -1) {
-
                 $customParams[]
                 = (object) [
                     'Key'   => $key,
