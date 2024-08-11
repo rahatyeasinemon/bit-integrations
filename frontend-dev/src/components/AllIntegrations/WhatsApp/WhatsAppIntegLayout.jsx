@@ -34,21 +34,23 @@ export default function WhatsAppIntegLayout({
       create(prevConf, (draftConf) => {
         draftConf[name] = value
 
-        if (name === 'messageType' && value === 'text') {
-          draftConf['taskNote'] = textMsgNote
-        } else if (name === 'messageType' && value === 'media') {
-          draftConf['taskNote'] = textMediaNote
-          draftConf['media_field_map'] = [{ formField: '', whatsAppFormField: '' }]
-          draftConf['media_fields'] = [
-            { key: 'caption', label: 'Caption', required: false },
-            { key: 'filename', label: 'FileName', required: false }
-          ]
-        } else if (name === 'messageType' && value === 'contact') {
-          delete draftConf?.taskNote
-          draftConf['contact_field_map'] = generateMappedField(contactFields)
-          draftConf['contact_fields'] = contactFields
-        } else if (name === 'messageType') {
-          delete draftConf?.taskNote
+        if (isPro) {
+          if (name === 'messageType' && value === 'text') {
+            draftConf['taskNote'] = textMsgNote
+          } else if (name === 'messageType' && value === 'media') {
+            draftConf['taskNote'] = textMediaNote
+            draftConf['media_field_map'] = [{ formField: '', whatsAppFormField: '' }]
+            draftConf['media_fields'] = [
+              { key: 'caption', label: 'Caption', required: false },
+              { key: 'filename', label: 'FileName', required: false }
+            ]
+          } else if (name === 'messageType' && value === 'contact') {
+            delete draftConf?.taskNote
+            draftConf['contact_field_map'] = generateMappedField(contactFields)
+            draftConf['contact_fields'] = contactFields
+          } else if (name === 'messageType') {
+            delete draftConf?.taskNote
+          }
         }
       })
     )
@@ -286,29 +288,29 @@ const contactFields = [
   { key: 'first_name', label: 'First Name', required: true },
   { key: 'last_name', label: 'Last Name', required: false },
   { key: 'middle_name', label: 'Middle Name', required: false },
-  { key: 'suffix', label: 'Name Suffix', required: false },
-  { key: 'prefix', label: 'Name Prefix', required: false },
+  { key: 'suffix', label: 'Suffix', required: false },
+  { key: 'prefix', label: 'Prefix', required: false },
   { key: 'birthday', label: 'Birthday (YEAR_MONTH_DAY)', required: false },
-  { key: 'company', label: 'Name of the contact company', required: false },
-  { key: 'department', label: 'Name of the contact department', required: false },
-  { key: 'title', label: 'Contact business title', required: false },
-  { key: 'HOME_email', label: 'Home Email', required: false },
-  { key: 'WORK_email', label: 'Work Email', required: false },
-  { key: 'CELL_phone', label: 'Cell Phone Number', required: false },
-  { key: 'MAIN_phone', label: 'Main Phone Number', required: false },
-  { key: 'IPHONE_phone', label: 'IPhone Phone Number', required: false },
-  { key: 'HOME_phone', label: 'Home Phone Number', required: false },
-  { key: 'WORK_phone', label: 'Work Phone Number', required: false },
-  { key: 'HOME_street', label: 'Home Street', required: false },
-  { key: 'HOME_city', label: 'Home City', required: false },
-  { key: 'HOME_state', label: 'Home State', required: false },
-  { key: 'HOME_zip', label: 'Home Zip', required: false },
-  { key: 'HOME_country', label: 'Home Country', required: false },
-  { key: 'HOME_country_code', label: 'Home Country Code', required: false },
-  { key: 'WORK_street', label: 'Work Street', required: false },
-  { key: 'WORK_city', label: 'Work City', required: false },
-  { key: 'WORK_state', label: 'Work State', required: false },
-  { key: 'WORK_zip', label: 'Work Zip', required: false },
-  { key: 'WORK_country', label: 'Work Country', required: false },
-  { key: 'WORK_country_code', label: 'Work Country Code', required: false }
+  { key: 'company', label: 'Company', required: false },
+  { key: 'department', label: 'Department', required: false },
+  { key: 'title', label: 'Business title', required: false },
+  { key: 'HOME_email', label: ' Email (Home)', required: false },
+  { key: 'WORK_email', label: ' Email (Work)', required: false },
+  { key: 'CELL_phone', label: 'Phone Number (Cell)', required: false },
+  { key: 'MAIN_phone', label: 'Phone Number (Main)', required: false },
+  { key: 'IPHONE_phone', label: 'Phone Number (IPhone)', required: false },
+  { key: 'HOME_phone', label: 'Phone Number (Home)', required: false },
+  { key: 'WORK_phone', label: 'Phone Number (Work)', required: false },
+  { key: 'HOME_street', label: 'Street (Home)', required: false },
+  { key: 'HOME_city', label: 'City (Home)', required: false },
+  { key: 'HOME_state', label: 'State (Home)', required: false },
+  { key: 'HOME_zip', label: 'Zip (Home)', required: false },
+  { key: 'HOME_country', label: 'Country (Home)', required: false },
+  { key: 'HOME_country_code', label: 'Country Code (Home)', required: false },
+  { key: 'WORK_street', label: 'Street (Work)', required: false },
+  { key: 'WORK_city', label: 'City (Work)', required: false },
+  { key: 'WORK_state', label: 'State (Work)', required: false },
+  { key: 'WORK_zip', label: 'Zip (Work)', required: false },
+  { key: 'WORK_country', label: 'Country (Work)', required: false },
+  { key: 'WORK_country_code', label: 'Country Code (Work)', required: false }
 ]
