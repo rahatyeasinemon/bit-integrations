@@ -244,3 +244,34 @@ const textMediaNote = `<h5>Caption</h5>
                 <li>Describes the <strong>FileName</strong> for the specific <strong>document</strong>.</li>
                 <li>The extension of the filename will specify what format the document is displayed as in WhatsApp.</li>
             </ul>`
+
+const contactFields = [
+  { key: 'first_name', label: 'First Name', required: true },
+  { key: 'last_name', label: 'Last Name', required: false },
+  { key: 'middle_name', label: 'Middle Name', required: false },
+  { key: 'suffix', label: 'Name Suffix', required: false },
+  { key: 'prefix', label: 'Name Prefix', required: false },
+  { key: 'birthday', label: 'Birthday (YEAR_MONTH_DAY)', required: false },
+  { key: 'company', label: 'Name of the contact company', required: false },
+  { key: 'department', label: 'Name of the contact department', required: false },
+  { key: 'title', label: 'Contact business title', required: false },
+  { key: 'HOME_email', label: 'Home Email', required: false },
+  { key: 'WORK_email', label: 'Work Email', required: false },
+  { key: 'CELL_phone', label: 'Cell Phone Number', required: false },
+  { key: 'MAIN_phone', label: 'Main Phone Number', required: false },
+  { key: 'IPHONE_phone', label: 'IPhone Phone Number', required: false },
+  { key: 'HOME_phone', label: 'Home Phone Number', required: false },
+  { key: 'WORK_phone', label: 'Work Phone Number', required: false },
+  { key: 'HOME_street', label: 'Home Street', required: false },
+  { key: 'HOME_city', label: 'Home City', required: false },
+  { key: 'HOME_state', label: 'Home State', required: false },
+  { key: 'HOME_zip', label: 'Home Zip', required: false },
+  { key: 'HOME_country', label: 'Home Country', required: false },
+  { key: 'HOME_country_code', label: 'Home Country Code', required: false },
+  { key: 'WORK_street', label: 'Work Street', required: false },
+  { key: 'WORK_city', label: 'Work City', required: false },
+  { key: 'WORK_state', label: 'Work State', required: false },
+  { key: 'WORK_zip', label: 'Work Zip', required: false },
+  { key: 'WORK_country', label: 'Work Country', required: false },
+  { key: 'WORK_country_code', label: 'Work Country Code', required: false }
+]
