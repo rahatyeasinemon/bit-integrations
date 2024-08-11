@@ -66,11 +66,7 @@ class RecordApiHelper
             $textBody = $this->_integrationDetails->body;
             $response = apply_filters('btcbi_whatsapp_send_text_messages', $textBody, $fieldValues, $numberId, $token, $phoneNumber);
 
-            if (isset($response->messages[0]->id) || isset($response->error) || is_wp_error($response)) {
-                return $response;
-            }
-
-            return (object) ['error' => 'Bit Integration Pro plugin is not installed or activate'];
+            return static::handleFilterResponse($response);
         }
 
         return (object) ['error' => 'Bit Integration Pro plugin is not installed or activate'];
@@ -84,12 +80,23 @@ class RecordApiHelper
     ) {
         if (Helper::proActionFeatExists('WhatsApp', 'sendMediaMessages')) {
             $response = apply_filters('btcbi_whatsapp_send_media_messages', $this->_integrationDetails, $fieldValues, $numberId, $token, $phoneNumber);
-            
-            if (isset($response->messages[0]->id) || isset($response->error) || is_wp_error($response)) {
-                return $response;
-            }
-            
-            return (object) ['error' => 'Bit Integration Pro plugin is not installed or activate'];
+
+            return static::handleFilterResponse($response);
+        }
+
+        return (object) ['error' => 'Bit Integration Pro plugin is not installed or activate'];
+    }
+
+    public function sendMessageWithContact(
+        $numberId,
+        $fieldValues,
+        $token,
+        $phoneNumber
+    ) {
+        if (Helper::proActionFeatExists('WhatsApp', 'sendContactMessages')) {
+            $response = apply_filters('btcbi_whatsapp_send_contact_messages', $this->_integrationDetails, $fieldValues, $numberId, $token, $phoneNumber);
+
+            return static::handleFilterResponse($response);
         }
 
         return (object) ['error' => 'Bit Integration Pro plugin is not installed or activate'];
@@ -131,6 +138,9 @@ class RecordApiHelper
         } elseif ($messageType === 'media') {
             $apiResponse = $this->sendMessageWithMedia($numberId, $fieldValues, $token, $phoneNumber);
             $typeName = 'Media Message';
+        } elseif ($messageType === 'contact') {
+            $apiResponse = $this->sendMessageWithContact($numberId, $fieldValues, $token, $phoneNumber);
+            $typeName = 'Media Message';
         }
 
         if (property_exists($apiResponse, 'error')) {
@@ -140,6 +150,15 @@ class RecordApiHelper
         }
 
         return $apiResponse;
+    }
+
+    private function handleFilterResponse($response)
+    {
+        if (isset($response->messages[0]->id) || isset($response->error) || is_wp_error($response)) {
+            return $response;
+        }
+
+        return (object) ['error' => 'Bit Integration Pro plugin is not installed or activate'];
     }
 
     private static function setHeaders($token)
