@@ -48,8 +48,6 @@ export default function DokanActions({ dokanConf, setDokanConf, loading, setLoad
     setDokanConf({ ...newConf })
   }
 
-  console.log(dokanConf)
-
   return (
     <div className="pos-rel d-flx w-8">
       {dokanConf.selectedTask === TASK_LIST_VALUES.CREATE_VENDOR && (

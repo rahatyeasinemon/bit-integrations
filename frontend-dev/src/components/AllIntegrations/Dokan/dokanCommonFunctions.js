@@ -125,6 +125,31 @@ export const getDokanTopics = (confTmp, setConf, loading, setLoading) => {
     })
 }
 
+export const getDokanEUFields = (confTmp, setConf, loading, setLoading) => {
+  toast.success('Fields fetched successfully.')
+  setLoading({ ...loading, euFields: true })
+
+  bitsFetch({}, 'dokan_fetch_eu_fields')
+    .then(result => {
+      if (result.success && result.data) {
+        const newConf = { ...confTmp }
+
+        if (newConf.staticFields) {
+          const defaultFields = newConf.staticFields
+          const mergedFields = defaultFields.concat(result.data)
+          newConf.staticFields = mergedFields
+        }
+
+        setConf(newConf)
+        setLoading({ ...loading, euFields: false })
+        toast.success(__('EU Compliance Fields fetched successfully', 'bit-integrations'))
+        return
+      }
+      setLoading({ ...loading, euFields: false })
+      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+    })
+}
+
 export const dokanStaticFields = (selectedTask) => {
   if (selectedTask === TASK_LIST_VALUES.CREATE_VENDOR) {
     return {

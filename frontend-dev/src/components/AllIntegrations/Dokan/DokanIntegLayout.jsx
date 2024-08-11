@@ -6,7 +6,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 import DokanFieldMap from './DokanFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
-import { getDokanTopics, dokanStaticFields } from './dokanCommonFunctions'
+import { getDokanTopics, dokanStaticFields, getDokanEUFields } from './dokanCommonFunctions'
 import { TASK_LIST, TASK_LIST_VALUES } from './dokanConstants'
 import Loader from '../../Loaders/Loader'
 import TableCheckBox from '../../Utilities/TableCheckBox'
@@ -24,12 +24,13 @@ export default function DokanIntegLayout({
     newConf.selectedTask = val
 
     if (val) {
-      if (val === TASK_LIST_VALUES.DELETE_TOPIC) {
-        getDokanTopics(newConf, setDokanConf, loading, setLoading)
-      }
       const fieldsAndFieldMap = dokanStaticFields(val)
       newConf.staticFields = fieldsAndFieldMap.staticFields
       newConf.field_map = fieldsAndFieldMap.fieldMap
+
+      if (val === TASK_LIST_VALUES.CREATE_VENDOR) {
+        getDokanEUFields(newConf, setDokanConf, loading, setLoading)
+      }
     } else {
       newConf.staticFields = []
       newConf.field_map = []
@@ -73,7 +74,7 @@ export default function DokanIntegLayout({
         <br />
         {dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_TOPIC && (
           <>
-            {loading.topics && (
+            {loading.euFields && (
               <Loader
                 style={{
                   display: 'flex',
@@ -124,6 +125,17 @@ export default function DokanIntegLayout({
           (dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_TOPIC &&
             dokanConf.deleteTopicFieldMap)) && (
           <>
+            {loading.euFields && (
+              <Loader
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 45,
+                  transform: 'scale(0.5)'
+                }}
+              />
+            )}
             <div className="mt-5">
               <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
             </div>

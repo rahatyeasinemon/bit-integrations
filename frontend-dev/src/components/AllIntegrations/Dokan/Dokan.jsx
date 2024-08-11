@@ -22,7 +22,8 @@ function Dokan({ formFields, setFlow, flow, allIntegURL }) {
     reputation: false,
     groups: false,
     forums: false,
-    topics: false
+    topics: false,
+    euFields: false
   })
 
   const [step, setStep] = useState(1)

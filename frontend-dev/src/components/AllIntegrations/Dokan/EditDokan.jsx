@@ -23,7 +23,8 @@ function EditDokan({ allIntegURL }) {
     auth: false,
     reputation: false,
     forums: false,
-    topics: false
+    topics: false,
+    euFields: false
   })
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)

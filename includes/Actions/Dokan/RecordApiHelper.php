@@ -21,7 +21,7 @@ class RecordApiHelper
         $this->_integrationID = $integId;
     }
 
-    public function createVendor($finalData)
+    public function createVendor($finalData, $actions)
     {
         if (empty($finalData['email']) || empty($finalData['user_login']) || empty($finalData['store_name'])) {
             return ['success' => false, 'message' => 'Required field email, username or store name is empty!', 'code' => 400];
@@ -31,7 +31,7 @@ class RecordApiHelper
             'payment_bank_routing_number', 'payment_bank_iban', 'payment_bank_swift'];
 
         $addressKeys = ['street_1', 'street_2', 'city', 'zip', 'state', 'country'];
-
+        $euFieldsKey = ['dokan_company_name', 'dokan_company_id_number', 'dokan_vat_number', 'dokan_bank_name', 'dokan_bank_iban'];
         $data = [];
 
         error_log(print_r(['final data' => $finalData], true));
@@ -43,14 +43,44 @@ class RecordApiHelper
                 $data['payment']['bank'][str_replace('payment_bank_', '', $key)] = $value;
             } elseif (\in_array($key, $addressKeys)) {
                 $data['address'][$key] = $value;
+            } elseif (\in_array($key, $euFieldsKey)) {
+                $data[str_replace('dokan_', '', $key)] = $value;
             } else {
                 $data[$key] = $value;
             }
         }
 
+        if (!empty($actions)) {
+            if (isset($actions['notifyVendor'])) {
+                $data['notify_vendor'] = true;
+            } else {
+                $data['notify_vendor'] = false;
+            }
+
+            if (isset($actions['enableSelling'])) {
+                $data['enabled'] = true;
+            }
+
+            if (isset($actions['publishProduct'])) {
+                $data['trusted'] = true;
+            }
+
+            if (isset($actions['featureVendor'])) {
+                $data['featured'] = true;
+            }
+        } else {
+            $data['notify_vendor'] = false;
+        }
+
         $store = dokan()->vendor->create($data);
 
-        error_log(print_r(['data' => $data, 'store' => $store], true));
+        if (is_wp_error($store)) {
+            return ['success' => false, 'message' => $store->get_error_message(), 'code' => 400];
+        }
+
+        error_log(print_r(['data' => $data], true));
+
+        return ['success' => true, 'message' => 'Vendor created successfully.'];
     }
 
     public function setUserReputation($finalData, $selectedReputation)
@@ -248,7 +278,7 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedTask, $selectedReputation, $selectedGroup, $topicOptions, $selectedTopic)
+    public function execute($fieldValues, $fieldMap, $selectedTask, $actions)
     {
         if (isset($fieldMap[0]) && empty($fieldMap[0]->formField)) {
             $finalData = [];
@@ -259,28 +289,9 @@ class RecordApiHelper
         $type = $typeName = '';
 
         if ($selectedTask === 'createVendor') {
-            $response = $this->createVendor($finalData);
-        }
-        if ($selectedTask === 'userReputation') {
-            $response = $this->setUserReputation($finalData, $selectedReputation);
-            $type = 'Reputation';
-            $typeName = 'Set User Reputation';
-        } elseif ($selectedTask === 'addToGroup') {
-            $response = $this->addToGroup($finalData, $selectedGroup);
-            $type = 'Group';
-            $typeName = 'Add User to Group';
-        } elseif ($selectedTask === 'removeFromGroup') {
-            $response = $this->removeFromGroup($finalData, $selectedGroup);
-            $type = 'Group';
-            $typeName = 'Remove User from Group';
-        } elseif ($selectedTask === 'createTopic') {
-            $response = $this->createTopic($finalData, $topicOptions);
-            $type = 'Topic';
-            $typeName = 'Create Topic';
-        } elseif ($selectedTask === 'deleteTopic') {
-            $response = $this->deleteTopic($finalData, $selectedTopic);
-            $type = 'Topic';
-            $typeName = 'Delete Topic';
+            $response = $this->createVendor($finalData, $actions);
+            $type = 'Vendor';
+            $typeName = 'Create Vendor';
         }
 
         if ($response['success']) {
