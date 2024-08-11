@@ -100,9 +100,9 @@ export const generateMappedField = (whatsAppFields) => {
     : [{ formField: '', whatsAppFormField: '' }]
 }
 
-export const checkMappedFields = (whatsAppConf) => {
-  const mappedFleld = whatsAppConf.field_map
-    ? whatsAppConf.field_map.filter((mapped) => mapped.formField && mapped.whatsAppFormField)
+export const checkMappedFields = (whatsAppFields) => {
+  const mappedFleld = whatsAppFields
+    ? whatsAppFields.filter((mapped) => mapped.formField && mapped.whatsAppFormField)
     : []
   if (mappedFleld.length > 0) {
     return false
@@ -111,25 +111,32 @@ export const checkMappedFields = (whatsAppConf) => {
 }
 
 export const checkDisabledButton = (whatsAppConf) => {
+  let check = false
+
   if (whatsAppConf?.messageType === '') {
-    return true
+    check = true
   } else if (whatsAppConf?.messageType === 'template' && whatsAppConf.templateName === '') {
-    return true
+    check = true
   } else if (whatsAppConf?.messageType === 'text' && whatsAppConf.body === '') {
-    return true
+    check = true
   } else if (
     whatsAppConf?.messageType === 'media' &&
     (whatsAppConf.upload_field === '' || whatsAppConf.mediaType === '')
   ) {
-    return true
-  } else {
-    return checkMappedFields(whatsAppConf)
+    check = true
+  } else if (
+    whatsAppConf?.messageType === 'contact' &&
+    checkMappedFields(whatsAppConf.contact_field_map)
+  ) {
+    check = true
   }
+
+  return checkMappedFields(whatsAppConf.field_map) || check
 }
 
 export const addFieldMap = (i, confTmp, setConf, mapKey = 'field_map') => {
   const newConf = { ...confTmp }
-  newConf[mapKey].splice(i, 0, {})
+  newConf[mapKey].splice(i + 1, 0, {})
   setConf({ ...newConf })
 }
 

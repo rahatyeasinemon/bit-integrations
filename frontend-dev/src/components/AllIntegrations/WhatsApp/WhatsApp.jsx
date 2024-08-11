@@ -10,12 +10,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 // import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 // import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import WhatsAppAuthorization from './WhatsAppAuthorization'
-import {
-  handleInput,
-  checkMappedFields,
-  generateMappedField,
-  checkDisabledButton
-} from './WhatsAppCommonFunc'
+import { handleInput, generateMappedField, checkDisabledButton } from './WhatsAppCommonFunc'
 import WhatsAppIntegLayout from './WhatsAppIntegLayout'
 import { useRecoilValue } from 'recoil'
 import { $btcbi } from '../../../GlobalStates'
@@ -83,7 +78,7 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
 
-    if (checkMappedFields(whatsAppConf)) {
+    if (checkDisabledButton(whatsAppConf)) {
       setSnackbar({ show: true, msg: 'Please map fields to continue.' })
       return
     }
