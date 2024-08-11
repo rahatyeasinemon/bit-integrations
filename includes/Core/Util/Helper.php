@@ -6,6 +6,7 @@ use DateTime;
 use stdClass;
 use WP_Error;
 use Exception;
+use DateTimeZone;
 use BitCode\FI\Triggers\TriggerController;
 
 /**
@@ -41,16 +42,20 @@ final class Helper
         return $data;
     }
 
-    public static function formatToISO8601($dateString)
+    public static function formatToISO8601($dateString, $timezone = 'UTC')
     {
         try {
+            $timezoneObj = new DateTimeZone($timezone);
+
             if (is_numeric($dateString)) {
                 if ($dateString > 10000000000) {
                     $dateString = $dateString / 1000;
                 }
+
                 $date = new DateTime("@{$dateString}");
+                $date->setTimezone($timezoneObj);
             } else {
-                $date = new DateTime($dateString);
+                $date = new DateTime($dateString, $timezoneObj);
             }
 
             return $date->format(DateTime::ATOM); // DateTime::ATOM is the ISO-8601 format
