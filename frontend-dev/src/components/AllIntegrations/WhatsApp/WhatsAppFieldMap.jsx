@@ -91,7 +91,8 @@ export default function WhatsAppFieldMap({
             )}
           </select>
         </div>
-        {i >= requiredFlds.length && (
+
+        {requiredFlds[0]?.key !== 'phone' && (
           <>
             <button
               onClick={() => addFieldMap(i, whatsAppConf, setWhatsAppConf, mapKey)}

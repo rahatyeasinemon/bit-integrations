@@ -75,16 +75,21 @@ export const getallTemplates = (confTmp, setConf, setIsLoading, setSnackbar) => 
   setIsLoading(true)
   bitsFetch(requestParams, 'whats_app_all_template').then((result) => {
     setIsLoading(false)
-    if (result && result.success) {
+    if (result?.data?.error?.message) {
+      console.log(result?.data?.error?.message)
+      setSnackbar({
+        show: true,
+        msg: __(result?.data?.error?.message, 'bit-integrations')
+      })
+    } else if (result && result.success) {
       setConf((prevConf) =>
         create(prevConf, (draftConf) => {
-          draftConf['allTemplates'] = result.data
+          draftConf['allTemplates'] = result?.data || []
         })
       )
-      setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
+      setSnackbar({ show: true, msg: __('Template Fetched Successfully', 'bit-integrations') })
       return
     }
-    setSnackbar({ show: true, msg: result?.data || __('Authorized failed', 'bit-integrations') })
   })
 }
 

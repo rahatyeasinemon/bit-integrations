@@ -74,7 +74,8 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
     field_map: generateMappedField(whatsAppFields),
     whatsAppFields,
     address_field: [],
-    actions: {}
+    actions: {},
+    allTemplates: []
   })
 
   const nextPage = () => {

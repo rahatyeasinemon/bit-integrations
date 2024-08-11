@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import TinyMCE from '../../Utilities/TinyMCE'
-import { getallTemplates } from './WhatsAppCommonFunc'
+import { generateMappedField, getallTemplates } from './WhatsAppCommonFunc'
 import WhatsAppFieldMap from './WhatsAppFieldMap'
 import Note from '../../Utilities/Note'
 import { useRecoilValue } from 'recoil'
@@ -43,6 +43,10 @@ export default function WhatsAppIntegLayout({
             { key: 'caption', label: 'Caption', required: false },
             { key: 'filename', label: 'FileName', required: false }
           ]
+        } else if (name === 'messageType' && value === 'contact') {
+          delete draftConf?.taskNote
+          draftConf['contact_field_map'] = generateMappedField(contactFields)
+          draftConf['contact_fields'] = contactFields
         } else if (name === 'messageType') {
           delete draftConf?.taskNote
         }
@@ -202,6 +206,39 @@ export default function WhatsAppIntegLayout({
               setWhatsAppConf={setWhatsAppConf}
               setSnackbar={setSnackbar}
               mapKey="media_field_map"
+            />
+          ))}
+        </>
+      )}
+
+      {whatsAppConf.messageType === 'contact' && isPro && whatsAppConf?.contact_fields && (
+        <>
+          <br />
+          <div className="mt-5">
+            <b className="wdt-100">{__('Contact Field Map', 'bit-integrations')}</b>
+          </div>
+          <div className="btcd-hr mt-1" />
+          <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
+            <div className="txt-dp">
+              <b>{__('Form Fields', 'bit-integrations')}</b>
+            </div>
+            <div className="txt-dp">
+              <b>{__('WhatsApp Fields', 'bit-integrations')}</b>
+            </div>
+          </div>
+          <br />
+
+          {whatsAppConf?.contact_field_map?.map((itm, i) => (
+            <WhatsAppFieldMap
+              key={`rp-m-${i + 9}`}
+              i={i}
+              field={itm}
+              whatsAppConf={whatsAppConf}
+              whatsAppFields={whatsAppConf.contact_fields}
+              formFields={formFields}
+              setWhatsAppConf={setWhatsAppConf}
+              setSnackbar={setSnackbar}
+              mapKey="contact_field_map"
             />
           ))}
         </>
