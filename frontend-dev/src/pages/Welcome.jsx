@@ -17,7 +17,7 @@ export default function Welcome({ setModal, isValidUser, integrations }) {
       </Link> */}
 
 
-      <Link to="/flow/new" className="btn round btcd-btn-lg dp-purple">
+      <Link to="/flow/new" className="btn round btcd-btn-lg purple purple-sh">
         {__('Create Integration', 'bit-integrations')}
       </Link>
     </div>
