@@ -7,6 +7,7 @@
 namespace BitCode\FI\Actions\Dokan;
 
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Log\LogHandler;
 
 /**
@@ -34,8 +35,6 @@ class RecordApiHelper
         $euFieldsKey = ['dokan_company_name', 'dokan_company_id_number', 'dokan_vat_number', 'dokan_bank_name', 'dokan_bank_iban'];
         $data = [];
 
-        error_log(print_r(['final data' => $finalData], true));
-
         foreach ($finalData as $key => $value) {
             if ($key === 'payment_paypal_email') {
                 $data['payment']['paypal'] = ['email' => $value];
@@ -50,23 +49,11 @@ class RecordApiHelper
             }
         }
 
-        if (!empty($actions)) {
-            if (isset($actions['notifyVendor'])) {
-                $data['notify_vendor'] = true;
-            } else {
-                $data['notify_vendor'] = false;
-            }
+        if (!empty($actions) && Helper::proActionFeatExists('Dokan', 'vendorCreateActions')) {
+            $filterResponse = apply_filters('btcbi_dokan_vendor_crud_actions', 'createVendor', $actions);
 
-            if (isset($actions['enableSelling'])) {
-                $data['enabled'] = true;
-            }
-
-            if (isset($actions['publishProduct'])) {
-                $data['trusted'] = true;
-            }
-
-            if (isset($actions['featureVendor'])) {
-                $data['featured'] = true;
+            if ($filterResponse !== 'createVendor' && !empty($filterResponse)) {
+                $data = array_merge($data, $filterResponse);
             }
         } else {
             $data['notify_vendor'] = false;
@@ -77,8 +64,6 @@ class RecordApiHelper
         if (is_wp_error($store)) {
             return ['success' => false, 'message' => $store->get_error_message(), 'code' => 400];
         }
-
-        error_log(print_r(['data' => $data], true));
 
         return ['success' => true, 'message' => 'Vendor created successfully.'];
     }

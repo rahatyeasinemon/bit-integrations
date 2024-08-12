@@ -15,6 +15,9 @@ final class AllProActionFeat
         'WC' => [
             ['feat_name' => 'getFlexibleCheckoutFields', 'class' => '\BitApps\BTCBI_PRO\Triggers\WC\WCHelperPro', 'pro_init_v' => '2.1.2'],
             ['feat_name' => 'getFlexibleCheckoutFieldsValue', 'class' => '\BitApps\BTCBI_PRO\Triggers\WC\WCHelperPro', 'pro_init_v' => '2.1.2']
+        ],
+        'Dokan' => [
+            ['feat_name' => 'vendorCreateActions', 'class' => '\BitApps\BTCBI_PRO\Actions\Dokan\DokanRecordHelper', 'pro_init_v' => '2.1.5']
         ]
     ];
 }
