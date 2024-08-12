@@ -1,5 +1,5 @@
 === Webhook Automator & Form Integration to Automate 210+ Platforms – Bit Integrations ===
-Contributors: bitpressadmin
+Contributors: bitpressadmin ,
 Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.1
@@ -20,7 +20,7 @@ You can see below what WPTuts say about Bit Integrations
 https://youtu.be/hgMkLvV-r6k
 
 **Useful Links**
-🚀[Try Demo](https://form.bitapps.pro/demo/wp-admin/) | 🚀[Docs](https://docs.bit-integrations.bitapps.pro/) | 🚀[Video Tutorials](https://youtube.com/playlist?list=PL7c6CDwwm-ALMEsKLYKebKb5XLGPWMNue) | 🚀[Support](https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e) | 🚀[Facebook Group](https://www.facebook.com/groups/3308027439209387) | 🚀[Upgrade to Pro](https://www.bitapps.pro/bit-integrations) | 🚀[Bit Integrations Repository](https://github.com/Bit-Apps-Pro/bit-integrations)
+🚀[Try Full Version Demo](https://towp.io/) | 🚀[Docs](https://docs.bit-integrations.bitapps.pro/) | 🚀[Video Tutorials](https://youtube.com/playlist?list=PL7c6CDwwm-ALMEsKLYKebKb5XLGPWMNue) | 🚀[Support](https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e) | 🚀[Facebook Group](https://www.facebook.com/groups/3308027439209387) | 🚀[Upgrade to Pro](https://www.bitapps.pro/bit-integrations) | 🚀[Bit Integrations Repository](https://github.com/Bit-Apps-Pro/bit-integrations)
 
 📢 **Join our community [Bit Integrations](https://www.facebook.com/groups/bitapps) & get updates on our plugins.**
 
