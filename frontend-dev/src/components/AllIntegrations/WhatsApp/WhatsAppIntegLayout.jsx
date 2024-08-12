@@ -45,7 +45,7 @@ export default function WhatsAppIntegLayout({
               { key: 'filename', label: 'FileName', required: false }
             ]
           } else if (name === 'messageType' && value === 'contact') {
-            delete draftConf?.taskNote
+            draftConf['taskNote'] = textMsgNote
             draftConf['contact_field_map'] = generateMappedField(contactFields)
             draftConf['contact_fields'] = contactFields
           } else if (name === 'messageType') {
@@ -259,6 +259,7 @@ export default function WhatsAppIntegLayout({
           />
         </div>
       )}
+      <br />
       {whatsAppConf?.taskNote && <Note note={whatsAppConf?.taskNote} />}
     </>
   )
@@ -271,7 +272,13 @@ const textMsgNote = `<p>To ensure successful message delivery using the WhatsApp
                 <li>Once the user has started the conversation, you can continue to communicate with the recipient normally.</li>
             </ul>`
 
-const textMediaNote = `<h5>Caption</h5>
+const textMediaNote = `<p>To ensure successful message delivery using the WhatsApp Business API:</p>
+            <ul>
+                <li><strong>The conversation must be initiated by the user.</strong></li>
+                <li>To begin, <strong>send a message from your WhatsApp number to the recipient's number.</strong></li>
+                <li>Once the user has started the conversation, you can continue to communicate with the recipient normally.</li>
+            </ul>
+            <h5>Caption</h5>
             <ul>
                 <li>Do not use with <strong>audio</strong> or <strong>sticker</strong> media.</li>
                 <li>Media asset <strong>caption</strong>.</li>
