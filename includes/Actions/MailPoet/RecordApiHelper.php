@@ -6,6 +6,7 @@
 
 namespace BitCode\FI\Actions\MailPoet;
 
+use Exception;
 use BitCode\FI\Log\LogHandler;
 
 /**
@@ -15,39 +16,44 @@ class RecordApiHelper
 {
     private $_integrationID;
 
+    private static $mailPoet_api;
+
     public function __construct($integId)
     {
         $this->_integrationID = $integId;
+        static::$mailPoet_api = \MailPoet\API\API::MP('v1');
     }
 
     public function insertRecord($subscriber, $lists)
     {
-        $mailpoet_api = \MailPoet\API\API::MP('v1');
-
         try {
             // try to find if user is already a subscriber
-            $existing_subscriber = $mailpoet_api->getSubscriber($subscriber['email']);
+            $existing_subscriber = static::$mailPoet_api->getSubscriber($subscriber['email']);
+
             if (!$existing_subscriber) {
-                $response = $mailpoet_api->addSubscriber($subscriber, $lists);
-                $subscriber_id = $response['id'];
-            } else {
-                $response = $mailpoet_api->subscribeToLists($existing_subscriber['id'], $lists);
-                $subscriber_id = $existing_subscriber['id'];
+                return static::addSubscriber($subscriber, $lists);
             }
 
-            $response = [
-                'success' => true,
-                'id'      => $subscriber_id
-            ];
+            return static::addSubscribeToLists($existing_subscriber['id'], $lists);
         } catch (\MailPoet\API\MP\v1\APIException $e) {
-            $response = [
+            if ($e->getMessage() === 'This subscriber does not exist.') {
+                // Handle the case where the subscriber doesn't exist
+                return static::addSubscriber($subscriber, $lists);
+            }
+
+            return [
                 'success' => false,
                 'code'    => $e->getCode(),
                 'message' => $e->getMessage()
             ];
+        } catch (Exception $e) {
+            // Handle other unexpected exceptions
+            return [
+                'success' => false,
+                'code'    => $e->getCode(),
+                'message' => $e->getMessage(),
+            ];
         }
-
-        return $response;
     }
 
     public function execute($fieldValues, $fieldMap, $lists)
@@ -75,5 +81,41 @@ class RecordApiHelper
         }
 
         return $recordApiResponse;
+    }
+
+    private static function addSubscriber($subscriber, $lists)
+    {
+        try {
+            $subscriber = static::$mailPoet_api->addSubscriber($subscriber, $lists);
+
+            return [
+                'success' => true,
+                'id'      => $subscriber['id'],
+            ];
+        } catch (\MailPoet\API\MP\v1\APIException $e) {
+            return [
+                'success' => false,
+                'code'    => $e->getCode(),
+                'message' => $e->getMessage(),
+            ];
+        }
+    }
+
+    private static function addSubscribeToLists($subscriber_id, $lists)
+    {
+        try {
+            $subscriber = static::$mailPoet_api->subscribeToLists($subscriber_id, $lists);
+
+            return [
+                'success' => true,
+                'id'      => $subscriber['id'],
+            ];
+        } catch (\MailPoet\API\MP\v1\APIException $e) {
+            return [
+                'success' => false,
+                'code'    => $e->getCode(),
+                'message' => $e->getMessage(),
+            ];
+        }
     }
 }

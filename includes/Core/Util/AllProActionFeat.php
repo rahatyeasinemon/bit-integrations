@@ -17,7 +17,10 @@ final class AllProActionFeat
             ['feat_name' => 'getFlexibleCheckoutFieldsValue', 'class' => '\BitApps\BTCBI_PRO\Triggers\WC\WCHelperPro', 'pro_init_v' => '2.1.2']
         ],
         'Dokan' => [
-            ['feat_name' => 'vendorCreateActions', 'class' => '\BitApps\BTCBI_PRO\Actions\Dokan\DokanRecordHelper', 'pro_init_v' => '2.1.5']
+            ['feat_name' => 'vendorCreateActions', 'class' => '\BitApps\BTCBI_PRO\Actions\Dokan\DokanRecordHelper', 'pro_init_v' => '2.1.5'],
+        ],
+        'CF7' => [
+            ['feat_name' => 'getAdvanceCustomHtmlFields', 'class' => '\BitApps\BTCBI_PRO\Triggers\CF7\CF7HelperPro', 'pro_init_v' => '2.1.6'],
         ]
     ];
 }

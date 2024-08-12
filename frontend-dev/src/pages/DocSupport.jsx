@@ -147,7 +147,7 @@ function DocSupport() {
             <ReviewStarIcn size="20" />
           </span>
           <span className="ml-2">
-            <a href="https://wordpress.org/support/plugin/bit-form/reviews/#new-post" target="_blank" rel="noreferrer">
+            <a href="https://wordpress.org/support/plugin/bit-integrations/reviews/#new-post" target="_blank" rel="noreferrer">
               Rate us on WordPress
               {' '}
               <ExternalLinkIcn size="15" />

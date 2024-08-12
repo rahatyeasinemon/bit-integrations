@@ -84,7 +84,7 @@ export default function ChangelogToggle() {
             <div className="flx flx-col flx-center whats-new">
               <h3>What's New in {btcbi.version}?</h3>
               <small className="date">
-                Updated at: <b>1st August 2024</b>
+                Updated at: <b>12th August 2024</b>
               </small>
             </div>
             <div className="changelog-content">
@@ -94,8 +94,7 @@ export default function ChangelogToggle() {
 
               <div className="integration-list">
                 <ul>
-                  <li> Popup Maker  (Pro)</li>
-                  <li> Hustle  (Pro)</li>
+                  <li> Dokan (Pro)</li>
                 </ul>
               </div>
 
@@ -105,9 +104,7 @@ export default function ChangelogToggle() {
 
               <div className="feature-list">
                 <ul>
-                  <li>
-                  WooCommerce: Product Module: ACF fields added
-                  </li>
+                  <li>Contact Form 7: Advanced Custom HTML Fields added (Pro)</li>
                 </ul>
               </div>
               <div>

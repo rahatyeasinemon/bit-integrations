@@ -15,7 +15,6 @@ function Settings() {
     // Fetch analytics/check
     const fetchAnalytics = bitsFetch({}, 'analytics/check', '', 'GET')
       .then(res => {
-        console.log('res.data', res.data)
         setShowAnalyticsOptin(res.data);
       });
 
