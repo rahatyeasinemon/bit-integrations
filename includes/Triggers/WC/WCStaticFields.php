@@ -31,7 +31,7 @@ class WCStaticFields
     private static function getOrderACFFields()
     {
         $fields = [];
-        $acfFieldGroups = WCHelper::acfGetFieldGroups(['shop_order']);
+        $acfFieldGroups = Helper::acfGetFieldGroups(['shop_order']);
 
         foreach ($acfFieldGroups as $group) {
             $acfFields = acf_get_fields($group['ID']);

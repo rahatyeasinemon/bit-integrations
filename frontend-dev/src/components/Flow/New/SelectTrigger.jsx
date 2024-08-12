@@ -187,7 +187,7 @@ export default function SelectTrigger() {
                       <div className="pro-filter">
                         <span className="txt-pro">
                           <a
-                            href="https://bitapps.pro/bit-integrations"
+                            href="https://bitapps.pro/bit-integrations#pricing"
                             target="_blank"
                             rel="noreferrer"
                           >

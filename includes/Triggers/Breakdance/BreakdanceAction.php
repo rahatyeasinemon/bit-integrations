@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Triggers\Breakdance;
 
-use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Flow\Flow;
+use BitCode\FI\Core\Util\Helper;
 use Breakdance\Forms\Actions\Action;
 
 if (class_exists('Breakdance\Forms\Actions\Action')) {
@@ -73,7 +73,7 @@ if (class_exists('Breakdance\Forms\Actions\Action')) {
 
                 $isPrimaryKeysMatch = true;
                 foreach ($flowDetails->primaryKey as $primaryKey) {
-                    $primaryKeyValue = Helper::extractValueFromPath($extra, $primaryKey->key);
+                    $primaryKeyValue = Helper::extractValueFromPath($extra, $primaryKey->key, 'Breakdance');
 
                     if ($primaryKey->value != $primaryKeyValue) {
                         $isPrimaryKeysMatch = false;

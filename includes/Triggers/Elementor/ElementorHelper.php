@@ -40,7 +40,7 @@ class ElementorHelper
     public static function isPrimaryKeysMatch($recordData, $flowDetails)
     {
         foreach ($flowDetails->primaryKey as $primaryKey) {
-            if ($primaryKey->value != Helper::extractValueFromPath($recordData, $primaryKey->key)) {
+            if ($primaryKey->value != Helper::extractValueFromPath($recordData, $primaryKey->key, 'Breakdance')) {
                 return false;
             }
         }
