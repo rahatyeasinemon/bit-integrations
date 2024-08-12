@@ -15,3 +15,4 @@ if (!defined('ABSPATH')) {
 Hooks::add('wp_initialize_site', [Activation::class, 'handle_new_site'], 200, 1);
 
 Hooks::filter(Config::VAR_PREFIX . 'telemetry_additional_data', [new BtcbiAnalyticsController(), 'filterTrackingData']);
+Hooks::filter(Config::VAR_PREFIX . 'telemetry_data', [new BtcbiAnalyticsController(), 'filterProTrackingData']);

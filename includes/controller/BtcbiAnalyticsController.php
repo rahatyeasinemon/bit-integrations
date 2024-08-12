@@ -28,6 +28,12 @@ final class BtcbiAnalyticsController
                 ");
 
         $additional_data['flows'] = $flow;
+
+        return $additional_data;
+    }
+
+    public function filterProTrackingData($telemetry_data)
+    {
         if (\function_exists('btcbi_pro_activate_plugin')) {
             $pro = [];
             $integrateData = get_option('btcbi_integrate_key_data');
@@ -37,10 +43,10 @@ final class BtcbiAnalyticsController
             $pro['status'] = $integrateData['status'];
             $pro['expireAt'] = $integrateData['expireIn'];
 
-            $additional_data['pro'] = $pro;
+            $telemetry_data['pro'] = $pro;
         }
 
-        return $additional_data;
+        return $telemetry_data;
     }
 
     public function analyticsOptIn($data)
