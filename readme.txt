@@ -985,7 +985,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 == Changelog ==
 
 = 2.1.9  =
-_Release Date -11th August 2024_
+_Release Date -12th August 2024_
 
 - **New Trigger :**
   - Dokan – Powerful WooCommerce Multivendor Marketplace Solution – Build Your Own Amazon, eBay, Etsy (Pro)
