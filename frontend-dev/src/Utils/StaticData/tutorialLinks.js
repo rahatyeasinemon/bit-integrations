@@ -714,5 +714,10 @@ const tutorialLinks = {
     youTubeLink: "#",
     docLink: "https://bitapps.pro/docs/bit-integrations/actions/wpforo-integration/",
   },
+  dokan: {
+    title: "How to setup Dokan integration",
+    youTubeLink: "#",
+    docLink: "#",
+  },
 };
 export default tutorialLinks;

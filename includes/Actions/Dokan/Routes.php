@@ -13,3 +13,4 @@ Route::post('dokan_fetch_groups', [DokanController::class, 'getGroups']);
 Route::post('dokan_fetch_forums', [DokanController::class, 'getForums']);
 Route::post('dokan_fetch_topics', [DokanController::class, 'getTopics']);
 Route::post('dokan_fetch_eu_fields', [DokanController::class, 'getEUFields']);
+Route::post('dokan_fetch_vendors', [DokanController::class, 'getAllVendors']);

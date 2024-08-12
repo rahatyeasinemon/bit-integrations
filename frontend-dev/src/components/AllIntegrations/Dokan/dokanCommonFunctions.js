@@ -125,6 +125,24 @@ export const getDokanTopics = (confTmp, setConf, loading, setLoading) => {
     })
 }
 
+export const getAllVendors = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, vendors: true })
+
+  bitsFetch({}, 'dokan_fetch_vendors')
+    .then(result => {
+      if (result.success && result.data) {
+        const newConf = { ...confTmp }
+        newConf.vendors = result.data
+        setConf(newConf)
+        setLoading({ ...loading, vendors: false })
+        toast.success(__('Vendors fetched successfully', 'bit-integrations'))
+        return
+      }
+      setLoading({ ...loading, vendors: false })
+      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+    })
+}
+
 export const getDokanEUFields = (confTmp, setConf, loading, setLoading) => {
   toast.success('Fields fetched successfully.')
   setLoading({ ...loading, euFields: true })
@@ -140,10 +158,18 @@ export const getDokanEUFields = (confTmp, setConf, loading, setLoading) => {
           newConf.staticFields = mergedFields
         }
 
+        if (confTmp.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR) {
+          getAllVendors(newConf, setConf, loading, setLoading)
+        }
+
         setConf(newConf)
         setLoading({ ...loading, euFields: false })
         toast.success(__('EU Compliance Fields fetched successfully', 'bit-integrations'))
         return
+      }
+
+      if (confTmp.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR) {
+        getAllVendors(confTmp, setConf, loading, setLoading)
       }
       setLoading({ ...loading, euFields: false })
       toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
@@ -151,12 +177,12 @@ export const getDokanEUFields = (confTmp, setConf, loading, setLoading) => {
 }
 
 export const dokanStaticFields = (selectedTask) => {
-  if (selectedTask === TASK_LIST_VALUES.CREATE_VENDOR) {
+  if (selectedTask === TASK_LIST_VALUES.CREATE_VENDOR || selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR) {
     return {
       staticFields: [
-        { key: 'email', label: 'Email', required: true },
-        { key: 'user_login', label: 'Username', required: true },
-        { key: 'store_name', label: 'Store Name', required: true },
+        { key: 'email', label: 'Email', required: selectedTask === TASK_LIST_VALUES.CREATE_VENDOR ? true : false },
+        { key: 'user_login', label: 'Username', required: selectedTask === TASK_LIST_VALUES.CREATE_VENDOR ? true : false },
+        { key: 'store_name', label: 'Store Name', required: selectedTask === TASK_LIST_VALUES.CREATE_VENDOR ? true : false },
         { key: 'first_name', label: 'First Name', required: false },
         { key: 'last_name', label: 'Last Name', required: false },
         { key: 'phone', label: 'Phone', required: false },
@@ -176,11 +202,11 @@ export const dokanStaticFields = (selectedTask) => {
         { key: 'state', label: 'State', required: false },
         { key: 'country', label: 'Country', required: false },
       ],
-      fieldMap: [
+      fieldMap: selectedTask === TASK_LIST_VALUES.CREATE_VENDOR ? [
         { formField: '', dokanField: 'email' },
         { formField: '', dokanField: 'user_login' },
         { formField: '', dokanField: 'store_name' },
-      ]
+      ] : [{ formField: '', dokanField: '' }]
     }
   }
 

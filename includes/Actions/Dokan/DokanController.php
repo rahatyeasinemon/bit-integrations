@@ -118,6 +118,26 @@ class DokanController
         wp_send_json_success($topicList, 200);
     }
 
+    public function getAllVendors()
+    {
+        self::checkedDokanExists();
+
+        $allVendors = dokan()->vendor->get_vendors(['number' => -1]);
+        $vendorList = [];
+
+        foreach ($allVendors as $vendor) {
+            $dispalyName = $vendor->data->display_name;
+            $vendorArray = $vendor->to_array();
+
+            $vendorList[] = (object) [
+                'label' => $dispalyName . ' (' . $vendorArray['store_name'] . ')',
+                'value' => (string) $vendorArray['id']
+            ];
+        }
+
+        wp_send_json_success($vendorList, 200);
+    }
+
     public function getEUFields()
     {
         self::checkedDokanExists();
@@ -162,6 +182,7 @@ class DokanController
         $integId = $integrationData->id;
         $fieldMap = $integrationDetails->field_map;
         $selectedTask = $integrationDetails->selectedTask;
+        $selectedVendor = $integrationDetails->selectedVendor;
         $actions = (array) $integrationDetails->actions;
 
         if (empty($fieldMap) || empty($selectedTask)) {
@@ -169,7 +190,7 @@ class DokanController
         }
 
         $recordApiHelper = new RecordApiHelper($integId);
-        $dokanResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $actions);
+        $dokanResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $actions, $selectedVendor);
 
         if (is_wp_error($dokanResponse)) {
             return $dokanResponse;

@@ -24,7 +24,8 @@ function EditDokan({ allIntegURL }) {
     reputation: false,
     forums: false,
     topics: false,
-    euFields: false
+    euFields: false,
+    vendors: false
   })
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)
@@ -35,31 +36,13 @@ function EditDokan({ allIntegURL }) {
       return
     }
 
+    if (dokanConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR && !dokanConf.selectedVendor) {
+      toast.error('Please select a vendor!')
+      return
+    }
+
     if (dokanConf.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC && !checkMappedFields(dokanConf)) {
       toast.error('Please map mandatory fields!')
-      return
-    }
-
-    if (
-      dokanConf.selectedTask === TASK_LIST_VALUES.USER_REPUTATION &&
-      !dokanConf.selectedReputation
-    ) {
-      toast.error('Please select a reputation!')
-      return
-    }
-
-    if (dokanConf.selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP && !dokanConf.selectedGroup) {
-      toast.error('Please select a group!')
-      return
-    }
-
-    if (dokanConf.selectedTask === TASK_LIST_VALUES.REMOVE_FROM_GROUP && !dokanConf.selectedGroup) {
-      toast.error('Please select a group!')
-      return
-    }
-
-    if (dokanConf.selectedTask === TASK_LIST_VALUES.CREATE_TOPIC && !dokanConf.selectedForum) {
-      toast.error('Please select a forum!')
       return
     }
 

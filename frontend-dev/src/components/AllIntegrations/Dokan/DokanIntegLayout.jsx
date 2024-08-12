@@ -6,7 +6,12 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 import DokanFieldMap from './DokanFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
-import { getDokanTopics, dokanStaticFields, getDokanEUFields } from './dokanCommonFunctions'
+import {
+  getDokanTopics,
+  dokanStaticFields,
+  getDokanEUFields,
+  getAllVendors
+} from './dokanCommonFunctions'
 import { TASK_LIST, TASK_LIST_VALUES } from './dokanConstants'
 import Loader from '../../Loaders/Loader'
 import TableCheckBox from '../../Utilities/TableCheckBox'
@@ -28,7 +33,7 @@ export default function DokanIntegLayout({
       newConf.staticFields = fieldsAndFieldMap.staticFields
       newConf.field_map = fieldsAndFieldMap.fieldMap
 
-      if (val === TASK_LIST_VALUES.CREATE_VENDOR) {
+      if (val === TASK_LIST_VALUES.CREATE_VENDOR || val === TASK_LIST_VALUES.UPDATE_VENDOR) {
         getDokanEUFields(newConf, setDokanConf, loading, setLoading)
       }
     } else {
@@ -39,9 +44,9 @@ export default function DokanIntegLayout({
     setDokanConf({ ...newConf })
   }
 
-  const handleTopicChange = (val) => {
+  const handleMultiSelectChange = (val, type) => {
     const newConf = { ...dokanConf }
-    newConf.selectedTopic = val
+    newConf[type] = val
     setDokanConf({ ...newConf })
   }
 
@@ -72,19 +77,21 @@ export default function DokanIntegLayout({
           />
         </div>
         <br />
+
+        {(loading.euFields || loading.vendors) && (
+          <Loader
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 45,
+              transform: 'scale(0.5)'
+            }}
+          />
+        )}
+
         {dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_TOPIC && (
           <>
-            {loading.euFields && (
-              <Loader
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: 45,
-                  transform: 'scale(0.5)'
-                }}
-              />
-            )}
             <div className="flx mt-3 mb-4">
               <b className="wdt-200 d-in-b">{__('Select Topic:', 'bit-integrations')}</b>
               <MultiSelect
@@ -121,21 +128,31 @@ export default function DokanIntegLayout({
           </>
         )}
 
+        {dokanConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR && (
+          <div className="flx mt-3 mb-4">
+            <b className="wdt-200 d-in-b">{__('Select Vendor:', 'bit-integrations')}</b>
+            <MultiSelect
+              style={{ width: '450px' }}
+              options={dokanConf?.vendors}
+              className="msl-wrp-options"
+              defaultValue={dokanConf?.selectedVendor}
+              onChange={(val) => handleMultiSelectChange(val, 'selectedVendor')}
+              singleSelect
+            />
+            <button
+              onClick={() => getAllVendors(dokanConf, setDokanConf, loading, setLoading)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `${__('Refresh Vendors', 'bit-integrations')}'` }}
+              type="button">
+              &#x21BB;
+            </button>
+          </div>
+        )}
+
         {(dokanConf.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC ||
           (dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_TOPIC &&
             dokanConf.deleteTopicFieldMap)) && (
           <>
-            {loading.euFields && (
-              <Loader
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: 45,
-                  transform: 'scale(0.5)'
-                }}
-              />
-            )}
             <div className="mt-5">
               <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
             </div>

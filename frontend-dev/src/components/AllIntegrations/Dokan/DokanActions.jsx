@@ -64,7 +64,8 @@ export default function DokanActions({ dokanConf, setDokanConf, loading, setLoad
         </div>
       )}
       <div className="pos-rel d-flx w-8">
-        {dokanConf.selectedTask === TASK_LIST_VALUES.CREATE_VENDOR && (
+        {(dokanConf.selectedTask === TASK_LIST_VALUES.CREATE_VENDOR ||
+          dokanConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR) && (
           <>
             <TableCheckBox
               checked={dokanConf.actions?.notifyVendor || false}

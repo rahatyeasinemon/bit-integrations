@@ -28,6 +28,36 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field email, username or store name is empty!', 'code' => 400];
         }
 
+        $data = $this->formatVendorUpsertData($finalData, $actions, 'createVendor');
+
+        $store = dokan()->vendor->create($data);
+
+        if (is_wp_error($store)) {
+            return ['success' => false, 'message' => $store->get_error_message(), 'code' => 400];
+        }
+
+        return ['success' => true, 'message' => 'Vendor created successfully.'];
+    }
+
+    public function updateVendor($finalData, $selectedVendor, $actions)
+    {
+        if (empty($selectedVendor)) {
+            return ['success' => false, 'message' => 'Required field vendor is empty!', 'code' => 400];
+        }
+
+        $data = $this->formatVendorUpsertData($finalData, $actions, 'updateVendor');
+
+        $storeId = dokan()->vendor->update($selectedVendor, $data);
+
+        if (is_wp_error($storeId)) {
+            return ['success' => false, 'message' => $storeId->get_error_message(), 'code' => 400];
+        }
+
+        return ['success' => true, 'message' => 'Vendor updated successfully.'];
+    }
+
+    public function formatVendorUpsertData($finalData, $actions, $module)
+    {
         $paymentBankKeys = ['payment_bank_ac_name', 'payment_bank_ac_type', 'payment_bank_ac_number', 'payment_bank_bank_name', 'payment_bank_bank_addr',
             'payment_bank_routing_number', 'payment_bank_iban', 'payment_bank_swift'];
 
@@ -50,22 +80,14 @@ class RecordApiHelper
         }
 
         if (!empty($actions) && Helper::proActionFeatExists('Dokan', 'vendorCreateActions')) {
-            $filterResponse = apply_filters('btcbi_dokan_vendor_crud_actions', 'createVendor', $actions);
+            $filterResponse = apply_filters('btcbi_dokan_vendor_crud_actions', $module, $actions);
 
-            if ($filterResponse !== 'createVendor' && !empty($filterResponse)) {
+            if ($filterResponse !== $module && !empty($filterResponse)) {
                 $data = array_merge($data, $filterResponse);
             }
-        } else {
-            $data['notify_vendor'] = false;
         }
 
-        $store = dokan()->vendor->create($data);
-
-        if (is_wp_error($store)) {
-            return ['success' => false, 'message' => $store->get_error_message(), 'code' => 400];
-        }
-
-        return ['success' => true, 'message' => 'Vendor created successfully.'];
+        return $data;
     }
 
     public function setUserReputation($finalData, $selectedReputation)
@@ -263,7 +285,7 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedTask, $actions)
+    public function execute($fieldValues, $fieldMap, $selectedTask, $actions, $selectedVendor)
     {
         if (isset($fieldMap[0]) && empty($fieldMap[0]->formField)) {
             $finalData = [];
@@ -277,6 +299,10 @@ class RecordApiHelper
             $response = $this->createVendor($finalData, $actions);
             $type = 'Vendor';
             $typeName = 'Create Vendor';
+        } elseif ($selectedTask === 'updateVendor') {
+            $response = $this->updateVendor($finalData, $selectedVendor, $actions);
+            $type = 'Vendor';
+            $typeName = 'Update Vendor';
         }
 
         if ($response['success']) {
