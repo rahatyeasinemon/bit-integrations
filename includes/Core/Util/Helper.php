@@ -2,11 +2,12 @@
 
 namespace BitCode\FI\Core\Util;
 
-use BitCode\FI\Triggers\TriggerController;
 use DateTime;
-use Exception;
 use stdClass;
 use WP_Error;
+use Exception;
+use DateTimeZone;
+use BitCode\FI\Triggers\TriggerController;
 
 /**
  * bit-integration helper class
@@ -41,16 +42,20 @@ final class Helper
         return $data;
     }
 
-    public static function formatToISO8601($dateString)
+    public static function formatToISO8601($dateString, $timezone = 'UTC')
     {
         try {
+            $timezoneObj = new DateTimeZone($timezone);
+
             if (is_numeric($dateString)) {
                 if ($dateString > 10000000000) {
                     $dateString = $dateString / 1000;
                 }
+
                 $date = new DateTime("@{$dateString}");
+                $date->setTimezone($timezoneObj);
             } else {
-                $date = new DateTime($dateString);
+                $date = new DateTime($dateString, $timezoneObj);
             }
 
             return $date->format(DateTime::ATOM); // DateTime::ATOM is the ISO-8601 format
@@ -210,7 +215,7 @@ final class Helper
         return json_last_error() === JSON_ERROR_NONE;
     }
 
-    public static function extractValueFromPath($data, $path)
+    public static function extractValueFromPath($data, $path, $triggerEntity = 'trigger')
     {
         $parts = \is_array($path) ? $path : explode('.', $path);
         if (\count($parts) === 0) {
@@ -220,21 +225,21 @@ final class Helper
         $currentPart = array_shift($parts);
         if (\is_array($data)) {
             if (!isset($data[$currentPart])) {
-                wp_send_json_error(new WP_Error('Breakdance', __('Index out of bounds or invalid', 'bit-integrations')));
+                wp_send_json_error(new WP_Error($triggerEntity, __('Index out of bounds or invalid', 'bit-integrations')));
             }
 
-            return self::extractValueFromPath($data[$currentPart], $parts);
+            return self::extractValueFromPath($data[$currentPart], $parts, $triggerEntity);
         }
 
         if (\is_object($data)) {
             if (!property_exists($data, $currentPart)) {
-                wp_send_json_error(new WP_Error('Breakdance', __('Invalid path', 'bit-integrations')));
+                wp_send_json_error(new WP_Error($triggerEntity, __('Invalid path', 'bit-integrations')));
             }
 
-            return self::extractValueFromPath($data->{$currentPart}, $parts);
+            return self::extractValueFromPath($data->{$currentPart}, $parts, $triggerEntity);
         }
 
-        wp_send_json_error(new WP_Error('Breakdance', __('Invalid path', 'bit-integrations')));
+        wp_send_json_error(new WP_Error($triggerEntity, __('Invalid path', 'bit-integrations')));
     }
 
     public static function parseFlowDetails($flowDetails)

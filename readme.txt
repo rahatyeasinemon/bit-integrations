@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.1
 Requires PHP: 7.0
-Stable tag: 2.1.8
+Stable tag: 2.1.9
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 70+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -59,6 +59,7 @@ https://youtu.be/eFuficjF_F4
 * [**CoBlocks**](https://wordpress.org/plugins/coblocks/)
 * [**Custom Trigger**](https://bitapps.pro/docs/bit-integrations/trigger/custom-trigger-integrations/)
 * [**Divi**](https://www.elegantthemes.com/gallery/divi/)
+* [**Dokan**](https://wordpress.org/plugins/dokan-lite/)
 * [**Everest Forms**](https://wordpress.org/plugins/everest-forms/)
 * [**Elementor**](https://wordpress.org/plugins/elementor/)
 * [**Easy Digital Downloads**](https://wordpress.org/plugins/easy-digital-downloads/)
@@ -635,6 +636,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 
 * [**Divi**](https://bitapps.pro/docs/bit-integrations/trigger/divi/)
 
+* [**Dokan**](https://bitapps.pro/docs/bit-integrations/trigger/dokan-integration/)
+
 * [**Easy Digital Downloads**](https://bitapps.pro/docs/bit-integrations/trigger/easy-digital-downloads/)
 
 * [**eForm**](https://bitapps.pro/docs/bit-integrations/trigger/eform/)
@@ -980,6 +983,20 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.1.9  =
+_Release Date -11th August 2024_
+
+- **New Trigger :**
+  - Dokan – Powerful WooCommerce Multivendor Marketplace Solution – Build Your Own Amazon, eBay, Etsy (Pro)
+  
+- **New Features :**
+  - Contact Form 7: Advanced Custom HTML Fields added (Pro)
+
+- **New Fixes :**
+  - WooCommerce: Undefined acfGetFieldGroups method defined
+  - MailPoet: Existing subscriber issue fixed 
+  - Google Calendar: Event TimeZone issue fixed 
 
 = 2.1.8  =
 _Release Date -1st August 2024_

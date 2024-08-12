@@ -96,7 +96,7 @@ class ActionHookController
                     continue;
                 }
 
-                $primaryKeyValue = Helper::extractValueFromPath($args, $flowDetails->primaryKey->key);
+                $primaryKeyValue = Helper::extractValueFromPath($args, $flowDetails->primaryKey->key, 'ActionHook');
                 if ($flowDetails->primaryKey->value === $primaryKeyValue) {
                     $fieldKeys = [];
                     $formatedData = [];
@@ -112,7 +112,7 @@ class ActionHookController
                     }
 
                     foreach ($fieldKeys as $key) {
-                        $formatedData[$key] = Helper::extractValueFromPath($args, $key);
+                        $formatedData[$key] = Helper::extractValueFromPath($args, $key, 'ActionHook');
                     }
 
                     Flow::execute('ActionHook', current_action(), $formatedData, [$flow]);

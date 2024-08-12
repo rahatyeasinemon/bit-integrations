@@ -2,22 +2,22 @@
 
 namespace BitCode\FI\Core\Util;
 
-use BitCode\FI\Flow\Flow;
 use DateTime;
-use EDD_Payment;
-use FrmEntryValues;
 use FrmField;
-use FrmFieldsHelper;
-use Give_Payment;
-use Give_Subscription;
-use Groundhogg\DB\Tags;
-use IPT_EForm_Form_Elements_Values;
-use IPT_FSQM_Form_Elements_Data;
-use MeprEvent;
-use RCP_Membership;
 use WP_Error;
-use WPCF7_ContactForm;
+use MeprEvent;
+use EDD_Payment;
+use Give_Payment;
+use FrmEntryValues;
+use RCP_Membership;
+use FrmFieldsHelper;
 use WPCF7_Submission;
+use Give_Subscription;
+use WPCF7_ContactForm;
+use Groundhogg\DB\Tags;
+use BitCode\FI\Flow\Flow;
+use IPT_FSQM_Form_Elements_Data;
+use IPT_EForm_Form_Elements_Values;
 
 final class TriggerFallback
 {
@@ -1983,7 +1983,7 @@ final class TriggerFallback
                     continue;
                 }
 
-                $primaryKeyValue = Helper::extractValueFromPath($args, $flowDetails->primaryKey->key);
+                $primaryKeyValue = Helper::extractValueFromPath($args, $flowDetails->primaryKey->key, 'EssentialBlocks');
                 if ($flowDetails->primaryKey->value === $primaryKeyValue) {
                     $fieldKeys = [];
                     $formatedData = [];
@@ -1999,7 +1999,7 @@ final class TriggerFallback
                     }
 
                     foreach ($fieldKeys as $key) {
-                        $formatedData[$key] = Helper::extractValueFromPath($args, $key);
+                        $formatedData[$key] = Helper::extractValueFromPath($args, $key, 'EssentialBlocks');
                     }
 
                     $execData = ['triggered_entity' => 'EssentialBlocks', 'triggered_entity_id' => current_action(), 'data' => $formatedData, 'flows' => [$flow]];
