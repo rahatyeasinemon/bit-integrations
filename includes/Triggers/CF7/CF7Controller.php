@@ -2,13 +2,13 @@
 
 namespace BitCode\FI\Triggers\CF7;
 
-use WPCF7_Submission;
-use WPCF7_ContactForm;
-use BitCode\FI\Flow\Flow;
-use WPCF7_FormTagsManager;
-use WPCF7_ShortcodeManager;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Flow\Flow;
+use WPCF7_ContactForm;
+use WPCF7_FormTagsManager;
+use WPCF7_ShortcodeManager;
+use WPCF7_Submission;
 
 final class CF7Controller
 {
@@ -62,7 +62,7 @@ final class CF7Controller
             $missing_field = 'Form ID';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         if (empty($fields)) {
             wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));
@@ -104,15 +104,6 @@ final class CF7Controller
         return $fields;
     }
 
-    private static function getCustomHtmlFields($form_text)
-    {
-        if (Helper::proActionFeatExists('CF7', 'getAdvanceCustomHtmlFields')) {
-            $fields = apply_filters('btcbi_cf7_get_advance_custom_html_fields', $form_text);
-
-            return is_array($fields) ?  $fields : [];
-        }
-    }
-
     public static function handle_wpcf7_submit()
     {
         $submission = WPCF7_Submission::get_instance();
@@ -149,6 +140,15 @@ final class CF7Controller
 
         if (!empty($form_id) && $flows = Flow::exists('CF7', $form_id)) {
             Flow::execute('CF7', $form_id, $data, $flows);
+        }
+    }
+
+    private static function getCustomHtmlFields($form_text)
+    {
+        if (Helper::proActionFeatExists('CF7', 'getAdvanceCustomHtmlFields')) {
+            $fields = apply_filters('btcbi_cf7_get_advance_custom_html_fields', $form_text);
+
+            return \is_array($fields) ? $fields : [];
         }
     }
 

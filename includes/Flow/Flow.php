@@ -2,15 +2,16 @@
 
 namespace BitCode\FI\Flow;
 
-use WP_Error;
-use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\CustomFuncValidator;
 use BitCode\FI\Core\Util\IpTool;
 use BitCode\FI\Core\Util\SmartTags;
-use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\StoreInCache;
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Triggers\TriggerController;
-use BitCode\FI\Core\Util\CustomFuncValidator;
+use WP_Error;
+use WP_REST_Request;
 
 /**
  * Provides details of available integration and helps to
@@ -88,7 +89,7 @@ final class Flow
             $missing_field = 'Integration ID';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         $integrationHandler = new FlowController();
         $integrations = $integrationHandler->get(
@@ -150,7 +151,7 @@ final class Flow
             $missing_field = (\is_null($missing_field) ? null : ', ') . 'Integration details';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
 
         // custom action
@@ -181,7 +182,7 @@ final class Flow
             $missingId = 'Flow ID';
         }
         if (!\is_null($missingId)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missingId));
+            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missingId));
         }
         $integrationHandler = new FlowController();
         $integrations = $integrationHandler->get(
@@ -222,7 +223,7 @@ final class Flow
             $missing_field = 'Flow details';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
 
         if ($data->flow_details->type === 'CustomAction') {
@@ -291,7 +292,7 @@ final class Flow
             $missing_field = 'Integration id';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
         }
         $integrationHandler = new FlowController();
         $deleteStatus = $integrationHandler->delete($data->id);
@@ -309,7 +310,7 @@ final class Flow
             wp_send_json_error('User don\'t have permission to access this page');
         }
         if (!\is_array($param->flowID) || $param->flowID === []) {
-            wp_send_json_error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), 'Integration id'));
+            wp_send_json_error(\sprintf(__('%s cann\'t be empty', 'bit-integrations'), 'Integration id'));
         }
 
         $integrationHandler = new FlowController();
@@ -335,7 +336,7 @@ final class Flow
             $missing_field = 'Integration id';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
         }
         $integrationHandler = new FlowController();
         $toggleStatus = $integrationHandler->updateStatus($data->id, $data->status);
@@ -412,12 +413,40 @@ final class Flow
 
     public static function execute($triggered_entity, $triggered_entity_id, $data, $flows = [])
     {
+        $url = get_rest_url() . 'bit-integrations/v1/flow/execute';
+        $args = ['triggered_entity' => $triggered_entity, 'triggered_entity_id' => $triggered_entity_id, 'data' => $data, 'flows' => $flows];
+
+        $defaultOptions = [
+            'method'    => 'POST',
+            'header'    => ['Content-Type' => 'application/json'],
+            'body'      => $args,
+            'sslverify' => false,
+            'timeout'   => 0.1
+        ];
+
+        $options = wp_parse_args(null, $defaultOptions);
+        $requestReponse = wp_remote_request($url, $options);
+    }
+
+    public function flowExecute(WP_REST_Request $request)
+    {
+        if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+            wp_send_json_error('Access denied. This action is restricted to localhost.', 403);
+        }
+
+        $triggered_entity = $request->get_param('triggered_entity');
+        $triggered_entity_id = $request->get_param('triggered_entity_id');
+        $data = $request->get_param('data');
+        $flows = $request->get_param('flows');
+
         if (!is_wp_error($flows) && !empty($flows)) {
             $data['bit-integrator%trigger_data%'] = [
                 'triggered_entity'    => $triggered_entity,
                 'triggered_entity_id' => $triggered_entity_id,
             ];
             foreach ($flows as $flowData) {
+                $flowData = \is_array($flowData) ? (object) $flowData : $flowData;
+
                 if (\is_string($flowData->flow_details)) {
                     $flowData->flow_details = json_decode($flowData->flow_details);
                 }
