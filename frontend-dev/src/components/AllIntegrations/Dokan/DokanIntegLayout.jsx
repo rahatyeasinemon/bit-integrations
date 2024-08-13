@@ -6,12 +6,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 import DokanFieldMap from './DokanFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
-import {
-  getDokanTopics,
-  dokanStaticFields,
-  getDokanEUFields,
-  getAllVendors
-} from './dokanCommonFunctions'
+import { dokanStaticFields, getDokanEUFields, getAllVendors } from './dokanCommonFunctions'
 import { TASK_LIST, TASK_LIST_VALUES } from './dokanConstants'
 import Loader from '../../Loaders/Loader'
 import TableCheckBox from '../../Utilities/TableCheckBox'
@@ -35,6 +30,8 @@ export default function DokanIntegLayout({
 
       if (val === TASK_LIST_VALUES.CREATE_VENDOR || val === TASK_LIST_VALUES.UPDATE_VENDOR) {
         getDokanEUFields(newConf, setDokanConf, loading, setLoading)
+      } else if (val === TASK_LIST_VALUES.DELETE_VENDOR) {
+        getAllVendors(newConf, setDokanConf, loading, setLoading)
       }
     } else {
       newConf.staticFields = []
@@ -54,9 +51,9 @@ export default function DokanIntegLayout({
     const newConf = { ...dokanConf }
 
     if (event.target.checked) {
-      newConf.deleteTopicFieldMap = true
+      newConf.deleteVendorFieldMap = true
     } else {
-      newConf.deleteTopicFieldMap = false
+      newConf.deleteVendorFieldMap = false
     }
 
     setDokanConf({ ...newConf })
@@ -90,68 +87,51 @@ export default function DokanIntegLayout({
           />
         )}
 
-        {dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_TOPIC && (
+        {(dokanConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR ||
+          dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_VENDOR) && (
           <>
             <div className="flx mt-3 mb-4">
-              <b className="wdt-200 d-in-b">{__('Select Topic:', 'bit-integrations')}</b>
+              <b className="wdt-200 d-in-b">{__('Select Vendor:', 'bit-integrations')}</b>
               <MultiSelect
                 style={{ width: '450px' }}
-                options={dokanConf?.topics}
+                options={dokanConf?.vendors}
                 className="msl-wrp-options"
-                defaultValue={dokanConf?.selectedTopic}
-                onChange={(val) => handleTopicChange(val)}
+                defaultValue={dokanConf?.selectedVendor}
+                onChange={(val) => handleMultiSelectChange(val, 'selectedVendor')}
                 singleSelect
               />
               <button
-                onClick={() => getDokanTopics(dokanConf, setDokanConf, loading, setLoading)}
+                onClick={() => getAllVendors(dokanConf, setDokanConf, loading, setLoading)}
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
-                style={{ '--tooltip-txt': `${__('Refresh topics', 'bit-integrations')}'` }}
+                style={{ '--tooltip-txt': `${__('Refresh Vendors', 'bit-integrations')}'` }}
                 type="button">
                 &#x21BB;
               </button>
             </div>
-            <br />
-            <div className="flx">
-              <span className="dokan-delete-topic-note">
-                To delete a topic, you can select a topic from the list above, or you can map
-                fields.
-              </span>
-              <TableCheckBox
-                checked={dokanConf.deleteTopicFieldMap}
-                onChange={(e) => handleDeleteTopicFieldMapCheck(e)}
-                className=" ml-2"
-                value="select_group"
-                title={__('Map Fields', 'bit-integrations')}
-              />
-            </div>
-            <br />
+            {dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_VENDOR && (
+              <>
+                <br />
+                <div className="flx">
+                  <span className="action-delete-task-note">
+                    To delete a vendor, you can select a vendor from the list above, or you can map
+                    fields.
+                  </span>
+                  <TableCheckBox
+                    checked={dokanConf.deleteVendorFieldMap}
+                    onChange={(e) => handleDeleteTopicFieldMapCheck(e)}
+                    className=" ml-2"
+                    value="select_group"
+                    title={__('Map Fields', 'bit-integrations')}
+                  />
+                </div>
+              </>
+            )}
           </>
         )}
 
-        {dokanConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR && (
-          <div className="flx mt-3 mb-4">
-            <b className="wdt-200 d-in-b">{__('Select Vendor:', 'bit-integrations')}</b>
-            <MultiSelect
-              style={{ width: '450px' }}
-              options={dokanConf?.vendors}
-              className="msl-wrp-options"
-              defaultValue={dokanConf?.selectedVendor}
-              onChange={(val) => handleMultiSelectChange(val, 'selectedVendor')}
-              singleSelect
-            />
-            <button
-              onClick={() => getAllVendors(dokanConf, setDokanConf, loading, setLoading)}
-              className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `${__('Refresh Vendors', 'bit-integrations')}'` }}
-              type="button">
-              &#x21BB;
-            </button>
-          </div>
-        )}
-
-        {(dokanConf.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC ||
-          (dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_TOPIC &&
-            dokanConf.deleteTopicFieldMap)) && (
+        {(dokanConf.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR ||
+          (dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_VENDOR &&
+            dokanConf.deleteVendorFieldMap)) && (
           <>
             <div className="mt-5">
               <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
@@ -169,9 +149,9 @@ export default function DokanIntegLayout({
           </>
         )}
 
-        {((dokanConf?.selectedTask && dokanConf?.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC) ||
-          (dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_TOPIC &&
-            dokanConf.deleteTopicFieldMap)) &&
+        {((dokanConf?.selectedTask && dokanConf?.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR) ||
+          (dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_VENDOR &&
+            dokanConf.deleteVendorFieldMap)) &&
           dokanConf?.field_map.map((itm, i) => (
             <DokanFieldMap
               key={`rp-m-${i + 9}`}
@@ -184,20 +164,23 @@ export default function DokanIntegLayout({
             />
           ))}
 
-        {((dokanConf?.selectedTask && dokanConf?.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC) ||
-          (dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_TOPIC &&
-            dokanConf.deleteTopicFieldMap)) && (
+        {((dokanConf?.selectedTask && dokanConf?.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR) ||
+          (dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_VENDOR &&
+            dokanConf.deleteVendorFieldMap)) && (
+          <div className="txt-center btcbi-field-map-button mt-2">
+            <button
+              onClick={() =>
+                addFieldMap(dokanConf.field_map.length, dokanConf, setDokanConf, false)
+              }
+              className="icn-btn sh-sm"
+              type="button">
+              +
+            </button>
+          </div>
+        )}
+
+        {dokanConf?.selectedTask && dokanConf?.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR && (
           <div>
-            <div className="txt-center btcbi-field-map-button mt-2">
-              <button
-                onClick={() =>
-                  addFieldMap(dokanConf.field_map.length, dokanConf, setDokanConf, false)
-                }
-                className="icn-btn sh-sm"
-                type="button">
-                +
-              </button>
-            </div>
             <br />
             <br />
             <div className="mt-4">

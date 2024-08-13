@@ -41,14 +41,17 @@ function EditDokan({ allIntegURL }) {
       return
     }
 
-    if (dokanConf.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC && !checkMappedFields(dokanConf)) {
+    if (
+      dokanConf.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR &&
+      !checkMappedFields(dokanConf)
+    ) {
       toast.error('Please map mandatory fields!')
       return
     }
 
     if (
-      dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_TOPIC &&
-      !dokanConf.selectedTopic &&
+      dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_VENDOR &&
+      !dokanConf.selectedVendor &&
       !checkMappedFields(dokanConf)
     ) {
       toast.error('Please select a topic or map fields!')

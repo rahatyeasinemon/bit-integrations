@@ -18,11 +18,6 @@ function Dokan({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
-    auth: false,
-    reputation: false,
-    groups: false,
-    forums: false,
-    topics: false,
     euFields: false,
     vendors: false
   })
@@ -48,7 +43,7 @@ function Dokan({ formFields, setFlow, flow, allIntegURL }) {
     actions: {},
     selectedTopic: '',
     topics: [],
-    deleteTopicFieldMap: false
+    deleteVendorFieldMap: false
   })
 
   const saveConfig = () => {
@@ -88,14 +83,17 @@ function Dokan({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (dokanConf.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC && !checkMappedFields(dokanConf)) {
+    if (
+      dokanConf.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR &&
+      !checkMappedFields(dokanConf)
+    ) {
       toast.error('Please map mandatory fields!')
       return
     }
 
     if (
-      dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_TOPIC &&
-      !dokanConf.selectedTopic &&
+      dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_VENDOR &&
+      !dokanConf.selectedVendor &&
       !checkMappedFields(dokanConf)
     ) {
       toast.error('Please select a topic or map fields!')
@@ -138,7 +136,7 @@ function Dokan({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           disabled={
-            dokanConf?.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC &&
+            dokanConf?.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR &&
             !checkMappedFields(dokanConf)
           }
           className="btn f-right btcd-btn-lg purple sh-sm flx"

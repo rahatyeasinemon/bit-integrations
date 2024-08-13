@@ -8,7 +8,6 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import Cooltip from '../../Utilities/Cooltip'
 import Loader from '../../Loaders/Loader'
-import { getDokanForums, getDokanGroups, getDokanReputations } from './dokanCommonFunctions'
 import { TASK_LIST_VALUES } from './dokanConstants'
 import { $btcbi } from '../../../GlobalStates'
 import { useRecoilValue } from 'recoil'
@@ -22,13 +21,10 @@ export default function DokanActions({ dokanConf, setDokanConf, loading, setLoad
     const newConf = { ...dokanConf }
 
     if (type === 'reputations') {
-      getDokanReputations(dokanConf, setDokanConf, setLoading)
       setActionMdl({ show: 'reputation' })
     } else if (type === 'groups') {
-      getDokanGroups(dokanConf, setDokanConf, setLoading)
       setActionMdl({ show: 'group' })
     } else if (type === 'forums') {
-      getDokanForums(dokanConf, setDokanConf, setLoading)
       setActionMdl({ show: 'forum' })
     } else if (type === 'tags') {
       setActionMdl({ show: 'tags' })

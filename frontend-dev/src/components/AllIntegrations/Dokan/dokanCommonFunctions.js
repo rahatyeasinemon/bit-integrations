@@ -47,84 +47,6 @@ export const dokanAuthentication = (confTmp, setError, setIsAuthorized, loading,
     })
 }
 
-export const getDokanReputations = (confTmp, setConf, setLoading) => {
-  setLoading({ ...setLoading, reputation: true })
-
-  bitsFetch({}, 'dokan_fetch_reputations')
-    .then(result => {
-      if (result && result.success) {
-        const newConf = { ...confTmp }
-        if (result.data) {
-          newConf.reputations = result.data
-        }
-        setConf(newConf)
-        setLoading({ ...setLoading, reputation: false })
-
-        toast.success(__('Reputations fetch successfully', 'bit-integrations'))
-        return
-      }
-      setLoading({ ...setLoading, reputation: false })
-      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
-    })
-}
-
-export const getDokanGroups = (confTmp, setConf, setLoading) => {
-  setLoading({ ...setLoading, groups: true })
-
-  bitsFetch({}, 'dokan_fetch_groups')
-    .then(result => {
-      if (result && result.success) {
-        const newConf = { ...confTmp }
-        if (result.data) {
-          newConf.groups = result.data
-        }
-        setConf(newConf)
-        setLoading({ ...setLoading, groups: false })
-
-        toast.success(__('Groups fetch successfully', 'bit-integrations'))
-        return
-      }
-      setLoading({ ...setLoading, groups: false })
-      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
-    })
-}
-
-export const getDokanForums = (confTmp, setConf, setLoading) => {
-  setLoading({ ...setLoading, forums: true })
-
-  bitsFetch({}, 'dokan_fetch_forums')
-    .then(result => {
-      if (result && result.data) {
-        const newConf = { ...confTmp }
-        newConf.forums = result.data
-        setConf(newConf)
-        setLoading({ ...setLoading, forums: false })
-        toast.success(__('Forums fetch successfully', 'bit-integrations'))
-        return
-      }
-      setLoading({ ...setLoading, forums: false })
-      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
-    })
-}
-
-export const getDokanTopics = (confTmp, setConf, loading, setLoading) => {
-  setLoading({ ...loading, topics: true })
-
-  bitsFetch({}, 'dokan_fetch_topics')
-    .then(result => {
-      if (result && result.data) {
-        const newConf = { ...confTmp }
-        newConf.topics = result.data
-        setConf(newConf)
-        setLoading({ ...loading, topics: false })
-        toast.success(__('Topics fetch successfully', 'bit-integrations'))
-        return
-      }
-      setLoading({ ...loading, topics: false })
-      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
-    })
-}
-
 export const getAllVendors = (confTmp, setConf, loading, setLoading) => {
   setLoading({ ...loading, vendors: true })
 
@@ -207,6 +129,14 @@ export const dokanStaticFields = (selectedTask) => {
         { formField: '', dokanField: 'user_login' },
         { formField: '', dokanField: 'store_name' },
       ] : [{ formField: '', dokanField: '' }]
+    }
+  } else if (selectedTask === TASK_LIST_VALUES.DELETE_VENDOR) {
+    return {
+      staticFields: [
+        { key: 'vendor_email', label: 'Vendor Email', required: true },
+        { key: 'reassign_email', label: 'Reassign (Email)', required: false },
+      ],
+      fieldMap: [{ formField: '', dokanField: 'vendor_email' }]
     }
   }
 
