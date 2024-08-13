@@ -417,20 +417,24 @@ final class Flow
         $args = ['triggered_entity' => $triggered_entity, 'triggered_entity_id' => $triggered_entity_id, 'data' => $data, 'flows' => $flows];
 
         $defaultOptions = [
-            'method'    => 'POST',
-            'header'    => ['Content-Type' => 'application/json'],
-            'body'      => $args,
+            'method'  => 'POST',
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'X-Token'      => base64_encode($triggered_entity_id)
+            ],
+            'body'      => wp_json_encode($args),
             'sslverify' => false,
             'timeout'   => 0.1
         ];
 
-        $options = wp_parse_args(null, $defaultOptions);
-        $requestReponse = wp_remote_request($url, $options);
+        wp_remote_request($url, $defaultOptions);
     }
 
     public function flowExecute(WP_REST_Request $request)
     {
-        if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+        ignore_user_abort(true);
+
+        if ($_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_ADDR']) {
             wp_send_json_error('Access denied. This action is restricted to localhost.', 403);
         }
 
