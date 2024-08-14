@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import TinyMCE from '../../Utilities/TinyMCE'
-import { generateMappedField, getallTemplates } from './WhatsAppCommonFunc'
+import { addFieldMap, generateMappedField, getallTemplates } from './WhatsAppCommonFunc'
 import WhatsAppFieldMap from './WhatsAppFieldMap'
 import Note from '../../Utilities/Note'
 import { useRecoilValue } from 'recoil'
@@ -242,6 +242,21 @@ export default function WhatsAppIntegLayout({
               mapKey="contact_field_map"
             />
           ))}
+          <div className="txt-center btcbi-field-map-button mt-2">
+            <button
+              onClick={() =>
+                addFieldMap(
+                  whatsAppConf.contact_field_map.length,
+                  whatsAppConf,
+                  setWhatsAppConf,
+                  'contact_field_map'
+                )
+              }
+              className="icn-btn sh-sm"
+              type="button">
+              +
+            </button>
+          </div>
         </>
       )}
 
