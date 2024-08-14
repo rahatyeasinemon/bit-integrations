@@ -77,6 +77,12 @@ export default function DokanIntegLayout({
           />
         </div>
 
+        {dokanConf.selectedTask === TASK_LIST_VALUES.REFUND_REQUEST && (
+          <span className="action-delete-task-note">
+            The Dokan Pro plugin needs to be installed and activated to use this (Refund Request)
+            task.
+          </span>
+        )}
         {(loading.euFields || loading.vendors) && (
           <Loader
             style={{

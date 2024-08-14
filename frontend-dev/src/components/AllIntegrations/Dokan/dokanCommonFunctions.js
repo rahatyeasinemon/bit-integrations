@@ -146,6 +146,18 @@ export const dokanStaticFields = (selectedTask) => {
       ],
       fieldMap: [{ formField: '', dokanField: 'amount' }]
     }
+  } else if (selectedTask === TASK_LIST_VALUES.REFUND_REQUEST) {
+    return {
+      staticFields: [
+        { key: 'order_id', label: 'Order ID', required: true },
+        { key: 'refund_amount', label: 'Refund Amount', required: true },
+        { key: 'refund_reason', label: 'Refund Reason', required: false },
+      ],
+      fieldMap: [
+        { formField: '', dokanField: 'order_id' },
+        { formField: '', dokanField: 'refund_amount' }
+      ]
+    }
   }
 
   return { staticFields: [], fieldMap: [] }

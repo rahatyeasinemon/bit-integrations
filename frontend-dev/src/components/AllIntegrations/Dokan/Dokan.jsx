@@ -18,6 +18,7 @@ function Dokan({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
+    auth: false,
     euFields: false,
     vendors: false
   })
@@ -33,16 +34,7 @@ function Dokan({ formFields, setFlow, flow, allIntegURL }) {
     selectedTask: '',
     vendors: [],
     selectedVendor: '',
-    groups: [],
-    selectedGroup: '',
-    reputations: [],
-    selectedReputation: '',
-    forums: [],
-    selectedForum: '',
-    selectedTags: '',
     actions: {},
-    selectedTopic: '',
-    topics: [],
     deleteVendorFieldMap: false,
     selectedPaymentMethod: ''
   })

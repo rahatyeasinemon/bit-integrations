@@ -3,10 +3,7 @@ export const TASK_LIST_VALUES = {
     UPDATE_VENDOR: 'updateVendor',
     DELETE_VENDOR: 'deleteVendor',
     WITHDRAW_REQUEST: 'withdrawRequest',
-    USER_REPUTATION: 'userReputation',
-    ADD_TO_GROUP: 'addToGroup',
-    REMOVE_FROM_GROUP: 'removeFromGroup',
-    CREATE_TOPIC: 'createTopic',
+    REFUND_REQUEST: 'refundRequest',
 }
 
 export const TASK_LIST = [
@@ -14,4 +11,5 @@ export const TASK_LIST = [
     { label: 'Update A Vendor', value: TASK_LIST_VALUES.UPDATE_VENDOR },
     { label: 'Delete A Vendor', value: TASK_LIST_VALUES.DELETE_VENDOR },
     { label: 'Request A Withdraw', value: TASK_LIST_VALUES.WITHDRAW_REQUEST },
+    { label: 'Request A Refund (Dokan pro feature)', value: TASK_LIST_VALUES.REFUND_REQUEST },
 ]

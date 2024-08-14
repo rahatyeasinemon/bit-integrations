@@ -9,6 +9,7 @@ namespace BitCode\FI\Actions\Dokan;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Log\LogHandler;
+use WeDevs\DokanPro\Refund\Validator;
 
 /**
  * Provide functionality for Record insert, update
@@ -164,6 +165,45 @@ class RecordApiHelper
         return ['success' => false, 'message' => 'Something went wrong!', 'code' => 400];
     }
 
+    public function refundRequest($finalData)
+    {
+        if (!is_plugin_active('dokan-pro/dokan-pro.php')) {
+            return [
+                'success' => false,
+                'message' => 'The Dokan Pro plugin is not installed or activated.',
+                'code'    => 400
+            ];
+        }
+
+        if (empty($finalData['order_id']) || empty($finalData['refund_amount'])) {
+            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+        }
+
+        $args = [
+            'order_id'        => $finalData['order_id'],
+            'refund_amount'   => $finalData['refund_amount'],
+            'refund_reason'   => isset($finalData['refund_reason']) ? $finalData['refund_reason'] : '',
+            'item_tax_totals' => []
+        ];
+
+        $validateRefundAmount = Validator::validate_refund_amount($finalData['refund_amount'], $args);
+
+        if (is_wp_error($validateRefundAmount)) {
+            return ['success' => false, 'message' => $validateRefundAmount->get_error_message(), 'code' => $validateRefundAmount->get_error_code()];
+        }
+
+        $refund = dokan_pro()->refund->create($args);
+
+        if (is_wp_error($refund)) {
+            return ['success' => false, 'message' => $refund->get_error_message(), 'code' => $refund->get_error_code()];
+        }
+
+        $refundAmount = $refund->get_refund_amount();
+        $orderId = $refund->get_order_id();
+
+        return ['success' => true, 'message' => 'Refund request added successfully. (Order ID: ' . $orderId . ' Refund Amount : ' . $refundAmount . ')'];
+    }
+
     public static function getUserIdFromEmail($email)
     {
         if (empty($email) || !is_email($email) || !email_exists($email)) {
@@ -217,6 +257,10 @@ class RecordApiHelper
             $response = $this->withdrawRequest($finalData, $selectedVendor, $selectedPaymentMethod);
             $type = 'Withdraw';
             $typeName = 'Withdraw Request';
+        } elseif ($selectedTask === 'refundRequest') {
+            $response = $this->refundRequest($finalData);
+            $type = 'Refund';
+            $typeName = 'Refund Request';
         }
 
         if ($response['success']) {

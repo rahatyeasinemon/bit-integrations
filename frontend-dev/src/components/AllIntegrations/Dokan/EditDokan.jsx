@@ -21,9 +21,6 @@ function EditDokan({ allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
     auth: false,
-    reputation: false,
-    forums: false,
-    topics: false,
     euFields: false,
     vendors: false
   })
