@@ -72,7 +72,7 @@ export default function WhatsAppIntegLayout({
           options={whatsAppConf?.messageTypes?.map((messageType) => ({
             label: checkIsPro(isPro, messageType.is_pro)
               ? messageType.label
-              : `${messageType.label} (Pro)`,
+              : getProLabel(messageType.label),
             value: messageType.name,
             disabled: checkIsPro(isPro, messageType.is_pro) ? false : true
           }))}
@@ -323,4 +323,12 @@ const contactFields = [
 
 const checkIsPro = (isPro, proType) => {
   return Boolean(isPro || !proType || (isPro && proType))
+}
+
+const getProLabel = (label) => {
+  return (
+    <span>
+      {label} <small className="txt-purple">(Pro)</small>
+    </span>
+  )
 }
