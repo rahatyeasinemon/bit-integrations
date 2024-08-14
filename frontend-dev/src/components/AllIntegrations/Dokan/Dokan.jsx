@@ -43,7 +43,8 @@ function Dokan({ formFields, setFlow, flow, allIntegURL }) {
     actions: {},
     selectedTopic: '',
     topics: [],
-    deleteVendorFieldMap: false
+    deleteVendorFieldMap: false,
+    selectedPaymentMethod: ''
   })
 
   const saveConfig = () => {
@@ -78,7 +79,11 @@ function Dokan({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (dokanConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR && !dokanConf.selectedVendor) {
+    if (
+      (dokanConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR ||
+        dokanConf.selectedTask === TASK_LIST_VALUES.WITHDRAW_REQUEST) &&
+      !dokanConf.selectedVendor
+    ) {
       toast.error('Please select a vendor!')
       return
     }
@@ -97,6 +102,14 @@ function Dokan({ formFields, setFlow, flow, allIntegURL }) {
       !checkMappedFields(dokanConf)
     ) {
       toast.error('Please select a topic or map fields!')
+      return
+    }
+
+    if (
+      dokanConf.selectedTask === TASK_LIST_VALUES.WITHDRAW_REQUEST &&
+      !dokanConf.selectedPaymentMethod
+    ) {
+      toast.error('Please select a payment method!')
       return
     }
 

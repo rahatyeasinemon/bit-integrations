@@ -36,7 +36,11 @@ function EditDokan({ allIntegURL }) {
       return
     }
 
-    if (dokanConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR && !dokanConf.selectedVendor) {
+    if (
+      (dokanConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR ||
+        dokanConf.selectedTask === TASK_LIST_VALUES.WITHDRAW_REQUEST) &&
+      !dokanConf.selectedVendor
+    ) {
       toast.error('Please select a vendor!')
       return
     }
@@ -55,6 +59,14 @@ function EditDokan({ allIntegURL }) {
       !checkMappedFields(dokanConf)
     ) {
       toast.error('Please select a topic or map fields!')
+      return
+    }
+
+    if (
+      dokanConf.selectedTask === TASK_LIST_VALUES.WITHDRAW_REQUEST &&
+      !dokanConf.selectedPaymentMethod
+    ) {
+      toast.error('Please select a payment method!')
       return
     }
 

@@ -184,13 +184,14 @@ class DokanController
         $selectedTask = $integrationDetails->selectedTask;
         $selectedVendor = $integrationDetails->selectedVendor;
         $actions = (array) $integrationDetails->actions;
+        $selectedPaymentMethod = $integrationDetails->selectedPaymentMethod;
 
         if (empty($fieldMap) || empty($selectedTask)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('Fields map, task are required for Dokan', 'bit-integrations'));
         }
 
         $recordApiHelper = new RecordApiHelper($integId);
-        $dokanResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $actions, $selectedVendor);
+        $dokanResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $actions, $selectedVendor, $selectedPaymentMethod);
 
         if (is_wp_error($dokanResponse)) {
             return $dokanResponse;

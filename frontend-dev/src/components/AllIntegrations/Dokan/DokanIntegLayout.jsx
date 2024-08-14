@@ -30,7 +30,10 @@ export default function DokanIntegLayout({
 
       if (val === TASK_LIST_VALUES.CREATE_VENDOR || val === TASK_LIST_VALUES.UPDATE_VENDOR) {
         getDokanEUFields(newConf, setDokanConf, loading, setLoading)
-      } else if (val === TASK_LIST_VALUES.DELETE_VENDOR) {
+      } else if (
+        val === TASK_LIST_VALUES.DELETE_VENDOR ||
+        val === TASK_LIST_VALUES.WITHDRAW_REQUEST
+      ) {
         getAllVendors(newConf, setDokanConf, loading, setLoading)
       }
     } else {
@@ -62,7 +65,7 @@ export default function DokanIntegLayout({
   return (
     <>
       <div>
-        <div className="flx mt-3">
+        <div className="flx mt-3 mb-4">
           <b className="wdt-200 d-in-b">{__('Select Task:', 'bit-integrations')}</b>
           <MultiSelect
             style={{ width: '450px' }}
@@ -73,7 +76,6 @@ export default function DokanIntegLayout({
             singleSelect
           />
         </div>
-        <br />
 
         {(loading.euFields || loading.vendors) && (
           <Loader
@@ -88,7 +90,8 @@ export default function DokanIntegLayout({
         )}
 
         {(dokanConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR ||
-          dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_VENDOR) && (
+          dokanConf.selectedTask === TASK_LIST_VALUES.DELETE_VENDOR ||
+          dokanConf.selectedTask === TASK_LIST_VALUES.WITHDRAW_REQUEST) && (
           <>
             <div className="flx mt-3 mb-4">
               <b className="wdt-200 d-in-b">{__('Select Vendor:', 'bit-integrations')}</b>
@@ -127,6 +130,24 @@ export default function DokanIntegLayout({
               </>
             )}
           </>
+        )}
+
+        {dokanConf.selectedTask === TASK_LIST_VALUES.WITHDRAW_REQUEST && (
+          <div className="flx mt-3 mb-4">
+            <b className="wdt-200 d-in-b">{__('Select Payment Method:', 'bit-integrations')}</b>
+            <MultiSelect
+              style={{ width: '450px' }}
+              options={[
+                { label: 'PayPal', value: 'paypal' },
+                { label: 'Bank Transfer', value: 'bank' },
+                { label: 'Skrill', value: 'skrill' }
+              ]}
+              className="msl-wrp-options"
+              defaultValue={dokanConf?.selectedPaymentMethod}
+              onChange={(val) => handleMultiSelectChange(val, 'selectedPaymentMethod')}
+              singleSelect
+            />
+          </div>
         )}
 
         {(dokanConf.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR ||
@@ -179,7 +200,8 @@ export default function DokanIntegLayout({
           </div>
         )}
 
-        {dokanConf?.selectedTask && dokanConf?.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR && (
+        {(dokanConf.selectedTask === TASK_LIST_VALUES.CREATE_VENDOR ||
+          dokanConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR) && (
           <div>
             <br />
             <br />

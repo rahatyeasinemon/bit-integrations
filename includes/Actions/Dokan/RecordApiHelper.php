@@ -128,6 +128,42 @@ class RecordApiHelper
         return ['success' => false, 'message' => 'Something went wrong!', 'code' => 400];
     }
 
+    public function withdrawRequest($finalData, $selectedVendor, $selectedPaymentMethod)
+    {
+        if (empty($selectedVendor) || empty($selectedPaymentMethod) || empty($finalData['amount'])) {
+            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+        }
+
+        $args = [
+            'method'  => $selectedPaymentMethod,
+            'user_id' => $selectedVendor,
+            'amount'  => $finalData['amount'],
+            'status'  => dokan()->withdraw->get_status_code('pending'),
+            'ip'      => dokan_get_client_ip(),
+            'notes'   => isset($finalData['note']) ? $finalData['note'] : ''
+        ];
+
+        $hasPendingRequest = dokan()->withdraw->has_pending_request($selectedVendor);
+
+        if ($hasPendingRequest) {
+            return ['success' => false, 'message' => 'Vendor already have pending withdraw request(s)!', 'code' => 400];
+        }
+
+        $validateRequest = dokan()->withdraw->is_valid_approval_request($args);
+
+        if (is_wp_error($validateRequest)) {
+            return ['success' => false, 'message' => $validateRequest->get_error_message(), 'code' => $validateRequest->get_error_code()];
+        }
+
+        $insertWithdraw = dokan()->withdraw->insert_withdraw($args);
+
+        if ($insertWithdraw) {
+            return ['success' => true, 'message' => 'Withdraw request inserted successfully. (Vendor ID: ' . $args['user_id'] . 'Amount : ' . $args['amount'] . 'Method: ' . $args['method'] . ')'];
+        }
+
+        return ['success' => false, 'message' => 'Something went wrong!', 'code' => 400];
+    }
+
     public static function getUserIdFromEmail($email)
     {
         if (empty($email) || !is_email($email) || !email_exists($email)) {
@@ -155,7 +191,7 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedTask, $actions, $selectedVendor)
+    public function execute($fieldValues, $fieldMap, $selectedTask, $actions, $selectedVendor, $selectedPaymentMethod)
     {
         if (isset($fieldMap[0]) && empty($fieldMap[0]->formField)) {
             $finalData = [];
@@ -177,6 +213,10 @@ class RecordApiHelper
             $response = $this->deleteVendor($finalData, $selectedVendor);
             $type = 'Vendor';
             $typeName = 'Delete Vendor';
+        } elseif ($selectedTask === 'withdrawRequest') {
+            $response = $this->withdrawRequest($finalData, $selectedVendor, $selectedPaymentMethod);
+            $type = 'Withdraw';
+            $typeName = 'Withdraw Request';
         }
 
         if ($response['success']) {

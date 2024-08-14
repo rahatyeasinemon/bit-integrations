@@ -138,6 +138,14 @@ export const dokanStaticFields = (selectedTask) => {
       ],
       fieldMap: [{ formField: '', dokanField: 'vendor_email' }]
     }
+  } else if (selectedTask === TASK_LIST_VALUES.WITHDRAW_REQUEST) {
+    return {
+      staticFields: [
+        { key: 'amount', label: 'Amount', required: true },
+        { key: 'note', label: 'Note', required: false },
+      ],
+      fieldMap: [{ formField: '', dokanField: 'amount' }]
+    }
   }
 
   return { staticFields: [], fieldMap: [] }
