@@ -70,12 +70,11 @@ export default function WhatsAppIntegLayout({
           className="mt-2 w-5"
           onChange={(val) => setChange(val, 'messageType')}
           options={whatsAppConf?.messageTypes?.map((messageType) => ({
-            label:
-              isPro || (isPro && messageType.is_pro)
-                ? messageType.label
-                : `${messageType.label} (Pro)`,
+            label: checkIsPro(isPro, messageType.is_pro)
+              ? messageType.label
+              : `${messageType.label} (Pro)`,
             value: messageType.name,
-            disabled: isPro || (isPro && messageType.is_pro) ? false : true
+            disabled: checkIsPro(isPro, messageType.is_pro) ? false : true
           }))}
           singleSelect
           closeOnSelect
@@ -321,3 +320,7 @@ const contactFields = [
   { key: 'WORK_country', label: 'Country (Work)', required: false },
   { key: 'WORK_country_code', label: 'Country Code (Work)', required: false }
 ]
+
+const checkIsPro = (isPro, proType) => {
+  return Boolean(isPro || !proType || (isPro && proType))
+}
