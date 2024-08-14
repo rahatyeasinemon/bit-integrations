@@ -183,6 +183,7 @@ const NewsletterAuthorization = lazy(() => import('./Newsletter/NewsletterAuthor
 const SureMembersAuthorization = lazy(() => import('./SureMembers/SureMembersAuthorization'))
 const MailsterAuthentication = lazy(() => import('./Mailster/MailsterAuthorization'))
 const WPForoAuthorization = lazy(() => import('./WPForo/WPForoAuthorization'))
+const DokanAuthorization = lazy(() => import('./Dokan/DokanAuthorization'))
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -564,6 +565,8 @@ export default function IntegInfo() {
         return <MailsterAuthentication mailsterConf={integrationConf} step={1} isInfo />
       case 'WPForo':
         return <WPForoAuthorization wpforoConf={integrationConf} step={1} isInfo />
+      case 'Dokan':
+        return <DokanAuthorization dokanConf={integrationConf} step={1} isInfo />
       default:
         return <></>
     }
