@@ -2,16 +2,17 @@
 
 namespace BitCode\FI\Flow;
 
-use BitCode\FI\Core\Util\Capabilities;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\CustomFuncValidator;
-use BitCode\FI\Core\Util\IpTool;
-use BitCode\FI\Core\Util\SmartTags;
-use BitCode\FI\Core\Util\StoreInCache;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Triggers\TriggerController;
 use WP_Error;
 use WP_REST_Request;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\IpTool;
+use BitCode\FI\Core\Util\SmartTags;
+use BitCode\FI\Core\Util\Capabilities;
+use BitCode\FI\Core\Util\StoreInCache;
+use BitCode\FI\Triggers\TriggerController;
+use BitCode\FI\Core\Util\CustomFuncValidator;
+use BitCode\FI\Core\Cryptography\Cryptography;
 
 /**
  * Provides details of available integration and helps to
@@ -420,7 +421,7 @@ final class Flow
             'method'  => 'POST',
             'headers' => [
                 'Content-Type' => 'application/json',
-                'X-Token'      => base64_encode($triggered_entity_id)
+                'X-Token'      => Cryptography::encrypt($triggered_entity_id, 'X-Token')
             ],
             'body'      => wp_json_encode($args),
             'sslverify' => false,
@@ -434,20 +435,24 @@ final class Flow
     {
         ignore_user_abort(true);
 
-        if ($_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_ADDR']) {
+        $triggered_entity = $request->get_param('triggered_entity');
+
+        $triggered_entity_id = $request->get_param('triggered_entity_id');
+
+        $data = $request->get_param('data');
+
+        $flows = $request->get_param('flows');
+
+        if ($_SERVER['REMOTE_ADDR'] != $_SERVER['SERVER_ADDR'] || $triggered_entity_id != Cryptography::decrypt($request->get_header('x_token'), 'X-Token')) {
             wp_send_json_error('Access denied. This action is restricted to localhost.', 403);
         }
-
-        $triggered_entity = $request->get_param('triggered_entity');
-        $triggered_entity_id = $request->get_param('triggered_entity_id');
-        $data = $request->get_param('data');
-        $flows = $request->get_param('flows');
 
         if (!is_wp_error($flows) && !empty($flows)) {
             $data['bit-integrator%trigger_data%'] = [
                 'triggered_entity'    => $triggered_entity,
                 'triggered_entity_id' => $triggered_entity_id,
             ];
+
             foreach ($flows as $flowData) {
                 $flowData = \is_array($flowData) ? (object) $flowData : $flowData;
 
@@ -465,12 +470,14 @@ final class Flow
                     // print_r(wp_json_encode($flowData->flow_details->condition->logics));
 
                     $error = new WP_Error('Conditional Logic False', __('Conditional Logic not matched', 'bit-integrations'));
+
                     if (isset($flowData->id)) {
                         LogHandler::save($flowData->id, 'Conditional Logic', 'validation', $error);
                     }
 
                     continue;
                 }
+
                 $integrationName = \is_null($flowData->flow_details->type) ? null : ucfirst(str_replace(' ', '', $flowData->flow_details->type));
 
                 switch ($integrationName) {
@@ -499,11 +506,13 @@ final class Flow
 
                 if (!\is_null($integrationName) && $integration = static::isActionExists($integrationName)) {
                     $handler = new $integration($flowData->id);
+
                     if (isset($flowData->flow_details->field_map)) {
                         $sptagData = self::specialTagMappingValue($flowData->flow_details->field_map);
                         // $data = array_merge($data, $sptagData);
                         $data = $data + $sptagData;
                     }
+
                     $handler->execute($flowData, $data);
                 }
             }
