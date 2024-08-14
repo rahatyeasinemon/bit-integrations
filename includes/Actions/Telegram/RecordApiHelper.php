@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Telegram;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -38,7 +38,7 @@ class RecordApiHelper
     public function execute($integrationDetails, $fieldValues)
     {
         $msg = Common::replaceFieldWithValue($integrationDetails->body, $fieldValues);
-        $messagesBody = str_replace(['<p>', '</p>', '&nbsp;'], ' ', $msg);
+        $messagesBody = strip_tags($msg);
 
         if (!empty($integrationDetails->actions->attachments)) {
             foreach ($fieldValues as $fieldKey => $fieldValue) {
@@ -98,7 +98,7 @@ class RecordApiHelper
         }
         $recordApiResponse = \is_string($recordApiResponse) ? json_decode($recordApiResponse) : $recordApiResponse;
 
-        if (!empty($recordApiResponse) && isset($recordApiResponse->ok)) {
+        if (!empty($recordApiResponse) && isset($recordApiResponse->ok) && $recordApiResponse->ok == true) {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', $recordApiResponse);
         } else {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', $recordApiResponse);
