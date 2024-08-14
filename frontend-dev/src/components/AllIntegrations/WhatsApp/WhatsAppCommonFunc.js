@@ -136,7 +136,7 @@ export const checkDisabledButton = (whatsAppConf) => {
 
 export const addFieldMap = (i, confTmp, setConf, mapKey = 'field_map') => {
   const newConf = { ...confTmp }
-  newConf[mapKey].splice(i + 1, 0, {})
+  newConf[mapKey].splice(i, 0, {})
   setConf({ ...newConf })
 }
 
