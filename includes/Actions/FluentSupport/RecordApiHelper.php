@@ -7,8 +7,8 @@
 namespace BitCode\FI\Actions\FluentSupport;
 
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper as BtcbiHelper;
 use BitCode\FI\Log\LogHandler;
-use Exception;
 use FluentSupport\App\Models\Customer;
 use FluentSupport\App\Models\Ticket;
 use FluentSupport\App\Services\Helper;
@@ -85,9 +85,8 @@ class RecordApiHelper
                 $ticket->syncCustomFields([$finalData['custom_fields']]);
             }
 
-            if (!empty($attachments) && class_exists(\FluentSupport\App\Services\Tickets\TicketService::class) && class_exists(\FluentSupport\App\Models\Attachment::class)) {
-                $finalData['attachments'] = static::uploadTicketFiles($attachments, $finalData['customer_id'], $this->_integrationID);
-                \FluentSupport\App\Services\Tickets\TicketService::addTicketAttachments($finalData, [], $ticket, $customer);
+            if (!empty($attachments)) {
+                static::uploadTicketFiles($finalData, $attachments, $ticket, $finalData['customer_id'], $this->_integrationID);
             }
 
             return $ticket;
@@ -134,62 +133,12 @@ class RecordApiHelper
         return $apiResponse;
     }
 
-    private static function uploadTicketFiles($files, $customerId, $flowId)
+    private static function uploadTicketFiles($finalData, $attachments, $ticket, $customer, $flowId)
     {
-        $attachments = [];
-        $files = static::prepareAttachments($files, $flowId);
-
-        foreach ($files as $file) {
-            if (empty($file['file_path'])) {
-                continue;
-            }
-
-            $fileData = [
-                'ticket_id' => null,
-                'person_id' => (int) $customerId,
-                'file_type' => $file['type'],
-                'file_path' => $file['file_path'],
-                'full_url'  => esc_url($file['url']),
-                'title'     => sanitize_file_name($file['name']),
-                'driver'    => 'local',
-                'status'    => 'in-active',
-                'settings'  => [
-                    'local_temp_path' => $file['file_path'],
-                ]
-            ];
-
-            try {
-                $attachment = \FluentSupport\App\Models\Attachment::create($fileData);
-                $attachments[] = $attachment->file_hash;
-            } catch (Exception $exception) {
-                error_log($exception->getMessage());
-
-                continue;
-            }
+        if (BtcbiHelper::proActionFeatExists('FluentSupport', 'uploadTicketAttachments')) {
+            do_action('btcbi_fluent_support_upload_ticket_attachments', $finalData, $attachments, $ticket, $customer, $flowId);
         }
 
-        return $attachments;
-    }
-
-    private static function prepareAttachments($files, $flowId)
-    {
-        $attachments = [];
-
-        foreach ((array) $files as $file) {
-            if (\is_array($file)) {
-                $attachments = array_merge($attachments, static::prepareAttachments($file, $flowId));
-            } else {
-                $path = Common::filePath($file);
-                $attachments[] = [
-                    'file_path' => $path,
-                    'url'       => Common::fileUrl($path),
-                    'name'      => basename($path),
-                    'type'      => mime_content_type($path),
-                    'size'      => filesize($path),
-                ];
-            }
-        }
-
-        return $attachments;
+        LogHandler::save($flowId, ['type' => 'Ticket', 'type_name' => 'Upload-Ticket-Attachments'], 'error', 'Bit Integration Pro plugin is not installed or activate');
     }
 }
