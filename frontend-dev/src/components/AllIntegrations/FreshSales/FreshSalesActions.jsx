@@ -9,7 +9,7 @@ import { $btcbi } from '../../../GlobalStates'
 
 export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf }) {
   const btcbi = useRecoilValue($btcbi)
-  const { isPro, version } = btcbi
+  const { isPro } = btcbi
 
   const actionHandler = (e, type) => {
     const newConf = { ...freshSalesConf }
@@ -27,7 +27,7 @@ export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf })
   return (
     <>
       <div className="pos-rel d-flx w-8">
-        {'Product' !== freshSalesConf.moduleData.module && isPro && version > '2.1.0' && (
+        {'Product' !== freshSalesConf.moduleData.module && (
           <TableCheckBox
             onChange={(e) => actionHandler(e, 'upsert')}
             checked={freshSalesConf?.actions?.upsert || false}
@@ -36,7 +36,7 @@ export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf })
             isInfo={!isPro}
             title={__(`Upsert Record ${!isPro ? '(Pro)' : ''}`, 'bit-integrations')}
             subTitle={__(
-              `${isPro ? 'A record gets updated based on the unique identifier value, else a new record will be created.' : 'The Bit Integration Pro plugin needs to be installed and activated to enable the Upsert Record feature'}`,
+              `${isPro ? 'A record gets updated based on the unique identifier value, else a new record will be created.' : 'The Bit Integration Pro v(2.1.1) plugin needs to be installed and activated to enable the Upsert Record feature'}`,
               'bit-integrations'
             )}
           />

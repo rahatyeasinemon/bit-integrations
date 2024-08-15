@@ -7,6 +7,8 @@ import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import Loader from '../../Loaders/Loader'
 import { getAllBusinessInboxes, supportStaff } from './FluentSupportCommonFunc'
+import { useRecoilValue } from 'recoil'
+import { $btcbi } from '../../../GlobalStates'
 
 export default function FluentSupportActions({
   fluentSupportConf,
@@ -15,30 +17,13 @@ export default function FluentSupportActions({
   formFields,
   setSnackbar
 }) {
+  const btcbi = useRecoilValue($btcbi)
+  const { isPro, version } = btcbi
   const [isLoading, setIsLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false })
 
   const actionHandler = (val, typ) => {
     const newConf = { ...fluentSupportConf }
-    // if (typ === 'support_staff') {
-    //   if (val !== '') {
-    //     newConf.actions.support_staff = val
-    //   } else {
-    //     delete newConf.actions.support_staff
-    //   }
-    // } else if (typ === 'client_priority') {
-    //   if (val !== '') {
-    //     newConf.actions.client_priority = val
-    //   } else {
-    //     delete newConf.actions.client_priority
-    //   }
-    // } else if (typ === 'business_inbox') {
-    //   if (val !== '') {
-    //     newConf.actions.business_inbox = val
-    //   } else {
-    //     delete newConf.actions.business_inbox
-    //   }
-    // }
 
     if (val !== '') {
       newConf.actions[typ] = val
@@ -120,9 +105,10 @@ export default function FluentSupportActions({
           checked={'attachment' in fluentSupportConf.actions}
           className="wdt-200 mt-4 mr-2"
           value="Attachment"
-          title={__('Attachment', 'bit-integrations')}
+          isInfo={!isPro}
+          title={__(`Attachment ${!isPro ? '(Pro)' : ''}`, 'bit-integrations')}
           subTitle={__(
-            'Supported Types: Photos, CSV, PDF/Docs, Zip, JSON and max file size: 2.0MB',
+            `${isPro ? 'Supported Types: Photos, CSV, PDF/Docs, Zip, JSON and max file size: 2.0MB' : 'The Bit Integration Pro v(2.1.7) plugin needs to be installed and activated to enable the Upsert Record feature'}`,
             'bit-integrations'
           )}
         />
@@ -256,28 +242,30 @@ export default function FluentSupportActions({
         )}
       </ConfirmModal>
 
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="purple"
-        btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'attachment'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Select Attachment', 'bit-integrations')}>
-        <div className="btcd-hr mt-2" />
-        <div className="mt-2">{__('Select file upload fields', 'bit-integrations')}</div>
-        <MultiSelect
-          defaultValue={fluentSupportConf.actions.attachment}
-          className="mt-2 w-9"
-          onChange={(val) => actionHandler(val, 'attachment')}
-          options={formFields
-            .filter((itm) => itm.type === 'file')
-            .map((itm) => ({ label: itm.label, value: itm.name }))}
-          singleSelect
-          closeOnSelect
-        />
-      </ConfirmModal>
+      {isPro && (
+        <ConfirmModal
+          className="custom-conf-mdl"
+          mainMdlCls="o-v"
+          btnClass="purple"
+          btnTxt={__('Ok', 'bit-integrations')}
+          show={actionMdl.show === 'attachment'}
+          close={clsActionMdl}
+          action={clsActionMdl}
+          title={__('Select Attachment', 'bit-integrations')}>
+          <div className="btcd-hr mt-2" />
+          <div className="mt-2">{__('Select file upload fields', 'bit-integrations')}</div>
+          <MultiSelect
+            defaultValue={fluentSupportConf.actions.attachment}
+            className="mt-2 w-9"
+            onChange={(val) => actionHandler(val, 'attachment')}
+            options={formFields
+              .filter((itm) => itm.type === 'file')
+              .map((itm) => ({ label: itm.label, value: itm.name }))}
+            singleSelect
+            closeOnSelect
+          />
+        </ConfirmModal>
+      )}
     </div>
   )
 }
