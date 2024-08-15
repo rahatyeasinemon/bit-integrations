@@ -78,7 +78,6 @@ export default function FluentSupportActions({
     setActionMdl({ show: false })
   }
 
-  console.log(fluentSupportConf.actions)
   return (
     <div className="pos-rel">
       <div className="d-flx flx-wrp">
