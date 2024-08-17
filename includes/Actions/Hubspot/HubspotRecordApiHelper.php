@@ -8,6 +8,7 @@ namespace BitCode\FI\Actions\Hubspot;
 
 use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
 
 /**
@@ -25,13 +26,39 @@ class HubspotRecordApiHelper
         ];
     }
 
-    public function insertContact($data, $actionName)
+    public function insertContact($data, $actionName, &$typeName)
     {
+
         $finalData['properties'] = $data;
+        if ($actionName === 'contact' && Helper::proActionFeatExists('Hubspot', 'updateContact') && $id = $this->existsContact($data['email'])) {
+            $typeName = 'Contact-Update';
+            return $this->updateContact($id, $finalData);
+        }
+
         $actionName = $actionName === 'contact' ? 'contacts' : 'companies';
         $apiEndpoint = "https://api.hubapi.com/crm/v3/objects/{$actionName}";
 
         return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
+    }
+
+    private function updateContact($id, $finalData)
+    {
+        $response = apply_filters('btcbi_hubspot_update_contact', $id, $finalData, $this->defaultHeader);
+
+        if (\is_string($response) && $response == $id) {
+            return (object) ['errors' => 'Bit Integration Pro plugin is not installed or activate'];
+        }
+
+        return $response;
+    }
+
+    private function existsContact($email)
+    {
+        $apiEndpoint = "https://api.hubapi.com/crm/v3/objects/contacts/{$email}?idProperty=email";
+
+        $response = HttpHelper::get($apiEndpoint, null, $this->defaultHeader);
+
+        return isset($response->id) ? $response->id : false;
     }
 
     public function insertDeal($finalData)
@@ -166,9 +193,9 @@ class HubspotRecordApiHelper
 
         if ($actionName === 'contact' || $actionName === 'company') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap, $integrationDetails);
-            $apiResponse = $this->insertContact($finalData, $actionName);
             $type = $actionName;
             $typeName = "{$actionName}-add";
+            $apiResponse = $this->insertContact($finalData, $actionName, $typeName);
         } elseif ($actionName === 'deal') {
             $finalData = $this->formatDealFieldMap($fieldValues, $fieldMap, $integrationDetails);
             $apiResponse = $this->insertDeal($finalData);
