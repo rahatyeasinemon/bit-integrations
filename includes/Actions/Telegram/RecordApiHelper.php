@@ -38,7 +38,7 @@ class RecordApiHelper
     public function execute($integrationDetails, $fieldValues)
     {
         $msg = Common::replaceFieldWithValue($integrationDetails->body, $fieldValues);
-        $messagesBody = strip_tags($msg);
+        $messagesBody = wp_strip_all_tags($msg);
 
         if (!empty($integrationDetails->actions->attachments)) {
             foreach ($fieldValues as $fieldKey => $fieldValue) {
