@@ -28,7 +28,10 @@ final class AllProActionFeat
             ['feat_name' => 'sendContactMessages', 'class' => '\BitApps\BTCBI_PRO\Actions\WhatsApp\WhatsAppHelperPro', 'pro_init_v' => '2.1.6'],
         ],
         'FluentSupport' => [
-            ['feat_name' => 'uploadTicketAttachments', 'class' => '\BitApps\BTCBI_PRO\Actions\FluentSupport\FluentSupportHelperPro', 'pro_init_v' => '2.1.6'],
+            ['feat_name' => 'uploadTicketAttachments', 'class' => '\BitApps\BTCBI_PRO\Actions\FluentSupport\FluentSupportHelperPro', 'pro_init_v' => '2.1.7'],
+        ],
+        'Hubspot' => [
+            ['feat_name' => 'updateContact', 'class' => '\BitApps\BTCBI_PRO\Actions\Hubspot\HubspotHelperPro', 'pro_init_v' => '2.1.7'],
         ],
     ];
 }
