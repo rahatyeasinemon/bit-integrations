@@ -21,11 +21,11 @@ export default function TinyMCE({
 
   useEffect(() => {
     if (typeof tinymce !== 'undefined') {
-      timyMceInit();
+      timyMceInit()
     } else {
-      console.warn('TinyMCE is not loaded yet');
+      console.warn('TinyMCE is not loaded yet')
     }
-  }, []);
+  }, [])
 
   const insertFieldKey = (fld: FieldType) => {
     if (fld.type === 'signature') {
@@ -38,6 +38,8 @@ export default function TinyMCE({
     if (window && window.tinymce) {
       window.tinymce.init({
         selector: `textarea#${editorId}`,
+        charset: 'UTF-8',
+        entity_encoding: 'raw',
         menubar,
         height: height || 150,
         width: width || '100%',
@@ -57,20 +59,37 @@ export default function TinyMCE({
           editor.on('Paste Change input Undo Redo', () => {
             onChangeHandler(editor.getContent())
           })
-          formFields && editor.addButton('addFormField', {
-            text: 'Form Fields ',
-            tooltip: 'Add Form Field Value in Message',
-            type: 'menubutton',
-            icon: false,
-            menu: formFields?.map(i => !i.type.match(/^(file-up|recaptcha|section|divider|image|advanced-file-up|)$/) && ({ text: i.name, onClick() { editor.insertContent(insertFieldKey(i)) } })),
-          })
-          SmartTagField && editor.addButton('addSmartField', {
-            text: 'Smart Tag Fields',
-            tooltip: 'Add Smart Tag Field Value in Message',
-            type: 'menubutton',
-            icon: false,
-            menu: SmartTagField?.map(i => ({ text: i.label, onClick() { editor.insertContent(`\${${i.name}}`) } })),
-          })
+          formFields &&
+            editor.addButton('addFormField', {
+              text: 'Form Fields ',
+              tooltip: 'Add Form Field Value in Message',
+              type: 'menubutton',
+              icon: false,
+              menu: formFields?.map(
+                (i) =>
+                  !i.type.match(
+                    /^(file-up|recaptcha|section|divider|image|advanced-file-up|)$/
+                  ) && {
+                    text: i.name,
+                    onClick() {
+                      editor.insertContent(insertFieldKey(i))
+                    }
+                  }
+              )
+            })
+          SmartTagField &&
+            editor.addButton('addSmartField', {
+              text: 'Smart Tag Fields',
+              tooltip: 'Add Smart Tag Field Value in Message',
+              type: 'menubutton',
+              icon: false,
+              menu: SmartTagField?.map((i) => ({
+                text: i.label,
+                onClick() {
+                  editor.insertContent(`\${${i.name}}`)
+                }
+              }))
+            })
           editor.addButton('toogleCode', {
             text: '</>',
             tooltip: 'Toggle preview',
@@ -104,15 +123,15 @@ export default function TinyMCE({
       className="btcd-paper-inp mt-1 w-10"
       rows={5}
       value={value}
-      onChange={ev => onChangeHandler(ev.target.value)}
+      onChange={(ev) => onChangeHandler(ev.target.value)}
       style={{ width: '95.5%', height: 'auto' }}
       disabled={disabled}
     />
   )
 }
 
-type FieldType = { key: string, type: string, name: string }
-type SmartTagType = { label: string, name: string }
+type FieldType = { key: string; type: string; name: string }
+type SmartTagType = { label: string; name: string }
 
 type TinyMCEProps = {
   id: string
@@ -134,7 +153,7 @@ type TinyMCEProps = {
 declare global {
   interface Window {
     tinymce: {
-      init: ({ }) => void
+      init: ({}) => void
       baseURI: {
         source: string
       }

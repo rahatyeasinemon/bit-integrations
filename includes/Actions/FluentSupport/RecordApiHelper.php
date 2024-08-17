@@ -7,6 +7,7 @@
 namespace BitCode\FI\Actions\FluentSupport;
 
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper as BtcbiHelper;
 use BitCode\FI\Log\LogHandler;
 use FluentSupport\App\Models\Customer;
 use FluentSupport\App\Models\Ticket;
@@ -45,14 +46,14 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function createCustomer($finalData)
+    public function createCustomer($finalData, $attachments = null)
     {
         $customer = Customer::maybeCreateCustomer($finalData);
 
         if (isset($customer->id)) {
             $finalData['customer_id'] = $customer->id;
 
-            return $this->createTicketByExistCustomer($finalData);
+            return $this->createTicketByExistCustomer($finalData, $customer, $attachments);
         }
         wp_send_json_error(
             __(
@@ -70,17 +71,22 @@ class RecordApiHelper
         return isset($customer->id) ? $customer->id : null;
     }
 
-    public function createTicketByExistCustomer($finalData)
+    public function createTicketByExistCustomer($finalData, $customer, $attachments = null)
     {
         if (!isset($finalData['mailbox_id']) || empty($finalData['mailbox_id'])) {
             $mailbox = Helper::getDefaultMailBox();
             $finalData['mailbox_id'] = $mailbox->id ?? null;
         }
+
         $ticket = Ticket::create($finalData);
 
         if (isset($ticket->id)) {
             if (isset($finalData['custom_fields']) && \is_array($finalData['custom_fields'])) {
                 $ticket->syncCustomFields([$finalData['custom_fields']]);
+            }
+
+            if (!empty($attachments)) {
+                static::uploadTicketFiles($finalData, $attachments, $ticket, $finalData['customer_id'], $this->_integrationID);
             }
 
             return $ticket;
@@ -107,12 +113,15 @@ class RecordApiHelper
         if (isset($integrationDetails->actions->business_inbox) && !empty($integrationDetails->actions->business_inbox)) {
             $finalData['mailbox_id'] = $integrationDetails->actions->business_inbox;
         }
+        if (isset($integrationDetails->actions->attachment) && !empty($integrationDetails->actions->attachment)) {
+            $attachments = $fieldValues[$integrationDetails->actions->attachment];
+        }
 
         if ($customerExits) {
             $finalData['customer_id'] = $customerExits;
-            $apiResponse = $this->createTicketByExistCustomer($finalData);
+            $apiResponse = $this->createTicketByExistCustomer($finalData, $customerExits, $attachments);
         } else {
-            $apiResponse = $this->createCustomer($finalData);
+            $apiResponse = $this->createCustomer($finalData, $attachments);
         }
 
         if (isset($apiResponse->errors)) {
@@ -122,5 +131,14 @@ class RecordApiHelper
         }
 
         return $apiResponse;
+    }
+
+    private static function uploadTicketFiles($finalData, $attachments, $ticket, $customer, $flowId)
+    {
+        if (BtcbiHelper::proActionFeatExists('FluentSupport', 'uploadTicketAttachments')) {
+            do_action('btcbi_fluent_support_upload_ticket_attachments', $finalData, $attachments, $ticket, $customer, $flowId);
+        }
+
+        LogHandler::save($flowId, ['type' => 'Ticket', 'type_name' => 'Upload-Ticket-Attachments'], 'error', 'Bit Integration Pro plugin is not installed or activate');
     }
 }
