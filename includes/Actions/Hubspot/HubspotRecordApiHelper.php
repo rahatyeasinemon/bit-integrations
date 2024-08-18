@@ -183,37 +183,63 @@ class HubspotRecordApiHelper
         return $apiResponse;
     }
 
-    private function insertContactOrCompany($finalData, $actionName)
+    private function handleContactOrCompany($data, $actionName, &$typeName, $update = false)
     {
+        $finalData = ['properties' => $data];
+        $actionName = $actionName === 'contact' ? 'contacts' : 'companies';
+
+        if ($update && Helper::proActionFeatExists('Hubspot', 'updateContactOrCompany')) {
+            $identifier = $actionName === 'contacts' ? $data['email'] : $data['name'];
+            $id = $this->existsEntity($actionName, $identifier);
+
+            return empty($id)
+                ? $this->insertContactOrCompany($finalData, $actionName, $typeName)
+                : $this->updateContactOrCompany($id, $finalData, $actionName, $typeName);
+        }
+
+        return $this->insertContactOrCompany($finalData, $actionName, $typeName);
+    }
+
+    private function existsEntity($actionName, $identifier)
+    {
+        $idProperty = $actionName === 'contacts' ? 'email' : 'name';
+        $apiEndpoint = "https://api.hubapi.com/crm/v3/objects/{$actionName}?idProperty={$idProperty}&properties={$idProperty}";
+
+        $results = $this->fetchEntity($apiEndpoint);
+        $results = $results ?? [];
+
+        foreach ($results as $entity) {
+            if ($entity->properties->{$idProperty} == $identifier) {
+                return $entity->id;
+            }
+        }
+
+        return false;
+    }
+
+    private function fetchEntity($apiEndpoint, $data = [])
+    {
+        $response = HttpHelper::get($apiEndpoint, null, $this->defaultHeader);
+        $data = array_merge($data, $response->results ?? []);
+
+        if (!empty($response->paging->next->link)) {
+            return $this->fetchEntity($response->paging->next->link, $data);
+        }
+
+        return $data;
+    }
+
+    private function insertContactOrCompany($finalData, $actionName, &$typeName)
+    {
+        $typeName = "{$actionName}-add";
         $apiEndpoint = "https://api.hubapi.com/crm/v3/objects/{$actionName}";
 
         return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
     }
 
-    private function handleContactOrCompany($data, $actionName, &$typeName, $update = false)
+    private function updateContactOrCompany($id, $finalData, $actionName, &$typeName)
     {
-        $finalData['properties'] = $data;
-        $actionName = $actionName === 'contact' ? 'contacts' : 'companies';
-
-        if (empty($update)) {
-            $typeName = "{$actionName}-add";
-
-            return $this->insertContactOrCompany($finalData, $actionName);
-        }
-
-        if ($actionName === 'contacts' && Helper::proActionFeatExists('Hubspot', 'updateContactOrCompany') && $id = $this->existsContact($data['email'])) {
-            $typeName = 'Contact-update';
-
-            return $this->updateContactOrCompany($id, $finalData, $actionName);
-        } elseif ($actionName === 'companies' && Helper::proActionFeatExists('Hubspot', 'updateContactOrCompany') && $id = $this->existsCompany($data['name'])) {
-            $typeName = 'Company-update';
-
-            return $this->updateContactOrCompany($id, $finalData, $actionName);
-        }
-    }
-
-    private function updateContactOrCompany($id, $finalData, $actionName)
-    {
+        $typeName = "{$actionName}-update";
         $response = apply_filters('btcbi_hubspot_update_contact_or_company', $id, $finalData, $actionName, $this->defaultHeader);
 
         if (\is_string($response) && $response == $id) {
@@ -221,37 +247,6 @@ class HubspotRecordApiHelper
         }
 
         return $response;
-    }
-
-    private function existsContact($email)
-    {
-        $apiEndpoint = "https://api.hubapi.com/crm/v3/objects/contacts/{$email}?idProperty=email";
-
-        $response = HttpHelper::get($apiEndpoint, null, $this->defaultHeader);
-
-        return isset($response->id) ? $response->id : false;
-    }
-
-    private function existsCompany($companyName)
-    {
-        $company = [];
-
-        $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/companies';
-
-        $companies = HttpHelper::get($apiEndpoint, null, $this->defaultHeader);
-
-        if (isset($companies->results)) {
-            $company = array_filter(
-                $companies->results,
-                function ($company) use ($companyName) {
-                    if ($company->properties->name == $companyName) {
-                        return $company;
-                    }
-                }
-            );
-        }
-
-        return isset($company[0]->id) ? $company[0]->id : false;
     }
 
     private static function setActions($integrationDetails)
