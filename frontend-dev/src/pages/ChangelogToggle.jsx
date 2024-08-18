@@ -84,17 +84,17 @@ export default function ChangelogToggle() {
             <div className="flx flx-col flx-center whats-new">
               <h3>What's New in {btcbi.version}?</h3>
               <small className="date">
-                Updated at: <b>12th August 2024</b>
+                Updated at: <b>17th August 2024</b>
               </small>
             </div>
             <div className="changelog-content">
               <span className="new-integration">
-                <b>New Trigger</b>
+                <b>New Action</b>
               </span>
 
               <div className="integration-list">
                 <ul>
-                  <li> Dokan (Pro)</li>
+                  <li> Dokan </li>
                 </ul>
               </div>
 
@@ -104,7 +104,8 @@ export default function ChangelogToggle() {
 
               <div className="feature-list">
                 <ul>
-                  <li>Contact Form 7: Advanced Custom HTML Fields added (Pro)</li>
+                  <li>WhatsApp: Text Message, Contact Message & Media Message added (Pro)</li>
+                  <li>Fluent Support: Ticket module Attachment field added (Pro)</li>
                 </ul>
               </div>
               <div>

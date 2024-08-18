@@ -2008,7 +2008,6 @@ final class TriggerFallback
 
             return $execData;
         }
-
     }
 
     public static function evfHandleSubmission($entry_id, $fields, $entry, $form_id, $form_data)
@@ -2457,7 +2456,6 @@ final class TriggerFallback
                 }
             }
         }
-
     }
 
     public static function gamipressHandleEarnPoints($user_id, $new_points, $total_points, $admin_id, $achievement_id, $points_type, $reason, $log_type)
@@ -2710,7 +2708,6 @@ final class TriggerFallback
         if ($enCode->selectedTag == $b || $enCode->selectedTag == 'any') {
             return ['triggered_entity' => 'Groundhogg', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
         }
-
     }
 
     public static function groundhoggTagRemove($a, $b)
@@ -2733,7 +2730,6 @@ final class TriggerFallback
         if ($enCode->selectedTag == $b || $enCode->selectedTag == 'any') {
             return ['triggered_entity' => 'Groundhogg', 'triggered_entity_id' => $form_id, 'data' => $data, 'flows' => $flows];
         }
-
     }
 
     public static function happySaveImage($base64_img, $title)
@@ -2808,7 +2804,6 @@ final class TriggerFallback
 
             return ['triggered_entity' => 'Happy', 'triggered_entity_id' => $form_id, 'data' => $form_data, 'flows' => $flows];
         }
-
     }
 
     public static function jetEnginePostMetaData($meta_id, $post_id, $meta_key, $meta_value)
@@ -2836,7 +2831,6 @@ final class TriggerFallback
         if (1 && $isPostTypeMatched && $isMetaKeyMatched && $isEditable) {
             return ['triggered_entity' => 'JetEngine', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $postCreateFlow];
         }
-
     }
 
     public static function jetEnginePostMetaValueCheck($meta_id, $post_id, $meta_key, $meta_value)
@@ -2864,7 +2858,6 @@ final class TriggerFallback
         if (2 && $isPostTypeMatched && $isMetaKeyMatched && $isMetaValueMatched && $isEditable) {
             return ['triggered_entity' => 'JetEngine', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $postCreateFlow];
         }
-
     }
 
     public static function handleKadenceFormSubmit($form_args, $fields, $form_id, $post_id)
@@ -3043,7 +3036,6 @@ final class TriggerFallback
             $quizAttemptDataFinal = $result_course + $result_lesson + $result_quiz + $user;
             Flow::execute('LearnDash', $i, $quizAttemptDataFinal, $flows);
         }
-
     }
 
     public static function learndashHandleTopicCompleted($data)
@@ -3540,7 +3532,6 @@ final class TriggerFallback
 
             return $date->format('Y-m-d');
         }
-
     }
 
     public static function handleMailpoetSubmit($data, $segmentIds, $form)
@@ -4015,7 +4006,6 @@ final class TriggerFallback
         if ($level_id === $selectedMembershipLevel || $selectedMembershipLevel === 'any') {
             return ['triggered_entity' => 'PaidMembershipPro', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $flows];
         }
-
     }
 
     public static function paidMembershipProgetUserInfo($user_id)
@@ -4056,7 +4046,6 @@ final class TriggerFallback
         if (($cancel_level == $selectedMembershipLevel || $selectedMembershipLevel === 'any')) {
             return ['triggered_entity' => 'PaidMembershipPro', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $flows];
         }
-
     }
 
     public static function perchesMembershipLevel($user_id, $morder)
@@ -4079,7 +4068,6 @@ final class TriggerFallback
         if (($membership_id == $selectedMembershipLevel || $selectedMembershipLevel === 'any')) {
             return ['triggered_entity' => 'PaidMembershipPro', 'triggered_entity_id' => 3, 'data' => $finalData, 'flows' => $flows];
         }
-
     }
 
     public static function expiryMembershipLevel($user_id, $membership_id)
@@ -4097,7 +4085,6 @@ final class TriggerFallback
         if (($membership_id == $selectedMembershipLevel || $selectedMembershipLevel === 'any')) {
             return ['triggered_entity' => 'PaidMembershipPro', 'triggered_entity_id' => 4, 'data' => $finalData, 'flows' => $flows];
         }
-
     }
 
     // PiotnetAddon all functions
@@ -4177,7 +4164,7 @@ final class TriggerFallback
             }
 
             if (isset($newPostData->post_content)) {
-                $newPostData->post_content = trim(strip_tags($newPostData->post_content));
+                $newPostData->post_content = trim(wp_strip_all_tags($newPostData->post_content));
                 $newPostData->post_permalink = get_permalink($newPostData);
             }
 
@@ -4226,7 +4213,7 @@ final class TriggerFallback
             }
 
             if (isset($deletedPost->post_content)) {
-                $deletedPost->post_content = trim(strip_tags($deletedPost->post_content));
+                $deletedPost->post_content = trim(wp_strip_all_tags($deletedPost->post_content));
                 $deletedPost->post_permalink = get_permalink($deletedPost);
             }
 
@@ -4258,7 +4245,7 @@ final class TriggerFallback
                 $flowDetails = json_decode($postUpdateFlow[0]->flow_details);
             }
             if (isset($updatedPostData->post_content)) {
-                $updatedPostData->post_content = trim(strip_tags($updatedPostData->post_content));
+                $updatedPostData->post_content = trim(wp_strip_all_tags($updatedPostData->post_content));
                 $updatedPostData->post_permalink = get_permalink($updatedPostData);
             }
 
@@ -4284,7 +4271,7 @@ final class TriggerFallback
             }
 
             if (isset($post->post_content)) {
-                $post->post_content = trim(strip_tags($post->post_content));
+                $post->post_content = trim(wp_strip_all_tags($post->post_content));
                 $post->post_permalink = get_permalink($post);
             }
             if (has_post_thumbnail($post->id)) {
@@ -4575,7 +4562,6 @@ final class TriggerFallback
         if (($commission_data['type'] == $selectedCommissionType || $selectedCommissionType === 'any')) {
             return ['triggered_entity' => 'SliceWp', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $flows];
         }
-
     }
 
     public static function sliceWpgetUserInfo($user_id)
@@ -4705,7 +4691,6 @@ final class TriggerFallback
         if ($flows && ($data['product_id'] == $selectedProduct || $selectedProduct === 'any')) {
             return ['triggered_entity' => 'SureCart', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $flows];
         }
-
     }
 
     public static function SureCartDataProcess($data, $product, $accountDetails)
@@ -4825,7 +4810,6 @@ final class TriggerFallback
         if ($flows && ($data->product->id == $selectedProduct || $selectedProduct === 'any')) {
             return ['triggered_entity' => 'SureCart', 'triggered_entity_id' => 2, 'data' => $finalData, 'flows' => $flows];
         }
-
     }
 
     public static function surecartPurchaseUnrevoked($data)
@@ -4857,14 +4841,10 @@ final class TriggerFallback
         if ($flows && ($data->product->id == $selectedProduct || $selectedProduct === 'any')) {
             return ['triggered_entity' => 'SureCart', 'triggered_entity_id' => 3, 'data' => $finalData, 'flows' => $flows];
         }
-
     }
 
     // main function was empty in the orginal file
-    public static function handleThemifySubmit()
-    {
-
-    }
+    public static function handleThemifySubmit() {}
 
     public static function thriveApprenticeHandleCourseComplete($course_details, $user_details)
     {
@@ -4892,14 +4872,10 @@ final class TriggerFallback
         if ($course_details['course_id'] == $selectedCourse || $selectedCourse === 'any') {
             return ['triggered_entity' => 'ThriveApprentice', 'triggered_entity_id' => 1, 'data' => $finalData, 'flows' => $flows];
         }
-
     }
 
     // main function was unavailable in the orginal file
-    public static function thriveApprenticeHandleLessonComplete()
-    {
-
-    }
+    public static function thriveApprenticeHandleLessonComplete() {}
 
     public static function thriveApprenticeHandleModuleComplete($module_details, $user_details)
     {
@@ -4927,7 +4903,6 @@ final class TriggerFallback
         if ($module_details['module_id'] == $selectedModule || $selectedModule === 'any') {
             return ['triggered_entity' => 'ThriveApprentice', 'triggered_entity_id' => 3, 'data' => $finalData, 'flows' => $flows];
         }
-
     }
 
     public static function thriveApprenticeGetUserInfo($user_id)
@@ -5200,7 +5175,6 @@ final class TriggerFallback
                 Flow::execute('TutorLms', 5, $attempt_details, [$flow]);
             }
         }
-
     }
 
     public static function TutorLmsGetUserInfo($user_id)
@@ -5270,7 +5244,6 @@ final class TriggerFallback
         if ($finalData && $role === $selectedRole) {
             return ['triggered_entity' => 'UltimateMember', 'triggered_entity_id' => $form_id, 'data' => $finalData, 'flows' => $flows];
         }
-
     }
 
     public static function ultimateMemberHandleUserRoleChange($user_id, $role, $old_roles)
@@ -5286,7 +5259,6 @@ final class TriggerFallback
         if ($finalData) {
             return ['triggered_entity' => 'UltimateMember', 'triggered_entity_id' => $form_id, 'data' => $finalData, 'flows' => $flows];
         }
-
     }
 
     public static function ultimateMemberHandleUserRegisViaForm($user_id, $um_args)
@@ -5301,7 +5273,6 @@ final class TriggerFallback
         if (!empty($um_args['submitted'])) {
             return ['triggered_entity' => 'UltimateMember', 'triggered_entity_id' => $form_id, 'data' => $um_args['submitted'], 'flows' => $flows];
         }
-
     }
 
     public static function ultimateMemberHandleUserLogViaForm($um_args)
@@ -5321,7 +5292,6 @@ final class TriggerFallback
         if ($finalData) {
             return ['triggered_entity' => 'UltimateMember', 'triggered_entity_id' => $form_id, 'data' => $finalData, 'flows' => $flows];
         }
-
     }
 
     public static function ultimateMemberGetUserInfo($user_id)

@@ -104,7 +104,7 @@ export default function WPForoIntegLayout({
             </div>
             <br />
             <div className="flx">
-              <span className="wpforo-delete-topic-note">
+              <span className="action-delete-task-note">
                 To delete a topic, you can select a topic from the list above, or you can map
                 fields.
               </span>

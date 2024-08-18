@@ -1,10 +1,10 @@
 === Webhook Automator & Form Integration to Automate 210+ Platforms – Bit Integrations ===
-Contributors: bitpressadmin ,
+Contributors: bitpressadmin,rishadbitcode,fahimsakib,shuvomohajan,tanvirchy,shakhawathosen,khoaiz,mazharul78
 Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.1
 Requires PHP: 7.0
-Stable tag: 2.1.9
+Stable tag: 2.2.0
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier; Integration of 70+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -146,6 +146,7 @@ https://youtu.be/eFuficjF_F4
 * [**ClickUp**](https://clickup.com/)
 * [**Copper CRM**](https://www.copper.com/)
 * [**Demio**](https://www.demio.com/)
+* [**Dokan**](https://wordpress.org/plugins/dokan-lite/)
 * [**Discord**](https://discord.com/)
 * [**DirectIQ**](https://www.directiq.com/)
 * [**Drip**](https://www.drip.com/)
@@ -761,6 +762,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 
 * [**Custom Action**](https://bitapps.pro/docs/bit-integrations/trigger/custom-action/)
 
+* [**Dokan**](https://bitapps.pro/docs/bit-integrations/actions/dokan-integration/)
+
 * [**DirectIQ**](https://bitapps.pro/docs/bit-integrations/trigger/directiq/)
 
 * [**Drip**](https://bitapps.pro/docs/bit-integrations/actions/drip-integrations/)
@@ -983,6 +986,23 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.2.0  =
+_Release Date -17th August 2024_
+
+- **New Action :**
+  - Dokan – Powerful WooCommerce Multivendor Marketplace Solution – Build Your Own Amazon, eBay, Etsy
+  
+- **New Features :**
+  - WhatsApp: Text Message, Contact Message & Media Message added (Pro)
+  - Fluent Support: Ticket module Attachment field added (Pro)
+
+- **New Improvements :**
+  - WhatsApp: Template Message imporved
+  - Telegram: Charset UTF-8 raw enitity encoded (Local Languages)
+
+- **New Fixes :**
+  - Telegram: HTML Entities parse issue fixed 
 
 = 2.1.9  =
 _Release Date -12th August 2024_

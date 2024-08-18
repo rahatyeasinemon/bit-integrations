@@ -159,7 +159,8 @@ export default function SelectAction() {
     { type: 'Newsletter' },
     { type: 'SureMembers' },
     { type: 'Mailster' },
-    { type: 'WPForo' }
+    { type: 'WPForo' },
+    { type: 'Dokan' }
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(
