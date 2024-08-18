@@ -21,6 +21,7 @@ final class AllProActionFeat
         ],
         'Hubspot' => [
             ['feat_name' => 'updateContactOrCompany', 'class' => '\BitApps\BTCBI_PRO\Actions\Hubspot\HubspotHelperPro', 'pro_init_v' => '2.1.7'],
+            ['feat_name' => 'updateDeal', 'class' => '\BitApps\BTCBI_PRO\Actions\Hubspot\HubspotHelperPro', 'pro_init_v' => '2.1.7'],
         ],
         'MailChimp' => [
             ['feat_name' => 'addRemoveTag', 'class' => '\BitApps\BTCBI_PRO\Actions\MailChimp\MailChimpRecordHelper', 'pro_init_v' => '2.0.9']
