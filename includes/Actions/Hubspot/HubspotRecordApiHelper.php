@@ -6,10 +6,10 @@
 
 namespace BitCode\FI\Actions\Hubspot;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -24,41 +24,6 @@ class HubspotRecordApiHelper
             'Content-Type'  => 'application/json',
             'authorization' => "Bearer {$accessToken}"
         ];
-    }
-
-    public function insertContact($data, $actionName, &$typeName)
-    {
-
-        $finalData['properties'] = $data;
-        if ($actionName === 'contact' && Helper::proActionFeatExists('Hubspot', 'updateContact') && $id = $this->existsContact($data['email'])) {
-            $typeName = 'Contact-Update';
-            return $this->updateContact($id, $finalData);
-        }
-
-        $actionName = $actionName === 'contact' ? 'contacts' : 'companies';
-        $apiEndpoint = "https://api.hubapi.com/crm/v3/objects/{$actionName}";
-
-        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
-    }
-
-    private function updateContact($id, $finalData)
-    {
-        $response = apply_filters('btcbi_hubspot_update_contact', $id, $finalData, $this->defaultHeader);
-
-        if (\is_string($response) && $response == $id) {
-            return (object) ['errors' => 'Bit Integration Pro plugin is not installed or activate'];
-        }
-
-        return $response;
-    }
-
-    private function existsContact($email)
-    {
-        $apiEndpoint = "https://api.hubapi.com/crm/v3/objects/contacts/{$email}?idProperty=email";
-
-        $response = HttpHelper::get($apiEndpoint, null, $this->defaultHeader);
-
-        return isset($response->id) ? $response->id : false;
     }
 
     public function insertDeal($finalData)
@@ -188,6 +153,7 @@ class HubspotRecordApiHelper
     public function executeRecordApi($integId, $integrationDetails, $fieldValues, $fieldMap)
     {
         $actionName = $integrationDetails->actionName;
+        $update = isset($integrationDetails->actions->update) ? $integrationDetails->actions->update : false;
         $type = '';
         $typeName = '';
 
@@ -195,7 +161,7 @@ class HubspotRecordApiHelper
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap, $integrationDetails);
             $type = $actionName;
             $typeName = "{$actionName}-add";
-            $apiResponse = $this->insertContact($finalData, $actionName, $typeName);
+            $apiResponse = $this->handleContactOrCompany($finalData, $actionName, $typeName, $update);
         } elseif ($actionName === 'deal') {
             $finalData = $this->formatDealFieldMap($fieldValues, $fieldMap, $integrationDetails);
             $apiResponse = $this->insertDeal($finalData);
@@ -215,6 +181,77 @@ class HubspotRecordApiHelper
         }
 
         return $apiResponse;
+    }
+
+    private function insertContactOrCompany($finalData, $actionName)
+    {
+        $apiEndpoint = "https://api.hubapi.com/crm/v3/objects/{$actionName}";
+
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
+    }
+
+    private function handleContactOrCompany($data, $actionName, &$typeName, $update = false)
+    {
+        $finalData['properties'] = $data;
+        $actionName = $actionName === 'contact' ? 'contacts' : 'companies';
+
+        if (empty($update)) {
+            $typeName = "{$actionName}-add";
+
+            return $this->insertContactOrCompany($finalData, $actionName);
+        }
+
+        if ($actionName === 'contacts' && Helper::proActionFeatExists('Hubspot', 'updateContactOrCompany') && $id = $this->existsContact($data['email'])) {
+            $typeName = 'Contact-update';
+
+            return $this->updateContactOrCompany($id, $finalData);
+        } elseif ($actionName === 'companies' && Helper::proActionFeatExists('Hubspot', 'updateContactOrCompany') && $id = $this->existsCompany($data['name'])) {
+            $typeName = 'Company-update';
+
+            return $this->updateContactOrCompany($id, $finalData);
+        }
+    }
+
+    private function updateContactOrCompany($id, $finalData)
+    {
+        $response = apply_filters('btcbi_hubspot_update_contact_or_company', $id, $finalData, $this->defaultHeader);
+
+        if (\is_string($response) && $response == $id) {
+            return (object) ['errors' => 'Bit Integration Pro plugin is not installed or activate'];
+        }
+
+        return $response;
+    }
+
+    private function existsContact($email)
+    {
+        $apiEndpoint = "https://api.hubapi.com/crm/v3/objects/contacts/{$email}?idProperty=email";
+
+        $response = HttpHelper::get($apiEndpoint, null, $this->defaultHeader);
+
+        return isset($response->id) ? $response->id : false;
+    }
+
+    private function existsCompany($companyName)
+    {
+        $company = [];
+
+        $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/companies';
+
+        $companies = HttpHelper::get($apiEndpoint, null, $this->defaultHeader);
+
+        if (isset($companies->results)) {
+            $company = array_filter(
+                $companies->results,
+                function ($company) use ($companyName) {
+                    if ($company->properties->name == $companyName) {
+                        return $company;
+                    }
+                }
+            );
+        }
+
+        return isset($company[0]->id) ? $company[0]->id : false;
     }
 
     private static function setActions($integrationDetails)
