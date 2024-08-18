@@ -160,7 +160,8 @@ export default function SelectAction() {
     { type: 'SureMembers' },
     { type: 'Mailster' },
     { type: 'WPForo' },
-    { type: 'Dokan' }
+    { type: 'Dokan' },
+    { type: 'JetEngine' }
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(

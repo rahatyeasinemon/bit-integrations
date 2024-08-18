@@ -155,6 +155,7 @@ const SureMembers = lazy(() => import('./SureMembers/SureMembers'))
 const Mailster = lazy(() => import('./Mailster/Mailster'))
 const WPForo = lazy(() => import('./WPForo/WPForo'))
 const Dokan = lazy(() => import('./Dokan/Dokan'))
+const JetEngine = lazy(() => import('./JetEngine/JetEngine'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
@@ -459,6 +460,8 @@ export default function NewInteg({ allIntegURL }) {
         return <WPForo allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       case 'Dokan':
         return <Dokan allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
+      case 'JetEngine':
+        return <JetEngine allIntegURL={allIntegURL} formFields={flow?.triggerData?.fields} flow={flow} setFlow={setFlow} />
       default:
         return <></>
     }

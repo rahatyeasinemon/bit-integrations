@@ -1,0 +1,12 @@
+export const TASK_LIST_VALUES = {
+    CREATE_POST_TYPE: 'createPostType',
+    CREATE_VENDOR: 'createVendor',
+    UPDATE_VENDOR: 'updateVendor',
+    DELETE_VENDOR: 'deleteVendor',
+    WITHDRAW_REQUEST: 'withdrawRequest',
+    REFUND_REQUEST: 'refundRequest',
+}
+
+export const TASK_LIST = [
+    { label: 'Add New Post Type', value: TASK_LIST_VALUES.CREATE_POST_TYPE },
+]
