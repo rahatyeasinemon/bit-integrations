@@ -138,7 +138,8 @@ class RecordApiHelper
         $finalData['created_by'] = get_current_user_id();
 
         if (class_exists('Mint\MRM\DataStores\ContactData') && class_exists('Mint\MRM\DataBase\Models\ContactModel')) {
-            $contact_id = ContactModel::update($finalData, $contact_id);
+            ContactModel::update($finalData, $contact_id);
+            
             if ('pending' === $selectedSubStatus) {
                 MessageController::get_instance()->send_double_opt_in($contact_id);
             }
