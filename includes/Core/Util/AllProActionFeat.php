@@ -20,8 +20,9 @@ final class AllProActionFeat
             ['feat_name' => 'upsertRecord', 'class' => '\BitApps\BTCBI_PRO\Actions\FreshSales\FreshSalesRecordApiHelper', 'pro_init_v' => '2.1.1']
         ],
         'Hubspot' => [
-            ['feat_name' => 'updateContactOrCompany', 'class' => '\BitApps\BTCBI_PRO\Actions\Hubspot\HubspotHelperPro', 'pro_init_v' => '2.1.7'],
-            ['feat_name' => 'updateDeal', 'class' => '\BitApps\BTCBI_PRO\Actions\Hubspot\HubspotHelperPro', 'pro_init_v' => '2.1.7'],
+            ['feat_name' => 'updateContactOrCompany', 'class' => '\BitApps\BTCBI_PRO\Actions\Hubspot\HubspotHelperPro', 'pro_init_v' => '2.1.8'],
+            ['feat_name' => 'updateDeal', 'class' => '\BitApps\BTCBI_PRO\Actions\Hubspot\HubspotHelperPro', 'pro_init_v' => '2.1.8'],
+            ['feat_name' => 'updateTicket', 'class' => '\BitApps\BTCBI_PRO\Actions\Hubspot\HubspotHelperPro', 'pro_init_v' => '2.1.8'],
         ],
         'MailChimp' => [
             ['feat_name' => 'addRemoveTag', 'class' => '\BitApps\BTCBI_PRO\Actions\MailChimp\MailChimpRecordHelper', 'pro_init_v' => '2.0.9']
