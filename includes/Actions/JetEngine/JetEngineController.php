@@ -6,7 +6,8 @@
 
 namespace BitCode\FI\Actions\JetEngine;
 
-use WeDevs\JetEnginePro\Modules\Germanized\Helper;
+use Jet_Engine_CPT;
+use Jet_Engine_Tools;
 use WP_Error;
 
 /**
@@ -38,60 +39,60 @@ class JetEngineController
         }
     }
 
-    public function getAllVendors()
+    public function getMenuIcons()
     {
         self::checkedJetEngineExists();
 
-        $allVendors = jetEngine()->vendor->get_vendors(['number' => -1]);
-        $vendorList = [];
+        $JetEngineCPT = new Jet_Engine_CPT();
+        $iconsOptions = $JetEngineCPT->get_icons_options();
 
-        foreach ($allVendors as $vendor) {
-            $dispalyName = $vendor->data->display_name;
-            $vendorArray = $vendor->to_array();
-
-            $vendorList[] = (object) [
-                'label' => $dispalyName . ' (' . $vendorArray['store_name'] . ')',
-                'value' => (string) $vendorArray['id']
+        foreach ($iconsOptions as $icon) {
+            $iconsOptionsList[] = (object) [
+                'label' => $icon,
+                'value' => 'dashicons-' . $icon
             ];
         }
 
-        wp_send_json_success($vendorList, 200);
+        if (!empty($iconsOptionsList)) {
+            wp_send_json_success($iconsOptionsList, 200);
+        }
+
+        wp_send_json_error('Icon options fetching failed!', 400);
     }
 
-    public function getEUFields()
+    public function getMenuPosition()
     {
         self::checkedJetEngineExists();
 
-        $fields = [];
-        $vendorEUFields = [
-            ['key' => 'jetEngine_company_name', 'label' => 'Company Name', 'required' => false],
-            ['key' => 'jetEngine_company_id_number', 'label' => 'Company ID/EUID Number', 'required' => false],
-            ['key' => 'jetEngine_vat_number', 'label' => 'VAT/TAX Number', 'required' => false],
-            ['key' => 'jetEngine_bank_name', 'label' => 'Name of Bank', 'required' => false],
-            ['key' => 'jetEngine_bank_iban', 'label' => 'Bank IBAN', 'required' => false],
-        ];
+        $menuPositions = Jet_Engine_Tools::get_available_menu_positions();
+        $menuPositionList = [];
 
-        if (is_plugin_active('jet-engine/jet-engine.php') && jetEngine_pro()->module->is_active('germanized')) {
-            $enabledEUFields = Helper::is_fields_enabled_for_seller();
-
-            foreach ($enabledEUFields as $key => $item) {
-                if ($item) {
-                    $vendorEnabledEUFieldsKey[] = $key;
-                }
-            }
-
-            if (!empty($vendorEnabledEUFieldsKey)) {
-                foreach ($vendorEUFields as $vendorEUField) {
-                    if (\in_array($vendorEUField['key'], $vendorEnabledEUFieldsKey)) {
-                        $fields[] = (object) $vendorEUField;
-                    }
-                }
-            }
-
-            wp_send_json_success($fields, 200);
+        foreach ($menuPositions as $item) {
+            $menuPositionList[] = (object) [
+                'label' => $item['label'],
+                'value' => (string) $item['value']
+            ];
         }
 
-        wp_send_json_error('EU Compliance Fields fetching failed - JetEngine Pro or EU Compliance Fields is not enabled', 400);
+        if (!empty($menuPositionList)) {
+            wp_send_json_success($menuPositionList, 200);
+        }
+
+        wp_send_json_error('Menu position fetching failed!', 400);
+    }
+
+    public function getSupports()
+    {
+        self::checkedJetEngineExists();
+
+        $JetEngineCPT = new Jet_Engine_CPT();
+        $supportsOptions = $JetEngineCPT->get_supports_options();
+
+        if (!empty($supportsOptions)) {
+            wp_send_json_success($supportsOptions, 200);
+        }
+
+        wp_send_json_error('Support options fetching failed!', 400);
     }
 
     public function execute($integrationData, $fieldValues)
@@ -102,16 +103,20 @@ class JetEngineController
         $integId = $integrationData->id;
         $fieldMap = $integrationDetails->field_map;
         $selectedTask = $integrationDetails->selectedTask;
-        $selectedVendor = $integrationDetails->selectedVendor;
         $actions = (array) $integrationDetails->actions;
-        $selectedPaymentMethod = $integrationDetails->selectedPaymentMethod;
 
         if (empty($fieldMap) || empty($selectedTask)) {
             return new WP_Error('REQ_FIELD_EMPTY', __('Fields map, task are required for JetEngine', 'bit-integrations'));
         }
 
+        $createCPTSelectedOptions = [
+            'selectedMenuPosition' => $integrationDetails->selectedMenuPosition,
+            'selectedMenuIcon'     => $integrationDetails->selectedMenuIcon,
+            'selectedSupports'     => $integrationDetails->selectedSupports,
+        ];
+
         $recordApiHelper = new RecordApiHelper($integId);
-        $jetEngineResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $actions, $selectedVendor, $selectedPaymentMethod);
+        $jetEngineResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $actions, $createCPTSelectedOptions);
 
         if (is_wp_error($jetEngineResponse)) {
             return $jetEngineResponse;

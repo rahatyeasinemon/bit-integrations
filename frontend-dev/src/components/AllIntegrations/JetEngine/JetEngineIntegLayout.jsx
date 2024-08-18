@@ -206,7 +206,7 @@ export default function JetEngineIntegLayout({
           </div>
         )}
 
-        {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_VENDOR ||
+        {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
           jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR) && (
           <div>
             <br />

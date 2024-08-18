@@ -535,7 +535,7 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditWPForo allIntegURL={allIntegURL} />
     case 'Dokan':
       return <EditDokan allIntegURL={allIntegURL} />
-    case 'DoJetEnginekan':
+    case 'JetEngine':
       return <EditJetEngine allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />

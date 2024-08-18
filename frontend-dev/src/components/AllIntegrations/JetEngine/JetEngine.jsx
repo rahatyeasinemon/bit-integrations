@@ -19,7 +19,7 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
     auth: false,
-    euFields: false,
+    cptOptions: false,
     vendors: false
   })
 
@@ -36,7 +36,9 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
     selectedVendor: '',
     actions: {},
     deleteVendorFieldMap: false,
-    selectedPaymentMethod: ''
+    selectedMenuPosition: '',
+    selectedMenuIcon: '',
+    selectedSupports: ''
   })
 
   const saveConfig = () => {

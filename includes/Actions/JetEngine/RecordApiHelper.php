@@ -23,6 +23,33 @@ class RecordApiHelper
         $this->_integrationID = $integId;
     }
 
+    public function createPostType($finalData, $createCPTSelectedOptions, $actions)
+    {
+        if (empty($finalData['name'])) {
+            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+        }
+
+        $finalData['slug'] = str_replace(' ', '-', strtolower($finalData['name']));
+
+        if (Helper::proActionFeatExists('JetEngine', 'createPostTypeActions')) {
+            $filterResponse = apply_filters('btcbi_jet_engine_create_post_type_actions', 'createPostType', $createCPTSelectedOptions, $actions);
+
+            if ($filterResponse !== 'createPostType' && !empty($filterResponse)) {
+                $finalData = array_merge($finalData, $filterResponse);
+            }
+        }
+
+        jet_engine()->cpt->data->set_request($finalData);
+
+        $postTypeId = jet_engine()->cpt->data->create_item(false);
+
+        if (empty($postTypeId) || is_wp_error($postTypeId)) {
+            return ['success' => false, 'message' => 'Failed to add create post type!', 'code' => 400];
+        }
+
+        return ['success' => true, 'message' => 'Post type created successfully.'];
+    }
+
     public function createVendor($finalData, $actions)
     {
         if (empty($finalData['email']) || empty($finalData['user_login']) || empty($finalData['store_name'])) {
@@ -231,7 +258,7 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedTask, $actions, $selectedVendor, $selectedPaymentMethod)
+    public function execute($fieldValues, $fieldMap, $selectedTask, $actions, $createCPTSelectedOptions)
     {
         if (isset($fieldMap[0]) && empty($fieldMap[0]->formField)) {
             $finalData = [];
@@ -240,6 +267,10 @@ class RecordApiHelper
         }
 
         $type = $typeName = '';
+
+        if ($selectedTask === 'createPostType') {
+            $response = $this->createPostType($finalData, $createCPTSelectedOptions, $actions);
+        }
 
         if ($selectedTask === 'createVendor') {
             $response = $this->createVendor($finalData, $actions);

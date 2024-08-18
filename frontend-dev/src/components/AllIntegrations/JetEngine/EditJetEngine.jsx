@@ -21,7 +21,7 @@ function EditJetEngine({ allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
     auth: false,
-    euFields: false,
+    menuPosition: false,
     vendors: false
   })
   const [snack, setSnackbar] = useState({ show: false })

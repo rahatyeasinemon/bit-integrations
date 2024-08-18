@@ -98,75 +98,57 @@ export const getJetEngineEUFields = (confTmp, setConf, loading, setLoading) => {
     })
 }
 
+export const getJetEngineOptions = (route, actionOptions, setActionsOptions, type, loading, setLoading) => {
+  if (!route) {
+    return
+  }
+
+  setLoading({ ...loading, cptOptions: true })
+
+  bitsFetch({}, route)
+    .then(result => {
+      console.log(result)
+      if (result.success && result.data) {
+        const tmpOptions = { ...actionOptions }
+        tmpOptions[type] = result.data
+        setActionsOptions(tmpOptions)
+        setLoading({ ...loading, cptOptions: false })
+        toast.success(__('Menu Positions fetched successfully', 'bit-integrations'))
+        return
+      }
+      setLoading({ ...loading, cptOptions: false })
+      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+    })
+
+}
+
 export const jetEngineStaticFields = (selectedTask) => {
   if (selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE) {
     return {
       staticFields: [
-        { key: 'vendor_email', label: 'Vendor Email', required: true },
-        { key: 'reassign_email', label: 'Reassign (Email)', required: false },
+        { key: 'name', label: 'Post Type Name', required: true },
+        { key: 'singular_name', label: 'Singular Name', required: false },
+        { key: 'add_new', label: 'Add New', required: false },
+        { key: 'add_new_item', label: 'Add New Item', required: false },
+        { key: 'new_item', label: 'New Item', required: false },
+        { key: 'edit_item', label: 'Edit Item', required: false },
+        { key: 'view_item', label: 'View Item', required: false },
+        { key: 'all_items', label: 'All Items', required: false },
+        { key: 'search_items', label: 'Search for items', required: false },
+        { key: 'parent_item_colon', label: 'Parent Item', required: false },
+        { key: 'not_found', label: 'Not Found', required: false },
+        { key: 'not_found_in_trash', label: 'Not Found In trash', required: false },
+        { key: 'menu_name', label: 'Admin Menu', required: false },
+        { key: 'name_admin_bar', label: 'Add New on Toolbar', required: false },
+        { key: 'featured_image', label: 'Featured Image', required: false },
+        { key: 'set_featured_image', label: 'Set Featured Image', required: false },
+        { key: 'remove_featured_image', label: 'Remove Featured Image', required: false },
+        { key: 'use_featured_image', label: 'Use Featured Image', required: false },
+        { key: 'archives', label: 'The post type archive label used in nav menus', required: false },
+        { key: 'insert_into_item', label: 'Insert into post', required: false },
+        { key: 'uploaded_to_this_item', label: 'Uploaded to this post', required: false },
       ],
-      fieldMap: [{ formField: '', jetEngineField: 'vendor_email' }]
-    }
-  }
-
-  if (selectedTask === TASK_LIST_VALUES.CREATE_VENDOR || selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR) {
-    return {
-      staticFields: [
-        { key: 'email', label: 'Email', required: selectedTask === TASK_LIST_VALUES.CREATE_VENDOR ? true : false },
-        { key: 'user_login', label: 'Username', required: selectedTask === TASK_LIST_VALUES.CREATE_VENDOR ? true : false },
-        { key: 'store_name', label: 'Store Name', required: selectedTask === TASK_LIST_VALUES.CREATE_VENDOR ? true : false },
-        { key: 'first_name', label: 'First Name', required: false },
-        { key: 'last_name', label: 'Last Name', required: false },
-        { key: 'phone', label: 'Phone', required: false },
-        { key: 'payment_bank_ac_name', label: 'Account Name', required: false },
-        { key: 'payment_bank_ac_type', label: 'Account Type', required: false },
-        { key: 'payment_bank_ac_number', label: 'Account Number', required: false },
-        { key: 'payment_bank_bank_name', label: 'Bank Name', required: false },
-        { key: 'payment_bank_bank_addr', label: 'Bank Address', required: false },
-        { key: 'payment_bank_routing_number', label: 'Routing Number', required: false },
-        { key: 'payment_bank_iban', label: 'IBAN', required: false },
-        { key: 'payment_bank_swift', label: 'Swift', required: false },
-        { key: 'payment_paypal_email', label: 'PayPal Email', required: false },
-        { key: 'street_1', label: 'Street 1', required: false },
-        { key: 'street_2', label: 'Street 2', required: false },
-        { key: 'city', label: 'City', required: false },
-        { key: 'zip', label: 'Zip', required: false },
-        { key: 'state', label: 'State', required: false },
-        { key: 'country', label: 'Country', required: false },
-      ],
-      fieldMap: selectedTask === TASK_LIST_VALUES.CREATE_VENDOR ? [
-        { formField: '', jetEngineField: 'email' },
-        { formField: '', jetEngineField: 'user_login' },
-        { formField: '', jetEngineField: 'store_name' },
-      ] : [{ formField: '', jetEngineField: '' }]
-    }
-  } else if (selectedTask === TASK_LIST_VALUES.DELETE_VENDOR) {
-    return {
-      staticFields: [
-        { key: 'vendor_email', label: 'Vendor Email', required: true },
-        { key: 'reassign_email', label: 'Reassign (Email)', required: false },
-      ],
-      fieldMap: [{ formField: '', jetEngineField: 'vendor_email' }]
-    }
-  } else if (selectedTask === TASK_LIST_VALUES.WITHDRAW_REQUEST) {
-    return {
-      staticFields: [
-        { key: 'amount', label: 'Amount', required: true },
-        { key: 'note', label: 'Note', required: false },
-      ],
-      fieldMap: [{ formField: '', jetEngineField: 'amount' }]
-    }
-  } else if (selectedTask === TASK_LIST_VALUES.REFUND_REQUEST) {
-    return {
-      staticFields: [
-        { key: 'order_id', label: 'Order ID', required: true },
-        { key: 'refund_amount', label: 'Refund Amount', required: true },
-        { key: 'refund_reason', label: 'Refund Reason', required: false },
-      ],
-      fieldMap: [
-        { formField: '', jetEngineField: 'order_id' },
-        { formField: '', jetEngineField: 'refund_amount' }
-      ]
+      fieldMap: [{ formField: '', jetEngineField: 'name' }]
     }
   }
 

@@ -30,5 +30,8 @@ final class AllProActionFeat
         'FluentSupport' => [
             ['feat_name' => 'uploadTicketAttachments', 'class' => '\BitApps\BTCBI_PRO\Actions\FluentSupport\FluentSupportHelperPro', 'pro_init_v' => '2.1.6'],
         ],
+        'JetEngine' => [
+            ['feat_name' => 'createPostTypeActions', 'class' => '\BitApps\BTCBI_PRO\Actions\JetEngine\JetEngineRecordHelper', 'pro_init_v' => '2.1.6'],
+        ],
     ];
 }
