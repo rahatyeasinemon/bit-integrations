@@ -204,17 +204,17 @@ class HubspotRecordApiHelper
         if ($actionName === 'contacts' && Helper::proActionFeatExists('Hubspot', 'updateContactOrCompany') && $id = $this->existsContact($data['email'])) {
             $typeName = 'Contact-update';
 
-            return $this->updateContactOrCompany($id, $finalData);
+            return $this->updateContactOrCompany($id, $finalData, $actionName);
         } elseif ($actionName === 'companies' && Helper::proActionFeatExists('Hubspot', 'updateContactOrCompany') && $id = $this->existsCompany($data['name'])) {
             $typeName = 'Company-update';
 
-            return $this->updateContactOrCompany($id, $finalData);
+            return $this->updateContactOrCompany($id, $finalData, $actionName);
         }
     }
 
-    private function updateContactOrCompany($id, $finalData)
+    private function updateContactOrCompany($id, $finalData, $actionName)
     {
-        $response = apply_filters('btcbi_hubspot_update_contact_or_company', $id, $finalData, $this->defaultHeader);
+        $response = apply_filters('btcbi_hubspot_update_contact_or_company', $id, $finalData, $actionName, $this->defaultHeader);
 
         if (\is_string($response) && $response == $id) {
             return (object) ['errors' => 'Bit Integration Pro plugin is not installed or activate'];
