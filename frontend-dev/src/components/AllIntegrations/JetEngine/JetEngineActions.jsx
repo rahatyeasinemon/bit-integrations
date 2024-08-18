@@ -77,7 +77,7 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
     <>
       {!isPro && (
         <div className="pt-2">
-          <span className="jetEngine-actions-note">
+          <span className="actions-note">
             The Bit Integrations Pro plugin needs to be installed and activated to utilize these
             features.
           </span>
