@@ -26,29 +26,6 @@ class HubspotRecordApiHelper
         ];
     }
 
-    public function insertDeal($finalData)
-    {
-        foreach ($finalData['associations'] as $key => $association) {
-            $associations[$key] = $association;
-        }
-
-        foreach ($finalData['properties'] as $key => $property) {
-            $properties[] = (object) [
-                'name'  => $key,
-                'value' => $property
-            ];
-        }
-
-        $data = [
-            'properties'   => $properties,
-            'associations' => (object) $associations
-        ];
-
-        $apiEndpoint = 'https://api.hubapi.com/deals/v1/deal';
-
-        return HttpHelper::post($apiEndpoint, wp_json_encode($data), $this->defaultHeader);
-    }
-
     public function insertTicket($finalData)
     {
         $data = wp_json_encode(['properties' => $finalData]);
@@ -163,10 +140,10 @@ class HubspotRecordApiHelper
             $typeName = "{$actionName}-add";
             $apiResponse = $this->handleContactOrCompany($finalData, $actionName, $typeName, $update);
         } elseif ($actionName === 'deal') {
-            $finalData = $this->formatDealFieldMap($fieldValues, $fieldMap, $integrationDetails);
-            $apiResponse = $this->insertDeal($finalData);
             $type = 'deal';
             $typeName = 'deal-add';
+            $finalData = $this->formatDealFieldMap($fieldValues, $fieldMap, $integrationDetails);
+            $apiResponse = $this->handleDeal($finalData, $typeName, $update);
         } elseif ($actionName === 'ticket') {
             $finalData = $this->formatTicketFieldMap($fieldValues, $fieldMap, $integrationDetails);
             $apiResponse = $this->insertTicket($finalData);
@@ -181,6 +158,39 @@ class HubspotRecordApiHelper
         }
 
         return $apiResponse;
+    }
+
+    private function handleDeal($finalData, &$typeName, $update = false)
+    {
+        if ($update && Helper::proActionFeatExists('Hubspot', 'updateDeal')) {
+            $id = $this->existsEntity('deals', $finalData['dealname']);
+
+            return empty($id)
+                ? $this->insertDeal($finalData, $typeName)
+                : $this->updateDeal($id, $finalData, $typeName);
+        }
+
+        return $this->insertDeal($finalData, $actionName, $typeName);
+    }
+
+    private function insertDeal($finalData, &$typeName)
+    {
+        $typeName = 'Deal-add';
+        $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/deals';
+
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
+    }
+
+    private function updateDeal($id, $finalData, &$typeName)
+    {
+        $typeName = 'Deal-update';
+        $response = apply_filters('btcbi_hubspot_update_deal', $id, $finalData, $this->defaultHeader);
+
+        if (\is_string($response) && $response == $id) {
+            return (object) ['errors' => 'Bit Integration Pro plugin is not installed or activate'];
+        }
+
+        return $response;
     }
 
     private function handleContactOrCompany($data, $actionName, &$typeName, $update = false)
