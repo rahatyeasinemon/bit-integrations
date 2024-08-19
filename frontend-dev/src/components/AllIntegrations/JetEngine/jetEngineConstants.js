@@ -1,5 +1,6 @@
 export const TASK_LIST_VALUES = {
     CREATE_POST_TYPE: 'createPostType',
+    CREATE_CONTENT_TYPE: 'createContentType',
     CREATE_VENDOR: 'createVendor',
     UPDATE_VENDOR: 'updateVendor',
     DELETE_VENDOR: 'deleteVendor',
@@ -9,4 +10,5 @@ export const TASK_LIST_VALUES = {
 
 export const TASK_LIST = [
     { label: 'Add New Post Type', value: TASK_LIST_VALUES.CREATE_POST_TYPE },
+    { label: 'Add New Custom Content Type', value: TASK_LIST_VALUES.CREATE_CONTENT_TYPE },
 ]

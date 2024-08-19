@@ -107,7 +107,6 @@ export const getJetEngineOptions = (route, actionOptions, setActionsOptions, typ
 
   bitsFetch({}, route)
     .then(result => {
-      console.log(result)
       if (result.success && result.data) {
         const tmpOptions = { ...actionOptions }
         tmpOptions[type] = result.data
@@ -147,6 +146,14 @@ export const jetEngineStaticFields = (selectedTask) => {
         { key: 'archives', label: 'The post type archive label used in nav menus', required: false },
         { key: 'insert_into_item', label: 'Insert into post', required: false },
         { key: 'uploaded_to_this_item', label: 'Uploaded to this post', required: false },
+      ],
+      fieldMap: [{ formField: '', jetEngineField: 'name' }]
+    }
+  } else if (selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE) {
+    return {
+      staticFields: [
+        { key: 'name', label: 'Content Type Name', required: true },
+        { key: 'capability', label: 'Content Type UI Access Capability', required: false },
       ],
       fieldMap: [{ formField: '', jetEngineField: 'name' }]
     }

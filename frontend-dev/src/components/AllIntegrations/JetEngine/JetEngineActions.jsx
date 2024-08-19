@@ -84,7 +84,8 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
         </div>
       )}
       <div className="pos-rel d-flx flx-wrp">
-        {jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE && (
+        {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE) && (
           <>
             <TableCheckBox
               checked={jetEngineConf.selectedMenuPosition || false}
@@ -172,6 +173,10 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
                 </div>
               )}
             </ConfirmModal>
+          </>
+        )}
+        {jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE && (
+          <>
             <TableCheckBox
               checked={jetEngineConf.selectedSupports || false}
               onChange={(e) => actionHandler(e, 'supports')}

@@ -6,7 +6,11 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 
 import JetEngineFieldMap from './JetEngineFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
-import { jetEngineStaticFields, getJetEngineEUFields, getAllVendors } from './jetEngineCommonFunctions'
+import {
+  jetEngineStaticFields,
+  getJetEngineEUFields,
+  getAllVendors
+} from './jetEngineCommonFunctions'
 import { TASK_LIST, TASK_LIST_VALUES } from './jetEngineConstants'
 import Loader from '../../Loaders/Loader'
 import TableCheckBox from '../../Utilities/TableCheckBox'
@@ -77,12 +81,6 @@ export default function JetEngineIntegLayout({
           />
         </div>
 
-        {jetEngineConf.selectedTask === TASK_LIST_VALUES.REFUND_REQUEST && (
-          <span className="action-delete-task-note">
-            The JetEngine Pro plugin needs to be installed and activated to use this (Refund Request)
-            task.
-          </span>
-        )}
         {(loading.euFields || loading.vendors) && (
           <Loader
             style={{
@@ -176,7 +174,8 @@ export default function JetEngineIntegLayout({
           </>
         )}
 
-        {((jetEngineConf?.selectedTask && jetEngineConf?.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR) ||
+        {((jetEngineConf?.selectedTask &&
+          jetEngineConf?.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR) ||
           (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_VENDOR &&
             jetEngineConf.deleteVendorFieldMap)) &&
           jetEngineConf?.field_map.map((itm, i) => (
@@ -191,7 +190,8 @@ export default function JetEngineIntegLayout({
             />
           ))}
 
-        {((jetEngineConf?.selectedTask && jetEngineConf?.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR) ||
+        {((jetEngineConf?.selectedTask &&
+          jetEngineConf?.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR) ||
           (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_VENDOR &&
             jetEngineConf.deleteVendorFieldMap)) && (
           <div className="txt-center btcbi-field-map-button mt-2">
@@ -207,12 +207,12 @@ export default function JetEngineIntegLayout({
         )}
 
         {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR) && (
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE) && (
           <div>
             <br />
             <br />
             <div className="mt-4">
-              <b className="wdt-100">{__('Actions', 'bit-integrations')}</b>
+              <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
             </div>
             <div className="btcd-hr mt-1" />
             <JetEngineActions
