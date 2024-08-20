@@ -156,12 +156,12 @@ class HubspotRecordApiHelper
     {
         $finalData = ['properties' => $data];
 
-        if ($update && Helper::proActionFeatExists('Hubspot', 'updateTicket')) {
+        if ($update && Helper::proActionFeatExists('Hubspot', 'updateEntity')) {
             $id = $this->existsEntity('tickets', 'subject', $data['subject']);
 
             return empty($id)
                 ? $this->insertTicket($finalData, $typeName)
-                : $this->updateTicket($id, $finalData, $typeName);
+                : $this->updateEntity($id, $finalData, 'tickets', $typeName);
         }
 
         return $this->insertTicket($finalData, $typeName);
@@ -175,26 +175,14 @@ class HubspotRecordApiHelper
         return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
     }
 
-    private function updateTicket($id, $finalData, &$typeName)
-    {
-        $typeName = 'Ticket-update';
-        $response = apply_filters('btcbi_hubspot_update_ticket', $id, $finalData, $this->defaultHeader);
-
-        if (\is_string($response) && $response == $id) {
-            return (object) ['errors' => 'Bit Integration Pro plugin is not installed or activate'];
-        }
-
-        return $response;
-    }
-
     private function handleDeal($finalData, &$typeName, $update = false)
     {
-        if ($update && Helper::proActionFeatExists('Hubspot', 'updateDeal')) {
+        if ($update && Helper::proActionFeatExists('Hubspot', 'updateEntity')) {
             $id = $this->existsEntity('deals', 'dealname', $finalData['dealname']);
 
             return empty($id)
                 ? $this->insertDeal($finalData, $typeName)
-                : $this->updateDeal($id, $finalData, $typeName);
+                : $this->updateEntity($id, $finalData, 'deals', $typeName);
         }
 
         return $this->insertDeal($finalData, $typeName);
@@ -208,31 +196,19 @@ class HubspotRecordApiHelper
         return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
     }
 
-    private function updateDeal($id, $finalData, &$typeName)
-    {
-        $typeName = 'Deal-update';
-        $response = apply_filters('btcbi_hubspot_update_deal', $id, $finalData, $this->defaultHeader);
-
-        if (\is_string($response) && $response == $id) {
-            return (object) ['errors' => 'Bit Integration Pro plugin is not installed or activate'];
-        }
-
-        return $response;
-    }
-
     private function handleContactOrCompany($data, $actionName, &$typeName, $update = false)
     {
         $finalData = ['properties' => $data];
         $actionName = $actionName === 'contact' ? 'contacts' : 'companies';
 
-        if ($update && Helper::proActionFeatExists('Hubspot', 'updateContactOrCompany')) {
+        if ($update && Helper::proActionFeatExists('Hubspot', 'updateEntity')) {
             $identifier = $actionName === 'contacts' ? $data['email'] : $data['name'];
             $idProperty = $actionName === 'contacts' ? 'email' : 'name';
             $id = $this->existsEntity($actionName, $idProperty, $identifier);
 
             return empty($id)
                 ? $this->insertContactOrCompany($finalData, $actionName, $typeName)
-                : $this->updateContactOrCompany($id, $finalData, $actionName, $typeName);
+                : $this->updateEntity($id, $finalData, $actionName, $typeName);
         }
 
         return $this->insertContactOrCompany($finalData, $actionName, $typeName);
@@ -271,10 +247,10 @@ class HubspotRecordApiHelper
         return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
     }
 
-    private function updateContactOrCompany($id, $finalData, $actionName, &$typeName)
+    private function updateEntity($id, $finalData, $actionName, &$typeName)
     {
         $typeName = "{$actionName}-update";
-        $response = apply_filters('btcbi_hubspot_update_contact_or_company', $id, $finalData, $actionName, $this->defaultHeader);
+        $response = apply_filters('btcbi_hubspot_update_entity', $id, $finalData, $actionName, $this->defaultHeader);
 
         if (\is_string($response) && $response == $id) {
             return (object) ['errors' => 'Bit Integration Pro plugin is not installed or activate'];
