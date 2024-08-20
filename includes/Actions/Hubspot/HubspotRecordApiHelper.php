@@ -157,7 +157,7 @@ class HubspotRecordApiHelper
         $finalData = ['properties' => $data];
 
         if ($update && Helper::proActionFeatExists('Hubspot', 'updateTicket')) {
-            $id = $this->existsEntity('tickets', $data['subject']);
+            $id = $this->existsEntity('tickets', 'subject', $data['subject']);
 
             return empty($id)
                 ? $this->insertTicket($finalData, $typeName)
@@ -190,7 +190,7 @@ class HubspotRecordApiHelper
     private function handleDeal($finalData, &$typeName, $update = false)
     {
         if ($update && Helper::proActionFeatExists('Hubspot', 'updateDeal')) {
-            $id = $this->existsEntity('deals', $finalData['dealname']);
+            $id = $this->existsEntity('deals', 'dealname', $finalData['dealname']);
 
             return empty($id)
                 ? $this->insertDeal($finalData, $typeName)
@@ -227,7 +227,8 @@ class HubspotRecordApiHelper
 
         if ($update && Helper::proActionFeatExists('Hubspot', 'updateContactOrCompany')) {
             $identifier = $actionName === 'contacts' ? $data['email'] : $data['name'];
-            $id = $this->existsEntity($actionName, $identifier);
+            $idProperty = $actionName === 'contacts' ? 'email' : 'name';
+            $id = $this->existsEntity($actionName, $idProperty, $identifier);
 
             return empty($id)
                 ? $this->insertContactOrCompany($finalData, $actionName, $typeName)
@@ -237,10 +238,8 @@ class HubspotRecordApiHelper
         return $this->insertContactOrCompany($finalData, $actionName, $typeName);
     }
 
-    private function existsEntity($actionName, $identifier)
+    private function existsEntity($actionName, $idProperty, $identifier)
     {
-        $idProperty = $actionName === 'contacts' ? 'email' : 'name';
-
         $results = $this->fetchEntity("https://api.hubapi.com/crm/v3/objects/{$actionName}?idProperty={$idProperty}&properties={$idProperty}");
 
         foreach ($results as $entity) {
