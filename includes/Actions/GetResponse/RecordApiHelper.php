@@ -6,9 +6,10 @@
 
 namespace BitCode\FI\Actions\GetResponse;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -16,6 +17,10 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_integrationID;
+
+    private $_integrationDetails;
+
+    private $_defaultHeader;
 
     private $baseUrl = 'https://api.getresponse.com/v3/';
 
@@ -76,6 +81,10 @@ class RecordApiHelper
             $requestParams['tags'] = $tags;
         }
 
+        if (!empty($this->_integrationDetails->dayOfCycle) && Helper::proActionFeatExists('GetResponse', 'autoResponderDay')) {
+            $requestParams = apply_filters('btcbi_getresponse_autoresponder_day', $requestParams, $this->_integrationDetails->dayOfCycle);
+        }
+
         foreach ($finalData as $key => $value) {
             if ($key !== 'email') {
                 if ($key === 'name') {
@@ -132,7 +141,6 @@ class RecordApiHelper
             $updatedContactId = $apiResponse->contactId;
             $apiResponse = null;
         }
-
         if ($apiResponse == null) {
             $res = ['message' => $updatedContactId ? 'Contact updated successfully' : 'Contact created successfully'];
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => $updatedContactId ? 'update-contact' : 'add-contact']), 'success', wp_json_encode($res));
