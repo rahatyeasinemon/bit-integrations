@@ -157,6 +157,7 @@ const EditSureMembers = lazy(() => import('./SureMembers/EditSureMembers'))
 const EditMailster = lazy(() => import('./Mailster/EditMailster'))
 const EditWPForo = lazy(() => import('./WPForo/EditWPForo'))
 const EditDokan = lazy(() => import('./Dokan/EditDokan'))
+const EditJetEngine = lazy(() => import('./JetEngine/EditJetEngine'))
 
 const loaderStyle = {
   display: 'flex',
@@ -534,6 +535,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditWPForo allIntegURL={allIntegURL} />
     case 'Dokan':
       return <EditDokan allIntegURL={allIntegURL} />
+    case 'JetEngine':
+      return <EditJetEngine allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }

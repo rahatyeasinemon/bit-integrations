@@ -6,9 +6,10 @@
 
 namespace BitCode\FI\Actions\Hubspot;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -23,46 +24,6 @@ class HubspotRecordApiHelper
             'Content-Type'  => 'application/json',
             'authorization' => "Bearer {$accessToken}"
         ];
-    }
-
-    public function insertContact($data, $actionName)
-    {
-        $finalData['properties'] = $data;
-        $actionName = $actionName === 'contact' ? 'contacts' : 'companies';
-        $apiEndpoint = "https://api.hubapi.com/crm/v3/objects/{$actionName}";
-
-        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
-    }
-
-    public function insertDeal($finalData)
-    {
-        foreach ($finalData['associations'] as $key => $association) {
-            $associations[$key] = $association;
-        }
-
-        foreach ($finalData['properties'] as $key => $property) {
-            $properties[] = (object) [
-                'name'  => $key,
-                'value' => $property
-            ];
-        }
-
-        $data = [
-            'properties'   => $properties,
-            'associations' => (object) $associations
-        ];
-
-        $apiEndpoint = 'https://api.hubapi.com/deals/v1/deal';
-
-        return HttpHelper::post($apiEndpoint, wp_json_encode($data), $this->defaultHeader);
-    }
-
-    public function insertTicket($finalData)
-    {
-        $data = wp_json_encode(['properties' => $finalData]);
-        $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/tickets';
-
-        return HttpHelper::post($apiEndpoint, $data, $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap, $integrationDetails)
@@ -161,24 +122,25 @@ class HubspotRecordApiHelper
     public function executeRecordApi($integId, $integrationDetails, $fieldValues, $fieldMap)
     {
         $actionName = $integrationDetails->actionName;
+        $update = isset($integrationDetails->actions->update) ? $integrationDetails->actions->update : false;
         $type = '';
         $typeName = '';
 
         if ($actionName === 'contact' || $actionName === 'company') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap, $integrationDetails);
-            $apiResponse = $this->insertContact($finalData, $actionName);
             $type = $actionName;
             $typeName = "{$actionName}-add";
+            $apiResponse = $this->handleContactOrCompany($finalData, $actionName, $typeName, $update);
         } elseif ($actionName === 'deal') {
-            $finalData = $this->formatDealFieldMap($fieldValues, $fieldMap, $integrationDetails);
-            $apiResponse = $this->insertDeal($finalData);
             $type = 'deal';
             $typeName = 'deal-add';
+            $finalData = $this->formatDealFieldMap($fieldValues, $fieldMap, $integrationDetails);
+            $apiResponse = $this->handleDeal($finalData, $typeName, $update);
         } elseif ($actionName === 'ticket') {
-            $finalData = $this->formatTicketFieldMap($fieldValues, $fieldMap, $integrationDetails);
-            $apiResponse = $this->insertTicket($finalData);
             $type = 'ticket';
             $typeName = 'ticket-add';
+            $finalData = $this->formatTicketFieldMap($fieldValues, $fieldMap, $integrationDetails);
+            $apiResponse = $this->handleTicket($finalData, $typeName, $update);
         }
 
         if (!isset($apiResponse->properties)) {
@@ -188,6 +150,113 @@ class HubspotRecordApiHelper
         }
 
         return $apiResponse;
+    }
+
+    private function handleTicket($data, &$typeName, $update = false)
+    {
+        $finalData = ['properties' => $data];
+
+        if ($update && Helper::proActionFeatExists('Hubspot', 'updateEntity')) {
+            $id = $this->existsEntity('tickets', 'subject', $data['subject']);
+
+            return empty($id)
+                ? $this->insertTicket($finalData, $typeName)
+                : $this->updateEntity($id, $finalData, 'tickets', $typeName);
+        }
+
+        return $this->insertTicket($finalData, $typeName);
+    }
+
+    private function insertTicket($finalData)
+    {
+        $typeName = 'Ticket-add';
+        $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/tickets';
+
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
+    }
+
+    private function handleDeal($finalData, &$typeName, $update = false)
+    {
+        if ($update && Helper::proActionFeatExists('Hubspot', 'updateEntity')) {
+            $id = $this->existsEntity('deals', 'dealname', $finalData['dealname']);
+
+            return empty($id)
+                ? $this->insertDeal($finalData, $typeName)
+                : $this->updateEntity($id, $finalData, 'deals', $typeName);
+        }
+
+        return $this->insertDeal($finalData, $typeName);
+    }
+
+    private function insertDeal($finalData, &$typeName)
+    {
+        $typeName = 'Deal-add';
+        $apiEndpoint = 'https://api.hubapi.com/crm/v3/objects/deals';
+
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
+    }
+
+    private function handleContactOrCompany($data, $actionName, &$typeName, $update = false)
+    {
+        $finalData = ['properties' => $data];
+        $actionName = $actionName === 'contact' ? 'contacts' : 'companies';
+
+        if ($update && Helper::proActionFeatExists('Hubspot', 'updateEntity')) {
+            $identifier = $actionName === 'contacts' ? $data['email'] : $data['name'];
+            $idProperty = $actionName === 'contacts' ? 'email' : 'name';
+            $id = $this->existsEntity($actionName, $idProperty, $identifier);
+
+            return empty($id)
+                ? $this->insertContactOrCompany($finalData, $actionName, $typeName)
+                : $this->updateEntity($id, $finalData, $actionName, $typeName);
+        }
+
+        return $this->insertContactOrCompany($finalData, $actionName, $typeName);
+    }
+
+    private function existsEntity($actionName, $idProperty, $identifier)
+    {
+        $results = $this->fetchEntity("https://api.hubapi.com/crm/v3/objects/{$actionName}?idProperty={$idProperty}&properties={$idProperty}");
+
+        foreach ($results as $entity) {
+            if ($entity->properties->{$idProperty} == $identifier) {
+                return $entity->id;
+            }
+        }
+
+        return false;
+    }
+
+    private function fetchEntity($apiEndpoint, $data = [])
+    {
+        $response = HttpHelper::get($apiEndpoint, null, $this->defaultHeader);
+        $data = array_merge($data, $response->results ?? []);
+
+        if (!empty($response->paging->next->link)) {
+            return $this->fetchEntity($response->paging->next->link, $data);
+        }
+
+        return $data;
+    }
+
+    private function insertContactOrCompany($finalData, $actionName, &$typeName)
+    {
+        $typeName = "{$actionName}-add";
+        $apiEndpoint = "https://api.hubapi.com/crm/v3/objects/{$actionName}";
+
+        return HttpHelper::post($apiEndpoint, wp_json_encode($finalData), $this->defaultHeader);
+    }
+
+    private function updateEntity($id, $finalData, $actionName, &$typeName)
+    {
+        $typeName = "{$actionName}-update";
+        $response = apply_filters('btcbi_hubspot_update_entity', $id, $finalData, $actionName, $this->defaultHeader);
+
+        if (\is_string($response) && $response == $id) {
+            return (object) ['errors' => 'Bit Integration Pro plugin is not installed or activate'];
+        }
+
+        return $response;
     }
 
     private static function setActions($integrationDetails)

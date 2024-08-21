@@ -9,9 +9,17 @@ export default function WebhookDataTable({ data, flow, setFlow }) {
   const types = [
     { key: 'text', value: 'text' },
     { key: 'email', value: 'email' },
+    { key: 'select', value: 'select' },
+    { key: 'radio', value: 'radio' },
+    { key: 'checkbox', value: 'checkbox' },
+    { key: 'number', value: 'number' },
+    { key: 'tel', value: 'tel' },
+    { key: 'textarea', value: 'textarea' },
+    { key: 'datepicker', value: 'datepicker' },
+    { key: 'url', value: 'url' },
     { key: 'file', value: 'file' },
     { key: 'array', value: 'array' },
-    { key: 'object', value: 'object' },
+    { key: 'object', value: 'object' }
   ]
 
   return (
@@ -25,21 +33,19 @@ export default function WebhookDataTable({ data, flow, setFlow }) {
         </thead>
         <tbody className="body-half-screen">
           {Object.values(data).map(({ name, label, type }, indx) => (
-            <tr
-              key={name}
-              className="tbl-webhook-tdtxt"
-            >
+            <tr key={name} className="tbl-webhook-tdtxt">
               <td className="break-words w-7 d-blk">{label}</td>
               <td className="break-words txt-right-imp w-3 d-blk">
-                <select name="type" value={type} onChange={(e) => handleChange(e, indx)} className="btcd-paper-inp">
-
-                  {
-                    types.map(item => (
-                      <option key={item.value} value={item.value}>
-                        {item.value}
-                      </option>
-                    ))
-                  }
+                <select
+                  name="type"
+                  value={type}
+                  onChange={(e) => handleChange(e, indx)}
+                  className="btcd-paper-inp">
+                  {types.map((item) => (
+                    <option key={item.value} value={item.value}>
+                      {item.value}
+                    </option>
+                  ))}
                 </select>
               </td>
             </tr>

@@ -9,7 +9,14 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import NewsletterFieldMap from './NewsletterFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
 
-export default function NewsletterIntegLayout({ formFields, newsletterConf, setNewsletterConf, loading, setLoading, setSnackbar }) {
+export default function NewsletterIntegLayout({
+  formFields,
+  newsletterConf,
+  setNewsletterConf,
+  loading,
+  setLoading,
+  setSnackbar
+}) {
   const [error, setError] = useState({ name: '', auth_token: '' })
   const [isAuthorized, setIsAuthorized] = useState(false)
 
@@ -24,15 +31,17 @@ export default function NewsletterIntegLayout({ formFields, newsletterConf, setN
       <div>
         <br />
         <div className="mt-5">
-          <b className="wdt-100">
-            {__('Field Map', 'bit-integrations')}
-          </b>
+          <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
         </div>
         <br />
         <div className="btcd-hr mt-1" />
         <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-          <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
-          <div className="txt-dp"><b>{__('Newsletter Fields', 'bit-integrations')}</b></div>
+          <div className="txt-dp">
+            <b>{__('Form Fields', 'bit-integrations')}</b>
+          </div>
+          <div className="txt-dp">
+            <b>{__('Newsletter Fields', 'bit-integrations')}</b>
+          </div>
         </div>
 
         {newsletterConf?.field_map.map((itm, i) => (
@@ -47,10 +56,26 @@ export default function NewsletterIntegLayout({ formFields, newsletterConf, setN
           />
         ))}
         <div>
-          <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(newsletterConf.field_map.length, newsletterConf, setNewsletterConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
+          <div className="txt-center btcbi-field-map-button mt-2">
+            <button
+              onClick={() =>
+                addFieldMap(
+                  newsletterConf.field_map.length,
+                  newsletterConf,
+                  setNewsletterConf,
+                  false
+                )
+              }
+              className="icn-btn sh-sm"
+              type="button">
+              +
+            </button>
+          </div>
           <br />
           <br />
-          <div className="mt-4"><b className="wdt-100">{__('Actions', 'bit-integrations')}</b></div>
+          <div className="mt-4">
+            <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
+          </div>
           <div className="btcd-hr mt-1" />
           <NewsletterActions
             newsletterConf={newsletterConf}
