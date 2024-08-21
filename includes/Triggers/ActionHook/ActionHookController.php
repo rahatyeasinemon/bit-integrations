@@ -23,11 +23,11 @@ class ActionHookController
                 'action' => 'elementor/test',
                 'method' => 'post',
             ],
-            'fetch_remove'      => [
+            'fetch_remove' => [
                 'action' => 'elementor/test/remove',
                 'method' => 'post',
             ],
-            'isPro'             => false
+            'isPro' => false
         ];
     }
 
@@ -39,7 +39,7 @@ class ActionHookController
             $missing_field = \is_null($missing_field) ? 'ActionHook ID' : $missing_field . ', ActionHook ID';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
         $testData = get_option('btcbi_action_hook_test_' . $data->hook_id);
@@ -54,6 +54,8 @@ class ActionHookController
 
     public static function actionHookHandler(...$args)
     {
+        $args = ActionHookHelper::convertToSimpleArray($args);
+        
         if (get_option('btcbi_action_hook_test_' . current_action()) !== false) {
             update_option('btcbi_action_hook_test_' . current_action(), $args);
         }
@@ -68,7 +70,7 @@ class ActionHookController
             $missing_field = \is_null($missing_field) ? 'ActionHook ID' : $missing_field . ', ActionHook ID';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
         if (property_exists($data, 'reset') && $data->reset) {
@@ -96,7 +98,9 @@ class ActionHookController
                     continue;
                 }
 
+                $args = ActionHookHelper::convertToSimpleArray($args);
                 $primaryKeyValue = Helper::extractValueFromPath($args, $flowDetails->primaryKey->key, 'ActionHook');
+                
                 if ($flowDetails->primaryKey->value === $primaryKeyValue) {
                     $fieldKeys = [];
                     $formatedData = [];
