@@ -6,10 +6,7 @@ import Loader from '../../Loaders/Loader'
 import TinyMCE from '../../Utilities/TinyMCE'
 import SlackActions from './SlackActions'
 
-export default function SlackIntegLayout({ formFields,
-  slackConf,
-  setSlackConf,
-  isLoading }) {
+export default function SlackIntegLayout({ formFields, slackConf, setSlackConf, isLoading }) {
   const { id } = useParams()
   const handleInput = (e) => {
     const newConf = { ...slackConf }
@@ -35,26 +32,19 @@ export default function SlackIntegLayout({ formFields,
     <>
       <br />
       <div className="flx">
-        <b className="wdt-200 d-in-b">
-          {__('Channels List: ', 'bit-integrations')}
-        </b>
+        <b className="wdt-200 d-in-b">{__('Channels List: ', 'bit-integrations')}</b>
         <select
           onChange={handleInput}
           name="channel_id"
           value={slackConf.channel_id}
-          className="btcd-paper-inp w-5"
-        >
-          <option value="">
-            {__('Select Channel List', 'bit-integrations')}
-          </option>
-          {
-            slackConf?.tokenDetails?.channels
-              && slackConf?.tokenDetails?.channels.map(({ id, name }) => (
-                <option key={id} value={id}>
-                  {name}
-                </option>
-              ))
-          }
+          className="btcd-paper-inp w-5">
+          <option value="">{__('Select Channel List', 'bit-integrations')}</option>
+          {slackConf?.tokenDetails?.channels &&
+            slackConf?.tokenDetails?.channels.map(({ id, name }) => (
+              <option key={id} value={id}>
+                {name}
+              </option>
+            ))}
         </select>
       </div>
       {isLoading && (
@@ -64,16 +54,14 @@ export default function SlackIntegLayout({ formFields,
             justifyContent: 'center',
             alignItems: 'center',
             height: 100,
-            transform: 'scale(0.7)',
+            transform: 'scale(0.7)'
           }}
         />
       )}
       {slackConf?.channel_id && (
         <>
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b mr-16">
-              {__('Messages: ', 'bit-integrations')}
-            </b>
+            <b className="wdt-200 d-in-b mr-16">{__('Messages: ', 'bit-integrations')}</b>
             <textarea
               className="w-7"
               onChange={handleInput}
@@ -90,14 +78,10 @@ export default function SlackIntegLayout({ formFields,
             />
           </div>
           <div className="mt-4">
-            <b className="wdt-100">{__('Actions', 'bit-integrations')}</b>
+            <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
           </div>
           <div className="btcd-hr mt-1" />
-          <SlackActions
-            slackConf={slackConf}
-            setSlackConf={setSlackConf}
-            formFields={formFields}
-          />
+          <SlackActions slackConf={slackConf} setSlackConf={setSlackConf} formFields={formFields} />
         </>
       )}
     </>

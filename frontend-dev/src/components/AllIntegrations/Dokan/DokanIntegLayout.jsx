@@ -212,7 +212,7 @@ export default function DokanIntegLayout({
             <br />
             <br />
             <div className="mt-4">
-              <b className="wdt-100">{__('Actions', 'bit-integrations')}</b>
+              <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
             </div>
             <div className="btcd-hr mt-1" />
             <DokanActions
