@@ -47,56 +47,6 @@ export const jetEngineAuthentication = (confTmp, setError, setIsAuthorized, load
     })
 }
 
-export const getAllVendors = (confTmp, setConf, loading, setLoading) => {
-  setLoading({ ...loading, vendors: true })
-
-  bitsFetch({}, 'jetEngine_fetch_vendors')
-    .then(result => {
-      if (result.success && result.data) {
-        const newConf = { ...confTmp }
-        newConf.vendors = result.data
-        setConf(newConf)
-        setLoading({ ...loading, vendors: false })
-        toast.success(__('Vendors fetched successfully', 'bit-integrations'))
-        return
-      }
-      setLoading({ ...loading, vendors: false })
-      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
-    })
-}
-
-export const getJetEngineEUFields = (confTmp, setConf, loading, setLoading) => {
-  toast.success('Fields fetched successfully.')
-  setLoading({ ...loading, euFields: true })
-
-  bitsFetch({}, 'jetEngine_fetch_eu_fields')
-    .then(result => {
-      if (result.success && result.data) {
-        const newConf = { ...confTmp }
-
-        if (newConf.staticFields) {
-          const defaultFields = newConf.staticFields
-          const mergedFields = defaultFields.concat(result.data)
-          newConf.staticFields = mergedFields
-        }
-
-        if (confTmp.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR) {
-          getAllVendors(newConf, setConf, loading, setLoading)
-        }
-
-        setConf(newConf)
-        setLoading({ ...loading, euFields: false })
-        toast.success(__('EU Compliance Fields fetched successfully', 'bit-integrations'))
-        return
-      }
-
-      if (confTmp.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR) {
-        getAllVendors(confTmp, setConf, loading, setLoading)
-      }
-      setLoading({ ...loading, euFields: false })
-      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
-    })
-}
 
 export const getJetEngineOptions = (route, actionOptions, setActionsOptions, type, loading, setLoading) => {
   if (!route) {
