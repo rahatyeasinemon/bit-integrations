@@ -22,6 +22,9 @@ final class AllProActionFeat
         'Hubspot' => [
             ['feat_name' => 'updateEntity', 'class' => '\BitApps\BTCBI_PRO\Actions\Hubspot\HubspotHelperPro', 'pro_init_v' => '2.1.9'],
         ],
+        'GetResponse' => [
+            ['feat_name' => 'autoResponderDay', 'class' => '\BitApps\BTCBI_PRO\Actions\GetResponse\GetResponseHelperPro', 'pro_init_v' => '2.1.9'],
+        ],
         'JetEngine' => [
             ['feat_name' => 'createPostTypeActions', 'class' => '\BitApps\BTCBI_PRO\Actions\JetEngine\JetEngineRecordHelper', 'pro_init_v' => '2.1.9'],
             ['feat_name' => 'createContentTypeActions', 'class' => '\BitApps\BTCBI_PRO\Actions\JetEngine\JetEngineRecordHelper', 'pro_init_v' => '2.1.9'],
