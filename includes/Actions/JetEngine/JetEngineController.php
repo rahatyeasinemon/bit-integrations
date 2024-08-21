@@ -95,6 +95,19 @@ class JetEngineController
         wp_send_json_error('Support options fetching failed!', 400);
     }
 
+    public function getTaxPostTypes()
+    {
+        self::checkedJetEngineExists();
+
+        $postTypes = Jet_Engine_Tools::get_post_types_for_js();
+
+        if (!empty($postTypes)) {
+            wp_send_json_success($postTypes, 200);
+        }
+
+        wp_send_json_error('Post types fetching failed!', 400);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         self::checkedJetEngineExists();
@@ -115,8 +128,12 @@ class JetEngineController
             'selectedSupports'     => $integrationDetails->selectedSupports,
         ];
 
+        $taxOptions = [
+            'selectedTaxPostTypes' => $integrationDetails->selectedTaxPostTypes
+        ];
+
         $recordApiHelper = new RecordApiHelper($integId);
-        $jetEngineResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $actions, $createCPTSelectedOptions);
+        $jetEngineResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask, $actions, $createCPTSelectedOptions, $taxOptions);
 
         if (is_wp_error($jetEngineResponse)) {
             return $jetEngineResponse;

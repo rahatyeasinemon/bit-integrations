@@ -33,37 +33,16 @@ function EditJetEngine({ allIntegURL }) {
       return
     }
 
-    if (
-      (jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR ||
-        jetEngineConf.selectedTask === TASK_LIST_VALUES.WITHDRAW_REQUEST) &&
-      !jetEngineConf.selectedVendor
-    ) {
-      toast.error('Please select a vendor!')
-      return
-    }
-
-    if (
-      jetEngineConf.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR &&
-      !checkMappedFields(jetEngineConf)
-    ) {
+    if (!checkMappedFields(jetEngineConf)) {
       toast.error('Please map mandatory fields!')
       return
     }
 
     if (
-      jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_VENDOR &&
-      !jetEngineConf.selectedVendor &&
-      !checkMappedFields(jetEngineConf)
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY &&
+      !jetEngineConf.selectedTaxPostTypes
     ) {
-      toast.error('Please select a topic or map fields!')
-      return
-    }
-
-    if (
-      jetEngineConf.selectedTask === TASK_LIST_VALUES.WITHDRAW_REQUEST &&
-      !jetEngineConf.selectedPaymentMethod
-    ) {
-      toast.error('Please select a payment method!')
+      toast.error('Please select post type(s)!')
       return
     }
 
@@ -99,7 +78,9 @@ function EditJetEngine({ allIntegURL }) {
       <JetEngineIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) => handleInput(e, jetEngineConf, setJetEngineConf, setLoading, setSnackbar)}
+        handleInput={(e) =>
+          handleInput(e, jetEngineConf, setJetEngineConf, setLoading, setSnackbar)
+        }
         jetEngineConf={jetEngineConf}
         setJetEngineConf={setJetEngineConf}
         loading={loading}

@@ -32,13 +32,12 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
     field_map: [],
     staticFields: [],
     selectedTask: '',
-    vendors: [],
-    selectedVendor: '',
     actions: {},
     deleteVendorFieldMap: false,
     selectedMenuPosition: '',
     selectedMenuIcon: '',
-    selectedSupports: ''
+    selectedSupports: '',
+    selectedTaxPostTypes: ''
   })
 
   const saveConfig = () => {
@@ -73,37 +72,16 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (
-      (jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_VENDOR ||
-        jetEngineConf.selectedTask === TASK_LIST_VALUES.WITHDRAW_REQUEST) &&
-      !jetEngineConf.selectedVendor
-    ) {
-      toast.error('Please select a vendor!')
-      return
-    }
-
-    if (
-      jetEngineConf.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR &&
-      !checkMappedFields(jetEngineConf)
-    ) {
+    if (!checkMappedFields(jetEngineConf)) {
       toast.error('Please map mandatory fields!')
       return
     }
 
     if (
-      jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_VENDOR &&
-      !jetEngineConf.selectedVendor &&
-      !checkMappedFields(jetEngineConf)
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY &&
+      !jetEngineConf.selectedTaxPostTypes
     ) {
-      toast.error('Please select a topic or map fields!')
-      return
-    }
-
-    if (
-      jetEngineConf.selectedTask === TASK_LIST_VALUES.WITHDRAW_REQUEST &&
-      !jetEngineConf.selectedPaymentMethod
-    ) {
-      toast.error('Please select a payment method!')
+      toast.error('Please select post type(s)!')
       return
     }
 
@@ -142,10 +120,7 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
         />
         <button
           onClick={() => nextPage(3)}
-          disabled={
-            jetEngineConf?.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR &&
-            !checkMappedFields(jetEngineConf)
-          }
+          disabled={!checkMappedFields(jetEngineConf)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
           type="button">
           {__('Next', 'bit-integrations')} &nbsp;

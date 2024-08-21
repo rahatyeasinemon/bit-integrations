@@ -157,6 +157,33 @@ export const jetEngineStaticFields = (selectedTask) => {
       ],
       fieldMap: [{ formField: '', jetEngineField: 'name' }]
     }
+  } else if (selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY) {
+    return {
+      staticFields: [
+        { key: 'name', label: 'Taxonomy Name', required: true },
+        { key: 'singular_name', label: 'Singular name', required: false },
+        { key: 'menu_name', label: 'Menu name text', required: false },
+        { key: 'all_items', label: 'All items text', required: false },
+        { key: 'edit_item', label: 'Edit item text', required: false },
+        { key: 'view_item', label: 'View Item', required: false },
+        { key: 'update_item', label: 'Update item text', required: false },
+        { key: 'add_new_item', label: 'Add new item text', required: false },
+        { key: 'new_item_name', label: 'New item name text', required: false },
+        { key: 'parent_item', label: 'Parent item text', required: false },
+        { key: 'parent_item_colon', label: 'Parent item with colon', required: false },
+        { key: 'search_items', label: 'Search items text', required: false },
+        { key: 'popular_items', label: 'Popular items text', required: false },
+        { key: 'separate_items_with_commas', label: 'Separate item with commas text', required: false },
+        { key: 'add_or_remove_items', label: 'Add or remove items text', required: false },
+        { key: 'choose_from_most_used', label: 'Choose from most used text', required: false },
+        { key: 'not_found', label: 'Items not found text', required: false },
+        { key: 'back_to_items', label: 'Back to items text', required: false },
+        { key: 'query_var', label: 'Register Query Var', required: false },
+        { key: 'capability_type', label: 'Capability Type', required: false },
+        { key: 'description', label: 'Taxonomy Description', required: false },
+      ],
+      fieldMap: [{ formField: '', jetEngineField: 'name' }]
+    }
   }
 
   return { staticFields: [], fieldMap: [] }

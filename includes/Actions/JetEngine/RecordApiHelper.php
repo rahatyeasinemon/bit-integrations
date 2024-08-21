@@ -44,7 +44,7 @@ class RecordApiHelper
         $postTypeId = jet_engine()->cpt->data->create_item(false);
 
         if (empty($postTypeId) || is_wp_error($postTypeId)) {
-            return ['success' => false, 'message' => 'Failed to add create post type!', 'code' => 400];
+            return ['success' => false, 'message' => 'Failed to add post type!', 'code' => 400];
         }
 
         return ['success' => true, 'message' => 'Post type created successfully.'];
@@ -84,10 +84,38 @@ class RecordApiHelper
         $itemId = Module::instance()->manager->data->create_item(false);
 
         if (empty($itemId) || is_wp_error($itemId)) {
-            return ['success' => false, 'message' => 'Failed to add create custom content type!', 'code' => 400];
+            return ['success' => false, 'message' => 'Failed to add custom content type!', 'code' => 400];
         }
 
         return ['success' => true, 'message' => 'Custom content type created successfully.'];
+    }
+
+    public function createTaxonomy($finalData, $taxOptions, $actions)
+    {
+        if (empty($finalData['name']) || empty($taxOptions['selectedTaxPostTypes'])) {
+            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+        }
+
+        $finalData['slug'] = str_replace(' ', '-', strtolower($finalData['name']));
+        $finalData['object_type'] = explode(',', $taxOptions['selectedTaxPostTypes']);
+
+        if (Helper::proActionFeatExists('JetEngine', 'createTaxonomyActions')) {
+            $filterResponse = apply_filters('btcbi_jet_engine_create_taxonomy_actions', 'createTaxonomy', $taxOptions, $actions);
+
+            if ($filterResponse !== 'createTaxonomy' && !empty($filterResponse)) {
+                $finalData = array_merge($finalData, $filterResponse);
+            }
+        }
+
+        jet_engine()->taxonomies->data->set_request($finalData);
+
+        $taxId = jet_engine()->taxonomies->data->create_item(false);
+
+        if (empty($taxId) || is_wp_error($taxId)) {
+            return ['success' => false, 'message' => 'Failed to add taxonomy!', 'code' => 400];
+        }
+
+        return ['success' => true, 'message' => 'Taxonomy added successfully.'];
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -106,7 +134,7 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedTask, $actions, $createCPTSelectedOptions)
+    public function execute($fieldValues, $fieldMap, $selectedTask, $actions, $createCPTSelectedOptions, $taxOptions)
     {
         if (isset($fieldMap[0]) && empty($fieldMap[0]->formField)) {
             $finalData = [];
@@ -124,6 +152,10 @@ class RecordApiHelper
             $response = $this->createContentType($finalData, $createCPTSelectedOptions, $actions);
             $type = 'Content Type';
             $typeName = 'Create Content Type';
+        } elseif ($selectedTask === 'createTaxonomy') {
+            $response = $this->createTaxonomy($finalData, $taxOptions, $actions);
+            $type = 'Taxonomy';
+            $typeName = 'Create Taxonomy';
         }
 
         if ($response['success']) {
