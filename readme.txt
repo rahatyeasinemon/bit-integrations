@@ -1,19 +1,19 @@
 === Webhook Automator & Form Integration to Automate 210+ Platforms – Bit Integrations ===
-Contributors: bitpressadmin,rishadbitcode,fahimsakib,shuvomohajan,tanvirchy,shakhawathosen,khoaiz,mazharul78
+Contributors: bitpressadmin, niloy121,rishadbitcode,fahimsakib,shuvomohajan,tanvirchy,shakhawathosen,khoaiz,mazharul78
 Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.1
 Requires PHP: 7.0
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 License: GPLv2 or later
 
-Automation Plugin for WordPress like Zapier; Integration of 70+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
+Automation Plugin for WordPress like Zapier. Integration of 70+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
 
 == Description ==
 
-<strong> Best Automation Plugin for WordPress. Automate 210+ (highest in WordPress) Individual Platforms.</strong>
+<strong> Best Automation Plugin for WordPress. Automate 210+ (Highest in WordPress) Individual Platforms.</strong>
 
-Automate your WordPress workflow with **Bit Integration**: the all-in-one plugin for WooCommerce, form builders, CRM, LMS, bookings, spreadsheets, [**webhooks**](https://webhook.is/difference-between-webhook-and-api), social media, and email marketing. No technical knowledge needed. Automate tasks across 210+ platforms effortlessly.
+Automate your WordPress workflow with **Bit Integration**: the all-in-one plugin for WooCommerce, form builders, CRM, LMS, bookings, spreadsheets, [**webhooks**](https://webhook.is/difference-between-webhook-and-api), social media, email marketing and automation platforms like Zapier and others. No technical knowledge needed. Automate tasks across 210+ platforms effortlessly.
 
 You can see below what WPTuts say about Bit Integrations
 
@@ -175,6 +175,7 @@ https://youtu.be/eFuficjF_F4
 * [**Make(Integromat)**](https://www.youtube.com/)
 * [**IFTTT**](https://ifttt.com/)
 * [**Insightly**](https://www.insightly.com/)
+* [**JetEngine**](https://crocoblock.com/plugins/jetengine/)
 * [**Keap (Infusionsoft)**](https://keap.com/)
 * [**Klaviyo**](https://www.klaviyo.com/)
 * [**KonnectzIT**](https://konnectzit.com/)
@@ -806,6 +807,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 
 * [**Hubspot**](https://bitapps.pro/docs/bit-integrations/trigger/hubspot/)
 
+* [**JetEngine**](https://bit-integrations.com/documentation/actions/jetengine-integrations-as-an-action/)
+
 * [**Keap**](https://bitapps.pro/docs/bit-integrations/trigger/keap/)
 
 * [**Kirim Email**](https://bitapps.pro/docs/bit-integrations/trigger/kirim-email/)
@@ -986,6 +989,22 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.2.1  =
+_Release Date -22th August 2024_
+
+- **New Action :**
+  - JetEngine: WordPress Plugin for Elementor, Gutenberg & Bricks
+  
+- **New Features :**
+  - HubSpot: Added the ability to update Contacts, Companies, Deals, and Tickets (Pro)
+
+- **New Improvements :**
+  - Brizy: Upgraded with PopUp Form Module (Pro)
+  - Action Hook: Enhanced to fetch protected or private class properties
+
+- **New Fixes :**
+  - Mail Mint: Fixed issue with updating tags for Contacts
 
 = 2.2.0  =
 _Release Date -17th August 2024_
