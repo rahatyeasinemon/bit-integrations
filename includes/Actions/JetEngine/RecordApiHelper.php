@@ -118,6 +118,37 @@ class RecordApiHelper
         return ['success' => true, 'message' => 'Taxonomy added successfully.'];
     }
 
+    public function createRelation($finalData, $relOptions, $actions)
+    {
+        if (empty($relOptions) || empty($relOptions['parentObject'])
+        || empty($relOptions['childObject']) || empty($relOptions['selectedRelationType'])) {
+            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+        }
+
+        $args['parent_object'] = $relOptions['parentObject'];
+        $args['child_object'] = $relOptions['childObject'];
+        $args['type'] = $relOptions['selectedRelationType'];
+        $args['labels'] = $finalData;
+
+        if (Helper::proActionFeatExists('JetEngine', 'createRelationActions')) {
+            $filterResponse = apply_filters('btcbi_jet_engine_create_relation_actions', 'createRelation', $relOptions, $actions);
+
+            if ($filterResponse !== 'createRelation' && !empty($filterResponse)) {
+                $args = array_merge($args, $filterResponse);
+            }
+        }
+
+        jet_engine()->relations->data->set_request($args);
+
+        $itemId = jet_engine()->relations->data->create_item(false);
+
+        if (empty($itemId) || is_wp_error($itemId)) {
+            return ['success' => false, 'message' => 'Failed to add new relation!', 'code' => 400];
+        }
+
+        return ['success' => true, 'message' => 'Relation added successfully.'];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -134,7 +165,7 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedTask, $actions, $createCPTSelectedOptions, $taxOptions)
+    public function execute($fieldValues, $fieldMap, $selectedTask, $actions, $createCPTSelectedOptions, $taxOptions, $relOptions)
     {
         if (isset($fieldMap[0]) && empty($fieldMap[0]->formField)) {
             $finalData = [];
@@ -156,6 +187,10 @@ class RecordApiHelper
             $response = $this->createTaxonomy($finalData, $taxOptions, $actions);
             $type = 'Taxonomy';
             $typeName = 'Create Taxonomy';
+        } elseif ($selectedTask === 'createRelation') {
+            $response = $this->createRelation($finalData, $relOptions, $actions);
+            $type = 'Relation';
+            $typeName = 'Create Relation';
         }
 
         if ($response['success']) {

@@ -5,7 +5,7 @@ import JetEngineActions from './JetEngineActions'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import JetEngineFieldMap from './JetEngineFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
-import { jetEngineStaticFields } from './jetEngineCommonFunctions'
+import { getJetEngineRelationTypes, jetEngineStaticFields } from './jetEngineCommonFunctions'
 import { TASK_LIST, TASK_LIST_VALUES } from './jetEngineConstants'
 import Loader from '../../Loaders/Loader'
 
@@ -25,6 +25,10 @@ export default function JetEngineIntegLayout({
       const fieldsAndFieldMap = jetEngineStaticFields(val)
       newConf.staticFields = fieldsAndFieldMap.staticFields
       newConf.field_map = fieldsAndFieldMap.fieldMap
+
+      if (val === TASK_LIST_VALUES.CREATE_RELATION) {
+        getJetEngineRelationTypes(newConf, setJetEngineConf, loading, setLoading)
+      }
     } else {
       newConf.staticFields = []
       newConf.field_map = []
@@ -33,9 +37,9 @@ export default function JetEngineIntegLayout({
     setJetEngineConf({ ...newConf })
   }
 
-  const handleMultiSelectChange = (val, type) => {
+  const handleRelationTypeChange = (val, type) => {
     const newConf = { ...jetEngineConf }
-    newConf[type] = val
+    newConf.relOptions[type] = val
     setJetEngineConf({ ...newConf })
   }
 
@@ -66,7 +70,67 @@ export default function JetEngineIntegLayout({
           />
         </div>
 
-        {(loading.euFields || loading.vendors) && (
+        {jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION && (
+          <>
+            <div className="flx mt-3 mb-4">
+              <b className="wdt-200 d-in-b">{__('Parent object:', 'bit-integrations')}</b>
+              <MultiSelect
+                style={{ width: '450px' }}
+                options={jetEngineConf?.allRelationTypes}
+                className="msl-wrp-options"
+                defaultValue={jetEngineConf?.relOptions?.parentObject}
+                onChange={(val) => handleRelationTypeChange(val, 'parentObject')}
+                singleSelect
+              />
+              <button
+                onClick={() =>
+                  getJetEngineRelationTypes(jetEngineConf, setJetEngineConf, loading, setLoading)
+                }
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': `${__('Refresh parent objects', 'bit-integrations')}'` }}
+                type="button">
+                &#x21BB;
+              </button>
+            </div>
+            <div className="flx mt-3 mb-4">
+              <b className="wdt-200 d-in-b">{__('Child object:', 'bit-integrations')}</b>
+              <MultiSelect
+                style={{ width: '450px' }}
+                options={jetEngineConf?.allRelationTypes}
+                className="msl-wrp-options"
+                defaultValue={jetEngineConf?.relOptions?.childObject}
+                onChange={(val) => handleRelationTypeChange(val, 'childObject')}
+                singleSelect
+              />
+              <button
+                onClick={() =>
+                  getJetEngineRelationTypes(jetEngineConf, setJetEngineConf, loading, setLoading)
+                }
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': `${__('Refresh child objects', 'bit-integrations')}'` }}
+                type="button">
+                &#x21BB;
+              </button>
+            </div>
+            <div className="flx mt-3 mb-4">
+              <b className="wdt-200 d-in-b">{__('Relation type:', 'bit-integrations')}</b>
+              <MultiSelect
+                style={{ width: '450px' }}
+                options={[
+                  { label: 'One to one', value: 'one_to_one' },
+                  { label: 'One to many', value: 'one_to_many' },
+                  { label: 'Many to many', value: 'many_to_many' }
+                ]}
+                className="msl-wrp-options"
+                defaultValue={jetEngineConf?.relOptions?.selectedRelationType}
+                onChange={(val) => handleRelationTypeChange(val, 'selectedRelationType')}
+                singleSelect
+              />
+            </div>
+          </>
+        )}
+
+        {loading.relation_types && (
           <Loader
             style={{
               display: 'flex',
@@ -120,7 +184,8 @@ export default function JetEngineIntegLayout({
 
         {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
           jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY) && (
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION) && (
           <div>
             <br />
             <br />
