@@ -9,9 +9,13 @@ import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { getAllCompany, getAllContacts, getAllIndustry, getAllOwners } from './HubspotCommonFunc'
+import { useRecoilValue } from 'recoil'
+import { $btcbi } from '../../../GlobalStates'
 
 export default function HubspotActions({ hubspotConf, setHubspotConf, formFields, loading, setLoading }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
+  const btcbi = useRecoilValue($btcbi)
+  const { isPro } = btcbi
 
   const actionHandler = (e, type) => {
     const newConf = { ...hubspotConf }
@@ -72,6 +76,12 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
         getAllIndustry(hubspotConf, setHubspotConf, setLoading)
       } else {
         delete newConf.actions.industry
+      }
+    } else if (type === 'update') {
+      if (e.target.checked) {
+        newConf.actions.update = true
+      } else {
+        delete newConf.actions.update
       }
     }
 
@@ -153,6 +163,7 @@ export default function HubspotActions({ hubspotConf, setHubspotConf, formFields
       {hubspotConf?.actionName !== 'contact' && hubspotConf?.actionName !== 'company' && <TableCheckBox checked={hubspotConf?.priority || false} onChange={(e) => actionHandler(e, 'priority')} className="wdt-200 mt-4 mr-2" value="deal_type" title={__('Priority', 'bit-integrations')} subTitle={__('Add priority', 'bit-integrations')} />}
       {hubspotConf?.actionName === 'company' && <TableCheckBox checked={hubspotConf?.company_type || false} onChange={(e) => actionHandler(e, 'company_type')} className="wdt-200 mt-4 mr-2" value="company_type" title={__('Type', 'bit-integrations')} subTitle={__('The optional classification of this company record - prospect, partner, etc.', 'bit-integrations')} />}
       {hubspotConf?.actionName === 'company' && <TableCheckBox checked={hubspotConf?.industry || false} onChange={(e) => actionHandler(e, 'industry')} className="wdt-200 mt-4 mr-2" value="industry" title={__('Industry', 'bit-integrations')} subTitle={__('The type of business the company performs. By default, this property has approximately 150 pre-defined options to select from.', 'bit-integrations')} />}
+      {<TableCheckBox checked={hubspotConf?.actions?.update || false} onChange={(e) => actionHandler(e, 'update')} className="wdt-200 mt-4 mr-2" value="update" title={__(`Update ${hubspotConf?.actionName} ${!isPro ? '(Pro)' : ''}`, 'bit-integrations')} subTitle={__(`${isPro ? 'Update Record' : 'The Bit Integration Pro v(2.2.1) plugin needs to be installed and activated to enable the Upsert Record feature'}`, 'bit-integrations')} isInfo={!isPro} />}
 
       <ConfirmModal
         className="custom-conf-mdl"

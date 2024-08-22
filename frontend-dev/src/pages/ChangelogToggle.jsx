@@ -84,7 +84,7 @@ export default function ChangelogToggle() {
             <div className="flx flx-col flx-center whats-new">
               <h3>What's New in {btcbi.version}?</h3>
               <small className="date">
-                Updated at: <b>17th August 2024</b>
+                Updated at: <b>22th August 2024</b>
               </small>
             </div>
             <div className="changelog-content">
@@ -94,7 +94,7 @@ export default function ChangelogToggle() {
 
               <div className="integration-list">
                 <ul>
-                  <li> Dokan </li>
+                  <li> JetEngine </li>
                 </ul>
               </div>
 
@@ -104,8 +104,7 @@ export default function ChangelogToggle() {
 
               <div className="feature-list">
                 <ul>
-                  <li>WhatsApp: Text Message, Contact Message & Media Message added (Pro)</li>
-                  <li>Fluent Support: Ticket module Attachment field added (Pro)</li>
+                  <li>HubSpot: Added the ability to update Contacts, Companies, Deals, and Tickets (Pro)</li>
                 </ul>
               </div>
               <div>
