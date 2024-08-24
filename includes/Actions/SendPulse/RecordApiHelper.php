@@ -27,17 +27,18 @@ class RecordApiHelper
     {
         $apiEndpoints = "https://api.sendpulse.com/addressbooks/{$selectedList}/emails";
 
-        $body = '{
-                    "emails":[{
-                        "email":"' . $finalData['email'] . '",
-                        "variables":{
-                            "name":"' . $finalData['name'] . '",
-                            "Phone":"' . $finalData['phone'] . '"
-                        }
-                    }]
-                }';
+        $variables = array_filter($finalData, fn ($key) => $key !== 'email', ARRAY_FILTER_USE_KEY);
 
-        return HttpHelper::post($apiEndpoints, $body, $this->_defaultHeader);
+        $body = [
+            'emails' => [
+                [
+                    'email'     => $finalData['email'],
+                    'variables' => $variables
+                ]
+            ]
+        ];
+
+        return HttpHelper::post($apiEndpoints, json_encode($body), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)

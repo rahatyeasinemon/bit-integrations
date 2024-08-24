@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Actions\SendPulse;
 
-use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
 use WP_Error;
+use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class SendPulseController
 {
@@ -63,8 +63,7 @@ class SendPulseController
             $apiEndpoint = "https://api.sendpulse.com/addressbooks/{$requestParams->list_id}/variables";
 
             $token = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->client_id, $requestParams->client_secret);
-            error_log(print_r([$fields, $apiEndpoint, $token, $requestParams->tokenDetails], true));
-
+            
             $fields = apply_filters('btcbi_sendPulse_refresh_fields', $fields, $apiEndpoint, $token->access_token);
         }
 
