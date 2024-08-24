@@ -65,10 +65,7 @@ class SendPulseController
             $apiEndpoint = "https://api.sendpulse.com/addressbooks/{$requestParams->list_id}/variables";
 
             $token = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->client_id, $requestParams->client_secret);
-
-            $headers = [
-                'Authorization' => 'Bearer ' . $token->access_token,
-            ];
+            error_log(print_r([$fields, $apiEndpoint, $token, $requestParams->tokenDetails], true));
 
             $fields = apply_filters('btcbi_sendPulse_refresh_fields', $fields, $apiEndpoint, $token->access_token);
         }
@@ -160,7 +157,7 @@ class SendPulseController
         }
 
         if ((\intval($token->generates_on) + (55 * 60)) < time()) {
-            $refreshToken = self::refreshToken($token->access_token, $clientId, $clientSecret);
+            $refreshToken = self::refreshToken($clientId, $clientSecret);
             if (is_wp_error($refreshToken) || !empty($refreshToken->error)) {
                 return false;
             }
@@ -183,6 +180,7 @@ class SendPulseController
 
         $apiEndpoint = 'https://api.sendpulse.com/oauth/access_token';
         $apiResponse = HttpHelper::post($apiEndpoint, $body);
+
         if (is_wp_error($apiResponse) || !empty($apiResponse->error)) {
             return false;
         }
