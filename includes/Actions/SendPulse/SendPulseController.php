@@ -53,12 +53,10 @@ class SendPulseController
             );
         }
 
-        // $sendPulseResponse = HttpHelper::get($apiEndpoint, null, $headers);
-
         $fields = [
-            ['fieldValue' => 'email', 'fieldName' => 'Email', 'required' => true],
-            ['fieldValue' => 'name', 'fieldName' => 'Name', 'required' => false],
-            ['fieldValue' => 'phone', 'fieldName' => 'Phone', 'required' => false]
+            'Email' => ['fieldValue' => 'email', 'fieldName' => 'Email', 'required' => true],
+            'Name'  => ['fieldValue' => 'name', 'fieldName' => 'Name', 'required' => false],
+            'Phone' => ['fieldValue' => 'phone', 'fieldName' => 'Phone', 'required' => false]
         ];
 
         if (Helper::proActionFeatExists('SendPulse', 'refreshFields')) {
@@ -70,23 +68,6 @@ class SendPulseController
             $fields = apply_filters('btcbi_sendPulse_refresh_fields', $fields, $apiEndpoint, $token->access_token);
         }
 
-        // $fields = [];
-        // if (!is_wp_error($sendPulseResponse)) {
-        //     $allFields = $sendPulseResponse;
-        //     $fields['Email'] = (object) ['fieldValue' => 'email', 'fieldName' => 'Email', 'required' => true];
-        //     $fields['Name'] = (object) ['fieldValue' => 'name', 'fieldName' => 'Name', 'required' => false];
-        //     $fields['Phone'] = (object) ['fieldValue' => 'phone', 'fieldName' => 'Phone', 'required' => false];
-        //     foreach ($allFields as $field) {
-        //         if (!\array_key_exists(ucfirst($field->name), $fields)) {
-        //             $fields[$field->name] = (object) [
-        //                 'fieldName'  => $field->name,
-        //                 'fieldValue' => strtolower(str_replace(' ', '_', $field->name)),
-        //                 'required'   => strtolower($field->name) == 'email' ? true : false
-        //             ];
-        //         }
-        //     }
-
-        // }
         $response['sendPulseField'] = $fields;
 
         wp_send_json_success($response);
