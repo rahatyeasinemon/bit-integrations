@@ -7,6 +7,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import {
   ARMemberStateIH,
+  CFSStateIH,
   EDDStateIH,
   GamiPressStateIH,
   GiveWpStateIH,
@@ -19,6 +20,7 @@ import {
   SureMembersStateIH,
   ThriveApprenticeStateIH,
   UltimateMemberStateIH,
+  actionHookStateIH,
   affiliateStateIH,
   buddybossStateIH,
   fluentBookingStateIH,
@@ -158,40 +160,12 @@ export const saveIntegConfig = async (
     flow.triggered_entity === 'EssentialBlocks' ||
     flow.triggered_entity === 'Coblocks'
   ) {
-    tmpConf['primaryKey'] = !edit ? flow.triggerData.primaryKey : flow?.flow_details?.primaryKey
-
-    tmpConf['fields'] = !edit ? flow?.triggerData?.fields : flow?.flow_details?.fields
-
-    tmpConf['rawData'] = !edit ? flow?.triggerData?.rawData : flow?.flow_details?.rawData
-
-    tmpConf['fetch'] = !edit ? flow?.triggerData?.fetch : flow?.flow_details?.fetch
-
-    tmpConf['fetch_remove'] = !edit
-      ? flow?.triggerData?.fetch_remove
-      : flow?.flow_details?.fetch_remove
-
-    tmpConf['fetch'] = !edit ? flow?.triggerData?.fetch : flow?.flow_details?.fetch || ''
-
-    tmpConf['fetch_remove'] = !edit
-      ? flow?.triggerData?.fetch_remove
-      : flow?.flow_details?.fetch_remove || ''
+    tmpConf = actionHookStateIH(edit, flow, tmpConf)
   } else if (
     flow?.triggerData?.trigger_type === 'custom_form_submission' ||
     flow?.flow_details?.trigger_type === 'custom_form_submission'
   ) {
-    tmpConf['primaryKey'] = !edit ? flow.triggerData.primaryKey : flow?.flow_details?.primaryKey
-
-    tmpConf['multi_form'] = !edit
-      ? flow.triggerData.multi_form || ''
-      : flow?.flow_details?.multi_form || ''
-
-    tmpConf['fields'] = !edit ? flow?.triggerData?.fields : flow?.flow_details?.fields
-
-    tmpConf['fetch'] = !edit ? flow?.triggerData?.fetch : flow?.flow_details?.fetch
-
-    tmpConf['fetch_remove'] = !edit
-      ? flow?.triggerData?.fetch_remove
-      : flow?.flow_details?.fetch_remove
+    tmpConf = CFSStateIH(edit, flow, tmpConf)
   }
 
   const data = {
@@ -340,34 +314,12 @@ export const saveActionConf = async ({
     flow.triggered_entity === 'EssentialBlocks' ||
     flow.triggered_entity === 'Coblocks'
   ) {
-    tmpConf['primaryKey'] = !edit ? flow.triggerData.primaryKey : flow?.flow_details?.primaryKey
-
-    tmpConf['fields'] = !edit ? flow?.triggerData?.fields : flow?.flow_details?.fields
-
-    tmpConf['rawData'] = !edit ? flow?.triggerData?.rawData : flow?.flow_details?.rawData || ''
-
-    tmpConf['fetch'] = !edit ? flow?.triggerData?.fetch : flow?.flow_details?.fetch
-
-    tmpConf['fetch_remove'] = !edit
-      ? flow?.triggerData?.fetch_remove
-      : flow?.flow_details?.fetch_remove || ''
+    tmpConf = actionHookStateIH(edit, flow, tmpConf)
   } else if (
     flow?.triggerData?.trigger_type === 'custom_form_submission' ||
     flow?.flow_details?.trigger_type === 'custom_form_submission'
   ) {
-    tmpConf['primaryKey'] = !edit ? flow.triggerData.primaryKey : flow?.flow_details?.primaryKey
-
-    tmpConf['multi_form'] = !edit
-      ? flow.triggerData.multi_form || ''
-      : flow?.flow_details?.multi_form || ''
-
-    tmpConf['fields'] = !edit ? flow?.triggerData?.fields : flow?.flow_details?.fields
-
-    tmpConf['fetch'] = !edit ? flow?.triggerData?.fetch : flow?.flow_details?.fetch
-
-    tmpConf['fetch_remove'] = !edit
-      ? flow?.triggerData?.fetch_remove
-      : flow?.flow_details?.fetch_remove
+    tmpConf = CFSStateIH(edit, flow, tmpConf)
   }
 
   const data = {
