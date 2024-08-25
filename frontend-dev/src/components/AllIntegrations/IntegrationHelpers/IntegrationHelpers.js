@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-expressions */
 import toast from 'react-hot-toast'
-import { resetRecoil } from 'recoil-nexus'
-import { $actionConf, $flowStep, $newFlow } from '../../../GlobalStates'
-import { webhookIntegrations } from '../../../Utils/StaticData/webhookIntegrations'
+import { getRecoil, resetRecoil } from 'recoil-nexus'
+import { $actionConf, $btcbi, $flowStep, $newFlow } from '../../../GlobalStates'
+import { freeTriggers, webhookIntegrations } from '../../../Utils/StaticData/webhookIntegrations'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import {
@@ -52,6 +52,9 @@ export const saveIntegConfig = async (
   edit,
   setIsLoading
 ) => {
+  const btcbi = getRecoil($btcbi)
+  const { isPro } = btcbi
+
   let action = 'flow/save'
   setIsLoading(true)
   let tmpConf = confTmp
@@ -160,12 +163,18 @@ export const saveIntegConfig = async (
     flow.triggered_entity === 'EssentialBlocks' ||
     flow.triggered_entity === 'Coblocks'
   ) {
-    tmpConf = actionHookStateIH(edit, flow, tmpConf)
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = actionHookStateIH(dataFlow, tmpConf)
   } else if (
     flow?.triggerData?.trigger_type === 'custom_form_submission' ||
     flow?.flow_details?.trigger_type === 'custom_form_submission'
   ) {
-    tmpConf = CFSStateIH(edit, flow, tmpConf)
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = CFSStateIH(dataFlow, tmpConf)
+  }
+
+  if (isPro && !freeTriggers.includes(flow.triggered_entity)) {
+    tmpConf['pro_integ_v'] = version
   }
 
   const data = {
@@ -214,6 +223,9 @@ export const saveActionConf = async ({
   setIsLoading,
   setSnackbar
 }) => {
+  const btcbi = getRecoil($btcbi)
+  const { isPro, version } = btcbi
+
   let action = 'flow/save'
   setIsLoading && setIsLoading instanceof Function && setIsLoading(true)
   let tmpConf = conf
@@ -314,12 +326,18 @@ export const saveActionConf = async ({
     flow.triggered_entity === 'EssentialBlocks' ||
     flow.triggered_entity === 'Coblocks'
   ) {
-    tmpConf = actionHookStateIH(edit, flow, tmpConf)
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = actionHookStateIH(dataFlow, tmpConf)
   } else if (
     flow?.triggerData?.trigger_type === 'custom_form_submission' ||
     flow?.flow_details?.trigger_type === 'custom_form_submission'
   ) {
-    tmpConf = CFSStateIH(edit, flow, tmpConf)
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = CFSStateIH(dataFlow, tmpConf)
+  }
+
+  if (isPro && !freeTriggers.includes(flow.triggered_entity)) {
+    tmpConf['pro_integ_v'] = version
   }
 
   const data = {
