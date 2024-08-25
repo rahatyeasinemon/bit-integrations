@@ -34,7 +34,7 @@ final class AllProActionFeat
             ['feat_name' => 'addRemoveTag', 'class' => '\BitApps\BTCBI_PRO\Actions\MailChimp\MailChimpRecordHelper', 'pro_init_v' => '2.0.9']
         ],
         'SendPulse' => [
-            ['feat_name' => 'refreshFields', 'class' => '\BitApps\BTCBI_PRO\Actions\SendPulse\SendPulseHelperPro', 'pro_init_v' => '2.1.9']
+            ['feat_name' => 'refreshFields', 'class' => '\BitApps\BTCBI_PRO\Actions\SendPulse\SendPulseHelperPro', 'pro_init_v' => '2.2.0']
         ],
         'WC' => [
             ['feat_name' => 'getFlexibleCheckoutFields', 'class' => '\BitApps\BTCBI_PRO\Triggers\WC\WCHelperPro', 'pro_init_v' => '2.1.2'],
