@@ -5,6 +5,7 @@ namespace BitCode\FI\Flow;
 use WP_Error;
 use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\IpTool;
 use BitCode\FI\Core\Util\SmartTags;
 use BitCode\FI\Core\Util\Capabilities;
@@ -88,7 +89,7 @@ final class Flow
             $missing_field = 'Integration ID';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         $integrationHandler = new FlowController();
         $integrations = $integrationHandler->get(
@@ -150,7 +151,7 @@ final class Flow
             $missing_field = (\is_null($missing_field) ? null : ', ') . 'Integration details';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
 
         // custom action
@@ -181,7 +182,7 @@ final class Flow
             $missingId = 'Flow ID';
         }
         if (!\is_null($missingId)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missingId));
+            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missingId));
         }
         $integrationHandler = new FlowController();
         $integrations = $integrationHandler->get(
@@ -222,7 +223,7 @@ final class Flow
             $missing_field = 'Flow details';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
 
         if ($data->flow_details->type === 'CustomAction') {
@@ -291,7 +292,7 @@ final class Flow
             $missing_field = 'Integration id';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
         }
         $integrationHandler = new FlowController();
         $deleteStatus = $integrationHandler->delete($data->id);
@@ -309,7 +310,7 @@ final class Flow
             wp_send_json_error('User don\'t have permission to access this page');
         }
         if (!\is_array($param->flowID) || $param->flowID === []) {
-            wp_send_json_error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), 'Integration id'));
+            wp_send_json_error(\sprintf(__('%s cann\'t be empty', 'bit-integrations'), 'Integration id'));
         }
 
         $integrationHandler = new FlowController();
@@ -335,7 +336,7 @@ final class Flow
             $missing_field = 'Integration id';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
         }
         $integrationHandler = new FlowController();
         $toggleStatus = $integrationHandler->updateStatus($data->id, $data->status);
@@ -421,6 +422,11 @@ final class Flow
                 if (\is_string($flowData->flow_details)) {
                     $flowData->flow_details = json_decode($flowData->flow_details);
                 }
+
+                if(!static::checkProInteg($flowData->flow_details)){
+                    continue;
+                }
+
                 if (
                     property_exists($flowData->flow_details, 'condition')
                     && property_exists($flowData->flow_details->condition, 'logics')
@@ -520,5 +526,10 @@ final class Flow
             $activeFlowTrigger = $storeInCacheInstance::getActiveFlow();
             $storeInCacheInstance::setTransient('activeCurrentTrigger', $activeFlowTrigger, DAY_IN_SECONDS);
         }
+    }
+
+    private static function checkProInteg($flow_details)
+    {
+        return (bool) (!Helper::isProActivate() && property_exists($flow_details, 'pro_integ_v'));
     }
 }
