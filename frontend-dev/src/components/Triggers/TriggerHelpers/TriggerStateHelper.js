@@ -57,6 +57,8 @@ export const FormPluginStateHelper = (val, tmpNewFlow, resp, setNewFlow) => {
     SureMembersStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else if (tmpNewFlow?.triggered_entity === 'WPForo') {
     wpForoStateFP(val, tmpNewFlow, resp, setNewFlow)
+  } else if (tmpNewFlow?.triggered_entity === 'WPJobManager') {
+    wpJobManagerStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else {
     setNewFlow(tmpNewFlow)
   }
@@ -148,6 +150,18 @@ export const wpForoStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
       ...tmpNewFlow.triggerData,
       users: resp.data.users,
       selectedUser: 'any'
+    }
+  }
+
+  setNewFlow(tmpNewFlow)
+}
+
+export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
+  if (val === 'wp_job_manager-1') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      jobTypes: resp.data.jobTypes,
+      selectedJobType: 'any'
     }
   }
 
@@ -454,6 +468,17 @@ export const wpForoStateIH = (tmpConf, flowData, triggered_entity_id) => {
   ) {
     tmpConf.selectedUser = flowData.selectedUser
     tmpConf.users = flowData.users
+  }
+
+  return tmpConf
+}
+
+export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id
+
+  if (formId === 'wp_job_manager-1') {
+    tmpConf.selectedJobType = flowData.selectedJobType
+    tmpConf.jobTypes = flowData.jobTypes
   }
 
   return tmpConf

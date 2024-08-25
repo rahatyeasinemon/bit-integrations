@@ -79,6 +79,7 @@ import {
   getWPForoTopics,
   getWPForoUsers
 } from '../Triggers/TriggerHelpers/WPForoHelper/WPForoCommonFunction.js'
+import { getWPJobManagerJobTypes } from '../Triggers/TriggerHelpers/WPJobManager/WPJobManagerCommonFunction.js'
 
 function EditFormInteg({ setSnackbar, className = '' }) {
   const [forms, setForms] = useState([])
@@ -333,6 +334,12 @@ function EditFormInteg({ setSnackbar, className = '' }) {
         data.triggered_entity_id === 'wpforo-12'
       ) {
         getWPForoUsers(data, setFlow)
+      }
+    }
+
+    if (trigger === 'WPJobManager') {
+      if (data.triggered_entity_id === 'wp_job_manager-1') {
+        getWPJobManagerJobTypes(data, setFlow)
       }
     }
   }
