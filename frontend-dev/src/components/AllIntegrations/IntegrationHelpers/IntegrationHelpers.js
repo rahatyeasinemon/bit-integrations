@@ -53,7 +53,7 @@ export const saveIntegConfig = async (
   setIsLoading
 ) => {
   const btcbi = getRecoil($btcbi)
-  const { isPro } = btcbi
+  const { isPro, version } = btcbi
 
   let action = 'flow/save'
   setIsLoading(true)

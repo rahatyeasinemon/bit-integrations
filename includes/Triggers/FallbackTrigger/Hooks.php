@@ -16,9 +16,9 @@ if (!Helper::isProActivate()) {
     $entities = array_unique(array_column($integrations, 'triggered_entity'));
 
     foreach (FallbackHooks::$triggerHookList as $trigger) {
-        if (!in_array($trigger['entity'], $entities)) {
+        if (in_array($trigger['entity'], $entities)) {
             $flowData = array_filter($integrations, function ($flow) use ($trigger) {
-                if ($flow->triggered_entity === $trigger['entity']) {
+                if ($flow->triggered_entity == $trigger['entity']) {
                     $flow->flow_details = is_string($flow->flow_details) ? json_decode($flow->flow_details) : $flow->flow_details;
 
                     return !isset($flow->flow_details->pro_integ_v);
