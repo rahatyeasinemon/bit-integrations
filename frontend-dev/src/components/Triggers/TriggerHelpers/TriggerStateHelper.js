@@ -164,7 +164,7 @@ export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
       selectedJobType: 'any'
     }
   }
-  if (val === 'wp_job_manager-2') {
+  if (val === 'wp_job_manager-2' || val === 'wp_job_manager-3') {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       jobList: resp.data.jobList,
@@ -487,7 +487,7 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
     tmpConf.selectedJobType = flowData.selectedJobType
     tmpConf.jobTypes = flowData.jobTypes
   }
-  if (formId === 'wp_job_manager-2') {
+  if (formId === 'wp_job_manager-2' || formId === 'wp_job_manager-3') {
     tmpConf.selectedJob = flowData.selectedJob
     tmpConf.jobList = flowData.jobList
   }
