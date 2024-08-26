@@ -2,16 +2,15 @@
 
 namespace BitCode\FI\Flow;
 
-use WP_Error;
-use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Core\Util\CustomFuncValidator;
 use BitCode\FI\Core\Util\IpTool;
 use BitCode\FI\Core\Util\SmartTags;
-use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\StoreInCache;
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Triggers\TriggerController;
-use BitCode\FI\Core\Util\CustomFuncValidator;
+use WP_Error;
 
 /**
  * Provides details of available integration and helps to
@@ -423,10 +422,6 @@ final class Flow
                     $flowData->flow_details = json_decode($flowData->flow_details);
                 }
 
-                if(!static::checkProInteg($flowData->flow_details)){
-                    continue;
-                }
-
                 if (
                     property_exists($flowData->flow_details, 'condition')
                     && property_exists($flowData->flow_details->condition, 'logics')
@@ -524,12 +519,10 @@ final class Flow
         if ($saveStatus) {
             $storeInCacheInstance = new StoreInCache();
             $activeFlowTrigger = $storeInCacheInstance::getActiveFlow();
-            $storeInCacheInstance::setTransient('activeCurrentTrigger', $activeFlowTrigger, DAY_IN_SECONDS);
-        }
-    }
+            $activeIntegration = $storeInCacheInstance::getActiveIntegration();
 
-    private static function checkProInteg($flow_details)
-    {
-        return (bool) (!Helper::isProActivate() && property_exists($flow_details, 'pro_integ_v'));
+            $storeInCacheInstance::setTransient('activeCurrentTrigger', $activeFlowTrigger, DAY_IN_SECONDS);
+            $storeInCacheInstance::setTransient('activeCurrentIntegrations', $activeIntegration, DAY_IN_SECONDS);
+        }
     }
 }
