@@ -83,7 +83,7 @@ class HookService
             $activeTrigger = [];
         }
 
-        $listedTriggers = ['CustomTrigger', 'ActionHook', 'Spectra', 'EssentialBlocks', 'Elementor'];
+        $listedTriggers = ['CustomTrigger', 'ActionHook', 'Spectra', 'EssentialBlocks', 'Elementor', 'FallbackTrigger'];
         $activeTrigger = array_merge($activeTrigger, $listedTriggers);
 
         if (empty($activeTrigger) || !\is_array($activeTrigger)) {
