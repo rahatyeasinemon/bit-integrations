@@ -28,6 +28,25 @@ class StoreInCache
         return $activeTriggerLists;
     }
 
+    public static function getActiveIntegration()
+    {
+        global $wpdb;
+        $integrations = $wpdb->get_results(
+            "SELECT triggered_entity, flow_details, status
+                    FROM {$wpdb->prefix}btcbi_flow
+                    WHERE status = 1
+                    AND triggered_entity NOT IN ('CustomTrigger', 'ActionHook', 'BitForm', 'CF7', 'WC', 'WPF', 'Breakdance', 'Elementor')",
+        );
+
+        if (empty($integrations) || !\is_array($integrations)) {
+            return false;
+        }
+
+        self::setTransient('activeCurrentIntegrations', $integrations, DAY_IN_SECONDS);
+
+        return $integrations;
+    }
+
     public static function setTransient($key, $value, $expiration)
     {
         if (empty($key) || empty($value)) {
