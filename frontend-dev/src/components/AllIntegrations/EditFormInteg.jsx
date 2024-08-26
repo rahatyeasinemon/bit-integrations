@@ -341,7 +341,11 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     }
 
     if (trigger === 'WPJobManager') {
-      if (data.triggered_entity_id === 'wp_job_manager-1') {
+      if (
+        data.triggered_entity_id === 'wp_job_manager-1' ||
+        data.triggered_entity_id === 'wp_job_manager-4' ||
+        data.triggered_entity_id === 'wp_job_manager-5'
+      ) {
         getWPJobManagerJobTypes(data, setFlow)
       }
       if (

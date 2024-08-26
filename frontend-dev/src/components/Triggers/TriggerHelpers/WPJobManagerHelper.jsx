@@ -11,7 +11,7 @@ const WPJobManagerHelper = ({ flow, setFlowData, edit = false }) => {
 
   return (
     <div>
-      {id === 'wp_job_manager-1' && (
+      {(id === 'wp_job_manager-1' || id === 'wp_job_manager-4' || id === 'wp_job_manager-5') && (
         <div className={edit ? 'flx mt-3' : ''}>
           <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select Job Type:</b>
           <MultiSelect
