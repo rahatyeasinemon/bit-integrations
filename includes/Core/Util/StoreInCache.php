@@ -6,45 +6,14 @@ use BitCode\FI\Flow\FlowController;
 
 class StoreInCache
 {
-    public static function getActiveFlow()
+    public static function getActiveFlowEntities($refresh = false)
     {
-        $integrationHandler = new FlowController();
-        $integrations = $integrationHandler->get(
-            ['status' => 1],
-            [
-                'triggered_entity',
-                'status',
-            ]
-        );
-        if (empty($integrations) || !\is_array($integrations)) {
-            return false;
-        }
-        foreach ($integrations as $integration) {
-            $activeFlowTrigger[] = $integration->triggered_entity;
-        }
-        $activeTriggerLists = array_unique($activeFlowTrigger);
-        self::setTransient('activeCurrentTrigger', $activeTriggerLists, DAY_IN_SECONDS);
-
-        return $activeTriggerLists;
+        return self::maybeFetchActiveFlowEntities('bit_integrations_active_trigger_entities', $refresh);
     }
 
-    public static function getActiveIntegration()
+    public static function getFallbackFlowEntities($refresh = false)
     {
-        global $wpdb;
-        $integrations = $wpdb->get_results(
-            "SELECT triggered_entity, flow_details, status
-                    FROM {$wpdb->prefix}btcbi_flow
-                    WHERE status = 1
-                    AND triggered_entity NOT IN ('CustomTrigger', 'ActionHook', 'BitForm', 'CF7', 'WC', 'WPF', 'Breakdance', 'Elementor')",
-        );
-
-        if (empty($integrations) || !\is_array($integrations)) {
-            return false;
-        }
-
-        self::setTransient('activeCurrentIntegrations', $integrations, DAY_IN_SECONDS);
-
-        return $integrations;
+        return self::maybeFetchActiveFlowEntities('bit_integrations_fallback_trigger_entities', $refresh);
     }
 
     public static function setTransient($key, $value, $expiration)
@@ -66,5 +35,64 @@ class StoreInCache
         }
 
         return $transientData;
+    }
+
+    private static function saveFallbackFlowEntities($integrations)
+    {
+        $entities = [];
+        $excludedEntities = ['CustomTrigger', 'ActionHook', 'BitForm', 'CF7', 'WC', 'WPF', 'Breakdance', 'Elementor'];
+
+        foreach ($integrations as $flow) {
+            if (!\in_array($flow->triggered_entity, $excludedEntities)) {
+                $flow->flow_details = \is_string($flow->flow_details) ? json_decode($flow->flow_details) : $flow->flow_details;
+
+                if (empty($flow->flow_details->pro_integ_v)) {
+                    $entities[$flow->triggered_entity] = $flow->triggered_entity;
+                }
+            }
+        }
+
+        if (!empty($entities)) {
+            self::setTransient('bit_integrations_fallback_trigger_entities', $entities, DAY_IN_SECONDS);
+
+            return $entities;
+        }
+
+        return false;
+    }
+
+    private static function saveActiveFlowEntities($integrations)
+    {
+        $activeTriggerLists = array_unique(array_column($integrations, 'triggered_entity'));
+
+        self::setTransient('bit_integrations_active_trigger_entities', $activeTriggerLists, DAY_IN_SECONDS);
+
+        return $activeTriggerLists;
+    }
+
+    private static function maybeFetchActiveFlowEntities($key, $refresh)
+    {
+        if (!$refresh && ($triggerEntities = self::getTransientData($key))) {
+            return $triggerEntities;
+        }
+
+        $integrationHandler = new FlowController();
+        $integrations = $integrationHandler->get(
+            ['status' => 1],
+            [
+                'triggered_entity',
+                'flow_details',
+                'status',
+            ]
+        );
+
+        $activeFlowEntities = static::saveActiveFlowEntities($integrations);
+        $fallbackFlowEntities = null;
+
+        if (!Helper::isProActivate()) {
+            $fallbackFlowEntities = static::saveFallbackFlowEntities($integrations);
+        }
+
+        return $key === 'bit_integrations_active_trigger_entities' ? $activeFlowEntities : $fallbackFlowEntities ?? [];
     }
 }

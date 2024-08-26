@@ -2,11 +2,11 @@
 
 namespace BitCode\FI\Core\Hooks;
 
+use FilesystemIterator;
 use BitCode\FI\Admin\AdminAjax;
 use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Core\Util\Request;
 use BitCode\FI\Core\Util\StoreInCache;
-use FilesystemIterator;
 
 class HookService
 {
@@ -74,11 +74,8 @@ class HookService
      */
     protected function loadTriggersHooks()
     {
-        $storeInCacheInstance = new StoreInCache();
-        $activeTrigger = $storeInCacheInstance::getTransientData('activeCurrentTrigger');
-        if (empty($activeTrigger)) {
-            $activeTrigger = $storeInCacheInstance::getActiveFlow();
-        }
+        $activeTrigger = StoreInCache::getActiveFlowEntities() ?? [];
+
         if (!$activeTrigger) {
             $activeTrigger = [];
         }
@@ -89,6 +86,7 @@ class HookService
         if (empty($activeTrigger) || !\is_array($activeTrigger)) {
             return;
         }
+        error_log(print_r($activeTrigger, true));
         foreach ($activeTrigger as $key => $triggerName) {
             $this->_includeTriggerTaskHooks($triggerName);
         }

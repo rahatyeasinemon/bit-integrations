@@ -2,15 +2,15 @@
 
 namespace BitCode\FI\Flow;
 
-use BitCode\FI\Core\Util\Capabilities;
+use WP_Error;
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\CustomFuncValidator;
 use BitCode\FI\Core\Util\IpTool;
 use BitCode\FI\Core\Util\SmartTags;
+use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\StoreInCache;
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Triggers\TriggerController;
-use WP_Error;
+use BitCode\FI\Core\Util\CustomFuncValidator;
 
 /**
  * Provides details of available integration and helps to
@@ -517,12 +517,7 @@ final class Flow
     private static function updateFlowTrigger($saveStatus)
     {
         if ($saveStatus) {
-            $storeInCacheInstance = new StoreInCache();
-            $activeFlowTrigger = $storeInCacheInstance::getActiveFlow();
-            $activeIntegration = $storeInCacheInstance::getActiveIntegration();
-
-            $storeInCacheInstance::setTransient('activeCurrentTrigger', $activeFlowTrigger, DAY_IN_SECONDS);
-            $storeInCacheInstance::setTransient('activeCurrentIntegrations', $activeIntegration, DAY_IN_SECONDS);
+            StoreInCache::getActiveFlowEntities(true);
         }
     }
 }
