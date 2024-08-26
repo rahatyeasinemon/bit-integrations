@@ -86,7 +86,7 @@ class HookService
         if (empty($activeTrigger) || !\is_array($activeTrigger)) {
             return;
         }
-        error_log(print_r($activeTrigger, true));
+
         foreach ($activeTrigger as $key => $triggerName) {
             $this->_includeTriggerTaskHooks($triggerName);
         }

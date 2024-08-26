@@ -12,23 +12,13 @@ use BitCode\FI\Triggers\FallbackTrigger\FallbackTriggerController;
 
 if (!Helper::isProActivate()) {
     $storeInCacheInstance = new StoreInCache();
-    $integrations = $storeInCacheInstance::getTransientData('activeCurrentIntegrations') ?: $storeInCacheInstance::getActiveIntegration() ?: [];
-    $entities = array_unique(array_column($integrations, 'triggered_entity'));
+    $entities = StoreInCache::getFallbackFlowEntities() ?? [];
 
-    foreach (FallbackHooks::$triggerHookList as $trigger) {
-        if (in_array($trigger['entity'], $entities)) {
-            $flowData = array_filter($integrations, function ($flow) use ($trigger) {
-                if ($flow->triggered_entity == $trigger['entity']) {
-                    $flow->flow_details = is_string($flow->flow_details) ? json_decode($flow->flow_details) : $flow->flow_details;
-
-                    return !isset($flow->flow_details->pro_integ_v);
-                }
-
-                return false;
-            });
-
-            if (!empty($flowData)) {
+    if (!empty($entities)) {
+        foreach (FallbackHooks::$triggerHookList as $trigger) {
+            if (isset($entities[$trigger['entity']])) {
                 $hookFunction = $trigger['isFilterHook'] ? 'filter' : 'add';
+
                 Hooks::$hookFunction($trigger['hook'], [FallbackTriggerController::class, 'triggerFallbackHandler'], $trigger['priority'], PHP_INT_MAX);
             }
         }
