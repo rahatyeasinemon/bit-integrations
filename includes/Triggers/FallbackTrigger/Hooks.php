@@ -11,7 +11,6 @@ use BitCode\FI\Triggers\FallbackTrigger\FallbackHooks;
 use BitCode\FI\Triggers\FallbackTrigger\FallbackTriggerController;
 
 if (!Helper::isProActivate()) {
-    $storeInCacheInstance = new StoreInCache();
     $entities = StoreInCache::getFallbackFlowEntities() ?? [];
 
     if (!empty($entities)) {

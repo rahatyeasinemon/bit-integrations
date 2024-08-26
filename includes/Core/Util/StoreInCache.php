@@ -16,6 +16,11 @@ class StoreInCache
         return self::maybeFetchActiveFlowEntities('bit_integrations_fallback_trigger_entities', $refresh);
     }
 
+    public static function getActionHookFlows($refresh = false)
+    {
+        return self::maybeFetchActiveFlowEntities('bit_integrations_action_hook_flows', $refresh);
+    }
+
     public static function setTransient($key, $value, $expiration)
     {
         if (empty($key) || empty($value)) {
@@ -70,7 +75,23 @@ class StoreInCache
         return $activeTriggerLists;
     }
 
-    private static function maybeFetchActiveFlowEntities($key, $refresh)
+    private static function saveActionHookFlows($integrations)
+    {
+        $flows = [];
+        $flows = array_filter($integrations, function ($flow) {
+            return $flow->triggered_entity == 'ActionHook';
+        });
+
+        if (!empty($flows)) {
+            self::setTransient('bit_integrations_action_hook_flows', $flows, DAY_IN_SECONDS);
+
+            return $flows;
+        }
+
+        return false;
+    }
+
+    private static function maybeFetchActiveFlowEntities($key, $refresh = false)
     {
         if (!$refresh && ($triggerEntities = self::getTransientData($key))) {
             return $triggerEntities;
@@ -79,20 +100,25 @@ class StoreInCache
         $integrationHandler = new FlowController();
         $integrations = $integrationHandler->get(
             ['status' => 1],
-            [
-                'triggered_entity',
-                'flow_details',
-                'status',
-            ]
+            ['triggered_entity', 'triggered_entity_id', 'flow_details', 'status']
         );
 
         $activeFlowEntities = static::saveActiveFlowEntities($integrations);
-        $fallbackFlowEntities = null;
+        $actionHookFlows = static::saveActionHookFlows($integrations);
+        $fallbackFlowEntities = Helper::isProActivate() ? null : static::saveFallbackFlowEntities($integrations);
 
-        if (!Helper::isProActivate()) {
-            $fallbackFlowEntities = static::saveFallbackFlowEntities($integrations);
+        switch ($key) {
+            case 'bit_integrations_active_trigger_entities':
+                return $activeFlowEntities ?? [];
+
+            case 'bit_integrations_fallback_trigger_entities':
+                return $fallbackFlowEntities ?? [];
+
+            case 'bit_integrations_action_hook_flows':
+                return $actionHookFlows ?? [];
+
+            default:
+                return [];
         }
-
-        return $key === 'bit_integrations_active_trigger_entities' ? $activeFlowEntities : $fallbackFlowEntities ?? [];
     }
 }
