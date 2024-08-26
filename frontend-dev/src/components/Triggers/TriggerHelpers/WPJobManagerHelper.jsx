@@ -24,6 +24,19 @@ const WPJobManagerHelper = ({ flow, setFlowData, edit = false }) => {
           />
         </div>
       )}
+      {id === 'wp_job_manager-2' && (
+        <div className={edit ? 'flx mt-3' : ''}>
+          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select Job:</b>
+          <MultiSelect
+            className="msl-wrp-options"
+            defaultValue={triggerData?.selectedJob}
+            options={triggerData?.jobList}
+            onChange={(val) => setFlowData(val, 'selectedJob')}
+            singleSelect
+            style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
+          />
+        </div>
+      )}
     </div>
   )
 }

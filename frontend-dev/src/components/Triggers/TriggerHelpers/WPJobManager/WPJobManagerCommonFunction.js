@@ -19,3 +19,21 @@ export const getWPJobManagerJobTypes = (data, setFlow) => {
     loading: __('Loading Types...'),
   })
 }
+
+export const getWPJobManagerJobs = (data, setFlow) => {
+  const loadJobs = bitsFetch(null, 'wpjobmanager/get/jobs', null, 'GET')
+    .then((result) => {
+      if (result && result.data) {
+        const tmpFlow = { ...data }
+        tmpFlow.flow_details.jobList = result.data
+        setFlow({ ...tmpFlow })
+        return 'Jobs fetched successfully'
+      }
+      return 'Jobs fetching failed. please try again'
+    })
+  toast.promise(loadJobs, {
+    success: (data) => data,
+    error: __('Error Occurred', 'bit-integrations'),
+    loading: __('Loading Jobs...'),
+  })
+}
