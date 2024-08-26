@@ -39,13 +39,3 @@ if (!is_wp_error($flows)) {
         }
     }
 }
-
-if (!Helper::isProActivate()) {
-    foreach (FallbackHooks::$triggerHookList as $hook) {
-        if (!$hook['isFilterHook']) {
-            Hooks::add($hook['hook'], [ActionHookController::class, 'triggerFallbackHandler'], $hook['priority'], PHP_INT_MAX);
-        } else {
-            Hooks::filter($hook['hook'], [ActionHookController::class, 'triggerFallbackHandler'], $hook['priority'], PHP_INT_MAX);
-        }
-    }
-}

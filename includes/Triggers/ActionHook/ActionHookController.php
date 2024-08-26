@@ -5,8 +5,6 @@ namespace BitCode\FI\Triggers\ActionHook;
 use WP_Error;
 use BitCode\FI\Flow\Flow;
 use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Core\Hooks\FallbackHooks;
-use BitCode\FI\Core\Util\TriggerFallback;
 
 class ActionHookController
 {
@@ -55,7 +53,7 @@ class ActionHookController
     public static function actionHookHandler(...$args)
     {
         $args = ActionHookHelper::convertToSimpleArray($args);
-        
+
         if (get_option('btcbi_action_hook_test_' . current_action()) !== false) {
             update_option('btcbi_action_hook_test_' . current_action(), $args);
         }
@@ -100,7 +98,7 @@ class ActionHookController
 
                 $args = ActionHookHelper::convertToSimpleArray($args);
                 $primaryKeyValue = Helper::extractValueFromPath($args, $flowDetails->primaryKey->key, 'ActionHook');
-                
+
                 if ($flowDetails->primaryKey->value === $primaryKeyValue) {
                     $fieldKeys = [];
                     $formatedData = [];
@@ -125,25 +123,5 @@ class ActionHookController
         }
 
         return rest_ensure_response(['status' => 'success']);
-    }
-
-    public static function triggerFallbackHandler(...$args)
-    {
-        $hook = FallbackHooks::$triggerHookList[current_action()];
-
-        if (empty($hook)) {
-            return;
-        }
-
-        $dynamicFunc = $hook['function'];
-        $flowData = TriggerFallback::$dynamicFunc(...$args);
-
-        if (!empty($flowData) && !empty($flowData['triggered_entity'])) {
-            Flow::execute($flowData['triggered_entity'], $flowData['triggered_entity_id'], $flowData['data'], \is_array($flowData['flows']) ? $flowData['flows'] : [$flowData['flows']]);
-        }
-
-        if ($hook['isFilterHook'] && isset($flowData['content'])) {
-            return $flowData['content'] ?? $flowData;
-        }
     }
 }
