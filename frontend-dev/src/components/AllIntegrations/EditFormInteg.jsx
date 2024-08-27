@@ -350,7 +350,8 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       }
       if (
         data.triggered_entity_id === 'wp_job_manager-2' ||
-        data.triggered_entity_id === 'wp_job_manager-3'
+        data.triggered_entity_id === 'wp_job_manager-3' ||
+        data.triggered_entity_id === 'wp_job_manager-6'
       ) {
         getWPJobManagerJobs(data, setFlow)
       }
