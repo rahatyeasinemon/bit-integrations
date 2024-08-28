@@ -36,7 +36,12 @@ function EditPerfexCRM({ allIntegURL }) {
       toast.error('Please select a Customer')
       return
     }
-    if (perfexCRMConf.actionName === 'lead' && (!perfexCRMConf.selectedLeadStatusId || !perfexCRMConf.selectedLeadSourceId)) {
+    if (
+      perfexCRMConf.actionName === 'lead' &&
+      (!perfexCRMConf.selectedLeadStatusId ||
+        !perfexCRMConf.selectedLeadSourceId ||
+        !perfexCRMConf.selectedStaff)
+    ) {
       toast.error('Lead Status Id and Lead Source Id are required!')
       return
     }
@@ -67,7 +72,15 @@ function EditPerfexCRM({ allIntegURL }) {
       }
     }
 
-    saveActionConf({ flow, allIntegURL, conf: perfexCRMConf, navigate, edit: 1, setIsLoading, setSnackbar })
+    saveActionConf({
+      flow,
+      allIntegURL,
+      conf: perfexCRMConf,
+      navigate,
+      edit: 1,
+      setIsLoading,
+      setSnackbar
+    })
   }
 
   return (
@@ -76,7 +89,14 @@ function EditPerfexCRM({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, perfexCRMConf, setPerfexCRMConf)} name="name" value={perfexCRMConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={(e) => handleInput(e, perfexCRMConf, setPerfexCRMConf)}
+          name="name"
+          value={perfexCRMConf.name}
+          type="text"
+          placeholder={__('Integration Name...', 'bit-integrations')}
+        />
       </div>
       <br />
 
@@ -84,7 +104,9 @@ function EditPerfexCRM({ allIntegURL }) {
       <PerfexCRMIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) => handleInput(e, perfexCRMConf, setPerfexCRMConf, setLoading, setSnackbar)}
+        handleInput={(e) =>
+          handleInput(e, perfexCRMConf, setPerfexCRMConf, setLoading, setSnackbar)
+        }
         perfexCRMConf={perfexCRMConf}
         setPerfexCRMConf={setPerfexCRMConf}
         loading={loading}

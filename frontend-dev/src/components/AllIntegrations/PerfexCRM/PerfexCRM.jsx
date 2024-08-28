@@ -40,7 +40,7 @@ function PerfexCRM({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'shipping_city', label: 'Shipping City', required: false },
     { key: 'shipping_state', label: 'Shipping State', required: false },
     { key: 'shipping_zip', label: 'Shipping Zip', required: false },
-    { key: 'shipping_country', label: 'Shipping Country', required: false },
+    { key: 'shipping_country', label: 'Shipping Country', required: false }
   ]
 
   const contactFields = [
@@ -65,7 +65,7 @@ function PerfexCRM({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'zip', label: 'Zip', required: false },
     { key: 'country', label: 'Country', required: false },
     { key: 'description', label: 'Description', required: false },
-    { key: 'custom_contact_date', label: 'Date Contacted', required: false },
+    { key: 'custom_contact_date', label: 'Date Contacted', required: false }
   ]
 
   const projectFields = [
@@ -80,11 +80,12 @@ function PerfexCRM({ formFields, setFlow, flow, allIntegURL }) {
   const [perfexCRMConf, setPerfexCRMConf] = useState({
     name: 'PerfexCRM',
     type: 'PerfexCRM',
-    api_token: process.env.NODE_ENV === 'development' ? 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiIiwibmFtZSI6IlRlc3QiLCJBUElfVElNRSI6MTY4OTQ4NzExOH0.sdDrgh19H08sLvpL8ArvT-rZvv_QP9KtoSLCAtOEyXM' : '',
+    api_token:
+      process.env.NODE_ENV === 'development'
+        ? 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiIiwibmFtZSI6IlRlc3QiLCJBUElfVElNRSI6MTY4OTQ4NzExOH0.sdDrgh19H08sLvpL8ArvT-rZvv_QP9KtoSLCAtOEyXM'
+        : '',
     domain: process.env.NODE_ENV === 'development' ? 'https://bit.nandocardoso.com.br' : '',
-    field_map: [
-      { formField: '', perfexCRMFormField: '' },
-    ],
+    field_map: [{ formField: '', perfexCRMFormField: '' }],
     actionName: '',
     selectedLeadSourceId: 1,
     selectedLeadStatusId: 1,
@@ -93,13 +94,22 @@ function PerfexCRM({ formFields, setFlow, flow, allIntegURL }) {
     contactFields,
     leadFields,
     projectFields,
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, perfexCRMConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      perfexCRMConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -123,7 +133,12 @@ function PerfexCRM({ formFields, setFlow, flow, allIntegURL }) {
       toast.error('Please select a Customer')
       return
     }
-    if (perfexCRMConf.actionName === 'lead' && (!perfexCRMConf.selectedLeadStatusId || !perfexCRMConf.selectedLeadSourceId)) {
+    if (
+      perfexCRMConf.actionName === 'lead' &&
+      (!perfexCRMConf.selectedLeadStatusId ||
+        !perfexCRMConf.selectedLeadSourceId ||
+        !perfexCRMConf.selectedStaff)
+    ) {
       toast.error('Lead Status Id and Lead Source Id are required!')
       return
     }
@@ -160,7 +175,9 @@ function PerfexCRM({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <PerfexCRMAuthorization
@@ -174,11 +191,14 @@ function PerfexCRM({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <PerfexCRMIntegLayout
           formFields={formFields}
-          handleInput={(e) => handleInput(e, perfexCRMConf, setPerfexCRMConf, setLoading, setSnackbar)}
+          handleInput={(e) =>
+            handleInput(e, perfexCRMConf, setPerfexCRMConf, setLoading, setSnackbar)
+          }
           perfexCRMConf={perfexCRMConf}
           setPerfexCRMConf={setPerfexCRMConf}
           loading={loading}
@@ -191,13 +211,10 @@ function PerfexCRM({ formFields, setFlow, flow, allIntegURL }) {
         {perfexCRMConf?.actionName && (
           <button
             onClick={() => nextPage(3)}
-            disabled={!(checkMappedFields(perfexCRMConf))}
+            disabled={!checkMappedFields(perfexCRMConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button"
-          >
-            {__('Next', 'bit-integrations')}
-            {' '}
-            &nbsp;
+            type="button">
+            {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         )}
