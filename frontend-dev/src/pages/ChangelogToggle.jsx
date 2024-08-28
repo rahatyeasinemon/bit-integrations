@@ -6,7 +6,6 @@ import { __ } from '../Utils/i18nwrap'
 import Modal from '../components/Utilities/Modal'
 import changelogInfo from '../Utils/StaticData/changelogInfo'
 import bitsFetch from '../Utils/bitsFetch'
-import CheckBox from '../components/Utilities/CheckBox'
 import Loader from '../components/Loaders/Loader'
 import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 
@@ -14,7 +13,7 @@ export default function ChangelogToggle() {
   const [btcbi, setBtcbi] = useRecoilState($btcbi)
   const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
   const [showAnalyticsOptin, setShowAnalyticsOptin] = useState([])
-  const currentChangelog = '2.1.0'
+  const currentChangelog = '2.2.2'
   const currenChangelog = changelogInfo[currentChangelog]
   const [loading, setLoading] = useState('')
 
@@ -84,17 +83,17 @@ export default function ChangelogToggle() {
             <div className="flx flx-col flx-center whats-new">
               <h3>What's New in {btcbi.version}?</h3>
               <small className="date">
-                Updated at: <b>22th August 2024</b>
+                Updated at: <b>28th August 2024</b>
               </small>
             </div>
             <div className="changelog-content">
               <span className="new-integration">
-                <b>New Action</b>
+                <b>New Trigger</b>
               </span>
 
               <div className="integration-list">
                 <ul>
-                  <li> JetEngine </li>
+                  <li> WP Job Manager </li>
                 </ul>
               </div>
 
@@ -104,7 +103,8 @@ export default function ChangelogToggle() {
 
               <div className="feature-list">
                 <ul>
-                  <li>HubSpot: Added the ability to update Contacts, Companies, Deals, and Tickets (Pro)</li>
+                  <li>GetResponse: Added the AutoResponder day of cycle feature (Pro)</li>
+                  <li>SendPulse: Introduced custom field functionality (Pro)</li>
                 </ul>
               </div>
               <div>
