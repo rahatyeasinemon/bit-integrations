@@ -344,7 +344,8 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       if (
         data.triggered_entity_id === 'wp_job_manager-1' ||
         data.triggered_entity_id === 'wp_job_manager-4' ||
-        data.triggered_entity_id === 'wp_job_manager-5'
+        data.triggered_entity_id === 'wp_job_manager-5' ||
+        data.triggered_entity_id === 'wp_job_manager-8'
       ) {
         getWPJobManagerJobTypes(data, setFlow)
       }
