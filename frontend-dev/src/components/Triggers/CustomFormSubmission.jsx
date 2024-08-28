@@ -25,7 +25,7 @@ import WebhookDataTable from '../Utilities/WebhookDataTable'
 const CustomFormSubmission = () => {
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
   const setFlowStep = useSetRecoilState($flowStep)
-  const setFields = useSetRecoilState($formFields)
+  const setFormFields = useSetRecoilState($formFields)
   const [primaryKey, setPrimaryKey] = useState()
   const [primaryKeyModal, setPrimaryKeyModal] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -60,7 +60,7 @@ const CustomFormSubmission = () => {
     }
 
     tmpNewFlow.triggered_entity_id = newFlow?.triggerDetail?.triggered_entity_id
-    setFields(tmpNewFlow.triggerDetail.data)
+    setFormFields(tmpNewFlow.triggerDetail.data)
     setNewFlow(tmpNewFlow)
     setFlowStep(2)
   }
@@ -141,7 +141,6 @@ const CustomFormSubmission = () => {
     return () => {
       intervalRef.current && clearInterval(intervalRef.current)
       controller.abort()
-      setFields()
       removeTestData()
     }
   }, [])

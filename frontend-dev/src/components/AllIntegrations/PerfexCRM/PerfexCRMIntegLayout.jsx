@@ -6,7 +6,12 @@ import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from './IntegrationHelpers'
 import PerfexCRMActions from './PerfexCRMActions'
-import { getAllCustomer, getAllLeads, refreshCustomFields } from './PerfexCRMCommonFunc'
+import {
+  getAllCustomer,
+  getAllStaffs,
+  getAllLeads,
+  refreshCustomFields
+} from './PerfexCRMCommonFunc'
 import PerfexCRMFieldMap from './PerfexCRMFieldMap'
 
 export default function PerfexCRMIntegLayout({
@@ -31,6 +36,11 @@ export default function PerfexCRMIntegLayout({
           if (e.target.value === 'contact' || e.target.value === 'lead') {
             getAllCustomer(draftConf, setPerfexCRMConf, loading, setLoading)
           }
+          if (e.target.value === 'lead') {
+            getAllCustomer(draftConf, setPerfexCRMConf, loading, setLoading)
+            getAllStaffs(draftConf, setPerfexCRMConf, loading, setLoading)
+          }
+
           if (e.target.value === 'project') {
             draftConf.billingTypes = [
               { id: 1, name: 'Fixed Rate' },
@@ -167,6 +177,35 @@ export default function PerfexCRMIntegLayout({
             </div>
           </>
         )}
+
+      {perfexCRMConf.actionName === 'lead' && perfexCRMConf?.staffs && !loading.staffs && (
+        <>
+          <br />
+          <div className="flx">
+            <b className="wdt-200 d-in-b">{__('Assigned By:', 'bit-integrations')}</b>
+            <MultiSelect
+              options={perfexCRMConf?.staffs?.map((staff) => ({
+                label: staff.name,
+                value: staff.id.toString()
+              }))}
+              className="msl-wrp-options dropdown-custom-width"
+              defaultValue={perfexCRMConf?.selectedStaff}
+              onChange={(val) => setChanges(val, 'selectedStaff')}
+              disabled={loading.staffs}
+              singleSelect
+              closeOnSelect
+            />
+            <button
+              onClick={() => getAllStaffs(perfexCRMConf, setPerfexCRMConf, loading, setLoading)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh Staffs', 'bit-integrations')}'` }}
+              type="button"
+              disabled={loading.staffs}>
+              &#x21BB;
+            </button>
+          </div>
+        </>
+      )}
       {perfexCRMConf.actionName === 'project' && perfexCRMConf?.billingTypes && (
         <>
           <br />
@@ -224,7 +263,7 @@ export default function PerfexCRMIntegLayout({
         </>
       )}
 
-      {(isLoading || loading.customers || loading.leads) && (
+      {(isLoading || loading.customers || loading.staffs || loading.leads) && (
         <Loader
           style={{
             display: 'flex',

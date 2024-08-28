@@ -7,6 +7,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
 import {
   ARMemberStateIH,
+  CFSStateIH,
   EDDStateIH,
   GamiPressStateIH,
   GiveWpStateIH,
@@ -19,6 +20,7 @@ import {
   SureMembersStateIH,
   ThriveApprenticeStateIH,
   UltimateMemberStateIH,
+  actionHookStateIH,
   affiliateStateIH,
   buddybossStateIH,
   fluentBookingStateIH,
@@ -31,7 +33,8 @@ import {
   tutorlmsStateIH,
   wooCommerceStateIH,
   wpCoursewareStateIH,
-  wpForoStateIH
+  wpForoStateIH,
+  wpJobManagerStateIH
 } from '../../Triggers/TriggerHelpers/TriggerStateHelper'
 import c from 'react-multiple-select-dropdown-lite'
 
@@ -152,46 +155,21 @@ export const saveIntegConfig = async (
   } else if (flow.triggered_entity === 'WPForo') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = wpForoStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
+  } else if (flow.triggered_entity === 'WPJobManager') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = wpJobManagerStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (
     flow.triggered_entity === 'ActionHook' ||
     flow.triggered_entity === 'Spectra' ||
     flow.triggered_entity === 'EssentialBlocks' ||
     flow.triggered_entity === 'Coblocks'
   ) {
-    tmpConf['primaryKey'] = !edit ? flow.triggerData.primaryKey : flow?.flow_details?.primaryKey
-
-    tmpConf['fields'] = !edit ? flow?.triggerData?.fields : flow?.flow_details?.fields
-
-    tmpConf['rawData'] = !edit ? flow?.triggerData?.rawData : flow?.flow_details?.rawData
-
-    tmpConf['fetch'] = !edit ? flow?.triggerData?.fetch : flow?.flow_details?.fetch
-
-    tmpConf['fetch_remove'] = !edit
-      ? flow?.triggerData?.fetch_remove
-      : flow?.flow_details?.fetch_remove
-
-    tmpConf['fetch'] = !edit ? flow?.triggerData?.fetch : flow?.flow_details?.fetch || ''
-
-    tmpConf['fetch_remove'] = !edit
-      ? flow?.triggerData?.fetch_remove
-      : flow?.flow_details?.fetch_remove || ''
+    tmpConf = actionHookStateIH(edit, flow, tmpConf)
   } else if (
     flow?.triggerData?.trigger_type === 'custom_form_submission' ||
     flow?.flow_details?.trigger_type === 'custom_form_submission'
   ) {
-    tmpConf['primaryKey'] = !edit ? flow.triggerData.primaryKey : flow?.flow_details?.primaryKey
-
-    tmpConf['multi_form'] = !edit
-      ? flow.triggerData.multi_form || ''
-      : flow?.flow_details?.multi_form || ''
-
-    tmpConf['fields'] = !edit ? flow?.triggerData?.fields : flow?.flow_details?.fields
-
-    tmpConf['fetch'] = !edit ? flow?.triggerData?.fetch : flow?.flow_details?.fetch
-
-    tmpConf['fetch_remove'] = !edit
-      ? flow?.triggerData?.fetch_remove
-      : flow?.flow_details?.fetch_remove
+    tmpConf = CFSStateIH(edit, flow, tmpConf)
   }
 
   const data = {
@@ -334,40 +312,21 @@ export const saveActionConf = async ({
   } else if (flow.triggered_entity === 'WPForo') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = wpForoStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
+  } else if (flow.triggered_entity === 'WPJobManager') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = wpJobManagerStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (
     flow.triggered_entity === 'ActionHook' ||
     flow.triggered_entity === 'Spectra' ||
     flow.triggered_entity === 'EssentialBlocks' ||
     flow.triggered_entity === 'Coblocks'
   ) {
-    tmpConf['primaryKey'] = !edit ? flow.triggerData.primaryKey : flow?.flow_details?.primaryKey
-
-    tmpConf['fields'] = !edit ? flow?.triggerData?.fields : flow?.flow_details?.fields
-
-    tmpConf['rawData'] = !edit ? flow?.triggerData?.rawData : flow?.flow_details?.rawData || ''
-
-    tmpConf['fetch'] = !edit ? flow?.triggerData?.fetch : flow?.flow_details?.fetch
-
-    tmpConf['fetch_remove'] = !edit
-      ? flow?.triggerData?.fetch_remove
-      : flow?.flow_details?.fetch_remove || ''
+    tmpConf = actionHookStateIH(edit, flow, tmpConf)
   } else if (
     flow?.triggerData?.trigger_type === 'custom_form_submission' ||
     flow?.flow_details?.trigger_type === 'custom_form_submission'
   ) {
-    tmpConf['primaryKey'] = !edit ? flow.triggerData.primaryKey : flow?.flow_details?.primaryKey
-
-    tmpConf['multi_form'] = !edit
-      ? flow.triggerData.multi_form || ''
-      : flow?.flow_details?.multi_form || ''
-
-    tmpConf['fields'] = !edit ? flow?.triggerData?.fields : flow?.flow_details?.fields
-
-    tmpConf['fetch'] = !edit ? flow?.triggerData?.fetch : flow?.flow_details?.fetch
-
-    tmpConf['fetch_remove'] = !edit
-      ? flow?.triggerData?.fetch_remove
-      : flow?.flow_details?.fetch_remove
+    tmpConf = CFSStateIH(edit, flow, tmpConf)
   }
 
   const data = {
@@ -464,13 +423,11 @@ export const handleAuthorize = (
     return
   }
   setIsLoading(true)
-  const apiEndpoint = `https://accounts.zoho.${
-    confTmp.dataCenter
-  }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${
-    confTmp.clientId
-  }&prompt=Consent&access_type=offline&state=${encodeURIComponent(
-    window.location.href
-  )}/redirect&redirect_uri=${encodeURIComponent(`${btcbi.api.base}`)}/redirect`
+  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter
+    }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId
+    }&prompt=Consent&access_type=offline&state=${encodeURIComponent(
+      window.location.href
+    )}/redirect&redirect_uri=${encodeURIComponent(`${btcbi.api.base}`)}/redirect`
   const authWindow = window.open(apiEndpoint, integ, 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
@@ -551,9 +508,8 @@ const tokenHelper = (
       ) {
         setSnackbar({
           show: true,
-          msg: `${__('Authorization failed Cause:', 'bit-integrations')}${
-            result.data.data || result.data
-          }. ${__('please try again', 'bit-integrations')}`
+          msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data
+            }. ${__('please try again', 'bit-integrations')}`
         })
       } else {
         setSnackbar({

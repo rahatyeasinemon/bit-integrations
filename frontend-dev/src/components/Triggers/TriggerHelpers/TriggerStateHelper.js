@@ -57,6 +57,8 @@ export const FormPluginStateHelper = (val, tmpNewFlow, resp, setNewFlow) => {
     SureMembersStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else if (tmpNewFlow?.triggered_entity === 'WPForo') {
     wpForoStateFP(val, tmpNewFlow, resp, setNewFlow)
+  } else if (tmpNewFlow?.triggered_entity === 'WPJobManager') {
+    wpJobManagerStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else {
     setNewFlow(tmpNewFlow)
   }
@@ -148,6 +150,25 @@ export const wpForoStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
       ...tmpNewFlow.triggerData,
       users: resp.data.users,
       selectedUser: 'any'
+    }
+  }
+
+  setNewFlow(tmpNewFlow)
+}
+
+export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
+  if (val === 'wp_job_manager-1' || val === 'wp_job_manager-4' || val === 'wp_job_manager-5') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      jobTypes: resp.data.jobTypes,
+      selectedJobType: 'any'
+    }
+  }
+  if (val === 'wp_job_manager-2' || val === 'wp_job_manager-3' || val === 'wp_job_manager-6' || val === 'wp_job_manager-7') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      jobList: resp.data.jobList,
+      selectedJob: 'any'
     }
   }
 
@@ -454,6 +475,21 @@ export const wpForoStateIH = (tmpConf, flowData, triggered_entity_id) => {
   ) {
     tmpConf.selectedUser = flowData.selectedUser
     tmpConf.users = flowData.users
+  }
+
+  return tmpConf
+}
+
+export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id
+
+  if (formId === 'wp_job_manager-1' || formId === 'wp_job_manager-4' || formId === 'wp_job_manager-5') {
+    tmpConf.selectedJobType = flowData.selectedJobType
+    tmpConf.jobTypes = flowData.jobTypes
+  }
+  if (formId === 'wp_job_manager-2' || formId === 'wp_job_manager-3' || formId === 'wp_job_manager-6' || formId === 'wp_job_manager-7') {
+    tmpConf.selectedJob = flowData.selectedJob
+    tmpConf.jobList = flowData.jobList
   }
 
   return tmpConf
@@ -786,4 +822,40 @@ export const academylmsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
     tmpNewFlow.triggerData.percentageCondition = resp.data.percentageCondition
   }
   setNewFlow(tmpNewFlow)
+}
+
+export const actionHookStateIH = (edit, flow, tmpConf) => {
+  if (!edit) {
+    tmpConf['primaryKey'] = flow.triggerData.primaryKey
+    tmpConf['fields'] = flow?.triggerData?.fields
+    tmpConf['rawData'] = flow?.triggerData?.rawData
+    tmpConf['fetch'] = flow?.triggerData?.fetch || ''
+    tmpConf['fetch_remove'] = flow?.triggerData?.fetch_remove || ''
+  } else {
+    tmpConf['primaryKey'] = flow?.flow_details?.primaryKey
+    tmpConf['fields'] = flow?.flow_details?.fields
+    tmpConf['rawData'] = flow?.flow_details?.rawData
+    tmpConf['fetch'] = flow?.flow_details?.fetch || ''
+    tmpConf['fetch_remove'] = flow?.flow_details?.fetch_remove || ''
+  }
+
+  return tmpConf
+}
+
+export const CFSStateIH = (edit, flow, tmpConf) => {
+  if (!edit) {
+    tmpConf['primaryKey'] = flow.triggerData.primaryKey
+    tmpConf['fields'] = flow?.triggerData?.fields
+    tmpConf['multi_form'] = flow.triggerData.multi_form || ''
+    tmpConf['fetch'] = flow?.triggerData?.fetch || ''
+    tmpConf['fetch_remove'] = flow?.triggerData?.fetch_remove || ''
+  } else {
+    tmpConf['primaryKey'] = flow?.flow_details?.primaryKey
+    tmpConf['fields'] = flow?.flow_details?.fields
+    tmpConf['multi_form'] = flow?.flow_details?.multi_form || ''
+    tmpConf['fetch'] = flow?.flow_details?.fetch || ''
+    tmpConf['fetch_remove'] = flow?.flow_details?.fetch_remove || ''
+  }
+
+  return tmpConf
 }

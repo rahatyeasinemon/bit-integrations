@@ -12,3 +12,4 @@ Route::post('jetEngine_menu_positions', [JetEngineController::class, 'getMenuPos
 Route::post('jetEngine_menu_icons', [JetEngineController::class, 'getMenuIcons']);
 Route::post('jetEngine_supports', [JetEngineController::class, 'getSupports']);
 Route::post('jetEngine_tax_post_types', [JetEngineController::class, 'getTaxPostTypes']);
+Route::post('jetEngine_relation_types', [JetEngineController::class, 'getRelationTypes']);

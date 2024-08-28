@@ -22,13 +22,20 @@ final class AllProActionFeat
         'Hubspot' => [
             ['feat_name' => 'updateEntity', 'class' => '\BitApps\BTCBI_PRO\Actions\Hubspot\HubspotHelperPro', 'pro_init_v' => '2.1.9'],
         ],
+        'GetResponse' => [
+            ['feat_name' => 'autoResponderDay', 'class' => '\BitApps\BTCBI_PRO\Actions\GetResponse\GetResponseHelperPro', 'pro_init_v' => '2.1.9'],
+        ],
         'JetEngine' => [
             ['feat_name' => 'createPostTypeActions', 'class' => '\BitApps\BTCBI_PRO\Actions\JetEngine\JetEngineRecordHelper', 'pro_init_v' => '2.1.9'],
             ['feat_name' => 'createContentTypeActions', 'class' => '\BitApps\BTCBI_PRO\Actions\JetEngine\JetEngineRecordHelper', 'pro_init_v' => '2.1.9'],
             ['feat_name' => 'createTaxonomyActions', 'class' => '\BitApps\BTCBI_PRO\Actions\JetEngine\JetEngineRecordHelper', 'pro_init_v' => '2.1.9'],
+            ['feat_name' => 'createRelationActions', 'class' => '\BitApps\BTCBI_PRO\Actions\JetEngine\JetEngineRecordHelper', 'pro_init_v' => '2.1.9'],
         ],
         'MailChimp' => [
             ['feat_name' => 'addRemoveTag', 'class' => '\BitApps\BTCBI_PRO\Actions\MailChimp\MailChimpRecordHelper', 'pro_init_v' => '2.0.9']
+        ],
+        'SendPulse' => [
+            ['feat_name' => 'refreshFields', 'class' => '\BitApps\BTCBI_PRO\Actions\SendPulse\SendPulseHelperPro', 'pro_init_v' => '2.2.0']
         ],
         'WC' => [
             ['feat_name' => 'getFlexibleCheckoutFields', 'class' => '\BitApps\BTCBI_PRO\Triggers\WC\WCHelperPro', 'pro_init_v' => '2.1.2'],

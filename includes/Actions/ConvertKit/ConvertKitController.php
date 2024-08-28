@@ -184,7 +184,7 @@ class ConvertKitController
         $fieldMap = $integrationDetails->field_map;
         $actions = $integrationDetails->actions;
         $formId = $integrationDetails->formId;
-        $tags = $integrationDetails->tagIds;
+        $tags = $integrationDetails->tagIds ?? null;
 
         if (
             empty($api_secret)

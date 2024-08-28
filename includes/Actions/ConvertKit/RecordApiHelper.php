@@ -31,24 +31,7 @@ class RecordApiHelper
     // for adding a subscriber
     public function storeOrModifyRecord($method, $formId, $data)
     {
-        $query = [
-            'api_secret' => $this->_defaultHeader,
-            'email'      => $data->email,
-            'first_name' => $data->firstName,
-        ];
-
-        foreach ($data as $key => $value) {
-            $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
-            $array_keys = array_keys($query);
-            if (!(\in_array($key, $array_keys))) {
-                $query['fields'] = [
-                    $key => $value,
-                ];
-            }
-        }
-
-        $queries = http_build_query($query);
-
+        $queries = $this->httpBuildQuery($data);
         $insertRecordEndpoint = "{$this->_apiEndpoint}/forms/{$formId}/{$method}?{$queries}";
 
         return HttpHelper::post($insertRecordEndpoint, null);
@@ -57,32 +40,7 @@ class RecordApiHelper
     // for updating subscribers data through email id.
     public function updateRecord($id, $data, $existSubscriber)
     {
-        $subscriberData = $data;
-
-        foreach ($subscriberData as $key => $value) {
-            if ($value === '') {
-                $subscriberData->{$key} = $existSubscriber->subscribers[0]->{$key};
-            }
-        }
-
-        $query = [
-            'api_secret'    => $this->_defaultHeader,
-            'email_address' => $data->email,
-            'first_name'    => $data->firstName,
-        ];
-
-        foreach ($data as $key => $value) {
-            $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
-            $array_keys = array_keys($query);
-            if (!(\in_array($key, $array_keys))) {
-                $query['fields'] = [
-                    $key => $value,
-                ];
-            }
-        }
-
-        $queries = http_build_query($query);
-
+        $queries = $this->httpBuildQuery($data);
         $updateRecordEndpoint = "{$this->_apiEndpoint}/subscribers/{$id}?" . $queries;
 
         return HttpHelper::request($updateRecordEndpoint, 'PUT', null);
@@ -95,6 +53,7 @@ class RecordApiHelper
             'api_secret' => $this->_defaultHeader,
             'email'      => $email,
         ]);
+
         foreach ($tags as $tagId) {
             $searchEndPoint = "{$this->_apiEndpoint}/tags/{$tagId}/subscribe?{$queries}";
 
@@ -160,6 +119,25 @@ class RecordApiHelper
         }
 
         return $recordApiResponse;
+    }
+
+    private function httpBuildQuery($data)
+    {
+        $query = [
+            'api_secret' => $this->_defaultHeader,
+            'email'      => $data->email,
+            'first_name' => $data->firstName,
+        ];
+
+        foreach ($data as $key => $value) {
+            $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
+            $array_keys = array_keys($query);
+            if (!(\in_array($key, $array_keys))) {
+                $query['fields'][$key] = $value;
+            }
+        }
+
+        return http_build_query($query);
     }
 
     // Check if a subscriber exists through email.
