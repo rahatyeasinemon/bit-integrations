@@ -93,7 +93,7 @@ export default function ChangelogToggle() {
 
               <div className="integration-list">
                 <ul>
-                  <li> WP Job Manager </li>
+                  <li> WP Job Manager (Pro) </li>
                 </ul>
               </div>
 
