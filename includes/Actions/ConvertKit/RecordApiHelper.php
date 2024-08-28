@@ -41,12 +41,9 @@ class RecordApiHelper
             $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
             $array_keys = array_keys($query);
             if (!(\in_array($key, $array_keys))) {
-                $query['fields'] = [
-                    $key => $value,
-                ];
+                $query['fields'][$key] = $value;
             }
         }
-
         $queries = http_build_query($query);
 
         $insertRecordEndpoint = "{$this->_apiEndpoint}/forms/{$formId}/{$method}?{$queries}";
@@ -75,9 +72,7 @@ class RecordApiHelper
             $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
             $array_keys = array_keys($query);
             if (!(\in_array($key, $array_keys))) {
-                $query['fields'] = [
-                    $key => $value,
-                ];
+                $query['fields'][$key] = $value;
             }
         }
 
