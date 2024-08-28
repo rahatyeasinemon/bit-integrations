@@ -24,6 +24,7 @@ import AcademyLmsHelper from './TriggerHelpers/AcademyLmsHelper'
 import FluentBookingHelper from './TriggerHelpers/FluentBookingHelper'
 import SureMembersHelper from './TriggerHelpers/SureMembersHelper'
 import WPForoHelper from './TriggerHelpers/WPForoHelper'
+import WPJobManagerHelper from './TriggerHelpers/WPJobManagerHelper'
 
 const TriggerMultiOption = ({ flow, setFlowData, edit = false }) => (
   <div>
@@ -104,6 +105,9 @@ const TriggerMultiOption = ({ flow, setFlowData, edit = false }) => (
     )}
     {flow?.triggered_entity === 'WPForo' && (
       <WPForoHelper flow={flow} setFlowData={setFlowData} edit={edit} />
+    )}
+    {flow?.triggered_entity === 'WPJobManager' && (
+      <WPJobManagerHelper flow={flow} setFlowData={setFlowData} edit={edit} />
     )}
   </div>
 )

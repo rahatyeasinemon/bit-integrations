@@ -22,7 +22,7 @@ function EditJetEngine({ allIntegURL }) {
   const [loading, setLoading] = useState({
     auth: false,
     menuPosition: false,
-    vendors: false
+    relationTypes: false
   })
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)
@@ -44,6 +44,21 @@ function EditJetEngine({ allIntegURL }) {
     ) {
       toast.error('Please select post type(s)!')
       return
+    }
+
+    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION) {
+      if (!jetEngineConf.relOptions.parentObject) {
+        toast.error('Please select a parent object!')
+        return
+      }
+      if (!jetEngineConf.relOptions.childObject) {
+        toast.error('Please select a child object!')
+        return
+      }
+      if (!jetEngineConf.relOptions.selectedRelationType) {
+        toast.error('Please select a relation type!')
+        return
+      }
     }
 
     saveActionConf({
