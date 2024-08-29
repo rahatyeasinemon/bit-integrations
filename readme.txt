@@ -992,7 +992,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 == Changelog ==
 
 = 2.2.2  =
-_Release Date -22th August 2024_
+_Release Date -28th August 2024_
 
 - **New Triggers :**
   - WP Job Manager
