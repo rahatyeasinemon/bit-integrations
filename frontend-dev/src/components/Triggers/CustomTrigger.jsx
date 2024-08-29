@@ -148,11 +148,11 @@ const CustomTrigger = () => {
     setShowResponse((prevState) => !prevState)
   }
 
-  const info = `<h4>Setup Custom Trigger</h4>
+  const info = `<h4>${__('Setup Custom Trigger', 'bit-integrations')}</h4>
             <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/custom-trigger-integrations" target="_blank" rel="noreferrer">${__('Details on Documentation', 'bit-integrations')}</a>
             <ul>
-                <li>Copy <b>do action hook</b> & past in your form submiting function</li>
-                <li>Click on the <b>Fetch</b> button & Submit your <b>Form</b> to get the form data</li>
+                <li>${__('Copy <b>do action hook</b> & past in your form submiting function', 'bit-integrations')}</li>
+                <li>${__('Click on the <b>Fetch</b> button & Submit your <b>Form</b> to get the form data', 'bit-integrations')}</li>
             </ul>
   `
 

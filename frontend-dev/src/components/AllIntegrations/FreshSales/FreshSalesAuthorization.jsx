@@ -36,11 +36,11 @@ export default function FreshSalesAuthorization({
     setFreshSalesConf(newConf)
   }
   const note = `
-    <h4> Step of generate API token:</h4>
+    <h4>${__('Step of generate API token:', 'bit-integrations')}</h4>
     <ul>
-      <li>Goto <a href="https://www.myfreshworks.com/crm/sales/personal-settings/api-settings">Generate API Token</a></li>
-      <li>Copy the <b>Token</b> and paste into <b>API Token</b> field of your authorization form.</li>
-      <li>Finally, click <b>Authorize</b> button.</li>
+      <li>${__('Goto', 'bit-integrations')} <a href="https://www.myfreshworks.com/crm/sales/personal-settings/api-settings">${__('Generate API Token', 'bit-integrations')}</a></li>
+      <li>${__('Copy the <b>Token</b> and paste into <b>API Token</b> field of your authorization form.', 'bit-integrations')}</li>
+      <li>${__('Finally, click <b>Authorize</b> button.', 'bit-integrations')}</li>
   </ul>
   `
 

@@ -9,12 +9,21 @@ import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 import toast from 'react-hot-toast'
 
-export default function DripAuthorization({ formID, dripConf, setDripConf, step, setstep, isInfo, loading, setLoading }) {
+export default function DripAuthorization({
+  formID,
+  dripConf,
+  setDripConf,
+  step,
+  setstep,
+  isInfo,
+  loading,
+  setLoading
+}) {
   const { drip } = tutorialLinks
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ name: '', api_token: '' })
 
-  const handleInput = e => {
+  const handleInput = (e) => {
     const newConf = { ...dripConf }
     const rmError = { ...error }
     rmError[e.target.name] = ''
@@ -32,39 +41,57 @@ export default function DripAuthorization({ formID, dripConf, setDripConf, step,
   }
 
   const ActiveInstructions = `
-            <h4>Get Drip Api Token</h4>
+            <h4>${__('Get Drip Api Token', 'bit-integrations')}</h4>
             <ul>
-                <li>First go to your <a href="https://www.getdrip.com/user/edit" target="_blank">Drip user settings</a>.</li>
-                <li>Copy the the API Token from "User Info"</li>
+                <li>${__('First go to your', 'bit-integrations')} <a href="https://www.getdrip.com/user/edit" target="_blank">${__('Drip user settings', 'bit-integrations')}</a>.</li>
+                <li>${__('Copy the the API Token from "User Info"', 'bit-integrations')}</li>
             </ul>`
 
   return (
-    <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {drip?.youTubeLink && (
-        <TutorialLink
-          title={drip?.title}
-          youTubeLink={drip?.youTubeLink}
-        />
-      )}
-      {drip?.docLink && (
-        <TutorialLink
-          title={drip?.title}
-          docLink={drip?.docLink}
-        />
-      )}
+    <div
+      className="btcd-stp-page"
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+      {drip?.youTubeLink && <TutorialLink title={drip?.title} youTubeLink={drip?.youTubeLink} />}
+      {drip?.docLink && <TutorialLink title={drip?.title} docLink={drip?.docLink} />}
 
-      <div className="mt-3 wdt-200"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={dripConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
+      <div className="mt-3 wdt-200">
+        <b>{__('Integration Name:', 'bit-integrations')}</b>
+      </div>
+      <input
+        className="btcd-paper-inp w-6 mt-1"
+        onChange={handleInput}
+        name="name"
+        value={dripConf.name}
+        type="text"
+        placeholder={__('Integration Name...', 'bit-integrations')}
+        disabled={isInfo}
+      />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
 
-      <div className="mt-3 wdt-250"><b>{__('Drip Api Token:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="api_token" value={dripConf.api_token} type="text" placeholder={__('Access Api Token Key...', 'bit-integrations')} disabled={isInfo} />
+      <div className="mt-3 wdt-250">
+        <b>{__('Drip Api Token:', 'bit-integrations')}</b>
+      </div>
+      <input
+        className="btcd-paper-inp w-6 mt-1"
+        onChange={handleInput}
+        name="api_token"
+        value={dripConf.api_token}
+        type="text"
+        placeholder={__('Access Api Token Key...', 'bit-integrations')}
+        disabled={isInfo}
+      />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_token}</div>
 
       <small className="d-blk mt-3">
         {__('To Get Drip Api Token, Please Visit', 'bit-integrations')}
         &nbsp;
-        <a className="btcd-link" href="https://www.getdrip.com/user/edit" target="_blank" rel="noreferrer">{__('Drip User Settings', 'bit-integrations')}</a>
+        <a
+          className="btcd-link"
+          href="https://www.getdrip.com/user/edit"
+          target="_blank"
+          rel="noreferrer">
+          {__('Drip User Settings', 'bit-integrations')}
+        </a>
       </small>
       <br />
       <br />
@@ -75,15 +102,33 @@ export default function DripAuthorization({ formID, dripConf, setDripConf, step,
         </div>
       )}
 
-
       {!isInfo && (
         <>
-          <button onClick={() => dripAuthentication(dripConf, setDripConf, setError, setisAuthorized, loading, setLoading)} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isAuthorized || loading.auth}>
-            {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
+          <button
+            onClick={() =>
+              dripAuthentication(
+                dripConf,
+                setDripConf,
+                setError,
+                setisAuthorized,
+                loading,
+                setLoading
+              )
+            }
+            className="btn btcd-btn-lg purple sh-sm flx"
+            type="button"
+            disabled={isAuthorized || loading.auth}>
+            {isAuthorized
+              ? __('Authorized ✔', 'bit-integrations')
+              : __('Authorize', 'bit-integrations')}
             {loading.auth && <LoaderSm size={20} clr="#022217" className="ml-2" />}
           </button>
           <br />
-          <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button" disabled={!isAuthorized}>
+          <button
+            onClick={() => nextPage(2)}
+            className="btn f-right btcd-btn-lg purple sh-sm flx"
+            type="button"
+            disabled={!isAuthorized}>
             {__('Next', 'bit-integrations')}
             <BackIcn className="ml-1 rev-icn" />
           </button>

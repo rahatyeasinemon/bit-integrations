@@ -111,7 +111,7 @@ export default function LifterLmsIntegLayout({ formFields, handleInput, lifterLm
         />
       )}
       <Note
-        note="This integration will only work for logged-in users."
+        note={__('This integration will only work for logged-in users.', 'bit-integrations')}
       />
     </>
   )

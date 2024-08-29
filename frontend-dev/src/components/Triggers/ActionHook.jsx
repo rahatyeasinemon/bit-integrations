@@ -192,16 +192,16 @@ const ActionHook = () => {
     }
   }
 
-  const info = `<h4>Please follow the simple steps below to setup Action Hook</h4>
+  const info = `<h4>${__('Please follow the simple steps below to setup Action Hook', 'bit-integrations')}</h4>
             <ul>
-              <li>Click <b>Fetch</b></li>
-              <li>Submit <b>Integrable Form</b></li>
-              <li>Click <b>Next</b> and <b>Go</b></b></li>
+              <li>${__('Click <b>Fetch</b>', 'bit-integrations')}</li>
+              <li>${__('Submit <b>Integrable Form</b>', 'bit-integrations')}</li>
+              <li>${__('Click <b>Next</b> and <b>Go</b></b>', 'bit-integrations')}</li>
             </ul>
             <h5>
               <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger-hooks" target="_blank" rel="noreferrer">${__('Bit Integrations Trigger Hooks', 'bit-integrations')}</a>
               <br />            
-              More Details on 
+              ${__('More Details on', 'bit-integrations')} 
               <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/action-hook-integrations" target="_blank" rel="noreferrer">${__('Documentation', 'bit-integrations')}</a>
               or
               <a className="btcd-link" href="https://youtu.be/pZ-8JuZfIco?si=Xxv857hJjv6p5Tcu" target="_blank" rel="noreferrer">${__('Youtube Tutorials', 'bit-integrations')}</a>

@@ -113,11 +113,11 @@ const Webhook = () => {
     setShowResponse((prevState) => !prevState)
   }
 
-  const info = `You can test any kind of webhook using <a href="https://webhook.is/" target="_blank" rel="noreferrer">webhook.is</a>
+  const info = `${__('You can test any kind of webhook using', 'bit-integrations')} <a href="https://webhook.is/" target="_blank" rel="noreferrer">${__('webhook.is', 'bit-integrations')}</a>
             <h4>Setup</h4>
             <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/webhook-integrations" target="_blank" rel="noreferrer">${__('Details on Documentation', 'bit-integrations')}</a>
             <ul>
-                <li>Click on the <b>Fetch</b> button & Submit your <b>Form</b> to get the form data</li>
+                <li>${__('Click on the <b>Fetch</b> button & Submit your <b>Form</b> to get the form data', 'bit-integrations')}</li>
             </ul>
   `
 

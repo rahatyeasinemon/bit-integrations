@@ -6,7 +6,8 @@ import Note from '../../Utilities/Note'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 
-export default function FreshdeskAuthorization({ formID,
+export default function FreshdeskAuthorization({
+  formID,
   freshdeskConf,
   setFreshdeskConf,
   step,
@@ -15,7 +16,8 @@ export default function FreshdeskAuthorization({ formID,
   setIsLoading,
   setSnackbar,
   redirectLocation,
-  isInfo }) {
+  isInfo
+}) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ api_key: '' })
   const { freshdesk } = tutorialLinks
@@ -37,7 +39,7 @@ export default function FreshdeskAuthorization({ formID,
   }
 
   const freshdeskInstructions = `
-            <h4>App Domain Exmple</h4>
+            <h4>${__('App Domain Example', 'bit-integrations')}</h4>
             <ul>
                 <li>https://domain-help.freshdesk.com/</li>
             </ul>`
@@ -47,21 +49,12 @@ export default function FreshdeskAuthorization({ formID,
       className="btcd-stp-page"
       style={{
         ...{ width: step === 1 && 900 },
-        ...{ height: step === 1 && 'auto' },
-      }}
-    >
+        ...{ height: step === 1 && 'auto' }
+      }}>
       {freshdesk?.youTubeLink && (
-        <TutorialLink
-          title={freshdesk?.title}
-          youTubeLink={freshdesk?.youTubeLink}
-        />
+        <TutorialLink title={freshdesk?.title} youTubeLink={freshdesk?.youTubeLink} />
       )}
-      {freshdesk?.docLink && (
-        <TutorialLink
-          title={freshdesk?.title}
-          docLink={freshdesk?.docLink}
-        />
-      )}
+      {freshdesk?.docLink && <TutorialLink title={freshdesk?.title} docLink={freshdesk?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
@@ -77,14 +70,12 @@ export default function FreshdeskAuthorization({ formID,
       />
 
       <small className="d-blk mt-5">
-        {__('To get access Token , Please Visit', 'bit-integrations')}
-        {' '}
+        {__('To get access Token , Please Visit', 'bit-integrations')}{' '}
         <a
           className="btcd-link"
           href="https://bitcode-help.freshdesk.com/a/profiles/72009210017/edit"
           target="_blank"
-          rel="noreferrer"
-        >
+          rel="noreferrer">
           {__('FreshDesk Console', 'bit-integrations')}
         </a>
       </small>
@@ -120,18 +111,19 @@ export default function FreshdeskAuthorization({ formID,
       {!isInfo && (
         <>
           <button
-            onClick={() => handleAuthorize(
-              freshdeskConf,
-              setFreshdeskConf,
-              setError,
-              setisAuthorized,
-              setIsLoading,
-              setSnackbar,
-            )}
+            onClick={() =>
+              handleAuthorize(
+                freshdeskConf,
+                setFreshdeskConf,
+                setError,
+                setisAuthorized,
+                setIsLoading,
+                setSnackbar
+              )
+            }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}
-          >
+            disabled={isAuthorized || isLoading}>
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -142,17 +134,14 @@ export default function FreshdeskAuthorization({ formID,
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}
-          >
+            disabled={!isAuthorized}>
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         </>
       )}
 
-      <Note
-        note={freshdeskInstructions}
-      />
+      <Note note={freshdeskInstructions} />
     </div>
   )
 }

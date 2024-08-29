@@ -120,7 +120,7 @@ const FormPlugin = () => {
                 {taskNote && (
                   <small className="trigger-task-note">
                     <strong>Task Details: </strong>
-                    {taskNote}
+                    {__(taskNote, 'bit-integrations')}
                   </small>
                 )}
                 <TriggerMultiOption flow={newFlow} setFlowData={setFlowData} />
@@ -137,7 +137,9 @@ const FormPlugin = () => {
                 </div>
               </div>
 
-              {newFlow.triggerDetail?.note && <Note note={newFlow.triggerDetail.note} />}
+              {newFlow.triggerDetail?.note && (
+                <Note note={__(newFlow.triggerDetail?.note, 'bit-integrations')} />
+              )}
             </>
           )}
         </div>
