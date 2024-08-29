@@ -87,6 +87,23 @@ export default function SendinBlueIntegLayout({
         <>
           <div className="mt-4">
             <b className="wdt-100">{__('Map Fields', 'bit-integrations')}</b>
+            <button
+              onClick={() =>
+                refreshSendinBlueHeader(
+                  sendinBlueConf,
+                  setSendinBlueConf,
+                  setIsLoading,
+                  setSnackbar
+                )
+              }
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{
+                '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'`
+              }}
+              type="button"
+              disabled={isLoading}>
+              &#x21BB;
+            </button>
           </div>
           <div className="btcd-hr mt-1" />
           <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
