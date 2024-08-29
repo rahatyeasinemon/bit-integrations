@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\PerfexCRM;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -91,10 +91,13 @@ class RecordApiHelper
             return ['success' => false, 'message' => 'Required field Lead Status Id is empty', 'code' => 400];
         } elseif (isset($this->integrationDetails->selectedLeadSourceId) && empty($this->integrationDetails->selectedLeadSourceId)) {
             return ['success' => false, 'message' => 'Required field Lead Source Id is empty', 'code' => 400];
+        } elseif (isset($this->integrationDetails->selectedStaff) && empty($this->integrationDetails->selectedStaff)) {
+            return ['success' => false, 'message' => 'Required field Lead Assigned By is empty', 'code' => 400];
         }
 
         $finalData['status'] = $this->integrationDetails->selectedLeadStatusId;
         $finalData['source'] = $this->integrationDetails->selectedLeadSourceId;
+        $finalData['assigned'] = $this->integrationDetails->selectedStaff;
 
         if (isset($this->integrationDetails->selectedCustomer) && !empty($this->integrationDetails->selectedCustomer)) {
             $finalData['client_id'] = ($this->integrationDetails->selectedCustomer);
@@ -105,10 +108,10 @@ class RecordApiHelper
         if (isset($this->integrationDetails->actions->contactedToday) && !empty($this->integrationDetails->actions->contactedToday)) {
             $finalData['contacted_today'] = $this->integrationDetails->actions->contactedToday;
         }
-
         $this->type = 'Lead';
         $this->typeName = 'Lead created';
         $apiEndpoint = $this->apiUrl . '/leads';
+        error_log(print_r([$apiEndpoint, $finalData, $this->defaultHeader], true));
 
         return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
     }

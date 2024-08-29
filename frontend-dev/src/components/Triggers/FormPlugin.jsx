@@ -45,12 +45,7 @@ const FormPlugin = () => {
 
       // Page Builder triggers requires postId
       if (
-        newFlow?.triggerDetail?.name === 'Elementor' ||
-        newFlow?.triggerDetail?.name === 'Divi' ||
-        newFlow?.triggerDetail?.name === 'Bricks' ||
-        newFlow?.triggerDetail?.name === 'Brizy' ||
         newFlow?.triggerDetail?.name === 'PiotnetAddon' ||
-        newFlow?.triggerDetail?.name === 'Breakdance' ||
         newFlow?.triggerDetail?.name === 'CartFlow'
       ) {
         const filterData = data?.data?.filter((item) => item.id === val)[0]?.post_id ?? null

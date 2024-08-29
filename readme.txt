@@ -1,19 +1,19 @@
-=== Webhook Automator & Form Integration to Automate 210+ Platforms – Bit Integrations ===
+=== Webhook Automator & Form Integration to Automate 230+ Platforms – Bit Integrations ===
 Contributors: bitpressadmin, niloy121,rishadbitcode,fahimsakib,shuvomohajan,tanvirchy,shakhawathosen,khoaiz,mazharul78
 Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.1
 Requires PHP: 7.0
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 License: GPLv2 or later
 
-Automation Plugin for WordPress like Zapier. Integration of 70+ Triggers & 140+ Actions.The #1 highest no-code platform Automator plugin in WordPress
+Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
 
 == Description ==
 
-<strong> Best Automation Plugin for WordPress. Automate 210+ (Highest in WordPress) Individual Platforms.</strong>
+<strong> Best Zapier Alternative Automation Plugin for WordPress. Automate 230+ Individual Platforms.</strong>
 
-Automate your WordPress workflow with **Bit Integration**: the all-in-one plugin for WooCommerce, form builders, CRM, LMS, bookings, spreadsheets, [**webhooks**](https://webhook.is/difference-between-webhook-and-api), social media, email marketing and automation platforms like Zapier and others. No technical knowledge needed. Automate tasks across 210+ platforms effortlessly.
+Automate your WordPress workflow with **Bit Integration**: the all-in-one plugin for WooCommerce, form builders, CRM, LMS, bookings, spreadsheets, [**webhooks**](https://webhook.is/difference-between-webhook-and-api), social media, email marketing and automation platforms like Zapier and others. No technical knowledge needed. Automate tasks across 230+ platforms effortlessly.
 
 You can see below what WPTuts say about Bit Integrations
 
@@ -111,6 +111,7 @@ https://youtu.be/eFuficjF_F4
 * [**Thrive Apprentice**](https://thrivethemes.com/apprentice/)
 * [**weForms**](https://wordpress.org/plugins/search/WeForms/)
 * [**WP Post**]()
+* [**WP Job Manager**](https://wordpress.org/plugins/wp-job-manager/)
 * [**WooCommerce**](https://wordpress.org/plugins/woocommerce/)
 * [**WP Courseware**](https://flyplugins.com/wp-courseware-wordpress-lms/)
 * [**WPForms**](https://wordpress.org/plugins/wpforms-lite/)
@@ -352,7 +353,7 @@ My typical use-case: Adding WooCommerce orders to Gsheets and then sending the l
 
 Free version allows you to use all free triggers and all actions,
 also with unlimited active integrations.
-With the pro version, you have the ability to use all 210+ triggers and actions for unlimited active integrations.
+With the pro version, you have the ability to use all 230+ triggers and actions for unlimited active integrations.
 Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations/).
 
 
@@ -938,9 +939,9 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 ## FAQ
 
 = 1. What is Bit Integrations? =
-Bit Integrations is a wordpress plugin that allows you to connect your WordPress site with over 210 popular platforms, such as CRMs, marketing tools, and more.
+Bit Integrations is a wordpress plugin that allows you to connect your WordPress site with over 230 popular platforms, such as CRMs, marketing tools, and more.
 = 2. What kind of tasks does Bit Integrations automate?=
-Bit Integrations provide automated solutions for form submissions, data transfer between platforms, and more. With the integration of over 210 popular platforms, users can effortlessly manage their connections to their WordPress site in one place.
+Bit Integrations provide automated solutions for form submissions, data transfer between platforms, and more. With the integration of over 230 popular platforms, users can effortlessly manage their connections to their WordPress site in one place.
 = 3. Is Bit integrations easy to use?=
 Yes, Bit integrations easy to use without require coding knowledge and without read documentation.
 = 4. Bit Integrations support Multisite?=
@@ -954,7 +955,7 @@ Yes, you can send data when user complete course/lesson , create course etc.
 = 8. Can I automate with WooCommerce, WooCommerce subscription, WooCommerce booking, Studiocart and Easy Digital Downloads?=
 Yes, you can send data when user complete order, create order, create subscription, create booking etc.
 = 9. Do I need coding skills to use Bit Integrations?=
-No, you don't need any coding skills to use Bit Integrations. You can easily connect your WordPress site with over 210 popular platforms, such as CRMs, marketing tools, and more.
+No, you don't need any coding skills to use Bit Integrations. You can easily connect your WordPress site with over 230 popular platforms, such as CRMs, marketing tools, and more.
 = 10. Can I automate with WhatsApp?=
 Yes, you can automate with WhatsApp.
 = 11. Best WordPress Automation Tools and Plugins Compared (2023)?=
@@ -962,9 +963,9 @@ Yes, Bit Integrations is one of the best WordPress Automation Tools and Plugins 
 = 12. Can I automate with Google Sheets, Google Calendar, Google Drive, Google Contact?=
 Yes, you can automate with Google Sheets, Google Calendar, Google Drive, Google Contact.
 = 13. What users say about Bit Integrations?=
-Bit Integrations is self hosted Zapier with chepest price. You can automate with over 210 popular platforms, such as CRMs, marketing tools, and more.
+Bit Integrations is self hosted Zapier with chepest price. You can automate with over 230 popular platforms, such as CRMs, marketing tools, and more.
 = 14. Can I automate WordPress?=
-Yes, you can automate WordPress with 60+ trigger and 140+ actions.
+Yes, you can automate WordPress with 60+ trigger and 150+ actions.
 = 15. Can Bit Integrations connect plugins with external services like Zapier, Pabbly, N8N?=
 Yes, you can connect plugins with external services like Zapier, Pabbly, N8N with webhook.
 = 16. Does Bit Integrations works as like as Zapier in Wordpress?=
@@ -989,6 +990,24 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.2.2  =
+_Release Date -28th August 2024_
+
+- **New Triggers :**
+  - WP Job Manager
+  
+- **New Features :**
+  - GetResponse: Added the AutoResponder day of cycle feature (Pro).
+  - SendPulse: Introduced custom field functionality (Pro)
+
+- **New Improvements :**
+  - Bricks: Upgraded with new UI/UX functionality (Pro)
+  - Perfex CRM: Added the Lead Assigned field
+
+- **New Fixes :**
+  - Core: Fixed operator precedence deprecation issue in PHP 8 (Pro)
+  - ConvertKit: Resolved the issue with custom field value mapping
 
 = 2.2.1  =
 _Release Date -22th August 2024_

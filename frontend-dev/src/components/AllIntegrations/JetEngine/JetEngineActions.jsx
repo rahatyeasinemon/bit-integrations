@@ -512,6 +512,94 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
             />
           </>
         )}
+        {jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION && (
+          <>
+            <TableCheckBox
+              checked={jetEngineConf.actions?.parent_control || false}
+              onChange={(e) => actionHandler(e, 'checkbox')}
+              className="wdt-200 mt-4 mr-2"
+              value="parent_control"
+              title={__('Register controls for parent object', 'bit-integrations')}
+              subTitle={__(
+                'Adds controls to manage related children items to the edit page of the parent object.',
+                'bit-integrations'
+              )}
+              isInfo={!isPro}
+            />
+            <TableCheckBox
+              checked={jetEngineConf.actions?.parent_manager || false}
+              onChange={(e) => actionHandler(e, 'checkbox')}
+              className="wdt-200 mt-4 mr-2"
+              value="parent_manager"
+              title={__('Allow to create new children from parent', 'bit-integrations')}
+              subTitle={__(
+                'If enabled, allows to create new children items from the related items control for parent object page.',
+                'bit-integrations'
+              )}
+              isInfo={!isPro}
+            />
+            <TableCheckBox
+              checked={jetEngineConf.actions?.parent_allow_delete || false}
+              onChange={(e) => actionHandler(e, 'checkbox')}
+              className="wdt-200 mt-4 mr-2"
+              value="parent_allow_delete"
+              title={__('Allow to delete children from parent', 'bit-integrations')}
+              subTitle={__(
+                'If enabled, allows to delete children items from the related items control for parent object page.',
+                'bit-integrations'
+              )}
+              isInfo={!isPro}
+            />
+            <TableCheckBox
+              checked={jetEngineConf.actions?.child_control || false}
+              onChange={(e) => actionHandler(e, 'checkbox')}
+              className="wdt-200 mt-4 mr-2"
+              value="child_control"
+              title={__('Register controls for child object', 'bit-integrations')}
+              subTitle={__(
+                'Adds controls to manage related parent items to the edit page of the child object.',
+                'bit-integrations'
+              )}
+              isInfo={!isPro}
+            />
+            <TableCheckBox
+              checked={jetEngineConf.actions?.child_manager || false}
+              onChange={(e) => actionHandler(e, 'checkbox')}
+              className="wdt-200 mt-4 mr-2"
+              value="child_manager"
+              title={__('Allow to create new parents from children', 'bit-integrations')}
+              subTitle={__(
+                'If enabled, allows to create new parent items from the related items control for child object page.',
+                'bit-integrations'
+              )}
+              isInfo={!isPro}
+            />
+            <TableCheckBox
+              checked={jetEngineConf.actions?.child_allow_delete || false}
+              onChange={(e) => actionHandler(e, 'checkbox')}
+              className="wdt-200 mt-4 mr-2"
+              value="child_allow_delete"
+              title={__('Allow to delete parents from children', 'bit-integrations')}
+              subTitle={__(
+                'If enabled, allows to delete parent items from the related items control for child object page.',
+                'bit-integrations'
+              )}
+              isInfo={!isPro}
+            />
+            <TableCheckBox
+              checked={jetEngineConf.actions?.db_table || false}
+              onChange={(e) => actionHandler(e, 'checkbox')}
+              className="wdt-200 mt-4 mr-2"
+              value="db_table"
+              title={__('Register separate DB table', 'bit-integrations')}
+              subTitle={__(
+                'Register separate DB tables to store current relation items and meta data. If you plan to create multiple relations with a big amount of items, this option will help optimize performance.',
+                'bit-integrations'
+              )}
+              isInfo={!isPro}
+            />
+          </>
+        )}
       </div>
     </>
   )
