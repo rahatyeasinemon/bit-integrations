@@ -40,38 +40,34 @@ function LearnDash({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
     { key: '14', label: 'Reset the users progress in a course pro' },
     // { key: '15', label: 'Send a certificate pro' },
     { key: '16', label: 'Send an email to the users group leaders' },
-    { key: '17', label: 'Unenroll the user from a course pro' },
+    { key: '17', label: 'Unenroll the user from a course pro' }
   ]
 
   const groupUserRole = [
     { key: '1', label: 'Do not add group leader role' },
     { key: '2', label: 'Add the role to their exiting role' },
-    { key: '3', label: 'Replace their existing role(s) with the Group Leader role' },
+    { key: '3', label: 'Replace their existing role(s) with the Group Leader role' }
   ]
 
   const groupOfLeader4 = [
     { key: '1', label: 'Do nothing' },
     { key: '2', label: 'Add the role to their exiting role' },
-    { key: '3', label: 'Replace their existing role(s) with the Group Leader role' },
+    { key: '3', label: 'Replace their existing role(s) with the Group Leader role' }
   ]
 
-  const createGroupFields = [
-    { key: 'title', label: 'Title', required: true },
-  ]
+  const createGroupFields = [{ key: 'title', label: 'Title', required: true }]
   const [learnDashConf, setLearnDashConf] = useState({
     name: 'LearnDash',
     type: 'LearnDash',
     mainAction: '',
     courseId: '',
     domainName: siteURL,
-    field_map: [
-      { formField: '', learnDeshFormField: '' },
-    ],
+    field_map: [{ formField: '', learnDeshFormField: '' }],
     allActions,
     groupUserRole,
     groupOfLeader4,
     createGroupFields,
-    actions: {},
+    actions: {}
   })
 
   const nextPage = () => {
@@ -79,7 +75,7 @@ function LearnDash({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
     if (learnDashConf.mainAction === '1' && !checkMappedFields(learnDashConf)) {
-      setSnackbar({ show: true, msg: 'Please map fields to continue.' })
+      setSnackbar({ show: true, msg: __('Please map fields to continue.', 'bit-integrations') })
       return
     }
     if (learnDashConf.mainAction !== '') {
@@ -90,7 +86,9 @@ function LearnDash({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <LearnDashAuthorization
@@ -105,11 +103,14 @@ function LearnDash({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <LearnDashIntegLayout
           formFields={formFields}
-          handleInput={(e) => handleInput(e, learnDashConf, setLearnDashConf, setIsLoading, setSnackbar, formID)}
+          handleInput={(e) =>
+            handleInput(e, learnDashConf, setLearnDashConf, setIsLoading, setSnackbar, formID)
+          }
           learnDashConf={learnDashConf}
           setLearnDashConf={setLearnDashConf}
           isLoading={isLoading}
@@ -125,8 +126,7 @@ function LearnDash({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
             onClick={() => nextPage(3)}
             disabled={!learnDashConf.mainAction || isLoading}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button"
-          >
+            type="button">
             {__('Next', 'bit-integrations')}
             &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
@@ -137,14 +137,23 @@ function LearnDash({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
       {learnDashConf.mainAction !== '16' && (
         <IntegrationStepThree
           step={step}
-          saveConfig={() => saveActionConf({ flow, setFlow, allIntegURL, navigate, conf: learnDashConf, setIsLoading, setSnackbar })}
+          saveConfig={() =>
+            saveActionConf({
+              flow,
+              setFlow,
+              allIntegURL,
+              navigate,
+              conf: learnDashConf,
+              setIsLoading,
+              setSnackbar
+            })
+          }
           isLoading={isLoading}
           dataConf={learnDashConf}
           setDataConf={setLearnDashConf}
           formFields={formFields}
         />
       )}
-
     </div>
   )
 }

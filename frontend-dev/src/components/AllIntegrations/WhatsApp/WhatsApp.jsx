@@ -79,7 +79,7 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (checkDisabledButton(whatsAppConf)) {
-      setSnackbar({ show: true, msg: 'Please map fields to continue.' })
+      setSnackbar({ show: true, msg: __('Please map fields to continue.', 'bit-integrations') })
       return
     }
     setstep(3)
