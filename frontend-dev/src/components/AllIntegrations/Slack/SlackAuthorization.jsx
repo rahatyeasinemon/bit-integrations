@@ -52,8 +52,8 @@ export default function SlackAuthorization({
         ...{ width: step === 1 && 900 },
         ...{ height: step === 1 && 'auto' }
       }}>
-      {slack?.youTubeLink && <TutorialLink title={slack?.title} youTubeLink={slack?.youTubeLink} />}
-      {slack?.docLink && <TutorialLink title={slack?.title} docLink={slack?.docLink} />}
+      {slack?.youTubeLink && <TutorialLink title="Slack" youTubeLink={slack?.youTubeLink} />}
+      {slack?.docLink && <TutorialLink title="Slack" docLink={slack?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

@@ -51,8 +51,8 @@ export default function DripAuthorization({
     <div
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {drip?.youTubeLink && <TutorialLink title={drip?.title} youTubeLink={drip?.youTubeLink} />}
-      {drip?.docLink && <TutorialLink title={drip?.title} docLink={drip?.docLink} />}
+      {drip?.youTubeLink && <TutorialLink title="Drip" youTubeLink={drip?.youTubeLink} />}
+      {drip?.docLink && <TutorialLink title="Drip" docLink={drip?.docLink} />}
 
       <div className="mt-3 wdt-200">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

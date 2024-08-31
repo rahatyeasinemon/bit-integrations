@@ -64,10 +64,8 @@ export default function FlowluAuthorization({
     <div
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {flowlu?.youTubeLink && (
-        <TutorialLink title={flowlu?.title} youTubeLink={flowlu?.youTubeLink} />
-      )}
-      {flowlu?.docLink && <TutorialLink title={flowlu?.title} docLink={flowlu?.docLink} />}
+      {flowlu?.youTubeLink && <TutorialLink title="Flowlu" youTubeLink={flowlu?.youTubeLink} />}
+      {flowlu?.docLink && <TutorialLink title="Flowlu" docLink={flowlu?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

@@ -1,10 +1,12 @@
-import { __ } from '../../Utils/i18nwrap'
+import { __, sprintf } from '../../Utils/i18nwrap'
 
 export default function Note({ note, isInstruction = false, isHeadingNull = false }) {
   return (
     <div className="note">
       {!isHeadingNull && (
-        <h4 className="mt-0">__({isInstruction ? 'Instruction' : 'Note'}, 'bit-integrations')</h4>
+        <h4 className="mt-0">
+          {__(sprintf('%s', isInstruction ? 'Instruction' : 'Note'), 'bit-integrations')}
+        </h4>
       )}
       <div
         className="note-text"

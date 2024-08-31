@@ -52,11 +52,9 @@ export default function WoodpeckerAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {woodpecker?.youTubeLink && (
-        <TutorialLink title={woodpecker?.title} youTubeLink={woodpecker?.youTubeLink} />
+        <TutorialLink title="Woodpecker" youTubeLink={woodpecker?.youTubeLink} />
       )}
-      {woodpecker?.docLink && (
-        <TutorialLink title={woodpecker?.title} docLink={woodpecker?.docLink} />
-      )}
+      {woodpecker?.docLink && <TutorialLink title="Woodpecker" docLink={woodpecker?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

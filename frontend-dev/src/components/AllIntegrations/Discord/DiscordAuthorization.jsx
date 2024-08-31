@@ -56,10 +56,8 @@ export default function DiscordAuthorization({
         ...{ width: step === 1 && 900 },
         ...{ height: step === 1 && 'auto' }
       }}>
-      {discord?.youTubeLink && (
-        <TutorialLink title={discord?.title} youTubeLink={discord?.youTubeLink} />
-      )}
-      {discord?.docLink && <TutorialLink title={discord?.title} docLink={discord?.docLink} />}
+      {discord?.youTubeLink && <TutorialLink title="Discord" youTubeLink={discord?.youTubeLink} />}
+      {discord?.docLink && <TutorialLink title="Discord" docLink={discord?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

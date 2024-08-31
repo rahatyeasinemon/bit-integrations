@@ -53,9 +53,9 @@ export default function MoxieCRMAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {moxiecrm?.youTubeLink && (
-        <TutorialLink title={moxiecrm?.title} youTubeLink={moxiecrm?.youTubeLink} />
+        <TutorialLink title="MoxieCRM" youTubeLink={moxiecrm?.youTubeLink} />
       )}
-      {moxiecrm?.docLink && <TutorialLink title={moxiecrm?.title} docLink={moxiecrm?.docLink} />}
+      {moxiecrm?.docLink && <TutorialLink title="MoxieCRM" docLink={moxiecrm?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

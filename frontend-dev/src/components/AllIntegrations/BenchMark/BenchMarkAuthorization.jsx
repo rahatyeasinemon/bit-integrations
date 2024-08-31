@@ -78,9 +78,9 @@ export default function BenchMarkAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {benchMark?.youTubeLink && (
-        <TutorialLink title={benchMark?.title} youTubeLink={benchMark?.youTubeLink} />
+        <TutorialLink title="Benchmark Email" youTubeLink={benchMark?.youTubeLink} />
       )}
-      {benchMark?.docLink && <TutorialLink title={benchMark?.title} docLink={benchMark?.docLink} />}
+      {benchMark?.docLink && <TutorialLink title="Benchmark Email" docLink={benchMark?.docLink} />}
 
       <div className="mt-3 wdt-200">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

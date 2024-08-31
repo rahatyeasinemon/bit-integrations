@@ -95,9 +95,9 @@ export default function SendPulseAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {sendPulse?.youTubeLink && (
-        <TutorialLink title={sendPulse?.title} youTubeLink={sendPulse?.youTubeLink} />
+        <TutorialLink title="SendPulse" youTubeLink={sendPulse?.youTubeLink} />
       )}
-      {sendPulse?.docLink && <TutorialLink title={sendPulse?.title} docLink={sendPulse?.docLink} />}
+      {sendPulse?.docLink && <TutorialLink title="SendPulse" docLink={sendPulse?.docLink} />}
 
       <div className="mt-3 wdt-200">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

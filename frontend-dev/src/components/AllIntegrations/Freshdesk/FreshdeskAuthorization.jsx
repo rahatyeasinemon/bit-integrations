@@ -52,9 +52,9 @@ export default function FreshdeskAuthorization({
         ...{ height: step === 1 && 'auto' }
       }}>
       {freshdesk?.youTubeLink && (
-        <TutorialLink title={freshdesk?.title} youTubeLink={freshdesk?.youTubeLink} />
+        <TutorialLink title="Freshdesk" youTubeLink={freshdesk?.youTubeLink} />
       )}
-      {freshdesk?.docLink && <TutorialLink title={freshdesk?.title} docLink={freshdesk?.docLink} />}
+      {freshdesk?.docLink && <TutorialLink title="Freshdesk" docLink={freshdesk?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

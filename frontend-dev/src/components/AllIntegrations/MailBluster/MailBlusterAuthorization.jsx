@@ -52,11 +52,9 @@ export default function MailBlusterAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {mailBluster?.youTubeLink && (
-        <TutorialLink title={mailBluster?.title} youTubeLink={mailBluster?.youTubeLink} />
+        <TutorialLink title="MailBluster" youTubeLink={mailBluster?.youTubeLink} />
       )}
-      {mailBluster?.docLink && (
-        <TutorialLink title={mailBluster?.title} docLink={mailBluster?.docLink} />
-      )}
+      {mailBluster?.docLink && <TutorialLink title="MailBluster" docLink={mailBluster?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

@@ -50,10 +50,8 @@ function KlaviyoAuthorization({
     <div
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {klaviyo?.youTubeLink && (
-        <TutorialLink title={klaviyo?.title} youTubeLink={klaviyo?.youTubeLink} />
-      )}
-      {klaviyo?.docLink && <TutorialLink title={klaviyo?.title} docLink={klaviyo?.docLink} />}
+      {klaviyo?.youTubeLink && <TutorialLink title="Klaviyo" youTubeLink={klaviyo?.youTubeLink} />}
+      {klaviyo?.docLink && <TutorialLink title="Klaviyo" docLink={klaviyo?.docLink} />}
 
       <div className="mt-2">
         <div className="my-1">

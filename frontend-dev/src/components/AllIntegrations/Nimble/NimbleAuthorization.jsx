@@ -53,10 +53,8 @@ export default function NimbleAuthorization({
     <div
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {nimble?.youTubeLink && (
-        <TutorialLink title={nimble?.title} youTubeLink={nimble?.youTubeLink} />
-      )}
-      {nimble?.docLink && <TutorialLink title={nimble?.title} docLink={nimble?.docLink} />}
+      {nimble?.youTubeLink && <TutorialLink title="NimbleCRM" youTubeLink={nimble?.youTubeLink} />}
+      {nimble?.docLink && <TutorialLink title="NimbleCRM" docLink={nimble?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

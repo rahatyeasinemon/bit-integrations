@@ -7,14 +7,16 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 
-export default function LearnDashAuthorization({ formID,
+export default function LearnDashAuthorization({
+  formID,
   learnDashConf,
   setLearnDashConf,
   step,
   setStep,
   isLoading,
   setIsLoading,
-  setSnackbar }) {
+  setSnackbar
+}) {
   const [isAuthorized, setisAuthorized] = useState(false)
   // const [isLoading, setIsLoading] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
@@ -25,7 +27,10 @@ export default function LearnDashAuthorization({ formID,
     bitsFetch({}, 'learnDash_authorize').then((result) => {
       if (result?.success) {
         setisAuthorized(true)
-        setSnackbar({ show: true, msg: __('Connected with LearnDash Successfully', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Connected with LearnDash Successfully', 'bit-integrations')
+        })
       }
       setIsLoading(false)
       setShowAuthMsg(true)
@@ -43,21 +48,12 @@ export default function LearnDashAuthorization({ formID,
       className="btcd-stp-page"
       style={{
         width: step === 1 && 900,
-        height: step === 1 && 'auto',
-      }}
-    >
+        height: step === 1 && 'auto'
+      }}>
       {learnDash?.youTubeLink && (
-        <TutorialLink
-          title={learnDash?.title}
-          youTubeLink={learnDash?.youTubeLink}
-        />
+        <TutorialLink title="LearnDash" youTubeLink={learnDash?.youTubeLink} />
       )}
-      {learnDash?.docLink && (
-        <TutorialLink
-          title={learnDash?.title}
-          docLink={learnDash?.docLink}
-        />
-      )}
+      {learnDash?.docLink && <TutorialLink title="LearnDash" docLink={learnDash?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
@@ -88,13 +84,20 @@ export default function LearnDashAuthorization({ formID,
       )}
 
       {!isAuthorized && (
-        <button onClick={authorizeHandler} className="btn btcd-btn-lg purple sh-sm flx mt-5" type="button">
+        <button
+          onClick={authorizeHandler}
+          className="btn btcd-btn-lg purple sh-sm flx mt-5"
+          type="button">
           {__('Connect', 'bit-integrations')}
         </button>
       )}
 
       {isAuthorized && (
-        <button onClick={() => setStep(2)} className="btn btcd-btn-lg purple sh-sm flx mt-5" type="button" disabled={!isAuthorized}>
+        <button
+          onClick={() => setStep(2)}
+          className="btn btcd-btn-lg purple sh-sm flx mt-5"
+          type="button"
+          disabled={!isAuthorized}>
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

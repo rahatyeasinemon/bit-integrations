@@ -105,10 +105,10 @@ export default function Registration({ formFields, setFlow, flow, allIntegURL })
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       {registration?.youTubeLink && (
-        <TutorialLink title={registration?.title} youTubeLink={registration?.youTubeLink} />
+        <TutorialLink title="Registration" youTubeLink={registration?.youTubeLink} />
       )}
       {registration?.docLink && (
-        <TutorialLink title={registration?.title} docLink={registration?.docLink} />
+        <TutorialLink title="Registration" docLink={registration?.docLink} />
       )}
 
       <div className="font-w-m mt-3">{__('Action type', 'bit-integrations')}</div>

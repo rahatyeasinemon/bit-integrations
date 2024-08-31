@@ -60,9 +60,9 @@ export default function PerfexCRMAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {perfexCRM?.youTubeLink && (
-        <TutorialLink title={perfexCRM?.title} youTubeLink={perfexCRM?.youTubeLink} />
+        <TutorialLink title="Perfex CRM" youTubeLink={perfexCRM?.youTubeLink} />
       )}
-      {perfexCRM?.docLink && <TutorialLink title={perfexCRM?.title} docLink={perfexCRM?.docLink} />}
+      {perfexCRM?.docLink && <TutorialLink title="Perfex CRM" docLink={perfexCRM?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

@@ -78,11 +78,9 @@ export default function ConvertKitAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {convertKit?.youTubeLink && (
-        <TutorialLink title={convertKit?.title} youTubeLink={convertKit?.youTubeLink} />
+        <TutorialLink title="ConvertKit" youTubeLink={convertKit?.youTubeLink} />
       )}
-      {convertKit?.docLink && (
-        <TutorialLink title={convertKit?.title} docLink={convertKit?.docLink} />
-      )}
+      {convertKit?.docLink && <TutorialLink title="ConvertKit" docLink={convertKit?.docLink} />}
 
       <div className="mt-3 wdt-200">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

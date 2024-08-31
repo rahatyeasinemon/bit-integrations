@@ -52,11 +52,9 @@ export default function SalesflareAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {salesflare?.youTubeLink && (
-        <TutorialLink title={salesflare?.title} youTubeLink={salesflare?.youTubeLink} />
+        <TutorialLink title="Salesflare" youTubeLink={salesflare?.youTubeLink} />
       )}
-      {salesflare?.docLink && (
-        <TutorialLink title={salesflare?.title} docLink={salesflare?.docLink} />
-      )}
+      {salesflare?.docLink && <TutorialLink title="Salesflare" docLink={salesflare?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

@@ -54,8 +54,8 @@ export default function VboutAuthorization({
     <div
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {vbout?.youTubeLink && <TutorialLink title={vbout?.title} youTubeLink={vbout?.youTubeLink} />}
-      {vbout?.docLink && <TutorialLink title={vbout?.title} docLink={vbout?.docLink} />}
+      {vbout?.youTubeLink && <TutorialLink title="VBOUT" youTubeLink={vbout?.youTubeLink} />}
+      {vbout?.docLink && <TutorialLink title="VBOUT" docLink={vbout?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

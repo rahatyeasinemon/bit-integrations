@@ -52,11 +52,9 @@ export default function FreshSalesAuthorization({
         ...{ height: step === 1 && 'auto' }
       }}>
       {freshSales?.youTubeLink && (
-        <TutorialLink title={freshSales?.title} youTubeLink={freshSales?.youTubeLink} />
+        <TutorialLink title="Freshsales" youTubeLink={freshSales?.youTubeLink} />
       )}
-      {freshSales?.docLink && (
-        <TutorialLink title={freshSales?.title} docLink={freshSales?.docLink} />
-      )}
+      {freshSales?.docLink && <TutorialLink title="Freshsales" docLink={freshSales?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Bundle Alias(Your Account URL):', 'bit-integrations')}</b>

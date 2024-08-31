@@ -50,13 +50,10 @@ export default function PaidMembershipProAuthorization({
         height: step === 1 && 'auto'
       }}>
       {paidMembershipPro?.youTubeLink && (
-        <TutorialLink
-          title={paidMembershipPro?.title}
-          youTubeLink={paidMembershipPro?.youTubeLink}
-        />
+        <TutorialLink title="Paid Memberships Pro" youTubeLink={paidMembershipPro?.youTubeLink} />
       )}
       {paidMembershipPro?.docLink && (
-        <TutorialLink title={paidMembershipPro?.title} docLink={paidMembershipPro?.docLink} />
+        <TutorialLink title="Paid Memberships Pro" docLink={paidMembershipPro?.docLink} />
       )}
 
       <div className="mt-3">

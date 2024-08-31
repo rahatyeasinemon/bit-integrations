@@ -54,11 +54,9 @@ export default function CompanyHubAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {companyHub?.youTubeLink && (
-        <TutorialLink title={companyHub?.title} youTubeLink={companyHub?.youTubeLink} />
+        <TutorialLink title="CompanyHub" youTubeLink={companyHub?.youTubeLink} />
       )}
-      {companyHub?.docLink && (
-        <TutorialLink title={companyHub?.title} docLink={companyHub?.docLink} />
-      )}
+      {companyHub?.docLink && <TutorialLink title="CompanyHub" docLink={companyHub?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

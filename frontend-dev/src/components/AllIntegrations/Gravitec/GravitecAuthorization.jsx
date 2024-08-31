@@ -53,9 +53,9 @@ export default function GravitecAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {gravitec?.youTubeLink && (
-        <TutorialLink title={gravitec?.title} youTubeLink={gravitec?.youTubeLink} />
+        <TutorialLink title="Gravitec" youTubeLink={gravitec?.youTubeLink} />
       )}
-      {gravitec?.docLink && <TutorialLink title={gravitec?.title} docLink={gravitec?.docLink} />}
+      {gravitec?.docLink && <TutorialLink title="Gravitec" docLink={gravitec?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

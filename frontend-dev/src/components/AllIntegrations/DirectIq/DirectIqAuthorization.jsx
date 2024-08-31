@@ -82,9 +82,9 @@ export default function DirectIqAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {directIq?.youTubeLink && (
-        <TutorialLink title={directIq?.title} youTubeLink={directIq?.youTubeLink} />
+        <TutorialLink title="DirectIQ" youTubeLink={directIq?.youTubeLink} />
       )}
-      {directIq?.docLink && <TutorialLink title={directIq?.title} docLink={directIq?.docLink} />}
+      {directIq?.docLink && <TutorialLink title="DirectIQ" docLink={directIq?.docLink} />}
 
       <div className="mt-3 wdt-200">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

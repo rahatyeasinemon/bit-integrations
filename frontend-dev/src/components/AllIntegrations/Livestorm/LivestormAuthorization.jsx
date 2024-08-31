@@ -55,9 +55,9 @@ export default function LivestormAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {livestorm?.youTubeLink && (
-        <TutorialLink title={livestorm?.title} youTubeLink={livestorm?.youTubeLink} />
+        <TutorialLink title="Livestorm" youTubeLink={livestorm?.youTubeLink} />
       )}
-      {livestorm?.docLink && <TutorialLink title={livestorm?.title} docLink={livestorm?.docLink} />}
+      {livestorm?.docLink && <TutorialLink title="Livestorm" docLink={livestorm?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

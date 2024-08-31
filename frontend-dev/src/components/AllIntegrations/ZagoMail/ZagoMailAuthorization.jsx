@@ -79,9 +79,9 @@ export default function ZagoMailAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {zagoMail?.youTubeLink && (
-        <TutorialLink title={zagoMail?.title} youTubeLink={zagoMail?.youTubeLink} />
+        <TutorialLink title="Zago Mail" youTubeLink={zagoMail?.youTubeLink} />
       )}
-      {zagoMail?.docLink && <TutorialLink title={zagoMail?.title} docLink={zagoMail?.docLink} />}
+      {zagoMail?.docLink && <TutorialLink title="Zago Mail" docLink={zagoMail?.docLink} />}
 
       <div className="mt-3 wdt-200">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

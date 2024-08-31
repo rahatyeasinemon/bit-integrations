@@ -47,10 +47,8 @@ function MoosendAuthorization({
 
   return (
     <StepPage step={step} stepNo={1} style={{ width: 900, height: 'auto' }}>
-      {moosend?.youTubeLink && (
-        <TutorialLink title={moosend?.title} youTubeLink={moosend?.youTubeLink} />
-      )}
-      {moosend?.docLink && <TutorialLink title={moosend?.title} docLink={moosend?.docLink} />}
+      {moosend?.youTubeLink && <TutorialLink title="Moosend" youTubeLink={moosend?.youTubeLink} />}
+      {moosend?.docLink && <TutorialLink title="Moosend" docLink={moosend?.docLink} />}
 
       <div className="mt-2">
         {/* Moosend Authorization */}

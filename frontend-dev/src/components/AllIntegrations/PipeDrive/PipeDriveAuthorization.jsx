@@ -52,9 +52,9 @@ export default function PipeDriveAuthorization({
         ...{ height: step === 1 && 'auto' }
       }}>
       {pipeDrive?.youTubeLink && (
-        <TutorialLink title={pipeDrive?.title} youTubeLink={pipeDrive?.youTubeLink} />
+        <TutorialLink title="Pipedrive" youTubeLink={pipeDrive?.youTubeLink} />
       )}
-      {pipeDrive?.docLink && <TutorialLink title={pipeDrive?.title} docLink={pipeDrive?.docLink} />}
+      {pipeDrive?.docLink && <TutorialLink title="Pipedrive" docLink={pipeDrive?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

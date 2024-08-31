@@ -43,9 +43,9 @@ export default function WhatsAppAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {whatsApp?.youTubeLink && (
-        <TutorialLink title={whatsApp?.title} youTubeLink={whatsApp?.youTubeLink} />
+        <TutorialLink title="WhatsApp" youTubeLink={whatsApp?.youTubeLink} />
       )}
-      {whatsApp?.docLink && <TutorialLink title={whatsApp?.title} docLink={whatsApp?.docLink} />}
+      {whatsApp?.docLink && <TutorialLink title="WhatsApp" docLink={whatsApp?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

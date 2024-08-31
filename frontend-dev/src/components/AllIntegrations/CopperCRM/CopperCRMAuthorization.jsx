@@ -52,9 +52,9 @@ export default function CopperCRMAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {coppercrm?.youTubeLink && (
-        <TutorialLink title={coppercrm?.title} youTubeLink={coppercrm?.youTubeLink} />
+        <TutorialLink title="Copper CRM" youTubeLink={coppercrm?.youTubeLink} />
       )}
-      {coppercrm?.docLink && <TutorialLink title={coppercrm?.title} docLink={coppercrm?.docLink} />}
+      {coppercrm?.docLink && <TutorialLink title="Copper CRM" docLink={coppercrm?.docLink} />}
 
       <div className="mt-3">
         <bapi_email>{__('Integration Name:', 'bit-integrations')}</bapi_email>

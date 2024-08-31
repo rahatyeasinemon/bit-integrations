@@ -54,8 +54,8 @@ export default function DemioAuthorization({
     <div
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {demio?.youTubeLink && <TutorialLink title={demio?.title} youTubeLink={demio?.youTubeLink} />}
-      {demio?.docLink && <TutorialLink title={demio?.title} docLink={demio?.docLink} />}
+      {demio?.youTubeLink && <TutorialLink title="Demio" youTubeLink={demio?.youTubeLink} />}
+      {demio?.docLink && <TutorialLink title="Demio" docLink={demio?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

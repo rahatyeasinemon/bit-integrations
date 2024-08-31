@@ -57,11 +57,9 @@ export default function GetResponseAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {getResponse?.youTubeLink && (
-        <TutorialLink title={getResponse?.title} youTubeLink={getResponse?.youTubeLink} />
+        <TutorialLink title="GetResponse" youTubeLink={getResponse?.youTubeLink} />
       )}
-      {getResponse?.docLink && (
-        <TutorialLink title={getResponse?.title} docLink={getResponse?.docLink} />
-      )}
+      {getResponse?.docLink && <TutorialLink title="GetResponse" docLink={getResponse?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

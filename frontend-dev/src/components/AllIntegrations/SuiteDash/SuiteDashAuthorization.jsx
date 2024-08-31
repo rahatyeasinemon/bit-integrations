@@ -55,9 +55,9 @@ export default function SuiteDashAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {suiteDash?.youTubeLink && (
-        <TutorialLink title={suiteDash?.title} youTubeLink={suiteDash?.youTubeLink} />
+        <TutorialLink title="SuiteDash" youTubeLink={suiteDash?.youTubeLink} />
       )}
-      {suiteDash?.docLink && <TutorialLink title={suiteDash?.title} docLink={suiteDash?.docLink} />}
+      {suiteDash?.docLink && <TutorialLink title="SuiteDash" docLink={suiteDash?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

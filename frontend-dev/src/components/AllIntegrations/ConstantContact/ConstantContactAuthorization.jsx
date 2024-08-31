@@ -64,10 +64,10 @@ export default function ConstantContactAuthorization({
         ...{ height: step === 1 && 'auto' }
       }}>
       {constantContact?.youTubeLink && (
-        <TutorialLink title={constantContact?.title} youTubeLink={constantContact?.youTubeLink} />
+        <TutorialLink title="Constant Contact" youTubeLink={constantContact?.youTubeLink} />
       )}
       {constantContact?.docLink && (
-        <TutorialLink title={constantContact?.title} docLink={constantContact?.docLink} />
+        <TutorialLink title="Constant Contact" docLink={constantContact?.docLink} />
       )}
 
       <div className="mt-3">

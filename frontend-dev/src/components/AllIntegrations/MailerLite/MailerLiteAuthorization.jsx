@@ -56,11 +56,9 @@ export default function MailerLiteAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {mailerLite?.youTubeLink && (
-        <TutorialLink title={mailerLite?.title} youTubeLink={mailerLite?.youTubeLink} />
+        <TutorialLink title="MailerLite" youTubeLink={mailerLite?.youTubeLink} />
       )}
-      {mailerLite?.docLink && (
-        <TutorialLink title={mailerLite?.title} docLink={mailerLite?.docLink} />
-      )}
+      {mailerLite?.docLink && <TutorialLink title="MailerLite" docLink={mailerLite?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

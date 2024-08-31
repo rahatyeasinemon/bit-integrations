@@ -56,10 +56,8 @@ export default function SmailyAuthorization({
     <div
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {smaily?.youTubeLink && (
-        <TutorialLink title={smaily?.title} youTubeLink={smaily?.youTubeLink} />
-      )}
-      {smaily?.docLink && <TutorialLink title={smaily?.title} docLink={smaily?.docLink} />}
+      {smaily?.youTubeLink && <TutorialLink title="Smaily" youTubeLink={smaily?.youTubeLink} />}
+      {smaily?.docLink && <TutorialLink title="Smaily" docLink={smaily?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

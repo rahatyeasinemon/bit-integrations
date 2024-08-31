@@ -47,8 +47,8 @@ function SelzyAuthorization({
 
   return (
     <StepPage step={step} stepNo={1} style={{ width: 900, height: 'auto' }}>
-      {selzy?.youTubeLink && <TutorialLink title={selzy?.title} youTubeLink={selzy?.youTubeLink} />}
-      {selzy?.docLink && <TutorialLink title={selzy?.title} docLink={selzy?.docLink} />}
+      {selzy?.youTubeLink && <TutorialLink title="Selzy" youTubeLink={selzy?.youTubeLink} />}
+      {selzy?.docLink && <TutorialLink title="Selzy" docLink={selzy?.docLink} />}
 
       <div className="mt-2">
         {/* SelzyAuthorization */}

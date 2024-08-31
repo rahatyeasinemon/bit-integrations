@@ -55,11 +55,9 @@ export default function NutshellCRMAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {nutshellCRM?.youTubeLink && (
-        <TutorialLink title={nutshellCRM?.title} youTubeLink={nutshellCRM?.youTubeLink} />
+        <TutorialLink title="Nutshell CRM" youTubeLink={nutshellCRM?.youTubeLink} />
       )}
-      {nutshellCRM?.docLink && (
-        <TutorialLink title={nutshellCRM?.title} docLink={nutshellCRM?.docLink} />
-      )}
+      {nutshellCRM?.docLink && <TutorialLink title="Nutshell CRM" docLink={nutshellCRM?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

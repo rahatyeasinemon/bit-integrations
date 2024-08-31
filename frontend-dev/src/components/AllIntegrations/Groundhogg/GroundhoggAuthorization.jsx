@@ -53,11 +53,9 @@ export default function GroundhoggAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {groundhogg?.youTubeLink && (
-        <TutorialLink title={groundhogg?.title} youTubeLink={groundhogg?.youTubeLink} />
+        <TutorialLink title="Groundhogg" youTubeLink={groundhogg?.youTubeLink} />
       )}
-      {groundhogg?.docLink && (
-        <TutorialLink title={groundhogg?.title} docLink={groundhogg?.docLink} />
-      )}
+      {groundhogg?.docLink && <TutorialLink title="Groundhogg" docLink={groundhogg?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

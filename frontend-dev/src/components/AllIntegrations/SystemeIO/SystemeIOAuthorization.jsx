@@ -56,9 +56,9 @@ export default function SystemeIOAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {systemeIO?.youTubeLink && (
-        <TutorialLink title={systemeIO?.title} youTubeLink={systemeIO?.youTubeLink} />
+        <TutorialLink title="SystemeIO" youTubeLink={systemeIO?.youTubeLink} />
       )}
-      {systemeIO?.docLink && <TutorialLink title={systemeIO?.title} docLink={systemeIO?.docLink} />}
+      {systemeIO?.docLink && <TutorialLink title="SystemeIO" docLink={systemeIO?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

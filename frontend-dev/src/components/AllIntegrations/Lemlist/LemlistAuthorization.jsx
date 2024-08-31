@@ -91,10 +91,8 @@ export default function LemlistAuthorization({
     <div
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {lemlist?.youTubeLink && (
-        <TutorialLink title={lemlist?.title} youTubeLink={lemlist?.youTubeLink} />
-      )}
-      {lemlist?.docLink && <TutorialLink title={lemlist?.title} docLink={lemlist?.docLink} />}
+      {lemlist?.youTubeLink && <TutorialLink title="Lemlist" youTubeLink={lemlist?.youTubeLink} />}
+      {lemlist?.docLink && <TutorialLink title="Lemlist" docLink={lemlist?.docLink} />}
 
       <div className="mt-3 wdt-200">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

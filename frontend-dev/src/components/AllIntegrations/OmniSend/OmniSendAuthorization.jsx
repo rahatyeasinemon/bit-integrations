@@ -53,9 +53,9 @@ export default function OmniSendAuthorization({
         ...{ height: step === 1 && 'auto' }
       }}>
       {omniSend?.youTubeLink && (
-        <TutorialLink title={omniSend?.title} youTubeLink={omniSend?.youTubeLink} />
+        <TutorialLink title="Omnisend" youTubeLink={omniSend?.youTubeLink} />
       )}
-      {omniSend?.docLink && <TutorialLink title={omniSend?.title} docLink={omniSend?.docLink} />}
+      {omniSend?.docLink && <TutorialLink title="Omnisend" docLink={omniSend?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

@@ -64,9 +64,9 @@ export default function SalesmateAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {salesmate?.youTubeLink && (
-        <TutorialLink title={salesmate?.title} youTubeLink={salesmate?.youTubeLink} />
+        <TutorialLink title="Salesmate CRM" youTubeLink={salesmate?.youTubeLink} />
       )}
-      {salesmate?.docLink && <TutorialLink title={salesmate?.title} docLink={salesmate?.docLink} />}
+      {salesmate?.docLink && <TutorialLink title="Salesmate CRM" docLink={salesmate?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

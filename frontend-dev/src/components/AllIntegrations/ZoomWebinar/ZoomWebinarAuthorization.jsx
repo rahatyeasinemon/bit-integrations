@@ -59,10 +59,10 @@ export default function ZoomWebinarAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
       {zoomWebinar?.youTubeLink && (
-        <TutorialLink title={zoomWebinar?.title} youTubeLink={zoomWebinar?.youTubeLink} />
+        <TutorialLink title="Zoom Webinars" youTubeLink={zoomWebinar?.youTubeLink} />
       )}
       {zoomWebinar?.docLink && (
-        <TutorialLink title={zoomWebinar?.title} docLink={zoomWebinar?.docLink} />
+        <TutorialLink title="Zoom Webinars" docLink={zoomWebinar?.docLink} />
       )}
 
       <div className="mt-3">

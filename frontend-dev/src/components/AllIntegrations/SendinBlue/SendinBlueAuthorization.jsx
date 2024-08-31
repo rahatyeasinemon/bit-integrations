@@ -64,10 +64,10 @@ export default function SendinBlueAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {sendinBlue?.youTubeLink && (
-        <TutorialLink title={sendinBlue?.title} youTubeLink={sendinBlue?.youTubeLink} />
+        <TutorialLink title="Brevo (Sendinblue)" youTubeLink={sendinBlue?.youTubeLink} />
       )}
       {sendinBlue?.docLink && (
-        <TutorialLink title={sendinBlue?.title} docLink={sendinBlue?.docLink} />
+        <TutorialLink title="Brevo (Sendinblue)" docLink={sendinBlue?.docLink} />
       )}
 
       <div className="mt-3">

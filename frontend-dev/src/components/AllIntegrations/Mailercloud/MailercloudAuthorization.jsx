@@ -48,11 +48,9 @@ function MailercloudAuthorization({
   return (
     <StepPage step={step} stepNo={1} style={{ width: 900, height: 'auto' }}>
       {mailercloud?.youTubeLink && (
-        <TutorialLink title={mailercloud?.title} youTubeLink={mailercloud?.youTubeLink} />
+        <TutorialLink title="Mailercloud" youTubeLink={mailercloud?.youTubeLink} />
       )}
-      {mailercloud?.docLink && (
-        <TutorialLink title={mailercloud?.title} docLink={mailercloud?.docLink} />
-      )}
+      {mailercloud?.docLink && <TutorialLink title="Mailercloud" docLink={mailercloud?.docLink} />}
 
       <div className="mt-2">
         {/* Mailercloud Authorization */}

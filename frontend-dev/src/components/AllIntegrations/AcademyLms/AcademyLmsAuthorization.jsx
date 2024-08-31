@@ -48,11 +48,9 @@ export default function AcademyLmsAuthorization({
         height: step === 1 && 'auto'
       }}>
       {academyLms?.youTubeLink && (
-        <TutorialLink title={academyLms?.title} youTubeLink={academyLms?.youTubeLink} />
+        <TutorialLink title="Academy LMS" youTubeLink={academyLms?.youTubeLink} />
       )}
-      {academyLms?.docLink && (
-        <TutorialLink title={academyLms?.title} docLink={academyLms?.docLink} />
-      )}
+      {academyLms?.docLink && <TutorialLink title="Academy LMS" docLink={academyLms?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

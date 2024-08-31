@@ -60,11 +60,9 @@ export default function ZoomAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && `${100}%` } }}>
       {zoomMeeting?.youTubeLink && (
-        <TutorialLink title={zoomMeeting?.title} youTubeLink={zoomMeeting?.youTubeLink} />
+        <TutorialLink title="Zoom Meeting" youTubeLink={zoomMeeting?.youTubeLink} />
       )}
-      {zoomMeeting?.docLink && (
-        <TutorialLink title={zoomMeeting?.title} docLink={zoomMeeting?.docLink} />
-      )}
+      {zoomMeeting?.docLink && <TutorialLink title="Zoom Meeting" docLink={zoomMeeting?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

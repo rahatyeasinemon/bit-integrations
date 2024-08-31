@@ -84,10 +84,10 @@ export default function ActiveCampaignAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {activeCampaign?.youTubeLink && (
-        <TutorialLink title={activeCampaign?.title} youTubeLink={activeCampaign?.youTubeLink} />
+        <TutorialLink title="ActiveCampaign" youTubeLink={activeCampaign?.youTubeLink} />
       )}
       {activeCampaign?.docLink && (
-        <TutorialLink title={activeCampaign?.title} docLink={activeCampaign?.docLink} />
+        <TutorialLink title="ActiveCampaign" docLink={activeCampaign?.docLink} />
       )}
 
       <div className="mt-3 wdt-200">

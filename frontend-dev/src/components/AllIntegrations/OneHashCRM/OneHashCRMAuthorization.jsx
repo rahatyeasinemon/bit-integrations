@@ -59,11 +59,9 @@ export default function OneHashCRMAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {oneHashCRM?.youTubeLink && (
-        <TutorialLink title={oneHashCRM?.title} youTubeLink={oneHashCRM?.youTubeLink} />
+        <TutorialLink title="oneHashCRM" youTubeLink={oneHashCRM?.youTubeLink} />
       )}
-      {oneHashCRM?.docLink && (
-        <TutorialLink title={oneHashCRM?.title} docLink={oneHashCRM?.docLink} />
-      )}
+      {oneHashCRM?.docLink && <TutorialLink title="oneHashCRM" docLink={oneHashCRM?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

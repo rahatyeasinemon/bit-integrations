@@ -99,10 +99,10 @@ export default function CampaignMonitorAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {campaignMonitor?.youTubeLink && (
-        <TutorialLink title={campaignMonitor?.title} youTubeLink={campaignMonitor?.youTubeLink} />
+        <TutorialLink title="Campaign Monitor" youTubeLink={campaignMonitor?.youTubeLink} />
       )}
       {campaignMonitor?.docLink && (
-        <TutorialLink title={campaignMonitor?.title} docLink={campaignMonitor?.docLink} />
+        <TutorialLink title="Campaign Monitor" docLink={campaignMonitor?.docLink} />
       )}
 
       <div className="mt-3 wdt-200">

@@ -53,10 +53,8 @@ function NotionAuthorization({
 `
   return (
     <StepPage step={step} stepNo={1} style={{ width: 900, height: 'auto' }}>
-      {notion?.youTubeLink && (
-        <TutorialLink title={notion?.title} youTubeLink={notion?.youTubeLink} />
-      )}
-      {notion?.docLink && <TutorialLink title={notion?.title} docLink={notion?.docLink} />}
+      {notion?.youTubeLink && <TutorialLink title="Notion" youTubeLink={notion?.youTubeLink} />}
+      {notion?.docLink && <TutorialLink title="Notion" docLink={notion?.docLink} />}
 
       <div className="mt-2">
         {/* Notion Authorization */}

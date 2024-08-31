@@ -53,10 +53,8 @@ export default function ClickupAuthorization({
     <div
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {clickup?.youTubeLink && (
-        <TutorialLink title={clickup?.title} youTubeLink={clickup?.youTubeLink} />
-      )}
-      {clickup?.docLink && <TutorialLink title={clickup?.title} docLink={clickup?.docLink} />}
+      {clickup?.youTubeLink && <TutorialLink title="ClickUp" youTubeLink={clickup?.youTubeLink} />}
+      {clickup?.docLink && <TutorialLink title="ClickUp" docLink={clickup?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
