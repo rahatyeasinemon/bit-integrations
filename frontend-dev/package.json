@@ -40,11 +40,14 @@
   "scripts": {
     "build": "vite build",
     "hot": "vite --force",
-    "pda": "pnpm build && pnpm gettext-parser && pnpm i18n:php",
+    "pda": "pnpm build && && pnpm i18n:mkdir && pnpm i18n",
     "clear-lint-cache": "eslint . --cache --cache-file eslint-cache/eslintcache",
-    "gettext-parser": "npx react-gettext-parser --output ./locale.pot --config ./gettext-parser.config.js  './src/**/{*.js,*.jsx}'",
-    "i18n:json": "npx po2json locale.pot ../languages/bitform-btcbi-admin-script.json -f jed1.x",
-    "i18n:php": "[ ! -d \"../languages/\" ] && mkdir ../languages/;node ./pot-to-php.js locale.pot ../languages/generatedString.php bit-integrations;wp i18n make-pot ../ --include=*.php --skip-js --slug=bit-integrations --headers='{\"Last-Translator\":\"developer@bitcode.pro\",\"Language-Team\":\"support@bitcode.pro\",\"PO-Revision-Date\":\"\"}'",
+    "i18n": "pnpm i18n:gettext-parser && pnpm i18n:php && pnpm i18n:pot",
+    "i18n:gettext-parser": "npx react-gettext-parser --output ./locale.pot --config ./gettext-parser.config.js  './src/**/{*.js,*.jsx}'",
+    "i18n:json": "npx po2json locale.pot ../languages/btcbi-admin-script.json -f jed1.x",
+    "i18n:mkdir": "[ ! -d \"../languages/\" ] && mkdir '../languages/'",
+    "i18n:php": "node ./pot-to-php.js locale.pot ../languages/generatedString.php bit-integrations",
+    "i18n:pot": "wp i18n make-pot ../ --include=*.php --skip-js --slug=bit-integrations --headers='{\"Last-Translator\":\"developer@bitcode.pro\",\"Language-Team\":\"support@bitcode.pro\",\"PO-Revision-Date\":\"\"}'",
     "clean": "rimraf node_modules yarn.lock package-lock.json pnpm-lock.yaml",
     "clean-install-run": "pnpm clean && pnpm i && pnpm hot"
   },
