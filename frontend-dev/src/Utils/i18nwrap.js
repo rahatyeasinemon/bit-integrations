@@ -4,8 +4,8 @@
 import { __ as i18n_, sprintf as i18nsprintf } from '@wordpress/i18n'
 
 const __ = (text, domain = 'bit-integrations') => {
-  if (btcbi?.translations && btcbi.translations[text]) {
-    return btcbi?.translations[text]
+  if (btcbi?.translations && btcbi.translations[`${text}`]) {
+    return btcbi?.translations[`${text}`]
   }
   if (!wp?.i18n) {
     return text
