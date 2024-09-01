@@ -41,11 +41,11 @@ const ActionHook = () => {
 
   const setTriggerData = () => {
     if (!selectedFields.length) {
-      toast.error('Please Select fields')
+      toast.error(__('Please Select fields', 'bit-integrations'))
       return
     }
     if (!primaryKey) {
-      toast.error('Please Select a Primary Key')
+      toast.error(__('Please Select a Primary Key', 'bit-integrations'))
       return
     }
 
@@ -192,7 +192,7 @@ const ActionHook = () => {
     }
   }
 
-  const info = `<h4>${__('Please follow the simple steps below to setup Action Hook', 'bit-integrations')}</h4>
+  const info = `<h4>${sprintf(__('Follow these simple steps to set up the %s', 'bit-integrations'), 'Action Hook')}</h4>
             <ul>
               <li>${__('Click <b>Fetch</b>', 'bit-integrations')}</li>
               <li>${__('Submit <b>Integrable Form</b>', 'bit-integrations')}</li>

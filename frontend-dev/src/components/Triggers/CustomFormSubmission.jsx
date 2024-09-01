@@ -41,11 +41,11 @@ const CustomFormSubmission = () => {
 
   const setTriggerData = () => {
     if (!primaryKey) {
-      toast.error('Please Select a Primary Key')
+      toast.error(__('Please Select a Primary Key', 'bit-integrations'))
       return
     }
     if (!newFlow?.triggerDetail?.triggered_entity_id) {
-      toast.error('Triggered Entity Id not found!')
+      toast.error(__('Triggered Entity Id not found!', 'bit-integrations'))
       return
     }
 
@@ -153,7 +153,7 @@ const CustomFormSubmission = () => {
     )
   }
 
-  const info = `<h4>${__(`Follow these simple steps to set up the ${newFlow?.triggerDetail?.name}:`, 'bit-integrations')}</h4>
+  const info = `<h4>${sprintf(__('Follow these simple steps to set up the %s', 'bit-integrations'), newFlow?.triggerDetail?.name)}</h4>
             <ul>
               <li>${__('Click the <b>Fetch</b> button.', 'bit-integrations')}</li>
               <li>${__('Submit <b>The Form</b> while the Fetch button is <b>spinning</b>.', 'bit-integrations')}</li>

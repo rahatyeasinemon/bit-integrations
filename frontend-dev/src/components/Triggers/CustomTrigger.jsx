@@ -148,7 +148,7 @@ const CustomTrigger = () => {
     setShowResponse((prevState) => !prevState)
   }
 
-  const info = `<h4>${__('Setup Custom Trigger', 'bit-integrations')}</h4>
+  const info = `<h4>${sprintf(__('Follow these simple steps to set up the %s', 'bit-integrations'), 'Custom Trigger')}</h4>
             <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/custom-trigger-integrations" target="_blank" rel="noreferrer">${__('Details on Documentation', 'bit-integrations')}</a>
             <ul>
                 <li>${__('Copy <b>do action hook</b> & past in your form submiting function', 'bit-integrations')}</li>

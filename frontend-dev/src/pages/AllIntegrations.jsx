@@ -20,57 +20,109 @@ const Welcome = lazy(() => import('./Welcome'))
 
 function AllIntegrations({ isValidUser }) {
   const { data, isLoading, mutate } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
-  const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
+  const [integrations, setIntegrations] = useState(
+    !isLoading && data.success && data?.data?.integrations ? data.data.integrations : []
+  )
   const [snack, setSnackbar] = useState({ show: false })
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
-  
+
   const [newFlow, setNewFlow] = useRecoilState($newFlow)
   const [flowStep, setFlowStep] = useRecoilState($flowStep)
 
-  useEffect(()=>{
-      setFlowStep(1)
-      setNewFlow({})
-  },[])
-  
+  useEffect(() => {
+    setFlowStep(1)
+    setNewFlow({})
+  }, [])
+
   const [cols, setCols] = useState([
-    { width: 250, minWidth: 80, Header: __('Trigger', 'bit-integrations'), accessor: 'triggered_entity' },
+    {
+      width: 250,
+      minWidth: 80,
+      Header: __('Trigger', 'bit-integrations'),
+      accessor: 'triggered_entity'
+    },
     { width: 250, minWidth: 80, Header: __('Action Name', 'bit-integrations'), accessor: 'name' },
-    { width: 200, minWidth: 200, Header: __('Created At', 'bit-integrations'), accessor: 'created_at' },
+    {
+      width: 200,
+      minWidth: 200,
+      Header: __('Created At', 'bit-integrations'),
+      accessor: 'created_at'
+    },
     // { width: 150, minWidth: 130, Header: __('Authorization Status', 'bit-integrations'), accessor: 'isAuthorized', Cell: value => <Button className="flx" action={(e) => handleStatus(e, value.row.original.id)} checked={Number(value.row.original.status) === 1} > Not Authorized <RemoveIcn size="14" className="icn-rotate-45" /></Button>  },
-    { width: 70, minWidth: 60, Header: __('Status', 'bit-integrations'), accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.id)} checked={Number(value.row.original.status) === 1} /> },
+    {
+      width: 70,
+      minWidth: 60,
+      Header: __('Status', 'bit-integrations'),
+      accessor: 'status',
+      Cell: (value) => (
+        <SingleToggle2
+          className="flx"
+          action={(e) => handleStatus(e, value.row.original.id)}
+          checked={Number(value.row.original.status) === 1}
+        />
+      )
+    }
   ])
 
   useEffect(() => {
     !isLoading && setIntegrations(data.success ? data.data.integrations : [])
   }, [data])
 
-
   useEffect(() => {
-    const ncols = cols.filter(itm => itm.accessor !== 't_action' && itm.accessor !== 'status')
-    ncols.push({ width: 70, minWidth: 60, Header: __('Status', 'bit-integrations'), accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.id)} checked={Number(value.row.original.status) === 1} /> })
-    ncols.push({ sticky: 'right', width: 100, minWidth: 60, Header: 'Actions', accessor: 't_action', Cell: val => <MenuBtn isValidUser={isValidUser} id={val.row.original.id} name={val.row.original.name} index={val.row.id} del={() => showDelModal(val.row.original.id, val.row.index)} dup={() => showDupMdl(val.row.original.id, val.row.index)} /> })
+    const ncols = cols.filter((itm) => itm.accessor !== 't_action' && itm.accessor !== 'status')
+    ncols.push({
+      width: 70,
+      minWidth: 60,
+      Header: __('Status', 'bit-integrations'),
+      accessor: 'status',
+      Cell: (value) => (
+        <SingleToggle2
+          className="flx"
+          action={(e) => handleStatus(e, value.row.original.id)}
+          checked={Number(value.row.original.status) === 1}
+        />
+      )
+    })
+    ncols.push({
+      sticky: 'right',
+      width: 100,
+      minWidth: 60,
+      Header: __('Actions', 'bit-integrations'),
+      accessor: 't_action',
+      Cell: (val) => (
+        <MenuBtn
+          isValidUser={isValidUser}
+          id={val.row.original.id}
+          name={val.row.original.name}
+          index={val.row.id}
+          del={() => showDelModal(val.row.original.id, val.row.index)}
+          dup={() => showDupMdl(val.row.original.id, val.row.index)}
+        />
+      )
+    })
     setCols([...ncols])
   }, [integrations])
 
   const handleStatus = (e, id) => {
     const status = e.target.checked
     const tmp = [...integrations]
-    const integ = tmp.find(int => int.id === id)
+    const integ = tmp.find((int) => int.id === id)
     integ.status = status === true ? '1' : '0'
     setIntegrations(tmp)
 
     const param = { id, status }
     bitsFetch(param, 'flow/toggleStatus')
-      .then(res => {
+      .then((res) => {
         toast.success(__(res.data, 'bit-integrations'))
-      }).catch(() => {
+      })
+      .catch(() => {
         toast.error(__('Something went wrong', 'bit-integrations'))
       })
   }
 
   const handleDelete = (id, index) => {
     const tmpIntegrations = [...integrations]
-    const deleteLoad = bitsFetch({ id }, 'flow/delete').then(response => {
+    const deleteLoad = bitsFetch({ id }, 'flow/delete').then((response) => {
       if (response.success) {
         tmpIntegrations.splice(index, 1)
         mutate(tmpIntegrations)
@@ -81,24 +133,24 @@ function AllIntegrations({ isValidUser }) {
     })
 
     toast.promise(deleteLoad, {
-      success: msg => msg,
+      success: (msg) => msg,
       error: __('Error Occurred', 'bit-integrations'),
-      loading: __('delete...'),
+      loading: __('delete...')
     })
   }
 
   const handleClone = (id) => {
-    const loadClone = bitsFetch({ id }, 'flow/clone').then(response => {
+    const loadClone = bitsFetch({ id }, 'flow/clone').then((response) => {
       if (response.success) {
         const newInteg = response.data
         const tmpIntegrations = [...integrations]
-        const exist = tmpIntegrations.find(item => item.id === id)
+        const exist = tmpIntegrations.find((item) => item.id === id)
         const cpyInteg = {
           id: newInteg.id,
           name: `duplicate of ${exist.name}`,
           triggered_entity: exist.triggered_entity,
           status: exist.status,
-          created_at: newInteg.created_at,
+          created_at: newInteg.created_at
         }
         tmpIntegrations.push(cpyInteg)
         setIntegrations(tmpIntegrations)
@@ -108,46 +160,54 @@ function AllIntegrations({ isValidUser }) {
     })
 
     toast.promise(loadClone, {
-      success: msg => msg,
+      success: (msg) => msg,
       error: __('Error Occurred', 'bit-integrations'),
-      loading: __('cloning...'),
+      loading: __('cloning...')
     })
   }
 
-  const setBulkDelete = useCallback(rows => {
-    const rowID = []
-    const flowID = []
-    for (let i = 0; i < rows.length; i += 1) {
-      rowID.push(rows[i].id)
-      flowID.push(rows[i].original.id)
-    }
-    const bulkDeleteLoading = bitsFetch({ flowID }, 'flow/bulk-delete').then(response => {
-      if (response.success) {
-        const newData = [...integrations]
-        for (let i = rowID.length - 1; i >= 0; i -= 1) {
-          newData.splice(Number(rowID[i]), 1)
-        }
-        setIntegrations(newData)
-        return 'Integration Deleted Successfully'
+  const setBulkDelete = useCallback(
+    (rows) => {
+      const rowID = []
+      const flowID = []
+      for (let i = 0; i < rows.length; i += 1) {
+        rowID.push(rows[i].id)
+        flowID.push(rows[i].original.id)
       }
-      return response.data
-    })
+      const bulkDeleteLoading = bitsFetch({ flowID }, 'flow/bulk-delete').then((response) => {
+        if (response.success) {
+          const newData = [...integrations]
+          for (let i = rowID.length - 1; i >= 0; i -= 1) {
+            newData.splice(Number(rowID[i]), 1)
+          }
+          setIntegrations(newData)
+          return 'Integration Deleted Successfully'
+        }
+        return response.data
+      })
 
-    toast.promise(bulkDeleteLoading, {
-      success: msg => msg,
-      error: __('Error Occurred', 'bit-integrations'),
-      loading: __('delete...'),
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [integrations])
+      toast.promise(bulkDeleteLoading, {
+        success: (msg) => msg,
+        error: __('Error Occurred', 'bit-integrations'),
+        loading: __('delete...')
+      })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [integrations]
+  )
 
-  const setTableCols = useCallback(newCols => { setCols(newCols) }, [])
+  const setTableCols = useCallback((newCols) => {
+    setCols(newCols)
+  }, [])
   const closeConfMdl = () => {
     confMdl.show = false
     setconfMdl({ ...confMdl })
   }
   const showDelModal = (id, index) => {
-    confMdl.action = () => { handleDelete(id, index); closeConfMdl() }
+    confMdl.action = () => {
+      handleDelete(id, index)
+      closeConfMdl()
+    }
     confMdl.btnTxt = __('Delete', 'bit-integrations')
     confMdl.btn2Txt = null
     confMdl.btnClass = ''
@@ -157,7 +217,10 @@ function AllIntegrations({ isValidUser }) {
   }
 
   const showDupMdl = (formID) => {
-    confMdl.action = () => { handleClone(formID); closeConfMdl() }
+    confMdl.action = () => {
+      handleClone(formID)
+      closeConfMdl()
+    }
     confMdl.btnTxt = __('Clone', 'bit-integration')
     confMdl.btn2Txt = null
     confMdl.btnClass = 'purple'
@@ -170,14 +233,11 @@ function AllIntegrations({ isValidUser }) {
     display: 'flex',
     height: '82vh',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   }
 
-
   if (isLoading) {
-    return (
-      <Loader style={loaderStyle} />
-    )
+    return <Loader style={loaderStyle} />
   }
 
   return (
@@ -201,7 +261,6 @@ function AllIntegrations({ isValidUser }) {
             <Link to="/flow/new" className="btn round btcd-btn-lg purple purple-sh">
               {__('Create Integration', 'bit-integrations')}
             </Link>
-
           </div>
           <div className="forms">
             <Table
@@ -218,8 +277,9 @@ function AllIntegrations({ isValidUser }) {
             />
           </div>
         </>
-      ) : <Welcome isValidUser={isValidUser} integrations={integrations} />}
-
+      ) : (
+        <Welcome isValidUser={isValidUser} integrations={integrations} />
+      )}
     </div>
   )
 }
