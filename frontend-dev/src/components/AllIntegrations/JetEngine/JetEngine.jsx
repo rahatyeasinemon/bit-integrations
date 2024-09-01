@@ -20,7 +20,8 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
   const [loading, setLoading] = useState({
     auth: false,
     cptOptions: false,
-    relationTypes: false
+    relationTypes: false,
+    cptList: false
   })
 
   const [step, setStep] = useState(1)
@@ -43,7 +44,9 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
       parentObject: '',
       childObject: '',
       selectedRelationType: ''
-    }
+    },
+    cptList: [],
+    selectedCPT: ''
   })
 
   const saveConfig = () => {
@@ -104,6 +107,14 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
         toast.error('Please select a relation type!')
         return
       }
+    }
+
+    if (
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE &&
+      !jetEngineConf.selectedCPT
+    ) {
+      toast.error('Please select a custom post type!')
+      return
     }
 
     jetEngineConf.field_map.length > 0 && setStep(pageNo)

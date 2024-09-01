@@ -89,11 +89,29 @@ export const getJetEngineRelationTypes = (confTmp, setConf, loading, setLoading)
 
 }
 
+export const getJetEngineCPTList = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, cptList: true })
+
+  bitsFetch({}, 'jetEngine_cpt_list')
+    .then(result => {
+      if (result.success && result.data) {
+        const newConf = { ...confTmp }
+        newConf.cptList = result.data
+        setConf(newConf)
+        setLoading({ ...loading, cptList: false })
+        toast.success(__('CPT list fetched successfully', 'bit-integrations'))
+        return
+      }
+      setLoading({ ...loading, cptList: false })
+      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+    })
+}
+
 export const jetEngineStaticFields = (selectedTask) => {
-  if (selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE) {
+  if (selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE || selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE) {
     return {
       staticFields: [
-        { key: 'name', label: 'Post Type Name', required: true },
+        { key: 'name', label: 'Post Type Name', required: selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ? true : false },
         { key: 'singular_name', label: 'Singular Name', required: false },
         { key: 'add_new', label: 'Add New', required: false },
         { key: 'add_new_item', label: 'Add New Item', required: false },
@@ -115,7 +133,7 @@ export const jetEngineStaticFields = (selectedTask) => {
         { key: 'insert_into_item', label: 'Insert into post', required: false },
         { key: 'uploaded_to_this_item', label: 'Uploaded to this post', required: false },
       ],
-      fieldMap: [{ formField: '', jetEngineField: 'name' }]
+      fieldMap: selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ? [{ formField: '', jetEngineField: 'name' }] : [{ formField: '', jetEngineField: '' }]
     }
   } else if (selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE) {
     return {

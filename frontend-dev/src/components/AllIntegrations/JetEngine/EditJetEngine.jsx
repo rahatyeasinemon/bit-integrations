@@ -22,7 +22,8 @@ function EditJetEngine({ allIntegURL }) {
   const [loading, setLoading] = useState({
     auth: false,
     menuPosition: false,
-    relationTypes: false
+    relationTypes: false,
+    cptList: false
   })
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)
@@ -59,6 +60,14 @@ function EditJetEngine({ allIntegURL }) {
         toast.error('Please select a relation type!')
         return
       }
+    }
+
+    if (
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE &&
+      !jetEngineConf.selectedCPT
+    ) {
+      toast.error('Please select a custom post type!')
+      return
     }
 
     saveActionConf({

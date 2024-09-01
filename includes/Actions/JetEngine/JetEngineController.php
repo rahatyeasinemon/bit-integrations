@@ -128,6 +128,29 @@ class JetEngineController
         wp_send_json_error('Relation types fetching failed!', 400);
     }
 
+    public function getCPTList()
+    {
+        self::checkedJetEngineExists();
+
+        $cpts = jet_engine()->cpt->data->get_items();
+        $cptList = [];
+
+        foreach ($cpts as $item) {
+            $labels = maybe_unserialize($item['labels']);
+
+            $cptList[] = (object) [
+                'label' => $labels['name'],
+                'value' => (string) $item['id']
+            ];
+        }
+
+        if (empty($cptList)) {
+            wp_send_json_error('No custom post types found!', 400);
+        }
+
+        wp_send_json_success($cptList, 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         self::checkedJetEngineExists();
@@ -146,6 +169,7 @@ class JetEngineController
             'selectedMenuPosition' => $integrationDetails->selectedMenuPosition,
             'selectedMenuIcon'     => $integrationDetails->selectedMenuIcon,
             'selectedSupports'     => $integrationDetails->selectedSupports,
+            'selectedCPT'          => isset($integrationDetails->selectedCPT) ? $integrationDetails->selectedCPT : '',
         ];
 
         $taxOptions = [

@@ -5,7 +5,11 @@ import JetEngineActions from './JetEngineActions'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import JetEngineFieldMap from './JetEngineFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
-import { getJetEngineRelationTypes, jetEngineStaticFields } from './jetEngineCommonFunctions'
+import {
+  getJetEngineCPTList,
+  getJetEngineRelationTypes,
+  jetEngineStaticFields
+} from './jetEngineCommonFunctions'
 import { TASK_LIST, TASK_LIST_VALUES } from './jetEngineConstants'
 import Loader from '../../Loaders/Loader'
 
@@ -29,6 +33,9 @@ export default function JetEngineIntegLayout({
       if (val === TASK_LIST_VALUES.CREATE_RELATION) {
         getJetEngineRelationTypes(newConf, setJetEngineConf, loading, setLoading)
       }
+      if (val === TASK_LIST_VALUES.UPDATE_POST_TYPE) {
+        getJetEngineCPTList(newConf, setJetEngineConf, loading, setLoading)
+      }
     } else {
       newConf.staticFields = []
       newConf.field_map = []
@@ -40,6 +47,12 @@ export default function JetEngineIntegLayout({
   const handleRelationTypeChange = (val, type) => {
     const newConf = { ...jetEngineConf }
     newConf.relOptions[type] = val
+    setJetEngineConf({ ...newConf })
+  }
+
+  const handleMultiSelectChange = (val, type) => {
+    const newConf = { ...jetEngineConf }
+    newConf[type] = val
     setJetEngineConf({ ...newConf })
   }
 
@@ -130,7 +143,30 @@ export default function JetEngineIntegLayout({
           </>
         )}
 
-        {loading.relation_types && (
+        {jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE && (
+          <div className="flx mt-3 mb-4">
+            <b className="wdt-200 d-in-b">{__('Custom Post Type:', 'bit-integrations')}</b>
+            <MultiSelect
+              style={{ width: '450px' }}
+              options={jetEngineConf?.cptList}
+              className="msl-wrp-options"
+              defaultValue={jetEngineConf?.selectedCPT}
+              onChange={(val) => handleMultiSelectChange(val, 'selectedCPT')}
+              singleSelect
+            />
+            <button
+              onClick={() =>
+                getJetEngineCPTList(jetEngineConf, setJetEngineConf, loading, setLoading)
+              }
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `${__('Refresh CPT List', 'bit-integrations')}'` }}
+              type="button">
+              &#x21BB;
+            </button>
+          </div>
+        )}
+
+        {(loading.relation_types || loading.cptList) && (
           <Loader
             style={{
               display: 'flex',
@@ -185,7 +221,8 @@ export default function JetEngineIntegLayout({
         {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
           jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE ||
           jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION) && (
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE) && (
           <div>
             <br />
             <br />

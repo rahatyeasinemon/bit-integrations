@@ -149,6 +149,69 @@ class RecordApiHelper
         return ['success' => true, 'message' => 'Relation added successfully.'];
     }
 
+    public function updatePostType($finalData, $createCPTSelectedOptions, $actions)
+    {
+        if (empty($createCPTSelectedOptions) || empty($createCPTSelectedOptions['selectedCPT'])) {
+            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+        }
+
+        $id = $createCPTSelectedOptions['selectedCPT'];
+
+        $initialPostType = jet_engine()->cpt->data->get_item_for_edit($id);
+        $initialSlug = $initialPostType['general_settings']['slug'];
+        $initialName = $initialPostType['general_settings']['name'];
+
+        if (empty($id)) {
+            return ['success' => false, 'message' => 'Custom post type id not available!', 'code' => 400];
+        }
+
+        $finalData['id'] = $id;
+
+        if (!empty($finalData['name'])) {
+            $finalData['slug'] = str_replace(' ', '-', strtolower($finalData['name']));
+        }
+
+        if (Helper::proActionFeatExists('JetEngine', 'createPostTypeActions')) {
+            $filterResponse = apply_filters('btcbi_jet_engine_create_post_type_actions', 'updatePostType', $createCPTSelectedOptions, $actions);
+
+            if ($filterResponse !== 'updatePostType' && !empty($filterResponse)) {
+                $finalData = array_merge($finalData, $filterResponse);
+            }
+        }
+
+        if (empty($finalData['name'])) {
+            $finalData['name'] = $initialName;
+        }
+
+        if (empty($finalData['slug'])) {
+            $finalData['slug'] = $initialSlug;
+        }
+
+        jet_engine()->cpt->data->set_request($finalData);
+
+        $updated = jet_engine()->cpt->data->edit_item(false);
+
+        if (empty($updated) || is_wp_error($updated)) {
+            return ['success' => false, 'message' => 'Failed to update post type!', 'code' => 400];
+        }
+
+        if ($updated && !empty($initialSlug) && !empty($finalData['slug']) && $initialSlug !== $finalData['slug']) {
+            global $wpdb;
+
+            $wpdb->update(
+                $wpdb->posts,
+                [
+                    'post_type' => $finalData['slug'],
+                ],
+                [
+                    'post_type' => $initialSlug,
+                ]
+            );
+        }
+
+        return ['success' => true, 'message' => 'Post type updated successfully.'];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -191,6 +254,10 @@ class RecordApiHelper
             $response = $this->createRelation($finalData, $relOptions, $actions);
             $type = 'Relation';
             $typeName = 'Create Relation';
+        } elseif ($selectedTask === 'updatePostType') {
+            $response = $this->updatePostType($finalData, $createCPTSelectedOptions, $actions);
+            $type = 'Post Type';
+            $typeName = 'Update Post Type';
         }
 
         if ($response['success']) {

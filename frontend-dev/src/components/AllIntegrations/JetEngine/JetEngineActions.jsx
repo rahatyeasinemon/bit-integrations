@@ -187,7 +187,9 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
           </>
         )}
         {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE) && (
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE) && (
           <>
             <TableCheckBox
               checked={jetEngineConf.selectedMenuPosition || false}
@@ -278,7 +280,8 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
           </>
         )}
 
-        {jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE && (
+        {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE) && (
           <>
             <TableCheckBox
               checked={jetEngineConf.selectedSupports || false}
@@ -341,7 +344,8 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
         )}
 
         {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY) && (
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE) && (
           <>
             <TableCheckBox
               checked={jetEngineConf.actions?.delete_metadata || false}
@@ -388,7 +392,8 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
               )}
               isInfo={!isPro}
             />
-            {jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE && (
+            {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
+              jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE) && (
               <TableCheckBox
                 checked={jetEngineConf.actions?.exclude_from_search || false}
                 onChange={(e) => actionHandler(e, 'checkbox')}
@@ -462,7 +467,8 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
               )}
               isInfo={!isPro}
             />
-            {jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE && (
+            {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
+              jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE) && (
               <>
                 <TableCheckBox
                   checked={jetEngineConf.actions?.query_var || false}
