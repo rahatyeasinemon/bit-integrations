@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SendinBlue;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -161,11 +161,14 @@ class SendinBlueController
         $authorizationHeader['Accept'] = 'application/json';
         $authorizationHeader['api-key'] = $queryParams->api_key;
         $sblueResponse = HttpHelper::get($apiEndpoint, null, $authorizationHeader);
+
         $fields = [];
         if (!is_wp_error($sblueResponse)) {
+            $excludingField = ['BLACKLIST', 'READERS', 'CLICKERS'];
             $allFields = $sblueResponse->attributes;
+
             foreach ($allFields as $field) {
-                if ($field->type !== 'float' && !empty($field->type)) {
+                if (!\in_array($field->name, $excludingField) && !empty($field->type)) {
                     $fields[$field->name] = (object) [
                         'fieldId'   => $field->name,
                         'fieldName' => $field->name
