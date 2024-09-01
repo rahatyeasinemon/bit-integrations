@@ -155,7 +155,7 @@ const CustomFormSubmission = () => {
 
   const info = `<h4>${__(`Follow these simple steps to set up the ${newFlow?.triggerDetail?.name}:`, 'bit-integrations')}</h4>
             <ul>
-              <li>${__('Click the <b>Fetch</b> button.', 'bit-integrations')}Click the <b>Fetch</b> button.</li>
+              <li>${__('Click the <b>Fetch</b> button.', 'bit-integrations')}</li>
               <li>${__('Submit <b>The Form</b> while the Fetch button is <b>spinning</b>.', 'bit-integrations')}</li>
               <li>${__('After submitting the form, Click <b>Next</b> and then <b>Go</b></b>', 'bit-integrations')}</li>
             </ul>

@@ -12,7 +12,7 @@ export default function TutorialLink({ title, subtitle, youTubeLink, docLink, st
           <DocIcn size="18" className="mr-1" />
         )}
         <a target="_blank" rel="noreferrer" href={youTubeLink || docLink}>
-          {__(sprintf('How to setup %s integration', title), 'bit-integrations')}
+          {sprintf(__('How to setup %s integration', 'bit-integrations'), title)}
         </a>
       </span>
       {subtitle && <p className="mt-1">{subtitle}</p>}
