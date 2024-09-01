@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\CapsuleCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -90,7 +90,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . '/parties';
 
-        return $response = HttpHelper::post($apiEndpoint, wp_json_encode(['party' => $requestParams]), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode(['party' => $requestParams]), $this->defaultHeader);
     }
 
     public function addPerson($finalData)
@@ -149,7 +149,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . '/parties';
 
-        return $response = HttpHelper::post($apiEndpoint, wp_json_encode(['party' => $requestParams]), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode(['party' => $requestParams]), $this->defaultHeader);
     }
 
     public function addOpportunity($finalData)
@@ -203,7 +203,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . '/opportunities';
 
-        return $response = HttpHelper::post($apiEndpoint, wp_json_encode(['opportunity' => $requestParams]), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode(['opportunity' => $requestParams]), $this->defaultHeader);
     }
 
     public function addProject($finalData)
@@ -248,7 +248,7 @@ class RecordApiHelper
 
         $apiEndpoint = $this->apiUrl . '/kases';
 
-        return $response = HttpHelper::post($apiEndpoint, wp_json_encode(['kase' => $requestParams]), $this->defaultHeader);
+        return HttpHelper::post($apiEndpoint, wp_json_encode(['kase' => $requestParams]), $this->defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -288,7 +288,7 @@ class RecordApiHelper
             $apiResponse = $this->addProject($finalData);
         }
 
-        if ($apiResponse->data->id || $apiResponse->status === 'success') {
+        if (isset($apiResponse->kase->id) || isset($apiResponse->opportunity->id) || isset($apiResponse->party->id) || isset($apiResponse->data->id) || $apiResponse->status === 'success') {
             $res = [$this->typeName . ' successfully'];
             LogHandler::save($this->integrationId, wp_json_encode(['type' => $this->type, 'type_name' => $this->typeName]), 'success', wp_json_encode($res));
         } else {
