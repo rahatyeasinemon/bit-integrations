@@ -125,6 +125,24 @@ export const getJetEngineCCTList = (confTmp, setConf, loading, setLoading) => {
     })
 }
 
+export const getJetEngineTaxList = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, taxList: true })
+
+  bitsFetch({}, 'jetEngine_tax_list')
+    .then(result => {
+      if (result.success && result.data) {
+        const newConf = { ...confTmp }
+        newConf.taxList = result.data
+        setConf(newConf)
+        setLoading({ ...loading, taxList: false })
+        toast.success(__('Taxonomy list fetched successfully', 'bit-integrations'))
+        return
+      }
+      setLoading({ ...loading, taxList: false })
+      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+    })
+}
+
 export const jetEngineStaticFields = (selectedTask) => {
   if (selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE || selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE) {
     return {
@@ -162,10 +180,10 @@ export const jetEngineStaticFields = (selectedTask) => {
       fieldMap: selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE ?
         [{ formField: '', jetEngineField: 'name' }] : [{ formField: '', jetEngineField: '' }]
     }
-  } else if (selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY) {
+  } else if (selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY || selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY) {
     return {
       staticFields: [
-        { key: 'name', label: 'Taxonomy Name', required: true },
+        { key: 'name', label: 'Taxonomy Name', required: selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ? true : false },
         { key: 'singular_name', label: 'Singular name', required: false },
         { key: 'menu_name', label: 'Menu name text', required: false },
         { key: 'all_items', label: 'All items text', required: false },
@@ -187,7 +205,7 @@ export const jetEngineStaticFields = (selectedTask) => {
         { key: 'capability_type', label: 'Capability Type', required: false },
         { key: 'description', label: 'Taxonomy Description', required: false },
       ],
-      fieldMap: [{ formField: '', jetEngineField: 'name' }]
+      fieldMap: selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ? [{ formField: '', jetEngineField: 'name' }] : [{ formField: '', jetEngineField: '' }]
     }
   } else if (selectedTask === TASK_LIST_VALUES.CREATE_RELATION) {
     return {

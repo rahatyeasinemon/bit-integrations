@@ -4,7 +4,8 @@ export const TASK_LIST_VALUES = {
     CREATE_TAXONOMY: 'createTaxonomy',
     CREATE_RELATION: 'createRelation',
     UPDATE_POST_TYPE: 'updatePostType',
-    UPDATE_CONTENT_TYPE: 'updateContentType'
+    UPDATE_CONTENT_TYPE: 'updateContentType',
+    UPDATE_TAXONOMY: 'updateTaxonomy',
 }
 
 export const TASK_LIST = [
@@ -14,4 +15,5 @@ export const TASK_LIST = [
     { label: 'Add New Relation', value: TASK_LIST_VALUES.CREATE_RELATION },
     { label: 'Update Post Type', value: TASK_LIST_VALUES.UPDATE_POST_TYPE },
     { label: 'Update Custom Content Type', value: TASK_LIST_VALUES.UPDATE_CONTENT_TYPE },
+    { label: 'Update Taxonomy', value: TASK_LIST_VALUES.UPDATE_TAXONOMY },
 ]

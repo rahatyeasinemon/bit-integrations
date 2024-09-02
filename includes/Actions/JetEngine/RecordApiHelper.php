@@ -266,6 +266,50 @@ class RecordApiHelper
         return ['success' => true, 'message' => 'Content type updated successfully.'];
     }
 
+    public function updateTaxonomy($finalData, $taxOptions, $actions)
+    {
+        $id = $taxOptions['selectedTaxForEdit'];
+
+        if (empty($id)) {
+            return ['success' => false, 'message' => 'Taxonomy id not found in request!', 'code' => 400];
+        }
+
+        $initialTaxonomy = jet_engine()->taxonomies->data->get_item_for_edit($id);
+        $initialName = $initialTaxonomy['general_settings']['name'];
+        $initialSlug = $initialTaxonomy['general_settings']['slug'];
+
+        $finalData['id'] = $id;
+
+        if (!empty($taxOptions['selectedTaxPostTypes'])) {
+            $finalData['object_type'] = explode(',', $taxOptions['selectedTaxPostTypes']);
+        }
+
+        if (!empty($finalData['name'])) {
+            $finalData['slug'] = str_replace(' ', '-', strtolower($finalData['name']));
+        } else {
+            $finalData['name'] = $initialName;
+            $finalData['slug'] = $initialSlug;
+        }
+
+        if (Helper::proActionFeatExists('JetEngine', 'createTaxonomyActions')) {
+            $filterResponse = apply_filters('btcbi_jet_engine_create_taxonomy_actions', 'updateTaxonomy', $taxOptions, $actions);
+
+            if ($filterResponse !== 'updateTaxonomy' && !empty($filterResponse)) {
+                $finalData = array_merge($finalData, $filterResponse);
+            }
+        }
+
+        jet_engine()->taxonomies->data->set_request($finalData);
+
+        $updated = jet_engine()->taxonomies->data->edit_item(false);
+
+        if (!$updated || is_wp_error($updated)) {
+            return ['success' => false, 'message' => 'Failed to update taxonomy!', 'code' => 400];
+        }
+
+        return ['success' => true, 'message' => 'Taxonomy updated successfully.'];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -316,6 +360,10 @@ class RecordApiHelper
             $response = $this->updateContentType($finalData, $createCPTSelectedOptions, $actions);
             $type = 'Content Type';
             $typeName = 'Update Content Type';
+        } elseif ($selectedTask === 'updateTaxonomy') {
+            $response = $this->updateTaxonomy($finalData, $taxOptions, $actions);
+            $type = 'Taxonomy';
+            $typeName = 'Update Taxonomy';
         }
 
         if ($response['success']) {

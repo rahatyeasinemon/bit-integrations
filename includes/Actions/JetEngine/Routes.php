@@ -15,3 +15,4 @@ Route::post('jetEngine_tax_post_types', [JetEngineController::class, 'getTaxPost
 Route::post('jetEngine_relation_types', [JetEngineController::class, 'getRelationTypes']);
 Route::post('jetEngine_cpt_list', [JetEngineController::class, 'getCPTList']);
 Route::post('jetEngine_cct_list', [JetEngineController::class, 'getCCTList']);
+Route::post('jetEngine_tax_list', [JetEngineController::class, 'getTaxList']);

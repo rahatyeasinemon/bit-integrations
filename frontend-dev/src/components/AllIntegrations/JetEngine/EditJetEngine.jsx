@@ -41,7 +41,8 @@ function EditJetEngine({ allIntegURL }) {
     }
 
     if (
-      jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY &&
+      (jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ||
+        jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY) &&
       !jetEngineConf.selectedTaxPostTypes
     ) {
       toast.error('Please select post type(s)!')
@@ -76,6 +77,14 @@ function EditJetEngine({ allIntegURL }) {
       !jetEngineConf.selectedCCT
     ) {
       toast.error('Please select a custom content type!')
+      return
+    }
+
+    if (
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY &&
+      !jetEngineConf.selectedTaxForEdit
+    ) {
+      toast.error('Please select a taxonomy!')
       return
     }
 

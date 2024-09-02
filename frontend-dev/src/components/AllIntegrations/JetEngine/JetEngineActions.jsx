@@ -86,51 +86,53 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
   return (
     <>
       <div className="pos-rel d-flx flx-wrp">
-        {!isPro && jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY && (
-          <>
-            <TableCheckBox
-              checked={jetEngineConf.selectedTaxPostTypes || false}
-              onChange={(e) => actionHandler(e, 'taxPostTypes')}
-              className="wdt-200 mt-4 mr-2"
-              value="select_menu_post_type"
-              title={__('Select Post Type', 'bit-integrations')}
-              subTitle={__('Select post types to add this taxonomy for.', 'bit-integrations')}
-            />
-            <ConfirmModal
-              className="custom-conf-mdl"
-              mainMdlCls="o-v"
-              btnClass="blue"
-              btnTxt={__('Ok', 'bit-integrations')}
-              show={actionMdl.show === 'taxPostTypes'}
-              close={clsActionMdl}
-              action={clsActionMdl}
-              title={__('Post Types', 'bit-integrations')}>
-              <div className="btcd-hr mt-2 mb-2" />
-              <div className="mt-2 flx">{__('Select Menu Position', 'bit-integrations')}</div>
-              {loading.cptOptions ? (
-                <Loader
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: 45,
-                    transform: 'scale(0.5)'
-                  }}
-                />
-              ) : (
-                <div className="mt-2">
-                  <MultiSelect
-                    options={actionOptions?.taxPostTypes}
-                    className="msl-wrp-options"
-                    defaultValue={jetEngineConf?.selectedTaxPostTypes}
-                    onChange={(val) => setChanges(val, 'selectedTaxPostTypes')}
-                    style={{ width: '100%' }}
+        {!isPro &&
+          (jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ||
+            jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY) && (
+            <>
+              <TableCheckBox
+                checked={jetEngineConf.selectedTaxPostTypes || false}
+                onChange={(e) => actionHandler(e, 'taxPostTypes')}
+                className="wdt-200 mt-4 mr-2"
+                value="select_menu_post_type"
+                title={__('Select Post Type', 'bit-integrations')}
+                subTitle={__('Select post types to add this taxonomy for.', 'bit-integrations')}
+              />
+              <ConfirmModal
+                className="custom-conf-mdl"
+                mainMdlCls="o-v"
+                btnClass="blue"
+                btnTxt={__('Ok', 'bit-integrations')}
+                show={actionMdl.show === 'taxPostTypes'}
+                close={clsActionMdl}
+                action={clsActionMdl}
+                title={__('Post Types', 'bit-integrations')}>
+                <div className="btcd-hr mt-2 mb-2" />
+                <div className="mt-2 flx">{__('Select Menu Position', 'bit-integrations')}</div>
+                {loading.cptOptions ? (
+                  <Loader
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: 45,
+                      transform: 'scale(0.5)'
+                    }}
                   />
-                </div>
-              )}
-            </ConfirmModal>
-          </>
-        )}
+                ) : (
+                  <div className="mt-2">
+                    <MultiSelect
+                      options={actionOptions?.taxPostTypes}
+                      className="msl-wrp-options"
+                      defaultValue={jetEngineConf?.selectedTaxPostTypes}
+                      onChange={(val) => setChanges(val, 'selectedTaxPostTypes')}
+                      style={{ width: '100%' }}
+                    />
+                  </div>
+                )}
+              </ConfirmModal>
+            </>
+          )}
       </div>
       {!isPro && (
         <div className="pt-2">
@@ -141,51 +143,53 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
         </div>
       )}
       <div className="pos-rel d-flx flx-wrp">
-        {jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY && isPro && (
-          <>
-            <TableCheckBox
-              checked={jetEngineConf.selectedTaxPostTypes || false}
-              onChange={(e) => actionHandler(e, 'taxPostTypes')}
-              className="wdt-200 mt-4 mr-2"
-              value="select_menu_post_type"
-              title={__('Select Post Type', 'bit-integrations')}
-              subTitle={__('Select post types to add this taxonomy for.', 'bit-integrations')}
-            />
-            <ConfirmModal
-              className="custom-conf-mdl"
-              mainMdlCls="o-v"
-              btnClass="blue"
-              btnTxt={__('Ok', 'bit-integrations')}
-              show={actionMdl.show === 'taxPostTypes'}
-              close={clsActionMdl}
-              action={clsActionMdl}
-              title={__('Post Types', 'bit-integrations')}>
-              <div className="btcd-hr mt-2 mb-2" />
-              <div className="mt-2 flx">{__('Select Menu Position', 'bit-integrations')}</div>
-              {loading.cptOptions ? (
-                <Loader
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: 45,
-                    transform: 'scale(0.5)'
-                  }}
-                />
-              ) : (
-                <div className="mt-2">
-                  <MultiSelect
-                    options={actionOptions?.taxPostTypes}
-                    className="msl-wrp-options"
-                    defaultValue={jetEngineConf?.selectedTaxPostTypes}
-                    onChange={(val) => setChanges(val, 'selectedTaxPostTypes')}
-                    style={{ width: '100%' }}
+        {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY) &&
+          isPro && (
+            <>
+              <TableCheckBox
+                checked={jetEngineConf.selectedTaxPostTypes || false}
+                onChange={(e) => actionHandler(e, 'taxPostTypes')}
+                className="wdt-200 mt-4 mr-2"
+                value="select_menu_post_type"
+                title={__('Select Post Type', 'bit-integrations')}
+                subTitle={__('Select post types to add this taxonomy for.', 'bit-integrations')}
+              />
+              <ConfirmModal
+                className="custom-conf-mdl"
+                mainMdlCls="o-v"
+                btnClass="blue"
+                btnTxt={__('Ok', 'bit-integrations')}
+                show={actionMdl.show === 'taxPostTypes'}
+                close={clsActionMdl}
+                action={clsActionMdl}
+                title={__('Post Types', 'bit-integrations')}>
+                <div className="btcd-hr mt-2 mb-2" />
+                <div className="mt-2 flx">{__('Select Menu Position', 'bit-integrations')}</div>
+                {loading.cptOptions ? (
+                  <Loader
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: 45,
+                      transform: 'scale(0.5)'
+                    }}
                   />
-                </div>
-              )}
-            </ConfirmModal>
-          </>
-        )}
+                ) : (
+                  <div className="mt-2">
+                    <MultiSelect
+                      options={actionOptions?.taxPostTypes}
+                      className="msl-wrp-options"
+                      defaultValue={jetEngineConf?.selectedTaxPostTypes}
+                      onChange={(val) => setChanges(val, 'selectedTaxPostTypes')}
+                      style={{ width: '100%' }}
+                    />
+                  </div>
+                )}
+              </ConfirmModal>
+            </>
+          )}
         {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
           jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE ||
           jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE ||
@@ -345,7 +349,8 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
 
         {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
           jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE) && (
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY) && (
           <>
             <TableCheckBox
               checked={jetEngineConf.actions?.delete_metadata || false}

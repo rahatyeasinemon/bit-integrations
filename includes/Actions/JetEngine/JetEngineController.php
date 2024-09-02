@@ -175,6 +175,29 @@ class JetEngineController
         wp_send_json_success($cctList, 200);
     }
 
+    public function getTaxList()
+    {
+        self::checkedJetEngineExists();
+
+        $taxonomies = jet_engine()->taxonomies->data->get_items();
+        $taxList = [];
+
+        foreach ($taxonomies as $item) {
+            $labels = maybe_unserialize($item['labels']);
+
+            $taxList[] = (object) [
+                'label' => $labels['name'],
+                'value' => (string) $item['id']
+            ];
+        }
+
+        if (empty($taxList)) {
+            wp_send_json_error('No taxonomies post types found!', 400);
+        }
+
+        wp_send_json_success($taxList, 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         self::checkedJetEngineExists();
@@ -198,7 +221,8 @@ class JetEngineController
         ];
 
         $taxOptions = [
-            'selectedTaxPostTypes' => $integrationDetails->selectedTaxPostTypes
+            'selectedTaxPostTypes' => $integrationDetails->selectedTaxPostTypes,
+            'selectedTaxForEdit'   => isset($integrationDetails->selectedTaxForEdit) ? $integrationDetails->selectedTaxForEdit : ''
         ];
 
         $relOptions = (array) $integrationDetails->relOptions;

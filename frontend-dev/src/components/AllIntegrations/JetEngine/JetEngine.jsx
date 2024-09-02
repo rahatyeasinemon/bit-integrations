@@ -22,7 +22,8 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
     cptOptions: false,
     relationTypes: false,
     cptList: false,
-    cctList: false
+    cctList: false,
+    taxList: false
   })
 
   const [step, setStep] = useState(1)
@@ -49,7 +50,9 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
     cptList: [],
     selectedCPT: '',
     cctList: [],
-    selectedCCT: ''
+    selectedCCT: '',
+    taxList: [],
+    selectedTaxForEdit: ''
   })
 
   const saveConfig = () => {
@@ -90,7 +93,8 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
     }
 
     if (
-      jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY &&
+      (jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ||
+        jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY) &&
       !jetEngineConf.selectedTaxPostTypes
     ) {
       toast.error('Please select post type(s)!')
@@ -125,6 +129,14 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
       !jetEngineConf.selectedCCT
     ) {
       toast.error('Please select a custom content type!')
+      return
+    }
+
+    if (
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY &&
+      !jetEngineConf.selectedTaxForEdit
+    ) {
+      toast.error('Please select a taxonomy!')
       return
     }
 
