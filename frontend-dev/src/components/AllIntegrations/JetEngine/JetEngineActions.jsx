@@ -523,7 +523,8 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
             />
           </>
         )}
-        {jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION && (
+        {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_RELATION) && (
           <>
             <TableCheckBox
               checked={jetEngineConf.actions?.parent_control || false}

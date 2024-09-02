@@ -8,6 +8,7 @@ import { addFieldMap } from './IntegrationHelpers'
 import {
   getJetEngineCCTList,
   getJetEngineCPTList,
+  getJetEngineRelationList,
   getJetEngineRelationTypes,
   getJetEngineTaxList,
   jetEngineStaticFields
@@ -43,6 +44,9 @@ export default function JetEngineIntegLayout({
       }
       if (val === TASK_LIST_VALUES.UPDATE_TAXONOMY) {
         getJetEngineTaxList(newConf, setJetEngineConf, loading, setLoading)
+      }
+      if (val === TASK_LIST_VALUES.UPDATE_RELATION) {
+        getJetEngineRelationList(newConf, setJetEngineConf, loading, setLoading)
       }
     } else {
       newConf.staticFields = []
@@ -91,7 +95,31 @@ export default function JetEngineIntegLayout({
           />
         </div>
 
-        {jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION && (
+        {jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_RELATION && (
+          <div className="flx mt-3 mb-4">
+            <b className="wdt-200 d-in-b">{__('Select Relation:', 'bit-integrations')}</b>
+            <MultiSelect
+              style={{ width: '450px' }}
+              options={jetEngineConf?.relationList}
+              className="msl-wrp-options"
+              defaultValue={jetEngineConf?.relOptions?.selectedRelationForEdit}
+              onChange={(val) => handleRelationTypeChange(val, 'selectedRelationForEdit')}
+              singleSelect
+            />
+            <button
+              onClick={() =>
+                getJetEngineRelationList(jetEngineConf, setJetEngineConf, loading, setLoading)
+              }
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `${__('Refresh relation list', 'bit-integrations')}'` }}
+              type="button">
+              &#x21BB;
+            </button>
+          </div>
+        )}
+
+        {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_RELATION) && (
           <>
             <div className="flx mt-3 mb-4">
               <b className="wdt-200 d-in-b">{__('Parent object:', 'bit-integrations')}</b>
@@ -220,7 +248,11 @@ export default function JetEngineIntegLayout({
           </div>
         )}
 
-        {(loading.relation_types || loading.cptList || loading.cctList || loading.taxList) && (
+        {(loading.relation_types ||
+          loading.cptList ||
+          loading.cctList ||
+          loading.taxList ||
+          loading.relationList) && (
           <Loader
             style={{
               display: 'flex',
@@ -278,7 +310,8 @@ export default function JetEngineIntegLayout({
           jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION ||
           jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE ||
           jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY) && (
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_RELATION) && (
           <div>
             <br />
             <br />

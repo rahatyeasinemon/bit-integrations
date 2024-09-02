@@ -143,6 +143,25 @@ export const getJetEngineTaxList = (confTmp, setConf, loading, setLoading) => {
     })
 }
 
+export const getJetEngineRelationList = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, relationList: true })
+
+  bitsFetch({}, 'jetEngine_relation_list')
+    .then(result => {
+      if (result.success && result.data) {
+        const newConf = { ...confTmp }
+        newConf.relationList = result.data
+        setConf(newConf)
+        setLoading({ ...loading, relationList: false })
+        toast.success(__('Taxonomy list fetched successfully', 'bit-integrations'))
+        getJetEngineRelationTypes(newConf, setConf, loading, setLoading)
+        return
+      }
+      setLoading({ ...loading, relationList: false })
+      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+    })
+}
+
 export const jetEngineStaticFields = (selectedTask) => {
   if (selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE || selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE) {
     return {
@@ -207,10 +226,10 @@ export const jetEngineStaticFields = (selectedTask) => {
       ],
       fieldMap: selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ? [{ formField: '', jetEngineField: 'name' }] : [{ formField: '', jetEngineField: '' }]
     }
-  } else if (selectedTask === TASK_LIST_VALUES.CREATE_RELATION) {
+  } else if (selectedTask === TASK_LIST_VALUES.CREATE_RELATION || selectedTask === TASK_LIST_VALUES.UPDATE_RELATION) {
     return {
       staticFields: [
-        { key: 'name', label: 'Relation Name', required: true },
+        { key: 'name', label: 'Relation Name', required: selectedTask === TASK_LIST_VALUES.CREATE_RELATION ? true : false },
         { key: 'parent_page_control_title', label: 'Parent Object: label of relation box', required: false },
         { key: 'parent_page_control_connect', label: 'Parent Object: label of connect button', required: false },
         { key: 'parent_page_control_select', label: 'Parent Object: label of select item control', required: false },
@@ -218,7 +237,7 @@ export const jetEngineStaticFields = (selectedTask) => {
         { key: 'child_page_control_connect', label: 'Child Object: label of connect button', required: false },
         { key: 'child_page_control_select', label: 'Child Object: label of select item control', required: false },
       ],
-      fieldMap: [{ formField: '', jetEngineField: 'name' }]
+      fieldMap: selectedTask === TASK_LIST_VALUES.CREATE_RELATION ? [{ formField: '', jetEngineField: 'name' }] : [{ formField: '', jetEngineField: '' }]
     }
   }
 

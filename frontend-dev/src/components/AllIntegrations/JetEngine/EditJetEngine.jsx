@@ -24,7 +24,8 @@ function EditJetEngine({ allIntegURL }) {
     menuPosition: false,
     relationTypes: false,
     cptList: false,
-    cctList: false
+    cctList: false,
+    relationList: false
   })
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)
@@ -49,7 +50,10 @@ function EditJetEngine({ allIntegURL }) {
       return
     }
 
-    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION) {
+    if (
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION ||
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_RELATION
+    ) {
       if (!jetEngineConf.relOptions.parentObject) {
         toast.error('Please select a parent object!')
         return

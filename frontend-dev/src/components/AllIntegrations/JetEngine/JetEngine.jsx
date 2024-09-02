@@ -23,7 +23,8 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
     relationTypes: false,
     cptList: false,
     cctList: false,
-    taxList: false
+    taxList: false,
+    relationList: false
   })
 
   const [step, setStep] = useState(1)
@@ -45,14 +46,16 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
     relOptions: {
       parentObject: '',
       childObject: '',
-      selectedRelationType: ''
+      selectedRelationType: '',
+      selectedRelationForEdit: ''
     },
     cptList: [],
     selectedCPT: '',
     cctList: [],
     selectedCCT: '',
     taxList: [],
-    selectedTaxForEdit: ''
+    selectedTaxForEdit: '',
+    relationList: []
   })
 
   const saveConfig = () => {
@@ -101,7 +104,10 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION) {
+    if (
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION ||
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_RELATION
+    ) {
       if (!jetEngineConf.relOptions.parentObject) {
         toast.error('Please select a parent object!')
         return

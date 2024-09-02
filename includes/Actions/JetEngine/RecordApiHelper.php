@@ -310,6 +310,52 @@ class RecordApiHelper
         return ['success' => true, 'message' => 'Taxonomy updated successfully.'];
     }
 
+    public function updateRelation($finalData, $relOptions, $actions)
+    {
+        if (empty($relOptions) || empty($relOptions['parentObject'])
+        || empty($relOptions['childObject']) || empty($relOptions['selectedRelationType'])) {
+            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+        }
+
+        $args['parent_object'] = $relOptions['parentObject'];
+        $args['child_object'] = $relOptions['childObject'];
+        $args['type'] = $relOptions['selectedRelationType'];
+
+        if (empty($relOptions['selectedRelationForEdit'])) {
+            return ['success' => false, 'message' => 'Relation id not found in request!', 'code' => 400];
+        }
+
+        $id = $relOptions['selectedRelationForEdit'];
+        $initialRelation = jet_engine()->relations->data->get_item_for_edit($id);
+        $labels = maybe_unserialize($initialRelation['labels']);
+        $initialName = $labels['name'];
+        $args['id'] = $id;
+
+        if (empty($finalData['name'])) {
+            $finalData['name'] = $initialName;
+        }
+
+        $args['labels'] = $finalData;
+
+        if (Helper::proActionFeatExists('JetEngine', 'createRelationActions')) {
+            $filterResponse = apply_filters('btcbi_jet_engine_create_relation_actions', 'updateRelation', $relOptions, $actions);
+
+            if ($filterResponse !== 'updateRelation' && !empty($filterResponse)) {
+                $args = array_merge($args, $filterResponse);
+            }
+        }
+
+        jet_engine()->relations->data->set_request($args);
+
+        $updated = jet_engine()->relations->data->edit_item(false);
+
+        if (!$updated || is_wp_error($updated)) {
+            return ['success' => false, 'message' => 'Failed to update relation!', 'code' => 400];
+        }
+
+        return ['success' => true, 'message' => 'Relation updated successfully.'];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -364,6 +410,10 @@ class RecordApiHelper
             $response = $this->updateTaxonomy($finalData, $taxOptions, $actions);
             $type = 'Taxonomy';
             $typeName = 'Update Taxonomy';
+        } elseif ($selectedTask === 'updateRelation') {
+            $response = $this->updateRelation($finalData, $relOptions, $actions);
+            $type = 'Relation';
+            $typeName = 'Update Relation';
         }
 
         if ($response['success']) {

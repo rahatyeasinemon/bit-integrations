@@ -192,10 +192,33 @@ class JetEngineController
         }
 
         if (empty($taxList)) {
-            wp_send_json_error('No taxonomies post types found!', 400);
+            wp_send_json_error('No taxonomies found!', 400);
         }
 
         wp_send_json_success($taxList, 200);
+    }
+
+    public function getRelationList()
+    {
+        self::checkedJetEngineExists();
+
+        $relations = jet_engine()->relations->data->get_item_for_register();
+        $relationList = [];
+
+        foreach ($relations as $item) {
+            $labels = maybe_unserialize($item['labels']);
+
+            $relationList[] = (object) [
+                'label' => $labels['name'],
+                'value' => (string) $item['id']
+            ];
+        }
+
+        if (empty($relationList)) {
+            wp_send_json_error('No realtions found!', 400);
+        }
+
+        wp_send_json_success($relationList, 200);
     }
 
     public function execute($integrationData, $fieldValues)
