@@ -189,7 +189,7 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
         {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
           jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE ||
           jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE) && (
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE) && (
           <>
             <TableCheckBox
               checked={jetEngineConf.selectedMenuPosition || false}

@@ -21,7 +21,8 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
     auth: false,
     cptOptions: false,
     relationTypes: false,
-    cptList: false
+    cptList: false,
+    cctList: false
   })
 
   const [step, setStep] = useState(1)
@@ -46,7 +47,9 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
       selectedRelationType: ''
     },
     cptList: [],
-    selectedCPT: ''
+    selectedCPT: '',
+    cctList: [],
+    selectedCCT: ''
   })
 
   const saveConfig = () => {
@@ -114,6 +117,14 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
       !jetEngineConf.selectedCPT
     ) {
       toast.error('Please select a custom post type!')
+      return
+    }
+
+    if (
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE &&
+      !jetEngineConf.selectedCCT
+    ) {
+      toast.error('Please select a custom content type!')
       return
     }
 

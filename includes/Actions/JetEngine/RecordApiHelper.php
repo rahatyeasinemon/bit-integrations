@@ -157,13 +157,13 @@ class RecordApiHelper
 
         $id = $createCPTSelectedOptions['selectedCPT'];
 
+        if (empty($id)) {
+            return ['success' => false, 'message' => 'Custom post type id not found in request!', 'code' => 400];
+        }
+
         $initialPostType = jet_engine()->cpt->data->get_item_for_edit($id);
         $initialSlug = $initialPostType['general_settings']['slug'];
         $initialName = $initialPostType['general_settings']['name'];
-
-        if (empty($id)) {
-            return ['success' => false, 'message' => 'Custom post type id not available!', 'code' => 400];
-        }
 
         $finalData['id'] = $id;
 
@@ -212,6 +212,60 @@ class RecordApiHelper
         return ['success' => true, 'message' => 'Post type updated successfully.'];
     }
 
+    public function updateContentType($finalData, $createCPTSelectedOptions, $actions)
+    {
+        if (!jet_engine()->modules->is_module_active('custom-content-types')) {
+            return ['success' => false, 'message' => 'Module - Custom Content Type is not active!', 'code' => 400];
+        }
+
+        $id = $createCPTSelectedOptions['selectedCCT'];
+
+        if (empty($id)) {
+            return ['success' => false, 'message' => 'Custom Content type id not found in request!', 'code' => 400];
+        }
+
+        $ctcData['id'] = $id;
+
+        $initialContentType = Module::instance()->manager->data->get_item_for_edit($id);
+        $initialSlug = $initialContentType['slug'];
+        $initialName = $initialContentType['name'];
+
+        if (!empty($finalData['name'])) {
+            $ctcData['name'] = $finalData['name'];
+            $ctcData['slug'] = str_replace(' ', '_', strtolower($finalData['name']));
+        } else {
+            $ctcData['name'] = $initialName;
+            $ctcData['slug'] = $initialSlug;
+        }
+
+        $args = $ctcData;
+
+        if (isset($finalData['capability'])) {
+            $args['capability'] = $finalData['capability'];
+        }
+
+        if (Helper::proActionFeatExists('JetEngine', 'createContentTypeActions')) {
+            $filterResponse = apply_filters('btcbi_jet_engine_create_content_type_actions', 'updateContentType', $createCPTSelectedOptions, $actions);
+
+            if ($filterResponse !== 'updateContentType' && !empty($filterResponse)) {
+                $args = array_merge($args, $filterResponse);
+            }
+        }
+
+        $ctcData['args'] = $args;
+        $ctcData['meta_fields'] = [];
+
+        Module::instance()->manager->data->set_request($ctcData);
+
+        $updated = Module::instance()->manager->data->edit_item(false);
+
+        if (!$updated || is_wp_error($updated)) {
+            return ['success' => false, 'message' => 'Failed to update content type!', 'code' => 400];
+        }
+
+        return ['success' => true, 'message' => 'Content type updated successfully.'];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -258,6 +312,10 @@ class RecordApiHelper
             $response = $this->updatePostType($finalData, $createCPTSelectedOptions, $actions);
             $type = 'Post Type';
             $typeName = 'Update Post Type';
+        } elseif ($selectedTask === 'updateContentType') {
+            $response = $this->updateContentType($finalData, $createCPTSelectedOptions, $actions);
+            $type = 'Content Type';
+            $typeName = 'Update Content Type';
         }
 
         if ($response['success']) {

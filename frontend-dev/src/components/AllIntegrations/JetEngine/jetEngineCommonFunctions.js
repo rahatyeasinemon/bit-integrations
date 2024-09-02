@@ -107,6 +107,24 @@ export const getJetEngineCPTList = (confTmp, setConf, loading, setLoading) => {
     })
 }
 
+export const getJetEngineCCTList = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, cctList: true })
+
+  bitsFetch({}, 'jetEngine_cct_list')
+    .then(result => {
+      if (result.success && result.data) {
+        const newConf = { ...confTmp }
+        newConf.cctList = result.data
+        setConf(newConf)
+        setLoading({ ...loading, cctList: false })
+        toast.success(__('CCT list fetched successfully', 'bit-integrations'))
+        return
+      }
+      setLoading({ ...loading, cctList: false })
+      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+    })
+}
+
 export const jetEngineStaticFields = (selectedTask) => {
   if (selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE || selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE) {
     return {
@@ -135,13 +153,14 @@ export const jetEngineStaticFields = (selectedTask) => {
       ],
       fieldMap: selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ? [{ formField: '', jetEngineField: 'name' }] : [{ formField: '', jetEngineField: '' }]
     }
-  } else if (selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE) {
+  } else if (selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE || selectedTask === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE) {
     return {
       staticFields: [
-        { key: 'name', label: 'Content Type Name', required: true },
+        { key: 'name', label: 'Content Type Name', required: selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE ? true : false },
         { key: 'capability', label: 'Content Type UI Access Capability', required: false },
       ],
-      fieldMap: [{ formField: '', jetEngineField: 'name' }]
+      fieldMap: selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE ?
+        [{ formField: '', jetEngineField: 'name' }] : [{ formField: '', jetEngineField: '' }]
     }
   } else if (selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY) {
     return {

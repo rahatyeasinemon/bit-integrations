@@ -6,6 +6,7 @@
 
 namespace BitCode\FI\Actions\JetEngine;
 
+use Jet_Engine\Modules\Custom_Content_Types\Module;
 use Jet_Engine_CPT;
 use Jet_Engine_Tools;
 use WP_Error;
@@ -151,6 +152,29 @@ class JetEngineController
         wp_send_json_success($cptList, 200);
     }
 
+    public function getCCTList()
+    {
+        self::checkedJetEngineExists();
+
+        $ccts = Module::instance()->manager->data->get_items();
+        $cctList = [];
+
+        foreach ($ccts as $item) {
+            $args = maybe_unserialize($item['args']);
+
+            $cctList[] = (object) [
+                'label' => $args['name'],
+                'value' => (string) $item['id']
+            ];
+        }
+
+        if (empty($cctList)) {
+            wp_send_json_error('No custom content types types found!', 400);
+        }
+
+        wp_send_json_success($cctList, 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         self::checkedJetEngineExists();
@@ -170,6 +194,7 @@ class JetEngineController
             'selectedMenuIcon'     => $integrationDetails->selectedMenuIcon,
             'selectedSupports'     => $integrationDetails->selectedSupports,
             'selectedCPT'          => isset($integrationDetails->selectedCPT) ? $integrationDetails->selectedCPT : '',
+            'selectedCCT'          => isset($integrationDetails->selectedCCT) ? $integrationDetails->selectedCCT : '',
         ];
 
         $taxOptions = [

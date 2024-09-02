@@ -6,6 +6,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import JetEngineFieldMap from './JetEngineFieldMap'
 import { addFieldMap } from './IntegrationHelpers'
 import {
+  getJetEngineCCTList,
   getJetEngineCPTList,
   getJetEngineRelationTypes,
   jetEngineStaticFields
@@ -35,6 +36,9 @@ export default function JetEngineIntegLayout({
       }
       if (val === TASK_LIST_VALUES.UPDATE_POST_TYPE) {
         getJetEngineCPTList(newConf, setJetEngineConf, loading, setLoading)
+      }
+      if (val === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE) {
+        getJetEngineCCTList(newConf, setJetEngineConf, loading, setLoading)
       }
     } else {
       newConf.staticFields = []
@@ -166,7 +170,30 @@ export default function JetEngineIntegLayout({
           </div>
         )}
 
-        {(loading.relation_types || loading.cptList) && (
+        {jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE && (
+          <div className="flx mt-3 mb-4">
+            <b className="wdt-200 d-in-b">{__('Custom Content Type:', 'bit-integrations')}</b>
+            <MultiSelect
+              style={{ width: '450px' }}
+              options={jetEngineConf?.cctList}
+              className="msl-wrp-options"
+              defaultValue={jetEngineConf?.selectedCCT}
+              onChange={(val) => handleMultiSelectChange(val, 'selectedCCT')}
+              singleSelect
+            />
+            <button
+              onClick={() =>
+                getJetEngineCCTList(jetEngineConf, setJetEngineConf, loading, setLoading)
+              }
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `${__('Refresh CCT List', 'bit-integrations')}'` }}
+              type="button">
+              &#x21BB;
+            </button>
+          </div>
+        )}
+
+        {(loading.relation_types || loading.cptList || loading.cctList) && (
           <Loader
             style={{
               display: 'flex',
@@ -222,7 +249,8 @@ export default function JetEngineIntegLayout({
           jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE ||
           jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ||
           jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE) && (
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE) && (
           <div>
             <br />
             <br />
