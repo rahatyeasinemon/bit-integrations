@@ -777,6 +777,10 @@ export const MasterStudyLmsStateIH = (tmpConf, flowData, formID) => {
     tmpConf.selectedQuiz = flowData.selectedQuiz
     tmpConf.allQuiz = flowData.allQuiz
   }
+  if (val === 6) {
+    tmpConf.selectedDistribution = flowData.selectedDistribution
+    tmpConf.allDistribution = flowData.allDistribution
+  }
 
   return tmpConf
 }
