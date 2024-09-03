@@ -13,8 +13,9 @@ import {
   getJetEngineTaxList,
   jetEngineStaticFields
 } from './jetEngineCommonFunctions'
-import { TASK_LIST, TASK_LIST_VALUES } from './jetEngineConstants'
+import { DELETE_LIST_ARRAY, TASK_LIST, TASK_LIST_VALUES } from './jetEngineConstants'
 import Loader from '../../Loaders/Loader'
+import TableCheckBox from '../../Utilities/TableCheckBox'
 
 export default function JetEngineIntegLayout({
   formFields,
@@ -36,7 +37,7 @@ export default function JetEngineIntegLayout({
       if (val === TASK_LIST_VALUES.CREATE_RELATION) {
         getJetEngineRelationTypes(newConf, setJetEngineConf, loading, setLoading)
       }
-      if (val === TASK_LIST_VALUES.UPDATE_POST_TYPE) {
+      if (val === TASK_LIST_VALUES.UPDATE_POST_TYPE || val === TASK_LIST_VALUES.DELETE_POST_TYPE) {
         getJetEngineCPTList(newConf, setJetEngineConf, loading, setLoading)
       }
       if (val === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE) {
@@ -68,13 +69,13 @@ export default function JetEngineIntegLayout({
     setJetEngineConf({ ...newConf })
   }
 
-  const handleDeleteTopicFieldMapCheck = (event) => {
+  const handleDeleteFieldMapCheck = (event, type) => {
     const newConf = { ...jetEngineConf }
 
     if (event.target.checked) {
-      newConf.deleteVendorFieldMap = true
+      newConf.deleteFieldMap[type] = true
     } else {
-      newConf.deleteVendorFieldMap = false
+      newConf.deleteFieldMap[type] = false
     }
 
     setJetEngineConf({ ...newConf })
@@ -111,7 +112,7 @@ export default function JetEngineIntegLayout({
                 getJetEngineRelationList(jetEngineConf, setJetEngineConf, loading, setLoading)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `${__('Refresh relation list', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh relation list', 'bit-integrations')}'` }}
               type="button">
               &#x21BB;
             </button>
@@ -136,7 +137,7 @@ export default function JetEngineIntegLayout({
                   getJetEngineRelationTypes(jetEngineConf, setJetEngineConf, loading, setLoading)
                 }
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
-                style={{ '--tooltip-txt': `${__('Refresh parent objects', 'bit-integrations')}'` }}
+                style={{ '--tooltip-txt': `'${__('Refresh parent objects', 'bit-integrations')}'` }}
                 type="button">
                 &#x21BB;
               </button>
@@ -156,7 +157,7 @@ export default function JetEngineIntegLayout({
                   getJetEngineRelationTypes(jetEngineConf, setJetEngineConf, loading, setLoading)
                 }
                 className="icn-btn sh-sm ml-2 mr-2 tooltip"
-                style={{ '--tooltip-txt': `${__('Refresh child objects', 'bit-integrations')}'` }}
+                style={{ '--tooltip-txt': `'${__('Refresh child objects', 'bit-integrations')}'` }}
                 type="button">
                 &#x21BB;
               </button>
@@ -179,7 +180,8 @@ export default function JetEngineIntegLayout({
           </>
         )}
 
-        {jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE && (
+        {(jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_POST_TYPE) && (
           <div className="flx mt-3 mb-4">
             <b className="wdt-200 d-in-b">{__('Custom Post Type:', 'bit-integrations')}</b>
             <MultiSelect
@@ -195,7 +197,7 @@ export default function JetEngineIntegLayout({
                 getJetEngineCPTList(jetEngineConf, setJetEngineConf, loading, setLoading)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `${__('Refresh CPT List', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh CPT List', 'bit-integrations')}'` }}
               type="button">
               &#x21BB;
             </button>
@@ -218,7 +220,7 @@ export default function JetEngineIntegLayout({
                 getJetEngineCCTList(jetEngineConf, setJetEngineConf, loading, setLoading)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `${__('Refresh CCT List', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh CCT List', 'bit-integrations')}'` }}
               type="button">
               &#x21BB;
             </button>
@@ -241,7 +243,7 @@ export default function JetEngineIntegLayout({
                 getJetEngineTaxList(jetEngineConf, setJetEngineConf, loading, setLoading)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `${__('Refresh Tax List', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh Tax List', 'bit-integrations')}'` }}
               type="button">
               &#x21BB;
             </button>
@@ -264,54 +266,76 @@ export default function JetEngineIntegLayout({
           />
         )}
 
-        <div className="mt-5">
-          <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
-        </div>
-        <br />
-        <div className="btcd-hr mt-1" />
-        <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-          <div className="txt-dp">
-            <b>{__('Form Fields', 'bit-integrations')}</b>
-          </div>
-          <div className="txt-dp">
-            <b>{__('JetEngine Fields', 'bit-integrations')}</b>
-          </div>
-        </div>
-
-        {jetEngineConf?.selectedTask &&
-          jetEngineConf?.field_map.map((itm, i) => (
-            <JetEngineFieldMap
-              key={`rp-m-${i + 9}`}
-              i={i}
-              field={itm}
-              jetEngineConf={jetEngineConf}
-              formFields={formFields}
-              setJetEngineConf={setJetEngineConf}
-              setSnackbar={setSnackbar}
-            />
-          ))}
-
-        {jetEngineConf?.selectedTask && (
-          <div className="txt-center btcbi-field-map-button mt-2">
-            <button
-              onClick={() =>
-                addFieldMap(jetEngineConf.field_map.length, jetEngineConf, setJetEngineConf, false)
-              }
-              className="icn-btn sh-sm"
-              type="button">
-              +
-            </button>
-          </div>
+        {DELETE_LIST_ARRAY.includes(jetEngineConf.selectedTask) && (
+          <>
+            <br />
+            <div className="flx">
+              <span className="action-delete-task-note">
+                To delete, you can select from the list above, or you can map fields.
+              </span>
+              <TableCheckBox
+                checked={jetEngineConf.deleteFieldMap.deletePostType}
+                onChange={(e) => handleDeleteFieldMapCheck(e, jetEngineConf.selectedTask)}
+                className=" ml-2"
+                value="delete_field_map"
+                title={__('Map Fields', 'bit-integrations')}
+              />
+            </div>
+          </>
         )}
 
-        {(jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY ||
-          jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_RELATION) && (
+        {(!DELETE_LIST_ARRAY.includes(jetEngineConf.selectedTask) ||
+          (DELETE_LIST_ARRAY.includes(jetEngineConf.selectedTask) &&
+            jetEngineConf.deleteFieldMap[jetEngineConf.selectedTask])) && (
+          <>
+            <div className="mt-5">
+              <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
+            </div>
+            <br />
+            <div className="btcd-hr mt-1" />
+            <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
+              <div className="txt-dp">
+                <b>{__('Form Fields', 'bit-integrations')}</b>
+              </div>
+              <div className="txt-dp">
+                <b>{__('JetEngine Fields', 'bit-integrations')}</b>
+              </div>
+            </div>
+
+            {jetEngineConf?.selectedTask &&
+              jetEngineConf?.field_map.map((itm, i) => (
+                <JetEngineFieldMap
+                  key={`rp-m-${i + 9}`}
+                  i={i}
+                  field={itm}
+                  jetEngineConf={jetEngineConf}
+                  formFields={formFields}
+                  setJetEngineConf={setJetEngineConf}
+                  setSnackbar={setSnackbar}
+                />
+              ))}
+
+            {jetEngineConf?.selectedTask && (
+              <div className="txt-center btcbi-field-map-button mt-2">
+                <button
+                  onClick={() =>
+                    addFieldMap(
+                      jetEngineConf.field_map.length,
+                      jetEngineConf,
+                      setJetEngineConf,
+                      false
+                    )
+                  }
+                  className="icn-btn sh-sm"
+                  type="button">
+                  +
+                </button>
+              </div>
+            )}
+          </>
+        )}
+
+        {jetEngineConf.selectedTask && (
           <div>
             <br />
             <br />

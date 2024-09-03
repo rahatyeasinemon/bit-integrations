@@ -133,6 +133,18 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
               </ConfirmModal>
             </>
           )}
+        {jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_POST_TYPE && (
+          <>
+            <TableCheckBox
+              checked={jetEngineConf.actions?.delete_all_posts || false}
+              onChange={(e) => actionHandler(e, 'checkbox')}
+              className="wdt-200 mt-4 mr-2"
+              value="delete_all_posts"
+              title={__('Delete All Posts', 'bit-integrations')}
+              subTitle={__('Delete all posts related to the post type.', 'bit-integrations')}
+            />
+          </>
+        )}
       </div>
       {!isPro && (
         <div className="pt-2">

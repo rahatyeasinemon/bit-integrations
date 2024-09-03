@@ -356,6 +356,55 @@ class RecordApiHelper
         return ['success' => true, 'message' => 'Relation updated successfully.'];
     }
 
+    public function deletePostType($finalData, $selectedCPT, $actions)
+    {
+        if (empty($finalData['post_type_id']) && empty($selectedCPT)) {
+            return ['success' => false, 'message' => 'Post type id not found in request!', 'code' => 400];
+        }
+
+        if (!empty($selectedCPT)) {
+            $id = $selectedCPT;
+        } else {
+            $id = $finalData['post_type_id'];
+        }
+
+        $postTypeData = jet_engine()->cpt->data->get_item_for_edit($id);
+
+        if (!$postTypeData || !isset($postTypeData['general_settings']['slug'])) {
+            return ['success' => false, 'message' => 'Post type data not found!', 'code' => 400];
+        }
+
+        if (isset($actions['delete_all_posts']) && $actions['delete_all_posts']) {
+            $fromPostType = $postTypeData['general_settings']['slug'];
+
+            $posts = get_posts([
+                'post_type'      => $fromPostType,
+                'post_status'    => 'any',
+                'posts_per_page' => -1,
+                'fields'         => 'ids'
+            ]);
+
+            if (!empty($posts) && !is_wp_error($posts)) {
+                foreach ($posts as $postId) {
+                    wp_delete_post($postId, true);
+                }
+            }
+
+            if (!empty($postTypeData['general_settings']['custom_storage']) && $postTypeData['general_settings']['custom_storage'] === true) {
+                $db = \Jet_Engine\CPT\Custom_Tables\Manager::instance()->get_db_instance($fromPostType, []);
+                $db->drop_table();
+            }
+        }
+
+        jet_engine()->cpt->data->set_request(['id' => $id]);
+
+        if (jet_engine()->cpt->data->delete_item(false)) {
+            return ['success' => true, 'message' => 'Post Type deleted successfully.'];
+        }
+
+        return ['success' => false, 'message' => 'Failed to delete relation!', 'code' => 400];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -414,6 +463,11 @@ class RecordApiHelper
             $response = $this->updateRelation($finalData, $relOptions, $actions);
             $type = 'Relation';
             $typeName = 'Update Relation';
+        } elseif ($selectedTask === 'deletePostType') {
+            $selectedCPT = $createCPTSelectedOptions['selectedCPT'];
+            $response = $this->deletePostType($finalData, $selectedCPT, $actions);
+            $type = 'Post Type';
+            $typeName = 'Delete Post Type';
         }
 
         if ($response['success']) {

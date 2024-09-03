@@ -7,6 +7,7 @@ export const TASK_LIST_VALUES = {
     UPDATE_CONTENT_TYPE: 'updateContentType',
     UPDATE_TAXONOMY: 'updateTaxonomy',
     UPDATE_RELATION: 'updateRelation',
+    DELETE_POST_TYPE: 'deletePostType',
 }
 
 export const TASK_LIST = [
@@ -18,4 +19,7 @@ export const TASK_LIST = [
     { label: 'Update Custom Content Type', value: TASK_LIST_VALUES.UPDATE_CONTENT_TYPE },
     { label: 'Update Taxonomy', value: TASK_LIST_VALUES.UPDATE_TAXONOMY },
     { label: 'Update Relation', value: TASK_LIST_VALUES.UPDATE_RELATION },
+    { label: 'Delete Post Type', value: TASK_LIST_VALUES.DELETE_POST_TYPE },
 ]
+
+export const DELETE_LIST_ARRAY = [TASK_LIST_VALUES.DELETE_POST_TYPE]

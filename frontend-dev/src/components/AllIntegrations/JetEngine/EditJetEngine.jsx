@@ -11,7 +11,7 @@ import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import JetEngineIntegLayout from './JetEngineIntegLayout'
 import toast from 'react-hot-toast'
-import { TASK_LIST_VALUES } from './jetEngineConstants'
+import { DELETE_LIST_ARRAY, TASK_LIST_VALUES } from './jetEngineConstants'
 import { checkMappedFields, handleInput } from './jetEngineCommonFunctions'
 
 function EditJetEngine({ allIntegURL }) {
@@ -36,9 +36,11 @@ function EditJetEngine({ allIntegURL }) {
       return
     }
 
-    if (!checkMappedFields(jetEngineConf)) {
-      toast.error('Please map mandatory fields!')
-      return
+    if (!DELETE_LIST_ARRAY.includes(jetEngineConf.selectedTask)) {
+      if (!checkMappedFields(jetEngineConf)) {
+        toast.error('Please map mandatory fields!')
+        return
+      }
     }
 
     if (
@@ -90,6 +92,13 @@ function EditJetEngine({ allIntegURL }) {
     ) {
       toast.error('Please select a taxonomy!')
       return
+    }
+
+    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_POST_TYPE) {
+      if (!jetEngineConf.selectedCPT && !checkMappedFields(jetEngineConf)) {
+        toast.error('Please select a custom post type or map fields!')
+        return
+      }
     }
 
     saveActionConf({

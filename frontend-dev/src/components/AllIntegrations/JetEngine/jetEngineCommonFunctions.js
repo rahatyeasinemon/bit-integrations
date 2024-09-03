@@ -239,6 +239,8 @@ export const jetEngineStaticFields = (selectedTask) => {
       ],
       fieldMap: selectedTask === TASK_LIST_VALUES.CREATE_RELATION ? [{ formField: '', jetEngineField: 'name' }] : [{ formField: '', jetEngineField: '' }]
     }
+  } else if (selectedTask === TASK_LIST_VALUES.DELETE_POST_TYPE) {
+    return { staticFields: [{ key: 'post_type_id', label: 'Post Type ID', required: true }], fieldMap: [{ formField: '', jetEngineField: 'post_type_id' }] }
   }
 
   return { staticFields: [], fieldMap: [] }

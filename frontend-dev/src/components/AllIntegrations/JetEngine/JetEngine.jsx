@@ -12,7 +12,7 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { checkMappedFields } from './jetEngineCommonFunctions'
 import JetEngineIntegLayout from './JetEngineIntegLayout'
 import JetEngineAuthorization from './JetEngineAuthorization'
-import { TASK_LIST_VALUES } from './jetEngineConstants'
+import { DELETE_LIST_ARRAY, TASK_LIST_VALUES } from './jetEngineConstants'
 
 function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -55,7 +55,10 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
     selectedCCT: '',
     taxList: [],
     selectedTaxForEdit: '',
-    relationList: []
+    relationList: [],
+    deleteFieldMap: {
+      deletePostType: false
+    }
   })
 
   const saveConfig = () => {
@@ -90,9 +93,11 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
-    if (!checkMappedFields(jetEngineConf)) {
-      toast.error('Please map mandatory fields!')
-      return
+    if (!DELETE_LIST_ARRAY.includes(jetEngineConf.selectedTask)) {
+      if (!checkMappedFields(jetEngineConf)) {
+        toast.error('Please map mandatory fields!')
+        return
+      }
     }
 
     if (
@@ -146,6 +151,13 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
 
+    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_POST_TYPE) {
+      if (!jetEngineConf.selectedCPT && !checkMappedFields(jetEngineConf)) {
+        toast.error('Please select a custom post type or map fields!')
+        return
+      }
+    }
+
     jetEngineConf.field_map.length > 0 && setStep(pageNo)
   }
 
@@ -181,7 +193,7 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
         />
         <button
           onClick={() => nextPage(3)}
-          disabled={!checkMappedFields(jetEngineConf)}
+          disabled={false}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
           type="button">
           {__('Next', 'bit-integrations')} &nbsp;
