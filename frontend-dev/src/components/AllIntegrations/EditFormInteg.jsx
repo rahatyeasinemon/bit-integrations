@@ -62,6 +62,7 @@ import {
 import TriggerMultiOption from '../Triggers/TriggerMultiOption'
 import {
   getAllMasterStudyLmsCourse,
+  getAllMasterStudyLmsDistribution,
   getAllMasterStudyLmsLesson
 } from '../Triggers/TriggerHelpers/MasterStudyLmsHelper/MasterStudyLmsCommonFunction.js'
 import {
@@ -288,6 +289,8 @@ function EditFormInteg({ setSnackbar, className = '' }) {
         getAllMasterStudyLmsCourse(data, setFlow)
       } else if ([2].includes(Number(data.triggered_entity_id))) {
         getAllMasterStudyLmsLesson(data, setFlow)
+      } else if ([6].includes(Number(data.triggered_entity_id))) {
+        getAllMasterStudyLmsDistribution(data, setFlow)
       }
     }
     if (trigger === 'Groundhogg') {
