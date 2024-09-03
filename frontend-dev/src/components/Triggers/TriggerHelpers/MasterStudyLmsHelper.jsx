@@ -34,7 +34,7 @@ const MasterStudyLmsHelper = ({ flow, setFlowData, edit = false }) => {
             defaultValue={triggerData?.selectedCourse}
             options={triggerData?.allCourse?.map((list) => ({
               label: list.title,
-              value: list.id.toString(),
+              value: list.id.toString()
             }))}
             onChange={(val) => setFlowData(val, 'selectedCourse')}
             singleSelect
@@ -42,7 +42,7 @@ const MasterStudyLmsHelper = ({ flow, setFlowData, edit = false }) => {
           />
         </div>
       )}
-      {(id === '2') && (
+      {id === '2' && (
         <div className={edit ? 'flx mt-3' : ''}>
           <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select a Lesson</b>
           <MultiSelect
@@ -50,7 +50,7 @@ const MasterStudyLmsHelper = ({ flow, setFlowData, edit = false }) => {
             defaultValue={triggerData?.selectedLesson}
             options={triggerData?.allLesson?.map((list) => ({
               label: list.title,
-              value: list.id.toString(),
+              value: list.id.toString()
             }))}
             onChange={(val) => setFlowData(val, 'selectedLesson')}
             singleSelect
@@ -66,7 +66,7 @@ const MasterStudyLmsHelper = ({ flow, setFlowData, edit = false }) => {
             defaultValue={triggerData?.selectedCourse}
             options={triggerData?.allCourse?.map((list) => ({
               label: list.title,
-              value: list.id.toString(),
+              value: list.id.toString()
             }))}
             onChange={(val) => setFlowDataDepend(val, 'selectedCourse')}
             singleSelect
@@ -82,9 +82,27 @@ const MasterStudyLmsHelper = ({ flow, setFlowData, edit = false }) => {
             defaultValue={triggerData?.selectedQuiz}
             options={triggerData?.allQuiz?.map((list) => ({
               label: list.title,
-              value: list.id.toString(),
+              value: list.id.toString()
             }))}
             onChange={(val) => setFlowData(val, 'selectedQuiz')}
+            singleSelect
+            style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
+          />
+        </div>
+      )}
+      {id === '6' && (
+        <div className={edit ? 'flx mt-3' : ''}>
+          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
+            Select Point Distribution
+          </b>
+          <MultiSelect
+            className="msl-wrp-options"
+            defaultValue={triggerData?.selectedDistribution}
+            options={triggerData?.allDistribution?.map((list) => ({
+              label: list.title,
+              value: list.id
+            }))}
+            onChange={(val) => setFlowData(val, 'selectedDistribution')}
             singleSelect
             style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
           />
