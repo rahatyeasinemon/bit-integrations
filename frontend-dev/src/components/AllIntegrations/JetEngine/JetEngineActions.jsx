@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { TASK_LIST_VALUES } from './jetEngineConstants'
+import { DELETE_LIST_ARRAY, TASK_LIST_VALUES } from './jetEngineConstants'
 import { $btcbi } from '../../../GlobalStates'
 import { useRecoilValue } from 'recoil'
 import ConfirmModal from '../../Utilities/ConfirmModal'
@@ -146,7 +146,7 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
           </>
         )}
       </div>
-      {!isPro && (
+      {!isPro && !DELETE_LIST_ARRAY.includes(jetEngineConf.selectedTask) && (
         <div className="pt-2">
           <span className="actions-note">
             The Bit Integrations Pro plugin needs to be installed and activated to utilize these
