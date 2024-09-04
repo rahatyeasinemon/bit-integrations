@@ -41,7 +41,7 @@ const ActionHook = () => {
 
   const setTriggerData = () => {
     if (!selectedFields.length) {
-      toast.error(__('Please Select fields', 'bit-integrations'))
+      toast.error(__('Please Select Fields', 'bit-integrations'))
       return
     }
     if (!primaryKey) {

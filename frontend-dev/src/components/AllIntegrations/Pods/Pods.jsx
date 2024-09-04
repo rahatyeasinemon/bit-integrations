@@ -99,11 +99,11 @@ function Pods({ formFields, setFlow, flow, allIntegURL }) {
 
   const saveConfig = () => {
     if (!podsConf.post_type) {
-      setSnackbar({ show: true, msg: __("Pod cann't be empty", 'bit-integrations') })
+      setSnackbar({ show: true, msg: __("Pod can't be empty", 'bit-integrations') })
       return
     }
     if (!podsConf.post_status) {
-      setSnackbar({ show: true, msg: __("Post Status cann't be empty", 'bit-integrations') })
+      setSnackbar({ show: true, msg: __("Post Status can't be empty", 'bit-integrations') })
       return
     }
     if (!checkMappedPostFields(podsConf)) {
@@ -144,7 +144,7 @@ function Pods({ formFields, setFlow, flow, allIntegURL }) {
         onChange={(e) => getPodsField(e.target.name, e.target.value)}
         className="btcd-paper-inp w-5 mt-1">
         <option disabled selected>
-          Select Type
+          Select type
         </option>
         {postTypes?.map((type, key) => (
           <option key={`pod-${key * 2}`} value={type.name}>

@@ -30,7 +30,7 @@ export default function ZagoMailAuthorization({
       setError({
         name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
         api_public_key: !newConf.api_public_key
-          ? __("API Public Key cann't be empty", 'bit-integrations')
+          ? __("API Public Key can't be empty", 'bit-integrations')
           : ''
       })
       return

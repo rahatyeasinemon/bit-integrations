@@ -127,7 +127,7 @@ export default function WhatsAppIntegLayout({
             />
           </div>
           <div className="flx">
-            <b className="wdt-200 d-in-b">{__('Select Type of media:', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select type of media:', 'bit-integrations')}</b>
             <MultiSelect
               defaultValue={whatsAppConf?.mediaType}
               className="mt-2 w-5"

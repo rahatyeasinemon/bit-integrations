@@ -36,7 +36,7 @@ export const fetchAllList = (mailupConf, setMailupConf, setIsLoading, setSnackba
         }
         setSnackbar({
           show: true,
-          msg: __('Mailup all lists fetched successfully', 'bit-integrations')
+          msg: __('Mailup all Lists fetched successfully.', 'bit-integrations')
         })
         setMailupConf({ ...newConf })
       } else {
@@ -144,7 +144,7 @@ export const handleMailupAuthorize = (
   if (!confTmp.clientSecret) {
     setError({
       clientSecret: !confTmp.clientSecret
-        ? __("Client secret can't be empty", 'bit-integrations')
+        ? __("Client Secret can't be empty", 'bit-integrations')
         : ''
     })
     return

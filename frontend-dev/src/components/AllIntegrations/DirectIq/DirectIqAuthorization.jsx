@@ -30,10 +30,10 @@ export default function DirectIqAuthorization({
       setError({
         name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
         client_id: !newConf.client_id
-          ? __("Access Client ID cann't be empty", 'bit-integrations')
+          ? __("Access Client Id can't be empty", 'bit-integrations')
           : '',
         client_secret: !newConf.client_secret
-          ? __("Access Client Secret Key cann't be empty", 'bit-integrations')
+          ? __("Access Client Secret Key can't be empty", 'bit-integrations')
           : ''
       })
       return
@@ -74,7 +74,7 @@ export default function DirectIqAuthorization({
             <h4>${__('Get client id and client secret key', 'bit-integrations')}</h4>
             <ul>
                 <li>${__('First go to your DirectIq dashboard.', 'bit-integrations')}</li>
-                <li>${__('Click "Integrations", Then click "Api Keys"', 'bit-integrations')}</li>
+                <li>${__('Click "Integrations", Then click "API Keys"', 'bit-integrations')}</li>
             </ul>`
 
   return (
@@ -101,7 +101,7 @@ export default function DirectIqAuthorization({
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
 
       <div className="mt-3 wdt-200">
-        <b>{__('Access Client ID:', 'bit-integrations')}</b>
+        <b>{__('Access Client id:', 'bit-integrations')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"
@@ -109,7 +109,7 @@ export default function DirectIqAuthorization({
         name="client_id"
         value={directIqConf.client_id}
         type="text"
-        placeholder={__('Access Client ID...', 'bit-integrations')}
+        placeholder={__('Access client ID...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.client_id}</div>

@@ -84,7 +84,7 @@ export default function NimbleAuthorization({
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
 
       <small className="d-blk mt-3">
-        {__('To Get API Key, Please Visit', 'bit-integrations')}
+        {__('To get API key, please visit', 'bit-integrations')}
         &nbsp;
         <a className="btcd-link" href="https://app.nimble.com/#app/settings/tokens" target="_blank">
           {__('Nimble API Token', 'bit-integrations')}

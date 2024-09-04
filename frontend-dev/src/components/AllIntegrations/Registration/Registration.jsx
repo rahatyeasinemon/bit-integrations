@@ -59,7 +59,7 @@ export default function Registration({ formFields, setFlow, flow, allIntegURL })
       return
     }
     if (!userConf.user_role && userConf.action_type !== 'updated_user') {
-      setSnackbar({ show: true, msg: __("User Role cann't be empty", 'bit-integrations') })
+      setSnackbar({ show: true, msg: __("User Role can't be empty", 'bit-integrations') })
       return
     }
     if (!checkMappedUserFields(userConf) && userConf.action_type !== 'updated_user') {

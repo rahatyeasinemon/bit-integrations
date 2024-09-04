@@ -129,7 +129,7 @@ export const getAllContacts = (confTmp, setConf, setLoading) => {
         return
       }
       setLoading({ ...setLoading, contact: false })
-      toast.error(__('Contacts Not Found!', 'bit-integrations'))
+      toast.error(__('Contacts not found!', 'bit-integrations'))
       return
     }
     setLoading({ ...setLoading, contact: false })

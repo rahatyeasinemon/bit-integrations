@@ -82,7 +82,7 @@ export default function BitFormAuthorization({
         name="api_key"
         value={bitFormConf.api_key}
         type="text"
-        placeholder={__('Client id...', 'bit-integrations')}
+        placeholder={__('client ID...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>

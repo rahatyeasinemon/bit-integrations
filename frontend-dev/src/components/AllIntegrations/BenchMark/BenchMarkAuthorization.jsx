@@ -30,7 +30,7 @@ export default function BenchMarkAuthorization({
       setError({
         name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
         api_secret: !newConf.api_secret
-          ? __("Access API Secret Key cann't be empty", 'bit-integrations')
+          ? __("Access API Secret Key can't be empty", 'bit-integrations')
           : ''
       })
       return

@@ -1809,7 +1809,7 @@ final class TriggerFallback
             $posted_data['post_id'] = $postID;
         }
 
-        // array to string conversion for radio and select fields
+        // array to string conversion for radio and Select Fields
         $data = [];
         foreach ($posted_data as $key => $value) {
             if (\is_array($value) && \count($value) == 1) {

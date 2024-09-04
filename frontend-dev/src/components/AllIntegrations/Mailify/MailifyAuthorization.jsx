@@ -31,7 +31,7 @@ export default function MailifyAuthorization({
       setError({
         name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
         account_id: !newConf.account_id
-          ? __("Access Account ID cann't be empty", 'bit-integrations')
+          ? __("Access Account ID can't be empty", 'bit-integrations')
           : '',
         api_key: !newConf.api_key ? __("Access Api Key can't be empty", 'bit-integrations') : ''
       })

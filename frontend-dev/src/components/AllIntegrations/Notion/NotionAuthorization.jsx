@@ -79,7 +79,7 @@ function NotionAuthorization({
         <Input
           label={__('OAuth client secret', 'bit-integrations')}
           name="clientSecret"
-          placeholder={__('client secret...', 'bit-integrations')}
+          placeholder={__('client Secret...', 'bit-integrations')}
           value={notionConf.clientSecret}
           onchange={(e) => handleInput(e, notionConf, setNotionConf, error, setError)}
         />

@@ -115,7 +115,7 @@ export default function CustomApiAuthorization({
               name="key"
               value={customApiConf.key}
               type="text"
-              placeholder={__('key', 'bit-integrations')}
+              placeholder={__('Key', 'bit-integrations')}
               disabled={isInfo}
             />
           </div>
@@ -129,7 +129,7 @@ export default function CustomApiAuthorization({
               name="value"
               value={customApiConf.value}
               type="text"
-              placeholder={__('value', 'bit-integrations')}
+              placeholder={__('Value', 'bit-integrations')}
               disabled={isInfo}
             />
           </div>
@@ -155,7 +155,7 @@ export default function CustomApiAuthorization({
               name="key"
               value={customApiConf.key}
               type="text"
-              placeholder={__('key', 'bit-integrations')}
+              placeholder={__('Key', 'bit-integrations')}
               disabled={isInfo}
             />
           </div>
@@ -187,7 +187,7 @@ export default function CustomApiAuthorization({
               name="key"
               value={customApiConf.key}
               type="text"
-              placeholder={__('key', 'bit-integrations')}
+              placeholder={__('Key', 'bit-integrations')}
               disabled={isInfo}
             />
           </div>
@@ -200,12 +200,12 @@ export default function CustomApiAuthorization({
             name="username"
             value={customApiConf.username}
             type="text"
-            placeholder={__('User Name...', 'bit-integrations')}
+            placeholder={__(User Name...', 'bit-integrations')}
             disabled={isInfo}
           />
 
           <div className="mt-3">
-            <b>{__('password:', 'bit-integrations')}</b>
+            <b>{__('Password:', 'bit-integrations')}</b>
           </div>
           <input
             className="btcd-paper-inp w-6 mt-1"
@@ -213,7 +213,7 @@ export default function CustomApiAuthorization({
             name="password"
             value={customApiConf.password}
             type="text"
-            placeholder={__('password...', 'bit-integrations')}
+            placeholder={__('Password...', 'bit-integrations')}
             disabled={isInfo}
           />
         </div>

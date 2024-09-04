@@ -101,7 +101,7 @@ export default function GoogleCalendarAuthorization({
       </small>
 
       <div className="mt-3">
-        <b>{__('GoogleCalendar Client Id:', 'bit-integrations')}</b>
+        <b>{__('GoogleCalendar Client id:', 'bit-integrations')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"
@@ -109,7 +109,7 @@ export default function GoogleCalendarAuthorization({
         name="clientId"
         value={googleCalendarConf.clientId}
         type="text"
-        placeholder={__('Client Id...', 'bit-integrations')}
+        placeholder={__('client ID...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red' }}>{error.clientId}</div>
@@ -123,7 +123,7 @@ export default function GoogleCalendarAuthorization({
         name="clientSecret"
         value={googleCalendarConf.clientSecret}
         type="text"
-        placeholder={__('Client Secret...', 'bit-integrations')}
+        placeholder={__('client Secret...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red' }}>{error.clientSecret}</div>

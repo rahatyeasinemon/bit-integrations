@@ -172,11 +172,11 @@ export const getallPipelines = (salesflareConf, setSalesflareConf, loading, setL
         return draftConf
       })
 
-      toast.success(__('pipelines fetched successfully', 'bit-integrations'))
+      toast.success(__('Pipelines fetched successfully', 'bit-integrations'))
       setLoading({ ...loading, pipeline: false })
       return
     }
     setLoading({ ...loading, pipeline: false })
-    toast.error(__('pipelines fetching failed', 'bit-integrations'))
+    toast.error(__('Pipelines fetching failed', 'bit-integrations'))
   })
 }

@@ -87,7 +87,7 @@ export default function DropboxAuthorization({
       </small>
 
       <div className="mt-3">
-        <b>{__('Dropbox Client Id:', 'bit-integrations')}</b>
+        <b>{__('Dropbox Client id:', 'bit-integrations')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"
@@ -95,7 +95,7 @@ export default function DropboxAuthorization({
         name="clientId"
         value={dropboxConf.clientId}
         type="text"
-        placeholder={__('Client Id...', 'bit-integrations')}
+        placeholder={__('client ID...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red' }}>{error.clientId}</div>
@@ -109,7 +109,7 @@ export default function DropboxAuthorization({
         name="clientSecret"
         value={dropboxConf.clientSecret}
         type="text"
-        placeholder={__('Client Secret...', 'bit-integrations')}
+        placeholder={__('client Secret...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red' }}>{error.clientSecret}</div>

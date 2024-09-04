@@ -118,7 +118,7 @@ export default function ZoomWebinarAuthorization({
         name="clientId"
         value={zoomWebinarConf.clientId}
         type="text"
-        placeholder={__('Client id...', 'bit-integrations')}
+        placeholder={__('client ID...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.clientId}</div>
@@ -132,7 +132,7 @@ export default function ZoomWebinarAuthorization({
         name="clientSecret"
         value={zoomWebinarConf.clientSecret}
         type="text"
-        placeholder={__('Client secret...', 'bit-integrations')}
+        placeholder={__('client Secret...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.clientSecret}</div>

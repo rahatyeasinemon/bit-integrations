@@ -35,7 +35,7 @@ const CoblocksHelper = () => {
 
   const setTriggerData = () => {
     if (!selectedFields.length) {
-      toast.error('Please Select fields')
+      toast.error('Please Select Fields')
       return
     }
     if (!primaryKey) {

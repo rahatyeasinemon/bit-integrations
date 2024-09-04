@@ -97,7 +97,7 @@ export const suiteDashAuthentication = (
   if (!confTmp.public_id || !confTmp.secret_key) {
     setError({
       public_id: !confTmp.public_id ? __("Public Id can't be empty", 'bit-integrations') : '',
-      secret_key: !confTmp.secret_key ? __("Secret Key can't be empty", 'bit-integrations') : ''
+      secret_key: !confTmp.secret_key ? __('Secret key can't be empty', 'bit-integrations') : ''
     })
     return
   }

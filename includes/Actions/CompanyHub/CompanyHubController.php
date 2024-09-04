@@ -47,7 +47,6 @@ class CompanyHubController
         if (!isset($response->success)) {
             $companies = [];
             foreach ($response->Data as $company) {
-
                 $companies[]
                 = (object) [
                     'id'   => $company->ID,
@@ -71,7 +70,6 @@ class CompanyHubController
         if (!isset($response->success)) {
             $contacts = [];
             foreach ($response->Data as $company) {
-
                 $contacts[]
                 = (object) [
                     'id'   => $company->ID,

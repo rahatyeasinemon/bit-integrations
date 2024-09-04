@@ -284,7 +284,7 @@ export default function PerfexCRMIntegLayout({
                 refreshCustomFields(perfexCRMConf, setPerfexCRMConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh Custom Fields', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
               type="button"
               disabled={isLoading}>
               &#x21BB;

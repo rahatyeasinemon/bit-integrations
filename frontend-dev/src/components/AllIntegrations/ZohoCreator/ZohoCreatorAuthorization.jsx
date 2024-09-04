@@ -128,7 +128,7 @@ export default function ZohoCreatorAuthorization({
         name="clientId"
         value={creatorConf.clientId}
         type="text"
-        placeholder={__('Client id...', 'bit-integrations')}
+        placeholder={__('client ID...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red' }}>{error.clientId}</div>
@@ -142,7 +142,7 @@ export default function ZohoCreatorAuthorization({
         name="clientSecret"
         value={creatorConf.clientSecret}
         type="text"
-        placeholder={__('Client secret...', 'bit-integrations')}
+        placeholder={__('client Secret...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red' }}>{error.clientSecret}</div>

@@ -71,7 +71,7 @@ export default function VboutAuthorization({
       />
 
       <small className="d-blk mt-3">
-        {__('To Get API Key, Please Visit', 'bit-integrations')}
+        {__('To get API key, please visit', 'bit-integrations')}
         &nbsp;
         <a
           className="btcd-link"

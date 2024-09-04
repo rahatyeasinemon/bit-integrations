@@ -97,7 +97,7 @@ export default function SalesforceAuthorization({
         name="clientId"
         value={salesforceConf.clientId}
         type="text"
-        placeholder={__('Client id...', 'bit-integrations')}
+        placeholder={__('client ID...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red' }}>{error.clientId}</div>
@@ -111,7 +111,7 @@ export default function SalesforceAuthorization({
         name="clientSecret"
         value={salesforceConf.clientSecret}
         type="text"
-        placeholder={__('Client secret...', 'bit-integrations')}
+        placeholder={__('client Secret...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red' }}>{error.clientSecret}</div>

@@ -123,7 +123,7 @@ export default function LemlistAuthorization({
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
 
       <small className="d-blk mt-3">
-        {__('To Get Api Key, Please Visit', 'bit-integrations')}
+        {__('To get API key, please visit', 'bit-integrations')}
         &nbsp;
         <a
           className="btcd-link"

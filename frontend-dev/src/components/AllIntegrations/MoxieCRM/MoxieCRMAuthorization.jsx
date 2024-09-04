@@ -71,7 +71,7 @@ export default function MoxieCRMAuthorization({
       />
 
       <div className="mt-3">
-        <b>{__('Your API Url:', 'bit-integrations')}</b>
+        <b>{__('Your API URL:', 'bit-integrations')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"

@@ -85,11 +85,11 @@ export const getAllPipelines = (confTmp, setConf, setLoading, type, loading) => 
       )
 
       setLoading({ ...setLoading, pipelines: false })
-      toast.success(__('pipelines fetched successfully', 'bit-integrations'))
+      toast.success(__('Pipelines fetched successfully', 'bit-integrations'))
       return
     } else {
       setLoading({ ...setLoading, pipelines: false })
-      toast.error(__('pipelines fetching failed', 'bit-integrations'))
+      toast.error(__('Pipelines fetching failed', 'bit-integrations'))
     }
   })
 }
@@ -108,11 +108,11 @@ export const getAllOwners = (confTmp, setConf, setLoading) => {
       setConf(newConf)
       setLoading({ ...setLoading, owners: false, hubSpotFields: true })
 
-      toast.success(__('owners fetched successfully', 'bit-integrations'))
+      toast.success(__('Owners fetched successfully', 'bit-integrations'))
       return
     }
     setLoading({ ...setLoading, owners: false, hubSpotFields: true })
-    toast.error(__('owners fetching failed', 'bit-integrations'))
+    toast.error(__('Owners fetching failed', 'bit-integrations'))
   })
 }
 
@@ -130,7 +130,7 @@ export const getAllContacts = (confTmp, setConf, setLoading) => {
       setConf(newConf)
       setLoading({ ...setLoading, contacts: false, hubSpotFields: true })
 
-      toast.success(__('contacts fetched successfully', 'bit-integrations'))
+      toast.success(__('Contacts fetched successfully', 'bit-integrations'))
       return
     }
     setLoading({ ...setLoading, contacts: false, hubSpotFields: true })
@@ -152,11 +152,11 @@ export const getAllCompany = (confTmp, setConf, setLoading) => {
       setConf(newConf)
       setLoading({ ...setLoading, companies: false, hubSpotFields: true })
 
-      toast.success(__('companies fetched successfully', 'bit-integrations'))
+      toast.success(__('Companies fetched successfully', 'bit-integrations'))
       return
     }
     setLoading({ ...setLoading, companies: false, hubSpotFields: true })
-    toast.error(__('companies fetching failed', 'bit-integrations'))
+    toast.error(__('Companies fetching failed', 'bit-integrations'))
   })
 }
 

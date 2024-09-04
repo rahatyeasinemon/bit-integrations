@@ -45,7 +45,7 @@ export const fetchAllList = (sendFoxConf, setSendFoxConf, setIsLoading, setSnack
         }
         setSendFoxConf({ ...newConf })
         setIsLoading(false)
-        toast.success(__('Lists fetched successfully', 'bit-integrations'))
+        toast.success(__('Lists fetched successfully.', 'bit-integrations'))
         return
       }
       setIsLoading(false)

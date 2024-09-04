@@ -150,7 +150,7 @@ export const fetchAllList = (acumbamailConf, setAcumbamailConf, setIsLoading, se
         }
         setAcumbamailConf({ ...newConf })
         setIsLoading(false)
-        toast.success(__('Lists fetched successfully', 'bit-integrations'))
+        toast.success(__('Lists fetched successfully.', 'bit-integrations'))
         return
       }
       setIsLoading(false)

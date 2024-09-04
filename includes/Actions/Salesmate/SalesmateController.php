@@ -52,7 +52,6 @@ class SalesmateController
             $fieldMap = [];
             foreach ($response->Data as $module) {
                 foreach ($module->Fields as $field) {
-
                     $fieldMap[]
                     = [
                         'key'      => $field->fieldName,
@@ -132,7 +131,7 @@ class SalesmateController
             }
             wp_send_json_success($CRMPipelines, 200);
         } else {
-            wp_send_json_error('Pipelines fetching failed', 400);
+            wp_send_json_error(__('Pipelines fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -204,7 +203,7 @@ class SalesmateController
             }
             wp_send_json_success($CRMOwners, 200);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            wp_send_json_error(__('Owners fetching failed', 'bit-integrations'), 400);
         }
     }
 

@@ -116,7 +116,7 @@ export default function FlowluAuthorization({
       <div style={{ color: 'red', fontSize: '15px' }}>{error.company_name}</div>
 
       <small className="d-blk mt-3">
-        {__('To Get API Key, Please Visit', 'bit-integrations')}
+        {__('To get API key, please visit', 'bit-integrations')}
         &nbsp;
         <a className="btcd-link" onClick={handleSessionTokenLink}>
           {__('Flowlu API Key', 'bit-integrations')}

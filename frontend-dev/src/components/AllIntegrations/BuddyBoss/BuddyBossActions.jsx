@@ -111,7 +111,7 @@ export default function BuddyBossActions({ buddyBossConf, setBuddyBossConf, form
         title={__('Type', 'bit-integrations')}
       >
         <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">{__('Select Type of referral', 'bit-integrations')}</div>
+        <div className="mt-2">{__('Select type of referral', 'bit-integrations')}</div>
         {isLoading
           ? (
             <Loader style={{

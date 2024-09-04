@@ -64,7 +64,7 @@ export default function MailsterActions({ mailsterConf, setMailsterConf, loading
         onChange={(e) => actionHandler(e, 'tags')}
         className="wdt-200 mt-4 mr-2"
         value="select_tags"
-        title={__('Select Tags', 'bit-integrations')}
+        title={__('Select tags', 'bit-integrations')}
         subTitle={__('Choose which tags to add to subscribers.', 'bit-integrations')}
       />
       <ConfirmModal
@@ -110,7 +110,7 @@ export default function MailsterActions({ mailsterConf, setMailsterConf, loading
         title={__('Lists', 'bit-integrations')}>
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2 flx">
-          {__('Select lists', 'bit-integrations')}
+          {__('Select Lists', 'bit-integrations')}
           <Cooltip width={250} icnSize={17} className="ml-1">
             <div className="txt-body">Subscribers will be associated with the selected lists.</div>
           </Cooltip>
@@ -148,7 +148,7 @@ export default function MailsterActions({ mailsterConf, setMailsterConf, loading
         title={__('Tags', 'bit-integrations')}>
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2 flx">
-          {__('Select Tags', 'bit-integrations')}
+          {__('Select tags', 'bit-integrations')}
           <Cooltip width={300} icnSize={17} className="ml-1">
             <div className="txt-body">
               Selected tags will be associated with the subscriber. You can also add custom tags by

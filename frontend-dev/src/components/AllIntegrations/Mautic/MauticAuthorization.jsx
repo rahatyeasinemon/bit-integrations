@@ -98,7 +98,7 @@ export default function MauticAuthorization({
         name="baseUrl"
         value={mauticConf.baseUrl}
         type="text"
-        placeholder={__('User name...', 'bit-integrations')}
+        placeholder={__(User Name...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red' }}>{error.baseUrl}</div>
@@ -116,7 +116,7 @@ export default function MauticAuthorization({
         name="clientId"
         value={mauticConf.clientId}
         type="text"
-        placeholder={__('Client id...', 'bit-integrations')}
+        placeholder={__('client ID...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.clientId}</div>
@@ -130,7 +130,7 @@ export default function MauticAuthorization({
         name="clientSecret"
         value={mauticConf.clientSecret}
         type="text"
-        placeholder={__('Client secret...', 'bit-integrations')}
+        placeholder={__('client Secret...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.clientSecret}</div>

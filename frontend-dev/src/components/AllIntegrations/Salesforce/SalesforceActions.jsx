@@ -223,8 +223,8 @@ export default function SalesforceActions({
                 checked={'potentialLiabilityId' in salesforceConf.actions}
                 className="wdt-200 mt-4 mr-2"
                 value="potentialLiabilityId"
-                title={__('Potential Liability', 'bit-integrations')}
-                subTitle={__('Potential Liability of salesforce.', 'bit-integrations')}
+                title={__('Potential liability', 'bit-integrations')}
+                subTitle={__('Potential liability of salesforce.', 'bit-integrations')}
               />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>

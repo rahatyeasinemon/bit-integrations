@@ -92,7 +92,7 @@ export default function FreshSalesNewRecord({
                 refreshAccounts(freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh accounts', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh Accounts', 'bit-integrations')}'` }}
               type="button"
               disabled={isLoading}>
               &#x21BB;
@@ -161,7 +161,7 @@ export default function FreshSalesNewRecord({
                 refreshContacts(freshSalesConf, setFreshSalesConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh contacts', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh Contacts', 'bit-integrations')}'` }}
               type="button"
               disabled={isLoading}>
               &#x21BB;

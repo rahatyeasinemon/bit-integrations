@@ -107,11 +107,11 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
     if (!postConf.post_type) {
-      setSnackbar({ show: true, msg: __("Post Type cann't be empty", 'bit-integrations') })
+      setSnackbar({ show: true, msg: __("Post Type can't be empty", 'bit-integrations') })
       return
     }
     if (!postConf.post_status) {
-      setSnackbar({ show: true, msg: __("Post Status cann't be empty", 'bit-integrations') })
+      setSnackbar({ show: true, msg: __("Post Status can't be empty", 'bit-integrations') })
       return
     }
 

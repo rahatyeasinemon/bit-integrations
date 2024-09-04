@@ -75,7 +75,7 @@ export default function EmailOctopusAuthorization({
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.auth_token}</div>
       <small className="d-blk mt-3">
-        {__('To Get API key, Please Visit', 'bit-integrations')}
+        {__('To get API key, please visit', 'bit-integrations')}
         &nbsp;
         <a
           className="btcd-link"

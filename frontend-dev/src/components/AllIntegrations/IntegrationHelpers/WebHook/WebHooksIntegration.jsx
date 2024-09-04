@@ -85,7 +85,7 @@ export default function WebHooksIntegration({
     <div style={{ ...{ width: isInfo && 900 } }}>
       <div className="flx ">
         <div className="w-8 mr-2 mt-2 mb-4">
-          <div className="f-m">{__('Integration name', 'bit-integrations')}</div>
+          <div className="f-m">{__('Integration Name', 'bit-integrations')}</div>
           <input
             name="name"
             onChange={(e) => handleInput(e, webHooks, setWebHooks)}

@@ -311,7 +311,7 @@ export const getAllCRMPrimaryContact = (confTmp, setConf, loading, setLoading) =
     setLoading({ ...loading, CRMContacts: false })
     if (result && result.success) {
       if (!result.data) {
-        toast.error(__('Contacts Not Found!', 'bit-integrations'))
+        toast.error(__('Contacts not found!', 'bit-integrations'))
         return
       }
 

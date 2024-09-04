@@ -38,10 +38,10 @@ function SendinBlue({ formFields, setFlow, flow, allIntegURL }) {
       if (sendinBlueConf.templateId === '' || sendinBlueConf.redirectionUrl === '') {
         setError({
           templateId: !sendinBlueConf.templateId
-            ? __("Template name cann't be empty", 'bit-integrations')
+            ? __("Template name can't be empty", 'bit-integrations')
             : '',
           redirectionUrl: !sendinBlueConf.redirectionUrl
-            ? __("Redirection url name cann't be empty", 'bit-integrations')
+            ? __("Redirection url name can't be empty", 'bit-integrations')
             : ''
         })
         return

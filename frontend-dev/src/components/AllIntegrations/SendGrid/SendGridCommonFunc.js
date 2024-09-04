@@ -101,7 +101,7 @@ export const getLists = (confTmp, setConf, setLoading) => {
       setConf(newConf)
       setLoading({ ...setLoading, lists: false })
 
-      toast.success(__('Lists fetched successfully', 'bit-integrations'))
+      toast.success(__('Lists fetched successfully.', 'bit-integrations'))
       return
     }
     setLoading({ ...setLoading, lists: false })

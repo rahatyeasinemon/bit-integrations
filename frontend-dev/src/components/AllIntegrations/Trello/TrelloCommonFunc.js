@@ -128,7 +128,7 @@ export const handleTrelloAuthorize = (
 ) => {
   if (!confTmp.clientId) {
     setError({
-      clientId: !confTmp.clientId ? __("Client ID cann't be empty", 'bit-integrations') : ''
+      clientId: !confTmp.clientId ? __("Client Id can't be empty", 'bit-integrations') : ''
     })
     return
   }

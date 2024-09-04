@@ -44,7 +44,7 @@ export default function GravitecAuthorization({
             <ul>
                 <li>${__('First go to your Gravitec dashboard.', 'bit-integrations')}</li>
                 <li>${__('Click go to your "YOUR SITES" from left SideBar', 'bit-integrations')}</li>
-                <li>${__('Then Click "Settings"', 'bit-integrations')}</li>
+                <li>${__('Then click "Settings"', 'bit-integrations')}</li>
                 <li>${__('Then Click "REST API"', 'bit-integrations')}</li>
             </ul>`
 

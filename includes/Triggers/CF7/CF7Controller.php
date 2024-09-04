@@ -2,13 +2,13 @@
 
 namespace BitCode\FI\Triggers\CF7;
 
-use WPCF7_Submission;
-use WPCF7_ContactForm;
-use BitCode\FI\Flow\Flow;
-use WPCF7_FormTagsManager;
-use WPCF7_ShortcodeManager;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Flow\Flow;
+use WPCF7_ContactForm;
+use WPCF7_FormTagsManager;
+use WPCF7_ShortcodeManager;
+use WPCF7_Submission;
 
 final class CF7Controller
 {
@@ -128,7 +128,7 @@ final class CF7Controller
             $posted_data['post_id'] = $postID;
         }
 
-        // array to string conversion for radio and select fields
+        // array to string conversion for radio and Select Fields
         $data = [];
         foreach ($posted_data as $key => $value) {
             if (\is_array($value) && \count($value) == 1) {

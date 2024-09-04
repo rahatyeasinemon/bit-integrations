@@ -129,7 +129,7 @@ export default function LearnDeshIntegLayout({
 
       {learnDashConf.mainAction === '2' && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select Group: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select group: ', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             defaultValue={learnDashConf?.groupId}

@@ -89,7 +89,7 @@ export default function FreshSalesAuthorization({
 
       {freshSalesConf.bundle_alias && (
         <small className="d-blk mt-3">
-          {__('To Get API token, Please Visit', 'bit-integrations')}
+          {__('To Get API Token, Please Visit', 'bit-integrations')}
           &nbsp;
           <a
             className="btcd-link"

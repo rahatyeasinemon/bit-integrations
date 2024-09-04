@@ -142,7 +142,7 @@ function Mail({ allIntegURL, isInfo, edit, isLearnDash = false, learnDashConf })
       return
     }
     if (!conf.to) {
-      setSnackbar({ show: true, msg: __("Email Receiver cann't be empty", 'bit-integrations') })
+      setSnackbar({ show: true, msg: __("Email Receiver can't be empty", 'bit-integrations') })
       return
     }
     const allConf = { ...conf, learnDashConf }

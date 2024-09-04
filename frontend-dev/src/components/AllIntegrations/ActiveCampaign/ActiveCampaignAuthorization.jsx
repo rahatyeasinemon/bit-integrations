@@ -76,7 +76,7 @@ export default function ActiveCampaignAuthorization({
             <h4>${__('Get api url and api key', 'bit-integrations')}</h4>
             <ul>
                 <li>${__('First go to activeCampaign your dashboard.', 'bit-integrations')}</li>
-                <li>${__('Click "Settings", Then click "Developer.', 'bit-integrations')}"</li>
+                <li>${__('Click Settings, Then click Developer', 'bit-integrations')}"</li>
             </ul>`
 
   return (

@@ -218,7 +218,7 @@ export const getAllLists = (confTmp, setConf, setLoading) => {
       setConf(newConf)
       setLoading({ ...setLoading, Lists: false })
       if (confTmp.actionName === 'task') {
-        toast.success(__('Lists fetched successfully', 'bit-integrations'))
+        toast.success(__('Lists fetched successfully.', 'bit-integrations'))
       }
 
       return

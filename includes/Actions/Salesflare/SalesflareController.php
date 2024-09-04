@@ -78,7 +78,7 @@ class SalesflareController
 
             wp_send_json_success($tags, 200);
         } else {
-            wp_send_json_error('Tags fetching failed!', 400);
+            wp_send_json_error(__('Tags fetching failed!', 'bit-integrations'), 400);
         }
     }
 

@@ -28,7 +28,7 @@ export default function TelegramAuthorization({
     if (!newConf.name || !newConf.bot_api_key) {
       setError({
         name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
-        bot_api_key: !newConf.bot_api_key ? __("API Key cann't be empty", 'bit-integrations') : ''
+        bot_api_key: !newConf.bot_api_key ? __("API Key can't be empty", 'bit-integrations') : ''
       })
       return
     }

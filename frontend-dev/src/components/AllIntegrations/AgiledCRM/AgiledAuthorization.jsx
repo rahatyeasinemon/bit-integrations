@@ -87,7 +87,7 @@ export default function AgiledAuthorization({
       <div style={{ color: 'red', fontSize: '15px' }}>{error.auth_token}</div>
       {agiledConf.brand && (
         <small className="d-blk mt-3">
-          {__('To Get API token, Please Visit', 'bit-integrations')}
+          {__('To Get API Token, Please Visit', 'bit-integrations')}
           &nbsp;
           <a
             className="btcd-link"
