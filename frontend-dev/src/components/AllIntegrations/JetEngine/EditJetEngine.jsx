@@ -94,6 +94,14 @@ function EditJetEngine({ allIntegURL }) {
       return
     }
 
+    if (
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_RELATION &&
+      !jetEngineConf.relOptions.selectedRelationForEdit
+    ) {
+      toast.error('Please select a relation!')
+      return
+    }
+
     if (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_POST_TYPE) {
       if (!jetEngineConf.selectedCPT && !checkMappedFields(jetEngineConf)) {
         toast.error('Please select a custom post type or map fields!')
@@ -111,6 +119,13 @@ function EditJetEngine({ allIntegURL }) {
     if (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_TAXONOMY) {
       if (!jetEngineConf.selectedTaxForEdit && !checkMappedFields(jetEngineConf)) {
         toast.error('Please select a taxonomy or map fields!')
+        return
+      }
+    }
+
+    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_RELATION) {
+      if (!jetEngineConf.relOptions.selectedRelationForEdit && !checkMappedFields(jetEngineConf)) {
+        toast.error('Please select a relation or map fields!')
         return
       }
     }

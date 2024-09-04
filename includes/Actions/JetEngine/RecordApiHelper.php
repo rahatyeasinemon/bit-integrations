@@ -473,6 +473,27 @@ class RecordApiHelper
         return ['success' => false, 'message' => 'Failed to delete taxonomy!', 'code' => 400];
     }
 
+    public function deleteRelation($finalData, $selectedRelation)
+    {
+        if (empty($selectedRelation) && empty($finalData['relation_id'])) {
+            return ['success' => false, 'message' => 'Relation id not found in request!', 'code' => 400];
+        }
+
+        if (!empty($selectedRelation)) {
+            $id = $selectedRelation;
+        } else {
+            $id = $finalData['relation_id'];
+        }
+
+        jet_engine()->relations->data->set_request(['id' => $id]);
+
+        if (jet_engine()->relations->data->delete_item(false)) {
+            return ['success' => true, 'message' => 'Relation deleted successfully.'];
+        }
+
+        return ['success' => false, 'message' => 'Failed to delete relation!', 'code' => 400];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -546,6 +567,11 @@ class RecordApiHelper
             $response = $this->deleteTaxonomy($finalData, $selectedTax, $actions);
             $type = 'Taxonomy';
             $typeName = 'Delete Taxonomy';
+        } elseif ($selectedTask === 'deleteRelation') {
+            $selectedRelation = $relOptions['selectedRelationForEdit'];
+            $response = $this->deleteRelation($finalData, $selectedRelation);
+            $type = 'Relation';
+            $typeName = 'Delete Relation';
         }
 
         if ($response['success']) {

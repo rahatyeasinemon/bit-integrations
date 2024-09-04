@@ -49,7 +49,7 @@ export default function JetEngineIntegLayout({
       if (val === TASK_LIST_VALUES.UPDATE_TAXONOMY || val === TASK_LIST_VALUES.DELETE_TAXONOMY) {
         getJetEngineTaxList(newConf, setJetEngineConf, loading, setLoading)
       }
-      if (val === TASK_LIST_VALUES.UPDATE_RELATION) {
+      if (val === TASK_LIST_VALUES.UPDATE_RELATION || val === TASK_LIST_VALUES.DELETE_RELATION) {
         getJetEngineRelationList(newConf, setJetEngineConf, loading, setLoading)
       }
     } else {
@@ -99,7 +99,8 @@ export default function JetEngineIntegLayout({
           />
         </div>
 
-        {jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_RELATION && (
+        {(jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_RELATION ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_RELATION) && (
           <div className="flx mt-3 mb-4">
             <b className="wdt-200 d-in-b">{__('Select Relation:', 'bit-integrations')}</b>
             <MultiSelect
@@ -341,7 +342,8 @@ export default function JetEngineIntegLayout({
         )}
 
         {jetEngineConf.selectedTask &&
-          jetEngineConf.selectedTask !== TASK_LIST_VALUES.DELETE_CONTENT_TYPE && (
+          jetEngineConf.selectedTask !== TASK_LIST_VALUES.DELETE_CONTENT_TYPE &&
+          jetEngineConf.selectedTask !== TASK_LIST_VALUES.DELETE_RELATION && (
             <div>
               <br />
               <br />

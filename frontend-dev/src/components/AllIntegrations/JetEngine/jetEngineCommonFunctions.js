@@ -154,7 +154,9 @@ export const getJetEngineRelationList = (confTmp, setConf, loading, setLoading) 
         setConf(newConf)
         setLoading({ ...loading, relationList: false })
         toast.success(__('Taxonomy list fetched successfully', 'bit-integrations'))
-        getJetEngineRelationTypes(newConf, setConf, loading, setLoading)
+        if (newConf.selectedTask !== TASK_LIST_VALUES.DELETE_RELATION) {
+          getJetEngineRelationTypes(newConf, setConf, loading, setLoading)
+        }
         return
       }
       setLoading({ ...loading, relationList: false })
@@ -245,6 +247,8 @@ export const jetEngineStaticFields = (selectedTask) => {
     return { staticFields: [{ key: 'content_type_id', label: 'Content Type ID', required: true }], fieldMap: [{ formField: '', jetEngineField: 'content_type_id' }] }
   } else if (selectedTask === TASK_LIST_VALUES.DELETE_TAXONOMY) {
     return { staticFields: [{ key: 'tax_id', label: 'Taxonomy ID', required: true }], fieldMap: [{ formField: '', jetEngineField: 'tax_id' }] }
+  } else if (selectedTask === TASK_LIST_VALUES.DELETE_RELATION) {
+    return { staticFields: [{ key: 'relation_id', label: 'Relation ID', required: true }], fieldMap: [{ formField: '', jetEngineField: 'relation_id' }] }
   }
 
   return { staticFields: [], fieldMap: [] }
