@@ -40,7 +40,10 @@ export default function JetEngineIntegLayout({
       if (val === TASK_LIST_VALUES.UPDATE_POST_TYPE || val === TASK_LIST_VALUES.DELETE_POST_TYPE) {
         getJetEngineCPTList(newConf, setJetEngineConf, loading, setLoading)
       }
-      if (val === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE) {
+      if (
+        val === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE ||
+        val === TASK_LIST_VALUES.DELETE_CONTENT_TYPE
+      ) {
         getJetEngineCCTList(newConf, setJetEngineConf, loading, setLoading)
       }
       if (val === TASK_LIST_VALUES.UPDATE_TAXONOMY) {
@@ -204,7 +207,8 @@ export default function JetEngineIntegLayout({
           </div>
         )}
 
-        {jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE && (
+        {(jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_CONTENT_TYPE) && (
           <div className="flx mt-3 mb-4">
             <b className="wdt-200 d-in-b">{__('Custom Content Type:', 'bit-integrations')}</b>
             <MultiSelect
@@ -274,7 +278,7 @@ export default function JetEngineIntegLayout({
                 To delete, you can select from the list above, or you can map fields.
               </span>
               <TableCheckBox
-                checked={jetEngineConf.deleteFieldMap.deletePostType}
+                checked={jetEngineConf.deleteFieldMap[jetEngineConf.selectedTask]}
                 onChange={(e) => handleDeleteFieldMapCheck(e, jetEngineConf.selectedTask)}
                 className=" ml-2"
                 value="delete_field_map"
@@ -335,22 +339,23 @@ export default function JetEngineIntegLayout({
           </>
         )}
 
-        {jetEngineConf.selectedTask && (
-          <div>
-            <br />
-            <br />
-            <div className="mt-4">
-              <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
+        {jetEngineConf.selectedTask &&
+          jetEngineConf.selectedTask !== TASK_LIST_VALUES.DELETE_CONTENT_TYPE && (
+            <div>
+              <br />
+              <br />
+              <div className="mt-4">
+                <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
+              </div>
+              <div className="btcd-hr mt-1" />
+              <JetEngineActions
+                jetEngineConf={jetEngineConf}
+                setJetEngineConf={setJetEngineConf}
+                loading={loading}
+                setLoading={setLoading}
+              />
             </div>
-            <div className="btcd-hr mt-1" />
-            <JetEngineActions
-              jetEngineConf={jetEngineConf}
-              setJetEngineConf={setJetEngineConf}
-              loading={loading}
-              setLoading={setLoading}
-            />
-          </div>
-        )}
+          )}
       </div>
     </>
   )

@@ -57,7 +57,8 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
     selectedTaxForEdit: '',
     relationList: [],
     deleteFieldMap: {
-      deletePostType: false
+      deletePostType: false,
+      deleteContentType: false
     }
   })
 
@@ -154,6 +155,13 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
     if (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_POST_TYPE) {
       if (!jetEngineConf.selectedCPT && !checkMappedFields(jetEngineConf)) {
         toast.error('Please select a custom post type or map fields!')
+        return
+      }
+    }
+
+    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_CONTENT_TYPE) {
+      if (!jetEngineConf.selectedCCT && !checkMappedFields(jetEngineConf)) {
+        toast.error('Please select a custom content type or map fields!')
         return
       }
     }

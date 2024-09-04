@@ -405,6 +405,31 @@ class RecordApiHelper
         return ['success' => false, 'message' => 'Failed to delete relation!', 'code' => 400];
     }
 
+    public function deleteContentType($finalData, $selectedCCT)
+    {
+        if (!jet_engine()->modules->is_module_active('custom-content-types')) {
+            return ['success' => false, 'message' => 'Module - Custom Content Type is not active!', 'code' => 400];
+        }
+
+        if (empty($selectedCCT) && empty($finalData['content_type_id'])) {
+            return ['success' => false, 'message' => 'Content type id not found in request!', 'code' => 400];
+        }
+
+        if (!empty($selectedCCT)) {
+            $id = $selectedCCT;
+        } else {
+            $id = $finalData['content_type_id'];
+        }
+
+        Module::instance()->manager->data->set_request(['id' => $id]);
+
+        if (Module::instance()->manager->data->delete_item(false)) {
+            return ['success' => true, 'message' => 'Content Type deleted successfully.'];
+        }
+
+        return ['success' => false, 'message' => 'Failed to delete relation!', 'code' => 400];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -468,6 +493,11 @@ class RecordApiHelper
             $response = $this->deletePostType($finalData, $selectedCPT, $actions);
             $type = 'Post Type';
             $typeName = 'Delete Post Type';
+        } elseif ($selectedTask === 'deleteContentType') {
+            $selectedCCT = $createCPTSelectedOptions['selectedCCT'];
+            $response = $this->deleteContentType($finalData, $selectedCCT);
+            $type = 'Content Type';
+            $typeName = 'Delete Content Type';
         }
 
         if ($response['success']) {

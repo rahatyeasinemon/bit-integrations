@@ -101,6 +101,13 @@ function EditJetEngine({ allIntegURL }) {
       }
     }
 
+    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_CONTENT_TYPE) {
+      if (!jetEngineConf.selectedCCT && !checkMappedFields(jetEngineConf)) {
+        toast.error('Please select a custom content type or map fields!')
+        return
+      }
+    }
+
     saveActionConf({
       flow,
       allIntegURL,
