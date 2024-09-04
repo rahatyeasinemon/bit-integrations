@@ -402,7 +402,7 @@ class RecordApiHelper
             return ['success' => true, 'message' => 'Post Type deleted successfully.'];
         }
 
-        return ['success' => false, 'message' => 'Failed to delete relation!', 'code' => 400];
+        return ['success' => false, 'message' => 'Failed to delete post type!', 'code' => 400];
     }
 
     public function deleteContentType($finalData, $selectedCCT)
@@ -427,7 +427,50 @@ class RecordApiHelper
             return ['success' => true, 'message' => 'Content Type deleted successfully.'];
         }
 
-        return ['success' => false, 'message' => 'Failed to delete relation!', 'code' => 400];
+        return ['success' => false, 'message' => 'Failed to delete content type!', 'code' => 400];
+    }
+
+    public function deleteTaxonomy($finalData, $selectedTax, $actions)
+    {
+        if (empty($selectedTax) && empty($finalData['tax_id'])) {
+            return ['success' => false, 'message' => 'Taxonomy id not found in request!', 'code' => 400];
+        }
+
+        if (!empty($selectedTax)) {
+            $id = $selectedTax;
+        } else {
+            $id = $finalData['tax_id'];
+        }
+
+        $taxData = jet_engine()->taxonomies->data->get_item_for_edit($id);
+
+        if (!$taxData || !isset($taxData['general_settings']['slug'])) {
+            return ['success' => false, 'message' => 'Taxonomy data not found!', 'code' => 400];
+        }
+
+        if (isset($actions['delete_all_tax_terms']) && $actions['delete_all_tax_terms']) {
+            $fromTax = $taxData['general_settings']['slug'];
+
+            $terms = get_terms([
+                'taxonomy'   => $fromTax,
+                'hide_empty' => false,
+                'fields'     => 'ids',
+            ]);
+
+            if (!empty($terms) && !is_wp_error($terms)) {
+                foreach ($terms as $termId) {
+                    wp_delete_term($termId, $fromTax);
+                }
+            }
+        }
+
+        jet_engine()->taxonomies->data->set_request(['id' => $id]);
+
+        if (jet_engine()->taxonomies->data->delete_item(false)) {
+            return ['success' => true, 'message' => 'Taxonomy deleted successfully.'];
+        }
+
+        return ['success' => false, 'message' => 'Failed to delete taxonomy!', 'code' => 400];
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -498,6 +541,11 @@ class RecordApiHelper
             $response = $this->deleteContentType($finalData, $selectedCCT);
             $type = 'Content Type';
             $typeName = 'Delete Content Type';
+        } elseif ($selectedTask === 'deleteTaxonomy') {
+            $selectedTax = $taxOptions['selectedTaxForEdit'];
+            $response = $this->deleteTaxonomy($finalData, $selectedTax, $actions);
+            $type = 'Taxonomy';
+            $typeName = 'Delete Taxonomy';
         }
 
         if ($response['success']) {

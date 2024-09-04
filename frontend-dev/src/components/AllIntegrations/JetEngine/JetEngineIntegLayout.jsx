@@ -46,7 +46,7 @@ export default function JetEngineIntegLayout({
       ) {
         getJetEngineCCTList(newConf, setJetEngineConf, loading, setLoading)
       }
-      if (val === TASK_LIST_VALUES.UPDATE_TAXONOMY) {
+      if (val === TASK_LIST_VALUES.UPDATE_TAXONOMY || val === TASK_LIST_VALUES.DELETE_TAXONOMY) {
         getJetEngineTaxList(newConf, setJetEngineConf, loading, setLoading)
       }
       if (val === TASK_LIST_VALUES.UPDATE_RELATION) {
@@ -231,7 +231,8 @@ export default function JetEngineIntegLayout({
           </div>
         )}
 
-        {jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY && (
+        {(jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY ||
+          jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_TAXONOMY) && (
           <div className="flx mt-3 mb-4">
             <b className="wdt-200 d-in-b">{__('Select Taxonomy:', 'bit-integrations')}</b>
             <MultiSelect

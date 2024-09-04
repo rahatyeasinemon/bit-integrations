@@ -166,6 +166,13 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
       }
     }
 
+    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_TAXONOMY) {
+      if (!jetEngineConf.selectedTaxForEdit && !checkMappedFields(jetEngineConf)) {
+        toast.error('Please select a taxonomy or map fields!')
+        return
+      }
+    }
+
     jetEngineConf.field_map.length > 0 && setStep(pageNo)
   }
 

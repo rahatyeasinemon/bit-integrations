@@ -145,6 +145,18 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
             />
           </>
         )}
+        {jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_TAXONOMY && (
+          <>
+            <TableCheckBox
+              checked={jetEngineConf.actions?.delete_all_tax_terms || false}
+              onChange={(e) => actionHandler(e, 'checkbox')}
+              className="wdt-200 mt-4 mr-2"
+              value="delete_all_tax_terms"
+              title={__('Delete All Terms', 'bit-integrations')}
+              subTitle={__('Delete all terms related to the taxonomy.', 'bit-integrations')}
+            />
+          </>
+        )}
       </div>
       {!isPro && !DELETE_LIST_ARRAY.includes(jetEngineConf.selectedTask) && (
         <div className="pt-2">

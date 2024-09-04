@@ -108,6 +108,13 @@ function EditJetEngine({ allIntegURL }) {
       }
     }
 
+    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_TAXONOMY) {
+      if (!jetEngineConf.selectedTaxForEdit && !checkMappedFields(jetEngineConf)) {
+        toast.error('Please select a taxonomy or map fields!')
+        return
+      }
+    }
+
     saveActionConf({
       flow,
       allIntegURL,
