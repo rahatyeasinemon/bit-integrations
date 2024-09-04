@@ -772,7 +772,7 @@ export const handleAuthorize = (
         const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
         setSnackbar({
           show: true,
-          msg: `${__('Authorization failed', 'bit-integrations')} ${errorCause}. ${__('please try again', 'bit-integrations')}`
+          msg: `${__('Authorization Failed', 'bit-integrations')} ${errorCause}. ${__('please try again', 'bit-integrations')}`
         })
         setIsLoading(false)
       } else {

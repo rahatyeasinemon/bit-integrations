@@ -21,7 +21,7 @@ export default function SendyAuthorization({ sendyConf, setSendyConf, step, sets
     const newConf = { ...sendyConf }
     if (!newConf.name || !newConf.api_key) {
       setError({
-        name: !newConf.name ? __("Integration name cann't be empty", 'bit-integrations') : '',
+        name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
         api_key: !newConf.api_key ? __("API Key cann't be empty", 'bit-integrations') : '',
         sendy_url: !newConf.sendy_url ? __("Sendy URL cann't be empty", 'bit-integrations') : ''
       })

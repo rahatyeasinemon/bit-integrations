@@ -244,7 +244,7 @@ export default function SalesforceActions({
                 className="wdt-200 mt-4 mr-2"
                 value="caseType"
                 title={__('Type', 'bit-integrations')}
-                subTitle={__('Add Case Type.', 'bit-integrations')}
+                subTitle={__('Add Case Type', 'bit-integrations')}
               />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -254,7 +254,7 @@ export default function SalesforceActions({
                 className="wdt-200 mt-4 mr-2"
                 value="caseReason"
                 title={__('Case Reason', 'bit-integrations')}
-                subTitle={__('Add Case Reason.', 'bit-integrations')}
+                subTitle={__('Add Case Reason', 'bit-integrations')}
               />
             </div>
           </>

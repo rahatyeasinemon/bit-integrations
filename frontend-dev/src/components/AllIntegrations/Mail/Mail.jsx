@@ -138,7 +138,7 @@ function Mail({ allIntegURL, isInfo, edit, isLearnDash = false, learnDashConf })
 
   const saveConfig = () => {
     if (!conf.name) {
-      setSnackbar({ show: true, msg: __("Integration Name cann't be empty", 'bit-integrations') })
+      setSnackbar({ show: true, msg: __("Integration name can't be empty", 'bit-integrations') })
       return
     }
     if (!conf.to) {

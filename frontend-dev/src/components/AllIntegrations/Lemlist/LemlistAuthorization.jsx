@@ -28,8 +28,8 @@ export default function LemlistAuthorization({
     const newConf = { ...lemlistConf }
     if (!newConf.name || !newConf.api_key) {
       setError({
-        name: !newConf.name ? __("Integration name cann't be empty", 'bit-integrations') : '',
-        api_key: !newConf.api_key ? __("Access Api Key cann't be empty", 'bit-integrations') : ''
+        name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
+        api_key: !newConf.api_key ? __("Access Api Key can't be empty", 'bit-integrations') : ''
       })
       return
     }
@@ -109,7 +109,7 @@ export default function LemlistAuthorization({
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
 
       <div className="mt-3 wdt-250">
-        <b>{__('Access Api Key:', 'bit-integrations')}</b>
+        <b>{__('Access API Key:', 'bit-integrations')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"
@@ -117,7 +117,7 @@ export default function LemlistAuthorization({
         name="api_key"
         value={lemlistConf.api_key}
         type="text"
-        placeholder={__('Access Api Key...', 'bit-integrations')}
+        placeholder={__('Access API Key...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>

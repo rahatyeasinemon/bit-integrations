@@ -2,7 +2,17 @@ import { __, sprintf } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 
-export const handleInput = (e, sheetConf, setSheetConf, formID, setIsLoading, setSnackbar, isNew, error, setError) => {
+export const handleInput = (
+  e,
+  sheetConf,
+  setSheetConf,
+  formID,
+  setIsLoading,
+  setSnackbar,
+  isNew,
+  error,
+  setError
+) => {
   let newConf = { ...sheetConf }
   if (isNew) {
     const rmError = { ...error }
@@ -32,7 +42,8 @@ export const spreadSheetChange = (sheetConf, formID, setSheetConf, setIsLoading,
   if (!newConf?.default?.worksheets?.[sheetConf.spreadsheetId]) {
     refreshWorksheets(formID, newConf, setSheetConf, setIsLoading, setSnackbar)
   } else if (Object.keys(newConf?.default?.worksheets?.[sheetConf.spreadsheetId]).length === 1) {
-    newConf.worksheetName = newConf?.default?.worksheets?.[sheetConf.spreadsheetId][0].properties.title
+    newConf.worksheetName =
+      newConf?.default?.worksheets?.[sheetConf.spreadsheetId][0].properties.title
 
     if (!newConf?.default?.worksheets?.headers?.[newConf.worksheetName]) {
       refreshWorksheetHeaders(formID, newConf, setSheetConf, setIsLoading, setSnackbar)
@@ -62,10 +73,10 @@ export const refreshSpreadsheets = (formID, sheetConf, setSheetConf, setIsLoadin
     clientId: sheetConf.clientId,
     clientSecret: sheetConf.clientSecret,
     tokenDetails: sheetConf.tokenDetails,
-    ownerEmail: sheetConf.ownerEmail,
+    ownerEmail: sheetConf.ownerEmail
   }
   bitsFetch(refreshModulesRequestParams, 'gsheet_refresh_spreadsheets')
-    .then(result => {
+    .then((result) => {
       if (result && result.success) {
         const newConf = { ...sheetConf }
         if (!newConf.default) {
@@ -79,10 +90,22 @@ export const refreshSpreadsheets = (formID, sheetConf, setSheetConf, setIsLoadin
         }
         setSnackbar({ show: true, msg: __('Spreadsheet refreshed', 'bit-integrations') })
         setSheetConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: sprintf(__('Spreadsheet refresh failed Cause: %s. please try again', 'bit-integrations'), result.data.data || result.data) })
+      } else if (
+        (result && result.data && result.data.data) ||
+        (!result.success && typeof result.data === 'string')
+      ) {
+        setSnackbar({
+          show: true,
+          msg: sprintf(
+            __('Spreadsheet refresh failed Cause: %s. please try again', 'bit-integrations'),
+            result.data.data || result.data
+          )
+        })
       } else {
-        setSnackbar({ show: true, msg: __('Spreadsheet refresh failed. please try again', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Spreadsheet refresh failed. please try again', 'bit-integrations')
+        })
       }
       setIsLoading(false)
     })
@@ -100,10 +123,10 @@ export const refreshWorksheets = (formID, sheetConf, setSheetConf, setIsLoading,
     spreadsheetId,
     clientId: sheetConf.clientId,
     clientSecret: sheetConf.clientSecret,
-    tokenDetails: sheetConf.tokenDetails,
+    tokenDetails: sheetConf.tokenDetails
   }
   bitsFetch(refreshSpreadsheetsRequestParams, 'gsheet_refresh_worksheets')
-    .then(result => {
+    .then((result) => {
       if (result && result.success) {
         const newConf = { ...sheetConf }
         if (result.data.worksheets) {
@@ -119,14 +142,23 @@ export const refreshWorksheets = (formID, sheetConf, setSheetConf, setIsLoading,
         setSnackbar({ show: true, msg: __('Worksheets refreshed', 'bit-integrations') })
         setSheetConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Worksheets refresh failed. please try again', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Worksheets refresh failed. please try again', 'bit-integrations')
+        })
       }
       setIsLoading(false)
     })
     .catch(() => setIsLoading(false))
 }
 
-export const refreshWorksheetHeaders = (formID, sheetConf, setSheetConf, setIsLoading, setSnackbar) => {
+export const refreshWorksheetHeaders = (
+  formID,
+  sheetConf,
+  setSheetConf,
+  setIsLoading,
+  setSnackbar
+) => {
   const { spreadsheetId, worksheetName, header, headerRow } = sheetConf
   if (!spreadsheetId && !worksheetName && !header && !headerRow) {
     return
@@ -141,10 +173,10 @@ export const refreshWorksheetHeaders = (formID, sheetConf, setSheetConf, setIsLo
     headerRow,
     clientId: sheetConf.clientId,
     clientSecret: sheetConf.clientSecret,
-    tokenDetails: sheetConf.tokenDetails,
+    tokenDetails: sheetConf.tokenDetails
   }
   bitsFetch(refreshWorksheetHeadersRequestParams, 'gsheet_refresh_worksheet_headers')
-    .then(result => {
+    .then((result) => {
       if (result && result.success) {
         const newConf = { ...sheetConf }
         if (result.data.worksheet_headers?.length > 0) {
@@ -157,13 +189,20 @@ export const refreshWorksheetHeaders = (formID, sheetConf, setSheetConf, setIsLo
           if (!newConf.default.headers[spreadsheetId][worksheetName]) {
             newConf.default.headers[spreadsheetId][worksheetName] = {}
           }
-          newConf.default.headers[spreadsheetId][worksheetName][headerRow] = result.data.worksheet_headers
+          newConf.default.headers[spreadsheetId][worksheetName][headerRow] =
+            result.data.worksheet_headers
           if (result.data.tokenDetails) {
             newConf.tokenDetails = result.data.tokenDetails
           }
           setSnackbar({ show: true, msg: __('Worksheet Headers refreshed', 'bit-integrations') })
         } else {
-          setSnackbar({ show: true, msg: __('No Worksheet headers found. Try changing the header row number or try again', 'bit-integrations') })
+          setSnackbar({
+            show: true,
+            msg: __(
+              'No Worksheet headers found. Try changing the header row number or try again',
+              'bit-integrations'
+            )
+          })
         }
 
         if (result.data.tokenDetails) {
@@ -171,18 +210,30 @@ export const refreshWorksheetHeaders = (formID, sheetConf, setSheetConf, setIsLo
         }
         setSheetConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Worksheet Headers refresh failed. please try again', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Worksheet Headers refresh failed. please try again', 'bit-integrations')
+        })
       }
       setIsLoading(false)
     })
     .catch(() => setIsLoading(false))
 }
 
-export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, setIsLoading, setSnackbar) => {
+export const handleAuthorize = (
+  confTmp,
+  setConf,
+  setError,
+  setisAuthorized,
+  setIsLoading,
+  setSnackbar
+) => {
   if (!confTmp.clientId || !confTmp.clientSecret) {
     setError({
-      clientId: !confTmp.clientId ? __('Client ID cann\'t be empty', 'bit-integrations') : '',
-      clientSecret: !confTmp.clientSecret ? __('Secret key cann\'t be empty', 'bit-integrations') : '',
+      clientId: !confTmp.clientId ? __("Client ID cann't be empty", 'bit-integrations') : '',
+      clientSecret: !confTmp.clientSecret
+        ? __("Secret key cann't be empty", 'bit-integrations')
+        : ''
     })
     return
   }
@@ -202,14 +253,29 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
         grantTokenResponse = JSON.parse(bitsGoogleSheet)
         localStorage.removeItem('__googleSheet')
       }
-      if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {
+      if (
+        !grantTokenResponse.code ||
+        grantTokenResponse.error ||
+        !grantTokenResponse ||
+        !isauthRedirectLocation
+      ) {
         const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
-        setSnackbar({ show: true, msg: `${__('Authorization failed', 'bit-integrations')} ${errorCause}. ${__('please try again', 'bit-integrations')}` })
+        setSnackbar({
+          show: true,
+          msg: `${__('Authorization Failed', 'bit-integrations')} ${errorCause}. ${__('please try again', 'bit-integrations')}`
+        })
         setIsLoading(false)
       } else {
         const newConf = { ...confTmp }
         newConf.accountServer = grantTokenResponse['accounts-server']
-        tokenHelper(grantTokenResponse, newConf, setConf, setisAuthorized, setIsLoading, setSnackbar)
+        tokenHelper(
+          grantTokenResponse,
+          newConf,
+          setConf,
+          setisAuthorized,
+          setIsLoading,
+          setSnackbar
+        )
       }
     }
   }, 500)
@@ -223,25 +289,36 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setIsLoading
   tokenRequestParams.redirectURI = `${btcbi.api.base}/redirect`
 
   bitsFetch(tokenRequestParams, 'gsheet_generate_token')
-    .then(result => result)
-    .then(result => {
+    .then((result) => result)
+    .then((result) => {
       if (result && result.success) {
         const newConf = { ...confTmp }
         newConf.tokenDetails = result.data
         setConf(newConf)
         setisAuthorized(true)
         setSnackbar({ show: true, msg: __('Authorized Successfully', 'bit-integrations') })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
+      } else if (
+        (result && result.data && result.data.data) ||
+        (!result.success && typeof result.data === 'string')
+      ) {
+        setSnackbar({
+          show: true,
+          msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}`
+        })
       } else {
-        setSnackbar({ show: true, msg: __('Authorization failed. please try again', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Authorization failed. please try again', 'bit-integrations')
+        })
       }
       setIsLoading(false)
     })
 }
 
 export const checkMappedFields = (sheetconf) => {
-  const mappedFleld = sheetconf.field_map ? sheetconf.field_map.filter(mapped => (!mapped.formField && !mapped.googleSheetField)) : []
+  const mappedFleld = sheetconf.field_map
+    ? sheetconf.field_map.filter((mapped) => !mapped.formField && !mapped.googleSheetField)
+    : []
   if (mappedFleld.length > 0) {
     return false
   }

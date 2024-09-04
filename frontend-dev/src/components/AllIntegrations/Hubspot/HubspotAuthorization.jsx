@@ -78,7 +78,7 @@ export default function HubspotAuthorization({
         name="api_key"
         value={hubspotConf.api_key}
         type="text"
-        placeholder={__('Access token...', 'bit-integrations')}
+        placeholder={__('Access Token...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red' }}>{error.api_key}</div>

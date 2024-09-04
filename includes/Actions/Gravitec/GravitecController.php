@@ -28,7 +28,7 @@ class GravitecController
         $data = [
             'payload' => [
                 'title'        => 'Authorization',
-                'message'      => 'Authorized successfully',
+                'message'      => 'Authorized Successfully',
                 'icon'         => BTCBI_ASSET_URI . '/gravitec.jpg',
                 'redirect_url' => $fieldsRequestParams->site_url
             ]

@@ -29,11 +29,11 @@ export default function MailifyAuthorization({
     const newConf = { ...mailifyConf }
     if (!newConf.name || !newConf.api_key) {
       setError({
-        name: !newConf.name ? __("Integration name cann't be empty", 'bit-integrations') : '',
+        name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
         account_id: !newConf.account_id
           ? __("Access Account ID cann't be empty", 'bit-integrations')
           : '',
-        api_key: !newConf.api_key ? __("Access Api Key cann't be empty", 'bit-integrations') : ''
+        api_key: !newConf.api_key ? __("Access Api Key can't be empty", 'bit-integrations') : ''
       })
       return
     }
@@ -127,7 +127,7 @@ export default function MailifyAuthorization({
       <div style={{ color: 'red', fontSize: '15px' }}>{error.account_id}</div>
 
       <div className="mt-3 wdt-250">
-        <b>{__('Access Api Key:', 'bit-integrations')}</b>
+        <b>{__('Access API Key:', 'bit-integrations')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"
@@ -135,7 +135,7 @@ export default function MailifyAuthorization({
         name="api_key"
         value={mailifyConf.api_key}
         type="text"
-        placeholder={__('Access Api Key...', 'bit-integrations')}
+        placeholder={__('Access API Key...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>

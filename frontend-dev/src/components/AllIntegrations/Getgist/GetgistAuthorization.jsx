@@ -23,7 +23,7 @@ export default function GetgistAuthorization({
     const newConf = { ...getgistConf }
     if (!newConf.name || !newConf.api_key) {
       setError({
-        name: !newConf.name ? __("Integration name cann't be empty", 'bit-integrations') : '',
+        name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
         api_key: !newConf.api_key ? __("API Key cann't be empty", 'bit-integrations') : ''
       })
       return

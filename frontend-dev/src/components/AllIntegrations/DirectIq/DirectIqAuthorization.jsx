@@ -28,7 +28,7 @@ export default function DirectIqAuthorization({
     const newConf = { ...directIqConf }
     if (!newConf.name || !newConf.client_secret) {
       setError({
-        name: !newConf.name ? __("Integration name cann't be empty", 'bit-integrations') : '',
+        name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
         client_id: !newConf.client_id
           ? __("Access Client ID cann't be empty", 'bit-integrations')
           : '',

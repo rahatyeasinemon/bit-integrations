@@ -3,12 +3,12 @@ import toast from 'react-hot-toast'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { sprintf, __ } from '../../../Utils/i18nwrap'
-import {create} from 'mutative'
+import { create } from 'mutative'
 
 export const handleInput = (e, mailupConf, setMailupConf, setIsLoading, setSnackbar) => {
   const newConf = { ...mailupConf }
   const { name } = e.target
-  
+
   if (e.target.value !== '') {
     newConf[name] = e.target.value
     fetchAllGroup(newConf, setMailupConf, setIsLoading, setSnackbar)
@@ -16,7 +16,7 @@ export const handleInput = (e, mailupConf, setMailupConf, setIsLoading, setSnack
   } else {
     delete newConf[name]
   }
-  
+
   setMailupConf({ ...newConf })
 }
 
@@ -25,19 +25,25 @@ export const fetchAllList = (mailupConf, setMailupConf, setIsLoading, setSnackba
   const requestParams = {
     tokenDetails: mailupConf.tokenDetails,
     clientId: mailupConf.clientId,
-    clientSecret: mailupConf.clientSecret,
+    clientSecret: mailupConf.clientSecret
   }
   bitsFetch(requestParams, 'mailup_fetch_all_list')
-    .then(result => {
+    .then((result) => {
       if (result && result.success) {
         const newConf = { ...mailupConf }
         if (result.data) {
           newConf.allList = result.data
         }
-        setSnackbar({ show: true, msg: __('Mailup all lists fetched successfully', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Mailup all lists fetched successfully', 'bit-integrations')
+        })
         setMailupConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Mailup lists fetching failed. please try again', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Mailup lists fetching failed. please try again', 'bit-integrations')
+        })
       }
       setIsLoading(false)
     })
@@ -49,18 +55,26 @@ export const fetchAllField = (mailupConf, setMailupConf, setIsLoading, setSnackb
   const requestParams = {
     tokenDetails: mailupConf.tokenDetails,
     clientId: mailupConf.clientId,
-    clientSecret: mailupConf.clientSecret,
+    clientSecret: mailupConf.clientSecret
   }
   bitsFetch(requestParams, 'mailup_fetch_all_field')
-    .then(result => {
+    .then((result) => {
       if (result && result.success) {
-        setMailupConf(prevConf => create(prevConf, draftConf => {
-          draftConf.staticFields = result.data
-          draftConf.field_map = generateMappedField(draftConf)
-        }))
-        setSnackbar({ show: true, msg: __('Mailup all fields fetched successfully', 'bit-integrations') })
+        setMailupConf((prevConf) =>
+          create(prevConf, (draftConf) => {
+            draftConf.staticFields = result.data
+            draftConf.field_map = generateMappedField(draftConf)
+          })
+        )
+        setSnackbar({
+          show: true,
+          msg: __('Mailup all fields fetched successfully', 'bit-integrations')
+        })
       } else {
-        setSnackbar({ show: true, msg: __('Mailup fields fetching failed. please try again', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Mailup fields fetching failed. please try again', 'bit-integrations')
+        })
       }
       setIsLoading(false)
     })
@@ -73,10 +87,10 @@ export const fetchAllGroup = (mailupConf, setMailupConf, setIsLoading, setSnackb
     tokenDetails: mailupConf.tokenDetails,
     clientId: mailupConf.clientId,
     clientSecret: mailupConf.clientSecret,
-    listId: mailupConf.listId,
+    listId: mailupConf.listId
   }
   bitsFetch(requestParams, 'mailup_fetch_all_group')
-    .then(result => {
+    .then((result) => {
       if (result && result.success) {
         const newConf = { ...mailupConf }
         if (result.data) {
@@ -85,7 +99,10 @@ export const fetchAllGroup = (mailupConf, setMailupConf, setIsLoading, setSnackb
         setSnackbar({ show: true, msg: __('All groups fetched successfully', 'bit-integrations') })
         setMailupConf({ ...newConf })
       } else {
-        setSnackbar({ show: true, msg: __('Groups fetching failed. please try again', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Groups fetching failed. please try again', 'bit-integrations')
+        })
       }
       setIsLoading(false)
     })
@@ -97,7 +114,7 @@ export const setGrantTokenResponse = (integ) => {
   const authWindowLocation = window.location.href
   const queryParams = authWindowLocation.replace(`${window.opener.location.href}`, '').split('&')
   if (queryParams) {
-    queryParams.forEach(element => {
+    queryParams.forEach((element) => {
       const gtKeyValue = element.split('=')
       if (gtKeyValue[1]) {
         // eslint-disable-next-line prefer-destructuring
@@ -109,13 +126,27 @@ export const setGrantTokenResponse = (integ) => {
   window.close()
 }
 
-export const handleMailupAuthorize = (integ, confTmp, setConf, setError, setIsAuthorized, setIsLoading, setSnackbar) => {
+export const handleMailupAuthorize = (
+  integ,
+  confTmp,
+  setConf,
+  setError,
+  setIsAuthorized,
+  setIsLoading,
+  setSnackbar
+) => {
   if (!confTmp.clientId) {
-    setError({ clientId: !confTmp.clientId ? __('Client ID can\'t be empty', 'bit-integrations') : '' })
+    setError({
+      clientId: !confTmp.clientId ? __("Client ID can't be empty", 'bit-integrations') : ''
+    })
     return
   }
   if (!confTmp.clientSecret) {
-    setError({ clientSecret: !confTmp.clientSecret ? __('Client secret can\'t be empty', 'bit-integrations') : '' })
+    setError({
+      clientSecret: !confTmp.clientSecret
+        ? __("Client secret can't be empty", 'bit-integrations')
+        : ''
+    })
     return
   }
   setIsLoading(true)
@@ -139,9 +170,17 @@ export const handleMailupAuthorize = (integ, confTmp, setConf, setError, setIsAu
           grantTokenResponse.code = grantTokenResponse.token
         }
       }
-      if (!grantTokenResponse.code || grantTokenResponse.error || !grantTokenResponse || !isauthRedirectLocation) {
+      if (
+        !grantTokenResponse.code ||
+        grantTokenResponse.error ||
+        !grantTokenResponse ||
+        !isauthRedirectLocation
+      ) {
         const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
-        setSnackbar({ show: true, msg: `${__('Authorization failed', 'bit-integrations')} ${errorCause}. ${__('please try again', 'bit-integrations')}` })
+        setSnackbar({
+          show: true,
+          msg: `${__('Authorization Failed', 'bit-integrations')} ${errorCause}. ${__('please try again', 'bit-integrations')}`
+        })
         setIsLoading(false)
       } else {
         const newConf = { ...confTmp }
@@ -158,30 +197,43 @@ const tokenHelper = (grantToken, confTmp, setConf, setIsAuthorized, setIsLoading
   tokenRequestParams.clientSecret = confTmp.clientSecret
   // eslint-disable-next-line no-undef
 
-  bitsFetch(tokenRequestParams, 'mailup_authorization')
-    .then(result => {
-      if (result && result.success) {
-        const newConf = { ...confTmp }
-        newConf.tokenDetails = result.data
-        setConf(newConf)
-        setIsAuthorized(true)
-        toast.success(__('Authorized Successfully', 'bit-integrations'))
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        toast.error(`${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}`)
-      } else {
-        toast.error(__('Authorization failed. please try again', 'bit-integrations'))
-      }
-      setIsLoading(false)
-    })
+  bitsFetch(tokenRequestParams, 'mailup_authorization').then((result) => {
+    if (result && result.success) {
+      const newConf = { ...confTmp }
+      newConf.tokenDetails = result.data
+      setConf(newConf)
+      setIsAuthorized(true)
+      toast.success(__('Authorized Successfully', 'bit-integrations'))
+    } else if (
+      (result && result.data && result.data.data) ||
+      (!result.success && typeof result.data === 'string')
+    ) {
+      toast.error(
+        `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}`
+      )
+    } else {
+      toast.error(__('Authorization failed. please try again', 'bit-integrations'))
+    }
+    setIsLoading(false)
+  })
 }
 
 export const generateMappedField = (mailupConf) => {
-  const requiredFlds = mailupConf?.staticFields.filter(fld => fld.required === true)
-  return requiredFlds.length > 0 ? requiredFlds.map(field => ({ formField: '', mailupFormField: field.key })) : [{ formField: '', mailupFormField: '' }]
+  const requiredFlds = mailupConf?.staticFields.filter((fld) => fld.required === true)
+  return requiredFlds.length > 0
+    ? requiredFlds.map((field) => ({ formField: '', mailupFormField: field.key }))
+    : [{ formField: '', mailupFormField: '' }]
 }
 
 export const checkMappedFields = (mailupConf) => {
-  const mappedFields = mailupConf?.field_map ? mailupConf.field_map.filter(mappedField => (!mappedField.formField || !mappedField.mailupFormField || (!mappedField.formField === 'custom' && !mappedField.customValue))) : []
+  const mappedFields = mailupConf?.field_map
+    ? mailupConf.field_map.filter(
+        (mappedField) =>
+          !mappedField.formField ||
+          !mappedField.mailupFormField ||
+          (!mappedField.formField === 'custom' && !mappedField.customValue)
+      )
+    : []
   if (mappedFields.length > 0) {
     return false
   }

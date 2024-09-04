@@ -28,7 +28,7 @@ export default function ConvertKitAuthorization({
     const newConf = { ...convertKitConf }
     if (!newConf.name || !newConf.api_secret) {
       setError({
-        name: !newConf.name ? __("Integration name cann't be empty", 'bit-integrations') : '',
+        name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
         api_secret: !newConf.api_secret
           ? __("Access API Secret Key cann't be empty", 'bit-integrations')
           : ''
