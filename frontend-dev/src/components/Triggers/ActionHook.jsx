@@ -132,7 +132,7 @@ const ActionHook = () => {
         })
         .catch((err) => {
           if (err.name === 'AbortError') {
-            console.log('AbortError: Fetch request aborted')
+            console.log(__('AbortError: Fetch request aborted', 'bit-integrations'))
           }
         })
     }, 1500)
@@ -203,7 +203,7 @@ const ActionHook = () => {
               <br />            
               ${__('More Details on', 'bit-integrations')} 
               <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/action-hook-integrations" target="_blank" rel="noreferrer">${__('Documentation', 'bit-integrations')}</a>
-              or
+              ${__('or', 'bit-integrations')}
               <a className="btcd-link" href="https://youtu.be/pZ-8JuZfIco?si=Xxv857hJjv6p5Tcu" target="_blank" rel="noreferrer">${__('Youtube Tutorials', 'bit-integrations')}</a>
             </h5>`
 
@@ -337,7 +337,9 @@ const ActionHook = () => {
         <div className="flx flx-between">
           <button onClick={showResponseTable} className="btn btcd-btn-lg sh-sm flx">
             <span className="txt-actionHook-resbtn font-inter-500">
-              {showResponse ? 'Hide Response' : 'View Response'}
+              {showResponse
+                ? __('Hide Response', 'bit-integrations')
+                : __('View Response', 'bit-integrations')}
             </span>
             {!showResponse ? (
               <EyeIcn width="20" height="20" strokeColor="#000000" />
@@ -350,7 +352,7 @@ const ActionHook = () => {
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
             disabled={!selectedFields.length || !primaryKey}>
-            Set Action
+            {__('Set Action', 'bit-integrations')}
           </button>
         </div>
       )}

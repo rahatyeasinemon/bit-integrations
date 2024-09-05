@@ -82,9 +82,14 @@ export default function ChangelogToggle() {
           <div className="changelog">
             <div className="flx flx-col flx-center whats-new">
               <h3>{sprintf(__("What's New in %s", 'bit-integrations'), btcbi.version)}?</h3>
-              <small className="date">
-                {sprintf(__('Updated at: <b>%s</b>', 'bit-integrations'), '28th August 2024')}
-              </small>
+              <small
+                className="date"
+                dangerouslySetInnerHTML={{
+                  __html: sprintf(
+                    __('Updated at:  <b>%s</b>', 'bit-integrations'),
+                    '28th August 2024'
+                  )
+                }}></small>
             </div>
             <div className="changelog-content">
               <span className="new-integration">
@@ -113,7 +118,7 @@ export default function ChangelogToggle() {
                   href="https://bitapps.pro/docs/bit-integrations/free-changelogs/"
                   target="_blank"
                   rel="noreferrer">
-                  {__('Click here ')}
+                  {__('Click here')}&nbsp;
                   <ExternalLinkIcn size="14" />
                 </a>
               </div>

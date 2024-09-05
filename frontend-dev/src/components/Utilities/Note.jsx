@@ -5,7 +5,7 @@ export default function Note({ note, isInstruction = false, isHeadingNull = fals
     <div className="note">
       {!isHeadingNull && (
         <h4 className="mt-0">
-          {sprintf(__('%s', 'bit-integrations'), isInstruction ? 'Instruction' : 'Note')}
+          {isInstruction ? __('Instruction', 'bit-integrations') : __('Note', 'bit-integrations')}
         </h4>
       )}
       <div

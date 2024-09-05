@@ -32,8 +32,20 @@ export default function CashbackModal() {
             <b>{sprintf(__('Thank you for using %s', 'bit-integrations'), PRODUCT_NAME)}</b>
           </div>
           <div className="details-wrapper">
-            <p className="details">
-              Give us a review on WordPress by clicking the &nbsp;
+            <p
+              className="details"
+              dangerouslySetInnerHTML={{
+                __html: sprintf(
+                  __(
+                    'Give us a review on WordPress by clicking the <a href={REVIEW_URL} target="_blank" rel="noreferrer">%s</a> button and send an email with the review link to <a href="mailto:support@bitapps.pro" target="_blank" rel="noreferrer">%s</a>. We will honour you with <strong>%s</strong> for your time & effort.',
+                    'bit-integrations'
+                  ),
+                  __('Review us', 'bit-integrations'),
+                  'support@bitapps.pro',
+                  __('$10 Cashback', 'bit-integrations')
+                )
+              }}>
+              {/* Give us a review on WordPress by clicking the &nbsp;
               <a href={REVIEW_URL} target="_blank" rel="noreferrer">
                 {__('Review us', 'bit-integrations')}
               </a>
@@ -43,13 +55,14 @@ export default function CashbackModal() {
               </a>
               . We will honour you with &nbsp;
               <strong>{__('$10 Cashback', 'bit-integrations')}</strong>
-              &nbsp; for your time & effort.
+              &nbsp; for your time & effort. */}
             </p>
             <p>
               <b>{__('Suggestions on how you may write the review:', 'bit-integrations')}</b>
             </p>
             <p>
               {__('1. What features do you like most in Bit Integrations?', 'bit-integrations')}
+              <br />
               {__(
                 '2. Which software did you previously used for these features?',
                 'bit-integrations'

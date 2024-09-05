@@ -101,7 +101,7 @@ const CustomFormSubmission = () => {
         })
         .catch((err) => {
           if (err.name === 'AbortError') {
-            console.log('AbortError: Fetch request aborted')
+            console.log(__('AbortError: Fetch request aborted', 'bit-integrations'))
           }
         })
     }, 1500)
@@ -166,9 +166,9 @@ const CustomFormSubmission = () => {
                 : ''
             }
             <h5>
-              More Details on 
+              ${__('More Details on', 'bit-integrations')} 
               <a className="btcd-link" href=${newFlow?.triggerDetail?.documentation_url} target="_blank" rel="noreferrer">${__('Documentation', 'bit-integrations')}</a>
-              or
+              ${__('or', 'bit-integrations')}
               <a className="btcd-link" href=${newFlow?.triggerDetail?.tutorial_url} target="_blank" rel="noreferrer">${__('Youtube Tutorials', 'bit-integrations')}</a>
             </h5>`
 
@@ -183,7 +183,7 @@ const CustomFormSubmission = () => {
     <div className="trigger-custom-width">
       {newFlow?.triggerDetail?.multi_form && (
         <div className="w-8 m-a">
-          <h4>Select a Form/Task Name</h4>
+          <h4>{__('Select a Form/Task Name', 'bit-integrations')}</h4>
           <MultiSelect
             className="msl-wrp-options"
             defaultValue={newFlow?.triggerDetail?.triggered_entity_id}
@@ -263,7 +263,9 @@ const CustomFormSubmission = () => {
             <div className="flx flx-between">
               <button onClick={showResponseTable} className="btn btcd-btn-lg sh-sm purple flx">
                 <span className="txt-essentialBlocks-resbtn font-inter-500">
-                  {showResponse ? 'Hide Response' : 'View Response'}
+                  {showResponse
+                    ? __('Hide Response', 'bit-integrations')
+                    : __('View Response', 'bit-integrations')}
                 </span>
                 &nbsp;
                 {!showResponse ? (
@@ -277,7 +279,7 @@ const CustomFormSubmission = () => {
                 className="btn btcd-btn-lg purple sh-sm flx"
                 type="button"
                 disabled={!newFlow.triggerDetail.data.length || !primaryKey}>
-                Set Action
+                {__('Set Action', 'bit-integrations')}
               </button>
             </div>
           )}
