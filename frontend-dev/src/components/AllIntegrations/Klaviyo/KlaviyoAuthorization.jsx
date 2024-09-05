@@ -84,13 +84,13 @@ function KlaviyoAuthorization({
         {error.authKey && <div className="mt-1 mb-2 error-msg">{error.authKey}</div>}
 
         <small className="d-blk mt-1">
-          {__('To get API key, please visit', 'bit-integrations')}
+          {__('To get API key, please visit ', 'bit-integrations')}
           <a
             className="btcd-link"
             href="https://www.klaviyo.com/account#api-keys-tab"
             target="_blank"
             rel="noreferrer">
-            {__(' here.', 'bit-integrations')}
+            {__('here.', 'bit-integrations')}
           </a>
         </small>
         {!isInfo && (

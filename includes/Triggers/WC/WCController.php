@@ -79,7 +79,7 @@ final class WCController
             wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'WooCommerce'));
         }
         if (empty($data->id)) {
-            wp_send_json_error(__(' Doesn\'t exists', 'bit-integrations'));
+            wp_send_json_error(__('Doesn\'t exists', 'bit-integrations'));
         }
         $fields = self::fields($data->id);
         if (empty($fields)) {

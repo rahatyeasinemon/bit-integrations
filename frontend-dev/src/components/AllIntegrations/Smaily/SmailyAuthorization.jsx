@@ -46,7 +46,7 @@ export default function SmailyAuthorization({
 
   const note = `<h4>${__('To create API username and password, do the following.', 'bit-integrations')}</h4>
   <ol>
-  <li>${__('Click on your', 'bit-integrations')} <a href="https://www.sendsmaily.net/account/login/" target="_blank">account</a>${__(' name in the upper right corner of the page.', 'bit-integrations')}</li>
+  <li>${__('Click on your', 'bit-integrations')} <a href="https://www.sendsmaily.net/account/login/" target="_blank">account</a>${__('name in the upper right corner of the page.', 'bit-integrations')}</li>
   <li>${__('From a dropdown menu choose “Preferences”.', 'bit-integrations')}</li>
   <li>${__('Click on the “Integrations” tab.', 'bit-integrations')}</li>
   <li>${__('And then underneath API Passwords click on “Create a new user”.', 'bit-integrations')}</li>

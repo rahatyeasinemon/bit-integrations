@@ -2,7 +2,7 @@ import { Suspense, useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { $btcbi } from '../GlobalStates'
 import ChangelogIcn from '../Icons/ChangeLogIcn'
-import { __ } from '../Utils/i18nwrap'
+import { __, sprintf } from '../Utils/i18nwrap'
 import Modal from '../components/Utilities/Modal'
 import changelogInfo from '../Utils/StaticData/changelogInfo'
 import bitsFetch from '../Utils/bitsFetch'
@@ -56,7 +56,7 @@ export default function ChangelogToggle() {
   return (
     <div className="changelog-toggle">
       <button
-        title={"What's New"}
+        title={__("What's New", 'bit-integrations')}
         type="button"
         className="changelog-btn"
         onClick={() => setShow(true)}>
@@ -81,14 +81,14 @@ export default function ChangelogToggle() {
         ) : (
           <div className="changelog">
             <div className="flx flx-col flx-center whats-new">
-              <h3>What's New in {btcbi.version}?</h3>
+              <h3>{sprintf(__("What's New in %s", 'bit-integrations'), btcbi.version)}?</h3>
               <small className="date">
-                Updated at: <b>28th August 2024</b>
+                {sprintf(__('Updated at: <b>%s</b>', 'bit-integrations'), '28th August 2024')}
               </small>
             </div>
             <div className="changelog-content">
               <span className="new-integration">
-                <b>New Trigger</b>
+                <b>{__('New Trigger', 'bit-integrations')}</b>
               </span>
 
               <div className="integration-list">
@@ -98,7 +98,7 @@ export default function ChangelogToggle() {
               </div>
 
               <span className="new-feature">
-                <b>New Features</b>
+                <b>{__('New Features', 'bit-integrations')}</b>
               </span>
 
               <div className="feature-list">
@@ -122,17 +122,21 @@ export default function ChangelogToggle() {
               <div>
                 <div className="btcd-hr mt-2"></div>
                 <div className="flx flx-col flx-center">
-                  <h4 className="mt-2 mb-0">Opt-In For Plugin Improvement</h4>
+                  <h4 className="mt-2 mb-0">
+                    {__('Opt-In For Plugin Improvement', 'bit-integrations')}
+                  </h4>
                 </div>
                 <div className="m-2 txt-sm">
-                  Accept and continue to share usage data to help us improve the plugin, the plugin
-                  will still function if you skip.
+                  {__(
+                    'Accept and continue to share usage data to help us improve the plugin, the plugin will still function if you skip.',
+                    'bit-integrations'
+                  )}
                   <br />
                   <a
                     className="app-link-active"
                     target="blank"
                     href="https://bitapps.pro/terms-of-service/">
-                    Click here to see terms
+                    {__('Click here to see terms', 'bit-integrations')}
                   </a>
                 </div>
                 <button
@@ -145,7 +149,7 @@ export default function ChangelogToggle() {
                   type="button"
                   className="btn round btcd-btn-lg purple purple-sh submit-btn"
                   onClick={() => handleSubmit()}>
-                  Accept and continue
+                  {__('Accept and continue', 'bit-integrations')}
                 </button>
               </div>
             )}

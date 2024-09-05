@@ -377,7 +377,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
   return (
     <>
       <div className={`${className || 'flx'}`}>
-        <b className="wdt-200 d-in-b">{__(' Form/Task Name:', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b">{__('Form/Task Name:', 'bit-integrations')}</b>
         <select
           name="triggered_entity_id"
           value={flow.triggered_entity_id}
