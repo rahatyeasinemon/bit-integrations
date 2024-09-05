@@ -48,7 +48,7 @@ class BuddyBossController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(__('BuddyBoss must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'BuddyBoss'));
     }
 
     public static function getAllGroups()
@@ -60,7 +60,7 @@ class BuddyBossController
 
             wp_send_json_success($groups, 200);
         }
-        wp_send_json_error(__('BuddyBoss must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'BuddyBoss'));
     }
 
     public static function getAllUser()
@@ -71,7 +71,7 @@ class BuddyBossController
             $users = $wpdb->get_results("select ID,display_name from {$wpdb->prefix}users");
             wp_send_json_success($users, 200);
         }
-        wp_send_json_error(__('BuddyBoss must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'BuddyBoss'));
     }
 
     public static function getAllForums()

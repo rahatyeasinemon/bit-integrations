@@ -21,7 +21,7 @@ class LifterLmsController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(__('LifterLms must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'LifterLms'));
     }
 
     public static function getAllLesson()

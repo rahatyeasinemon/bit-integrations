@@ -44,7 +44,7 @@ final class WCController
     public function getAll()
     {
         if (!class_exists('WooCommerce')) {
-            wp_send_json_error(__('WooCommerce is not installed or activated', 'bit-integrations'));
+            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'WooCommerce'));
         }
 
         $wc_action = [
@@ -76,7 +76,7 @@ final class WCController
     public function get_trigger_field($data)
     {
         if (!class_exists('WooCommerce')) {
-            wp_send_json_error(__('WooCommerce is not installed or activated', 'bit-integrations'));
+            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'WooCommerce'));
         }
         if (empty($data->id)) {
             wp_send_json_error(__(' Doesn\'t exists', 'bit-integrations'));

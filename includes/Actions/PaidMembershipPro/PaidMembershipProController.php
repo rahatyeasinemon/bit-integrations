@@ -20,7 +20,7 @@ class PaidMembershipProController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(__('Paid Membership must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'Paid Membership'));
     }
 
     public static function getAllPaidMembershipProLevel()

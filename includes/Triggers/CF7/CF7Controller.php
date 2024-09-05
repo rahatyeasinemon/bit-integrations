@@ -2,13 +2,13 @@
 
 namespace BitCode\FI\Triggers\CF7;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Flow\Flow;
+use WPCF7_Submission;
 use WPCF7_ContactForm;
+use BitCode\FI\Flow\Flow;
 use WPCF7_FormTagsManager;
 use WPCF7_ShortcodeManager;
-use WPCF7_Submission;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 
 final class CF7Controller
 {
@@ -41,7 +41,7 @@ final class CF7Controller
     public function getAll()
     {
         if (!class_exists('WPCF7_ContactForm')) {
-            wp_send_json_error(__('Contact Form 7 is not installed or activated', 'bit-integrations'));
+            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'Contact Form 7'));
         }
         $forms = WPCF7_ContactForm::find();
         $all_forms = [];

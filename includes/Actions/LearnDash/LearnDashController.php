@@ -40,7 +40,7 @@ class LearnDashController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(__('LearnDash must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'LearnDash'));
     }
 
     public static function getCourses()

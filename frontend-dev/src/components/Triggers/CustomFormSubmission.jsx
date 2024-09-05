@@ -173,7 +173,12 @@ const CustomFormSubmission = () => {
             </h5>`
 
   return !newFlow?.triggerDetail?.is_active ? (
-    <span className="mt-3">{newFlow?.triggerDetail?.name} is not installed or activated.</span>
+    <span className="mt-3">
+      {sprintf(
+        __('%s is not installed or activated.', 'bit-integrations'),
+        newFlow?.triggerDetail?.name
+      )}
+    </span>
   ) : (
     <div className="trigger-custom-width">
       {newFlow?.triggerDetail?.multi_form && (

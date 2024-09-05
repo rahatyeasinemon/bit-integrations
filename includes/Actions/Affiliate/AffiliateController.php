@@ -35,7 +35,7 @@ class AffiliateController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(__('Affiliate must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'Affiliate'));
     }
 
     public static function getAllAffiliate()

@@ -4675,7 +4675,7 @@ final class TriggerFallback
     public static function surecartPurchaseProduct($data)
     {
         if (!self::surecartPluginActive()) {
-            wp_send_json_error(__('SureCart is not installed or activated', 'bit-integrations'));
+            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'SureCart'));
         }
         $accountDetails = \SureCart\Models\Account::find();
         $product = \SureCart\Models\Product::find($data['product_id']);
