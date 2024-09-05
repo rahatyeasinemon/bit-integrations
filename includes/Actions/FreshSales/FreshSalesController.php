@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\FreshSales;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for FreshSales integration
@@ -219,7 +219,7 @@ class FreshSalesController
             || empty($api_key)
             || empty($bundle_alias)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for FreshSales api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'FreshSales'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $freshSalesApiResponse = $recordApiHelper->execute(

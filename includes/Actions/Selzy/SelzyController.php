@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Selzy;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Selzy integration
@@ -116,7 +116,7 @@ class SelzyController
             empty($field_map)
             || empty($authKey)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Selzy api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Selzy'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $selzyApiResponse = $recordApiHelper->execute(

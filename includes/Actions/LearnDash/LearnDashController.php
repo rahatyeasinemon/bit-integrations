@@ -192,7 +192,7 @@ class LearnDashController
             empty($integId)
             || empty($mainAction)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for LearnDash api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'LearnDash'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $learnDashApiResponse = $recordApiHelper->execute(

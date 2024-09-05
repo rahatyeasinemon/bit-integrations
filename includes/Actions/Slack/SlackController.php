@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Slack;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for slack integration
@@ -72,7 +72,7 @@ class SlackController
             || empty($channel_id)
             || empty($body)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Slack api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Slack'));
         }
         $recordApiHelper = new RecordApiHelper(self::APIENDPOINT, $access_token, $integrationId);
         $slackApiResponse = $recordApiHelper->execute(

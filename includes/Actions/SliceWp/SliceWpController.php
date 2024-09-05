@@ -33,7 +33,7 @@ class SliceWpController
             empty($integId)
             || empty($mainAction)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for sliceWp affiliate api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'sliceWp affiliate'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $sliceWpApiResponse = $recordApiHelper->execute(

@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Actions\MailMint;
 
+use WP_Error;
 use Mint\MRM\Constants;
 use Mint\MRM\DataBase\Models\ContactGroupModel;
 use Mint\MRM\DataBase\Tables\CustomFieldSchema;
-use WP_Error;
 
 class MailMintController
 {
@@ -97,7 +97,7 @@ class MailMintController
             empty($integId)
             || empty($mainAction)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Mail Mint api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mail Mint'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $mailMintApiResponse = $recordApiHelper->execute(

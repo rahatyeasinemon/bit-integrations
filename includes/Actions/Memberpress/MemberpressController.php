@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\Memberpress;
 
-use MeprOptions;
 use WP_Error;
+use MeprOptions;
 
 class MemberpressController
 {
@@ -104,7 +104,7 @@ class MemberpressController
             empty($integId)
             || empty($mainAction) || empty($selectedMembership)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for memberpress api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'memberpress'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $memberpressApiResponse = $recordApiHelper->execute(

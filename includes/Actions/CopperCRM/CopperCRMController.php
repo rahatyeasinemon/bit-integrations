@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\CopperCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for CopperCRM integration
@@ -278,7 +278,7 @@ class CopperCRMController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for CopperCRM api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Copper CRM'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

@@ -6,10 +6,10 @@
 
 namespace BitCode\FI\Actions\ZohoBigin;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Log\LogHandler;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -448,7 +448,7 @@ class ZohoBiginController
             || empty($module)
             || empty($fieldMap)
         ) {
-            $error = new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for zoho bigin api', 'bit-integrations'));
+            $error = new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Zoho Bigin'));
             LogHandler::save($this->_integrationID, 'record', 'validation', $error);
 
             return $error;

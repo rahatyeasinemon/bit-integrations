@@ -48,7 +48,7 @@ class PropovoiceCRMController
             || empty($fieldMap)
 
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Propovoice CRM', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Propovoice CRM'));
         }
         $recordApiHelper = new RecordApiHelper($integrationId);
         $propovoiceCrmApiResponse = $recordApiHelper->execute(

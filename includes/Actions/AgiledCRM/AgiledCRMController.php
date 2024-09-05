@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\AgiledCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for AgiledCRM integration
@@ -246,7 +246,7 @@ class AgiledCRMController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Agiled CRM api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Agiled CRM'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

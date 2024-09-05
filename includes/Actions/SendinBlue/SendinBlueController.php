@@ -198,7 +198,7 @@ class SendinBlueController
             || empty($fieldMap)
             || empty($defaultDataConf)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Sendinblue api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Sendinblue'));
         }
         $recordApiHelper = new RecordApiHelper($api_key, $integId);
         $sendinBlueApiResponse = $recordApiHelper->execute(

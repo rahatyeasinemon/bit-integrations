@@ -152,7 +152,7 @@ class MailupController
         }
 
         if (empty($fieldMap) || empty($tokenDetails) || empty($selectedList)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Mailup api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mailup'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $tokenDetails->access_token);

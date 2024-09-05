@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\OneHashCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for OneHashCRM integration
@@ -48,7 +48,7 @@ class OneHashCRMController
         $domain = $integrationDetails->domain;
 
         if (empty($fieldMap) || empty($apiKey) || empty($apiSecret) || empty($actionName) || empty($domain)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for OneHashCRM api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'OneHashCRM'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey, $apiSecret, $domain);

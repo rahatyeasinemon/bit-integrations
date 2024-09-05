@@ -6,10 +6,10 @@
 
 namespace BitCode\FI\Actions\ConstantContact;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Log\LogHandler;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Constant Contact integration
@@ -248,7 +248,7 @@ class ConstantContactController
             empty($fieldMap)
              || empty($auth_token)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Constant Contact api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Constant Contact'));
         }
 
         if ((\intval($integrationDetails->tokenDetails->generates_on) + (1435 * 60)) < time()) {

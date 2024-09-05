@@ -93,7 +93,7 @@ class SystemeIOController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($actionName) || empty($apiKey)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for SystemeIO api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SystemeIO'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey);

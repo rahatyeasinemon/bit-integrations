@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\CapsuleCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for CapsuleCRM integration
@@ -258,7 +258,7 @@ class CapsuleCRMController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for CapsuleCRM api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Capsule CRM'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Salesflare;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Salesflare integration
@@ -46,7 +46,6 @@ class SalesflareController
         if (!isset($response->error)) {
             $fieldMap = [];
             foreach ($response as $field) {
-
                 $fieldMap[]
                 = (object) [
                     'key'      => "custom_field_{$field->api_field}",
@@ -93,7 +92,6 @@ class SalesflareController
         if (!isset($response->error)) {
             $accounts = [];
             foreach ($response as $account) {
-
                 $accounts[]
                 = (object) [
                     'id'   => $account->id,
@@ -119,7 +117,6 @@ class SalesflareController
         if (!isset($response->error)) {
             $pipelines = [];
             foreach ($response as $pipeline) {
-
                 $pipelines[]
                 = (object) [
                     'id'     => $pipeline->id,
@@ -144,7 +141,7 @@ class SalesflareController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($apiKey) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Salesflare api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Salesflare'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey);

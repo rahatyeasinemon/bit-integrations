@@ -287,7 +287,7 @@ class MailChimpController
             || empty($fieldMap)
             || empty($defaultDataConf)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Mail Chimp api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mail Chimp'));
         }
         $recordApiHelper = new RecordApiHelper($tokenDetails, $this->_integrationID);
         $mChimpApiResponse = $recordApiHelper->execute(

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Flowlu;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Flowlu integration
@@ -366,7 +366,7 @@ class FlowluController
         $comapnyName = $integrationDetails->company_name;
 
         if (empty($fieldMap) || empty($apiKey) || empty($actionName) || empty($comapnyName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Flowlu api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Flowlu'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $comapnyName);
