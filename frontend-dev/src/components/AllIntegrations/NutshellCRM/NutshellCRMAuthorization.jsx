@@ -81,7 +81,7 @@ export default function NutshellCRMAuthorization({
         name="user_name"
         value={nutshellCRMConf.user_name}
         type="text"
-        placeholder={__(User Name...', 'bit-integrations')}
+        placeholder={__('User Name...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.user_name}</div>

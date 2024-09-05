@@ -142,7 +142,7 @@ export const handleMauticAuthorize = (
     setError({
       clientId: !confTmp.clientId ? __("Client Id can't be empty", 'bit-integrations') : '',
       clientSecret: !confTmp.clientSecret
-        ? __('Secret key can't be empty', 'bit-integrations')
+        ? __("Secret key can't be empty", 'bit-integrations')
         : '',
       baseUrl: !confTmp.baseUrl ? __("Base Url can't be empty", 'bit-integrations') : ''
     })

@@ -147,7 +147,7 @@ export const handleAuthorization = (
     setError({
       dataCenter: !confTmp.dataCenter ? __("Data center can't be empty") : '',
       clientId: !confTmp.clientId ? __("Client ID can't be empty") : '',
-      clientSecret: !confTmp.clientSecret ? __('Secret key can't be empty') : ''
+      clientSecret: !confTmp.clientSecret ? __("Secret key can't be empty") : ''
     })
     return
   }

@@ -200,7 +200,7 @@ export default function CustomApiAuthorization({
             name="username"
             value={customApiConf.username}
             type="text"
-            placeholder={__(User Name...', 'bit-integrations')}
+            placeholder={__('User Name...', 'bit-integrations')}
             disabled={isInfo}
           />
 

@@ -79,7 +79,7 @@ export default function RapidmailAuthorization({
         name="username"
         value={rapidmailConf.username}
         type="text"
-        placeholder={__(User Name...', 'bit-integrations')}
+        placeholder={__('User Name...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red' }}>{error.username}</div>

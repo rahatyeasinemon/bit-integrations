@@ -98,7 +98,7 @@ export default function MauticAuthorization({
         name="baseUrl"
         value={mauticConf.baseUrl}
         type="text"
-        placeholder={__(User Name...', 'bit-integrations')}
+        placeholder={__('User Name...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red' }}>{error.baseUrl}</div>

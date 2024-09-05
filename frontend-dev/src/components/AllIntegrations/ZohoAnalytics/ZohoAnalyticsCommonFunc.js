@@ -33,7 +33,7 @@ export const handleAuthorize = (
     setError({
       dataCenter: !confTmp.dataCenter ? __("Data center can't be empty", 'bit-integrations') : '',
       clientId: !confTmp.clientId ? __("Client Id can't be empty", 'bit-integrations') : '',
-      clientSecret: !confTmp.clientSecret ? __('Secret key can't be empty', 'bit-integrations') : ''
+      clientSecret: !confTmp.clientSecret ? __("Secret key can't be empty", 'bit-integrations') : ''
     })
     return
   }

@@ -208,7 +208,7 @@ export const handleConstantContactAuthorize = (
   if (!confTmp.clientId) {
     setError({
       clientId: !confTmp.clientId ? __("Client Id can't be empty", 'bit-integrations') : '',
-      clientSecret: !confTmp.clientSecret ? __('Secret key can't be empty', 'bit-integrations') : ''
+      clientSecret: !confTmp.clientSecret ? __("Secret key can't be empty", 'bit-integrations') : ''
     })
     return
   }

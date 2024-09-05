@@ -55,7 +55,7 @@ export const mailjetAuthentication = (
   }
   if (!confTmp.secretKey) {
     setError({
-      secretKey: !confTmp.secretKey ? __('Secret key can't be empty', 'bit-integrations') : ''
+      secretKey: !confTmp.secretKey ? __("Secret key can't be empty", 'bit-integrations') : ''
     })
     return
   }
