@@ -44,19 +44,7 @@ export default function CashbackModal() {
                   'support@bitapps.pro',
                   __('$10 Cashback', 'bit-integrations')
                 )
-              }}>
-              {/* Give us a review on WordPress by clicking the &nbsp;
-              <a href={REVIEW_URL} target="_blank" rel="noreferrer">
-                {__('Review us', 'bit-integrations')}
-              </a>
-              &nbsp; button and send an email with the review link to &nbsp;
-              <a href="mailto:support@bitapps.pro" target="_blank" rel="noreferrer">
-                support@bitapps.pro
-              </a>
-              . We will honour you with &nbsp;
-              <strong>{__('$10 Cashback', 'bit-integrations')}</strong>
-              &nbsp; for your time & effort. */}
-            </p>
+              }}></p>
             <p>
               <b>{__('Suggestions on how you may write the review:', 'bit-integrations')}</b>
             </p>
