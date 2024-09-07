@@ -52,10 +52,13 @@ final class RegistrationController
 
         $userData = $this->userFieldMapping($userFieldMap, $updatedvalues, $flowDetails);
 
+        if (isset($flowDetails->user_role)) {
+            $userData['role'] = $flowDetails->user_role;
+        }
+
         if (isset($flowDetails->action_type) && $flowDetails->action_type == 'updated_user') {
             $this->updateUser($userData, $flowDetails, $updatedvalues);
         } elseif (isset($flowDetails->action_type) && $flowDetails->action_type == 'new_user') {
-            $userData['role'] = isset($flowDetails->user_role) ? $flowDetails->user_role : '';
             $this->createUser($userData, $flowDetails, $updatedvalues);
         }
     }
@@ -159,6 +162,7 @@ final class RegistrationController
         }
         $updatedData['ID'] = $userId;
         $updatedUser = wp_update_user($updatedData);
+
         if (is_wp_error($updatedUser) || !$updatedUser) {
             $message = is_wp_error($updatedUser) ? $updatedUser->get_error_message() : 'error';
             LogHandler::save($this->_integrationID, __('User update', 'bit-integrations'), 'error', $message);
