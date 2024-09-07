@@ -92,8 +92,8 @@ function Log({ allIntegURL }) {
         // eslint-disable-next-line no-param-reassign
         row.original = row.data[0].row.original
       }
-      confMdl.btnTxt = 'Delete'
-      confMdl.body = 'Are you sure to delete this entry'
+      confMdl.btnTxt = __('Delete', 'bit-integrations')
+      confMdl.body = __('Are you sure to delete this entry', 'bit-integrations')
       confMdl.btnClass = ''
 
       confMdl.action = () => {
@@ -148,7 +148,7 @@ function Log({ allIntegURL }) {
         <div>
           <Link to={allIntegURL} className="btn btcd-btn-o-gray">
             <span className="btcd-icn icn-chevron-left" />
-            &nbsp;Back
+            &nbsp;{__('Back', 'bit-integrations')}
           </Link>
           <button
             onClick={() => setRefreshLog(1)}

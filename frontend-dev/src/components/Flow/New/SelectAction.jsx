@@ -209,7 +209,7 @@ export default function SelectAction() {
       <div className="txt-center" style={{ width: '100%' }}>
         <button type="button" className="f-left btn btcd-btn-o-gray mt-1" onClick={updatedStep}>
           <span className="btcd-icn icn-chevron-left" />
-          &nbsp;Back
+          &nbsp;{__('Back', 'bit-integrations')}
         </button>
         <h2 className="mt-0">{__('Please select a Action', 'bit-integrations')}</h2>
         <input

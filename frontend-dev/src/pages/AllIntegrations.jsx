@@ -127,7 +127,7 @@ function AllIntegrations({ isValidUser }) {
         tmpIntegrations.splice(index, 1)
         mutate(tmpIntegrations)
         setIntegrations(tmpIntegrations)
-        return 'Integration deleted successfully'
+        return __('Integration deleted successfully', 'bit-integrations')
       }
       return response.data
     })
@@ -154,7 +154,7 @@ function AllIntegrations({ isValidUser }) {
         }
         tmpIntegrations.push(cpyInteg)
         setIntegrations(tmpIntegrations)
-        return 'Integration clone successfully'
+        return __('Integration clone successfully', 'bit-integrations')
       }
       return response.data
     })
@@ -181,7 +181,7 @@ function AllIntegrations({ isValidUser }) {
             newData.splice(Number(rowID[i]), 1)
           }
           setIntegrations(newData)
-          return 'Integration Deleted Successfully'
+          return __('Integration Deleted Successfully', 'bit-integrations')
         }
         return response.data
       })
