@@ -13,7 +13,7 @@ export default function ChangelogToggle() {
   const [btcbi, setBtcbi] = useRecoilState($btcbi)
   const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
   const [showAnalyticsOptin, setShowAnalyticsOptin] = useState([])
-  const currentChangelog = '2.2.2'
+  const currentChangelog = '2.2.3'
   const currenChangelog = changelogInfo[currentChangelog]
   const [loading, setLoading] = useState('')
 
@@ -83,17 +83,17 @@ export default function ChangelogToggle() {
             <div className="flx flx-col flx-center whats-new">
               <h3>What's New in {btcbi.version}?</h3>
               <small className="date">
-                Updated at: <b>28th August 2024</b>
+                Updated at: <b>7th September 2024</b>
               </small>
             </div>
             <div className="changelog-content">
               <span className="new-integration">
-                <b>New Trigger</b>
+                <b>New Improvements</b>
               </span>
 
               <div className="integration-list">
                 <ul>
-                  <li> WP Job Manager (Pro) </li>
+                  <li> Plugin Translations Enhanced </li>
                 </ul>
               </div>
 
@@ -103,8 +103,7 @@ export default function ChangelogToggle() {
 
               <div className="feature-list">
                 <ul>
-                  <li>GetResponse: Added the AutoResponder day of cycle feature (Pro)</li>
-                  <li>SendPulse: Introduced custom field functionality (Pro)</li>
+                  <li>MasterStudy LMS: "User earns a point" trigger added for point system integrations (Pro)</li>
                 </ul>
               </div>
               <div>
