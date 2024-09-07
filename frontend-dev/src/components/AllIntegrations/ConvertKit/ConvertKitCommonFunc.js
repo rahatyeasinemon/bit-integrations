@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 export const handleInput = (e, convertKitConf, setConvertKitConf) => {
@@ -12,10 +12,10 @@ export const refreshConvertKitForm = (
   convertKitConf,
   setConvertKitConf,
   setIsLoading,
-  setSnackbar,
+  setSnackbar
 ) => {
   const refreshFormsRequestParams = {
-    api_secret: convertKitConf.api_secret,
+    api_secret: convertKitConf.api_secret
   }
   bitsFetch(refreshFormsRequestParams, 'convertKit_forms')
     .then((result) => {
@@ -28,15 +28,15 @@ export const refreshConvertKitForm = (
           newConf.default.convertKitForms = result.data.convertKitForms
           setSnackbar({
             show: true,
-            msg: __('Convert Kit forms refreshed', 'bit-integrations'),
+            msg: __('Convert Kit forms refreshed', 'bit-integrations')
           })
         } else {
           setSnackbar({
             show: true,
             msg: __(
               'No Convert Kit forms found. Try changing the header row number or try again',
-              'bit-integrations',
-            ),
+              'bit-integrations'
+            )
           })
         }
 
@@ -44,10 +44,7 @@ export const refreshConvertKitForm = (
       } else {
         setSnackbar({
           show: true,
-          msg: __(
-            'Convert Kit forms refresh failed. please try again',
-            'bit-integrations',
-          ),
+          msg: __('Convert Kit forms refresh failed. please try again', 'bit-integrations')
         })
       }
       setIsLoading(false)
@@ -59,10 +56,10 @@ export const refreshConvertKitTags = (
   convertKitConf,
   setConvertKitConf,
   setIsLoading,
-  setSnackbar,
+  setSnackbar
 ) => {
   const refreshFormsRequestParams = {
-    api_secret: convertKitConf.api_secret,
+    api_secret: convertKitConf.api_secret
   }
   bitsFetch(refreshFormsRequestParams, 'convertKit_tags')
     .then((result) => {
@@ -75,15 +72,15 @@ export const refreshConvertKitTags = (
           newConf.default.convertKitTags = result.data.convertKitTags
           setSnackbar({
             show: true,
-            msg: __('Convert Kit tags refreshed', 'bit-integrations'),
+            msg: __('Convert Kit tags refreshed', 'bit-integrations')
           })
         } else {
           setSnackbar({
             show: true,
             msg: __(
               'No Convert Kit tags found. Try changing the header row number or try again',
-              'bit-integrations',
-            ),
+              'bit-integrations'
+            )
           })
         }
 
@@ -91,10 +88,7 @@ export const refreshConvertKitTags = (
       } else {
         setSnackbar({
           show: true,
-          msg: __(
-            'Convert Kit tags refresh failed. please try again',
-            'bit-integrations',
-          ),
+          msg: __('Convert Kit tags refresh failed. please try again', 'bit-integrations')
         })
       }
       setIsLoading(false)
@@ -106,10 +100,10 @@ export const refreshConvertKitHeader = (
   convertKitConf,
   setConvertKitConf,
   setIsLoading,
-  setSnackbar,
+  setSnackbar
 ) => {
   const refreshFormsRequestParams = {
-    api_secret: convertKitConf.api_secret,
+    api_secret: convertKitConf.api_secret
   }
   bitsFetch(refreshFormsRequestParams, 'convertKit_headers')
     .then((result) => {
@@ -126,19 +120,19 @@ export const refreshConvertKitHeader = (
             .map((f) => ({
               formField: '',
               convertKitField: f.fieldId,
-              required: true,
+              required: true
             }))
           setSnackbar({
             show: true,
-            msg: __('Convert Kit fields refreshed', 'bit-integrations'),
+            msg: __('Convert Kit fields refreshed', 'bit-integrations')
           })
         } else {
           setSnackbar({
             show: true,
             msg: __(
               'No Convert Kit fields found. Try changing the header row number or try again',
-              'bit-integrations',
-            ),
+              'bit-integrations'
+            )
           })
         }
 
@@ -146,10 +140,7 @@ export const refreshConvertKitHeader = (
       } else {
         setSnackbar({
           show: true,
-          msg: __(
-            'Convert Kit fields refresh failed. please try again',
-            'bit-integrations',
-          ),
+          msg: __('Convert Kit fields refresh failed. please try again', 'bit-integrations')
         })
       }
       setIsLoading(false)
@@ -160,10 +151,9 @@ export const refreshConvertKitHeader = (
 export const checkMappedFields = (convertKitConf) => {
   const mappedFields = convertKitConf?.field_map
     ? convertKitConf.field_map.filter(
-      (mappedField) => !mappedField.formField
-          && mappedField.convertKitField
-          && mappedField.required,
-    )
+        (mappedField) =>
+          !mappedField.formField && mappedField.convertKitField && mappedField.required
+      )
     : []
   if (mappedFields.length > 0) {
     return false

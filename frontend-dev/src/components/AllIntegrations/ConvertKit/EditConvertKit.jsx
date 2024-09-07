@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+import { __ } from '../../../Utils/i18nwrap'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -30,7 +30,14 @@ function EditConvertKit({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, convertKitConf, setConvertKitConf)} name="name" value={convertKitConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={(e) => handleInput(e, convertKitConf, setConvertKitConf)}
+          name="name"
+          value={convertKitConf.name}
+          type="text"
+          placeholder={__('Integration Name...', 'bit-integrations')}
+        />
       </div>
       <br />
 
@@ -47,7 +54,18 @@ function EditConvertKit({ allIntegURL }) {
 
       <IntegrationStepThree
         edit
-        saveConfig={() => saveActionConf({ flow, setFlow, allIntegURL, navigate, conf: convertKitConf, edit: 1, setIsLoading, setSnackbar })}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            setFlow,
+            allIntegURL,
+            navigate,
+            conf: convertKitConf,
+            edit: 1,
+            setIsLoading,
+            setSnackbar
+          })
+        }
         disabled={convertKitConf.field_map.length < 1}
         isLoading={isLoading}
         dataConf={convertKitConf}

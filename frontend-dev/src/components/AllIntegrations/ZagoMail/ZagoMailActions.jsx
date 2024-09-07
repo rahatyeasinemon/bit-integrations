@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+import { __ } from '../../../Utils/i18nwrap'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
