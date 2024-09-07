@@ -101,7 +101,7 @@ const MasterStudyLmsHelper = ({ flow, setFlowData, edit = false }) => {
       )}
       {id === '6' && (
         <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
+          <b className={edit ? 'wdt-200 d-in-b' : 'd-in-b mt-3 mb-3'}>
             {__('Select Point Distribution', 'bit-integrations')}
           </b>
           <MultiSelect
