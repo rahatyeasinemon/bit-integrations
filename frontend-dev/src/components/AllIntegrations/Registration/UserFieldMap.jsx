@@ -125,7 +125,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, roles,
                 value={userConf?.user_role}
                 className="btcd-paper-inp mt-1">
                 <option disabled selected>
-                  Select User Role
+                  {__('Select User Role', 'bit-integrations')}
                 </option>
                 {roles.map((role, index) => (
                   <option key={`acf-${index * 2}`} value={role?.key}>
