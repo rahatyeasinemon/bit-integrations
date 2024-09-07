@@ -177,7 +177,7 @@ export default function ClickupIntegLayout({
             <button
               onClick={() => getAllLists(clickupConf, setClickupConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh lists', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh Lists', 'bit-integrations')}'` }}
               type="button"
               disabled={loading.Lists}>
               &#x21BB;
@@ -210,7 +210,7 @@ export default function ClickupIntegLayout({
             <button
               onClick={() => getCustomFields(clickupConf, setClickupConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh Fields', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
               disabled={loading.Lists}>
               &#x21BB;

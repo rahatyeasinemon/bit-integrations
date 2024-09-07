@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Salesmate;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Salesmate integration
@@ -52,7 +52,6 @@ class SalesmateController
             $fieldMap = [];
             foreach ($response->Data as $module) {
                 foreach ($module->Fields as $field) {
-
                     $fieldMap[]
                     = [
                         'key'      => $field->fieldName,
@@ -132,7 +131,7 @@ class SalesmateController
             }
             wp_send_json_success($CRMPipelines, 200);
         } else {
-            wp_send_json_error('Pipelines fetching failed', 400);
+            wp_send_json_error(__('Pipelines fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -204,7 +203,7 @@ class SalesmateController
             }
             wp_send_json_success($CRMOwners, 200);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            wp_send_json_error(__('Owners fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -219,7 +218,7 @@ class SalesmateController
         $linkName = $integrationDetails->link_name;
 
         if (empty($fieldMap) || empty($sessionToken) || empty($actionName) || empty($actionId) || empty($linkName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Salesmate api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Salesmate'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $sessionToken, $linkName);

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\MailRelay;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for MailRelay integration
@@ -104,7 +104,7 @@ class MailRelayController
             empty($fieldMap)
             || empty($auth_token) || empty($status)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for MailRelay api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'MailRelay'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

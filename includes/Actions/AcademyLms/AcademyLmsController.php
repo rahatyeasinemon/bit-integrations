@@ -28,13 +28,13 @@ class AcademyLmsController
             wp_send_json_success(true, 200);
         }
 
-        wp_send_json_error(__('Academy Lms must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'Academy Lms'));
     }
 
     public static function getAllLesson()
     {
         if (!class_exists('Academy')) {
-            wp_send_json_error(__('Academy Lms is not installed or activated', 'bit-integrations'));
+            wp_send_json_error(\sprintf(__('%s is not installed or activated', 'bit-integrations'), 'Academy Lms'));
         }
 
         $lessons = [];
@@ -54,7 +54,7 @@ class AcademyLmsController
     {
         $action = $queryParams->type;
         if (!class_exists('Academy')) {
-            wp_send_json_error(__('Academy Lms is not installed or activated', 'bit-integrations'));
+            wp_send_json_error(\sprintf(__('%s is not installed or activated', 'bit-integrations'), 'Academy Lms'));
         }
 
         $courseList = get_posts([
@@ -177,7 +177,6 @@ class AcademyLmsController
         if ($is_complete) {
             return 'Course Completed.';
         }
-
     }
 
     public static function resetCourse($selectedCourse)

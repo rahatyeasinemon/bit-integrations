@@ -111,7 +111,7 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
             onChange={(e) => actionHandler(e, 'groups')}
             className="wdt-200 mt-4 mr-2"
             value="select_group"
-            title={__('Select Group', 'bit-integrations')}
+            title={__('Select group', 'bit-integrations')}
             subTitle={__(
               `Select a group to ${wpforoConf.selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP ? 'add a user to it' : 'remove a user from it'}.`,
               'bit-integrations'
@@ -128,7 +128,7 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
             title={__('Groups', 'bit-integrations')}>
             <div className="btcd-hr mt-2 mb-2" />
             <div className="mt-2 flx">
-              {__('Select Group', 'bit-integrations')}
+              {__('Select group', 'bit-integrations')}
               <Cooltip width={250} icnSize={17} className="ml-1">
                 <div className="txt-body">
                   The user will be{' '}
@@ -179,7 +179,7 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
             onChange={(e) => actionHandler(e, 'tags')}
             className="wdt-200 mt-4 mr-2"
             value="select_tags"
-            title={__('Select Tags', 'bit-integrations')}
+            title={__('Select tags', 'bit-integrations')}
             subTitle={__('Add tags for the topic', 'bit-integrations')}
           />
           <TableCheckBox
@@ -240,7 +240,7 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
             title={__('Tags', 'bit-integrations')}>
             <div className="btcd-hr mt-2 mb-2" />
             <div className="mt-2 flx">
-              {__('Select Tags', 'bit-integrations')}
+              {__('Select tags', 'bit-integrations')}
               <Cooltip width={250} icnSize={17} className="ml-1">
                 <div className="txt-body">
                   Separate tags by pressing enter or comma (,) after writing them.

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Flowlu;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Flowlu integration
@@ -73,7 +73,6 @@ class FlowluController
             $fieldsName = ['id', 'type', 'honorific_title_id', 'created_date', 'updated_date', 'merged_to', 'owner_id', 'industry_id', 'account_category_id', 'customer_id', 'contact_id', 'source_id', 'assignee_id', 'pipeline_id', 'pipeline_stage_id', 'active', 'closing_status_id', 'created_by', 'last_activity_id', 'last_activity_time', 'last_activity_model', 'ordering', 'auto_calc', 'pricelist_id', 'manager_id', 'ordering', 'stage_id', 'project_type_id', 'briefcase_id', 'is_archive', 'priority', 'customer_id', 'customer_crm_contact_id', 'archive_date', 'workspace_id', 'archive_description', 'crm_lead_id', 'uuid', 'ref', 'ref_id', 'updated_by', 'billing_type', 'default_billing_rate', 'default_bill_time_type', 'use_default_invoice_split_type', 'default_invoice_split_type_in_project', 'default_invoice_item_format', 'tasks_workflow_id'];
             foreach ($response->response->fields as $field) {
                 if (array_search($field->code, $fieldsName) === false) {
-
                     $fieldMap[]
                     = [
                         'key'      => $field->code,
@@ -91,7 +90,6 @@ class FlowluController
                 if (!isset($customFieldResponse->error)) {
                     foreach ($customFieldResponse->response->items as $field) {
                         if ($field->fieldset_id === $fieldsetId) {
-
                             $fieldMap[]
                             = [
                                 'key'      => "cf_{$field->id}",
@@ -121,7 +119,6 @@ class FlowluController
         if (!isset($response->error)) {
             $accountCategories = [];
             foreach ($response->response->items as $field) {
-
                 $accountCategories[]
                 = [
                     'id'   => $field->id,
@@ -147,7 +144,6 @@ class FlowluController
         if (!isset($response->error)) {
             $industries = [];
             foreach ($response->response->items as $field) {
-
                 $industries[]
                 = [
                     'id'   => $field->id,
@@ -173,7 +169,6 @@ class FlowluController
         if (!isset($response->error)) {
             $pipelines = [];
             foreach ($response->response->items as $field) {
-
                 $pipelines[]
                 = [
                     'id'   => $field->id,
@@ -184,7 +179,7 @@ class FlowluController
 
             wp_send_json_success($pipelines, 200);
         } else {
-            wp_send_json_error('Pipelines fetching failed', 400);
+            wp_send_json_error(__('Pipelines fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -200,7 +195,6 @@ class FlowluController
             $stages = [];
             foreach ($response->response->items as $field) {
                 if ($field->pipeline_id === (int) $fieldsRequestParams->pipeline_id) {
-
                     $stages[]
                     = [
                         'id'   => $field->id,
@@ -227,7 +221,6 @@ class FlowluController
         if (!isset($response->error)) {
             $sources = [];
             foreach ($response->response->items as $field) {
-
                 $sources[]
                 = [
                     'id'   => $field->id,
@@ -253,7 +246,6 @@ class FlowluController
         if (!isset($response->error)) {
             $customers = [];
             foreach ($response->response->items as $field) {
-
                 $customers[]
                 = [
                     'id'   => $field->id,
@@ -279,7 +271,6 @@ class FlowluController
         if (!isset($response->error)) {
             $managers = [];
             foreach ($response->response->items as $field) {
-
                 $managers[]
                 = [
                     'id'   => $field->id,
@@ -304,7 +295,6 @@ class FlowluController
         if (!isset($response->error)) {
             $stages = [];
             foreach ($response->response->items as $field) {
-
                 $stages[]
                 = [
                     'id'   => $field->id,
@@ -329,7 +319,6 @@ class FlowluController
         if (!isset($response->error)) {
             $portfolios = [];
             foreach ($response->response->items as $field) {
-
                 $portfolios[]
                 = [
                     'id'   => $field->id,
@@ -354,7 +343,6 @@ class FlowluController
         if (!isset($response->error)) {
             $portfolios = [];
             foreach ($response->response->items as $field) {
-
                 $portfolios[]
                 = [
                     'id'   => $field->id,
@@ -378,7 +366,7 @@ class FlowluController
         $comapnyName = $integrationDetails->company_name;
 
         if (empty($fieldMap) || empty($apiKey) || empty($actionName) || empty($comapnyName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Flowlu api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Flowlu'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $comapnyName);

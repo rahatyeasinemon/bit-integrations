@@ -1,3 +1,5 @@
+import { __ } from '../../Utils/i18nwrap'
+
 export default function WebhookDataTable({ data, flow, setFlow }) {
   const handleChange = (e, indx) => {
     const { value, name } = e.target
@@ -27,8 +29,8 @@ export default function WebhookDataTable({ data, flow, setFlow }) {
       <table className="border-collapse table-fixed webhook-table-scroll">
         <thead>
           <tr className="btcd-drawer-title tbl-webhook-head">
-            <th className="w-7">Field</th>
-            <th className="w-3">Type</th>
+            <th className="w-7">{__('Field', 'bit-integrations')}</th>
+            <th className="w-3">{__('Type', 'bit-integrations')}</th>
           </tr>
         </thead>
         <tbody className="body-half-screen">

@@ -52,15 +52,12 @@ export default function NewsletterActions({ newsletterConf, setNewsletterConf })
         show={actionMdl.show === 'lists'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Lists', 'bit-integrations')}
-      >
+        title={__('Lists', 'bit-integrations')}>
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2 flx">
-          {__('Select lists', 'bit-integrations')}
+          {__('Select Lists', 'bit-integrations')}
           <Cooltip width={250} icnSize={17} className="ml-1">
-            <div className="txt-body">
-              Subscribers will be associated with the selected lists.
-            </div>
+            <div className="txt-body">Subscribers will be associated with the selected lists.</div>
           </Cooltip>
         </div>
         <div className="mt-2">
@@ -68,7 +65,7 @@ export default function NewsletterActions({ newsletterConf, setNewsletterConf })
             options={getListsOptions}
             className="msl-wrp-options"
             defaultValue={newsletterConf?.selectedLists}
-            onChange={val => setChanges(val, 'selectedLists')}
+            onChange={(val) => setChanges(val, 'selectedLists')}
             style={{ width: '100%' }}
           />
         </div>

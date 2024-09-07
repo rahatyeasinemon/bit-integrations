@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\Memberpress;
 
-use MeprOptions;
 use WP_Error;
+use MeprOptions;
 
 class MemberpressController
 {
@@ -29,7 +29,7 @@ class MemberpressController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(__('Memberpress must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'Memberpress'));
     }
 
     public function getAllMembership($label = null, $option_code = 'MPPRODUCT', $args = [])
@@ -63,13 +63,13 @@ class MemberpressController
             }
             wp_send_json_success($allMembership, 200);
         }
-        wp_send_json_error(__('Memberpress must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'Memberpress'));
     }
 
     public static function allPaymentGateway()
     {
         if (!self::pluginActive()) {
-            wp_send_json_error(__('Memberpress must be activated!', 'bit-integrations'));
+            wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'Memberpress'));
         }
         $mepr_options = MeprOptions::fetch();
 
@@ -104,7 +104,7 @@ class MemberpressController
             empty($integId)
             || empty($mainAction) || empty($selectedMembership)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for memberpress api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'memberpress'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $memberpressApiResponse = $recordApiHelper->execute(

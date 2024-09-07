@@ -171,7 +171,7 @@ export const getAllType = (
   toast.promise(loadPostTypes, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),
-    loading: __('Loading Type...')
+    loading: __('Loading type...')
   })
 }
 
@@ -740,10 +740,8 @@ export const handleAuthorize = (
 ) => {
   if (!confTmp.clientId || !confTmp.clientSecret) {
     setError({
-      clientId: !confTmp.clientId ? __("Client ID cann't be empty", 'bit-integrations') : '',
-      clientSecret: !confTmp.clientSecret
-        ? __("Secret key cann't be empty", 'bit-integrations')
-        : ''
+      clientId: !confTmp.clientId ? __("Client Id can't be empty", 'bit-integrations') : '',
+      clientSecret: !confTmp.clientSecret ? __("Secret key can't be empty", 'bit-integrations') : ''
     })
     return
   }
@@ -772,7 +770,7 @@ export const handleAuthorize = (
         const errorCause = grantTokenResponse.error ? `Cause: ${grantTokenResponse.error}` : ''
         setSnackbar({
           show: true,
-          msg: `${__('Authorization failed', 'bit-integrations')} ${errorCause}. ${__('please try again', 'bit-integrations')}`
+          msg: `${__('Authorization Failed', 'bit-integrations')} ${errorCause}. ${__('please try again', 'bit-integrations')}`
         })
         setIsLoading(false)
       } else {

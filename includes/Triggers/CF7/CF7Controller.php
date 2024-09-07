@@ -24,7 +24,7 @@ final class CF7Controller
             'is_active'      => class_exists('WPCF7_ContactForm'),
             'activation_url' => wp_nonce_url(self_admin_url('plugins.php?action=activate&amp;plugin=' . $plugin_path . '&amp;plugin_status=all&amp;paged=1&amp;s'), 'activate-plugin_' . $plugin_path),
             'install_url'    => wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=' . $plugin_path), 'install-plugin_' . $plugin_path),
-            'note'           => '<p>' . __('The feature <b>"Advanced Custom HTML Fields"</b> is available only in the Pro version of the plugin. Please upgrade to access this feature.', 'bit-integrations') . '</p>',
+            'note'           => '<p>' . __('The feature <b>Advanced Custom HTML Fields</b> is available only in the Bit Integrations Pro starting from v2.1.6 of the plugin. Please upgrade to access this feature.', 'bit-integrations') . '</b>',
             'list'           => [
                 'action' => 'cf7/get',
                 'method' => 'get',
@@ -41,7 +41,7 @@ final class CF7Controller
     public function getAll()
     {
         if (!class_exists('WPCF7_ContactForm')) {
-            wp_send_json_error(__('Contact Form 7 is not installed or activated', 'bit-integrations'));
+            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'Contact Form 7'));
         }
         $forms = WPCF7_ContactForm::find();
         $all_forms = [];
@@ -62,7 +62,7 @@ final class CF7Controller
             $missing_field = 'Form ID';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         if (empty($fields)) {
             wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));
@@ -104,15 +104,6 @@ final class CF7Controller
         return $fields;
     }
 
-    private static function getCustomHtmlFields($form_text)
-    {
-        if (Helper::proActionFeatExists('CF7', 'getAdvanceCustomHtmlFields')) {
-            $fields = apply_filters('btcbi_cf7_get_advance_custom_html_fields', $form_text);
-
-            return is_array($fields) ?  $fields : [];
-        }
-    }
-
     public static function handle_wpcf7_submit()
     {
         $submission = WPCF7_Submission::get_instance();
@@ -137,7 +128,7 @@ final class CF7Controller
             $posted_data['post_id'] = $postID;
         }
 
-        // array to string conversion for radio and select fields
+        // array to string conversion for radio and Select Fields
         $data = [];
         foreach ($posted_data as $key => $value) {
             if (\is_array($value) && \count($value) == 1) {
@@ -149,6 +140,15 @@ final class CF7Controller
 
         if (!empty($form_id) && $flows = Flow::exists('CF7', $form_id)) {
             Flow::execute('CF7', $form_id, $data, $flows);
+        }
+    }
+
+    private static function getCustomHtmlFields($form_text)
+    {
+        if (Helper::proActionFeatExists('CF7', 'getAdvanceCustomHtmlFields')) {
+            $fields = apply_filters('btcbi_cf7_get_advance_custom_html_fields', $form_text);
+
+            return \is_array($fields) ? $fields : [];
         }
     }
 

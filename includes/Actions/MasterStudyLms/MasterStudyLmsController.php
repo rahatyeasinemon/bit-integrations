@@ -12,9 +12,8 @@ class MasterStudyLmsController
 
         return (bool) (
             is_plugin_active('masterstudy-lms-learning-management-system/masterstudy-lms-learning-management-system.php')
-        || is_plugin_active('masterstudy-lms-learning-management-system-pro/                       masterstudy-lms-learning-management-system-pro.php'))
-
-        ;
+        || is_plugin_active('masterstudy-lms-learning-management-system-pro/masterstudy-lms-learning-management-system-pro.php')
+        );
     }
 
     public static function authorizeMasterStudyLms()
@@ -22,7 +21,7 @@ class MasterStudyLmsController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(__('MasterStudyLms must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'MasterStudyLms'));
     }
 
     public static function getAllCourse()
@@ -42,7 +41,7 @@ class MasterStudyLmsController
             }
             wp_send_json_success($courseList, 200);
         }
-        wp_send_json_error(__('MasterStudyLms must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'MasterStudyLms'));
     }
 
     public static function getAllLesson($queryPrarms)
@@ -52,7 +51,7 @@ class MasterStudyLmsController
             $allLesson = MasterStudyLmsHelper::getLessonByCourse($courseId);
             wp_send_json_success($allLesson, 200);
         }
-        wp_send_json_error(__('MasterStudyLms must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'MasterStudyLms'));
     }
 
     public static function getAllQuizByCourse($queryPrarms)
@@ -62,7 +61,7 @@ class MasterStudyLmsController
             $allQuiz = MasterStudyLmsHelper::getQuizByCourse($courseId);
             wp_send_json_success($allQuiz, 200);
         }
-        wp_send_json_error(__('MasterStudyLms must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'MasterStudyLms'));
     }
 
     public function execute($integrationData, $fieldValues)

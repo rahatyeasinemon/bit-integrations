@@ -144,7 +144,9 @@ export default function AffiliateIntegLayout({
         />
       </>
       <br />
-      <Note note="Some integrations will only work for logged-in users." />
+      <Note
+        note={__('Some integrations will only work for logged-in users.', 'bit-integrations')}
+      />
     </>
   )
 }

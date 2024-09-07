@@ -41,11 +41,11 @@ const CustomFormSubmission = () => {
 
   const setTriggerData = () => {
     if (!primaryKey) {
-      toast.error('Please Select a Primary Key')
+      toast.error(__('Please Select a Primary Key', 'bit-integrations'))
       return
     }
     if (!newFlow?.triggerDetail?.triggered_entity_id) {
-      toast.error('Triggered Entity Id not found!')
+      toast.error(__('Triggered Entity Id not found!', 'bit-integrations'))
       return
     }
 
@@ -101,7 +101,7 @@ const CustomFormSubmission = () => {
         })
         .catch((err) => {
           if (err.name === 'AbortError') {
-            console.log('AbortError: Fetch request aborted')
+            console.log(__('AbortError: Fetch request aborted', 'bit-integrations'))
           }
         })
     }, 1500)
@@ -153,32 +153,37 @@ const CustomFormSubmission = () => {
     )
   }
 
-  const info = `<h4>Follow these simple steps to set up the ${newFlow?.triggerDetail?.name}:</h4>
+  const info = `<h4>${sprintf(__('Follow these simple steps to set up the %s', 'bit-integrations'), newFlow?.triggerDetail?.name)}</h4>
             <ul>
-              <li>Click the <b>Fetch</b> button.</li>
-              <li>Submit <b>The Form</b> while the Fetch button is <b>spinning</b>.</li>
-              <li>After submitting the form, Click <b>Next</b> and then <b>Go</b></b></li>
+              <li>${__('Click the <b>Fetch</b> button.', 'bit-integrations')}</li>
+              <li>${__('Submit <b>The Form</b> while the Fetch button is <b>spinning</b>.', 'bit-integrations')}</li>
+              <li>${__('After submitting the form, Click <b>Next</b> and then <b>Go</b></b>', 'bit-integrations')}</li>
             </ul>
-            <h5>Important: The Fetch button will keep spinning until you submit the form.</h5>
+            <h5>${__('Important: The Fetch button will keep spinning until you submit the form.', 'bit-integrations')}</h5>
             ${
               newFlow?.triggerDetail?.note
                 ? `<h4 className="mt-0">Note</h4>${__(newFlow?.triggerDetail?.note, 'bit-integrations')}`
                 : ''
             }
             <h5>
-              More Details on 
+              ${__('More Details on', 'bit-integrations')} 
               <a className="btcd-link" href=${newFlow?.triggerDetail?.documentation_url} target="_blank" rel="noreferrer">${__('Documentation', 'bit-integrations')}</a>
-              or
+              ${__('or', 'bit-integrations')}
               <a className="btcd-link" href=${newFlow?.triggerDetail?.tutorial_url} target="_blank" rel="noreferrer">${__('Youtube Tutorials', 'bit-integrations')}</a>
             </h5>`
 
   return !newFlow?.triggerDetail?.is_active ? (
-    <span className="mt-3">{newFlow?.triggerDetail?.name} is not installed or activated.</span>
+    <span className="mt-3">
+      {sprintf(
+        __('%s is not installed or activated.', 'bit-integrations'),
+        newFlow?.triggerDetail?.name
+      )}
+    </span>
   ) : (
     <div className="trigger-custom-width">
       {newFlow?.triggerDetail?.multi_form && (
         <div className="w-8 m-a">
-          <h4>Select a Form/Task Name</h4>
+          <h4>{__('Select a Form/Task Name', 'bit-integrations')}</h4>
           <MultiSelect
             className="msl-wrp-options"
             defaultValue={newFlow?.triggerDetail?.triggered_entity_id}
@@ -258,7 +263,9 @@ const CustomFormSubmission = () => {
             <div className="flx flx-between">
               <button onClick={showResponseTable} className="btn btcd-btn-lg sh-sm purple flx">
                 <span className="txt-essentialBlocks-resbtn font-inter-500">
-                  {showResponse ? 'Hide Response' : 'View Response'}
+                  {showResponse
+                    ? __('Hide Response', 'bit-integrations')
+                    : __('View Response', 'bit-integrations')}
                 </span>
                 &nbsp;
                 {!showResponse ? (
@@ -272,7 +279,7 @@ const CustomFormSubmission = () => {
                 className="btn btcd-btn-lg purple sh-sm flx"
                 type="button"
                 disabled={!newFlow.triggerDetail.data.length || !primaryKey}>
-                Set Action
+                {__('Set Action', 'bit-integrations')}
               </button>
             </div>
           )}

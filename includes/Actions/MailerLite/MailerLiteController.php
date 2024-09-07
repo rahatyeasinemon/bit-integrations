@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\MailerLite;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for MailerLite integration
@@ -175,7 +175,7 @@ class MailerLiteController
             empty($fieldMap)
             || empty($auth_token)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for MailerLite api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'MailerLite'));
         }
         $recordApiHelper = new RecordApiHelper($auth_token, $integrationDetails, $integId, $actions, $version);
         $mailerliteApiResponse = $recordApiHelper->execute(

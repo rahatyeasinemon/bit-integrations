@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\OmniSend;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for OmniSend integration
@@ -61,7 +61,7 @@ class OmniSendController
             empty($fieldMap)
              || empty($api_key)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for OmniSend api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'OmniSend'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
 

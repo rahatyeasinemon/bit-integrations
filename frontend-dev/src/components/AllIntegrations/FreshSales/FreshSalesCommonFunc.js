@@ -414,7 +414,7 @@ export const handleAuthorize = (confTmp, setError, setisAuthorized, setIsLoading
       bundle_alias: !confTmp.bundle_alias
         ? __("Bundle Alias (Account URL) can't be empty", 'bit-integrations')
         : '',
-      api_key: !confTmp.api_key ? __("Api Key can't be empty", 'bit-integrations') : ''
+      api_key: !confTmp.api_key ? __("API Key can't be empty", 'bit-integrations') : ''
     })
     return
   }
@@ -430,7 +430,7 @@ export const handleAuthorize = (confTmp, setError, setisAuthorized, setIsLoading
     if (result && result.success) {
       setisAuthorized(true)
       setIsLoading(false)
-      toast.success(__('Authorized successfully', 'bit-integrations'))
+      toast.success(__('Authorized Successfully', 'bit-integrations'))
       return
     }
     setIsLoading(false)

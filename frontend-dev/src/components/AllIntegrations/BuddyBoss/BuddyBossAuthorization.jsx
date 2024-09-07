@@ -7,14 +7,16 @@ import LoaderSm from '../../Loaders/LoaderSm'
 import TutorialLink from '../../Utilities/TutorialLink'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
-export default function BuddyBossAuthorization({ formID,
+export default function BuddyBossAuthorization({
+  formID,
   buddyBossConf,
   setBuddyBossConf,
   step,
   setStep,
   isLoading,
   setIsLoading,
-  setSnackbar }) {
+  setSnackbar
+}) {
   const [isAuthorized, setisAuthorized] = useState(false)
   // const [isLoading, setIsLoading] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
@@ -25,7 +27,10 @@ export default function BuddyBossAuthorization({ formID,
     bitsFetch({}, 'buddyBoss_authorize').then((result) => {
       if (result?.success) {
         setisAuthorized(true)
-        setSnackbar({ show: true, msg: __('Connected with BuddyBoss Successfully', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Connected with BuddyBoss Successfully', 'bit-integrations')
+        })
       }
       setIsLoading(false)
       setShowAuthMsg(true)
@@ -43,21 +48,12 @@ export default function BuddyBossAuthorization({ formID,
       className="btcd-stp-page"
       style={{
         width: step === 1 && 900,
-        height: step === 1 && 'auto',
-      }}
-    >
+        height: step === 1 && 'auto'
+      }}>
       {buddyBoss?.youTubeLink && (
-        <TutorialLink
-          title={buddyBoss?.title}
-          youTubeLink={buddyBoss?.youTubeLink}
-        />
+        <TutorialLink title="BuddyBoss" youTubeLink={buddyBoss?.youTubeLink} />
       )}
-      {buddyBoss?.docLink && (
-        <TutorialLink
-          title={buddyBoss?.title}
-          docLink={buddyBoss?.docLink}
-        />
-      )}
+      {buddyBoss?.docLink && <TutorialLink title="BuddyBoss" docLink={buddyBoss?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
@@ -88,13 +84,20 @@ export default function BuddyBossAuthorization({ formID,
       )}
 
       {!isAuthorized && (
-        <button onClick={authorizeHandler} className="btn btcd-btn-lg purple sh-sm flx mt-5" type="button">
+        <button
+          onClick={authorizeHandler}
+          className="btn btcd-btn-lg purple sh-sm flx mt-5"
+          type="button">
           {__('Connect', 'bit-integrations')}
         </button>
       )}
 
       {isAuthorized && (
-        <button onClick={() => setStep(2)} className="btn btcd-btn-lg purple sh-sm flx mt-5" type="button" disabled={!isAuthorized}>
+        <button
+          onClick={() => setStep(2)}
+          className="btn btcd-btn-lg purple sh-sm flx mt-5"
+          type="button"
+          disabled={!isAuthorized}>
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

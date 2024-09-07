@@ -36,11 +36,11 @@ export default function FreshSalesAuthorization({
     setFreshSalesConf(newConf)
   }
   const note = `
-    <h4> Step of generate API token:</h4>
+    <h4>${__('Step of generate API token:', 'bit-integrations')}</h4>
     <ul>
-      <li>Goto <a href="https://www.myfreshworks.com/crm/sales/personal-settings/api-settings">Generate API Token</a></li>
-      <li>Copy the <b>Token</b> and paste into <b>API Token</b> field of your authorization form.</li>
-      <li>Finally, click <b>Authorize</b> button.</li>
+      <li>${__('Goto', 'bit-integrations')} <a href="https://www.myfreshworks.com/crm/sales/personal-settings/api-settings">${__('Generate API Token', 'bit-integrations')}</a></li>
+      <li>${__('Copy the <b>Token</b> and paste into <b>API Token</b> field of your authorization form.', 'bit-integrations')}</li>
+      <li>${__('Finally, click <b>Authorize</b> button.', 'bit-integrations')}</li>
   </ul>
   `
 
@@ -52,11 +52,9 @@ export default function FreshSalesAuthorization({
         ...{ height: step === 1 && 'auto' }
       }}>
       {freshSales?.youTubeLink && (
-        <TutorialLink title={freshSales?.title} youTubeLink={freshSales?.youTubeLink} />
+        <TutorialLink title="Freshsales" youTubeLink={freshSales?.youTubeLink} />
       )}
-      {freshSales?.docLink && (
-        <TutorialLink title={freshSales?.title} docLink={freshSales?.docLink} />
-      )}
+      {freshSales?.docLink && <TutorialLink title="Freshsales" docLink={freshSales?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Bundle Alias(Your Account URL):', 'bit-integrations')}</b>
@@ -91,7 +89,7 @@ export default function FreshSalesAuthorization({
 
       {freshSalesConf.bundle_alias && (
         <small className="d-blk mt-3">
-          {__('To Get API token, Please Visit', 'bit-integrations')}
+          {__('To Get API Token, Please Visit', 'bit-integrations')}
           &nbsp;
           <a
             className="btcd-link"

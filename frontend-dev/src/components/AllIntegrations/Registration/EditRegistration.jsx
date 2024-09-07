@@ -39,7 +39,9 @@ export default function EditRegistration({ allIntegURL }) {
       }
     })
     if (!tmpConf?.user_map?.[0]?.userField) {
-      tmpConf.user_map = userFields.filter(fld => fld.required).map(fl => ({ formField: '', userField: fl.key, required: fl.required }))
+      tmpConf.user_map = userFields
+        .filter((fld) => fld.required)
+        .map((fl) => ({ formField: '', userField: fl.key, required: fl.required }))
     }
 
     setUserConf(tmpConf)
@@ -51,14 +53,23 @@ export default function EditRegistration({ allIntegURL }) {
       return
     }
     if (!userConf.user_role && userConf.action_type !== 'updated_user') {
-      setSnackbar({ show: true, msg: __('User Role can\'t be empty', 'bit-integrations') })
+      setSnackbar({ show: true, msg: __("User Role can't be empty", 'bit-integrations') })
       return
     }
     if (!checkMappedUserFields(userConf) && userConf.action_type !== 'updated_user') {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
       return
     }
-    saveActionConf({ flow, setFlow, allIntegURL, conf: userConf, navigate, edit: 1, setIsLoading, setSnackbar })
+    saveActionConf({
+      flow,
+      setFlow,
+      allIntegURL,
+      conf: userConf,
+      navigate,
+      edit: 1,
+      setIsLoading,
+      setSnackbar
+    })
   }
 
   const checkedCondition = (val, checked) => {
@@ -82,14 +93,13 @@ export default function EditRegistration({ allIntegURL }) {
 
   const userUpdateInstruction = `
   <ul>
-  <li>The user must be logged in when updating profile</li>
-  <li>The user cannot change the value of the username field when updating the user profile.</li>
+  <li>${__('The user must be logged in when updating profile', 'bit-integrations')}</li>
+  <li>${__('The user cannot change the value of the username field when updating the user profile.', 'bit-integrations')}</li>
      
   </ul>`
   const userCreateInstruction = `
   <ul>
-  <li>If the Username and Password fields are blank then the user will take the value of the email field as the field and the password will be auto-generated.</li>
-     
+  <li>${__('If the Username and Password fields are blank then the user will take the value of the email field as the field and the password will be auto-generated.', 'bit-integrations')}</li>  
   </ul>`
 
   return (
@@ -100,8 +110,22 @@ export default function EditRegistration({ allIntegURL }) {
       <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
       <div className="font-w-m mt-3">{__('Action type', 'bit-integrations')}</div>
       <div>
-        <CheckBox radio name="action_type" onChange={actionHandler} checked={userConf?.action_type === 'new_user'} value="new_user" title={__('New User Create', 'bit-integrations')} />
-        <CheckBox radio name="action_type" onChange={actionHandler} checked={userConf?.action_type === 'updated_user'} value="updated_user" title={__('Updated User', 'bit-integrations')} />
+        <CheckBox
+          radio
+          name="action_type"
+          onChange={actionHandler}
+          checked={userConf?.action_type === 'new_user'}
+          value="new_user"
+          title={__('New User Create', 'bit-integrations')}
+        />
+        <CheckBox
+          radio
+          name="action_type"
+          onChange={actionHandler}
+          checked={userConf?.action_type === 'updated_user'}
+          value="updated_user"
+          title={__('Updated User', 'bit-integrations')}
+        />
       </div>
 
       <div>
@@ -127,12 +151,21 @@ export default function EditRegistration({ allIntegURL }) {
       {userConf?.condition && (
         <>
           <div className="flx">
-            <TableCheckBox onChange={e => checkedCondition(e.target.value, e.target.checked)} checked={userConf?.condition?.action_behavior === 'cond'} className="wdt-200 mt-4 mr-2" value="cond" title={__('Conditional Logics', 'bit_integration')} />
+            <TableCheckBox
+              onChange={(e) => checkedCondition(e.target.value, e.target.checked)}
+              checked={userConf?.condition?.action_behavior === 'cond'}
+              className="wdt-200 mt-4 mr-2"
+              value="cond"
+              title={__('Conditional Logics', 'bit_integration')}
+            />
           </div>
           <br />
           {userConf?.condition?.action_behavior === 'cond' && (
-
-            <ConditionalLogic formFields={formFields} dataConf={userConf} setDataConf={setUserConf} />
+            <ConditionalLogic
+              formFields={formFields}
+              dataConf={userConf}
+              setDataConf={setUserConf}
+            />
           )}
         </>
       )}
@@ -147,13 +180,11 @@ export default function EditRegistration({ allIntegURL }) {
         className="btn f-left btcd-btn-lg purple sh-sm flx"
         type="button"
         onClick={saveConfig}
-        disabled={isLoading}
-      >
+        disabled={isLoading}>
         {__('Update', 'bit-integrations')}
 
         {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
       </button>
-
     </div>
   )
 }

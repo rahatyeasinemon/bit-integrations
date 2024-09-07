@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Gravitec;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Gravitec integration
@@ -28,7 +28,7 @@ class GravitecController
         $data = [
             'payload' => [
                 'title'        => 'Authorization',
-                'message'      => 'Authorized successfully',
+                'message'      => 'Authorized Successfully',
                 'icon'         => BTCBI_ASSET_URI . '/gravitec.jpg',
                 'redirect_url' => $fieldsRequestParams->site_url
             ]
@@ -54,7 +54,7 @@ class GravitecController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($appKey) || empty($actionName) || empty($appSecret)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Gravitec api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Gravitec'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $appKey, $appSecret);

@@ -58,7 +58,7 @@ const CustomTrigger = () => {
         })
         .catch((err) => {
           if (err.name === 'AbortError') {
-            console.log('AbortError: Fetch request aborted')
+            console.log(__('AbortError: Fetch request aborted', 'bit-integrations'))
           }
         })
     }
@@ -70,7 +70,7 @@ const CustomTrigger = () => {
         })
         .catch((err) => {
           if (err.name === 'AbortError') {
-            console.log('AbortError: Fetch request aborted')
+            console.log(__('AbortError: Fetch request aborted', 'bit-integrations'))
           }
         })
       controller.abort()
@@ -131,14 +131,14 @@ const CustomTrigger = () => {
               })
               .catch((err) => {
                 if (err.name === 'AbortError') {
-                  console.log('AbortError: Fetch request aborted')
+                  console.log(__('AbortError: Fetch request aborted', 'bit-integrations'))
                 }
               })
           }
         })
         .catch((err) => {
           if (err.name === 'AbortError') {
-            console.log('AbortError: Fetch request aborted')
+            console.log(__('AbortError: Fetch request aborted', 'bit-integrations'))
           }
         })
     }, 1500)
@@ -148,11 +148,11 @@ const CustomTrigger = () => {
     setShowResponse((prevState) => !prevState)
   }
 
-  const info = `<h4>Setup Custom Trigger</h4>
+  const info = `<h4>${sprintf(__('Follow these simple steps to set up the %s', 'bit-integrations'), 'Custom Trigger')}</h4>
             <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/custom-trigger-integrations" target="_blank" rel="noreferrer">${__('Details on Documentation', 'bit-integrations')}</a>
             <ul>
-                <li>Copy <b>do action hook</b> & past in your form submiting function</li>
-                <li>Click on the <b>Fetch</b> button & Submit your <b>Form</b> to get the form data</li>
+                <li>${__('Copy <b>do action hook</b> & past in your form submiting function', 'bit-integrations')}</li>
+                <li>${__('Click on the <b>Fetch</b> button & Submit your <b>Form</b> to get the form data', 'bit-integrations')}</li>
             </ul>
   `
 
@@ -182,7 +182,9 @@ const CustomTrigger = () => {
         {newFlow.triggerDetail?.data && (
           <button onClick={showResponseTable} className="btn btcd-btn-lg sh-sm flx">
             <span className="txt-webhook-resbtn font-inter-500">
-              {showResponse ? 'Hide Response' : 'View Response'}
+              {showResponse
+                ? __('Hide Response', 'bit-integrations')
+                : __('View Response', 'bit-integrations')}
             </span>
             {!showResponse ? (
               <EyeIcn width="20" height="20" strokeColor="#000000" />
@@ -200,7 +202,7 @@ const CustomTrigger = () => {
         className="btn btcd-btn-lg purple sh-sm flx"
         type="button"
         disabled={!newFlow.triggerDetail?.data}>
-        Set Action
+        {__('Set Action', 'bit-integrations')}
       </button>
       <Note note={info} />
     </div>

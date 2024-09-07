@@ -101,11 +101,11 @@ const FormPlugin = () => {
       ) : (
         <div>
           {data?.success === false ? (
-            <span>{data.data}</span>
+            <span>{__(data.data, 'bit-integrations')}</span>
           ) : (
             <>
               <div>
-                <h4>Select a Form/Task Name</h4>
+                <h4>{__('Select a Form/Task Name', 'bit-integrations')}</h4>
                 <MultiSelect
                   className="msl-wrp-options"
                   defaultValue={newFlow.triggerData?.formID}
@@ -120,7 +120,7 @@ const FormPlugin = () => {
                 {taskNote && (
                   <small className="trigger-task-note">
                     <strong>Task Details: </strong>
-                    {taskNote}
+                    {__(taskNote, 'bit-integrations')}
                   </small>
                 )}
                 <TriggerMultiOption flow={newFlow} setFlowData={setFlowData} />
@@ -130,14 +130,16 @@ const FormPlugin = () => {
                     onClick={updatedStep}
                     className="btn ml-auto btcd-btn-lg purple sh-sm flx mt-4"
                     disabled={!newFlow?.triggerData?.formID}>
-                    &nbsp;Next
+                    &nbsp;{__('Next', 'bit-integrations')}
                     <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
                     {isLoad && <LoaderSm size={20} clr="#fff" className="ml-2" />}
                   </button>
                 </div>
               </div>
 
-              {newFlow.triggerDetail?.note && <Note note={newFlow.triggerDetail.note} />}
+              {newFlow.triggerDetail?.note && (
+                <Note note={__(newFlow.triggerDetail?.note, 'bit-integrations')} />
+              )}
             </>
           )}
         </div>

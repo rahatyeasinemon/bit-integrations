@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\CampaignMonitor;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class CampaignMonitorController
 {
@@ -84,7 +84,7 @@ class CampaignMonitorController
         $apiKey = $integrationDetails->api_key;
 
         if (empty($fieldMap) || empty($apiKey) || empty($selectedList)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for CampaignMonitor api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Campaign Monitor'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey);

@@ -101,7 +101,7 @@ export default function ZendeskIntegLayout({
             <button
               onClick={() => getAllCRMCompanies(zendeskConf, setZendeskConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh companies', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh Companies', 'bit-integrations')}'` }}
               type="button"
               disabled={loading.CRMCompanies}>
               &#x21BB;
@@ -129,7 +129,7 @@ export default function ZendeskIntegLayout({
             <button
               onClick={() => getAllCRMContacts(zendeskConf, setZendeskConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh contacts', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh Contacts', 'bit-integrations')}'` }}
               type="button"
               disabled={loading.CRMContacts}>
               &#x21BB;
@@ -185,7 +185,7 @@ export default function ZendeskIntegLayout({
             <button
               onClick={() => getCustomFields(zendeskConf, setZendeskConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh Fields', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
               disabled={loading.CRMSources}>
               &#x21BB;

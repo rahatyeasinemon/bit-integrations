@@ -41,11 +41,11 @@ const ActionHook = () => {
 
   const setTriggerData = () => {
     if (!selectedFields.length) {
-      toast.error('Please Select fields')
+      toast.error(__('Please Select Fields', 'bit-integrations'))
       return
     }
     if (!primaryKey) {
-      toast.error('Please Select a Primary Key')
+      toast.error(__('Please Select a Primary Key', 'bit-integrations'))
       return
     }
 
@@ -132,7 +132,7 @@ const ActionHook = () => {
         })
         .catch((err) => {
           if (err.name === 'AbortError') {
-            console.log('AbortError: Fetch request aborted')
+            console.log(__('AbortError: Fetch request aborted', 'bit-integrations'))
           }
         })
     }, 1500)
@@ -192,18 +192,18 @@ const ActionHook = () => {
     }
   }
 
-  const info = `<h4>Please follow the simple steps below to setup Action Hook</h4>
+  const info = `<h4>${sprintf(__('Follow these simple steps to set up the %s', 'bit-integrations'), 'Action Hook')}</h4>
             <ul>
-              <li>Click <b>Fetch</b></li>
-              <li>Submit <b>Integrable Form</b></li>
-              <li>Click <b>Next</b> and <b>Go</b></b></li>
+              <li>${__('Click <b>Fetch</b>', 'bit-integrations')}</li>
+              <li>${__('Submit <b>Integrable Form</b>', 'bit-integrations')}</li>
+              <li>${__('Click <b>Next</b> and <b>Go</b></b>', 'bit-integrations')}</li>
             </ul>
             <h5>
               <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger-hooks" target="_blank" rel="noreferrer">${__('Bit Integrations Trigger Hooks', 'bit-integrations')}</a>
               <br />            
-              More Details on 
+              ${__('More Details on', 'bit-integrations')} 
               <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/action-hook-integrations" target="_blank" rel="noreferrer">${__('Documentation', 'bit-integrations')}</a>
-              or
+              ${__('or', 'bit-integrations')}
               <a className="btcd-link" href="https://youtu.be/pZ-8JuZfIco?si=Xxv857hJjv6p5Tcu" target="_blank" rel="noreferrer">${__('Youtube Tutorials', 'bit-integrations')}</a>
             </h5>`
 
@@ -337,7 +337,9 @@ const ActionHook = () => {
         <div className="flx flx-between">
           <button onClick={showResponseTable} className="btn btcd-btn-lg sh-sm flx">
             <span className="txt-actionHook-resbtn font-inter-500">
-              {showResponse ? 'Hide Response' : 'View Response'}
+              {showResponse
+                ? __('Hide Response', 'bit-integrations')
+                : __('View Response', 'bit-integrations')}
             </span>
             {!showResponse ? (
               <EyeIcn width="20" height="20" strokeColor="#000000" />
@@ -350,7 +352,7 @@ const ActionHook = () => {
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
             disabled={!selectedFields.length || !primaryKey}>
-            Set Action
+            {__('Set Action', 'bit-integrations')}
           </button>
         </div>
       )}

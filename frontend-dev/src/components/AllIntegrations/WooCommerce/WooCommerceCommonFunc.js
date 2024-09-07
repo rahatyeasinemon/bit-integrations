@@ -36,7 +36,10 @@ export const moduleChange = (wcConf, setWcConf, setIsLoading, setSnackbar, isPro
     if (newConf?.orderchange) delete newConf.orderchange
   }
   if (newConf?.module === 'order' && !isPro) {
-    newConf['taskNote'] = 'Flexible Checkout Fields are a feature available in the Pro version.'
+    newConf['taskNote'] = __(
+      'Flexible Checkout Fields are a feature available in the Pro version.',
+      'bit-integrations'
+    )
   }
   return newConf
 }

@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\ZohoRecruit;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
 use WP_Error;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -417,11 +417,10 @@ class ZohoRecruitController
             || empty($module)
             || empty($fieldMap)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for zoho recruit api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Zoho Recruit'));
         }
         if (empty($defaultDataConf->moduleData->{$module}->fields) || empty($defaultDataConf->modules->{$module})) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for zoho recruit api', 'bit-integrations'));
-        }
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Zoho Recruit'));
         if ((\intval($tokenDetails->generates_on) + (55 * 60)) < time()) {
             $requiredParams['clientId'] = $integrationDetails->clientId;
             $requiredParams['clientSecret'] = $integrationDetails->clientSecret;

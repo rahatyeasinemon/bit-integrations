@@ -58,7 +58,7 @@ function LogicBlock({
     <div className="flx pos-rel btcd-logic-blk">
       <span className="btcd-logic-chip mr-2">IF</span>
       <MtSelect
-        label="Form Fields"
+        label={__('Form Fields', 'bit-integrations')}
         value={fieldVal || ''}
         style={{ width: 620 }}
         onChange={(e) => changeFormField(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}>
@@ -78,7 +78,7 @@ function LogicBlock({
       </svg>
 
       <MtSelect
-        label="Logic"
+        label={__('Logic', 'bit-integrations')}
         value={logicValue || ''}
         onChange={(e) => changeLogic(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}
         className="w-5">
@@ -117,7 +117,7 @@ function LogicBlock({
         />
       ) : (
         <MtInput
-          label="Value"
+          label={__('Value', 'bit-integrations')}
           type={type}
           disabled={logicValue === 'null' || logicValue === 'not_null'}
           onChange={(e) => changeValue(e.target.value, lgcInd, subLgcInd, subSubLgcInd)}

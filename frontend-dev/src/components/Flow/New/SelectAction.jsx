@@ -209,14 +209,14 @@ export default function SelectAction() {
       <div className="txt-center" style={{ width: '100%' }}>
         <button type="button" className="f-left btn btcd-btn-o-gray mt-1" onClick={updatedStep}>
           <span className="btcd-icn icn-chevron-left" />
-          &nbsp;Back
+          &nbsp;{__('Back', 'bit-integrations')}
         </button>
-        <h2 className="mt-0">Please select a Action</h2>
+        <h2 className="mt-0">{__('Please select a Action', 'bit-integrations')}</h2>
         <input
           type="search"
           className="btcd-paper-inp w-5 mb-3"
           onChange={searchInteg}
-          placeholder="Search Actions..."
+          placeholder={__('Search Actions...', 'bit-integrations')}
           style={{ height: '50%' }}
           autoFocus
         />

@@ -164,7 +164,12 @@ export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
       selectedJobType: 'any'
     }
   }
-  if (val === 'wp_job_manager-2' || val === 'wp_job_manager-3' || val === 'wp_job_manager-6' || val === 'wp_job_manager-7') {
+  if (
+    val === 'wp_job_manager-2' ||
+    val === 'wp_job_manager-3' ||
+    val === 'wp_job_manager-6' ||
+    val === 'wp_job_manager-7'
+  ) {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       jobList: resp.data.jobList,
@@ -247,6 +252,9 @@ export const MasterStudyLmsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   }
   if (['1', '3', '4', '5'].includes(val.toString())) {
     tmpNewFlow.triggerData.allCourse = resp.data.allCourse
+  }
+  if (val.toString() === '6') {
+    tmpNewFlow.triggerData.allDistribution = resp.data.allDistribution
   }
   if (val.toString() === '4' || val.toString() === '5') {
     tmpNewFlow.triggerData.allQuiz = resp.data.allQuiz
@@ -483,11 +491,20 @@ export const wpForoStateIH = (tmpConf, flowData, triggered_entity_id) => {
 export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
   const formId = flowData.formID ? flowData.formID : triggered_entity_id
 
-  if (formId === 'wp_job_manager-1' || formId === 'wp_job_manager-4' || formId === 'wp_job_manager-5') {
+  if (
+    formId === 'wp_job_manager-1' ||
+    formId === 'wp_job_manager-4' ||
+    formId === 'wp_job_manager-5'
+  ) {
     tmpConf.selectedJobType = flowData.selectedJobType
     tmpConf.jobTypes = flowData.jobTypes
   }
-  if (formId === 'wp_job_manager-2' || formId === 'wp_job_manager-3' || formId === 'wp_job_manager-6' || formId === 'wp_job_manager-7') {
+  if (
+    formId === 'wp_job_manager-2' ||
+    formId === 'wp_job_manager-3' ||
+    formId === 'wp_job_manager-6' ||
+    formId === 'wp_job_manager-7'
+  ) {
     tmpConf.selectedJob = flowData.selectedJob
     tmpConf.jobList = flowData.jobList
   }
@@ -759,6 +776,10 @@ export const MasterStudyLmsStateIH = (tmpConf, flowData, formID) => {
   if (val === 4 || val === 5) {
     tmpConf.selectedQuiz = flowData.selectedQuiz
     tmpConf.allQuiz = flowData.allQuiz
+  }
+  if (val === 6) {
+    tmpConf.selectedDistribution = flowData.selectedDistribution
+    tmpConf.allDistribution = flowData.allDistribution
   }
 
   return tmpConf

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Livestorm;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Livestorm integration
@@ -53,7 +53,6 @@ class LivestormController
             ];
 
             foreach ($response->data as $event) {
-
                 $data['events'][]
                 = (object) [
                     'id'   => $event->id,
@@ -61,7 +60,6 @@ class LivestormController
                 ]
                 ;
                 foreach ($event->attributes->fields as $field) {
-
                     $data['allFields'][]
                     = (object) [
                         'eventId'  => $event->id,
@@ -89,7 +87,6 @@ class LivestormController
         if (isset($response->data)) {
             $sessions = [];
             foreach ($response->data as $session) {
-
                 $sessions[]
                 = (object) [
                     'id'       => $session->id,
@@ -111,7 +108,7 @@ class LivestormController
         $fieldMap = $integrationDetails->field_map;
 
         if (empty($fieldMap) || empty($apiKey)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Livestorm api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Livestorm'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey);

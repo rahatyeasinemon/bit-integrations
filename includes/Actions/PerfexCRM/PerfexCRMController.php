@@ -170,7 +170,7 @@ class PerfexCRMController
         $domain = $integrationDetails->domain;
 
         if (empty($fieldMap) || empty($apiToken) || empty($actionName) || empty($domain)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for PerfexCRM api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'PerfexCRM'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiToken, $domain);

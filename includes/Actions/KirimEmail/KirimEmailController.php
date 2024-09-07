@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\KirimEmail;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for KirimEmail integration
@@ -109,7 +109,7 @@ class KirimEmailController
             || empty($fieldMap)
 
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Freshdesk api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Freshdesk'));
         }
         $recordApiHelper = new RecordApiHelper($integrationId);
         $kirinEmailApiResponse = $recordApiHelper->execute(
