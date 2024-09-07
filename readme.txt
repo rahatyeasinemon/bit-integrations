@@ -24,7 +24,12 @@ https://youtu.be/hgMkLvV-r6k
 
 📢 **Join our community [Bit Integrations](https://www.facebook.com/groups/bitapps) & get updates on our plugins.**
 
-Mak says about Bit Integrations in his youtube channel
+Jeffrey @ Lytbox says about Bit Integrations
+
+https://www.youtube.com/watch?v=Jocbz2lAqKU
+
+
+Mak says about Bit Integrations
 
 https://youtu.be/UhTu6LCmh8A
 
