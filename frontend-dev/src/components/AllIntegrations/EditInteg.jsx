@@ -215,7 +215,7 @@ export default function EditInteg({ allIntegURL }) {
         <SnackMsg snack={snack} setSnackbar={setSnackbar} />
         <Link to={allIntegURL} className="btn btcd-btn-o-gray">
           <span className="btcd-icn icn-chevron-left" />
-          &nbsp;Back
+          &nbsp;{__('Back', 'bit-integrations')}
         </Link>
         <div className="w-10 txt-center" style={{ marginRight: '73px' }}>
           <b className="f-lg mb-2">{flow.flow_details?.type}</b>

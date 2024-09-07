@@ -73,7 +73,7 @@ export default function DokanActions({ dokanConf, setDokanConf, loading, setLoad
               onChange={(e) => actionHandler(e, 'vendorCheckbox')}
               className="wdt-200 mt-4 mr-2"
               value="featureVendor"
-              title={__(' Make Vendor Featured', 'bit-integrations')}
+              title={__('Make Vendor Featured', 'bit-integrations')}
               subTitle={__('Make this vendor featured', 'bit-integrations')}
               isInfo={!isPro}
             />

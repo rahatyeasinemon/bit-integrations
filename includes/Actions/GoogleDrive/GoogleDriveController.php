@@ -2,11 +2,11 @@
 
 namespace BitCode\FI\Actions\GoogleDrive;
 
-use BitCode\FI\Actions\GoogleDrive\RecordApiHelper as GoogleDriveRecordApiHelper;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Log\LogHandler;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Actions\GoogleDrive\RecordApiHelper as GoogleDriveRecordApiHelper;
 
 class GoogleDriveController
 {
@@ -105,7 +105,7 @@ class GoogleDriveController
         }
 
         if (empty($fieldMap)) {
-            $error = new WP_Error('REQ_FIELD_EMPTY', __('Required fields not mapped.', 'bit-integrations'));
+            $error = new WP_Error('REQ_FIELD_EMPTY', __('Required fields not mapped', 'bit-integrations'));
             LogHandler::save($this->integrationID, 'record', 'validation', $error);
 
             return $error;

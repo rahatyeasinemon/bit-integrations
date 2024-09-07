@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\PipeDrive;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for PipeDrive integration
@@ -162,7 +162,7 @@ class PipeDriveController
             empty($fieldMap)
              || empty($api_key)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for PipeDrive api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'PipeDrive'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $pipeDriveApiResponse = $recordApiHelper->execute(

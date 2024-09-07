@@ -127,7 +127,7 @@ export default function WhatsAppIntegLayout({
             />
           </div>
           <div className="flx">
-            <b className="wdt-200 d-in-b">{__('Select Type of media:', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select type of media:', 'bit-integrations')}</b>
             <MultiSelect
               defaultValue={whatsAppConf?.mediaType}
               className="mt-2 w-5"
@@ -279,30 +279,30 @@ export default function WhatsAppIntegLayout({
   )
 }
 
-const textMsgNote = `<p>To ensure successful message delivery using the WhatsApp Business API:</p>
+const textMsgNote = `<p>${__('To ensure successful message delivery using the WhatsApp Business API: ', 'bit-integrations')}</p>
             <ul>
-                <li><strong>The conversation must be initiated by the user.</strong></li>
-                <li>To begin, <strong>send a message from your WhatsApp number to the recipient's number.</strong></li>
-                <li>Once the user has started the conversation, you can continue to communicate with the recipient normally.</li>
+                <li><strong>${__('The conversation must be initiated by the user.', 'bit-integrations')}</strong></li>
+                <li>${__("To begin, <strong>send a message from your WhatsApp number to the recipient's number.</strong>", 'bit-integrations')}</li>
+                <li>${__('Once the user has started the conversation, you can continue to communicate with the recipient normally.', 'bit-integrations')}</li>
             </ul>`
 
-const textMediaNote = `<p>To ensure successful message delivery using the WhatsApp Business API:</p>
+const textMediaNote = `<p>${__('To ensure successful message delivery using the WhatsApp Business API: ', 'bit-integrations')}</p>
             <ul>
-                <li><strong>The conversation must be initiated by the user.</strong></li>
-                <li>To begin, <strong>send a message from your WhatsApp number to the recipient's number.</strong></li>
-                <li>Once the user has started the conversation, you can continue to communicate with the recipient normally.</li>
+                <li><strong>${__('The conversation must be initiated by the user.', 'bit-integrations')}</strong></li>
+                <li>${__("To begin, <strong>send a message from your WhatsApp number to the recipient's number.</strong>", 'bit-integrations')}</li>
+                <li>${__('Once the user has started the conversation, you can continue to communicate with the recipient normally.', 'bit-integrations')}</li>
             </ul>
-            <h5>Caption</h5>
+            <h5>${__('Caption', 'bit-integrations')}</h5>
             <ul>
-                <li>Do not use with <strong>audio</strong> or <strong>sticker</strong> media.</li>
-                <li>Media asset <strong>caption</strong>.</li>
-                <li><strong>Captions</strong> are currently not supported for <strong>document</strong> media.</li>
+                <li>${__('Do not use with <strong>audio</strong> or <strong>sticker</strong> media.', 'bit-integrations')}</li>
+                <li>${__('Media asset <strong>caption</strong>.', 'bit-integrations')}</li>
+                <li>${__('<strong>Captions</strong> are currently not supported for <strong>document</strong> media', 'bit-integrations')}</li>
             </ul>
-            <h5>FileName</h5>
+            <h5>${__('FileName', 'bit-integrations')}</h5>
             <ul>
-                <li>Use only with <strong>document media</strong>.</li>
-                <li>Describes the <strong>FileName</strong> for the specific <strong>document</strong>.</li>
-                <li>The extension of the filename will specify what format the document is displayed as in WhatsApp.</li>
+                <li>${__('Use only with <strong>document media</strong>.', 'bit-integrations')}</li>
+                <li>${__('Describes the <strong>FileName</strong> for the specific <strong>document</strong>.', 'bit-integrations')}</li>
+                <li>${__('The extension of the filename will specify what format the document is displayed as in WhatsApp.', 'bit-integrations')}</li>
             </ul>`
 
 const contactFields = [

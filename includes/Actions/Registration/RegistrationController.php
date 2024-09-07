@@ -27,9 +27,9 @@ final class RegistrationController
         if (is_wp_error($userId) || !$userId) {
             $message = is_wp_error($userId) ? $userId->get_error_message() : 'error';
 
-            LogHandler::save($this->_integrationID, 'New user registration', 'error', $message);
+            LogHandler::save($this->_integrationID, __('New user registration', 'bit-integrations'), 'error', $message);
         } else {
-            LogHandler::save($this->_integrationID, 'New user registration', 'success', `New user created successfully, user id : {$userId}`);
+            LogHandler::save($this->_integrationID, __('New user registration', 'bit-integrations'), 'success', \sprintf(__('New user created successfully, user id : %s', 'bit-integrations'), $userId));
 
             $this->saveMetaData($flowDetails->meta_map, $fieldValues, $userId);
 
@@ -141,9 +141,9 @@ final class RegistrationController
     {
         $message = '';
         if (isset($user['user_login']) && username_exists($user['user_login'])) {
-            $message = 'This username is already registered. Please choose another one.';
+            $message = __('This username is already registered. Please choose another one.', 'bit-integrations');
         } elseif (isset($user['user_email']) && email_exists($user['user_email'])) {
-            $message = 'This email  is already registered. Please choose another one.';
+            $message = __('This email  is already registered. Please choose another one.', 'bit-integrations');
         }
 
         return $message;
@@ -153,7 +153,7 @@ final class RegistrationController
     {
         $userId = get_current_user_id();
         if (!$userId) {
-            LogHandler::save($this->_integrationID, 'User update', 'error', 'You are not logged in.');
+            LogHandler::save($this->_integrationID, __('User update', 'bit-integrations'), 'error', __('You are not logged in.', 'bit-integrations'));
 
             return;
         }
@@ -161,9 +161,9 @@ final class RegistrationController
         $updatedUser = wp_update_user($updatedData);
         if (is_wp_error($updatedUser) || !$updatedUser) {
             $message = is_wp_error($updatedUser) ? $updatedUser->get_error_message() : 'error';
-            LogHandler::save($this->_integrationID, 'User update', 'error', $message);
+            LogHandler::save($this->_integrationID, __('User update', 'bit-integrations'), 'error', $message);
         } else {
-            LogHandler::save($this->_integrationID, 'User update', 'success', "User updated successfully, user id : {$updatedUser}");
+            LogHandler::save($this->_integrationID, __('User update', 'bit-integrations'), 'success', \sprintf(__('User updated successfully, user id : %s', 'bit-integrations'), $updatedUser));
             $this->saveMetaData($flowDetails->meta_map, $fieldValues, $updatedUser);
             $this->notification($flowDetails, $updatedUser);
         }

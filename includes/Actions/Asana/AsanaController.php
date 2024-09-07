@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Asana;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Asana integration
@@ -166,7 +166,7 @@ class AsanaController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Asana api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Asana'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

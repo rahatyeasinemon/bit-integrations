@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Groundhogg;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Groundhogg integration
@@ -90,7 +90,7 @@ class GroundhoggController
         if (
             empty($fieldMap)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Groundhogg api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Groundhogg'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $groundhoggApiResponse = $recordApiHelper->execute(

@@ -27,18 +27,16 @@ function LifterLms({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
     { key: '4', label: 'Enroll user in a membership' },
     { key: '5', label: 'Course complete for the user' },
     { key: '6', label: 'Unenroll user from a course' },
-    { key: '7', label: 'Unenroll user from a membership' },
+    { key: '7', label: 'Unenroll user from a membership' }
   ]
 
   const [lifterLmsConf, setLifterLmsConf] = useState({
     name: 'LifterLms',
     type: 'LifterLms',
     mainAction: '',
-    field_map: [
-      { formField: '', lifterLmsFormField: '' },
-    ],
+    field_map: [{ formField: '', lifterLmsFormField: '' }],
     allActions,
-    actions: {},
+    actions: {}
   })
 
   const nextPage = () => {
@@ -46,7 +44,7 @@ function LifterLms({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
     if (lifterLmsConf.mainAction === '11' && !checkMappedFields(lifterLmsConf)) {
-      setSnackbar({ show: true, msg: 'Please map fields to continue.' })
+      setSnackbar({ show: true, msg: __('Please map fields to continue.', 'bit-integrations') })
       return
     }
     if (lifterLmsConf.mainAction !== '') {
@@ -75,7 +73,9 @@ function LifterLms({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <LifterLmsAuthorization
@@ -90,11 +90,14 @@ function LifterLms({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <LifterLmsIntegLayout
           formFields={formFields}
-          handleInput={(e) => handleInput(e, lifterLmsConf, setLifterLmsConf, setIsLoading, setSnackbar, formID)}
+          handleInput={(e) =>
+            handleInput(e, lifterLmsConf, setLifterLmsConf, setIsLoading, setSnackbar, formID)
+          }
           lifterLmsConf={lifterLmsConf}
           setLifterLmsConf={setLifterLmsConf}
           isLoading={isLoading}
@@ -109,8 +112,7 @@ function LifterLms({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
           onClick={() => nextPage(3)}
           disabled={!lifterLmsConf.mainAction || isLoading || isDisabled()}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
+          type="button">
           {__('Next', 'bit-integrations')}
           &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
@@ -119,13 +121,22 @@ function LifterLms({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
       {/* STEP 3 */}
       <IntegrationStepThree
         step={step}
-        saveConfig={() => saveActionConf({ flow, setFlow, allIntegURL, navigate, conf: lifterLmsConf, setIsLoading, setSnackbar })}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            setFlow,
+            allIntegURL,
+            navigate,
+            conf: lifterLmsConf,
+            setIsLoading,
+            setSnackbar
+          })
+        }
         isLoading={isLoading}
         dataConf={lifterLmsConf}
         setDataConf={setLifterLmsConf}
         formFields={formFields}
       />
-
     </div>
   )
 }

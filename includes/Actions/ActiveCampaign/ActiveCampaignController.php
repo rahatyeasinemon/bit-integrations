@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\ActiveCampaign;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -245,7 +245,7 @@ class ActiveCampaignController
             || empty($api_url)
             || empty($fieldMap)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Sendinblue api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Active Campaign'));
         }
         $recordApiHelper = new RecordApiHelper($api_key, $api_url, $this->_integrationID);
         $activeCampaignApiResponse = $recordApiHelper->execute(

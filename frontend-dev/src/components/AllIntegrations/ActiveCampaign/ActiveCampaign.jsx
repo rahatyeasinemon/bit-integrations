@@ -36,11 +36,14 @@ function ActiveCampaign({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
     if (val === 3) {
       if (!checkMappedFields(activeCampaingConf)) {
-        setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
+        setSnackbar({
+          show: true,
+          msg: __('Please map all required fields to continue.', 'bit-integrations')
+        })
         return
       }
       if (!activeCampaingConf?.listId) {
-        setSnackbar({ show: true, msg: 'Please select list to continue.' })
+        setSnackbar({ show: true, msg: __('Please select list to continue.', 'bit-integrations') })
         return
       }
       if (activeCampaingConf.name !== '' && activeCampaingConf.field_map.length > 0) {

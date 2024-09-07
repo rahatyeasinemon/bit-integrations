@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\LionDesk;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for LionDesk integration
@@ -134,7 +134,7 @@ class LionDeskController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($tokenDetails) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for LionDesk api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'LionDesk'));
         }
 
         $response = [];

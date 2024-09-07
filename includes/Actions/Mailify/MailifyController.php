@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\Mailify;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class MailifyController
 {
@@ -115,7 +115,7 @@ class MailifyController
         $apiKey = $integrationDetails->api_key;
 
         if (empty($fieldMap) || empty($accountId) || empty($apiKey) || empty($selectedList)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Mailify api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mailify'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $accountId, $apiKey);

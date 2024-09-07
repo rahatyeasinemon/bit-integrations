@@ -115,7 +115,7 @@ export default function BuddyBossIntegLayout({
         <>
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Group: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select group: ', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={buddyBossConf?.groupId}
@@ -332,7 +332,9 @@ export default function BuddyBossIntegLayout({
         )}
       </>
       <br />
-      <Note note="Some integrations will only work for logged-in users." />
+      <Note
+        note={__('Some integrations will only work for logged-in users.', 'bit-integrations')}
+      />
     </>
   )
 }

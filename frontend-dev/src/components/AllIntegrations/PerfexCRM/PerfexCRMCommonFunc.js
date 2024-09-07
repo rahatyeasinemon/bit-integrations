@@ -107,8 +107,8 @@ export const perfexCRMAuthentication = (
 ) => {
   if (!confTmp.api_token || !confTmp.domain) {
     setError({
-      api_token: !confTmp.api_token ? __("Api Token can't be empty", 'bit-integrations') : '',
-      domain: !confTmp.domain ? __("Access API URL can't be empty", 'bit-integrations') : ''
+      api_token: !confTmp.api_token ? __("API Token can't be empty", 'bit-integrations') : '',
+      domain: !confTmp.domain ? __("API URL can't be empty", 'bit-integrations') : ''
     })
     return
   }
@@ -125,7 +125,7 @@ export const perfexCRMAuthentication = (
     if (result && result.success) {
       setIsAuthorized(true)
       setLoading({ ...loading, auth: false })
-      toast.success(__('Authorized successfully', 'bit-integrations'))
+      toast.success(__('Authorized Successfully', 'bit-integrations'))
       return
     }
     setLoading({ ...loading, auth: false })

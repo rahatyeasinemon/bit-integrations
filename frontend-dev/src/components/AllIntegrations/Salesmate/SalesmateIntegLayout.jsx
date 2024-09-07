@@ -248,7 +248,7 @@ export default function SalesmateIntegLayout({
                 refreshSalesmateFields(salesmateConf, setSalesmateConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh Fields', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
               disabled={loading.CRMPipelines}>
               &#x21BB;

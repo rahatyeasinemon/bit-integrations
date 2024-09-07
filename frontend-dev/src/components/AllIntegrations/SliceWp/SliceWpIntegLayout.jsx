@@ -105,7 +105,9 @@ export default function SliceWpIntegLayout({
         )}
       </>
       <br />
-      <Note note="Some integrations will only work for logged-in users." />
+      <Note
+        note={__('Some integrations will only work for logged-in users.', 'bit-integrations')}
+      />
     </>
   )
 }

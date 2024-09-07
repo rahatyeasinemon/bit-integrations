@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Dokan;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Log\LogHandler;
 use WeDevs\DokanPro\Refund\Validator;
 
 /**
@@ -170,7 +170,7 @@ class RecordApiHelper
         if (!is_plugin_active('dokan-pro/dokan-pro.php')) {
             return [
                 'success' => false,
-                'message' => 'The Dokan Pro plugin is not installed or activated.',
+                'message' => \sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'The Dokan Pro'),
                 'code'    => 400
             ];
         }

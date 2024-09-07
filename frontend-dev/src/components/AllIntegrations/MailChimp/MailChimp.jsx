@@ -8,7 +8,12 @@ import Steps from '../../Utilities/Steps'
 import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import MailChimpAuthorization from './MailChimpAuthorization'
-import { checkAddressFieldMapRequired, handleInput, setGrantTokenResponse, checkMappedFields } from './MailChimpCommonFunc'
+import {
+  checkAddressFieldMapRequired,
+  handleInput,
+  setGrantTokenResponse,
+  checkMappedFields
+} from './MailChimpCommonFunc'
 import MailChimpIntegLayout from './MailChimpIntegLayout'
 
 function MailChimp({ formFields, setFlow, flow, allIntegURL }) {
@@ -22,13 +27,14 @@ function MailChimp({ formFields, setFlow, flow, allIntegURL }) {
     name: 'Mail Chimp',
     type: 'Mail Chimp',
     clientId: process.env.NODE_ENV === 'development' ? '343788104704' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? '6095599b3071827e5049e6e43cfd6f5677d3960d14b3c10990' : '',
+    clientSecret:
+      process.env.NODE_ENV === 'development'
+        ? '6095599b3071827e5049e6e43cfd6f5677d3960d14b3c10990'
+        : '',
     listId: '',
     listName: '',
     tags: '',
-    field_map: [
-      { formField: '', mailChimpField: '' },
-    ],
+    field_map: [{ formField: '', mailChimpField: '' }],
     address_field: [],
     module: '',
     actions: {},
@@ -44,11 +50,14 @@ function MailChimp({ formFields, setFlow, flow, allIntegURL }) {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
     if (mailChimpConf.actions?.address && !checkAddressFieldMapRequired(mailChimpConf)) {
-      setSnackbar({ show: true, msg: 'Please map address required fields to continue.' })
+      setSnackbar({
+        show: true,
+        msg: __('Please map address required fields to continue.', 'bit-integrations')
+      })
       return
     }
     if (!checkMappedFields(mailChimpConf)) {
-      setSnackbar({ show: true, msg: 'Please map fields to continue.' })
+      setSnackbar({ show: true, msg: __('Please map fields to continue.', 'bit-integrations') })
       return
     }
     if (mailChimpConf.listId !== '') {
@@ -59,7 +68,9 @@ function MailChimp({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <MailChimpAuthorization
@@ -74,12 +85,24 @@ function MailChimp({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
         <MailChimpIntegLayout
           formID={formID}
           formFields={formFields}
-          handleInput={(e) => handleInput(e, mailChimpConf, setMailChimpConf, formID, loading, setLoading, setSnackbar, setIsLoading)}
+          handleInput={(e) =>
+            handleInput(
+              e,
+              mailChimpConf,
+              setMailChimpConf,
+              formID,
+              loading,
+              setLoading,
+              setSnackbar,
+              setIsLoading
+            )
+          }
           mailChimpConf={mailChimpConf}
           setMailChimpConf={setMailChimpConf}
           isLoading={isLoading}
@@ -92,18 +115,26 @@ function MailChimp({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!mailChimpConf.listId || mailChimpConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
+          type="button">
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
-
       </div>
 
       {/* STEP 3 */}
       <IntegrationStepThree
         step={step}
-        saveConfig={() => saveActionConf({ flow, setFlow, allIntegURL, navigate, conf: mailChimpConf, setIsLoading, setSnackbar })}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            setFlow,
+            allIntegURL,
+            navigate,
+            conf: mailChimpConf,
+            setIsLoading,
+            setSnackbar
+          })
+        }
         isLoading={isLoading}
         dataConf={mailChimpConf}
         setDataConf={setMailChimpConf}

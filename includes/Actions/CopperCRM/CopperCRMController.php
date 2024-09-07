@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\CopperCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for CopperCRM integration
@@ -142,7 +142,7 @@ class CopperCRMController
             }
             wp_send_json_success($owners, 200);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            wp_send_json_error(__('Owners fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -265,7 +265,7 @@ class CopperCRMController
             }
             wp_send_json_success($pipelines, 200);
         } else {
-            wp_send_json_error('Pipelines fetching failed', 400);
+            wp_send_json_error(__('Pipelines fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -278,7 +278,7 @@ class CopperCRMController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for CopperCRM api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Copper CRM'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

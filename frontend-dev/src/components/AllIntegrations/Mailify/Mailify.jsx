@@ -23,10 +23,8 @@ function Mailify({ formFields, setFlow, flow, allIntegURL }) {
     type: 'Sarbacane(Mailify)',
     account_id: process.env.NODE_ENV === 'development' ? '643240d170f32e4b76f5e52b' : '',
     api_key: process.env.NODE_ENV === 'development' ? 'hoWqax0jSVuMsxGBizHOUg' : '',
-    field_map: [
-      { formField: '', mailifyField: '' },
-    ],
-    actions: {},
+    field_map: [{ formField: '', mailifyField: '' }],
+    actions: {}
   })
 
   const nextPage = (val) => {
@@ -36,11 +34,14 @@ function Mailify({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
     if (val === 3) {
       if (!checkMappedFields(mailifyConf)) {
-        setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
+        setSnackbar({
+          show: true,
+          msg: __('Please map all required fields to continue.', 'bit-integrations')
+        })
         return
       }
       if (!mailifyConf?.listId) {
-        setSnackbar({ show: true, msg: 'Please select list to continue.' })
+        setSnackbar({ show: true, msg: __('Please select list to continue.', 'bit-integrations') })
         return
       }
       if (mailifyConf.name !== '' && mailifyConf.field_map.length > 0) {
@@ -51,7 +52,9 @@ function Mailify({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <MailifyAuthorization
@@ -65,8 +68,9 @@ function Mailify({ formFields, setFlow, flow, allIntegURL }) {
         setSnackbar={setSnackbar}
       />
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
         <MailifyIntegLayout
           formID={formID}
           formFields={formFields}
@@ -80,20 +84,18 @@ function Mailify({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!mailifyConf?.listId || mailifyConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
-          &nbsp;
+          type="button">
+          {__('Next', 'bit-integrations')} &nbsp;
           <BackIcn className="ml-1 rev-icn" />
         </button>
-
       </div>
 
       {/* STEP 3 */}
       <IntegrationStepThree
         step={step}
-        saveConfig={() => saveIntegConfig(flow, setFlow, allIntegURL, mailifyConf, navigate, '', '', setIsLoading)}
+        saveConfig={() =>
+          saveIntegConfig(flow, setFlow, allIntegURL, mailifyConf, navigate, '', '', setIsLoading)
+        }
         isLoading={isLoading}
         dataConf={mailifyConf}
         setDataConf={setMailifyConf}

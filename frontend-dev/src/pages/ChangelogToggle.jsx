@@ -2,7 +2,7 @@ import { Suspense, useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { $btcbi } from '../GlobalStates'
 import ChangelogIcn from '../Icons/ChangeLogIcn'
-import { __ } from '../Utils/i18nwrap'
+import { __, sprintf } from '../Utils/i18nwrap'
 import Modal from '../components/Utilities/Modal'
 import changelogInfo from '../Utils/StaticData/changelogInfo'
 import bitsFetch from '../Utils/bitsFetch'
@@ -56,7 +56,7 @@ export default function ChangelogToggle() {
   return (
     <div className="changelog-toggle">
       <button
-        title={"What's New"}
+        title={__("What's New", 'bit-integrations')}
         type="button"
         className="changelog-btn"
         onClick={() => setShow(true)}>

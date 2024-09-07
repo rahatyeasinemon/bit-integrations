@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Triggers\WPF;
 
-use BitCode\FI\Core\Util\DateTimeHelper;
 use BitCode\FI\Flow\Flow;
+use BitCode\FI\Core\Util\DateTimeHelper;
 
 final class WPFController
 {
@@ -48,7 +48,7 @@ final class WPFController
     public function getAll()
     {
         if (!\function_exists('WPForms')) {
-            wp_send_json_error(__('WPForms is not installed or activated', 'bit-integrations'));
+            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'WPForms'));
         }
         $forms = WPForms()->form->get();
         $all_forms = [];
@@ -66,7 +66,7 @@ final class WPFController
     public function get_a_form($data)
     {
         if (!\function_exists('WPForms')) {
-            wp_send_json_error(__('WPForms is not installed or activated', 'bit-integrations'));
+            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'WPForms'));
         }
         if (empty($data->id)) {
             wp_send_json_error(__('Form doesn\'t exists', 'bit-integrations'));
