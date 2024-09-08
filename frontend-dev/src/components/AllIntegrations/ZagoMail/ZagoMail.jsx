@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+import { __ } from '../../../Utils/i18nwrap'
 import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'

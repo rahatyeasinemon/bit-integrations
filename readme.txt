@@ -997,7 +997,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 == Changelog ==
 
 = 2.2.3  =
-_Release Date -7th September 2024_
+_Release Date -8th September 2024_
   
 - **New Features :**
   - MasterStudy LMS: "User earns a point" trigger added for point system integrations (Pro)
