@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
 
+import bitsFetch from '../../../Utils/bitsFetch'
+
 export const addFieldMap = (fldProp, i, confTmp, setConf) => {
   const newConf = { ...confTmp }
   newConf[fldProp].splice(i, 0, {})
@@ -31,4 +33,16 @@ export const checkMappedUserFields = (data) => {
     return false
   }
   return true
+}
+
+export const getUserRoles = (setIsLoading, setRoles) => {
+  setIsLoading(true)
+  bitsFetch({}, 'role/list', null, 'GET').then((res) => {
+    if (res?.success && res !== undefined) {
+      setIsLoading(false)
+      setRoles(Object.values(res?.data))
+    } else {
+      setIsLoading(false)
+    }
+  })
 }
