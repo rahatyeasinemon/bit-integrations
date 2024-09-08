@@ -77,9 +77,18 @@ class StoreInCache
 
     private static function saveActionHookFlows($integrations)
     {
-        $flows = [];
         $flows = array_filter($integrations, function ($flow) {
-            return $flow->triggered_entity == 'ActionHook';
+            if ($flow->triggered_entity != 'ActionHook') {
+                return false;
+            }
+
+            if (Helper::isProActivate()) {
+                return true;
+            }
+
+            $flow->flow_details = \is_string($flow->flow_details) ? json_decode($flow->flow_details) : $flow->flow_details;
+
+            return empty($flow->flow_details->pro_integ_v);
         });
 
         if (!empty($flows)) {
