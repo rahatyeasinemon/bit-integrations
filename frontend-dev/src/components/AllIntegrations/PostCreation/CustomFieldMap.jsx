@@ -25,6 +25,10 @@ export default function CustomFieldMap({ i, type, formFields, field, postConf, s
       propName: 'metabox_file_map',
       fldName: 'metaboxFileUpload',
     },
+    jeCPTFields: {
+      propName: 'je_cpt_meta_map',
+      fldName: 'jeCPTField',
+    }
   }
 
   const { propName, fldName } = fldType[type]

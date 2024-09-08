@@ -8,6 +8,7 @@
 
 namespace BitCode\FI\Actions\PostCreation;
 
+use BitCode\FI\controller\PostController;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Flow\Flow;
@@ -146,6 +147,69 @@ final class PostCreationController
         }
     }
 
+    public static function HandleJeCPTFieldMap($jeCPTFieldMap, $fieldValues, $postId, $fields)
+    {
+        foreach ($jeCPTFieldMap as $key => $item) {
+            if (isset($item->formField, $item->jeCPTField)) {
+                $triggerValue = $item->formField;
+                $actionValue = $item->jeCPTField;
+                $currentField = self::JeCPTFieldfindByName($fields, $actionValue);
+
+                if ($currentField['type'] === 'checkbox') {
+                    if ($triggerValue === 'custom') {
+                        $customValueString = str_replace(' ', '', Common::replaceFieldWithValue($item->customValue, $fieldValues));
+                        $customValue = explode(',', $customValueString);
+                        $cbValue = [];
+                        foreach ($customValue as $cbItem) {
+                            $cbValue[$cbItem] = true;
+                        }
+                        update_post_meta($postId, $actionValue, $cbValue);
+                    } elseif (!\is_null($fieldValues[$triggerValue]) && !\is_array($fieldValues[$triggerValue])) {
+                        $cvRawValue = explode(',', str_replace(' ', '', $fieldValues[$triggerValue]));
+                        $cbValue = [];
+                        foreach ($cvRawValue as $cbItem) {
+                            $cbValue[$cbItem] = true;
+                        }
+                        update_post_meta($postId, $actionValue, $cbValue);
+                    } elseif (!\is_null($fieldValues[$triggerValue]) && \is_array($fieldValues[$triggerValue])) {
+                        $cbValue = [];
+                        foreach ($fieldValues[$triggerValue] as $cbItem) {
+                            $cbValue[$cbItem] = true;
+                        }
+                        update_post_meta($postId, $actionValue, $cbValue);
+                    }
+                } elseif (($currentField['type'] === 'select' && !empty($currentField['is_multiple']))) {
+                    if ($triggerValue === 'custom') {
+                        $customValueString = str_replace(' ', '', Common::replaceFieldWithValue($item->customValue, $fieldValues));
+                        $customValue = explode(',', $customValueString);
+                        update_post_meta($postId, $actionValue, $customValue);
+                    } elseif (!\is_null($fieldValues[$triggerValue]) && !\is_array($fieldValues[$triggerValue])) {
+                        update_post_meta($postId, $actionValue, explode(',', str_replace(' ', '', $fieldValues[$triggerValue])));
+                    } elseif (!\is_null($fieldValues[$triggerValue]) && \is_array($fieldValues[$triggerValue])) {
+                        update_post_meta($postId, $actionValue, $fieldValues[$triggerValue]);
+                    }
+                } else {
+                    if ($triggerValue === 'custom') {
+                        update_post_meta($postId, $actionValue, Common::replaceFieldWithValue($item->customValue, $fieldValues));
+                    } elseif (!\is_null($fieldValues[$triggerValue]) && !\is_array($fieldValues[$triggerValue])) {
+                        update_post_meta($postId, $actionValue, $fieldValues[$triggerValue]);
+                    } elseif (!\is_null($fieldValues[$triggerValue]) && \is_array($fieldValues[$triggerValue])) {
+                        update_post_meta($postId, $actionValue, reset($fieldValues[$triggerValue]));
+                    }
+                }
+            }
+        }
+    }
+
+    public static function JeCPTFieldfindByName($fields, $name)
+    {
+        $filter = array_filter($fields, function ($field) use ($name) {
+            return $field['name'] === $name;
+        });
+
+        return reset($filter);
+    }
+
     public function postFieldData($postData)
     {
         $data = [];
@@ -177,6 +241,7 @@ final class PostCreationController
 
         $mbFieldMap = $flowDetails->metabox_map;
         $mbFileMap = $flowDetails->metabox_file_map;
+        $jeCPTFieldMap = $flowDetails->je_cpt_meta_map;
 
         $postId = wp_insert_post(['post_title' => '(no title)', 'post_content' => '']);
 
@@ -223,6 +288,14 @@ final class PostCreationController
                 }
             }
             self::mbFileMapping($mbFileMap, $fieldValues, $mbFields, $postId);
+        }
+
+        if (is_plugin_active('jet-engine/jet-engine.php')) {
+            $specialTagValue = Flow::specialTagMappingValue($jeCPTFieldMap);
+            $updatedJeCPTValues = $fieldValues + $specialTagValue;
+            $fields = PostController::getJetEngineCPTRawMeta($flowDetails->post_type);
+
+            self::HandleJeCPTFieldMap($jeCPTFieldMap, $updatedJeCPTValues, $postId, $fields);
         }
     }
 }

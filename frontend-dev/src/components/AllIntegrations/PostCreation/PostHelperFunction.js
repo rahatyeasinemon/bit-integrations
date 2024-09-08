@@ -51,6 +51,15 @@ export const checkMappedMbFields = data => {
   return true
 }
 
+export const checkMappedJEFields = data => {
+  const mappedFields = data?.je_cpt_meta_map ? data.je_cpt_meta_map.filter(mappedField => !mappedField.formField && mappedField.jeCPTField && mappedField.required) : []
+  if (mappedFields.length > 0) {
+    return false
+  }
+
+  return true
+}
+
 export const refreshAcfFields = (acfConf, setAcfFields, setAcfFile) => {
   const loadAcfFields = bitsFetch({ post_type: acfConf?.post_type }, 'bitforms_get_custom_field').then((res) => {
     if (res !== undefined && res.success) {
