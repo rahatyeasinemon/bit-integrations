@@ -20,6 +20,9 @@ import TableCheckBox from '../../Utilities/TableCheckBox'
 import ConditionalLogic from '../../ConditionalLogic'
 import CheckBox from '../../Utilities/CheckBox'
 import Note from '../../Utilities/Note'
+import RegistrationActions from './RegistrationActions'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function EditRegistration({ allIntegURL }) {
   const navigate = useNavigate()
@@ -30,14 +33,11 @@ export default function EditRegistration({ allIntegURL }) {
   const [flow, setFlow] = useRecoilState($newFlow)
   const formFields = useRecoilValue($formFields)
   const [userConf, setUserConf] = useRecoilState($actionConf)
+  const { registration } = tutorialLinks
 
   useEffect(() => {
     const tmpConf = { ...userConf }
-    bitsFetch({}, 'role/list', null, 'GET').then((res) => {
-      if (res?.success && res !== undefined) {
-        setRoles(Object.values(res?.data))
-      }
-    })
+
     if (!tmpConf?.user_map?.[0]?.userField) {
       tmpConf.user_map = userFields
         .filter((fld) => fld.required)
@@ -103,13 +103,20 @@ export default function EditRegistration({ allIntegURL }) {
   </ul>`
 
   return (
-    <div>
+    <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
+      {registration?.youTubeLink && (
+        <TutorialLink title="Registration" youTubeLink={registration?.youTubeLink} />
+      )}
+      {registration?.docLink && (
+        <TutorialLink title="Registration" docLink={registration?.docLink} />
+      )}
+      <br />
       <br />
 
       <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
-      <div className="font-w-m mt-3">{__('Action type', 'bit-integrations')}</div>
-      <div>
+      <div className="flx mt-3">
+        <div className="wdt-200 d-in-b">{__('Action type', 'bit-integrations')}</div>
         <CheckBox
           radio
           name="action_type"
@@ -127,6 +134,8 @@ export default function EditRegistration({ allIntegURL }) {
           title={__('Updated User', 'bit-integrations')}
         />
       </div>
+      <br />
+      <br />
 
       <div>
         <UserFieldMap
@@ -137,6 +146,7 @@ export default function EditRegistration({ allIntegURL }) {
           roles={roles}
           userFields={userFields}
         />
+        <br />
       </div>
       <div>
         <UserMetaField
@@ -147,6 +157,19 @@ export default function EditRegistration({ allIntegURL }) {
         />
         <br />
       </div>
+
+      <div className="mt-4">
+        <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
+      </div>
+      <div className="btcd-hr mt-1" />
+      <RegistrationActions userConf={userConf} setUserConf={setUserConf} />
+
+      <br />
+      <Note
+        note={
+          userConf?.action_type === 'updated_user' ? userUpdateInstruction : userCreateInstruction
+        }
+      />
 
       {userConf?.condition && (
         <>
@@ -168,12 +191,6 @@ export default function EditRegistration({ allIntegURL }) {
             />
           )}
         </>
-      )}
-
-      {userConf?.action_type === 'updated_user' ? (
-        <Note note={userUpdateInstruction} />
-      ) : (
-        <Note note={userCreateInstruction} />
       )}
 
       <button
