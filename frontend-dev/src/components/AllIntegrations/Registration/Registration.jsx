@@ -17,6 +17,7 @@ import CheckBox from '../../Utilities/CheckBox'
 import Note from '../../Utilities/Note'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
+import RegistrationActions from './RegistrationActions'
 
 export default function Registration({ formFields, setFlow, flow, allIntegURL }) {
   const { formID } = useParams()
@@ -98,7 +99,6 @@ export default function Registration({ formFields, setFlow, flow, allIntegURL })
   const userCreateInstruction = `
   <ul>
   <li>${__('If the Username and Password fields are blank then the user will take the value of the email field as the field and the password will be auto-generated.', 'bit-integrations')}</li>
-     
   </ul>`
 
   return (
@@ -110,8 +110,7 @@ export default function Registration({ formFields, setFlow, flow, allIntegURL })
       {registration?.docLink && (
         <TutorialLink title="Registration" docLink={registration?.docLink} />
       )}
-
-      <div className="font-w-m mt-3">{__('Action type', 'bit-integrations')}</div>
+      <br />{' '}
       <div>
         <CheckBox
           radio
@@ -130,6 +129,7 @@ export default function Registration({ formFields, setFlow, flow, allIntegURL })
           title={__('Updated User', 'bit-integrations')}
         />
       </div>
+      <br />
       <div>
         <UserFieldMap
           formFields={formFields}
@@ -147,9 +147,18 @@ export default function Registration({ formFields, setFlow, flow, allIntegURL })
           userConf={userConf}
           setUserConf={setUserConf}
         />
-        <br />
       </div>
-
+      <div className="mt-4">
+        <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
+      </div>
+      <div className="btcd-hr mt-1" />
+      <RegistrationActions userConf={userConf} setUserConf={setUserConf} />
+      <br />
+      <Note
+        note={
+          userConf?.action_type === 'updated_user' ? userUpdateInstruction : userCreateInstruction
+        }
+      />
       {userConf?.condition && (
         <>
           <div className="flx">
@@ -170,11 +179,6 @@ export default function Registration({ formFields, setFlow, flow, allIntegURL })
             />
           )}
         </>
-      )}
-      {userConf?.action_type === 'updated_user' ? (
-        <Note note={userUpdateInstruction} />
-      ) : (
-        <Note note={userCreateInstruction} />
       )}
       <button
         className="btn f-left btcd-btn-lg purple sh-sm flx"

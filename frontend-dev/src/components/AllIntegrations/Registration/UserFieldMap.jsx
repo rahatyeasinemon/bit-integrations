@@ -15,17 +15,6 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, roles,
     setUserConf(tmpConf)
   }
 
-  const handleCheckd = (e) => {
-    const tmpConf = { ...userConf }
-    const { name, checked } = e.target
-    if (checked) {
-      tmpConf[name] = true
-    } else {
-      delete tmpConf[name]
-    }
-    setUserConf(tmpConf)
-  }
-
   return (
     <>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -71,90 +60,6 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, roles,
             </button>
           </div>
         </div>
-
-        {userConf?.action_type !== 'updated_user' && (
-          <div className="flx">
-            <div className="w-5 mt-5 flx">
-              <TableCheckBox
-                name="user_notify"
-                onChange={handleCheckd}
-                title={__('User Email Notification', 'bit-integrations')}
-                checked={!!userConf?.user_notify}
-                value={false}
-              />
-              <Cooltip width={250} icnSize={17} className="ml-1">
-                <div className="txt-body">
-                  {__(
-                    'When this option is enabled, a welcome email will be sent from WordPress after registration.',
-                    'bit-integrations'
-                  )}
-                  <br />
-                </div>
-              </Cooltip>
-            </div>
-            <div className="w-5 mt-5 flx">
-              <TableCheckBox
-                name="admin_notify"
-                onChange={handleCheckd}
-                title={__('Admin Email Notification', 'bit-integrations')}
-                checked={!!userConf?.admin_notify}
-                value={false}
-              />
-              <Cooltip width={250} icnSize={17} className="ml-1">
-                <div className="txt-body">
-                  {__(
-                    'If this option is enabled, e-mail will be sent from WordPress to admin.',
-                    'bit-integrations'
-                  )}
-                  <br />
-                </div>
-              </Cooltip>
-            </div>
-          </div>
-        )}
-        <br />
-        <br />
-
-        {userConf?.action_type !== 'updated_user' && (
-          <div className="flx integ-fld-wrp">
-            <div className="w-5 ">
-              <div className="f-m fw-500">{__('WP User Role', 'bit-integrations')}</div>
-              <select
-                name="user_role"
-                onChange={handleInput}
-                value={userConf?.user_role}
-                className="btcd-paper-inp mt-1">
-                <option disabled selected>
-                  {__('Select User Role', 'bit-integrations')}
-                </option>
-                {roles.map((role, index) => (
-                  <option key={`acf-${index * 2}`} value={role?.key}>
-                    {role?.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="w-5 ml-2 mt-2 flx">
-              <TableCheckBox
-                name="auto_login"
-                onChange={handleCheckd}
-                title={__('Auto Login After Registration', 'bit-integrations')}
-                checked={!!userConf?.auto_login}
-                value={false}
-              />
-              <Cooltip width={250} icnSize={17} className="ml-1">
-                <div className="txt-body">
-                  {__(
-                    'if checked Auto Login, the user login automatically after registration.',
-                    'bit-integrations'
-                  )}
-                  <br />
-                </div>
-              </Cooltip>
-            </div>
-          </div>
-        )}
       </div>
     </>
   )
