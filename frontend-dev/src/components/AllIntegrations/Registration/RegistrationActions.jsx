@@ -7,6 +7,7 @@ import ConfirmModal from '../../Utilities/ConfirmModal'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { getUserRoles } from './UserHelperFunction'
 import Loader from '../../Loaders/Loader'
+import { create } from 'mutative'
 
 export default function RegistrationActions({ userConf, setUserConf }) {
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => {} })
@@ -16,15 +17,11 @@ export default function RegistrationActions({ userConf, setUserConf }) {
   const actionHandler = (e, name) => {
     const newConf = { ...userConf }
 
-    if (name === 'role') {
-      if (e.target?.checked) {
-        // getUserRoles(setIsLoading, setRoles)
-        console.log(name)
-        setActionMdl({ show: 'role' })
-      } else {
-        clsActionMdl()
-        delete newConf[name]
+    if (name === 'user_role') {
+      if (!roles) {
+        getUserRoles(setIsLoading, setRoles)
       }
+      setActionMdl({ show: 'user_role' })
     } else {
       if (e.target.checked) {
         newConf[name] = true
@@ -36,10 +33,22 @@ export default function RegistrationActions({ userConf, setUserConf }) {
     setUserConf({ ...newConf })
   }
 
+  const setUserRole = (val) => {
+    setUserConf((prevConf) =>
+      create(prevConf, (draftConf) => {
+        if (val) {
+          draftConf['user_role'] = val
+        } else {
+          delete draftConf['user_role']
+        }
+      })
+    )
+  }
+
   const clsActionMdl = () => {
     setActionMdl({ show: false })
   }
-  console.log(isLoading)
+
   return (
     <div className="pos-rel d-flx w-8">
       {userConf?.action_type !== 'updated_user' && (
@@ -80,10 +89,10 @@ export default function RegistrationActions({ userConf, setUserConf }) {
         </>
       )}
       <TableCheckBox
-        checked={userConf?.role || false}
-        onChange={(e) => actionHandler(e, 'role')}
+        checked={userConf?.user_role || false}
+        onChange={(e) => actionHandler(e, 'user_role')}
         className="wdt-200 mt-4 mr-2"
-        value="role"
+        value="user_role"
         title={
           userConf?.action_type !== 'updated_user'
             ? __('Add WP User Role', 'bit-integrations')
@@ -101,7 +110,7 @@ export default function RegistrationActions({ userConf, setUserConf }) {
         mainMdlCls="o-v"
         btnClass="purple"
         btnTxt={__('Ok', 'bit-integrations')}
-        show={actionMdl.show === 'role'}
+        show={actionMdl.show === 'user_role'}
         close={clsActionMdl}
         action={clsActionMdl}
         title={
@@ -109,6 +118,8 @@ export default function RegistrationActions({ userConf, setUserConf }) {
             ? __('WP User Role', 'bit-integrations')
             : __('Update WP User Role', 'bit-integrations')
         }>
+        <div className="btcd-hr mt-2 mb-2" />
+        <div className="mt-2">{__('Select User Role', 'bit-integrations')}</div>
         {isLoading ? (
           <Loader
             style={{
@@ -121,8 +132,6 @@ export default function RegistrationActions({ userConf, setUserConf }) {
           />
         ) : (
           <>
-            <div className="btcd-hr mt-2 mb-2" />
-            <div className="mt-2">{__('Select User Role', 'bit-integrations')}</div>
             <div className="flx mt-2">
               <MultiSelect
                 options={roles?.map((role) => ({
@@ -131,9 +140,9 @@ export default function RegistrationActions({ userConf, setUserConf }) {
                 }))}
                 className="msl-wrp-options"
                 defaultValue={userConf?.user_role}
-                onChange={(val) => actionHandler(val, 'user_role')}
+                onChange={(e) => setUserRole(e)}
                 singleSelect
-                CloseOnSelect
+                closeOnSelect
               />
               <button
                 onClick={() => getUserRoles(setIsLoading, setRoles)}
