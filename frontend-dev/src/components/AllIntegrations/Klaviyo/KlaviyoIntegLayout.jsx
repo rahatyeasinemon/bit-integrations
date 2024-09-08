@@ -27,41 +27,54 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
   return (
     <div>
       <b className="wdt-200 d-in-b mt-2">{__('List:', 'bit-integrations')}</b>
-      <select name="listId" value={klaviyoConf.listId} onChange={handleList} className="btcd-paper-inp w-5">
+      <select
+        name="listId"
+        value={klaviyoConf.listId}
+        onChange={handleList}
+        className="btcd-paper-inp w-5">
         <option value="">{__('Select List', 'bit-integrations')}</option>
-        {
-          klaviyoConf?.default?.lists && klaviyoConf.default.lists.map(list => (
-            <option key={list.id} value={list.id}>
-              {list.attributes.name}
+        {klaviyoConf?.default?.lists &&
+          klaviyoConf.default.lists.map((list, key) => (
+            <option key={key} value={list?.id}>
+              {list?.attributes?.name}
             </option>
-          ))
-        }
+          ))}
       </select>
-      <button onClick={() => getAllLists(klaviyoConf, setKlaviyoConf, loading, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh list"' }} type="button" disabled={loading.list}>&#x21BB;</button>
+      <button
+        onClick={() => getAllLists(klaviyoConf, setKlaviyoConf, loading, setLoading)}
+        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        style={{ '--tooltip-txt': '"Refresh list"' }}
+        type="button"
+        disabled={loading.list}>
+        &#x21BB;
+      </button>
 
       {/* When user refresh the List then loader call */}
 
       {loading.list && (
-        <Loader style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 100,
-          transform: 'scale(0.7)',
-        }}
+        <Loader
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 100,
+            transform: 'scale(0.7)'
+          }}
         />
       )}
 
       {klaviyoConf?.listId && (
         <div className="mt-5">
-          <b className="wdt-100">
-            {__('Field Map', 'bit-integrations')}
-          </b>
+          <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
 
           <div className="btcd-hr mt-2 mb-4" />
           <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-            <div className="txt-dp"><b>{__('Form Fields', 'bit-integrations')}</b></div>
-            <div className="txt-dp"><b>{__('Klaviyo Fields', 'bit-integrations')}</b></div>
+            <div className="txt-dp">
+              <b>{__('Form Fields', 'bit-integrations')}</b>
+            </div>
+            <div className="txt-dp">
+              <b>{__('Klaviyo Fields', 'bit-integrations')}</b>
+            </div>
           </div>
           {klaviyoConf?.field_map.map((itm, i) => (
             <KlaviyoFieldMap
@@ -73,7 +86,16 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
               setKlaviyoConf={setKlaviyoConf}
             />
           ))}
-          <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(klaviyoConf.field_map.length, klaviyoConf, setKlaviyoConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
+          <div className="txt-center btcbi-field-map-button mt-2">
+            <button
+              onClick={() =>
+                addFieldMap(klaviyoConf.field_map.length, klaviyoConf, setKlaviyoConf, false)
+              }
+              className="icn-btn sh-sm"
+              type="button">
+              +
+            </button>
+          </div>
         </div>
       )}
     </div>
