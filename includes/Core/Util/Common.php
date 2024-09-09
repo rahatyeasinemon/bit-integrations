@@ -312,4 +312,8 @@ final class Common
 
         return $stringToReplaceField;
     }
+
+    public static function loadPluginTextDomain($domain, $path){
+        load_plugin_textdomain($domain, false, $path);
+    }
 }
