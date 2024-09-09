@@ -43,7 +43,8 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
     acf_file_map: [{}],
     metabox_map: [{}],
     metabox_file_map: [{}],
-    je_cpt_meta_map: [{}]
+    je_cpt_meta_map: [{}],
+    je_cpt_file_map: [{}]
   })
 
   const handleInput = (typ, val) => {

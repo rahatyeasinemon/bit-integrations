@@ -201,6 +201,65 @@ final class PostCreationController
         }
     }
 
+    public static function HandleJeCPTFileMap($jeCPTFileMap, $fieldValues, $postId, $fields)
+    {
+        foreach ($jeCPTFileMap as $key => $item) {
+            if (isset($item->formField, $item->jeCPTFile)) {
+                $triggerValue = $item->formField;
+                $actionValue = $item->jeCPTFile;
+                $currentField = self::JeCPTFieldfindByName($fields, $actionValue);
+                $currentFieldValue = $fieldValues[$triggerValue] ?? false;
+
+                if (empty($currentFieldValue)) {
+                    continue;
+                }
+
+                if ($currentField['type'] === 'gallery') {
+                    if (\is_array($currentFieldValue)) {
+                        $firstValue = reset($currentFieldValue);
+
+                        if (\is_array($fieldValues)) {
+                            $files = $firstValue;
+                        } else {
+                            $files = $currentFieldValue;
+                        }
+                    } else {
+                        $files = [$currentFieldValue];
+                    }
+
+                    $attachmentIds = Helper::multiFileMoveWpMedia($files, $postId);
+                    $attachemnts = [];
+
+                    if (!empty($attachmentIds)) {
+                        foreach ($attachmentIds as $attachemntId) {
+                            $attachemnts[] = ['id' => $attachemntId, 'url' => wp_get_attachment_url($attachemntId)];
+                        }
+                    }
+
+                    update_post_meta($postId, $actionValue, $attachemnts);
+                } else {
+                    if (\is_array($currentFieldValue)) {
+                        $firstValue = reset($currentFieldValue);
+
+                        if (\is_array($firstValue)) {
+                            $file = reset($firstValue);
+                        } else {
+                            $file = $firstValue;
+                        }
+                    } else {
+                        $file = $currentFieldValue;
+                    }
+
+                    $attachemntId = Helper::singleFileMoveWpMedia($file, $postId);
+
+                    if (!empty($attachemntId)) {
+                        update_post_meta($postId, $actionValue, ['id' => $attachemntId, 'url' => wp_get_attachment_url($attachemntId)]);
+                    }
+                }
+            }
+        }
+    }
+
     public static function JeCPTFieldfindByName($fields, $name)
     {
         $filter = array_filter($fields, function ($field) use ($name) {
@@ -242,6 +301,7 @@ final class PostCreationController
         $mbFieldMap = $flowDetails->metabox_map;
         $mbFileMap = $flowDetails->metabox_file_map;
         $jeCPTFieldMap = $flowDetails->je_cpt_meta_map;
+        $jeCPTFileMap = $flowDetails->je_cpt_file_map;
 
         $postId = wp_insert_post(['post_title' => '(no title)', 'post_content' => '']);
 
@@ -296,6 +356,7 @@ final class PostCreationController
             $fields = PostController::getJetEngineCPTRawMeta($flowDetails->post_type);
 
             self::HandleJeCPTFieldMap($jeCPTFieldMap, $updatedJeCPTValues, $postId, $fields);
+            self::HandleJeCPTFileMap($jeCPTFileMap, $updatedJeCPTValues, $postId, $fields);
         }
     }
 }

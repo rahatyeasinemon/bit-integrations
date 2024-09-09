@@ -99,7 +99,7 @@ final class PostController
 
     public static function getJetEngineCPTMetaFields($postType)
     {
-        $fields = [];
+        $fields = $files = [];
 
         if (is_plugin_active('jet-engine/jet-engine.php')) {
             $postTypeObject = get_post_type_object($postType);
@@ -110,18 +110,26 @@ final class PostController
                 if (!empty($postTypeData) && !empty($postTypeData['meta_fields'])) {
                     foreach ($postTypeData['meta_fields'] as $item) {
                         if ($item['object_type'] === 'field') {
-                            $fields[] = [
-                                'key'      => $item['name'],
-                                'name'     => $item['title'],
-                                'required' => (isset($item['is_required']) && $item['is_required']) ? true : false,
-                            ];
+                            if ($item['type'] === 'media' || $item['type'] === 'gallery') {
+                                $files[] = [
+                                    'key'      => $item['name'],
+                                    'name'     => $item['title'],
+                                    'required' => false,
+                                ];
+                            } else {
+                                $fields[] = [
+                                    'key'      => $item['name'],
+                                    'name'     => $item['title'],
+                                    'required' => (isset($item['is_required']) && $item['is_required']) ? true : false,
+                                ];
+                            }
                         }
                     }
                 }
             }
         }
 
-        return ['fields' => $fields];
+        return ['fields' => $fields, 'files' => $files];
     }
 
     public static function getJetEngineCPTRawMeta($postType)
@@ -157,7 +165,7 @@ final class PostController
             'mb_fields'     => $metabox['fields'],
             'mb_files'      => $metabox['files'],
             'je_cpt_fields' => $jetEngineCPTMeta['fields'],
-            'je_cpt_files'  => []
+            'je_cpt_files'  => $jetEngineCPTMeta['files']
         ];
 
         wp_send_json_success($fields, 200);
