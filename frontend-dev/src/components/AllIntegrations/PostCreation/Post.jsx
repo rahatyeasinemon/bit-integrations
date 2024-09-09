@@ -10,6 +10,7 @@ import { postFields } from '../../../Utils/StaticData/postField'
 import {
   addFieldMap,
   checkMappedAcfFields,
+  checkMappedJEFields,
   checkMappedMbFields,
   checkMappedPostFields,
   refreshPostTypes
