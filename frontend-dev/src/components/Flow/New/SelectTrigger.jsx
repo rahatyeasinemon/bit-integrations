@@ -16,11 +16,9 @@ import GetLogo from '../../../Utils/GetLogo'
 import EssentialBlocksHelper from '../../Triggers/TriggerHelpers/EssentialBlocksHelper'
 import SpectraHelper from '../../Triggers/TriggerHelpers/SpectraHelper'
 import CustomFormSubmission from '../../Triggers/CustomFormSubmission'
-import { allTriggersName } from '../../../Utils/AllTriggersName'
 import CoblocksHelper from '../../Triggers/TriggerHelpers/CoblocksHelper'
 
 export default function SelectTrigger() {
-  // const data = allTriggersName
   const { isPro } = useRecoilValue($btcbi)
   const loaderStyle = {
     display: 'flex',
