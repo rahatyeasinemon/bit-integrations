@@ -23,9 +23,16 @@ class StoreInCache
 
     public static function setTransient($key, $value, $expiration)
     {
-        if (empty($key) || empty($value)) {
-            return false;
+        if (empty($key)) {
+            return;
         }
+
+        if (empty($value)) {
+            delete_transient($key);
+
+            return;
+        }
+
         set_transient($key, $value, $expiration);
     }
 
@@ -57,13 +64,9 @@ class StoreInCache
             }
         }
 
-        if (!empty($entities)) {
-            self::setTransient('bit_integrations_fallback_trigger_entities', $entities, DAY_IN_SECONDS);
+        self::setTransient('bit_integrations_fallback_trigger_entities', $entities, DAY_IN_SECONDS);
 
-            return $entities;
-        }
-
-        return false;
+        return $entities;
     }
 
     private static function saveActiveFlowEntities($integrations)
@@ -91,13 +94,9 @@ class StoreInCache
             return empty($flow->flow_details->pro_integ_v);
         });
 
-        if (!empty($flows)) {
-            self::setTransient('bit_integrations_action_hook_flows', $flows, DAY_IN_SECONDS);
+        self::setTransient('bit_integrations_action_hook_flows', $flows, DAY_IN_SECONDS);
 
-            return $flows;
-        }
-
-        return false;
+        return $flows;
     }
 
     private static function maybeFetchActiveFlowEntities($key, $refresh = false)
@@ -111,6 +110,10 @@ class StoreInCache
             ['status' => 1],
             ['triggered_entity', 'triggered_entity_id', 'flow_details', 'status']
         );
+
+        if (is_wp_error($integrations)) {
+            $integrations = [];
+        }
 
         $activeFlowEntities = static::saveActiveFlowEntities($integrations);
         $actionHookFlows = static::saveActionHookFlows($integrations);

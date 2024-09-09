@@ -4,8 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Core\Util\StoreInCache;
 use BitCode\FI\Triggers\ActionHook\ActionHookController;
 
