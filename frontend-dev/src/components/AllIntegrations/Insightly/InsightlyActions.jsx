@@ -173,7 +173,7 @@ export default function InsightlyActions({ insightlyConf, setInsightlyConf, load
         show={actionMdl.show === 'status'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Statuses', 'bit-integrations')}
+        title={__('Status', 'bit-integrations')}
       >
         <div className="btcd-hr mt-2 mb-2" />
         <div className="mt-2">

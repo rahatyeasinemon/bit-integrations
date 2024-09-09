@@ -42,10 +42,8 @@ export default function WPForoAuthorization({
     <div
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {wpforo?.youTubeLink && (
-        <TutorialLink title={wpforo?.title} youTubeLink={wpforo?.youTubeLink} />
-      )}
-      {wpforo?.docLink && <TutorialLink title={wpforo?.title} docLink={wpforo?.docLink} />}
+      {wpforo?.youTubeLink && <TutorialLink title="wpforo" youTubeLink={wpforo?.youTubeLink} />}
+      {wpforo?.docLink && <TutorialLink title="wpforo" docLink={wpforo?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

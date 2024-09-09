@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Demio;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Demio integration
@@ -47,7 +47,6 @@ class DemioController
         if (!isset($response->errors)) {
             $events = [];
             foreach ($response as $event) {
-
                 $events[]
                 = (object) [
                     'id'   => $event->id,
@@ -71,7 +70,6 @@ class DemioController
         if (!isset($response->errors)) {
             $sessions = [];
             foreach ($response->dates as $session) {
-
                 $sessions[]
                 = (object) [
                     'date_id'  => $session->date_id,
@@ -95,7 +93,7 @@ class DemioController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($apiSecret) || empty($actionName) || empty($apiKey)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Demio api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Demio'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiSecret, $apiKey);

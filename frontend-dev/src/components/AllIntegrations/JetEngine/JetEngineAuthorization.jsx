@@ -43,9 +43,9 @@ export default function JetEngineAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {jetEngine?.youTubeLink && (
-        <TutorialLink title={jetEngine?.title} youTubeLink={jetEngine?.youTubeLink} />
+        <TutorialLink title="jet Engine" youTubeLink={jetEngine?.youTubeLink} />
       )}
-      {jetEngine?.docLink && <TutorialLink title={jetEngine?.title} docLink={jetEngine?.docLink} />}
+      {jetEngine?.docLink && <TutorialLink title="jet Engine" docLink={jetEngine?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

@@ -173,7 +173,7 @@ final class HubspotController
             }
             wp_send_json_success($response, 200);
         } else {
-            wp_send_json_error('pipelines fetching failed', 400);
+            wp_send_json_error(__('Pipelines fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -200,7 +200,7 @@ final class HubspotController
             }
             wp_send_json_success($contacts, 200);
         } else {
-            wp_send_json_error('contacts fetching failed', 400);
+            wp_send_json_error('Contacts fetching failed', 400);
         }
     }
 

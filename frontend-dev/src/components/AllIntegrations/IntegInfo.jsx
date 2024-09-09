@@ -578,7 +578,7 @@ export default function IntegInfo() {
       <div className="flx">
         <Link to="/" className="btn btcd-btn-o-gray">
           <span className="btcd-icn icn-chevron-left" />
-          &nbsp;Back
+          &nbsp;{__('Back', 'bit-integrations')}
         </Link>
         <div className="w-10 txt-center" style={{ marginRight: '73px' }}>
           <b className="f-lg">{type}</b>

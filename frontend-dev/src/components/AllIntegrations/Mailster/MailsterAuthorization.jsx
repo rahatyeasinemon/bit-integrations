@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-expressions */
-import { useState } from "react";
-import { __ } from "../../../Utils/i18nwrap";
-import LoaderSm from "../../Loaders/LoaderSm";
-import { mailsterAuthentication } from "./MailsterCommonFunc";
-import tutorialLinks from "../../../Utils/StaticData/tutorialLinks";
-import TutorialLink from "../../Utilities/TutorialLink";
+import { useState } from 'react'
+import { __ } from '../../../Utils/i18nwrap'
+import LoaderSm from '../../Loaders/LoaderSm'
+import { mailsterAuthentication } from './MailsterCommonFunc'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
+import TutorialLink from '../../Utilities/TutorialLink'
 
 export default function MailsterAuthorization({
   mailsterConf,
@@ -14,50 +14,44 @@ export default function MailsterAuthorization({
   setStep,
   loading,
   setLoading,
-  isInfo,
+  isInfo
 }) {
-  const [isAuthorized, setIsAuthorized] = useState(false);
-  const [error, setError] = useState({ name: "" });
-  const { mailster } = tutorialLinks;
+  const [isAuthorized, setIsAuthorized] = useState(false)
+  const [error, setError] = useState({ name: '' })
+  const { mailster } = tutorialLinks
 
   const nextPage = () => {
     setTimeout(() => {
-      document.getElementById("btcd-settings-wrp").scrollTop = 0;
-    }, 300);
+      document.getElementById('btcd-settings-wrp').scrollTop = 0
+    }, 300)
 
-    !mailsterConf?.default;
-    setStep(2);
-  };
+    !mailsterConf?.default
+    setStep(2)
+  }
 
   const handleInput = (e) => {
-    const newConf = { ...mailsterConf };
-    const rmError = { ...error };
-    rmError[e.target.name] = "";
-    newConf[e.target.name] = e.target.value;
-    setError(rmError);
-    setMailsterConf(newConf);
-  };
+    const newConf = { ...mailsterConf }
+    const rmError = { ...error }
+    rmError[e.target.name] = ''
+    newConf[e.target.name] = e.target.value
+    setError(rmError)
+    setMailsterConf(newConf)
+  }
 
   return (
     <div
       className="btcd-stp-page"
       style={{
         ...{ width: step === 1 && 900 },
-        ...{ height: step === 1 && "auto" },
-      }}
-    >
+        ...{ height: step === 1 && 'auto' }
+      }}>
       {mailster?.youTubeLink && (
-        <TutorialLink
-          title={mailster?.title}
-          youTubeLink={mailster?.youTubeLink}
-        />
+        <TutorialLink title="Mailster" youTubeLink={mailster?.youTubeLink} />
       )}
-      {mailster?.docLink && (
-        <TutorialLink title={mailster?.title} docLink={mailster?.docLink} />
-      )}
+      {mailster?.docLink && <TutorialLink title="Mailster" docLink={mailster?.docLink} />}
 
       <div className="mt-3">
-        <b>{__("Integration Name:", "bit-integrations")}</b>
+        <b>{__('Integration Name:', 'bit-integrations')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"
@@ -65,12 +59,10 @@ export default function MailsterAuthorization({
         name="name"
         value={mailsterConf.name}
         type="text"
-        placeholder={__("Integration Name...", "bit-integrations")}
+        placeholder={__('Integration Name...', 'bit-integrations')}
         disabled={isInfo}
       />
-      {error.name && (
-        <div style={{ color: "red", fontSize: "15px" }}>{error.name}</div>
-      )}
+      {error.name && <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>}
       <br />
 
       {!isInfo && (
@@ -88,27 +80,23 @@ export default function MailsterAuthorization({
             }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || loading.auth}
-          >
+            disabled={isAuthorized || loading.auth}>
             {isAuthorized
-              ? __("Connected ✔", "bit-integrations")
-              : __("Connect to Mailster", "bit-integrations")}
-            {loading.auth && (
-              <LoaderSm size="20" clr="#022217" className="ml-2" />
-            )}
+              ? __('Connected ✔', 'bit-integrations')
+              : __('Connect to Mailster', 'bit-integrations')}
+            {loading.auth && <LoaderSm size="20" clr="#022217" className="ml-2" />}
           </button>
           <br />
           <button
             onClick={nextPage}
             className="btn ml-auto btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}
-          >
-            {__("Next", "bit-integrations")}
+            disabled={!isAuthorized}>
+            {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         </div>
       )}
     </div>
-  );
+  )
 }

@@ -111,7 +111,6 @@ class RecordApiHelper
         $this->type = 'Lead';
         $this->typeName = 'Lead created';
         $apiEndpoint = $this->apiUrl . '/leads';
-        error_log(print_r([$apiEndpoint, $finalData, $this->defaultHeader], true));
 
         return HttpHelper::post($apiEndpoint, $finalData, $this->defaultHeader);
     }

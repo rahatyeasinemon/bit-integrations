@@ -7,7 +7,15 @@ import { sureMembersAuthentication } from './SureMembersCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 
-export default function SureMembersAuthorization({ sureMembersConf, setSureMembersConf, step, setStep, loading, setLoading, isInfo }) {
+export default function SureMembersAuthorization({
+  sureMembersConf,
+  setSureMembersConf,
+  step,
+  setStep,
+  loading,
+  setLoading,
+  isInfo
+}) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ name: '' })
   const { sureMembers } = tutorialLinks
@@ -21,7 +29,7 @@ export default function SureMembersAuthorization({ sureMembersConf, setSureMembe
     setStep(2)
   }
 
-  const handleInput = e => {
+  const handleInput = (e) => {
     const newConf = { ...sureMembersConf }
     const rmError = { ...error }
     rmError[e.target.name] = ''
@@ -31,33 +39,55 @@ export default function SureMembersAuthorization({ sureMembersConf, setSureMembe
   }
 
   return (
-    <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
+    <div
+      className="btcd-stp-page"
+      style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {sureMembers?.youTubeLink && (
-        <TutorialLink
-          title={sureMembers?.title}
-          youTubeLink={sureMembers?.youTubeLink}
-        />
+        <TutorialLink title="SureMembers" youTubeLink={sureMembers?.youTubeLink} />
       )}
-      {sureMembers?.docLink && (
-        <TutorialLink
-          title={sureMembers?.title}
-          docLink={sureMembers?.docLink}
-        />
-      )}
+      {sureMembers?.docLink && <TutorialLink title="SureMembers" docLink={sureMembers?.docLink} />}
 
-      <div className="mt-3"><b>{__('Integration Name:', 'bit-integrations')}</b></div>
-      <input className="btcd-paper-inp w-6 mt-1" onChange={handleInput} name="name" value={sureMembersConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} disabled={isInfo} />
+      <div className="mt-3">
+        <b>{__('Integration Name:', 'bit-integrations')}</b>
+      </div>
+      <input
+        className="btcd-paper-inp w-6 mt-1"
+        onChange={handleInput}
+        name="name"
+        value={sureMembersConf.name}
+        type="text"
+        placeholder={__('Integration Name...', 'bit-integrations')}
+        disabled={isInfo}
+      />
       {error.name && <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>}
       <br />
 
       {!isInfo && (
         <div>
-          <button onClick={() => sureMembersAuthentication(sureMembersConf, setError, setIsAuthorized, loading, setLoading)} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isAuthorized || loading.auth}>
-            {isAuthorized ? __('Connected ✔', 'bit-integrations') : __('Connect to SureMembers', 'bit-integrations')}
+          <button
+            onClick={() =>
+              sureMembersAuthentication(
+                sureMembersConf,
+                setError,
+                setIsAuthorized,
+                loading,
+                setLoading
+              )
+            }
+            className="btn btcd-btn-lg purple sh-sm flx"
+            type="button"
+            disabled={isAuthorized || loading.auth}>
+            {isAuthorized
+              ? __('Connected ✔', 'bit-integrations')
+              : __('Connect to SureMembers', 'bit-integrations')}
             {loading.auth && <LoaderSm size="20" clr="#022217" className="ml-2" />}
           </button>
           <br />
-          <button onClick={nextPage} className="btn ml-auto btcd-btn-lg purple sh-sm flx" type="button" disabled={!isAuthorized}>
+          <button
+            onClick={nextPage}
+            className="btn ml-auto btcd-btn-lg purple sh-sm flx"
+            type="button"
+            disabled={!isAuthorized}>
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>

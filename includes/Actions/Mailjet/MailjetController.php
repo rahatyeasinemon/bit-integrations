@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Mailjet;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Mailjet integration
@@ -82,7 +82,7 @@ class MailjetController
         $fieldMap = $integrationDetails->field_map;
 
         if (empty($fieldMap) || empty($secretKey) || empty($apiKey) || empty($selectedLists)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Mailjet api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mailjet'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey, $secretKey);

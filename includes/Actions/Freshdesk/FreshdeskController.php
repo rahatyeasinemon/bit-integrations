@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Freshdesk;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Freshdesk integration
@@ -196,7 +196,7 @@ class FreshdeskController
             || empty($fieldMap)
 
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Freshdesk api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Freshdesk'));
         }
         $app_base_domamin = $integrationDetails->app_domain;
         $apiEndpoint = $integrationDetails->app_domain . '/api/v2/tickets';

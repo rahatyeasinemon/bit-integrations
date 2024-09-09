@@ -118,7 +118,7 @@ export default function CopperCRMIntegLayout({
             <button
               onClick={() => getAllCRMPipelines(coppercrmConf, setCopperCRMConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh Pipelines', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh pipelines', 'bit-integrations')}'` }}
               type="button"
               disabled={loading.CRMPipelines}>
               &#x21BB;
@@ -145,7 +145,7 @@ export default function CopperCRMIntegLayout({
             <button
               onClick={() => getCustomFields(coppercrmConf, setCopperCRMConf, setLoading)}
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh Fields', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh fields', 'bit-integrations')}'` }}
               type="button"
               disabled={loading.CRMPipelines}>
               &#x21BB;

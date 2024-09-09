@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Woodpecker;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Woodpecker integration
@@ -48,7 +48,6 @@ class WoodpeckerController
         } else {
             $campaigns = [];
             foreach ($response as $campaign) {
-
                 $campaigns[]
                 = (object) [
                     'id'   => $campaign->id,
@@ -71,7 +70,7 @@ class WoodpeckerController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($apiKey) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Woodpecker api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Woodpecker'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, base64_encode($apiKey));

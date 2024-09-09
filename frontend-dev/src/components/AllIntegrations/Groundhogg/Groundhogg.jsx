@@ -27,7 +27,7 @@ function Groundhogg({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'last_name', label: 'Last Name', required: false },
     { key: 'user_id', label: 'User Id', required: false },
     { key: 'owner_id', label: 'Owner Id', required: false },
-    { key: 'note', label: 'Note', required: false },
+    { key: 'note', label: 'Note', required: false }
   ]
 
   const contactMetaFields = [
@@ -36,13 +36,12 @@ function Groundhogg({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'street_address_2', label: 'Street Address 2', required: false },
     { key: 'postal_zip', label: 'Postal Zip', required: false },
     { key: 'city', label: 'City', required: false },
-    { key: 'country', label: 'Country', required: false },
-
+    { key: 'country', label: 'Country', required: false }
   ]
 
   const allActions = [
     { key: '1', label: 'Create Contact' },
-    { key: '2', label: 'Add tag to user' },
+    { key: '2', label: 'Add tag to user' }
   ]
   const [groundhoggConf, setGroundhoggConf] = useState({
     name: 'Groundhogg',
@@ -56,17 +55,13 @@ function Groundhogg({ formFields, setFlow, flow, allIntegURL }) {
     emailAddress: '',
     showMeta: false,
     optin_status: '1',
-    field_map: [
-      { formField: '', GroundhoggMapField: '' },
-    ],
-    field_map_meta: [
-      { formField: '', GroundhoggMetaMapField: '' },
-    ],
+    field_map: [{ formField: '', GroundhoggMapField: '' }],
+    field_map_meta: [{ formField: '', GroundhoggMetaMapField: '' }],
     contactsFields,
     contactMetaFields,
     allActions,
     address_field: [],
-    actions: {},
+    actions: {}
   })
 
   const nextPage = () => {
@@ -74,31 +69,39 @@ function Groundhogg({ formFields, setFlow, flow, allIntegURL }) {
       document.getElementById('btcd-settings-wrp').scrollTop = 0
     }, 300)
     if (groundhoggConf.mainAction === '1' && !checkMappedFields(groundhoggConf)) {
-      setSnackbar({ show: true, msg: 'Please map fields to continue.' })
+      setSnackbar({ show: true, msg: __('Please map fields to continue.', 'bit-integrations') })
       return
     }
     if (groundhoggConf.showMeta && !checkMetaMappedFields(groundhoggConf)) {
-      setSnackbar({ show: true, msg: 'Please map fields to continue.' })
+      setSnackbar({ show: true, msg: __('Please map fields to continue.', 'bit-integrations') })
       return
     }
     if (groundhoggConf.mainAction === '2' && groundhoggConf?.emailAddress === '') {
-      setSnackbar({ show: true, msg: 'Please select Email field to continue.' })
+      setSnackbar({
+        show: true,
+        msg: __('Please select Email field to continue.', 'bit-integrations')
+      })
       return
     }
     if (groundhoggConf.mainAction === '2' && groundhoggConf?.addTagToUser === '') {
-      setSnackbar({ show: true, msg: 'Please select All Tags field to continue.' })
+      setSnackbar({
+        show: true,
+        msg: __('Please select All Tags field to continue.', 'bit-integrations')
+      })
       return
     }
     if (groundhoggConf.listId !== '') {
       setstep(3)
     }
   }
-  const isDisabled = !((groundhoggConf.mainAction === '2' && groundhoggConf.addTagToUser !== ''))
+  const isDisabled = !(groundhoggConf.mainAction === '2' && groundhoggConf.addTagToUser !== '')
 
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <GroundhoggAuthorization
@@ -113,11 +116,14 @@ function Groundhogg({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <GroundhoggIntegLayout
           formFields={formFields}
-          handleInput={(e) => handleInput(e, groundhoggConf, setGroundhoggConf, formID, setIsLoading, setSnackbar)}
+          handleInput={(e) =>
+            handleInput(e, groundhoggConf, setGroundhoggConf, formID, setIsLoading, setSnackbar)
+          }
           groundhoggConf={groundhoggConf}
           setGroundhoggConf={setGroundhoggConf}
           isLoading={isLoading}
@@ -127,26 +133,36 @@ function Groundhogg({ formFields, setFlow, flow, allIntegURL }) {
 
         <button
           onClick={() => nextPage(3)}
-          disabled={(groundhoggConf.mainAction === '2' ? isDisabled : (!((groundhoggConf.field_map?.length >= 1)))) || isLoading}
+          disabled={
+            (groundhoggConf.mainAction === '2'
+              ? isDisabled
+              : !(groundhoggConf.field_map?.length >= 1)) || isLoading
+          }
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
-          &nbsp;
+          type="button">
+          {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>
       {/* STEP 3 */}
       <IntegrationStepThree
         step={step}
-        saveConfig={() => saveActionConf({ flow, setFlow, allIntegURL, navigate, conf: groundhoggConf, setIsLoading, setSnackbar })}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            setFlow,
+            allIntegURL,
+            navigate,
+            conf: groundhoggConf,
+            setIsLoading,
+            setSnackbar
+          })
+        }
         isLoading={isLoading}
         dataConf={groundhoggConf}
         setDataConf={setGroundhoggConf}
         formFields={formFields}
       />
-
     </div>
   )
 }

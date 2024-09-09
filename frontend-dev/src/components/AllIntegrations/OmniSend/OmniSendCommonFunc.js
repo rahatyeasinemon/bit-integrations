@@ -11,7 +11,7 @@ export const handleInput = (
   setSnackbar,
   isNew,
   error,
-  setError,
+  setError
 ) => {
   const newConf = { ...omniSendConf }
   const { name } = e.target
@@ -24,24 +24,23 @@ export const handleInput = (
 }
 
 export const generateMappedField = (omniSendConf) => {
-  const requiredFlds = omniSendConf?.omniSend_fields.filter(
-    (fld) => fld.required === true,
-  )
+  const requiredFlds = omniSendConf?.omniSend_fields.filter((fld) => fld.required === true)
   return requiredFlds.length > 0
     ? requiredFlds.map((field) => ({
-      formField: '',
-      omniSendFormField: field.key,
-    }))
+        formField: '',
+        omniSendFormField: field.key
+      }))
     : [{ formField: '', omniSendFormField: '' }]
 }
 
 export const checkMappedFields = (omniSendConf) => {
   const mappedFields = omniSendConf?.field_map
     ? omniSendConf.field_map.filter(
-      (mappedField) => !mappedField.formField
-          || !mappedField.omniSendFormField
-          || (!mappedField.formField === 'custom' && !mappedField.customValue),
-    )
+        (mappedField) =>
+          !mappedField.formField ||
+          !mappedField.omniSendFormField ||
+          (!mappedField.formField === 'custom' && !mappedField.customValue)
+      )
     : []
   if (mappedFields.length > 0) {
     return false
@@ -54,13 +53,11 @@ export const handleOmniSendAuthorize = (
   setError,
   setisAuthorized,
   loading,
-  setLoading,
+  setLoading
 ) => {
   if (!confTmp.api_key) {
     setError({
-      api_key: !confTmp.api_key
-        ? __("Api Key can't be empty", 'bit-integrations')
-        : '',
+      api_key: !confTmp.api_key ? __("API Key can't be empty", 'bit-integrations') : ''
     })
     return
   }
@@ -75,7 +72,7 @@ export const handleOmniSendAuthorize = (
       setConf(newConf)
       setisAuthorized(true)
       setLoading({ ...loading, auth: false })
-      toast.success(__('Authorized successfully', 'bit-integrations'))
+      toast.success(__('Authorized Successfully', 'bit-integrations'))
       return
     }
 

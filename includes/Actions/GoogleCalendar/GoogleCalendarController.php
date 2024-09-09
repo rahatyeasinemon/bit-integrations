@@ -87,7 +87,7 @@ class GoogleCalendarController
         }
 
         if (empty($fieldMap)) {
-            $error = new WP_Error('REQ_FIELD_EMPTY', __('Required fields not mapped.', 'bit-integrations'));
+            $error = new WP_Error('REQ_FIELD_EMPTY', __('Required fields not mapped', 'bit-integrations'));
             LogHandler::save($this->integrationID, 'record', 'validation', $error);
 
             return $error;

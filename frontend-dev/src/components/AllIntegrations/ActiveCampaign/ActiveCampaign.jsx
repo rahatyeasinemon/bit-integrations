@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+import { __ } from '../../../Utils/i18nwrap'
 import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -36,11 +36,14 @@ function ActiveCampaign({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
     if (val === 3) {
       if (!checkMappedFields(activeCampaingConf)) {
-        setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
+        setSnackbar({
+          show: true,
+          msg: __('Please map all required fields to continue.', 'bit-integrations')
+        })
         return
       }
       if (!activeCampaingConf?.listId) {
-        setSnackbar({ show: true, msg: 'Please select list to continue.' })
+        setSnackbar({ show: true, msg: __('Please select list to continue.', 'bit-integrations') })
         return
       }
       if (activeCampaingConf.name !== '' && activeCampaingConf.field_map.length > 0) {

@@ -26,8 +26,8 @@ export default function SendinBlueAuthorization({
     const newConf = { ...sendinBlueConf }
     if (!newConf.name || !newConf.api_key) {
       setError({
-        name: !newConf.name ? __("Integration name cann't be empty", 'bit-integrations') : '',
-        api_key: !newConf.api_key ? __("API Key cann't be empty", 'bit-integrations') : ''
+        name: !newConf.name ? __("Integration name can't be empty", 'bit-integrations') : '',
+        api_key: !newConf.api_key ? __("API Key can't be empty", 'bit-integrations') : ''
       })
       return
     }
@@ -64,10 +64,10 @@ export default function SendinBlueAuthorization({
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       {sendinBlue?.youTubeLink && (
-        <TutorialLink title={sendinBlue?.title} youTubeLink={sendinBlue?.youTubeLink} />
+        <TutorialLink title="Brevo (Sendinblue)" youTubeLink={sendinBlue?.youTubeLink} />
       )}
       {sendinBlue?.docLink && (
-        <TutorialLink title={sendinBlue?.title} docLink={sendinBlue?.docLink} />
+        <TutorialLink title="Brevo (Sendinblue)" docLink={sendinBlue?.docLink} />
       )}
 
       <div className="mt-3">

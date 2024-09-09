@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\BenchMark;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -159,7 +159,7 @@ class BenchMarkController
         if (empty($api_secret)
             || empty($fieldMap)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Sendinblue api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Sendinblue'));
         }
         $recordApiHelper = new RecordApiHelper($api_secret, $this->_integrationID);
 

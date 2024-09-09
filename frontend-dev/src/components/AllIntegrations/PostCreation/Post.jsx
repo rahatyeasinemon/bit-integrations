@@ -10,7 +10,6 @@ import { postFields } from '../../../Utils/StaticData/postField'
 import {
   addFieldMap,
   checkMappedAcfFields,
-  checkMappedJEFields,
   checkMappedMbFields,
   checkMappedPostFields,
   refreshPostTypes
@@ -120,11 +119,11 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
       return
     }
     if (!postConf.post_type) {
-      setSnackbar({ show: true, msg: __("Post Type cann't be empty", 'bit-integrations') })
+      setSnackbar({ show: true, msg: __("Post Type can't be empty", 'bit-integrations') })
       return
     }
     if (!postConf.post_status) {
-      setSnackbar({ show: true, msg: __("Post Status cann't be empty", 'bit-integrations') })
+      setSnackbar({ show: true, msg: __("Post Status can't be empty", 'bit-integrations') })
       return
     }
 
@@ -173,10 +172,10 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       {postCreation?.youTubeLink && (
-        <TutorialLink title={postCreation?.title} youTubeLink={postCreation?.youTubeLink} />
+        <TutorialLink title="Post Creation" youTubeLink={postCreation?.youTubeLink} />
       )}
       {postCreation?.docLink && (
-        <TutorialLink title={postCreation?.title} docLink={postCreation?.docLink} />
+        <TutorialLink title="Post Creation" docLink={postCreation?.docLink} />
       )}
 
       <div className="txt-center mt-2">

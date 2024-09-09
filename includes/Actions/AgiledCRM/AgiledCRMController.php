@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\AgiledCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for AgiledCRM integration
@@ -62,7 +62,7 @@ class AgiledCRMController
             }
             wp_send_json_success($owners, 200);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            wp_send_json_error(__('Owners fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -90,7 +90,7 @@ class AgiledCRMController
             }
             wp_send_json_success($accounts, 200);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            wp_send_json_error(__('Owners fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -118,7 +118,7 @@ class AgiledCRMController
             }
             wp_send_json_success($sources, 200);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            wp_send_json_error(__('Owners fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -146,7 +146,7 @@ class AgiledCRMController
             }
             wp_send_json_success($statuses, 200);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            wp_send_json_error(__('Owners fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -174,7 +174,7 @@ class AgiledCRMController
             }
             wp_send_json_success($lifeCycleStages, 200);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            wp_send_json_error(__('Owners fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -202,7 +202,7 @@ class AgiledCRMController
             }
             wp_send_json_success($pipelines, 200);
         } else {
-            wp_send_json_error('Pipelines fetching failed', 400);
+            wp_send_json_error(__('Pipelines fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -246,7 +246,7 @@ class AgiledCRMController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Agiled CRM api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Agiled CRM'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

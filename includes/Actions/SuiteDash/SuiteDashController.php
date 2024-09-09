@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SuiteDash;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for SuiteDash integration
@@ -51,7 +51,6 @@ class SuiteDashController
             $fieldNames = ['uid', 'name_prefix', 'active', 'role', 'tags', 'created', 'company', 'companies'];
             foreach ($response as $key => $field) {
                 if (array_search($key, $fieldNames) === false && $key !== 'custom_fields' && $key !== 'address') {
-
                     $fieldMap[]
                     = [
                         'key'      => $key,
@@ -61,7 +60,6 @@ class SuiteDashController
                     ;
                 } elseif (array_search($key, $fieldNames) === false && $key === 'address') {
                     foreach ($field->properties as $addressFKey => $addressField) {
-
                         $fieldMap[]
                         = [
                             'key'      => "address-{$addressFKey}",
@@ -72,7 +70,6 @@ class SuiteDashController
                     }
                 } elseif (array_search($key, $fieldNames) === false && $key === 'custom_fields') {
                     foreach ($field->properties as $customFKey => $customField) {
-
                         $fieldMap[]
                         = [
                             'key'      => "custom-{$customFKey}",
@@ -98,7 +95,6 @@ class SuiteDashController
         if (isset($response->success) && $response->success) {
             $companies = [];
             foreach ($response->data as $company) {
-
                 $companies[]
                 = $company->name
                 ;
@@ -119,7 +115,7 @@ class SuiteDashController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($publicId) || empty($actionName) || empty($secretKey)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for SuiteDash api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SuiteDash'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $publicId, $secretKey);

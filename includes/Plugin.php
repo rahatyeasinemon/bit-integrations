@@ -101,6 +101,8 @@ final class Plugin
             (new Admin_Bar())->register();
         }
         new HookService();
+
+        load_plugin_textdomain('bit-integrations', false, basename(BTCBI_PLUGIN_BASEDIR) . '/languages');
     }
 
     /**
