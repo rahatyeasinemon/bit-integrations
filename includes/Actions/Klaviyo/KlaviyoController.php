@@ -18,48 +18,29 @@ class KlaviyoController
 
     public function handleAuthorize($requestParams)
     {
-      if (empty($requestParams->authKey)) {
-        wp_send_json_error(
-          __(
+        if (empty($requestParams->authKey)) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
 
-            'Requested parameter is empty',
-            'bit-integrations'
-          ),
-          400
-        );
-      }
+        $response = static::fetchLists($requestParams->authKey, $this->baseUrl . 'lists');
 
-      $response = static::fetchLists($requestParams->authKey, $this->baseUrl . 'lists');
+        if (empty($response)) {
+            wp_send_json_error(
+                __(
+                    'Invalid token',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
 
-      if (empty($response)) {
-        wp_send_json_error(
-          __(
-            'Invalid token',
-            'bit-integrations'
-          ),
-          400
-        );
-      }
-
-      wp_send_json_success($response, 200);
-    }
-
-    private static function fetchLists($authKey, $apiEndpoints, $data = [])
-    {
-      $headers = [
-        'Authorization' => "Klaviyo-API-Key {$authKey}",
-        'accept'        => 'application/json',
-        'revision'      => '2024-02-15',
-      ];
-
-      $response = HttpHelper::get($apiEndpoints, null, $headers);
-      $data = array_merge($data, $response->data);
-
-      if (!empty($response->links->next)) {
-        return static::fetchLists($authKey, $response->links->next, $data);
-      }
-
-      return $data;
+        wp_send_json_success($response, 200);
     }
 
     public function execute($integrationData, $fieldValues)
@@ -74,7 +55,7 @@ class KlaviyoController
             empty($field_map)
             || empty($authKey)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Klaviyo api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Klaviyo'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $klaviyoApiResponse = $recordApiHelper->execute(
@@ -89,5 +70,23 @@ class KlaviyoController
         }
 
         return $klaviyoApiResponse;
+    }
+
+    private static function fetchLists($authKey, $apiEndpoints, $data = [])
+    {
+        $headers = [
+            'Authorization' => "Klaviyo-API-Key {$authKey}",
+            'accept'        => 'application/json',
+            'revision'      => '2024-02-15',
+        ];
+
+        $response = HttpHelper::get($apiEndpoints, null, $headers);
+        $data = array_merge($data, $response->data);
+
+        if (!empty($response->links->next)) {
+            return static::fetchLists($authKey, $response->links->next, $data);
+        }
+
+        return $data;
     }
 }

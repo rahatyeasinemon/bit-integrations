@@ -103,7 +103,7 @@ const Webhook = () => {
         })
         .catch((err) => {
           if (err.name === 'AbortError') {
-            console.log('AbortError: Fetch request aborted')
+            console.log(__('AbortError: Fetch request aborted', 'bit-integrations'))
           }
         })
     }, 1500)
@@ -113,11 +113,11 @@ const Webhook = () => {
     setShowResponse((prevState) => !prevState)
   }
 
-  const info = `You can test any kind of webhook using <a href="https://webhook.is/" target="_blank" rel="noreferrer">webhook.is</a>
-            <h4>Setup</h4>
+  const info = `${__('You can test any kind of webhook using', 'bit-integrations')} <a href="https://webhook.is/" target="_blank" rel="noreferrer">${__('webhook.is', 'bit-integrations')}</a>
+            <h4>${__('Setup', 'bit-integrations')}</h4>
             <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/webhook-integrations" target="_blank" rel="noreferrer">${__('Details on Documentation', 'bit-integrations')}</a>
             <ul>
-                <li>Click on the <b>Fetch</b> button & Submit your <b>Form</b> to get the form data</li>
+                <li>${__('Click on the <b>Fetch</b> button & Submit your <b>Form</b> to get the form data', 'bit-integrations')}</li>
             </ul>
   `
 
@@ -147,7 +147,9 @@ const Webhook = () => {
         {newFlow.triggerDetail?.data && (
           <button onClick={showResponseTable} className="btn btcd-btn-lg sh-sm flx">
             <span className="txt-webhook-resbtn font-inter-500">
-              {showResponse ? 'Hide Response' : 'View Response'}
+              {showResponse
+                ? __('Hide Response', 'bit-integrations')
+                : __('View Response', 'bit-integrations')}
             </span>
             {!showResponse ? (
               <EyeIcn width="20" height="20" strokeColor="#000000" />
@@ -165,7 +167,7 @@ const Webhook = () => {
         className="btn btcd-btn-lg purple sh-sm flx"
         type="button"
         disabled={!newFlow.triggerDetail?.data}>
-        Set Action
+        {__('Set Action', 'bit-integrations')}
       </button>
       <Note note={info} />
     </div>

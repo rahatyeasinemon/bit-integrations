@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\CapsuleCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for CapsuleCRM integration
@@ -130,7 +130,7 @@ class CapsuleCRMController
             }
             wp_send_json_success($owners, 200);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            wp_send_json_error(__('Owners fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -258,7 +258,7 @@ class CapsuleCRMController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for CapsuleCRM api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Capsule CRM'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

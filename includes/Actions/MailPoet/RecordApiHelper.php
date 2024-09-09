@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\MailPoet;
 
-use BitCode\FI\Log\LogHandler;
 use Exception;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -36,7 +36,7 @@ class RecordApiHelper
 
             return static::addSubscribeToLists($existing_subscriber['id'], $lists);
         } catch (\MailPoet\API\MP\v1\APIException $e) {
-            if ($e->getMessage() == 'This subscriber does not exist.') {
+            if ($e->getCode() == 4) {
                 // Handle the case where the subscriber doesn't exist
                 return static::addSubscriber($subscriber, $lists);
             }

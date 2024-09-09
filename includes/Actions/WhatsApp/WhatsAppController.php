@@ -60,7 +60,7 @@ class WhatsAppController
         $messageType = isset($integrationDetails->messageTypeId) ? $integrationDetails->messageTypeId : $integrationDetails->messageType;
 
         if (empty($messageType)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for WhatsApp api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'WhatsApp'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

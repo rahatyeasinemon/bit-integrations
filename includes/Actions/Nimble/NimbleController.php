@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Nimble;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Nimble integration
@@ -119,7 +119,7 @@ class NimbleController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($apiKey) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Nimble api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Nimble'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey);
@@ -153,7 +153,6 @@ class NimbleController
         $fieldsArr = [];
         foreach ($fields as $field) {
             if (!\in_array($field->name, $unWantedFields)) {
-
                 $fieldsArr[]
                 = (object) [
                     'key'      => $field->name,

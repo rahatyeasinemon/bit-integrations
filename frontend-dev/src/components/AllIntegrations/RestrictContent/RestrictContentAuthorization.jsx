@@ -8,7 +8,14 @@ import { getAllLevels } from './RestrictContentCommonFunc'
 import TutorialLink from '../../Utilities/TutorialLink'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 
-export default function RestrictContentAuthorization({ formID, restrictConf, setRestrictConf, step, setStep, setSnackbar }) {
+export default function RestrictContentAuthorization({
+  formID,
+  restrictConf,
+  setRestrictConf,
+  step,
+  setStep,
+  setSnackbar
+}) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [showAuthMsg, setShowAuthMsg] = useState(false)
@@ -19,7 +26,10 @@ export default function RestrictContentAuthorization({ formID, restrictConf, set
     bitsFetch({}, 'restrict_authorize').then((result) => {
       if (result?.success) {
         setisAuthorized(true)
-        setSnackbar({ show: true, msg: __('Connected with Restrict Content Successfully', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Connected with Restrict Content Successfully', 'bit-integrations')
+        })
       }
       setIsLoading(false)
       setShowAuthMsg(true)
@@ -45,20 +55,13 @@ export default function RestrictContentAuthorization({ formID, restrictConf, set
       className="btcd-stp-page"
       style={{
         width: step === 1 && 900,
-        height: step === 1 && 'auto',
-      }}
-    >
+        height: step === 1 && 'auto'
+      }}>
       {restrictContent?.youTubeLink && (
-        <TutorialLink
-          title={restrictContent?.title}
-          youTubeLink={restrictContent?.youTubeLink}
-        />
+        <TutorialLink title="Restrict Content" youTubeLink={restrictContent?.youTubeLink} />
       )}
       {restrictContent?.docLink && (
-        <TutorialLink
-          title={restrictContent?.title}
-          docLink={restrictContent?.docLink}
-        />
+        <TutorialLink title="Restrict Content" docLink={restrictContent?.docLink} />
       )}
 
       <div className="mt-3">
@@ -90,13 +93,20 @@ export default function RestrictContentAuthorization({ formID, restrictConf, set
       )}
 
       {!isAuthorized && (
-        <button onClick={authorizeHandler} className="btn btcd-btn-lg purple sh-sm flx mt-5" type="button">
+        <button
+          onClick={authorizeHandler}
+          className="btn btcd-btn-lg purple sh-sm flx mt-5"
+          type="button">
           {__('Connect', 'bit-integrations')}
         </button>
       )}
 
       {isAuthorized && (
-        <button onClick={() => nextPage(2)} className="btn btcd-btn-lg purple sh-sm flx mt-5" type="button" disabled={!isAuthorized}>
+        <button
+          onClick={() => nextPage(2)}
+          className="btn btcd-btn-lg purple sh-sm flx mt-5"
+          type="button"
+          disabled={!isAuthorized}>
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>

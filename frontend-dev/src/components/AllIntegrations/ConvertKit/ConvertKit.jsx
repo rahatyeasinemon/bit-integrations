@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+import { __ } from '../../../Utils/i18nwrap'
 import { useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -21,11 +21,10 @@ function ConvertKit({ formFields, setFlow, flow, allIntegURL }) {
   const [convertKitConf, setConvertKitConf] = useState({
     name: 'ConvertKit',
     type: 'ConvertKit',
-    api_secret: process.env.NODE_ENV === 'development' ? 'm4iHyMa_gu65b16dJMnYJJzOlSFpj3wl1pB3k_IvOhc' : '',
-    field_map: [
-      { formField: '', convertKitField: '' },
-    ],
-    actions: {},
+    api_secret:
+      process.env.NODE_ENV === 'development' ? 'm4iHyMa_gu65b16dJMnYJJzOlSFpj3wl1pB3k_IvOhc' : '',
+    field_map: [{ formField: '', convertKitField: '' }],
+    actions: {}
   })
 
   const nextPage = (val) => {
@@ -35,11 +34,14 @@ function ConvertKit({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
     if (val === 3) {
       if (!checkMappedFields(convertKitConf)) {
-        setSnackbar({ show: true, msg: 'Please map all required fields to continue.' })
+        setSnackbar({
+          show: true,
+          msg: __('Please map all required fields to continue.', 'bit-integrations')
+        })
         return
       }
       if (!convertKitConf?.formId) {
-        setSnackbar({ show: true, msg: 'Please select form to continue.' })
+        setSnackbar({ show: true, msg: __('Please select form to continue.', 'bit-integrations') })
         return
       }
       if (convertKitConf.name !== '' && convertKitConf.field_map.length > 0) {
@@ -50,7 +52,9 @@ function ConvertKit({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <ConvertKitAuthorization
@@ -64,8 +68,9 @@ function ConvertKit({ formFields, setFlow, flow, allIntegURL }) {
         setSnackbar={setSnackbar}
       />
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
         <ConvertKitIntegLayout
           formID={formID}
           formFields={formFields}
@@ -79,20 +84,27 @@ function ConvertKit({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!convertKitConf?.formId || convertKitConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
-          &nbsp;
+          type="button">
+          {__('Next', 'bit-integrations')} &nbsp;
           <BackIcn className="ml-1 rev-icn" />
         </button>
-
       </div>
 
       {/* STEP 3 */}
       <IntegrationStepThree
         step={step}
-        saveConfig={() => saveIntegConfig(flow, setFlow, allIntegURL, convertKitConf, navigate, '', '', setIsLoading)}
+        saveConfig={() =>
+          saveIntegConfig(
+            flow,
+            setFlow,
+            allIntegURL,
+            convertKitConf,
+            navigate,
+            '',
+            '',
+            setIsLoading
+          )
+        }
         isLoading={isLoading}
         dataConf={convertKitConf}
         setDataConf={setConvertKitConf}

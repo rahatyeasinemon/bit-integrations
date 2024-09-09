@@ -143,7 +143,7 @@ export default function SalesflareIntegLayout({
                 getallPipelines(salesflareConf, setSalesflareConf, loading, setLoading)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh Pipelines', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh pipelines', 'bit-integrations')}'` }}
               type="button"
               disabled={loading.pipeline}>
               &#x21BB;
@@ -193,7 +193,7 @@ export default function SalesflareIntegLayout({
                 salesflareFields(salesflareConf, setSalesflareConf, setIsLoading, setSnackbar)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `'${__('Refresh Custom Fields', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
               type="button"
               disabled={isLoading}>
               &#x21BB;

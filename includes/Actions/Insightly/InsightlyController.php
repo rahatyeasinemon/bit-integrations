@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Insightly;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Insightly integration
@@ -61,7 +61,7 @@ class InsightlyController
             }
             wp_send_json_success($organisations, 200);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            wp_send_json_error(__('Owners fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -124,7 +124,7 @@ class InsightlyController
             }
             wp_send_json_success($statuses, 200);
         } else {
-            wp_send_json_error('Owners fetching failed', 400);
+            wp_send_json_error(__('Owners fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -214,7 +214,7 @@ class InsightlyController
             }
             wp_send_json_success($pipelines, 200);
         } else {
-            wp_send_json_error('Pipelines fetching failed', 400);
+            wp_send_json_error(__('Pipelines fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -255,7 +255,7 @@ class InsightlyController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Insightly api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Insightly'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

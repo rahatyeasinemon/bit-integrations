@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Drip;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Drip integration
@@ -127,7 +127,7 @@ class DripController
         $selectedRemoveTags = $integrationDetails->selectedRemoveTags;
 
         if (empty($api_token) || empty($fieldMap) || empty($accountId)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Drip api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Drip'));
         }
 
         $recordApiHelper = new RecordApiHelper($api_token, $this->_integrationID);

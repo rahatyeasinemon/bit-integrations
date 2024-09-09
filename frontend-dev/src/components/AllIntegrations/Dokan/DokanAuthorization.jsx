@@ -42,8 +42,8 @@ export default function DokanAuthorization({
     <div
       className="btcd-stp-page"
       style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
-      {dokan?.youTubeLink && <TutorialLink title={dokan?.title} youTubeLink={dokan?.youTubeLink} />}
-      {dokan?.docLink && <TutorialLink title={dokan?.title} docLink={dokan?.docLink} />}
+      {dokan?.youTubeLink && <TutorialLink title="Dokan" youTubeLink={dokan?.youTubeLink} />}
+      {dokan?.docLink && <TutorialLink title="Dokan" docLink={dokan?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>

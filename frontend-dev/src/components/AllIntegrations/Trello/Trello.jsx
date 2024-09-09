@@ -20,7 +20,7 @@ function Trello({ formFields, setFlow, flow, allIntegURL }) {
   const cardFields = [
     { key: 'name', label: 'Name', required: true },
     { key: 'desc', label: 'Description', required: false },
-    { key: 'due', label: 'Date', required: false },
+    { key: 'due', label: 'Date', required: false }
   ]
   const [trelloConf, setTrelloConf] = useState({
     name: 'Trello',
@@ -30,12 +30,10 @@ function Trello({ formFields, setFlow, flow, allIntegURL }) {
     listName: '',
     tags: '',
     pos: '',
-    field_map: [
-      { formField: '', trelloFormField: '' },
-    ],
+    field_map: [{ formField: '', trelloFormField: '' }],
     cardFields,
     address_field: [],
-    actions: {},
+    actions: {}
   })
 
   useEffect(() => {
@@ -48,7 +46,7 @@ function Trello({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(trelloConf)) {
-      setSnackbar({ show: true, msg: 'Please map fields to continue.' })
+      setSnackbar({ show: true, msg: __('Please map fields to continue.', 'bit-integrations') })
       return
     }
     if (trelloConf.listId !== '') {
@@ -59,7 +57,9 @@ function Trello({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <TrelloAuthorization
@@ -74,8 +74,9 @@ function Trello({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <TrelloIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, trelloConf, setTrelloConf, setIsLoading, setSnackbar)}
@@ -90,24 +91,30 @@ function Trello({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!trelloConf?.listId || !checkMappedFields(trelloConf)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
-          &nbsp;
+          type="button">
+          {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>
       {/* STEP 3 */}
       <IntegrationStepThree
         step={step}
-        saveConfig={() => saveActionConf({ flow, setFlow, allIntegURL, navigate, conf: trelloConf, setIsLoading, setSnackbar })}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            setFlow,
+            allIntegURL,
+            navigate,
+            conf: trelloConf,
+            setIsLoading,
+            setSnackbar
+          })
+        }
         isLoading={isLoading}
         dataConf={trelloConf}
         setDataConf={setTrelloConf}
         formFields={formFields}
       />
-
     </div>
   )
 }

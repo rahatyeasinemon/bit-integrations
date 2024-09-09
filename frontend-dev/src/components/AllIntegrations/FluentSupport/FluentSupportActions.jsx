@@ -253,7 +253,7 @@ export default function FluentSupportActions({
           action={clsActionMdl}
           title={__('Select Attachment', 'bit-integrations')}>
           <div className="btcd-hr mt-2" />
-          <div className="mt-2">{__('Select file upload fields', 'bit-integrations')}</div>
+          <div className="mt-2">{__('Select File Upload Fields', 'bit-integrations')}</div>
           <MultiSelect
             defaultValue={fluentSupportConf.actions.attachment}
             className="mt-2 w-9"

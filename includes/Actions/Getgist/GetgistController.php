@@ -46,7 +46,7 @@ class GetgistController
         if (empty($api_key)
             || empty($fieldMap)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Sendinblue api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'GetGist'));
         }
         $recordApiHelper = new RecordApiHelper($api_key, $integId);
         $getgistApiResponse = $recordApiHelper->execute(

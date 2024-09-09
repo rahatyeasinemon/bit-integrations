@@ -40,7 +40,7 @@ class LearnDashController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(__('LearnDash must be activated!', 'bit-integrations'));
+        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'LearnDash'));
     }
 
     public static function getCourses()
@@ -192,7 +192,7 @@ class LearnDashController
             empty($integId)
             || empty($mainAction)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for LearnDash api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'LearnDash'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $learnDashApiResponse = $recordApiHelper->execute(

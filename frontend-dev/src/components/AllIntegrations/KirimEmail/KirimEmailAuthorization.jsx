@@ -5,7 +5,8 @@ import { handleAuthorize } from './KirimEmailCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 
-export default function KirmilEmailAuthorization({ formID,
+export default function KirmilEmailAuthorization({
+  formID,
   kirimEmailConf,
   setKirimEmailConf,
   step,
@@ -14,7 +15,8 @@ export default function KirmilEmailAuthorization({ formID,
   setIsLoading,
   setSnackbar,
   redirectLocation,
-  isInfo }) {
+  isInfo
+}) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ api_key: '' })
   const { kirimEmail } = tutorialLinks
@@ -39,21 +41,12 @@ export default function KirmilEmailAuthorization({ formID,
       className="btcd-stp-page"
       style={{
         ...{ width: step === 1 && 900 },
-        ...{ height: step === 1 && 'auto' },
-      }}
-    >
+        ...{ height: step === 1 && 'auto' }
+      }}>
       {kirimEmail?.youTubeLink && (
-        <TutorialLink
-          title={kirimEmail?.title}
-          youTubeLink={kirimEmail?.youTubeLink}
-        />
+        <TutorialLink title="Kirim Email" youTubeLink={kirimEmail?.youTubeLink} />
       )}
-      {kirimEmail?.docLink && (
-        <TutorialLink
-          title={kirimEmail?.title}
-          docLink={kirimEmail?.docLink}
-        />
-      )}
+      {kirimEmail?.docLink && <TutorialLink title="Kirim Email" docLink={kirimEmail?.docLink} />}
 
       <div className="mt-3">
         <b>{__('Integration Name:', 'bit-integrations')}</b>
@@ -101,8 +94,7 @@ export default function KirmilEmailAuthorization({ formID,
           className="btcd-link"
           href="https://aplikasi.kirim.email/"
           target="_blank"
-          rel="noreferrer"
-        >
+          rel="noreferrer">
           {__('Kirim Email ', 'bit-integrations')}
         </a>
       </small>
@@ -112,18 +104,19 @@ export default function KirmilEmailAuthorization({ formID,
       {!isInfo && (
         <>
           <button
-            onClick={() => handleAuthorize(
-              kirimEmailConf,
-              setKirimEmailConf,
-              setError,
-              setIsAuthorized,
-              setIsLoading,
-              setSnackbar,
-            )}
+            onClick={() =>
+              handleAuthorize(
+                kirimEmailConf,
+                setKirimEmailConf,
+                setError,
+                setIsAuthorized,
+                setIsLoading,
+                setSnackbar
+              )
+            }
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={isAuthorized || isLoading}
-          >
+            disabled={isAuthorized || isLoading}>
             {isAuthorized
               ? __('Authorized ✔', 'bit-integrations')
               : __('Authorize', 'bit-integrations')}
@@ -134,14 +127,12 @@ export default function KirmilEmailAuthorization({ formID,
             onClick={nextPage}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!isAuthorized}
-          >
+            disabled={!isAuthorized}>
             {__('Next', 'bit-integrations')}
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         </>
       )}
-
     </div>
   )
 }

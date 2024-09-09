@@ -266,7 +266,7 @@ class GoogleSheetController
             || empty($worksheetName)
             || empty($fieldMap)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Google sheet api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Google sheet'));
         }
 
         if ((\intval($tokenDetails->generates_on) + (55 * 60)) < time()) {

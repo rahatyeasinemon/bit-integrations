@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { __ } from '@wordpress/i18n'
+import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import { dripAuthentication, getCustomFields, staticFields } from './DripCommonFunc'
@@ -62,7 +62,7 @@ export default function DripIntegLayout({
           )
         }
         className="icn-btn sh-sm ml-2 mr-2 tooltip"
-        style={{ '--tooltip-txt': '"Refresh accounts"' }}
+        style={{ '--tooltip-txt': '"Refresh Accounts"' }}
         type="button"
         disabled={loading?.accounts}>
         &#x21BB;
@@ -88,7 +88,7 @@ export default function DripIntegLayout({
           <button
             onClick={() => getCustomFields(dripConf, setDripConf, setLoading)}
             className="icn-btn sh-sm ml-2 mr-2 tooltip"
-            style={{ '--tooltip-txt': `'${__('Refresh Custom Fields', 'bit-integrations')}'` }}
+            style={{ '--tooltip-txt': `'${__('Refresh custom fields', 'bit-integrations')}'` }}
             type="button"
             disabled={loading?.customFields}>
             &#x21BB;

@@ -2,12 +2,12 @@
 
 namespace BitCode\FI\Actions\Autonami;
 
-use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Log\LogHandler;
-use BWFCRM_Fields;
-use BWFCRM_Lists;
-use BWFCRM_Tag;
 use WP_Error;
+use BWFCRM_Tag;
+use BWFCRM_Lists;
+use BWFCRM_Fields;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Helper;
 
 class AutonamiController
 {
@@ -112,7 +112,7 @@ class AutonamiController
         }
 
         if (empty($fieldMap)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for Autonami api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Autonami'));
         }
 
         $recordApiHelper = new RecordApiHelper($this->_integrationID);

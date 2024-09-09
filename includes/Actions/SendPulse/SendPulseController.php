@@ -63,7 +63,7 @@ class SendPulseController
             $apiEndpoint = "https://api.sendpulse.com/addressbooks/{$requestParams->list_id}/variables";
 
             $token = self::tokenExpiryCheck($requestParams->tokenDetails, $requestParams->client_id, $requestParams->client_secret);
-            
+
             $fields = apply_filters('btcbi_sendPulse_refresh_fields', $fields, $apiEndpoint, $token->access_token);
         }
 
@@ -112,7 +112,7 @@ class SendPulseController
         }
 
         if (empty($fieldMap) || empty($tokenDetails) || empty($selectedList)) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('module, fields are required for SendPulse api', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SendPulse'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $tokenDetails->access_token);

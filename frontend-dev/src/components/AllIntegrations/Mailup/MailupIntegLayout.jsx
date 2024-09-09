@@ -78,7 +78,7 @@ export default function MailupIntegLayout({
             name="groupId"
             value={mailupConf.groupId}
             className="btcd-paper-inp w-5">
-            <option value="">{__('Select Group', 'bit-integrations')}</option>
+            <option value="">{__('Select group', 'bit-integrations')}</option>
             {mailupConf?.allGroup &&
               mailupConf.allGroup.map(({ idGroup, name }) => (
                 <option key={idGroup} value={idGroup}>
