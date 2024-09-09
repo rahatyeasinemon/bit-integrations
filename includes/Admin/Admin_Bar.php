@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Admin;
 
-use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\DateTimeHelper;
+use BitCode\FI\Core\Util\Hooks;
 
 /**
  * The admin menu and page handler class
@@ -28,6 +28,8 @@ class Admin_Bar
      */
     public function AdminMenu()
     {
+        global $submenu;
+
         $capability = Hooks::apply('manage_wp_integrations', 'manage_options');
         if (Capabilities::Check($capability)) {
             add_menu_page(__('Integrations for WordPress Forms', 'bit-integrations'), __('Bit Integrations', 'bit-integrations'), $capability, 'bit-integrations', [$this, 'rootPage'], 'data:image/svg+xml;base64,' . base64_encode('<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,6 +37,12 @@ class Admin_Bar
                 <path d="M25.1091 12.817C24.2234 12.031 23.8672 11.1284 24.2607 10.0266C24.6155 9.03294 25.3347 8.50758 26.3946 8.43723C27.4598 8.36652 28.2492 8.81474 28.7137 9.74617C29.1593 10.6397 29.0929 11.5514 28.4554 12.3458C27.8047 13.1566 26.9435 13.4549 25.9254 13.1827C25.6584 13.1113 25.4118 12.9637 25.1091 12.817Z" fill="#808285"/>
                 </svg>'), 30);
         }
+
+        $submenu['bit-integrations'] = [
+            [__('All Integrations', 'bit-integrations'), $capability, 'admin.php?page=bit-integrations#/'],
+            [__('Doc & Support', 'bit-integrations'), $capability, 'admin.php?page=bit-integrations#/doc-support'],
+            [__('Settings', 'bit-integrations'), $capability, 'admin.php?page=bit-integrations#/app-settings'],
+        ];
     }
 
     /**
