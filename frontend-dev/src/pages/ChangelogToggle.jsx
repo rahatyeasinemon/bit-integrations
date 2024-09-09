@@ -87,7 +87,7 @@ export default function ChangelogToggle() {
                 dangerouslySetInnerHTML={{
                   __html: sprintf(
                     __('Updated at:  <b>%s</b>', 'bit-integrations'),
-                    '7th September 2024'
+                    '8th September 2024'
                   )
                 }}></small>
             </div>
@@ -128,6 +128,7 @@ export default function ChangelogToggle() {
               <div className="feature-list">
                 <ul>
                   <li>MasterStudy LMS: "User earns a point" trigger added for point system integrations (Pro)</li>
+                  <li>Registration: The ability to update user role has been added to the User Data Update module, enhancing user management capabilities.</li>
                 </ul>
               </div>
               <div>

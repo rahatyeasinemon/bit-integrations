@@ -997,18 +997,20 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 == Changelog ==
 
 = 2.2.3  =
-_Release Date -7th September 2024_
+_Release Date -8th September 2024_
   
 - **New Features :**
   - MasterStudy LMS: "User earns a point" trigger added for point system integrations (Pro)
+  - Registration: The ability to update user role has been added to the User Data Update module, enhancing user management capabilities.
 
 - **New Improvements :**
-  - Plugin Translations Enhanced
+  - Plugin Translations Enhanced: The translation files for the plugin have been optimized, ensuring better accuracy and compatibility across multiple languages. This improvement provides a more seamless experience for users in non-English locales, making the plugin more accessible globally.
 
 - **New Fixes :**
   - Brevo: Resolved refresh fields & float type field issue
   - MailPoet: Resolved subsriber existing issue
   - CapsuleCRM: Resolved API response handling issue
+  - Klaviyo: Resolved an issue where the Klaviyo list attribute was returning as undefined
 
 = 2.2.2  =
 _Release Date -28th August 2024_
