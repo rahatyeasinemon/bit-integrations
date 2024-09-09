@@ -6,12 +6,12 @@
 
 namespace BitCode\FI\Actions\FluentSupport;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\Helper as BtcbiHelper;
 use BitCode\FI\Log\LogHandler;
-use FluentSupport\App\Models\Customer;
+use BitCode\FI\Core\Util\Common;
 use FluentSupport\App\Models\Ticket;
+use FluentSupport\App\Models\Customer;
 use FluentSupport\App\Services\Helper;
+use BitCode\FI\Core\Util\Helper as BtcbiHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -105,6 +105,7 @@ class RecordApiHelper
         $fieldMap,
         $integrationDetails
     ) {
+        $attachments = null;
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $customerExits = $this->getCustomerExits($finalData['email']);
         $finalData['client_priority'] = !empty($integrationDetails->actions->client_priority) ? $integrationDetails->actions->client_priority : 'normal';

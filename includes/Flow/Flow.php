@@ -421,6 +421,7 @@ final class Flow
                 if (\is_string($flowData->flow_details)) {
                     $flowData->flow_details = json_decode($flowData->flow_details);
                 }
+
                 if (
                     property_exists($flowData->flow_details, 'condition')
                     && property_exists($flowData->flow_details->condition, 'logics')
@@ -516,9 +517,7 @@ final class Flow
     private static function updateFlowTrigger($saveStatus)
     {
         if ($saveStatus) {
-            $storeInCacheInstance = new StoreInCache();
-            $activeFlowTrigger = $storeInCacheInstance::getActiveFlow();
-            $storeInCacheInstance::setTransient('activeCurrentTrigger', $activeFlowTrigger, DAY_IN_SECONDS);
+            StoreInCache::getActiveFlowEntities(true);
         }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace BitCode\FI\Core\Util;
+namespace BitCode\FI\Triggers\FallbackTrigger;
 
 use DateTime;
 use FrmField;
