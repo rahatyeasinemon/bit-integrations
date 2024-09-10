@@ -176,6 +176,13 @@ export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
       selectedJob: 'any'
     }
   }
+  if (val === 'wp_job_manager-9') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      statusList: resp.data.statusList,
+      selectedStatus: 'any'
+    }
+  }
 
   setNewFlow(tmpNewFlow)
 }
@@ -507,6 +514,10 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
   ) {
     tmpConf.selectedJob = flowData.selectedJob
     tmpConf.jobList = flowData.jobList
+  }
+  if (formId === 'wp_job_manager-9') {
+    tmpConf.selectedStatus = flowData.selectedStatus
+    tmpConf.statusList = flowData.statusList
   }
 
   return tmpConf

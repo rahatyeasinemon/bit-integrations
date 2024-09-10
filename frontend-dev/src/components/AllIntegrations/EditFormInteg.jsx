@@ -81,6 +81,7 @@ import {
   getWPForoUsers
 } from '../Triggers/TriggerHelpers/WPForoHelper/WPForoCommonFunction.js'
 import {
+  getApplicationStatuses,
   getWPJobManagerJobs,
   getWPJobManagerJobTypes
 } from '../Triggers/TriggerHelpers/WPJobManager/WPJobManagerCommonFunction.js'
@@ -359,6 +360,9 @@ function EditFormInteg({ setSnackbar, className = '' }) {
         data.triggered_entity_id === 'wp_job_manager-7'
       ) {
         getWPJobManagerJobs(data, setFlow)
+      }
+      if (data.triggered_entity_id === 'wp_job_manager-9') {
+        getApplicationStatuses(data, setFlow)
       }
     }
   }
