@@ -2,12 +2,12 @@
 
 namespace BitCode\FI\Core\Util;
 
+use BitCode\FI\Triggers\TriggerController;
 use DateTime;
+use DateTimeZone;
+use Exception;
 use stdClass;
 use WP_Error;
-use Exception;
-use DateTimeZone;
-use BitCode\FI\Triggers\TriggerController;
 
 /**
  * bit-integration helper class
@@ -225,7 +225,8 @@ final class Helper
         $currentPart = array_shift($parts);
         if (\is_array($data)) {
             if (!isset($data[$currentPart])) {
-                wp_send_json_error(new WP_Error($triggerEntity, __('Index out of bounds or invalid', 'bit-integrations')));
+                // wp_send_json_error(new WP_Error($triggerEntity, __('Index out of bounds or invalid', 'bit-integrations')));
+                return;
             }
 
             return self::extractValueFromPath($data[$currentPart], $parts, $triggerEntity);
@@ -233,13 +234,14 @@ final class Helper
 
         if (\is_object($data)) {
             if (!property_exists($data, $currentPart)) {
-                wp_send_json_error(new WP_Error($triggerEntity, __('Invalid path', 'bit-integrations')));
+                // wp_send_json_error(new WP_Error($triggerEntity, __('Invalid path', 'bit-integrations')));
+                return;
             }
 
             return self::extractValueFromPath($data->{$currentPart}, $parts, $triggerEntity);
         }
 
-        wp_send_json_error(new WP_Error($triggerEntity, __('Invalid path', 'bit-integrations')));
+        // wp_send_json_error(new WP_Error($triggerEntity, __('Invalid path', 'bit-integrations')));
     }
 
     public static function parseFlowDetails($flowDetails)
