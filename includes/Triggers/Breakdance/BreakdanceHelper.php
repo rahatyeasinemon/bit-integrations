@@ -9,8 +9,8 @@ class BreakdanceHelper
         // Create a mapping for quick access
         $formFields = array_column($form, null, 'name');
         $allFields = [
-            ['name' => self::findKeyPath($data, 'formId'), 'type' => 'text', 'label' => "Form Id ({$data['formId']})", 'value' => $data['formId']],
-            ['name' => self::findKeyPath($data, 'postId'), 'type' => 'text', 'label' => "Post Id ({$data['postId']})", 'value' => $data['postId']]
+            ['name' => self::findKeyPath($data, 'formId'), 'type' => 'text', 'label' => \sprintf(__('Form Id (%s)', 'bit-integrations'), $data['formId']), 'value' => $data['formId']],
+            ['name' => self::findKeyPath($data, 'postId'), 'type' => 'text', 'label' => \sprintf(__('Post Id (%s)', 'bit-integrations'), $data['postId']), 'value' => $data['postId']]
         ];
 
         // Process fields data

@@ -12,7 +12,7 @@ final class BitFormController
 
         return [
             'name'           => 'Bit Form',
-            'title'          => 'Contact Form Plugin - Fastest Contact Form Builder Plugin for WordPress by Bit Forms.',
+            'title'          => __('Contact Form Plugin - Fastest Contact Form Builder Plugin for WordPress by Bit Forms.', 'bit-integrations'),
             'slug'           => $plugin_path,
             'type'           => 'form',
             'is_active'      => self::isPluginActive(),

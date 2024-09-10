@@ -53,59 +53,59 @@ class WCHelper
         return [
             'Product Id' => (object) [
                 'fieldKey'  => 'product_id',
-                'fieldName' => 'Product Id'
+                'fieldName' => __('Product Id', 'bit-integrations')
             ],
             'Product Title' => (object) [
                 'fieldKey'  => 'product_title',
-                'fieldName' => 'Product Title'
+                'fieldName' => __('Product Title', 'bit-integrations')
             ],
             'Product Url' => (object) [
                 'fieldKey'  => 'product_url',
-                'fieldName' => 'Product Url'
+                'fieldName' => __('Product Url', 'bit-integrations')
             ],
             'Product Price' => (object) [
                 'fieldKey'  => 'product_price',
-                'fieldName' => 'Product Price'
+                'fieldName' => __('Product Price', 'bit-integrations')
             ],
             'Product Review' => (object) [
                 'fieldKey'  => 'product_review',
-                'fieldName' => 'Product Review'
+                'fieldName' => __('Product Review', 'bit-integrations')
             ],
             'Product Sku' => (object) [
                 'fieldKey'  => 'product_sku',
-                'fieldName' => 'Product Sku'
+                'fieldName' => __('Product Sku', 'bit-integrations')
             ],
             'Product Tags' => (object) [
                 'fieldKey'  => 'product_tags',
-                'fieldName' => 'Product Tags'
+                'fieldName' => __('Product Tags', 'bit-integrations')
             ],
             'Product Categories' => (object) [
                 'fieldKey'  => 'product_categories',
-                'fieldName' => 'Product Categories'
+                'fieldName' => __('Product Categories', 'bit-integrations')
             ],
             'Product Rating' => (object) [
                 'fieldKey'  => 'product_rating',
-                'fieldName' => 'Product Rating'
+                'fieldName' => __('Product Rating', 'bit-integrations')
             ],
             'Review Id' => (object) [
                 'fieldKey'  => 'review_id',
-                'fieldName' => 'Review Id'
+                'fieldName' => __('Review Id', 'bit-integrations')
             ],
             'Review Date' => (object) [
                 'fieldKey'  => 'review_date',
-                'fieldName' => 'Review Date'
+                'fieldName' => __('Review Date', 'bit-integrations')
             ],
             'Author Id' => (object) [
                 'fieldKey'  => 'author_id',
-                'fieldName' => 'Author Id'
+                'fieldName' => __('Author Id', 'bit-integrations')
             ],
             'Review Author Name' => (object) [
                 'fieldKey'  => 'review_author_name',
-                'fieldName' => 'Review Author Name'
+                'fieldName' => __('Review Author Name', 'bit-integrations')
             ],
             'Author Email' => (object) [
                 'fieldKey'  => 'author_email',
-                'fieldName' => 'Author Email',
+                'fieldName' => __('Author Email', 'bit-integrations')
             ],
         ];
     }
@@ -129,7 +129,7 @@ class WCHelper
             ];
 
             if ($id == 19) {
-                $allProducts = [['product_id' => 'any', 'product_title' => 'Any Product', 'product_type' => '', 'product_sku' => '']] + $allProducts;
+                $allProducts = [['product_id' => 'any', 'product_title' => __('Any Product', 'bit-integrations'), 'product_type' => '', 'product_sku' => '']] + $allProducts;
             }
         }
 
@@ -152,7 +152,7 @@ class WCHelper
     public static function getAllWcVariableProduct()
     {
         $products = wc_get_products(['status' => 'publish', 'limit' => -1, 'type' => 'variable']);
-        $finalProduct = [['product_id' => 'any', 'product_title' => 'Any Product']];
+        $finalProduct = [['product_id' => 'any', 'product_title' => __('Any Product', 'bit-integrations')]];
         $allProducts = [];
         foreach ($products as $product) {
             $productId = $product->get_id();
@@ -179,7 +179,7 @@ class WCHelper
         if ($product_id === 'any') {
             $allVariations[] = (object) [
                 'variation_id'    => 'any',
-                'variation_title' => 'Any Variation',
+                'variation_title' => __('Any Variation', 'bit-integrations'),
             ];
         } elseif ($product_id !== '') {
             $product = wc_get_product($product_id);

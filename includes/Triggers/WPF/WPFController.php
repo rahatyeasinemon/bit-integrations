@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Triggers\WPF;
 
-use BitCode\FI\Flow\Flow;
 use BitCode\FI\Core\Util\DateTimeHelper;
+use BitCode\FI\Flow\Flow;
 
 final class WPFController
 {
@@ -18,7 +18,7 @@ final class WPFController
 
         return [
             'name'           => 'WPForms',
-            'title'          => 'Contact Form by WPForms - Drag & Drop Form Builder for WordPress',
+            'title'          => __('Contact Form by WPForms - Drag & Drop Form Builder for WordPress', 'bit-integrations'),
             'slug'           => $plugin_path,
             'pro'            => 'wpforms/wpforms.php',
             'type'           => 'form',

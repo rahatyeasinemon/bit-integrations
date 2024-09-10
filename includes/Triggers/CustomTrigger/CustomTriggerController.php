@@ -11,7 +11,7 @@ class CustomTriggerController
     {
         return [
             'name'      => 'Custom Trigger',
-            'title'     => 'You can connect bit integrations with any other plugin or theme using this trigger(custom hook)',
+            'title'     => __('You can connect bit integrations with any other plugin or theme using this trigger(custom hook)', 'bit-integrations'),
             'type'      => 'custom_trigger',
             'is_active' => true,
             'isPro'     => false
@@ -36,7 +36,7 @@ class CustomTriggerController
             $missing_field = \is_null($missing_field) ? 'Custom trigger ID' : $missing_field . ', Webhook ID';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
         $testData = get_option('btcbi_custom_trigger_' . $data->hook_id);
@@ -70,7 +70,7 @@ class CustomTriggerController
             $missing_field = \is_null($missing_field) ? 'Custom trigger ID' : $missing_field . ', Custom trigger ID';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
+            wp_send_json_error(\sprintf(__('%s can\'t be empty or need to be valid', 'bit-integrations'), $missing_field));
         }
 
         if (property_exists($data, 'reset') && $data->reset) {
