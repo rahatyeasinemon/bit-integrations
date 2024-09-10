@@ -40,7 +40,7 @@ class RecordApiHelper
     public function addAccount($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $apiEndpoint = "https://my.agiled.app/api/v1/accounts?api_token={$this->authToken}";
@@ -71,7 +71,7 @@ class RecordApiHelper
     public function addContact($finalData)
     {
         if (empty($finalData['first_name']) || empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Name or Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name or Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $apiEndpoint = "https://my.agiled.app/api/v1/contacts?api_token={$this->authToken}";
@@ -126,7 +126,7 @@ class RecordApiHelper
     public function addDeal($finalData)
     {
         if (empty($finalData['deal_name'])) {
-            return ['success' => false, 'message' => 'Required field deal name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field deal name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $apiEndpoint = "https://my.agiled.app/api/v1/crm/pipeline-deals?api_token={$this->authToken}";

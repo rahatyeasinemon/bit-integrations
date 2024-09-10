@@ -98,7 +98,7 @@ class RecordApiHelper
                 $this->updateRecord($existSubscriber->subscribers[0]->id, $convertKit, $existSubscriber);
                 $type = 'update';
             } else {
-                LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', 'Email address already exists in the system');
+                LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', __('Email address already exists in the system', 'bit-integrations'));
 
                 wp_send_json_error(
                     [

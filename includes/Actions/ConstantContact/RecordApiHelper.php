@@ -47,7 +47,7 @@ class RecordApiHelper
             $splitTagIds = explode(',', $tagIds);
         }
         if (empty($finalData['email_address'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $requestParams = [

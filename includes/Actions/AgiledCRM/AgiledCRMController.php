@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\AgiledCRM;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for AgiledCRM integration
@@ -32,9 +32,9 @@ class AgiledCRMController
         $response = HttpHelper::get($apiEndpoint, null, $header);
 
         if (isset($response->data[0]->id)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid Brand name & API key', 400);
+            wp_send_json_error(__('Please enter valid Brand name & API key', 'bit-integrations'), 400);
         }
     }
 
@@ -233,7 +233,7 @@ class AgiledCRMController
             }
             wp_send_json_success($pipelineStages, 200);
         } else {
-            wp_send_json_error('Pipeline stages fetching failed', 400);
+            wp_send_json_error(__('Pipeline stages fetching failed', 'bit-integrations'), 400);
         }
     }
 

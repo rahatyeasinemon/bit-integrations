@@ -43,7 +43,7 @@ class RecordApiHelper
         $this->typeName = 'Contact created';
 
         if (empty($finalData['LastName'])) {
-            return ['success' => false, 'message' => 'Required field Last Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Last Name is empty', 'bit-integrations'), 'code' => 400];
         }
         if (isset($this->integrationDetails->selectedCompany) && !empty($this->integrationDetails->selectedCompany)) {
             $finalData['Company'] = $this->integrationDetails->selectedCompany;
@@ -63,7 +63,7 @@ class RecordApiHelper
         $this->typeName = 'Company created';
 
         if (empty($finalData['Name'])) {
-            return ['success' => false, 'message' => 'Required field Company Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Company Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $apiEndpoint = $this->apiUrl . '/tables/company';
@@ -77,7 +77,7 @@ class RecordApiHelper
         $this->typeName = 'Deal created';
 
         if (empty($finalData['Name'])) {
-            return ['success' => false, 'message' => 'Required field Deal Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Deal Name is empty', 'bit-integrations'), 'code' => 400];
         }
         if (!isset($this->integrationDetails->selectedStage) || empty($this->integrationDetails->selectedStage)) {
             return ['success' => false, 'message' => 'Required field Last Name is empty', 'code' => 400];

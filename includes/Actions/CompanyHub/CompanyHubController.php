@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\CompanyHub;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for CompanyHub integration
@@ -31,9 +31,9 @@ class CompanyHubController
         $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
 
         if (!isset($response->Success) && !$response->Success) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid Sub Domain & API Key', 400);
+            wp_send_json_error(__('Please enter valid Sub Domain & API Key', 'bit-integrations'), 400);
         }
     }
 
@@ -56,7 +56,7 @@ class CompanyHubController
             }
             wp_send_json_success($companies, 200);
         } else {
-            wp_send_json_error('Companies fetching failed', 400);
+            wp_send_json_error(__('Companies fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -79,7 +79,7 @@ class CompanyHubController
             }
             wp_send_json_success($contacts, 200);
         } else {
-            wp_send_json_error('Contacts fetching failed', 400);
+            wp_send_json_error(__('Contacts fetching failed', 'bit-integrations'), 400);
         }
     }
 

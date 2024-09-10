@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\ActiveCampaign;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -221,10 +221,10 @@ class ActiveCampaignController
                     'required'  => $field->isrequired === '0' ? false : true
                 ];
             }
-            $fields['FirstName'] = (object) ['fieldId' => 'firstName', 'fieldName' => 'First Name', 'required' => false];
-            $fields['LastName'] = (object) ['fieldId' => 'lastName', 'fieldName' => 'Last Name', 'required' => false];
-            $fields['Email'] = (object) ['fieldId' => 'email', 'fieldName' => 'Email', 'required' => true];
-            $fields['Phone'] = (object) ['fieldId' => 'phone', 'fieldName' => 'Phone', 'required' => false];
+            $fields['FirstName'] = (object) ['fieldId' => 'firstName', 'fieldName' => __('First Name', 'bit-integrations'), 'required' => false];
+            $fields['LastName'] = (object) ['fieldId' => 'lastName', 'fieldName' => __('Last Name', 'bit-integrations'), 'required' => false];
+            $fields['Email'] = (object) ['fieldId' => 'email', 'fieldName' => __('Email', 'bit-integrations'), 'required' => true];
+            $fields['Phone'] = (object) ['fieldId' => 'phone', 'fieldName' => __('Phone', 'bit-integrations'), 'required' => false];
             $response['activeCampaignField'] = $fields;
             wp_send_json_success($response);
         }

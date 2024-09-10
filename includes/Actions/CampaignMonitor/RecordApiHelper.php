@@ -77,7 +77,7 @@ class RecordApiHelper
                     LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Subscriber', 'type_name' => 'updating Subscriber']), 'error', wp_json_encode($apiResponse));
                 }
             } else {
-                LogHandler::save($this->_integrationID, ['type' => 'Subscriber', 'type_name' => 'Adding Subscriber'], 'error', 'Email address already exists in the system');
+                LogHandler::save($this->_integrationID, ['type' => 'Subscriber', 'type_name' => 'Adding Subscriber'], 'error', __('Email address already exists in the system', 'bit-integrations'));
             }
         }
 

@@ -171,7 +171,7 @@ class RecordApiHelper
         }
 
         if ($type === 'notSet') {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', 'Email already exist.');
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', __('Email already exist', 'bit-integrations'));
 
             return false;
         }

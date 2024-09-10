@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Dokan;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Log\LogHandler;
 use WeDevs\DokanPro\Refund\Validator;
 
 /**
@@ -26,7 +26,7 @@ class RecordApiHelper
     public function createVendor($finalData, $actions)
     {
         if (empty($finalData['email']) || empty($finalData['user_login']) || empty($finalData['store_name'])) {
-            return ['success' => false, 'message' => 'Required field email, username or store name is empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field email, username or store name is empty!', 'bit-integrations'), 'code' => 400];
         }
 
         $data = $this->formatVendorUpsertData($finalData, $actions, 'createVendor');
@@ -37,13 +37,13 @@ class RecordApiHelper
             return ['success' => false, 'message' => $store->get_error_message(), 'code' => 400];
         }
 
-        return ['success' => true, 'message' => 'Vendor created successfully.'];
+        return ['success' => true, 'message' => __('Vendor created successfully.', 'bit-integrations')];
     }
 
     public function updateVendor($finalData, $selectedVendor, $actions)
     {
         if (empty($selectedVendor)) {
-            return ['success' => false, 'message' => 'Required field vendor is empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field vendor is empty!', 'bit-integrations'), 'code' => 400];
         }
 
         $data = $this->formatVendorUpsertData($finalData, $actions, 'updateVendor');
@@ -54,7 +54,7 @@ class RecordApiHelper
             return ['success' => false, 'message' => $storeId->get_error_message(), 'code' => 400];
         }
 
-        return ['success' => true, 'message' => 'Vendor updated successfully.'];
+        return ['success' => true, 'message' => __('Vendor updated successfully.', 'bit-integrations')];
     }
 
     public function formatVendorUpsertData($finalData, $actions, $module)
@@ -94,7 +94,7 @@ class RecordApiHelper
     public function deleteVendor($finalData, $selectedVendor)
     {
         if (empty($finalData['vendor_email']) && empty($selectedVendor)) {
-            return ['success' => false, 'message' => 'Vendor email or id is required!', 'code' => 400];
+            return ['success' => false, 'message' => __('Vendor email or id is required!', 'bit-integrations'), 'code' => 400];
         }
 
         if (!empty($selectedVendor)) {
@@ -110,29 +110,29 @@ class RecordApiHelper
         }
 
         if (empty($vendorId)) {
-            return ['success' => false, 'message' => 'Vendor not found!', 'code' => 400];
+            return ['success' => false, 'message' => __('Vendor not found!', 'bit-integrations'), 'code' => 400];
         }
 
         $vendor = dokan()->vendor->delete($vendorId, $reassignId);
 
         if (!empty($vendor) && isset($vendor['id'])) {
             if ($vendor['id'] === 0) {
-                return ['success' => false, 'message' => 'Vendor not found!', 'code' => 400];
+                return ['success' => false, 'message' => __('Vendor not found!', 'bit-integrations'), 'code' => 400];
             }
 
             $id = $vendor['id'];
             $vendorEmail = isset($vendor['email']) ? ' Email: ' . $vendor['email'] : '';
 
-            return ['success' => true, 'message' => 'Vendor deleted successfully. (ID: ' . $id . $vendorEmail . ')'];
+            return ['success' => true, 'message' => \sprintf(__('Vendor deleted successfully. (ID: %s %s)', 'bit-integrations'), $id, $vendorEmail)];
         }
 
-        return ['success' => false, 'message' => 'Something went wrong!', 'code' => 400];
+        return ['success' => false, 'message' => __('Something went wrong!', 'bit-integrations'), 'code' => 400];
     }
 
     public function withdrawRequest($finalData, $selectedVendor, $selectedPaymentMethod)
     {
         if (empty($selectedVendor) || empty($selectedPaymentMethod) || empty($finalData['amount'])) {
-            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Request parameters are empty!', 'bit-integrations'), 'code' => 400];
         }
 
         $args = [
@@ -147,7 +147,7 @@ class RecordApiHelper
         $hasPendingRequest = dokan()->withdraw->has_pending_request($selectedVendor);
 
         if ($hasPendingRequest) {
-            return ['success' => false, 'message' => 'Vendor already have pending withdraw request(s)!', 'code' => 400];
+            return ['success' => false, 'message' => __('Vendor already have pending withdraw request(s)!', 'bit-integrations'), 'code' => 400];
         }
 
         $validateRequest = dokan()->withdraw->is_valid_approval_request($args);
@@ -159,10 +159,10 @@ class RecordApiHelper
         $insertWithdraw = dokan()->withdraw->insert_withdraw($args);
 
         if ($insertWithdraw) {
-            return ['success' => true, 'message' => 'Withdraw request inserted successfully. (Vendor ID: ' . $args['user_id'] . 'Amount : ' . $args['amount'] . 'Method: ' . $args['method'] . ')'];
+            return ['success' => true, 'message' => \sprintf(__('Withdraw request inserted successfully. (Vendor ID: %s Amount : %s Method: %s)', 'bit-integrations'), $args['user_id'], $args['amount'], $args['method'])];
         }
 
-        return ['success' => false, 'message' => 'Something went wrong!', 'code' => 400];
+        return ['success' => false, 'message' => __('Something went wrong!', 'bit-integrations'), 'code' => 400];
     }
 
     public function refundRequest($finalData)
@@ -176,7 +176,7 @@ class RecordApiHelper
         }
 
         if (empty($finalData['order_id']) || empty($finalData['refund_amount'])) {
-            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Request parameters are empty!', 'bit-integrations'), 'code' => 400];
         }
 
         $args = [
@@ -201,7 +201,7 @@ class RecordApiHelper
         $refundAmount = $refund->get_refund_amount();
         $orderId = $refund->get_order_id();
 
-        return ['success' => true, 'message' => 'Refund request added successfully. (Order ID: ' . $orderId . ' Refund Amount : ' . $refundAmount . ')'];
+        return ['success' => true, 'message' => \sprintf(__('Refund request added successfully. (Order ID: %s Refund Amount: %s)', 'bit-integrations'), $orderId, $refundAmount)];
     }
 
     public static function getUserIdFromEmail($email)

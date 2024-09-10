@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Dokan;
 
-use WeDevs\DokanPro\Modules\Germanized\Helper;
 use WP_Error;
+use WeDevs\DokanPro\Modules\Germanized\Helper;
 
 /**
  * Provide functionality for Dokan integration
@@ -32,7 +32,7 @@ class DokanController
     public static function checkedDokanExists()
     {
         if (!is_plugin_active('dokan-lite/dokan.php')) {
-            wp_send_json_error(__('Dokan Plugin is not active or not installed', 'bit-integrations'), 400);
+            wp_send_json_error(\sprintf(__('%s is not active or not installed', 'bit-integrations'), 'Dokan'), 400);
         } else {
             return true;
         }
@@ -64,11 +64,11 @@ class DokanController
 
         $fields = [];
         $vendorEUFields = [
-            ['key' => 'dokan_company_name', 'label' => 'Company Name', 'required' => false],
-            ['key' => 'dokan_company_id_number', 'label' => 'Company ID/EUID Number', 'required' => false],
-            ['key' => 'dokan_vat_number', 'label' => 'VAT/TAX Number', 'required' => false],
-            ['key' => 'dokan_bank_name', 'label' => 'Name of Bank', 'required' => false],
-            ['key' => 'dokan_bank_iban', 'label' => 'Bank IBAN', 'required' => false],
+            ['key' => 'dokan_company_name', 'label' => __('Company Name', 'bit-integrations'), 'required' => false],
+            ['key' => 'dokan_company_id_number', 'label' => __('Company ID/EUID Number', 'bit-integrations'), 'required' => false],
+            ['key' => 'dokan_vat_number', 'label' => __('VAT/TAX Number', 'bit-integrations'), 'required' => false],
+            ['key' => 'dokan_bank_name', 'label' => __('Name of Bank', 'bit-integrations'), 'required' => false],
+            ['key' => 'dokan_bank_iban', 'label' => __('Bank IBAN', 'bit-integrations'), 'required' => false],
         ];
 
         if (is_plugin_active('dokan-pro/dokan-pro.php') && dokan_pro()->module->is_active('germanized')) {
@@ -91,7 +91,7 @@ class DokanController
             wp_send_json_success($fields, 200);
         }
 
-        wp_send_json_error('EU Compliance Fields fetching failed - Dokan Pro or EU Compliance Fields is not enabled', 400);
+        wp_send_json_error(\sprintf(__('EU Compliance Fields fetching failed - %s or EU Compliance Fields is not enabled', 'bit-integrations'), 'Dokan Pro'), 400);
     }
 
     public function execute($integrationData, $fieldValues)

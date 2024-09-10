@@ -66,7 +66,7 @@ class AcademyLmsController
         if ($action !== 'complete-course' && $action !== 'reset-course' && $action !== 'complete-lesson') {
             $courses[] = [
                 'courseId'    => 'all-course',
-                'courseTitle' => 'All Course',
+                'courseTitle' => __('All Course', 'bit-integrations')
             ];
         }
 

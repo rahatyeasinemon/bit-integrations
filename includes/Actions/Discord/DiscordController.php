@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Discord;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for discord integration
@@ -82,7 +82,7 @@ class DiscordController
             }
             wp_send_json_success($servers, 200);
         } else {
-            wp_send_json_error('Servers fetching failed', 400);
+            wp_send_json_error(__('Servers fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -115,7 +115,7 @@ class DiscordController
             }
             wp_send_json_success($channels, 200);
         } else {
-            wp_send_json_error('Channels fetching failed', 400);
+            wp_send_json_error(__('Channels fetching failed', 'bit-integrations'), 400);
         }
     }
 

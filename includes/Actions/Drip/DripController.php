@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Drip;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Drip integration
@@ -75,7 +75,7 @@ class DripController
         $response = HttpHelper::get($apiEndpoints, null, $header);
 
         if (!isset($response->custom_field_identifiers)) {
-            wp_send_json_error('Custom fields fetch failed', 400);
+            wp_send_json_error(__('Custom fields fetch failed', 'bit-integrations'), 400);
         }
 
         $staticFieldsKey = ['email', 'first_name', 'last_name', 'address1', 'address2', 'city', 'state', 'zip', 'country', 'phone', 'time_zone', 'ip_address'];
@@ -113,7 +113,7 @@ class DripController
             wp_send_json_success($response->tags, 200);
         }
 
-        wp_send_json_error('Tags fetching failed', 400);
+        wp_send_json_error(__('Tags fetching failed', 'bit-integrations'), 400);
     }
 
     public function execute($integrationData, $fieldValues)
