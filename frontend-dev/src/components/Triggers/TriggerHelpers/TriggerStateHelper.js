@@ -184,6 +184,16 @@ export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
     }
   }
 
+  if (val === 'wp_job_manager-10') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      jobTypes: resp.data.jobTypes,
+      selectedJobType: 'any',
+      statusList: resp.data.statusList,
+      selectedStatus: 'any'
+    }
+  }
+
   setNewFlow(tmpNewFlow)
 }
 
@@ -501,7 +511,8 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
   if (
     formId === 'wp_job_manager-1' ||
     formId === 'wp_job_manager-4' ||
-    formId === 'wp_job_manager-5'
+    formId === 'wp_job_manager-5' ||
+    formId === 'wp_job_manager-10'
   ) {
     tmpConf.selectedJobType = flowData.selectedJobType
     tmpConf.jobTypes = flowData.jobTypes
@@ -515,7 +526,7 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
     tmpConf.selectedJob = flowData.selectedJob
     tmpConf.jobList = flowData.jobList
   }
-  if (formId === 'wp_job_manager-9') {
+  if (formId === 'wp_job_manager-9' || formId === 'wp_job_manager-10') {
     tmpConf.selectedStatus = flowData.selectedStatus
     tmpConf.statusList = flowData.statusList
   }

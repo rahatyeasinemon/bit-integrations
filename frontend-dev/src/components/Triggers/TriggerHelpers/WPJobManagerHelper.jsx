@@ -14,7 +14,8 @@ const WPJobManagerHelper = ({ flow, setFlowData, edit = false }) => {
       {(id === 'wp_job_manager-1' ||
         id === 'wp_job_manager-4' ||
         id === 'wp_job_manager-5' ||
-        id === 'wp_job_manager-8') && (
+        id === 'wp_job_manager-8' ||
+        id === 'wp_job_manager-10') && (
         <div className={edit ? 'flx mt-3' : ''}>
           <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select Job Type:</b>
           <MultiSelect
@@ -43,7 +44,7 @@ const WPJobManagerHelper = ({ flow, setFlowData, edit = false }) => {
           />
         </div>
       )}
-      {id === 'wp_job_manager-9' && (
+      {(id === 'wp_job_manager-9' || id === 'wp_job_manager-10') && (
         <div className={edit ? 'flx mt-3' : ''}>
           <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
             Select Application Status:
