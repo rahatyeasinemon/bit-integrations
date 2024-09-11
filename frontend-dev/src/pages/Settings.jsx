@@ -13,49 +13,47 @@ function Settings() {
 
   useEffect(() => {
     // Fetch analytics/check
-    const fetchAnalytics = bitsFetch({}, 'analytics/check', '', 'GET')
-      .then(res => {
-        setShowAnalyticsOptin(res.data);
-      });
+    const fetchAnalytics = bitsFetch({}, 'analytics/check', '', 'GET').then((res) => {
+      setShowAnalyticsOptin(res.data)
+    })
 
     // Fetch get/config
-    const fetchConfig = bitsFetch({}, 'get/config', null, 'GET')
-      .then(res => {
-        if ('success' in res && res.success) {
-          setAppConf(res.data);
-        }
-        if (res?.success) return 'Successfully fetched';
-        return 'Error';
-      });
+    const fetchConfig = bitsFetch({}, 'get/config', null, 'GET').then((res) => {
+      if ('success' in res && res.success) {
+        setAppConf(res.data)
+      }
+      if (res?.success) return __('Successfully fetched', 'bit-integrations')
+      return 'Error'
+    })
 
     // Execute both fetches in parallel
-    Promise.all([fetchAnalytics, fetchConfig])
-      .catch(err => {
-        console.error(err);
-      });
+    Promise.all([fetchAnalytics, fetchConfig]).catch((err) => {
+      console.error(err)
+    })
 
     toast.promise(fetchConfig, {
-      success: data => data,
+      success: (data) => data,
       error: __('Error Occurred', 'bit-integrations'),
-      loading: __('Fetching...'),
-    });
-  }, []);
+      loading: __('Fetching...')
+    })
+  }, [])
 
   const updatePluginConfig = (name) => {
     const config = { ...appConf }
     const loadSaving = bitsFetch({ data: config }, 'app/config')
-      .then(res => {
+      .then((res) => {
         if ('success' in res && res.success) {
-          return 'Save successfully done'
+          return __('Save successfully done', 'bit-integrations')
         }
         delete config[name]
         setAppConf({ ...config })
-      }).catch(() => 'Failed to save')
+      })
+      .catch(() => __('Failed to save', 'bit-integrations'))
 
     toast.promise(loadSaving, {
-      success: data => data,
+      success: (data) => data,
       error: __('Error Occurred', 'bit-integrations'),
-      loading: __('Updating...'),
+      loading: __('Updating...')
     })
   }
 
@@ -84,16 +82,16 @@ function Settings() {
   }
 
   const analyticsHandle = () => {
-    const updatedOptin = !showAnalyticsOptin;
-    setShowAnalyticsOptin(updatedOptin);
+    const updatedOptin = !showAnalyticsOptin
+    setShowAnalyticsOptin(updatedOptin)
     bitsFetch({ isChecked: updatedOptin }, 'analytics/optIn')
-      .then(res => {
-        toast.success('Opt-in status updated');
+      .then((res) => {
+        toast.success(__('Opt-in status updated', 'bit-integrations'))
       })
       .catch(() => {
-        toast.error('Failed to save');
-      });
-  };
+        toast.error(__('Failed to save', 'bit-integrations'))
+      })
+  }
 
   return (
     <div className="btcd-f-settings">
@@ -107,7 +105,12 @@ function Settings() {
                 {__('Erase all data of this plugin in deletion', 'bit-integrations')}
               </b>
             </div>
-            <SingleToggle2 action={checkboxHandle} name="erase_db" checked={appConf?.erase_db} className="flx" />
+            <SingleToggle2
+              action={checkboxHandle}
+              name="erase_db"
+              checked={appConf?.erase_db}
+              className="flx"
+            />
           </div>
           <br />
         </div>
@@ -119,7 +122,12 @@ function Settings() {
                 {__('Turn off Opt In', 'bit-integrations')}
               </b>
             </div>
-            <SingleToggle2 action={analyticsHandle} name="erase_db" checked={showAnalyticsOptin} className="flx" />
+            <SingleToggle2
+              action={analyticsHandle}
+              name="erase_db"
+              checked={showAnalyticsOptin}
+              className="flx"
+            />
           </div>
           <br />
         </div>
@@ -132,8 +140,22 @@ function Settings() {
               </b>
             </div>
             <div className="flx">
-              <input onChange={inputHandle} name="day" value={appConf?.day} disabled={!appConf.enable_log_del} className="btcd-paper-inp mr-2 wdt-100" placeholder="Day" type="number" min="1" />
-              <SingleToggle2 action={checkboxHandle} name="enable_log_del" checked={appConf?.enable_log_del} className="flx" />
+              <input
+                onChange={inputHandle}
+                name="day"
+                value={appConf?.day}
+                disabled={!appConf.enable_log_del}
+                className="btcd-paper-inp mr-2 wdt-100"
+                placeholder="Day"
+                type="number"
+                min="1"
+              />
+              <SingleToggle2
+                action={checkboxHandle}
+                name="enable_log_del"
+                checked={appConf?.enable_log_del}
+                className="flx"
+              />
             </div>
           </div>
         </div>
