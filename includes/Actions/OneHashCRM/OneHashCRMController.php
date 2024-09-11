@@ -31,9 +31,9 @@ class OneHashCRMController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (isset($response->data)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API Key & Secret or Access Api URL', 400);
+            wp_send_json_error(__('Please enter valid API Key & Secret or Access Api URL', 'bit-integrations'), 400);
         }
     }
 

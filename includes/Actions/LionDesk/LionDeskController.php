@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\LionDesk;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for LionDesk integration
@@ -91,7 +91,7 @@ class LionDeskController
                 wp_send_json_error($response->message, 400);
             }
         } else {
-            wp_send_json_error('Custom field fetching failed', 400);
+            wp_send_json_error(__('Custom field fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -121,7 +121,7 @@ class LionDeskController
                 wp_send_json_error($response->message, 400);
             }
         } else {
-            wp_send_json_error('Tags fetching failed', 400);
+            wp_send_json_error(__('Tags fetching failed', 'bit-integrations'), 400);
         }
     }
 

@@ -29,7 +29,7 @@ class RecordApiHelper
         if ($subscriber && isset($actions->skip_if_exists) && $actions->skip_if_exists) {
             $response = [
                 'success'  => false,
-                'messages' => 'Contact already exists!'
+                'messages' => __('Contact already exists!', 'bit-integrations')
             ];
         } else {
             // for subscirber
@@ -48,12 +48,12 @@ class RecordApiHelper
                 if ($subscriber) {
                     $response = [
                         'success'  => true,
-                        'messages' => 'Insert successfully!'
+                        'messages' => __('Insert successfully!', 'bit-integrations')
                     ];
                 } else {
                     $response = [
                         'success'  => false,
-                        'messages' => 'Something wrong!'
+                        'messages' => __('Something wrong!', 'bit-integrations')
                     ];
                 }
             } else {
@@ -73,12 +73,12 @@ class RecordApiHelper
                 if ($subscriber) {
                     $response = [
                         'success'  => true,
-                        'messages' => 'Insert successfully!'
+                        'messages' => __('Insert successfully!', 'bit-integrations')
                     ];
                 } else {
                     $response = [
                         'success'  => false,
-                        'messages' => 'Something wrong!'
+                        'messages' => __('Something wrong!', 'bit-integrations')
                     ];
                 }
             }
@@ -94,7 +94,7 @@ class RecordApiHelper
         if (!$subscriber) {
             return $response = [
                 'success'  => false,
-                'messages' => "Contact doesn't exists!"
+                'messages' => __("Contact doesn't exists!", 'bit-integrations')
             ];
         }
 
@@ -105,14 +105,14 @@ class RecordApiHelper
 
             return $response = [
                 'success'  => true,
-                'messages' => 'Tag added successfully!'
+                'messages' => __('Tag added successfully!', 'bit-integrations')
             ];
         }
         $subscriber->detachTags($tags);
 
         return $response = [
             'success'  => true,
-            'messages' => 'Tag remove successfully!'
+            'messages' => __('Tag remove successfully!', 'bit-integrations')
         ];
     }
 
@@ -123,7 +123,7 @@ class RecordApiHelper
         if (!$subscriber) {
             return $response = [
                 'success'  => false,
-                'messages' => "Contact doesn't exists!"
+                'messages' => __("Contact doesn't exists!", 'bit-integrations')
             ];
         }
 
@@ -133,7 +133,7 @@ class RecordApiHelper
 
         return $response = [
             'success'  => true,
-            'messages' => 'User remove from list successfully!'
+            'messages' => __('User remove from list successfully!', 'bit-integrations')
         ];
     }
 

@@ -38,7 +38,7 @@ class MailjetController
             }
             wp_send_json_success($lists, 200);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 
@@ -68,7 +68,7 @@ class MailjetController
         if (!empty($customFields)) {
             wp_send_json_success($customFields, 200);
         } else {
-            wp_send_json_error('Custom fields fetch failed', 400);
+            wp_send_json_error(__('Custom fields fetch failed', 'bit-integrations'), 400);
         }
     }
 

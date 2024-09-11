@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\WhatsApp;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Trello integration
@@ -27,7 +27,7 @@ class WhatsAppController
         if (is_wp_error($response) || !isset($response->id)) {
             wp_send_json_error(isset($response->error->message) ? $response->error->message : 'Authentication failed', 400);
         } else {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         }
     }
 

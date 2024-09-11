@@ -6,10 +6,10 @@
 
 namespace BitCode\FI\Actions\FluentSupport;
 
-use FluentSupport\App\Models\Agent;
-use FluentSupport\App\Models\MailBox;
-
 use WP_Error;
+use FluentSupport\App\Models\Agent;
+
+use FluentSupport\App\Models\MailBox;
 
 /**
  * Provide functionality for Fluent Support integration
@@ -34,13 +34,7 @@ class FluentSupportController
     public function getCustomFields()
     {
         if (!class_exists(\FluentSupportPro\App\Services\CustomFieldsService::class)) {
-            wp_send_json_error(
-                __(
-                    'Fluent Support pro Plugin is not active or not installed',
-                    'bit-integrations'
-                ),
-                400
-            );
+            wp_send_json_error(\sprintf(__('%s is not active or not installed', 'bit-integrations'), 'Fluent Support'), 400);
         }
 
         $customFields = [];

@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\SureMembers;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
 use SureMembers\Inc\Access;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 
 /**
  * Provide functionality for Record insert, update
@@ -25,13 +25,13 @@ class RecordApiHelper
     public function grantAccessToGroup($finalData, $selectedGroup)
     {
         if (empty($finalData['email']) || empty($selectedGroup)) {
-            return ['success' => false, 'message' => 'Required field email or group is empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field email or group is empty!', 'bit-integrations'), 'code' => 400];
         }
 
         $userId = self::getUserIdFromEmail($finalData['email']);
 
         if (!$userId) {
-            return ['success' => false, 'message' => 'The user does not exist on your site, or the email is invalid!', 'code' => 400];
+            return ['success' => false, 'message' => __('The user does not exist on your site, or the email is invalid!', 'bit-integrations'), 'code' => 400];
         }
 
         Access::grant($userId, $selectedGroup);
@@ -42,13 +42,13 @@ class RecordApiHelper
     public function revokeAccessFromGroup($finalData, $selectedGroup)
     {
         if (empty($finalData['email']) || empty($selectedGroup)) {
-            return ['success' => false, 'message' => 'Required field email or group is empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field email or group is empty!', 'bit-integrations'), 'code' => 400];
         }
 
         $userId = self::getUserIdFromEmail($finalData['email']);
 
         if (!$userId) {
-            return ['success' => false, 'message' => 'The user does not exist on your site, or the email is invalid!', 'code' => 400];
+            return ['success' => false, 'message' => __('The user does not exist on your site, or the email is invalid!', 'bit-integrations'), 'code' => 400];
         }
 
         Access::revoke($userId, $selectedGroup);

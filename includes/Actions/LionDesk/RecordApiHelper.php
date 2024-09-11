@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\LionDesk;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -43,7 +43,7 @@ class RecordApiHelper
     public function addCampaign($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $this->type = 'Campaign';
@@ -56,7 +56,7 @@ class RecordApiHelper
     public function addContact($finalData)
     {
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $staticFieldKeys = ['first_name', 'last_name', 'email', 'mobile_phone', 'home_phone', 'office_phone', 'fax', 'company', 'birthday', 'anniversary', 'spouse_name', 'spouse_email', 'spouse_phone', 'spouse_birthday', 'type', 'street_address_1', 'street_address_2', 'zip', 'city', 'state'];
@@ -72,7 +72,6 @@ class RecordApiHelper
                     $requestParams[$key] = $value;
                 }
             } else {
-
                 $customParams[]
                 = (object) [
                     'id'    => $key,

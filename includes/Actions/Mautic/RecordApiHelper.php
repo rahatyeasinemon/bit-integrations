@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\Mautic;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 class RecordApiHelper
 {
@@ -62,7 +62,7 @@ class RecordApiHelper
         if (isset($apiResponse->errors)) {
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', wp_json_encode($apiResponse));
         } else {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'success', wp_json_encode('Contact Added Successfully'));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'success', wp_json_encode(__('Contact Added Successfully', 'bit-integrations')));
         }
 
         return $apiResponse;

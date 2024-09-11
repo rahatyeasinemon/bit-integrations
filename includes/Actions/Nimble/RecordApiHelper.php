@@ -46,10 +46,10 @@ class RecordApiHelper
         $this->typeName = $actionName === 'person' ? 'People' : 'Company' . ' Added';
 
         if ($actionName === 'person' && empty($finalData['first name'])) {
-            return ['success' => false, 'message' => 'Required field First Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field First Name is empty', 'bit-integrations'), 'code' => 400];
         }
         if ($actionName === 'company' && empty($finalData['company name'])) {
-            return ['success' => false, 'message' => 'Required field Company Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Company Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         foreach ($finalData as $key => $value) {

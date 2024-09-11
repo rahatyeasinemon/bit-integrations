@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\ZohoRecruit;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
 use WP_Error;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -294,7 +294,7 @@ class ZohoRecruitController
             $requiredFileUploadFiles = [];
             if ($queryParams->module === 'Candidates') {
                 $fileUploadFields['Candidate Photo'] = (object) [
-                    'display_label' => 'Candidate Profile Photo',
+                    'display_label' => __('Candidate Profile Photo', 'bit-integrations'),
                     'length'        => 1000,
                     'data_type'     => 'UploadText',
                     'required'      => 'false'

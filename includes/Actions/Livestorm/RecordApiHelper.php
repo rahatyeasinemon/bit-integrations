@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Livestorm;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -44,10 +44,10 @@ class RecordApiHelper
         $this->typeName = 'Add People to Event Session';
 
         if (!isset($this->integrationDetails->selectedEvent) || empty($this->integrationDetails->selectedEvent)) {
-            return ['success' => false, 'message' => 'Required field Event is empty', 'code' => 400];
+            return ['success' => false, 'message' => \sprintf(__('Required field %s is empty', 'bit-integrations'), __('Event', 'bit-integrations')), 'code' => 400];
         }
         if (!isset($this->integrationDetails->selectedSession) || empty($this->integrationDetails->selectedSession)) {
-            return ['success' => false, 'message' => 'Required field Session is empty', 'code' => 400];
+            return ['success' => false, 'message' => \sprintf(__('Required field %s is empty', 'bit-integrations'), __('Session', 'bit-integrations')), 'code' => 400];
         }
 
         $apiEndpoint = $this->apiUrl . "/sessions/{$this->integrationDetails->selectedSession}/people";

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Woodpecker;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -40,7 +40,7 @@ class RecordApiHelper
     public function addProspects($finalData, $actionName, $actions)
     {
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $requestData = [];
@@ -49,7 +49,7 @@ class RecordApiHelper
             $this->typeName = 'Prospects created into Prospects List';
         } else {
             if (!isset($this->integrationDetails->selectedCampaign) || empty($this->integrationDetails->selectedCampaign)) {
-                return ['success' => false, 'message' => 'Required Campaign field is empty', 'code' => 400];
+                return ['success' => false, 'message' => __('Required Campaign field is empty', 'bit-integrations'), 'code' => 400];
             }
 
             $apiEndpoint = $this->apiUrl . '/add_prospects_campaign';
@@ -69,7 +69,7 @@ class RecordApiHelper
     public function addCompany($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Company Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Company Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $this->type = 'Company';

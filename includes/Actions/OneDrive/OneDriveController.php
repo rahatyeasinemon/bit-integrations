@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Actions\OneDrive;
 
-use BitCode\FI\Actions\OneDrive\RecordApiHelper as OneDriveRecordApiHelper;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Actions\OneDrive\RecordApiHelper as OneDriveRecordApiHelper;
 
 class OneDriveController
 {
@@ -119,7 +119,7 @@ class OneDriveController
     public function execute($integrationData, $fieldValues)
     {
         if (empty($integrationData->flow_details->tokenDetails->access_token)) {
-            LogHandler::save($this->integrationID, wp_json_encode(['type' => 'oneDrive', 'type_name' => 'file_upload']), 'error', 'Not Authorization By OneDrive.');
+            LogHandler::save($this->integrationID, wp_json_encode(['type' => 'oneDrive', 'type_name' => 'file_upload']), 'error', \sprintf(__('Not Authorization By %s', 'bit-integrations'), 'OneDrive'));
 
             return false;
         }

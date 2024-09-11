@@ -34,7 +34,7 @@ class RecordApiHelper
     public function addSubscriber($finalData)
     {
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $apiEndpoint = "https://{$this->_subDomainName}.sendsmaily.net/api/contact.php";

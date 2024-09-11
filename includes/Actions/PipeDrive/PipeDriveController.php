@@ -130,11 +130,11 @@ class PipeDriveController
                 $addFields = [
                     (object) [
                         'key'      => 'cost',
-                        'label'    => 'Cost Per Unit',
+                        'label'    => __('Cost Per Unit', 'bit-integrations'),
                         'required' => false,
                     ], [
                         'key'      => 'overhead_cost',
-                        'label'    => 'Direct Cost',
+                        'label'    => __('Direct Cost', 'bit-integrations'),
                         'required' => false,
                     ]
                 ];

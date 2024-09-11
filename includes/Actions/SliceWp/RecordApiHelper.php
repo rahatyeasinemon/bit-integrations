@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\SliceWp;
 
-use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 
 class RecordApiHelper
 {
@@ -83,7 +83,7 @@ class RecordApiHelper
             if ($response && \gettype($response) === 'integer') {
                 LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add commission', 'type_name' => 'add-commission-to-user']), 'success', wp_json_encode($response));
             } else {
-                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add commission', 'type_name' => 'add-commission-to-user']), 'error', wp_json_encode('Failed to add commission'));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add commission', 'type_name' => 'add-commission-to-user']), 'error', wp_json_encode(__('Failed to add commission', 'bit-integrations')));
             }
         }
 

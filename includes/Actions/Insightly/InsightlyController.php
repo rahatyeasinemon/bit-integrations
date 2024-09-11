@@ -32,9 +32,9 @@ class InsightlyController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (\is_array($response) && isset($response[0]->USER_ID)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API URL & API key', 400);
+            wp_send_json_error(__('Please enter valid API URL & API key', 'bit-integrations'), 400);
         }
     }
 
@@ -151,7 +151,7 @@ class InsightlyController
             }
             wp_send_json_success($leadStatuses, 200);
         } else {
-            wp_send_json_error('Lead Status fetching failed', 400);
+            wp_send_json_error(__('Lead Status fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -178,7 +178,7 @@ class InsightlyController
             }
             wp_send_json_success($leadSources, 200);
         } else {
-            wp_send_json_error('Lead Status fetching failed', 400);
+            wp_send_json_error(__('Lead Status fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -242,7 +242,7 @@ class InsightlyController
             }
             wp_send_json_success($pipelineStages, 200);
         } else {
-            wp_send_json_error('Pipeline stages fetching failed', 400);
+            wp_send_json_error(__('Pipeline stages fetching failed', 'bit-integrations'), 400);
         }
     }
 

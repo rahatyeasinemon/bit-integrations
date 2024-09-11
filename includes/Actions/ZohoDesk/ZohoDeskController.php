@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\ZohoDesk;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
 use WP_Error;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -227,13 +227,13 @@ class ZohoDeskController
             if (\count($fields) > 0) {
                 $response['fields']['Contact Name - Last Name'] = (object) [
                     'apiName'       => 'lastName',
-                    'displayLabel'  => 'Contact Name - Last Name',
+                    'displayLabel'  => __('Contact Name - Last Name', 'bit-integrations'),
                     'isCustomField' => false,
                     'required'      => true
                 ];
                 $response['fields']['Contact Name - First Name'] = (object) [
                     'apiName'       => 'firstName',
-                    'displayLabel'  => 'Contact Name - First Name',
+                    'displayLabel'  => __('Contact Name - First Name', 'bit-integrations'),
                     'isCustomField' => false,
                     'required'      => false
                 ];

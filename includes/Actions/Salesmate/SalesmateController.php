@@ -31,9 +31,9 @@ class SalesmateController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (isset($response->Status) && $response->Status === 'success') {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid Session Token or Link Name', 400);
+            wp_send_json_error(__('Please enter valid Session Token or Link Name', 'bit-integrations'), 400);
         }
     }
 
@@ -64,7 +64,7 @@ class SalesmateController
 
             wp_send_json_success($fieldMap, 200);
         } else {
-            wp_send_json_error('Fields fetching failed', 400);
+            wp_send_json_error(__('Fields fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -86,7 +86,7 @@ class SalesmateController
             }
             wp_send_json_success($tags, 200);
         } else {
-            wp_send_json_error('Tags fetching failed', 400);
+            wp_send_json_error(__('Tags fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -108,7 +108,7 @@ class SalesmateController
             }
             wp_send_json_success($currencies, 200);
         } else {
-            wp_send_json_error('Currencies fetching failed', 400);
+            wp_send_json_error(__('Currencies fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -156,7 +156,7 @@ class SalesmateController
             }
             wp_send_json_success($CRMContacts, 200);
         } else {
-            wp_send_json_error('Contacts fetching failed', 400);
+            wp_send_json_error(__('Contacts fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -180,7 +180,7 @@ class SalesmateController
             }
             wp_send_json_success($CRMCompanies, 200);
         } else {
-            wp_send_json_error('Companies fetching failed', 400);
+            wp_send_json_error(__('Companies fetching failed', 'bit-integrations'), 400);
         }
     }
 

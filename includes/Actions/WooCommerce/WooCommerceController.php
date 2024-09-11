@@ -56,125 +56,125 @@ class WooCommerceController
             $fields = [
                 'First Name' => (object) [
                     'fieldKey'  => 'first_name',
-                    'fieldName' => 'First Name'
+                    'fieldName' => __('First Name', 'bit-integrations')
                 ],
                 'Last Name' => (object) [
                     'fieldKey'  => 'last_name',
-                    'fieldName' => 'Last Name'
+                    'fieldName' => __('Last Name', 'bit-integrations')
                 ],
                 'Email' => (object) [
                     'fieldKey'  => 'user_email',
-                    'fieldName' => 'Email',
+                    'fieldName' => __('Email', 'bit-integrations'),
                     'required'  => true
                 ],
                 'Username' => (object) [
                     'fieldKey'  => 'user_login',
-                    'fieldName' => 'Username',
+                    'fieldName' => __('Username', 'bit-integrations'),
                     'required'  => true
                 ],
                 'Password' => (object) [
                     'fieldKey'  => 'user_pass',
-                    'fieldName' => 'Password'
+                    'fieldName' => __('Password', 'bit-integrations')
                 ],
                 'Display Name' => (object) [
                     'fieldKey'  => 'display_name',
-                    'fieldName' => 'Display Name'
+                    'fieldName' => __('Display Name', 'bit-integrations')
                 ],
                 'Nickname' => (object) [
                     'fieldKey'  => 'nickname',
-                    'fieldName' => 'Nickname'
+                    'fieldName' => __('Nickname', 'bit-integrations')
                 ],
                 'Description' => (object) [
                     'fieldKey'  => 'description',
-                    'fieldName' => 'Description'
+                    'fieldName' => __('Description', 'bit-integrations')
                 ],
                 'Locale' => (object) [
                     'fieldKey'  => 'locale',
-                    'fieldName' => 'Locale'
+                    'fieldName' => __('Locale', 'bit-integrations')
                 ],
                 'Website' => (object) [
                     'fieldKey'  => 'user_url',
-                    'fieldName' => 'Website'
+                    'fieldName' => __('Website', 'bit-integrations')
                 ],
                 'Billing First Name' => (object) [
                     'fieldKey'  => 'billing_first_name',
-                    'fieldName' => 'Billing First Name'
+                    'fieldName' => __('Billing First Name', 'bit-integrations')
                 ],
                 'Billing Last Name' => (object) [
                     'fieldKey'  => 'billing_last_name',
-                    'fieldName' => 'Billing Last Name'
+                    'fieldName' => __('Billing Last Name', 'bit-integrations')
                 ],
                 'Billing Company' => (object) [
                     'fieldKey'  => 'billing_company',
-                    'fieldName' => 'Billing Company'
+                    'fieldName' => __('Billing Company', 'bit-integrations')
                 ],
                 'Billing Address 1' => (object) [
                     'fieldKey'  => 'billing_address_1',
-                    'fieldName' => 'Billing Address 1'
+                    'fieldName' => __('Billing Address 1', 'bit-integrations')
                 ],
                 'Billing Address 2' => (object) [
                     'fieldKey'  => 'billing_address_2',
-                    'fieldName' => 'Billing Address 2'
+                    'fieldName' => __('Billing Address 2', 'bit-integrations')
                 ],
                 'Billing City' => (object) [
                     'fieldKey'  => 'billing_city',
-                    'fieldName' => 'Billing City'
+                    'fieldName' => __('Billing City', 'bit-integrations')
                 ],
                 'Billing Post Code' => (object) [
                     'fieldKey'  => 'billing_postcode',
-                    'fieldName' => 'Billing Post Code'
+                    'fieldName' => __('Billing Post Code', 'bit-integrations')
                 ],
                 'Billing Country' => (object) [
                     'fieldKey'  => 'billing_country',
-                    'fieldName' => 'Billing Country'
+                    'fieldName' => __('Billing Country', 'bit-integrations')
                 ],
                 'Billing State' => (object) [
                     'fieldKey'  => 'billing_state',
-                    'fieldName' => 'Billing State'
+                    'fieldName' => __('Billing State', 'bit-integrations')
                 ],
                 'Billing Email' => (object) [
                     'fieldKey'  => 'billing_email',
-                    'fieldName' => 'Billing Email'
+                    'fieldName' => __('Billing Email', 'bit-integrations')
                 ],
                 'Billing Phone' => (object) [
                     'fieldKey'  => 'billing_phone',
-                    'fieldName' => 'Billing Phone'
+                    'fieldName' => __('Billing Phone', 'bit-integrations')
                 ],
                 'Shipping First Name' => (object) [
                     'fieldKey'  => 'shipping_first_name',
-                    'fieldName' => 'Shipping First Name'
+                    'fieldName' => __('Shipping First Name', 'bit-integrations')
                 ],
                 'Shipping Last Name' => (object) [
                     'fieldKey'  => 'shipping_last_name',
-                    'fieldName' => 'Shipping Last Name'
+                    'fieldName' => __('Shipping Last Name', 'bit-integrations')
                 ],
                 'Shipping Company' => (object) [
                     'fieldKey'  => 'shipping_company',
-                    'fieldName' => 'Shipping Company'
+                    'fieldName' => __('Shipping Company', 'bit-integrations')
                 ],
                 'Shipping Address 1' => (object) [
                     'fieldKey'  => 'shipping_address_1',
-                    'fieldName' => 'Shipping Address 1'
+                    'fieldName' => __('Shipping Address 1', 'bit-integrations')
                 ],
                 'Shipping Address 2' => (object) [
                     'fieldKey'  => 'shipping_address_2',
-                    'fieldName' => 'Shipping Address 2'
+                    'fieldName' => __('Shipping Address 2', 'bit-integrations')
                 ],
                 'Shipping City' => (object) [
                     'fieldKey'  => 'shipping_city',
-                    'fieldName' => 'Shipping City'
+                    'fieldName' => __('Shipping City', 'bit-integrations')
                 ],
                 'Shipping Post Code' => (object) [
                     'fieldKey'  => 'shipping_postcode',
-                    'fieldName' => 'Shipping Post Code'
+                    'fieldName' => __('Shipping Post Code', 'bit-integrations')
                 ],
                 'Shipping Country' => (object) [
                     'fieldKey'  => 'shipping_country',
-                    'fieldName' => 'Shipping Country'
+                    'fieldName' => __('Shipping Country', 'bit-integrations')
                 ],
                 'Shipping State' => (object) [
                     'fieldKey'  => 'shipping_state',
-                    'fieldName' => 'Shipping State'
+                    'fieldName' => __('Shipping State', 'bit-integrations')
                 ],
             ];
 
@@ -189,42 +189,42 @@ class WooCommerceController
             $fields = [
                 'Order ID' => (object) [
                     'fieldKey'  => 'order_id',
-                    'fieldName' => 'Order ID',
+                    'fieldName' => __('Order ID', 'bit-integrations'),
                     'required'  => true
                 ],
                 'Order Status' => (object) [
                     'fieldKey'  => 'order_status',
-                    'fieldName' => 'Order Status',
+                    'fieldName' => __('Order Status', 'bit-integrations'),
                     'required'  => true
                 ],
                 'Customer Email' => (object) [
                     'fieldKey'  => 'email',
-                    'fieldName' => 'Customer Email',
+                    'fieldName' => __('Customer Email', 'bit-integrations'),
                     'required'  => true
                 ],
                 'From Date' => (object) [
                     'fieldKey'  => 'from_date',
-                    'fieldName' => 'From Date',
+                    'fieldName' => __('From Date', 'bit-integrations'),
                     'required'  => true
                 ],
                 'To Date' => (object) [
                     'fieldKey'  => 'to_date',
-                    'fieldName' => 'To Date',
+                    'fieldName' => __('To Date', 'bit-integrations'),
                     'required'  => true
                 ],
                 'N Days' => (object) [
                     'fieldKey'  => 'n_days',
-                    'fieldName' => 'N Days',
+                    'fieldName' => __('N Days', 'bit-integrations'),
                     'required'  => true
                 ],
                 'N Weeks' => (object) [
                     'fieldKey'  => 'n_weeks',
-                    'fieldName' => 'N Weeks',
+                    'fieldName' => __('N Weeks', 'bit-integrations'),
                     'required'  => true
                 ],
                 'N Months' => (object) [
                     'fieldKey'  => 'n_months',
-                    'fieldName' => 'N Months',
+                    'fieldName' => __('N Months', 'bit-integrations'),
                     'required'  => true
                 ],
 
@@ -288,7 +288,7 @@ class WooCommerceController
 
         $subscriptions[] = [
             'product_id'   => 'any',
-            'product_name' => 'Any product',
+            'product_name' => __('Any product', 'bit-integrations'),
         ];
 
         foreach ($allSubscriptions as $key => $val) {

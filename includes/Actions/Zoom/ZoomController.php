@@ -80,9 +80,9 @@ class ZoomController
         }
 
         $allFields = [
-            (object) ['key' => 'first_name', 'label' => 'First Name', 'required' => true],
-            (object) ['key' => 'last_name', 'label' => 'Last Name', 'required' => true],
-            (object) ['key' => 'email', 'label' => 'Email', 'required' => true]
+            (object) ['key' => 'first_name', 'label' => __('First Name', 'bit-integrations'), 'required' => true],
+            (object) ['key' => 'last_name', 'label' => __('Last Name', 'bit-integrations'), 'required' => true],
+            (object) ['key' => 'email', 'label' => __('Email', 'bit-integrations'), 'required' => true]
         ];
         $excludedFields = ['first_name', 'last_name', 'email'];
 

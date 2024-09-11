@@ -148,31 +148,31 @@ class FreshSalesController
             $formattedResponse = [
                 [
                     'key'      => 'name',
-                    'label'    => 'Name',
+                    'label'    => __('Name', 'bit-integrations'),
                     'required' => true
                 ],
 
                 [
                     'key'      => 'description',
-                    'label'    => 'Description',
+                    'label'    => __('Description', 'bit-integrations'),
                     'required' => true
                 ],
 
                 [
                     'key'      => 'sku_number',
-                    'label'    => 'Sku number',
+                    'label'    => __('Sku number', 'bit-integrations'),
                     'required' => false
                 ],
 
                 [
                     'key'      => 'valid_till',
-                    'label'    => 'Valid till',
+                    'label'    => __('Valid till', 'bit-integrations'),
                     'required' => false
                 ],
 
                 [
                     'key'      => 'product_code',
-                    'label'    => 'Product code',
+                    'label'    => __('Product code', 'bit-integrations'),
                     'required' => false
                 ],
             ];
@@ -197,7 +197,7 @@ class FreshSalesController
                 wp_send_json_success($formattedResponse, 200);
             } else {
                 wp_send_json_error(
-                    'The token is invalid',
+                    __('The token is invalid', 'bit-integrations'),
                     400
                 );
             }

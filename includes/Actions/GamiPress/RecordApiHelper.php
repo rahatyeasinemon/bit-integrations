@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\GamiPress;
 
-use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -132,18 +132,18 @@ class RecordApiHelper
         if ($mainAction === '1') {
             $apiResponse = self::addRankToUser($integrationDetails->selectedRank, $mainAction);
             if ($apiResponse) {
-                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-rank']), 'success', wp_json_encode("Added successfully, post id {$apiResponse->ID} and post title {$apiResponse->post_title}"));
+                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-rank']), 'success', wp_json_encode(\sprintf(__('Added successfully, post id %s and post title %s', 'bit-integrations'), $apiResponse->ID, $apiResponse->post_title)));
             } else {
-                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-rank']), 'error', wp_json_encode('Failed to add rank'));
+                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-rank']), 'error', wp_json_encode(__('Failed to add rank', 'bit-integrations')));
             }
         }
 
         if ($mainAction === '2') {
             $apiResponse = self::addAchievementToUser($integrationDetails->selectedAchievement, $mainAction);
             if ($apiResponse) {
-                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-award']), 'success', wp_json_encode('Achievement added successfully'));
+                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-award']), 'success', wp_json_encode(__('Achievement added successfully', 'bit-integrations')));
             } else {
-                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-award']), 'error', wp_json_encode('Failed to add achievement'));
+                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-award']), 'error', wp_json_encode(__('Failed to add achievement', 'bit-integrations')));
             }
         }
 
@@ -153,30 +153,30 @@ class RecordApiHelper
             if (!empty($point) && is_numeric($point)) {
                 $apiResponse = self::addPointToUser($integrationDetails->selectedPointType, $point, $mainAction);
                 if ($apiResponse) {
-                    LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-point']), 'success', wp_json_encode("Point added successfully and total points are {$apiResponse}"));
+                    LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-point']), 'success', wp_json_encode(\sprintf(__('Point added successfully and total points are %s', 'bit-integrations'), $apiResponse)));
                 } else {
-                    LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-point']), 'error', wp_json_encode('Failed to add point'));
+                    LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-point']), 'error', wp_json_encode(__('Failed to add point', 'bit-integrations')));
                 }
             } else {
-                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-point']), 'error', wp_json_encode('Failed to add point'));
+                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-point']), 'error', wp_json_encode(__('Failed to add point', 'bit-integrations')));
             }
         }
 
         if ($mainAction === '4') {
             $apiResponse = self::addRankToUser($integrationDetails->selectedRank, $mainAction);
             if ($apiResponse) {
-                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'revoke', 'type_name' => 'revoke-rank']), 'success', wp_json_encode("Revoked rank successfully, post id {$apiResponse->ID} and post title {$apiResponse->post_title}"));
+                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'revoke', 'type_name' => 'revoke-rank']), 'success', wp_json_encode(\sprintf(__('Revoked rank successfully, post id %s and post title %s', 'bit-integrations'), $apiResponse->ID, $apiResponse->post_title)));
             } else {
-                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'revoke', 'type_name' => 'revoke-rank']), 'error', wp_json_encode('Failed to revoke rank'));
+                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'revoke', 'type_name' => 'revoke-rank']), 'error', wp_json_encode(__('Failed to revoke rank', 'bit-integrations')));
             }
         }
 
         if ($mainAction === '5') {
             $apiResponse = self::addAchievementToUser($integrationDetails->selectedAchievement, $mainAction);
             if ($apiResponse) {
-                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'revoke', 'type_name' => 'revoke-achievement']), 'success', wp_json_encode('Achievement revoked successfully'));
+                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'revoke', 'type_name' => 'revoke-achievement']), 'success', wp_json_encode(__('Achievement revoked successfully', 'bit-integrations')));
             } else {
-                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'revoke', 'type_name' => 'revoke-achievement']), 'error', wp_json_encode('Failed to revoke achievement'));
+                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'revoke', 'type_name' => 'revoke-achievement']), 'error', wp_json_encode(__('Failed to revoke achievement', 'bit-integrations')));
             }
         }
 
@@ -186,12 +186,12 @@ class RecordApiHelper
             if (!empty($point) && is_numeric($point)) {
                 $apiResponse = self::addPointToUser($integrationDetails->selectedPointType, $point, $mainAction);
                 if ($apiResponse) {
-                    LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-point']), 'success', wp_json_encode("Point revoked successfully and total points are {$apiResponse}"));
+                    LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-point']), 'success', wp_json_encode(\sprintf(__('Point revoked successfully and total points are %s', 'bit-integrations'), $apiResponse)));
                 } else {
-                    LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-point']), 'error', wp_json_encode('Failed to revoke point'));
+                    LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-point']), 'error', wp_json_encode(__('Failed to revoke point', 'bit-integrations')));
                 }
             } else {
-                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-point']), 'error', wp_json_encode('Failed operation , point is not valid number'));
+                LogHandler::save(self::getIntegrationId(), wp_json_encode(['type' => 'insert', 'type_name' => 'update-point']), 'error', wp_json_encode(__('Failed operation , point is not valid number', 'bit-integrations')));
             }
         }
 

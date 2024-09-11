@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Insightly;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -40,7 +40,7 @@ class RecordApiHelper
     public function addOrganisation($finalData)
     {
         if (empty($finalData['ORGANISATION_NAME'])) {
-            return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $staticFieldsKeys = ['ORGANISATION_NAME', 'PHONE', 'PHONE_FAX', 'WEBSITE', 'SOCIAL_FACEBOOK', 'SOCIAL_LINKEDIN', 'SOCIAL_TWITTER', 'ADDRESS_BILLING_STREET', 'ADDRESS_BILLING_CITY', 'ADDRESS_BILLING_STATE', 'ADDRESS_BILLING_COUNTRY', 'ADDRESS_BILLING_POSTCODE', 'ADDRESS_SHIP_STREET', 'ADDRESS_SHIP_STATE', 'ADDRESS_SHIP_POSTCODE', 'ADDRESS_SHIP_COUNTRY'];
@@ -67,7 +67,7 @@ class RecordApiHelper
     public function addContact($finalData)
     {
         if (empty($finalData['FIRST_NAME']) || empty($finalData['EMAIL_ADDRESS'])) {
-            return ['success' => false, 'message' => 'Required field Name or Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name or Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $staticFieldsKeys = ['FIRST_NAME', 'LAST_NAME', 'TITLE', 'EMAIL_ADDRESS', 'PHONE', 'DATE_OF_BIRTH', 'SOCIAL_FACEBOOK', 'SOCIAL_LINKEDIN', 'SOCIAL_TWITTER', 'ADDRESS_MAIL_STREET', 'ADDRESS_MAIL_CITY', 'ADDRESS_MAIL_STATE', 'ADDRESS_MAIL_COUNTRY', 'ADDRESS_MAIL_POSTCODE', 'ADDRESS_OTHER_STREET', 'ADDRESS_OTHER_STATE', 'ADDRESS_OTHER_POSTCODE', 'ADDRESS_OTHER_COUNTRY'];
@@ -98,7 +98,7 @@ class RecordApiHelper
     public function addOpportunity($finalData)
     {
         if (empty($finalData['OPPORTUNITY_NAME'])) {
-            return ['success' => false, 'message' => 'Required field opportunity name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field opportunity name is empty', 'bit-integrations'), 'code' => 400];
         }
         $staticFieldsKeys = ['OPPORTUNITY_NAME', 'OPPORTUNITY_DETAILS', 'BID_AMOUNT', 'ACTUAL_CLOSE_DATE', 'PROBABILITY', 'FORECAST_CLOSE_DATE'];
 
@@ -136,7 +136,7 @@ class RecordApiHelper
     public function addProject($finalData)
     {
         if (empty($finalData['PROJECT_NAME'])) {
-            return ['success' => false, 'message' => 'Required field opportunity name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field opportunity name is empty', 'bit-integrations'), 'code' => 400];
         }
         $staticFieldsKeys = ['PROJECT_NAME', 'PROJECT_DETAILS', 'BID_AMOUNT', 'ACTUAL_CLOSE_DATE', 'PROBABILITY', 'FORECAST_CLOSE_DATE'];
 
@@ -174,7 +174,7 @@ class RecordApiHelper
     public function addTask($finalData)
     {
         if (empty($finalData['TITLE'])) {
-            return ['success' => false, 'message' => 'Required field opportunity name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field opportunity name is empty', 'bit-integrations'), 'code' => 400];
         }
         $staticFieldsKeys = ['TITLE', 'DUE_DATE', 'COMPLETED_DATE_UTC', 'DETAILS', 'PERCENT_COMPLETE', 'START_DATE'];
 
@@ -204,7 +204,7 @@ class RecordApiHelper
     public function addLead($finalData)
     {
         if (empty($finalData['LAST_NAME'])) {
-            return ['success' => false, 'message' => 'Required field opportunity name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field opportunity name is empty', 'bit-integrations'), 'code' => 400];
         }
         $staticFieldsKeys = ['FIRST_NAME', 'LAST_NAME', 'TITLE', 'ORGANISATION_NAME', 'LEAD_RATING', 'EMAIL', 'PHONE', 'MOBILE', 'FAX', 'WEBSITE', 'INDUSTRY', 'EMPLOYEE_COUNT', 'ADDRESS_STREET', 'ADDRESS_CITY', 'ADDRESS_STATE', 'ADDRESS_POSTCODE', 'ADDRESS_COUNTRY', 'LEAD_DESCRIPTION'];
 

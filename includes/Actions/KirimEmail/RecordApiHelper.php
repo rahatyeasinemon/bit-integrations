@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\KirimEmail;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -110,7 +110,7 @@ class RecordApiHelper
             if (isset($apiResponse->code) && $apiResponse->code == 200) {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'delete', 'type_name' => 'delete-subscriber']), 'success', wp_json_encode($apiResponse->message));
             } else {
-                LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'delete', 'type_name' => 'delete-subscriber']), 'error', wp_json_encode('Subscriber not found , failed to delete subscriber'));
+                LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'delete', 'type_name' => 'delete-subscriber']), 'error', wp_json_encode(__('Subscriber not found , failed to delete subscriber', 'bit-integrations')));
             }
         }
 

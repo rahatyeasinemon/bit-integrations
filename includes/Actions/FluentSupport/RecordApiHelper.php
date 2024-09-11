@@ -140,6 +140,6 @@ class RecordApiHelper
             do_action('btcbi_fluent_support_upload_ticket_attachments', $finalData, $attachments, $ticket, $customer, $flowId);
         }
 
-        LogHandler::save($flowId, ['type' => 'Ticket', 'type_name' => 'Upload-Ticket-Attachments'], 'error', 'Bit Integration Pro plugin is not installed or activate');
+        LogHandler::save($flowId, ['type' => 'Ticket', 'type_name' => 'Upload-Ticket-Attachments'], 'error', \sprintf(__('%s plugin is not installed or activate', 'bit-integrations'), 'Bit Integration Pro'));
     }
 }

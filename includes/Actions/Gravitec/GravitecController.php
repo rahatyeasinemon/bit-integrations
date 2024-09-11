@@ -28,7 +28,7 @@ class GravitecController
         $data = [
             'payload' => [
                 'title'        => 'Authorization',
-                'message'      => 'Authorized Successfully',
+                'message'      => __('Authorized Successfully', 'bit-integrations'),
                 'icon'         => BTCBI_ASSET_URI . '/gravitec.jpg',
                 'redirect_url' => $fieldsRequestParams->site_url
             ]
@@ -38,9 +38,9 @@ class GravitecController
         $response = HttpHelper::post($apiEndpoint, wp_json_encode($data), $headers);
 
         if (isset($response->id)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid Site Url, App Key & App Secret', 400);
+            wp_send_json_error(__('Please enter valid Site Url, App Key & App Secret', 'bit-integrations'), 400);
         }
     }
 

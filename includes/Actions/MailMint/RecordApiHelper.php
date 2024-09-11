@@ -139,7 +139,7 @@ class RecordApiHelper
 
         if (class_exists('Mint\MRM\DataStores\ContactData') && class_exists('Mint\MRM\DataBase\Models\ContactModel')) {
             ContactModel::update($finalData, $contact_id);
-            
+
             if ('pending' === $selectedSubStatus) {
                 MessageController::get_instance()->send_double_opt_in($contact_id);
             }
@@ -174,9 +174,9 @@ class RecordApiHelper
             $apiResponse = $this->createContact($selectedList, $selectedTags, $selectedSubStatus, $finalData);
 
             if ($apiResponse && \gettype($apiResponse) === 'integer') {
-                LogHandler::save(self::$integrationID, ['type' => 'create', 'type_name' => 'create contact'], 'success', wp_json_encode('Contact created successfully and id is ' . $apiResponse));
+                LogHandler::save(self::$integrationID, ['type' => 'create', 'type_name' => 'create contact'], 'success', wp_json_encode(\sprintf(__('Contact created successfully and id is %s', 'bit-integrations'), $apiResponse)));
             } else {
-                LogHandler::save(self::$integrationID, ['type' => 'create', 'type_name' => 'create contact'], 'error', 'Failed to create contact');
+                LogHandler::save(self::$integrationID, ['type' => 'create', 'type_name' => 'create contact'], 'error', __('Failed to create contact', 'bit-integrations'));
             }
 
             return $apiResponse;
@@ -186,14 +186,14 @@ class RecordApiHelper
             $selectedSubStatus = $integrationDetails->selectedSubStatus;
             $apiResponse = $this->updateContact($selectedList, $selectedTags, $selectedSubStatus, $finalData, $contactExist);
             if ($apiResponse && (\gettype($apiResponse) == 'integer' || (\gettype($apiResponse) == 'boolean' && $apiResponse == true))) {
-                LogHandler::save(self::$integrationID, ['type' => 'update', 'type_name' => 'update contact'], 'success', 'Contact updated successfully');
+                LogHandler::save(self::$integrationID, ['type' => 'update', 'type_name' => 'update contact'], 'success', __('Contact updated successfully', 'bit-integrations'));
             } else {
-                LogHandler::save(self::$integrationID, ['type' => 'update', 'type_name' => 'update contact'], 'error', 'Failed to create contact');
+                LogHandler::save(self::$integrationID, ['type' => 'update', 'type_name' => 'update contact'], 'error', __('Failed to create contact', 'bit-integrations'));
             }
 
             return $apiResponse;
         }
-        LogHandler::save(self::$integrationID, ['type' => 'create', 'type_name' => 'create contact'], 'error', 'Email already exist');
+        LogHandler::save(self::$integrationID, ['type' => 'create', 'type_name' => 'create contact'], 'error', __('Email already exist', 'bit-integrations'));
 
         return $apiResponse;
     }

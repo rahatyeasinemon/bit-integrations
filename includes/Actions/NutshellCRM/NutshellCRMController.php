@@ -33,9 +33,9 @@ class NutshellCRMController
         $response = HttpHelper::post($apiEndpoint, wp_json_encode($body), $headers);
 
         if (isset($response->result)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid User Name & Secret or Access Api URL', 400);
+            wp_send_json_error(__('Please enter valid User Name & Secret or Access Api URL', 'bit-integrations'), 400);
         }
     }
 
@@ -65,7 +65,7 @@ class NutshellCRMController
             }
             wp_send_json_success($companies, 200);
         } else {
-            wp_send_json_error('Contacts fetching failed', 400);
+            wp_send_json_error(__('Contacts fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -95,7 +95,7 @@ class NutshellCRMController
             }
             wp_send_json_success($contacts, 200);
         } else {
-            wp_send_json_error('Contacts fetching failed', 400);
+            wp_send_json_error(__('Contacts fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -125,7 +125,7 @@ class NutshellCRMController
             }
             wp_send_json_success($products, 200);
         } else {
-            wp_send_json_error('Products fetching failed', 400);
+            wp_send_json_error(__('Products fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -155,7 +155,7 @@ class NutshellCRMController
             }
             wp_send_json_success($sources, 200);
         } else {
-            wp_send_json_error('Sources fetching failed', 400);
+            wp_send_json_error(__('Sources fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -185,7 +185,7 @@ class NutshellCRMController
             }
             wp_send_json_success($tags, 200);
         } else {
-            wp_send_json_error('Tags fetching failed', 400);
+            wp_send_json_error(__('Tags fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -215,7 +215,7 @@ class NutshellCRMController
             }
             wp_send_json_success($companyTypes, 200);
         } else {
-            wp_send_json_error('CompanyTypes fetching failed', 400);
+            wp_send_json_error(__('CompanyTypes fetching failed', 'bit-integrations'), 400);
         }
     }
 

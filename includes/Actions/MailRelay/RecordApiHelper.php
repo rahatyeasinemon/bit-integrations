@@ -6,10 +6,10 @@
 
 namespace BitCode\FI\Actions\MailRelay;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -45,7 +45,7 @@ class RecordApiHelper
         }
 
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $isSubscriberExist = $this->isExist($baseUrl, $finalData['email']);

@@ -31,9 +31,9 @@ class NimbleController
         $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
 
         if (isset($response->user_id)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API Key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 
@@ -106,7 +106,7 @@ class NimbleController
                 200
             );
         } else {
-            wp_send_json_error('Field fetching failed', 400);
+            wp_send_json_error(__('Field fetching failed', 'bit-integrations'), 400);
         }
     }
 

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\ZohoProjects;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Core\Util\IpTool;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -648,56 +648,56 @@ class ZohoProjectsController
         $allFields = [
             'Project Title' => [
                 'apiName'      => 'name',
-                'displayLabel' => 'Project Title',
+                'displayLabel' => __('Project Title', 'bit-integrations'),
                 'required'     => true
             ],
             'Project Overview' => [
                 'apiName'      => 'description',
-                'displayLabel' => 'Project Overview'
+                'displayLabel' => __('Project Overview', 'bit-integrations')
             ],
             'Start Date' => [
                 'apiName'      => 'start_date',
-                'displayLabel' => 'Start Date'
+                'displayLabel' => __('Start Date', 'bit-integrations')
             ],
             'End Date' => [
                 'apiName'      => 'end_date',
-                'displayLabel' => 'End Date'
+                'displayLabel' => __('End Date', 'bit-integrations')
             ],
             'Strict Project' => [
                 'apiName'      => 'strict_project',
-                'displayLabel' => 'Strict Project'
+                'displayLabel' => __('Strict Project', 'bit-integrations')
             ],
             'Project Budget' => [
                 'apiName'      => 'budget_type',
-                'displayLabel' => 'Project Budget'
+                'displayLabel' => __('Project Budget', 'bit-integrations')
             ],
             'Budget Amount' => [
                 'apiName'      => 'budget_value',
-                'displayLabel' => 'Budget Amount'
+                'displayLabel' => __('Budget Amount', 'bit-integrations')
             ],
             'Billing Method' => [
                 'apiName'      => 'billing_method',
-                'displayLabel' => 'Billing Method'
+                'displayLabel' => __('Billing Method', 'bit-integrations')
             ],
             'Currency' => [
                 'apiName'      => 'currency',
-                'displayLabel' => 'Currency'
+                'displayLabel' => __('Currency', 'bit-integrations')
             ],
             'Threshold Limit' => [
                 'apiName'      => 'threshold',
-                'displayLabel' => 'Threshold Limit'
+                'displayLabel' => __('Threshold Limit', 'bit-integrations')
             ],
             'Rate Per Hour' => [
                 'apiName'      => 'project_rate',
-                'displayLabel' => 'Rate Per Hour'
+                'displayLabel' => __('Rate Per Hour', 'bit-integrations')
             ],
             'Fixed Cost' => [
                 'apiName'      => 'fixed_cost',
-                'displayLabel' => 'Fixed Cost'
+                'displayLabel' => __('Fixed Cost', 'bit-integrations')
             ],
             'Bill Status' => [
                 'apiName'      => 'bill_status',
-                'displayLabel' => 'Bill Status'
+                'displayLabel' => __('Bill Status', 'bit-integrations')
             ]
         ];
 
@@ -736,17 +736,17 @@ class ZohoProjectsController
         $allFields = [
             'Milestone Title' => [
                 'apiName'      => 'name',
-                'displayLabel' => 'Milestone Title',
+                'displayLabel' => __('Milestone Title', 'bit-integrations'),
                 'required'     => true
             ],
             'Start Date' => [
                 'apiName'      => 'start_date',
-                'displayLabel' => 'Start Date',
+                'displayLabel' => __('Start Date', 'bit-integrations'),
                 'required'     => true
             ],
             'End Date' => [
                 'apiName'      => 'end_date',
-                'displayLabel' => 'End Date',
+                'displayLabel' => __('End Date', 'bit-integrations'),
                 'required'     => true
             ]
         ];
@@ -765,7 +765,7 @@ class ZohoProjectsController
         $allFields = [
             'Tasklist Title' => [
                 'apiName'      => 'name',
-                'displayLabel' => 'Tasklist Title',
+                'displayLabel' => __('Tasklist Title', 'bit-integrations'),
                 'required'     => true
             ]
         ];
@@ -784,44 +784,44 @@ class ZohoProjectsController
         $allFields = [
             'Task Title' => [
                 'apiName'      => 'name',
-                'displayLabel' => 'Task Title',
+                'displayLabel' => __('Task Title', 'bit-integrations'),
                 'required'     => true
             ],
             'Task Description' => [
                 'apiName'      => 'description',
-                'displayLabel' => 'Task Description'
+                'displayLabel' => __('Task Description', 'bit-integrations')
             ],
             'Start Date' => [
                 'apiName'      => 'start_date',
-                'displayLabel' => 'Start Date'
+                'displayLabel' => __('Start Date', 'bit-integrations')
             ],
             'End Date' => [
                 'apiName'      => 'end_date',
-                'displayLabel' => 'End Date'
+                'displayLabel' => __('End Date', 'bit-integrations')
             ],
             'Duration' => [
                 'apiName'      => 'duration',
-                'displayLabel' => 'Duration'
+                'displayLabel' => __('Duration', 'bit-integrations')
             ],
             'Duration Type' => [
                 'apiName'      => 'duration_type',
-                'displayLabel' => 'Duration Type'
+                'displayLabel' => __('Duration Type', 'bit-integrations')
             ],
             'Start Time' => [
                 'apiName'      => 'start_time',
-                'displayLabel' => 'Start Time'
+                'displayLabel' => __('Start Time', 'bit-integrations')
             ],
             'End Time' => [
                 'apiName'      => 'end_time',
-                'displayLabel' => 'End Time'
+                'displayLabel' => __('End Time', 'bit-integrations')
             ],
             'Rate Per Hour' => [
                 'apiName'      => 'rate_per_hour',
-                'displayLabel' => 'Rate Per Hour'
+                'displayLabel' => __('Rate Per Hour', 'bit-integrations')
             ],
             'Priority' => [
                 'apiName'      => 'priority',
-                'displayLabel' => 'Priority'
+                'displayLabel' => __('Priority', 'bit-integrations')
             ]
         ];
 
@@ -867,20 +867,20 @@ class ZohoProjectsController
         $allFields = [
             'Issue Title' => [
                 'apiName'      => 'title',
-                'displayLabel' => 'Issue Title',
+                'displayLabel' => __('Issue Title', 'bit-integrations'),
                 'required'     => true
             ],
             'Description' => [
                 'apiName'      => 'description',
-                'displayLabel' => 'Description'
+                'displayLabel' => __('Description', 'bit-integrations')
             ],
             'Due Date' => [
                 'apiName'      => 'due_date',
-                'displayLabel' => 'Due Date'
+                'displayLabel' => __('Due Date', 'bit-integrations')
             ],
             'Rate Per Hour' => [
                 'apiName'      => 'rate_per_hour',
-                'displayLabel' => 'Rate Per Hour'
+                'displayLabel' => __('Rate Per Hour', 'bit-integrations')
             ]
         ];
 

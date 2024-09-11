@@ -48,7 +48,7 @@ class MailRelayController
         }
 
         if (isset($response->error) || isset($response->errors) || \gettype($response) == 'string') {
-            wp_send_json_error('Please enter valid Domain name & API key', 400);
+            wp_send_json_error(__('Please enter valid Domain name & API key', 'bit-integrations'), 400);
         } else {
             wp_send_json_success($customFields, 200);
         }

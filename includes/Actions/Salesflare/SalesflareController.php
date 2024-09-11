@@ -29,9 +29,9 @@ class SalesflareController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (!isset($response->error)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API Key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 
@@ -102,7 +102,7 @@ class SalesflareController
 
             wp_send_json_success($accounts, 200);
         } else {
-            wp_send_json_error('Accounts fetching failed!', 400);
+            wp_send_json_error(__('Accounts fetching failed!', 'bit-integrations'), 400);
         }
     }
 
@@ -128,7 +128,7 @@ class SalesflareController
 
             wp_send_json_success($pipelines, 200);
         } else {
-            wp_send_json_error('Accounts fetching failed!', 400);
+            wp_send_json_error(__('Accounts fetching failed!', 'bit-integrations'), 400);
         }
     }
 

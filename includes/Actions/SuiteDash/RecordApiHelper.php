@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SuiteDash;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -44,16 +44,16 @@ class RecordApiHelper
         $this->typeName = 'Contact created';
 
         if (empty($finalData['first_name'])) {
-            return ['success' => false, 'message' => 'Required field First Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field First Name is empty', 'bit-integrations'), 'code' => 400];
         }
         if (empty($finalData['last_name'])) {
-            return ['success' => false, 'message' => 'Required field Last Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Last Name is empty', 'bit-integrations'), 'code' => 400];
         }
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
         if (!isset($this->integrationDetails->selectedRole) || empty($this->integrationDetails->selectedRole)) {
-            return ['success' => false, 'message' => 'Required Role is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required Role is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $contactData = ['role' => $this->integrationDetails->selectedRole];

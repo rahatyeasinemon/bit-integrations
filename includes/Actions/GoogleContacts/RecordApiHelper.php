@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\GoogleContacts;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 class RecordApiHelper
 {
@@ -168,7 +168,7 @@ class RecordApiHelper
             if (!property_exists($contactResponse, 'error')) {
                 LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'insert']), 'success', wp_json_encode($contactResponse));
             } else {
-                LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'insert']), 'error', wp_json_encode('Fail to add contact'));
+                LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'insert']), 'error', wp_json_encode(__('Fail to add contact', 'bit-integrations')));
             }
 
             return;
@@ -184,7 +184,7 @@ class RecordApiHelper
                     if (!property_exists($updateResponse, 'error')) {
                         LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'update']), 'success', wp_json_encode($updateResponse));
                     } else {
-                        LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'update']), 'error', wp_json_encode('Fail to update contact'));
+                        LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'update']), 'error', wp_json_encode(__('Fail to update contact', 'bit-integrations')));
                     }
                     $imageLocation = $fieldValues[$actions->attachments][0];
                     if (!empty($imageLocation)) {
@@ -194,7 +194,7 @@ class RecordApiHelper
                     return;
                 }
             } else {
-                LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'update']), 'error', wp_json_encode('Contact not found, please check the name'));
+                LogHandler::save($integrationId, wp_json_encode(['type' => 'contact', 'type_name' => 'update']), 'error', wp_json_encode(__('Contact not found, please check the name', 'bit-integrations')));
             }
         }
     }

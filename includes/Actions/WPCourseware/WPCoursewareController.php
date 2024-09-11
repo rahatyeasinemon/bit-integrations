@@ -2,22 +2,11 @@
 
 namespace BitCode\FI\Actions\WPCourseware;
 
-use BitCode\FI\Log\LogHandler;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
 
 class WPCoursewareController
 {
-    protected static $actions = [
-        'enroll' => [
-            'id'    => 'enroll',
-            'title' => 'Enroll user in a Course'
-        ],
-        'unroll' => [
-            'id'    => 'unroll',
-            'title' => 'Unroll user in a Course'
-        ],
-    ];
-
     private $integrationID;
 
     public function __construct($integrationID)
@@ -79,7 +68,7 @@ class WPCoursewareController
     public function execute($integrationData, $fieldValues)
     {
         if (!is_plugin_active('wp-courseware/wp-courseware.php')) {
-            LogHandler::save($this->integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', 'WP Courseware Plugins not found');
+            LogHandler::save($this->integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', __('WP Courseware Plugins not found', 'bit-integrations'));
 
             return false;
         }
@@ -97,5 +86,19 @@ class WPCoursewareController
         $recordApiHelper = new RecordApiHelper($this->integrationID);
 
         return $recordApiHelper->execute($action, $course, $userId, $allCourse);
+    }
+
+    protected static function actions()
+    {
+        return [
+            'enroll' => [
+                'id'    => 'enroll',
+                'title' => __('Enroll user in a Course', 'bit-integrations')
+            ],
+            'unroll' => [
+                'id'    => 'unroll',
+                'title' => __('Unroll user in a Course', 'bit-integrations')
+            ],
+        ];
     }
 }

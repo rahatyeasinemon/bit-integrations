@@ -61,7 +61,7 @@ class RecordApiHelper
             $apiResponse = $this->addSubscriber($selectedList, $finalData);
 
             if (filter_var($apiResponse, FILTER_VALIDATE_EMAIL)) {
-                $res = ['message' => 'Subscriber added successfully'];
+                $res = ['message' => __('Subscriber added successfully', 'bit-integrations')];
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Subscriber', 'type_name' => 'Subscriber added']), 'success', wp_json_encode($res));
             } else {
                 LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Subscriber', 'type_name' => 'Adding Subscriber']), 'error', wp_json_encode($apiResponse));

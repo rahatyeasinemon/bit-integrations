@@ -70,7 +70,7 @@ class TutorLmsController
         if ($action !== 'complete-course' && $action !== 'reset-course') {
             $courses[] = [
                 'courseId'    => 'all-course',
-                'courseTitle' => 'All Course',
+                'courseTitle' => __('All Course', 'bit-integrations'),
             ];
         }
 
@@ -109,13 +109,13 @@ class TutorLmsController
                 remove_filter('is_course_purchasable', '__return_false', 10);
             }
 
-            return 'course enrolled';
+            return __('course enrolled', 'bit-integrations');
         }
         foreach ($course_ids as $course_id) {
             tutor_utils()->cancel_course_enrol($course_id, $user_id);
         }
 
-        return 'course unenrolled';
+        return __('course unenrolled', 'bit-integrations');
     }
 
     public static function completeLesson($selectedLesson)
@@ -124,7 +124,7 @@ class TutorLmsController
         $lesson_id = $selectedLesson[0];
         tutils()->mark_lesson_complete($lesson_id, $user_id);
 
-        return 'Lesson completed';
+        return __('Lesson completed', 'bit-integrations');
     }
 
     public static function completeCourse($selectedCourse)
@@ -143,7 +143,7 @@ class TutorLmsController
 
         $completed = self::completedCourse($course_id, $user_id);
 
-        return 'Course Completed';
+        return __('Course Completed', 'bit-integrations');
     }
 
     public static function resetCourse($selectedCourse)
@@ -180,7 +180,7 @@ class TutorLmsController
 
         $wpdb->query($wpdb->prepare("DELETE from {$wpdb->comments} WHERE comment_agent = 'TutorLMSPlugin' AND comment_type = 'course_completed' AND comment_post_ID = %d AND user_id = %d", $course_id, $user_id));
 
-        return 'Course progress reseted';
+        return __('Course progress reseted', 'bit-integrations');
     }
 
     public static function completedCourse($course_id, $user_id)

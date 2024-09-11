@@ -50,7 +50,7 @@ class MailBlusterController
         if (property_exists($response, 'fields')) {
             wp_send_json_success($customFields, 200);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 

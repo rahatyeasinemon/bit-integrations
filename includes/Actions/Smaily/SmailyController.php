@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Smaily;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Smaily integration
@@ -31,9 +31,9 @@ class SmailyController
         $response = HttpHelper::get($apiEndpoint, null, $header);
 
         if (isset($response[0]->id) && !empty($response)) {
-            wp_send_json_success('authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid subdomain name and api credentials', 400);
+            wp_send_json_error(__('Please enter valid subdomain name and api credentials', 'bit-integrations'), 400);
         }
     }
 

@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\Notion;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 class NotionController
 {

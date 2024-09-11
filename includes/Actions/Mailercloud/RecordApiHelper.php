@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Mailercloud;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record Add Contact
@@ -30,7 +30,7 @@ class RecordApiHelper
     public function addContact($authKey, $data)
     {
         if (empty($data->email)) {
-            return ['success' => false, 'message' => 'Required field opportunity name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field opportunity name is empty', 'bit-integrations'), 'code' => 400];
         }
         $staticFieldsKeys = ['city', 'country', 'details', 'department', 'dob', 'email', 'industry', 'job_title', 'last_name', 'lead_source', 'middle_name', 'name', 'organization', 'phone', 'salary', 'state', 'zip', 'contact_type', 'list_id'];
 

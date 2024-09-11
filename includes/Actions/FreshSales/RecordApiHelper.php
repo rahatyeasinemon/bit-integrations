@@ -6,10 +6,10 @@
 
 namespace BitCode\FI\Actions\FreshSales;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -69,7 +69,7 @@ class RecordApiHelper
             $response = apply_filters('btcbi_freshsales_upsert_record', $module, $finalData, $this->_integrationDetails, $this->_defaultHeader, $this->baseUrl);
 
             if (\is_string($response) && $response == $module) {
-                return (object) ['errors' => 'Bit Integration Pro plugin is not installed or activate'];
+                return (object) ['errors' => wp_send_json_error(\sprintf(__('%s is not active or not installed', 'bit-integrations'), 'Bit Integration Pro'), 400)];
             }
 
             return $response;

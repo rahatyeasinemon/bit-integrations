@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\OneHashCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -40,9 +40,9 @@ class RecordApiHelper
     public function addCustomer($finalData)
     {
         if (empty($finalData['customer_name'])) {
-            return ['success' => false, 'message' => 'Required field Full Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Full Name is empty', 'bit-integrations'), 'code' => 400];
         } elseif (!isset($this->integrationDetails->selectedCustomerType) || empty($this->integrationDetails->selectedCustomerType)) {
-            return ['success' => false, 'message' => 'Required field Customer Type is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Customer Type is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $finalData['customer_type'] = $this->integrationDetails->selectedCustomerType;
@@ -58,7 +58,7 @@ class RecordApiHelper
     public function addContact($finalData)
     {
         if (empty($finalData['first_name'])) {
-            return ['success' => false, 'message' => 'Required field First Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field First Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         if (isset($this->integrationDetails->selectedContactStatus) && !empty($this->integrationDetails->selectedContactStatus)) {
@@ -96,11 +96,11 @@ class RecordApiHelper
     public function addLead($finalData)
     {
         if (empty($finalData['lead_name'])) {
-            return ['success' => false, 'message' => 'Required Person Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required Person Name is empty', 'bit-integrations'), 'code' => 400];
         } elseif (empty($finalData['company_name'])) {
-            return ['success' => false, 'message' => 'Required Organization Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required Organization Name is empty', 'bit-integrations'), 'code' => 400];
         } elseif (!isset($this->integrationDetails->selectedLeadStatus) || empty($this->integrationDetails->selectedLeadStatus)) {
-            return ['success' => false, 'message' => 'Required Lead Status is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required Lead Status is empty', 'bit-integrations'), 'code' => 400];
         }
 
         if (isset($this->integrationDetails->selectedLeadSource) && !empty($this->integrationDetails->selectedLeadSource)) {

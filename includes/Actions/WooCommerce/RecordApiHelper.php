@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\WooCommerce;
 
-use BitCode\FI\Log\LogHandler;
-use WC_Product_Download;
 use WP_Error;
+use WC_Product_Download;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert,upsert.
@@ -537,9 +537,9 @@ class RecordApiHelper
             $productId = $integrationDetails->productId;
             $response = $this->cancelSubscription($productId);
             if ($response) {
-                LogHandler::save($this->_integrationID, ['type' => 'cancelSubscription', 'type_name' => 'cancelSubscription'], 'success', wp_json_encode('Subscription cancelled successfully'));
+                LogHandler::save($this->_integrationID, ['type' => 'cancelSubscription', 'type_name' => 'cancelSubscription'], 'success', wp_json_encode(__('Subscription cancelled successfully', 'bit-integrations')));
             } else {
-                LogHandler::save($this->_integrationID, ['type' => 'cancelSubscription', 'type_name' => 'cancelSubscription'], 'error', wp_json_encode('Subscription not cancelled'));
+                LogHandler::save($this->_integrationID, ['type' => 'cancelSubscription', 'type_name' => 'cancelSubscription'], 'error', wp_json_encode(__('Subscription not cancelled', 'bit-integrations')));
             }
         }
 

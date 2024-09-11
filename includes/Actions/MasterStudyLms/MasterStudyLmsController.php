@@ -73,7 +73,7 @@ class MasterStudyLmsController
             empty($integId)
             || empty($mainAction)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('Some important info are missing those are required for MasterStudyLms', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('Some important info are missing those are required for %s', 'bit-integrations'), 'MasterStudyLms'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $MasterStudyLmsApiResponse = $recordApiHelper->execute(

@@ -33,13 +33,7 @@ class FluentCrmController
     public static function checkedExistsFluentCRM()
     {
         if (!is_plugin_active('fluent-crm/fluent-crm.php')) {
-            wp_send_json_error(
-                __(
-                    'Fluent CRM Plugin is not active or not installed',
-                    'bit-integrations'
-                ),
-                400
-            );
+            wp_send_json_error(\sprintf(__('%s is not active or not installed', 'bit-integrations'), 'Fluent CRM'), 400);
         } else {
             return true;
         }

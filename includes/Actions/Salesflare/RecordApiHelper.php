@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Salesflare;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -40,7 +40,7 @@ class RecordApiHelper
     public function addAccount($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Account Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Account Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $this->type = 'Account';
@@ -54,10 +54,10 @@ class RecordApiHelper
     public function addContact($finalData)
     {
         if (empty($finalData['firstname'])) {
-            return ['success' => false, 'message' => 'Required field First Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field First Name is empty', 'bit-integrations'), 'code' => 400];
         }
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email Address is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email Address is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $this->type = 'Contact';
@@ -71,13 +71,13 @@ class RecordApiHelper
     public function addOpprtunity($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required Opportunity Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required Opportunity Name is empty', 'bit-integrations'), 'code' => 400];
         } elseif (!isset($this->integrationDetails->selectedAccount) || empty($this->integrationDetails->selectedAccount)) {
-            return ['success' => false, 'message' => 'Required Account field is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required Account field is empty', 'bit-integrations'), 'code' => 400];
         } elseif (!isset($this->integrationDetails->selectedPipeline) || empty($this->integrationDetails->selectedPipeline)) {
-            return ['success' => false, 'message' => 'Required Pipeline field is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required Pipeline field is empty', 'bit-integrations'), 'code' => 400];
         } elseif (!isset($this->integrationDetails->selectedStage) || empty($this->integrationDetails->selectedStage)) {
-            return ['success' => false, 'message' => 'Required Stage field is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required Stage field is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $this->type = 'Opportunity';

@@ -37,7 +37,7 @@ class SendGridController
             }
             wp_send_json_success($customFields, 200);
         } else {
-            wp_send_json_error($response->errors[0]->message ?? 'Please enter valid API key', 400);
+            wp_send_json_error($response->errors[0]->message ?? __('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 

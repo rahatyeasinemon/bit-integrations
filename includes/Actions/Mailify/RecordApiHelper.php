@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\Mailify;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class RecordApiHelper
 {
@@ -86,8 +86,8 @@ class RecordApiHelper
                     LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'Contact updated']), 'success', wp_json_encode($res));
                 }
             } else {
-                LogHandler::save($this->_integrationID, ['type' => 'contact', 'type_name' => 'Adding Contact'], 'error', 'Email address already exists in the system');
-                wp_send_json_error('Email address already exists in the system', 400);
+                LogHandler::save($this->_integrationID, ['type' => 'contact', 'type_name' => 'Adding Contact'], 'error', __('Email address already exists in the system', 'bit-integrations'));
+                wp_send_json_error(__('Email address already exists in the system', 'bit-integrations'), 400);
             }
         }
 

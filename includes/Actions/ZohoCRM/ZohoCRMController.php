@@ -6,11 +6,11 @@
 
 namespace BitCode\FI\Actions\ZohoCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Log\LogHandler;
 use stdClass;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -604,7 +604,7 @@ final class ZohoCRMController
                 ZohoCRMController::_saveRefreshedToken($this->_integrationID, $newTokenDetails);
                 $tokenDetails = $newTokenDetails;
             } else {
-                LogHandler::save($this->_integrationID, 'token', 'error', 'Failed to refresh access token');
+                LogHandler::save($this->_integrationID, 'token', 'error', __('Failed to refresh access token', 'bit-integrations'));
 
                 return;
             }

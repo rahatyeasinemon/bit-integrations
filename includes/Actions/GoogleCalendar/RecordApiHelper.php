@@ -119,7 +119,7 @@ class RecordApiHelper
             if (isset($apiResponse->error)) {
                 LogHandler::save($integrationId, wp_json_encode(['type' => 'record', 'type_name' => 'insert']), 'error', $apiResponse);
             }
-            LogHandler::save($integrationId, wp_json_encode(['type' => 'record', 'type_name' => 'insert']), 'error', 'Please check if your have access to insert event in this selected calendar.');
+            LogHandler::save($integrationId, wp_json_encode(['type' => 'record', 'type_name' => 'insert']), 'error', __('Please check if your have access to insert event in this selected calendar', 'bit-integrations'));
         } else {
             LogHandler::save($integrationId, wp_json_encode(['type' => 'record', 'type_name' => 'insert']), 'success', $apiResponse);
         }

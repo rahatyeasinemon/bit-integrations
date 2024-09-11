@@ -70,7 +70,7 @@ class GoogleCalendarController
     public function execute($integrationData, $fieldValues)
     {
         if (empty($integrationData->flow_details->tokenDetails->access_token)) {
-            LogHandler::save($this->integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'insert']), 'error', 'Not Authorization By GoogleCalendar.');
+            LogHandler::save($this->integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'insert']), 'error', \sprintf(__('Not Authorization By %s', 'bit-integrations'), 'GoogleCalendar'));
 
             return false;
         }
