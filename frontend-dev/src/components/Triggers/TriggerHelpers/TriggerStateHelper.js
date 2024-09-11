@@ -168,7 +168,8 @@ export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
     val === 'wp_job_manager-2' ||
     val === 'wp_job_manager-3' ||
     val === 'wp_job_manager-6' ||
-    val === 'wp_job_manager-7'
+    val === 'wp_job_manager-7' ||
+    val === 'wp_job_manager-11'
   ) {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
@@ -521,7 +522,8 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
     formId === 'wp_job_manager-2' ||
     formId === 'wp_job_manager-3' ||
     formId === 'wp_job_manager-6' ||
-    formId === 'wp_job_manager-7'
+    formId === 'wp_job_manager-7' ||
+    formId === 'wp_job_manager-11'
   ) {
     tmpConf.selectedJob = flowData.selectedJob
     tmpConf.jobList = flowData.jobList
