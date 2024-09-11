@@ -135,8 +135,10 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
       {!isPro && (
         <div className="pt-2">
           <span className="actions-note">
-            The Bit Integrations Pro plugin needs to be installed and activated to utilize these
-            features.
+            {__(
+              'The Bit Integrations Pro plugin needs to be installed and activated to utilize these features',
+              'bit-integrations'
+            )}
           </span>
         </div>
       )}
@@ -492,14 +494,11 @@ export default function JetEngineActions({ jetEngineConf, setJetEngineConf, load
               onChange={(e) => actionHandler(e, 'checkbox')}
               className="wdt-200 mt-4 mr-2"
               value="hierarchical"
-              title={__(
-                `${
-                  jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE
-                    ? 'Hierarchical'
-                    : 'Rewrite Hierarchical'
-                }`,
-                'bit-integrations'
-              )}
+              title={
+                jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE
+                  ? __('Hierarchical', 'bit-integrations')
+                  : __('Rewrite Hierarchical', 'bit-integrations')
+              }
               subTitle={__(
                 `${
                   jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE

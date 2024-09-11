@@ -24,21 +24,31 @@ function Flowlu({ formFields, setFlow, flow, allIntegURL }) {
   const [flowluConf, setFlowluConf] = useState({
     name: 'Flowlu',
     type: 'Flowlu',
-    api_key: process.env.NODE_ENV === 'development' ? 'Z2pBZHR5ckZkSERQSU1sN295RU5VQ25IcXd3YzFRUTlfMTA1Mjc0' : '',
+    api_key:
+      process.env.NODE_ENV === 'development'
+        ? 'Z2pBZHR5ckZkSERQSU1sN295RU5VQ25IcXd3YzFRUTlfMTA1Mjc0'
+        : '',
     company_name: process.env.NODE_ENV === 'development' ? 'bit-integration' : '',
-    field_map: [
-      { formField: '', flowluFormField: '' },
-    ],
+    field_map: [{ formField: '', flowluFormField: '' }],
     actionName: '',
     actionId: '',
     flowluFields: [],
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, flowluConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      flowluConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -54,23 +64,23 @@ function Flowlu({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(flowluConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
 
     if (flowluConf.actionName === 'account') {
       if (!flowluConf.selectedAccountType) {
-        toast.error('Please select an Account Type')
+        toast.error(__('Please select an Account Type', 'bit-integrations'))
         return
       }
     }
     if (flowluConf.actionName === 'opportunity') {
       if (!flowluConf.selectedPipeline) {
-        toast.error('Please select a Opportunity Pipeline')
+        toast.error(__('Please select a Opportunity Pipeline', 'bit-integrations'))
         return
       }
       if (!flowluConf.selectedOpportunityStage) {
-        toast.error('Please select a Opportunity Stage')
+        toast.error(__('Please select a Opportunity Stage', 'bit-integrations'))
         return
       }
     }
@@ -81,7 +91,9 @@ function Flowlu({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <FlowluAuthorization
@@ -95,8 +107,9 @@ function Flowlu({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <FlowluIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, flowluConf, setFlowluConf, setLoading, setSnackbar)}
@@ -112,13 +125,10 @@ function Flowlu({ formFields, setFlow, flow, allIntegURL }) {
         {flowluConf?.actionName && (
           <button
             onClick={() => nextPage(3)}
-            disabled={!(checkMappedFields(flowluConf))}
+            disabled={!checkMappedFields(flowluConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button"
-          >
-            {__('Next', 'bit-integrations')}
-            {' '}
-            &nbsp;
+            type="button">
+            {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         )}
@@ -140,4 +150,3 @@ function Flowlu({ formFields, setFlow, flow, allIntegURL }) {
 }
 
 export default Flowlu
-

@@ -30,9 +30,9 @@ export const getAllDropboxFolders = (flowID, dropboxConf, setDropboxConf) => {
       }
 
       setDropboxConf(newConf)
-      return 'Dropbox Folders List refreshed successfully'
+      return __('Dropbox Folders List refreshed successfully', 'bit-integrations')
     } else {
-      return 'Dropbox Folders List refresh failed. please try again'
+      return __('Dropbox Folders List refresh failed. please try again', 'bit-integrations')
     }
   })
   toast.promise(loadPostTypes, {

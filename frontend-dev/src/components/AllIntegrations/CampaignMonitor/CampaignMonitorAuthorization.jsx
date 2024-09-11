@@ -172,7 +172,7 @@ export default function CampaignMonitorAuthorization({
           <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
             &times;
           </span>
-          Sorry, Api key is invalid
+          {__('Sorry, Api key is invalid', 'bit-integrations')}
         </div>
       )}
       {!isInfo && (

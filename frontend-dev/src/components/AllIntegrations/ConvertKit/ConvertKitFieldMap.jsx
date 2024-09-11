@@ -58,7 +58,7 @@ export default function ConvertKitFieldMap({
           value={field.formField || ''}
           onChange={(ev) => handleFieldMapping(ev, i)}>
           <option value="">{__('Select Field', 'bit-integrations')}</option>
-          <optgroup label="Form Fields">
+          <optgroup label={__('Form Fields', 'bit-integrations')}>
             {formFields?.map((f) => (
               <option key={`ff-rm-${f.name}`} value={f.name}>
                 {f.label}
@@ -66,7 +66,11 @@ export default function ConvertKitFieldMap({
             ))}
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
-          <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+          <optgroup
+            label={sprintf(
+              __('General Smart Codes %s', 'bit-integrations'),
+              isPro ? '' : `(${__('PRO', 'bit-integrations')})`
+            )}>
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>

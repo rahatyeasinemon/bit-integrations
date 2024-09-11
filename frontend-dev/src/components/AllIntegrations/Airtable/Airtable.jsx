@@ -68,7 +68,7 @@ function Airtable({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(airtableConf)) {
-      toast.error('Please map mandatory airtableFields')
+      toast.error(__('Please map mandatory airtableFields', 'bit-integrations'))
       return
     }
     airtableConf.field_map.length > 0 && setStep(pageNo)

@@ -141,16 +141,16 @@ export default function FreshdeskActions({
   }
 
   const statusOptions = [
-    { label: 'Open', value: '2' },
-    { label: 'Pending', value: '3' },
-    { label: 'Resolved', value: '4' },
-    { label: 'Closed', value: '5' }
+    { label: __('Open', 'bit-integrations'), value: '2' },
+    { label: __('Pending', 'bit-integrations'), value: '3' },
+    { label: __('Resolved', 'bit-integrations'), value: '4' },
+    { label: __('Closed', 'bit-integrations'), value: '5' }
   ]
   const priorityOptions = [
-    { label: 'Low', value: '1' },
-    { label: 'Medium', value: '2' },
-    { label: 'High', value: '3' },
-    { label: 'Urgent', value: '4' }
+    { label: __('Low', 'bit-integrations'), value: '1' },
+    { label: __('Medium', 'bit-integrations'), value: '2' },
+    { label: __('High', 'bit-integrations'), value: '3' },
+    { label: __('Urgent', 'bit-integrations'), value: '4' }
   ]
 
   return (

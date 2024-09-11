@@ -12,11 +12,17 @@ export default function AcademyLmsIntegLayout({
   setIsLoading
 }) {
   const action = [
-    { value: 'enroll-course', label: 'Enroll the user in a course' },
-    { value: 'unenroll-course', label: 'Unenroll user from a course' },
-    { value: 'complete-course', label: 'Mark a course complete for the user' },
-    { value: 'complete-lesson', label: 'Mark a lesson complete for the user' },
-    { value: 'reset-course', label: 'Reset the user progress in a course' }
+    { value: 'enroll-course', label: __('Enroll the user in a course', 'bit-integrations') },
+    { value: 'unenroll-course', label: __('Unenroll user from a course', 'bit-integrations') },
+    {
+      value: 'complete-course',
+      label: __('Mark a course complete for the user', 'bit-integrations')
+    },
+    {
+      value: 'complete-lesson',
+      label: __('Mark a lesson complete for the user', 'bit-integrations')
+    },
+    { value: 'reset-course', label: __('Reset the user progress in a course', 'bit-integrations') }
   ]
 
   const handleAction = (e) => {

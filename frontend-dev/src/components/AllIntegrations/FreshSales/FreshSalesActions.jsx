@@ -35,10 +35,17 @@ export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf })
             value="Upsert_Record"
             isInfo={!isPro}
             title={__(`Upsert Record ${!isPro ? '(Pro)' : ''}`, 'bit-integrations')}
-            subTitle={__(
-              `${isPro ? 'A record gets updated based on the unique identifier value, else a new record will be created.' : 'The Bit Integration Pro v(2.1.1) plugin needs to be installed and activated to enable the Upsert Record feature'}`,
-              'bit-integrations'
-            )}
+            subTitle={
+              isPro
+                ? __(
+                    'A record gets updated based on the unique identifier value, else a new record will be created',
+                    'bit-integrations'
+                  )
+                : __(
+                    'The Bit Integration Pro v(2.1.1) plugin needs to be installed and activated to enable the Upsert Record feature',
+                    'bit-integrations'
+                  )
+            }
           />
         )}
       </div>

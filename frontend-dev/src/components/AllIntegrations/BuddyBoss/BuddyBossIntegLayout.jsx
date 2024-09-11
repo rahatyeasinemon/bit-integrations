@@ -148,7 +148,7 @@ export default function BuddyBossIntegLayout({
           <div className="flx mt-4">
             <b className="wdt-200 d-in-b">
               {__(
-                `${buddyBossConf.mainAction === '8' ? 'Sender User' : 'Select User'}`,
+                `${buddyBossConf.mainAction === '8' ? __('Sender User', 'bit-integrations') : __('Select User', 'bit-integrations')}`,
                 'bit-integrations'
               )}
             </b>

@@ -27,10 +27,10 @@ export default function FluentCrmIntegLayout({
     setFluentCrmConf({ ...newConf })
   }
   const action = [
-    { value: 'add-tag', label: 'Add tag to a user' },
-    { value: 'remove-tag', label: 'Remove tag from a user' },
-    { value: 'add-user', label: 'Add user to a list' },
-    { value: 'remove-user', label: 'Remove user from a list' }
+    { value: 'add-tag', label: __('Add tag to a user', 'bit-integrations') },
+    { value: 'remove-tag', label: __('Remove tag from a user', 'bit-integrations') },
+    { value: 'add-user', label: __('Add user to a list', 'bit-integrations') },
+    { value: 'remove-user', label: __('Remove user from a list', 'bit-integrations') }
   ]
 
   const inputHendler = (e) => {

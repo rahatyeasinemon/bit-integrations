@@ -118,7 +118,7 @@ export default function SendinBlueAuthorization({
           <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
             &times;
           </span>
-          Sorry, API key is invalid
+          {__('Sorry, Api key is invalid', 'bit-integrations')}
         </div>
       )}
       {!isInfo && (

@@ -45,11 +45,11 @@ function Drip({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
     if (val === 3) {
       if (!checkMappedFields(dripConf)) {
-        toast.error('Please map all required fields to continue.')
+        toast.error(__('Please map all required fields to continue', 'bit-integrations'))
         return
       }
       if (!dripConf?.selectedAccountId) {
-        toast.error('Please select account to continue.')
+        toast.error(__('Please select account to continue', 'bit-integrations'))
         return
       }
       if (dripConf.name !== '' && dripConf.field_map.length > 0) {

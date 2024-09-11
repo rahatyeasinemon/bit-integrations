@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import { useEffect, useState } from 'react'
-import { __ } from '../../../Utils/i18nwrap'
+import { __, sprintf } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import LoaderSm from '../../Loaders/LoaderSm'
 import BackIcn from '../../../Icons/BackIcn'
@@ -82,7 +82,10 @@ export default function WPCoursewareAuthorization({
             <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
               &times;
             </span>
-            Please! First Install or Active WP Courseware Plugin
+            {sprintf(
+              __('Please! First Install or Active %s Plugin', 'bit-integrations'),
+              'WP Courseware'
+            )}
           </div>
         )}
         {!isInfo && (

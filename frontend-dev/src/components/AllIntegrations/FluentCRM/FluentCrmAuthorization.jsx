@@ -76,7 +76,7 @@ export default function FluentCrmAuthorization({
         {isLoading === 'auth' && (
           <div className="flx mt-5">
             <LoaderSm size={25} clr="#022217" className="mr-2" />
-            Checking if Fluent CRM is active!!!
+            {__('Checking if Fluent CRM is active!!!', 'bit-integrations')}
           </div>
         )}
 
@@ -85,7 +85,7 @@ export default function FluentCrmAuthorization({
             <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
               &times;
             </span>
-            Please! First Install Fluent CRM Plugins
+            {__('Please! First Install Fluent CRM Plugins', 'bit-integrations')}
           </div>
         )}
         <button

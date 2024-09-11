@@ -38,9 +38,9 @@ export const getAllGoogleCalendarLists = (flowID, googleCalendarConf, setGoogleC
       }
 
       setGoogleCalendarConf(newConf)
-      return 'Google Calendar List refreshed successfully'
+      return __('Google Calendar List refreshed successfully', 'bit-integrations')
     } else {
-      return 'Google Calendar List refresh failed. please try again'
+      return __('Google Calendar List refresh failed. please try again', 'bit-integrations')
     }
   })
   toast.promise(loadPostTypes, {

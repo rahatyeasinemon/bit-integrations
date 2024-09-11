@@ -19,10 +19,10 @@ export default function HubspotIntegLayout({
   setLoading
 }) {
   const action = [
-    { label: 'Create Company', value: 'company' },
-    { label: 'Create Contact', value: 'contact' },
-    { label: 'Create Deal', value: 'deal' },
-    { label: 'Create Ticket', value: 'ticket' }
+    { label: __('Create Company', 'bit-integrations'), value: 'company' },
+    { label: __('Create Contact', 'bit-integrations'), value: 'contact' },
+    { label: __('Create Deal', 'bit-integrations'), value: 'deal' },
+    { label: __('Create Ticket', 'bit-integrations'), value: 'ticket' }
   ]
 
   const handleInputP = (e) => {

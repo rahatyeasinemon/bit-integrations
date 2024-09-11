@@ -24,28 +24,28 @@ function Affiliate({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const allActions = [
-    { key: '1', label: 'Create a referral for specific affiliate Id' },
-    { key: '2', label: 'Create a referral for the user' }
+    { key: '1', label: __('Create a referral for specific affiliate Id', 'bit-integrations') },
+    { key: '2', label: __('Create a referral for the user', 'bit-integrations') }
   ]
 
   const allStatus = [
-    { key: '1', label: 'Paid' },
-    { key: '2', label: 'Unpaid' },
-    { key: '3', label: 'Pending' },
-    { key: '4', label: 'Reject' }
+    { key: '1', label: __('Paid', 'bit-integrations') },
+    { key: '2', label: __('Unpaid', 'bit-integrations') },
+    { key: '3', label: __('Pending', 'bit-integrations') },
+    { key: '4', label: __('Reject', 'bit-integrations') }
   ]
 
   const allReferralType = [
-    { key: '1', label: 'Sale' },
-    { key: '2', label: 'Opt-in' },
-    { key: '3', label: 'Lead' }
+    { key: '1', label: __('Sale', 'bit-integrations') },
+    { key: '2', label: __('Opt-in', 'bit-integrations') },
+    { key: '3', label: __('Lead', 'bit-integrations') }
   ]
 
   const createAffiliateFields = [
-    { key: 'amount', label: 'Amount', required: true },
-    { key: 'description', label: 'Description', required: true },
-    { key: 'reference', label: 'Reference', required: false },
-    { key: 'context', label: 'Context', required: false }
+    { key: 'amount', label: __('Amount', 'bit-integrations'), required: true },
+    { key: 'description', label: __('Description', 'bit-integrations'), required: true },
+    { key: 'reference', label: __('Reference', 'bit-integrations'), required: false },
+    { key: 'context', label: __('Context', 'bit-integrations'), required: false }
   ]
   const [affiliateConf, setAffiliateConf] = useState({
     name: 'Affiliate',

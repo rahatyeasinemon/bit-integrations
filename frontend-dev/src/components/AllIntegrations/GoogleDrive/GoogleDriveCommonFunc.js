@@ -30,9 +30,9 @@ export const getAllGoogleDriveFolders = (flowID, googleDriveConf, setGoogleDrive
       }
 
       setGoogleDriveConf(newConf)
-      return 'GoogleDrive Folders List refreshed successfully'
+      return __('GoogleDrive Folders List refreshed successfully', 'bit-integrations')
     } else {
-      return 'GoogleDrive Folders List refresh failed. please try again'
+      return __('GoogleDrive Folders List refresh failed. please try again', 'bit-integrations')
     }
   })
   toast.promise(loadPostTypes, {

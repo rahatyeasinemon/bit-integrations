@@ -2,20 +2,14 @@ import { useRecoilValue } from 'recoil'
 import { useEffect } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
-import { addFieldMap,
-  delFieldMap,
-  handleFieldMapping } from './IntegrationHelpers'
+import { addFieldMap, delFieldMap, handleFieldMapping } from './IntegrationHelpers'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import { $btcbi } from '../../../GlobalStates'
 import { generateMappedField } from './OmniSendCommonFunc'
 import TagifyInput from '../../Utilities/TagifyInput'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 
-export default function OmniSendFieldMap({ i,
-  formFields,
-  field,
-  omniSendConf,
-  setOmniSendConf }) {
+export default function OmniSendFieldMap({ i, formFields, field, omniSendConf, setOmniSendConf }) {
   if (omniSendConf?.field_map?.length === 1 && field.omniSendFormField === '') {
     const newConf = { ...omniSendConf }
     const tmp = generateMappedField(newConf)
@@ -24,7 +18,8 @@ export default function OmniSendFieldMap({ i,
   }
 
   const requiredFlds = omniSendConf?.omniSend_fields.filter((fld) => fld.required === true) || []
-  const nonRequiredFlds = omniSendConf?.omniSend_fields.filter((fld) => fld.required === false) || []
+  const nonRequiredFlds =
+    omniSendConf?.omniSend_fields.filter((fld) => fld.required === false) || []
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
 
@@ -36,22 +31,23 @@ export default function OmniSendFieldMap({ i,
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, omniSendConf, setOmniSendConf)}
-          >
+            onChange={(ev) => handleFieldMapping(ev, i, omniSendConf, setOmniSendConf)}>
             <option value="">{__('Select Field', 'bit-integrations')}</option>
-            <optgroup label="Form Fields">
+            <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>
                   {f.label}
                 </option>
               ))}
             </optgroup>
-            <option value="custom">
-              {__('Custom...', 'bit-integrations')}
-            </option>
-            <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
-              {isPro
-                && SmartTagField?.map((f) => (
+            <option value="custom">{__('Custom...', 'bit-integrations')}</option>
+            <optgroup
+              label={sprintf(
+                __('General Smart Codes %s', 'bit-integrations'),
+                isPro ? '' : `(${__('PRO', 'bit-integrations')})`
+              )}>
+              {isPro &&
+                SmartTagField?.map((f) => (
                   <option key={`ff-rm-${f.name}`} value={f.name}>
                     {f.label}
                   </option>
@@ -59,19 +55,24 @@ export default function OmniSendFieldMap({ i,
             </optgroup>
           </select>
 
-          {field.formField === 'custom' && <TagifyInput onChange={e => handleCustomValue(e, i, omniSendConf, setOmniSendConf)} label={__('Custom Value', 'bit-integrations')} className="mr-2" type="text" value={field.customValue} placeholder={__('Custom Value', 'bit-integrations')} formFields={formFields} />}
+          {field.formField === 'custom' && (
+            <TagifyInput
+              onChange={(e) => handleCustomValue(e, i, omniSendConf, setOmniSendConf)}
+              label={__('Custom Value', 'bit-integrations')}
+              className="mr-2"
+              type="text"
+              value={field.customValue}
+              placeholder={__('Custom Value', 'bit-integrations')}
+              formFields={formFields}
+            />
+          )}
 
           <select
             className="btcd-paper-inp"
             disabled={i < requiredFlds.length}
             name="omniSendFormField"
-            value={
-              i < requiredFlds
-                ? requiredFlds[i].label || ''
-                : field.omniSendFormField || ''
-            }
-            onChange={(ev) => handleFieldMapping(ev, i, omniSendConf, setOmniSendConf)}
-          >
+            value={i < requiredFlds ? requiredFlds[i].label || '' : field.omniSendFormField || ''}
+            onChange={(ev) => handleFieldMapping(ev, i, omniSendConf, setOmniSendConf)}>
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
@@ -91,16 +92,14 @@ export default function OmniSendFieldMap({ i,
             <button
               onClick={() => addFieldMap(i, omniSendConf, setOmniSendConf)}
               className="icn-btn sh-sm ml-2 mr-1"
-              type="button"
-            >
+              type="button">
               +
             </button>
             <button
               onClick={() => delFieldMap(i, omniSendConf, setOmniSendConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
-              aria-label="btn"
-            >
+              aria-label="btn">
               <span className="btcd-icn icn-trash-2" />
             </button>
           </>
