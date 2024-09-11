@@ -16,11 +16,11 @@ final class LogHandler
     public function get($data)
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
 
         if (!isset($data->id)) {
-            wp_send_json_error('Integration Id cann\'t be empty');
+            wp_send_json_error(__('Integration Id can\'t be empty', 'bit-integrations'));
         }
         $logModel = new LogModel();
         $countResult = $logModel->count(['flow_id' => $data->id]);
@@ -94,7 +94,7 @@ final class LogHandler
     public static function deleteLog($data)
     {
         if (empty($data->id) && empty($data->flow_id)) {
-            wp_send_json_error('Integration Id or Log Id required');
+            wp_send_json_error(__('Integration Id or Log Id required', 'bit-integrations'));
         }
         $deleteStatus = self::delete($data);
         if (is_wp_error($deleteStatus)) {
@@ -106,7 +106,7 @@ final class LogHandler
     public static function delete($data)
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
         $condition = null;
         if (!empty($data->id)) {

@@ -137,11 +137,11 @@ function Mail({ allIntegURL, isInfo, edit }) {
 
   const saveConfig = () => {
     if (!conf.name) {
-      setSnackbar({ show: true, msg: __('Integration Name cann\'t be empty', 'bit-integrations') })
+      setSnackbar({ show: true, msg: __('Integration Name can\'t be empty', 'bit-integrations') })
       return
     }
     if (!conf.to) {
-      setSnackbar({ show: true, msg: __('Email Receiver cann\'t be empty', 'bit-integrations') })
+      setSnackbar({ show: true, msg: __('Email Receiver can\'t be empty', 'bit-integrations') })
       return
     }
     const resp = saveIntegConfig(flow, setFlow, allIntegURL, conf, navigate, '', edit, setIsLoading)
