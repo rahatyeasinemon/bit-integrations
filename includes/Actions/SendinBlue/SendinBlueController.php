@@ -168,10 +168,11 @@ class SendinBlueController
             $allFields = $sblueResponse->attributes;
 
             foreach ($allFields as $field) {
-                if (!\in_array($field->name, $excludingField) && !empty($field->type)) {
+                if (!\in_array($field->name, $excludingField)) {
                     $fields[$field->name] = (object) [
                         'fieldId'   => $field->name,
-                        'fieldName' => $field->name
+                        'fieldName' => $field->name,
+                        'options'   => isset($field->enumeration) && \is_array($field->enumeration) ? $field->enumeration : []
                     ];
                 }
             }

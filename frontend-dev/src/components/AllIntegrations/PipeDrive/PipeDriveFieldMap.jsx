@@ -117,7 +117,7 @@ export default function PipeDriveFieldMap({
             <div>
               <Cooltip width={250} icnSize={17} className="ml-2">
                 <div className="txt-body">
-                  <p>Custom field options with id</p>
+                  <p>{__('Custom field options with id', 'bit-integrations')}</p>
                   {options.map((option) => (
                     <li key={option.id}>
                       {option?.label} - {option?.id}
