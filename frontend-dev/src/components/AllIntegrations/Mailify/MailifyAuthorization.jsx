@@ -156,7 +156,7 @@ export default function MailifyAuthorization({
       {isLoading === 'auth' && (
         <div className="flx mt-5">
           <LoaderSm size={25} clr="#022217" className="mr-2" />
-          Checking Api Key!!!
+          {__('Checking API Key!!!', 'bit-integrations')}
         </div>
       )}
 

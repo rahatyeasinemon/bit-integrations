@@ -33,7 +33,7 @@ function EditPerfexCRM({ allIntegURL }) {
     }
 
     if (perfexCRMConf.actionName === 'contact' && !perfexCRMConf.selectedCustomer) {
-      toast.error('Please select a Customer')
+      toast.error(__('Please select a Customer', 'bit-integrations'))
       return
     }
     if (
@@ -42,32 +42,32 @@ function EditPerfexCRM({ allIntegURL }) {
         !perfexCRMConf.selectedLeadSourceId ||
         !perfexCRMConf.selectedStaff)
     ) {
-      toast.error('Lead Status Id and Lead Source Id are required!')
+      toast.error(__('Lead Status Id and Lead Source Id are required!', 'bit-integrations'))
       return
     }
     if (perfexCRMConf.actionName === 'project') {
       if (!perfexCRMConf.selectedProjectStatus) {
-        toast.error('Please select Project status')
+        toast.error(__('Please select Project status', 'bit-integrations'))
         return
       }
       if (!perfexCRMConf.selectedProjectType) {
-        toast.error('Please select Project Related With...')
+        toast.error(__('Please select Project Related With...', 'bit-integrations'))
         return
       }
       if (!perfexCRMConf.selectedbillingType) {
-        toast.error('Please select a Billing type')
+        toast.error(__('Please select a Billing type', 'bit-integrations'))
         return
       }
       if (!perfexCRMConf.selectedCustomer) {
-        toast.error('Please select a Customer')
+        toast.error(__('Please select a Customer', 'bit-integrations'))
         return
       }
       if (Number(perfexCRMConf.selectedbillingType) === 1 && !perfexCRMConf.totalRate) {
-        toast.error('Please select a Total Rate')
+        toast.error(__('Please select a Total Rate', 'bit-integrations'))
         return
       }
       if (Number(perfexCRMConf.selectedbillingType) === 2 && !perfexCRMConf.ratePerHour) {
-        toast.error('Please select a Rate Per Hour')
+        toast.error(__('Please select a Rate Per Hour', 'bit-integrations'))
         return
       }
     }

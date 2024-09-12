@@ -23,16 +23,15 @@ function Mailup({ formFields, setFlow, flow, allIntegURL }) {
     name: 'Mailup',
     type: 'Mailup',
     clientId: process.env.NODE_ENV === 'development' ? '85e59098-8c70-46c6-b2a2-a95bf9c0a356' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? '4e8c54cf-3c07-4c18-8d9c-47e0aa8ed6c1' : '',
+    clientSecret:
+      process.env.NODE_ENV === 'development' ? '4e8c54cf-3c07-4c18-8d9c-47e0aa8ed6c1' : '',
     allList: [],
     allGroup: [],
     listId: '',
     groupId: '',
-    field_map: [
-      { formField: '', mailupFormField: '' },
-    ],
+    field_map: [{ formField: '', mailupFormField: '' }],
     staticFields: [],
-    actions: {},
+    actions: {}
   })
 
   useEffect(() => {
@@ -46,7 +45,7 @@ function Mailup({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(mailupConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
     // eslint-disable-next-line no-unused-expressions
@@ -56,7 +55,9 @@ function Mailup({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <MailupAuthorization
@@ -71,8 +72,9 @@ function Mailup({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <MailupIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, mailupConf, setMailupConf, setIsLoading, setSnackbar)}
@@ -88,11 +90,8 @@ function Mailup({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(3)}
             disabled={!mailupConf?.listId || !checkMappedFields(mailupConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button"
-          >
-            {__('Next', 'bit-integrations')}
-            {' '}
-            &nbsp;
+            type="button">
+            {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         )}
@@ -101,14 +100,23 @@ function Mailup({ formFields, setFlow, flow, allIntegURL }) {
       {mailupConf.listId && (
         <IntegrationStepThree
           step={step}
-          saveConfig={() => saveActionConf({ flow, setFlow, allIntegURL, navigate, conf: mailupConf, setIsLoading, setSnackbar })}
+          saveConfig={() =>
+            saveActionConf({
+              flow,
+              setFlow,
+              allIntegURL,
+              navigate,
+              conf: mailupConf,
+              setIsLoading,
+              setSnackbar
+            })
+          }
           isLoading={isLoading}
           dataConf={mailupConf}
           setDataConf={setMailupConf}
           formFields={formFields}
         />
       )}
-
     </div>
   )
 }

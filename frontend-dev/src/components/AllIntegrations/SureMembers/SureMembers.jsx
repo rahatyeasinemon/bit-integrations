@@ -18,7 +18,7 @@ function SureMembers({ formFields, setFlow, flow, allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
     auth: false,
-    groups: false,
+    groups: false
   })
 
   const [step, setStep] = useState(1)
@@ -27,9 +27,7 @@ function SureMembers({ formFields, setFlow, flow, allIntegURL }) {
   const [sureMembersConf, setSureMembersConf] = useState({
     name: 'SureMembers',
     type: 'SureMembers',
-    field_map: [
-      { formField: '', sureMembersField: 'email' },
-    ],
+    field_map: [{ formField: '', sureMembersField: 'email' }],
     staticFields,
     selectedTask: '',
     groups: [],
@@ -38,8 +36,17 @@ function SureMembers({ formFields, setFlow, flow, allIntegURL }) {
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, sureMembersConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      sureMembersConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -55,17 +62,17 @@ function SureMembers({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!sureMembersConf.selectedTask) {
-      toast.error('Please select a task!')
+      toast.error(__('Please select a task!', 'bit-integrations'))
       return
     }
 
     if (!checkMappedFields(sureMembersConf)) {
-      toast.error('Please map mandatory fields!')
+      toast.error(__('Please map mandatory fields!', 'bit-integrations'))
       return
     }
 
     if (!sureMembersConf.selectedGroup) {
-      toast.error('Please select a group!')
+      toast.error(__('Please select a group!', 'bit-integrations'))
       return
     }
 
@@ -75,7 +82,9 @@ function SureMembers({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <SureMembersAuthorization
@@ -89,8 +98,9 @@ function SureMembers({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <SureMembersIntegLayout
           formFields={formFields}
           sureMembersConf={sureMembersConf}
@@ -103,11 +113,8 @@ function SureMembers({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!checkMappedFields(sureMembersConf)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
-          &nbsp;
+          type="button">
+          {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>

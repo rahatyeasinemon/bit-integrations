@@ -43,15 +43,15 @@ export default function PerfexCRMIntegLayout({
 
           if (e.target.value === 'project') {
             draftConf.billingTypes = [
-              { id: 1, name: 'Fixed Rate' },
-              { id: 2, name: 'Project Hours' },
-              { id: 3, name: 'Task Hours' }
+              { id: 1, name: __('Fixed Rate', 'bit-integrations') },
+              { id: 2, name: __('Project Hours', 'bit-integrations') },
+              { id: 3, name: __('Task Hours', 'bit-integrations') }
             ]
             draftConf.projectStatus = [
-              { id: 2, name: 'In Progress' },
-              { id: 3, name: 'On Hold' },
-              { id: 4, name: 'Finished' },
-              { id: 5, name: 'Cancelled' }
+              { id: 2, name: __('In Progress', 'bit-integrations') },
+              { id: 3, name: __('On Hold', 'bit-integrations') },
+              { id: 4, name: __('Finished', 'bit-integrations') },
+              { id: 5, name: __('Cancelled', 'bit-integrations') }
             ]
           }
 

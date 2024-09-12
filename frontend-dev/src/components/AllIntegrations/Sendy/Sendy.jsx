@@ -19,8 +19,8 @@ function Sendy({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const subscriberFields = [
-    { key: 'email', label: 'Email', required: true },
-    { key: 'name', label: 'Name', required: false },
+    { key: 'email', label: __('Email', 'bit-integrations'), required: true },
+    { key: 'name', label: __('Name', 'bit-integrations'), required: false }
   ]
 
   const [sendyConf, setSendyConf] = useState({
@@ -28,17 +28,24 @@ function Sendy({ formFields, setFlow, flow, allIntegURL }) {
     type: 'Sendy',
     api_key: process.env.NODE_ENV === 'development' ? 'qIhdPEcl2m7x9f4JPtFw' : '',
     sendy_url: process.env.NODE_ENV === 'development' ? 'https://mizan.dev.bitcode.pro' : '',
-    field_map: [
-      { formField: '', sendyField: '' },
-    ],
+    field_map: [{ formField: '', sendyField: '' }],
     subscriberFields,
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, sendyConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      sendyConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         // setSnackbar({ show: true, msg: res.data?.msg })
         toast.success(res.data?.msg)
@@ -56,7 +63,7 @@ function Sendy({ formFields, setFlow, flow, allIntegURL }) {
 
     if (!checkMappedFields(sendyConf)) {
       // setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
     sendyConf.field_map.length > 0 && setstep(pageNo)
@@ -65,7 +72,9 @@ function Sendy({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
 
@@ -80,8 +89,9 @@ function Sendy({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <SendyIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, sendyConf, setSendyConf, setIsLoading, setSnackbar)}
@@ -96,11 +106,8 @@ function Sendy({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           // disabled={!sendyConf?.recipient_id}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
-          &nbsp;
+          type="button">
+          {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>

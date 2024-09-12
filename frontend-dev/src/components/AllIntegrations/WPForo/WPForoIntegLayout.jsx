@@ -105,8 +105,10 @@ export default function WPForoIntegLayout({
             <br />
             <div className="flx">
               <span className="action-delete-task-note">
-                To delete a topic, you can select a topic from the list above, or you can map
-                fields.
+                {__(
+                  'To delete a topic, you can select a topic from the list above, or you can map fields',
+                  'bit-integrations'
+                )}
               </span>
               <TableCheckBox
                 checked={wpforoConf.deleteTopicFieldMap}

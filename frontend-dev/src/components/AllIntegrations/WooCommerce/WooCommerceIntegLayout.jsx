@@ -122,33 +122,33 @@ export default function WooCommerceIntegLayout({
   }
 
   const moduleType = [
-    { name: 'customer', label: 'Create-Customer' },
-    { name: 'product', label: 'Create-Product' },
-    { name: 'order', label: 'Create-Order' },
-    { name: 'changestatus', label: 'Change Order Status' },
-    { name: 'cancelSubscription', label: 'Cancel Subscription' }
+    { name: 'customer', label: __('Create-Customer', 'bit-integrations') },
+    { name: 'product', label: __('Create-Product', 'bit-integrations') },
+    { name: 'order', label: __('Create-Order', 'bit-integrations') },
+    { name: 'changestatus', label: __('Change Order Status', 'bit-integrations') },
+    { name: 'cancelSubscription', label: __('Cancel Subscription', 'bit-integrations') }
   ]
 
   const filterStatus = [
-    { name: 'order-id', label: 'Specific Order ID' },
-    { name: 'email', label: 'Specific Customer Email' },
-    { name: 'date-range', label: 'Specific Date Range' },
-    { name: 'n-days', label: "Last N Day's Orders" },
-    { name: 'n-weeks', label: "Last N Week's Orders" },
-    { name: 'n-months', label: "Last N Month's Orders" },
-    { name: 'prev-months', label: "Previous Month's Orders" },
-    { name: 'n-prev-months', label: "Previous N Month's Orders" }
+    { name: 'order-id', label: __('Specific Order ID', 'bit-integrations') },
+    { name: 'email', label: __('Specific Customer Email', 'bit-integrations') },
+    { name: 'date-range', label: __('Specific Date Range', 'bit-integrations') },
+    { name: 'n-days', label: __("Last N Day's Orders", 'bit-integrations') },
+    { name: 'n-weeks', label: __("Last N Week's Orders", 'bit-integrations') },
+    { name: 'n-months', label: __("Last N Month's Orders", 'bit-integrations') },
+    { name: 'prev-months', label: __("Previous Month's Orders", 'bit-integrations') },
+    { name: 'n-prev-months', label: __("Previous N Month's Orders", 'bit-integrations') }
   ]
 
   const orderChange = [
-    { name: 'latest-order', label: 'Latest Order' },
-    { name: 'all-order', label: 'All Orders' },
-    { name: 'date-order', label: 'Specific Date Range' },
-    { name: 'n-days-order', label: "Last N Day's Orders" },
-    { name: 'n-weeks-order', label: "Last N Week's Orders" },
-    { name: 'n-months-order', label: "Last N Month's Orders" },
-    { name: 'prev-months-order', label: "Previous Month's Orders" },
-    { name: 'n-prev-months-order', label: "Previous N Month's Orders" }
+    { name: 'latest-order', label: __('Latest Order', 'bit-integrations') },
+    { name: 'all-order', label: __('All Orders', 'bit-integrations') },
+    { name: 'date-order', label: __('Specific Date Range', 'bit-integrations') },
+    { name: 'n-days-order', label: __("Last N Day's Orders", 'bit-integrations') },
+    { name: 'n-weeks-order', label: __("Last N Week's Orders", 'bit-integrations') },
+    { name: 'n-months-order', label: __("Last N Month's Orders", 'bit-integrations') },
+    { name: 'prev-months-order', label: __("Previous Month's Orders", 'bit-integrations') },
+    { name: 'n-prev-months-order', label: __("Previous N Month's Orders", 'bit-integrations') }
   ]
 
   const changeHandler = (val, name) => {

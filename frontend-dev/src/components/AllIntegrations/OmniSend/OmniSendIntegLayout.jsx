@@ -7,23 +7,25 @@ import OmniSendFieldMap from './OmniSendFieldMap'
 import OmniSendActions from './OmniSendActions'
 import { generateMappedField } from './OmniSendCommonFunc'
 
-export default function OmniSendIntegLayout({ formFields,
+export default function OmniSendIntegLayout({
+  formFields,
   handleInput,
   omniSendConf,
   setOmniSendConf,
   loading,
   setLoading,
-  setSnackbar }) {
+  setSnackbar
+}) {
   const isInitialMount = useRef(true)
   const channels = [
     {
-      label: 'Email',
-      value: 'email',
+      label: __('Email', 'bit-integrations'),
+      value: 'email'
     },
     {
-      label: 'SMS',
-      value: 'sms',
-    },
+      label: __('SMS', 'bit-integrations'),
+      value: 'sms'
+    }
   ]
 
   const setChanges = (val, type) => {
@@ -76,7 +78,7 @@ export default function OmniSendIntegLayout({ formFields,
           defaultValue={omniSendConf?.channels}
           options={channels?.map((channel) => ({
             label: channel.label,
-            value: channel.value,
+            value: channel.value
           }))}
           onChange={(val) => setChanges(val, 'channels')}
           customValue
@@ -85,115 +87,105 @@ export default function OmniSendIntegLayout({ formFields,
       <br />
       {omniSendConf.channels.search('email') !== -1 && (
         <div className="flx">
-          <b className="wdt-200 d-in-b">
-            {__('Email Status:', 'bit-integrations')}
-          </b>
+          <b className="wdt-200 d-in-b">{__('Email Status:', 'bit-integrations')}</b>
           <select
             onChange={handleInput}
             name="email_status"
             value={omniSendConf.email_status}
             className="btcd-paper-inp w-5"
-            required
-          >
+            required>
             <option value="">{__('Select Status', 'bit-integrations')}</option>
-            <option value="subscribed">Subscribed</option>
-            <option value="unsubscribed">Unsubscribed</option>
-            <option value="nonSubscribed">nonSubscribed</option>
+            <option value="subscribed">{__('Subscribed', 'bit-integrations')}</option>
+            <option value="unsubscribed">{__('Unsubscribed', 'bit-integrations')}</option>
+            <option value="nonSubscribed">{__('nonSubscribed', 'bit-integrations')}</option>
           </select>
         </div>
       )}
       <br />
       {omniSendConf.channels.search('sms') !== -1 && (
         <div className="flx">
-          <b className="wdt-200 d-in-b">
-            {__('SMS Status:', 'bit-integrations')}
-          </b>
+          <b className="wdt-200 d-in-b">{__('SMS Status:', 'bit-integrations')}</b>
           <select
             onChange={handleInput}
             name="sms_status"
             value={omniSendConf.sms_status}
             className="btcd-paper-inp w-5"
-            required
-          >
+            required>
             <option value="">{__('Select Status', 'bit-integrations')}</option>
-            <option value="subscribed">Subscribed</option>
-            <option value="unsubscribed">Unsubscribed</option>
-            <option value="nonSubscribed">nonSubscribed</option>
+            <option value="subscribed">{__('Subscribed', 'bit-integrations')}</option>
+            <option value="unsubscribed">{__('Unsubscribed', 'bit-integrations')}</option>
+            <option value="nonSubscribed">{__('nonSubscribed', 'bit-integrations')}</option>
           </select>
         </div>
       )}
 
-      {(omniSendConf.channels.search('email') !== -1
-        || omniSendConf.channels.search('sms') !== -1) && (
-          <>
-            <br />
-            <div className="mt-5">
-              <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
-            </div>
-            <br />
+      {(omniSendConf.channels.search('email') !== -1 ||
+        omniSendConf.channels.search('sms') !== -1) && (
+        <>
+          <br />
+          <div className="mt-5">
+            <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
+          </div>
+          <br />
 
-            {loading.field && (
-              <Loader
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: 100,
-                  transform: 'scale(0.7)',
-                }}
-              />
-            )}
-            <div className="btcd-hr mt-1" />
-            <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-              <div className="txt-dp">
-                <b>{__('Form Fields', 'bit-integrations')}</b>
-              </div>
-              <div className="txt-dp">
-                <b>{__('OmniSend Fields', 'bit-integrations')}</b>
-              </div>
-            </div>
-
-            {omniSendConf?.field_map.map((itm, i) => (
-              <OmniSendFieldMap
-                key={`rp-m-${i + 9}`}
-                i={i}
-                field={itm}
-                omniSendConf={omniSendConf}
-                formFields={formFields}
-                setOmniSendConf={setOmniSendConf}
-                setSnackbar={setSnackbar}
-              />
-            ))}
-            <div className="txt-center btcbi-field-map-button mt-2">
-              <button
-                onClick={() => addFieldMap(
-                  omniSendConf.field_map.length,
-                  omniSendConf,
-                  setOmniSendConf,
-                  false,
-                )}
-                className="icn-btn sh-sm"
-                type="button"
-              >
-                +
-              </button>
-            </div>
-            <br />
-            <br />
-
-            <div className="mt-4">
-              <b className="wdt-100">{__("Actions", "bit-integrations")}</b>
-            </div>
-            <div className="btcd-hr mt-1" />
-            <OmniSendActions
-              omniSendConf={omniSendConf}
-              setOmniSendConf={setOmniSendConf}
-              formFields={formFields}
-              loading={loading}
-              setLoading={setLoading}
+          {loading.field && (
+            <Loader
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 100,
+                transform: 'scale(0.7)'
+              }}
             />
-          </>
-        )}
+          )}
+          <div className="btcd-hr mt-1" />
+          <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
+            <div className="txt-dp">
+              <b>{__('Form Fields', 'bit-integrations')}</b>
+            </div>
+            <div className="txt-dp">
+              <b>{__('OmniSend Fields', 'bit-integrations')}</b>
+            </div>
+          </div>
+
+          {omniSendConf?.field_map.map((itm, i) => (
+            <OmniSendFieldMap
+              key={`rp-m-${i + 9}`}
+              i={i}
+              field={itm}
+              omniSendConf={omniSendConf}
+              formFields={formFields}
+              setOmniSendConf={setOmniSendConf}
+              setSnackbar={setSnackbar}
+            />
+          ))}
+          <div className="txt-center btcbi-field-map-button mt-2">
+            <button
+              onClick={() =>
+                addFieldMap(omniSendConf.field_map.length, omniSendConf, setOmniSendConf, false)
+              }
+              className="icn-btn sh-sm"
+              type="button">
+              +
+            </button>
+          </div>
+          <br />
+          <br />
+
+          <div className="mt-4">
+            <b className="wdt-100">{__('Actions', 'bit-integrations')}</b>
+          </div>
+          <div className="btcd-hr mt-1" />
+          <OmniSendActions
+            omniSendConf={omniSendConf}
+            setOmniSendConf={setOmniSendConf}
+            formFields={formFields}
+            loading={loading}
+            setLoading={setLoading}
+          />
+        </>
+      )}
     </>
   )
 }

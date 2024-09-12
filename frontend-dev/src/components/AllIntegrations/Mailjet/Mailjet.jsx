@@ -19,35 +19,40 @@ function Mailjet({ formFields, setFlow, flow, allIntegURL }) {
   const [loading, setLoading] = useState({
     auth: false,
     customFields: false,
-    lists: false,
+    lists: false
   })
 
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
-  const staticFields = [
-    { key: 'Email', label: 'Email', required: true },
-  ]
+  const staticFields = [{ key: 'Email', label: __('Email', 'bit-integrations'), required: true }]
 
   const [mailjetConf, setMailjetConf] = useState({
     name: 'Mailjet',
     type: 'Mailjet',
     apiKey: process.env.NODE_ENV === 'development' ? 'eda7ec27e1a31ddc88ae5aae3c569699' : '',
     secretKey: process.env.NODE_ENV === 'development' ? '8f6175601298cf3fa3a12439794af7b2' : '',
-    field_map: [
-      { formField: '', mailjetFormField: '' },
-    ],
+    field_map: [{ formField: '', mailjetFormField: '' }],
     staticFields,
     lists: [],
     customFields: [],
     selectedLists: '',
     groups: [],
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, mailjetConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      mailjetConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -63,7 +68,7 @@ function Mailjet({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(mailjetConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
     mailjetConf.field_map.length > 0 && setStep(pageNo)
@@ -72,7 +77,9 @@ function Mailjet({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <MailjetAuthorization
@@ -86,8 +93,9 @@ function Mailjet({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <MailjetIntegLayout
           formFields={formFields}
           mailjetConf={mailjetConf}
@@ -100,11 +108,8 @@ function Mailjet({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!mailjetConf?.selectedLists}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
-          &nbsp;
+          type="button">
+          {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>

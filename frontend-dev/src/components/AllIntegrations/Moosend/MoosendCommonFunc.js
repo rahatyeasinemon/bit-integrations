@@ -96,7 +96,7 @@ export const nextPage = (conf, setStep, pageNo) => {
     toast.error('Please select list')
   }
   if (!checkMappedFields(conf)) {
-    toast.error('Please map mandatory fields')
+    toast.error(__('Please map mandatory fields', 'bit-integrations'))
     return
   }
   conf.field_map.length > 0 && setStep(pageNo)
@@ -117,7 +117,7 @@ export const saveConfig = (flow, setFlow, allIntegURL, conf, navigate, setLoadin
 
 export const saveUpdateConfig = (flow, allIntegURL, conf, navigate, edit, setIsLoading) => {
   if (!checkMappedFields(conf)) {
-    toast.error('Please map mandatory fields')
+    toast.error(__('Please map mandatory fields', 'bit-integrations'))
     return
   }
   saveActionConf({ flow, allIntegURL, conf, navigate, edit, setIsLoading })

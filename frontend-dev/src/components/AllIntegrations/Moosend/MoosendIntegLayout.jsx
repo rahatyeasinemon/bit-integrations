@@ -10,9 +10,9 @@ import MoosendFieldMap from './MoosendFieldMap'
 
 function MoosendIntegLayout({ moosendConf, setMoosendConf, formFields, loading, setLoading }) {
   const moosendMethod = [
-    { key: '1', name: 'Subscribe' },
-    { key: '0', name: 'Unsubscribe' },
-    { key: '2', name: 'Unsubscribe from list' },
+    { key: '1', name: __('Subscribe', 'bit-integrations') },
+    { key: '0', name: __('Unsubscribe', 'bit-integrations') },
+    { key: '2', name: __('Unsubscribe from list', 'bit-integrations') }
   ]
   const handleList = (e) => {
     let tmp
@@ -43,53 +43,63 @@ function MoosendIntegLayout({ moosendConf, setMoosendConf, formFields, loading, 
 
   return (
     <div className="mt-2">
-
       {!loading.page && (
-
         <div className="flx mt-2">
           <b className="wdt-200 d-in-b ">{__('Method:')}</b>
-          <select onChange={handleList} name="method" value={moosendConf?.method} className="btcd-paper-inp w-5 mx-0">
+          <select
+            onChange={handleList}
+            name="method"
+            value={moosendConf?.method}
+            className="btcd-paper-inp w-5 mx-0">
             <option value="">{__('Select Method')}</option>
-            {
-              moosendMethod.map(method => (
-                <option key={method.key} value={method.key}>
-                  {method.name}
-                </option>
-              ))
-
-            }
+            {moosendMethod.map((method) => (
+              <option key={method.key} value={method.key}>
+                {method.name}
+              </option>
+            ))}
           </select>
         </div>
       )}
-      {(moosendConf.method && moosendConf.method !== '0') && (
+      {moosendConf.method && moosendConf.method !== '0' && (
         <div className="flx mt-2">
           <b className="wdt-200 d-in-b ">{__('List:')}</b>
-          <select onChange={handleList} name="listId" value={moosendConf?.listId} className="btcd-paper-inp w-5 mx-0">
+          <select
+            onChange={handleList}
+            name="listId"
+            value={moosendConf?.listId}
+            className="btcd-paper-inp w-5 mx-0">
             <option value="">{__('Select List')}</option>
-            {
-              moosendConf?.default?.lists && moosendConf.default.lists.map(list => (
+            {moosendConf?.default?.lists &&
+              moosendConf.default.lists.map((list) => (
                 <option key={list.ID} value={list.ID}>
                   {list.Name}
                 </option>
-              ))
-
-            }
+              ))}
           </select>
-          <button onClick={() => getAllLists(moosendConf, setMoosendConf, loading, setLoading)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': '"Refresh list"' }} type="button" disabled={loading.list}>&#x21BB;</button>
+          <button
+            onClick={() => getAllLists(moosendConf, setMoosendConf, loading, setLoading)}
+            className="icn-btn sh-sm ml-2 mr-2 tooltip"
+            style={{ '--tooltip-txt': '"Refresh list"' }}
+            type="button"
+            disabled={loading.list}>
+            &#x21BB;
+          </button>
           {loading.list && <LoaderSm size="20" clr="#022217" className="ml-2" />}
         </div>
       )}
 
-      { moosendConf?.method && (
+      {moosendConf?.method && (
         <div className="mt-5">
-          <b className="wdt-100">
-            {__('Field Map')}
-          </b>
+          <b className="wdt-100">{__('Field Map')}</b>
 
           <div className="btcd-hr mt-2 mb-4" />
           <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-            <div className="txt-dp"><b>{__('Form Fields')}</b></div>
-            <div className="txt-dp"><b>{__('Moosend Fields')}</b></div>
+            <div className="txt-dp">
+              <b>{__('Form Fields')}</b>
+            </div>
+            <div className="txt-dp">
+              <b>{__('Moosend Fields')}</b>
+            </div>
           </div>
           {moosendConf?.field_map.map((itm, i) => (
             <MoosendFieldMap
@@ -102,22 +112,31 @@ function MoosendIntegLayout({ moosendConf, setMoosendConf, formFields, loading, 
             />
           ))}
           {moosendConf?.method === '1' && (
-            <div className="txt-center btcbi-field-map-button mt-2"><button onClick={() => addFieldMap(moosendConf.field_map.length, moosendConf, setMoosendConf, false)} className="icn-btn sh-sm" type="button">+</button></div>
+            <div className="txt-center btcbi-field-map-button mt-2">
+              <button
+                onClick={() =>
+                  addFieldMap(moosendConf.field_map.length, moosendConf, setMoosendConf, false)
+                }
+                className="icn-btn sh-sm"
+                type="button">
+                +
+              </button>
+            </div>
           )}
-
         </div>
       )}
 
       {/* --- PAGE Loader --- */}
 
       {loading.page && (
-        <Loader style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 100,
-          transform: 'scale(0.7)',
-        }}
+        <Loader
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 100,
+            transform: 'scale(0.7)'
+          }}
         />
       )}
     </div>

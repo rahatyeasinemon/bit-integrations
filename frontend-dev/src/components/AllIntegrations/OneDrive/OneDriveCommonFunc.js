@@ -76,10 +76,10 @@ export const getAllOneDriveFolders = (
 
         setOneDriveConf(newConf)
         setIsLoading(false)
-        return 'OneDrive Folders List refreshed successfully'
+        return __('OneDrive Folders List refreshed successfully', 'bit-integrations')
       } else {
         setIsLoading(false)
-        return 'OneDrive Folders List refresh failed. please try again'
+        return __('OneDrive Folders List refresh failed. please try again', 'bit-integrations')
       }
     })
     .catch(() => setIsLoading(false))

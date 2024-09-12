@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { useState } from 'react'
-import { __ } from '../../../Utils/i18nwrap'
+import { __, sprintf } from '../../../Utils/i18nwrap'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
@@ -74,7 +74,7 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
               {__('Select Reputation', 'bit-integrations')}
               <Cooltip width={250} icnSize={17} className="ml-1">
                 <div className="txt-body">
-                  Selected reputation will be set as user new reputation.
+                  {__('Selected reputation will be set as user new reputation', 'bit-integrations')}
                 </div>
               </Cooltip>
             </div>
@@ -112,9 +112,11 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
             className="wdt-200 mt-4 mr-2"
             value="select_group"
             title={__('Select group', 'bit-integrations')}
-            subTitle={__(
-              `Select a group to ${wpforoConf.selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP ? 'add a user to it' : 'remove a user from it'}.`,
-              'bit-integrations'
+            subTitle={sprintf(
+              __('Select a group to %s', 'bit-integrations'),
+              wpforoConf.selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP
+                ? __('add a user to it', 'bit-integrations')
+                : __('remove a user from it', 'bit-integrations')
             )}
           />
           <ConfirmModal
@@ -131,11 +133,12 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
               {__('Select group', 'bit-integrations')}
               <Cooltip width={250} icnSize={17} className="ml-1">
                 <div className="txt-body">
-                  The user will be{' '}
-                  {wpforoConf.selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP
-                    ? 'added to'
-                    : 'removed from'}{' '}
-                  the selected group.
+                  {sprintf(
+                    __('The user will be %s the selected group', 'bit-integrations'),
+                    wpforoConf.selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP
+                      ? __('added to', 'bit-integrations')
+                      : __('removed from', 'bit-integrations')
+                  )}
                 </div>
               </Cooltip>
             </div>
@@ -203,7 +206,9 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
             <div className="mt-2 flx">
               {__('Select Forum', 'bit-integrations')}
               <Cooltip width={250} icnSize={17} className="ml-1">
-                <div className="txt-body">Topics will be added to the selected forum.</div>
+                <div className="txt-body">
+                  {__('Topics will be added to the selected forum', 'bit-integrations')}
+                </div>
               </Cooltip>
             </div>
             {loading.forums ? (
@@ -243,7 +248,10 @@ export default function WPForoActions({ wpforoConf, setWPForoConf, loading, setL
               {__('Select tags', 'bit-integrations')}
               <Cooltip width={250} icnSize={17} className="ml-1">
                 <div className="txt-body">
-                  Separate tags by pressing enter or comma (,) after writing them.
+                  {__(
+                    'Separate tags by pressing enter or comma (,) after writing them',
+                    'bit-integrations'
+                  )}
                 </div>
               </Cooltip>
             </div>

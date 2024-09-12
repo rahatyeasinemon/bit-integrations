@@ -39,11 +39,11 @@ function Mail({ allIntegURL, isInfo, edit }) {
           flds.push({ label: fld.label, value: `\${${fld.name}}` })
         }
       })
-      mail.push({ title: 'Form Fields', type: 'group', childs: flds })
+      mail.push({ title: __('Form Fields', 'bit-integrations'), type: 'group', childs: flds })
     }
 
     if (userMail && Array.isArray(userMail)) {
-      mail.push({ title: 'WP Emails', type: 'group', childs: userMail })
+      mail.push({ title: __('WP Emails', 'bit-integrations'), type: 'group', childs: userMail })
     }
 
     return mail

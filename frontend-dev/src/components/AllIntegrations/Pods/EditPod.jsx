@@ -143,12 +143,12 @@ function EditPod({ allIntegURL }) {
         <option disabled selected>
           {__('Select Status', 'bit-integrations')}
         </option>
-        <option value="publish">Publish</option>
-        <option value="draft">Draft</option>
-        <option value="inherit">Inherit</option>
-        <option value="auto-draft">Auto-Draft</option>
-        <option value="private ">Private</option>
-        <option value="pending">Pending</option>
+        <option value="publish">{__('Publish', 'bit-integrations')}</option>
+        <option value="draft">{__('Draft', 'bit-integrations')}</option>
+        <option value="inherit">{__('Inherit', 'bit-integrations')}</option>
+        <option value="auto-draft">{__('Auto-Draft', 'bit-integrations')}</option>
+        <option value="private ">{__('Private', 'bit-integrations')}</option>
+        <option value="pending">{__('Pending', 'bit-integrations')}</option>
       </select>
 
       <div className="mt-3">
@@ -162,8 +162,8 @@ function EditPod({ allIntegURL }) {
         <option disabled selected>
           {__('Select Status', 'bit-integrations')}
         </option>
-        <option value="open">Open</option>
-        <option value="closed">Closed</option>
+        <option value="open">{__('Open', 'bit-integrations')}</option>
+        <option value="closed">{__('Closed', 'bit-integrations')}</option>
       </select>
 
       <div className="mt-3">
@@ -189,7 +189,7 @@ function EditPod({ allIntegURL }) {
       <div>
         <div>
           <div className="mt-3 mb-1">
-            <b>Post Fields Mapping</b>
+            <b>{__('Post Fields Mapping', 'bit-integrations')}</b>
           </div>
           <div className="btcd-hr" />
           <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">

@@ -12,15 +12,15 @@ export default function SliceWpActions({ sliceWpConf, setSliceWpConf, formFields
   const [isLoading, setIsLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => {} })
   const status = [
-    { key: 'pending', label: 'Pending' },
-    { key: 'paid', label: 'Paid' },
-    { key: 'unpaid', label: 'Unpaid' },
-    { key: 'rejected', label: 'Rejected' }
+    { key: 'pending', label: __('Pending', 'bit-integrations') },
+    { key: 'paid', label: __('Paid', 'bit-integrations') },
+    { key: 'unpaid', label: __('Unpaid', 'bit-integrations') },
+    { key: 'rejected', label: __('Rejected', 'bit-integrations') }
   ]
 
   const types = [
-    { key: 'sale', label: 'Sale' },
-    { key: 'subscription', label: 'Subscription' }
+    { key: 'sale', label: __('Sale', 'bit-integrations') },
+    { key: 'subscription', label: __('Subscription', 'bit-integrations') }
   ]
 
   const actionHandler = (e, typeName) => {

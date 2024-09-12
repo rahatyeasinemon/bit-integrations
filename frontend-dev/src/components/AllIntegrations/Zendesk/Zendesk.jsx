@@ -22,91 +22,109 @@ function Zendesk({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const organizationFields = [
-    { key: 'name', label: 'Name', required: true },
-    { key: 'phone', label: 'Phone', required: false },
-    { key: 'mobile', label: 'Mobile', required: false },
-    { key: 'email', label: 'Email', required: false },
-    { key: 'description', label: 'Description', required: false },
-    { key: 'line1', label: 'Street', required: false },
-    { key: 'city', label: 'City', required: false },
-    { key: 'state', label: 'State', required: false },
-    { key: 'postal_code', label: 'Postal Code', required: false },
-    { key: 'country', label: 'Country', required: false },
-    { key: 'fax', label: 'Fax', required: false },
-    { key: 'facebook', label: 'Facebook', required: false },
-    { key: 'skype', label: 'Skype', required: false },
-    { key: 'linkedin', label: 'LinkedIn', required: false },
-    { key: 'twitter', label: 'Twitter', required: false },
+    { key: 'name', label: __('Name', 'bit-integrations'), required: true },
+    { key: 'phone', label: __('Phone', 'bit-integrations'), required: false },
+    { key: 'mobile', label: __('Mobile', 'bit-integrations'), required: false },
+    { key: 'email', label: __('Email', 'bit-integrations'), required: false },
+    { key: 'description', label: __('Description', 'bit-integrations'), required: false },
+    { key: 'line1', label: __('Street', 'bit-integrations'), required: false },
+    { key: 'city', label: __('City', 'bit-integrations'), required: false },
+    { key: 'state', label: __('State', 'bit-integrations'), required: false },
+    { key: 'postal_code', label: __('Postal Code', 'bit-integrations'), required: false },
+    { key: 'country', label: __('Country', 'bit-integrations'), required: false },
+    { key: 'fax', label: __('Fax', 'bit-integrations'), required: false },
+    { key: 'facebook', label: __('Facebook', 'bit-integrations'), required: false },
+    { key: 'skype', label: __('Skype', 'bit-integrations'), required: false },
+    { key: 'linkedin', label: __('LinkedIn', 'bit-integrations'), required: false },
+    { key: 'twitter', label: __('Twitter', 'bit-integrations'), required: false }
   ]
 
   const contactFields = [
-    { key: 'first_name', label: 'First Name', required: false },
-    { key: 'last_name', label: 'Last Name', required: true },
-    { key: 'title', label: 'Title', required: false },
-    { key: 'phone', label: 'Phone', required: false },
-    { key: 'mobile', label: 'Mobile', required: false },
-    { key: 'email', label: 'Email', required: false },
-    { key: 'description', label: 'Description', required: false },
-    { key: 'line1', label: 'Street', required: false },
-    { key: 'city', label: 'City', required: false },
-    { key: 'state', label: 'State', required: false },
-    { key: 'postal_code', label: 'Postal Code', required: false },
-    { key: 'country', label: 'Country', required: false },
-    { key: 'fax', label: 'Fax', required: false },
-    { key: 'facebook', label: 'Facebook', required: false },
-    { key: 'skype', label: 'Skype', required: false },
-    { key: 'linkedin', label: 'LinkedIn', required: false },
-    { key: 'twitter', label: 'Twitter', required: false },
+    { key: 'first_name', label: __('First Name', 'bit-integrations'), required: false },
+    { key: 'last_name', label: __('Last Name', 'bit-integrations'), required: true },
+    { key: 'title', label: __('Title', 'bit-integrations'), required: false },
+    { key: 'phone', label: __('Phone', 'bit-integrations'), required: false },
+    { key: 'mobile', label: __('Mobile', 'bit-integrations'), required: false },
+    { key: 'email', label: __('Email', 'bit-integrations'), required: false },
+    { key: 'description', label: __('Description', 'bit-integrations'), required: false },
+    { key: 'line1', label: __('Street', 'bit-integrations'), required: false },
+    { key: 'city', label: __('City', 'bit-integrations'), required: false },
+    { key: 'state', label: __('State', 'bit-integrations'), required: false },
+    { key: 'postal_code', label: __('Postal Code', 'bit-integrations'), required: false },
+    { key: 'country', label: __('Country', 'bit-integrations'), required: false },
+    { key: 'fax', label: __('Fax', 'bit-integrations'), required: false },
+    { key: 'facebook', label: __('Facebook', 'bit-integrations'), required: false },
+    { key: 'skype', label: __('Skype', 'bit-integrations'), required: false },
+    { key: 'linkedin', label: __('LinkedIn', 'bit-integrations'), required: false },
+    { key: 'twitter', label: __('Twitter', 'bit-integrations'), required: false }
   ]
 
   const leadFields = [
-    { key: 'first_name', label: 'First Name', required: false },
-    { key: 'last_name', label: 'Last Name', required: true },
-    { key: 'title', label: 'Title', required: false },
-    { key: 'phone', label: 'Phone', required: false },
-    { key: 'mobile', label: 'Mobile', required: false },
-    { key: 'fax', label: 'Fax', required: false },
-    { key: 'website', label: 'Website', required: false },
-    { key: 'email', label: 'Email', required: false },
-    { key: 'description', label: 'Description', required: false },
-    { key: 'line1', label: 'Street', required: false },
-    { key: 'city', label: 'City', required: false },
-    { key: 'state', label: 'State', required: false },
-    { key: 'postal_code', label: 'Postal Code', required: false },
-    { key: 'country', label: 'Country', required: false },
-    { key: 'facebook', label: 'Facebook', required: false },
-    { key: 'skype', label: 'Skype', required: false },
-    { key: 'linkedin', label: 'LinkedIn', required: false },
-    { key: 'twitter', label: 'Twitter', required: false },
+    { key: 'first_name', label: __('First Name', 'bit-integrations'), required: false },
+    { key: 'last_name', label: __('Last Name', 'bit-integrations'), required: true },
+    { key: 'title', label: __('Title', 'bit-integrations'), required: false },
+    { key: 'phone', label: __('Phone', 'bit-integrations'), required: false },
+    { key: 'mobile', label: __('Mobile', 'bit-integrations'), required: false },
+    { key: 'fax', label: __('Fax', 'bit-integrations'), required: false },
+    { key: 'website', label: __('Website', 'bit-integrations'), required: false },
+    { key: 'email', label: __('Email', 'bit-integrations'), required: false },
+    { key: 'description', label: __('Description', 'bit-integrations'), required: false },
+    { key: 'line1', label: __('Street', 'bit-integrations'), required: false },
+    { key: 'city', label: __('City', 'bit-integrations'), required: false },
+    { key: 'state', label: __('State', 'bit-integrations'), required: false },
+    { key: 'postal_code', label: __('Postal Code', 'bit-integrations'), required: false },
+    { key: 'country', label: __('Country', 'bit-integrations'), required: false },
+    { key: 'facebook', label: __('Facebook', 'bit-integrations'), required: false },
+    { key: 'skype', label: __('Skype', 'bit-integrations'), required: false },
+    { key: 'linkedin', label: __('LinkedIn', 'bit-integrations'), required: false },
+    { key: 'twitter', label: __('Twitter', 'bit-integrations'), required: false }
   ]
 
   const dealFields = [
-    { key: 'name', label: 'Deal Name', required: true },
-    { key: 'value', label: 'Value', required: false },
-    { key: 'estimated_close_date', label: 'Estimated Close Date', required: false },
-    { key: 'added_at', label: 'Added On', required: false },
-    { key: 'last_stage_change_at', label: 'Last Moved Stage On', required: false },
+    { key: 'name', label: __('Deal Name', 'bit-integrations'), required: true },
+    { key: 'value', label: __('Value', 'bit-integrations'), required: false },
+    {
+      key: 'estimated_close_date',
+      label: __('Estimated Close Date', 'bit-integrations'),
+      required: false
+    },
+    { key: 'added_at', label: __('Added On', 'bit-integrations'), required: false },
+    {
+      key: 'last_stage_change_at',
+      label: __('Last Moved Stage On', 'bit-integrations'),
+      required: false
+    }
   ]
 
   const [zendeskConf, setZendeskConf] = useState({
     name: 'Zendesk',
     type: 'Zendesk',
-    api_key: process.env.NODE_ENV === 'development' ? '8259c4ba5798d7005e5d2f2a3ea8e57de2013439ed4a0720f0cfcaf4bc4095a5' : '',
-    field_map: [
-      { formField: '', zendeskFormField: '' },
-    ],
+    api_key:
+      process.env.NODE_ENV === 'development'
+        ? '8259c4ba5798d7005e5d2f2a3ea8e57de2013439ed4a0720f0cfcaf4bc4095a5'
+        : '',
+    field_map: [{ formField: '', zendeskFormField: '' }],
     actionName: '',
     organizationFields,
     contactFields,
     leadFields,
     dealFields,
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, zendeskConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      zendeskConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -122,21 +140,21 @@ function Zendesk({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(zendeskConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
 
     if (zendeskConf.actionName === 'lead' || zendeskConf.actionName === 'deal') {
       if (!zendeskConf.selectedCRMCompany) {
-        toast.error('Please select a company')
+        toast.error(__('Please select a company', 'bit-integrations'))
         return
       }
       if (!zendeskConf.selectedCRMContact) {
-        toast.error('Please select a contact')
+        toast.error(__('Please select a contact', 'bit-integrations'))
         return
       }
       if (!zendeskConf.selectedCRMSources && zendeskConf.actionName === 'lead') {
-        toast.error('Please select a Source')
+        toast.error(__('Please select a Source', 'bit-integrations'))
         return
       }
     }
@@ -147,7 +165,9 @@ function Zendesk({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <ZendeskAuthorization
@@ -161,8 +181,9 @@ function Zendesk({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <ZendeskIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, zendeskConf, setZendeskConf, setLoading, setSnackbar)}
@@ -176,13 +197,10 @@ function Zendesk({ formFields, setFlow, flow, allIntegURL }) {
         {zendeskConf?.actionName && (
           <button
             onClick={() => nextPage(3)}
-            disabled={!(checkMappedFields(zendeskConf))}
+            disabled={!checkMappedFields(zendeskConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button"
-          >
-            {__('Next', 'bit-integrations')}
-            {' '}
-            &nbsp;
+            type="button">
+            {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         )}

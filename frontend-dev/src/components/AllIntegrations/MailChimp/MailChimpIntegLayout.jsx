@@ -21,12 +21,12 @@ export default function MailChimpIntegLayout({
   setLoading
 }) {
   const address = [
-    { tag: 'addr1', name: 'Address 1', required: true },
-    { tag: 'addr2', name: 'Address 2', required: false },
-    { tag: 'city', name: 'City', required: true },
-    { tag: 'zip', name: 'Zip', required: true },
-    { tag: 'state', name: 'State', required: true },
-    { tag: 'country', name: 'Country', required: false }
+    { tag: 'addr1', name: __('Address 1', 'bit-integrations'), required: true },
+    { tag: 'addr2', name: __('Address 2', 'bit-integrations'), required: false },
+    { tag: 'city', name: __('City', 'bit-integrations'), required: true },
+    { tag: 'zip', name: __('Zip', 'bit-integrations'), required: true },
+    { tag: 'state', name: __('State', 'bit-integrations'), required: true },
+    { tag: 'country', name: __('Country', 'bit-integrations'), required: false }
   ]
   const setTags = (val) => {
     const newConf = { ...mailChimpConf }

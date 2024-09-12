@@ -24,15 +24,24 @@ function Nimble({ formFields, setFlow, flow, allIntegURL }) {
     name: 'Nimble',
     type: 'Nimble',
     api_key: process.env.NODE_ENV === 'development' ? 't8KX44qoxEKGQ2B1MGQi8f6XxLWlsY' : '',
-    field_map: [{ formField: "", nimbleFormField: "" }],
+    field_map: [{ formField: '', nimbleFormField: '' }],
     actionName: '',
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, nimbleConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      nimbleConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -48,7 +57,7 @@ function Nimble({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(nimbleConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
 
@@ -74,8 +83,9 @@ function Nimble({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <NimbleIntegLayout
           formFields={formFields}
           nimbleConf={nimbleConf}
@@ -90,13 +100,10 @@ function Nimble({ formFields, setFlow, flow, allIntegURL }) {
         {nimbleConf?.actionName && (
           <button
             onClick={() => nextPage(3)}
-            disabled={!(checkMappedFields(nimbleConf))}
+            disabled={!checkMappedFields(nimbleConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button"
-          >
-            {__('Next', 'bit-integrations')}
-            {' '}
-            &nbsp;
+            type="button">
+            {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         )}

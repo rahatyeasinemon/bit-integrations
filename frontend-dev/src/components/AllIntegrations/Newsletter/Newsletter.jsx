@@ -17,7 +17,7 @@ function Newsletter({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
-    auth: false,
+    auth: false
   })
 
   const [step, setStep] = useState(1)
@@ -26,20 +26,27 @@ function Newsletter({ formFields, setFlow, flow, allIntegURL }) {
   const [newsletterConf, setNewsletterConf] = useState({
     name: 'Newsletter',
     type: 'Newsletter',
-    field_map: [
-      { formField: '', newsletterFormField: '' },
-    ],
+    field_map: [{ formField: '', newsletterFormField: '' }],
     staticFields,
     lists: [],
     selectedLists: '',
     groups: [],
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, newsletterConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      newsletterConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -55,7 +62,7 @@ function Newsletter({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(newsletterConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
     newsletterConf.field_map.length > 0 && setStep(pageNo)
@@ -64,7 +71,9 @@ function Newsletter({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <NewsletterAuthorization
@@ -78,8 +87,9 @@ function Newsletter({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <NewsletterIntegLayout
           formFields={formFields}
           newsletterConf={newsletterConf}
@@ -92,11 +102,8 @@ function Newsletter({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!checkMappedFields(newsletterConf)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
-          &nbsp;
+          type="button">
+          {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>

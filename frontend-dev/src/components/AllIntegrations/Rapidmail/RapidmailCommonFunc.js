@@ -39,10 +39,10 @@ export const getAllRecipient = (rapidmailConf, setRapidmailConf, setIsLoading, s
         }
         setRapidmailConf({ ...newConf })
         setIsLoading(false)
-        return 'Recipientlist refreshed successfully'
+        return __('Recipientlist refreshed successfully', 'bit-integrations')
       } else {
         setIsLoading(false)
-        return 'Recipientlist refresh failed. please try again'
+        return __('Recipientlist refresh failed. please try again', 'bit-integrations')
       }
     }
   )

@@ -73,7 +73,7 @@ export default function MailMintAuthorization({
       {isLoading === 'auth' && (
         <div className="flx mt-5">
           <LoaderSm size={25} clr="#022217" className="mr-2" />
-          Checking if Mail Mint is active!!!
+          {__('Checking if Mail Mint is active!!!', 'bit-integrations')}
         </div>
       )}
 

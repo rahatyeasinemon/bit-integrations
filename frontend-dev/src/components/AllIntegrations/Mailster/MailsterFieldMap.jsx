@@ -111,7 +111,13 @@ export default function MailsterFieldMap({ i, formFields, field, mailsterConf, s
             <div>
               <Cooltip width={300} icnSize={17} className="ml-2">
                 <div className="txt-body">
-                  <p>Available values or options for the selected Mailster field:</p>
+                  <p>
+                    {__(
+                      'Available values or options for the selected Mailster field',
+                      'bit-integrations'
+                    )}
+                    :
+                  </p>
                   {options.map((option, index) => (
                     <li key={index}>{option}</li>
                   ))}

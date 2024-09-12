@@ -56,9 +56,9 @@ export default function MailMintIntegLayout({
   }
 
   const subscriptionStatus = [
-    { key: 'pending', label: 'Pending' },
-    { key: 'subscribed', label: 'Subscribed' },
-    { key: 'unsubscribed', label: 'Unsubscribed' }
+    { key: 'pending', label: __('Pending', 'bit-integrations') },
+    { key: 'subscribed', label: __('Subscribed', 'bit-integrations') },
+    { key: 'unsubscribed', label: __('Unsubscribed', 'bit-integrations') }
   ]
 
   return (

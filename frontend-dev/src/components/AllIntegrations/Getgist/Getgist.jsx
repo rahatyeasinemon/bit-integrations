@@ -63,7 +63,7 @@ function Getgist({ formFields, setFlow, flow, allIntegURL }) {
 
     if (!checkMappedFields(getgistConf)) {
       // setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
     getgistConf.field_map.length > 0 && setstep(pageNo)

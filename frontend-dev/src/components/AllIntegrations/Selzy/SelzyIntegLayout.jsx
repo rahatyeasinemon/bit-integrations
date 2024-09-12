@@ -14,8 +14,8 @@ import SelzyFieldMap from './SelzyFieldMap'
 
 function SelzyIntegLayout({ selzyConf, setSelzyConf, formFields, loading, setLoading }) {
   const [methodList, setMethodList] = useState([
-    { key: '1', label: 'Subscribe' },
-    { key: '2', label: 'unsubscribe' }
+    { key: '1', label: __('Subscribe', 'bit-integrations') },
+    { key: '2', label: __('unsubscribe', 'bit-integrations') }
   ])
   const handleList = (val, name) => {
     const newConf = { ...selzyConf }

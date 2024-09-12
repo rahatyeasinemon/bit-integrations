@@ -108,7 +108,7 @@ export default function ElasticEmailAuthorization({
       {isLoading === 'auth' && (
         <div className="flx mt-5">
           <LoaderSm size={25} clr="#022217" className="mr-2" />
-          Checking API Key!!!
+          {__('Checking API Key!!!', 'bit-integrations')}
         </div>
       )}
 
