@@ -28,7 +28,7 @@ function MailBluster({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'firstName', label: __('First Name', 'bit-integrations'), required: false },
     { key: 'lastName', label: __('Last Name', 'bit-integrations'), required: false },
     { key: 'timezone', label: __('Timezone', 'bit-integrations'), required: false },
-    { key: 'ipAddress', label: __('Ip Address', 'bit-integrations'), required: false }
+    { key: 'ipAddress', label: __('IP Address', 'bit-integrations'), required: false }
   ]
 
   const [mailBlusterConf, setMailBlusterConf] = useState({

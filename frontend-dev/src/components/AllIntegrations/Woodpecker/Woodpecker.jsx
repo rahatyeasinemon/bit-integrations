@@ -21,8 +21,8 @@ function Woodpecker({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const prospectsFields = [
-    { key: 'first_name', label: __('First name', 'bit-integrations'), required: false },
-    { key: 'last_name', label: __('Last name', 'bit-integrations'), required: false },
+    { key: 'first_name', label: __('First Name', 'bit-integrations'), required: false },
+    { key: 'last_name', label: __('Last Name', 'bit-integrations'), required: false },
     { key: 'company', label: __('Company', 'bit-integrations'), required: false },
     { key: 'industry', label: __('Industry', 'bit-integrations'), required: false },
     { key: 'website', label: __('Website', 'bit-integrations'), required: false },

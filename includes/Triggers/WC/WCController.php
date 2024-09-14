@@ -2,12 +2,12 @@
 
 namespace BitCode\FI\Triggers\WC;
 
-use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Flow\Flow;
 use WC_Booking;
 use WC_Checkout;
 use WC_Product_Simple;
+use BitCode\FI\Flow\Flow;
 use WC_Subscriptions_Product;
+use BitCode\FI\Core\Util\Helper;
 
 final class WCController
 {
@@ -383,7 +383,7 @@ final class WCController
                 $fields = [
                     'Customer ID' => (object) [
                         'fieldKey'  => 'customer_id',
-                        'fieldName' => __('Customer ID', 'bit-integrations')
+                        'fieldName' => __('Customer Id', 'bit-integrations')
                     ],
                     'First Name' => (object) [
                         'fieldKey'  => 'first_name',

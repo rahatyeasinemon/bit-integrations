@@ -20,8 +20,8 @@ function Rapidmail({ formFields, setFlow, flow, allIntegURL }) {
 
   const recipientsFields = [
     { key: 'email', label: __('Email', 'bit-integrations'), required: true },
-    { key: 'firstname', label: __('First name', 'bit-integrations'), required: false },
-    { key: 'lastname', label: __('Last name', 'bit-integrations'), required: false },
+    { key: 'firstname', label: __('First Name', 'bit-integrations'), required: false },
+    { key: 'lastname', label: __('Last Name', 'bit-integrations'), required: false },
     { key: 'gender', label: __('Gender', 'bit-integrations'), required: false },
     { key: 'title', label: __('Title', 'bit-integrations'), required: false },
     { key: 'zip', label: __('Zip', 'bit-integrations'), required: false },

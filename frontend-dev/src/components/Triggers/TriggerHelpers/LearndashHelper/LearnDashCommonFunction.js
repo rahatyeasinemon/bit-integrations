@@ -41,7 +41,7 @@ export const getTopicByLesson = (val, course_id, tmpNewFlow, setNewFlow, edit = 
           newConf.flow_details.topics = result.data
         }
         setNewFlow({ ...newConf })
-        return __('Fetched topic successfully', 'bit-integrations')
+        return __('Fetched Topic successfully', 'bit-integrations')
       }
       return __('Topics fetching failed. please try again', 'bit-integrations')
     }

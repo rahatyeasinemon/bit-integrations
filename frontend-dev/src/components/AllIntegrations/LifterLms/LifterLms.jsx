@@ -23,7 +23,7 @@ function LifterLms({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
   const allActions = [
     { key: '1', label: __('Lesson complete for the user', 'bit-integrations') },
     { key: '2', label: __('Section complete for the user', 'bit-integrations') },
-    { key: '3', label: __('Enroll user in a course', 'bit-integrations') },
+    { key: '3', label: __('Enroll user in a Course', 'bit-integrations') },
     { key: '4', label: __('Enroll user in a membership', 'bit-integrations') },
     { key: '5', label: __('Course complete for the user', 'bit-integrations') },
     { key: '6', label: __('Unenroll user from a course', 'bit-integrations') },

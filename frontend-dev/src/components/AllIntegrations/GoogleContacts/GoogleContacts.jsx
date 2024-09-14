@@ -33,7 +33,7 @@ function GoogleContacts({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'city', label: __('City', 'bit-integrations'), required: false },
     { key: 'country', label: __('Country', 'bit-integrations'), required: false },
     { key: 'locations', label: __('Locations', 'bit-integrations'), required: false },
-    { key: 'email', label: __('email', 'bit-integrations'), required: false },
+    { key: 'email', label: __('Email', 'bit-integrations'), required: false },
     { key: 'occupation', label: __('Occupation', 'bit-integrations'), required: false },
     { key: 'organization', label: __('Organization', 'bit-integrations'), required: false }
   ]

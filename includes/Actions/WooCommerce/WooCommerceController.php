@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\WooCommerce;
 
-use BitCode\FI\Log\LogHandler;
-use WC_Data_Store;
 use WP_Error;
+use WC_Data_Store;
+use BitCode\FI\Log\LogHandler;
 
 class WooCommerceController
 {
@@ -288,7 +288,7 @@ class WooCommerceController
 
         $subscriptions[] = [
             'product_id'   => 'any',
-            'product_name' => __('Any product', 'bit-integrations'),
+            'product_name' => __('Any Product', 'bit-integrations'),
         ];
 
         foreach ($allSubscriptions as $key => $val) {

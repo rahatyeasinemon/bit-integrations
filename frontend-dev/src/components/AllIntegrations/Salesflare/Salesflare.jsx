@@ -55,8 +55,8 @@ function Salesflare({ formFields, setFlow, flow, allIntegURL }) {
   const opportunitiyFields = [
     { key: 'name', label: __('Opportunity name', 'bit-integrations'), required: true },
     { key: 'value', label: __('Value', 'bit-integrations'), required: false },
-    { key: 'start_date', label: __('Start date', 'bit-integrations'), required: false },
-    { key: 'close_date', label: __('Close date', 'bit-integrations'), required: false }
+    { key: 'start_date', label: __('Start Date', 'bit-integrations'), required: false },
+    { key: 'close_date', label: __('Close Date', 'bit-integrations'), required: false }
   ]
 
   const [salesflareConf, setSalesflareConf] = useState({

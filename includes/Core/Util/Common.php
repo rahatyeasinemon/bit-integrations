@@ -76,15 +76,15 @@ final class Common
         $fileBaseURL = $upDir['baseurl'];
         $fileBasePath = $upDir['basedir'];
         if (\is_array($file)) {
-            $path = [];
+            $Url = [];
             foreach ($file as $fileIndex => $fileUrl) {
-                $path[$fileIndex] = str_replace($fileBaseURL, $fileBasePath, $fileUrl);
+                $Url[$fileIndex] = str_replace($fileBaseURL, $fileBasePath, $fileUrl);
             }
         } else {
-            $path = str_replace($fileBasePath, $fileBaseURL, $file);
+            $Url = str_replace($fileBasePath, $fileBaseURL, $file);
         }
 
-        return $path;
+        return $Url;
     }
 
     /**
@@ -289,6 +289,11 @@ final class Common
         }
     }
 
+    public static function loadPluginTextDomain($domain, $path)
+    {
+        load_plugin_textdomain($domain, false, $path);
+    }
+
     private static function replaceFieldWithValueHelper($stringToReplaceField, $fieldValues)
     {
         if (empty($stringToReplaceField)) {
@@ -311,9 +316,5 @@ final class Common
         }
 
         return $stringToReplaceField;
-    }
-
-    public static function loadPluginTextDomain($domain, $path){
-        load_plugin_textdomain($domain, false, $path);
     }
 }
