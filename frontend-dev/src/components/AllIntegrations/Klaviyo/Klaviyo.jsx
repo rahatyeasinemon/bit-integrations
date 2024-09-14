@@ -21,6 +21,7 @@ function Klaviyo({ formFields, setFlow, flow, allIntegURL }) {
     type: 'Klaviyo',
     authKey: process.env.NODE_ENV === 'development' ? 'pk_d8b5b0537a0358d781f72a474efab0f36e' : '',
     field_map: [{ formField: '', klaviyoFormField: '' }],
+    custom_field_map: [{ formField: '', klaviyoFormField: '' }],
     klaviyoFields: [
       { key: 'email', label: __('Email', 'bit-integrations'), required: true },
       { key: 'first_name', label: __('First Name', 'bit-integrations'), required: false },

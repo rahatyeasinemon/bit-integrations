@@ -8,7 +8,7 @@ import { addFieldMap, delFieldMap, handleFieldMapping } from '../GlobalIntegrati
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
 import { generateMappedField } from './KlaviyoCommonFunc'
 
-function KlaviyoFieldMap({ i, field, formFields, klaviyoConf, setKlaviyoConf }) {
+function KlaviyoFieldMap({ i, field, formFields, klaviyoConf, setKlaviyoConf, type }) {
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
 
@@ -23,6 +23,13 @@ function KlaviyoFieldMap({ i, field, formFields, klaviyoConf, setKlaviyoConf }) 
 
   const nonrequiredFields = klaviyoConf?.klaviyoFields.filter((fld) => fld.required === false) || []
 
+  const handleFieldMapping = (event, index) => {
+    const newConf = { ...klaviyoConf }
+
+    newConf[type][index][event.target.name] = event.target.value
+    setKlaviyoConf(newConf)
+  }
+
   return (
     <div className="flx mt-2 mb-2 btcbi-field-map">
       <div className="pos-rel flx">
@@ -31,7 +38,7 @@ function KlaviyoFieldMap({ i, field, formFields, klaviyoConf, setKlaviyoConf }) 
             className="btcd-paper-inp mr-2"
             name="formField"
             onChange={(event) => {
-              handleFieldMapping(event, i, klaviyoConf, setKlaviyoConf)
+              handleFieldMapping(event, i)
             }}
             value={field.formField || ''}>
             <option value="">{__('Select Field', 'bit-integrations')}</option>
@@ -61,7 +68,7 @@ function KlaviyoFieldMap({ i, field, formFields, klaviyoConf, setKlaviyoConf }) 
 
           {field.formField === 'custom' && (
             <TagifyInput
-              onChange={(e) => handleCustomValue(e, i, klaviyoConf, setKlaviyoConf)}
+              onChange={(e) => handleCustomValue(e, i)}
               label={__('Custom Value', 'bit-integrations')}
               className="mr-2"
               type="text"
@@ -71,29 +78,43 @@ function KlaviyoFieldMap({ i, field, formFields, klaviyoConf, setKlaviyoConf }) 
             />
           )}
 
-          <select
-            className="btcd-paper-inp"
-            disabled={i < requiredFields.length}
-            name="klaviyoFormField"
-            onChange={(event) => {
-              handleFieldMapping(event, i, klaviyoConf, setKlaviyoConf)
-            }}
-            value={
-              i < requiredFields.length ? requiredFields[i].key || '' : field.klaviyoFormField || ''
-            }>
-            <option value="">{__('Select Field', 'bit-integrations')}</option>
-            {i < requiredFields.length ? (
-              <option key={requiredFields[i].key} value={requiredFields[i].key}>
-                {requiredFields[i].label}
-              </option>
-            ) : (
-              nonrequiredFields.map(({ key, label }) => (
-                <option key={key} value={key}>
-                  {label}
+          {type === 'field_map' ? (
+            <select
+              className="btcd-paper-inp"
+              disabled={i < requiredFields.length}
+              name="klaviyoFormField"
+              onChange={(event) => {
+                handleFieldMapping(event, i)
+              }}
+              value={
+                i < requiredFields.length
+                  ? requiredFields[i].key || ''
+                  : field.klaviyoFormField || ''
+              }>
+              <option value="">{__('Select Field', 'bit-integrations')}</option>
+              {i < requiredFields.length ? (
+                <option key={requiredFields[i].key} value={requiredFields[i].key}>
+                  {requiredFields[i].label}
                 </option>
-              ))
-            )}
-          </select>
+              ) : (
+                nonrequiredFields.map(({ key, label }) => (
+                  <option key={key} value={key}>
+                    {label}
+                  </option>
+                ))
+              )}
+            </select>
+          ) : (
+            <input
+              className="btcd-paper-inp"
+              name="klaviyoFormField"
+              value={field['klaviyoFormField'] || ''}
+              onChange={(event) => {
+                handleFieldMapping(event, i)
+              }}
+              type="text"
+            />
+          )}
         </div>
         <button
           onClick={() => addFieldMap(i, klaviyoConf, setKlaviyoConf)}

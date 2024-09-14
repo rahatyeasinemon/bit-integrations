@@ -18,6 +18,7 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
     switch (e.target.name) {
       case 'listId':
         newConf.field_map = [{ formField: '', klaviyoFormField: '' }]
+        newConf.custom_field_map = [{ formField: '', klaviyoFormField: '' }]
         break
     }
 
@@ -84,6 +85,43 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
               formFields={formFields}
               klaviyoConf={klaviyoConf}
               setKlaviyoConf={setKlaviyoConf}
+              type="field_map"
+            />
+          ))}
+          <div className="txt-center btcbi-field-map-button mt-2">
+            <button
+              onClick={() =>
+                addFieldMap(klaviyoConf.field_map.length, klaviyoConf, setKlaviyoConf, false)
+              }
+              className="icn-btn sh-sm"
+              type="button">
+              +
+            </button>
+          </div>
+        </div>
+      )}
+      {klaviyoConf?.listId && (
+        <div className="mt-5">
+          <b className="wdt-100">{__('Custom properties', 'bit-integrations')}</b>
+
+          <div className="btcd-hr mt-2 mb-4" />
+          <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
+            <div className="txt-dp">
+              <b>{__('Form Fields', 'bit-integrations')}</b>
+            </div>
+            <div className="txt-dp">
+              <b>{__('Property name', 'bit-integrations')}</b>
+            </div>
+          </div>
+          {klaviyoConf?.custom_field_map?.map((itm, i) => (
+            <KlaviyoFieldMap
+              key={`ko-m-${i + 8}`}
+              i={i}
+              field={itm}
+              formFields={formFields}
+              klaviyoConf={klaviyoConf}
+              setKlaviyoConf={setKlaviyoConf}
+              type="custom_field_map"
             />
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
