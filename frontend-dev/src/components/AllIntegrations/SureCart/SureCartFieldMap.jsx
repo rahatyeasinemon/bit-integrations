@@ -44,7 +44,7 @@ export default function SureCartFieldMap({ i, field, formFields, sureCartConf, s
             <optgroup
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
-                isPro ? '' : `(${__('PRO', 'bit-integrations')})`
+                isPro ? '' : `(${__('Pro', 'bit-integrations')})`
               )}>
               {isPro &&
                 SmartTagField?.map((f) => (

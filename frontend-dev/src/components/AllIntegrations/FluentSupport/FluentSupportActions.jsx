@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { __ } from '../../../Utils/i18nwrap'
+import { __, sprintf } from '../../../Utils/i18nwrap'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import Loader from '../../Loaders/Loader'
@@ -113,9 +113,13 @@ export default function FluentSupportActions({
                   'Supported Types: Photos, CSV, PDF/Docs, Zip, JSON and max file size: 2.0MB',
                   'bit-integrations'
                 )
-              : __(
-                  'The Bit Integration Pro v(2.1.7) plugin needs to be installed and activated to enable the Upsert Record feature',
-                  'bit-integrations'
+              : sprintf(
+                  __(
+                    'The Bit Integration Pro v(%s) plugin needs to be installed and activated to enable the %s feature',
+                    'bit-integrations'
+                  ),
+                  '2.1.7',
+                  __('Upsert Record', 'bit-integrations')
                 )
           }
         />

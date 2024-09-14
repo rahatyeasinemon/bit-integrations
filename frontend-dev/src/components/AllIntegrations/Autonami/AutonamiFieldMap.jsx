@@ -56,10 +56,7 @@ export default function AutonamiFieldMap({ i, formFields, field, autonamiConf, s
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
           <optgroup
-            label={sprintf(
-              __('General Smart Codes %s', 'bit-integrations'),
-              isPro ? '' : `(${__('PRO', 'bit-integrations')})`
-            )}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>

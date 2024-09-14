@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil'
 import { $btcbi } from '../../../GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
-import { __ } from '../../../Utils/i18nwrap'
+import { __, sprintf } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
 import TagifyInput from '../../Utilities/TagifyInput'
@@ -55,10 +55,7 @@ export default function MailChimpFieldMap({
           </optgroup>
           <option value="custom">{__('Custom...', 'bit-integrations')}</option>
           <optgroup
-            label={sprintf(
-              __('General Smart Codes %s', 'bit-integrations'),
-              isPro ? '' : `(${__('PRO', 'bit-integrations')})`
-            )}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={f.name}>

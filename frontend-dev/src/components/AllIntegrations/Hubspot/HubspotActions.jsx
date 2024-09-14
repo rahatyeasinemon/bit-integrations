@@ -265,10 +265,18 @@ export default function HubspotActions({
             `Update ${hubspotConf?.actionName} ${!isPro ? '(Pro)' : ''}`,
             'bit-integrations'
           )}
-          subTitle={__(
-            `${isPro ? 'Update Record' : 'The Bit Integration Pro v(2.1.9) plugin needs to be installed and activated to enable the Upsert Record feature'}`,
-            'bit-integrations'
-          )}
+          subTitle={
+            isPro
+              ? __('Update Record', 'bit-integrations')
+              : sprintf(
+                  __(
+                    'The Bit Integration Pro v(%s) plugin needs to be installed and activated to enable the %s feature',
+                    'bit-integrations'
+                  ),
+                  '2.1.9',
+                  __('Update Record', 'bit-integrations')
+                )
+          }
           isInfo={!isPro}
         />
       }

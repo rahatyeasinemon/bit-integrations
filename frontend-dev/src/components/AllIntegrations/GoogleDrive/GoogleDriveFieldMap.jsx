@@ -42,7 +42,7 @@ export default function GoogleDriveFieldMap({
             <optgroup
               label={sprintf(
                 __('General Smart Codes %s', 'bit-integrations'),
-                isPro ? '' : `(${__('PRO', 'bit-integrations')})`
+                isPro ? '' : `(${__('Pro', 'bit-integrations')})`
               )}>
               {isPro &&
                 SmartTagField?.map((f) => (

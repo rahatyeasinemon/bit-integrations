@@ -302,10 +302,7 @@ function Mail({ allIntegURL, isInfo, edit, isLearnDash = false, learnDashConf })
               )}
           </optgroup>
           <optgroup
-            label={sprintf(
-              __('General Smart Codes %s', 'bit-integrations'),
-              isPro ? '' : `(${__('PRO', 'bit-integrations')})`
-            )}>
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`}>

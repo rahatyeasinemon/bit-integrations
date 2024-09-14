@@ -89,11 +89,19 @@ export default function GetResponseActions({
           onChange={(e) => actionHandler(e, 'dayOfCycle')}
           className="wdt-200 mt-4 mr-2"
           value="dayOfCycle"
-          title={__(`Autoresponder day ${!isPro ? '(Pro)' : ''}`, 'bit-integrations')}
-          subTitle={__(
-            `${isPro ? 'The day on which the contact is in the Autoresponder cycle' : 'The Bit Integration Pro v(2.1.9) plugin needs to be installed and activated to enable the Autoresponder day feature'}`,
-            'bit-integrations'
-          )}
+          title={`${__('Autoresponder day', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          subTitle={
+            isPro
+              ? __('The day on which the contact is in the Autoresponder cycle', 'bit-integrations')
+              : sprintf(
+                  __(
+                    'The Bit Integration Pro v(%s) plugin needs to be installed and activated to enable the %s feature',
+                    'bit-integrations'
+                  ),
+                  '2.1.9',
+                  __('Autoresponder day', 'bit-integrations')
+                )
+          }
           isInfo={!isPro}
         />
       }

@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { __ } from '../../../Utils/i18nwrap'
+import { __, sprintf } from '../../../Utils/i18nwrap'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import { useRecoilValue } from 'recoil'
 import { $btcbi } from '../../../GlobalStates'
@@ -41,9 +41,13 @@ export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf })
                     'A record gets updated based on the unique identifier value, else a new record will be created',
                     'bit-integrations'
                   )
-                : __(
-                    'The Bit Integration Pro v(2.1.1) plugin needs to be installed and activated to enable the Upsert Record feature',
-                    'bit-integrations'
+                : sprintf(
+                    __(
+                      'The Bit Integration Pro v(%s) plugin needs to be installed and activated to enable the %s feature',
+                      'bit-integrations'
+                    ),
+                    '2.1.1',
+                    __('Upsert Record', 'bit-integrations')
                   )
             }
           />
