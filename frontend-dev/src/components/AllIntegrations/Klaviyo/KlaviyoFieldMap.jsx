@@ -4,9 +4,8 @@ import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import MtInput from '../../Utilities/MtInput'
 import TagifyInput from '../../Utilities/TagifyInput'
-import { addFieldMap, delFieldMap, handleFieldMapping } from '../GlobalIntegrationHelper'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
-import { generateMappedField } from './KlaviyoCommonFunc'
+import { generateMappedField, addFieldMap, delFieldMap } from './KlaviyoCommonFunc'
 
 function KlaviyoFieldMap({ i, field, formFields, klaviyoConf, setKlaviyoConf, type }) {
   const btcbi = useRecoilValue($btcbi)
@@ -117,13 +116,13 @@ function KlaviyoFieldMap({ i, field, formFields, klaviyoConf, setKlaviyoConf, ty
           )}
         </div>
         <button
-          onClick={() => addFieldMap(i, klaviyoConf, setKlaviyoConf)}
+          onClick={() => addFieldMap(i, klaviyoConf, setKlaviyoConf, type)}
           className="icn-btn sh-sm ml-2 mr-1"
           type="button">
           +
         </button>
         <button
-          onClick={() => delFieldMap(i, klaviyoConf, setKlaviyoConf)}
+          onClick={() => delFieldMap(i, klaviyoConf, setKlaviyoConf, type)}
           className="icn-btn sh-sm ml-1"
           type="button"
           aria-label="btn">

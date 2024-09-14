@@ -1,8 +1,7 @@
 /* eslint-disable default-case */
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
-import { addFieldMap } from '../GlobalIntegrationHelper'
-import { getAllLists } from './KlaviyoCommonFunc'
+import { getAllLists, addFieldMap } from './KlaviyoCommonFunc'
 import KlaviyoFieldMap from './KlaviyoFieldMap'
 
 function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, setLoading }) {
@@ -91,7 +90,7 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(klaviyoConf.field_map.length, klaviyoConf, setKlaviyoConf, false)
+                addFieldMap(klaviyoConf.field_map.length, klaviyoConf, setKlaviyoConf, 'field_map')
               }
               className="icn-btn sh-sm"
               type="button">
@@ -127,7 +126,12 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(klaviyoConf.field_map.length, klaviyoConf, setKlaviyoConf, false)
+                addFieldMap(
+                  klaviyoConf?.custom_field_map?.length,
+                  klaviyoConf,
+                  setKlaviyoConf,
+                  'custom_field_map'
+                )
               }
               className="icn-btn sh-sm"
               type="button">

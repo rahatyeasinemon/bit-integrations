@@ -134,3 +134,18 @@ export const saveUpdateConfig = (flow, allIntegURL, conf, navigate, edit, setIsL
   }
   saveActionConf({ flow, allIntegURL, conf, navigate, edit, setIsLoading })
 }
+
+export const addFieldMap = (i, confTmp, setConf, type) => {
+  const newConf = { ...confTmp }
+  newConf[type].splice(i, 0, {})
+  setConf({ ...newConf })
+}
+
+export const delFieldMap = (i, confTmp, setConf, type) => {
+  const newConf = { ...confTmp }
+  if (newConf[type].length > 1) {
+    newConf[type].splice(i, 1)
+  }
+
+  setConf({ ...newConf })
+}
