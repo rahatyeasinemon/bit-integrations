@@ -81,6 +81,7 @@ import {
   getWPForoUsers
 } from '../Triggers/TriggerHelpers/WPForoHelper/WPForoCommonFunction.js'
 import {
+  getApplicationStatuses,
   getWPJobManagerJobs,
   getWPJobManagerJobTypes
 } from '../Triggers/TriggerHelpers/WPJobManager/WPJobManagerCommonFunction.js'
@@ -348,7 +349,8 @@ function EditFormInteg({ setSnackbar, className = '' }) {
         data.triggered_entity_id === 'wp_job_manager-1' ||
         data.triggered_entity_id === 'wp_job_manager-4' ||
         data.triggered_entity_id === 'wp_job_manager-5' ||
-        data.triggered_entity_id === 'wp_job_manager-8'
+        data.triggered_entity_id === 'wp_job_manager-8' ||
+        data.triggered_entity_id === 'wp_job_manager-10'
       ) {
         getWPJobManagerJobTypes(data, setFlow)
       }
@@ -356,9 +358,13 @@ function EditFormInteg({ setSnackbar, className = '' }) {
         data.triggered_entity_id === 'wp_job_manager-2' ||
         data.triggered_entity_id === 'wp_job_manager-3' ||
         data.triggered_entity_id === 'wp_job_manager-6' ||
-        data.triggered_entity_id === 'wp_job_manager-7'
+        data.triggered_entity_id === 'wp_job_manager-7' ||
+        data.triggered_entity_id === 'wp_job_manager-11'
       ) {
         getWPJobManagerJobs(data, setFlow)
+      }
+      if (data.triggered_entity_id === 'wp_job_manager-9') {
+        getApplicationStatuses(data, setFlow)
       }
     }
   }
