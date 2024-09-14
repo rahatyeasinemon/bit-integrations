@@ -218,7 +218,7 @@ final class PostCreationController
                     if (\is_array($currentFieldValue)) {
                         $firstValue = reset($currentFieldValue);
 
-                        if (\is_array($fieldValues)) {
+                        if (\is_array($firstValue)) {
                             $files = $firstValue;
                         } else {
                             $files = $currentFieldValue;
