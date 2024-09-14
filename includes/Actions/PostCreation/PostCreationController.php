@@ -45,14 +45,7 @@ final class PostCreationController
                 $fieldObject = get_field_object($actionValue);
                 if (!empty($fieldValues[$fieldPair->formField])) {
                     if (\in_array($fieldObject['type'], $fileTypes)) {
-                        $filePath = Common::filePath(\is_array($fieldValues[$triggerValue]) ? $fieldValues[$triggerValue][0] : $fieldValues[$triggerValue]);
-
-                        $attachMentId = Helper::singleFileMoveWpMedia($filePath, $postId);
-
-                        if (!empty($attachMentId)) {
-                            update_post_meta($postId, '_' . $actionValue, $fieldObject['key']);
-                            update_post_meta($postId, $fieldObject['name'], wp_json_encode($attachMentId));
-                        }
+                        static::uploadACFFile($postId, $fieldValues[$triggerValue], $actionValue, $fieldObject);
                     } else {
                         $attachMentId = Helper::multiFileMoveWpMedia($fieldValues[$triggerValue], $postId);
                         if (!empty($attachMentId)) {
@@ -127,12 +120,7 @@ final class PostCreationController
                     $fieldObject = $metaboxFields->{$actionValue};
 
                     if ($fieldObject['multiple'] == false) {
-                        $filePath = Common::filePath(\is_array($fieldValues[$triggerValue]) ? $fieldValues[$triggerValue][0] : $fieldValues[$triggerValue]);
-                        $attachMentId = Helper::singleFileMoveWpMedia($filePath, $postId);
-
-                        if (!empty($attachMentId)) {
-                            add_post_meta($postId, $fieldObject['field_name'], $attachMentId);
-                        }
+                        static::uploadMBFile($postId, $fieldValues[$triggerValue], $fieldObject);
                     } elseif ($fieldObject['multiple'] == true) {
                         $attachMentId = Helper::multiFileMoveWpMedia($fieldValues[$triggerValue], $postId);
 
@@ -224,6 +212,41 @@ final class PostCreationController
                 }
             }
             self::mbFileMapping($mbFileMap, $fieldValues, $mbFields, $postId);
+        }
+    }
+
+    private static function uploadACFFile($postId, $files, $actionValue, $fieldObject)
+    {
+        $files = \is_array($files) ? $files : [$files];
+
+        foreach ($files as $file) {
+            if (\is_array($file)) {
+                static::uploadACFFile($postId, $file, $actionValue, $fieldObject);
+            } else {
+                $attachMentId = Helper::singleFileMoveWpMedia($file, $postId);
+
+                if (!empty($attachMentId)) {
+                    update_post_meta($postId, '_' . $actionValue, $fieldObject['key']);
+                    update_post_meta($postId, $fieldObject['name'], wp_json_encode($attachMentId));
+                }
+            }
+        }
+    }
+
+    private static function uploadMBFile($postId, $files, $fieldObject)
+    {
+        $files = \is_array($files) ? $files : [$files];
+
+        foreach ($files as $file) {
+            if (\is_array($file)) {
+                static::uploadMBFile($postId, $file, $fieldObject);
+            } else {
+                $attachMentId = Helper::singleFileMoveWpMedia($file, $postId);
+
+                if (!empty($attachMentId)) {
+                    add_post_meta($postId, $fieldObject['field_name'], $attachMentId);
+                }
+            }
         }
     }
 }

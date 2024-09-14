@@ -2,12 +2,12 @@
 
 namespace BitCode\FI\Core\Util;
 
-use BitCode\FI\Triggers\TriggerController;
 use DateTime;
-use DateTimeZone;
-use Exception;
 use stdClass;
 use WP_Error;
+use Exception;
+use DateTimeZone;
+use BitCode\FI\Triggers\TriggerController;
 
 /**
  * bit-integration helper class
@@ -99,6 +99,8 @@ final class Helper
     {
         require_once ABSPATH . 'wp-load.php';
 
+        $filePath = Common::filePath($filePath);
+
         if (file_exists($filePath)) {
             $imgFileName = basename($filePath);
             // prepare upload image to WordPress Media Library
@@ -131,6 +133,7 @@ final class Helper
         $attachMentId = [];
         require_once ABSPATH . 'wp-admin/includes/image.php';
         foreach ($files as $file) {
+            $file = Common::filePath($file);
             if (file_exists($file)) {
                 $imgFileName = basename($file);
                 // prepare upload image to WordPress Media Library
