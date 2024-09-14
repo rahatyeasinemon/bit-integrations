@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SendFox;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 class SendFoxController
 {
@@ -85,7 +85,7 @@ class SendFoxController
             // empty($fieldMap)||
             empty($access_token)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SendFox'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SendFox'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $acumbamailApiResponse = $recordApiHelper->execute(

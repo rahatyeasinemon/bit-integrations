@@ -26,7 +26,7 @@ final class FilesApiHelper
 
                 $reg_errors->add(
                     'field',
-                    sprintf(
+                    wp_sprintf(
                         esc_html__(
                             'Invalid file type: %s. Supported file types: %s',
                             'propovoice'

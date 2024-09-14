@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SendGrid;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for SendGrid integration
@@ -78,7 +78,7 @@ class SendGridController
         $fieldMap = $integrationDetails->field_map;
 
         if (empty($fieldMap) || empty($apiKey)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SendGrid'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SendGrid'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SuiteDash;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for SuiteDash integration
@@ -115,7 +115,7 @@ class SuiteDashController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($publicId) || empty($actionName) || empty($secretKey)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SuiteDash'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SuiteDash'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $publicId, $secretKey);

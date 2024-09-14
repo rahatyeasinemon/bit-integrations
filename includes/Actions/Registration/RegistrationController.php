@@ -29,7 +29,7 @@ final class RegistrationController
 
             LogHandler::save($this->_integrationID, __('New user registration', 'bit-integrations'), 'error', $message);
         } else {
-            LogHandler::save($this->_integrationID, __('New user registration', 'bit-integrations'), 'success', \sprintf(__('New user created successfully, user id : %s', 'bit-integrations'), $userId));
+            LogHandler::save($this->_integrationID, __('New user registration', 'bit-integrations'), 'success', wp_sprintf(__('New user created successfully, user id : %s', 'bit-integrations'), $userId));
 
             $this->saveMetaData($flowDetails->meta_map, $fieldValues, $userId);
 
@@ -167,7 +167,7 @@ final class RegistrationController
             $message = is_wp_error($updatedUser) ? $updatedUser->get_error_message() : 'error';
             LogHandler::save($this->_integrationID, __('User update', 'bit-integrations'), 'error', $message);
         } else {
-            LogHandler::save($this->_integrationID, __('User update', 'bit-integrations'), 'success', \sprintf(__('User updated successfully, user id : %s', 'bit-integrations'), $updatedUser));
+            LogHandler::save($this->_integrationID, __('User update', 'bit-integrations'), 'success', wp_sprintf(__('User updated successfully, user id : %s', 'bit-integrations'), $updatedUser));
             $this->saveMetaData($flowDetails->meta_map, $fieldValues, $updatedUser);
             $this->notification($flowDetails, $updatedUser);
         }

@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\Mail;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Log\LogHandler;
 
 final class MailController
 {
@@ -56,9 +56,9 @@ final class MailController
                     $status = wp_mail($mailTo, $mailSubject, $mailBody, $mailHeaders);
                 }
                 if (!$status) {
-                    LogHandler::save($integrationData->id, 'Send Mail', 'failed', \sprintf(__('%s failed sends mail to %s', 'bit-integrations'), $flow->name, implode(', ', $mailTo)));
+                    LogHandler::save($integrationData->id, 'Send Mail', 'failed', wp_sprintf(__('%s failed sends mail to %s', 'bit-integrations'), $flow->name, implode(', ', $mailTo)));
                 } else {
-                    LogHandler::save($integrationData->id, 'Send Mail', 'success', \sprintf(__('%s successfully sends mail to %s', 'bit-integrations'), $flow->name, implode(', ', $mailTo)));
+                    LogHandler::save($integrationData->id, 'Send Mail', 'success', wp_sprintf(__('%s successfully sends mail to %s', 'bit-integrations'), $flow->name, implode(', ', $mailTo)));
                 }
 
                 remove_filter('wp_mail_content_type', [self::class, 'filterMailContentType']);

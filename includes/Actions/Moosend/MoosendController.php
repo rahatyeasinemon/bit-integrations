@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Moosend;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Moosend integration
@@ -58,7 +58,7 @@ class MoosendController
             empty($field_map)
             || empty($authKey)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Moosend'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Moosend'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $moosendApiResponse = $recordApiHelper->execute(

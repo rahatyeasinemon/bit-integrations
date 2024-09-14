@@ -130,9 +130,9 @@ class RecordApiHelper
             $following = bp_start_following($data);
         }
         if ($following) {
-            return LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'friend', 'type_name' => 'follow-user']), 'success', wp_json_encode(\sprintf(__('The user successfully start following a member ID - %s', 'bit-integrations'), $friendId)));
+            return LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'friend', 'type_name' => 'follow-user']), 'success', wp_json_encode(wp_sprintf(__('The user successfully start following a member ID - %s', 'bit-integrations'), $friendId)));
         }
-        LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'friend', 'type_name' => 'follow-user']), 'error', wp_json_encode(\sprintf(__('The user was already following a member ID - %s', 'bit-integrations'), $friendId)));
+        LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'friend', 'type_name' => 'follow-user']), 'error', wp_json_encode(wp_sprintf(__('The user was already following a member ID - %s', 'bit-integrations'), $friendId)));
     }
 
     // for action 5
@@ -233,7 +233,7 @@ class RecordApiHelper
 
             return;
         }
-        LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'success', wp_json_encode(\sprintf(__('Post created successfully and id is %s', 'bit-integrations'), $topic_id)));
+        LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'success', wp_json_encode(wp_sprintf(__('Post created successfully and id is %s', 'bit-integrations'), $topic_id)));
 
         if (
             (bbp_get_trash_status_id() === get_post_field('post_status', $forum_id))
@@ -851,7 +851,7 @@ class RecordApiHelper
                 $finalData
             );
             if ($apiResponse !== 0) {
-                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'create-group']), 'success', wp_json_encode(\sprintf(__('Group created successfully and is is %s', 'bit-integrations'), $apiResponse)));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'create-group']), 'success', wp_json_encode(wp_sprintf(__('Group created successfully and is is %s', 'bit-integrations'), $apiResponse)));
             } else {
                 LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'group', 'type_name' => 'create-group']), 'error', wp_json_encode($apiResponse));
             }
@@ -968,7 +968,7 @@ class RecordApiHelper
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = self::addPostToGroup($group_id, $friendId, $finalData);
             if (\gettype($apiResponse) === 'integer') {
-                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-to-group']), 'success', wp_json_encode(\sprintf(__('Post added to group successfully and id is -> %s', 'bit-integrations'), $apiResponse)));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-to-group']), 'success', wp_json_encode(wp_sprintf(__('Post added to group successfully and id is -> %s', 'bit-integrations'), $apiResponse)));
             } else {
                 LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-to-group']), 'error', wp_json_encode($apiResponse));
             }
@@ -978,7 +978,7 @@ class RecordApiHelper
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = self::postActivityStream($friendId, $finalData);
             if (\gettype($apiResponse) === 'integer') {
-                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-sitewide-activity']), 'success', wp_json_encode(\sprintf(__('Post added to sitewide activity stream successfully and id is -> %s', 'bit-integrations'), $apiResponse)));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-sitewide-activity']), 'success', wp_json_encode(wp_sprintf(__('Post added to sitewide activity stream successfully and id is -> %s', 'bit-integrations'), $apiResponse)));
             } else {
                 LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-sitewide-activity']), 'error', wp_json_encode($apiResponse));
             }
@@ -988,7 +988,7 @@ class RecordApiHelper
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = self::postActivityUsersStream($friendId, $finalData);
             if (\gettype($apiResponse) === 'integer') {
-                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-user-activity']), 'success', wp_json_encode(\sprintf(__('Post added to Users activity stream successfully and id is -> %s', 'bit-integrations'), $apiResponse)));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-user-activity']), 'success', wp_json_encode(wp_sprintf(__('Post added to Users activity stream successfully and id is -> %s', 'bit-integrations'), $apiResponse)));
             } else {
                 LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'post', 'type_name' => 'add-post-user-activity']), 'error', wp_json_encode($apiResponse));
             }
@@ -999,7 +999,7 @@ class RecordApiHelper
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
             $apiResponse = self::postReplyTopicForum($forum_id, $topic_id, $finalData);
             if (\gettype($apiResponse) === 'integer') {
-                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'success', wp_json_encode(\sprintf(__('Reply forum topic successfully and id is -> %s', 'bit-integrations'), $apiResponse)));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'success', wp_json_encode(wp_sprintf(__('Reply forum topic successfully and id is -> %s', 'bit-integrations'), $apiResponse)));
             } else {
                 LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'reply', 'type_name' => 'reply-forum-topic']), 'error', wp_json_encode(__('Failed to reply forum topic.', 'bit-integrations')));
             }

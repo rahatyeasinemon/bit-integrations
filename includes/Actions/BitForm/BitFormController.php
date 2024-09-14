@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\BitForm;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for BitForm integration
@@ -212,7 +212,7 @@ class BitFormController
             || empty($domainName)
             || empty($formId)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Bit From'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Bit From'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $bitFormApiResponse = $recordApiHelper->execute(

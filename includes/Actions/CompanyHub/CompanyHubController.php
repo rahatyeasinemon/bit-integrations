@@ -93,7 +93,7 @@ class CompanyHubController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($subDomain) || empty($actionName) || empty($apiKey)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Company Hub'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Company Hub'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $subDomain, $apiKey);

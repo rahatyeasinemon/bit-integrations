@@ -366,7 +366,7 @@ class FlowluController
         $comapnyName = $integrationDetails->company_name;
 
         if (empty($fieldMap) || empty($apiKey) || empty($actionName) || empty($comapnyName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Flowlu'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Flowlu'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $comapnyName);

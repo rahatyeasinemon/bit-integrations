@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\ElasticEmail;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -84,7 +84,7 @@ class ElasticEmailController
         if (empty($api_key)
             || empty($fieldMap)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Elastic Email'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Elastic Email'));
         }
         $recordApiHelper = new RecordApiHelper($api_key, $integId);
         $elasticEmailApiResponse = $recordApiHelper->execute(

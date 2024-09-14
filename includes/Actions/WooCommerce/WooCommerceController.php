@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\WooCommerce;
 
-use WP_Error;
-use WC_Data_Store;
 use BitCode\FI\Log\LogHandler;
+use WC_Data_Store;
+use WP_Error;
 
 class WooCommerceController
 {
@@ -26,7 +26,7 @@ class WooCommerceController
             wp_send_json_success(true, 200);
         }
 
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'WooCommerce'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'WooCommerce'));
     }
 
     public static function refreshFields($queryParams)

@@ -48,7 +48,7 @@ class BuddyBossController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'BuddyBoss'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'BuddyBoss'));
     }
 
     public static function getAllGroups()
@@ -60,7 +60,7 @@ class BuddyBossController
 
             wp_send_json_success($groups, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'BuddyBoss'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'BuddyBoss'));
     }
 
     public static function getAllUser()
@@ -71,7 +71,7 @@ class BuddyBossController
             $users = $wpdb->get_results("select ID,display_name from {$wpdb->prefix}users");
             wp_send_json_success($users, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'BuddyBoss'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'BuddyBoss'));
     }
 
     public static function getAllForums()
@@ -168,7 +168,7 @@ class BuddyBossController
             empty($integId)
             || empty($mainAction)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'BuddyBoss'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'BuddyBoss'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $buddyBossApiResponse = $recordApiHelper->execute(

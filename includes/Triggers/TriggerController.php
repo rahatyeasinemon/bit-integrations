@@ -66,7 +66,7 @@ final class TriggerController
             update_option("btcbi_{$triggerName}_test", []);
         }
         if (!$testData || empty($testData)) {
-            wp_send_json_error(new WP_Error("{$triggerName}_test", \sprintf(__('%s data is empty', 'bit-integrations'), $triggerName)));
+            wp_send_json_error(new WP_Error("{$triggerName}_test", wp_sprintf(__('%s data is empty', 'bit-integrations'), $triggerName)));
         }
 
         wp_send_json_success($testData);
@@ -84,6 +84,6 @@ final class TriggerController
             wp_send_json_error(new WP_Error("{$triggerName}_test", __('Failed to remove test data', 'bit-integrations')));
         }
 
-        wp_send_json_success(\sprintf(__('%s test data removed successfully', 'bit-integrations'), $triggerName));
+        wp_send_json_success(wp_sprintf(__('%s test data removed successfully', 'bit-integrations'), $triggerName));
     }
 }

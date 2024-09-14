@@ -245,7 +245,7 @@ class ActiveCampaignController
             || empty($api_url)
             || empty($fieldMap)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Active Campaign'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Active Campaign'));
         }
         $recordApiHelper = new RecordApiHelper($api_key, $api_url, $this->_integrationID);
         $activeCampaignApiResponse = $recordApiHelper->execute(

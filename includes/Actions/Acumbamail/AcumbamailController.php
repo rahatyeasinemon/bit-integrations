@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Acumbamail;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Trello integration
@@ -125,7 +125,7 @@ class AcumbamailController
             || empty($fieldMap)
             || empty($auth_token)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Acumbamail'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Acumbamail'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $acumbamailApiResponse = $recordApiHelper->execute(

@@ -41,7 +41,7 @@ final class CF7Controller
     public function getAll()
     {
         if (!class_exists('WPCF7_ContactForm')) {
-            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'Contact Form 7'));
+            wp_send_json_error(wp_sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'Contact Form 7'));
         }
         $forms = WPCF7_ContactForm::find();
         $all_forms = [];
@@ -62,7 +62,7 @@ final class CF7Controller
             $missing_field = 'Form ID';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(wp_sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         if (empty($fields)) {
             wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));

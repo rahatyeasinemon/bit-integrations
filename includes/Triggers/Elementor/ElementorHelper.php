@@ -65,9 +65,9 @@ class ElementorHelper
     public static function setFields($formData)
     {
         $allFields = [
-            ['name' => 'id', 'type' => 'text', 'label' => \sprintf(__('Form Id (%s)', 'bit-integrations'), $formData['id']), 'value' => $formData['id']],
-            ['name' => 'form_post_id', 'type' => 'text', 'label' => \sprintf(__('Form Post Id (%s)', 'bit-integrations'), $formData['form_post_id']), 'value' => $formData['form_post_id']],
-            ['name' => 'edit_post_id', 'type' => 'text', 'label' => \sprintf(__('Edit Post Id (%s)', 'bit-integrations'), $formData['edit_post_id']), 'value' => $formData['edit_post_id']],
+            ['name' => 'id', 'type' => 'text', 'label' => wp_sprintf(__('Form Id (%s)', 'bit-integrations'), $formData['id']), 'value' => $formData['id']],
+            ['name' => 'form_post_id', 'type' => 'text', 'label' => wp_sprintf(__('Form Post Id (%s)', 'bit-integrations'), $formData['form_post_id']), 'value' => $formData['form_post_id']],
+            ['name' => 'edit_post_id', 'type' => 'text', 'label' => wp_sprintf(__('Edit Post Id (%s)', 'bit-integrations'), $formData['edit_post_id']), 'value' => $formData['edit_post_id']],
         ];
 
         // Process fields data

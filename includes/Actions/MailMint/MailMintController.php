@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Actions\MailMint;
 
-use WP_Error;
 use Mint\MRM\Constants;
 use Mint\MRM\DataBase\Models\ContactGroupModel;
 use Mint\MRM\DataBase\Tables\CustomFieldSchema;
+use WP_Error;
 
 class MailMintController
 {
@@ -21,7 +21,7 @@ class MailMintController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'Mail Mint'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'Mail Mint'));
     }
 
     public static function allCustomFields()
@@ -48,7 +48,7 @@ class MailMintController
             }
             wp_send_json_success($allFields, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'Mail Mint'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'Mail Mint'));
     }
 
     public static function getAllList()
@@ -97,7 +97,7 @@ class MailMintController
             empty($integId)
             || empty($mainAction)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mail Mint'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mail Mint'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $mailMintApiResponse = $recordApiHelper->execute(

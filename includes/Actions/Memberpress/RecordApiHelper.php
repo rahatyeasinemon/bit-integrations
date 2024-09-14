@@ -2,13 +2,13 @@
 
 namespace BitCode\FI\Actions\Memberpress;
 
-use MeprUser;
-use MeprHooks;
-use MeprUtils;
-use MeprTransaction;
-use MeprSubscription;
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Log\LogHandler;
+use MeprHooks;
+use MeprSubscription;
+use MeprTransaction;
+use MeprUser;
+use MeprUtils;
 
 class RecordApiHelper
 {
@@ -160,7 +160,7 @@ class RecordApiHelper
             if (!empty($apiResponse) && \gettype($apiResponse) !== 'integer') {
                 LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership']), 'error', wp_json_encode(__('Failed to add user to membership', 'bit-integrations')));
             } else {
-                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership']), 'success', wp_json_encode(\sprintf(__('Successfully user added to the membership and id is: %s', 'bit-integrations'), $apiResponse)));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'add user', 'type_name' => 'Add the user to a membership']), 'success', wp_json_encode(wp_sprintf(__('Successfully user added to the membership and id is: %s', 'bit-integrations'), $apiResponse)));
             }
         } elseif ($mainAction === '2') {
             $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);

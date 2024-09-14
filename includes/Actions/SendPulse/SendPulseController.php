@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Actions\SendPulse;
 
-use WP_Error;
 use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Flow\FlowController;
+use WP_Error;
 
 class SendPulseController
 {
@@ -112,7 +112,7 @@ class SendPulseController
         }
 
         if (empty($fieldMap) || empty($tokenDetails) || empty($selectedList)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SendPulse'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SendPulse'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $tokenDetails->access_token);

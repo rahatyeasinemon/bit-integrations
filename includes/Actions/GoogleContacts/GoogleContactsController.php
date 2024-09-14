@@ -2,11 +2,11 @@
 
 namespace BitCode\FI\Actions\GoogleContacts;
 
-use WP_Error;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Actions\GoogleContacts\RecordApiHelper as GoogleContactsRecordApiHelper;
+use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Log\LogHandler;
+use WP_Error;
 
 class GoogleContactsController
 {
@@ -70,7 +70,7 @@ class GoogleContactsController
     public function execute($integrationData, $fieldValues)
     {
         if (empty($integrationData->flow_details->tokenDetails->access_token)) {
-            LogHandler::save($this->integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'insert']), 'error', \sprintf(__('Not Authorization By %s', 'bit-integrations'), 'GoogleContact'));
+            LogHandler::save($this->integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'insert']), 'error', wp_sprintf(__('Not Authorization By %s', 'bit-integrations'), 'GoogleContact'));
 
             return false;
         }

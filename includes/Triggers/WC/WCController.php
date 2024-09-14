@@ -2,12 +2,12 @@
 
 namespace BitCode\FI\Triggers\WC;
 
+use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Flow\Flow;
 use WC_Booking;
 use WC_Checkout;
 use WC_Product_Simple;
-use BitCode\FI\Flow\Flow;
 use WC_Subscriptions_Product;
-use BitCode\FI\Core\Util\Helper;
 
 final class WCController
 {
@@ -44,7 +44,7 @@ final class WCController
     public function getAll()
     {
         if (!class_exists('WooCommerce')) {
-            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'WooCommerce'));
+            wp_send_json_error(wp_sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'WooCommerce'));
         }
 
         $wc_action = [
@@ -76,7 +76,7 @@ final class WCController
     public function get_trigger_field($data)
     {
         if (!class_exists('WooCommerce')) {
-            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'WooCommerce'));
+            wp_send_json_error(wp_sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'WooCommerce'));
         }
         if (empty($data->id)) {
             wp_send_json_error(__('Doesn\'t exists', 'bit-integrations'));

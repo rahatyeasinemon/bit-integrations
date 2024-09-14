@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\GetResponse;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for GetResponse integration
@@ -149,7 +149,7 @@ class GetResponseController
             empty($fieldMap)
             || empty($auth_token) || empty($campaignId)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'GetResponse'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'GetResponse'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $getResponseApiResponse = $recordApiHelper->execute(

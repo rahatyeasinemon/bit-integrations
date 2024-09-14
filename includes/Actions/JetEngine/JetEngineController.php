@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\JetEngine;
 
-use WP_Error;
 use Jet_Engine_CPT;
 use Jet_Engine_Tools;
+use WP_Error;
 
 /**
  * Provide functionality for JetEngine integration
@@ -33,7 +33,7 @@ class JetEngineController
     public static function checkedJetEngineExists()
     {
         if (!is_plugin_active('jet-engine/jet-engine.php')) {
-            wp_send_json_error(\sprintf(__('%s is not active or not installed', 'bit-integrations'), 'JetEngine Plugin'), 400);
+            wp_send_json_error(wp_sprintf(__('%s is not active or not installed', 'bit-integrations'), 'JetEngine Plugin'), 400);
         } else {
             return true;
         }

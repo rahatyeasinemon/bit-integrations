@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Salesmate;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Salesmate integration
@@ -218,7 +218,7 @@ class SalesmateController
         $linkName = $integrationDetails->link_name;
 
         if (empty($fieldMap) || empty($sessionToken) || empty($actionName) || empty($actionId) || empty($linkName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Salesmate'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Salesmate'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $sessionToken, $linkName);

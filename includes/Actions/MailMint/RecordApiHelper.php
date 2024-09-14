@@ -2,12 +2,12 @@
 
 namespace BitCode\FI\Actions\MailMint;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
-use Mint\MRM\DataStores\ContactData;
-use Mint\MRM\DataBase\Models\ContactModel;
-use Mint\MRM\DataBase\Models\ContactGroupModel;
+use BitCode\FI\Log\LogHandler;
 use Mint\MRM\Admin\API\Controllers\MessageController;
+use Mint\MRM\DataBase\Models\ContactGroupModel;
+use Mint\MRM\DataBase\Models\ContactModel;
+use Mint\MRM\DataStores\ContactData;
 
 class RecordApiHelper
 {
@@ -174,7 +174,7 @@ class RecordApiHelper
             $apiResponse = $this->createContact($selectedList, $selectedTags, $selectedSubStatus, $finalData);
 
             if ($apiResponse && \gettype($apiResponse) === 'integer') {
-                LogHandler::save(self::$integrationID, ['type' => 'create', 'type_name' => 'create contact'], 'success', wp_json_encode(\sprintf(__('Contact created successfully and id is %s', 'bit-integrations'), $apiResponse)));
+                LogHandler::save(self::$integrationID, ['type' => 'create', 'type_name' => 'create contact'], 'success', wp_json_encode(wp_sprintf(__('Contact created successfully and id is %s', 'bit-integrations'), $apiResponse)));
             } else {
                 LogHandler::save(self::$integrationID, ['type' => 'create', 'type_name' => 'create contact'], 'error', __('Failed to create contact', 'bit-integrations'));
             }

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\WPForo;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, update
@@ -162,7 +162,7 @@ class RecordApiHelper
         $topicId = WPF()->topic->add($args);
 
         if ($topicId) {
-            return ['success' => true, 'message' => \sprintf(__('New topic created, topic id: %s', 'bit-integrations'), $topicId)];
+            return ['success' => true, 'message' => wp_sprintf(__('New topic created, topic id: %s', 'bit-integrations'), $topicId)];
         }
 
         return ['success' => false, 'message' => __('Something went wrong!', 'bit-integrations')];

@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\WooCommerce;
 
-use WP_Error;
-use WC_Product_Download;
 use BitCode\FI\Log\LogHandler;
+use WC_Product_Download;
+use WP_Error;
 
 /**
  * Provide functionality for Record insert,upsert.

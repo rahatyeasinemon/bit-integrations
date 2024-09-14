@@ -28,13 +28,13 @@ class TutorLmsController
             wp_send_json_success(true, 200);
         }
 
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'Tutor LMS'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'Tutor LMS'));
     }
 
     public static function getAllLesson()
     {
         if (!\function_exists('tutor')) {
-            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'Tutor LMS'));
+            wp_send_json_error(wp_sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'Tutor LMS'));
         }
 
         $lessons = [];
@@ -58,7 +58,7 @@ class TutorLmsController
     {
         $action = $queryParams->type;
         if (!\function_exists('tutor')) {
-            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'Tutor LMS'));
+            wp_send_json_error(wp_sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'Tutor LMS'));
         }
 
         $courseList = get_posts([

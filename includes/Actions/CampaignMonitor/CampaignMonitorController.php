@@ -70,7 +70,7 @@ class CampaignMonitorController
         if (!isset($apiResponse->Code)) {
             wp_send_json_success($fields, 200);
         } else {
-            wp_send_json_error(\sprintf(__('Field fetching failed: %s', 'bit-integrations'), $apiResponse->Message), 400);
+            wp_send_json_error(wp_sprintf(__('Field fetching failed: %s', 'bit-integrations'), $apiResponse->Message), 400);
         }
     }
 
@@ -84,7 +84,7 @@ class CampaignMonitorController
         $apiKey = $integrationDetails->api_key;
 
         if (empty($fieldMap) || empty($apiKey) || empty($selectedList)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Campaign Monitor'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Campaign Monitor'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey);

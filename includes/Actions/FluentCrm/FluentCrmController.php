@@ -6,12 +6,12 @@
 
 namespace BitCode\FI\Actions\FluentCrm;
 
-use WP_Error;
+use FluentCrm\App\Models\CustomContactField;
 
-use FluentCrm\App\Models\Tag;
 use FluentCrm\App\Models\Lists;
 use FluentCrm\App\Models\Subscriber;
-use FluentCrm\App\Models\CustomContactField;
+use FluentCrm\App\Models\Tag;
+use WP_Error;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -33,7 +33,7 @@ class FluentCrmController
     public static function checkedExistsFluentCRM()
     {
         if (!is_plugin_active('fluent-crm/fluent-crm.php')) {
-            wp_send_json_error(\sprintf(__('%s is not active or not installed', 'bit-integrations'), 'Fluent CRM'), 400);
+            wp_send_json_error(wp_sprintf(__('%s is not active or not installed', 'bit-integrations'), 'Fluent CRM'), 400);
         } else {
             return true;
         }
@@ -155,7 +155,7 @@ class FluentCrmController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Fluent CRM'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Fluent CRM'));
         }
 
         $recordApiHelper = new RecordApiHelper($this->_integrationID);

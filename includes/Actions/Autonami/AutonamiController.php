@@ -112,7 +112,7 @@ class AutonamiController
         }
 
         if (empty($fieldMap)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Autonami'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Autonami'));
         }
 
         $recordApiHelper = new RecordApiHelper($this->_integrationID);

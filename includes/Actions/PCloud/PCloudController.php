@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Actions\PCloud;
 
-use WP_Error;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Actions\PCloud\RecordApiHelper as PCloudRecordApiHelper;
+use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
+use WP_Error;
 
 class PCloudController
 {
@@ -68,7 +68,7 @@ class PCloudController
     public function execute($integrationData, $fieldValues)
     {
         if (empty($integrationData->flow_details->tokenDetails->access_token)) {
-            LogHandler::save($this->integrationID, wp_json_encode(['type' => 'pCloud', 'type_name' => 'file_upload']), 'error', \sprintf(__('Not Authorization By %s', 'bit-integrations'), 'PCloud'));
+            LogHandler::save($this->integrationID, wp_json_encode(['type' => 'pCloud', 'type_name' => 'file_upload']), 'error', wp_sprintf(__('Not Authorization By %s', 'bit-integrations'), 'PCloud'));
 
             return false;
         }

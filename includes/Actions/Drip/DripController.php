@@ -127,7 +127,7 @@ class DripController
         $selectedRemoveTags = $integrationDetails->selectedRemoveTags;
 
         if (empty($api_token) || empty($fieldMap) || empty($accountId)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Drip'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Drip'));
         }
 
         $recordApiHelper = new RecordApiHelper($api_token, $this->_integrationID);

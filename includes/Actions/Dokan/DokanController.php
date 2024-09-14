@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Dokan;
 
-use WP_Error;
 use WeDevs\DokanPro\Modules\Germanized\Helper;
+use WP_Error;
 
 /**
  * Provide functionality for Dokan integration
@@ -32,7 +32,7 @@ class DokanController
     public static function checkedDokanExists()
     {
         if (!is_plugin_active('dokan-lite/dokan.php')) {
-            wp_send_json_error(\sprintf(__('%s is not active or not installed', 'bit-integrations'), 'Dokan'), 400);
+            wp_send_json_error(wp_sprintf(__('%s is not active or not installed', 'bit-integrations'), 'Dokan'), 400);
         } else {
             return true;
         }
@@ -91,7 +91,7 @@ class DokanController
             wp_send_json_success($fields, 200);
         }
 
-        wp_send_json_error(\sprintf(__('EU Compliance Fields fetching failed - %s or EU Compliance Fields is not enabled', 'bit-integrations'), 'Dokan Pro'), 400);
+        wp_send_json_error(wp_sprintf(__('EU Compliance Fields fetching failed - %s or EU Compliance Fields is not enabled', 'bit-integrations'), 'Dokan Pro'), 400);
     }
 
     public function execute($integrationData, $fieldValues)

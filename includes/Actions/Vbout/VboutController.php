@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Vbout;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Vbout integration
@@ -124,7 +124,7 @@ class VboutController
             empty($fieldMap)
              || empty($auth_token)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'MailerLite'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'MailerLite'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $vboutApiResponse = $recordApiHelper->execute(

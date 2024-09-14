@@ -138,7 +138,7 @@ class DiscordController
             || empty($channel_id)
             || empty($body)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Discord'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Discord'));
         }
         $recordApiHelper = new RecordApiHelper(self::APIENDPOINT, $access_token, $integrationId);
         $discordApiResponse = $recordApiHelper->execute(

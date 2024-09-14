@@ -93,7 +93,7 @@ class DemioController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($apiSecret) || empty($actionName) || empty($apiKey)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Demio'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Demio'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiSecret, $apiKey);

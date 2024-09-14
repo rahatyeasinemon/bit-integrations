@@ -248,7 +248,7 @@ class ConstantContactController
             empty($fieldMap)
              || empty($auth_token)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Constant Contact'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Constant Contact'));
         }
 
         if ((\intval($integrationDetails->tokenDetails->generates_on) + (1435 * 60)) < time()) {
