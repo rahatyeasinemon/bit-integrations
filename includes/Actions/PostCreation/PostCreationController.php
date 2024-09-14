@@ -45,9 +45,10 @@ final class PostCreationController
                 $fieldObject = get_field_object($actionValue);
                 if (!empty($fieldValues[$fieldPair->formField])) {
                     if (\in_array($fieldObject['type'], $fileTypes)) {
-                        $filePath = \is_array($fieldValues[$triggerValue]) ? $fieldValues[$triggerValue][0] : $fieldValues[$triggerValue];
+                        $filePath = Common::filePath(\is_array($fieldValues[$triggerValue]) ? $fieldValues[$triggerValue][0] : $fieldValues[$triggerValue]);
 
                         $attachMentId = Helper::singleFileMoveWpMedia($filePath, $postId);
+
                         if (!empty($attachMentId)) {
                             update_post_meta($postId, '_' . $actionValue, $fieldObject['key']);
                             update_post_meta($postId, $fieldObject['name'], wp_json_encode($attachMentId));
@@ -126,7 +127,7 @@ final class PostCreationController
                     $fieldObject = $metaboxFields->{$actionValue};
 
                     if ($fieldObject['multiple'] == false) {
-                        $filePath = \is_array($fieldValues[$triggerValue]) ? $fieldValues[$triggerValue][0] : $fieldValues[$triggerValue];
+                        $filePath = Common::filePath(\is_array($fieldValues[$triggerValue]) ? $fieldValues[$triggerValue][0] : $fieldValues[$triggerValue]);
                         $attachMentId = Helper::singleFileMoveWpMedia($filePath, $postId);
 
                         if (!empty($attachMentId)) {
