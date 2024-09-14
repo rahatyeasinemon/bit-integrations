@@ -3,6 +3,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilState } from 'recoil'
 import Cooltip from '../../Utilities/Cooltip'
 import { $newFlow } from '../../../GlobalStates'
+import { __ } from '../../../Utils/i18nwrap'
 
 const PostHelper = ({ flow, setFlowData, edit = false }) => {
   // const id = Number(flow?.triggerData?.formID)

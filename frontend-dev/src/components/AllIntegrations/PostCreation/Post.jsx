@@ -34,8 +34,8 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
   const { postCreation } = tutorialLinks
 
   const [postConf, setPostConf] = useState({
-    name: 'Post Creation',
-    type: 'Post Creation',
+    name: 'WP Post Creation',
+    type: 'WP Post Creation',
     post_map: [{ post_author: 'logged_in_user' }],
     acf_map: [{}],
     acf_file_map: [{}],
@@ -155,10 +155,10 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       {postCreation?.youTubeLink && (
-        <TutorialLink title="Post Creation" youTubeLink={postCreation?.youTubeLink} />
+        <TutorialLink title="WP Post Creation" youTubeLink={postCreation?.youTubeLink} />
       )}
       {postCreation?.docLink && (
-        <TutorialLink title="Post Creation" docLink={postCreation?.docLink} />
+        <TutorialLink title="WP Post Creation" docLink={postCreation?.docLink} />
       )}
 
       <div className="txt-center mt-2">

@@ -8,10 +8,10 @@
 
 namespace BitCode\FI\Actions\PostCreation;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Flow\Flow;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 
 final class PostCreationController
 {
@@ -193,9 +193,9 @@ final class PostCreationController
 
         if (is_wp_error($result) || !$result) {
             $message = is_wp_error($result) ? $result->get_error_message() : 'error';
-            LogHandler::save($integrationData->id, 'Post Creation', 'error', $message);
+            LogHandler::save($integrationData->id, 'WP Post Creation', 'error', $message);
         } else {
-            LogHandler::save($integrationData->id, 'Post Creation', 'success', $result);
+            LogHandler::save($integrationData->id, 'WP Post Creation', 'success', $result);
         }
 
         if (class_exists('ACF')) {

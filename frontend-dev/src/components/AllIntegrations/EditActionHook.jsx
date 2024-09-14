@@ -305,7 +305,9 @@ function EditActionHook() {
               onClick={() => setShowResponse((prev) => !prev)}
               className="btn btcd-btn-md sh-sm flx">
               <span className="txt-actionHook-resbtn font-inter-500">
-                {showResponse ? 'Hide Response' : 'View Response'}
+                {showResponse
+                  ? __('Hide Response', 'bit-integrations')
+                  : __('View Response', 'bit-integrations')}
               </span>
               {!showResponse ? (
                 <EyeIcn width="20" height="20" strokeColor="#000000" />
