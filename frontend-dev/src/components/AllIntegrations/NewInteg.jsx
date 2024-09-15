@@ -158,6 +158,7 @@ const Mailster = lazy(() => import('./Mailster/Mailster'))
 const WPForo = lazy(() => import('./WPForo/WPForo'))
 const Dokan = lazy(() => import('./Dokan/Dokan'))
 const JetEngine = lazy(() => import('./JetEngine/JetEngine'))
+const HighLevel = lazy(() => import('./HighLevel/HighLevel'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
@@ -1494,6 +1495,15 @@ export default function NewInteg({ allIntegURL }) {
       case 'JetEngine':
         return (
           <JetEngine
+            allIntegURL={allIntegURL}
+            formFields={flow?.triggerData?.fields}
+            flow={flow}
+            setFlow={setFlow}
+          />
+        )
+      case 'Go High Level':
+        return (
+          <HighLevel
             allIntegURL={allIntegURL}
             formFields={flow?.triggerData?.fields}
             flow={flow}

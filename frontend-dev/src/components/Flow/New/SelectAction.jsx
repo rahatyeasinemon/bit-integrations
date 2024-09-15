@@ -161,7 +161,8 @@ export default function SelectAction() {
     { type: 'Mailster' },
     { type: 'WPForo' },
     { type: 'Dokan' },
-    { type: 'JetEngine' }
+    { type: 'JetEngine' },
+    { type: 'Go High Level' }
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(
