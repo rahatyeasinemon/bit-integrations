@@ -41,7 +41,7 @@ export default function HighLevelAuthorization({
   }
 
   const ActiveInstructions = `
-            <h4>${__('Get Go High Level Api Key', 'bit-integrations')}</h4>
+            <h4>${__('Get High Level Api Key', 'bit-integrations')}</h4>
             <ul>
                 <li>${__('First go to your High Level sub account settings then business profile tab', 'bit-integrations')}.</li>
                 <li>${__('Copy the the API key.', 'bit-integrations')}</li>
@@ -72,7 +72,7 @@ export default function HighLevelAuthorization({
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
 
       <div className="mt-3 wdt-250">
-        <b>{__('Go High Level Api Key:', 'bit-integrations')}</b>
+        <b>{__('High Level Api Key:', 'bit-integrations')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"

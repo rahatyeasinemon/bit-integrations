@@ -25,8 +25,8 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
   })
 
   const [highLevelConf, setHighLevelConf] = useState({
-    name: 'Go High Level',
-    type: 'Go High Level',
+    name: 'High Level',
+    type: 'High Level',
     api_key:
       process.env.NODE_ENV === 'development'
         ? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IlBqM1lwWkE2bHZTcmhBYlZ4dDRWIiwidmVyc2lvbiI6MSwiaWF0IjoxNzI2MzkxMjM1NTQwLCJzdWIiOiJORHFMUmNBT1ZSU2xPbTFrTUlLZiJ9.N8u68mUJxmmFHIozCtJCoIgCnxq9D-uipGIZFDYMe1w'

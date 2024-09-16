@@ -1501,7 +1501,7 @@ export default function NewInteg({ allIntegURL }) {
             setFlow={setFlow}
           />
         )
-      case 'Go High Level':
+      case 'High Level':
         return (
           <HighLevel
             allIntegURL={allIntegURL}

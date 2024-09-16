@@ -538,7 +538,7 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditDokan allIntegURL={allIntegURL} />
     case 'JetEngine':
       return <EditJetEngine allIntegURL={allIntegURL} />
-    case 'Go High Level':
+    case 'High Level':
       return <EditHighLevel allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />

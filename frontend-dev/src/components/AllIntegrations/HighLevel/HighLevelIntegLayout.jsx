@@ -21,9 +21,6 @@ export default function HighLevelIntegLayout({
   loading,
   setLoading
 }) {
-  const [error, setError] = useState({ name: '', api_key: '' })
-  const [isAuthorized, setisAuthorized] = useState(false)
-
   const handleInput = (e) => {
     const accountId = e.target.value
     const newConf = { ...highLevelConf }

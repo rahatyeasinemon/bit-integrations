@@ -33,10 +33,8 @@ class HighLevelController
 
         $response = HttpHelper::get($apiEndpoint, null, $header);
 
-        error_log(print_r(['response' => $response], true));
-
         if (!isset($response->contacts)) {
-            wp_send_json_error(empty($apiResponse) ? 'Unknown' : $apiResponse, 400);
+            wp_send_json_error(empty($response) ? 'Unknown' : $response, 400);
         }
 
         wp_send_json_success($response);
@@ -54,8 +52,6 @@ class HighLevelController
 
         $response = HttpHelper::get($apiEndpoint, null, $header);
 
-        error_log(print_r(['response' => $response], true));
-
         if (!isset($response->customFields)) {
             wp_send_json_error('Custom fields fetching failed', 400);
         }
@@ -66,14 +62,12 @@ class HighLevelController
         if (!empty($rawCustomFields)) {
             foreach ($rawCustomFields as $item) {
                 $customFields[] = (object) [
-                    'key'      => $item->id,
+                    'key'      => $item->id . '_bihl_' . $item->dataType,
                     'label'    => $item->name,
                     'required' => false,
                 ];
             }
         }
-
-        error_log(print_r(['custom fields' => $customFields], true));
 
         wp_send_json_success($customFields, 200);
     }
@@ -103,27 +97,17 @@ class HighLevelController
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
-        $api_key = $integrationDetails->api_key;
+        $apiKey = $integrationDetails->api_key;
         $fieldMap = $integrationDetails->field_map;
-        $accountId = $integrationDetails->selectedAccountId;
-        $selectedStatus = $integrationDetails->selectedStatus;
-        $selectedTags = $integrationDetails->selectedTags;
-        $selectedRemoveTags = $integrationDetails->selectedRemoveTags;
+        $selectedTask = $integrationDetails->selectedTask;
 
-        if (empty($api_key) || empty($fieldMap) || empty($accountId)) {
+        if (empty($apiKey) || empty($fieldMap)) {
             return new WP_Error('REQ_FIELD_EMPTY', sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'HighLevel'));
         }
 
-        $recordApiHelper = new RecordApiHelper($api_key, $this->_integrationID);
+        $recordApiHelper = new RecordApiHelper($apiKey, $this->_integrationID);
 
-        $highLevelApiResponse = $recordApiHelper->execute(
-            $fieldValues,
-            $fieldMap,
-            $accountId,
-            $selectedStatus,
-            $selectedTags,
-            $selectedRemoveTags
-        );
+        $highLevelApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $selectedTask);
 
         if (is_wp_error($highLevelApiResponse)) {
             return $highLevelApiResponse;

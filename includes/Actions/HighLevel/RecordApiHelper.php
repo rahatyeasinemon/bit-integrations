@@ -15,66 +15,60 @@ use BitCode\FI\Log\LogHandler;
  */
 class RecordApiHelper
 {
-    private $_defaultHeader;
+    private $defaultHeader;
 
-    private $_integrationID;
+    private $integrationID;
 
-    public function __construct($api_key, $integId)
+    private $baseUrl = 'https://rest.gohighlevel.com/v1/';
+
+    public function __construct($apiKey, $integId)
     {
-        $this->_defaultHeader = [
-            'Authorization' => 'Basic ' . base64_encode("{$api_key}:"),
+        $this->defaultHeader = [
+            'Authorization' => 'Bearer ' . $apiKey,
             'Content-Type'  => 'application/json'
         ];
 
-        $this->_integrationID = $integId;
+        $this->integrationID = $integId;
     }
 
-    public function upsertSubscriber($accountId, $finalData, $selectedStatus, $selectedTags, $selectedRemoveTags)
+    public function createContact($finalData)
     {
-        if (empty($accountId)) {
-            return ['success' => false, 'message' => 'Account id is Required', 'code' => 400];
-        }
-
-        $apiEndpoints = 'https://api.gethighLevel.com/v2/' . $accountId . '/subscribers';
-
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => 'Request parameter(s) empty!', 'code' => 400];
         }
 
-        $subscriberData = $customFieldsData = [];
-        $staticFieldsKey = ['email', 'first_name', 'last_name', 'address1', 'address2', 'city', 'state', 'zip', 'country', 'phone', 'time_zone', 'ip_address'];
+        $staticFieldsKey = ['email', 'firstName', 'lastName', 'name', 'phone', 'dateOfBirth', 'address1', 'city', 'state', 'country', 'postalCode', 'companyName', 'website'];
+        $apiRequestData = $customFieldsData = [];
 
         foreach ($finalData as $key => $value) {
             if (\in_array($key, $staticFieldsKey)) {
-                $subscriberData[$key] = $value;
+                $apiRequestData[$key] = $value;
             } else {
-                $customFieldsData[$key] = $value;
+                $keyFieldType = explode('_bihl_', $key);
+                $fieldKey = $keyFieldType[0];
+                $fieldType = $keyFieldType[1];
+
+                if ($fieldType === 'MULTIPLE_OPTIONS' || $fieldType === 'CHECKBOX') {
+                    $customFieldsData[$fieldKey] = explode(',', str_replace(' ', '', $value));
+                } else {
+                    $customFieldsData[$fieldKey] = $value;
+                }
             }
         }
 
         if (!empty($customFieldsData)) {
-            $subscriberData['custom_fields'] = (object) $customFieldsData;
+            $apiRequestData['customField'] = $customFieldsData;
         }
 
-        if (!empty($selectedStatus)) {
-            $subscriberData['status'] = $selectedStatus;
+        $apiEndpoint = $this->baseUrl . 'contacts';
+
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($apiRequestData), $this->defaultHeader);
+
+        if (isset($response->contact)) {
+            return ['success' => true, 'message' => 'Contact created successfully.'];
         }
 
-        if (!empty($selectedTags)) {
-            $subscriberData['tags'] = explode(',', $selectedTags);
-        }
-
-        if (!empty($selectedRemoveTags)) {
-            $subscriberData['remove_tags'] = explode(',', $selectedRemoveTags);
-        }
-
-        $requestParams = (object) [
-            'subscribers' => [
-                (object) $subscriberData
-            ]
-        ];
-
-        return HttpHelper::post($apiEndpoints, wp_json_encode($requestParams), $this->_defaultHeader);
+        return ['success' => false, 'message' => 'Failed to create contact type!', 'code' => 400];
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -93,18 +87,24 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $accountId, $selectedStatus, $selectedTags, $selectedRemoveTags)
+    public function execute($fieldValues, $fieldMap, $selectedTask)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $apiResponse = $this->upsertSubscriber($accountId, $finalData, $selectedStatus, $selectedTags, $selectedRemoveTags);
+        $type = $typeName = '';
 
-        if (isset($apiResponse->subscribers)) {
-            $res = ['message' => 'Subscriber upserted successfully'];
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber upsert']), 'success', wp_json_encode($res));
-        } else {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber upsert']), 'error', wp_json_encode($apiResponse));
+        if ($selectedTask === 'createContact') {
+            $response = $this->createContact($finalData);
+            $type = 'Contact';
+            $typeName = 'Create Contact';
         }
 
-        return $apiResponse;
+        if ($response['success']) {
+            $res = ['message' => $response['message']];
+            LogHandler::save($this->integrationID, wp_json_encode(['type' => $type, 'type_name' => $typeName]), 'success', wp_json_encode($res));
+        } else {
+            LogHandler::save($this->integrationID, wp_json_encode(['type' => $type, 'type_name' => $typeName]), 'error', wp_json_encode($response));
+        }
+
+        return $response;
     }
 }
