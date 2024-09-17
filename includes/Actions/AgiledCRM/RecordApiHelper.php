@@ -6,8 +6,9 @@
 
 namespace BitCode\FI\Actions\AgiledCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -160,9 +161,9 @@ class RecordApiHelper
             $actionValue = $value->agiledFormField;
             if ($triggerValue === 'custom') {
                 if ($actionValue === 'customFieldKey') {
-                    $dataFinal[$value->customFieldKey] = $value->customValue;
+                    $dataFinal[$value->customFieldKey] = Common::replaceFieldWithValue($value->customValue, $data);
                 } else {
-                    $dataFinal[$actionValue] = $value->customValue;
+                    $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
                 }
             } elseif (!\is_null($data[$triggerValue])) {
                 if ($actionValue === 'customFieldKey') {

@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Clickup;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -77,9 +77,9 @@ class RecordApiHelper
             $actionValue = $value->clickupFormField;
             if ($triggerValue === 'custom') {
                 if ($actionValue === 'customFieldKey') {
-                    $dataFinal[$value->customFieldKey] = self::formatPhoneNumber($value->customValue);
+                    $dataFinal[$value->customFieldKey] = self::formatPhoneNumber(Common::replaceFieldWithValue($value->customValue, $data));
                 } else {
-                    $dataFinal[$actionValue] = self::formatPhoneNumber($value->customValue);
+                    $dataFinal[$actionValue] = self::formatPhoneNumber(Common::replaceFieldWithValue($value->customValue, $data));
                 }
             } elseif (!\is_null($data[$triggerValue])) {
                 if ($actionValue === 'customFieldKey') {

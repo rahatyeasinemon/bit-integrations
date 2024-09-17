@@ -6,8 +6,9 @@
 
 namespace BitCode\FI\Actions\ClinchPad;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -143,9 +144,9 @@ class RecordApiHelper
             $actionValue = $value->clinchPadFormField;
             if ($triggerValue === 'custom') {
                 if ($actionValue === 'fields') {
-                    $dataFinal[$value->customFieldKey] = $value->customValue;
+                    $dataFinal[$value->customFieldKey] = Common::replaceFieldWithValue($value->customValue, $data);
                 } else {
-                    $dataFinal[$actionValue] = $value->customValue;
+                    $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
                 }
             } elseif (!\is_null($data[$triggerValue])) {
                 if ($actionValue === 'fields') {
