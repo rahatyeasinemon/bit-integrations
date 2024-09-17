@@ -43,8 +43,6 @@ class AffiliateController
         $affiliates = [];
 
         global $wpdb;
-        $query = "select affiliate_Id from {$wpdb->prefix}affiliate_wp_affiliates";
-
         $affiliatesIds = $wpdb->get_results(
             $wpdb->prepare("SELECT affiliate_Id FROM {$wpdb->prefix}affiliate_wp_affiliates")
         );

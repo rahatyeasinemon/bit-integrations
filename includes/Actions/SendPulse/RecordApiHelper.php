@@ -38,7 +38,7 @@ class RecordApiHelper
             ]
         ];
 
-        return HttpHelper::post($apiEndpoints, json_encode($body), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoints, wp_json_encode($body), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
