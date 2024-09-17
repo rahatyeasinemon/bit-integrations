@@ -215,7 +215,7 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
             onChange={(e) => getCustomFields(e.target.name, e.target.value)}
             className="btcd-paper-inp w-5 mt-1">
             <option disabled selected>
-              Select Post Type
+              {('Select Post Type', 'bit-integrations')}
             </option>
             {postTypes?.map((postType, key) => (
               <option key={`acf-${key * 2}`} value={postType?.id}>
@@ -251,11 +251,11 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
           <option disabled selected>
             {__('Select Status', 'bit-integrations')}
           </option>
-          <option value="publish">Publish</option>
-          <option value="draft">Draft</option>
-          <option value="auto-draft">Auto-Draft</option>
-          <option value="private">Private</option>
-          <option value="pending">Pending</option>
+          <option value="publish">{__('Publish', 'bit-integrations')}</option>
+          <option value="draft">{__('Draft', 'bit-integrations')}</option>
+          <option value="auto-draft">{__('Auto-Draft', 'bit-integrations')}</option>
+          <option value="private">{__('Private', 'bit-integrations')}</option>
+          <option value="pending">{__('Pending', 'bit-integrations')}</option>
         </select>
 
         <div className="mt-3 flx">
@@ -294,8 +294,8 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
           <option disabled selected>
             {__('Select Status', 'bit-integrations')}
           </option>
-          <option value="open">Open</option>
-          <option value="closed">Closed</option>
+          <option value="open">{__('Open', 'bit-integrations')}</option>
+          <option value="closed">{__('Closed', 'bit-integrations')}</option>
         </select>
 
         <div>
