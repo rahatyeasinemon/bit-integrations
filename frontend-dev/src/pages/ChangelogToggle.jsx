@@ -13,7 +13,7 @@ export default function ChangelogToggle() {
   const [btcbi, setBtcbi] = useRecoilState($btcbi)
   const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
   const [showAnalyticsOptin, setShowAnalyticsOptin] = useState([])
-  const currentChangelog = '2.2.3'
+  const currentChangelog = '2.2.4'
   const currenChangelog = changelogInfo[currentChangelog]
   const [loading, setLoading] = useState('')
 
@@ -111,13 +111,22 @@ export default function ChangelogToggle() {
                 </ul>
               </div> */}
               
-              <span className="new-integration">
+              {/* <span className="new-integration">
                 <b>{__('New Improvements', 'bit-integrations')}</b>
               </span>
 
               <div className="integration-list">
                 <ul>
                   <li> Plugin Translations Enhanced </li>
+                </ul>
+              </div> */}
+              <span className="new-integration">
+                <b>{__('Note', 'bit-integrations')}</b>
+              </span>
+
+              <div className="integration-list">
+                <ul>
+                  <li>Action Hook trigger moved to pro version.</li>
                 </ul>
               </div>
 
@@ -127,8 +136,10 @@ export default function ChangelogToggle() {
 
               <div className="feature-list">
                 <ul>
-                  <li>MasterStudy LMS: "User earns a point" trigger added for point system integrations (Pro)</li>
-                  <li>Registration: The ability to update user role has been added to the User Data Update module, enhancing user management capabilities.</li>
+                  <li>Klaviyo (Pro): Added support for custom properties.</li>
+                  <li>WP Post Creation (Action): JetEngine’s Meta fields are now supported.</li>
+                  <li>JetEngine (Actions): Added functionality for updating and deleting Post Type, Custom Content Type, Taxonomy, and Relation.</li>
+                  <li>WP Job Manager (Trigger) (Pro): Added 3 new trigger tasks</li>
                 </ul>
               </div>
               <div>
