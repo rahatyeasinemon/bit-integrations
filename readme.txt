@@ -997,7 +997,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 == Changelog ==
 
 = 2.2.4  =
-_Release Date -8th September 2024_
+_Release Date -17th September 2024_
  - **Note :**
   - Action Hook trigger moved to pro version.
 
