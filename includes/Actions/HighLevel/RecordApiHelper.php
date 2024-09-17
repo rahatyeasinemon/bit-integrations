@@ -7,6 +7,7 @@
 namespace BitCode\FI\Actions\HighLevel;
 
 use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
 
@@ -31,7 +32,7 @@ class RecordApiHelper
         $this->integrationID = $integId;
     }
 
-    public function createContact($finalData)
+    public function createContact($finalData, $selectedOptions, $actions)
     {
         if (empty($finalData['email'])) {
             return ['success' => false, 'message' => 'Request parameter(s) empty!', 'code' => 400];
@@ -60,6 +61,16 @@ class RecordApiHelper
             $apiRequestData['customField'] = $customFieldsData;
         }
 
+        if ((isset($selectedOptions['selectedTags']) && !empty($selectedOptions['selectedTags'])) || !empty($actions)) {
+            if (Helper::proActionFeatExists('HighLevel', 'contactUtilities')) {
+                $filterResponse = apply_filters('btcbi_high_level_contact_utilities', 'createContact', $selectedOptions, $actions);
+
+                if ($filterResponse !== 'createContact' && !empty($filterResponse)) {
+                    $apiRequestData = array_merge($apiRequestData, $filterResponse);
+                }
+            }
+        }
+
         $apiEndpoint = $this->baseUrl . 'contacts';
 
         $response = HttpHelper::post($apiEndpoint, wp_json_encode($apiRequestData), $this->defaultHeader);
@@ -68,7 +79,7 @@ class RecordApiHelper
             return ['success' => true, 'message' => 'Contact created successfully.'];
         }
 
-        return ['success' => false, 'message' => 'Failed to create contact type!', 'code' => 400];
+        return ['success' => false, 'message' => 'Failed to create contact!', 'code' => 400];
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -87,13 +98,13 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute($fieldValues, $fieldMap, $selectedTask)
+    public function execute($fieldValues, $fieldMap, $selectedTask, $selectedOptions, $actions)
     {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $type = $typeName = '';
 
         if ($selectedTask === 'createContact') {
-            $response = $this->createContact($finalData);
+            $response = $this->createContact($finalData, $selectedOptions, $actions);
             $type = 'Contact';
             $typeName = 'Create Contact';
         }

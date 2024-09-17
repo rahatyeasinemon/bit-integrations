@@ -26,8 +26,7 @@ function EditHighLevel({ allIntegURL }) {
   const [loading, setLoading] = useState({
     auth: false,
     customFields: false,
-    accounts: false,
-    tags: false
+    options: false
   })
 
   return (

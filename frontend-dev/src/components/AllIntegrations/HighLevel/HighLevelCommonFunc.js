@@ -75,28 +75,27 @@ export const getCustomFields = (confTmp, setConf, loading, setLoading) => {
     toast.error(__('Custom fields fetch failed', 'bit-integrations'))
   })
 }
-export const getAllTags = (confTmp, setConf, setLoading) => {
-  setLoading({ ...setLoading, tags: true })
 
-  const requestParams = {
-    apiToken: confTmp.api_key,
-    selectedAccountId: confTmp.selectedAccountId
+export const getHighLevelOptions = (route, confTmp, utilityOptions, setUtilityOptions, type, loading, setLoading, name = '') => {
+  if (!route) {
+    return
   }
 
-  bitsFetch(requestParams, 'highLevel_fetch_all_tags').then((result) => {
-    if (result && result.success) {
-      const newConf = { ...confTmp }
-      if (result.data) {
-        newConf.tags = result.data
+  setLoading({ ...loading, options: true })
+
+  bitsFetch({ api_key: confTmp.api_key }, route)
+    .then(result => {
+      if (result.success && result.data) {
+        const tmpOptions = { ...utilityOptions }
+        tmpOptions[type] = result.data
+        setUtilityOptions(tmpOptions)
+        setLoading({ ...loading, options: false })
+        toast.success(__(`${name} fetched successfully`, 'bit-integrations'))
+        return
       }
-      setConf(newConf)
-      setLoading({ ...setLoading, tags: false })
-      toast.success(__('Tags fetched successfully', 'bit-integrations'))
-      return
-    }
-    setLoading({ ...setLoading, customFields: false })
-    toast.error(__('Tags fetching failed', 'bit-integrations'))
-  })
+      setLoading({ ...loading, options: false })
+      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+    })
 }
 
 export const contactStaticFields = [

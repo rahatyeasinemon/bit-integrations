@@ -20,8 +20,7 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
   const [loading, setLoading] = useState({
     auth: false,
     customFields: false,
-    accounts: false,
-    tags: false
+    options: false
   })
 
   const [highLevelConf, setHighLevelConf] = useState({
@@ -31,15 +30,11 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
       process.env.NODE_ENV === 'development'
         ? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6IlBqM1lwWkE2bHZTcmhBYlZ4dDRWIiwidmVyc2lvbiI6MSwiaWF0IjoxNzI2MzkxMjM1NTQwLCJzdWIiOiJORHFMUmNBT1ZSU2xPbTFrTUlLZiJ9.N8u68mUJxmmFHIozCtJCoIgCnxq9D-uipGIZFDYMe1w'
         : '',
-    accounts: [],
     field_map: [{ formField: '', highLevelField: '' }],
     actions: {},
     tags: [],
-    selectedAccountId: '',
     highLevelFields: [],
     selectedTags: '',
-    selectedStatus: '',
-    selectedRemoveTags: '',
     selectedTask: ''
   })
 
