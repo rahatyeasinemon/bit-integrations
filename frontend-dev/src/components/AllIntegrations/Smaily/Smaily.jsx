@@ -21,8 +21,8 @@ function Smaily({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const staticFields = [
-    { key: 'email', label: 'Email', required: true },
-    { key: 'birthday', label: 'Birthday', required: false },
+    { key: 'email', label: __('Email', 'bit-integrations'), required: true },
+    { key: 'birthday', label: __('Birthday', 'bit-integrations'), required: false }
   ]
 
   const [smailyConf, setSmailyConf] = useState({
@@ -30,18 +30,26 @@ function Smaily({ formFields, setFlow, flow, allIntegURL }) {
     type: 'Smaily',
     subdomain: process.env.NODE_ENV === 'development' ? 'b5bmlbqw' : '',
     api_user_name: process.env.NODE_ENV === 'development' ? 'iyl32h' : '',
-    api_user_password: process.env.NODE_ENV === 'development' ? '6jlqbV3OnLTTy1iiHjGcOsi01sP2iJKQ' : '',
-    field_map: [
-      { formField: '', smailyFormField: '' },
-    ],
+    api_user_password:
+      process.env.NODE_ENV === 'development' ? '6jlqbV3OnLTTy1iiHjGcOsi01sP2iJKQ' : '',
+    field_map: [{ formField: '', smailyFormField: '' }],
     staticFields,
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, smailyConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      smailyConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -57,7 +65,7 @@ function Smaily({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(smailyConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
     smailyConf.field_map.length > 0 && setStep(pageNo)
@@ -66,7 +74,9 @@ function Smaily({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <SmailyAuthorization
@@ -80,8 +90,9 @@ function Smaily({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <SmailyIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, smailyConf, setSmailyConf, setLoading, setSnackbar)}
@@ -95,11 +106,8 @@ function Smaily({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={!checkMappedFields(smailyConf)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
-          &nbsp;
+          type="button">
+          {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>

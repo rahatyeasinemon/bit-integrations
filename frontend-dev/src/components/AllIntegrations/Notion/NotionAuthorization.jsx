@@ -10,6 +10,7 @@ import StepPage from '../../Utilities/StepPage'
 import { getAllDatabaseLists, handleAuthorize, handleInput } from './NotionCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
+import { __ } from '../../../Utils/i18nwrap'
 
 function NotionAuthorization({
   notionConf,

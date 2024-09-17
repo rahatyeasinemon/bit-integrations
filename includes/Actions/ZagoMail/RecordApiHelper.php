@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\ZagoMail;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,update, exist
@@ -100,7 +100,7 @@ class RecordApiHelper
                 $recordApiResponse = $this->updateRecord($existSubscriber->data->subscriber_uid, $listId, $zagoMail);
                 $type = 'update';
             } else {
-                LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', 'Email address already exists in the system');
+                LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', __('Email address already exists in the system', 'bit-integrations'));
 
                 wp_send_json_error(
                     __(

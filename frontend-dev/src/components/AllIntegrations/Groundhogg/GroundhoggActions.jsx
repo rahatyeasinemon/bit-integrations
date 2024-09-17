@@ -71,28 +71,28 @@ export default function GroundhoggActions({ groundhoggConf, setGroundhoggConf, f
   }))
 
   const options = [
-    { type: 'group', title: 'Groundhogg Tags', childs: organizedTags },
+    { type: 'group', title: __('Groundhogg Tags', 'bit-integrations'), childs: organizedTags },
     {
       type: 'group',
-      title: 'Form Fields',
+      title: __('Form Fields', 'bit-integrations'),
       childs: formFields.map((fld) => ({ label: fld.label, value: fld.name }))
     },
     {
       type: 'group',
-      title: 'Special Tags',
+      title: __('Special Tags', 'bit-integrations'),
       childs: SmartTagField?.map((fld) => ({ label: fld.label, value: fld.name }))
     }
   ]
 
   const optinStatusOptions = [
-    { label: 'Unconfirmed', value: '1' },
-    { label: 'Confirmed', value: '2' },
-    { label: 'Unsubscribed', value: '3' },
-    { label: 'Weekly', value: '4' },
-    { label: 'Monthly', value: '5' },
-    { label: 'Bounced', value: '6' },
-    { label: 'Spam', value: '7' },
-    { label: 'Complained', value: '8' }
+    { label: __('Unconfirmed', 'bit-integrations'), value: '1' },
+    { label: __('Confirmed', 'bit-integrations'), value: '2' },
+    { label: __('Unsubscribed', 'bit-integrations'), value: '3' },
+    { label: __('Weekly', 'bit-integrations'), value: '4' },
+    { label: __('Monthly', 'bit-integrations'), value: '5' },
+    { label: __('Bounced', 'bit-integrations'), value: '6' },
+    { label: __('Spam', 'bit-integrations'), value: '7' },
+    { label: __('Complained', 'bit-integrations'), value: '8' }
   ]
 
   return (
@@ -161,8 +161,8 @@ export default function GroundhoggActions({ groundhoggConf, setGroundhoggConf, f
             onChange={(e) => actionHandler(e, 'optin_status_open')}
             className="wdt-200 mt-4 mr-2"
             value="optin_status_open"
-            title={__('Optin Status ', 'bit-integrations')}
-            subTitle={__('Add optin status ', 'bit-integrations')}
+            title={__('Optin Status', 'bit-integrations')}
+            subTitle={__('Add optin status', 'bit-integrations')}
           />
         </TitleModal>
         <ConfirmModal

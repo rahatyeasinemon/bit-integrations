@@ -176,8 +176,8 @@ export default function ZohoCRMActions({
   const module = tab === 0 ? crmConf.module : crmConf.relatedlists[tab - 1].module
   const getTags = () => {
     const arr = [
-      { title: 'Zoho CRM Tags', type: 'group', childs: [] },
-      { title: 'Form Fields', type: 'group', childs: [] }
+      { title: __('Zoho CRM Tags', 'bit-integrations'), type: 'group', childs: [] },
+      { title: __('Form Fields', 'bit-integrations'), type: 'group', childs: [] }
     ]
 
     if (crmConf.default.tags?.[module]) {

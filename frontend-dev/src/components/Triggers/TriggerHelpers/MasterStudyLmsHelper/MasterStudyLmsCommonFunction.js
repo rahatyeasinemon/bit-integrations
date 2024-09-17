@@ -10,9 +10,9 @@ export const getAllMasterStudyLmsCourse = (data, setFlow) => {
         tmpFlow.flow_details.allCourse = result.data
 
         setFlow({ ...tmpFlow })
-        return 'All MasterStudyLms course fetched successfully'
+        return __('All MasterStudyLms course fetched successfully', 'bit-integrations')
       }
-      return 'MasterStudyLms course fetching failed. please try again'
+      return __('MasterStudyLms course fetching failed. please try again', 'bit-integrations')
     }
   )
   toast.promise(loadPostTypes, {
@@ -30,9 +30,9 @@ export const getAllMasterStudyLmsLesson = (data, setFlow) => {
         tmpFlow.flow_details.allLesson = result.data
 
         setFlow({ ...tmpFlow })
-        return 'All MasterStudyLms lesson fetched successfully'
+        return __('All MasterStudyLms lesson fetched successfully', 'bit-integrations')
       }
-      return 'MasterStudyLms lesson fetching failed. please try again'
+      return __('MasterStudyLms lesson fetching failed. please try again', 'bit-integrations')
     }
   )
   toast.promise(loadPostTypes, {
@@ -50,9 +50,12 @@ export const getAllMasterStudyLmsDistribution = (data, setFlow) => {
         tmpFlow.flow_details.allDistribution = result.data
 
         setFlow({ ...tmpFlow })
-        return 'All MasterStudyLms Point Distribution fetched successfully'
+        return __('All MasterStudyLms Point Distribution fetched successfully', 'bit-integrations')
       }
-      return 'MasterStudyLms Point Distribution fetching failed. please try again'
+      return __(
+        'MasterStudyLms Point Distribution fetching failed. please try again',
+        'bit-integrations'
+      )
     }
   )
   toast.promise(loadPostTypes, {
@@ -74,9 +77,9 @@ export const getQuizByCourse = (val, tmpNewFlow, setNewFlow, edit = false) => {
           newConf.flow_details.allQuiz = result.data
         }
         setNewFlow({ ...newConf })
-        return 'Fetched Quiz successfully'
+        return __('Fetched Quiz successfully', 'bit-integrations')
       }
-      return 'Quiz fetching failed. please try again'
+      return __('Quiz fetching failed. please try again', 'bit-integrations')
     }
   )
   toast.promise(loadPostTypes, {

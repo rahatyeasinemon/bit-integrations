@@ -29,7 +29,7 @@ function EditDokan({ allIntegURL }) {
 
   const saveConfig = () => {
     if (!dokanConf.selectedTask) {
-      toast.error('Please select a task!')
+      toast.error(__('Please select a task!', 'bit-integrations'))
       return
     }
 
@@ -38,7 +38,7 @@ function EditDokan({ allIntegURL }) {
         dokanConf.selectedTask === TASK_LIST_VALUES.WITHDRAW_REQUEST) &&
       !dokanConf.selectedVendor
     ) {
-      toast.error('Please select a vendor!')
+      toast.error(__('Please select a vendor!', 'bit-integrations'))
       return
     }
 
@@ -46,7 +46,7 @@ function EditDokan({ allIntegURL }) {
       dokanConf.selectedTask !== TASK_LIST_VALUES.DELETE_VENDOR &&
       !checkMappedFields(dokanConf)
     ) {
-      toast.error('Please map mandatory fields!')
+      toast.error(__('Please map mandatory fields!', 'bit-integrations'))
       return
     }
 
@@ -55,7 +55,7 @@ function EditDokan({ allIntegURL }) {
       !dokanConf.selectedVendor &&
       !checkMappedFields(dokanConf)
     ) {
-      toast.error('Please select a topic or map fields!')
+      toast.error(__('Please select a topic or map fields!', 'bit-integrations'))
       return
     }
 
@@ -63,7 +63,7 @@ function EditDokan({ allIntegURL }) {
       dokanConf.selectedTask === TASK_LIST_VALUES.WITHDRAW_REQUEST &&
       !dokanConf.selectedPaymentMethod
     ) {
-      toast.error('Please select a payment method!')
+      toast.error(__('Please select a payment method!', 'bit-integrations'))
       return
     }
 

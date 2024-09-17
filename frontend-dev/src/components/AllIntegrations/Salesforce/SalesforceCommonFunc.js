@@ -48,10 +48,10 @@ export const handleInput = (
 //         }
 //         setSalesforceConf({ ...newConf })
 //         setIsLoading(false)
-//         return 'Campaign list refreshed'
+//         return __('Campaign list refreshed','bit-integrations')
 //       }
 //       setIsLoading(false)
-//       return 'Campaign list refresh failed. please try again'
+//       return __('Campaign list refresh failed. please try again','bit-integrations')
 //     })
 //   toast.promise(loadPostTypes, {
 //     success: data => data,
@@ -92,10 +92,10 @@ export const getAllCampaignList = (
           return newConf
         })
         setIsLoading(false)
-        return 'Campaign list refreshed'
+        return __('Campaign list refreshed', 'bit-integrations')
       }
       setIsLoading(false)
-      return 'Campaign list refresh failed. please try again'
+      return __('Campaign list refresh failed. please try again', 'bit-integrations')
     }
   )
   toast.promise(loadPostTypes, {
@@ -128,10 +128,10 @@ export const getAllOrigin = (
           })
         )
         setIsLoading(false)
-        return 'Case Origin refreshed'
+        return __('Case Origin refreshed', 'bit-integrations')
       }
       setIsLoading(false)
-      return 'Case Origin refresh failed. please try again'
+      return __('Case Origin refresh failed. please try again', 'bit-integrations')
     }
   )
   toast.promise(loadPostTypes, {
@@ -163,10 +163,10 @@ export const getAllType = (
         })
       )
       setIsLoading(false)
-      return 'Type refreshed'
+      return __('Type refreshed', 'bit-integrations')
     }
     setIsLoading(false)
-    return 'Type refresh failed. please try again'
+    return __('Type refresh failed. please try again', 'bit-integrations')
   })
   toast.promise(loadPostTypes, {
     success: (data) => data,
@@ -198,10 +198,10 @@ export const getAllReason = (
           })
         )
         setIsLoading(false)
-        return 'Reason refreshed'
+        return __('Reason refreshed', 'bit-integrations')
       }
       setIsLoading(false)
-      return 'Reason refresh failed. please try again'
+      return __('Reason refresh failed. please try again', 'bit-integrations')
     }
   )
   toast.promise(loadPostReasons, {
@@ -234,10 +234,10 @@ export const getAllStatus = (
           })
         )
         setIsLoading(false)
-        return 'Status refreshed'
+        return __('Status refreshed', 'bit-integrations')
       }
       setIsLoading(false)
-      return 'Status refresh failed. please try again'
+      return __('Status refresh failed. please try again', 'bit-integrations')
     }
   )
   toast.promise(loadPostReasons, {
@@ -270,10 +270,10 @@ export const getAllPriority = (
           })
         )
         setIsLoading(false)
-        return 'Priority refreshed'
+        return __('Priority refreshed', 'bit-integrations')
       }
       setIsLoading(false)
-      return 'Priority refresh failed. please try again'
+      return __('Priority refresh failed. please try again', 'bit-integrations')
     }
   )
   toast.promise(loadPostReasons, {
@@ -308,10 +308,10 @@ export const getAllPotentialLiability = (
         })
       )
       setIsLoading(false)
-      return 'Potential Liability refreshed'
+      return __('Potential Liability refreshed', 'bit-integrations')
     }
     setIsLoading(false)
-    return 'Potential Liability refresh failed. please try again'
+    return __('Potential Liability refresh failed. please try again', 'bit-integrations')
   })
   toast.promise(loadPostReasons, {
     success: (data) => data,
@@ -343,10 +343,10 @@ export const getAllSLAViolation = (
           })
         )
         setIsLoading(false)
-        return 'SLA Violation refreshed'
+        return __('SLA Violation refreshed', 'bit-integrations')
       }
       setIsLoading(false)
-      return 'SLA Violation refresh failed. please try again'
+      return __('SLA Violation refresh failed. please try again', 'bit-integrations')
     }
   )
   toast.promise(loadPostReasons, {
@@ -413,10 +413,10 @@ export const getAllSLAViolation = (
 //         }
 //         setSalesforceConf({ ...newConf })
 //         setIsLoading(false)
-//         return 'Contact list refreshed'
+//         return __('Contact list refreshed','bit-integrations')
 //       }
 //       setIsLoading(false)
-//       return 'Contact list refresh failed. please try again'
+//       return __('Contact list refresh failed. please try again','bit-integrations')
 //     })
 //   toast.promise(loadPostTypes, {
 //     success: data => data,
@@ -457,10 +457,10 @@ export const getAllLeadList = (
           return newConf
         })
         setIsLoading(false)
-        return 'Lead list refreshed'
+        return __('Lead list refreshed', 'bit-integrations')
       }
       setIsLoading(false)
-      return 'Lead list refresh failed. please try again'
+      return __('Lead list refresh failed. please try again', 'bit-integrations')
     })
     .catch(() => setIsLoading(false))
 }
@@ -497,10 +497,10 @@ export const getAllContactList = (
           return newConf
         })
         setIsLoading(false)
-        return 'Contact list refresh successfully.'
+        return __('Contact list refresh successfully.', 'bit-integrations')
       }
       setIsLoading(false)
-      return 'Contact list refresh failed. please try again'
+      return __('Contact list refresh failed. please try again', 'bit-integrations')
     }
   )
   toast.promise(loadPostTypes, {
@@ -630,10 +630,10 @@ export const getAllCustomActionModules = (
 //         }
 //         setSalesforceConf({ ...newConf })
 //         setIsLoading(false)
-//         return 'Account list refreshed'
+//         return __('Account list refreshed','bit-integrations')
 //       }
 //       setIsLoading(false)
-//       return 'Account list refresh failed. please try again'
+//       return __('Account list refresh failed. please try again','bit-integrations')
 //     })
 //   toast.promise(loadPostTypes, {
 //     success: data => data,
@@ -674,10 +674,10 @@ export const getAllAccountList = (
           return newConf
         })
         setIsLoading(false)
-        return 'Account list refreshed'
+        return __('Account list refreshed', 'bit-integrations')
       }
       setIsLoading(false)
-      return 'Account list refresh failed. please try again'
+      return __('Account list refresh failed. please try again', 'bit-integrations')
     }
   )
   toast.promise(loadPostTypes, {

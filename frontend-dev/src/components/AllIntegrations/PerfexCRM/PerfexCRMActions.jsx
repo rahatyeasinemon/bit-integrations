@@ -30,12 +30,12 @@ export default function PerfexCRMActions({ perfexCRMConf, setPerfexCRMConf, load
     } else if (type === 'permission') {
       if (e.target?.checked) {
         newConf.permissions = [
-          { id: 1, name: 'Invoices permission' },
-          { id: 2, name: 'Estimates permission' },
-          { id: 3, name: 'Contracts permission' },
-          { id: 4, name: 'Proposals permission' },
-          { id: 5, name: 'Support permission' },
-          { id: 6, name: 'Projects permission' }
+          { id: 1, name: __('Invoices permission', 'bit-integrations') },
+          { id: 2, name: __('Estimates permission', 'bit-integrations') },
+          { id: 3, name: __('Contracts permission', 'bit-integrations') },
+          { id: 4, name: __('Proposals permission', 'bit-integrations') },
+          { id: 5, name: __('Support permission', 'bit-integrations') },
+          { id: 6, name: __('Projects permission', 'bit-integrations') }
         ]
         newConf.actions.permission = true
       } else {

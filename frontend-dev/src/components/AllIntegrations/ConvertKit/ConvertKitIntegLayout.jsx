@@ -84,7 +84,7 @@ export default function ConvertKitIntegLayout({
       <br />
       <div className="d-flx">
         <b style={{ marginTop: '15px' }} className="wdt-200 d-in-b">
-          {__('Tags: ', 'bit-integrations')}
+          {__('Tags:', 'bit-integrations')}
         </b>
         <MultiSelect
           defaultValue={convertKitConf?.tagIds?.toString()}

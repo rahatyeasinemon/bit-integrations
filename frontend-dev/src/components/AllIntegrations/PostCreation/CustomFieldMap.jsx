@@ -71,7 +71,7 @@ export default function CustomFieldMap({
               { formFields?.map(f => (
                 <option key={`ff-zhcrm-${f.name}`} value={f.name}>{f.label}</option>
               ))} */}
-              <optgroup label="Form Fields">
+              <optgroup label={__('Form Fields', 'bit-integrations')}>
                 {formFields?.map(
                   (f) =>
                     f.type !== 'file' && (
@@ -82,7 +82,11 @@ export default function CustomFieldMap({
                 )}
               </optgroup>
               <option value="custom">{__('Custom...', 'bit-integrations')}</option>
-              <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+              <optgroup
+                label={sprintf(
+                  __('General Smart Codes %s', 'bit-integrations'),
+                  isPro ? '' : `(${__('Pro', 'bit-integrations')})`
+                )}>
                 {isPro &&
                   SmartTagField?.map((f) => (
                     <option key={`ff-zhcrm-${f.name}`} value={f.name}>

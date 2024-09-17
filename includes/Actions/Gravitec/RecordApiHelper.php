@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Gravitec;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -40,13 +40,13 @@ class RecordApiHelper
         $this->typeName = 'Notification Pushed';
 
         if (empty($finalData['message'])) {
-            return ['success' => false, 'message' => 'Required field Message is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Message is empty', 'bit-integrations'), 'code' => 400];
         }
         if (empty($finalData['icon'])) {
-            return ['success' => false, 'message' => 'Required field Icon is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Icon is empty', 'bit-integrations'), 'code' => 400];
         }
         if (empty($finalData['redirect_url'])) {
-            return ['success' => false, 'message' => 'Required field Refirect URL is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Refirect URL is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $requestData = [];

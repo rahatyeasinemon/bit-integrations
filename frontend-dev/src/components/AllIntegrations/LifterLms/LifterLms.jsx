@@ -21,13 +21,13 @@ function LifterLms({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const allActions = [
-    { key: '1', label: 'Lesson complete for the user' },
-    { key: '2', label: 'Section complete for the user' },
-    { key: '3', label: 'Enroll user in a course' },
-    { key: '4', label: 'Enroll user in a membership' },
-    { key: '5', label: 'Course complete for the user' },
-    { key: '6', label: 'Unenroll user from a course' },
-    { key: '7', label: 'Unenroll user from a membership' }
+    { key: '1', label: __('Lesson complete for the user', 'bit-integrations') },
+    { key: '2', label: __('Section complete for the user', 'bit-integrations') },
+    { key: '3', label: __('Enroll user in a Course', 'bit-integrations') },
+    { key: '4', label: __('Enroll user in a membership', 'bit-integrations') },
+    { key: '5', label: __('Course complete for the user', 'bit-integrations') },
+    { key: '6', label: __('Unenroll user from a course', 'bit-integrations') },
+    { key: '7', label: __('Unenroll user from a membership', 'bit-integrations') }
   ]
 
   const [lifterLmsConf, setLifterLmsConf] = useState({

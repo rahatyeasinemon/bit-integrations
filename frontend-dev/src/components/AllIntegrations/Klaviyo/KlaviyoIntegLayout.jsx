@@ -1,11 +1,15 @@
 /* eslint-disable default-case */
-import { __ } from '../../../Utils/i18nwrap'
+import { useRecoilValue } from 'recoil'
+import { __, sprintf } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
-import { addFieldMap } from '../GlobalIntegrationHelper'
-import { getAllLists } from './KlaviyoCommonFunc'
+import { getAllLists, addFieldMap } from './KlaviyoCommonFunc'
 import KlaviyoFieldMap from './KlaviyoFieldMap'
+import { $btcbi } from '../../../GlobalStates'
 
 function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, setLoading }) {
+  const btcbi = useRecoilValue($btcbi)
+  const { isPro } = btcbi
+
   const handleList = (e) => {
     const newConf = { ...klaviyoConf }
     const { name } = e.target
@@ -18,6 +22,7 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
     switch (e.target.name) {
       case 'listId':
         newConf.field_map = [{ formField: '', klaviyoFormField: '' }]
+        newConf.custom_field_map = [{ formField: '', klaviyoFormField: '' }]
         break
     }
 
@@ -84,18 +89,77 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
               formFields={formFields}
               klaviyoConf={klaviyoConf}
               setKlaviyoConf={setKlaviyoConf}
+              type="field_map"
             />
           ))}
           <div className="txt-center btcbi-field-map-button mt-2">
             <button
               onClick={() =>
-                addFieldMap(klaviyoConf.field_map.length, klaviyoConf, setKlaviyoConf, false)
+                addFieldMap(klaviyoConf.field_map.length, klaviyoConf, setKlaviyoConf, 'field_map')
               }
               className="icn-btn sh-sm"
               type="button">
               +
             </button>
           </div>
+        </div>
+      )}
+      {klaviyoConf?.listId && (
+        <div className="mt-5">
+          <b className="wdt-100">
+            {__('Custom Properties', 'bit-integrations')}{' '}
+            {isPro ? '' : `(${__('Pro', 'bit-integrations')})`}
+          </b>
+          <div className="btcd-hr mt-2 mb-4" />
+          {isPro ? (
+            <>
+              <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
+                <div className="txt-dp">
+                  <b>{__('Form Fields', 'bit-integrations')}</b>
+                </div>
+                <div className="txt-dp">
+                  <b>{__('Klaviyo Property name', 'bit-integrations')}</b>
+                </div>
+              </div>
+              {klaviyoConf?.custom_field_map?.map((itm, i) => (
+                <KlaviyoFieldMap
+                  key={`ko-m-${i + 8}`}
+                  i={i}
+                  field={itm}
+                  formFields={formFields}
+                  klaviyoConf={klaviyoConf}
+                  setKlaviyoConf={setKlaviyoConf}
+                  type="custom_field_map"
+                />
+              ))}
+              <div className="txt-center btcbi-field-map-button mt-2">
+                <button
+                  onClick={() =>
+                    addFieldMap(
+                      klaviyoConf?.custom_field_map?.length,
+                      klaviyoConf,
+                      setKlaviyoConf,
+                      'custom_field_map'
+                    )
+                  }
+                  className="icn-btn sh-sm"
+                  type="button">
+                  +
+                </button>
+              </div>
+            </>
+          ) : (
+            <p>
+              {sprintf(
+                __(
+                  'The Bit Integration Pro v(%s) plugin needs to be installed and activated to enable the %s feature',
+                  'bit-integrations'
+                ),
+                '2.2.2',
+                __('Custom Properties', 'bit-integrations')
+              )}
+            </p>
+          )}
         </div>
       )}
     </div>

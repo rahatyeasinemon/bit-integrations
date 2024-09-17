@@ -86,10 +86,10 @@ export default function MailsterActions({ mailsterConf, setMailsterConf, loading
         <div className="mt-2">
           <MultiSelect
             options={[
-              { label: 'Pending', value: '0' },
-              { label: 'Subscribed', value: '1' },
-              { label: 'Unsubscribed', value: '2' },
-              { label: 'Hardbounced', value: '3' }
+              { label: __('Pending', 'bit-integrations'), value: '0' },
+              { label: __('Subscribed', 'bit-integrations'), value: '1' },
+              { label: __('Unsubscribed', 'bit-integrations'), value: '2' },
+              { label: __('Hardbounced', 'bit-integrations'), value: '3' }
             ]}
             className="msl-wrp-options"
             defaultValue={mailsterConf?.selectedStatus}
@@ -112,7 +112,9 @@ export default function MailsterActions({ mailsterConf, setMailsterConf, loading
         <div className="mt-2 flx">
           {__('Select Lists', 'bit-integrations')}
           <Cooltip width={250} icnSize={17} className="ml-1">
-            <div className="txt-body">Subscribers will be associated with the selected lists.</div>
+            <div className="txt-body">
+              {__('Subscribers will be associated with the selected lists', 'bit-integrations')}
+            </div>
           </Cooltip>
         </div>
         {loading.lists ? (
@@ -151,8 +153,10 @@ export default function MailsterActions({ mailsterConf, setMailsterConf, loading
           {__('Select tags', 'bit-integrations')}
           <Cooltip width={300} icnSize={17} className="ml-1">
             <div className="txt-body">
-              Selected tags will be associated with the subscriber. You can also add custom tags by
-              pressing enter or comma (,) after writing them.
+              {__(
+                'Selected tags will be associated with the subscriber. You can also add custom tags by pressing enter or comma (,) after writing them',
+                'bit-integrations'
+              )}
             </div>
           </Cooltip>
         </div>

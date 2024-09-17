@@ -29,9 +29,9 @@ final class HubspotController
         $apiResponse = HttpHelper::get($apiEndpoint, null, $header);
 
         if (isset($apiResponse->results)) {
-            wp_send_json_success('Authorization successfull', 200);
+            wp_send_json_success(__('Authorization successfull', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Authorization failed', 400);
+            wp_send_json_error(__('Authorization failed', 'bit-integrations'), 400);
         }
     }
 
@@ -79,7 +79,7 @@ final class HubspotController
 
             wp_send_json_success($fields, 200);
         } else {
-            wp_send_json_error('fields fetching failed', 400);
+            wp_send_json_error(__('fields fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -110,7 +110,7 @@ final class HubspotController
             }
             wp_send_json_success($options, 200);
         } else {
-            wp_send_json_error('fields fetching failed', 400);
+            wp_send_json_error(__('fields fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -200,7 +200,7 @@ final class HubspotController
             }
             wp_send_json_success($contacts, 200);
         } else {
-            wp_send_json_error('Contacts fetching failed', 400);
+            wp_send_json_error(__('Contacts fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -226,7 +226,7 @@ final class HubspotController
             }
             wp_send_json_success($companies, 200);
         } else {
-            wp_send_json_error('fields fetching failed', 400);
+            wp_send_json_error(__('fields fetching failed', 'bit-integrations'), 400);
         }
     }
 

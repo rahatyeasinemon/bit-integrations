@@ -6,7 +6,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import { create } from 'mutative'
 
 export const handleInput = (e, newsletterConf, setNewsletterConf) => {
-  const newConf = create(newsletterConf, draftConf => {
+  const newConf = create(newsletterConf, (draftConf) => {
     const { name } = e.target
     if (e.target.value !== '') {
       draftConf[name] = e.target.value
@@ -19,67 +19,83 @@ export const handleInput = (e, newsletterConf, setNewsletterConf) => {
 }
 
 export const generateMappedField = (newsletterConf) => {
-  const requiredFlds = newsletterConf?.staticFields.filter(fld => fld.required === true)
-  return requiredFlds.length > 0 ? requiredFlds.map(field => ({ formField: '', newsletterFormField: field.key })) : [{ formField: '', newsletterFormField: '' }]
+  const requiredFlds = newsletterConf?.staticFields.filter((fld) => fld.required === true)
+  return requiredFlds.length > 0
+    ? requiredFlds.map((field) => ({ formField: '', newsletterFormField: field.key }))
+    : [{ formField: '', newsletterFormField: '' }]
 }
 
 export const checkMappedFields = (newsletterConf) => {
-  const mappedFields = newsletterConf?.field_map ? newsletterConf.field_map.filter(mappedField => (!mappedField.formField || !mappedField.newsletterFormField || (!mappedField.formField === 'custom' && !mappedField.customValue))) : []
+  const mappedFields = newsletterConf?.field_map
+    ? newsletterConf.field_map.filter(
+        (mappedField) =>
+          !mappedField.formField ||
+          !mappedField.newsletterFormField ||
+          (!mappedField.formField === 'custom' && !mappedField.customValue)
+      )
+    : []
   if (mappedFields.length > 0) {
     return false
   }
   return true
 }
 
-export const newsletterAuthentication = (confTmp, setError, setIsAuthorized, loading, setLoading) => {
+export const newsletterAuthentication = (
+  confTmp,
+  setError,
+  setIsAuthorized,
+  loading,
+  setLoading
+) => {
   if (!confTmp.name) {
-    setError({ name: !confTmp.name ? __('Name can\'t be empty', 'bit-integrations') : '' })
+    setError({ name: !confTmp.name ? __("Name can't be empty", 'bit-integrations') : '' })
     return
   }
 
   setLoading({ ...loading, auth: true })
-  bitsFetch({}, 'newsletter_authentication')
-    .then(result => {
-      if (result.success) {
-        setIsAuthorized(true)
-        toast.success(__('Connected Successfully', 'bit-integrations'))
-        setLoading({ ...loading, auth: false })
-        return
-      }
+  bitsFetch({}, 'newsletter_authentication').then((result) => {
+    if (result.success) {
+      setIsAuthorized(true)
+      toast.success(__('Connected Successfully', 'bit-integrations'))
       setLoading({ ...loading, auth: false })
-      toast.error(__('Connection failed: install and active Newsletter plugin first!', 'bit-integrations'))
-    })
+      return
+    }
+    setLoading({ ...loading, auth: false })
+    toast.error(
+      __('Connection failed: install and active Newsletter plugin first!', 'bit-integrations')
+    )
+  })
 }
 
 export const staticFields = [
-  { key: 'email', label: 'Email', required: true },
-  { key: 'name', label: 'First Name', required: false },
-  { key: 'surname', label: 'Last Name', required: false },
-  { key: 'status', label: 'Status', required: false },
-  { key: 'gender', label: 'Gender', required: false },
-  { key: 'country', label: 'Country Code', required: false },
-  { key: 'region', label: 'Region', required: false },
-  { key: 'city', label: 'City', required: false },
-  { key: 'profile_1', label: 'Custom Field 1', required: false },
-  { key: 'profile_2', label: 'Custom Field 2', required: false },
-  { key: 'profile_3', label: 'Custom Field 3', required: false },
-  { key: 'profile_4', label: 'Custom Field 4', required: false },
-  { key: 'profile_5', label: 'Custom Field 5', required: false },
-  { key: 'profile_6', label: 'Custom Field 6', required: false },
-  { key: 'profile_7', label: 'Custom Field 7', required: false },
-  { key: 'profile_8', label: 'Custom Field 8', required: false },
-  { key: 'profile_9', label: 'Custom Field 9', required: false },
-  { key: 'profile_10', label: 'Custom Field 10', required: false },
-  { key: 'profile_11', label: 'Custom Field 11', required: false },
-  { key: 'profile_12', label: 'Custom Field 12', required: false },
-  { key: 'profile_13', label: 'Custom Field 13', required: false },
-  { key: 'profile_14', label: 'Custom Field 14', required: false },
-  { key: 'profile_15', label: 'Custom Field 15', required: false },
-  { key: 'profile_16', label: 'Custom Field 16', required: false },
-  { key: 'profile_17', label: 'Custom Field 17', required: false },
-  { key: 'profile_18', label: 'Custom Field 18', required: false },
-  { key: 'profile_19', label: 'Custom Field 19', required: false },
-  { key: 'profile_20', label: 'Custom Field 20', required: false },
+  { key: 'email', label: __('Email', 'bit-integrations'), required: true },
+  { key: 'name', label: __('First Name', 'bit-integrations'), required: false },
+  { key: 'surname', label: __('Last Name', 'bit-integrations'), required: false },
+  { key: 'status', label: __('Status', 'bit-integrations'), required: false },
+  { key: 'gender', label: __('Gender', 'bit-integrations'), required: false },
+  { key: 'country', label: __('Country Code', 'bit-integrations'), required: false },
+  { key: 'region', label: __('Region', 'bit-integrations'), required: false },
+  { key: 'city', label: __('City', 'bit-integrations'), required: false },
+  { key: 'profile_1', label: __('Custom Field 1', 'bit-integrations'), required: false },
+  { key: 'profile_2', label: __('Custom Field 2', 'bit-integrations'), required: false },
+  { key: 'profile_3', label: __('Custom Field 3', 'bit-integrations'), required: false },
+  { key: 'profile_4', label: __('Custom Field 4', 'bit-integrations'), required: false },
+  { key: 'profile_5', label: __('Custom Field 5', 'bit-integrations'), required: false },
+  { key: 'profile_6', label: __('Custom Field 6', 'bit-integrations'), required: false },
+  { key: 'profile_7', label: __('Custom Field 7', 'bit-integrations'), required: false },
+  { key: 'profile_8', label: __('Custom Field 8', 'bit-integrations'), required: false },
+  { key: 'profile_9', label: __('Custom Field 9', 'bit-integrations'), required: false },
+  { key: 'profile_10', label: __('Custom Field 10', 'bit-integrations'), required: false },
+  { key: 'profile_11', label: __('Custom Field 11', 'bit-integrations'), required: false },
+  { key: 'profile_12', label: __('Custom Field 12', 'bit-integrations'), required: false },
+  { key: 'profile_13', label: __('Custom Field 13', 'bit-integrations'), required: false },
+  { key: 'profile_14', label: __('Custom Field 14', 'bit-integrations'), required: false },
+  { key: 'profile_15', label: __('Custom Field 15', 'bit-integrations'), required: false },
+  { key: 'profile_16', label: __('Custom Field 16', 'bit-integrations'), required: false },
+  { key: 'profile_17', label: __('Custom Field 17', 'bit-integrations'), required: false },
+  { key: 'profile_18', label: __('Custom Field 18', 'bit-integrations'), required: false },
+  { key: 'profile_19', label: __('Custom Field 19', 'bit-integrations'), required: false },
+  { key: 'profile_20', label: __('Custom Field 20', 'bit-integrations'), required: false }
 ]
 
 export const listsOptions = () => {

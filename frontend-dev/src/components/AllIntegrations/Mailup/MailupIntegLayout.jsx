@@ -67,8 +67,10 @@ export default function MailupIntegLayout({
             {__('Groups:', 'bit-integrations')}
             <Cooltip width={250} icnSize={17} className="ml-2">
               <div className="txt-body">
-                If you want to assign a subscriber to a group then select a group otherwise leave it
-                blank.
+                {__(
+                  'If you want to assign a subscriber to a group then select a group otherwise leave it blank',
+                  'bit-integrations'
+                )}
                 <br />
               </div>
             </Cooltip>

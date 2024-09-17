@@ -52,7 +52,7 @@ export default function AffiliateActions({ affiliateConf, setAffiliateConf, form
         className="wdt-200 mt-4 mr-2"
         value="status"
         title={__('Add Status', 'bit-integrations')}
-        subTitle={__('Add Status ', 'bit-integrations')}
+        subTitle={__('Add Status', 'bit-integrations')}
       />
 
       <ConfirmModal
@@ -65,7 +65,7 @@ export default function AffiliateActions({ affiliateConf, setAffiliateConf, form
         action={clsActionMdl}
         title={__('Status', 'bit-integrations')}>
         <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">{__('Select status of referral ', 'bit-integrations')}</div>
+        <div className="mt-2">{__('Select status of referral', 'bit-integrations')}</div>
         {isLoading ? (
           <Loader
             style={{

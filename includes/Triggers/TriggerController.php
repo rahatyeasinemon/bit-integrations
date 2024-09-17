@@ -13,7 +13,7 @@ final class TriggerController
     public static function triggerList()
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_view_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__("User don't have permission to access this page", 'bit-integrations'));
         }
         $triggers = [];
         $dirs = new FilesystemIterator(__DIR__);
@@ -33,7 +33,7 @@ final class TriggerController
         }
 
         if (!\function_exists('btcbi_pro_activate_plugin')) {
-            $triggers = array_merge($triggers, AllTriggersName::$allTriggersName);
+            $triggers = array_merge($triggers, AllTriggersName::allTriggersName());
         }
 
         return Hooks::apply('bit_integrations_triggers', $triggers);
@@ -66,7 +66,7 @@ final class TriggerController
             update_option("btcbi_{$triggerName}_test", []);
         }
         if (!$testData || empty($testData)) {
-            wp_send_json_error(new WP_Error("{$triggerName}_test", sprintf(__('%s data is empty', 'bit-integrations'), $triggerName)));
+            wp_send_json_error(new WP_Error("{$triggerName}_test", wp_sprintf(__('%s data is empty', 'bit-integrations'), $triggerName)));
         }
 
         wp_send_json_success($testData);
@@ -84,6 +84,6 @@ final class TriggerController
             wp_send_json_error(new WP_Error("{$triggerName}_test", __('Failed to remove test data', 'bit-integrations')));
         }
 
-        wp_send_json_success(sprintf(__('%s test data removed successfully', 'bit-integrations'), $triggerName));
+        wp_send_json_success(wp_sprintf(__('%s test data removed successfully', 'bit-integrations'), $triggerName));
     }
 }

@@ -66,7 +66,7 @@ function Mailster({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(mailsterConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
     mailsterConf.field_map.length > 0 && setStep(pageNo)

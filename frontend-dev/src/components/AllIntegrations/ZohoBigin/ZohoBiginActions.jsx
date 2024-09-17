@@ -41,8 +41,8 @@ export default function ZohoBiginActions({
   const module = tab === 0 ? biginConf.module : biginConf.relatedlists[tab - 1].module
   const getTags = () => {
     const arr = [
-      { title: 'Tags', type: 'group', childs: [] },
-      { title: 'Form Fields', type: 'group', childs: [] }
+      { title: __('Tags', 'bit-integrations'), type: 'group', childs: [] },
+      { title: __('Form Fields', 'bit-integrations'), type: 'group', childs: [] }
     ]
 
     if (biginConf?.default?.moduleData?.[module]?.tags) {

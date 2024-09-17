@@ -17,7 +17,9 @@ const WPJobManagerHelper = ({ flow, setFlowData, edit = false }) => {
         id === 'wp_job_manager-8' ||
         id === 'wp_job_manager-10') && (
         <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select Job Type:</b>
+          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
+            {__('Select Job Type:', 'bit-integrations')}
+          </b>
           <MultiSelect
             className="msl-wrp-options"
             defaultValue={triggerData?.selectedJobType}
@@ -34,7 +36,9 @@ const WPJobManagerHelper = ({ flow, setFlowData, edit = false }) => {
         id === 'wp_job_manager-7' ||
         id === 'wp_job_manager-11') && (
         <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select Job:</b>
+          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
+            {__('Select Job:', 'bit-integrations')}
+          </b>
           <MultiSelect
             className="msl-wrp-options"
             defaultValue={triggerData?.selectedJob}

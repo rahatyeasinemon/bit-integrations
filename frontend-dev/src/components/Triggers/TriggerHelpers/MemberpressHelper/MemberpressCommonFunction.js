@@ -9,9 +9,9 @@ export const getAllMembership = (data, setFlow) => {
       tmpFlow.flow_details.allMemberships = result.data
 
       setFlow({ ...tmpFlow })
-      return 'All membership fetched successfully'
+      return __('All membership fetched successfully', 'bit-integrations')
     }
-    return 'Membership fetching failed. please try again'
+    return __('Membership fetching failed. please try again', 'bit-integrations')
   })
   toast.promise(loadPostTypes, {
     success: (data) => data,
@@ -28,9 +28,9 @@ export const getAllOneTimeMembership = (data, setFlow) => {
         tmpFlow.flow_details.oneTimeMembership = result.data
 
         setFlow({ ...tmpFlow })
-        return 'Fetched one time membership successfully'
+        return __('Fetched one time membership successfully', 'bit-integrations')
       }
-      return 'One time membership fetching failed. please try again'
+      return __('One time membership fetching failed. please try again', 'bit-integrations')
     }
   )
   toast.promise(loadPostTypes, {
@@ -47,9 +47,9 @@ export const getAllRecurringMembership = (data, setFlow) => {
         const tmpFlow = { ...data }
         tmpFlow.flow_details.recurringMembership = result.data
         setFlow({ ...tmpFlow })
-        return 'Fetched recurring membership successfully'
+        return __('Fetched recurring membership successfully', 'bit-integrations')
       }
-      return 'Recurring membership fetching failed. please try again'
+      return __('Recurring membership fetching failed. please try again', 'bit-integrations')
     }
   )
   toast.promise(loadQuizType, {

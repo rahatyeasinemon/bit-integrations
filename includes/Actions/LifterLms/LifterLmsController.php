@@ -21,7 +21,7 @@ class LifterLmsController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'LifterLms'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'LifterLms'));
     }
 
     public static function getAllLesson()
@@ -97,7 +97,7 @@ class LifterLmsController
             empty($integId)
             || empty($mainAction)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('Some important info are missing those are required for LifterLms', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('Some important info are missing those are required for %s', 'bit-integrations'), 'LifterLms'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $lifterLmsApiResponse = $recordApiHelper->execute(

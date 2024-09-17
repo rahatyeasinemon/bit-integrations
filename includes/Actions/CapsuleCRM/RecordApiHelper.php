@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\CapsuleCRM;
 
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -40,7 +40,7 @@ class RecordApiHelper
     public function addOrganisation($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $staticFieldsKeys = ['name', 'emailAddresses', 'about', 'street', 'city', 'state', 'zip', 'country',  'websites', 'phoneNumbers'];
@@ -209,7 +209,7 @@ class RecordApiHelper
     public function addProject($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field project name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field project name is empty', 'bit-integrations'), 'code' => 400];
         }
         $staticFieldsKeys = ['name', 'description', 'expectedCloseOn'];
 

@@ -19,8 +19,8 @@ function Twilio({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const twilioFields = [
-    { key: 'To', label: 'To', required: true },
-    { key: 'Body', label: 'Message Body', required: true },
+    { key: 'To', label: __('To', 'bit-integrations'), required: true },
+    { key: 'Body', label: __('Message Body', 'bit-integrations'), required: true }
   ]
 
   const [twilioConf, setTwilioConf] = useState({
@@ -33,9 +33,9 @@ function Twilio({ formFields, setFlow, flow, allIntegURL }) {
     from_num: process.env.NODE_ENV === 'development' ? '01861054127' : '',
     field_map: [
       { formField: '', twilioField: 'To' },
-      { formField: '', twilioField: 'Body' },
+      { formField: '', twilioField: 'Body' }
     ],
-    twilioFields,
+    twilioFields
   })
 
   const saveConfig = () => {
@@ -48,7 +48,7 @@ function Twilio({ formFields, setFlow, flow, allIntegURL }) {
       navigate,
       '',
       '',
-      setIsLoading,
+      setIsLoading
     )
     resp.then((res) => {
       if (res.success) {
@@ -93,19 +93,12 @@ function Twilio({ formFields, setFlow, flow, allIntegURL }) {
           ...(step === 2 && {
             width: 900,
             height: 'auto',
-            overflow: 'visible',
-          }),
-        }}
-      >
+            overflow: 'visible'
+          })
+        }}>
         <TwilioIntegLayout
           formFields={formFields}
-          handleInput={(e) => handleInput(
-            e,
-            twilioConf,
-            setTwilioConf,
-            setIsLoading,
-            setSnackbar,
-          )}
+          handleInput={(e) => handleInput(e, twilioConf, setTwilioConf, setIsLoading, setSnackbar)}
           twilioConf={twilioConf}
           setTwilioConf={setTwilioConf}
           isLoading={isLoading}
@@ -116,11 +109,8 @@ function Twilio({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
-          &nbsp;
+          type="button">
+          {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>

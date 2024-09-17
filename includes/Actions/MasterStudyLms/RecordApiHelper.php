@@ -2,13 +2,13 @@
 
 namespace BitCode\FI\Actions\MasterStudyLms;
 
-use BitCode\FI\Log\LogHandler;
-use STM_LMS_Course;
-use STM_LMS_Helpers;
-use STM_LMS_Lesson;
-use STM_LMS_Quiz;
-use STM_LMS_User_Manager_Course_User;
 use WP_Error;
+use STM_LMS_Quiz;
+use STM_LMS_Course;
+use STM_LMS_Lesson;
+use STM_LMS_Helpers;
+use BitCode\FI\Log\LogHandler;
+use STM_LMS_User_Manager_Course_User;
 
 class RecordApiHelper
 {
@@ -311,44 +311,44 @@ class RecordApiHelper
             $courseId = $integrationDetails->courseId;
             $response = self::complete_course($courseId);
             if ($response) {
-                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'course-complete', 'type_name' => 'user-course-complete']), 'success', 'Course completed successfully');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'course-complete', 'type_name' => 'user-course-complete']), 'success', __('Course completed successfully', 'bit-integrations'));
             } else {
-                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'course-complete', 'type_name' => 'user-course-complete']), 'error', 'Failed to completed course');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'course-complete', 'type_name' => 'user-course-complete']), 'error', __('Failed to completed course', 'bit-integrations'));
             }
         } elseif ($mainAction == 2) {
             $courseId = $integrationDetails->courseId;
             $lessonId = $integrationDetails->lessonId;
             $response = self::complete_lesson($courseId, $lessonId);
             if ($response) {
-                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'lesson-complete', 'type_name' => 'user-lesson-complete']), 'success', 'Lesson completed successfully');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'lesson-complete', 'type_name' => 'user-lesson-complete']), 'success', __('Lesson completed successfully', 'bit-integrations'));
             } else {
-                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'lesson-complete', 'type_name' => 'user-lesson-complete']), 'error', 'Failed to completed lesson');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'lesson-complete', 'type_name' => 'user-lesson-complete']), 'error', __('Failed to completed lesson', 'bit-integrations'));
             }
         } elseif ($mainAction == 3) {
             $courseId = $integrationDetails->courseId;
             $quizId = $integrationDetails->quizId;
             $response = self::complete_quiz($courseId, $quizId);
             if ($response) {
-                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'quiz-complete', 'type_name' => 'user-quiz-complete']), 'success', 'quiz completed successfully');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'quiz-complete', 'type_name' => 'user-quiz-complete']), 'success', __('quiz completed successfully', 'bit-integrations'));
             } else {
-                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'quiz-complete', 'type_name' => 'user-quiz-complete']), 'error', 'Failed to completed quiz');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'quiz-complete', 'type_name' => 'user-quiz-complete']), 'error', __('Failed to completed quiz', 'bit-integrations'));
             }
         } elseif ($mainAction == 4) {
             $courseId = $integrationDetails->courseId;
             $response = self::reset_course($courseId);
             if ($response) {
-                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'course-reset', 'type_name' => 'user-course-reset']), 'success', 'Course reset successfully');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'course-reset', 'type_name' => 'user-course-reset']), 'success', __('Course reset successfully', 'bit-integrations'));
             } else {
-                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'course-reset', 'type_name' => 'user-course-reset']), 'error', 'Failed to reset course');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'course-reset', 'type_name' => 'user-course-reset']), 'error', __('Failed to reset course', 'bit-integrations'));
             }
         } elseif ($mainAction == 5) {
             $course_id = $integrationDetails->courseId;
             $lesson_id = $integrationDetails->lessonId;
             $response = self::reset_lesson($course_id, $lesson_id);
             if ($response) {
-                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'lesson-reset', 'type_name' => 'user-lesson-reset']), 'success', 'Lesson reset successfully');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'lesson-reset', 'type_name' => 'user-lesson-reset']), 'success', __('Lesson reset successfully', 'bit-integrations'));
             } else {
-                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'lesson-reset', 'type_name' => 'user-lesson-reset']), 'error', 'Failed to reset lesson');
+                LogHandler::save($this->integrationID, wp_json_encode(['type' => 'lesson-reset', 'type_name' => 'user-lesson-reset']), 'error', __('Failed to reset lesson', 'bit-integrations'));
             }
         }
 

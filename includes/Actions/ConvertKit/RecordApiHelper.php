@@ -6,8 +6,9 @@
 
 namespace BitCode\FI\Actions\ConvertKit;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,update, exist
@@ -69,9 +70,9 @@ class RecordApiHelper
         foreach ($fieldMap as $fieldKey => $fieldPair) {
             if (!empty($fieldPair->convertKitField)) {
                 if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue) && !is_numeric($fieldPair->convertKitField)) {
-                    $fieldData[$fieldPair->convertKitField] = $fieldPair->customValue;
+                    $fieldData[$fieldPair->convertKitField] = Common::replaceFieldWithValue($fieldPair->customValue, $fieldValues);
                 } elseif (is_numeric($fieldPair->convertKitField) && $fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
-                    $customFields[] = ['field' => (int) $fieldPair->convertKitField, 'value' => $fieldPair->customValue];
+                    $customFields[] = ['field' => (int) $fieldPair->convertKitField, 'value' => Common::replaceFieldWithValue($fieldPair->customValue, $fieldValues)];
                 } elseif (is_numeric($fieldPair->convertKitField)) {
                     $customFields[] = ['field' => (int) $fieldPair->convertKitField, 'value' => $fieldValues[$fieldPair->formField]];
                 } else {
@@ -98,7 +99,7 @@ class RecordApiHelper
                 $this->updateRecord($existSubscriber->subscribers[0]->id, $convertKit, $existSubscriber);
                 $type = 'update';
             } else {
-                LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', 'Email address already exists in the system');
+                LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', __('Email address already exists in the system', 'bit-integrations'));
 
                 wp_send_json_error(
                     [

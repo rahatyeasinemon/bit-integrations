@@ -20,8 +20,8 @@ function Acumbamail({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const allActions = [
-    { key: '1', label: 'Add/Update Subscriber' },
-    { key: '2', label: 'Delete Subscriber' }
+    { key: '1', label: __('Add/Update Subscriber', 'bit-integrations') },
+    { key: '2', label: __('Delete Subscriber', 'bit-integrations') }
   ]
 
   const addSubsCriberFields = [{ key: 'email', label: 'Email', required: true }]

@@ -96,7 +96,7 @@ class MailPoetController
         $lists = $integrationDetails->lists;
 
         if (empty($fieldMap)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Google sheet'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Google sheet'));
         }
 
         $recordApiHelper = new RecordApiHelper($integId);

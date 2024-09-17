@@ -24,21 +24,29 @@ function Salesmate({ formFields, setFlow, flow, allIntegURL }) {
   const [salesmateConf, setSalesmateConf] = useState({
     name: 'Salesmate',
     type: 'Salesmate',
-    session_token: process.env.NODE_ENV === 'development' ? 'a2e39d10-b9d2-11ed-8056-0d118e2d3ff7' : '',
+    session_token:
+      process.env.NODE_ENV === 'development' ? 'a2e39d10-b9d2-11ed-8056-0d118e2d3ff7' : '',
     link_name: process.env.NODE_ENV === 'development' ? 'bitcode' : '',
-    field_map: [
-      { formField: '', salesmateFormField: '' },
-    ],
+    field_map: [{ formField: '', salesmateFormField: '' }],
     actionName: '',
     actionId: '',
     salesmateFields: [],
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, salesmateConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      salesmateConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -54,26 +62,26 @@ function Salesmate({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(salesmateConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
 
     if (!salesmateConf.selectedCRMOwner) {
-      toast.error('Please select a Owner')
+      toast.error(__('Please select a Owner', 'bit-integrations'))
       return
     }
 
     if (Number(salesmateConf.actionId) === 4) {
       if (!salesmateConf.selectedCRMContact) {
-        toast.error('Please select a Contact')
+        toast.error(__('Please select a Contact', 'bit-integrations'))
         return
       }
       if (!salesmateConf.selectedCRMPipeline) {
-        toast.error('Please select a Pipeline')
+        toast.error(__('Please select a Pipeline', 'bit-integrations'))
         return
       }
       if (!salesmateConf.selectedCRMStage) {
-        toast.error('Please select a Stage')
+        toast.error(__('Please select a Stage', 'bit-integrations'))
         return
       }
     }
@@ -84,7 +92,9 @@ function Salesmate({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <SalesmateAuthorization
@@ -98,11 +108,14 @@ function Salesmate({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <SalesmateIntegLayout
           formFields={formFields}
-          handleInput={(e) => handleInput(e, salesmateConf, setSalesmateConf, setLoading, setSnackbar)}
+          handleInput={(e) =>
+            handleInput(e, salesmateConf, setSalesmateConf, setLoading, setSnackbar)
+          }
           salesmateConf={salesmateConf}
           setSalesmateConf={setSalesmateConf}
           loading={loading}
@@ -115,13 +128,10 @@ function Salesmate({ formFields, setFlow, flow, allIntegURL }) {
         {salesmateConf?.actionName && (
           <button
             onClick={() => nextPage(3)}
-            disabled={!(checkMappedFields(salesmateConf))}
+            disabled={!checkMappedFields(salesmateConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button"
-          >
-            {__('Next', 'bit-integrations')}
-            {' '}
-            &nbsp;
+            type="button">
+            {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         )}

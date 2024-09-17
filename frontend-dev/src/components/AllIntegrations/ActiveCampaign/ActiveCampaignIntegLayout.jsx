@@ -118,7 +118,7 @@ export default function ActiveCampaignIntegLayout({
       <br />
       <div className="d-flx">
         <b style={{ marginTop: '15px' }} className="wdt-200 d-in-b">
-          {__('Tags: ', 'bit-integrations')}
+          {__('Tags:', 'bit-integrations')}
         </b>
         <MultiSelect
           defaultValue={activeCampaingConf?.tagIds}
@@ -153,7 +153,7 @@ export default function ActiveCampaignIntegLayout({
         <>
           <div className="d-flx">
             <b style={{ marginTop: '15px' }} className="wdt-200 d-in-b">
-              {__('Account: ', 'bit-integrations')}
+              {__('Account:', 'bit-integrations')}
             </b>
             <MultiSelect
               defaultValue={activeCampaingConf?.selectedAccount}

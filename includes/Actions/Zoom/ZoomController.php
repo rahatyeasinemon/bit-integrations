@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\Zoom;
 
-use WP_Error;
-use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Flow\FlowController;
+use WP_Error;
 
 class ZoomController
 {
@@ -80,9 +80,9 @@ class ZoomController
         }
 
         $allFields = [
-            (object) ['key' => 'first_name', 'label' => 'First Name', 'required' => true],
-            (object) ['key' => 'last_name', 'label' => 'Last Name', 'required' => true],
-            (object) ['key' => 'email', 'label' => 'Email', 'required' => true]
+            (object) ['key' => 'first_name', 'label' => __('First Name', 'bit-integrations'), 'required' => true],
+            (object) ['key' => 'last_name', 'label' => __('Last Name', 'bit-integrations'), 'required' => true],
+            (object) ['key' => 'email', 'label' => __('Email', 'bit-integrations'), 'required' => true]
         ];
         $excludedFields = ['first_name', 'last_name', 'email'];
 
@@ -128,7 +128,7 @@ class ZoomController
             || empty($fieldMap)
             || empty($defaultDataConf)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Zoom'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Zoom'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $zoomApiResponse = $recordApiHelper->execute(

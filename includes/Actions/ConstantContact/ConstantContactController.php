@@ -6,10 +6,10 @@
 
 namespace BitCode\FI\Actions\ConstantContact;
 
-use WP_Error;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Log\LogHandler;
+use WP_Error;
 
 /**
  * Provide functionality for Constant Contact integration
@@ -248,7 +248,7 @@ class ConstantContactController
             empty($fieldMap)
              || empty($auth_token)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Constant Contact'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Constant Contact'));
         }
 
         if ((\intval($integrationDetails->tokenDetails->generates_on) + (1435 * 60)) < time()) {
@@ -262,7 +262,7 @@ class ConstantContactController
                 ConstantContactController::_saveRefreshedToken($integId, $newTokenDetails);
                 $integrationDetails->tokenDetails->access_token = $newTokenDetails->access_token;
             } else {
-                LogHandler::save($integId, 'token', 'error', 'Failed to refresh access token');
+                LogHandler::save($integId, 'token', 'error', __('Failed to refresh access token', 'bit-integrations'));
 
                 return;
             }

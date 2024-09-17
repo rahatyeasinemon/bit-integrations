@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Telegram;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Telegram integration
@@ -126,7 +126,7 @@ class TelegramController
             || empty($chat_id)
             || empty($body)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Telegram'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Telegram'));
         }
         $recordApiHelper = new RecordApiHelper(self::APIENDPOINT . $bot_api_key, $integrationId);
         $telegramApiResponse = $recordApiHelper->execute(

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Salesmate;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -42,9 +42,9 @@ class RecordApiHelper
     public function addProduct($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name is empty', 'bit-integrations'), 'code' => 400];
         } elseif (empty($finalData['unitPrice'])) {
-            return ['success' => false, 'message' => 'Required field unit Price is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field unit Price is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $finalData['isActive'] = isset($this->integrationDetails->selectedIsActive) && !empty($this->integrationDetails->selectedIsActive) ? $this->integrationDetails->selectedIsActive : 1;
@@ -67,7 +67,7 @@ class RecordApiHelper
     public function addContact($finalData)
     {
         if (empty($finalData['lastName'])) {
-            return ['success' => false, 'message' => 'Required field lastName is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field lastName is empty', 'bit-integrations'), 'code' => 400];
         }
 
         if (isset($this->integrationDetails->selectedTag) && !empty($this->integrationDetails->selectedTag)) {
@@ -90,7 +90,7 @@ class RecordApiHelper
     public function addCompany($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $finalData['currency'] = isset($this->integrationDetails->selectedCurrency) && !empty($this->integrationDetails->selectedCurrency) ? $this->integrationDetails->selectedCurrency : 'USD';
@@ -115,7 +115,7 @@ class RecordApiHelper
     public function addDeal($finalData)
     {
         if (empty($finalData['title'])) {
-            return ['success' => false, 'message' => 'Required field title is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field title is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $finalData['currency'] = isset($this->integrationDetails->selectedCurrency) && !empty($this->integrationDetails->selectedCurrency) ? $this->integrationDetails->selectedCurrency : 'USD';

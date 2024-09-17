@@ -56,9 +56,9 @@ final class MailController
                     $status = wp_mail($mailTo, $mailSubject, $mailBody, $mailHeaders);
                 }
                 if (!$status) {
-                    LogHandler::save($integrationData->id, 'Send Mail', 'failed', "[{$flow->name}] failed sends mail to " . implode(', ', $mailTo));
+                    LogHandler::save($integrationData->id, 'Send Mail', 'failed', wp_sprintf(__('%s failed sends mail to %s', 'bit-integrations'), $flow->name, implode(', ', $mailTo)));
                 } else {
-                    LogHandler::save($integrationData->id, 'Send Mail', 'success', "[{$flow->name}] successfully sends mail to " . implode(', ', $mailTo));
+                    LogHandler::save($integrationData->id, 'Send Mail', 'success', wp_sprintf(__('%s successfully sends mail to %s', 'bit-integrations'), $flow->name, implode(', ', $mailTo)));
                 }
 
                 remove_filter('wp_mail_content_type', [self::class, 'filterMailContentType']);

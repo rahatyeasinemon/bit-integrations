@@ -89,13 +89,13 @@ export default function KirmilEmailAuthorization({
       />
       <div style={{ color: 'red' }}>{error.api_key}</div>
       <small className="d-blk mt-5">
-        {__('To get Api key , Please Visit   ', 'bit-integrations')}
+        {__('To get Api key , Please Visit  ', 'bit-integrations')}
         <a
           className="btcd-link"
           href="https://aplikasi.kirim.email/"
           target="_blank"
           rel="noreferrer">
-          {__('Kirim Email ', 'bit-integrations')}
+          {__('Kirim Email', 'bit-integrations')}
         </a>
       </small>
       <br />

@@ -55,7 +55,7 @@ export default function AffiliateIntegLayout({
         <>
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Affiliate: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Affiliate:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={affiliateConf?.affiliate_id}

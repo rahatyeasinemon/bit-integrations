@@ -26,33 +26,50 @@ function EditSalesforce({ allIntegURL }) {
 
   useEffect(() => {
     if (!salesforceConf.action_modules) {
-      setSalesforceConf(prevConf => create(prevConf, draftConf => {
-        const action_modules = [
-          { label: 'Create Contact', value: 'contact-create' },
-          { label: 'Create lead', value: 'lead-create' },
-          { label: 'Create Account', value: 'account-create' },
-          { label: 'Create Campaign', value: 'campaign-create' },
-          { label: 'Add campaign member', value: 'add-campaign-member' },
-          { label: 'Create Task', value: 'task-create' },
-          { label: 'Oportunity Create', value: 'opportunity-create' },
-          { label: 'Event Create', value: 'event-create' },
-          { label: 'Create Case', value: 'case-create' },
-        ]
-        draftConf['action_modules'] = action_modules
-        draftConf['selesforceActionModules'] = action_modules
-      }))
+      setSalesforceConf((prevConf) =>
+        create(prevConf, (draftConf) => {
+          const action_modules = [
+            { label: __('Create Contact', 'bit-integrations'), value: 'contact-create' },
+            { label: __('Create lead', 'bit-integrations'), value: 'lead-create' },
+            { label: __('Create Account', 'bit-integrations'), value: 'account-create' },
+            { label: __('Create Campaign', 'bit-integrations'), value: 'campaign-create' },
+            { label: __('Add campaign member', 'bit-integrations'), value: 'add-campaign-member' },
+            { label: __('Create Task', 'bit-integrations'), value: 'task-create' },
+            { label: __('Oportunity Create', 'bit-integrations'), value: 'opportunity-create' },
+            { label: __('Event Create', 'bit-integrations'), value: 'event-create' },
+            { label: __('Create Case', 'bit-integrations'), value: 'case-create' }
+          ]
+          draftConf['action_modules'] = action_modules
+          draftConf['selesforceActionModules'] = action_modules
+        })
+      )
       getAllCustomActionModules(salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
     }
   }, [])
 
-
-  const checkedActionFieldsMapType = ['contact-create', 'lead-create', 'account-create', 'campaign-create', 'opportunity-create', 'event-create', 'case-create'].includes(salesforceConf?.actionName)
+  const checkedActionFieldsMapType = [
+    'contact-create',
+    'lead-create',
+    'account-create',
+    'campaign-create',
+    'opportunity-create',
+    'event-create',
+    'case-create'
+  ].includes(salesforceConf?.actionName)
   const saveConfig = () => {
     if (checkedActionFieldsMapType && !checkMappedFields(salesforceConf)) {
       toast.error('Please map mandatory fields !')
       return
     }
-    saveActionConf({ flow, allIntegURL, conf: salesforceConf, navigate, edit: 1, setIsLoading, setSnackbar })
+    saveActionConf({
+      flow,
+      allIntegURL,
+      conf: salesforceConf,
+      navigate,
+      edit: 1,
+      setIsLoading,
+      setSnackbar
+    })
   }
 
   const isDisabled = () => {
@@ -73,7 +90,14 @@ function EditSalesforce({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, salesforceConf, setSalesforceConf)} name="name" value={salesforceConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={(e) => handleInput(e, salesforceConf, setSalesforceConf)}
+          name="name"
+          value={salesforceConf.name}
+          type="text"
+          placeholder={__('Integration Name...', 'bit-integrations')}
+        />
       </div>
       <br />
 
@@ -81,7 +105,9 @@ function EditSalesforce({ allIntegURL }) {
 
       <SelesforceIntegLayout
         formFields={formField}
-        handleInput={(e) => handleInput(e, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)}
+        handleInput={(e) =>
+          handleInput(e, salesforceConf, setSalesforceConf, setIsLoading, setSnackbar)
+        }
         salesforceConf={salesforceConf}
         setSalesforceConf={setSalesforceConf}
         isLoading={isLoading}

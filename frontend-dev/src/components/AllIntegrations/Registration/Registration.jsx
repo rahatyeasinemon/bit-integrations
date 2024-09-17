@@ -28,8 +28,8 @@ export default function Registration({ formFields, setFlow, flow, allIntegURL })
   const { registration } = tutorialLinks
 
   const [userConf, setUserConf] = useState({
-    name: 'User Registration',
-    type: 'Registration',
+    name: 'WP User Registration',
+    type: 'WP User Registration',
     user_map: [{}],
     meta_map: [{}],
     condition: {

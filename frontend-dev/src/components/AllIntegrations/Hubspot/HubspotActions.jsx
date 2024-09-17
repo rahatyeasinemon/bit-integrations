@@ -106,55 +106,55 @@ export default function HubspotActions({
   }
 
   const lifecycleStage = [
-    { value: 'subscriber', label: 'Subscriber' },
-    { value: 'lead', label: 'Lead' },
-    { value: 'marketingqualifiedlead', label: 'Marketing Qualified Lead' },
-    { value: 'salesqualifiedlead', label: 'Sales Qualified Lead' },
-    { value: 'opportunity', label: 'Opportunity' },
-    { value: 'evangelist', label: 'Evangelist' },
-    { value: 'other', label: 'Other' },
-    { value: 'customer', label: 'Customer' }
+    { value: 'subscriber', label: __('Subscriber', 'bit-integrations') },
+    { value: 'lead', label: __('Lead', 'bit-integrations') },
+    { value: 'marketingqualifiedlead', label: __('Marketing Qualified Lead', 'bit-integrations') },
+    { value: 'salesqualifiedlead', label: __('Sales Qualified Lead', 'bit-integrations') },
+    { value: 'opportunity', label: __('Opportunity', 'bit-integrations') },
+    { value: 'evangelist', label: __('Evangelist', 'bit-integrations') },
+    { value: 'other', label: __('Other', 'bit-integrations') },
+    { value: 'customer', label: __('Customer', 'bit-integrations') }
   ]
 
   const leadStatus = [
-    { value: 'OPEN', label: 'Open' },
-    { value: 'NEW', label: 'New' },
-    { value: 'IN_PROGRESS', label: 'In Progress' },
-    { value: 'OPEN_DEAL', label: 'Open Deal' },
-    { value: 'UNQUALIFIED', label: 'Unqualified' },
-    { value: 'ATTEMPTED_TO_CONTACT', label: 'Attempted to contact' },
-    { value: 'CONNECTED', label: 'Connected' },
-    { value: 'BAD_TIMING', label: 'Bad timing' }
+    { value: 'OPEN', label: __('Open', 'bit-integrations') },
+    { value: 'NEW', label: __('New', 'bit-integrations') },
+    { value: 'IN_PROGRESS', label: __('In Progress', 'bit-integrations') },
+    { value: 'OPEN_DEAL', label: __('Open Deal', 'bit-integrations') },
+    { value: 'UNQUALIFIED', label: __('Unqualified', 'bit-integrations') },
+    { value: 'ATTEMPTED_TO_CONTACT', label: __('Attempted to contact', 'bit-integrations') },
+    { value: 'CONNECTED', label: __('Connected', 'bit-integrations') },
+    { value: 'BAD_TIMING', label: __('Bad timing', 'bit-integrations') }
   ]
 
   const dealType = [
-    { value: 'newbusiness', label: 'New Business' },
-    { value: 'existingbusiness', label: 'Existing Business' }
+    { value: 'newbusiness', label: __('New Business', 'bit-integrations') },
+    { value: 'existingbusiness', label: __('Existing Business', 'bit-integrations') }
   ]
 
   const priority = [
-    { value: 'low', label: 'Low' },
-    { value: 'medium', label: 'Medium' },
-    { value: 'high', label: 'High' }
+    { value: 'low', label: __('Low', 'bit-integrations') },
+    { value: 'medium', label: __('Medium', 'bit-integrations') },
+    { value: 'high', label: __('High', 'bit-integrations') }
   ]
 
   const companyTypes = [
-    { value: 'PROSPECT', label: 'Prospect' },
-    { value: 'PARTNER', label: 'Partner' },
-    { value: 'RESELLER', label: 'Reseller' },
-    { value: 'VENDOR', label: 'Vendor' },
-    { value: 'OTHER', label: 'Other' }
+    { value: 'PROSPECT', label: __('Prospect', 'bit-integrations') },
+    { value: 'PARTNER', label: __('Partner', 'bit-integrations') },
+    { value: 'RESELLER', label: __('Reseller', 'bit-integrations') },
+    { value: 'VENDOR', label: __('Vendor', 'bit-integrations') },
+    { value: 'OTHER', label: __('Other', 'bit-integrations') }
   ]
 
   const lifecycleStages = [
-    { value: 'subscriber', label: 'Subscriber' },
-    { value: 'lead', label: 'Lead' },
-    { value: 'marketingqualifiedlead', label: 'Marketing Qualified Lead' },
-    { value: 'salesqualifiedlead', label: 'Sales Qualified Lead' },
-    { value: 'opportunity', label: 'Opportunity' },
-    { value: 'customer', label: 'Customer' },
-    { value: 'evangelist', label: 'Evangelist' },
-    { value: 'other', label: 'Other' }
+    { value: 'subscriber', label: __('Subscriber', 'bit-integrations') },
+    { value: 'lead', label: __('Lead', 'bit-integrations') },
+    { value: 'marketingqualifiedlead', label: __('Marketing Qualified Lead', 'bit-integrations') },
+    { value: 'salesqualifiedlead', label: __('Sales Qualified Lead', 'bit-integrations') },
+    { value: 'opportunity', label: __('Opportunity', 'bit-integrations') },
+    { value: 'customer', label: __('Customer', 'bit-integrations') },
+    { value: 'evangelist', label: __('Evangelist', 'bit-integrations') },
+    { value: 'other', label: __('Other', 'bit-integrations') }
   ]
 
   return (
@@ -265,10 +265,18 @@ export default function HubspotActions({
             `Update ${hubspotConf?.actionName} ${!isPro ? '(Pro)' : ''}`,
             'bit-integrations'
           )}
-          subTitle={__(
-            `${isPro ? 'Update Record' : 'The Bit Integration Pro v(2.1.9) plugin needs to be installed and activated to enable the Upsert Record feature'}`,
-            'bit-integrations'
-          )}
+          subTitle={
+            isPro
+              ? __('Update Record', 'bit-integrations')
+              : sprintf(
+                  __(
+                    'The Bit Integration Pro v(%s) plugin needs to be installed and activated to enable the %s feature',
+                    'bit-integrations'
+                  ),
+                  '2.1.9',
+                  __('Update Record', 'bit-integrations')
+                )
+          }
           isInfo={!isPro}
         />
       }

@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\GoogleDrive;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class RecordApiHelper
 {
@@ -72,12 +72,11 @@ class RecordApiHelper
         $this->handleAllFiles($folderWithFile, $actions);
 
         if (\count($this->successApiResponse) > 0) {
-            LogHandler::save($integrationId, wp_json_encode(['type' => 'GoogleDrive', 'type_name' => 'file_upload']), 'success', 'All Files Uploaded. ' . wp_json_encode($this->successApiResponse));
+            LogHandler::save($integrationId, wp_json_encode(['type' => 'GoogleDrive', 'type_name' => 'file_upload']), 'success', __('All Files Uploaded.', 'bit-integrations') . wp_json_encode($this->successApiResponse));
         }
         if (\count($this->errorApiResponse) > 0) {
-            LogHandler::save($integrationId, wp_json_encode(['type' => 'GoogleDrive', 'type_name' => 'file_upload']), 'error', 'Some Files Can\'t Upload. ' . wp_json_encode($this->errorApiResponse));
+            LogHandler::save($integrationId, wp_json_encode(['type' => 'GoogleDrive', 'type_name' => 'file_upload']), 'error', __('Some Files Can\'t Upload.', 'bit-integrations') . wp_json_encode($this->errorApiResponse));
         }
-
     }
 
     protected function getBody($folder, $filePath, $boundary)

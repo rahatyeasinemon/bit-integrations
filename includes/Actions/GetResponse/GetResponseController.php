@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\GetResponse;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for GetResponse integration
@@ -52,7 +52,7 @@ class GetResponseController
             wp_send_json_success($formattedResponse, 200);
         } else {
             wp_send_json_error(
-                'The token is invalid',
+                __('The token is invalid', 'bit-integrations'),
                 400
             );
         }
@@ -91,7 +91,7 @@ class GetResponseController
             wp_send_json_success($formattedResponse, 200);
         } else {
             wp_send_json_error(
-                'The token is invalid',
+                __('The token is invalid', 'bit-integrations'),
                 400
             );
         }
@@ -130,7 +130,7 @@ class GetResponseController
         if (property_exists($response[0], 'campaignId')) {
             wp_send_json_success($campaigns, 200);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 
@@ -149,7 +149,7 @@ class GetResponseController
             empty($fieldMap)
             || empty($auth_token) || empty($campaignId)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'GetResponse'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'GetResponse'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $getResponseApiResponse = $recordApiHelper->execute(

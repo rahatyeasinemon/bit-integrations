@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\OmniSend;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -43,7 +43,7 @@ class RecordApiHelper
         if (!empty($channels)) {
             $splitChannels = explode(',', $channels);
         } else {
-            return ['success' => false, 'message' => 'At least one channel is required', 'code' => 400];
+            return ['success' => false, 'message' => __('At least one channel is required', 'bit-integrations'), 'code' => 400];
         }
         $email = $finalData['email'];
         $phone = $finalData['phone_number'];

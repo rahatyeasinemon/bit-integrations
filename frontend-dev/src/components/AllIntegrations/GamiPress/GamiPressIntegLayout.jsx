@@ -72,7 +72,7 @@ export default function GamiPressIntegLayout({
       {['1', '4'].includes(gamiPressConf.mainAction) && (
         <>
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Rank Type: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Rank Type:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={gamiPressConf?.rankType}
@@ -100,7 +100,7 @@ export default function GamiPressIntegLayout({
 
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Rank: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Rank:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={gamiPressConf?.selectedRank}
@@ -131,7 +131,7 @@ export default function GamiPressIntegLayout({
       {['2', '5'].includes(gamiPressConf.mainAction) && (
         <>
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Achievement Type: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Achievement Type:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={gamiPressConf?.selectedAchievementType}
@@ -161,7 +161,7 @@ export default function GamiPressIntegLayout({
 
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Achievement: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Achievement:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={gamiPressConf?.selectedAchievement}
@@ -195,7 +195,7 @@ export default function GamiPressIntegLayout({
       )}
       {['3', '6'].includes(gamiPressConf.mainAction) && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Enter Point: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Enter Point:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             defaultValue={gamiPressConf?.selectedPointType}

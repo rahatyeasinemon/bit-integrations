@@ -20,78 +20,101 @@ function BuddyBoss({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const allActions = [
-    { key: '1', label: 'Create Group Pro' },
-    { key: '2', label: 'Add the user to a group' },
-    { key: '3', label: 'End friendship with a user Pro' },
-    { key: '4', label: 'Follow a user Pro' },
-    { key: '5', label: 'Post a topic in a forum Pro' },
-    { key: '6', label: 'Remove user from a group Pro' },
-    { key: '7', label: 'Send a friendship request to a user Pro' },
-    { key: '8', label: 'Send a notification to all members of a group Pro' },
-    { key: '9', label: 'Send a private message to all members of a group Pro' },
-    { key: '10', label: 'Send a private message to a user Pro' },
-    { key: '11', label: 'Send a notification to a user Pro' },
-    { key: '12', label: 'Stop following a user Pro' },
-    { key: '13', label: 'Subscribe the user to a forum Pro' },
-    { key: '14', label: 'Add a post to the activity stream of a group Pro' },
-    { key: '15', label: 'Add a post to the site wide activity stream Pro' },
-    { key: '16', label: "Add a post to the user's activity stream Pro" },
-    { key: '17', label: 'Post a reply to a topic in a forum' },
-    { key: '18', label: "Set the user's status to a specific status" }
+    { key: '1', label: __('Create Group Pro', 'bit-integrations') },
+    { key: '2', label: __('Add the user to a group', 'bit-integrations') },
+    { key: '3', label: __('End friendship with a user Pro', 'bit-integrations') },
+    { key: '4', label: __('Follow a user Pro', 'bit-integrations') },
+    { key: '5', label: __('Post a topic in a forum Pro', 'bit-integrations') },
+    { key: '6', label: __('Remove user from a group Pro', 'bit-integrations') },
+    { key: '7', label: __('Send a friendship request to a user Pro', 'bit-integrations') },
+    {
+      key: '8',
+      label: __('Send a notification to all members of a group Pro', 'bit-integrations')
+    },
+    {
+      key: '9',
+      label: __('Send a private message to all members of a group Pro', 'bit-integrations')
+    },
+    { key: '10', label: __('Send a private message to a user Pro', 'bit-integrations') },
+    { key: '11', label: __('Send a notification to a user Pro', 'bit-integrations') },
+    { key: '12', label: __('Stop following a user Pro', 'bit-integrations') },
+    { key: '13', label: __('Subscribe the user to a forum Pro', 'bit-integrations') },
+    {
+      key: '14',
+      label: __('Add a post to the activity stream of a group Pro', 'bit-integrations')
+    },
+    { key: '15', label: __('Add a post to the site wide activity stream Pro', 'bit-integrations') },
+    { key: '16', label: __("Add a post to the user's activity stream Pro", 'bit-integrations') },
+    { key: '17', label: __('Post a reply to a topic in a forum', 'bit-integrations') },
+    { key: '18', label: __("Set the user's status to a specific status", 'bit-integrations') }
   ]
 
   // for action 1
-  const createGroupFields = [{ key: 'group_name', label: 'Group Name', required: true }]
+  const createGroupFields = [
+    { key: 'group_name', label: __('Group Name', 'bit-integrations'), required: true }
+  ]
 
   // for action 5
   const topicInForumFields = [
-    { key: 'topic_content', label: 'Topic Content', required: true },
-    { key: 'topic_title', label: 'Topic Title', required: false }
+    { key: 'topic_content', label: __('Topic Content', 'bit-integrations'), required: true },
+    { key: 'topic_title', label: __('Topic Title', 'bit-integrations'), required: false }
   ]
 
   // for action 8
 
   const sendAllUserNotificationFields = [
-    { key: 'notification_content', label: 'Notification Content', required: true },
-    { key: 'notification_link', label: 'Notification Link', required: false }
+    {
+      key: 'notification_content',
+      label: __('Notification Content', 'bit-integrations'),
+      required: true
+    },
+    {
+      key: 'notification_link',
+      label: __('Notification Link', 'bit-integrations'),
+      required: false
+    }
   ]
 
   // for action 9
   const sendAllGroupPrivateMessageFields = [
-    { key: 'message_content', label: 'Message Content', required: true },
-    { key: 'message_subject', label: 'Message subject', required: false }
+    { key: 'message_content', label: __('Message Content', 'bit-integrations'), required: true },
+    { key: 'message_subject', label: __('Message subject', 'bit-integrations'), required: false }
   ]
 
   // for action 14
 
   const addPostToGroupFields = [
-    { key: 'activity_action', label: 'activity_action', required: true },
-    { key: 'activity_content', label: 'activity_content', required: true }
+    { key: 'activity_action', label: __('activity_action', 'bit-integrations'), required: true },
+    { key: 'activity_content', label: __('activity_content', 'bit-integrations'), required: true }
   ]
 
   // for action 15
 
   const addPostSiteWideActivityStreamFields = [
-    { key: 'activity_action', label: 'activity_action', required: false },
-    { key: 'activity_action_link', label: 'activity_action_link', required: false },
-    { key: 'activity_content', label: 'activity_content', required: true }
+    { key: 'activity_action', label: __('activity_action', 'bit-integrations'), required: false },
+    {
+      key: 'activity_action_link',
+      label: __('activity_action_link', 'bit-integrations'),
+      required: false
+    },
+    { key: 'activity_content', label: __('activity_content', 'bit-integrations'), required: true }
   ]
 
   // for action 17
   const postReplyTopicForumFields = [
-    { key: 'reply_content', label: 'Reply Content', required: true }
+    { key: 'reply_content', label: __('Reply Content', 'bit-integrations'), required: true }
   ]
 
   const groupPrivacyOptions = [
-    { key: '1', label: 'Public' },
-    { key: '2', label: 'Private' },
-    { key: '3', label: 'Hidden' }
+    { key: '1', label: __('Public', 'bit-integrations') },
+    { key: '2', label: __('Private', 'bit-integrations') },
+    { key: '3', label: __('Hidden', 'bit-integrations') }
   ]
 
   // for action 18
   const userStatusOptions = [
-    { key: '1', label: 'Active' },
-    { key: '2', label: 'Suspend' }
+    { key: '1', label: __('Active', 'bit-integrations') },
+    { key: '2', label: __('Suspend', 'bit-integrations') }
   ]
 
   const [buddyBossConf, setBuddyBossConf] = useState({

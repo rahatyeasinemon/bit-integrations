@@ -132,16 +132,16 @@ export const getAllTags = (confTmp, setConf, setLoading) => {
 }
 
 export const staticFields = [
-  { key: 'email', label: 'Email', required: true },
-  { key: 'first_name', label: 'First Name', required: false },
-  { key: 'last_name', label: 'Last Name', required: false },
-  { key: 'address1', label: 'Address 1', required: false },
-  { key: 'address2', label: 'Address 2', required: false },
-  { key: 'city', label: 'City', required: false },
-  { key: 'state', label: 'State', required: false },
-  { key: 'zip', label: 'Zip', required: false },
-  { key: 'country', label: 'Country', required: false },
-  { key: 'phone', label: 'Phone', required: false },
-  { key: 'time_zone', label: 'Time Zone', required: false },
-  { key: 'ip_address', label: 'IP Address', required: false }
+  { key: 'email', label: __('Email', 'bit-integrations'), required: true },
+  { key: 'first_name', label: __('First Name', 'bit-integrations'), required: false },
+  { key: 'last_name', label: __('Last Name', 'bit-integrations'), required: false },
+  { key: 'address1', label: __('Address 1', 'bit-integrations'), required: false },
+  { key: 'address2', label: __('Address 2', 'bit-integrations'), required: false },
+  { key: 'city', label: __('City', 'bit-integrations'), required: false },
+  { key: 'state', label: __('State', 'bit-integrations'), required: false },
+  { key: 'zip', label: __('Zip', 'bit-integrations'), required: false },
+  { key: 'country', label: __('Country', 'bit-integrations'), required: false },
+  { key: 'phone', label: __('Phone', 'bit-integrations'), required: false },
+  { key: 'time_zone', label: __('Time Zone', 'bit-integrations'), required: false },
+  { key: 'ip_address', label: __('IP Address', 'bit-integrations'), required: false }
 ]

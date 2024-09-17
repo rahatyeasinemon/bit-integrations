@@ -34,7 +34,7 @@ class JetEngineController
     public static function checkedJetEngineExists()
     {
         if (!is_plugin_active('jet-engine/jet-engine.php')) {
-            wp_send_json_error(__('JetEngine Plugin is not active or not installed', 'bit-integrations'), 400);
+            wp_send_json_error(wp_sprintf(__('%s is not active or not installed', 'bit-integrations'), 'JetEngine Plugin'), 400);
         } else {
             return true;
         }
@@ -58,7 +58,7 @@ class JetEngineController
             wp_send_json_success($iconsOptionsList, 200);
         }
 
-        wp_send_json_error('Icon options fetching failed!', 400);
+        wp_send_json_error(__('Icon options fetching failed!', 'bit-integrations'), 400);
     }
 
     public function getMenuPosition()
@@ -79,7 +79,7 @@ class JetEngineController
             wp_send_json_success($menuPositionList, 200);
         }
 
-        wp_send_json_error('Menu position fetching failed!', 400);
+        wp_send_json_error(__('Menu position fetching failed!', 'bit-integrations'), 400);
     }
 
     public function getSupports()
@@ -93,7 +93,7 @@ class JetEngineController
             wp_send_json_success($supportsOptions, 200);
         }
 
-        wp_send_json_error('Support options fetching failed!', 400);
+        wp_send_json_error(__('Support options fetching failed!', 'bit-integrations'), 400);
     }
 
     public function getTaxPostTypes()
@@ -106,7 +106,7 @@ class JetEngineController
             wp_send_json_success($postTypes, 200);
         }
 
-        wp_send_json_error('Post types fetching failed!', 400);
+        wp_send_json_error(__('Post types fetching failed!', 'bit-integrations'), 400);
     }
 
     public function getRelationTypes()
@@ -126,7 +126,7 @@ class JetEngineController
             wp_send_json_success($typeList, 200);
         }
 
-        wp_send_json_error('Relation types fetching failed!', 400);
+        wp_send_json_error(__('Relation types fetching failed!', 'bit-integrations'), 400);
     }
 
     public function getCPTList()

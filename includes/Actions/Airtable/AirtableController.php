@@ -41,7 +41,7 @@ class AirtableController
             }
             wp_send_json_success($bases, 200);
         } else {
-            wp_send_json_error('Authentication failed', 400);
+            wp_send_json_error(__('Authentication failed', 'bit-integrations'), 400);
         }
     }
 
@@ -69,7 +69,7 @@ class AirtableController
             }
             wp_send_json_success($tables, 200);
         } else {
-            wp_send_json_error('Tables fetching failed', 400);
+            wp_send_json_error(__('Tables fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -106,7 +106,7 @@ class AirtableController
             }
             wp_send_json_success($fields, 200);
         } else {
-            wp_send_json_error('Table fields fetching failed', 400);
+            wp_send_json_error(__('Table fields fetching failed', 'bit-integrations'), 400);
         }
     }
 

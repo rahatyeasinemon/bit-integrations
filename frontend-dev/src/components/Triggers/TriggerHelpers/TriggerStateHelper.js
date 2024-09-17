@@ -869,38 +869,22 @@ export const academylmsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   setNewFlow(tmpNewFlow)
 }
 
-export const actionHookStateIH = (edit, flow, tmpConf) => {
-  if (!edit) {
-    tmpConf['primaryKey'] = flow.triggerData.primaryKey
-    tmpConf['fields'] = flow?.triggerData?.fields
-    tmpConf['rawData'] = flow?.triggerData?.rawData
-    tmpConf['fetch'] = flow?.triggerData?.fetch || ''
-    tmpConf['fetch_remove'] = flow?.triggerData?.fetch_remove || ''
-  } else {
-    tmpConf['primaryKey'] = flow?.flow_details?.primaryKey
-    tmpConf['fields'] = flow?.flow_details?.fields
-    tmpConf['rawData'] = flow?.flow_details?.rawData
-    tmpConf['fetch'] = flow?.flow_details?.fetch || ''
-    tmpConf['fetch_remove'] = flow?.flow_details?.fetch_remove || ''
-  }
+export const actionHookStateIH = (dataFlow, tmpConf) => {
+  tmpConf['primaryKey'] = dataFlow?.primaryKey
+  tmpConf['fields'] = dataFlow?.fields
+  tmpConf['rawData'] = dataFlow?.rawData
+  tmpConf['fetch'] = dataFlow?.fetch || ''
+  tmpConf['fetch_remove'] = dataFlow?.fetch_remove || ''
 
   return tmpConf
 }
 
-export const CFSStateIH = (edit, flow, tmpConf) => {
-  if (!edit) {
-    tmpConf['primaryKey'] = flow.triggerData.primaryKey
-    tmpConf['fields'] = flow?.triggerData?.fields
-    tmpConf['multi_form'] = flow.triggerData.multi_form || ''
-    tmpConf['fetch'] = flow?.triggerData?.fetch || ''
-    tmpConf['fetch_remove'] = flow?.triggerData?.fetch_remove || ''
-  } else {
-    tmpConf['primaryKey'] = flow?.flow_details?.primaryKey
-    tmpConf['fields'] = flow?.flow_details?.fields
-    tmpConf['multi_form'] = flow?.flow_details?.multi_form || ''
-    tmpConf['fetch'] = flow?.flow_details?.fetch || ''
-    tmpConf['fetch_remove'] = flow?.flow_details?.fetch_remove || ''
-  }
+export const CFSStateIH = (dataFlow, tmpConf) => {
+  tmpConf['primaryKey'] = dataFlow?.primaryKey
+  tmpConf['fields'] = dataFlow?.fields
+  tmpConf['multi_form'] = dataFlow?.multi_form || ''
+  tmpConf['fetch'] = dataFlow?.fetch || ''
+  tmpConf['fetch_remove'] = dataFlow?.fetch_remove || ''
 
   return tmpConf
 }

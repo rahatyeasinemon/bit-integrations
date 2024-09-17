@@ -18,17 +18,17 @@ function FluentSupport({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const basicFields = [
-    { key: 'title', label: 'Title', required: true },
-    { key: 'content', label: 'Content', required: true },
-    { key: 'first_name', label: 'First Name', required: true },
-    { key: 'last_name', label: 'Last Name', required: true },
-    { key: 'email', label: 'Email', required: true },
-    { key: 'city', label: 'City', required: false },
-    { key: 'zip', label: 'Zip', required: false },
-    { key: 'state', label: 'State', required: false },
-    { key: 'country', label: 'Country', required: false },
-    { key: 'note', label: 'Note', required: false },
-    { key: 'description', label: 'Description', required: false }
+    { key: 'title', label: __('Title', 'bit-integrations'), required: true },
+    { key: 'content', label: __('Content', 'bit-integrations'), required: true },
+    { key: 'first_name', label: __('First Name', 'bit-integrations'), required: true },
+    { key: 'last_name', label: __('Last Name', 'bit-integrations'), required: true },
+    { key: 'email', label: __('Email', 'bit-integrations'), required: true },
+    { key: 'city', label: __('City', 'bit-integrations'), required: false },
+    { key: 'zip', label: __('Zip', 'bit-integrations'), required: false },
+    { key: 'state', label: __('State', 'bit-integrations'), required: false },
+    { key: 'country', label: __('Country', 'bit-integrations'), required: false },
+    { key: 'note', label: __('Note', 'bit-integrations'), required: false },
+    { key: 'description', label: __('Description', 'bit-integrations'), required: false }
   ]
   const [fluentSupportConf, setFluentSupportConf] = useState({
     name: 'Fluent Support',

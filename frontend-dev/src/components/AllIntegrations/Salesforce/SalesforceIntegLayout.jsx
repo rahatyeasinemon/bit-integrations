@@ -164,7 +164,7 @@ export default function SalesforceIntegLayout({
       {['add-campaign-member'].includes(salesforceConf.actionName) && (
         <>
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Campaign: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Campaign:', 'bit-integrations')}</b>
 
             <MultiSelect
               className="w-5"
@@ -205,7 +205,7 @@ export default function SalesforceIntegLayout({
       {/* Lead */}
       {['add-campaign-member'].includes(salesforceConf.actionName) && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select Lead: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Lead:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             defaultValue={salesforceConf?.leadId}
@@ -232,7 +232,7 @@ export default function SalesforceIntegLayout({
       {/* Contact */}
       {['add-campaign-member', 'task-create'].includes(salesforceConf.actionName) && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select Contact: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Contact:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             defaultValue={salesforceConf?.contactId}
@@ -268,7 +268,7 @@ export default function SalesforceIntegLayout({
       {/* Account */}
       {['add-campaign-member', 'task-create'].includes(salesforceConf.actionName) && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select Account: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Account:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             defaultValue={salesforceConf?.accountId}
@@ -302,7 +302,7 @@ export default function SalesforceIntegLayout({
       )}
       {['add-campaign-member'].includes(salesforceConf.actionName) && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select Status: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Status:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             defaultValue={salesforceConf?.statusId}
@@ -321,7 +321,7 @@ export default function SalesforceIntegLayout({
       {['task-create'].includes(salesforceConf.actionName) && (
         <>
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Subject: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Subject:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={salesforceConf?.subjectId}
@@ -331,7 +331,7 @@ export default function SalesforceIntegLayout({
             />
           </div>
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Priority: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Priority:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={salesforceConf?.priorityId}
@@ -341,7 +341,7 @@ export default function SalesforceIntegLayout({
             />
           </div>
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Status: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Status:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={salesforceConf?.statusId}

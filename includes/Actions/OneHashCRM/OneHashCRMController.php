@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\OneHashCRM;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for OneHashCRM integration
@@ -31,9 +31,9 @@ class OneHashCRMController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (isset($response->data)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API Key & Secret or Access Api URL', 400);
+            wp_send_json_error(__('Please enter valid API Key & Secret or Access Api URL', 'bit-integrations'), 400);
         }
     }
 
@@ -48,7 +48,7 @@ class OneHashCRMController
         $domain = $integrationDetails->domain;
 
         if (empty($fieldMap) || empty($apiKey) || empty($apiSecret) || empty($actionName) || empty($domain)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'OneHashCRM'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'OneHashCRM'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey, $apiSecret, $domain);

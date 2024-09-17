@@ -2,13 +2,13 @@
 
 namespace BitCode\FI\Triggers\CF7;
 
-use WPCF7_Submission;
-use WPCF7_ContactForm;
-use BitCode\FI\Flow\Flow;
-use WPCF7_FormTagsManager;
-use WPCF7_ShortcodeManager;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Flow\Flow;
+use WPCF7_ContactForm;
+use WPCF7_FormTagsManager;
+use WPCF7_ShortcodeManager;
+use WPCF7_Submission;
 
 final class CF7Controller
 {
@@ -18,7 +18,7 @@ final class CF7Controller
 
         return [
             'name'           => 'Contact Form 7',
-            'title'          => 'Just another contact form plugin. Simple but flexible.',
+            'title'          => __('Just another contact form plugin. Simple but flexible', 'bit-integrations'),
             'slug'           => $plugin_path,
             'type'           => 'form',
             'is_active'      => class_exists('WPCF7_ContactForm'),
@@ -41,7 +41,7 @@ final class CF7Controller
     public function getAll()
     {
         if (!class_exists('WPCF7_ContactForm')) {
-            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'Contact Form 7'));
+            wp_send_json_error(wp_sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'Contact Form 7'));
         }
         $forms = WPCF7_ContactForm::find();
         $all_forms = [];
@@ -62,7 +62,7 @@ final class CF7Controller
             $missing_field = 'Form ID';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(wp_sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         if (empty($fields)) {
             wp_send_json_error(__('Form doesn\'t exists any field', 'bit-integrations'));

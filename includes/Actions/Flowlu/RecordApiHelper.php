@@ -37,9 +37,9 @@ class RecordApiHelper
     public function addAccount($finalData, $apiKey)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name is empty', 'bit-integrations'), 'code' => 400];
         } elseif (!isset($this->integrationDetails->selectedAccountType) || empty($this->integrationDetails->selectedAccountType)) {
-            return ['success' => false, 'message' => 'Required field Account type is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Account type is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $finalData['type'] = $this->integrationDetails->selectedAccountType;
@@ -60,11 +60,11 @@ class RecordApiHelper
     public function addOpportunity($finalData, $apiKey)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field lastName is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field lastName is empty', 'bit-integrations'), 'code' => 400];
         } elseif (!isset($this->integrationDetails->selectedPipeline) || empty($this->integrationDetails->selectedPipeline)) {
-            return ['success' => false, 'message' => 'Required field Pipeline is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Pipeline is empty', 'bit-integrations'), 'code' => 400];
         } elseif (!isset($this->integrationDetails->selectedOpportunityStage) || empty($this->integrationDetails->selectedOpportunityStage)) {
-            return ['success' => false, 'message' => 'Required field Opportunity Stage is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Opportunity Stage is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $finalData['pipeline_id'] = $this->integrationDetails->selectedPipeline;
@@ -87,7 +87,7 @@ class RecordApiHelper
     public function addProject($finalData, $apiKey)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field lastName is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field lastName is empty', 'bit-integrations'), 'code' => 400];
         }
 
         if (isset($this->integrationDetails->selectedManager) && !empty($this->integrationDetails->selectedManager)) {

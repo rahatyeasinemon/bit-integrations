@@ -130,12 +130,12 @@ export const perfexCRMAuthentication = (
     }
     setLoading({ ...loading, auth: false })
     toast.error(
-      __(
-        String(result?.data)
-          ? result?.data
-          : 'Authorized failed, Please enter valid API Token or Access API URL',
-        'bit-integrations'
-      )
+      String(result?.data)
+        ? result?.data
+        : __(
+            'Authorized failed, Please enter valid API Token or Access API URL',
+            'bit-integrations'
+          )
     )
   })
 }
@@ -216,7 +216,7 @@ export const getAllStaffs = (confTmp, setConf, loading, setLoading) => {
     }
     setLoading({ ...loading, staffs: false })
     toast.error(
-      __(String(result?.data) ? result?.data : 'Project Member Not Found!', 'bit-integrations')
+      String(result?.data) ? result?.data : __('Project Member Not Found!', 'bit-integrations')
     )
   })
 }

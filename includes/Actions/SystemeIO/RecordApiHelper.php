@@ -43,7 +43,7 @@ class RecordApiHelper
         $this->typeName = 'Add People to Contacts';
 
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $apiEndpoint = $this->apiUrl . '/contacts';
@@ -59,10 +59,10 @@ class RecordApiHelper
     public function addTag($contactId, $tag)
     {
         if (empty($contactId)) {
-            return ['success' => false, 'message' => 'Contact is not created', 'code' => 400];
+            return ['success' => false, 'message' => __('Contact is not created', 'bit-integrations'), 'code' => 400];
         }
         if (empty($tag)) {
-            return ['success' => false, 'message' => 'Required field tag is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field tag is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $apiEndpoint = $this->apiUrl . '/contacts/' . $contactId . '/tags';

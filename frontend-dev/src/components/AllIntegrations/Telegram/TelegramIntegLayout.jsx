@@ -41,7 +41,7 @@ export default function TelegramIntegLayout({
     <>
       <br />
       <div className="flx">
-        <b className="wdt-150 d-in-b">{__('Chat List: ', 'bit-integrations')}</b>
+        <b className="wdt-150 d-in-b">{__('Chat List:', 'bit-integrations')}</b>
         <select
           onChange={handleInput}
           name="chat_id"
@@ -84,7 +84,7 @@ export default function TelegramIntegLayout({
       {telegramConf?.chat_id && (
         <>
           <div className="flx mt-4">
-            <b className="wdt-150 d-in-b">{__('Parse Mode: ', 'bit-integrations')}</b>
+            <b className="wdt-150 d-in-b">{__('Parse Mode:', 'bit-integrations')}</b>
             <CheckBox
               radio
               onChange={changeActionRun}
@@ -103,7 +103,7 @@ export default function TelegramIntegLayout({
             />
           </div>
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Messages: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Messages:', 'bit-integrations')}</b>
             {telegramConf?.parse_mode === 'HTML' ? (
               <TinyMCE
                 formFields={formFields}

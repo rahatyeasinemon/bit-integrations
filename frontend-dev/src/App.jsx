@@ -22,7 +22,7 @@ import { $btcbi } from './GlobalStates'
 import ChangelogToggle from './pages/ChangelogToggle'
 import CashbackModal from './pages/CashbackModal'
 import { useRecoilValue } from 'recoil'
-import "regenerator-runtime/runtime.js";
+import 'regenerator-runtime/runtime.js'
 const AllIntegrations = lazy(() => import('./pages/AllIntegrations'))
 const Error404 = lazy(() => import('./pages/Error404'))
 
@@ -33,18 +33,23 @@ function App() {
   // check if integrations are available
   const { data, isLoading } = useFetch({ payload: {}, action: 'flow/list', method: 'get' })
 
-  const [integrations, setIntegrations] = useState(!isLoading && data.success && data?.data?.integrations ? data.data.integrations : [])
+  const [integrations, setIntegrations] = useState(
+    !isLoading && data.success && data?.data?.integrations ? data.data.integrations : []
+  )
   useEffect(() => {
     !isLoading && setIntegrations(data.success ? data.data.integrations : [])
   }, [data])
   // check integrations end
   const flowNumber = integrations.length
-  useEffect(() => { removeUnwantedCSS() }, [])
+  useEffect(() => {
+    removeUnwantedCSS()
+  }, [])
 
-  const isValidUser = typeof btcbi !== 'undefined' ? ('isPro' in btcbi ? btcbi.isPro : false) : false
+  const isValidUser =
+    typeof btcbi !== 'undefined' ? ('isPro' in btcbi ? btcbi.isPro : false) : false
 
   return (
-    <Suspense fallback={(<Loader className="g-c" style={loaderStyle} />)}>
+    <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
       <Toaster
         position="bottom-right"
         containerStyle={{ inset: '-25px 30px 20px -10px' }}
@@ -55,12 +60,11 @@ function App() {
             color: '#fff',
             bottom: 40,
             padding: '15px 18px',
-            boxShadow: '0 0px 7px rgb(0 0 0 / 30%), 0 3px 30px rgb(0 0 0 / 20%)',
-          },
+            boxShadow: '0 0px 7px rgb(0 0 0 / 30%), 0 3px 30px rgb(0 0 0 / 20%)'
+          }
         }}
       />
       <div className="Btcd-App">
-
         <div className="nav-wrp">
           <div className="flx">
             <div className="logo flx" title={__('Integrations for Forms')}>
@@ -70,34 +74,13 @@ function App() {
               {/* </Link> */}
             </div>
             <nav className="top-nav ml-2">
-              <NavLink
-                to="/"
-                className={({ isActive, isPending }) => (isPending ? 'pending' : isActive ? 'app-link-active' : '')}
-              // className="app-link-active"
-              >
-                {__('Integrations', 'bit-integrations')}
-              </NavLink>
-              <NavLink
-                to="/app-settings"
-                className={({ isActive, isPending }) => (isPending ? 'pending' : isActive ? 'app-link-active' : '')}
-              >
-                {__('Settings', 'bit-integrations')}
-              </NavLink>
-              <NavLink
-                to="/doc-support"
-                className={({ isActive, isPending }) => (isPending ? 'pending' : isActive ? 'app-link-active' : '')}
-              >
-                {__('Doc & Support', 'bit-integrations')}
-              </NavLink>
-                <a
-                  target="_blank"
-                  href="https://wordpress.org/plugins/bit-integrations/#reviews"
-                  className={`app-link ${btcbi.isPro ? '' : 'green blink'} `}
-                  rel="noreferrer"
-                >
-                  {__('Review us', 'bit-integrations')}
-                </a>
-
+              <a
+                target="_blank"
+                href="https://wordpress.org/plugins/bit-integrations/#reviews"
+                className={`app-link ${btcbi.isPro ? '' : 'green blink'} `}
+                rel="noreferrer">
+                {__('Review us', 'bit-integrations')}
+              </a>
             </nav>
             <div className="flx flx-center" style={{ marginLeft: 'auto' }}>
               <CashbackModal />
@@ -108,34 +91,54 @@ function App() {
 
         <div className="route-wrp">
           <Routes>
-            <Route path="/" element={
-              <Suspense fallback={<TableLoader />}>
-                <AllIntegrations integrations={integrations} setIntegrations={setIntegrations} isLoading={isLoading} isValidUser={isValidUser} />
-              </Suspense>
-            } />
-            <Route path="/app-settings" element={
-              <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                <Settings />
-              </Suspense>
-            } />
+            <Route
+              path="/"
+              element={
+                <Suspense fallback={<TableLoader />}>
+                  <AllIntegrations
+                    integrations={integrations}
+                    setIntegrations={setIntegrations}
+                    isLoading={isLoading}
+                    isValidUser={isValidUser}
+                  />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/app-settings"
+              element={
+                <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                  <Settings />
+                </Suspense>
+              }
+            />
 
-            <Route path="/doc-support" element={
-              <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                <DocSupport />
-              </Suspense>
-            } />
+            <Route
+              path="/doc-support"
+              element={
+                <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                  <DocSupport />
+                </Suspense>
+              }
+            />
 
-            <Route path="/flow/new" element={
-              <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                <FlowBuilder />
-              </Suspense>
-            } />
+            <Route
+              path="/flow/new"
+              element={
+                <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                  <FlowBuilder />
+                </Suspense>
+              }
+            />
 
-            <Route path="/flow/action/*" element={
-              <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
-                <Integrations />
-              </Suspense>
-            } />
+            <Route
+              path="/flow/action/*"
+              element={
+                <Suspense fallback={<Loader className="g-c" style={loaderStyle} />}>
+                  <Integrations />
+                </Suspense>
+              }
+            />
 
             <Route path="*" element={<Error404 />} />
           </Routes>

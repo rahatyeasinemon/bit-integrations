@@ -171,9 +171,9 @@ export default function JetEngineIntegLayout({
               <MultiSelect
                 style={{ width: '450px' }}
                 options={[
-                  { label: 'One to one', value: 'one_to_one' },
-                  { label: 'One to many', value: 'one_to_many' },
-                  { label: 'Many to many', value: 'many_to_many' }
+                  { label: __('One to one', 'bit-integrations'), value: 'one_to_one' },
+                  { label: __('One to many', 'bit-integrations'), value: 'one_to_many' },
+                  { label: __('Many to many', 'bit-integrations'), value: 'many_to_many' }
                 ]}
                 className="msl-wrp-options"
                 defaultValue={jetEngineConf?.relOptions?.selectedRelationType}

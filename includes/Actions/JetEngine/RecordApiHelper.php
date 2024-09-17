@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\JetEngine;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Log\LogHandler;
 use Jet_Engine\Modules\Custom_Content_Types\Module;
 
 /**
@@ -26,7 +26,7 @@ class RecordApiHelper
     public function createPostType($finalData, $createCPTSelectedOptions, $actions)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Request parameters are empty!', 'bit-integrations'), 'code' => 400];
         }
 
         $finalData['slug'] = str_replace(' ', '-', strtolower($finalData['name']));
@@ -44,20 +44,20 @@ class RecordApiHelper
         $postTypeId = jet_engine()->cpt->data->create_item(false);
 
         if (empty($postTypeId) || is_wp_error($postTypeId)) {
-            return ['success' => false, 'message' => 'Failed to add post type!', 'code' => 400];
+            return ['success' => false, 'message' => __('Failed to add post type!', 'bit-integrations'), 'code' => 400];
         }
 
-        return ['success' => true, 'message' => 'Post type created successfully.'];
+        return ['success' => true, 'message' => __('Post type created successfully', 'bit-integrations')];
     }
 
     public function createContentType($finalData, $createCPTSelectedOptions, $actions)
     {
         if (!jet_engine()->modules->is_module_active('custom-content-types')) {
-            return ['success' => false, 'message' => 'Module - Custom Content Type is not active!', 'code' => 400];
+            return ['success' => false, 'message' => __('Module - Custom Content Type is not active!', 'bit-integrations'), 'code' => 400];
         }
 
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Request parameters are empty!', 'bit-integrations'), 'code' => 400];
         }
 
         $ctcData['name'] = $finalData['name'];
@@ -84,16 +84,16 @@ class RecordApiHelper
         $itemId = Module::instance()->manager->data->create_item(false);
 
         if (empty($itemId) || is_wp_error($itemId)) {
-            return ['success' => false, 'message' => 'Failed to add custom content type!', 'code' => 400];
+            return ['success' => false, 'message' => __('Failed to add custom content type!', 'bit-integrations'), 'code' => 400];
         }
 
-        return ['success' => true, 'message' => 'Custom content type created successfully.'];
+        return ['success' => true, 'message' => __('Custom content type created successfully', 'bit-integrations')];
     }
 
     public function createTaxonomy($finalData, $taxOptions, $actions)
     {
         if (empty($finalData['name']) || empty($taxOptions['selectedTaxPostTypes'])) {
-            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Request parameters are empty!', 'bit-integrations'), 'code' => 400];
         }
 
         $finalData['slug'] = str_replace(' ', '-', strtolower($finalData['name']));
@@ -112,17 +112,17 @@ class RecordApiHelper
         $taxId = jet_engine()->taxonomies->data->create_item(false);
 
         if (empty($taxId) || is_wp_error($taxId)) {
-            return ['success' => false, 'message' => 'Failed to add taxonomy!', 'code' => 400];
+            return ['success' => false, 'message' => __('Failed to add taxonomy!', 'bit-integrations'), 'code' => 400];
         }
 
-        return ['success' => true, 'message' => 'Taxonomy added successfully.'];
+        return ['success' => true, 'message' => __('Taxonomy added successfully', 'bit-integrations')];
     }
 
     public function createRelation($finalData, $relOptions, $actions)
     {
         if (empty($relOptions) || empty($relOptions['parentObject'])
         || empty($relOptions['childObject']) || empty($relOptions['selectedRelationType'])) {
-            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Request parameters are empty!', 'bit-integrations'), 'code' => 400];
         }
 
         $args['parent_object'] = $relOptions['parentObject'];
@@ -143,10 +143,10 @@ class RecordApiHelper
         $itemId = jet_engine()->relations->data->create_item(false);
 
         if (empty($itemId) || is_wp_error($itemId)) {
-            return ['success' => false, 'message' => 'Failed to add new relation!', 'code' => 400];
+            return ['success' => false, 'message' => __('Failed to add new relation!', 'bit-integrations'), 'code' => 400];
         }
 
-        return ['success' => true, 'message' => 'Relation added successfully.'];
+        return ['success' => true, 'message' => __('Relation added successfully', 'bit-integrations')];
     }
 
     public function updatePostType($finalData, $createCPTSelectedOptions, $actions)

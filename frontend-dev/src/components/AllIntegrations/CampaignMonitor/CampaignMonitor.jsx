@@ -20,8 +20,8 @@ function CampaignMonitor({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const subscriberFields = [
-    { key: 'Name', label: 'Name', required: false },
-    { key: 'EmailAddress', label: 'Email Address', required: true }
+    { key: 'Name', label: __('Name', 'bit-integrations'), required: false },
+    { key: 'EmailAddress', label: __('Email Address', 'bit-integrations'), required: true }
   ]
 
   const [campaignMonitorConf, setCampaignMonitorConf] = useState({

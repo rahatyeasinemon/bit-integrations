@@ -22,17 +22,17 @@ function Gravitec({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const notificationFields = [
-    { key: 'send_date', label: 'Send Date', required: false },
-    { key: 'ttl', label: 'Time to Live', required: false },
-    { key: 'push_tag', label: 'Push Tag', required: false },
-    { key: 'display_time', label: 'Display Time', required: false },
-    { key: 'is_transactional', label: 'Is Transactional', required: false },
-    { key: 'segments', label: 'Segments', required: false },
-    { key: 'message', label: 'Message', required: true },
-    { key: 'title', label: 'Title', required: false },
-    { key: 'icon', label: 'Icon', required: true },
-    { key: 'image', label: 'Image', required: false },
-    { key: 'redirect_url', label: 'Redirect URL', required: true },
+    { key: 'send_date', label: __('Send Date', 'bit-integrations'), required: false },
+    { key: 'ttl', label: __('Time to Live', 'bit-integrations'), required: false },
+    { key: 'push_tag', label: __('Push Tag', 'bit-integrations'), required: false },
+    { key: 'display_time', label: __('Display Time', 'bit-integrations'), required: false },
+    { key: 'is_transactional', label: __('Is Transactional', 'bit-integrations'), required: false },
+    { key: 'segments', label: __('Segments', 'bit-integrations'), required: false },
+    { key: 'message', label: __('Message', 'bit-integrations'), required: true },
+    { key: 'title', label: __('Title', 'bit-integrations'), required: false },
+    { key: 'icon', label: __('Icon', 'bit-integrations'), required: true },
+    { key: 'image', label: __('Image', 'bit-integrations'), required: false },
+    { key: 'redirect_url', label: __('Redirect URL', 'bit-integrations'), required: true }
   ]
 
   const [gravitecConf, setGravitecConf] = useState({
@@ -44,13 +44,22 @@ function Gravitec({ formFields, setFlow, flow, allIntegURL }) {
     field_map: generateMappedField(notificationFields),
     actionName: '',
     notificationFields,
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, gravitecConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      gravitecConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -66,7 +75,7 @@ function Gravitec({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(gravitecConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
 
@@ -76,7 +85,9 @@ function Gravitec({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <GravitecAuthorization
@@ -90,8 +101,9 @@ function Gravitec({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <GravitecIntegLayout
           formFields={formFields}
           gravitecConf={gravitecConf}
@@ -106,13 +118,10 @@ function Gravitec({ formFields, setFlow, flow, allIntegURL }) {
         {gravitecConf?.actionName && (
           <button
             onClick={() => nextPage(3)}
-            disabled={!(checkMappedFields(gravitecConf))}
+            disabled={!checkMappedFields(gravitecConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button"
-          >
-            {__('Next', 'bit-integrations')}
-            {' '}
-            &nbsp;
+            type="button">
+            {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         )}

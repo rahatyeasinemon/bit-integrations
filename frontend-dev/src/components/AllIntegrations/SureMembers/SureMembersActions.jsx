@@ -58,7 +58,7 @@ export default function SureMembersActions({
           {__('Select group', 'bit-integrations')}
           <Cooltip width={250} icnSize={17} className="ml-1">
             <div className="txt-body">
-              The user will be added or removed from the selected group.
+              {__('The user will be added or removed from the selected group', 'bit-integrations')}
             </div>
           </Cooltip>
         </div>

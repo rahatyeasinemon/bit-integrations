@@ -30,7 +30,7 @@ function EditWPForo({ allIntegURL }) {
 
   const saveConfig = () => {
     if (!wpforoConf.selectedTask) {
-      toast.error('Please select a task!')
+      toast.error(__('Please select a task!', 'bit-integrations'))
       return
     }
 
@@ -38,7 +38,7 @@ function EditWPForo({ allIntegURL }) {
       wpforoConf.selectedTask !== TASK_LIST_VALUES.DELETE_TOPIC &&
       !checkMappedFields(wpforoConf)
     ) {
-      toast.error('Please map mandatory fields!')
+      toast.error(__('Please map mandatory fields!', 'bit-integrations'))
       return
     }
 
@@ -46,12 +46,12 @@ function EditWPForo({ allIntegURL }) {
       wpforoConf.selectedTask === TASK_LIST_VALUES.USER_REPUTATION &&
       !wpforoConf.selectedReputation
     ) {
-      toast.error('Please select a reputation!')
+      toast.error(__('Please select a reputation!', 'bit-integrations'))
       return
     }
 
     if (wpforoConf.selectedTask === TASK_LIST_VALUES.ADD_TO_GROUP && !wpforoConf.selectedGroup) {
-      toast.error('Please select a group!')
+      toast.error(__('Please select a group!', 'bit-integrations'))
       return
     }
 
@@ -59,12 +59,12 @@ function EditWPForo({ allIntegURL }) {
       wpforoConf.selectedTask === TASK_LIST_VALUES.REMOVE_FROM_GROUP &&
       !wpforoConf.selectedGroup
     ) {
-      toast.error('Please select a group!')
+      toast.error(__('Please select a group!', 'bit-integrations'))
       return
     }
 
     if (wpforoConf.selectedTask === TASK_LIST_VALUES.CREATE_TOPIC && !wpforoConf.selectedForum) {
-      toast.error('Please select a forum!')
+      toast.error(__('Please select a forum!', 'bit-integrations'))
       return
     }
 
@@ -73,7 +73,7 @@ function EditWPForo({ allIntegURL }) {
       !wpforoConf.selectedTopic &&
       !checkMappedFields(wpforoConf)
     ) {
-      toast.error('Please select a topic or map fields!')
+      toast.error(__('Please select a topic or map fields!', 'bit-integrations'))
       return
     }
 

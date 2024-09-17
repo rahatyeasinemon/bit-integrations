@@ -14,7 +14,7 @@ final class PostController
     public function getPostTypes()
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
         $cptArguments = [
             'public'          => true,
@@ -152,7 +152,7 @@ final class PostController
     public function getCustomFields($data)
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
 
         $acf = self::getAcfFields($data->post_type);
@@ -174,7 +174,7 @@ final class PostController
     public function getPages()
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
         $pages = get_pages(['post_status' => 'publish', 'sort_column' => 'post_date', 'sort_order' => 'desc']);
         $allPages = [];
@@ -189,7 +189,7 @@ final class PostController
     public function getPodsPostType()
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
         $users = get_users(['fields' => ['ID', 'display_name']]);
         $pods = [];

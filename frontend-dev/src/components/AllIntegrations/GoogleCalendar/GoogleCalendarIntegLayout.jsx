@@ -28,7 +28,7 @@ export default function GoogleCalendarIntegLayout({
   return (
     <>
       <div className="flx mt-4">
-        <b className="wdt-200 d-in-b">{__('Calendar Lists: ', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b">{__('Calendar Lists:', 'bit-integrations')}</b>
         <select
           onChange={(e) => inputHandler(e)}
           name="calendarId"
@@ -53,7 +53,7 @@ export default function GoogleCalendarIntegLayout({
         </button>
       </div>
       <div className="flx mt-4">
-        <b className="wdt-200 d-in-b">{__('Time Zone: ', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b">{__('Time Zone:', 'bit-integrations')}</b>
         <MultiSelect
           name="timeZone"
           className="w-5"

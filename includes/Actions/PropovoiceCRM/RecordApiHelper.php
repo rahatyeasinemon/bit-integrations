@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\PropovoiceCRM;
 
-use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -63,7 +63,7 @@ class RecordApiHelper
             $apiResponse = $this->createLead($finalData);
 
             if (!$apiResponse) {
-                LogHandler::save($this->_integrationID, 'Lead', 'success', 'Lead Created Successfully');
+                LogHandler::save($this->_integrationID, 'Lead', 'success', __('Lead Created Successfully', 'bit-integrations'));
             } else {
                 LogHandler::save($this->_integrationID, 'Lead', 'error', wp_json_encode($apiResponse));
             }

@@ -8,11 +8,11 @@
 
 namespace BitCode\FI\Actions\PostCreation;
 
-use BitCode\FI\controller\PostController;
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Flow\Flow;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\controller\PostController;
 
 final class PostCreationController
 {
@@ -46,13 +46,7 @@ final class PostCreationController
                 $fieldObject = get_field_object($actionValue);
                 if (!empty($fieldValues[$fieldPair->formField])) {
                     if (\in_array($fieldObject['type'], $fileTypes)) {
-                        $filePath = \is_array($fieldValues[$triggerValue]) ? $fieldValues[$triggerValue][0] : $fieldValues[$triggerValue];
-
-                        $attachMentId = Helper::singleFileMoveWpMedia($filePath, $postId);
-                        if (!empty($attachMentId)) {
-                            update_post_meta($postId, '_' . $actionValue, $fieldObject['key']);
-                            update_post_meta($postId, $fieldObject['name'], wp_json_encode($attachMentId));
-                        }
+                        static::uploadACFFile($postId, $fieldValues[$triggerValue], $actionValue, $fieldObject);
                     } else {
                         $attachMentId = Helper::multiFileMoveWpMedia($fieldValues[$triggerValue], $postId);
                         if (!empty($attachMentId)) {
@@ -127,12 +121,7 @@ final class PostCreationController
                     $fieldObject = $metaboxFields->{$actionValue};
 
                     if ($fieldObject['multiple'] == false) {
-                        $filePath = \is_array($fieldValues[$triggerValue]) ? $fieldValues[$triggerValue][0] : $fieldValues[$triggerValue];
-                        $attachMentId = Helper::singleFileMoveWpMedia($filePath, $postId);
-
-                        if (!empty($attachMentId)) {
-                            add_post_meta($postId, $fieldObject['field_name'], $attachMentId);
-                        }
+                        static::uploadMBFile($postId, $fieldValues[$triggerValue], $fieldObject);
                     } elseif ($fieldObject['multiple'] == true) {
                         $attachMentId = Helper::multiFileMoveWpMedia($fieldValues[$triggerValue], $postId);
 
@@ -318,9 +307,9 @@ final class PostCreationController
 
         if (is_wp_error($result) || !$result) {
             $message = is_wp_error($result) ? $result->get_error_message() : 'error';
-            LogHandler::save($integrationData->id, 'Post Creation', 'error', $message);
+            LogHandler::save($integrationData->id, 'WP Post Creation', 'error', $message);
         } else {
-            LogHandler::save($integrationData->id, 'Post Creation', 'success', $result);
+            LogHandler::save($integrationData->id, 'WP Post Creation', 'success', $result);
         }
 
         if (class_exists('ACF')) {
@@ -357,6 +346,41 @@ final class PostCreationController
 
             self::HandleJeCPTFieldMap($jeCPTFieldMap, $updatedJeCPTValues, $postId, $fields);
             self::HandleJeCPTFileMap($jeCPTFileMap, $updatedJeCPTValues, $postId, $fields);
+        }
+    }
+
+    private static function uploadACFFile($postId, $files, $actionValue, $fieldObject)
+    {
+        $files = \is_array($files) ? $files : [$files];
+
+        foreach ($files as $file) {
+            if (\is_array($file)) {
+                static::uploadACFFile($postId, $file, $actionValue, $fieldObject);
+            } else {
+                $attachMentId = Helper::singleFileMoveWpMedia($file, $postId);
+
+                if (!empty($attachMentId)) {
+                    update_post_meta($postId, '_' . $actionValue, $fieldObject['key']);
+                    update_post_meta($postId, $fieldObject['name'], wp_json_encode($attachMentId));
+                }
+            }
+        }
+    }
+
+    private static function uploadMBFile($postId, $files, $fieldObject)
+    {
+        $files = \is_array($files) ? $files : [$files];
+
+        foreach ($files as $file) {
+            if (\is_array($file)) {
+                static::uploadMBFile($postId, $file, $fieldObject);
+            } else {
+                $attachMentId = Helper::singleFileMoveWpMedia($file, $postId);
+
+                if (!empty($attachMentId)) {
+                    add_post_meta($postId, $fieldObject['field_name'], $attachMentId);
+                }
+            }
         }
     }
 }

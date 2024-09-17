@@ -122,8 +122,10 @@ export default function DokanIntegLayout({
                 <br />
                 <div className="flx">
                   <span className="action-delete-task-note">
-                    To delete a vendor, you can select a vendor from the list above, or you can map
-                    fields.
+                    {__(
+                      'To delete a vendor, you can select a vendor from the list above, or you can map fields',
+                      'bit-integrations'
+                    )}
                   </span>
                   <TableCheckBox
                     checked={dokanConf.deleteVendorFieldMap}
@@ -144,9 +146,9 @@ export default function DokanIntegLayout({
             <MultiSelect
               style={{ width: '450px' }}
               options={[
-                { label: 'PayPal', value: 'paypal' },
-                { label: 'Bank Transfer', value: 'bank' },
-                { label: 'Skrill', value: 'skrill' }
+                { label: __('PayPal', 'bit-integrations'), value: 'paypal' },
+                { label: __('Bank Transfer', 'bit-integrations'), value: 'bank' },
+                { label: __('Skrill', 'bit-integrations'), value: 'skrill' }
               ]}
               className="msl-wrp-options"
               defaultValue={dokanConf?.selectedPaymentMethod}

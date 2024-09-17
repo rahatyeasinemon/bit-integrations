@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Nimble;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Nimble integration
@@ -31,9 +31,9 @@ class NimbleController
         $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
 
         if (isset($response->user_id)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API Key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 
@@ -106,7 +106,7 @@ class NimbleController
                 200
             );
         } else {
-            wp_send_json_error('Field fetching failed', 400);
+            wp_send_json_error(__('Field fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -119,7 +119,7 @@ class NimbleController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($apiKey) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Nimble'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Nimble'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey);

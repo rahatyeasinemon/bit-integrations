@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { __ } from '../../../Utils/i18nwrap'
+import { __, sprintf } from '../../../Utils/i18nwrap'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import Loader from '../../Loaders/Loader'
@@ -35,9 +35,9 @@ export default function FluentSupportActions({
   }
 
   const options = [
-    { label: 'Normal', value: 'normal' },
-    { label: 'Critical', value: 'critical' },
-    { label: 'Medium', value: 'medium' }
+    { label: __('Normal', 'bit-integrations'), value: 'normal' },
+    { label: __('Critical', 'bit-integrations'), value: 'critical' },
+    { label: __('Medium', 'bit-integrations'), value: 'medium' }
   ]
 
   const openRecOwnerModal = () => {
@@ -107,10 +107,21 @@ export default function FluentSupportActions({
           value="Attachment"
           isInfo={!isPro}
           title={__(`Attachment ${!isPro ? '(Pro)' : ''}`, 'bit-integrations')}
-          subTitle={__(
-            `${isPro ? 'Supported Types: Photos, CSV, PDF/Docs, Zip, JSON and max file size: 2.0MB' : 'The Bit Integration Pro v(2.1.7) plugin needs to be installed and activated to enable the Upsert Record feature'}`,
-            'bit-integrations'
-          )}
+          subTitle={
+            isPro
+              ? __(
+                  'Supported Types: Photos, CSV, PDF/Docs, Zip, JSON and max file size: 2.0MB',
+                  'bit-integrations'
+                )
+              : sprintf(
+                  __(
+                    'The Bit Integration Pro v(%s) plugin needs to be installed and activated to enable the %s feature',
+                    'bit-integrations'
+                  ),
+                  '2.1.7',
+                  __('Upsert Record', 'bit-integrations')
+                )
+          }
         />
       </div>
 

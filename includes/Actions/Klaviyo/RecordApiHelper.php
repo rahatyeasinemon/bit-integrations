@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Klaviyo;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record Add Member
@@ -16,6 +16,8 @@ use BitCode\FI\Log\LogHandler;
 class RecordApiHelper
 {
     private $_integrationID;
+
+    private $_integrationDetails;
 
     private $baseUrl = 'https://a.klaviyo.com/api/';
 
@@ -25,14 +27,16 @@ class RecordApiHelper
         $this->_integrationID = $integId;
     }
 
-    public function addMember($authKey, $listId, $data)
+    public function addMember($authKey, $listId, $data, $fieldValues)
     {
         $data = [
-            'data' => (object) [
+            'data' => [
                 'type'       => 'profile',
                 'attributes' => $data
             ]
         ];
+
+        $data = apply_filters('btcbi_klaviyo_custom_properties', $data, $this->_integrationDetails->custom_field_map ?? [], $fieldValues);
 
         $headers = [
             'Authorization' => "Klaviyo-API-Key {$authKey}",
@@ -82,7 +86,7 @@ class RecordApiHelper
         $authKey
     ) {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $field_map);
-        $apiResponse = $this->addMember($authKey, $listId, (object) $finalData);
+        $apiResponse = $this->addMember($authKey, $listId, $finalData, $fieldValues);
         if (isset($apiResponse->errors)) {
             $res = ['success' => false, 'message' => $apiResponse->errors[0]->detail, 'code' => 400];
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'members', 'type_name' => 'add-members']), 'error', wp_json_encode($res));

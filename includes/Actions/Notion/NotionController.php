@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\Notion;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 class NotionController
 {
@@ -109,7 +109,7 @@ class NotionController
         if (
             empty($field_map) || empty($accessToken)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'notion'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'notion'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

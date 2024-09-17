@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\ZagoMail;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -214,7 +214,7 @@ class ZagoMailController
             empty($api_public_key)
             || empty($fieldMap)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Sendinblue'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Sendinblue'));
         }
         $recordApiHelper = new RecordApiHelper($api_public_key, $this->_integrationID);
 

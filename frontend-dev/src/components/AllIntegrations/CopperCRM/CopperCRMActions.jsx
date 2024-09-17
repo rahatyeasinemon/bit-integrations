@@ -18,13 +18,13 @@ export default function CopperCRMActions({ coppercrmConf, setCopperCRMConf, load
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => {} })
 
   const followUps = [
-    { label: 'Yes', value: 'yes' },
-    { label: 'No', value: 'no' }
+    { label: __('Yes', 'bit-integrations'), value: 'yes' },
+    { label: __('No', 'bit-integrations'), value: 'no' }
   ]
 
   const opportunityTypes = [
-    { label: 'New Business', value: 'New Business' },
-    { label: 'Existing Business', value: 'Existing Business' }
+    { label: __('New Business', 'bit-integrations'), value: 'New Business' },
+    { label: __('Existing Business', 'bit-integrations'), value: 'Existing Business' }
   ]
 
   const actionHandler = (e, type) => {

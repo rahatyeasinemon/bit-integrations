@@ -145,7 +145,7 @@ function Post({ allIntegURL }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div style={{ width: 900 }}>
         <div className="mt-3">
-          <b>{__('Integration Name ', 'bit-integrations')}</b>
+          <b>{__('Integration Name', 'bit-integrations')}</b>
         </div>
         <input
           className="btcd-paper-inp w-5 mt-1"
@@ -163,7 +163,10 @@ function Post({ allIntegURL }) {
           <b>{__('Post Type', 'bit-integrations')}</b>
           <Cooltip width={250} icnSize={17} className="ml-2">
             <div className="txt-body">
-              Select one of the defined WordPress post types Or custom post types for the post.
+              {__(
+                'Select one of the defined WordPress post types Or custom post types for the post',
+                'bit-integrations'
+              )}
               <br />
             </div>
           </Cooltip>
@@ -196,8 +199,10 @@ function Post({ allIntegURL }) {
           <b>{__('Post Status', 'bit-integrations')}</b>
           <Cooltip width={250} icnSize={17} className="ml-2">
             <div className="txt-body">
-              Select the status for the post. If published status is selected and the post date is
-              in the future, it will automatically be changed to scheduled
+              {__(
+                'Select the status for the post. If published status is selected and the post date is in the future, it will automatically be changed to scheduled',
+                'bit-integrations'
+              )}
               <br />
             </div>
           </Cooltip>
@@ -221,7 +226,7 @@ function Post({ allIntegURL }) {
           <b>{__('Author', 'bit-integrations')}</b>
           <Cooltip width={250} icnSize={17} className="ml-2">
             <div className="txt-body">
-              Select the user to be assigned to the post.
+              {__('Select the user to be assigned to the post', 'bit-integrations')}
               <br />
             </div>
           </Cooltip>

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SendinBlue;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for ZohoCrm integration
@@ -168,10 +168,11 @@ class SendinBlueController
             $allFields = $sblueResponse->attributes;
 
             foreach ($allFields as $field) {
-                if (!\in_array($field->name, $excludingField) && !empty($field->type)) {
+                if (!\in_array($field->name, $excludingField)) {
                     $fields[$field->name] = (object) [
                         'fieldId'   => $field->name,
-                        'fieldName' => $field->name
+                        'fieldName' => $field->name,
+                        'options'   => isset($field->enumeration) && \is_array($field->enumeration) ? $field->enumeration : []
                     ];
                 }
             }
@@ -198,7 +199,7 @@ class SendinBlueController
             || empty($fieldMap)
             || empty($defaultDataConf)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Sendinblue'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Sendinblue'));
         }
         $recordApiHelper = new RecordApiHelper($api_key, $integId);
         $sendinBlueApiResponse = $recordApiHelper->execute(

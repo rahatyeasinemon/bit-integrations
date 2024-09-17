@@ -57,7 +57,9 @@ export default function NewsletterActions({ newsletterConf, setNewsletterConf })
         <div className="mt-2 flx">
           {__('Select Lists', 'bit-integrations')}
           <Cooltip width={250} icnSize={17} className="ml-1">
-            <div className="txt-body">Subscribers will be associated with the selected lists.</div>
+            <div className="txt-body">
+              {__('Subscribers will be associated with the selected lists', 'bit-integrations')}
+            </div>
           </Cooltip>
         </div>
         <div className="mt-2">

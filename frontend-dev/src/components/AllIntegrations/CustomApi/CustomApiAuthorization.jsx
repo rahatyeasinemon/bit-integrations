@@ -29,15 +29,14 @@ export default function CustomApiAuthorization({
     setStep(2)
   }
   const authType = [
-    { label: 'API Key', value: 'apikey' },
-    { label: 'Bearer Token', value: 'bearer' },
-    { label: 'Basic Auth', value: 'basic' }
-    // { label: 'OAuth 2.0', value: 'oauth2' },
+    { label: __('API Key', 'bit-integrations'), value: 'apikey' },
+    { label: __('Bearer Token', 'bit-integrations'), value: 'bearer' },
+    { label: __('Basic Auth', 'bit-integrations'), value: 'basic' }
   ]
 
   const apiKeyAddTo = [
-    { label: 'Header', value: 'header' },
-    { label: 'Query String', value: 'query' }
+    { label: __('Header', 'bit-integrations'), value: 'header' },
+    { label: __('Query String', 'bit-integrations'), value: 'query' }
   ]
 
   const handleInput = (e) => {
@@ -94,7 +93,7 @@ export default function CustomApiAuthorization({
       </div>
       <br />
       <div className="d-flx">
-        <b className="wdt-200 d-in-b mt-3">{__('Select Auth Protocol: ', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b mt-3">{__('Select Auth Protocol:', 'bit-integrations')}</b>
         <MultiSelect
           defaultValue={customApiConf.authType}
           className="btcd-paper-drpdwn w-5"
@@ -133,7 +132,7 @@ export default function CustomApiAuthorization({
               disabled={isInfo}
             />
           </div>
-          <b className="wdt-200 d-in-b mt-3">{__('Add to: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b mt-3">{__('Add to:', 'bit-integrations')}</b>
           <MultiSelect
             defaultValue={customApiConf.apiKeyAddTo}
             className="btcd-paper-drpdwn w-5 mt-2"

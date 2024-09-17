@@ -102,7 +102,7 @@ export default function GetgistAuthorization({
       {isLoading === 'auth' && (
         <div className="flx mt-5">
           <LoaderSm size={25} clr="#022217" className="mr-2" />
-          Checking API Key!!!
+          {__('Checking API Key!!!', 'bit-integrations')}
         </div>
       )}
 
@@ -111,7 +111,7 @@ export default function GetgistAuthorization({
           <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
             &times;
           </span>
-          Sorry, API key is invalid
+          {__('Sorry, Api key is invalid', 'bit-integrations')}
         </div>
       )}
       {!isInfo && (

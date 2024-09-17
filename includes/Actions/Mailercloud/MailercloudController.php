@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Mailercloud;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Mailercloud integration
@@ -145,7 +145,7 @@ class MailercloudController
             empty($field_map)
              || empty($authKey)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mailercloud'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mailercloud'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $mailercloudApiResponse = $recordApiHelper->execute(

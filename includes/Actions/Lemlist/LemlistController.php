@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\Lemlist;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 class LemlistController
 {
@@ -54,7 +54,7 @@ class LemlistController
         if ((\count($campaigns)) > 0) {
             wp_send_json_success($campaigns, 200);
         } else {
-            wp_send_json_error('Campaign fetching failed', 400);
+            wp_send_json_error(__('Campaign fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -68,7 +68,7 @@ class LemlistController
         $apiKey = $integrationDetails->api_key;
 
         if (empty($fieldMap) || empty($apiKey) || empty($selectedCampaign)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Lemlist'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Lemlist'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey);

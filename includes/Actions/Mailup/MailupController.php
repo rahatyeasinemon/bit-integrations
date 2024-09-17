@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\Mailup;
 
-use WP_Error;
-use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Flow\FlowController;
+use WP_Error;
 
 class MailupController
 {
@@ -152,7 +152,7 @@ class MailupController
         }
 
         if (empty($fieldMap) || empty($tokenDetails) || empty($selectedList)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mailup'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mailup'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $tokenDetails->access_token);

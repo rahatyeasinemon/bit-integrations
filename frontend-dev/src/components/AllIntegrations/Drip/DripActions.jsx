@@ -101,8 +101,8 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
         <div className="mt-2">
           <MultiSelect
             options={[
-              { label: 'Active', value: 'active' },
-              { label: 'Unsubscribed', value: 'unsubscribed' }
+              { label: __('Active', 'bit-integrations'), value: 'active' },
+              { label: __('Unsubscribed', 'bit-integrations'), value: 'unsubscribed' }
             ]}
             className="msl-wrp-options"
             defaultValue={dripConf?.selectedStatus}
@@ -126,8 +126,10 @@ export default function DripActions({ dripConf, setDripConf, loading, setLoading
           {__('Select tags', 'bit-integrations')}
           <Cooltip width={350} icnSize={17} className="ml-1">
             <div className="txt-body">
-              Choose from the existing tags, or create and add new ones by typing them and pressing
-              enter or comma (,).
+              {__(
+                'Choose from the existing tags, or create and add new ones by typing them and pressing enter or comma (,)',
+                'bit-integrations'
+              )}
             </div>
           </Cooltip>
         </div>

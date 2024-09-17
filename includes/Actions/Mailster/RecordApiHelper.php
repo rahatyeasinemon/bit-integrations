@@ -25,7 +25,7 @@ class RecordApiHelper
     public function addSubscriber($finalData, $selectedStatus, $selectedLists, $selectedTags)
     {
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         if (!empty($selectedStatus)) {
@@ -73,7 +73,7 @@ class RecordApiHelper
         $response = $this->addSubscriber($finalData, $selectedStatus, $selectedLists, $selectedTags);
 
         if (!is_wp_error($response)) {
-            $res = ['message' => 'Subscriber added successfully'];
+            $res = ['message' => __('Subscriber added successfully', 'bit-integrations')];
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber add']), 'success', wp_json_encode($res));
         } else {
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => '', 'type_name' => 'Adding subscriber']), 'error', wp_json_encode($response));

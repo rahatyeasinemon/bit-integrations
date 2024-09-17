@@ -20,10 +20,18 @@ function SureCart({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const customerFields = [
-    { key: 'customer_first_name', label: 'Customer First Name ', required: true },
-    { key: 'customer_email', label: 'Customer Email ', required: true },
-    { key: 'customer_last_name', label: 'Customer Last Name ', required: false },
-    { key: 'customer_phone', label: 'Customer Phone ', required: false }
+    {
+      key: 'customer_first_name',
+      label: __('Customer First Name', 'bit-integrations'),
+      required: true
+    },
+    { key: 'customer_email', label: __('Customer Email', 'bit-integrations'), required: true },
+    {
+      key: 'customer_last_name',
+      label: __('Customer Last Name', 'bit-integrations'),
+      required: false
+    },
+    { key: 'customer_phone', label: __('Customer Phone', 'bit-integrations'), required: false }
   ]
 
   const allActions = [{ key: '1', label: 'Create Customer' }]

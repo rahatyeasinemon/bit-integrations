@@ -2,12 +2,12 @@
 
 namespace BitCode\FI\Actions\Autonami;
 
-use WP_Error;
-use BWFCRM_Tag;
-use BWFCRM_Lists;
-use BWFCRM_Fields;
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Log\LogHandler;
+use BWFCRM_Fields;
+use BWFCRM_Lists;
+use BWFCRM_Tag;
+use WP_Error;
 
 class AutonamiController
 {
@@ -95,7 +95,7 @@ class AutonamiController
     public function execute($integrationData, $fieldValues)
     {
         if (!class_exists('BWFCRM_Contact')) {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', 'Autonami Pro Plugins not found');
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', __('Autonami Pro Plugins not found', 'bit-integrations'));
 
             return false;
         }
@@ -112,7 +112,7 @@ class AutonamiController
         }
 
         if (empty($fieldMap)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Autonami'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Autonami'));
         }
 
         $recordApiHelper = new RecordApiHelper($this->_integrationID);

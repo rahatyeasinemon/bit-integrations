@@ -18,7 +18,7 @@ class PropovoiceCRMController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'Propovoice CRM'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'Propovoice CRM'));
     }
 
     public static function leadTags()
@@ -48,7 +48,7 @@ class PropovoiceCRMController
             || empty($fieldMap)
 
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Propovoice CRM'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Propovoice CRM'));
         }
         $recordApiHelper = new RecordApiHelper($integrationId);
         $propovoiceCrmApiResponse = $recordApiHelper->execute(

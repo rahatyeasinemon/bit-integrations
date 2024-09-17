@@ -104,7 +104,7 @@ export const nextPage = (conf, setStep, pageNo) => {
   }, 300)
 
   if (!checkMappedFields(conf)) {
-    toast.error('Please map mandatory fields')
+    toast.error(__('Please map mandatory fields', 'bit-integrations'))
     return
   }
   conf.field_map.length > 0 && setStep(pageNo)
@@ -125,12 +125,31 @@ export const saveConfig = (flow, setFlow, allIntegURL, conf, navigate, setIsLoad
 
 export const saveUpdateConfig = (flow, allIntegURL, conf, navigate, edit, setIsLoading) => {
   if (!checkMappedFields(conf)) {
-    toast.error('Please map mandatory fields')
+    toast.error(__('Please map mandatory fields', 'bit-integrations'))
     return
   }
   if (checkMappedFields(conf) === 'required') {
-    toast.error('You must select email or phone in klaviyo fields')
+    toast.error(__('You must select email or phone in klaviyo fields', 'bit-integrations'))
     return
   }
   saveActionConf({ flow, allIntegURL, conf, navigate, edit, setIsLoading })
+}
+
+export const addFieldMap = (i, confTmp, setConf, type) => {
+  const newConf = { ...confTmp }
+  if (!newConf[type]) {
+    newConf[type] = []
+  }
+
+  newConf[type].splice(i, 0, {})
+  setConf({ ...newConf })
+}
+
+export const delFieldMap = (i, confTmp, setConf, type) => {
+  const newConf = { ...confTmp }
+  if (newConf[type].length > 1) {
+    newConf[type].splice(i, 1)
+  }
+
+  setConf({ ...newConf })
 }

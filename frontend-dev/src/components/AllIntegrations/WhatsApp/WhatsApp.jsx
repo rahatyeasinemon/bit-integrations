@@ -25,10 +25,10 @@ function WhatsApp({ formFields, setFlow, flow, allIntegURL }) {
   const { isPro } = btcbi
   const whatsAppFields = [{ key: 'phone', label: "Recipient's Phone", required: true }]
   const messageTypes = [
-    { name: 'template', label: 'Template Message', is_pro: false },
-    { name: 'text', label: 'Text Message', is_pro: true },
-    { name: 'contact', label: 'Contact Message', is_pro: true },
-    { name: 'media', label: 'Media Message', is_pro: true }
+    { name: 'template', label: __('Template Message', 'bit-integrations'), is_pro: false },
+    { name: 'text', label: __('Text Message', 'bit-integrations'), is_pro: true },
+    { name: 'contact', label: __('Contact Message', 'bit-integrations'), is_pro: true },
+    { name: 'media', label: __('Media Message', 'bit-integrations'), is_pro: true }
   ]
   const mediaTypes = [
     'image/jpeg',

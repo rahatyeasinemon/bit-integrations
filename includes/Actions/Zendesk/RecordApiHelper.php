@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Zendesk;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -40,7 +40,7 @@ class RecordApiHelper
     public function addOrganization($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $staticFieldsKeys = ['name', 'phone', 'mobile', 'email', 'description', 'line1', 'city', 'state',  'postal_code', 'country', 'fax', 'facebook', 'skype', 'linkedin', 'twitter'];
@@ -77,7 +77,7 @@ class RecordApiHelper
     public function addContact($finalData)
     {
         if (empty($finalData['last_name'])) {
-            return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $staticFieldsKeys = ['first_name', 'last_name', 'title', 'phone', 'mobile', 'email', 'description', 'line1', 'city', 'state', 'postal_code',  'country', 'fax', 'facebook', 'skype', 'linkedin', 'twitter'];
@@ -108,7 +108,7 @@ class RecordApiHelper
     public function addLead($finalData)
     {
         if (!isset($finalData['last_name'])) {
-            return ['success' => false, 'message' => 'Required field lead name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field lead name is empty', 'bit-integrations'), 'code' => 400];
         }
         $staticFieldsKeys = ['first_name', 'last_name', 'value', 'title', 'phone', 'mobile', 'fax', 'website', 'email', 'description', 'line1', 'city', 'state', 'postal_code', 'country', 'facebook', 'skype', 'linkedin', 'twitter'];
 
@@ -145,7 +145,7 @@ class RecordApiHelper
     public function addDeal($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field deal name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field deal name is empty', 'bit-integrations'), 'code' => 400];
         }
         $staticFieldsKeys = ['name', 'value', 'estimated_close_date', 'added_at', 'last_stage_change_at'];
 

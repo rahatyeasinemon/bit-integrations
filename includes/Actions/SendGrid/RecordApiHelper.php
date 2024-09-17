@@ -34,7 +34,7 @@ class RecordApiHelper
         $apiEndpoints = 'https://api.sendgrid.com/v3/marketing/contacts';
 
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $this->_responseType = $this->isExist($finalData['email']);

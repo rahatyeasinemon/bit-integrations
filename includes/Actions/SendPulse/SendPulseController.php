@@ -2,10 +2,10 @@
 
 namespace BitCode\FI\Actions\SendPulse;
 
-use WP_Error;
 use BitCode\FI\Core\Util\Helper;
-use BitCode\FI\Flow\FlowController;
 use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Flow\FlowController;
+use WP_Error;
 
 class SendPulseController
 {
@@ -54,9 +54,9 @@ class SendPulseController
         }
 
         $fields = [
-            'Email' => ['fieldValue' => 'email', 'fieldName' => 'Email', 'required' => true],
-            'Name'  => ['fieldValue' => 'name', 'fieldName' => 'Name', 'required' => false],
-            'Phone' => ['fieldValue' => 'phone', 'fieldName' => 'Phone', 'required' => false]
+            'Email' => ['fieldValue' => 'email', 'fieldName' => __('Email', 'bit-integrations'), 'required' => true],
+            'Name'  => ['fieldValue' => 'name', 'fieldName' => __('Name', 'bit-integrations'), 'required' => false],
+            'Phone' => ['fieldValue' => 'phone', 'fieldName' => __('Phone', 'bit-integrations'), 'required' => false]
         ];
 
         if (Helper::proActionFeatExists('SendPulse', 'refreshFields')) {
@@ -96,7 +96,7 @@ class SendPulseController
         if ((\count($lists)) > 0) {
             wp_send_json_success($lists, 200);
         } else {
-            wp_send_json_error('List fetching failed', 400);
+            wp_send_json_error(__('List fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -112,7 +112,7 @@ class SendPulseController
         }
 
         if (empty($fieldMap) || empty($tokenDetails) || empty($selectedList)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SendPulse'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SendPulse'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $tokenDetails->access_token);

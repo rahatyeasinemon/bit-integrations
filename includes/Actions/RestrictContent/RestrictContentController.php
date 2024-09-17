@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\RestrictContent;
 
-use WP_Error;
 use BitCode\FI\Log\LogHandler;
+use WP_Error;
 
 /**
  * Provide functionality for RestricContent integration
@@ -39,7 +39,7 @@ class RestrictContentController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'Restrict Content'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'Restrict Content'));
     }
 
     public static function getAllLevels()

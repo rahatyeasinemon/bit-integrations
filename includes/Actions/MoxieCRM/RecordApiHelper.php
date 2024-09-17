@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\MoxieCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -40,7 +40,7 @@ class RecordApiHelper
     public function addClient($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $staticFieldsKeys = ['name', 'address1', 'address2', 'city', 'locality', 'postal', 'country', 'website',  'phone', 'leadSource', 'hourlyAmount', 'currency', 'notes', 'firstName', 'lastName', 'email'];
@@ -69,7 +69,7 @@ class RecordApiHelper
     public function addContact($finalData)
     {
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $staticFieldsKeys = ['email', 'first', 'last', 'phone', 'notes'];
@@ -100,7 +100,7 @@ class RecordApiHelper
     public function addOpportunity($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field opportunity name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field opportunity name is empty', 'bit-integrations'), 'code' => 400];
         }
         $staticFieldsKeys = ['name', 'description', 'value', 'firstName', 'lastName', 'email', 'phone', 'role', 'businessName', 'website', 'address1', 'address2', 'city', 'locality', 'postal', 'country', 'sourceUrl', 'leadSource'];
 

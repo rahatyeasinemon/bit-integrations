@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\CustomAction;
 
-use BitCode\FI\Log\LogHandler;
 use Throwable;
+use BitCode\FI\Log\LogHandler;
 
 class CustomActionController
 {
@@ -14,12 +14,12 @@ class CustomActionController
         $filePath = stream_get_meta_data($temp_file)['uri'];
         if (\function_exists('exec') === false) {
             fclose($temp_file);
-            wp_send_json_success('Exec function not found in your server, So we can\'t validate your function. But you can run your custom action.');
+            wp_send_json_success(__('Exec function not found in your server, So we can\'t validate your function. But you can run your custom action.', 'bit-integrations'));
         }
         $response = exec(escapeshellcmd("php -l {$filePath}"), $output, $return);
         if (empty($response)) {
             fclose($temp_file);
-            wp_send_json_success('Exec function not found in your server, So we can\'t validate your function. But you can run your custom action.');
+            wp_send_json_success(__('Exec function not found in your server, So we can\'t validate your function. But you can run your custom action.', 'bit-integrations'));
         }
 
         $msg = str_replace($filePath, 'your function', $response);
@@ -46,7 +46,7 @@ class CustomActionController
                 include "{$funcFileLocation}";
             } catch (Throwable $th) {
                 $isSuccessfullyRun = false;
-                LogHandler::save($integId, $th->getMessage(), 'error', 'Custom action Failed');
+                LogHandler::save($integId, $th->getMessage(), 'error', __('Custom action Failed', 'bit-integrations'));
             }
             $additionalData = ob_get_clean();
         } else {

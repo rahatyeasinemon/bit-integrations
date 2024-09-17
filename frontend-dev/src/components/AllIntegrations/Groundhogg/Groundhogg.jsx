@@ -22,26 +22,26 @@ function Groundhogg({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const contactsFields = [
-    { key: 'email', label: 'Email', required: true },
-    { key: 'first_name', label: 'First Name', required: false },
-    { key: 'last_name', label: 'Last Name', required: false },
-    { key: 'user_id', label: 'User Id', required: false },
-    { key: 'owner_id', label: 'Owner Id', required: false },
-    { key: 'note', label: 'Note', required: false }
+    { key: 'email', label: __('Email', 'bit-integrations'), required: true },
+    { key: 'first_name', label: __('First Name', 'bit-integrations'), required: false },
+    { key: 'last_name', label: __('Last Name', 'bit-integrations'), required: false },
+    { key: 'user_id', label: __('User Id', 'bit-integrations'), required: false },
+    { key: 'owner_id', label: __('Owner Id', 'bit-integrations'), required: false },
+    { key: 'note', label: __('Note', 'bit-integrations'), required: false }
   ]
 
   const contactMetaFields = [
-    { key: 'primary_phone', label: 'Primary Phone', required: false },
-    { key: 'street_address_1', label: 'Street Address 1', required: false },
-    { key: 'street_address_2', label: 'Street Address 2', required: false },
-    { key: 'postal_zip', label: 'Postal Zip', required: false },
-    { key: 'city', label: 'City', required: false },
-    { key: 'country', label: 'Country', required: false }
+    { key: 'primary_phone', label: __('Primary Phone', 'bit-integrations'), required: false },
+    { key: 'street_address_1', label: __('Street Address 1', 'bit-integrations'), required: false },
+    { key: 'street_address_2', label: __('Street Address 2', 'bit-integrations'), required: false },
+    { key: 'postal_zip', label: __('Postal Zip', 'bit-integrations'), required: false },
+    { key: 'city', label: __('City', 'bit-integrations'), required: false },
+    { key: 'country', label: __('Country', 'bit-integrations'), required: false }
   ]
 
   const allActions = [
-    { key: '1', label: 'Create Contact' },
-    { key: '2', label: 'Add tag to user' }
+    { key: '1', label: __('Create Contact', 'bit-integrations') },
+    { key: '2', label: __('Add tag to user', 'bit-integrations') }
   ]
   const [groundhoggConf, setGroundhoggConf] = useState({
     name: 'Groundhogg',

@@ -9,7 +9,7 @@ function CustomField({ formFields, postConf, setPostConf, acfFields, mbFields, j
         <div>
           <div>
             <div className="mt-3 mb-1">
-              <b>{__('ACF Fields Mapping ', 'bit-integrations')}</b>
+              <b>{__('ACF Fields Mapping', 'bit-integrations')}</b>
               {/* <button onClick={() => refreshAcfFields(data, setAcfFields, setAcfFileFields)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `'${__('Refresh ACF fields', 'bit-integrations')}'` }} type="button">&#x21BB;</button> */}
             </div>
             <div className="btcd-hr" />

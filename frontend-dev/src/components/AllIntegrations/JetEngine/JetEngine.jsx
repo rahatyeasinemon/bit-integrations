@@ -92,13 +92,13 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!jetEngineConf.selectedTask) {
-      toast.error('Please select a task!')
+      toast.error(__('Please select a task!', 'bit-integrations'))
       return
     }
 
     if (!DELETE_LIST_ARRAY.includes(jetEngineConf.selectedTask)) {
       if (!checkMappedFields(jetEngineConf)) {
-        toast.error('Please map mandatory fields!')
+        toast.error(__('Please map mandatory fields!', 'bit-integrations'))
         return
       }
     }
@@ -108,7 +108,7 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
         jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY) &&
       !jetEngineConf.selectedTaxPostTypes
     ) {
-      toast.error('Please select post type(s)!')
+      toast.error(__('Please select post type(s)!', 'bit-integrations'))
       return
     }
 
@@ -117,15 +117,15 @@ function JetEngine({ formFields, setFlow, flow, allIntegURL }) {
       jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_RELATION
     ) {
       if (!jetEngineConf.relOptions.parentObject) {
-        toast.error('Please select a parent object!')
+        toast.error(__('Please select a parent object!', 'bit-integrations'))
         return
       }
       if (!jetEngineConf.relOptions.childObject) {
-        toast.error('Please select a child object!')
+        toast.error(__('Please select a child object!', 'bit-integrations'))
         return
       }
       if (!jetEngineConf.relOptions.selectedRelationType) {
-        toast.error('Please select a relation type!')
+        toast.error(__('Please select a relation type!', 'bit-integrations'))
         return
       }
     }

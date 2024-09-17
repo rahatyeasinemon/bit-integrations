@@ -79,9 +79,9 @@ class RecordApiHelper
         $type = 'insert';
 
         if ($recordApiResponse !== 200) {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', 'There is an error while inserting record');
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', __('There is an error while inserting record', 'bit-integrations'));
         } else {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', 'Record inserted successfully');
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'success', __('Record inserted successfully', 'bit-integrations'));
         }
 
         return $recordApiResponse;

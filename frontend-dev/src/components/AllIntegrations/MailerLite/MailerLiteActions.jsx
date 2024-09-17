@@ -76,24 +76,24 @@ export default function MailerLiteActions({
 
   const mailerLiteTypes = [
     {
-      label: 'Active',
+      label: __('Active', 'bit-integrations'),
       value: 'active'
     },
     {
-      label: 'Unsubscribed',
+      label: __('Unsubscribed', 'bit-integrations'),
       value: 'unsubscribed'
     },
 
     {
-      label: 'Bounced',
+      label: __('Bounced', 'bit-integrations'),
       value: 'bounced'
     },
     {
-      label: 'Spam Complaints',
+      label: __('Spam Complaints', 'bit-integrations'),
       value: 'junk'
     },
     {
-      label: 'Unconfirmed',
+      label: __('Unconfirmed', 'bit-integrations'),
       value: 'unconfirmed'
     }
   ]

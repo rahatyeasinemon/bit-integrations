@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\PerfexCRM;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for PerfexCRM integration
@@ -32,7 +32,7 @@ class PerfexCRMController
         if (\is_string($response) || isset($response->errors) || (isset($response->status) && !$response->status)) {
             wp_send_json_error(\is_string($response) ? $response : (!empty($response->message) ? $response->message : 'Please enter valid API Token or Access Api URL'), 400);
         } else {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         }
     }
 
@@ -170,7 +170,7 @@ class PerfexCRMController
         $domain = $integrationDetails->domain;
 
         if (empty($fieldMap) || empty($apiToken) || empty($actionName) || empty($domain)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'PerfexCRM'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'PerfexCRM'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiToken, $domain);

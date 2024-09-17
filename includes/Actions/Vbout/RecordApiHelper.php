@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Vbout;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -48,7 +48,7 @@ class RecordApiHelper
         ];
 
         if (empty($finalData[$emailId])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         foreach ($finalData as $key => $value) {
@@ -66,7 +66,7 @@ class RecordApiHelper
             $response = HttpHelper::post($this->editContact($auth_token), $requestParams);
             $response->update = true;
         } else {
-            return ['success' => false, 'message' => 'Your contact already exists in list!', 'code' => 400];
+            return ['success' => false, 'message' => __('Your contact already exists in list!', 'bit-integrations'), 'code' => 400];
         }
 
         return $response;
@@ -101,10 +101,10 @@ class RecordApiHelper
 
         $apiResponse = $this->addContact($auth_token, $listId, $contactStatus, $finalData, $emailId);
         if ($apiResponse->response->data->id) {
-            $res = ['success' => true, 'message' => $apiResponse->update ? 'Your contact has been updated successfully.' : 'Your contact has been created successfully.', 'code' => 200];
+            $res = ['success' => true, 'message' => $apiResponse->update ? __('Your contact has been updated successfully', 'bit-integrations') : __('Your contact has been created successfully', 'bit-integrations'), 'code' => 200];
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'success', wp_json_encode($res));
         } elseif ($apiResponse->update) {
-            $res = ['success' => true, 'message' => 'Your contact has been updated successfully.', 'code' => 200];
+            $res = ['success' => true, 'message' => __('Your contact has been updated successfully', 'bit-integrations'), 'code' => 200];
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'success', wp_json_encode($res));
         } else {
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', wp_json_encode($apiResponse));

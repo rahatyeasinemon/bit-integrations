@@ -29,20 +29,20 @@ export default function VboutIntegLayout({
   }
   const ContactStatus = [
     {
-      label: 'Active',
+      label: __('Active', 'bit-integrations'),
       value: 'active'
     },
     // {
-    //     label: 'Unsubscribed',
+    //     label: __('Unsubscribed','bit-integrations'),
     //     value: 'unsubscribed'
     // },
 
     // {
-    //     label: 'Bounced Email',
+    //     label: __('Bounced Email','bit-integrations'),
     //     value: 'bounced'
     // },
     {
-      label: 'Unconfirmed',
+      label: __('Unconfirmed', 'bit-integrations'),
       value: 'unconfirmed'
     }
   ]

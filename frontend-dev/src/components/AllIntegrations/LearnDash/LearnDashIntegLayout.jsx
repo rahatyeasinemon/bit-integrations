@@ -100,7 +100,7 @@ export default function LearnDeshIntegLayout({
 
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Course: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Course:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={learnDashConf?.courseId}
@@ -129,7 +129,7 @@ export default function LearnDeshIntegLayout({
 
       {learnDashConf.mainAction === '2' && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select group: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select group:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             defaultValue={learnDashConf?.groupId}
@@ -157,7 +157,7 @@ export default function LearnDeshIntegLayout({
 
       {learnDashConf.mainAction === '3' && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select Course: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Course:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             defaultValue={learnDashConf?.courseId}
@@ -230,7 +230,7 @@ export default function LearnDeshIntegLayout({
       )}
       {learnDashConf.mainAction === '5' && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select Course: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Course:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             defaultValue={learnDashConf?.courseId}
@@ -259,7 +259,7 @@ export default function LearnDeshIntegLayout({
       {learnDashConf.mainAction === '6' && (
         <>
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Course: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Course:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={learnDashConf?.courseId}
@@ -286,7 +286,7 @@ export default function LearnDeshIntegLayout({
           </div>
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Lesson: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Lesson:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={learnDashConf?.lessonId}
@@ -317,7 +317,7 @@ export default function LearnDeshIntegLayout({
       {learnDashConf.mainAction === '7' && (
         <>
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Course: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Course:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={learnDashConf?.courseId}
@@ -345,7 +345,7 @@ export default function LearnDeshIntegLayout({
           </div>
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Lesson: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Lesson:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={learnDashConf?.lessonId}
@@ -376,7 +376,7 @@ export default function LearnDeshIntegLayout({
       {learnDashConf.mainAction === '8' && (
         <>
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Course: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Course:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={learnDashConf?.courseId}
@@ -404,7 +404,7 @@ export default function LearnDeshIntegLayout({
           </div>
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Lesson: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Lesson:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={learnDashConf?.lessonId}
@@ -432,7 +432,7 @@ export default function LearnDeshIntegLayout({
           </div>
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Topic: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Topic:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={learnDashConf?.topicId}
@@ -464,7 +464,7 @@ export default function LearnDeshIntegLayout({
       {learnDashConf.mainAction === '9' && (
         <>
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Course: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Course:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={learnDashConf?.courseId}
@@ -492,7 +492,7 @@ export default function LearnDeshIntegLayout({
           </div>
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Lesson: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Lesson:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={learnDashConf?.lessonId}
@@ -520,7 +520,7 @@ export default function LearnDeshIntegLayout({
           </div>
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Topic: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Topic:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={learnDashConf?.topicId}
@@ -641,7 +641,7 @@ export default function LearnDeshIntegLayout({
 
       {learnDashConf.mainAction === '13' && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select Quiz: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Quiz:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             defaultValue={learnDashConf?.quizId}
@@ -668,7 +668,7 @@ export default function LearnDeshIntegLayout({
       )}
       {learnDashConf.mainAction === '14' && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select Course: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Course:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             defaultValue={learnDashConf?.courseId}
@@ -709,7 +709,7 @@ export default function LearnDeshIntegLayout({
 
       {learnDashConf.mainAction === '17' && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select Course: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Course:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             defaultValue={learnDashConf?.courseId}

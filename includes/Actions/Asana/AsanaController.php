@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Asana;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Asana integration
@@ -38,9 +38,9 @@ class AsanaController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (isset($response->data)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 
@@ -72,7 +72,7 @@ class AsanaController
             }
             wp_send_json_success($customFields, 200);
         } else {
-            wp_send_json_error('Custom field fetching failed', 400);
+            wp_send_json_error(__('Custom field fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -99,7 +99,7 @@ class AsanaController
             }
             wp_send_json_success($tasks, 200);
         } else {
-            wp_send_json_error('Task fetching failed', 400);
+            wp_send_json_error(__('Task fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -126,7 +126,7 @@ class AsanaController
             }
             wp_send_json_success($projects, 200);
         } else {
-            wp_send_json_error('Projects fetching failed', 400);
+            wp_send_json_error(__('Projects fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -153,7 +153,7 @@ class AsanaController
             }
             wp_send_json_success($sections, 200);
         } else {
-            wp_send_json_error('Sections fetching failed', 400);
+            wp_send_json_error(__('Sections fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -166,7 +166,7 @@ class AsanaController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Asana'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Asana'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
