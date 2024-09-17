@@ -465,7 +465,7 @@ export default function NewInteg({ allIntegURL }) {
             setFlow={setFlow}
           />
         )
-      case 'Registration':
+      case 'WP User Registration':
         return (
           <Registration
             allIntegURL={allIntegURL}
@@ -519,7 +519,7 @@ export default function NewInteg({ allIntegURL }) {
             setFlow={setFlow}
           />
         )
-      case 'Post Creation':
+      case 'WP Post Creation':
         return (
           <Post
             allIntegURL={allIntegURL}

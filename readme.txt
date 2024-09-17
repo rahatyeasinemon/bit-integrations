@@ -2,9 +2,9 @@
 Contributors: bitpressadmin, niloy121,rishadbitcode,fahimsakib,shuvomohajan,tanvirchy,shakhawathosen,khoaiz,mazharul78
 Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
-Tested up to: 6.6.1
+Tested up to: 6.6.2
 Requires PHP: 7.0
-Stable tag: 2.2.3
+Stable tag: 2.2.4
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -995,6 +995,36 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.2.4  =
+_Release Date -17th September 2024_
+ - **Note :**
+  - Action Hook trigger moved to pro version.
+
+- **New Features :**
+  - Klaviyo (Pro): Added support for custom properties.
+  - WP Post Creation (Action): JetEngine’s Meta fields are now supported.
+  - JetEngine (Actions): Added functionality for updating and deleting Post Type, Custom Content Type, Taxonomy, and Relation.
+  - WP Job Manager (Trigger) (Pro): Added triggers for:
+     1. A user’s application is set to a specific status.
+     2. A user’s application for a specific job type is set to a specific status.
+     3. Applies with resume.
+
+- **New Improvements :**
+  - Plugin Translations Enhanced (Pro): Translation files have been optimized for better accuracy and compatibility across multiple languages. This enhancement improves user experience in non-English locales, making the plugin more globally accessible.
+
+- **New Fixes :**
+  - GetResponse (Auto Responder): Resolved the issue with zero day of cycle.
+  - Core: Fixed the index bound issue.
+  - Notion: Addressed the blank page issue.
+  - Brevo (ex Sendinblue): Corrected the category field fetching problem.
+  - WP Post Creation (Action): Fixed the file path issues related to ACF & MetaBox.
+  - AgileCRM: Fixed the issue with custom field values.
+  - ClickUp: Resolved the issue with custom field values.
+  - ClinchPad: Addressed the issue with custom field values.
+  - CompanyHub: Fixed the issue with custom field values.
+  - ConvertKit: Resolved the issue with custom field values.
+  - CopperCRM: Addressed the issue with custom field values.
 
 = 2.2.3  =
 _Release Date -8th September 2024_

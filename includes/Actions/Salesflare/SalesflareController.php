@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Salesflare;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Salesflare integration
@@ -29,9 +29,9 @@ class SalesflareController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (!isset($response->error)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API Key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 
@@ -102,7 +102,7 @@ class SalesflareController
 
             wp_send_json_success($accounts, 200);
         } else {
-            wp_send_json_error('Accounts fetching failed!', 400);
+            wp_send_json_error(__('Accounts fetching failed!', 'bit-integrations'), 400);
         }
     }
 
@@ -128,7 +128,7 @@ class SalesflareController
 
             wp_send_json_success($pipelines, 200);
         } else {
-            wp_send_json_error('Accounts fetching failed!', 400);
+            wp_send_json_error(__('Accounts fetching failed!', 'bit-integrations'), 400);
         }
     }
 
@@ -141,7 +141,7 @@ class SalesflareController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($apiKey) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Salesflare'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Salesflare'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey);

@@ -20,36 +20,43 @@ function GetResponse({ formFields, setFlow, flow, allIntegURL }) {
     field: false,
     auth: false,
     tags: false,
-    customFields: false,
+    customFields: false
   })
 
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const contactsFields = [
-    { key: 'email', label: 'Email', required: true },
-    { key: 'name', label: 'Name', required: false },
+    { key: 'email', label: __('Email', 'bit-integrations'), required: true },
+    { key: 'name', label: __('Name', 'bit-integrations'), required: false }
   ]
 
   const [getResponseConf, setGetResponseConf] = useState({
     name: 'GetResponse',
     type: 'GetResponse',
     auth_token: process.env.NODE_ENV === 'development' ? '' : '',
-    field_map: [
-      { formField: '', getResponseFormField: '' },
-    ],
+    field_map: [{ formField: '', getResponseFormField: '' }],
     contactsFields,
     campaignId: '',
     getResponseFields: [],
     campaigns: [],
     tags: [],
     selectedTags: [],
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, getResponseConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      getResponseConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -65,7 +72,7 @@ function GetResponse({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(getResponseConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
     getResponseConf.field_map.length > 0 && setstep(pageNo)
@@ -74,7 +81,9 @@ function GetResponse({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <GetResponseAuthorization
@@ -88,11 +97,14 @@ function GetResponse({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <GetResponseIntegLayout
           formFields={formFields}
-          handleInput={(e) => handleInput(e, getResponseConf, setGetResponseConf, setLoading, setSnackbar)}
+          handleInput={(e) =>
+            handleInput(e, getResponseConf, setGetResponseConf, setLoading, setSnackbar)
+          }
           getResponseConf={getResponseConf}
           setGetResponseConf={setGetResponseConf}
           loading={loading}
@@ -105,11 +117,8 @@ function GetResponse({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(3)}
             disabled={!getResponseConf?.campaignId}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button"
-          >
-            {__('Next', 'bit-integrations')}
-            {' '}
-            &nbsp;
+            type="button">
+            {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         )}

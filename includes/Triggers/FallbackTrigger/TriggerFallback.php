@@ -1,23 +1,23 @@
 <?php
 
-namespace BitCode\FI\Core\Util;
+namespace BitCode\FI\Triggers\FallbackTrigger;
 
-use DateTime;
-use FrmField;
-use WP_Error;
-use MeprEvent;
-use EDD_Payment;
-use Give_Payment;
-use FrmEntryValues;
-use RCP_Membership;
-use FrmFieldsHelper;
-use WPCF7_Submission;
-use Give_Subscription;
-use WPCF7_ContactForm;
-use Groundhogg\DB\Tags;
 use BitCode\FI\Flow\Flow;
-use IPT_FSQM_Form_Elements_Data;
+use DateTime;
+use EDD_Payment;
+use FrmEntryValues;
+use FrmField;
+use FrmFieldsHelper;
+use Give_Payment;
+use Give_Subscription;
+use Groundhogg\DB\Tags;
 use IPT_EForm_Form_Elements_Values;
+use IPT_FSQM_Form_Elements_Data;
+use MeprEvent;
+use RCP_Membership;
+use WP_Error;
+use WPCF7_ContactForm;
+use WPCF7_Submission;
 
 final class TriggerFallback
 {
@@ -4675,7 +4675,7 @@ final class TriggerFallback
     public static function surecartPurchaseProduct($data)
     {
         if (!self::surecartPluginActive()) {
-            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'SureCart'));
+            wp_send_json_error(wp_sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'SureCart'));
         }
         $accountDetails = \SureCart\Models\Account::find();
         $product = \SureCart\Models\Product::find($data['product_id']);
@@ -4844,7 +4844,9 @@ final class TriggerFallback
     }
 
     // main function was empty in the orginal file
-    public static function handleThemifySubmit() {}
+    public static function handleThemifySubmit()
+    {
+    }
 
     public static function thriveApprenticeHandleCourseComplete($course_details, $user_details)
     {
@@ -4875,7 +4877,9 @@ final class TriggerFallback
     }
 
     // main function was unavailable in the orginal file
-    public static function thriveApprenticeHandleLessonComplete() {}
+    public static function thriveApprenticeHandleLessonComplete()
+    {
+    }
 
     public static function thriveApprenticeHandleModuleComplete($module_details, $user_details)
     {

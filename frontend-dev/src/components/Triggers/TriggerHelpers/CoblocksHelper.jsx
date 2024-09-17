@@ -35,11 +35,11 @@ const CoblocksHelper = () => {
 
   const setTriggerData = () => {
     if (!selectedFields.length) {
-      toast.error('Please Select Fields')
+      toast.error(__('Please Select Fields', 'bit-integrations'))
       return
     }
     if (!primaryKey) {
-      toast.error('Please Select a Primary Key')
+      toast.error(__('Please Select a Primary Key', 'bit-integrations'))
       return
     }
 

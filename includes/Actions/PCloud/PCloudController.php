@@ -61,14 +61,14 @@ class PCloudController
             }
             wp_send_json_success($folders, 200);
         } else {
-            wp_send_json_error('Folders fetching failed', 400);
+            wp_send_json_error(__('Folders fetching failed', 'bit-integrations'), 400);
         }
     }
 
     public function execute($integrationData, $fieldValues)
     {
         if (empty($integrationData->flow_details->tokenDetails->access_token)) {
-            LogHandler::save($this->integrationID, wp_json_encode(['type' => 'pCloud', 'type_name' => 'file_upload']), 'error', 'Not Authorization By PCloud.');
+            LogHandler::save($this->integrationID, wp_json_encode(['type' => 'pCloud', 'type_name' => 'file_upload']), 'error', wp_sprintf(__('Not Authorization By %s', 'bit-integrations'), 'PCloud'));
 
             return false;
         }

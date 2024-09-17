@@ -21,7 +21,7 @@ class MasterStudyLmsController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'MasterStudyLms'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'MasterStudyLms'));
     }
 
     public static function getAllCourse()
@@ -41,7 +41,7 @@ class MasterStudyLmsController
             }
             wp_send_json_success($courseList, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'MasterStudyLms'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'MasterStudyLms'));
     }
 
     public static function getAllLesson($queryPrarms)
@@ -51,7 +51,7 @@ class MasterStudyLmsController
             $allLesson = MasterStudyLmsHelper::getLessonByCourse($courseId);
             wp_send_json_success($allLesson, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'MasterStudyLms'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'MasterStudyLms'));
     }
 
     public static function getAllQuizByCourse($queryPrarms)
@@ -61,7 +61,7 @@ class MasterStudyLmsController
             $allQuiz = MasterStudyLmsHelper::getQuizByCourse($courseId);
             wp_send_json_success($allQuiz, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'MasterStudyLms'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'MasterStudyLms'));
     }
 
     public function execute($integrationData, $fieldValues)
@@ -73,7 +73,7 @@ class MasterStudyLmsController
             empty($integId)
             || empty($mainAction)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', __('Some important info are missing those are required for MasterStudyLms', 'bit-integrations'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('Some important info are missing those are required for %s', 'bit-integrations'), 'MasterStudyLms'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $MasterStudyLmsApiResponse = $recordApiHelper->execute(

@@ -52,7 +52,7 @@ export default function WPCoursewareIntegLayout({
 
       {wpCoursewareConf?.action && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('WP Courseware Courses: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('WP Courseware Courses:', 'bit-integrations')}</b>
           <MultiSelect
             defaultValue={wpCoursewareConf?.course}
             className="btcd-paper-drpdwn w-5"

@@ -12,7 +12,7 @@ final class BitFormController
 
         return [
             'name'           => 'Bit Form',
-            'title'          => 'Contact Form Plugin - Fastest Contact Form Builder Plugin for WordPress by Bit Forms.',
+            'title'          => __('Contact Form Plugin - Fastest Contact Form Builder Plugin for WordPress by Bit Forms.', 'bit-integrations'),
             'slug'           => $plugin_path,
             'type'           => 'form',
             'is_active'      => self::isPluginActive(),
@@ -33,7 +33,7 @@ final class BitFormController
     public function getAll()
     {
         if (!self::isPluginActive()) {
-            wp_send_json_error(\sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'Bit Form'));
+            wp_send_json_error(wp_sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'Bit Form'));
         }
 
         $forms = \BitCode\BitForm\API\BitForm_Public\BitForm_Public::getForms();

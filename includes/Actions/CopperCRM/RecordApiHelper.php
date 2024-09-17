@@ -6,8 +6,9 @@
 
 namespace BitCode\FI\Actions\CopperCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -42,7 +43,7 @@ class RecordApiHelper
     public function addCompany($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $staticFieldsKeys = ['name', 'email_domain', 'details', 'street', 'city', 'state', 'postal_code', 'country',  'phone_numbers', 'websites'];
@@ -86,7 +87,7 @@ class RecordApiHelper
     public function addPerson($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $staticFieldsKeys = ['name', 'title', 'details', 'email', 'email_domain', 'phone_numbers', 'street', 'city', 'state', 'postal_code', 'country', 'websites'];
@@ -135,7 +136,7 @@ class RecordApiHelper
     public function addOpportunity($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field opportunity name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field opportunity name is empty', 'bit-integrations'), 'code' => 400];
         }
         $staticFieldsKeys = ['name', 'close_date', 'details', 'monetary_value'];
 
@@ -181,7 +182,7 @@ class RecordApiHelper
     public function addTask($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field task name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field task name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $staticFieldsKeys = ['name', 'due_date', 'reminder_date', 'details'];
@@ -221,9 +222,9 @@ class RecordApiHelper
             $actionValue = $value->coppercrmFormField;
             if ($triggerValue === 'custom') {
                 if ($actionValue === 'custom_fields') {
-                    $dataFinal[$value->customFieldKey] = $value->customValue;
+                    $dataFinal[$value->customFieldKey] = Common::replaceFieldWithValue($value->customValue, $data);
                 } else {
-                    $dataFinal[$actionValue] = $value->customValue;
+                    $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
                 }
             } elseif (!\is_null($data[$triggerValue])) {
                 if ($actionValue === 'custom_fields') {

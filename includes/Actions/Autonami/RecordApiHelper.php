@@ -22,7 +22,7 @@ class RecordApiHelper
         $userExist = (absint($contact->get_id()) > 0);
 
         if ($userExist && isset($actions->skip_if_exists) && $actions->skip_if_exists) {
-            $response = ['success' => false, 'messages' => 'Contact already exists!'];
+            $response = ['success' => false, 'messages' => __('Contact already exists!', 'bit-integrations')];
         } else {
             foreach ($data as $key => $item) {
                 $obj = 'set_' . $key;
@@ -43,9 +43,9 @@ class RecordApiHelper
             $customContact->save_fields();
 
             if (absint($contact->get_id()) > 0) {
-                $response = ['success' => true, 'messages' => 'Insert successfully!'];
+                $response = ['success' => true, 'messages' => __('Insert successfully!', 'bit-integrations')];
             } else {
-                $response = ['success' => false, 'messages' => 'Something wrong!'];
+                $response = ['success' => false, 'messages' => __('Something wrong!', 'bit-integrations')];
             }
         }
 

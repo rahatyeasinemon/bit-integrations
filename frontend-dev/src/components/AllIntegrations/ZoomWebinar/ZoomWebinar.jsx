@@ -19,14 +19,14 @@ function ZoomWebinar({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setStep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const zoomWebinarFields = [
-    { key: 'first_name', label: 'First Name', required: true },
-    { key: 'last_name', label: 'Last Name', required: true },
-    { key: 'email', label: 'Email', required: true },
-    { key: 'city', label: 'City', required: false },
-    { key: 'country', label: 'Country', required: false },
-    { key: 'phone', label: 'Phone', required: false },
-    { key: 'job_title', label: 'Job Title', required: false },
-    { key: 'zip', label: 'Zip', required: false }
+    { key: 'first_name', label: __('First Name', 'bit-integrations'), required: true },
+    { key: 'last_name', label: __('Last Name', 'bit-integrations'), required: true },
+    { key: 'email', label: __('Email', 'bit-integrations'), required: true },
+    { key: 'city', label: __('City', 'bit-integrations'), required: false },
+    { key: 'country', label: __('Country', 'bit-integrations'), required: false },
+    { key: 'phone', label: __('Phone', 'bit-integrations'), required: false },
+    { key: 'job_title', label: __('Job Title', 'bit-integrations'), required: false },
+    { key: 'zip', label: __('Zip', 'bit-integrations'), required: false }
   ]
   const [zoomWebinarConf, setZoomWebinarConf] = useState({
     name: 'Zoom Webinar',

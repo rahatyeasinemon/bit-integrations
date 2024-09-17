@@ -24,12 +24,12 @@ function GamiPress({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const allActions = [
-    { key: '1', label: 'Award rank to the user' },
-    { key: '2', label: 'Award an achievement to the user' },
-    { key: '3', label: 'Award a points to the user' },
-    { key: '4', label: 'Revoke a rank form the user' },
-    { key: '5', label: 'Revoke an achievement form the user' },
-    { key: '6', label: 'Revoke points from the user' }
+    { key: '1', label: __('Award rank to the user', 'bit-integrations') },
+    { key: '2', label: __('Award an achievement to the user', 'bit-integrations') },
+    { key: '3', label: __('Award a points to the user', 'bit-integrations') },
+    { key: '4', label: __('Revoke a rank form the user', 'bit-integrations') },
+    { key: '5', label: __('Revoke an achievement form the user', 'bit-integrations') },
+    { key: '6', label: __('Revoke points from the user', 'bit-integrations') }
   ]
 
   const pointFields = [{ key: 'point', label: 'Point', required: true }]

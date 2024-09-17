@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\CopperCRM;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for CopperCRM integration
@@ -42,9 +42,9 @@ class CopperCRMController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (!isset($response->error)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 
@@ -85,7 +85,7 @@ class CopperCRMController
             }
             wp_send_json_success($customFields, 200);
         } else {
-            wp_send_json_error('Custom field fetching failed', 400);
+            wp_send_json_error(__('Custom field fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -112,7 +112,7 @@ class CopperCRMController
             }
             wp_send_json_success($opportunities, 200);
         } else {
-            wp_send_json_error('Opportunity fetching failed', 400);
+            wp_send_json_error(__('Opportunity fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -172,7 +172,7 @@ class CopperCRMController
             }
             wp_send_json_success($companies, 200);
         } else {
-            wp_send_json_error('Companies fetching failed', 400);
+            wp_send_json_error(__('Companies fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -203,7 +203,7 @@ class CopperCRMController
             }
             wp_send_json_success($pipelineStages, 200);
         } else {
-            wp_send_json_error('PipelineStages fetching failed', 400);
+            wp_send_json_error(__('PipelineStages fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -234,7 +234,7 @@ class CopperCRMController
             }
             wp_send_json_success($peoples, 200);
         } else {
-            wp_send_json_error('Peoples fetching failed', 400);
+            wp_send_json_error(__('Peoples fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -278,7 +278,7 @@ class CopperCRMController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Copper CRM'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Copper CRM'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

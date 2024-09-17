@@ -22,14 +22,18 @@ function Demio({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
 
   const demioFields = [
-    { label: 'First Name', key: 'name', required: true },
-    { label: 'Email Address', key: 'email', required: true },
-    { label: 'Last Name', key: 'last_name', required: false },
-    { label: 'Phone Number', key: 'phone_number', required: false },
-    { label: 'Company', key: 'company', required: false },
-    { label: 'Website', key: 'website', required: false },
-    { label: 'GDPR', key: 'gdpr', required: false },
-    { label: 'Event Registration page URL', key: 'ref_url', required: false },
+    { label: __('First Name', 'bit-integrations'), key: 'name', required: true },
+    { label: __('Email Address', 'bit-integrations'), key: 'email', required: true },
+    { label: __('Last Name', 'bit-integrations'), key: 'last_name', required: false },
+    { label: __('Phone Number', 'bit-integrations'), key: 'phone_number', required: false },
+    { label: __('Company', 'bit-integrations'), key: 'company', required: false },
+    { label: __('Website', 'bit-integrations'), key: 'website', required: false },
+    { label: __('GDPR', 'bit-integrations'), key: 'gdpr', required: false },
+    {
+      label: __('Event Registration page URL', 'bit-integrations'),
+      key: 'ref_url',
+      required: false
+    }
   ]
 
   const [demioConf, setDemioConf] = useState({
@@ -40,13 +44,22 @@ function Demio({ formFields, setFlow, flow, allIntegURL }) {
     field_map: generateMappedField(demioFields),
     actionName: 'registerPeopletoWabinar',
     demioFields,
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, demioConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      demioConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -62,12 +75,12 @@ function Demio({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(demioConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
 
     if (!demioConf.selectedEvent) {
-      toast.error('Please select a Event')
+      toast.error(__('Please select a Event', 'bit-integrations'))
       return
     }
 
@@ -93,8 +106,9 @@ function Demio({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <DemioIntegLayout
           formFields={formFields}
           demioConf={demioConf}
@@ -109,13 +123,10 @@ function Demio({ formFields, setFlow, flow, allIntegURL }) {
         {demioConf?.actionName && (
           <button
             onClick={() => nextPage(3)}
-            disabled={!(checkMappedFields(demioConf))}
+            disabled={!checkMappedFields(demioConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button"
-          >
-            {__('Next', 'bit-integrations')}
-            {' '}
-            &nbsp;
+            type="button">
+            {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         )}

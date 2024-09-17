@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\ZohoMarketingHub;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,upsert

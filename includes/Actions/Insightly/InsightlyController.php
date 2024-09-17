@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Insightly;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Insightly integration
@@ -32,9 +32,9 @@ class InsightlyController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (\is_array($response) && isset($response[0]->USER_ID)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API URL & API key', 400);
+            wp_send_json_error(__('Please enter valid API URL & API key', 'bit-integrations'), 400);
         }
     }
 
@@ -151,7 +151,7 @@ class InsightlyController
             }
             wp_send_json_success($leadStatuses, 200);
         } else {
-            wp_send_json_error('Lead Status fetching failed', 400);
+            wp_send_json_error(__('Lead Status fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -178,7 +178,7 @@ class InsightlyController
             }
             wp_send_json_success($leadSources, 200);
         } else {
-            wp_send_json_error('Lead Status fetching failed', 400);
+            wp_send_json_error(__('Lead Status fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -242,7 +242,7 @@ class InsightlyController
             }
             wp_send_json_success($pipelineStages, 200);
         } else {
-            wp_send_json_error('Pipeline stages fetching failed', 400);
+            wp_send_json_error(__('Pipeline stages fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -255,7 +255,7 @@ class InsightlyController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Insightly'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Insightly'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

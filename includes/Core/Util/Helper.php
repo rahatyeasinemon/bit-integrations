@@ -99,6 +99,8 @@ final class Helper
     {
         require_once ABSPATH . 'wp-load.php';
 
+        $filePath = Common::filePath($filePath);
+
         if (file_exists($filePath)) {
             $imgFileName = basename($filePath);
             // prepare upload image to WordPress Media Library
@@ -131,6 +133,7 @@ final class Helper
         $attachMentId = [];
         require_once ABSPATH . 'wp-admin/includes/image.php';
         foreach ($files as $file) {
+            $file = Common::filePath($file);
             if (file_exists($file)) {
                 $imgFileName = basename($file);
                 // prepare upload image to WordPress Media Library
@@ -225,7 +228,8 @@ final class Helper
         $currentPart = array_shift($parts);
         if (\is_array($data)) {
             if (!isset($data[$currentPart])) {
-                wp_send_json_error(new WP_Error($triggerEntity, __('Index out of bounds or invalid', 'bit-integrations')));
+                // wp_send_json_error(new WP_Error($triggerEntity, __('Index out of bounds or invalid', 'bit-integrations')));
+                return;
             }
 
             return self::extractValueFromPath($data[$currentPart], $parts, $triggerEntity);
@@ -233,13 +237,14 @@ final class Helper
 
         if (\is_object($data)) {
             if (!property_exists($data, $currentPart)) {
-                wp_send_json_error(new WP_Error($triggerEntity, __('Invalid path', 'bit-integrations')));
+                // wp_send_json_error(new WP_Error($triggerEntity, __('Invalid path', 'bit-integrations')));
+                return;
             }
 
             return self::extractValueFromPath($data->{$currentPart}, $parts, $triggerEntity);
         }
 
-        wp_send_json_error(new WP_Error($triggerEntity, __('Invalid path', 'bit-integrations')));
+        // wp_send_json_error(new WP_Error($triggerEntity, __('Invalid path', 'bit-integrations')));
     }
 
     public static function parseFlowDetails($flowDetails)

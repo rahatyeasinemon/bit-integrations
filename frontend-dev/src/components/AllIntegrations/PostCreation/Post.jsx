@@ -10,6 +10,7 @@ import { postFields } from '../../../Utils/StaticData/postField'
 import {
   addFieldMap,
   checkMappedAcfFields,
+  checkMappedJEFields,
   checkMappedMbFields,
   checkMappedPostFields,
   refreshPostTypes
@@ -31,16 +32,19 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
   const [acf, setAcf] = useState({ fields: [], files: [] })
   const [mb, setMb] = useState({ fields: [], files: [] })
+  const [jeCPTMeta, setJeCPTMeta] = useState({ fields: [], files: [] })
   const { postCreation } = tutorialLinks
 
   const [postConf, setPostConf] = useState({
-    name: 'Post Creation',
-    type: 'Post Creation',
+    name: 'WP Post Creation',
+    type: 'WP Post Creation',
     post_map: [{ post_author: 'logged_in_user' }],
     acf_map: [{}],
     acf_file_map: [{}],
     metabox_map: [{}],
-    metabox_file_map: [{}]
+    metabox_file_map: [{}],
+    je_cpt_meta_map: [{}],
+    je_cpt_file_map: [{}]
   })
 
   const handleInput = (typ, val) => {
@@ -73,6 +77,7 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
       const { data } = res
       setAcf({ fields: data.acf_fields, files: data.acf_files })
       setMb({ fields: data.mb_fields, files: data.mb_files })
+      setJeCPTMeta({ fields: data.je_cpt_fields, files: data.je_cpt_files })
 
       if (data?.acf_fields) {
         tmpData.acf_map = data.acf_fields
@@ -89,6 +94,14 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
         if (tmpData.metabox_map.length < 1) {
           tmpData.metabox_map = [{}]
         }
+      }
+      if (data?.je_cpt_fields) {
+        tmpData.je_cpt_meta_map = data.je_cpt_fields
+          .filter((fld) => fld.required)
+          .map((fl) => ({ formField: '', jeCPTField: fl.key, required: fl.required }))
+      }
+      if (tmpData.je_cpt_meta_map.length < 1) {
+        tmpData.je_cpt_meta_map = [{}]
       }
     })
 
@@ -125,6 +138,11 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
         setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
         return
       }
+
+      if (!checkMappedJEFields(postConf)) {
+        setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
+        return
+      }
     }
     setstep(stepNo)
   }
@@ -155,10 +173,10 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       {postCreation?.youTubeLink && (
-        <TutorialLink title="Post Creation" youTubeLink={postCreation?.youTubeLink} />
+        <TutorialLink title="WP Post Creation" youTubeLink={postCreation?.youTubeLink} />
       )}
       {postCreation?.docLink && (
-        <TutorialLink title="Post Creation" docLink={postCreation?.docLink} />
+        <TutorialLink title="WP Post Creation" docLink={postCreation?.docLink} />
       )}
 
       <div className="txt-center mt-2">
@@ -168,7 +186,7 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
         className="btcd-stp-page"
         style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
         <div className="mt-3">
-          <b>{__('Integration Name ', 'bit-integrations')}</b>
+          <b>{__('Integration Name', 'bit-integrations')}</b>
         </div>
         <input
           className="btcd-paper-inp w-5 mt-1"
@@ -183,7 +201,10 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
           <b>{__('Post Type', 'bit-integrations')}</b>
           <Cooltip width={250} icnSize={17} className="ml-2">
             <div className="txt-body">
-              Select one of the defined WordPress post types Or custom post types for the post.
+              {__(
+                'Select one of the defined WordPress post types Or custom post types for the post',
+                'bit-integrations'
+              )}
               <br />
             </div>
           </Cooltip>
@@ -194,7 +215,7 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
             onChange={(e) => getCustomFields(e.target.name, e.target.value)}
             className="btcd-paper-inp w-5 mt-1">
             <option disabled selected>
-              Select Post Type
+              {('Select Post Type', 'bit-integrations')}
             </option>
             {postTypes?.map((postType, key) => (
               <option key={`acf-${key * 2}`} value={postType?.id}>
@@ -215,8 +236,10 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
           <b>{__('Post Status', 'bit-integrations')}</b>
           <Cooltip width={250} icnSize={17} className="ml-2">
             <div className="txt-body">
-              Select the status for the post. If published status is selected and the post date is
-              in the future, it will automatically be changed to scheduled
+              {__(
+                'Select the status for the post. If published status is selected and the post date is in the future, it will automatically be changed to scheduled',
+                'bit-integrations'
+              )}
               <br />
             </div>
           </Cooltip>
@@ -228,18 +251,18 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
           <option disabled selected>
             {__('Select Status', 'bit-integrations')}
           </option>
-          <option value="publish">Publish</option>
-          <option value="draft">Draft</option>
-          <option value="auto-draft">Auto-Draft</option>
-          <option value="private">Private</option>
-          <option value="pending">Pending</option>
+          <option value="publish">{__('Publish', 'bit-integrations')}</option>
+          <option value="draft">{__('Draft', 'bit-integrations')}</option>
+          <option value="auto-draft">{__('Auto-Draft', 'bit-integrations')}</option>
+          <option value="private">{__('Private', 'bit-integrations')}</option>
+          <option value="pending">{__('Pending', 'bit-integrations')}</option>
         </select>
 
         <div className="mt-3 flx">
           <b>{__('Author', 'bit-integrations')}</b>
           <Cooltip width={250} icnSize={17} className="ml-2">
             <div className="txt-body">
-              Select the user to be assigned to the post.
+              {('Select the user to be assigned to the post', 'bit-integrations')}
               <br />
             </div>
           </Cooltip>
@@ -271,8 +294,8 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
           <option disabled selected>
             {__('Select Status', 'bit-integrations')}
           </option>
-          <option value="open">Open</option>
-          <option value="closed">Closed</option>
+          <option value="open">{__('Open', 'bit-integrations')}</option>
+          <option value="closed">{__('Closed', 'bit-integrations')}</option>
         </select>
 
         <div>
@@ -336,6 +359,7 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
           setSnackbar={setSnackbar}
           acfFields={acf}
           mbFields={mb}
+          jeCPTFields={jeCPTMeta}
         />
 
         <button

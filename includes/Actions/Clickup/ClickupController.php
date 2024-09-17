@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Clickup;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Clickup integration
@@ -38,9 +38,9 @@ class ClickupController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (isset($response->user)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 
@@ -75,7 +75,7 @@ class ClickupController
             }
             wp_send_json_success($customFields, 200);
         } else {
-            wp_send_json_error('Custom field fetching failed', 400);
+            wp_send_json_error(__('Custom field fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -101,7 +101,7 @@ class ClickupController
             }
             wp_send_json_success($tasks, 200);
         } else {
-            wp_send_json_error('Task fetching failed', 400);
+            wp_send_json_error(__('Task fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -128,7 +128,7 @@ class ClickupController
             }
             wp_send_json_success($teams, 200);
         } else {
-            wp_send_json_error('Teams fetching failed', 400);
+            wp_send_json_error(__('Teams fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -156,7 +156,7 @@ class ClickupController
             }
             wp_send_json_success($spaces, 200);
         } else {
-            wp_send_json_error('Spaces fetching failed', 400);
+            wp_send_json_error(__('Spaces fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -184,7 +184,7 @@ class ClickupController
             }
             wp_send_json_success($folders, 200);
         } else {
-            wp_send_json_error('Folders fetching failed', 400);
+            wp_send_json_error(__('Folders fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -212,7 +212,7 @@ class ClickupController
             }
             wp_send_json_success($lists, 200);
         } else {
-            wp_send_json_error('Lists fetching failed', 400);
+            wp_send_json_error(__('Lists fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -239,7 +239,7 @@ class ClickupController
             }
             wp_send_json_success($tags, 200);
         } else {
-            wp_send_json_error('Tags fetching failed', 400);
+            wp_send_json_error(__('Tags fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -252,7 +252,7 @@ class ClickupController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Clickup'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Clickup'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

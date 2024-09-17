@@ -15,7 +15,9 @@ const FluentCrmHelper = ({ flow, setFlowData, edit = false }) => {
     <div>
       {(id === 'fluentcrm-1' || id === 'fluentcrm-2') && (
         <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select tag</b>
+          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
+            {__('Select tag', 'bit-integrations')}
+          </b>
           <MultiSelect
             className="msl-wrp-options"
             defaultValue={triggerData?.selectedTag}
@@ -32,7 +34,9 @@ const FluentCrmHelper = ({ flow, setFlowData, edit = false }) => {
 
       {(id === 'fluentcrm-3' || id === 'fluentcrm-4') && (
         <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select List</b>
+          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
+            {__('Select List', 'bit-integrations')}
+          </b>
           <MultiSelect
             className="msl-wrp-options"
             defaultValue={triggerData?.selectedList}
@@ -49,7 +53,9 @@ const FluentCrmHelper = ({ flow, setFlowData, edit = false }) => {
 
       {id === 'fluentcrm-5' && (
         <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select Status</b>
+          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
+            {__('Select Status', 'bit-integrations')}
+          </b>
           <MultiSelect
             className="msl-wrp-options"
             defaultValue={triggerData?.selectedStatus}

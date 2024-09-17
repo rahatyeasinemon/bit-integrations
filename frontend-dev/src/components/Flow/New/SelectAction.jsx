@@ -35,7 +35,7 @@ export default function SelectAction() {
     { type: 'Rapidmail' },
     { type: 'ActiveCampaign' },
     { type: 'Encharge' },
-    { type: 'Post Creation' },
+    { type: 'WP Post Creation' },
     { type: 'Fluent CRM' },
     { type: 'Autonami' },
     { type: 'Dropbox' },
@@ -44,7 +44,7 @@ export default function SelectAction() {
     { type: 'Google Calendar' },
     { type: 'Pods' },
     { type: 'Zoho Flow' },
-    { type: 'Registration' },
+    { type: 'WP User Registration' },
     { type: 'Mail Poet' },
     { type: 'Brevo(SendinBlue)' },
     { type: 'Telegram' },
@@ -204,6 +204,7 @@ export default function SelectAction() {
     setNewFlow(tempConf)
     navigate(`/flow/action/new/${action}`)
   }
+
   return (
     <>
       <div className="txt-center" style={{ width: '100%' }}>

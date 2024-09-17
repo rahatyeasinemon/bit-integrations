@@ -106,7 +106,7 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
         defaultValue={webHooks?.body?.type}
         className="btcd-paper-inp w-6"
         disabled={isInfo}>
-        <option>-- Select Content-Type --</option>
+        <option>-- {__('Select Content-Type', 'bit-integrations')} --</option>
         <option value="application/json">application/json</option>
         <option value="multipart/form-data">multipart/form-data</option>
         <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
@@ -159,14 +159,18 @@ function Body({ formFields, webHooks, setWebHooks, isInfo, setTab }) {
                         value={itm.value || ''}
                         onChange={(ev) => setFromField(ev.target.value, childindx)}>
                         <option value="">{__('Select Field', 'bit-integrations')}</option>
-                        <optgroup label="Form Fields">
+                        <optgroup label={__('Form Fields', 'bit-integrations')}>
                           {formFields?.map((f) => (
                             <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`}>
                               {f.label}
                             </option>
                           ))}
                         </optgroup>
-                        <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+                        <optgroup
+                          label={sprintf(
+                            __('General Smart Codes %s', 'bit-integrations'),
+                            isPro ? '' : `(${__('Pro', 'bit-integrations')})`
+                          )}>
                           {isPro &&
                             SmartTagField?.map((f) => (
                               <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`}>

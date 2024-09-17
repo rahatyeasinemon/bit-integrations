@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Livestorm;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Livestorm integration
@@ -31,11 +31,11 @@ class LivestormController
         $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
 
         if (!\count((array) $response)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } elseif (isset($response->errors) && $response->errors[0]->title === 'Workspace blocked') {
             wp_send_json_error($response->errors[0]->detail, 400);
         } else {
-            wp_send_json_error('Authorized failed, Please enter valid API Key', 400);
+            wp_send_json_error(__('Authorized failed, Please enter valid API Key', 'bit-integrations'), 400);
         }
     }
 
@@ -73,7 +73,7 @@ class LivestormController
 
             wp_send_json_success($data, 200);
         } else {
-            wp_send_json_error('Events fetching failed', 400);
+            wp_send_json_error(__('Events fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -96,7 +96,7 @@ class LivestormController
             }
             wp_send_json_success($sessions, 200);
         } else {
-            wp_send_json_error('Session fetching failed', 400);
+            wp_send_json_error(__('Session fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -108,7 +108,7 @@ class LivestormController
         $fieldMap = $integrationDetails->field_map;
 
         if (empty($fieldMap) || empty($apiKey)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Livestorm'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Livestorm'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey);

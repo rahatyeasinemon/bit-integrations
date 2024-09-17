@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\MailChimp;
 
-use WP_Error;
 use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for MailChimp integration
@@ -42,7 +42,7 @@ class MailChimpController
         $allModules = [
             [
                 'name'  => 'add_a_member_to_an_audience',
-                'label' => 'Add a member to an audience',
+                'label' => __('Add a member to an audience', 'bit-integrations'),
             ]
         ];
 
@@ -52,11 +52,11 @@ class MailChimpController
                 [
                     [
                         'name'  => 'add_tag_to_a_member',
-                        'label' => 'Add tag to a member',
+                        'label' => __('Add tag to a member', 'bit-integrations'),
                     ],
                     [
                         'name'  => 'remove_tag_from_a_member',
-                        'label' => 'Remove tag from a member',
+                        'label' => __('Remove tag from a member', 'bit-integrations'),
                     ],
                 ]
             );
@@ -287,7 +287,7 @@ class MailChimpController
             || empty($fieldMap)
             || empty($defaultDataConf)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mail Chimp'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mail Chimp'));
         }
         $recordApiHelper = new RecordApiHelper($tokenDetails, $this->_integrationID);
         $mChimpApiResponse = $recordApiHelper->execute(

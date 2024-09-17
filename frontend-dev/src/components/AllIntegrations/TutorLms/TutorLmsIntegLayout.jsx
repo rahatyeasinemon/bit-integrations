@@ -12,11 +12,17 @@ export default function TutorLmsIntegLayout({
   setIsLoading
 }) {
   const action = [
-    { value: 'enroll-course', label: 'Enroll the user in a course' },
-    { value: 'unenroll-course', label: 'Unenroll user from a course' },
-    { value: 'complete-course', label: 'Mark a course complete for the user' },
-    { value: 'complete-lesson', label: 'Mark a lesson complete for the user' },
-    { value: 'reset-course', label: 'Reset the user progress in a course' }
+    { value: 'enroll-course', label: __('Enroll the user in a course', 'bit-integrations') },
+    { value: 'unenroll-course', label: __('Unenroll user from a course', 'bit-integrations') },
+    {
+      value: 'complete-course',
+      label: __('Mark a course complete for the user', 'bit-integrations')
+    },
+    {
+      value: 'complete-lesson',
+      label: __('Mark a lesson complete for the user', 'bit-integrations')
+    },
+    { value: 'reset-course', label: __('Reset the user progress in a course', 'bit-integrations') }
   ]
 
   const handleAction = (e) => {
@@ -86,7 +92,7 @@ export default function TutorLmsIntegLayout({
         tutorlmsConf?.actionName === 'complete-course' ||
         tutorlmsConf?.actionName === 'reset-course') && (
         <div className="flx">
-          <b className="wdt-200 d-in-b">{__('Select Course: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Course:', 'bit-integrations')}</b>
           <MultiSelect
             defaultValue={tutorlmsConf?.selectedCourse}
             className="btcd-paper-drpdwn w-5"
@@ -117,7 +123,7 @@ export default function TutorLmsIntegLayout({
       )}
       {tutorlmsConf?.actionName === 'complete-lesson' && (
         <div className="flx">
-          <b className="wdt-200 d-in-b">{__('Select Lessons: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Lessons:', 'bit-integrations')}</b>
           <MultiSelect
             defaultValue={tutorlmsConf?.selectedLesson}
             className="btcd-paper-drpdwn w-5"

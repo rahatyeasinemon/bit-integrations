@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\SendPulse;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class RecordApiHelper
 {
@@ -38,7 +38,7 @@ class RecordApiHelper
             ]
         ];
 
-        return HttpHelper::post($apiEndpoints, json_encode($body), $this->_defaultHeader);
+        return HttpHelper::post($apiEndpoints, wp_json_encode($body), $this->_defaultHeader);
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -65,7 +65,7 @@ class RecordApiHelper
         $apiResponse = $this->addContact($selectedList, $finalData);
 
         if ($apiResponse->result == true) {
-            $res = ['message' => 'Contact added successfully'];
+            $res = ['message' => __('Contact Added Successfully', 'bit-integrations')];
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'Contact added']), 'success', wp_json_encode($res));
         } else {
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'Adding Contact']), 'error', wp_json_encode($apiResponse));

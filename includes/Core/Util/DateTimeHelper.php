@@ -309,7 +309,7 @@ final class DateTimeHelper
         $abs_hour = abs($hours);
         $abs_mins = abs($minutes * 60);
 
-        return sprintf('%s%02d:%02d', $sign, $abs_hour, $abs_mins);
+        return wp_sprintf('%s%02d:%02d', $sign, $abs_hour, $abs_mins);
     }
 
     public static function wp_timezone()

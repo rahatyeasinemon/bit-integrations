@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\NutshellCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -40,7 +40,7 @@ class RecordApiHelper
     public function addPeople($finalData)
     {
         if (empty($finalData['first_name'] || $finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field First Name or Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field First Name or Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $staticFieldsKeys = ['first_name', 'email', 'last_name', 'phone', 'address_1', 'city', 'state', 'postalCode', 'country'];
@@ -88,7 +88,7 @@ class RecordApiHelper
     public function addCompany($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Full Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Full Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $staticFieldsKeys = ['name', 'url', 'phone', 'address_1', 'city', 'state', 'postalCode', 'country'];
@@ -135,7 +135,7 @@ class RecordApiHelper
     public function addLead($finalData)
     {
         if (empty($finalData['description'])) {
-            return ['success' => false, 'message' => 'Required field Description is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Description is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $staticFieldsKeys = ['description', 'dueTime', 'confidence'];

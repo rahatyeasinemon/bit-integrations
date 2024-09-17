@@ -42,11 +42,11 @@ function Mail({ allIntegURL, isInfo, edit, isLearnDash = false, learnDashConf })
           flds.push({ label: fld.label, value: `\${${fld.name}}` })
         }
       })
-      mail.push({ title: 'Form Fields', type: 'group', childs: flds })
+      mail.push({ title: __('Form Fields', 'bit-integrations'), type: 'group', childs: flds })
     }
 
     if (userMail && Array.isArray(userMail)) {
-      mail.push({ title: 'WP Emails', type: 'group', childs: userMail })
+      mail.push({ title: __('WP Emails', 'bit-integrations'), type: 'group', childs: userMail })
     }
 
     return mail
@@ -289,7 +289,7 @@ function Mail({ allIntegURL, isInfo, edit, isLearnDash = false, learnDashConf })
           {/* <option value="">{__('Add form field', 'bit-integrations')}</option>
           {formFields !== null && formFields.map(f => !f.type.match(/^(file|recaptcha)$/) && <option key={f.name} value={`\${${f.name}}`}>{f.label}</option>)} */}
           <option value="">{__('Add field', 'bit-integrations')}</option>
-          <optgroup label="Form Fields">
+          <optgroup label={__('Form Fields', 'bit-integrations')}>
             {formFields !== null &&
               formFields.map(
                 (f) =>
@@ -301,7 +301,8 @@ function Mail({ allIntegURL, isInfo, edit, isLearnDash = false, learnDashConf })
                   )
               )}
           </optgroup>
-          <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+          <optgroup
+            label={`${__('General Smart Codes', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}>
             {isPro &&
               SmartTagField?.map((f) => (
                 <option key={`ff-rm-${f.name}`} value={`\${${f.name}}`}>
@@ -363,7 +364,7 @@ const SaveButton = ({ saveConfig, edit, isLoading }) =>
         className="btn btcd-btn-lg purple sh-sm"
         type="button"
         disabled={isLoading}>
-        {__('Save ', 'bit-integrations')}✔
+        {__('Save', 'bit-integrations')}✔
         {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
       </button>
     </div>

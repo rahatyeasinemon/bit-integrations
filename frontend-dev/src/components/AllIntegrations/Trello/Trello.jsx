@@ -18,9 +18,9 @@ function Trello({ formFields, setFlow, flow, allIntegURL }) {
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
   const cardFields = [
-    { key: 'name', label: 'Name', required: true },
-    { key: 'desc', label: 'Description', required: false },
-    { key: 'due', label: 'Date', required: false }
+    { key: 'name', label: __('Name', 'bit-integrations'), required: true },
+    { key: 'desc', label: __('Description', 'bit-integrations'), required: false },
+    { key: 'due', label: __('Date', 'bit-integrations'), required: false }
   ]
   const [trelloConf, setTrelloConf] = useState({
     name: 'Trello',

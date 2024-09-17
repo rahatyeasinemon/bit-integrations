@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\FreshSales;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for FreshSales integration
@@ -148,31 +148,31 @@ class FreshSalesController
             $formattedResponse = [
                 [
                     'key'      => 'name',
-                    'label'    => 'Name',
+                    'label'    => __('Name', 'bit-integrations'),
                     'required' => true
                 ],
 
                 [
                     'key'      => 'description',
-                    'label'    => 'Description',
+                    'label'    => __('Description', 'bit-integrations'),
                     'required' => true
                 ],
 
                 [
                     'key'      => 'sku_number',
-                    'label'    => 'Sku number',
+                    'label'    => __('Sku number', 'bit-integrations'),
                     'required' => false
                 ],
 
                 [
                     'key'      => 'valid_till',
-                    'label'    => 'Valid till',
+                    'label'    => __('Valid till', 'bit-integrations'),
                     'required' => false
                 ],
 
                 [
                     'key'      => 'product_code',
-                    'label'    => 'Product code',
+                    'label'    => __('Product code', 'bit-integrations'),
                     'required' => false
                 ],
             ];
@@ -197,7 +197,7 @@ class FreshSalesController
                 wp_send_json_success($formattedResponse, 200);
             } else {
                 wp_send_json_error(
-                    'The token is invalid',
+                    __('The token is invalid', 'bit-integrations'),
                     400
                 );
             }
@@ -219,7 +219,7 @@ class FreshSalesController
             || empty($api_key)
             || empty($bundle_alias)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'FreshSales'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'FreshSales'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $freshSalesApiResponse = $recordApiHelper->execute(

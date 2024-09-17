@@ -24,13 +24,13 @@ class RecordApiHelper
     public function setUserReputation($finalData, $selectedReputation)
     {
         if (empty($finalData['email']) || empty($selectedReputation)) {
-            return ['success' => false, 'message' => 'Required field email or reputation is empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field email or reputation is empty!', 'bit-integrations'), 'code' => 400];
         }
 
         $userId = self::getUserIdFromEmail($finalData['email']);
 
         if (!$userId) {
-            return ['success' => false, 'message' => 'The user does not exist on your site, or the email is invalid!', 'code' => 400];
+            return ['success' => false, 'message' => __('The user does not exist on your site, or the email is invalid!', 'bit-integrations'), 'code' => 400];
         }
 
         $points = WPF()->member->rating($selectedReputation, 'points');
@@ -39,36 +39,36 @@ class RecordApiHelper
         WPF()->member->update_profile_fields($userId, $data, false);
         WPF()->member->reset($userId);
 
-        return ['success' => true, 'message' => 'User reputation changed.'];
+        return ['success' => true, 'message' => __('User reputation changed', 'bit-integrations')];
     }
 
     public function addToGroup($finalData, $selectedGroup)
     {
         if (empty($finalData['email']) || empty($selectedGroup)) {
-            return ['success' => false, 'message' => 'Required field email or group is empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field email or group is empty!', 'bit-integrations'), 'code' => 400];
         }
 
         $userId = self::getUserIdFromEmail($finalData['email']);
 
         if (!$userId) {
-            return ['success' => false, 'message' => 'The user does not exist on your site, or the email is invalid!', 'code' => 400];
+            return ['success' => false, 'message' => __('The user does not exist on your site, or the email is invalid!', 'bit-integrations'), 'code' => 400];
         }
 
         WPF()->usergroup->set_users_groupid([$selectedGroup => [$userId]]);
 
-        return ['success' => true, 'message' => 'User group changed.'];
+        return ['success' => true, 'message' => __('User group changed', 'bit-integrations')];
     }
 
     public function removeFromGroup($finalData, $selectedGroup)
     {
         if (empty($finalData['email']) || empty($selectedGroup)) {
-            return ['success' => false, 'message' => 'Required field email or group is empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field email or group is empty!', 'bit-integrations'), 'code' => 400];
         }
 
         $userId = self::getUserIdFromEmail($finalData['email']);
 
         if (!$userId) {
-            return ['success' => false, 'message' => 'The user does not exist on your site, or the email is invalid!', 'code' => 400];
+            return ['success' => false, 'message' => __('The user does not exist on your site, or the email is invalid!', 'bit-integrations'), 'code' => 400];
         }
 
         WPF()->member->clear_db_cache();
@@ -94,27 +94,27 @@ class RecordApiHelper
                     }
                 }
 
-                return ['success' => true, 'message' => 'User removed from group.'];
+                return ['success' => true, 'message' => __('User removed from group', 'bit-integrations')];
             }
         }
 
-        return ['success' => false, 'message' => 'Something went wrong!'];
+        return ['success' => false, 'message' => __('Something went wrong!', 'bit-integrations')];
     }
 
     public function createTopic($finalData, $topicOptions)
     {
         if (empty($finalData['email']) || empty($finalData['topic_title']) || empty($finalData['topic_content'])) {
-            return ['success' => false, 'message' => 'Required fields are empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Required fields are empty!', 'bit-integrations'), 'code' => 400];
         }
 
         if (empty($topicOptions['selectedForum'])) {
-            return ['success' => false, 'message' => 'Forum id is required!', 'code' => 400];
+            return ['success' => false, 'message' => __('Forum id is required!', 'bit-integrations'), 'code' => 400];
         }
 
         $userId = self::getUserIdFromEmail($finalData['email']);
 
         if (!$userId) {
-            return ['success' => false, 'message' => 'The user does not exist on your site, or the email is invalid!', 'code' => 400];
+            return ['success' => false, 'message' => __('The user does not exist on your site, or the email is invalid!', 'bit-integrations'), 'code' => 400];
         }
 
         $actions = (array) $topicOptions['actions'];
@@ -139,39 +139,39 @@ class RecordApiHelper
 
         if ($min) {
             if (wpfkey($args, 'body') && (int) $min > wpforo_length($args['body'])) {
-                return ['success' => false, 'message' => 'The content is too short', 'code' => 400];
+                return ['success' => false, 'message' => __('The content is too short', 'bit-integrations'), 'code' => 400];
             }
         }
 
         if (!isset($args['forumid'])) {
-            return ['success' => false, 'message' => 'Add Topic error: No forum selected', 'code' => 400];
+            return ['success' => false, 'message' => __('Add Topic error: No forum selected', 'bit-integrations'), 'code' => 400];
         }
 
         if (!WPF()->forum->get_forum($args['forumid'])) {
-            return ['success' => false, 'message' => 'Add Topic error: No forum selected', 'code' => 400];
+            return ['success' => false, 'message' => __('Add Topic error: No forum selected', 'bit-integrations'), 'code' => 400];
         }
 
         if (!WPF()->perm->forum_can('ct', $args['forumid'])) {
-            return ['success' => false, 'message' => 'You don\'t have permission to create topic into this forum', 'code' => 400];
+            return ['success' => false, 'message' => __('You don\'t have permission to create topic into this forum', 'bit-integrations'), 'code' => 400];
         }
 
         if (!WPF()->perm->can_post_now()) {
-            return ['success' => false, 'message' => 'You are posting too quickly. Slow down.', 'code' => 400];
+            return ['success' => false, 'message' => __('You are posting too quickly. Slow down.', 'bit-integrations'), 'code' => 400];
         }
 
         $topicId = WPF()->topic->add($args);
 
         if ($topicId) {
-            return ['success' => true, 'message' => 'New topic created, topic id: ' . $topicId];
+            return ['success' => true, 'message' => wp_sprintf(__('New topic created, topic id: %s', 'bit-integrations'), $topicId)];
         }
 
-        return ['success' => false, 'message' => 'Something went wrong!'];
+        return ['success' => false, 'message' => __('Something went wrong!', 'bit-integrations')];
     }
 
     public function deleteTopic($finalData, $selectedTopic)
     {
         if (empty($selectedTopic) && empty($finalData['topic_id'])) {
-            return ['success' => false, 'message' => 'Topic id is required!', 'code' => 400];
+            return ['success' => false, 'message' => __('Topic id is required!', 'bit-integrations'), 'code' => 400];
         }
 
         if (!empty($selectedTopic)) {
@@ -183,10 +183,10 @@ class RecordApiHelper
         $topicId = WPF()->topic->delete($topic, true, false);
 
         if ($topicId) {
-            return ['success' => true, 'message' => 'Topic deleted successfully'];
+            return ['success' => true, 'message' => __('Topic deleted successfully', 'bit-integrations')];
         }
 
-        return ['success' => false, 'message' => 'Something went wrong!'];
+        return ['success' => false, 'message' => __('Something went wrong!', 'bit-integrations')];
     }
 
     public static function getUserIdFromEmail($email)

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SystemeIO;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for SystemeIO integration
@@ -31,9 +31,9 @@ class SystemeIOController
         $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
 
         if (isset($response->items)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API Key & API Secret', 400);
+            wp_send_json_error(__('Please enter valid API Key & API Secret', 'bit-integrations'), 400);
         }
     }
 
@@ -56,7 +56,7 @@ class SystemeIOController
             }
             wp_send_json_success($tags, 200);
         } else {
-            wp_send_json_error('Tags fetching failed', 400);
+            wp_send_json_error(__('Tags fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -80,7 +80,7 @@ class SystemeIOController
 
             wp_send_json_success($allFields, 200);
         } else {
-            wp_send_json_error('Contact Field fetching failed', 400);
+            wp_send_json_error(__('Contact Field fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -93,7 +93,7 @@ class SystemeIOController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($actionName) || empty($apiKey)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SystemeIO'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SystemeIO'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey);

@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Zoom;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -147,13 +147,13 @@ class RecordApiHelper
         $apiResponse = null;
         if ($selectedAction === 'Delete User') {
             $this->deleteUser($finalData, $tokenDetails);
-            $apiResponse = 'User deleted successfully';
+            $apiResponse = __('User deleted successfully', 'bit-integrations');
         }
 
         // Delete registrant if email is present in the form
         if ($selectedAction === 'Delete Attendee') {
             $this->deleteMeetingRegistrant($meetingId, $finalData, $tokenDetails);
-            $apiResponse = 'Attendee deleted successfully';
+            $apiResponse = __('Attendee deleted successfully', 'bit-integrations');
         }
 
         // Create user

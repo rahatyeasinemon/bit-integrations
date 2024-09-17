@@ -9,5 +9,14 @@ export const webhookIntegrations = [
   'FluentSupport'
 ]
 
-export const customFormIntegrations = ['Breakdance', 'Elementor', 'Kadence', 'Divi', 'SiteOriginWidgets', 'Bricksforge', 'PopupMaker']
+export const customFormIntegrations = [
+  'Breakdance',
+  'Elementor',
+  'Kadence',
+  'Divi',
+  'SiteOriginWidgets',
+  'Bricksforge',
+  'PopupMaker'
+]
 export const actionHookIntegrations = ['ActionHook']
+export const freeTriggers = ['BitForm', 'CF7', 'CustomTrigger', 'Elementor', 'WC', 'WPF']

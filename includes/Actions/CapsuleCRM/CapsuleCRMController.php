@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\CapsuleCRM;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for CapsuleCRM integration
@@ -38,9 +38,9 @@ class CapsuleCRMController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (isset($response->users)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 
@@ -76,7 +76,7 @@ class CapsuleCRMController
             }
             wp_send_json_success($customFields, 200);
         } else {
-            wp_send_json_error('Custom field fetching failed', 400);
+            wp_send_json_error(__('Custom field fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -103,7 +103,7 @@ class CapsuleCRMController
             }
             wp_send_json_success($opportunities, 200);
         } else {
-            wp_send_json_error('Opportunity fetching failed', 400);
+            wp_send_json_error(__('Opportunity fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -157,7 +157,7 @@ class CapsuleCRMController
             }
             wp_send_json_success($teams, 200);
         } else {
-            wp_send_json_error('Teams fetching failed', 400);
+            wp_send_json_error(__('Teams fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -184,7 +184,7 @@ class CapsuleCRMController
             }
             wp_send_json_success($currencies, 200);
         } else {
-            wp_send_json_error('Currencies fetching failed', 400);
+            wp_send_json_error(__('Currencies fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -218,7 +218,7 @@ class CapsuleCRMController
             }
             wp_send_json_success($parties, 200);
         } else {
-            wp_send_json_error('Parties fetching failed', 400);
+            wp_send_json_error(__('Parties fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -245,7 +245,7 @@ class CapsuleCRMController
             }
             wp_send_json_success($milestones, 200);
         } else {
-            wp_send_json_error('Milestones fetching failed', 400);
+            wp_send_json_error(__('Milestones fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -258,7 +258,7 @@ class CapsuleCRMController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Capsule CRM'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Capsule CRM'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

@@ -11,7 +11,7 @@ import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import JetEngineIntegLayout from './JetEngineIntegLayout'
 import toast from 'react-hot-toast'
-import { TASK_LIST_VALUES } from './jetEngineConstants'
+import { DELETE_LIST_ARRAY, TASK_LIST_VALUES } from './jetEngineConstants'
 import { checkMappedFields, handleInput } from './jetEngineCommonFunctions'
 
 function EditJetEngine({ allIntegURL }) {
@@ -22,41 +22,110 @@ function EditJetEngine({ allIntegURL }) {
   const [loading, setLoading] = useState({
     auth: false,
     menuPosition: false,
-    relationTypes: false
+    relationTypes: false,
+    cptList: false,
+    cctList: false,
+    relationList: false
   })
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)
 
   const saveConfig = () => {
     if (!jetEngineConf.selectedTask) {
-      toast.error('Please select a task!')
+      toast.error(__('Please select a task!', 'bit-integrations'))
       return
     }
 
-    if (!checkMappedFields(jetEngineConf)) {
-      toast.error('Please map mandatory fields!')
+    if (!DELETE_LIST_ARRAY.includes(jetEngineConf.selectedTask)) {
+      if (!checkMappedFields(jetEngineConf)) {
+        toast.error(__('Please map mandatory fields!', 'bit-integrations'))
+        return
+      }
+    }
+
+    if (
+      (jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ||
+        jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY) &&
+      !jetEngineConf.selectedTaxPostTypes
+    ) {
+      toast.error(__('Please select post type(s)!', 'bit-integrations'))
       return
     }
 
     if (
-      jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY &&
-      !jetEngineConf.selectedTaxPostTypes
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION ||
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_RELATION
     ) {
-      toast.error('Please select post type(s)!')
-      return
-    }
-
-    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.CREATE_RELATION) {
       if (!jetEngineConf.relOptions.parentObject) {
-        toast.error('Please select a parent object!')
+        toast.error(__('Please select a parent object!', 'bit-integrations'))
         return
       }
       if (!jetEngineConf.relOptions.childObject) {
-        toast.error('Please select a child object!')
+        toast.error(__('Please select a child object!', 'bit-integrations'))
         return
       }
       if (!jetEngineConf.relOptions.selectedRelationType) {
-        toast.error('Please select a relation type!')
+        toast.error(__('Please select a relation type!', 'bit-integrations'))
+        return
+      }
+    }
+
+    if (
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE &&
+      !jetEngineConf.selectedCPT
+    ) {
+      toast.error('Please select a custom post type!')
+      return
+    }
+
+    if (
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE &&
+      !jetEngineConf.selectedCCT
+    ) {
+      toast.error('Please select a custom content type!')
+      return
+    }
+
+    if (
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY &&
+      !jetEngineConf.selectedTaxForEdit
+    ) {
+      toast.error('Please select a taxonomy!')
+      return
+    }
+
+    if (
+      jetEngineConf.selectedTask === TASK_LIST_VALUES.UPDATE_RELATION &&
+      !jetEngineConf.relOptions.selectedRelationForEdit
+    ) {
+      toast.error('Please select a relation!')
+      return
+    }
+
+    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_POST_TYPE) {
+      if (!jetEngineConf.selectedCPT && !checkMappedFields(jetEngineConf)) {
+        toast.error('Please select a custom post type or map fields!')
+        return
+      }
+    }
+
+    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_CONTENT_TYPE) {
+      if (!jetEngineConf.selectedCCT && !checkMappedFields(jetEngineConf)) {
+        toast.error('Please select a custom content type or map fields!')
+        return
+      }
+    }
+
+    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_TAXONOMY) {
+      if (!jetEngineConf.selectedTaxForEdit && !checkMappedFields(jetEngineConf)) {
+        toast.error('Please select a taxonomy or map fields!')
+        return
+      }
+    }
+
+    if (jetEngineConf.selectedTask === TASK_LIST_VALUES.DELETE_RELATION) {
+      if (!jetEngineConf.relOptions.selectedRelationForEdit && !checkMappedFields(jetEngineConf)) {
+        toast.error('Please select a relation or map fields!')
         return
       }
     }

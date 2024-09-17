@@ -13,7 +13,7 @@ final class ElementorController
 
         return [
             'name'                => 'Elementor',
-            'title'               => 'Elementor is the platform web creators choose to build professional WordPress websites, grow their skills, and build their business. Start for free today!',
+            'title'               => __('Elementor is the platform web creators choose to build professional WordPress websites, grow their skills, and build their business. Start for free today!', 'bit-integrations'),
             'slug'                => $plugin_path,
             'pro'                 => $plugin_path,
             'type'                => 'custom_form_submission',

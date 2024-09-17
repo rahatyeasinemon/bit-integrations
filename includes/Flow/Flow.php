@@ -2,15 +2,15 @@
 
 namespace BitCode\FI\Flow;
 
-use BitCode\FI\Core\Util\Capabilities;
+use WP_Error;
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\CustomFuncValidator;
 use BitCode\FI\Core\Util\IpTool;
 use BitCode\FI\Core\Util\SmartTags;
+use BitCode\FI\Core\Util\Capabilities;
 use BitCode\FI\Core\Util\StoreInCache;
-use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Triggers\TriggerController;
-use WP_Error;
+use BitCode\FI\Core\Util\CustomFuncValidator;
 
 /**
  * Provides details of available integration and helps to
@@ -28,17 +28,17 @@ final class Flow
         if ($triggerName == 'Post') {
             switch ($triggerId) {
                 case 1:
-                    return 'Create a new post';
+                    return __('Create a new post', 'bit-integrations');
                 case 2:
-                    return 'Updated a post';
+                    return __('Updated a post', 'bit-integrations');
                 case 3:
-                    return 'Delete a post';
+                    return __('Delete a post', 'bit-integrations');
                 case 4:
-                    return 'User views a post';
+                    return __('User views a post', 'bit-integrations');
                 case 5:
-                    return 'User comments on a post';
+                    return __('User comments on a post', 'bit-integrations');
                 case 6:
-                    return 'Change post status';
+                    return __('Change post status', 'bit-integrations');
                 default:
                     return $triggerName;
             }
@@ -50,7 +50,7 @@ final class Flow
     public function flowList()
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
         $integrationHandler = new FlowController();
         $triggers = $this->triggers();
@@ -81,14 +81,14 @@ final class Flow
     public function get($data)
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
         $missing_field = null;
         if (!property_exists($data, 'id')) {
             $missing_field = 'Integration ID';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(wp_sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         $integrationHandler = new FlowController();
         $integrations = $integrationHandler->get(
@@ -135,7 +135,7 @@ final class Flow
     public function save($data)
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
         $missing_field = null;
         if (!property_exists($data, 'trigger')) {
@@ -150,7 +150,7 @@ final class Flow
             $missing_field = (\is_null($missing_field) ? null : ', ') . 'Integration details';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(wp_sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
 
         // custom action
@@ -173,7 +173,7 @@ final class Flow
     public function flowClone($data)
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
         $missingId = null;
         $user_details = IpTool::getUserDetail();
@@ -181,7 +181,7 @@ final class Flow
             $missingId = 'Flow ID';
         }
         if (!\is_null($missingId)) {
-            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missingId));
+            wp_send_json_error(wp_sprintf(__('%s can\'t be empty', 'bit-integrations'), $missingId));
         }
         $integrationHandler = new FlowController();
         $integrations = $integrationHandler->get(
@@ -212,7 +212,7 @@ final class Flow
     public function update($data)
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
         $missing_field = null;
         if (empty($data->id)) {
@@ -222,7 +222,7 @@ final class Flow
             $missing_field = 'Flow details';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(\sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(wp_sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
 
         if ($data->flow_details->type === 'CustomAction') {
@@ -284,14 +284,14 @@ final class Flow
     public function delete($data)
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_delete_integrations'))) {
-            wp_send_json_error('User don\'t have permission to Delete Integration');
+            wp_send_json_error(__('User don\'t have permission to Delete Integration', 'bit-integrations'));
         }
         $missing_field = null;
         if (empty($data->id)) {
             $missing_field = 'Integration id';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(\sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(wp_sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         $integrationHandler = new FlowController();
         $deleteStatus = $integrationHandler->delete($data->id);
@@ -306,10 +306,10 @@ final class Flow
     public function bulkDelete($param)
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_delete_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
         if (!\is_array($param->flowID) || $param->flowID === []) {
-            wp_send_json_error(\sprintf(__('%s cann\'t be empty', 'bit-integrations'), 'Integration id'));
+            wp_send_json_error(wp_sprintf(__('%s can\'t be empty', 'bit-integrations'), 'Integration id'));
         }
 
         $integrationHandler = new FlowController();
@@ -325,7 +325,7 @@ final class Flow
     public function toggle_status($data)
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
         $missing_field = null;
         if (!property_exists($data, 'status')) {
@@ -335,7 +335,7 @@ final class Flow
             $missing_field = 'Integration id';
         }
         if (!\is_null($missing_field)) {
-            wp_send_json_error(\sprintf(__('%s cann\'t be empty', 'bit-integrations'), $missing_field));
+            wp_send_json_error(wp_sprintf(__('%s can\'t be empty', 'bit-integrations'), $missing_field));
         }
         $integrationHandler = new FlowController();
         $toggleStatus = $integrationHandler->updateStatus($data->id, $data->status);
@@ -421,6 +421,7 @@ final class Flow
                 if (\is_string($flowData->flow_details)) {
                     $flowData->flow_details = json_decode($flowData->flow_details);
                 }
+
                 if (
                     property_exists($flowData->flow_details, 'condition')
                     && property_exists($flowData->flow_details->condition, 'logics')
@@ -438,8 +439,9 @@ final class Flow
 
                     continue;
                 }
+                
                 $integrationName = \is_null($flowData->flow_details->type) ? null : ucfirst(str_replace(' ', '', $flowData->flow_details->type));
-
+                
                 switch ($integrationName) {
                     case 'Brevo(Sendinblue)':
                         $integrationName = 'SendinBlue';
@@ -451,6 +453,14 @@ final class Flow
                         break;
                     case 'Sarbacane(Mailify)':
                         $integrationName = 'Mailify';
+
+                        break;
+                    case 'WPPostCreation':
+                        $integrationName = 'PostCreation';
+
+                        break;
+                    case 'WPUserRegistration':
+                        $integrationName = 'Registration';
 
                         break;
                     case 'Zoho Marketing Automation(Zoho Marketing Hub)':
@@ -516,9 +526,7 @@ final class Flow
     private static function updateFlowTrigger($saveStatus)
     {
         if ($saveStatus) {
-            $storeInCacheInstance = new StoreInCache();
-            $activeFlowTrigger = $storeInCacheInstance::getActiveFlow();
-            $storeInCacheInstance::setTransient('activeCurrentTrigger', $activeFlowTrigger, DAY_IN_SECONDS);
+            StoreInCache::getActiveFlowEntities(true);
         }
     }
 }

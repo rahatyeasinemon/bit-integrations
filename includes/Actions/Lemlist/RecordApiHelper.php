@@ -2,8 +2,8 @@
 
 namespace BitCode\FI\Actions\Lemlist;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class RecordApiHelper
 {
@@ -80,8 +80,8 @@ class RecordApiHelper
                     LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Lead', 'type_name' => 'updating Lead']), 'error', wp_json_encode($apiResponse));
                 }
             } else {
-                LogHandler::save($this->_integrationID, ['type' => 'Lead', 'type_name' => 'Adding Lead'], 'error', 'Email address already exists in the system');
-                wp_send_json_error('Email address already exists in the system', 400);
+                LogHandler::save($this->_integrationID, ['type' => 'Lead', 'type_name' => 'Adding Lead'], 'error', __('Email address already exists in the system', 'bit-integrations'));
+                wp_send_json_error(__('Email address already exists in the system', 'bit-integrations'), 400);
             }
         }
 

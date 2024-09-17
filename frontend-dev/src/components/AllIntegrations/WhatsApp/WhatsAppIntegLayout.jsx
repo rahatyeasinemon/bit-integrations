@@ -64,7 +64,7 @@ export default function WhatsAppIntegLayout({
     <>
       <br />
       <div className="flx">
-        <b className="wdt-200 d-in-b">{__('Message Type: ', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b">{__('Message Type:', 'bit-integrations')}</b>
         <MultiSelect
           defaultValue={whatsAppConf?.messageType}
           className="mt-2 w-5"
@@ -262,7 +262,7 @@ export default function WhatsAppIntegLayout({
 
       {whatsAppConf?.messageType === 'text' && isPro && (
         <div>
-          <b className="wdt-200 d-in-b mr-16 mb-4 mt-4">{__('Message: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b mr-16 mb-4 mt-4">{__('Message:', 'bit-integrations')}</b>
           <TinyMCE
             formFields={formFields}
             id={`whatsapp-message-${id}`}
@@ -279,14 +279,14 @@ export default function WhatsAppIntegLayout({
   )
 }
 
-const textMsgNote = `<p>${__('To ensure successful message delivery using the WhatsApp Business API: ', 'bit-integrations')}</p>
+const textMsgNote = `<p>${__('To ensure successful message delivery using the WhatsApp Business API:', 'bit-integrations')}</p>
             <ul>
                 <li><strong>${__('The conversation must be initiated by the user.', 'bit-integrations')}</strong></li>
                 <li>${__("To begin, <strong>send a message from your WhatsApp number to the recipient's number.</strong>", 'bit-integrations')}</li>
                 <li>${__('Once the user has started the conversation, you can continue to communicate with the recipient normally.', 'bit-integrations')}</li>
             </ul>`
 
-const textMediaNote = `<p>${__('To ensure successful message delivery using the WhatsApp Business API: ', 'bit-integrations')}</p>
+const textMediaNote = `<p>${__('To ensure successful message delivery using the WhatsApp Business API:', 'bit-integrations')}</p>
             <ul>
                 <li><strong>${__('The conversation must be initiated by the user.', 'bit-integrations')}</strong></li>
                 <li>${__("To begin, <strong>send a message from your WhatsApp number to the recipient's number.</strong>", 'bit-integrations')}</li>
@@ -306,34 +306,42 @@ const textMediaNote = `<p>${__('To ensure successful message delivery using the 
             </ul>`
 
 const contactFields = [
-  { key: 'first_name', label: 'First Name', required: true },
-  { key: 'last_name', label: 'Last Name', required: false },
-  { key: 'middle_name', label: 'Middle Name', required: false },
-  { key: 'suffix', label: 'Suffix', required: false },
-  { key: 'prefix', label: 'Prefix', required: false },
-  { key: 'birthday', label: 'Birthday (YEAR_MONTH_DAY)', required: false },
-  { key: 'company', label: 'Company', required: false },
-  { key: 'department', label: 'Department', required: false },
-  { key: 'title', label: 'Business title', required: false },
-  { key: 'HOME_email', label: ' Email (Home)', required: false },
-  { key: 'WORK_email', label: ' Email (Work)', required: false },
-  { key: 'CELL_phone', label: 'Phone Number (Cell)', required: false },
-  { key: 'MAIN_phone', label: 'Phone Number (Main)', required: false },
-  { key: 'IPHONE_phone', label: 'Phone Number (IPhone)', required: false },
-  { key: 'HOME_phone', label: 'Phone Number (Home)', required: false },
-  { key: 'WORK_phone', label: 'Phone Number (Work)', required: false },
-  { key: 'HOME_street', label: 'Street (Home)', required: false },
-  { key: 'HOME_city', label: 'City (Home)', required: false },
-  { key: 'HOME_state', label: 'State (Home)', required: false },
-  { key: 'HOME_zip', label: 'Zip (Home)', required: false },
-  { key: 'HOME_country', label: 'Country (Home)', required: false },
-  { key: 'HOME_country_code', label: 'Country Code (Home)', required: false },
-  { key: 'WORK_street', label: 'Street (Work)', required: false },
-  { key: 'WORK_city', label: 'City (Work)', required: false },
-  { key: 'WORK_state', label: 'State (Work)', required: false },
-  { key: 'WORK_zip', label: 'Zip (Work)', required: false },
-  { key: 'WORK_country', label: 'Country (Work)', required: false },
-  { key: 'WORK_country_code', label: 'Country Code (Work)', required: false }
+  { key: 'first_name', label: __('First Name', 'bit-integrations'), required: true },
+  { key: 'last_name', label: __('Last Name', 'bit-integrations'), required: false },
+  { key: 'middle_name', label: __('Middle Name', 'bit-integrations'), required: false },
+  { key: 'suffix', label: __('Suffix', 'bit-integrations'), required: false },
+  { key: 'prefix', label: __('Prefix', 'bit-integrations'), required: false },
+  { key: 'birthday', label: __('Birthday (YEAR_MONTH_DAY)', 'bit-integrations'), required: false },
+  { key: 'company', label: __('Company', 'bit-integrations'), required: false },
+  { key: 'department', label: __('Department', 'bit-integrations'), required: false },
+  { key: 'title', label: __('Business title', 'bit-integrations'), required: false },
+  { key: 'HOME_email', label: __('Email (Home)', 'bit-integrations'), required: false },
+  { key: 'WORK_email', label: __('Email (Work)', 'bit-integrations'), required: false },
+  { key: 'CELL_phone', label: __('Phone Number (Cell)', 'bit-integrations'), required: false },
+  { key: 'MAIN_phone', label: __('Phone Number (Main)', 'bit-integrations'), required: false },
+  { key: 'IPHONE_phone', label: __('Phone Number (IPhone)', 'bit-integrations'), required: false },
+  { key: 'HOME_phone', label: __('Phone Number (Home)', 'bit-integrations'), required: false },
+  { key: 'WORK_phone', label: __('Phone Number (Work)', 'bit-integrations'), required: false },
+  { key: 'HOME_street', label: __('Street (Home)', 'bit-integrations'), required: false },
+  { key: 'HOME_city', label: __('City (Home)', 'bit-integrations'), required: false },
+  { key: 'HOME_state', label: __('State (Home)', 'bit-integrations'), required: false },
+  { key: 'HOME_zip', label: __('Zip (Home)', 'bit-integrations'), required: false },
+  { key: 'HOME_country', label: __('Country (Home)', 'bit-integrations'), required: false },
+  {
+    key: 'HOME_country_code',
+    label: __('Country Code (Home)', 'bit-integrations'),
+    required: false
+  },
+  { key: 'WORK_street', label: __('Street (Work)', 'bit-integrations'), required: false },
+  { key: 'WORK_city', label: __('City (Work)', 'bit-integrations'), required: false },
+  { key: 'WORK_state', label: __('State (Work)', 'bit-integrations'), required: false },
+  { key: 'WORK_zip', label: __('Zip (Work)', 'bit-integrations'), required: false },
+  { key: 'WORK_country', label: __('Country (Work)', 'bit-integrations'), required: false },
+  {
+    key: 'WORK_country_code',
+    label: __('Country Code (Work)', 'bit-integrations'),
+    required: false
+  }
 ]
 
 const checkIsPro = (isPro, proType) => {

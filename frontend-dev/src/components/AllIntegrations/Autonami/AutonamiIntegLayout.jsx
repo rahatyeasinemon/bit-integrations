@@ -58,7 +58,7 @@ export default function AutonamiIntegLayout({
         </button>
       </div>
       <div className="flx mt-5">
-        <b className="wdt-200 d-in-b">{__('Autonami Tags: ', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b">{__('Autonami Tags:', 'bit-integrations')}</b>
         <MultiSelect
           defaultValue={autonamiConf?.tags}
           className="btcd-paper-drpdwn w-5"

@@ -24,7 +24,7 @@ class RecordApiHelper
             : (\function_exists('WPCW_users_getUserCourseList') ? WPCW_users_getUserCourseList($userId) : []);
 
         if (empty($wpcwCourses)) {
-            return ['success' => false, 'messages' => 'No Course Available!'];
+            return ['success' => false, 'messages' => __('No Course Available!', 'bit-integrations')];
         }
 
         foreach ($wpcwCourses as $tempCourse) {
@@ -44,10 +44,10 @@ class RecordApiHelper
         if (\function_exists('WPCW_courses_syncUserAccess')) {
             WPCW_courses_syncUserAccess($userId, $courses, $type);
 
-            return ['success' => true, 'messages' => 'Insert successfully!'];
+            return ['success' => true, 'messages' => __('Insert successfully!', 'bit-integrations')];
         }
 
-        return ['success' => false, 'messages' => 'Somethings wrong, please try again!'];
+        return ['success' => false, 'messages' => __('Somethings wrong, please try again!', 'bit-integrations')];
     }
 
     public function execute($action, $course, $userId, $allCourse)

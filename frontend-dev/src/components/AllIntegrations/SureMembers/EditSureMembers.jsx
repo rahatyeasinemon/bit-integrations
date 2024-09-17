@@ -27,21 +27,29 @@ function EditSureMembers({ allIntegURL }) {
 
   const saveConfig = () => {
     if (!sureMembersConf.selectedTask) {
-      toast.error('Please select a task!')
+      toast.error(__('Please select a task!', 'bit-integrations'))
       return
     }
 
     if (!checkMappedFields(sureMembersConf)) {
-      toast.error('Please map mandatory fields!')
+      toast.error(__('Please map mandatory fields!', 'bit-integrations'))
       return
     }
 
     if (!sureMembersConf.selectedGroup) {
-      toast.error('Please select a group!')
+      toast.error(__('Please select a group!', 'bit-integrations'))
       return
     }
 
-    saveActionConf({ flow, allIntegURL, conf: sureMembersConf, navigate, edit: 1, setLoading, setSnackbar })
+    saveActionConf({
+      flow,
+      allIntegURL,
+      conf: sureMembersConf,
+      navigate,
+      edit: 1,
+      setLoading,
+      setSnackbar
+    })
   }
 
   return (
@@ -50,7 +58,14 @@ function EditSureMembers({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, sureMembersConf, setSureMembersConf)} name="name" defaultValue={sureMembersConf.name || ''} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={(e) => handleInput(e, sureMembersConf, setSureMembersConf)}
+          name="name"
+          defaultValue={sureMembersConf.name || ''}
+          type="text"
+          placeholder={__('Integration Name...', 'bit-integrations')}
+        />
       </div>
       <br />
 
@@ -58,7 +73,9 @@ function EditSureMembers({ allIntegURL }) {
       <SureMembersIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) => handleInput(e, sureMembersConf, setSureMembersConf, setLoading, setSnackbar)}
+        handleInput={(e) =>
+          handleInput(e, sureMembersConf, setSureMembersConf, setLoading, setSnackbar)
+        }
         sureMembersConf={sureMembersConf}
         setSureMembersConf={setSureMembersConf}
         loading={loading}

@@ -72,16 +72,16 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
   }
 
   const statusOptions = [
-    { label: 'Open', value: '2' },
-    { label: 'Pending', value: '3' },
-    { label: 'Resolved', value: '4' },
-    { label: 'Closed', value: '5' }
+    { label: __('Open', 'bit-integrations'), value: '2' },
+    { label: __('Pending', 'bit-integrations'), value: '3' },
+    { label: __('Resolved', 'bit-integrations'), value: '4' },
+    { label: __('Closed', 'bit-integrations'), value: '5' }
   ]
   const priorityOptions = [
-    { label: 'Low', value: '1' },
-    { label: 'Medium', value: '2' },
-    { label: 'High', value: '3' },
-    { label: 'Urgent', value: '4' }
+    { label: __('Low', 'bit-integrations'), value: '1' },
+    { label: __('Medium', 'bit-integrations'), value: '2' },
+    { label: __('High', 'bit-integrations'), value: '3' },
+    { label: __('Urgent', 'bit-integrations'), value: '4' }
   ]
 
   return (
@@ -139,7 +139,7 @@ export default function FreshdeskActions({ freshdeskConf, setFreshdeskConf, form
           className="wdt-200 mt-4 mr-2"
           value="priority"
           title={__('Priority', 'bit-integrations')}
-          subTitle={__('Add Ticket Priority ', 'bit-integrations')}
+          subTitle={__('Add Ticket Priority', 'bit-integrations')}
         />
         <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>
           {__('This Required', 'bit-integrations')}

@@ -136,7 +136,7 @@ export default function BenchMarkAuthorization({
           <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
             &times;
           </span>
-          Sorry, API Secret key is invalid
+          {__('Sorry, API Secret key is invalid', 'bit-integrations')}
         </div>
       )}
       {!isInfo && (

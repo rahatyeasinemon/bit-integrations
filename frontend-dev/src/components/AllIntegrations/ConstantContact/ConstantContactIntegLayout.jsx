@@ -19,14 +19,16 @@ export default function ConstantContactIntegLayout({
   setSnackbar
 }) {
   const address = [
-    { tag: 'street', name: 'Street', required: false },
-    { tag: 'city', name: 'City', required: false },
-    { tag: 'state', name: 'State', required: false },
-    { tag: 'postal_code', name: 'Postal Code', required: false },
-    { tag: 'country', name: 'Country', required: false }
+    { tag: 'street', name: __('Street', 'bit-integrations'), required: false },
+    { tag: 'city', name: __('City', 'bit-integrations'), required: false },
+    { tag: 'state', name: __('State', 'bit-integrations'), required: false },
+    { tag: 'postal_code', name: __('Postal Code', 'bit-integrations'), required: false },
+    { tag: 'country', name: __('Country', 'bit-integrations'), required: false }
   ]
 
-  const phone = [{ tag: 'phone_number', name: 'Phone Number', required: true }]
+  const phone = [
+    { tag: 'phone_number', name: __('Phone Number', 'bit-integrations'), required: true }
+  ]
   return (
     <>
       <br />
@@ -37,7 +39,8 @@ export default function ConstantContactIntegLayout({
         value={constantContactConf.source_type}
         className="btcd-paper-inp w-5">
         <option value="">{__('Select Source', 'bit-integrations')}</option>
-        <option value="Contact">Contact</option> <option value="Account">Account</option>
+        <option value="Contact">{__('Contact', 'bit-integrations')}</option>
+        <option value="Account">{__('Account', 'bit-integrations')}</option>
       </select>
       <br />
       <br />

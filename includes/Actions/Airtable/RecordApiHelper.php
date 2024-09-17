@@ -87,7 +87,7 @@ class RecordApiHelper
         $apiResponse = $this->createRecord($finalData);
 
         if (isset($apiResponse->records)) {
-            $successMessage = ['message' => 'Record created successfully'];
+            $successMessage = ['message' => __('Record created successfully', 'bit-integrations')];
             LogHandler::save($this->integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'Record created']), 'success', wp_json_encode($successMessage));
 
             if (isset($apiResponse->details) && $apiResponse->details->message == 'partialSuccess') {

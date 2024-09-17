@@ -40,7 +40,7 @@ class RecordApiHelper
     public function addTask($finalData)
     {
         if (!isset($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field task name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field task name is empty', 'bit-integrations'), 'code' => 400];
         }
         $staticFieldsKeys = ['name', 'due_at', 'due_on', 'notes'];
         $customFields = [];

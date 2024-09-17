@@ -31,47 +31,47 @@ function ConstantContact({ formFields, setFlow, flow, allIntegURL }) {
   const constantContactFields = [
     {
       key: 'email_address',
-      label: 'Email',
+      label: __('Email', 'bit-integrations'),
       required: true
     },
     {
       key: 'first_name',
-      label: 'First Name',
+      label: __('First Name', 'bit-integrations'),
       required: false
     },
     {
       key: 'last_name',
-      label: 'Last Name',
+      label: __('Last Name', 'bit-integrations'),
       required: false
     },
     {
       key: 'job_title',
-      label: 'Job Title',
+      label: __('Job Title', 'bit-integrations'),
       required: false
     },
     {
       key: 'company_name',
-      label: 'Company Name',
+      label: __('Company Name', 'bit-integrations'),
       required: false
     },
     {
       key: 'phone_number',
-      label: 'Phone Number',
+      label: __('Phone Number', 'bit-integrations'),
       required: false
     },
     {
       key: 'anniversary',
-      label: 'Anniversary',
+      label: __('Anniversary', 'bit-integrations'),
       required: false
     },
     {
       key: 'birthday_month',
-      label: 'Birthday Month',
+      label: __('Birthday Month', 'bit-integrations'),
       required: false
     },
     {
       key: 'birthday_day',
-      label: 'Birthday Day',
+      label: __('Birthday Day', 'bit-integrations'),
       required: false
     }
   ]

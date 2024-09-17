@@ -32,13 +32,13 @@ class RecordApiHelper
     public function upsertSubscriber($accountId, $finalData, $selectedStatus, $selectedTags, $selectedRemoveTags)
     {
         if (empty($accountId)) {
-            return ['success' => false, 'message' => 'Account id is Required', 'code' => 400];
+            return ['success' => false, 'message' => __('Account id is Required', 'bit-integrations'), 'code' => 400];
         }
 
         $apiEndpoints = 'https://api.getdrip.com/v2/' . $accountId . '/subscribers';
 
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $subscriberData = $customFieldsData = [];
@@ -99,7 +99,7 @@ class RecordApiHelper
         $apiResponse = $this->upsertSubscriber($accountId, $finalData, $selectedStatus, $selectedTags, $selectedRemoveTags);
 
         if (isset($apiResponse->subscribers)) {
-            $res = ['message' => 'Subscriber upserted successfully'];
+            $res = ['message' => __('Subscriber upserted successfully', 'bit-integrations')];
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber upsert']), 'success', wp_json_encode($res));
         } else {
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber upsert']), 'error', wp_json_encode($apiResponse));

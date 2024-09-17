@@ -25,19 +25,29 @@ function SuiteDash({ formFields, setFlow, flow, allIntegURL }) {
     name: 'SuiteDash',
     type: 'SuiteDash',
     public_id: process.env.NODE_ENV === 'development' ? '994665df-dd08-4e9d-9d40-fa510ef31ac8' : '',
-    secret_key: process.env.NODE_ENV === 'development' ? '$2y$13$WZy9preZCG5DO3Vhj3..N.hiyHnRn2QHkEkQClwrYYeYzsYPx0JPG' : '',
-    field_map: [
-      { formField: '', suiteDashFormField: '' },
-    ],
+    secret_key:
+      process.env.NODE_ENV === 'development'
+        ? '$2y$13$WZy9preZCG5DO3Vhj3..N.hiyHnRn2QHkEkQClwrYYeYzsYPx0JPG'
+        : '',
+    field_map: [{ formField: '', suiteDashFormField: '' }],
     actionName: '',
     suiteDashFields: [],
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, suiteDashConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      suiteDashConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -53,12 +63,12 @@ function SuiteDash({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(suiteDashConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
 
     if (!suiteDashConf.selectedRole) {
-      toast.error('Please select a Role')
+      toast.error(__('Please select a Role', 'bit-integrations'))
       return
     }
 
@@ -68,7 +78,9 @@ function SuiteDash({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <SuiteDashAuthorization
@@ -82,8 +94,9 @@ function SuiteDash({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <SuiteDashIntegLayout
           formFields={formFields}
           suiteDashConf={suiteDashConf}
@@ -98,13 +111,10 @@ function SuiteDash({ formFields, setFlow, flow, allIntegURL }) {
         {suiteDashConf?.actionName && (
           <button
             onClick={() => nextPage(3)}
-            disabled={!(checkMappedFields(suiteDashConf))}
+            disabled={!checkMappedFields(suiteDashConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button"
-          >
-            {__('Next', 'bit-integrations')}
-            {' '}
-            &nbsp;
+            type="button">
+            {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         )}

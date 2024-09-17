@@ -31,11 +31,11 @@ function EditLivestorm({ allIntegURL }) {
       return
     }
     if (!livestormConf.selectedEvent) {
-      toast.error('Please select an Event')
+      toast.error(__('Please select an Event', 'bit-integrations'))
       return
     }
     if (!livestormConf.selectedSession) {
-      toast.error('Please select a Session')
+      toast.error(__('Please select a Session', 'bit-integrations'))
       return
     }
     saveActionConf({ flow, allIntegURL, conf: livestormConf, navigate, edit: 1, setIsLoading, setSnackbar })

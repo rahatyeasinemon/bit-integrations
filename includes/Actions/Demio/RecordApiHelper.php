@@ -44,13 +44,13 @@ class RecordApiHelper
         $this->typeName = 'Register People to Wabinar';
 
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field First Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field First Name is empty', 'bit-integrations'), 'code' => 400];
         }
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
         if (!isset($this->integrationDetails->selectedEvent) || empty($this->integrationDetails->selectedEvent)) {
-            return ['success' => false, 'message' => 'Required field Event is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Event is empty', 'bit-integrations'), 'code' => 400];
         }
         if (isset($this->integrationDetails->selectedEvent) || !empty($this->integrationDetails->selectedEvent)) {
             $finalData['id'] = $this->integrationDetails->selectedEvent;

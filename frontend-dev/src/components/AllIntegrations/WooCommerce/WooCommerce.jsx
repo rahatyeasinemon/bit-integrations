@@ -52,18 +52,24 @@ export default function WooCommerce({ formFields, setFlow, flow, allIntegURL }) 
       const fieldMap = checkMappedFields(wcConf.customer.field_map)
       if (!fieldMap) {
         status = 'Customer Field Map'
-        setSnackbar({ show: true, msg: "Customer Field Map can't be empty" })
+        setSnackbar({
+          show: true,
+          msg: __("Customer Field Map can't be empty", 'bit-integrations')
+        })
       }
     } else if (wcConf?.module === 'product') {
       const fieldMap = checkMappedFields(wcConf.product.field_map)
       if (!fieldMap) {
         status = 'Product Field Map'
-        setSnackbar({ show: true, msg: "Product Field Map can't be empty" })
+        setSnackbar({ show: true, msg: __("Product Field Map can't be empty", 'bit-integrations') })
       }
     } else if (wcConf?.module === 'changestatus') {
       const fieldMap = checkMappedFields(wcConf.changestatus.field_map)
       if (!fieldMap) {
-        setSnackbar({ show: true, msg: "Change Status Field Map can't be empty" })
+        setSnackbar({
+          show: true,
+          msg: __("Change Status Field Map can't be empty", 'bit-integrations')
+        })
       }
     }
 

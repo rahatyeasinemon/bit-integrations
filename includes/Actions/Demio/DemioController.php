@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Demio;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Demio integration
@@ -31,9 +31,9 @@ class DemioController
         $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
 
         if ($response->pong) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API Key & API Secret', 400);
+            wp_send_json_error(__('Please enter valid API Key & API Secret', 'bit-integrations'), 400);
         }
     }
 
@@ -56,7 +56,7 @@ class DemioController
             }
             wp_send_json_success($events, 200);
         } else {
-            wp_send_json_error('Events fetching failed', 400);
+            wp_send_json_error(__('Events fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -79,7 +79,7 @@ class DemioController
             }
             wp_send_json_success($sessions, 200);
         } else {
-            wp_send_json_error('Events fetching failed', 400);
+            wp_send_json_error(__('Events fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -93,7 +93,7 @@ class DemioController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($apiSecret) || empty($actionName) || empty($apiKey)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Demio'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Demio'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiSecret, $apiKey);

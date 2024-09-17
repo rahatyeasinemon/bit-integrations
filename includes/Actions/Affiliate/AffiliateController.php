@@ -35,7 +35,7 @@ class AffiliateController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'Affiliate'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'Affiliate'));
     }
 
     public static function getAllAffiliate()
@@ -43,8 +43,6 @@ class AffiliateController
         $affiliates = [];
 
         global $wpdb;
-        $query = "select affiliate_Id from {$wpdb->prefix}affiliate_wp_affiliates";
-
         $affiliatesIds = $wpdb->get_results(
             $wpdb->prepare("SELECT affiliate_Id FROM {$wpdb->prefix}affiliate_wp_affiliates")
         );
@@ -69,7 +67,7 @@ class AffiliateController
             empty($integId)
             || empty($mainAction) || empty($fieldMap)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Affiliate api'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Affiliate api'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $affiliateApiResponse = $recordApiHelper->execute(

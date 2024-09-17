@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\PerfexCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -41,7 +41,7 @@ class RecordApiHelper
     public function addCustomer($finalData)
     {
         if (empty($finalData['company'])) {
-            return ['success' => false, 'message' => 'Required field Company is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Company is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $this->type = 'Customer';
@@ -54,13 +54,13 @@ class RecordApiHelper
     public function addContact($finalData)
     {
         if (empty($finalData['firstname'])) {
-            return ['success' => false, 'message' => 'Required field First Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field First Name is empty', 'bit-integrations'), 'code' => 400];
         } elseif (empty($finalData['lastname'])) {
-            return ['success' => false, 'message' => 'Required field Last Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Last Name is empty', 'bit-integrations'), 'code' => 400];
         } elseif (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         } elseif (isset($this->integrationDetails->selectedCustomer) && empty($this->integrationDetails->selectedCustomer)) {
-            return ['success' => false, 'message' => 'Required field Customer is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Customer is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $finalData['customer_id'] = ($this->integrationDetails->selectedCustomer);
@@ -86,13 +86,13 @@ class RecordApiHelper
     public function addLead($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field name is empty', 'bit-integrations'), 'code' => 400];
         } elseif (isset($this->integrationDetails->selectedLeadStatusId) && empty($this->integrationDetails->selectedLeadStatusId)) {
-            return ['success' => false, 'message' => 'Required field Lead Status Id is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Lead Status Id is empty', 'bit-integrations'), 'code' => 400];
         } elseif (isset($this->integrationDetails->selectedLeadSourceId) && empty($this->integrationDetails->selectedLeadSourceId)) {
-            return ['success' => false, 'message' => 'Required field Lead Source Id is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Lead Source Id is empty', 'bit-integrations'), 'code' => 400];
         } elseif (isset($this->integrationDetails->selectedStaff) && empty($this->integrationDetails->selectedStaff)) {
-            return ['success' => false, 'message' => 'Required field Lead Assigned By is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Lead Assigned By is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $finalData['status'] = $this->integrationDetails->selectedLeadStatusId;
@@ -118,17 +118,17 @@ class RecordApiHelper
     public function addProject($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field name is empty', 'bit-integrations'), 'code' => 400];
         } elseif (empty($finalData['start_date'])) {
-            return ['success' => false, 'message' => 'Required field Start Date is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Start Date is empty', 'bit-integrations'), 'code' => 400];
         } elseif (isset($this->integrationDetails->selectedProjectStatus) && empty($this->integrationDetails->selectedProjectStatus)) {
-            return ['success' => false, 'message' => 'Required field Project Status is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Project Status is empty', 'bit-integrations'), 'code' => 400];
         } elseif (isset($this->integrationDetails->selectedProjectType) && empty($this->integrationDetails->selectedProjectType)) {
-            return ['success' => false, 'message' => 'Required field Project Type is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Project Type is empty', 'bit-integrations'), 'code' => 400];
         } elseif (isset($this->integrationDetails->selectedbillingType) && empty($this->integrationDetails->selectedbillingType)) {
-            return ['success' => false, 'message' => 'Required field Billing Type is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Billing Type is empty', 'bit-integrations'), 'code' => 400];
         } elseif (isset($this->integrationDetails->selectedCustomer) && empty($this->integrationDetails->selectedCustomer)) {
-            return ['success' => false, 'message' => 'Required field Customer is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Customer is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $finalData['status'] = $this->integrationDetails->selectedProjectStatus;

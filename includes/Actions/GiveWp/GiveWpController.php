@@ -20,7 +20,7 @@ class GiveWpController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'GiveWp'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'GiveWp'));
     }
 
     public function execute($integrationData, $fieldValues)
@@ -33,7 +33,7 @@ class GiveWpController
             empty($integId)
             || empty($mainAction)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'GiveWp'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'GiveWp'));
         }
         $recordApiHelper = new RecordApiHelper();
         $giveWpApiResponse = $recordApiHelper->execute(

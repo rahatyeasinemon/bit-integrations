@@ -303,6 +303,7 @@ const IntegType = memo(({ allIntegURL, flow }) => {
     case 'Encharge':
       return <EditEncharge allIntegURL={allIntegURL} />
     case 'Registration':
+    case 'WP User Registration':
       return <EditRegistration allIntegURL={allIntegURL} />
     case 'Autonami':
       return <EditAutonami allIntegURL={allIntegURL} />
@@ -313,6 +314,7 @@ const IntegType = memo(({ allIntegURL, flow }) => {
     case 'Google Calendar':
       return <EditGoogleCalendar allIntegURL={allIntegURL} />
     case 'Post Creation':
+    case 'WP Post Creation':
       return <EditPost allIntegURL={allIntegURL} />
     case 'Slack':
       return <EditSlack allIntegURL={allIntegURL} />

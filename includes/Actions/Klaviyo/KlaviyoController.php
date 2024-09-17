@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Klaviyo;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Klaviyo integration
@@ -55,7 +55,7 @@ class KlaviyoController
             empty($field_map)
             || empty($authKey)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Klaviyo'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Klaviyo'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $klaviyoApiResponse = $recordApiHelper->execute(

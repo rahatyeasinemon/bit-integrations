@@ -7,10 +7,10 @@
 
 namespace BitCode\FI\Actions\Pods;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Core\Util\Helper;
 use BitCode\FI\Flow\Flow;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
+use BitCode\FI\Core\Util\Helper;
 
 /**
  * Provide functionality for POD integration
@@ -44,9 +44,9 @@ final class PodsController
 
         if (is_wp_error($updated) || !$updated) {
             $message = is_wp_error($updated) ? $updated->get_error_message() : 'error';
-            LogHandler::save($integrationData->id, 'Post Creation', 'error', $message);
+            LogHandler::save($integrationData->id, 'WP Post Creation', 'error', $message);
         } else {
-            LogHandler::save($integrationData->id, 'Post Creation', 'success', $updated);
+            LogHandler::save($integrationData->id, 'WP Post Creation', 'success', $updated);
         }
 
         if (is_plugin_active('pods/init.php')) {

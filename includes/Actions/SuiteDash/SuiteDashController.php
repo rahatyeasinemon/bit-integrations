@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SuiteDash;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for SuiteDash integration
@@ -31,9 +31,9 @@ class SuiteDashController
         $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
 
         if (isset($response->success) && $response->success) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid Session Token or Link Name', 400);
+            wp_send_json_error(__('Please enter valid Session Token or Link Name', 'bit-integrations'), 400);
         }
     }
 
@@ -45,7 +45,7 @@ class SuiteDashController
         $response = HttpHelper::get($apiEndpoint, null, $this->_defaultHeader);
 
         if (isset($response->success) && $response->success === false) {
-            wp_send_json_error('Fields fetching failed', 400);
+            wp_send_json_error(__('Fields fetching failed', 'bit-integrations'), 400);
         } else {
             $fieldMap = [];
             $fieldNames = ['uid', 'name_prefix', 'active', 'role', 'tags', 'created', 'company', 'companies'];
@@ -101,7 +101,7 @@ class SuiteDashController
             }
             wp_send_json_success($companies, 200);
         } else {
-            wp_send_json_error('Tags fetching failed', 400);
+            wp_send_json_error(__('Tags fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -115,7 +115,7 @@ class SuiteDashController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($publicId) || empty($actionName) || empty($secretKey)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SuiteDash'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'SuiteDash'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $publicId, $secretKey);

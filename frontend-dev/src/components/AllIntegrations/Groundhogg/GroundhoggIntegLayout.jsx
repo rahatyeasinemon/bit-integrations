@@ -57,11 +57,11 @@ export default function GroundhoggIntegLayout({
   const allFormFields = formFields.map((itm) => ({ label: itm.label, value: itm.name }))
 
   const options = [
-    { type: 'group', title: 'Groundhogg Tags', childs: organizedTags },
-    { type: 'group', title: 'Form Fields', childs: allFormFields },
+    { type: 'group', title: __('Groundhogg Tags', 'bit-integrations'), childs: organizedTags },
+    { type: 'group', title: __('Form Fields', 'bit-integrations'), childs: allFormFields },
     {
       type: 'group',
-      title: 'Special Tags',
+      title: __('Special Tags', 'bit-integrations'),
       childs: SmartTagField?.map((fld) => ({ label: fld.label, value: fld.name }))
     }
   ]

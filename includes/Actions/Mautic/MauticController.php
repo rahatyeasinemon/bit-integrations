@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Mautic;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for MailChimp integration
@@ -163,7 +163,7 @@ class MauticController
             || empty($fieldMap)
             || empty($defaultDataConf)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'mautic'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'mautic'));
         }
         if ((\intval($tokenDetails->generates_on) + (60 * 55)) < time()) {
             $requiredParams['clientId'] = $integrationDetails->clientId;

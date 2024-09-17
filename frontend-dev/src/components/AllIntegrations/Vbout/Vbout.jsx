@@ -18,7 +18,7 @@ function Vbout({ formFields, setFlow, flow, allIntegURL }) {
   const [loading, setLoading] = useState({
     list: false,
     field: false,
-    auth: false,
+    auth: false
   })
   const [step, setstep] = useState(1)
   const [snack, setSnackbar] = useState({ show: false })
@@ -27,18 +27,25 @@ function Vbout({ formFields, setFlow, flow, allIntegURL }) {
     name: 'Vbout',
     type: 'Vbout',
     auth_token: process.env.NODE_ENV === 'development' ? '8517173337548323874274218' : '',
-    field_map: [
-      { formField: '', VboutFormField: '' },
-    ],
+    field_map: [{ formField: '', VboutFormField: '' }],
     VboutFields: [],
     list_id: '',
     contact_status: '',
-    actions: {},
+    actions: {}
   })
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, vboutConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      vboutConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -53,7 +60,7 @@ function Vbout({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(vboutConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
     vboutConf.field_map.length > 0 && setstep(pageNo)
@@ -62,7 +69,9 @@ function Vbout({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
 
@@ -77,8 +86,9 @@ function Vbout({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <VboutIntegLayout
           formFields={formFields}
           handleInput={(e) => handleInput(e, vboutConf, setVboutConf)}
@@ -92,11 +102,8 @@ function Vbout({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
-          &nbsp;
+          type="button">
+          {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>

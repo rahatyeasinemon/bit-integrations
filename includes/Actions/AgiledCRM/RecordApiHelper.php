@@ -6,8 +6,9 @@
 
 namespace BitCode\FI\Actions\AgiledCRM;
 
-use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -40,7 +41,7 @@ class RecordApiHelper
     public function addAccount($finalData)
     {
         if (empty($finalData['name'])) {
-            return ['success' => false, 'message' => 'Required field Name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $apiEndpoint = "https://my.agiled.app/api/v1/accounts?api_token={$this->authToken}";
@@ -71,7 +72,7 @@ class RecordApiHelper
     public function addContact($finalData)
     {
         if (empty($finalData['first_name']) || empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field Name or Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Name or Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $apiEndpoint = "https://my.agiled.app/api/v1/contacts?api_token={$this->authToken}";
@@ -126,7 +127,7 @@ class RecordApiHelper
     public function addDeal($finalData)
     {
         if (empty($finalData['deal_name'])) {
-            return ['success' => false, 'message' => 'Required field deal name is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field deal name is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $apiEndpoint = "https://my.agiled.app/api/v1/crm/pipeline-deals?api_token={$this->authToken}";
@@ -160,9 +161,9 @@ class RecordApiHelper
             $actionValue = $value->agiledFormField;
             if ($triggerValue === 'custom') {
                 if ($actionValue === 'customFieldKey') {
-                    $dataFinal[$value->customFieldKey] = $value->customValue;
+                    $dataFinal[$value->customFieldKey] = Common::replaceFieldWithValue($value->customValue, $data);
                 } else {
-                    $dataFinal[$actionValue] = $value->customValue;
+                    $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
                 }
             } elseif (!\is_null($data[$triggerValue])) {
                 if ($actionValue === 'customFieldKey') {

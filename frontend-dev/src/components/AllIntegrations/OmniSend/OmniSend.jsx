@@ -18,7 +18,7 @@ function OmniSend({ formFields, setFlow, flow, allIntegURL }) {
   const [loading, setLoading] = useState({
     channel: false,
     field: false,
-    auth: false,
+    auth: false
   })
 
   const [step, setstep] = useState(1)
@@ -26,65 +26,65 @@ function OmniSend({ formFields, setFlow, flow, allIntegURL }) {
   const omniSendFields = [
     {
       key: 'email',
-      label: 'Email',
-      required: false,
+      label: __('Email', 'bit-integrations'),
+      required: false
     },
     {
       key: 'phone_number',
-      label: 'Phone Number',
-      required: false,
+      label: __('Phone Number', 'bit-integrations'),
+      required: false
     },
     {
       key: 'firstName',
-      label: 'First Name',
-      required: false,
+      label: __('First Name', 'bit-integrations'),
+      required: false
     },
     {
       key: 'lastName',
-      label: 'Last Name',
-      required: false,
+      label: __('Last Name', 'bit-integrations'),
+      required: false
     },
     {
       key: 'country',
-      label: 'Country',
-      required: false,
+      label: __('Country', 'bit-integrations'),
+      required: false
     },
 
     {
       key: 'countryCode',
-      label: 'Country Code',
-      required: false,
+      label: __('Country Code', 'bit-integrations'),
+      required: false
     },
     {
       key: 'state',
-      label: 'State',
-      required: false,
+      label: __('State', 'bit-integrations'),
+      required: false
     },
     {
       key: 'city',
-      label: 'City',
-      required: false,
+      label: __('City', 'bit-integrations'),
+      required: false
     },
     {
       key: 'address',
-      label: 'Address',
-      required: false,
+      label: __('Address', 'bit-integrations'),
+      required: false
     },
     {
       key: 'postalCode',
-      label: 'Postal Code',
-      required: false,
+      label: __('Postal Code', 'bit-integrations'),
+      required: false
     },
     {
       key: 'gender',
-      label: 'Gender',
-      required: false,
+      label: __('Gender', 'bit-integrations'),
+      required: false
     },
     {
       key: 'birthdate',
-      label: 'Birth Date',
-      required: false,
-    },
+      label: __('Birth Date', 'bit-integrations'),
+      required: false
+    }
   ]
   const [omniSendConf, setOmniSendConf] = useState({
     name: 'OmniSend',
@@ -99,7 +99,7 @@ function OmniSend({ formFields, setFlow, flow, allIntegURL }) {
     email_status: '',
     sms_status: '',
     omniSend_fields: omniSendFields,
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
@@ -112,7 +112,7 @@ function OmniSend({ formFields, setFlow, flow, allIntegURL }) {
       navigate,
       '',
       '',
-      setIsLoading,
+      setIsLoading
     )
     resp.then((res) => {
       if (res.success) {
@@ -129,7 +129,7 @@ function OmniSend({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(omniSendConf)) {
-      toast.error('Please map mandatory fields')
+      toast.error(__('Please map mandatory fields', 'bit-integrations'))
       return
     }
     omniSendConf.field_map.length > 0 && setstep(pageNo)
@@ -161,19 +161,14 @@ function OmniSend({ formFields, setFlow, flow, allIntegURL }) {
           ...(step === 2 && {
             width: 900,
             height: 'auto',
-            overflow: 'visible',
-          }),
-        }}
-      >
+            overflow: 'visible'
+          })
+        }}>
         <OmniSendIntegLayout
           formFields={formFields}
-          handleInput={(e) => handleInput(
-            e,
-            omniSendConf,
-            setOmniSendConf,
-            setLoading,
-            setSnackbar,
-          )}
+          handleInput={(e) =>
+            handleInput(e, omniSendConf, setOmniSendConf, setLoading, setSnackbar)
+          }
           omniSendConf={omniSendConf}
           setOmniSendConf={setOmniSendConf}
           loading={loading}
@@ -184,11 +179,8 @@ function OmniSend({ formFields, setFlow, flow, allIntegURL }) {
         <button
           onClick={() => nextPage(3)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
-          &nbsp;
+          type="button">
+          {__('Next', 'bit-integrations')} &nbsp;
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>

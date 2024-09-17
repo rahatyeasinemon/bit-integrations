@@ -438,7 +438,7 @@ class Model
         if (!\is_null($condition) && array_keys($condition) === range(0, \count($condition) - 1)) {
             return new WP_Error(
                 'get_condition',
-                'Require ASSOC_ARRAY but found N_ARRAY'
+                __('Require ASSOC_ARRAY but found N_ARRAY', 'bit-integrations')
             );
         }
 

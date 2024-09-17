@@ -128,7 +128,7 @@ export default function ZagoMailAuthorization({
       {isLoading === 'auth' && (
         <div className="flx mt-5">
           <LoaderSm size={25} clr="#022217" className="mr-2" />
-          Checking API Public Key Key!!!
+          {__('Checking API Public Key Key!!!', 'bit-integrations')}
         </div>
       )}
 
@@ -137,7 +137,7 @@ export default function ZagoMailAuthorization({
           <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
             &times;
           </span>
-          Sorry, API Public Key key is invalid
+          {__('Sorry, API Public Key key is invalid', 'bit-integrations')}
         </div>
       )}
       {!isInfo && (

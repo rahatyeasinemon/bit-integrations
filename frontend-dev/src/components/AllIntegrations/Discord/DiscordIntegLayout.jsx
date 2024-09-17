@@ -116,7 +116,7 @@ export default function DiscordIntegLayout({
       {discordConf?.selectedChannel && discordConf?.selectedServer && (
         <>
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b mr-16">{__('Messages: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b mr-16">{__('Messages:', 'bit-integrations')}</b>
             <textarea
               className="w-7"
               onChange={handleInput}

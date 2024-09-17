@@ -13,7 +13,9 @@ const WPForoHelper = ({ flow, setFlowData, edit = false }) => {
     <div>
       {id === 'wpforo-1' && (
         <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select Forum</b>
+          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
+            {__('Select Forum', 'bit-integrations')}
+          </b>
           <MultiSelect
             className="msl-wrp-options"
             defaultValue={triggerData?.selectedForum}
@@ -31,7 +33,9 @@ const WPForoHelper = ({ flow, setFlowData, edit = false }) => {
         id === 'wpforo-6' ||
         id === 'wpforo-11') && (
         <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select Topic</b>
+          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
+            {__('Select Topic', 'bit-integrations')}
+          </b>
           <MultiSelect
             className="msl-wrp-options"
             defaultValue={triggerData?.selectedTopic}
@@ -48,7 +52,9 @@ const WPForoHelper = ({ flow, setFlowData, edit = false }) => {
         id === 'wpforo-10' ||
         id === 'wpforo-12') && (
         <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>Select User</b>
+          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
+            {__('Select User', 'bit-integrations')}
+          </b>
           <MultiSelect
             className="msl-wrp-options"
             defaultValue={triggerData?.selectedUser}

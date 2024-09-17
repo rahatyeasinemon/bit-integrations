@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Gravitec;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Gravitec integration
@@ -28,7 +28,7 @@ class GravitecController
         $data = [
             'payload' => [
                 'title'        => 'Authorization',
-                'message'      => 'Authorized Successfully',
+                'message'      => __('Authorized Successfully', 'bit-integrations'),
                 'icon'         => BTCBI_ASSET_URI . '/gravitec.jpg',
                 'redirect_url' => $fieldsRequestParams->site_url
             ]
@@ -38,9 +38,9 @@ class GravitecController
         $response = HttpHelper::post($apiEndpoint, wp_json_encode($data), $headers);
 
         if (isset($response->id)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid Site Url, App Key & App Secret', 400);
+            wp_send_json_error(__('Please enter valid Site Url, App Key & App Secret', 'bit-integrations'), 400);
         }
     }
 
@@ -54,7 +54,7 @@ class GravitecController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($appKey) || empty($actionName) || empty($appSecret)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Gravitec'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Gravitec'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $appKey, $appSecret);

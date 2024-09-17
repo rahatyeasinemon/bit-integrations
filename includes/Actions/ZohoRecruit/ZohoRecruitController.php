@@ -294,7 +294,7 @@ class ZohoRecruitController
             $requiredFileUploadFiles = [];
             if ($queryParams->module === 'Candidates') {
                 $fileUploadFields['Candidate Photo'] = (object) [
-                    'display_label' => 'Candidate Profile Photo',
+                    'display_label' => __('Candidate Profile Photo', 'bit-integrations'),
                     'length'        => 1000,
                     'data_type'     => 'UploadText',
                     'required'      => 'false'
@@ -417,10 +417,10 @@ class ZohoRecruitController
             || empty($module)
             || empty($fieldMap)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Zoho Recruit'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Zoho Recruit'));
         }
         if (empty($defaultDataConf->moduleData->{$module}->fields) || empty($defaultDataConf->modules->{$module})) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Zoho Recruit'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Zoho Recruit'));
         }
         if ((\intval($tokenDetails->generates_on) + (55 * 60)) < time()) {
             $requiredParams['clientId'] = $integrationDetails->clientId;

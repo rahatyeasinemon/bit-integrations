@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Mailjet;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Mailjet integration
@@ -38,7 +38,7 @@ class MailjetController
             }
             wp_send_json_success($lists, 200);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 
@@ -68,7 +68,7 @@ class MailjetController
         if (!empty($customFields)) {
             wp_send_json_success($customFields, 200);
         } else {
-            wp_send_json_error('Custom fields fetch failed', 400);
+            wp_send_json_error(__('Custom fields fetch failed', 'bit-integrations'), 400);
         }
     }
 
@@ -82,7 +82,7 @@ class MailjetController
         $fieldMap = $integrationDetails->field_map;
 
         if (empty($fieldMap) || empty($secretKey) || empty($apiKey) || empty($selectedLists)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mailjet'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Mailjet'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, $apiKey, $secretKey);

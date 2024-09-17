@@ -2,7 +2,7 @@ import { useState } from 'react'
 import BackIcn from '../../../Icons/BackIcn'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
-import { __ } from '../../../Utils/i18nwrap'
+import { __, sprintf } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
@@ -71,7 +71,7 @@ export default function PropovoiceCrmAuthorization({
       {isLoading === 'auth' && (
         <div className="flx mt-5">
           <LoaderSm size={25} clr="#022217" className="mr-2" />
-          Checking if Propovoice CRM is active!!!
+          {__('Checking if Propovoice CRM is active!!!', 'bit-integrations')}
         </div>
       )}
 
@@ -80,7 +80,13 @@ export default function PropovoiceCrmAuthorization({
           <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
             &times;
           </span>
-          Propovoice CRM plugin must be activated to integrate with Bit Integrations.
+          {sprintf(
+            __(
+              '%s plugin must be activated to integrate with Bit Integrations',
+              'bit-integrations'
+            ),
+            'Propovoice CRM'
+          )}
         </div>
       )}
 

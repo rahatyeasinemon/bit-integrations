@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\ZohoSheet;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Flow\FlowController;
 use WP_Error;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class ZohoSheetController
 {
@@ -133,10 +133,10 @@ class ZohoSheetController
                 }
                 wp_send_json_success($sheetHeaders, 200);
             } else {
-                wp_send_json_error('No header found', 400);
+                wp_send_json_error(__('No header found', 'bit-integrations'), 400);
             }
         } else {
-            wp_send_json_error('Header fetching failed', 400);
+            wp_send_json_error(__('Header fetching failed', 'bit-integrations'), 400);
         }
     }
 

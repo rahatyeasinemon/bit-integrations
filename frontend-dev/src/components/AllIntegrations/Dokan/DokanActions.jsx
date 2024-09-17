@@ -32,8 +32,10 @@ export default function DokanActions({ dokanConf, setDokanConf, loading, setLoad
       {!isPro && (
         <div className="pt-2">
           <span className="actions-note">
-            The Bit Integrations Pro plugin needs to be installed and activated to utilize these
-            features.
+            {__(
+              'The Bit Integrations Pro plugin needs to be installed and activated to utilize these features',
+              'bit-integrations'
+            )}
           </span>
         </div>
       )}

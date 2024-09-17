@@ -14,7 +14,7 @@ final class PostController
     public function getPostTypes()
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
         $cptArguments = [
             'public'          => true,
@@ -97,20 +97,75 @@ final class PostController
         return ['fields' => array_values($metaboxFields), 'files' => $metaboxFile];
     }
 
+    public static function getJetEngineCPTMetaFields($postType)
+    {
+        $fields = $files = [];
+
+        if (is_plugin_active('jet-engine/jet-engine.php')) {
+            $postTypeObject = get_post_type_object($postType);
+
+            if ($postTypeObject && !is_wp_error($postTypeObject)) {
+                $id = $postTypeObject->id;
+                $postTypeData = jet_engine()->cpt->data->get_item_for_edit($id);
+                if (!empty($postTypeData) && !empty($postTypeData['meta_fields'])) {
+                    foreach ($postTypeData['meta_fields'] as $item) {
+                        if ($item['object_type'] === 'field') {
+                            if ($item['type'] === 'media' || $item['type'] === 'gallery') {
+                                $files[] = [
+                                    'key'      => $item['name'],
+                                    'name'     => $item['title'],
+                                    'required' => false,
+                                ];
+                            } else {
+                                $fields[] = [
+                                    'key'      => $item['name'],
+                                    'name'     => $item['title'],
+                                    'required' => (isset($item['is_required']) && $item['is_required']) ? true : false,
+                                ];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return ['fields' => $fields, 'files' => $files];
+    }
+
+    public static function getJetEngineCPTRawMeta($postType)
+    {
+        if (is_plugin_active('jet-engine/jet-engine.php')) {
+            $postTypeObject = get_post_type_object($postType);
+
+            if ($postTypeObject && !is_wp_error($postTypeObject)) {
+                $id = $postTypeObject->id;
+                $postTypeData = jet_engine()->cpt->data->get_item_for_edit($id);
+                if (!empty($postTypeData) && !empty($postTypeData['meta_fields'])) {
+                    return $postTypeData['meta_fields'];
+                }
+            }
+        }
+
+        return [];
+    }
+
     public function getCustomFields($data)
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
 
         $acf = self::getAcfFields($data->post_type);
 
         $metabox = self::getMetaboxFields($data->post_type);
+        $jetEngineCPTMeta = self::getJetEngineCPTMetaFields($data->post_type);
         $fields = [
-            'acf_fields' => $acf['fields'],
-            'acf_files'  => $acf['files'],
-            'mb_fields'  => $metabox['fields'],
-            'mb_files'   => $metabox['files'],
+            'acf_fields'    => $acf['fields'],
+            'acf_files'     => $acf['files'],
+            'mb_fields'     => $metabox['fields'],
+            'mb_files'      => $metabox['files'],
+            'je_cpt_fields' => $jetEngineCPTMeta['fields'],
+            'je_cpt_files'  => $jetEngineCPTMeta['files']
         ];
 
         wp_send_json_success($fields, 200);
@@ -119,7 +174,7 @@ final class PostController
     public function getPages()
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
         $pages = get_pages(['post_status' => 'publish', 'sort_column' => 'post_date', 'sort_order' => 'desc']);
         $allPages = [];
@@ -134,7 +189,7 @@ final class PostController
     public function getPodsPostType()
     {
         if (!(Capabilities::Check('manage_options') || Capabilities::Check('bit_integrations_manage_integrations') || Capabilities::Check('bit_integrations_create_integrations') || Capabilities::Check('bit_integrations_edit_integrations'))) {
-            wp_send_json_error('User don\'t have permission to access this page');
+            wp_send_json_error(__('User don\'t have permission to access this page', 'bit-integrations'));
         }
         $users = get_users(['fields' => ['ID', 'display_name']]);
         $pods = [];

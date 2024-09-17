@@ -29,8 +29,11 @@ export default function SureMembersIntegLayout({
           <MultiSelect
             style={{ width: '450px' }}
             options={[
-              { label: 'Add User to Access Group', value: 'grantAccess' },
-              { label: 'Remove User from Access Group', value: 'revokeAccess' }
+              { label: __('Add User to Access Group', 'bit-integrations'), value: 'grantAccess' },
+              {
+                label: __('Remove User from Access Group', 'bit-integrations'),
+                value: 'revokeAccess'
+              }
             ]}
             className="msl-wrp-options"
             defaultValue={sureMembersConf?.selectedTask}

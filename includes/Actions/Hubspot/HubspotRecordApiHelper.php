@@ -253,7 +253,7 @@ class HubspotRecordApiHelper
         $response = apply_filters('btcbi_hubspot_update_entity', $id, $finalData, $actionName, $this->defaultHeader);
 
         if (\is_string($response) && $response == $id) {
-            return (object) ['errors' => 'Bit Integration Pro plugin is not installed or activate'];
+            return (object) ['errors' => wp_sprintf(__('%s is not active or not installed', 'bit-integrations'), 'Bit Integration Pro')];
         }
 
         return $response;

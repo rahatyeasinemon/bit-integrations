@@ -34,7 +34,7 @@ class RecordApiHelper
         $apiEndpoints = 'https://api.mailjet.com/v3/REST/contact/managemanycontacts';
 
         if (empty($finalData['Email'])) {
-            return ['success' => false, 'message' => 'Required field Email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         $this->_responseType = $this->isExist($finalData['Email']);

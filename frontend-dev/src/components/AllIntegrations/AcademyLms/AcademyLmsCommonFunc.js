@@ -42,10 +42,10 @@ export const getAllCourses = (academyLmsConf, setAcademyLmsConf, setIsLoading, v
         newConf.default.courses = result.data
         setAcademyLmsConf({ ...newConf })
         setIsLoading(false)
-        return 'Courses fetched successfully'
+        return __('Courses fetched successfully', 'bit-integrations')
       }
       setIsLoading(false)
-      return 'Courses fetch failed. please try again'
+      return __('Courses fetch failed. please try again', 'bit-integrations')
     }
   )
   toast.promise(loadPostTypes, {
@@ -64,10 +64,10 @@ export const getAllLesson = (academyLmsConf, setAcademyLmsConf, setIsLoading) =>
       newConf.default.lessons = result.data
       setAcademyLmsConf({ ...newConf })
       setIsLoading(false)
-      return 'Lessons fetched successfully'
+      return __('Lessons fetched successfully', 'bit-integrations')
     }
     setIsLoading(false)
-    return 'Lessons fetch failed, please try again...'
+    return __('Lessons fetch failed, please try again...', 'bit-integrations')
   })
   toast.promise(loadPostTypes, {
     success: (data) => data,

@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Newsletter;
 
-use BitCode\FI\Core\Util\Common;
-use BitCode\FI\Log\LogHandler;
 use TNP;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 
 /**
  * Provide functionality for Record insert, update
@@ -25,7 +25,7 @@ class RecordApiHelper
     public function addSubscriber($finalData, $selectedLists)
     {
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Required field email is empty', 'code' => 400];
+            return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
         }
 
         if (!empty($selectedLists)) {
@@ -57,7 +57,7 @@ class RecordApiHelper
         $response = $this->addSubscriber($finalData, $selectedLists);
 
         if (isset($response->id)) {
-            $res = ['message' => 'Subscriber added successfully'];
+            $res = ['message' => __('Subscriber added successfully', 'bit-integrations')];
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'subscriber', 'type_name' => 'Subscriber add']), 'success', wp_json_encode($res));
         } else {
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => '', 'type_name' => 'Adding subscriber']), 'error', wp_json_encode($response));

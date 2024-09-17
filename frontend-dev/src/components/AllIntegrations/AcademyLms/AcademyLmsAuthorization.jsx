@@ -2,7 +2,7 @@ import { useState } from 'react'
 import BackIcn from '../../../Icons/BackIcn'
 import { deepCopy } from '../../../Utils/Helpers'
 import bitsFetch from '../../../Utils/bitsFetch'
-import { __ } from '../../../Utils/i18nwrap'
+import { __, sprintf } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
@@ -76,9 +76,12 @@ export default function AcademyLmsAuthorization({
           <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
             &times;
           </span>
-          {__(
-            'Academy Lms plugin must be activated to integrate with Bit Integrations.',
-            'bit-integrations'
+          {sprintf(
+            __(
+              '%s plugin must be activated to integrate with Bit Integrations',
+              'bit-integrations'
+            ),
+            'Academy Lms'
           )}
         </div>
       )}

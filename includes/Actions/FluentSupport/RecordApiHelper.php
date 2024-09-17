@@ -105,6 +105,7 @@ class RecordApiHelper
         $fieldMap,
         $integrationDetails
     ) {
+        $attachments = null;
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
         $customerExits = $this->getCustomerExits($finalData['email']);
         $finalData['client_priority'] = !empty($integrationDetails->actions->client_priority) ? $integrationDetails->actions->client_priority : 'normal';
@@ -139,6 +140,6 @@ class RecordApiHelper
             do_action('btcbi_fluent_support_upload_ticket_attachments', $finalData, $attachments, $ticket, $customer, $flowId);
         }
 
-        LogHandler::save($flowId, ['type' => 'Ticket', 'type_name' => 'Upload-Ticket-Attachments'], 'error', 'Bit Integration Pro plugin is not installed or activate');
+        LogHandler::save($flowId, ['type' => 'Ticket', 'type_name' => 'Upload-Ticket-Attachments'], 'error', wp_sprintf(__('%s plugin is not installed or activate', 'bit-integrations'), 'Bit Integration Pro'));
     }
 }

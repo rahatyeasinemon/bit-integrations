@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\MailBluster;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for MailBluster integration
@@ -50,7 +50,7 @@ class MailBlusterController
         if (property_exists($response, 'fields')) {
             wp_send_json_success($customFields, 200);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 
@@ -67,7 +67,7 @@ class MailBlusterController
             empty($fieldMap)
             || empty($auth_token) || empty($subscribed)
         ) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'GetResponse'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'GetResponse'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
         $mailBlusterApiResponse = $recordApiHelper->execute(

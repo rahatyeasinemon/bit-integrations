@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\PCloud;
 
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 use CURLFile;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 class RecordApiHelper
 {
@@ -25,7 +25,7 @@ class RecordApiHelper
             return false;
         }
 
-        if (is_array($filePath)) {
+        if (\is_array($filePath)) {
             foreach ($filePath as $item) {
                 $response = HttpHelper::post(
                     'https://api.pcloud.com/uploadfile?folderid=' . $folder,
@@ -61,8 +61,10 @@ class RecordApiHelper
                 continue;
             }
             foreach ($folderWithFile as $folder => $singleFilePath) {
-                if ($singleFilePath == '') continue;
-                $response = $this->uploadFile($folder, is_array($singleFilePath) ? $singleFilePath[0] : $singleFilePath);
+                if ($singleFilePath == '') {
+                    continue;
+                }
+                $response = $this->uploadFile($folder, \is_array($singleFilePath) ? $singleFilePath[0] : $singleFilePath);
                 $this->storeInState($response);
                 $this->deleteFile($singleFilePath[0], $actions);
             }
@@ -89,12 +91,11 @@ class RecordApiHelper
         $this->handleAllFiles($folderWithFiles, $actions);
 
         if (\count($this->successApiResponse) > 0) {
-            LogHandler::save($integrationId, wp_json_encode(['type' => 'PCloud', 'type_name' => 'file_upload']), 'success', 'All Files Uploaded. ' . wp_json_encode($this->successApiResponse));
+            LogHandler::save($integrationId, wp_json_encode(['type' => 'PCloud', 'type_name' => 'file_upload']), 'success', __('All Files Uploaded', 'bit-integrations') . wp_json_encode($this->successApiResponse));
         }
         if (\count($this->errorApiResponse) > 0) {
-            LogHandler::save($integrationId, wp_json_encode(['type' => 'PCloud', 'type_name' => 'file_upload']), 'error', 'Some Files Can\'t Upload. ' . wp_json_encode($this->errorApiResponse));
+            LogHandler::save($integrationId, wp_json_encode(['type' => 'PCloud', 'type_name' => 'file_upload']), 'error', __('Some Files Can\'t Upload', 'bit-integrations') . wp_json_encode($this->errorApiResponse));
         }
-
     }
 
     protected function storeInState($response)

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\MoxieCRM;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for MoxieCRM integration
@@ -39,9 +39,9 @@ class MoxieCRMController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (!isset($response->error)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 
@@ -73,7 +73,7 @@ class MoxieCRMController
     //         }
     //         wp_send_json_success($customFields, 200);
     //     } else {
-    //         wp_send_json_error('Custom field fetching failed', 400);
+    //         wp_send_json_error(__('Custom field fetching failed', 'bit-integrations'), 400);
     //     }
     // }
 
@@ -100,7 +100,7 @@ class MoxieCRMController
             }
             wp_send_json_success($opportunities, 200);
         } else {
-            wp_send_json_error('Opportunity fetching failed', 400);
+            wp_send_json_error(__('Opportunity fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -128,7 +128,7 @@ class MoxieCRMController
             }
             wp_send_json_success($clients, 200);
         } else {
-            wp_send_json_error('Clients fetching failed', 400);
+            wp_send_json_error(__('Clients fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -156,7 +156,7 @@ class MoxieCRMController
             }
             wp_send_json_success($pipelineStages, 200);
         } else {
-            wp_send_json_error('PipelineStages fetching failed', 400);
+            wp_send_json_error(__('PipelineStages fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -185,7 +185,7 @@ class MoxieCRMController
             }
             wp_send_json_success($peoples, 200);
         } else {
-            wp_send_json_error('Peoples fetching failed', 400);
+            wp_send_json_error(__('Peoples fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -227,7 +227,7 @@ class MoxieCRMController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'MoxieCRM'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'MoxieCRM'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\ClinchPad;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for ClinchPad integration
@@ -38,9 +38,9 @@ class ClinchPadController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (isset($response)) {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         } else {
-            wp_send_json_error('Please enter valid API key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         }
     }
 
@@ -67,7 +67,7 @@ class ClinchPadController
             }
             wp_send_json_success($parentOrganizations, 200);
         } else {
-            wp_send_json_error('ParentOrganizations fetching failed', 400);
+            wp_send_json_error(__('ParentOrganizations fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -121,7 +121,7 @@ class ClinchPadController
             }
             wp_send_json_success($contacts, 200);
         } else {
-            wp_send_json_error('Contacts fetching failed', 400);
+            wp_send_json_error(__('Contacts fetching failed', 'bit-integrations'), 400);
         }
     }
 
@@ -134,7 +134,7 @@ class ClinchPadController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($authToken) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'ClinchPad'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'ClinchPad'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);

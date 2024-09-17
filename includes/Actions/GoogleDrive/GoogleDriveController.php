@@ -2,11 +2,11 @@
 
 namespace BitCode\FI\Actions\GoogleDrive;
 
-use WP_Error;
-use BitCode\FI\Log\LogHandler;
-use BitCode\FI\Flow\FlowController;
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Actions\GoogleDrive\RecordApiHelper as GoogleDriveRecordApiHelper;
+use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Flow\FlowController;
+use BitCode\FI\Log\LogHandler;
+use WP_Error;
 
 class GoogleDriveController
 {
@@ -91,7 +91,7 @@ class GoogleDriveController
     public function execute($integrationData, $fieldValues)
     {
         if (empty($integrationData->flow_details->tokenDetails->access_token)) {
-            LogHandler::save($this->integrationID, wp_json_encode(['type' => 'googleDrive', 'type_name' => 'file_upload']), 'error', 'Not Authorization By GoogleDrive.');
+            LogHandler::save($this->integrationID, wp_json_encode(['type' => 'googleDrive', 'type_name' => 'file_upload']), 'error', wp_sprintf(__('Not Authorization By %s', 'bit-integrations'), 'GoogleDrive'));
 
             return false;
         }

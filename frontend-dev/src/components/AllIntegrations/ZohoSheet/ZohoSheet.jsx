@@ -20,7 +20,7 @@ function ZohoSheet({ formFields, setFlow, flow, allIntegURL }) {
     header: false,
     workbooks: false,
     worksheets: false,
-    workSheetHeaders: false,
+    workSheetHeaders: false
   })
 
   const [step, setStep] = useState(1)
@@ -30,17 +30,16 @@ function ZohoSheet({ formFields, setFlow, flow, allIntegURL }) {
     type: 'Zoho Sheet',
     dataCenter: '',
     clientId: process.env.NODE_ENV === 'development' ? '1000.RZ6CKE6NUUU3YMJ83FKMQH3T6E0OAK' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? '192e33c5530e52e5d9066ed5394ccec15b550dd4fe' : '',
-    field_map: [
-      { formField: '', zohoSheetFormField: '' },
-    ],
+    clientSecret:
+      process.env.NODE_ENV === 'development' ? '192e33c5530e52e5d9066ed5394ccec15b550dd4fe' : '',
+    field_map: [{ formField: '', zohoSheetFormField: '' }],
     workbooks: [],
     worksheets: [],
     workSheetHeaders: [],
     selectedWorkbook: '',
     selectedWorksheet: '',
     headerRow: 1,
-    actions: {},
+    actions: {}
   })
 
   useEffect(() => {
@@ -49,8 +48,17 @@ function ZohoSheet({ formFields, setFlow, flow, allIntegURL }) {
 
   const saveConfig = () => {
     setIsLoading(true)
-    const resp = saveIntegConfig(flow, setFlow, allIntegURL, zohoSheetConf, navigate, '', '', setIsLoading)
-    resp.then(res => {
+    const resp = saveIntegConfig(
+      flow,
+      setFlow,
+      allIntegURL,
+      zohoSheetConf,
+      navigate,
+      '',
+      '',
+      setIsLoading
+    )
+    resp.then((res) => {
       if (res.success) {
         toast.success(res.data?.msg)
         navigate(allIntegURL)
@@ -66,7 +74,7 @@ function ZohoSheet({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (!checkMappedFields(zohoSheetConf)) {
-      toast.error('Please map mandatory workSheetHeaders')
+      toast.error(__('Please map mandatory workSheetHeaders', 'bit-integrations'))
       return
     }
     zohoSheetConf.field_map.length > 0 && setStep(pageNo)
@@ -75,7 +83,9 @@ function ZohoSheet({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <ZohoSheetAuthorization
@@ -89,8 +99,9 @@ function ZohoSheet({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ ...(step === 2 && { width: 900, height: 'auto', overflow: 'visible' }) }}>
         <ZohoSheetIntegLayout
           formFields={formFields}
           zohoSheetConf={zohoSheetConf}
@@ -99,23 +110,20 @@ function ZohoSheet({ formFields, setFlow, flow, allIntegURL }) {
           setLoading={setLoading}
         />
 
-        {(loading.workSheetHeaders && zohoSheetConf.selectedWorksheet) && (
+        {loading.workSheetHeaders && zohoSheetConf.selectedWorksheet && (
           <button
             onClick={() => nextPage(3)}
             disabled={!checkMappedFields(zohoSheetConf)}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button"
-          >
-            {__('Next', 'bit-integrations')}
-            {' '}
-            &nbsp;
+            type="button">
+            {__('Next', 'bit-integrations')} &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
           </button>
         )}
       </div>
 
       {/* STEP 3 */}
-      {(loading.workSheetHeaders && zohoSheetConf.selectedWorksheet) && (
+      {loading.workSheetHeaders && zohoSheetConf.selectedWorksheet && (
         <IntegrationStepThree
           step={step}
           saveConfig={() => saveConfig()}

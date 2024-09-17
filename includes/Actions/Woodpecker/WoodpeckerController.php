@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Woodpecker;
 
-use WP_Error;
 use BitCode\FI\Core\Util\HttpHelper;
+use WP_Error;
 
 /**
  * Provide functionality for Woodpecker integration
@@ -29,9 +29,9 @@ class WoodpeckerController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (isset($response->status) && $response->status->status === 'ERROR') {
-            wp_send_json_error('Please enter valid API Key', 400);
+            wp_send_json_error(__('Please enter valid API key', 'bit-integrations'), 400);
         } else {
-            wp_send_json_success('Authentication successful', 200);
+            wp_send_json_success(__('Authentication successful', 'bit-integrations'), 200);
         }
     }
 
@@ -44,7 +44,7 @@ class WoodpeckerController
         $response = HttpHelper::get($apiEndpoint, null, $headers);
 
         if (isset($response->status) && $response->status->status === 'ERROR') {
-            wp_send_json_error('Campaign not found!', 400);
+            wp_send_json_error(__('Campaign not found!', 'bit-integrations'), 400);
         } else {
             $campaigns = [];
             foreach ($response as $campaign) {
@@ -70,7 +70,7 @@ class WoodpeckerController
         $actionName = $integrationDetails->actionName;
 
         if (empty($fieldMap) || empty($apiKey) || empty($actionName)) {
-            return new WP_Error('REQ_FIELD_EMPTY', \sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Woodpecker'));
+            return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Woodpecker'));
         }
 
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId, base64_encode($apiKey));

@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\SendinBlue;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -97,7 +97,7 @@ class RecordApiHelper
 
         $type = 'insert';
 
-        if (!empty($actions->update) && !empty($recordApiResponse->message) && $recordApiResponse->message === 'Contact already exist') {
+        if (!empty($actions->update) && !empty($recordApiResponse->message) && $recordApiResponse->message === __('Contact already exist', 'bit-integrations')) {
             $contactEmail = $fieldData['email'];
             $recordApiResponse = $this->updateRecord($contactEmail, wp_json_encode($fieldData));
             if (empty($recordApiResponse)) {

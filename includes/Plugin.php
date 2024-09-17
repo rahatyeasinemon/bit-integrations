@@ -13,6 +13,7 @@ use BitCode\FI\Core\Database\DB;
 use BitCode\FI\Core\Hooks\HookService;
 use BitCode\FI\Core\Util\Activation;
 use BitCode\FI\Core\Util\Capabilities;
+use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\Deactivation;
 use BitCode\FI\Core\Util\Hooks;
 use BitCode\FI\Core\Util\Request;
@@ -102,7 +103,7 @@ final class Plugin
         }
         new HookService();
 
-        load_plugin_textdomain('bit-integrations', false, basename(BTCBI_PLUGIN_BASEDIR) . '/languages');
+        Common::loadPluginTextDomain('bit-integrations', basename(BTCBI_PLUGIN_BASEDIR) . '/languages');
     }
 
     /**

@@ -36,7 +36,7 @@ class GamiPressController
         if (self::pluginActive()) {
             wp_send_json_success(true, 200);
         }
-        wp_send_json_error(\sprintf(__('%s must be activated!', 'bit-integrations'), 'GamiPress'));
+        wp_send_json_error(wp_sprintf(__('%s must be activated!', 'bit-integrations'), 'GamiPress'));
     }
 
     public static function getCourses()

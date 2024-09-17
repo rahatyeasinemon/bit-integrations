@@ -166,7 +166,7 @@ export default function SendPulseAuthorization({
           <span className="btcd-icn mr-2" style={{ fontSize: 30, marginTop: -5 }}>
             &times;
           </span>
-          Sorry, Client Secret key is invalid
+          {__('Sorry, Client Secret key is invalid', 'bit-integrations')}
         </div>
       )}
       {!isInfo && (

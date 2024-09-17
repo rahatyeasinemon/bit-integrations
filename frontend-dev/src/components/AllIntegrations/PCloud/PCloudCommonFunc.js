@@ -37,11 +37,11 @@ export const getAllPCloudFolders = (pCloudConf, setPCloudConf, type) => {
       }
       setPCloudConf(newConf)
       if (type === 'fetch') {
-        return 'Folders fetched successfully'
+        return __('Folders fetched successfully', 'bit-integrations')
       }
-      return 'Folders refreshed successfully'
+      return __('Folders refreshed successfully', 'bit-integrations')
     } else {
-      return 'Folders refresh failed. please try again'
+      return __('Folders refresh failed. please try again', 'bit-integrations')
     }
   })
   toast.promise(loadPostTypes, {
