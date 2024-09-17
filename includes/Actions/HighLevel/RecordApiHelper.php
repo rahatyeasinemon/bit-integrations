@@ -82,6 +82,60 @@ class RecordApiHelper
         return ['success' => false, 'message' => 'Failed to create contact!', 'response' => $response, 'code' => 400];
     }
 
+    public function updateContact($finalData, $selectedOptions, $actions)
+    {
+        if (empty($selectedOptions['selectedContact']) && empty($finalData['id'])) {
+            return ['success' => false, 'message' => 'Request parameter(s) empty!', 'code' => 400];
+        }
+
+        if (!empty($selectedOptions['selectedContact'])) {
+            $id = $selectedOptions['selectedContact'];
+        } else {
+            $id = $finalData['id'];
+        }
+
+        $staticFieldsKey = ['email', 'firstName', 'lastName', 'name', 'phone', 'dateOfBirth', 'address1', 'city', 'state', 'country', 'postalCode', 'companyName', 'website'];
+        $apiRequestData = $customFieldsData = [];
+
+        foreach ($finalData as $key => $value) {
+            if (\in_array($key, $staticFieldsKey)) {
+                $apiRequestData[$key] = $value;
+            } else {
+                $keyFieldType = explode('_bihl_', $key);
+                $fieldKey = $keyFieldType[0];
+                $fieldType = $keyFieldType[1];
+
+                if ($fieldType === 'MULTIPLE_OPTIONS' || $fieldType === 'CHECKBOX') {
+                    $customFieldsData[$fieldKey] = explode(',', str_replace(' ', '', $value));
+                } else {
+                    $customFieldsData[$fieldKey] = $value;
+                }
+            }
+        }
+
+        if (!empty($customFieldsData)) {
+            $apiRequestData['customField'] = $customFieldsData;
+        }
+
+        if ((isset($selectedOptions['selectedTags']) && !empty($selectedOptions['selectedTags'])) || !empty($actions)) {
+            if (Helper::proActionFeatExists('HighLevel', 'contactUtilities')) {
+                $filterResponse = apply_filters('btcbi_high_level_contact_utilities', 'updateContact', $selectedOptions, $actions);
+
+                if ($filterResponse !== 'updateContact' && !empty($filterResponse)) {
+                    $apiRequestData = array_merge($apiRequestData, $filterResponse);
+                }
+            }
+        }
+
+        $apiEndpoint = $this->baseUrl . 'contacts/' . $id;
+
+        error_log(print_r(['api endpoint' => $apiEndpoint], true));
+
+        $response = HttpHelper::put($apiEndpoint, wp_json_encode($apiRequestData), $this->defaultHeader);
+
+        error_log(print_r(['response' => $response], true));
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -100,13 +154,22 @@ class RecordApiHelper
 
     public function execute($fieldValues, $fieldMap, $selectedTask, $selectedOptions, $actions)
     {
-        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        if (isset($fieldMap[0]) && empty($fieldMap[0]->formField)) {
+            $finalData = [];
+        } else {
+            $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+        }
+
         $type = $typeName = '';
 
         if ($selectedTask === 'createContact') {
             $response = $this->createContact($finalData, $selectedOptions, $actions);
             $type = 'Contact';
             $typeName = 'Create Contact';
+        } elseif ($selectedTask === 'updateContact') {
+            $response = $this->updateContact($finalData, $selectedOptions, $actions);
+            $type = 'Contact';
+            $typeName = 'Update Contact';
         }
 
         if ($response['success']) {

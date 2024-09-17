@@ -11,6 +11,7 @@ import HighLevelAuthorization from './HighLevelAuthorization'
 import { checkMappedFields } from './HighLevelCommonFunc'
 import HighLevelIntegLayout from './HighLevelIntegLayout'
 import toast from 'react-hot-toast'
+import { OPTIONAL_FIELD_MAP_ARRAY, TASK_LIST_VALUES } from './highlevelConstants'
 
 function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
   const navigate = useNavigate()
@@ -20,7 +21,8 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
   const [loading, setLoading] = useState({
     auth: false,
     customFields: false,
-    options: false
+    options: false,
+    contacts: false
   })
 
   const [highLevelConf, setHighLevelConf] = useState({
@@ -35,7 +37,9 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
     tags: [],
     highLevelFields: [],
     selectedTags: '',
-    selectedTask: ''
+    selectedTask: '',
+    contacts: [],
+    selectedContact: ''
   })
 
   const nextPage = (val) => {
@@ -44,21 +48,31 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
     }, 300)
 
     if (val === 3) {
-      if (!checkMappedFields(highLevelConf)) {
-        toast.error('Please map all required fields to continue.')
-        return
+      if (!OPTIONAL_FIELD_MAP_ARRAY.includes(highLevelConf.selectedTask)) {
+        if (!checkMappedFields(highLevelConf)) {
+          toast.error('Please map all required fields to continue!')
+          return
+        }
       }
+
       if (!highLevelConf?.selectedTask) {
-        toast.error('Please select task to continue.')
+        toast.error('Please select task to continue!')
         return
       }
+
+      if (highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT) {
+        if (!highLevelConf.selectedContact && !checkMappedFields(highLevelConf)) {
+          toast.error('Please select a contact or map fields!')
+          return
+        }
+      }
+
       if (highLevelConf.name !== '' && highLevelConf.field_map.length > 0) {
         setstep(3)
       }
     }
   }
 
-  // console.log(highLevelConf)
   return (
     <div>
       <div className="txt-center mt-2">
@@ -89,11 +103,7 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
         />
         <button
           onClick={() => nextPage(3)}
-          disabled={
-            !highLevelConf?.selectedTask ||
-            !checkMappedFields(highLevelConf) ||
-            highLevelConf.field_map.length < 1
-          }
+          disabled={!highLevelConf?.selectedTask}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
           type="button">
           {__('Next', 'bit-integrations')} &nbsp;

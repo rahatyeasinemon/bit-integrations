@@ -7,12 +7,13 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import SnackMsg from '../../Utilities/SnackMsg'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
-import { handleInput } from './HighLevelCommonFunc'
+import { checkMappedFields, handleInput } from './HighLevelCommonFunc'
 import HighLevelIntegLayout from './HighLevelIntegLayout'
 import EditFormInteg from '../EditFormInteg'
 import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents'
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import EditWebhookInteg from '../EditWebhookInteg'
+import toast from 'react-hot-toast'
 
 function EditHighLevel({ allIntegURL }) {
   const navigate = useNavigate()
@@ -26,8 +27,43 @@ function EditHighLevel({ allIntegURL }) {
   const [loading, setLoading] = useState({
     auth: false,
     customFields: false,
-    options: false
+    options: false,
+    contacts: false
   })
+
+  const saveConfig = () => {
+    if (!OPTIONAL_FIELD_MAP_ARRAY.includes(highLevelConf.selectedTask)) {
+      if (!checkMappedFields(highLevelConf)) {
+        toast.error('Please map all required fields to continue!')
+        return
+      }
+    }
+
+    if (!highLevelConf?.selectedTask) {
+      toast.error('Please select task to continue!')
+      return
+    }
+
+    if (highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT) {
+      if (!highLevelConf.selectedContact && !checkMappedFields(highLevelConf)) {
+        toast.error('Please select a contact or map fields!')
+        return
+      }
+    }
+
+    if (highLevelConf.field_map.length > 0) {
+      saveActionConf({
+        flow,
+        setFlow,
+        allIntegURL,
+        navigate,
+        conf: highLevelConf,
+        edit: 1,
+        setIsLoading,
+        setSnackbar
+      })
+    }
+  }
 
   return (
     <div style={{ width: 900 }}>
@@ -58,19 +94,8 @@ function EditHighLevel({ allIntegURL }) {
 
       <IntegrationStepThree
         edit
-        saveConfig={() =>
-          saveActionConf({
-            flow,
-            setFlow,
-            allIntegURL,
-            navigate,
-            conf: highLevelConf,
-            edit: 1,
-            setIsLoading,
-            setSnackbar
-          })
-        }
-        disabled={highLevelConf.field_map.length < 1}
+        saveConfig={saveConfig}
+        disabled={!highLevelConf.selectedTask}
         isLoading={isLoading}
         dataConf={highLevelConf}
         setDataConf={setHighLevelConf}

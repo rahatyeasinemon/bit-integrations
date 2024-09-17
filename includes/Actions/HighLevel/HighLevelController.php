@@ -103,6 +103,39 @@ class HighLevelController
         wp_send_json_success($tagList, 200);
     }
 
+    public static function getContacts($requestsParams)
+    {
+        if (empty($requestsParams->api_key)) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+
+        $apiKey = $requestsParams->api_key;
+        $apiEndpoint = 'https://rest.gohighlevel.com/v1/contacts/?limit=100';
+        $header = ['Authorization' => 'Bearer ' . $apiKey];
+        $response = HttpHelper::get($apiEndpoint, null, $header);
+
+        if (!isset($response->contacts)) {
+            wp_send_json_error('Contacts fetching failed', 400);
+        }
+
+        $contacts = $response->contacts;
+        $contactList = [];
+
+        if (!empty($contacts)) {
+            foreach ($contacts as $contact) {
+                $contactList[] = (object) [
+                    'label' => !empty($contact->contactName)
+                    ? $contact->contactName . ' (' . $contact->email . ')' : $contact->email,
+                    'value' => $contact->id
+                ];
+            }
+        }
+
+        error_log(print_r(['contact list' => $contactList], true));
+
+        wp_send_json_success($contactList, 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
@@ -116,7 +149,8 @@ class HighLevelController
         }
 
         $selectedOptions = [
-            'selectedTags' => $integrationDetails->selectedTags
+            'selectedTags'    => $integrationDetails->selectedTags,
+            'selectedContact' => $integrationDetails->selectedContact,
         ];
 
         $recordApiHelper = new RecordApiHelper($apiKey, $this->_integrationID);

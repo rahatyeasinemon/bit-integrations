@@ -65,7 +65,8 @@ export default function HighLevelActions({ highLevelConf, setHighLevelConf, load
         </div>
       )}
       <div className="pos-rel d-flx w-8">
-        {highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTACT && (
+        {(highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTACT ||
+          highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT) && (
           <>
             <TableCheckBox
               checked={highLevelConf.actions?.dnd || false}

@@ -19,12 +19,12 @@ export default function HighLevelFieldMap({
   const notResquiredField =
     highLevelConf?.highLevelFields?.filter((fld) => fld.required === false) || []
 
-  if (highLevelConf?.field_map?.length === 1 && field.highLevelField === '') {
-    const newConf = { ...highLevelConf }
-    const tmp = generateMappedField(newConf)
-    newConf.field_map = tmp
-    setHighLevelConf(newConf)
-  }
+  // if (highLevelConf?.field_map?.length === 1 && field.highLevelField === '') {
+  //   const newConf = { ...highLevelConf }
+  //   const tmp = generateMappedField(newConf)
+  //   newConf.field_map = tmp
+  //   setHighLevelConf(newConf)
+  // }
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi

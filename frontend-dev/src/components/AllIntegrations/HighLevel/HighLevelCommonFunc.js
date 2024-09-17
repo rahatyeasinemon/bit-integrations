@@ -65,14 +65,33 @@ export const getCustomFields = (confTmp, setConf, loading, setLoading) => {
   bitsFetch({ api_key: confTmp.api_key }, 'get_highLevel_contact_custom_fields').then((result) => {
     if (result.success && result.data) {
       const newConf = { ...confTmp }
-      newConf.highLevelFields = [...contactStaticFields, ...result.data]
+      const staticFields = contactStaticFields(confTmp.selectedTask)
+      newConf.highLevelFields = [...staticFields, ...result.data]
       setConf(newConf)
       setLoading({ ...loading, customFields: false })
       toast.success(__('Custom fields fetch successfully', 'bit-integrations'))
       return
     }
     setLoading({ ...loading, customFields: false })
-    toast.error(__('Custom fields fetch failed', 'bit-integrations'))
+    toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+  })
+}
+
+export const getContacts = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, contacts: true })
+
+  bitsFetch({ api_key: confTmp.api_key }, 'get_highLevel_contacts').then((result) => {
+    if (result.success && result.data) {
+      const newConf = { ...confTmp }
+      newConf.contacts = result.data
+      setConf(newConf)
+      setLoading({ ...loading, contacts: false })
+      toast.success(__('Contacts fetch successfully', 'bit-integrations'))
+      getCustomFields(newConf, setConf, loading, setLoading)
+      return
+    }
+    setLoading({ ...loading, contacts: false })
+    toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
   })
 }
 
@@ -98,27 +117,40 @@ export const getHighLevelOptions = (route, confTmp, utilityOptions, setUtilityOp
     })
 }
 
-export const contactStaticFields = [
-  { key: 'email', label: 'Email', required: true },
-  { key: 'firstName', label: 'First Name', required: false },
-  { key: 'lastName', label: 'Last Name', required: false },
-  { key: 'name', label: 'Full Name', required: false },
-  { key: 'phone', label: 'Phone', required: false },
-  { key: 'dateOfBirth', label: 'Date of Birth', required: false },
-  { key: 'address1', label: 'Address 1', required: false },
-  { key: 'city', label: 'City', required: false },
-  { key: 'state', label: 'State', required: false },
-  { key: 'country', label: 'Country', required: false },
-  { key: 'postalCode', label: 'postalCode (Zip)', required: false },
-  { key: 'companyName', label: 'Company Name', required: false },
-  { key: 'website', label: 'Website', required: false },
-]
+export const contactStaticFields = (selectedTask) => {
+  const fields = [
+    { key: 'email', label: 'Email', required: selectedTask === TASK_LIST_VALUES.CREATE_CONTACT ? true : false },
+    { key: 'firstName', label: 'First Name', required: false },
+    { key: 'lastName', label: 'Last Name', required: false },
+    { key: 'name', label: 'Full Name', required: false },
+    { key: 'phone', label: 'Phone', required: false },
+    { key: 'dateOfBirth', label: 'Date of Birth', required: false },
+    { key: 'address1', label: 'Address 1', required: false },
+    { key: 'city', label: 'City', required: false },
+    { key: 'state', label: 'State', required: false },
+    { key: 'country', label: 'Country', required: false },
+    { key: 'postalCode', label: 'postalCode (Zip)', required: false },
+    { key: 'companyName', label: 'Company Name', required: false },
+    { key: 'website', label: 'Website', required: false },
+  ]
+
+  if (selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT) {
+    fields.unshift({ key: 'id', label: 'ID', required: false })
+  }
+
+  return fields
+}
 
 export const highLevelStaticFields = (selectedTask) => {
   if (selectedTask === TASK_LIST_VALUES.CREATE_CONTACT) {
     return {
-      staticFields: contactStaticFields,
+      staticFields: contactStaticFields(selectedTask),
       fieldMap: [{ formField: '', highLevelField: 'email' }]
+    }
+  } else if (selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT) {
+    return {
+      staticFields: contactStaticFields(selectedTask),
+      fieldMap: [{ formField: '', highLevelField: '' }]
     }
   }
 }
