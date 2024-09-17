@@ -6,6 +6,7 @@
 
 namespace BitCode\FI\Actions\JetEngine;
 
+use Jet_Engine\Modules\Custom_Content_Types\Module;
 use Jet_Engine_CPT;
 use Jet_Engine_Tools;
 use WP_Error;
@@ -128,6 +129,98 @@ class JetEngineController
         wp_send_json_error(__('Relation types fetching failed!', 'bit-integrations'), 400);
     }
 
+    public function getCPTList()
+    {
+        self::checkedJetEngineExists();
+
+        $cpts = jet_engine()->cpt->data->get_items();
+        $cptList = [];
+
+        foreach ($cpts as $item) {
+            $labels = maybe_unserialize($item['labels']);
+
+            $cptList[] = (object) [
+                'label' => $labels['name'],
+                'value' => (string) $item['id']
+            ];
+        }
+
+        if (empty($cptList)) {
+            wp_send_json_error('No custom post types found!', 400);
+        }
+
+        wp_send_json_success($cptList, 200);
+    }
+
+    public function getCCTList()
+    {
+        self::checkedJetEngineExists();
+
+        $ccts = Module::instance()->manager->data->get_items();
+        $cctList = [];
+
+        foreach ($ccts as $item) {
+            $args = maybe_unserialize($item['args']);
+
+            $cctList[] = (object) [
+                'label' => $args['name'],
+                'value' => (string) $item['id']
+            ];
+        }
+
+        if (empty($cctList)) {
+            wp_send_json_error('No custom content types types found!', 400);
+        }
+
+        wp_send_json_success($cctList, 200);
+    }
+
+    public function getTaxList()
+    {
+        self::checkedJetEngineExists();
+
+        $taxonomies = jet_engine()->taxonomies->data->get_items();
+        $taxList = [];
+
+        foreach ($taxonomies as $item) {
+            $labels = maybe_unserialize($item['labels']);
+
+            $taxList[] = (object) [
+                'label' => $labels['name'],
+                'value' => (string) $item['id']
+            ];
+        }
+
+        if (empty($taxList)) {
+            wp_send_json_error('No taxonomies found!', 400);
+        }
+
+        wp_send_json_success($taxList, 200);
+    }
+
+    public function getRelationList()
+    {
+        self::checkedJetEngineExists();
+
+        $relations = jet_engine()->relations->data->get_item_for_register();
+        $relationList = [];
+
+        foreach ($relations as $item) {
+            $labels = maybe_unserialize($item['labels']);
+
+            $relationList[] = (object) [
+                'label' => $labels['name'],
+                'value' => (string) $item['id']
+            ];
+        }
+
+        if (empty($relationList)) {
+            wp_send_json_error('No realtions found!', 400);
+        }
+
+        wp_send_json_success($relationList, 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         self::checkedJetEngineExists();
@@ -146,10 +239,13 @@ class JetEngineController
             'selectedMenuPosition' => $integrationDetails->selectedMenuPosition,
             'selectedMenuIcon'     => $integrationDetails->selectedMenuIcon,
             'selectedSupports'     => $integrationDetails->selectedSupports,
+            'selectedCPT'          => isset($integrationDetails->selectedCPT) ? $integrationDetails->selectedCPT : '',
+            'selectedCCT'          => isset($integrationDetails->selectedCCT) ? $integrationDetails->selectedCCT : '',
         ];
 
         $taxOptions = [
-            'selectedTaxPostTypes' => $integrationDetails->selectedTaxPostTypes
+            'selectedTaxPostTypes' => $integrationDetails->selectedTaxPostTypes,
+            'selectedTaxForEdit'   => isset($integrationDetails->selectedTaxForEdit) ? $integrationDetails->selectedTaxForEdit : ''
         ];
 
         $relOptions = (array) $integrationDetails->relOptions;

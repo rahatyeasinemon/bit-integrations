@@ -10,6 +10,7 @@ import { postFields } from '../../../Utils/StaticData/postField'
 import {
   addFieldMap,
   checkMappedAcfFields,
+  checkMappedJEFields,
   checkMappedMbFields,
   checkMappedPostFields,
   refreshPostTypes
@@ -31,6 +32,7 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
   const [acf, setAcf] = useState({ fields: [], files: [] })
   const [mb, setMb] = useState({ fields: [], files: [] })
+  const [jeCPTMeta, setJeCPTMeta] = useState({ fields: [], files: [] })
   const { postCreation } = tutorialLinks
 
   const [postConf, setPostConf] = useState({
@@ -40,7 +42,9 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
     acf_map: [{}],
     acf_file_map: [{}],
     metabox_map: [{}],
-    metabox_file_map: [{}]
+    metabox_file_map: [{}],
+    je_cpt_meta_map: [{}],
+    je_cpt_file_map: [{}]
   })
 
   const handleInput = (typ, val) => {
@@ -73,6 +77,7 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
       const { data } = res
       setAcf({ fields: data.acf_fields, files: data.acf_files })
       setMb({ fields: data.mb_fields, files: data.mb_files })
+      setJeCPTMeta({ fields: data.je_cpt_fields, files: data.je_cpt_files })
 
       if (data?.acf_fields) {
         tmpData.acf_map = data.acf_fields
@@ -89,6 +94,14 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
         if (tmpData.metabox_map.length < 1) {
           tmpData.metabox_map = [{}]
         }
+      }
+      if (data?.je_cpt_fields) {
+        tmpData.je_cpt_meta_map = data.je_cpt_fields
+          .filter((fld) => fld.required)
+          .map((fl) => ({ formField: '', jeCPTField: fl.key, required: fl.required }))
+      }
+      if (tmpData.je_cpt_meta_map.length < 1) {
+        tmpData.je_cpt_meta_map = [{}]
       }
     })
 
@@ -122,6 +135,11 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
       }
 
       if (!checkMappedMbFields(postConf)) {
+        setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
+        return
+      }
+
+      if (!checkMappedJEFields(postConf)) {
         setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
         return
       }
@@ -341,6 +359,7 @@ function Post({ formFields, setFlow, flow, allIntegURL }) {
           setSnackbar={setSnackbar}
           acfFields={acf}
           mbFields={mb}
+          jeCPTFields={jeCPTMeta}
         />
 
         <button

@@ -17,6 +17,7 @@ import FieldMap from './FieldMap'
 import {
   addFieldMap,
   checkMappedAcfFields,
+  checkMappedJEFields,
   checkMappedMbFields,
   checkMappedPostFields,
   refreshPostTypes
@@ -34,6 +35,7 @@ function Post({ allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
   const [acf, setAcf] = useState({ fields: [], files: [] })
   const [mb, setMb] = useState({ fields: [], files: [] })
+  const [jeCPTMeta, setJeCPTMeta] = useState({ fields: [], files: [] })
   // const [postConf, setPostConf] = useState({ ...flow.flow_details })
 
   const handleInput = (typ, val) => {
@@ -57,6 +59,7 @@ function Post({ allIntegURL }) {
       const { data } = res
       setAcf({ fields: data.acf_fields, files: data.acf_files })
       setMb({ fields: data.mb_fields, files: data.mb_files })
+      setJeCPTMeta({ fields: data.je_cpt_fields, files: data.je_cpt_files })
     })
     // setLoad(false)
     setPostConf(tmpData)
@@ -69,6 +72,7 @@ function Post({ allIntegURL }) {
       const { data } = res
       setAcf({ fields: data.acf_fields, files: data.acf_files })
       setMb({ fields: data.mb_fields, files: data.mb_files })
+      setJeCPTMeta({ fields: data.je_cpt_fields, files: data.je_cpt_files })
       if (data?.acf_fields) {
         tmpData.acf_map = data.acf_fields
           .filter((fld) => fld.required)
@@ -85,6 +89,14 @@ function Post({ allIntegURL }) {
           tmpData.metabox_map = [{}]
         }
       }
+      if (data?.je_cpt_fields) {
+        tmpData.je_cpt_meta_map = data.je_cpt_fields
+          .filter((fld) => fld.required)
+          .map((fl) => ({ formField: '', jeCPTField: fl.key, required: fl.required }))
+      }
+      if (tmpData.je_cpt_meta_map.length < 1) {
+        tmpData.je_cpt_meta_map = [{}]
+      }
     })
     setPostConf(tmpData)
     // setLoad(false)
@@ -100,6 +112,10 @@ function Post({ allIntegURL }) {
       return
     }
     if (!checkMappedMbFields(postConf)) {
+      setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
+      return
+    }
+    if (!checkMappedJEFields(postConf)) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
       return
     }
@@ -298,6 +314,7 @@ function Post({ allIntegURL }) {
           setSnackbar={setSnackbar}
           acfFields={acf}
           mbFields={mb}
+          jeCPTFields={jeCPTMeta}
         />
       </div>
       <IntegrationStepThree

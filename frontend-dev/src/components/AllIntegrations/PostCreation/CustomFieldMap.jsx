@@ -33,6 +33,14 @@ export default function CustomFieldMap({
     metaboxFile: {
       propName: 'metabox_file_map',
       fldName: 'metaboxFileUpload'
+    },
+    jeCPTFields: {
+      propName: 'je_cpt_meta_map',
+      fldName: 'jeCPTField'
+    },
+    jeCPTFiles: {
+      propName: 'je_cpt_file_map',
+      fldName: 'jeCPTFile'
     }
   }
 

@@ -106,11 +106,89 @@ export const getJetEngineRelationTypes = (confTmp, setConf, loading, setLoading)
   })
 }
 
+export const getJetEngineCPTList = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, cptList: true })
+
+  bitsFetch({}, 'jetEngine_cpt_list').then((result) => {
+    if (result.success && result.data) {
+      const newConf = { ...confTmp }
+      newConf.cptList = result.data
+      setConf(newConf)
+      setLoading({ ...loading, cptList: false })
+      toast.success(__('CPT list fetched successfully', 'bit-integrations'))
+      return
+    }
+    setLoading({ ...loading, cptList: false })
+    toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+  })
+}
+
+export const getJetEngineCCTList = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, cctList: true })
+
+  bitsFetch({}, 'jetEngine_cct_list').then((result) => {
+    if (result.success && result.data) {
+      const newConf = { ...confTmp }
+      newConf.cctList = result.data
+      setConf(newConf)
+      setLoading({ ...loading, cctList: false })
+      toast.success(__('CCT list fetched successfully', 'bit-integrations'))
+      return
+    }
+    setLoading({ ...loading, cctList: false })
+    toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+  })
+}
+
+export const getJetEngineTaxList = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, taxList: true })
+
+  bitsFetch({}, 'jetEngine_tax_list').then((result) => {
+    if (result.success && result.data) {
+      const newConf = { ...confTmp }
+      newConf.taxList = result.data
+      setConf(newConf)
+      setLoading({ ...loading, taxList: false })
+      toast.success(__('Taxonomy list fetched successfully', 'bit-integrations'))
+      return
+    }
+    setLoading({ ...loading, taxList: false })
+    toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+  })
+}
+
+export const getJetEngineRelationList = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, relationList: true })
+
+  bitsFetch({}, 'jetEngine_relation_list').then((result) => {
+    if (result.success && result.data) {
+      const newConf = { ...confTmp }
+      newConf.relationList = result.data
+      setConf(newConf)
+      setLoading({ ...loading, relationList: false })
+      toast.success(__('Taxonomy list fetched successfully', 'bit-integrations'))
+      if (newConf.selectedTask !== TASK_LIST_VALUES.DELETE_RELATION) {
+        getJetEngineRelationTypes(newConf, setConf, loading, setLoading)
+      }
+      return
+    }
+    setLoading({ ...loading, relationList: false })
+    toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+  })
+}
+
 export const jetEngineStaticFields = (selectedTask) => {
-  if (selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE) {
+  if (
+    selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ||
+    selectedTask === TASK_LIST_VALUES.UPDATE_POST_TYPE
+  ) {
     return {
       staticFields: [
-        { key: 'name', label: __('Post Type Name', 'bit-integrations'), required: true },
+        {
+          key: 'name',
+          label: __('Post Type Name', 'bit-integrations'),
+          required: selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE ? true : false
+        },
         { key: 'singular_name', label: __('Singular Name', 'bit-integrations'), required: false },
         { key: 'add_new', label: __('Add New', 'bit-integrations'), required: false },
         { key: 'add_new_item', label: __('Add New Item', 'bit-integrations'), required: false },
@@ -164,24 +242,44 @@ export const jetEngineStaticFields = (selectedTask) => {
           required: false
         }
       ],
-      fieldMap: [{ formField: '', jetEngineField: 'name' }]
+      fieldMap:
+        selectedTask === TASK_LIST_VALUES.CREATE_POST_TYPE
+          ? [{ formField: '', jetEngineField: 'name' }]
+          : [{ formField: '', jetEngineField: '' }]
     }
-  } else if (selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE) {
+  } else if (
+    selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE ||
+    selectedTask === TASK_LIST_VALUES.UPDATE_CONTENT_TYPE
+  ) {
     return {
       staticFields: [
-        { key: 'name', label: __('Content Type Name', 'bit-integrations'), required: true },
+        {
+          key: 'name',
+          label: __('Content Type Name', 'bit-integrations'),
+          required: selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE ? true : false
+        },
         {
           key: 'capability',
           label: __('Content Type UI Access Capability', 'bit-integrations'),
           required: false
         }
       ],
-      fieldMap: [{ formField: '', jetEngineField: 'name' }]
+      fieldMap:
+        selectedTask === TASK_LIST_VALUES.CREATE_CONTENT_TYPE
+          ? [{ formField: '', jetEngineField: 'name' }]
+          : [{ formField: '', jetEngineField: '' }]
     }
-  } else if (selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY) {
+  } else if (
+    selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ||
+    selectedTask === TASK_LIST_VALUES.UPDATE_TAXONOMY
+  ) {
     return {
       staticFields: [
-        { key: 'name', label: __('Taxonomy Name', 'bit-integrations'), required: true },
+        {
+          key: 'name',
+          label: __('Taxonomy Name', 'bit-integrations'),
+          required: selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY ? true : false
+        },
         { key: 'singular_name', label: __('Singular name', 'bit-integrations'), required: false },
         { key: 'menu_name', label: __('Menu name text', 'bit-integrations'), required: false },
         { key: 'all_items', label: __('All items text', 'bit-integrations'), required: false },
@@ -251,12 +349,22 @@ export const jetEngineStaticFields = (selectedTask) => {
           required: false
         }
       ],
-      fieldMap: [{ formField: '', jetEngineField: 'name' }]
+      fieldMap:
+        selectedTask === TASK_LIST_VALUES.CREATE_TAXONOMY
+          ? [{ formField: '', jetEngineField: 'name' }]
+          : [{ formField: '', jetEngineField: '' }]
     }
-  } else if (selectedTask === TASK_LIST_VALUES.CREATE_RELATION) {
+  } else if (
+    selectedTask === TASK_LIST_VALUES.CREATE_RELATION ||
+    selectedTask === TASK_LIST_VALUES.UPDATE_RELATION
+  ) {
     return {
       staticFields: [
-        { key: 'name', label: __('Relation Name', 'bit-integrations'), required: true },
+        {
+          key: 'name',
+          label: __('Relation Name', 'bit-integrations'),
+          required: selectedTask === TASK_LIST_VALUES.CREATE_RELATION ? true : false
+        },
         {
           key: 'parent_page_control_title',
           label: __('Parent Object: label of relation box', 'bit-integrations'),
@@ -288,7 +396,30 @@ export const jetEngineStaticFields = (selectedTask) => {
           required: false
         }
       ],
-      fieldMap: [{ formField: '', jetEngineField: 'name' }]
+      fieldMap:
+        selectedTask === TASK_LIST_VALUES.CREATE_RELATION
+          ? [{ formField: '', jetEngineField: 'name' }]
+          : [{ formField: '', jetEngineField: '' }]
+    }
+  } else if (selectedTask === TASK_LIST_VALUES.DELETE_POST_TYPE) {
+    return {
+      staticFields: [{ key: 'post_type_id', label: 'Post Type ID', required: true }],
+      fieldMap: [{ formField: '', jetEngineField: 'post_type_id' }]
+    }
+  } else if (selectedTask === TASK_LIST_VALUES.DELETE_CONTENT_TYPE) {
+    return {
+      staticFields: [{ key: 'content_type_id', label: 'Content Type ID', required: true }],
+      fieldMap: [{ formField: '', jetEngineField: 'content_type_id' }]
+    }
+  } else if (selectedTask === TASK_LIST_VALUES.DELETE_TAXONOMY) {
+    return {
+      staticFields: [{ key: 'tax_id', label: 'Taxonomy ID', required: true }],
+      fieldMap: [{ formField: '', jetEngineField: 'tax_id' }]
+    }
+  } else if (selectedTask === TASK_LIST_VALUES.DELETE_RELATION) {
+    return {
+      staticFields: [{ key: 'relation_id', label: 'Relation ID', required: true }],
+      fieldMap: [{ formField: '', jetEngineField: 'relation_id' }]
     }
   }
 

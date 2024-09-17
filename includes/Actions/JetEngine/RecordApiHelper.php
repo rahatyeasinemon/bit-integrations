@@ -149,6 +149,351 @@ class RecordApiHelper
         return ['success' => true, 'message' => __('Relation added successfully', 'bit-integrations')];
     }
 
+    public function updatePostType($finalData, $createCPTSelectedOptions, $actions)
+    {
+        if (empty($createCPTSelectedOptions) || empty($createCPTSelectedOptions['selectedCPT'])) {
+            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+        }
+
+        $id = $createCPTSelectedOptions['selectedCPT'];
+
+        if (empty($id)) {
+            return ['success' => false, 'message' => 'Custom post type id not found in request!', 'code' => 400];
+        }
+
+        $initialPostType = jet_engine()->cpt->data->get_item_for_edit($id);
+        $initialSlug = $initialPostType['general_settings']['slug'];
+        $initialName = $initialPostType['general_settings']['name'];
+
+        $finalData['id'] = $id;
+
+        if (!empty($finalData['name'])) {
+            $finalData['slug'] = str_replace(' ', '-', strtolower($finalData['name']));
+        }
+
+        if (Helper::proActionFeatExists('JetEngine', 'createPostTypeActions')) {
+            $filterResponse = apply_filters('btcbi_jet_engine_create_post_type_actions', 'updatePostType', $createCPTSelectedOptions, $actions);
+
+            if ($filterResponse !== 'updatePostType' && !empty($filterResponse)) {
+                $finalData = array_merge($finalData, $filterResponse);
+            }
+        }
+
+        if (empty($finalData['name'])) {
+            $finalData['name'] = $initialName;
+        }
+
+        if (empty($finalData['slug'])) {
+            $finalData['slug'] = $initialSlug;
+        }
+
+        jet_engine()->cpt->data->set_request($finalData);
+
+        $updated = jet_engine()->cpt->data->edit_item(false);
+
+        if (empty($updated) || is_wp_error($updated)) {
+            return ['success' => false, 'message' => 'Failed to update post type!', 'code' => 400];
+        }
+
+        if ($updated && !empty($initialSlug) && !empty($finalData['slug']) && $initialSlug !== $finalData['slug']) {
+            global $wpdb;
+
+            $wpdb->update(
+                $wpdb->posts,
+                [
+                    'post_type' => $finalData['slug'],
+                ],
+                [
+                    'post_type' => $initialSlug,
+                ]
+            );
+        }
+
+        return ['success' => true, 'message' => 'Post type updated successfully.'];
+    }
+
+    public function updateContentType($finalData, $createCPTSelectedOptions, $actions)
+    {
+        if (!jet_engine()->modules->is_module_active('custom-content-types')) {
+            return ['success' => false, 'message' => 'Module - Custom Content Type is not active!', 'code' => 400];
+        }
+
+        $id = $createCPTSelectedOptions['selectedCCT'];
+
+        if (empty($id)) {
+            return ['success' => false, 'message' => 'Custom Content type id not found in request!', 'code' => 400];
+        }
+
+        $ctcData['id'] = $id;
+
+        $initialContentType = Module::instance()->manager->data->get_item_for_edit($id);
+        $initialSlug = $initialContentType['slug'];
+        $initialName = $initialContentType['name'];
+
+        if (!empty($finalData['name'])) {
+            $ctcData['name'] = $finalData['name'];
+            $ctcData['slug'] = str_replace(' ', '_', strtolower($finalData['name']));
+        } else {
+            $ctcData['name'] = $initialName;
+            $ctcData['slug'] = $initialSlug;
+        }
+
+        $args = $ctcData;
+
+        if (isset($finalData['capability'])) {
+            $args['capability'] = $finalData['capability'];
+        }
+
+        if (Helper::proActionFeatExists('JetEngine', 'createContentTypeActions')) {
+            $filterResponse = apply_filters('btcbi_jet_engine_create_content_type_actions', 'updateContentType', $createCPTSelectedOptions, $actions);
+
+            if ($filterResponse !== 'updateContentType' && !empty($filterResponse)) {
+                $args = array_merge($args, $filterResponse);
+            }
+        }
+
+        $ctcData['args'] = $args;
+        $ctcData['meta_fields'] = [];
+
+        Module::instance()->manager->data->set_request($ctcData);
+
+        $updated = Module::instance()->manager->data->edit_item(false);
+
+        if (!$updated || is_wp_error($updated)) {
+            return ['success' => false, 'message' => 'Failed to update content type!', 'code' => 400];
+        }
+
+        return ['success' => true, 'message' => 'Content type updated successfully.'];
+    }
+
+    public function updateTaxonomy($finalData, $taxOptions, $actions)
+    {
+        $id = $taxOptions['selectedTaxForEdit'];
+
+        if (empty($id)) {
+            return ['success' => false, 'message' => 'Taxonomy id not found in request!', 'code' => 400];
+        }
+
+        $initialTaxonomy = jet_engine()->taxonomies->data->get_item_for_edit($id);
+        $initialName = $initialTaxonomy['general_settings']['name'];
+        $initialSlug = $initialTaxonomy['general_settings']['slug'];
+
+        $finalData['id'] = $id;
+
+        if (!empty($taxOptions['selectedTaxPostTypes'])) {
+            $finalData['object_type'] = explode(',', $taxOptions['selectedTaxPostTypes']);
+        }
+
+        if (!empty($finalData['name'])) {
+            $finalData['slug'] = str_replace(' ', '-', strtolower($finalData['name']));
+        } else {
+            $finalData['name'] = $initialName;
+            $finalData['slug'] = $initialSlug;
+        }
+
+        if (Helper::proActionFeatExists('JetEngine', 'createTaxonomyActions')) {
+            $filterResponse = apply_filters('btcbi_jet_engine_create_taxonomy_actions', 'updateTaxonomy', $taxOptions, $actions);
+
+            if ($filterResponse !== 'updateTaxonomy' && !empty($filterResponse)) {
+                $finalData = array_merge($finalData, $filterResponse);
+            }
+        }
+
+        jet_engine()->taxonomies->data->set_request($finalData);
+
+        $updated = jet_engine()->taxonomies->data->edit_item(false);
+
+        if (!$updated || is_wp_error($updated)) {
+            return ['success' => false, 'message' => 'Failed to update taxonomy!', 'code' => 400];
+        }
+
+        return ['success' => true, 'message' => 'Taxonomy updated successfully.'];
+    }
+
+    public function updateRelation($finalData, $relOptions, $actions)
+    {
+        if (empty($relOptions) || empty($relOptions['parentObject'])
+        || empty($relOptions['childObject']) || empty($relOptions['selectedRelationType'])) {
+            return ['success' => false, 'message' => 'Request parameters are empty!', 'code' => 400];
+        }
+
+        $args['parent_object'] = $relOptions['parentObject'];
+        $args['child_object'] = $relOptions['childObject'];
+        $args['type'] = $relOptions['selectedRelationType'];
+
+        if (empty($relOptions['selectedRelationForEdit'])) {
+            return ['success' => false, 'message' => 'Relation id not found in request!', 'code' => 400];
+        }
+
+        $id = $relOptions['selectedRelationForEdit'];
+        $initialRelation = jet_engine()->relations->data->get_item_for_edit($id);
+        $labels = maybe_unserialize($initialRelation['labels']);
+        $initialName = $labels['name'];
+        $args['id'] = $id;
+
+        if (empty($finalData['name'])) {
+            $finalData['name'] = $initialName;
+        }
+
+        $args['labels'] = $finalData;
+
+        if (Helper::proActionFeatExists('JetEngine', 'createRelationActions')) {
+            $filterResponse = apply_filters('btcbi_jet_engine_create_relation_actions', 'updateRelation', $relOptions, $actions);
+
+            if ($filterResponse !== 'updateRelation' && !empty($filterResponse)) {
+                $args = array_merge($args, $filterResponse);
+            }
+        }
+
+        jet_engine()->relations->data->set_request($args);
+
+        $updated = jet_engine()->relations->data->edit_item(false);
+
+        if (!$updated || is_wp_error($updated)) {
+            return ['success' => false, 'message' => 'Failed to update relation!', 'code' => 400];
+        }
+
+        return ['success' => true, 'message' => 'Relation updated successfully.'];
+    }
+
+    public function deletePostType($finalData, $selectedCPT, $actions)
+    {
+        if (empty($finalData['post_type_id']) && empty($selectedCPT)) {
+            return ['success' => false, 'message' => 'Post type id not found in request!', 'code' => 400];
+        }
+
+        if (!empty($selectedCPT)) {
+            $id = $selectedCPT;
+        } else {
+            $id = $finalData['post_type_id'];
+        }
+
+        $postTypeData = jet_engine()->cpt->data->get_item_for_edit($id);
+
+        if (!$postTypeData || !isset($postTypeData['general_settings']['slug'])) {
+            return ['success' => false, 'message' => 'Post type data not found!', 'code' => 400];
+        }
+
+        if (isset($actions['delete_all_posts']) && $actions['delete_all_posts']) {
+            $fromPostType = $postTypeData['general_settings']['slug'];
+
+            $posts = get_posts([
+                'post_type'      => $fromPostType,
+                'post_status'    => 'any',
+                'posts_per_page' => -1,
+                'fields'         => 'ids'
+            ]);
+
+            if (!empty($posts) && !is_wp_error($posts)) {
+                foreach ($posts as $postId) {
+                    wp_delete_post($postId, true);
+                }
+            }
+
+            if (!empty($postTypeData['general_settings']['custom_storage']) && $postTypeData['general_settings']['custom_storage'] === true) {
+                $db = \Jet_Engine\CPT\Custom_Tables\Manager::instance()->get_db_instance($fromPostType, []);
+                $db->drop_table();
+            }
+        }
+
+        jet_engine()->cpt->data->set_request(['id' => $id]);
+
+        if (jet_engine()->cpt->data->delete_item(false)) {
+            return ['success' => true, 'message' => 'Post Type deleted successfully.'];
+        }
+
+        return ['success' => false, 'message' => 'Failed to delete post type!', 'code' => 400];
+    }
+
+    public function deleteContentType($finalData, $selectedCCT)
+    {
+        if (!jet_engine()->modules->is_module_active('custom-content-types')) {
+            return ['success' => false, 'message' => 'Module - Custom Content Type is not active!', 'code' => 400];
+        }
+
+        if (empty($selectedCCT) && empty($finalData['content_type_id'])) {
+            return ['success' => false, 'message' => 'Content type id not found in request!', 'code' => 400];
+        }
+
+        if (!empty($selectedCCT)) {
+            $id = $selectedCCT;
+        } else {
+            $id = $finalData['content_type_id'];
+        }
+
+        Module::instance()->manager->data->set_request(['id' => $id]);
+
+        if (Module::instance()->manager->data->delete_item(false)) {
+            return ['success' => true, 'message' => 'Content Type deleted successfully.'];
+        }
+
+        return ['success' => false, 'message' => 'Failed to delete content type!', 'code' => 400];
+    }
+
+    public function deleteTaxonomy($finalData, $selectedTax, $actions)
+    {
+        if (empty($selectedTax) && empty($finalData['tax_id'])) {
+            return ['success' => false, 'message' => 'Taxonomy id not found in request!', 'code' => 400];
+        }
+
+        if (!empty($selectedTax)) {
+            $id = $selectedTax;
+        } else {
+            $id = $finalData['tax_id'];
+        }
+
+        $taxData = jet_engine()->taxonomies->data->get_item_for_edit($id);
+
+        if (!$taxData || !isset($taxData['general_settings']['slug'])) {
+            return ['success' => false, 'message' => 'Taxonomy data not found!', 'code' => 400];
+        }
+
+        if (isset($actions['delete_all_tax_terms']) && $actions['delete_all_tax_terms']) {
+            $fromTax = $taxData['general_settings']['slug'];
+
+            $terms = get_terms([
+                'taxonomy'   => $fromTax,
+                'hide_empty' => false,
+                'fields'     => 'ids',
+            ]);
+
+            if (!empty($terms) && !is_wp_error($terms)) {
+                foreach ($terms as $termId) {
+                    wp_delete_term($termId, $fromTax);
+                }
+            }
+        }
+
+        jet_engine()->taxonomies->data->set_request(['id' => $id]);
+
+        if (jet_engine()->taxonomies->data->delete_item(false)) {
+            return ['success' => true, 'message' => 'Taxonomy deleted successfully.'];
+        }
+
+        return ['success' => false, 'message' => 'Failed to delete taxonomy!', 'code' => 400];
+    }
+
+    public function deleteRelation($finalData, $selectedRelation)
+    {
+        if (empty($selectedRelation) && empty($finalData['relation_id'])) {
+            return ['success' => false, 'message' => 'Relation id not found in request!', 'code' => 400];
+        }
+
+        if (!empty($selectedRelation)) {
+            $id = $selectedRelation;
+        } else {
+            $id = $finalData['relation_id'];
+        }
+
+        jet_engine()->relations->data->set_request(['id' => $id]);
+
+        if (jet_engine()->relations->data->delete_item(false)) {
+            return ['success' => true, 'message' => 'Relation deleted successfully.'];
+        }
+
+        return ['success' => false, 'message' => 'Failed to delete relation!', 'code' => 400];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -191,6 +536,42 @@ class RecordApiHelper
             $response = $this->createRelation($finalData, $relOptions, $actions);
             $type = 'Relation';
             $typeName = 'Create Relation';
+        } elseif ($selectedTask === 'updatePostType') {
+            $response = $this->updatePostType($finalData, $createCPTSelectedOptions, $actions);
+            $type = 'Post Type';
+            $typeName = 'Update Post Type';
+        } elseif ($selectedTask === 'updateContentType') {
+            $response = $this->updateContentType($finalData, $createCPTSelectedOptions, $actions);
+            $type = 'Content Type';
+            $typeName = 'Update Content Type';
+        } elseif ($selectedTask === 'updateTaxonomy') {
+            $response = $this->updateTaxonomy($finalData, $taxOptions, $actions);
+            $type = 'Taxonomy';
+            $typeName = 'Update Taxonomy';
+        } elseif ($selectedTask === 'updateRelation') {
+            $response = $this->updateRelation($finalData, $relOptions, $actions);
+            $type = 'Relation';
+            $typeName = 'Update Relation';
+        } elseif ($selectedTask === 'deletePostType') {
+            $selectedCPT = $createCPTSelectedOptions['selectedCPT'];
+            $response = $this->deletePostType($finalData, $selectedCPT, $actions);
+            $type = 'Post Type';
+            $typeName = 'Delete Post Type';
+        } elseif ($selectedTask === 'deleteContentType') {
+            $selectedCCT = $createCPTSelectedOptions['selectedCCT'];
+            $response = $this->deleteContentType($finalData, $selectedCCT);
+            $type = 'Content Type';
+            $typeName = 'Delete Content Type';
+        } elseif ($selectedTask === 'deleteTaxonomy') {
+            $selectedTax = $taxOptions['selectedTaxForEdit'];
+            $response = $this->deleteTaxonomy($finalData, $selectedTax, $actions);
+            $type = 'Taxonomy';
+            $typeName = 'Delete Taxonomy';
+        } elseif ($selectedTask === 'deleteRelation') {
+            $selectedRelation = $relOptions['selectedRelationForEdit'];
+            $response = $this->deleteRelation($finalData, $selectedRelation);
+            $type = 'Relation';
+            $typeName = 'Delete Relation';
         }
 
         if ($response['success']) {

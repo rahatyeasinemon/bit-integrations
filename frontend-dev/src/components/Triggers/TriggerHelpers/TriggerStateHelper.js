@@ -157,7 +157,7 @@ export const wpForoStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
 }
 
 export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
-  if (val === 'wp_job_manager-1' || val === 'wp_job_manager-4' || val === 'wp_job_manager-5') {
+  if (val === 'wp_job_manager-1' || val === 'wp_job_manager-4' || val === 'wp_job_manager-5' || val === 'wp_job_manager-8') {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       jobTypes: resp.data.jobTypes,
@@ -168,12 +168,30 @@ export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
     val === 'wp_job_manager-2' ||
     val === 'wp_job_manager-3' ||
     val === 'wp_job_manager-6' ||
-    val === 'wp_job_manager-7'
+    val === 'wp_job_manager-7' ||
+    val === 'wp_job_manager-11'
   ) {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       jobList: resp.data.jobList,
       selectedJob: 'any'
+    }
+  }
+  if (val === 'wp_job_manager-9') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      statusList: resp.data.statusList,
+      selectedStatus: 'any'
+    }
+  }
+
+  if (val === 'wp_job_manager-10') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      jobTypes: resp.data.jobTypes,
+      selectedJobType: 'any',
+      statusList: resp.data.statusList,
+      selectedStatus: 'any'
     }
   }
 
@@ -494,7 +512,8 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
   if (
     formId === 'wp_job_manager-1' ||
     formId === 'wp_job_manager-4' ||
-    formId === 'wp_job_manager-5'
+    formId === 'wp_job_manager-5' ||
+    formId === 'wp_job_manager-10'
   ) {
     tmpConf.selectedJobType = flowData.selectedJobType
     tmpConf.jobTypes = flowData.jobTypes
@@ -503,10 +522,15 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
     formId === 'wp_job_manager-2' ||
     formId === 'wp_job_manager-3' ||
     formId === 'wp_job_manager-6' ||
-    formId === 'wp_job_manager-7'
+    formId === 'wp_job_manager-7' ||
+    formId === 'wp_job_manager-11'
   ) {
     tmpConf.selectedJob = flowData.selectedJob
     tmpConf.jobList = flowData.jobList
+  }
+  if (formId === 'wp_job_manager-9' || formId === 'wp_job_manager-10') {
+    tmpConf.selectedStatus = flowData.selectedStatus
+    tmpConf.statusList = flowData.statusList
   }
 
   return tmpConf

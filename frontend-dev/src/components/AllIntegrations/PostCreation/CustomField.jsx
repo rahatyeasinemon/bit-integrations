@@ -2,7 +2,7 @@ import { __ } from '../../../Utils/i18nwrap'
 import CustomFieldMap from './CustomFieldMap'
 import { addFieldMap } from './PostHelperFunction'
 
-function CustomField({ formFields, postConf, setPostConf, acfFields, mbFields }) {
+function CustomField({ formFields, postConf, setPostConf, acfFields, mbFields, jeCPTFields }) {
   return (
     <div>
       <div style={{ width: 900 }}>
@@ -166,6 +166,98 @@ function CustomField({ formFields, postConf, setPostConf, acfFields, mbFields })
                 addFieldMap(
                   'metabox_file_map',
                   postConf.metabox_file_map.length,
+                  postConf,
+                  setPostConf
+                )
+              }
+              className="icn-btn sh-sm"
+              type="button">
+              +
+            </button>
+          </div>
+        </div>
+        <br />
+        <br />
+        <div>
+          <div>
+            <div className="mt-3 mb-1">
+              <b>{__('JetEngine CPT Meta', 'bit-integrations')}</b>
+            </div>
+            <div className="btcd-hr" />
+            <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
+              <div className="txt-dp">
+                <b>{__('Form Fields', 'bit-integrations')}</b>
+              </div>
+              <div className="txt-dp">
+                <b>{__('CPT Meta Fields', 'bit-integrations')}</b>
+              </div>
+            </div>
+          </div>
+          {postConf?.je_cpt_meta_map?.map((itm, i) => (
+            <CustomFieldMap
+              key={`analytics-m-${i + 9}`}
+              i={i}
+              type="jeCPTFields"
+              field={itm}
+              formFields={formFields}
+              postConf={postConf}
+              setPostConf={setPostConf}
+              customFields={jeCPTFields?.fields}
+              fieldType="fields"
+            />
+          ))}
+
+          <div className="txt-center btcbi-field-map-button mt-2">
+            <button
+              onClick={() =>
+                addFieldMap(
+                  'je_cpt_meta_map',
+                  postConf.je_cpt_meta_map.length,
+                  postConf,
+                  setPostConf
+                )
+              }
+              className="icn-btn sh-sm"
+              type="button">
+              +
+            </button>
+          </div>
+        </div>
+        <div>
+          <div>
+            <div className="mt-3 mb-1">
+              <b>{__('JetEngine CPT File Upload (Media/Gallery)', 'bit-integrations')}</b>
+            </div>
+            <div className="btcd-hr" />
+            <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
+              <div className="txt-dp">
+                <b>{__('Form Fields', 'bit-integrations')}</b>
+              </div>
+              <div className="txt-dp">
+                <b>{__('CPT Meta Fields (Media/Gallery)', 'bit-integrations')}</b>
+              </div>
+            </div>
+          </div>
+          {postConf?.je_cpt_file_map?.map((itm, i) => (
+            <CustomFieldMap
+              key={`analytics-m-${i + 9}`}
+              i={i}
+              type="jeCPTFiles"
+              field={itm}
+              formFields={formFields}
+              postConf={postConf}
+              setPostConf={setPostConf}
+              customFields={jeCPTFields?.files}
+              fieldType="file"
+            />
+          ))}
+
+          <div className="txt-center btcbi-field-map-button mt-2">
+            <button
+              onClick={() =>
+                addFieldMap(
+                  'je_cpt_file_map',
+                  postConf.je_cpt_file_map.length,
                   postConf,
                   setPostConf
                 )
