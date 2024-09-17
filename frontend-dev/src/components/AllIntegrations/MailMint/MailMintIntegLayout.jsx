@@ -80,7 +80,7 @@ export default function MailMintIntegLayout({
       </select>
       <br />
       <div className="flx mt-4">
-        <b className="wdt-200 d-in-b">{__('Select List: ', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b">{__('Select List:', 'bit-integrations')}</b>
         <MultiSelect
           className="w-5"
           defaultValue={mailMintConf?.selectedList}
@@ -103,7 +103,7 @@ export default function MailMintIntegLayout({
         </button>
       </div>
       <div className="flx mt-4">
-        <b className="wdt-200 d-in-b">{__('Select tags: ', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b">{__('Select tags:', 'bit-integrations')}</b>
         <MultiSelect
           className="w-5"
           defaultValue={mailMintConf?.selectedTags}
@@ -126,7 +126,7 @@ export default function MailMintIntegLayout({
         </button>
       </div>
       <div className="flx mt-4">
-        <b className="wdt-200 d-in-b">{__('Select subscription status: ', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b">{__('Select subscription status:', 'bit-integrations')}</b>
         <MultiSelect
           className="w-5"
           singleSelect

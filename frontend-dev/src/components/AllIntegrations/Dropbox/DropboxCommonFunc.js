@@ -75,7 +75,7 @@ export const handleAuthorize = (confTmp, setConf, setIsAuthorized, setIsLoading,
         (!result.success && typeof result.data === 'string')
       ) {
         toast.error(
-          `${__('Authorization failed Cause: ', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}`
+          `${__('Authorization failed Cause:', 'bit-integrations')} ${result.data.data || result.data} ${__('please try again', 'bit-integrations')}`
         )
       } else {
         toast.error(__('Authorization failed. please try again', 'bit-integrations'))

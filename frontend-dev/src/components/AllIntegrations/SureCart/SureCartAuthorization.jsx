@@ -75,7 +75,7 @@ export default function SureCartAuthorization({
       />
       <div style={{ color: 'red' }}>{error.api_key}</div>
       <small className="d-blk mt-5">
-        {__('To get Api key , Please Visit   ', 'bit-integrations')}
+        {__('To get Api key , Please Visit  ', 'bit-integrations')}
         <a
           className="btcd-link"
           href="https://app.surecart.com/developer"

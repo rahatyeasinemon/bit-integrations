@@ -58,7 +58,7 @@ export default function BuddyBossActions({ buddyBossConf, setBuddyBossConf, form
         className="wdt-200 mt-4 mr-2"
         value="privacy"
         title={__('Add Privacy', 'bit-integrations')}
-        subTitle={__('Add privacy of group ', 'bit-integrations')}
+        subTitle={__('Add privacy of group', 'bit-integrations')}
       />
 
       <ConfirmModal
@@ -71,7 +71,7 @@ export default function BuddyBossActions({ buddyBossConf, setBuddyBossConf, form
         action={clsActionMdl}
         title={__('Status', 'bit-integrations')}>
         <div className="btcd-hr mt-2 mb-2" />
-        <div className="mt-2">{__('Select privacy of group ', 'bit-integrations')}</div>
+        <div className="mt-2">{__('Select privacy of group', 'bit-integrations')}</div>
         {isLoading ? (
           <Loader
             style={{

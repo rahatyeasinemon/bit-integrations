@@ -65,7 +65,7 @@ export default function LifterLmsIntegLayout({
       <br />
       {lifterLmsConf.mainAction === '1' && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select Lesson: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Lesson:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             singleSelect
@@ -93,7 +93,7 @@ export default function LifterLmsIntegLayout({
       )}
       {lifterLmsConf.mainAction === '2' && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select a Section: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select a Section:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             singleSelect
@@ -121,7 +121,7 @@ export default function LifterLmsIntegLayout({
       )}
       {['3', '5', '6'].includes(lifterLmsConf.mainAction) && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select a Course: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select a Course:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             singleSelect
@@ -150,7 +150,7 @@ export default function LifterLmsIntegLayout({
 
       {['4', '7'].includes(lifterLmsConf.mainAction) && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select a membership: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select a membership:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             singleSelect

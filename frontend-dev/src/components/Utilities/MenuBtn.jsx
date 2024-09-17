@@ -61,7 +61,8 @@ export default function MenuBtn(props) {
           className="flx"
           aria-label="actions">
           <TimeIcn size={16} />
-          &nbsp; Timeline
+          &nbsp;
+          {__('Timeline', 'bit-integrations')}
         </Link>
         <Link
           to={`/flow/action/edit/${props.id}`}

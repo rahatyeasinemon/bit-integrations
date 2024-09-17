@@ -54,7 +54,7 @@ export default function SendinBlueIntegLayout({
     <>
       <br />
       <div className="flx">
-        <b className="wdt-200 d-in-b">{__('List: ', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b">{__('List:', 'bit-integrations')}</b>
         <MultiSelect
           defaultValue={sendinBlueConf?.lists}
           className="btcd-paper-drpdwn w-5"
@@ -140,7 +140,7 @@ export default function SendinBlueIntegLayout({
           {sendinBlueConf.actions?.double_optin && (
             <>
               <div className="flx">
-                <b className="wdt-150 d-in-b">{__('Template: ', 'bit-integrations')}</b>
+                <b className="wdt-150 d-in-b">{__('Template:', 'bit-integrations')}</b>
                 <div className="w-5">
                   <select
                     onChange={handleInput}

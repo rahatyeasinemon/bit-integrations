@@ -93,7 +93,7 @@ export default function CustomApiAuthorization({
       </div>
       <br />
       <div className="d-flx">
-        <b className="wdt-200 d-in-b mt-3">{__('Select Auth Protocol: ', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b mt-3">{__('Select Auth Protocol:', 'bit-integrations')}</b>
         <MultiSelect
           defaultValue={customApiConf.authType}
           className="btcd-paper-drpdwn w-5"
@@ -132,7 +132,7 @@ export default function CustomApiAuthorization({
               disabled={isInfo}
             />
           </div>
-          <b className="wdt-200 d-in-b mt-3">{__('Add to: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b mt-3">{__('Add to:', 'bit-integrations')}</b>
           <MultiSelect
             defaultValue={customApiConf.apiKeyAddTo}
             className="btcd-paper-drpdwn w-5 mt-2"

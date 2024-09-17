@@ -60,7 +60,7 @@ export default function MasterStudyLmsIntegLayout({
       <br />
       {['1', '2', '3', '4', '5'].includes(msLmsConf.mainAction) && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select a Course: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select a Course:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             singleSelect
@@ -86,7 +86,7 @@ export default function MasterStudyLmsIntegLayout({
       )}
       {(msLmsConf.mainAction === '2' || msLmsConf.mainAction === '5') && msLmsConf?.courseId && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select Lesson: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Lesson:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             singleSelect
@@ -112,7 +112,7 @@ export default function MasterStudyLmsIntegLayout({
       )}
       {msLmsConf.mainAction === '3' && msLmsConf?.courseId && (
         <div className="flx mt-4">
-          <b className="wdt-200 d-in-b">{__('Select Quiz: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Quiz:', 'bit-integrations')}</b>
           <MultiSelect
             className="w-5"
             singleSelect

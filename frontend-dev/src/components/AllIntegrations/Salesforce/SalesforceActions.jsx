@@ -518,7 +518,7 @@ export default function SalesforceActions({
         show={actionMdl.show === 'contact'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Contact ', 'bit-integrations')}>
+        title={__('Contact', 'bit-integrations')}>
         <div className="btcd-hr mt-2" />
         {isLoading ? (
           <Loader

@@ -161,8 +161,8 @@ export default function GroundhoggActions({ groundhoggConf, setGroundhoggConf, f
             onChange={(e) => actionHandler(e, 'optin_status_open')}
             className="wdt-200 mt-4 mr-2"
             value="optin_status_open"
-            title={__('Optin Status ', 'bit-integrations')}
-            subTitle={__('Add optin status ', 'bit-integrations')}
+            title={__('Optin Status', 'bit-integrations')}
+            subTitle={__('Add optin status', 'bit-integrations')}
           />
         </TitleModal>
         <ConfirmModal

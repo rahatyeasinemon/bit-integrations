@@ -115,7 +115,7 @@ export default function BuddyBossIntegLayout({
         <>
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select group: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select group:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={buddyBossConf?.groupId}
@@ -181,7 +181,7 @@ export default function BuddyBossIntegLayout({
         <>
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Forum: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Forum:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={buddyBossConf?.forumId}
@@ -212,7 +212,7 @@ export default function BuddyBossIntegLayout({
         <>
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Topic: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Topic:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={buddyBossConf?.topicId}
@@ -244,7 +244,7 @@ export default function BuddyBossIntegLayout({
         <>
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Status: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Status:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={buddyBossConf?.userStatusId}

@@ -21,8 +21,8 @@ function KirimEmail({ formFields, setFlow, flow, allIntegURL }) {
 
   const subscriberFields = [
     { key: 'full_name', label: __('Full Name', 'bit-integrations'), required: true },
-    { key: 'email', label: __('Email ', 'bit-integrations'), required: true },
-    { key: 'tags', label: __('Tags ', 'bit-integrations'), required: false }
+    { key: 'email', label: __('Email', 'bit-integrations'), required: true },
+    { key: 'tags', label: __('Tags', 'bit-integrations'), required: false }
   ]
 
   const allActions = [

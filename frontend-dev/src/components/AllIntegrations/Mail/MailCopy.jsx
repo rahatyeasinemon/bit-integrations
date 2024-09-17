@@ -347,7 +347,7 @@ const SaveButton = ({ saveConfig, edit, isLoading }) =>
         className="btn btcd-btn-lg purple sh-sm"
         type="button"
         disabled={isLoading}>
-        {__('Save ', 'bit-integrations')}✔
+        {__('Save', 'bit-integrations')}✔
         {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
       </button>
     </div>

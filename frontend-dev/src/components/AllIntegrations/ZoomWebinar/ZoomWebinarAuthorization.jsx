@@ -50,8 +50,8 @@ export default function ZoomWebinarAuthorization({
   <h4>${__("Redirect URIs add also in <b>'Add allow lists'</b>", 'bit-integrations')}</h4>
   <h4>${__('Zoom Settings :', 'bit-integrations')}</h4>
   <ul>
-      <li>${__('Registration:<b>Required</b> ', 'bit-integrations')}</li>
-      <li>${__('Participant:<b>On</b> ', 'bit-integrations')}</li>
+      <li>${__('Registration:<b>Required</b>', 'bit-integrations')}</li>
+      <li>${__('Participant:<b>On</b>', 'bit-integrations')}</li>
   </ul>
   `
   return (

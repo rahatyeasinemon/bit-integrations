@@ -92,7 +92,7 @@ export default function TutorLmsIntegLayout({
         tutorlmsConf?.actionName === 'complete-course' ||
         tutorlmsConf?.actionName === 'reset-course') && (
         <div className="flx">
-          <b className="wdt-200 d-in-b">{__('Select Course: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Course:', 'bit-integrations')}</b>
           <MultiSelect
             defaultValue={tutorlmsConf?.selectedCourse}
             className="btcd-paper-drpdwn w-5"
@@ -123,7 +123,7 @@ export default function TutorLmsIntegLayout({
       )}
       {tutorlmsConf?.actionName === 'complete-lesson' && (
         <div className="flx">
-          <b className="wdt-200 d-in-b">{__('Select Lessons: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Lessons:', 'bit-integrations')}</b>
           <MultiSelect
             defaultValue={tutorlmsConf?.selectedLesson}
             className="btcd-paper-drpdwn w-5"

@@ -24,7 +24,7 @@ function PropovoiceCrm({ formFields, setFlow, flow, allIntegURL }) {
     { key: 'email', label: __('Email', 'bit-integrations'), required: true },
     { key: 'mobile', label: __('Mobile', 'bit-integrations'), required: false },
     { key: 'org_name', label: __('Organization Name', 'bit-integrations'), required: false },
-    { key: 'person_id', label: __('Person Id ', 'bit-integrations'), required: false },
+    { key: 'person_id', label: __('Person Id', 'bit-integrations'), required: false },
     { key: 'org_id', label: __('Organization Id', 'bit-integrations'), required: false },
     { key: 'budget', label: __('Budget', 'bit-integrations'), required: false },
     { key: 'currency', label: __('Currency', 'bit-integrations'), required: false },

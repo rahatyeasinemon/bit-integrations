@@ -136,7 +136,7 @@ export default function FluentCrmIntegLayout({
         fluentCrmConf?.fluentCrmTags &&
         !loading.fluentCrmTags && (
           <div className="flx mt-5">
-            <b className="wdt-200 d-in-b">{__('Fluent CRM Tags: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Fluent CRM Tags:', 'bit-integrations')}</b>
             <MultiSelect
               defaultValue={fluentCrmConf?.tags}
               className="btcd-paper-drpdwn w-5"

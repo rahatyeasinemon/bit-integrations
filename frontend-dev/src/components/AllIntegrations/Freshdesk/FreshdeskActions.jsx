@@ -208,7 +208,7 @@ export default function FreshdeskActions({
           className="wdt-200 mt-4 mr-2"
           value="priority"
           title={__('Priority', 'bit-integrations')}
-          subTitle={__('Add Ticket Priority ', 'bit-integrations')}
+          subTitle={__('Add Ticket Priority', 'bit-integrations')}
         />
         <small style={{ marginLeft: 30, marginTop: 10, color: 'red' }}>
           {__('This Required', 'bit-integrations')}

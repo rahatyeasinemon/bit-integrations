@@ -63,7 +63,7 @@ const CustomApiIntegrationLayout = ({
     <>
       <br />
       <div className="d-flx">
-        <b className="wdt-200 d-in-b mt-3">{__('Select Method: ', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b mt-3">{__('Select Method:', 'bit-integrations')}</b>
         <MultiSelect
           defaultValue={customApiConf.actionMethod}
           className="btcd-paper-drpdwn w-5"
@@ -74,7 +74,7 @@ const CustomApiIntegrationLayout = ({
       </div>
       {/* <br /> */}
       {/* <div className="d-flx">
-            <b className="wdt-200 d-in-b mt-3">{__('Select Content Type: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b mt-3">{__('Select Content Type:', 'bit-integrations')}</b>
             <MultiSelect
               defaultValue={customApiConf.contentType}
               className="btcd-paper-drpdwn w-5"

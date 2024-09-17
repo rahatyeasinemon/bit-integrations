@@ -278,7 +278,7 @@ export default function ConstantContactActions({
                 )
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `${__('Refresh Lists ', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `${__('Refresh Lists', 'bit-integrations')}'` }}
               type="button"
               disabled={isLoading.list}>
               &#x21BB;
@@ -324,7 +324,7 @@ export default function ConstantContactActions({
                 getContactTags(constantContactConf, setConstantContactConf, isLoading, setIsLoading)
               }
               className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': `${__('Refresh Tags ', 'bit-integrations')}'` }}
+              style={{ '--tooltip-txt': `${__('Refresh Tags', 'bit-integrations')}'` }}
               type="button"
               disabled={isLoading.tag}>
               &#x21BB;

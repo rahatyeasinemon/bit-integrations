@@ -32,7 +32,7 @@ export default function SlackIntegLayout({ formFields, slackConf, setSlackConf, 
     <>
       <br />
       <div className="flx">
-        <b className="wdt-200 d-in-b">{__('Channels List: ', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b">{__('Channels List:', 'bit-integrations')}</b>
         <select
           onChange={handleInput}
           name="channel_id"
@@ -61,7 +61,7 @@ export default function SlackIntegLayout({ formFields, slackConf, setSlackConf, 
       {slackConf?.channel_id && (
         <>
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b mr-16">{__('Messages: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b mr-16">{__('Messages:', 'bit-integrations')}</b>
             <textarea
               className="w-7"
               onChange={handleInput}

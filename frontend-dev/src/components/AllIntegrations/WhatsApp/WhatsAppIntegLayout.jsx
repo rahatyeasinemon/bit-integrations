@@ -64,7 +64,7 @@ export default function WhatsAppIntegLayout({
     <>
       <br />
       <div className="flx">
-        <b className="wdt-200 d-in-b">{__('Message Type: ', 'bit-integrations')}</b>
+        <b className="wdt-200 d-in-b">{__('Message Type:', 'bit-integrations')}</b>
         <MultiSelect
           defaultValue={whatsAppConf?.messageType}
           className="mt-2 w-5"
@@ -262,7 +262,7 @@ export default function WhatsAppIntegLayout({
 
       {whatsAppConf?.messageType === 'text' && isPro && (
         <div>
-          <b className="wdt-200 d-in-b mr-16 mb-4 mt-4">{__('Message: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b mr-16 mb-4 mt-4">{__('Message:', 'bit-integrations')}</b>
           <TinyMCE
             formFields={formFields}
             id={`whatsapp-message-${id}`}
@@ -279,14 +279,14 @@ export default function WhatsAppIntegLayout({
   )
 }
 
-const textMsgNote = `<p>${__('To ensure successful message delivery using the WhatsApp Business API: ', 'bit-integrations')}</p>
+const textMsgNote = `<p>${__('To ensure successful message delivery using the WhatsApp Business API:', 'bit-integrations')}</p>
             <ul>
                 <li><strong>${__('The conversation must be initiated by the user.', 'bit-integrations')}</strong></li>
                 <li>${__("To begin, <strong>send a message from your WhatsApp number to the recipient's number.</strong>", 'bit-integrations')}</li>
                 <li>${__('Once the user has started the conversation, you can continue to communicate with the recipient normally.', 'bit-integrations')}</li>
             </ul>`
 
-const textMediaNote = `<p>${__('To ensure successful message delivery using the WhatsApp Business API: ', 'bit-integrations')}</p>
+const textMediaNote = `<p>${__('To ensure successful message delivery using the WhatsApp Business API:', 'bit-integrations')}</p>
             <ul>
                 <li><strong>${__('The conversation must be initiated by the user.', 'bit-integrations')}</strong></li>
                 <li>${__("To begin, <strong>send a message from your WhatsApp number to the recipient's number.</strong>", 'bit-integrations')}</li>
@@ -315,8 +315,8 @@ const contactFields = [
   { key: 'company', label: __('Company', 'bit-integrations'), required: false },
   { key: 'department', label: __('Department', 'bit-integrations'), required: false },
   { key: 'title', label: __('Business title', 'bit-integrations'), required: false },
-  { key: 'HOME_email', label: __(' Email (Home)', 'bit-integrations'), required: false },
-  { key: 'WORK_email', label: __(' Email (Work)', 'bit-integrations'), required: false },
+  { key: 'HOME_email', label: __('Email (Home)', 'bit-integrations'), required: false },
+  { key: 'WORK_email', label: __('Email (Work)', 'bit-integrations'), required: false },
   { key: 'CELL_phone', label: __('Phone Number (Cell)', 'bit-integrations'), required: false },
   { key: 'MAIN_phone', label: __('Phone Number (Main)', 'bit-integrations'), required: false },
   { key: 'IPHONE_phone', label: __('Phone Number (IPhone)', 'bit-integrations'), required: false },

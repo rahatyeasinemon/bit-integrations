@@ -50,7 +50,7 @@ export default function PaidMembershipProIntegLayout({
         <>
           <br />
           <div className="flx mt-4">
-            <b className="wdt-200 d-in-b">{__('Select Membership: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Membership:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={paidMembershipProConf?.selectedMembership}

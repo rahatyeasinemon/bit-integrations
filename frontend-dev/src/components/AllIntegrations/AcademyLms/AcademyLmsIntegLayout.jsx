@@ -89,7 +89,7 @@ export default function AcademyLmsIntegLayout({
         academyLmsConf?.actionName === 'reset-course' ||
         academyLmsConf?.actionName === 'complete-lesson') && (
         <div className="flx">
-          <b className="wdt-200 d-in-b">{__('Select Course: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Course:', 'bit-integrations')}</b>
           <MultiSelect
             defaultValue={academyLmsConf?.selectedCourse}
             className="btcd-paper-drpdwn w-5"
@@ -127,7 +127,7 @@ export default function AcademyLmsIntegLayout({
       <br />
       {academyLmsConf?.actionName === 'complete-lesson' && (
         <div className="flx">
-          <b className="wdt-200 d-in-b">{__('Select Lessons: ', 'bit-integrations')}</b>
+          <b className="wdt-200 d-in-b">{__('Select Lessons:', 'bit-integrations')}</b>
           <MultiSelect
             defaultValue={academyLmsConf?.selectedLesson}
             className="btcd-paper-drpdwn w-5"

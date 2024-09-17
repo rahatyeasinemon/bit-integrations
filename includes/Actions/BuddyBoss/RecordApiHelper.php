@@ -119,7 +119,7 @@ class RecordApiHelper
         ];
 
         if ($user_id === $friendId) {
-            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'friend', 'type_name' => 'follow-user']), 'error', wp_json_encode(__('A user can not follow itself. ', 'bit-integrations')));
+            LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'friend', 'type_name' => 'follow-user']), 'error', wp_json_encode(__('A user can not follow itself.', 'bit-integrations')));
 
             return;
         }
@@ -148,12 +148,12 @@ class RecordApiHelper
 
         if (!empty($forum_id)) {
             if (bbp_is_forum_category($forum_id)) {
-                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', wp_json_encode(__('Sorry, This forum is a category. No discussions can be created in this forum. ', 'bit-integrations')));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', wp_json_encode(__('Sorry, This forum is a category. No discussions can be created in this forum.', 'bit-integrations')));
 
                 return;
             }
             if (bbp_is_forum_closed($forum_id) && !current_user_can('edit_forum', $forum_id)) {
-                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', wp_json_encode(__('Sorry, This forum has been closed to new discussions. ', 'bit-integrations')));
+                LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', wp_json_encode(__('Sorry, This forum has been closed to new discussions.', 'bit-integrations')));
 
                 return;
             }
@@ -178,7 +178,7 @@ class RecordApiHelper
                     (empty($group_ids) && !current_user_can('read_private_forums'))
                     || (!empty($group_ids) && !$is_member)
                 ) {
-                    LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', wp_json_encode(__('Sorry, This forum is private and you do not have the capability to read or create new discussions in it. ', 'bit-integrations')));
+                    LogHandler::save(self::$integrationID, wp_json_encode(['type' => 'topic', 'type_name' => 'post-topic-forum']), 'error', wp_json_encode(__('Sorry, This forum is private and you do not have the capability to read or create new discussions in it.', 'bit-integrations')));
 
                     return;
                 }
@@ -778,7 +778,7 @@ class RecordApiHelper
         if (empty($reply_id) || is_wp_error($reply_id)) {
             $append_error = (
                 (is_wp_error($reply_id) && $reply_id->get_error_message())
-                ? __('The following problems have been found with your reply: ', 'bit-integrations') . $reply_id->get_error_message()
+                ? __('The following problems have been found with your reply:', 'bit-integrations') . ' ' . $reply_id->get_error_message()
                 : __('We are facing a problem to creating a reply.', 'bit-integrations')
             );
 

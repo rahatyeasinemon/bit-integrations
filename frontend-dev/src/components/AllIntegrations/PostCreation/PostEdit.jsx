@@ -129,7 +129,7 @@ function Post({ allIntegURL }) {
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <div style={{ width: 900 }}>
         <div className="mt-3">
-          <b>{__('Integration Name ', 'bit-integrations')}</b>
+          <b>{__('Integration Name', 'bit-integrations')}</b>
         </div>
         <input
           className="btcd-paper-inp w-5 mt-1"

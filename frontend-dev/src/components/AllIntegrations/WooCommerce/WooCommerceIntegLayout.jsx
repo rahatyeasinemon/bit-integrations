@@ -253,7 +253,7 @@ export default function WooCommerceIntegLayout({
         <>
           <br />
           <div className="flx mt-1">
-            <b className="wdt-200 d-in-b">{__('Select Product: ', 'bit-integrations')}</b>
+            <b className="wdt-200 d-in-b">{__('Select Product:', 'bit-integrations')}</b>
             <MultiSelect
               className="w-5"
               defaultValue={wcConf?.productId}

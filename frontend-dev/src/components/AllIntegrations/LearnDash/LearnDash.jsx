@@ -42,7 +42,7 @@ function LearnDash({ formFields, setFlow, flow, allIntegURL, isInfo, edit }) {
       key: '12',
       label: __('Remove the user from a group and its children pro', 'bit-integrations')
     },
-    { key: '13', label: __('Reset the users attempts for a quiz pro ', 'bit-integrations') },
+    { key: '13', label: __('Reset the users attempts for a quiz pro', 'bit-integrations') },
     { key: '14', label: __('Reset the users progress in a course pro', 'bit-integrations') },
     // { key: '15', label: __('Send a certificate pro', 'bit-integrations')},
     { key: '16', label: __('Send an email to the users group leaders', 'bit-integrations') },
