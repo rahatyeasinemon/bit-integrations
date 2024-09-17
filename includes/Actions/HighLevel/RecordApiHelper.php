@@ -79,7 +79,7 @@ class RecordApiHelper
             return ['success' => true, 'message' => 'Contact created successfully.'];
         }
 
-        return ['success' => false, 'message' => 'Failed to create contact!', 'code' => 400];
+        return ['success' => false, 'message' => 'Failed to create contact!', 'response' => $response, 'code' => 400];
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
