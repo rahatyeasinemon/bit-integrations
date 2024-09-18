@@ -131,8 +131,6 @@ class HighLevelController
             }
         }
 
-        error_log(print_r(['contact list' => $contactList], true));
-
         wp_send_json_success($contactList, 200);
     }
 

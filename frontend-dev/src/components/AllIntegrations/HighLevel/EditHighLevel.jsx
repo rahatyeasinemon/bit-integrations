@@ -14,6 +14,7 @@ import SetEditIntegComponents from '../IntegrationHelpers/SetEditIntegComponents
 import { $actionConf, $formFields, $newFlow } from '../../../GlobalStates'
 import EditWebhookInteg from '../EditWebhookInteg'
 import toast from 'react-hot-toast'
+import { OPTIONAL_FIELD_MAP_ARRAY, TASK_LIST_VALUES } from './highlevelConstants'
 
 function EditHighLevel({ allIntegURL }) {
   const navigate = useNavigate()
