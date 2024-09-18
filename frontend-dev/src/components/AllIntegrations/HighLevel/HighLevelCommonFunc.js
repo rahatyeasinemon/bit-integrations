@@ -73,7 +73,7 @@ export const getCustomFields = (confTmp, setConf, loading, setLoading) => {
       return
     }
     setLoading({ ...loading, customFields: false })
-    toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+    toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
   })
 }
 
@@ -87,11 +87,33 @@ export const getContacts = (confTmp, setConf, loading, setLoading) => {
       setConf(newConf)
       setLoading({ ...loading, contacts: false })
       toast.success(__('Contacts fetch successfully', 'bit-integrations'))
-      getCustomFields(newConf, setConf, loading, setLoading)
+      if (newConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT) {
+        getCustomFields(newConf, setConf, loading, setLoading)
+      }
+      if (newConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK) {
+        getUsers(newConf, setConf, loading, setLoading)
+      }
       return
     }
     setLoading({ ...loading, contacts: false })
-    toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+    toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
+  })
+}
+
+export const getUsers = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, users: true })
+
+  bitsFetch({ api_key: confTmp.api_key }, 'get_highLevel_users').then((result) => {
+    if (result.success && result.data) {
+      const newConf = { ...confTmp }
+      newConf.users = result.data
+      setConf(newConf)
+      setLoading({ ...loading, users: false })
+      toast.success(__('Users fetch successfully', 'bit-integrations'))
+      return
+    }
+    setLoading({ ...loading, users: false })
+    toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
   })
 }
 
@@ -113,7 +135,7 @@ export const getHighLevelOptions = (route, confTmp, utilityOptions, setUtilityOp
         return
       }
       setLoading({ ...loading, options: false })
-      toast.error(__(result?.data ? result.data : 'Something went wrong!', 'bit-integrations'))
+      toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
     })
 }
 
@@ -151,6 +173,16 @@ export const highLevelStaticFields = (selectedTask) => {
     return {
       staticFields: contactStaticFields(selectedTask),
       fieldMap: [{ formField: '', highLevelField: '' }]
+    }
+  } else if (selectedTask === TASK_LIST_VALUES.CREATE_TASK) {
+    return {
+      staticFields: [
+        { key: 'title', label: 'Title', required: true },
+        { key: 'dueDate', label: 'Due Date', required: true },
+        { key: 'description', label: 'Description', required: false },
+        { key: 'contactId', label: 'Contact ID', required: false },
+      ],
+      fieldMap: [{ formField: '', highLevelField: 'title' }, { formField: '', highLevelField: 'dueDate' }]
     }
   }
 }

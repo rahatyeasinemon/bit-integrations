@@ -53,7 +53,7 @@ class HighLevelController
         $response = HttpHelper::get($apiEndpoint, null, $header);
 
         if (!isset($response->customFields)) {
-            wp_send_json_error('Custom fields fetching failed', 400);
+            wp_send_json_error(__('Custom fields fetching failed', 'bit-integrations'), 400);
         }
 
         $rawCustomFields = $response->customFields;
@@ -85,7 +85,7 @@ class HighLevelController
         $response = HttpHelper::get($apiEndpoint, null, $header);
 
         if (!isset($response->tags)) {
-            wp_send_json_error('Tags fetching failed', 400);
+            wp_send_json_error(__('Tags fetching failed', 'bit-integrations'), 400);
         }
 
         $tags = $response->tags;
@@ -115,7 +115,7 @@ class HighLevelController
         $response = HttpHelper::get($apiEndpoint, null, $header);
 
         if (!isset($response->contacts)) {
-            wp_send_json_error('Contacts fetching failed', 400);
+            wp_send_json_error(__('Contacts fetching failed', 'bit-integrations'), 400);
         }
 
         $contacts = $response->contacts;
@@ -134,6 +134,36 @@ class HighLevelController
         wp_send_json_success($contactList, 200);
     }
 
+    public static function getUsers($requestsParams)
+    {
+        if (empty($requestsParams->api_key)) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+
+        $apiKey = $requestsParams->api_key;
+        $apiEndpoint = 'https://rest.gohighlevel.com/v1/users';
+        $header = ['Authorization' => 'Bearer ' . $apiKey];
+        $response = HttpHelper::get($apiEndpoint, null, $header);
+
+        if (!isset($response->users)) {
+            wp_send_json_error('Contacts fetching failed', 400);
+        }
+
+        $users = $response->users;
+        $userList = [];
+
+        if (!empty($users)) {
+            foreach ($users as $user) {
+                $userList[] = (object) [
+                    'label' => !empty($user->name) ? $user->name . ' (' . $user->email . ')' : $user->email,
+                    'value' => $user->id
+                ];
+            }
+        }
+
+        wp_send_json_success($userList, 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
@@ -147,8 +177,10 @@ class HighLevelController
         }
 
         $selectedOptions = [
-            'selectedTags'    => $integrationDetails->selectedTags,
-            'selectedContact' => $integrationDetails->selectedContact,
+            'selectedTags'       => $integrationDetails->selectedTags,
+            'selectedContact'    => $integrationDetails->selectedContact,
+            'selectedTaskStatus' => $integrationDetails->selectedTaskStatus,
+            'selectedUser'       => $integrationDetails->selectedUser,
         ];
 
         $recordApiHelper = new RecordApiHelper($apiKey, $this->_integrationID);

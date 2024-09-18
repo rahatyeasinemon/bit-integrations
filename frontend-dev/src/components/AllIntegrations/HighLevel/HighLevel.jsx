@@ -22,7 +22,8 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
     auth: false,
     customFields: false,
     options: false,
-    contacts: false
+    contacts: false,
+    users: false
   })
 
   const [highLevelConf, setHighLevelConf] = useState({
@@ -39,7 +40,10 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
     selectedTags: '',
     selectedTask: '',
     contacts: [],
-    selectedContact: ''
+    selectedContact: '',
+    selectedTaskStatus: '',
+    users: [],
+    selectedUser: ''
   })
 
   const nextPage = (val) => {
@@ -61,6 +65,18 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
       }
 
       if (highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT) {
+        if (!highLevelConf.selectedContact && !checkMappedFields(highLevelConf)) {
+          toast.error('Please select a contact or map fields!')
+          return
+        }
+      }
+
+      if (highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK) {
+        if (!highLevelConf.selectedTaskStatus) {
+          toast.error('Please select a status!')
+          return
+        }
+
         if (!highLevelConf.selectedContact && !checkMappedFields(highLevelConf)) {
           toast.error('Please select a contact or map fields!')
           return

@@ -6,7 +6,6 @@ import TrashIcn from '../../../Icons/TrashIcn'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import TagifyInput from '../../Utilities/TagifyInput'
 import { handleCustomValue } from '../IntegrationHelpers/IntegrationHelpers'
-import { generateMappedField } from './HighLevelCommonFunc'
 
 export default function HighLevelFieldMap({
   i,
@@ -18,13 +17,6 @@ export default function HighLevelFieldMap({
   const requiredFields = highLevelConf?.highLevelFields.filter((fld) => fld.required === true) || []
   const notResquiredField =
     highLevelConf?.highLevelFields?.filter((fld) => fld.required === false) || []
-
-  // if (highLevelConf?.field_map?.length === 1 && field.highLevelField === '') {
-  //   const newConf = { ...highLevelConf }
-  //   const tmp = generateMappedField(newConf)
-  //   newConf.field_map = tmp
-  //   setHighLevelConf(newConf)
-  // }
 
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi

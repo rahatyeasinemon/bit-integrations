@@ -35,7 +35,7 @@ class RecordApiHelper
     public function createContact($finalData, $selectedOptions, $actions)
     {
         if (empty($finalData['email'])) {
-            return ['success' => false, 'message' => 'Request parameter(s) empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Request parameter(s) empty!', 'bit-integrations'), 'code' => 400];
         }
 
         $apiRequestData = self::formatContactData($finalData, $selectedOptions, $actions, 'createContact');
@@ -45,16 +45,16 @@ class RecordApiHelper
         $response = HttpHelper::post($apiEndpoint, wp_json_encode($apiRequestData), $this->defaultHeader);
 
         if (isset($response->contact)) {
-            return ['success' => true, 'message' => 'Contact created successfully.'];
+            return ['success' => true, 'message' => __('Contact created successfully.', 'bit-integrations')];
         }
 
-        return ['success' => false, 'message' => 'Failed to create contact!', 'response' => $response, 'code' => 400];
+        return ['success' => false, 'message' => __('Failed to create contact!', 'bit-integrations'), 'response' => $response, 'code' => 400];
     }
 
     public function updateContact($finalData, $selectedOptions, $actions)
     {
         if (empty($selectedOptions['selectedContact']) && empty($finalData['id'])) {
-            return ['success' => false, 'message' => 'Request parameter(s) empty!', 'code' => 400];
+            return ['success' => false, 'message' => __('Contact id not found in request!', 'bit-integrations'), 'code' => 400];
         }
 
         if (!empty($selectedOptions['selectedContact'])) {
@@ -70,10 +70,43 @@ class RecordApiHelper
         $response = HttpHelper::put($apiEndpoint, wp_json_encode($apiRequestData), $this->defaultHeader);
 
         if (isset($response->contact)) {
-            return ['success' => true, 'message' => 'Contact updated successfully.'];
+            return ['success' => true, 'message' => __('Contact updated successfully.', 'bit-integrations')];
         }
 
-        return ['success' => false, 'message' => 'Failed to update contact!', 'response' => $response, 'code' => 400];
+        return ['success' => false, 'message' => __('Failed to update contact!', 'bit-integrations'), 'response' => $response, 'code' => 400];
+    }
+
+    public function createTask($finalData, $selectedOptions, $actions)
+    {
+        if (empty($selectedOptions['selectedContact']) && empty($finalData['contactId'])) {
+            return ['success' => false, 'message' => __('Contact id not found in request!', 'bit-integrations'), 'code' => 400];
+        }
+
+        if (empty($selectedOptions['selectedTaskStatus']) || empty($finalData['title'])) {
+            return ['success' => false, 'message' => __('Request parameter(s) empty!', 'bit-integrations'), 'code' => 400];
+        }
+
+        if (!empty($selectedOptions['selectedContact'])) {
+            $contactId = $selectedOptions['selectedContact'];
+        } else {
+            $contactId = $finalData['contactId'];
+        }
+
+        $apiRequestData['title'] = $finalData['title'];
+        $apiRequestData['description'] = !empty($finalData['description']) ? $finalData['description'] : '';
+        $apiRequestData['dueDate'] = !empty($finalData['dueDate']) ? $finalData['dueDate'] : '';
+        $apiRequestData['assignedTo'] = !empty($selectedOptions['selectedUser']) ? $selectedOptions['selectedUser'] : '';
+        $apiRequestData['status'] = !empty($selectedOptions['selectedTaskStatus']) ? $selectedOptions['selectedTaskStatus'] : '';
+
+        $apiEndpoint = $this->baseUrl . 'contacts/' . $contactId . '/tasks';
+
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($apiRequestData), $this->defaultHeader);
+
+        if (isset($response->id)) {
+            return ['success' => true, 'message' => __('Task created successfully.', 'bit-integrations')];
+        }
+
+        return ['success' => false, 'message' => __('Failed to create task!', 'bit-integrations'), 'response' => $response, 'code' => 400];
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -110,6 +143,10 @@ class RecordApiHelper
             $response = $this->updateContact($finalData, $selectedOptions, $actions);
             $type = 'Contact';
             $typeName = 'Update Contact';
+        } elseif ($selectedTask === 'createTask') {
+            $response = $this->createTask($finalData, $selectedOptions, $actions);
+            $type = 'Task';
+            $typeName = 'Create Task';
         }
 
         if ($response['success']) {
