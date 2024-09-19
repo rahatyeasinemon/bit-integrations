@@ -997,6 +997,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 == Changelog ==
 
 = 2.2.5  =
+_Release Date -19th September 2024_
 - **New Fixes :**
   - Klaviyo: Resolved the issue with excessive setState calls, preventing performance bottlenecks.
   - Core: Fixed the Tagify event handling issue.
