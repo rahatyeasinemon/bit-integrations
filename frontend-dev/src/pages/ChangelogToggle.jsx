@@ -87,7 +87,7 @@ export default function ChangelogToggle() {
                 dangerouslySetInnerHTML={{
                   __html: sprintf(
                     __('Updated at:  <b>%s</b>', 'bit-integrations'),
-                    '17th September 2024'
+                    '19th September 2024'
                   )
                 }}></small>
             </div>
@@ -110,7 +110,7 @@ export default function ChangelogToggle() {
                   <li> WP Job Manager (Pro) </li>
                 </ul>
               </div> */}
-              
+
               {/* <span className="new-integration">
                 <b>{__('New Improvements', 'bit-integrations')}</b>
               </span>
@@ -138,7 +138,10 @@ export default function ChangelogToggle() {
                 <ul>
                   <li>Klaviyo (Pro): Added support for custom properties.</li>
                   <li>WP Post Creation (Action): JetEngine’s Meta fields are now supported.</li>
-                  <li>JetEngine (Actions): Added functionality for updating and deleting Post Type, Custom Content Type, Taxonomy, and Relation.</li>
+                  <li>
+                    JetEngine (Actions): Added functionality for updating and deleting Post Type,
+                    Custom Content Type, Taxonomy, and Relation.
+                  </li>
                   <li>WP Job Manager (Trigger) (Pro): Added 3 new trigger tasks</li>
                 </ul>
               </div>
