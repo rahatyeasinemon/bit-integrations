@@ -1,0 +1,22 @@
+import toast from 'react-hot-toast'
+import bitsFetch from '../../../../Utils/bitsFetch'
+import { __ } from '../../../../Utils/i18nwrap'
+
+export const getWCSubscriptionsAllSubscriptions = (data, setFlow) => {
+  const loadJobTypes = bitsFetch(null, 'wcsubscriptions/get/subscriptions', null, 'GET').then(
+    (result) => {
+      if (result && result.data) {
+        const tmpFlow = { ...data }
+        tmpFlow.flow_details.allSubscriptions = result.data
+        setFlow({ ...tmpFlow })
+        return __('Subscriptions fetched successfully', 'bit-integrations')
+      }
+      return __('Subscriptions fetching failed. please try again', 'bit-integrations')
+    }
+  )
+  toast.promise(loadJobTypes, {
+    success: (data) => data,
+    error: __('Error Occurred', 'bit-integrations'),
+    loading: __('Loading Types...')
+  })
+}

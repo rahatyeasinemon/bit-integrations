@@ -85,6 +85,7 @@ import {
   getWPJobManagerJobs,
   getWPJobManagerJobTypes
 } from '../Triggers/TriggerHelpers/WPJobManager/WPJobManagerCommonFunction.js'
+import { getWCSubscriptionsAllSubscriptions } from '../Triggers/TriggerHelpers/WCSubscriptions/WCSubscriptionsCommonFunction.js'
 
 function EditFormInteg({ setSnackbar, className = '' }) {
   const [forms, setForms] = useState([])
@@ -105,12 +106,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     tmpInteg[name] = value
     setFlow(tmpInteg)
     let queryData = { id: value }
-    if (
-      flow.triggered_entity === 'Bricks' ||
-      flow.triggered_entity === 'Brizy' ||
-      flow.triggered_entity === 'PiotnetAddon' ||
-      flow.triggered_entity === 'CartFlow'
-    ) {
+    if (flow.triggered_entity === 'PiotnetAddon' || flow.triggered_entity === 'CartFlow') {
       queryData = { ...queryData, postId: formPost[value] ?? flow.flow_details.postId }
     } else {
       baseDataLoad(flow.triggered_entity, tmpInteg)
@@ -365,6 +361,12 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       }
       if (data.triggered_entity_id === 'wp_job_manager-9') {
         getApplicationStatuses(data, setFlow)
+      }
+    }
+
+    if (trigger === 'WCSubscriptions') {
+      if (data.triggered_entity_id === 'user_cancels_subscription') {
+        getWCSubscriptionsAllSubscriptions(data, setFlow)
       }
     }
   }

@@ -555,6 +555,17 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
   return tmpConf
 }
 
+export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id
+
+  if (formId === 'user_cancels_subscription') {
+    tmpConf.selectedSubscription = flowData.selectedSubscription
+    tmpConf.allSubscriptions = flowData.allSubscriptions
+  }
+
+  return tmpConf
+}
+
 export const tutorlmsStateIH = (tmpConf, flowData) => {
   if (flowData.formID === '2') {
     tmpConf.selectedQuiz = flowData.selectedQuiz
