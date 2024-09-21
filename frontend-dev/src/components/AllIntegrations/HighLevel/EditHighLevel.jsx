@@ -30,7 +30,8 @@ function EditHighLevel({ allIntegURL }) {
     customFields: false,
     options: false,
     contacts: false,
-    users: false
+    users: false,
+    hlTasks: false
   })
 
   const saveConfig = () => {
@@ -53,14 +54,19 @@ function EditHighLevel({ allIntegURL }) {
       }
     }
 
-    if (highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK) {
-      if (!highLevelConf.selectedTaskStatus) {
-        toast.error('Please select a status!')
-        return
-      }
-
+    if (
+      highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK ||
+      highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK
+    ) {
       if (!highLevelConf.selectedContact && !checkMappedFields(highLevelConf)) {
         toast.error('Please select a contact or map fields!')
+        return
+      }
+    }
+
+    if (highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK) {
+      if (!highLevelConf.updateTaskId && !checkMappedFields(highLevelConf)) {
+        toast.error('Please select a task or map fields!')
         return
       }
     }

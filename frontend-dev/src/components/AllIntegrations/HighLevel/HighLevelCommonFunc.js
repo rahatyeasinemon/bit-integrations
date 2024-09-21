@@ -86,11 +86,11 @@ export const getContacts = (confTmp, setConf, loading, setLoading) => {
       newConf.contacts = result.data
       setConf(newConf)
       setLoading({ ...loading, contacts: false })
-      toast.success(__('Contacts fetch successfully', 'bit-integrations'))
+      toast.success(__('Contacts fetched successfully', 'bit-integrations'))
       if (newConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT) {
         getCustomFields(newConf, setConf, loading, setLoading)
       }
-      if (newConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK) {
+      if (newConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK || newConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK) {
         getUsers(newConf, setConf, loading, setLoading)
       }
       return
@@ -109,10 +109,27 @@ export const getUsers = (confTmp, setConf, loading, setLoading) => {
       newConf.users = result.data
       setConf(newConf)
       setLoading({ ...loading, users: false })
-      toast.success(__('Users fetch successfully', 'bit-integrations'))
+      toast.success(__('Users fetched successfully', 'bit-integrations'))
       return
     }
     setLoading({ ...loading, users: false })
+    toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
+  })
+}
+
+export const getHLTasks = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, hlTasks: true })
+
+  bitsFetch({ api_key: confTmp.api_key, contact_id: confTmp.selectedContact }, 'get_highLevel_tasks').then((result) => {
+    if (result.success && result.data) {
+      const newConf = { ...confTmp }
+      newConf.hlTasks = result.data
+      setConf(newConf)
+      setLoading({ ...loading, hlTasks: false })
+      toast.success(__('Task fetched successfully', 'bit-integrations'))
+      return
+    }
+    setLoading({ ...loading, hlTasks: false })
     toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
   })
 }
@@ -179,6 +196,17 @@ export const highLevelStaticFields = (selectedTask) => {
       staticFields: [
         { key: 'title', label: 'Title', required: true },
         { key: 'dueDate', label: 'Due Date', required: true },
+        { key: 'description', label: 'Description', required: false },
+        { key: 'contactId', label: 'Contact ID', required: false },
+      ],
+      fieldMap: [{ formField: '', highLevelField: 'title' }, { formField: '', highLevelField: 'dueDate' }]
+    }
+  } else if (selectedTask === TASK_LIST_VALUES.UPDATE_TASK) {
+    return {
+      staticFields: [
+        { key: 'title', label: 'Title', required: true },
+        { key: 'dueDate', label: 'Due Date', required: true },
+        { key: 'taskId', label: 'Task ID', required: false },
         { key: 'description', label: 'Description', required: false },
         { key: 'contactId', label: 'Contact ID', required: false },
       ],

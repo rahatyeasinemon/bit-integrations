@@ -6,7 +6,8 @@ import {
   getCustomFields,
   highLevelStaticFields,
   getContacts,
-  getUsers
+  getUsers,
+  getHLTasks
 } from './HighLevelCommonFunc'
 import HighLevelFieldMap from './HighLevelFieldMap'
 import { useState } from 'react'
@@ -33,7 +34,11 @@ export default function HighLevelIntegLayout({
 
       if (val === TASK_LIST_VALUES.CREATE_CONTACT) {
         getCustomFields(newConf, setHighLevelConf, loading, setLoading)
-      } else if (val === TASK_LIST_VALUES.UPDATE_CONTACT || val === TASK_LIST_VALUES.CREATE_TASK) {
+      } else if (
+        val === TASK_LIST_VALUES.UPDATE_CONTACT ||
+        val === TASK_LIST_VALUES.CREATE_TASK ||
+        val === TASK_LIST_VALUES.UPDATE_TASK
+      ) {
         getContacts(newConf, setHighLevelConf, loading, setLoading)
       }
     } else {
@@ -47,6 +52,15 @@ export default function HighLevelIntegLayout({
   const handleMultiSelectChange = (val, type) => {
     const newConf = { ...highLevelConf }
     newConf[type] = val
+
+    if (
+      val &&
+      newConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK &&
+      type === 'selectedContact'
+    ) {
+      getHLTasks(newConf, setHighLevelConf, loading, setLoading)
+    }
+
     setHighLevelConf({ ...newConf })
   }
 
@@ -66,7 +80,8 @@ export default function HighLevelIntegLayout({
       </div>
 
       {(highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT ||
-        highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK) && (
+        highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK ||
+        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK) && (
         <div className="flx mt-3 mb-4">
           <b className="wdt-200 d-in-b">{__('Select Contact:', 'bit-integrations')}</b>
           <MultiSelect
@@ -88,7 +103,33 @@ export default function HighLevelIntegLayout({
         </div>
       )}
 
-      {highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK && (
+      {highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK && (
+        <div className="flx mt-3 mb-4">
+          <b className="wdt-200 d-in-b">{__('Select Task:', 'bit-integrations')}</b>
+          <MultiSelect
+            style={{ width: '450px' }}
+            options={highLevelConf.hlTasks}
+            className="msl-wrp-options"
+            defaultValue={highLevelConf?.updateTaskId}
+            onChange={(val) => handleMultiSelectChange(val, 'updateTaskId')}
+            disabled={!highLevelConf.selectedContact || loading.contacts || loading.hlTasks}
+            singleSelect
+          />
+          <button
+            onClick={() => getHLTasks(highLevelConf, setHighLevelConf, loading, setLoading)}
+            className="icn-btn sh-sm ml-2 mr-2 tooltip"
+            style={{ '--tooltip-txt': `'${__('Refresh task list', 'bit-integrations')}'` }}
+            disabled={
+              !highLevelConf.selectedContact || loading.contacts || loading.users || loading.hlTasks
+            }
+            type="button">
+            &#x21BB;
+          </button>
+        </div>
+      )}
+
+      {(highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK ||
+        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK) && (
         <>
           <div className="flx mt-3 mb-4">
             <b className="wdt-200 d-in-b">{__('Select Assignee:', 'bit-integrations')}</b>
@@ -126,7 +167,11 @@ export default function HighLevelIntegLayout({
         </>
       )}
 
-      {(loading.accounts || loading.customFields || loading.contacts || loading.users) && (
+      {(loading.accounts ||
+        loading.customFields ||
+        loading.contacts ||
+        loading.users ||
+        loading.hlTasks) && (
         <Loader
           style={{
             display: 'flex',
@@ -156,6 +201,25 @@ export default function HighLevelIntegLayout({
             'bit-integrations'
           )}
         </span>
+      )}
+
+      {highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK && (
+        <>
+          <span className="action-delete-task-note">
+            {__(
+              'To update, you can select contact from the list above, or you can map fields. If not selected, "Contact ID" field mapping is required.',
+              'bit-integrations'
+            )}
+          </span>
+          <br />
+          <br />
+          <span className="action-delete-task-note">
+            {__(
+              'You can select task from the list above, or you can map fields. If not selected, "Task ID" field mapping is required. To enable task selection, choose a contact first.',
+              'bit-integrations'
+            )}
+          </span>
+        </>
       )}
 
       <br />
@@ -209,7 +273,8 @@ export default function HighLevelIntegLayout({
         </>
       )}
 
-      {highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK && (
+      {(highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK ||
+        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK) && (
         <>
           <br />
           <br />

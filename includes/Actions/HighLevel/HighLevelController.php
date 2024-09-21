@@ -164,6 +164,37 @@ class HighLevelController
         wp_send_json_success($userList, 200);
     }
 
+    public static function getHLTasks($requestsParams)
+    {
+        if (empty($requestsParams->api_key) || empty($requestsParams->contact_id)) {
+            wp_send_json_error(__('Requested parameter(s) empty', 'bit-integrations'), 400);
+        }
+
+        $apiKey = $requestsParams->api_key;
+        $contactId = $requestsParams->contact_id;
+        $apiEndpoint = 'https://rest.gohighlevel.com/v1/contacts/' . $contactId . '/tasks';
+        $header = ['Authorization' => 'Bearer ' . $apiKey];
+        $response = HttpHelper::get($apiEndpoint, null, $header);
+
+        if (!isset($response->tasks)) {
+            wp_send_json_error('Tasks fetching failed', 400);
+        }
+
+        $tasks = $response->tasks;
+        $taskList = [];
+
+        if (!empty($tasks)) {
+            foreach ($tasks as $task) {
+                $taskList[] = (object) [
+                    'label' => $task->title,
+                    'value' => $task->id
+                ];
+            }
+        }
+
+        wp_send_json_success($taskList, 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
@@ -181,6 +212,7 @@ class HighLevelController
             'selectedContact'    => $integrationDetails->selectedContact,
             'selectedTaskStatus' => $integrationDetails->selectedTaskStatus,
             'selectedUser'       => $integrationDetails->selectedUser,
+            'updateTaskId'       => $integrationDetails->updateTaskId,
         ];
 
         $recordApiHelper = new RecordApiHelper($apiKey, $this->_integrationID);

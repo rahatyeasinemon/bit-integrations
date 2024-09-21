@@ -82,7 +82,7 @@ class RecordApiHelper
             return ['success' => false, 'message' => __('Contact id not found in request!', 'bit-integrations'), 'code' => 400];
         }
 
-        if (empty($selectedOptions['selectedTaskStatus']) || empty($finalData['title'])) {
+        if (empty($finalData['dueDate']) || empty($finalData['title'])) {
             return ['success' => false, 'message' => __('Request parameter(s) empty!', 'bit-integrations'), 'code' => 400];
         }
 
@@ -107,6 +107,49 @@ class RecordApiHelper
         }
 
         return ['success' => false, 'message' => __('Failed to create task!', 'bit-integrations'), 'response' => $response, 'code' => 400];
+    }
+
+    public function updateTask($finalData, $selectedOptions, $actions)
+    {
+        if (empty($selectedOptions['selectedContact']) && empty($finalData['contactId'])) {
+            return ['success' => false, 'message' => __('Contact id not found in request!', 'bit-integrations'), 'code' => 400];
+        }
+
+        if (empty($selectedOptions['updateTaskId']) && empty($finalData['taskId'])) {
+            return ['success' => false, 'message' => __('Task id not found in request!', 'bit-integrations'), 'code' => 400];
+        }
+
+        if (empty($finalData['dueDate']) || empty($finalData['title'])) {
+            return ['success' => false, 'message' => __('Request parameter(s) empty!', 'bit-integrations'), 'code' => 400];
+        }
+
+        if (!empty($selectedOptions['selectedContact'])) {
+            $contactId = $selectedOptions['selectedContact'];
+        } else {
+            $contactId = $finalData['contactId'];
+        }
+
+        if (!empty($selectedOptions['updateTaskId'])) {
+            $taskId = $selectedOptions['updateTaskId'];
+        } else {
+            $taskId = $finalData['taskId'];
+        }
+
+        $apiRequestData['title'] = $finalData['title'];
+        $apiRequestData['description'] = !empty($finalData['description']) ? $finalData['description'] : '';
+        $apiRequestData['dueDate'] = !empty($finalData['dueDate']) ? $finalData['dueDate'] : '';
+        $apiRequestData['assignedTo'] = !empty($selectedOptions['selectedUser']) ? $selectedOptions['selectedUser'] : '';
+        $apiRequestData['status'] = !empty($selectedOptions['selectedTaskStatus']) ? $selectedOptions['selectedTaskStatus'] : '';
+
+        $apiEndpoint = $this->baseUrl . 'contacts/' . $contactId . '/tasks/' . $taskId;
+
+        $response = HttpHelper::put($apiEndpoint, wp_json_encode($apiRequestData), $this->defaultHeader);
+
+        if (isset($response->id)) {
+            return ['success' => true, 'message' => __('Task updated successfully.', 'bit-integrations')];
+        }
+
+        return ['success' => false, 'message' => __('Failed to update task!', 'bit-integrations'), 'response' => $response, 'code' => 400];
     }
 
     public function generateReqDataFromFieldMap($data, $fieldMap)
@@ -147,6 +190,10 @@ class RecordApiHelper
             $response = $this->createTask($finalData, $selectedOptions, $actions);
             $type = 'Task';
             $typeName = 'Create Task';
+        } elseif ($selectedTask === 'updateTask') {
+            $response = $this->updateTask($finalData, $selectedOptions, $actions);
+            $type = 'Task';
+            $typeName = 'Update Task';
         }
 
         if ($response['success']) {
