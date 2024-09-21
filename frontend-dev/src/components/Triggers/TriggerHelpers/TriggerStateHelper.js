@@ -206,7 +206,7 @@ export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
 }
 
 export const WCSubscriptionsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
-  if (val === 'user_cancels_subscription') {
+  if (val === 'user_cancels_subscription' || val === 'user_subscription_expires') {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       allSubscriptions: resp.data.allSubscriptions,
@@ -565,7 +565,7 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
 export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) => {
   const formId = flowData.formID ? flowData.formID : triggered_entity_id
 
-  if (formId === 'user_cancels_subscription') {
+  if (formId === 'user_cancels_subscription' || formId === 'user_subscription_expires') {
     tmpConf.selectedSubscription = flowData.selectedSubscription
     tmpConf.allSubscriptions = flowData.allSubscriptions
   }

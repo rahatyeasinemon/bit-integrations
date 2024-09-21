@@ -19,7 +19,9 @@ const WCSubscriptionsHelper = ({ flow, setFlowData, edit = false }) => {
 
   return (
     <div>
-      {(id === 'user_cancels_subscription' || id === 'user_subscription_status_updated') && (
+      {(id === 'user_cancels_subscription' ||
+        id === 'user_subscription_status_updated' ||
+        id === 'user_subscription_expires') && (
         <div className={edit ? 'flx mt-3' : ''}>
           <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
             {__('Select Subscription:', 'bit-integrations')}

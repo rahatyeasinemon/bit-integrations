@@ -367,6 +367,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     if (trigger === 'WCSubscriptions') {
       if (
         data.triggered_entity_id === 'user_cancels_subscription' ||
+        data.triggered_entity_id === 'user_subscription_expires' ||
         data.triggered_entity_id === 'user_subscription_status_updated'
       ) {
         getWCSubscriptionsAllSubscriptions(data, setFlow)
