@@ -212,6 +212,13 @@ export const WCSubscriptionsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
       allSubscriptions: resp.data.allSubscriptions,
       selectedSubscription: 'any'
     }
+  } else if (val === 'user_subscription_status_updated') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      allSubscriptions: resp.data.allSubscriptions,
+      selectedSubscription: 'any',
+      selectedStatus: 'any'
+    }
   }
 
   setNewFlow(tmpNewFlow)
@@ -561,6 +568,19 @@ export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) =
   if (formId === 'user_cancels_subscription') {
     tmpConf.selectedSubscription = flowData.selectedSubscription
     tmpConf.allSubscriptions = flowData.allSubscriptions
+  }
+  if (formId === 'user_subscription_status_updated') {
+    tmpConf.selectedSubscription = flowData.selectedSubscription
+    tmpConf.selectedStatus = flowData.selectedStatus
+    tmpConf.allSubscriptions = flowData.allSubscriptions
+    tmpConf.allStatus = [
+      { label: 'Any Status', value: 'any' },
+      { label: 'Active', value: 'active' },
+      { label: 'On Hold', value: 'on-hold' },
+      { label: 'Pending', value: 'pending' },
+      { label: 'Cancelled', value: 'cancelled' },
+      { label: 'Pending Cancel', value: 'pending-cancel' }
+    ]
   }
 
   return tmpConf

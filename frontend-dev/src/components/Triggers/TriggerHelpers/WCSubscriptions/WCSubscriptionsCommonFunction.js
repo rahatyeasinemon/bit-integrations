@@ -17,6 +17,6 @@ export const getWCSubscriptionsAllSubscriptions = (data, setFlow) => {
   toast.promise(loadJobTypes, {
     success: (data) => data,
     error: __('Error Occurred', 'bit-integrations'),
-    loading: __('Loading Types...')
+    loading: __('Loading Subscriptions...')
   })
 }
