@@ -59,6 +59,8 @@ export const FormPluginStateHelper = (val, tmpNewFlow, resp, setNewFlow) => {
     wpForoStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else if (tmpNewFlow?.triggered_entity === 'WPJobManager') {
     wpJobManagerStateFP(val, tmpNewFlow, resp, setNewFlow)
+  } else if (tmpNewFlow?.triggered_entity === 'WCSubscriptions') {
+    WCSubscriptionsStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else {
     setNewFlow(tmpNewFlow)
   }
@@ -157,7 +159,12 @@ export const wpForoStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
 }
 
 export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
-  if (val === 'wp_job_manager-1' || val === 'wp_job_manager-4' || val === 'wp_job_manager-5' || val === 'wp_job_manager-8') {
+  if (
+    val === 'wp_job_manager-1' ||
+    val === 'wp_job_manager-4' ||
+    val === 'wp_job_manager-5' ||
+    val === 'wp_job_manager-8'
+  ) {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       jobTypes: resp.data.jobTypes,
@@ -192,6 +199,18 @@ export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
       selectedJobType: 'any',
       statusList: resp.data.statusList,
       selectedStatus: 'any'
+    }
+  }
+
+  setNewFlow(tmpNewFlow)
+}
+
+export const WCSubscriptionsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
+  if (val === 'user_cancels_subscription') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      allSubscriptions: resp.data.allSubscriptions,
+      selectedSubscription: 'any'
     }
   }
 
