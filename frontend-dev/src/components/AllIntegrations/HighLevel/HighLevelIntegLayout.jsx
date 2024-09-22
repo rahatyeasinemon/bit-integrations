@@ -7,10 +7,10 @@ import {
   highLevelStaticFields,
   getContacts,
   getUsers,
-  getHLTasks
+  getHLTasks,
+  getPipelines
 } from './HighLevelCommonFunc'
 import HighLevelFieldMap from './HighLevelFieldMap'
-import { useState } from 'react'
 import HighLevelActions from './HighLevelAction'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
@@ -40,6 +40,8 @@ export default function HighLevelIntegLayout({
         val === TASK_LIST_VALUES.UPDATE_TASK
       ) {
         getContacts(newConf, setHighLevelConf, loading, setLoading)
+      } else if (val === TASK_LIST_VALUES.CREATE_OPPORTUNITY) {
+        getPipelines(newConf, setHighLevelConf, loading, setLoading)
       }
     } else {
       newConf.highLevelFields = []
@@ -61,7 +63,36 @@ export default function HighLevelIntegLayout({
       getHLTasks(newConf, setHighLevelConf, loading, setLoading)
     }
 
+    if (val && type === 'selectedPipeline') {
+      newConf.selectedStage = ''
+      const stageList = newConf.stages[val].map((stage) => ({ label: stage.name, value: stage.id }))
+      newConf.currentStages = stageList
+    }
+
+    if (!val && type === 'selectedPipeline') {
+      newConf.selectedStage = ''
+    }
+
     setHighLevelConf({ ...newConf })
+  }
+
+  const getStatusOptions = () => {
+    if (
+      highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK ||
+      highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK
+    ) {
+      return [
+        { label: 'Incompleted', value: 'incompleted' },
+        { label: 'Completed', value: 'completed' }
+      ]
+    }
+
+    return [
+      { label: 'Open', value: 'open' },
+      { label: 'Won', value: 'won' },
+      { label: 'Lost', value: 'lost' },
+      { label: 'Abandoned', value: 'abandoned' }
+    ]
   }
 
   return (
@@ -79,9 +110,47 @@ export default function HighLevelIntegLayout({
         />
       </div>
 
+      {highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY && (
+        <>
+          <div className="flx mt-3 mb-4">
+            <b className="wdt-200 d-in-b">{__('Select Pipeline:', 'bit-integrations')}</b>
+            <MultiSelect
+              style={{ width: '450px' }}
+              options={highLevelConf.pipelines}
+              className="msl-wrp-options"
+              defaultValue={highLevelConf?.selectedPipeline}
+              onChange={(val) => handleMultiSelectChange(val, 'selectedPipeline')}
+              disabled={loading.pipelines || loading.contacts || loading.users}
+              singleSelect
+            />
+            <button
+              onClick={() => getPipelines(highLevelConf, setHighLevelConf, loading, setLoading)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `'${__('Refresh pipeline list', 'bit-integrations')}'` }}
+              disabled={loading.contacts || loading.pipelines}
+              type="button">
+              &#x21BB;
+            </button>
+          </div>
+          <div className="flx mt-3 mb-4">
+            <b className="wdt-200 d-in-b">{__('Select Stage:', 'bit-integrations')}</b>
+            <MultiSelect
+              style={{ width: '450px' }}
+              options={highLevelConf.currentStages}
+              className="msl-wrp-options"
+              defaultValue={highLevelConf?.selectedStage}
+              onChange={(val) => handleMultiSelectChange(val, 'selectedStage')}
+              disabled={!highLevelConf.selectedPipeline}
+              singleSelect
+            />
+          </div>
+        </>
+      )}
+
       {(highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT ||
         highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK ||
-        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK) && (
+        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK ||
+        highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) && (
         <div className="flx mt-3 mb-4">
           <b className="wdt-200 d-in-b">{__('Select Contact:', 'bit-integrations')}</b>
           <MultiSelect
@@ -129,7 +198,8 @@ export default function HighLevelIntegLayout({
       )}
 
       {(highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK ||
-        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK) && (
+        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK ||
+        highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) && (
         <>
           <div className="flx mt-3 mb-4">
             <b className="wdt-200 d-in-b">{__('Select Assignee:', 'bit-integrations')}</b>
@@ -154,10 +224,7 @@ export default function HighLevelIntegLayout({
             <b className="wdt-200 d-in-b">{__('Select Status:', 'bit-integrations')}</b>
             <MultiSelect
               style={{ width: '450px' }}
-              options={[
-                { label: 'Incompleted', value: 'incompleted' },
-                { label: 'Completed', value: 'completed' }
-              ]}
+              options={getStatusOptions()}
               className="msl-wrp-options"
               defaultValue={highLevelConf?.selectedTaskStatus}
               onChange={(val) => handleMultiSelectChange(val, 'selectedTaskStatus')}
@@ -171,14 +238,15 @@ export default function HighLevelIntegLayout({
         loading.customFields ||
         loading.contacts ||
         loading.users ||
-        loading.hlTasks) && (
+        loading.hlTasks ||
+        loading.pipelines) && (
         <Loader
           style={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            height: 100,
-            transform: 'scale(0.7)'
+            height: 45,
+            transform: 'scale(0.5)'
           }}
         />
       )}
@@ -198,6 +266,15 @@ export default function HighLevelIntegLayout({
         <span className="action-delete-task-note">
           {__(
             'To create, you can select contact from the list above, or you can map fields. If not selected, "Contact ID" field mapping is required.',
+            'bit-integrations'
+          )}
+        </span>
+      )}
+
+      {highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY && (
+        <span className="action-delete-task-note">
+          {__(
+            'Either a Select Contact, Email, or Phone Number is required. For Contact you can select from the list above, or you can map field (Contact ID).',
             'bit-integrations'
           )}
         </span>

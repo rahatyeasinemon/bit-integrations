@@ -195,6 +195,37 @@ class HighLevelController
         wp_send_json_success($taskList, 200);
     }
 
+    public static function getPipelines($requestsParams)
+    {
+        if (empty($requestsParams->api_key)) {
+            wp_send_json_error(__('Requested parameter is empty', 'bit-integrations'), 400);
+        }
+
+        $apiKey = $requestsParams->api_key;
+        $apiEndpoint = 'https://rest.gohighlevel.com/v1/pipelines';
+        $header = ['Authorization' => 'Bearer ' . $apiKey];
+        $response = HttpHelper::get($apiEndpoint, null, $header);
+
+        if (!isset($response->pipelines)) {
+            wp_send_json_error('Pipelines fetching failed', 400);
+        }
+
+        $pipelines = $response->pipelines;
+        $pipelineList = $stages = [];
+
+        if (!empty($pipelines)) {
+            foreach ($pipelines as $pipeline) {
+                $pipelineList[] = (object) [
+                    'label' => $pipeline->name,
+                    'value' => $pipeline->id
+                ];
+                $stages[$pipeline->id] = $pipeline->stages;
+            }
+        }
+
+        wp_send_json_success(['pipelineList' => $pipelineList, 'stages' => $stages], 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
@@ -213,6 +244,8 @@ class HighLevelController
             'selectedTaskStatus' => $integrationDetails->selectedTaskStatus,
             'selectedUser'       => $integrationDetails->selectedUser,
             'updateTaskId'       => $integrationDetails->updateTaskId,
+            'selectedPipeline'   => $integrationDetails->selectedPipeline,
+            'selectedStage'      => $integrationDetails->selectedStage,
         ];
 
         $recordApiHelper = new RecordApiHelper($apiKey, $this->_integrationID);

@@ -90,7 +90,7 @@ export const getContacts = (confTmp, setConf, loading, setLoading) => {
       if (newConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT) {
         getCustomFields(newConf, setConf, loading, setLoading)
       }
-      if (newConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK || newConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK) {
+      if (newConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK || newConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK || newConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) {
         getUsers(newConf, setConf, loading, setLoading)
       }
       return
@@ -130,6 +130,27 @@ export const getHLTasks = (confTmp, setConf, loading, setLoading) => {
       return
     }
     setLoading({ ...loading, hlTasks: false })
+    toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
+  })
+}
+
+export const getPipelines = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, pipelines: true })
+
+  bitsFetch({ api_key: confTmp.api_key }, 'get_highLevel_pipelines').then((result) => {
+    if (result.success && result.data) {
+      const newConf = { ...confTmp }
+      newConf.pipelines = result.data.pipelineList
+      newConf.stages = result.data.stages
+      setConf(newConf)
+      setLoading({ ...loading, pipelines: false })
+      toast.success(__('Pipelines fetched successfully', 'bit-integrations'))
+      if (newConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) {
+        getContacts(newConf, setConf, loading, setLoading)
+      }
+      return
+    }
+    setLoading({ ...loading, pipelines: false })
     toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
   })
 }
@@ -211,6 +232,19 @@ export const highLevelStaticFields = (selectedTask) => {
         { key: 'contactId', label: 'Contact ID', required: false },
       ],
       fieldMap: [{ formField: '', highLevelField: 'title' }, { formField: '', highLevelField: 'dueDate' }]
+    }
+  } else if (selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) {
+    return {
+      staticFields: [
+        { key: 'title', label: 'Title', required: true },
+        { key: 'name', label: 'Name', required: false },
+        { key: 'email', label: 'Email', required: false },
+        { key: 'phone', label: 'Phone Number', required: false },
+        { key: 'companyName', label: 'Company Name', required: false },
+        { key: 'monetaryValue', label: 'Monetary Value', required: false },
+        { key: 'contactId', label: 'Contact ID', required: false },
+      ],
+      fieldMap: [{ formField: '', highLevelField: 'title' }]
     }
   }
 }

@@ -152,6 +152,44 @@ class RecordApiHelper
         return ['success' => false, 'message' => __('Failed to update task!', 'bit-integrations'), 'response' => $response, 'code' => 400];
     }
 
+    public function createOpportunity($finalData, $selectedOptions, $actions)
+    {
+        if (empty($selectedOptions['selectedPipeline']) || empty($selectedOptions['selectedStage']) || empty($finalData['title'])) {
+            return ['success' => false, 'message' => __('Request parameter(s) empty!', 'bit-integrations'), 'code' => 400];
+        }
+
+        if ($selectedOptions['selectedContact']) {
+            $contactId = $selectedOptions['selectedContact'];
+        } else {
+            $contactId = !empty($finalData['contactId']) ? $finalData['contactId'] : '';
+        }
+
+        if (empty($finalData['email']) && empty($finalData['phone']) && empty($contactId)) {
+            return ['success' => false, 'message' => __('Either a Contact ID, Email, or Phone Number is required!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $apiRequestData['title'] = $finalData['title'];
+        $apiRequestData['status'] = !empty($selectedOptions['selectedTaskStatus']) ? $selectedOptions['selectedTaskStatus'] : '';
+        $apiRequestData['stageId'] = $selectedOptions['selectedStage'];
+        $apiRequestData['email'] = !empty($finalData['email']) ? $finalData['email'] : '';
+        $apiRequestData['phone'] = !empty($finalData['phone']) ? $finalData['phone'] : '';
+        $apiRequestData['assignedTo'] = !empty($selectedOptions['selectedUser']) ? $selectedOptions['selectedUser'] : '';
+        $apiRequestData['monetaryValue'] = !empty($finalData['monetaryValue']) ? $finalData['monetaryValue'] : '';
+        $apiRequestData['contactId'] = $contactId;
+        $apiRequestData['name'] = !empty($finalData['name']) ? $finalData['name'] : '';
+        $apiRequestData['companyName'] = !empty($finalData['companyName']) ? $finalData['companyName'] : '';
+
+        $apiEndpoint = 'https://rest.gohighlevel.com/v1/pipelines/' . $selectedOptions['selectedPipeline'] . '/opportunities';
+
+        $response = HttpHelper::post($apiEndpoint, wp_json_encode($apiRequestData), $this->defaultHeader);
+
+        if (isset($response->id)) {
+            return ['success' => true, 'message' => __('Opportunity updated successfully.', 'bit-integrations')];
+        }
+
+        return ['success' => false, 'message' => __('Failed to update opportunity!', 'bit-integrations'), 'response' => $response, 'code' => 400];
+    }
+
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
@@ -194,6 +232,10 @@ class RecordApiHelper
             $response = $this->updateTask($finalData, $selectedOptions, $actions);
             $type = 'Task';
             $typeName = 'Update Task';
+        } elseif ($selectedTask === 'createOpportunity') {
+            $response = $this->createOpportunity($finalData, $selectedOptions, $actions);
+            $type = 'Opportunity';
+            $typeName = 'Create Opportunity';
         }
 
         if ($response['success']) {

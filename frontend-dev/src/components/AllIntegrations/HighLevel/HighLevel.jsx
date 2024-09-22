@@ -24,7 +24,8 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
     options: false,
     contacts: false,
     users: false,
-    hlTasks: false
+    hlTasks: false,
+    pipelines: false
   })
 
   const [highLevelConf, setHighLevelConf] = useState({
@@ -46,7 +47,12 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
     users: [],
     selectedUser: '',
     hlTasks: [],
-    updateTaskId: ''
+    updateTaskId: '',
+    pipelines: [],
+    selectedPipeline: '',
+    stages: [],
+    currentStages: [],
+    selectedStage: ''
   })
 
   const nextPage = (val) => {
@@ -87,6 +93,23 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
       if (highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK) {
         if (!highLevelConf.updateTaskId && !checkMappedFields(highLevelConf)) {
           toast.error('Please select a task or map fields!')
+          return
+        }
+      }
+
+      if (highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) {
+        if (!highLevelConf.selectedPipeline) {
+          toast.error('Please select a pipeline!')
+          return
+        }
+
+        if (!highLevelConf.selectedStage) {
+          toast.error('Please select a stage!')
+          return
+        }
+
+        if (!highLevelConf.selectedTaskStatus) {
+          toast.error('Please select a status!')
           return
         }
       }
