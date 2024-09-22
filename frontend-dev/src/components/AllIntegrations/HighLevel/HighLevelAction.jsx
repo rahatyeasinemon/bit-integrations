@@ -67,16 +67,21 @@ export default function HighLevelActions({ highLevelConf, setHighLevelConf, load
       <div className="pos-rel d-flx w-8">
         {(highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTACT ||
           highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT) && (
+          <TableCheckBox
+            checked={highLevelConf.actions?.dnd || false}
+            onChange={(e) => actionHandler(e, 'checkbox')}
+            className="wdt-200 mt-4 mr-2"
+            value="dnd"
+            title={__('Do Not Disturb', 'bit-integrations')}
+            subTitle={__('Enable do not disturb for contact.', 'bit-integrations')}
+            isInfo={!isPro}
+          />
+        )}
+
+        {(highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTACT ||
+          highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT ||
+          highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) && (
           <>
-            <TableCheckBox
-              checked={highLevelConf.actions?.dnd || false}
-              onChange={(e) => actionHandler(e, 'checkbox')}
-              className="wdt-200 mt-4 mr-2"
-              value="dnd"
-              title={__('Do Not Disturb', 'bit-integrations')}
-              subTitle={__('Enable do not disturb for contact.', 'bit-integrations')}
-              isInfo={!isPro}
-            />
             <TableCheckBox
               checked={highLevelConf.selectedTags || false}
               onChange={(e) => actionHandler(e, 'contactTags')}

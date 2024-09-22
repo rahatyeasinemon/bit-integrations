@@ -365,7 +365,8 @@ export default function HighLevelIntegLayout({
       )}
 
       {(highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTACT ||
-        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT) && (
+        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT ||
+        highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) && (
         <>
           <br />
           <br />

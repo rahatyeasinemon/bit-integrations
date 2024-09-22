@@ -179,6 +179,16 @@ class RecordApiHelper
         $apiRequestData['name'] = !empty($finalData['name']) ? $finalData['name'] : '';
         $apiRequestData['companyName'] = !empty($finalData['companyName']) ? $finalData['companyName'] : '';
 
+        if (!empty($selectedOptions['selectedTags'])) {
+            if (Helper::proActionFeatExists('HighLevel', 'opportunityUtilities')) {
+                $filterResponse = apply_filters('btcbi_high_level_opportunity_utilities', 'createOpportunity', $selectedOptions, $actions);
+
+                if ($filterResponse !== 'createOpportunity' && !empty($filterResponse)) {
+                    $apiRequestData = array_merge($apiRequestData, $filterResponse);
+                }
+            }
+        }
+
         $apiEndpoint = 'https://rest.gohighlevel.com/v1/pipelines/' . $selectedOptions['selectedPipeline'] . '/opportunities';
 
         $response = HttpHelper::post($apiEndpoint, wp_json_encode($apiRequestData), $this->defaultHeader);
