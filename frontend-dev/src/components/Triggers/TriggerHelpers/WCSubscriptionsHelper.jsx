@@ -21,6 +21,7 @@ const WCSubscriptionsHelper = ({ flow, setFlowData, edit = false }) => {
     <div>
       {(id === 'user_cancels_subscription' ||
         id === 'user_subscription_trial_end' ||
+        id === 'user_subscribes_to_product' ||
         id === 'user_renews_subscription' ||
         id === 'user_subscription_status_updated' ||
         id === 'user_subscription_expires') && (
