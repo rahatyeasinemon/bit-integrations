@@ -38,6 +38,26 @@ const WCSubscriptionsHelper = ({ flow, setFlowData, edit = false }) => {
           />
         </div>
       )}
+      {(id === 'user_cancels_subscription' ||
+        id === 'user_subscription_trial_end' ||
+        id === 'user_renews_subscription' ||
+        id === 'user_subscribes_to_product' ||
+        id === 'user_subscription_status_updated' ||
+        id === 'user_subscription_expires') && (
+        <div className={edit ? 'flx mt-3' : ''}>
+          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
+            {__('Select Subscription Product:', 'bit-integrations')}
+          </b>
+          <MultiSelect
+            className="msl-wrp-options"
+            defaultValue={triggerData?.selectedProduct}
+            options={triggerData?.allSubscriptionProducts}
+            onChange={(val) => setFlowData(val, 'selectedProduct')}
+            singleSelect
+            style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
+          />
+        </div>
+      )}
       {id === 'user_subscription_status_updated' && (
         <div className={edit ? 'flx mt-3' : ''}>
           <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
@@ -48,21 +68,6 @@ const WCSubscriptionsHelper = ({ flow, setFlowData, edit = false }) => {
             defaultValue={triggerData?.selectedStatus}
             options={allStatus}
             onChange={(val) => setFlowData(val, 'selectedStatus')}
-            singleSelect
-            style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
-          />
-        </div>
-      )}
-      {id === 'user_subscribes_to_product' && (
-        <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
-            {__('Select Subscription Product:', 'bit-integrations')}
-          </b>
-          <MultiSelect
-            className="msl-wrp-options"
-            defaultValue={triggerData?.selectedProduct}
-            options={triggerData?.allSubscriptionProducts}
-            onChange={(val) => setFlowData(val, 'selectedProduct')}
             singleSelect
             style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
           />

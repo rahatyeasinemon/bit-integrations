@@ -215,13 +215,17 @@ export const WCSubscriptionsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       allSubscriptions: resp.data.allSubscriptions,
-      selectedSubscription: 'any'
+      allSubscriptionProducts: resp.data.allSubscriptionProducts,
+      selectedSubscription: 'any',
+      selectedProduct: 'any'
     }
   } else if (val === 'user_subscription_status_updated') {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       allSubscriptions: resp.data.allSubscriptions,
+      allSubscriptionProducts: resp.data.allSubscriptionProducts,
       selectedSubscription: 'any',
+      selectedProduct: 'any',
       selectedStatus: 'any'
     }
   } else if (val === 'user_subscribes_to_product') {
@@ -580,15 +584,16 @@ export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) =
     formId === 'user_cancels_subscription' ||
     formId === 'user_renews_subscription' ||
     formId === 'user_subscription_trial_end' ||
+    formId === 'user_subscription_status_updated' ||
     formId === 'user_subscription_expires'
   ) {
     tmpConf.selectedSubscription = flowData.selectedSubscription
     tmpConf.allSubscriptions = flowData.allSubscriptions
+    tmpConf.selectedProduct = flowData.selectedProduct
+    tmpConf.allSubscriptionProducts = flowData.allSubscriptionProducts
   }
   if (formId === 'user_subscription_status_updated') {
-    tmpConf.selectedSubscription = flowData.selectedSubscription
     tmpConf.selectedStatus = flowData.selectedStatus
-    tmpConf.allSubscriptions = flowData.allSubscriptions
     tmpConf.allStatus = [
       { label: 'Any Status', value: 'any' },
       { label: 'Active', value: 'active' },
@@ -600,7 +605,7 @@ export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) =
   }
   if (formId === 'user_subscribes_to_product') {
     tmpConf.selectedProduct = flowData.selectedProduct
-    tmpConf.allSubscriptions = flowData.allSubscriptionProducts
+    tmpConf.allSubscriptionProducts = flowData.allSubscriptionProducts
   }
 
   return tmpConf

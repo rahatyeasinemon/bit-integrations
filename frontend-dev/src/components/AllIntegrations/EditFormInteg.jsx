@@ -376,6 +376,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
         data.triggered_entity_id === 'user_subscription_expires'
       ) {
         getWCSubscriptionsAllSubscriptions(data, setFlow)
+        getWCSubscriptionsAllSubscriptionProducts(data, setFlow)
       } else if (data.triggered_entity_id === 'user_subscribes_to_product') {
         getWCSubscriptionsAllSubscriptionProducts(data, setFlow)
       }
