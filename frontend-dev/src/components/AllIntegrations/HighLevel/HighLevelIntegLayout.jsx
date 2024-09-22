@@ -103,7 +103,7 @@ export default function HighLevelIntegLayout({
         <MultiSelect
           style={{ width: '450px' }}
           options={TASK_LIST}
-          className="msl-wrp-options"
+          className={`msl-wrp-options ${!highLevelConf.selectedTask ? 'height-s' : ''}`}
           defaultValue={highLevelConf?.selectedTask}
           onChange={(val) => setChanges(val)}
           singleSelect
