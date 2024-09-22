@@ -209,6 +209,7 @@ export const WCSubscriptionsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   if (
     val === 'user_cancels_subscription' ||
     val === 'user_subscription_trial_end' ||
+    val === 'user_renews_subscription' ||
     val === 'user_subscription_expires'
   ) {
     tmpNewFlow.triggerData = {
@@ -571,6 +572,7 @@ export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) =
 
   if (
     formId === 'user_cancels_subscription' ||
+    formId === 'user_renews_subscription' ||
     formId === 'user_subscription_trial_end' ||
     formId === 'user_subscription_expires'
   ) {
