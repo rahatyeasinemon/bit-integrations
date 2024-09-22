@@ -209,7 +209,6 @@ export const WCSubscriptionsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   if (
     val === 'user_cancels_subscription' ||
     val === 'user_subscription_trial_end' ||
-    val === 'user_subscribes_to_product' ||
     val === 'user_renews_subscription' ||
     val === 'user_subscription_expires'
   ) {
@@ -224,6 +223,12 @@ export const WCSubscriptionsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
       allSubscriptions: resp.data.allSubscriptions,
       selectedSubscription: 'any',
       selectedStatus: 'any'
+    }
+  } else if (val === 'user_subscribes_to_product') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      allSubscriptionProducts: resp.data.allSubscriptionProducts,
+      selectedProduct: 'any'
     }
   }
 
@@ -574,7 +579,6 @@ export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) =
   if (
     formId === 'user_cancels_subscription' ||
     formId === 'user_renews_subscription' ||
-    formId === 'user_subscribes_to_product' ||
     formId === 'user_subscription_trial_end' ||
     formId === 'user_subscription_expires'
   ) {
@@ -593,6 +597,10 @@ export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) =
       { label: 'Cancelled', value: 'cancelled' },
       { label: 'Pending Cancel', value: 'pending-cancel' }
     ]
+  }
+  if (formId === 'user_subscribes_to_product') {
+    tmpConf.selectedProduct = flowData.selectedProduct
+    tmpConf.allSubscriptions = flowData.allSubscriptionProducts
   }
 
   return tmpConf

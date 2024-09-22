@@ -20,3 +20,24 @@ export const getWCSubscriptionsAllSubscriptions = (data, setFlow) => {
     loading: __('Loading Subscriptions...')
   })
 }
+export const getWCSubscriptionsAllSubscriptionProducts = (data, setFlow) => {
+  const loadJobTypes = bitsFetch(
+    null,
+    'wcsubscriptions/get/subscription-products',
+    null,
+    'GET'
+  ).then((result) => {
+    if (result && result.data) {
+      const tmpFlow = { ...data }
+      tmpFlow.flow_details.allSubscriptionProducts = result.data
+      setFlow({ ...tmpFlow })
+      return __('Subscription Products fetched successfully', 'bit-integrations')
+    }
+    return __('Subscription Products fetching failed. please try again', 'bit-integrations')
+  })
+  toast.promise(loadJobTypes, {
+    success: (data) => data,
+    error: __('Error Occurred', 'bit-integrations'),
+    loading: __('Loading Subscription Products...')
+  })
+}

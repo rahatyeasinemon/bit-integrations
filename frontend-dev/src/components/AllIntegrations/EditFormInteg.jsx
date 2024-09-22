@@ -85,7 +85,10 @@ import {
   getWPJobManagerJobs,
   getWPJobManagerJobTypes
 } from '../Triggers/TriggerHelpers/WPJobManager/WPJobManagerCommonFunction.js'
-import { getWCSubscriptionsAllSubscriptions } from '../Triggers/TriggerHelpers/WCSubscriptions/WCSubscriptionsCommonFunction.js'
+import {
+  getWCSubscriptionsAllSubscriptionProducts,
+  getWCSubscriptionsAllSubscriptions
+} from '../Triggers/TriggerHelpers/WCSubscriptions/WCSubscriptionsCommonFunction.js'
 
 function EditFormInteg({ setSnackbar, className = '' }) {
   const [forms, setForms] = useState([])
@@ -365,7 +368,18 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     }
 
     if (trigger === 'WCSubscriptions') {
-      getWCSubscriptionsAllSubscriptions(data, setFlow)
+      if (
+        val === 'user_cancels_subscription' ||
+        val === 'user_subscription_trial_end' ||
+        val === 'user_renews_subscription' ||
+        val === 'user_subscription_status_updated' ||
+        val === 'user_subscription_expires'
+      ) {
+        getWCSubscriptionsAllSubscriptions(data, setFlow)
+      }
+      if (val === 'user_subscribes_to_product') {
+        getWCSubscriptionsAllSubscriptionProducts(data, setFlow)
+      }
     }
   }
 
