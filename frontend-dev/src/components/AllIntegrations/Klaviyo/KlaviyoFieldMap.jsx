@@ -11,13 +11,6 @@ function KlaviyoFieldMap({ i, field, formFields, klaviyoConf, setKlaviyoConf, ty
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
 
-  if (klaviyoConf?.field_map?.length === 1 && field.klaviyoFormField === '') {
-    const newConf = { ...klaviyoConf }
-    const tmp = generateMappedField(newConf)
-    newConf.field_map = tmp
-    setKlaviyoConf(newConf)
-  }
-
   const requiredFields = klaviyoConf?.klaviyoFields.filter((fld) => fld.required === true) || []
 
   const nonrequiredFields = klaviyoConf?.klaviyoFields.filter((fld) => fld.required === false) || []

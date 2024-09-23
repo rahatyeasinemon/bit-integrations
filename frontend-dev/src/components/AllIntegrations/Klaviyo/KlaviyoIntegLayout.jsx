@@ -2,7 +2,7 @@
 import { useRecoilValue } from 'recoil'
 import { __, sprintf } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
-import { getAllLists, addFieldMap } from './KlaviyoCommonFunc'
+import { getAllLists, addFieldMap, generateMappedField } from './KlaviyoCommonFunc'
 import KlaviyoFieldMap from './KlaviyoFieldMap'
 import { $btcbi } from '../../../GlobalStates'
 
@@ -21,7 +21,7 @@ function KlaviyoIntegLayout({ klaviyoConf, setKlaviyoConf, formFields, loading, 
     newConf[e.target.name] = e.target.value
     switch (e.target.name) {
       case 'listId':
-        newConf.field_map = [{ formField: '', klaviyoFormField: '' }]
+        newConf.field_map = generateMappedField(newConf)
         newConf.custom_field_map = [{ formField: '', klaviyoFormField: '' }]
         break
     }
