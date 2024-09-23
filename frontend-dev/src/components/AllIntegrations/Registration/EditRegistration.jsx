@@ -106,10 +106,10 @@ export default function EditRegistration({ allIntegURL }) {
     <div style={{ width: 900 }}>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       {registration?.youTubeLink && (
-        <TutorialLink title="Registration" youTubeLink={registration?.youTubeLink} />
+        <TutorialLink title="WP User Registration" youTubeLink={registration?.youTubeLink} />
       )}
       {registration?.docLink && (
-        <TutorialLink title="Registration" docLink={registration?.docLink} />
+        <TutorialLink title="WP User Registration" docLink={registration?.docLink} />
       )}
       <br />
       <br />

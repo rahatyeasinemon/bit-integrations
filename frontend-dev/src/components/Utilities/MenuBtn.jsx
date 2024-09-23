@@ -13,18 +13,21 @@ export default function MenuBtn(props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const checkIfClickedOutside = (e) => {
-    // If the menu is open and the clicked target is not within the menu,
-    if (isMenuOpen && menuList.current && menuList.current.contains(e.target)) {
+    if (
+      isMenuOpen &&
+      menuList.current &&
+      !menuList.current.contains(e.target) &&
+      !menuButton.current.contains(e.target)
+    ) {
       setIsMenuOpen(false)
     }
-    document.removeEventListener('click', checkIfClickedOutside)
   }
 
   useEffect(() => {
     menuButton.current.parentNode.parentNode.parentNode.style.zIndex = isMenuOpen ? '10' : 'auto'
-    if (!isMenuOpen) menuButton.current.blur()
-
-    document.addEventListener('click', checkIfClickedOutside)
+    isMenuOpen
+      ? document.addEventListener('click', checkIfClickedOutside)
+      : document.removeEventListener('click', checkIfClickedOutside)
 
     return () => {
       document.removeEventListener('click', checkIfClickedOutside)

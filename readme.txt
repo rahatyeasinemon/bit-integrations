@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.2
 Requires PHP: 7.0
-Stable tag: 2.2.4
+Stable tag: 2.2.5
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -995,6 +995,12 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.2.5  =
+_Release Date -19th September 2024_
+- **New Fixes :**
+  - Klaviyo: Resolved the issue with excessive setState calls, preventing performance bottlenecks.
+  - Core: Fixed the Tagify event handling issue.
 
 = 2.2.4  =
 _Release Date -17th September 2024_
