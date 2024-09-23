@@ -168,30 +168,50 @@ class RecordApiHelper
             return ['success' => false, 'message' => __('Either a Contact ID, Email, or Phone Number is required!', 'bit-integrations'), 'code' => 400];
         }
 
-        $apiRequestData['title'] = $finalData['title'];
-        $apiRequestData['status'] = !empty($selectedOptions['selectedTaskStatus']) ? $selectedOptions['selectedTaskStatus'] : '';
-        $apiRequestData['stageId'] = $selectedOptions['selectedStage'];
-        $apiRequestData['email'] = !empty($finalData['email']) ? $finalData['email'] : '';
-        $apiRequestData['phone'] = !empty($finalData['phone']) ? $finalData['phone'] : '';
-        $apiRequestData['assignedTo'] = !empty($selectedOptions['selectedUser']) ? $selectedOptions['selectedUser'] : '';
-        $apiRequestData['monetaryValue'] = !empty($finalData['monetaryValue']) ? $finalData['monetaryValue'] : '';
-        $apiRequestData['contactId'] = $contactId;
-        $apiRequestData['name'] = !empty($finalData['name']) ? $finalData['name'] : '';
-        $apiRequestData['companyName'] = !empty($finalData['companyName']) ? $finalData['companyName'] : '';
+        $apiRequestData = self::formatOpportunityData($finalData, $selectedOptions, $actions, $contactId, 'createOpportunity');
 
-        if (!empty($selectedOptions['selectedTags'])) {
-            if (Helper::proActionFeatExists('HighLevel', 'opportunityUtilities')) {
-                $filterResponse = apply_filters('btcbi_high_level_opportunity_utilities', 'createOpportunity', $selectedOptions, $actions);
-
-                if ($filterResponse !== 'createOpportunity' && !empty($filterResponse)) {
-                    $apiRequestData = array_merge($apiRequestData, $filterResponse);
-                }
-            }
-        }
-
-        $apiEndpoint = 'https://rest.gohighlevel.com/v1/pipelines/' . $selectedOptions['selectedPipeline'] . '/opportunities';
+        $apiEndpoint = $this->baseUrl . 'pipelines/' . $selectedOptions['selectedPipeline'] . '/opportunities';
 
         $response = HttpHelper::post($apiEndpoint, wp_json_encode($apiRequestData), $this->defaultHeader);
+
+        if (isset($response->id)) {
+            return ['success' => true, 'message' => __('Opportunity created successfully.', 'bit-integrations')];
+        }
+
+        return ['success' => false, 'message' => __('Failed to create opportunity!', 'bit-integrations'), 'response' => $response, 'code' => 400];
+    }
+
+    public function updateOpportunity($finalData, $selectedOptions, $actions)
+    {
+        if (empty($selectedOptions['selectedPipeline']) || empty($selectedOptions['selectedStage']) || empty($finalData['title'])) {
+            return ['success' => false, 'message' => __('Request parameter(s) empty!', 'bit-integrations'), 'code' => 400];
+        }
+
+        if (empty($selectedOptions['selectedOpportunity']) && empty($finalData['opportunityId'])) {
+            return ['success' => false, 'message' => __('Opportunity id not found in request!', 'bit-integrations'), 'code' => 400];
+        }
+
+        if (!empty($selectedOptions['selectedOpportunity'])) {
+            $opportunityId = $selectedOptions['selectedOpportunity'];
+        } else {
+            $opportunityId = $finalData['opportunityId'];
+        }
+
+        if ($selectedOptions['selectedContact']) {
+            $contactId = $selectedOptions['selectedContact'];
+        } else {
+            $contactId = !empty($finalData['contactId']) ? $finalData['contactId'] : '';
+        }
+
+        if (empty($finalData['email']) && empty($finalData['phone']) && empty($contactId)) {
+            return ['success' => false, 'message' => __('Either a Contact ID, Email, or Phone Number is required!', 'bit-integrations'), 'code' => 400];
+        }
+
+        $apiRequestData = self::formatOpportunityData($finalData, $selectedOptions, $actions, $contactId, 'updateOpportunity');
+
+        $apiEndpoint = $this->baseUrl . 'pipelines/' . $selectedOptions['selectedPipeline'] . '/opportunities/' . $opportunityId;
+
+        $response = HttpHelper::put($apiEndpoint, wp_json_encode($apiRequestData), $this->defaultHeader);
 
         if (isset($response->id)) {
             return ['success' => true, 'message' => __('Opportunity updated successfully.', 'bit-integrations')];
@@ -246,6 +266,10 @@ class RecordApiHelper
             $response = $this->createOpportunity($finalData, $selectedOptions, $actions);
             $type = 'Opportunity';
             $typeName = 'Create Opportunity';
+        } elseif ($selectedTask === 'updateOpportunity') {
+            $response = $this->updateOpportunity($finalData, $selectedOptions, $actions);
+            $type = 'Opportunity';
+            $typeName = 'Update Opportunity';
         }
 
         if ($response['success']) {
@@ -286,6 +310,32 @@ class RecordApiHelper
         if ((isset($selectedOptions['selectedTags']) && !empty($selectedOptions['selectedTags'])) || !empty($actions)) {
             if (Helper::proActionFeatExists('HighLevel', 'contactUtilities')) {
                 $filterResponse = apply_filters('btcbi_high_level_contact_utilities', $module, $selectedOptions, $actions);
+
+                if ($filterResponse !== $module && !empty($filterResponse)) {
+                    $apiRequestData = array_merge($apiRequestData, $filterResponse);
+                }
+            }
+        }
+
+        return $apiRequestData;
+    }
+
+    private static function formatOpportunityData($finalData, $selectedOptions, $actions, $contactId, $module = 'opportunity')
+    {
+        $apiRequestData['title'] = $finalData['title'];
+        $apiRequestData['status'] = !empty($selectedOptions['selectedTaskStatus']) ? $selectedOptions['selectedTaskStatus'] : '';
+        $apiRequestData['stageId'] = $selectedOptions['selectedStage'];
+        $apiRequestData['email'] = !empty($finalData['email']) ? $finalData['email'] : '';
+        $apiRequestData['phone'] = !empty($finalData['phone']) ? $finalData['phone'] : '';
+        $apiRequestData['assignedTo'] = !empty($selectedOptions['selectedUser']) ? $selectedOptions['selectedUser'] : '';
+        $apiRequestData['monetaryValue'] = !empty($finalData['monetaryValue']) ? $finalData['monetaryValue'] : '';
+        $apiRequestData['contactId'] = $contactId;
+        $apiRequestData['name'] = !empty($finalData['name']) ? $finalData['name'] : '';
+        $apiRequestData['companyName'] = !empty($finalData['companyName']) ? $finalData['companyName'] : '';
+
+        if (!empty($selectedOptions['selectedTags'])) {
+            if (Helper::proActionFeatExists('HighLevel', 'opportunityUtilities')) {
+                $filterResponse = apply_filters('btcbi_high_level_opportunity_utilities', $module, $selectedOptions, $actions);
 
                 if ($filterResponse !== $module && !empty($filterResponse)) {
                     $apiRequestData = array_merge($apiRequestData, $filterResponse);

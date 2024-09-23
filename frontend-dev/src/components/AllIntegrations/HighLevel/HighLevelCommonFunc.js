@@ -90,7 +90,8 @@ export const getContacts = (confTmp, setConf, loading, setLoading) => {
       if (newConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT) {
         getCustomFields(newConf, setConf, loading, setLoading)
       }
-      if (newConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK || newConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK || newConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) {
+      if (newConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK || newConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK
+        || newConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) {
         getUsers(newConf, setConf, loading, setLoading)
       }
       return
@@ -145,12 +146,29 @@ export const getPipelines = (confTmp, setConf, loading, setLoading) => {
       setConf(newConf)
       setLoading({ ...loading, pipelines: false })
       toast.success(__('Pipelines fetched successfully', 'bit-integrations'))
-      if (newConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) {
+      if (newConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY || newConf.selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY) {
         getContacts(newConf, setConf, loading, setLoading)
       }
       return
     }
     setLoading({ ...loading, pipelines: false })
+    toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
+  })
+}
+
+export const getOpportunities = (confTmp, setConf, loading, setLoading) => {
+  setLoading({ ...loading, opportunities: true })
+
+  bitsFetch({ api_key: confTmp.api_key, pipeline_id: confTmp.selectedPipeline }, 'get_highLevel_opportunities').then((result) => {
+    if (result.success && result.data) {
+      const newConf = { ...confTmp }
+      newConf.opportunities = result.data
+      setConf(newConf)
+      setLoading({ ...loading, opportunities: false })
+      toast.success(__('Opportunities fetched successfully', 'bit-integrations'))
+      return
+    }
+    setLoading({ ...loading, opportunities: false })
     toast.error(result?.data ? result.data : __('Something went wrong!', 'bit-integrations'))
   })
 }
@@ -242,6 +260,20 @@ export const highLevelStaticFields = (selectedTask) => {
         { key: 'phone', label: 'Phone Number', required: false },
         { key: 'companyName', label: 'Company Name', required: false },
         { key: 'monetaryValue', label: 'Monetary Value', required: false },
+        { key: 'contactId', label: 'Contact ID', required: false },
+      ],
+      fieldMap: [{ formField: '', highLevelField: 'title' }]
+    }
+  } else if (selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY) {
+    return {
+      staticFields: [
+        { key: 'title', label: 'Title', required: true },
+        { key: 'name', label: 'Name', required: false },
+        { key: 'email', label: 'Email', required: false },
+        { key: 'phone', label: 'Phone Number', required: false },
+        { key: 'companyName', label: 'Company Name', required: false },
+        { key: 'monetaryValue', label: 'Monetary Value', required: false },
+        { key: 'opportunityId', label: 'Opportunity ID', required: false },
         { key: 'contactId', label: 'Contact ID', required: false },
       ],
       fieldMap: [{ formField: '', highLevelField: 'title' }]

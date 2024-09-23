@@ -25,7 +25,8 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
     contacts: false,
     users: false,
     hlTasks: false,
-    pipelines: false
+    pipelines: false,
+    opportunities: false
   })
 
   const [highLevelConf, setHighLevelConf] = useState({
@@ -52,7 +53,9 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
     selectedPipeline: '',
     stages: [],
     currentStages: [],
-    selectedStage: ''
+    selectedStage: '',
+    opportunities: [],
+    selectedOpportunity: ''
   })
 
   const nextPage = (val) => {
@@ -97,7 +100,10 @@ function HighLevel({ formFields, setFlow, flow, allIntegURL }) {
         }
       }
 
-      if (highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) {
+      if (
+        highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY ||
+        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY
+      ) {
         if (!highLevelConf.selectedPipeline) {
           toast.error('Please select a pipeline!')
           return

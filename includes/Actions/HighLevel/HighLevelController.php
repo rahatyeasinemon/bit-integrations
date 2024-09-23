@@ -146,7 +146,7 @@ class HighLevelController
         $response = HttpHelper::get($apiEndpoint, null, $header);
 
         if (!isset($response->users)) {
-            wp_send_json_error('Contacts fetching failed', 400);
+            wp_send_json_error(__('Contacts fetching failed', 'bit-integrations'), 400);
         }
 
         $users = $response->users;
@@ -177,7 +177,7 @@ class HighLevelController
         $response = HttpHelper::get($apiEndpoint, null, $header);
 
         if (!isset($response->tasks)) {
-            wp_send_json_error('Tasks fetching failed', 400);
+            wp_send_json_error(__('Tasks fetching failed', 'bit-integrations'), 400);
         }
 
         $tasks = $response->tasks;
@@ -207,7 +207,7 @@ class HighLevelController
         $response = HttpHelper::get($apiEndpoint, null, $header);
 
         if (!isset($response->pipelines)) {
-            wp_send_json_error('Pipelines fetching failed', 400);
+            wp_send_json_error(__('Pipelines fetching failed', 'bit-integrations'), 400);
         }
 
         $pipelines = $response->pipelines;
@@ -226,6 +226,37 @@ class HighLevelController
         wp_send_json_success(['pipelineList' => $pipelineList, 'stages' => $stages], 200);
     }
 
+    public static function getOpportunities($requestsParams)
+    {
+        if (empty($requestsParams->api_key) || empty($requestsParams->pipeline_id)) {
+            wp_send_json_error(__('Requested parameter(s) empty', 'bit-integrations'), 400);
+        }
+
+        $apiKey = $requestsParams->api_key;
+        $pipelineId = $requestsParams->pipeline_id;
+        $apiEndpoint = 'https://rest.gohighlevel.com/v1/pipelines/' . $pipelineId . '/opportunities?limit=100';
+        $header = ['Authorization' => 'Bearer ' . $apiKey];
+        $response = HttpHelper::get($apiEndpoint, null, $header);
+
+        if (!isset($response->opportunities)) {
+            wp_send_json_error(__('Opportunities fetching failed', 'bit-integrations'), 400);
+        }
+
+        $opportunities = $response->opportunities;
+        $opportunityList = [];
+
+        if (!empty($opportunities)) {
+            foreach ($opportunities as $opportunity) {
+                $opportunityList[] = (object) [
+                    'label' => $opportunity->name,
+                    'value' => $opportunity->id
+                ];
+            }
+        }
+
+        wp_send_json_success($opportunityList, 200);
+    }
+
     public function execute($integrationData, $fieldValues)
     {
         $integrationDetails = $integrationData->flow_details;
@@ -239,13 +270,14 @@ class HighLevelController
         }
 
         $selectedOptions = [
-            'selectedTags'       => $integrationDetails->selectedTags,
-            'selectedContact'    => $integrationDetails->selectedContact,
-            'selectedTaskStatus' => $integrationDetails->selectedTaskStatus,
-            'selectedUser'       => $integrationDetails->selectedUser,
-            'updateTaskId'       => $integrationDetails->updateTaskId,
-            'selectedPipeline'   => $integrationDetails->selectedPipeline,
-            'selectedStage'      => $integrationDetails->selectedStage,
+            'selectedTags'        => $integrationDetails->selectedTags,
+            'selectedContact'     => $integrationDetails->selectedContact,
+            'selectedTaskStatus'  => $integrationDetails->selectedTaskStatus,
+            'selectedUser'        => $integrationDetails->selectedUser,
+            'updateTaskId'        => $integrationDetails->updateTaskId,
+            'selectedPipeline'    => $integrationDetails->selectedPipeline,
+            'selectedStage'       => $integrationDetails->selectedStage,
+            'selectedOpportunity' => $integrationDetails->selectedOpportunity,
         ];
 
         $recordApiHelper = new RecordApiHelper($apiKey, $this->_integrationID);

@@ -80,7 +80,8 @@ export default function HighLevelActions({ highLevelConf, setHighLevelConf, load
 
         {(highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTACT ||
           highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT ||
-          highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) && (
+          highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY ||
+          highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY) && (
           <>
             <TableCheckBox
               checked={highLevelConf.selectedTags || false}

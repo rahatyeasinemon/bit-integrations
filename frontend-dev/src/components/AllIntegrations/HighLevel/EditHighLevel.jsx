@@ -32,7 +32,8 @@ function EditHighLevel({ allIntegURL }) {
     contacts: false,
     users: false,
     hlTasks: false,
-    pipelines: false
+    pipelines: false,
+    opportunities: false
   })
 
   const saveConfig = () => {
@@ -72,7 +73,10 @@ function EditHighLevel({ allIntegURL }) {
       }
     }
 
-    if (highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) {
+    if (
+      highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY ||
+      highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY
+    ) {
       if (!highLevelConf.selectedPipeline) {
         toast.error('Please select a pipeline!')
         return

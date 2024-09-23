@@ -8,7 +8,8 @@ import {
   getContacts,
   getUsers,
   getHLTasks,
-  getPipelines
+  getPipelines,
+  getOpportunities
 } from './HighLevelCommonFunc'
 import HighLevelFieldMap from './HighLevelFieldMap'
 import HighLevelActions from './HighLevelAction'
@@ -40,7 +41,10 @@ export default function HighLevelIntegLayout({
         val === TASK_LIST_VALUES.UPDATE_TASK
       ) {
         getContacts(newConf, setHighLevelConf, loading, setLoading)
-      } else if (val === TASK_LIST_VALUES.CREATE_OPPORTUNITY) {
+      } else if (
+        val === TASK_LIST_VALUES.CREATE_OPPORTUNITY ||
+        val === TASK_LIST_VALUES.UPDATE_OPPORTUNITY
+      ) {
         getPipelines(newConf, setHighLevelConf, loading, setLoading)
       }
     } else {
@@ -65,12 +69,18 @@ export default function HighLevelIntegLayout({
 
     if (val && type === 'selectedPipeline') {
       newConf.selectedStage = ''
+      newConf.selectedOpportunity = ''
       const stageList = newConf.stages[val].map((stage) => ({ label: stage.name, value: stage.id }))
       newConf.currentStages = stageList
+
+      if (highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY) {
+        getOpportunities(newConf, setHighLevelConf, loading, setLoading)
+      }
     }
 
     if (!val && type === 'selectedPipeline') {
       newConf.selectedStage = ''
+      newConf.selectedOpportunity = ''
     }
 
     setHighLevelConf({ ...newConf })
@@ -110,7 +120,8 @@ export default function HighLevelIntegLayout({
         />
       </div>
 
-      {highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY && (
+      {(highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY ||
+        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY) && (
         <>
           <div className="flx mt-3 mb-4">
             <b className="wdt-200 d-in-b">{__('Select Pipeline:', 'bit-integrations')}</b>
@@ -147,10 +158,34 @@ export default function HighLevelIntegLayout({
         </>
       )}
 
+      {highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY && (
+        <div className="flx mt-3 mb-4">
+          <b className="wdt-200 d-in-b">{__('Select Opportunity:', 'bit-integrations')}</b>
+          <MultiSelect
+            style={{ width: '450px' }}
+            options={highLevelConf.opportunities}
+            className="msl-wrp-options"
+            defaultValue={highLevelConf?.selectedOpportunity}
+            onChange={(val) => handleMultiSelectChange(val, 'selectedOpportunity')}
+            disabled={!highLevelConf.selectedPipeline || loading.opportunities}
+            singleSelect
+          />
+          <button
+            onClick={() => getOpportunities(highLevelConf, setHighLevelConf, loading, setLoading)}
+            className="icn-btn sh-sm ml-2 mr-2 tooltip"
+            style={{ '--tooltip-txt': `'${__('Refresh opportunity list', 'bit-integrations')}'` }}
+            disabled={loading.contacts || loading.pipelines || loading.opportunities}
+            type="button">
+            &#x21BB;
+          </button>
+        </div>
+      )}
+
       {(highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT ||
         highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK ||
         highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK ||
-        highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) && (
+        highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY ||
+        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY) && (
         <div className="flx mt-3 mb-4">
           <b className="wdt-200 d-in-b">{__('Select Contact:', 'bit-integrations')}</b>
           <MultiSelect
@@ -199,7 +234,8 @@ export default function HighLevelIntegLayout({
 
       {(highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_TASK ||
         highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK ||
-        highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) && (
+        highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY ||
+        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY) && (
         <>
           <div className="flx mt-3 mb-4">
             <b className="wdt-200 d-in-b">{__('Select Assignee:', 'bit-integrations')}</b>
@@ -239,7 +275,8 @@ export default function HighLevelIntegLayout({
         loading.contacts ||
         loading.users ||
         loading.hlTasks ||
-        loading.pipelines) && (
+        loading.pipelines ||
+        loading.opportunities) && (
         <Loader
           style={{
             display: 'flex',
@@ -271,13 +308,27 @@ export default function HighLevelIntegLayout({
         </span>
       )}
 
-      {highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY && (
+      {(highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY ||
+        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY) && (
         <span className="action-delete-task-note">
           {__(
             'Either a Select Contact, Email, or Phone Number is required. For Contact you can select from the list above, or you can map field (Contact ID).',
             'bit-integrations'
           )}
         </span>
+      )}
+
+      {highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY && (
+        <>
+          <br />
+          <br />
+          <span className="action-delete-task-note">
+            {__(
+              'To update, you can select opportunity from the list above, or you can map field.  If not selected, "Opportunity ID" field mapping is required.',
+              'bit-integrations'
+            )}
+          </span>
+        </>
       )}
 
       {highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_TASK && (
@@ -366,7 +417,8 @@ export default function HighLevelIntegLayout({
 
       {(highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_CONTACT ||
         highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_CONTACT ||
-        highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY) && (
+        highLevelConf.selectedTask === TASK_LIST_VALUES.CREATE_OPPORTUNITY ||
+        highLevelConf.selectedTask === TASK_LIST_VALUES.UPDATE_OPPORTUNITY) && (
         <>
           <br />
           <br />
