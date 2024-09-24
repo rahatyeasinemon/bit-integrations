@@ -29,7 +29,14 @@ function EditGoogleSheet({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, sheetConf, setSheetConf)} name="name" value={sheetConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={(e) => handleInput(e, sheetConf, setSheetConf)}
+          name="name"
+          value={sheetConf.name}
+          type="text"
+          placeholder={__('Integration Name...', 'bit-integrations')}
+        />
       </div>
       <br />
 
@@ -38,7 +45,9 @@ function EditGoogleSheet({ allIntegURL }) {
       <GoogleSheetIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) => handleInput(e, sheetConf, setSheetConf, formID, setIsLoading, setSnackbar)}
+        handleInput={(e) =>
+          handleInput(e, sheetConf, setSheetConf, formID, setIsLoading, setSnackbar)
+        }
         sheetConf={sheetConf}
         setSheetConf={setSheetConf}
         isLoading={isLoading}
@@ -48,8 +57,23 @@ function EditGoogleSheet({ allIntegURL }) {
 
       <IntegrationStepThree
         edit
-        saveConfig={() => saveActionConf({ flow, setFlow, allIntegURL, conf: sheetConf, navigate, edit: 1, setIsLoading, setSnackbar })}
-        disabled={sheetConf.spreadsheetId === '' || sheetConf.worksheetName === '' || sheetConf.field_map.length < 1}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            setFlow,
+            allIntegURL,
+            conf: sheetConf,
+            navigate,
+            edit: 1,
+            setIsLoading,
+            setSnackbar
+          })
+        }
+        disabled={
+          sheetConf.spreadsheetId === '' ||
+          sheetConf.worksheetName === '' ||
+          sheetConf.field_map.length < 1
+        }
         isLoading={isLoading}
         dataConf={sheetConf}
         setDataConf={setSheetConf}

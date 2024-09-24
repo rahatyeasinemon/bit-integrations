@@ -25,11 +25,19 @@ function Dropbox({ formFields, setFlow, flow, allIntegURL }) {
     accessCode: '',
     field_map: [{ formField: '', dropboxFormField: '' }],
     foldersList: [],
-    actions: {},
+    actions: {}
   })
 
   const saveConfig = () => {
-    saveActionConf({ flow, setFlow, allIntegURL, conf: dropboxConf, navigate, setIsLoading, setSnackbar })
+    saveActionConf({
+      flow,
+      setFlow,
+      allIntegURL,
+      conf: dropboxConf,
+      navigate,
+      setIsLoading,
+      setSnackbar
+    })
   }
 
   return (
@@ -57,10 +65,9 @@ function Dropbox({ formFields, setFlow, flow, allIntegURL }) {
           ...(step === 2 && {
             width: 900,
             height: 'auto',
-            overflow: 'visible',
-          }),
-        }}
-      >
+            overflow: 'visible'
+          })
+        }}>
         <DropboxIntegLayout
           flowID={flowID}
           formFields={formFields}
@@ -72,20 +79,14 @@ function Dropbox({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => setStep(3)}
           disabled={dropboxConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
+          type="button">
+          {__('Next', 'bit-integrations')}{' '}
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>
 
       {/* STEP 3 */}
-      <IntegrationStepThree
-        step={step}
-        saveConfig={() => saveConfig()}
-        isLoading={isLoading}
-      />
+      <IntegrationStepThree step={step} saveConfig={() => saveConfig()} isLoading={isLoading} />
     </div>
   )
 }

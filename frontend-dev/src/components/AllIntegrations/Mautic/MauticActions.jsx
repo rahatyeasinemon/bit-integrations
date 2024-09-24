@@ -11,7 +11,7 @@ import { getAllTags } from './MauticCommonFunc'
 
 export default function MauticActions({ mauticConf, setMauticConf, formFields }) {
   const [isLoading, setIsLoading] = useState(false)
-  const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
+  const [actionMdl, setActionMdl] = useState({ show: false, action: () => {} })
   const [snack, setSnackbar] = useState({ show: false })
   const actionHandler = (e, type) => {
     const newConf = { ...mauticConf }
@@ -36,11 +36,16 @@ export default function MauticActions({ mauticConf, setMauticConf, formFields })
     setMauticConf({ ...newConf })
   }
 
-
   return (
-
     <div className="pos-rel d-flx w-8">
-      <TableCheckBox checked={mauticConf.actions?.tag || false} onChange={(e) => actionHandler(e, 'tag')} className="wdt-200 mt-4 mr-2" value="tag" title={__('Add Tag', 'bit-integrations')} subTitle={__('Add tag to mautic contact', 'bit-integrations')} />
+      <TableCheckBox
+        checked={mauticConf.actions?.tag || false}
+        onChange={(e) => actionHandler(e, 'tag')}
+        className="wdt-200 mt-4 mr-2"
+        value="tag"
+        title={__('Add Tag', 'bit-integrations')}
+        subTitle={__('Add tag to mautic contact', 'bit-integrations')}
+      />
       <ConfirmModal
         className="custom-conf-mdl"
         mainMdlCls="o-v"
@@ -49,37 +54,43 @@ export default function MauticActions({ mauticConf, setMauticConf, formFields })
         show={actionMdl.show === 'tag'}
         close={clsActionMdl}
         action={clsActionMdl}
-        title={__('Tag Records', 'bit-integrations')}
-      >
+        title={__('Tag Records', 'bit-integrations')}>
         <div className="btcd-hr mt-2 mb-2" />
         <small>{__('Add a tag to contacts', 'bit-integrations')}</small>
         <div className="mt-2">{__('Tag Name', 'bit-integrations')}</div>
-        {isLoading
-          ? (
-            <Loader style={{
+        {isLoading ? (
+          <Loader
+            style={{
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               height: 45,
-              transform: 'scale(0.5)',
+              transform: 'scale(0.5)'
             }}
+          />
+        ) : (
+          <div className="flx flx-between mt-2">
+            <MultiSelect
+              className="msl-wrp-options"
+              defaultValue={mauticConf?.tag}
+              options={mauticConf.default?.tags?.map((list) => ({
+                label: list.tagName,
+                value: list.tagName.toString()
+              }))}
+              onChange={(val) => setTags(val)}
+              customValue
             />
-          )
-          : (
-            <div className="flx flx-between mt-2">
-              <MultiSelect
-                className="msl-wrp-options"
-                defaultValue={mauticConf?.tag}
-                options={mauticConf.default?.tags?.map(list => ({ label: list.tagName, value: list.tagName.toString() }))}
-                onChange={val => setTags(val)}
-                customValue
-              />
-              <button onClick={() => getAllTags(mauticConf, setMauticConf, setIsLoading, setSnackbar)} className="icn-btn sh-sm ml-2 mr-2 tooltip" style={{ '--tooltip-txt': `${__('Refresh CRM Tags', 'bit-integrations')}'` }} type="button" disabled={isLoading}>&#x21BB;</button>
-            </div>
-          )}
-
+            <button
+              onClick={() => getAllTags(mauticConf, setMauticConf, setIsLoading, setSnackbar)}
+              className="icn-btn sh-sm ml-2 mr-2 tooltip"
+              style={{ '--tooltip-txt': `${__('Refresh CRM Tags', 'bit-integrations')}'` }}
+              type="button"
+              disabled={isLoading}>
+              &#x21BB;
+            </button>
+          </div>
+        )}
       </ConfirmModal>
-
     </div>
   )
 }

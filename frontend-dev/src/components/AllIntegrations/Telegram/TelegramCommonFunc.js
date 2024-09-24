@@ -6,7 +6,7 @@ export const refreshGetUpdates = (telegramConf, setTelegramConf, setIsLoading, s
   const requestParams = { bot_api_key: newConf.bot_api_key }
   setIsLoading(true)
   bitsFetch(requestParams, 'refresh_get_updates')
-    .then(result => {
+    .then((result) => {
       if (result && result.success) {
         if (!newConf.default) {
           newConf.default = {}
@@ -17,10 +17,19 @@ export const refreshGetUpdates = (telegramConf, setTelegramConf, setIsLoading, s
         }
         setSnackbar({ show: true, msg: __('Chat list refreshed', 'bit-integrations') })
         setTelegramConf({ ...newConf })
-      } else if ((result && result.data && result.data.data) || (!result.success && typeof result.data === 'string')) {
-        setSnackbar({ show: true, msg: `${__('Chat list refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}` })
+      } else if (
+        (result && result.data && result.data.data) ||
+        (!result.success && typeof result.data === 'string')
+      ) {
+        setSnackbar({
+          show: true,
+          msg: `${__('Chat list refresh failed Cause:', 'bit-integrations')}${result.data.data || result.data}. ${__('please try again', 'bit-integrations')}`
+        })
       } else {
-        setSnackbar({ show: true, msg: __('Chat list refresh failed. please try again', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Chat list refresh failed. please try again', 'bit-integrations')
+        })
       }
       setIsLoading(false)
     })

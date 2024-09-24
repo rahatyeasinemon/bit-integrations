@@ -17,9 +17,15 @@ export default function MailPoetActions({ mailPoetConf, setMailPoetConf, formFie
   }
 
   return (
-
     <div className="pos-rel d-flx w-8">
-      <TableCheckBox checked={mailPoetConf.actions?.update || false} onChange={(e) => actionHandler(e, 'update')} className="wdt-200 mt-4 mr-2" value="user_share" title={__('Update MailPoet', 'bit-integrations')} subTitle={__('Update Responses with Mailpoet exist Subscriber?', 'bit-integrations')} />
+      <TableCheckBox
+        checked={mailPoetConf.actions?.update || false}
+        onChange={(e) => actionHandler(e, 'update')}
+        className="wdt-200 mt-4 mr-2"
+        value="user_share"
+        title={__('Update MailPoet', 'bit-integrations')}
+        subTitle={__('Update Responses with Mailpoet exist Subscriber?', 'bit-integrations')}
+      />
     </div>
   )
 }
