@@ -54,8 +54,6 @@ import getAllCommissionType from '../Triggers/TriggerHelpers/SliceWpHelper/Slice
 import getSureCartAllProduct from '../Triggers/TriggerHelpers/SureCartHelper/SureCartCommonFunction'
 import {
   getAllOrderStatus,
-  getAllSubscriptionProduct,
-  getAllSubscriptionStatus,
   getAllWCProductCategory,
   getAllWCProducts
 } from '../Triggers/TriggerHelpers/WooCommerceHelper/WooCommerceCommonFunction'
@@ -187,12 +185,6 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       }
       if (['11'].includes(data.triggered_entity_id)) {
         getAllOrderStatus(data, setFlow)
-      }
-      if (['12', '13', '14', '15', '16'].includes(data.triggered_entity_id)) {
-        getAllSubscriptionProduct(data, setFlow)
-      }
-      if (['15'].includes(data.triggered_entity_id)) {
-        getAllSubscriptionStatus(data, setFlow)
       }
       if (['17'].includes(data.triggered_entity_id)) {
         getAllWCProductCategory(data, setFlow)

@@ -241,12 +241,6 @@ export const WooCommerceStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   if (val === '11') {
     tmpNewFlow.triggerData.orderStatus = resp.data.orderStatus
   }
-  if (val === '12' || val === '13' || val === '14' || val === '15' || val === '16') {
-    tmpNewFlow.triggerData.subscriptions = resp.data.subscriptions
-  }
-  if (val === '15') {
-    tmpNewFlow.triggerData.subscriptionStatus = resp.data.subscription_statuses
-  }
   if (val === '17') {
     tmpNewFlow.triggerData.allProductCategories = resp.data.allProductCategories
   }
