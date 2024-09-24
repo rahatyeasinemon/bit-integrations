@@ -377,7 +377,10 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       ) {
         getWCSubscriptionsAllSubscriptions(data, setFlow)
         getWCSubscriptionsAllSubscriptionProducts(data, setFlow)
-      } else if (data.triggered_entity_id === 'user_subscribes_to_product') {
+      } else if (
+        data.triggered_entity_id === 'user_subscribes_to_product' ||
+        data.triggered_entity_id === 'user_purchases_variable_subscription'
+      ) {
         getWCSubscriptionsAllSubscriptionProducts(data, setFlow)
       }
     }

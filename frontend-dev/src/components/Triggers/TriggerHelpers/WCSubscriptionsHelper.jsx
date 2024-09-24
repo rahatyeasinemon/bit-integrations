@@ -42,11 +42,12 @@ const WCSubscriptionsHelper = ({ flow, setFlowData, edit = false }) => {
         id === 'user_subscription_trial_end' ||
         id === 'user_renews_subscription' ||
         id === 'user_subscribes_to_product' ||
+        id === 'user_purchases_variable_subscription' ||
         id === 'user_subscription_status_updated' ||
         id === 'user_subscription_expires') && (
         <div className={edit ? 'flx mt-3' : ''}>
           <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
-            {__('Select Subscription Product:', 'bit-integrations')}
+            {__('Select Product:', 'bit-integrations')}
           </b>
           <MultiSelect
             className="msl-wrp-options"

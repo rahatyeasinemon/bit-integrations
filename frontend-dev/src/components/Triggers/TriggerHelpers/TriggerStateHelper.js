@@ -228,7 +228,10 @@ export const WCSubscriptionsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
       selectedProduct: 'any',
       selectedStatus: 'any'
     }
-  } else if (val === 'user_subscribes_to_product') {
+  } else if (
+    val === 'user_subscribes_to_product' ||
+    val === 'user_purchases_variable_subscription'
+  ) {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       allSubscriptionProducts: resp.data.allSubscriptionProducts,
@@ -603,7 +606,10 @@ export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) =
       { label: 'Pending Cancel', value: 'pending-cancel' }
     ]
   }
-  if (formId === 'user_subscribes_to_product') {
+  if (
+    formId === 'user_subscribes_to_product' ||
+    formId === 'user_purchases_variable_subscription'
+  ) {
     tmpConf.selectedProduct = flowData.selectedProduct
     tmpConf.allSubscriptionProducts = flowData.allSubscriptionProducts
   }
