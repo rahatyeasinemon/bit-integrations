@@ -206,17 +206,10 @@ export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
 }
 
 export const WCSubscriptionsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
-  if (
-    val === 'user_cancels_subscription' ||
-    val === 'user_subscription_trial_end' ||
-    val === 'user_renews_subscription' ||
-    val === 'user_subscription_expires'
-  ) {
+  if (['user_subscribes_to_product', 'user_purchases_variable_subscription'].includes(val)) {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
-      allSubscriptions: resp.data.allSubscriptions,
       allSubscriptionProducts: resp.data.allSubscriptionProducts,
-      selectedSubscription: 'any',
       selectedProduct: 'any'
     }
   } else if (val === 'user_subscription_status_updated') {
@@ -228,13 +221,12 @@ export const WCSubscriptionsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
       selectedProduct: 'any',
       selectedStatus: 'any'
     }
-  } else if (
-    val === 'user_subscribes_to_product' ||
-    val === 'user_purchases_variable_subscription'
-  ) {
+  } else {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
+      allSubscriptions: resp.data.allSubscriptions,
       allSubscriptionProducts: resp.data.allSubscriptionProducts,
+      selectedSubscription: 'any',
       selectedProduct: 'any'
     }
   }
@@ -583,17 +575,12 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
 export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) => {
   const formId = flowData.formID ? flowData.formID : triggered_entity_id
 
-  if (
-    formId === 'user_cancels_subscription' ||
-    formId === 'user_renews_subscription' ||
-    formId === 'user_subscription_trial_end' ||
-    formId === 'user_subscription_status_updated' ||
-    formId === 'user_subscription_expires'
-  ) {
+  tmpConf.selectedProduct = flowData.selectedProduct
+  tmpConf.allSubscriptionProducts = flowData.allSubscriptionProducts
+
+  if (!['user_subscribes_to_product', 'user_purchases_variable_subscription'].includes(formId)) {
     tmpConf.selectedSubscription = flowData.selectedSubscription
     tmpConf.allSubscriptions = flowData.allSubscriptions
-    tmpConf.selectedProduct = flowData.selectedProduct
-    tmpConf.allSubscriptionProducts = flowData.allSubscriptionProducts
   }
   if (formId === 'user_subscription_status_updated') {
     tmpConf.selectedStatus = flowData.selectedStatus
@@ -605,13 +592,6 @@ export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) =
       { label: 'Cancelled', value: 'cancelled' },
       { label: 'Pending Cancel', value: 'pending-cancel' }
     ]
-  }
-  if (
-    formId === 'user_subscribes_to_product' ||
-    formId === 'user_purchases_variable_subscription'
-  ) {
-    tmpConf.selectedProduct = flowData.selectedProduct
-    tmpConf.allSubscriptionProducts = flowData.allSubscriptionProducts
   }
 
   return tmpConf

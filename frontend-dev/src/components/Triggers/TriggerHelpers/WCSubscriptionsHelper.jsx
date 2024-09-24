@@ -19,32 +19,24 @@ const WCSubscriptionsHelper = ({ flow, setFlowData, edit = false }) => {
 
   return (
     <div>
-      {(id === 'user_cancels_subscription' ||
-        id === 'user_subscription_trial_end' ||
-        id === 'user_renews_subscription' ||
-        id === 'user_subscription_status_updated' ||
-        id === 'user_subscription_expires') && (
-        <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
-            {__('Select Subscription:', 'bit-integrations')}
-          </b>
-          <MultiSelect
-            className="msl-wrp-options"
-            defaultValue={triggerData?.selectedSubscription}
-            options={triggerData?.allSubscriptions}
-            onChange={(val) => setFlowData(val, 'selectedSubscription')}
-            singleSelect
-            style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
-          />
-        </div>
-      )}
-      {(id === 'user_cancels_subscription' ||
-        id === 'user_subscription_trial_end' ||
-        id === 'user_renews_subscription' ||
-        id === 'user_subscribes_to_product' ||
-        id === 'user_purchases_variable_subscription' ||
-        id === 'user_subscription_status_updated' ||
-        id === 'user_subscription_expires') && (
+      {id &&
+        !['user_subscribes_to_product', 'user_purchases_variable_subscription'].includes(id) && (
+          <div className={edit ? 'flx mt-3' : ''}>
+            <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
+              {__('Select Subscription:', 'bit-integrations')}
+            </b>
+            <MultiSelect
+              className="msl-wrp-options"
+              defaultValue={triggerData?.selectedSubscription}
+              options={triggerData?.allSubscriptions}
+              onChange={(val) => setFlowData(val, 'selectedSubscription')}
+              singleSelect
+              style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
+            />
+          </div>
+        )}
+
+      {id && (
         <div className={edit ? 'flx mt-3' : ''}>
           <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
             {__('Select Product:', 'bit-integrations')}
@@ -59,6 +51,7 @@ const WCSubscriptionsHelper = ({ flow, setFlowData, edit = false }) => {
           />
         </div>
       )}
+
       {id === 'user_subscription_status_updated' && (
         <div className={edit ? 'flx mt-3' : ''}>
           <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>

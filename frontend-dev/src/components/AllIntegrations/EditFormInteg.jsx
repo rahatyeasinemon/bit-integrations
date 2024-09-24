@@ -369,18 +369,13 @@ function EditFormInteg({ setSnackbar, className = '' }) {
 
     if (trigger === 'WCSubscriptions') {
       if (
-        data.triggered_entity_id === 'user_cancels_subscription' ||
-        data.triggered_entity_id === 'user_subscription_trial_end' ||
-        data.triggered_entity_id === 'user_renews_subscription' ||
-        data.triggered_entity_id === 'user_subscription_status_updated' ||
-        data.triggered_entity_id === 'user_subscription_expires'
+        ['user_subscribes_to_product', 'user_purchases_variable_subscription'].includes(
+          data.triggered_entity_id
+        )
       ) {
-        getWCSubscriptionsAllSubscriptions(data, setFlow)
         getWCSubscriptionsAllSubscriptionProducts(data, setFlow)
-      } else if (
-        data.triggered_entity_id === 'user_subscribes_to_product' ||
-        data.triggered_entity_id === 'user_purchases_variable_subscription'
-      ) {
+      } else {
+        getWCSubscriptionsAllSubscriptions(data, setFlow)
         getWCSubscriptionsAllSubscriptionProducts(data, setFlow)
       }
     }
