@@ -18,6 +18,11 @@ final class HttpHelper
         return static::request($url, 'GET', $data, $headers, $options);
     }
 
+    public static function put($url, $data, $headers = null, $options = null)
+    {
+        return static::request($url, 'PUT', $data, $headers, $options);
+    }
+
     public static function request($url, $type, $data, $headers = null, $options = null)
     {
         $headers['user-agent'] = 'wordpress/bit-integrations';
