@@ -1315,6 +1315,11 @@ input[type='checkbox'].disabled:checked:before {
 }
 
 .btcd-inte-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: stretch;
+
   position: relative;
   cursor: pointer;
   width: 160px;
@@ -1420,8 +1425,8 @@ input[type='checkbox'].disabled:checked:before {
     max-height: 100px;
     object-fit: contain;
     // margin: 0 auto;
-    margin-top: 8px;
-    padding: 12px;
+    // margin-top: 8px;
+    // padding: 12px;
   }
 
   &:before {
