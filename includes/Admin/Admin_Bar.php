@@ -119,6 +119,7 @@ class Admin_Bar
                 'timeFormat' => get_option('time_format'),
                 'timeZone'   => DateTimeHelper::wp_timezone_string(),
                 'userMail'   => $userMails,
+                'currentUser'=> wp_get_current_user(),
             ]
         );
 

@@ -132,6 +132,18 @@ class RecordApiHelper
             }
         }
 
+        if (isset($actions->selectedTags)) {
+            $response = apply_filters('btcbi_zbigin_add_tags_to_records', $recordID, $module, $actions->selectedTags, $this->_apiDomain, $this->_defaultHeader);
+
+            if ($response === $recordID) {
+                LogHandler::save($this->_integID, ['type' => 'tags', 'type_name' => $module], 'error', wp_sprintf(__('%s plugin is not installed or activate', 'bit-integrations'), 'Bit Integration Pro'));
+            } elseif (\is_object($response) && isset($response->status) && $response->status === 'error') {
+                LogHandler::save($this->_integID, ['type' => 'tags', 'type_name' => $module], 'error', $response);
+            } else {
+                LogHandler::save($this->_integID, ['type' => 'tags', 'type_name' => $module], 'success', __('Tags added successfully', 'Bit Integration Pro'));
+            }
+        }
+
         if (isset($actions->photo)) {
             $filesApiHelper = new FilesApiHelper($this->_tokenDetails);
             if (isset($fieldValues[$actions->photo])) {

@@ -70,7 +70,14 @@ function EditBuddyBoss({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, buddyBossConf, setBuddyBossConf)} name="name" value={buddyBossConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={(e) => handleInput(e, buddyBossConf, setBuddyBossConf)}
+          name="name"
+          value={buddyBossConf.name}
+          type="text"
+          placeholder={__('Integration Name...', 'bit-integrations')}
+        />
       </div>
       <br />
       <br />
@@ -79,7 +86,9 @@ function EditBuddyBoss({ allIntegURL }) {
       <BuddyBossIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) => handleInput(e, buddyBossConf, setBuddyBossConf, setIsLoading, setSnackbar)}
+        handleInput={(e) =>
+          handleInput(e, buddyBossConf, setBuddyBossConf, setIsLoading, setSnackbar)
+        }
         buddyBossConf={buddyBossConf}
         setBuddyBossConf={setBuddyBossConf}
         isLoading={isLoading}
@@ -89,7 +98,17 @@ function EditBuddyBoss({ allIntegURL }) {
 
       <IntegrationStepThree
         edit
-        saveConfig={() => saveActionConf({ flow, allIntegURL, conf: buddyBossConf, navigate, edit: 1, setIsLoading, setSnackbar })}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            allIntegURL,
+            conf: buddyBossConf,
+            navigate,
+            edit: 1,
+            setIsLoading,
+            setSnackbar
+          })
+        }
         disabled={!buddyBossConf.mainAction || isLoading || isDisabled()}
         isLoading={isLoading}
         dataConf={buddyBossConf}

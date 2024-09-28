@@ -20,6 +20,7 @@ import {
   SureMembersStateIH,
   ThriveApprenticeStateIH,
   UltimateMemberStateIH,
+  WCSubscriptionsStateIH,
   actionHookStateIH,
   affiliateStateIH,
   buddybossStateIH,
@@ -161,6 +162,9 @@ export const saveIntegConfig = async (
   } else if (flow.triggered_entity === 'WPJobManager') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = wpJobManagerStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
+  } else if (flow.triggered_entity === 'WCSubscriptions') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = WCSubscriptionsStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (
     flow.triggered_entity === 'ActionHook' ||
     flow.triggered_entity === 'Spectra' ||
@@ -327,6 +331,9 @@ export const saveActionConf = async ({
   } else if (flow.triggered_entity === 'WPJobManager') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = wpJobManagerStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
+  } else if (flow.triggered_entity === 'WCSubscriptions') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = WCSubscriptionsStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (
     flow.triggered_entity === 'ActionHook' ||
     flow.triggered_entity === 'Spectra' ||

@@ -59,6 +59,8 @@ export const FormPluginStateHelper = (val, tmpNewFlow, resp, setNewFlow) => {
     wpForoStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else if (tmpNewFlow?.triggered_entity === 'WPJobManager') {
     wpJobManagerStateFP(val, tmpNewFlow, resp, setNewFlow)
+  } else if (tmpNewFlow?.triggered_entity === 'WCSubscriptions') {
+    WCSubscriptionsStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else {
     setNewFlow(tmpNewFlow)
   }
@@ -157,7 +159,12 @@ export const wpForoStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
 }
 
 export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
-  if (val === 'wp_job_manager-1' || val === 'wp_job_manager-4' || val === 'wp_job_manager-5' || val === 'wp_job_manager-8') {
+  if (
+    val === 'wp_job_manager-1' ||
+    val === 'wp_job_manager-4' ||
+    val === 'wp_job_manager-5' ||
+    val === 'wp_job_manager-8'
+  ) {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       jobTypes: resp.data.jobTypes,
@@ -198,18 +205,41 @@ export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   setNewFlow(tmpNewFlow)
 }
 
+export const WCSubscriptionsStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
+  if (['user_subscribes_to_product', 'user_purchases_variable_subscription'].includes(val)) {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      allSubscriptionProducts: resp.data.allSubscriptionProducts,
+      selectedProduct: 'any'
+    }
+  } else if (val === 'user_subscription_status_updated') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      allSubscriptions: resp.data.allSubscriptions,
+      allSubscriptionProducts: resp.data.allSubscriptionProducts,
+      selectedSubscription: 'any',
+      selectedProduct: 'any',
+      selectedStatus: 'any'
+    }
+  } else {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      allSubscriptions: resp.data.allSubscriptions,
+      allSubscriptionProducts: resp.data.allSubscriptionProducts,
+      selectedSubscription: 'any',
+      selectedProduct: 'any'
+    }
+  }
+
+  setNewFlow(tmpNewFlow)
+}
+
 export const WooCommerceStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
   if (val === '10' || val === '19') {
     tmpNewFlow.triggerData.products = resp.data.products
   }
   if (val === '11') {
     tmpNewFlow.triggerData.orderStatus = resp.data.orderStatus
-  }
-  if (val === '12' || val === '13' || val === '14' || val === '15' || val === '16') {
-    tmpNewFlow.triggerData.subscriptions = resp.data.subscriptions
-  }
-  if (val === '15') {
-    tmpNewFlow.triggerData.subscriptionStatus = resp.data.subscription_statuses
   }
   if (val === '17') {
     tmpNewFlow.triggerData.allProductCategories = resp.data.allProductCategories
@@ -531,6 +561,31 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
   if (formId === 'wp_job_manager-9' || formId === 'wp_job_manager-10') {
     tmpConf.selectedStatus = flowData.selectedStatus
     tmpConf.statusList = flowData.statusList
+  }
+
+  return tmpConf
+}
+
+export const WCSubscriptionsStateIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id
+
+  tmpConf.selectedProduct = flowData.selectedProduct
+  tmpConf.allSubscriptionProducts = flowData.allSubscriptionProducts
+
+  if (!['user_subscribes_to_product', 'user_purchases_variable_subscription'].includes(formId)) {
+    tmpConf.selectedSubscription = flowData.selectedSubscription
+    tmpConf.allSubscriptions = flowData.allSubscriptions
+  }
+  if (formId === 'user_subscription_status_updated') {
+    tmpConf.selectedStatus = flowData.selectedStatus
+    tmpConf.allStatus = [
+      { label: 'Any Status', value: 'any' },
+      { label: 'Active', value: 'active' },
+      { label: 'On Hold', value: 'on-hold' },
+      { label: 'Pending', value: 'pending' },
+      { label: 'Cancelled', value: 'cancelled' },
+      { label: 'Pending Cancel', value: 'pending-cancel' }
+    ]
   }
 
   return tmpConf

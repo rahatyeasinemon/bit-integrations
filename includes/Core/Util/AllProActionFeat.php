@@ -25,6 +25,10 @@ final class AllProActionFeat
         'GetResponse' => [
             ['feat_name' => 'autoResponderDay', 'class' => '\BitApps\BTCBI_PRO\Actions\GetResponse\GetResponseHelperPro', 'pro_init_v' => '2.1.9'],
         ],
+        'HighLevel' => [
+            ['feat_name' => 'contactUtilities', 'class' => '\BitApps\BTCBI_PRO\Actions\HighLevel\HighLevelUtilitiesPro', 'pro_init_v' => '2.2.1'],
+            ['feat_name' => 'opportunityUtilities', 'class' => '\BitApps\BTCBI_PRO\Actions\HighLevel\HighLevelUtilitiesPro', 'pro_init_v' => '2.2.1'],
+        ],
         'JetEngine' => [
             ['feat_name' => 'createPostTypeActions', 'class' => '\BitApps\BTCBI_PRO\Actions\JetEngine\JetEngineRecordHelper', 'pro_init_v' => '2.1.9'],
             ['feat_name' => 'createContentTypeActions', 'class' => '\BitApps\BTCBI_PRO\Actions\JetEngine\JetEngineRecordHelper', 'pro_init_v' => '2.1.9'],

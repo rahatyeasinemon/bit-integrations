@@ -33,7 +33,10 @@ function EditPipeDrive({ allIntegURL }) {
     }
     if (!checkRequired(pipeDriveConf)) {
       if (['Leads', 'Deals', 'Activities', 'Notes'].includes(pipeDriveConf.moduleData.module)) {
-        setSnackbar({ show: true, msg: __('Please select a organization or a person', 'bit-integrations') })
+        setSnackbar({
+          show: true,
+          msg: __('Please select a organization or a person', 'bit-integrations')
+        })
       }
       // if (pipeDriveConf.moduleData.module === 'Persons') {
       //   setSnackbar({ show: true, msg: __('Please select a organization', 'bit-integrations') })
@@ -41,13 +44,25 @@ function EditPipeDrive({ allIntegURL }) {
       return
     }
 
-    saveActionConf({ flow, setFlow, allIntegURL, conf: pipeDriveConf, navigate, id, edit: 1, setIsLoading, setSnackbar })
+    saveActionConf({
+      flow,
+      setFlow,
+      allIntegURL,
+      conf: pipeDriveConf,
+      navigate,
+      id,
+      edit: 1,
+      setIsLoading,
+      setSnackbar
+    })
   }
 
   const handleEditIntegName = (e) => {
-    setPipeDriveConf(prevConf => create(prevConf, draftConF => {
-      draftConF[e.target.name] = e.target.value
-    }))
+    setPipeDriveConf((prevConf) =>
+      create(prevConf, (draftConF) => {
+        draftConF[e.target.name] = e.target.value
+      })
+    )
   }
 
   return (
@@ -56,10 +71,16 @@ function EditPipeDrive({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 ">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleEditIntegName} name="name" value={pipeDriveConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={(e) => handleEditIntegName}
+          name="name"
+          value={pipeDriveConf.name}
+          type="text"
+          placeholder={__('Integration Name...', 'bit-integrations')}
+        />
       </div>
       <br />
-
 
       <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
 
@@ -68,7 +89,9 @@ function EditPipeDrive({ allIntegURL }) {
         settab={settab}
         formID={flow.triggered_entity_id}
         formFields={formFields}
-        handleInput={(e) => handleInput(e, tab, pipeDriveConf, setPipeDriveConf, setIsLoading, setSnackbar)}
+        handleInput={(e) =>
+          handleInput(e, tab, pipeDriveConf, setPipeDriveConf, setIsLoading, setSnackbar)
+        }
         pipeDriveConf={pipeDriveConf}
         setPipeDriveConf={setPipeDriveConf}
         isLoading={isLoading}

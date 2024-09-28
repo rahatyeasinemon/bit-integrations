@@ -39,10 +39,10 @@ function WebHooks({ formFields, setFlow, flow, allIntegURL }) {
         className="btcd-stp-page"
         style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
         {webHooksLinks?.youTubeLink && (
-          <TutorialLink title="WP Webhooks" youTubeLink={webHooksLinks?.youTubeLink} />
+          <TutorialLink title="Web Hooks" youTubeLink={webHooksLinks?.youTubeLink} />
         )}
         {webHooksLinks?.docLink && (
-          <TutorialLink title="WP Webhooks" docLink={webHooksLinks?.docLink} />
+          <TutorialLink title="Web Hooks" docLink={webHooksLinks?.docLink} />
         )}
 
         <WebHooksIntegration

@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.2
 Requires PHP: 7.0
-Stable tag: 2.2.5
+Stable tag: 2.2.6
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -996,6 +996,25 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 
 == Changelog ==
 
+= 2.2.6  =
+_Release Date -28th September 2024_
+- **New Actions :**
+  - Go High Level: Now available as an action, allowing seamless integration with Go High Level for better automation and CRM workflows.
+
+- **New Triggers :**
+  - Divi Form Builder: Create complex forms with the Divi Builder and trigger actions based on form submissions. (Pro)
+  - WooCommerce Subscriptions: Introduced new triggers to manage various subscription scenarios for physical or virtual products. (Pro)
+
+- **New Features :**
+  - Zoho Bigin: Added the functionality to add tags to records, enhancing customization and organization within your Zoho Bigin CRM. (Pro)
+
+- **Note :**
+  - Deprecated old WooCommerce subscription-based triggers and replaced them with new, more comprehensive subscription-based triggers for managing WooCommerce subscriptions effectively.
+     1. User-Cancel-Subscription-Product
+     2. Expired-Subscription-Product
+     3. Subscription-Product-Status-Change
+     4. Subscription-Trial-Period-End
+
 = 2.2.5  =
 _Release Date -19th September 2024_
 - **New Fixes :**
@@ -1004,7 +1023,8 @@ _Release Date -19th September 2024_
 
 = 2.2.4  =
 _Release Date -17th September 2024_
- - **Note :**
+
+- **Note :**
   - Action Hook trigger moved to pro version.
 
 - **New Features :**

@@ -158,6 +158,7 @@ const EditMailster = lazy(() => import('./Mailster/EditMailster'))
 const EditWPForo = lazy(() => import('./WPForo/EditWPForo'))
 const EditDokan = lazy(() => import('./Dokan/EditDokan'))
 const EditJetEngine = lazy(() => import('./JetEngine/EditJetEngine'))
+const EditHighLevel = lazy(() => import('./HighLevel/EditHighLevel'))
 
 const loaderStyle = {
   display: 'flex',
@@ -539,6 +540,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditDokan allIntegURL={allIntegURL} />
     case 'JetEngine':
       return <EditJetEngine allIntegURL={allIntegURL} />
+    case 'High Level':
+      return <EditHighLevel allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }

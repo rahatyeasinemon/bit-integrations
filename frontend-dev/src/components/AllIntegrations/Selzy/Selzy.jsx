@@ -15,29 +15,36 @@ function Selzy({ formFields, setFlow, flow, allIntegURL }) {
     auth: false,
     list: false,
     tag: false,
-    page: false,
+    page: false
   })
 
   const [selzyConf, setSelzyConf] = useState({
     name: 'Selzy',
     type: 'Selzy',
-    authKey: process.env.NODE_ENV === 'development' ? '6rfgbuq7w7mkusbq6ec13oarzpr1qwwizybyusyo' : '',
-    field_map: [
-      { formFields: '', selzyFormField: '' },
-    ],
+    authKey:
+      process.env.NODE_ENV === 'development' ? '6rfgbuq7w7mkusbq6ec13oarzpr1qwwizybyusyo' : '',
+    field_map: [{ formFields: '', selzyFormField: '' }],
     listIds: '',
     tags: '',
     method: '',
     option: '0',
     overwrite: '0',
-    doubleOption: [{ key: '0', name: 'Invitation' }, { key: '3', name: 'Auto Subscribe' }, { key: '4', name: 'Update Subscribe' }],
-    overwriteOption: [{ key: '0', name: 'Default' }, { key: '1', name: 'Field and Tag' }, { key: '2', name: 'Tag' }],
+    doubleOption: [
+      { key: '0', name: 'Invitation' },
+      { key: '3', name: 'Auto Subscribe' },
+      { key: '4', name: 'Update Subscribe' }
+    ],
+    overwriteOption: [
+      { key: '0', name: 'Default' },
+      { key: '1', name: 'Field and Tag' },
+      { key: '2', name: 'Tag' }
+    ],
     actions: {},
     selzyFields: [
       { key: 'email', label: 'Email', required: true },
       // { key: 'name', label: 'Name', required: false },
-      { key: 'phone', label: 'Phone Number', required: false },
-    ],
+      { key: 'phone', label: 'Phone Number', required: false }
+    ]
   })
 
   const setSavePageLoad = (value) => {
@@ -46,7 +53,9 @@ function Selzy({ formFields, setFlow, flow, allIntegURL }) {
 
   return (
     <div>
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* --- STEP 1 --- */}
 
@@ -61,11 +70,7 @@ function Selzy({ formFields, setFlow, flow, allIntegURL }) {
 
       {/* --- STEP 2 --- */}
 
-      <StepPage
-        step={step}
-        stepNo={2}
-        style={{ width: 900, height: 'auto', overflow: 'visible' }}
-      >
+      <StepPage step={step} stepNo={2} style={{ width: 900, height: 'auto', overflow: 'visible' }}>
         <SelzyIntegLayout
           selzyConf={selzyConf}
           setSelzyConf={setSelzyConf}
@@ -79,8 +84,7 @@ function Selzy({ formFields, setFlow, flow, allIntegURL }) {
             onClick={() => nextPage(selzyConf, setStep, 3)}
             disabled={!selzyConf.listIds || selzyConf.field_map.length < 1}
             className="btn f-right btcd-btn-lg purple sh-sm flx"
-            type="button"
-          >
+            type="button">
             {__('Next')}
             &nbsp;
             <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
@@ -90,20 +94,18 @@ function Selzy({ formFields, setFlow, flow, allIntegURL }) {
 
       {/* --- STEP 3 --- */}
       {selzyConf.listIds && (
-
         <IntegrationStepThree
           step={step}
-          saveConfig={() => saveConfig(flow, setFlow, allIntegURL, selzyConf, navigate, setSavePageLoad)}
+          saveConfig={() =>
+            saveConfig(flow, setFlow, allIntegURL, selzyConf, navigate, setSavePageLoad)
+          }
           isLoading={loading.page}
           dataConf={selzyConf}
           setDataConf={setSelzyConf}
           formFields={formFields}
         />
-
       )}
-
     </div>
-
   )
 }
 

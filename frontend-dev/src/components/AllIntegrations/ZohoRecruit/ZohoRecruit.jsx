@@ -22,13 +22,12 @@ function ZohoRecruit({ formFields, setFlow, flow, allIntegURL }) {
     name: 'Zoho Recruit',
     type: 'Zoho Recruit',
     clientId: process.env.NODE_ENV === 'development' ? '1000.B82LKZRRYX2ZYMIJ8OAMI3HQYJXJJG' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? 'e92f924ba9f4aab15b8c198d4a266fda7b7ee292a4' : '',
+    clientSecret:
+      process.env.NODE_ENV === 'development' ? 'e92f924ba9f4aab15b8c198d4a266fda7b7ee292a4' : '',
     module: '',
-    field_map: [
-      { formField: '', zohoFormField: '' },
-    ],
+    field_map: [{ formField: '', zohoFormField: '' }],
     relatedlists: [],
-    actions: {},
+    actions: {}
   })
 
   useEffect(() => {
@@ -55,7 +54,9 @@ function ZohoRecruit({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <ZohoRecruitAuthorization
@@ -70,14 +71,17 @@ function ZohoRecruit({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
-
+      <div
+        className="btcd-stp-page"
+        style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
         <ZohoRecruitIntegLayout
           tab={tab}
           settab={settab}
           formID={formID}
           formFields={formFields}
-          handleInput={(e) => handleInput(e, tab, recruitConf, setRecruitConf, formID, setIsLoading, setSnackbar)}
+          handleInput={(e) =>
+            handleInput(e, tab, recruitConf, setRecruitConf, formID, setIsLoading, setSnackbar)
+          }
           recruitConf={recruitConf}
           setRecruitConf={setRecruitConf}
           isLoading={isLoading}
@@ -89,18 +93,18 @@ function ZohoRecruit({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={recruitConf.module === '' || recruitConf.field_map.length < 1}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
+          type="button">
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
-
       </div>
 
       {/* STEP 3 */}
       <IntegrationStepThree
         step={step}
-        saveConfig={() => saveIntegConfig(flow, setFlow, allIntegURL, recruitConf, navigate, '', '', setIsLoading)}
+        saveConfig={() =>
+          saveIntegConfig(flow, setFlow, allIntegURL, recruitConf, navigate, '', '', setIsLoading)
+        }
         isLoading={isLoading}
         dataConf={recruitConf}
         setDataConf={setRecruitConf}

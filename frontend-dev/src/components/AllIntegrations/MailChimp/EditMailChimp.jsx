@@ -28,17 +28,34 @@ function EditMailChimp({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, mailChimpConf, setMailChimpConf)} name="name" value={mailChimpConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={(e) => handleInput(e, mailChimpConf, setMailChimpConf)}
+          name="name"
+          value={mailChimpConf.name}
+          type="text"
+          placeholder={__('Integration Name...', 'bit-integrations')}
+        />
       </div>
       <br />
-
 
       <SetEditIntegComponents entity={flow.triggered_entity} setSnackbar={setSnackbar} />
 
       <MailChimpIntegLayout
         formID={formID}
         formFields={formFields}
-        handleInput={(e) => handleInput(e, mailChimpConf, setMailChimpConf, formID, loading, setLoading, setSnackbar, setIsLoading)}
+        handleInput={(e) =>
+          handleInput(
+            e,
+            mailChimpConf,
+            setMailChimpConf,
+            formID,
+            loading,
+            setLoading,
+            setSnackbar,
+            setIsLoading
+          )
+        }
         mailChimpConf={mailChimpConf}
         setMailChimpConf={setMailChimpConf}
         isLoading={isLoading}
@@ -50,8 +67,24 @@ function EditMailChimp({ allIntegURL }) {
 
       <IntegrationStepThree
         edit
-        saveConfig={() => saveActionConf({ flow, setFlow, allIntegURL, conf: mailChimpConf, navigate, edit: 1, setIsLoading, setSnackbar })}
-        disabled={mailChimpConf.module === '' || mailChimpConf.listId === '' || mailChimpConf.field_map.length < 1 || !checkMappedFields(mailChimpConf)}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            setFlow,
+            allIntegURL,
+            conf: mailChimpConf,
+            navigate,
+            edit: 1,
+            setIsLoading,
+            setSnackbar
+          })
+        }
+        disabled={
+          mailChimpConf.module === '' ||
+          mailChimpConf.listId === '' ||
+          mailChimpConf.field_map.length < 1 ||
+          !checkMappedFields(mailChimpConf)
+        }
         isLoading={isLoading}
         dataConf={mailChimpConf}
         setDataConf={setMailChimpConf}

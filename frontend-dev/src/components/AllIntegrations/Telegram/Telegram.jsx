@@ -20,10 +20,13 @@ export default function Telegram({ formFields, setFlow, flow, allIntegURL }) {
     name: 'Telegram',
     type: 'Telegram',
     parse_mode: 'HTML',
-    bot_api_key: process.env.NODE_ENV === 'development' ? '1748780148:AAGrngQBKkEhKx5qyo3smqllw2gNc2YWnO4' : '',
+    bot_api_key:
+      process.env.NODE_ENV === 'development'
+        ? '1748780148:AAGrngQBKkEhKx5qyo3smqllw2gNc2YWnO4'
+        : '',
     chat_id: '',
     body: '',
-    actions: {},
+    actions: {}
   })
 
   const nextPage = (val) => {
@@ -40,7 +43,9 @@ export default function Telegram({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <TelegramAuthorization
@@ -55,7 +60,13 @@ export default function Telegram({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto', minHeight: step === 2 && `${200}px` }}>
+      <div
+        className="btcd-stp-page"
+        style={{
+          width: step === 2 && 900,
+          height: step === 2 && 'auto',
+          minHeight: step === 2 && `${200}px`
+        }}>
         <TelegramIntegLayout
           formID={formID}
           formFields={formFields}
@@ -71,8 +82,7 @@ export default function Telegram({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => nextPage(3)}
           disabled={telegramConf.chat_id === ''}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
+          type="button">
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
@@ -81,7 +91,18 @@ export default function Telegram({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 3 */}
       <IntegrationStepThree
         step={step}
-        saveConfig={() => saveIntegConfig(flow, setFlow, allIntegURL, telegramConf, navigate, 0, false, setIsLoading)}
+        saveConfig={() =>
+          saveIntegConfig(
+            flow,
+            setFlow,
+            allIntegURL,
+            telegramConf,
+            navigate,
+            0,
+            false,
+            setIsLoading
+          )
+        }
         isLoading={isLoading}
         dataConf={telegramConf}
         setDataConf={setTelegramConf}
