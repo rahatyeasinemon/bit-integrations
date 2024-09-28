@@ -22,10 +22,10 @@ export const getWCSubscriptionsAllSubscriptions = (data, setFlow) => {
 }
 export const getWCSubscriptionsAllSubscriptionProducts = (data, setFlow) => {
   const loadJobTypes = bitsFetch(
-    null,
+    { id: data.triggered_entity_id },
     'wcsubscriptions/get/subscription-products',
     null,
-    'GET'
+    'POST'
   ).then((result) => {
     if (result && result.data) {
       const tmpFlow = { ...data }
