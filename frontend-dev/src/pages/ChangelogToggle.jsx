@@ -87,29 +87,30 @@ export default function ChangelogToggle() {
                 dangerouslySetInnerHTML={{
                   __html: sprintf(
                     __('Updated at:  <b>%s</b>', 'bit-integrations'),
-                    '19th September 2024'
+                    '28th September 2024'
                   )
                 }}></small>
             </div>
             <div className="changelog-content">
-              {/* <span className="new-integration">
+              <span className="new-integration">
                 <b>{__('New Action', 'bit-integrations')}</b>
               </span>
 
               <div className="integration-list">
                 <ul>
-                  <li> WP Job Manager (Pro) </li>
+                  <li> Go High Level (Pro) </li>
                 </ul>
-              </div> */}
-              {/* <span className="new-integration">
+              </div>
+              <span className="new-feature">
                 <b>{__('New Trigger', 'bit-integrations')}</b>
               </span>
 
               <div className="integration-list">
                 <ul>
-                  <li> WP Job Manager (Pro) </li>
+                  <li> Divi Form Builder (Pro) </li>
+                  <li> WooCommerce Subscriptions (Pro) </li>
                 </ul>
-              </div> */}
+              </div>
 
               {/* <span className="new-integration">
                 <b>{__('New Improvements', 'bit-integrations')}</b>
@@ -120,31 +121,25 @@ export default function ChangelogToggle() {
                   <li> Plugin Translations Enhanced </li>
                 </ul>
               </div> */}
-              <span className="new-integration">
+              {/* <span className="new-integration">
                 <b>{__('Note', 'bit-integrations')}</b>
-              </span>
+              </span> */}
 
-              <div className="integration-list">
+              {/* <div className="integration-list">
                 <ul>
                   <li>Action Hook trigger moved to pro version.</li>
                 </ul>
-              </div>
+              </div> */}
 
-              <span className="new-feature">
+              {/* <span className="new-feature">
                 <b>{__('New Features', 'bit-integrations')}</b>
               </span>
 
               <div className="feature-list">
                 <ul>
-                  <li>Klaviyo (Pro): Added support for custom properties.</li>
-                  <li>WP Post Creation (Action): JetEngine’s Meta fields are now supported.</li>
-                  <li>
-                    JetEngine (Actions): Added functionality for updating and deleting Post Type,
-                    Custom Content Type, Taxonomy, and Relation.
-                  </li>
-                  <li>WP Job Manager (Trigger) (Pro): Added 3 new trigger tasks</li>
+                  <li>Zoho Bigin: Added the functionality to add tags to records, enhancing customization and organization within your Zoho Bigin CRM. (Pro)</li>
                 </ul>
-              </div>
+              </div> */}
               <div>
                 <span className="footer">{__('For more details,')}</span>
                 <a
