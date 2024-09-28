@@ -47,6 +47,14 @@ final class WCController
             wp_send_json_error(wp_sprintf(__('%s is not installed or activated.', 'bit-integrations'), 'WooCommerce'));
         }
 
+        /**
+         * Deprecated SUbscriptions Events
+         * ['id' => 12, 'title' => __('User-Subscribes-Product', 'bit-integrations')],
+         * ['id' => 13, 'title' => __('User-Cancel-Subscription-Product', 'bit-integrations')],
+         * ['id' => 14, 'title' => __('Expired-Subscription-Product', 'bit-integrations')],
+         * ['id' => 15, 'title' => __('Subscription-Product-Status-Change', 'bit-integrations')],
+         * ['id' => 16, 'title' => __('Subscription-Trial-Period-End', 'bit-integrations')],
+         */
         $wc_action = [
             (object) ['id' => 1, 'title' => __('Customer-Create', 'bit-integrations')],
             (object) ['id' => 2, 'title' => __('Customer-Edit', 'bit-integrations')],
@@ -59,11 +67,6 @@ final class WCController
             (object) ['id' => 9, 'title' => __('Order-Delete', 'bit-integrations'), 'note' => __('Flexible Checkout Fields are a feature available in the Pro version', 'bit-integrations')],
             (object) ['id' => 10, 'title' => __('Order-Specific-Product', 'bit-integrations'), 'note' => __('Flexible Checkout Fields are a feature available in the Pro version', 'bit-integrations')],
             (object) ['id' => 11, 'title' => __('Order-Status-Change-Specific-Status', 'bit-integrations'), 'note' => __('Flexible Checkout Fields are a feature available in the Pro version', 'bit-integrations')],
-            (object) ['id' => 12, 'title' => __('User-Subscribes-Product', 'bit-integrations')],
-            (object) ['id' => 13, 'title' => __('User-Cancel-Subscription-Product', 'bit-integrations')],
-            (object) ['id' => 14, 'title' => __('Expired-Subscription-Product', 'bit-integrations')],
-            (object) ['id' => 15, 'title' => __('Subscription-Product-Status-Change', 'bit-integrations')],
-            (object) ['id' => 16, 'title' => __('Subscription-Trial-Period-End', 'bit-integrations')],
             (object) ['id' => 17, 'title' => __('Order-Specific-Category', 'bit-integrations'), 'note' => __('Flexible Checkout Fields are a feature available in the Pro version', 'bit-integrations')],
             (object) ['id' => 18, 'title' => __('Booking-Created', 'bit-integrations')],
             (object) ['id' => 19, 'title' => __('User reviews a product', 'bit-integrations')],
@@ -95,24 +98,6 @@ final class WCController
         if ($data->id == 11) {
             $orderStatuses = wc_get_order_statuses();
             $responseData['orderStatus'] = $orderStatuses;
-        }
-
-        if ($data->id == 12 || $data->id == 13 || $data->id == 14 || $data->id == 15 || $data->id == 16) {
-            $allSubscriptions = self::getAllSubscriptions();
-            $responseData['subscriptions'] = $allSubscriptions;
-        }
-
-        if ($data->id == 15) {
-            $anyStatus = [
-                'any_status' => __('Any Status', 'bit-integrations'),
-            ];
-            if (\function_exists('wcs_get_subscription_statuses')) {
-                $allSubscriptionStatus = wcs_get_subscription_statuses();
-                $allSubscriptionStatus = array_merge($anyStatus, $allSubscriptionStatus);
-            } else {
-                $allSubscriptionStatus = $anyStatus;
-            }
-            $responseData['subscription_statuses'] = (array) $allSubscriptionStatus;
         }
 
         if ($data->id == 17) {
@@ -152,8 +137,6 @@ final class WCController
             $entity = 'product';
         } elseif ($id <= 11 || $id == 17 || $id == 20) {
             $entity = 'order';
-        } elseif ($id <= 16) {
-            $entity = 'subscription';
         } elseif ($id <= 18) {
             $entity = 'booking';
         } elseif ($id <= 19) {
@@ -505,62 +488,6 @@ final class WCController
             }
         } elseif ($entity === 'order') {
             $fields = WCStaticFields::getWCOrderFields($id);
-        } elseif ($entity === 'subscription') {
-            $fields = [
-                'user_id' => (object) [
-                    'fieldKey'  => 'user_id',
-                    'fieldName' => __('User Id', 'bit-integrations')
-                ],
-                'product_id' => (object) [
-                    'fieldKey'  => 'product_id',
-                    'fieldName' => __('Product Id', 'bit-integrations')
-                ],
-
-                'product_title' => (object) [
-                    'fieldKey'  => 'product_title',
-                    'fieldName' => __('Product Title', 'bit-integrations')
-                ],
-                'product_url' => (object) [
-                    'fieldKey'  => 'product_url',
-                    'fieldName' => __('Product Url', 'bit-integrations')
-                ],
-                'product_featured_image_url' => (object) [
-                    'fieldKey'  => 'product_featured_image_url',
-                    'fieldName' => __('Product Featured Image Url', 'bit-integrations')
-                ],
-                'product_featured_image_id' => (object) [
-                    'fieldKey'  => 'product_featured_image_id',
-                    'fieldName' => __('Product Featured Image Id', 'bit-integrations')
-                ],
-                'product_quantity' => (object) [
-                    'fieldKey'  => 'product_quantity',
-                    'fieldName' => __('Product Quantity', 'bit-integrations')
-                ],
-                'order_total' => (object) [
-                    'fieldKey'  => 'order_total',
-                    'fieldName' => __('Order Total', 'bit-integrations')
-                ],
-                'subscription_id' => (object) [
-                    'fieldKey'  => 'subscription_id',
-                    'fieldName' => __('Subscription Id', 'bit-integrations')
-                ],
-                'subscription_status' => (object) [
-                    'fieldKey'  => 'subscription_status',
-                    'fieldName' => __('Subscription Status', 'bit-integrations')
-                ],
-                'subscription_trial_end_date' => (object) [
-                    'fieldKey'  => 'subscription_trial_end_date',
-                    'fieldName' => __('Subscription Trial End Date', 'bit-integrations')
-                ],
-                'subscription_end_date' => (object) [
-                    'fieldKey'  => 'subscription_end_date',
-                    'fieldName' => __('Subscription End Date', 'bit-integrations')
-                ],
-                'subscription_next_payment_date' => (object) [
-                    'fieldKey'  => 'subscription_next_payment_date',
-                    'fieldName' => __('Subscription Next Payment Date', 'bit-integrations')
-                ],
-            ];
         } elseif ($entity === 'booking') {
             $fields = [
                 'Product Id' => (object) [
@@ -1288,42 +1215,6 @@ final class WCController
         }
     }
 
-    public static function getAllSubscriptions()
-    {
-        global $wpdb;
-
-        $allSubscriptions = $wpdb->get_results(
-            $wpdb->prepare(
-                "
-                    SELECT posts.ID, posts.post_title FROM {$wpdb->posts} as posts
-                    LEFT JOIN {$wpdb->term_relationships} as rel ON (posts.ID = rel.object_id)
-                    WHERE rel.term_taxonomy_id IN (SELECT term_id FROM {$wpdb->terms} WHERE slug IN ('subscription','variable-subscription'))
-                    AND posts.post_type = 'product'
-                    AND posts.post_status = 'publish'
-                    UNION ALL
-                    SELECT ID, post_title FROM {$wpdb->posts}
-                    WHERE post_type = 'shop_subscription'
-                    AND post_status = 'publish'
-                    ORDER BY post_title
-                "
-            )
-        );
-
-        $subscriptions[] = [
-            'id'         => 'any',
-            'post_title' => 'Any product',
-        ];
-
-        foreach ($allSubscriptions as $key => $val) {
-            $subscriptions[] = [
-                'id'         => $val->ID,
-                'post_title' => $val->post_title,
-            ];
-        }
-
-        return $subscriptions;
-    }
-
     public static function handle_subscription_create($subscription)
     {
         $flows = Flow::exists('WC', 12);
@@ -1742,28 +1633,6 @@ final class WCController
     {
         $orderStatuses = wc_get_order_statuses();
         wp_send_json_success($orderStatuses);
-    }
-
-    public static function getSubscriptionProduct()
-    {
-        $subscriptions = self::getAllSubscriptions();
-        wp_send_json_success($subscriptions);
-    }
-
-    public static function getSubscriptionStatus()
-    {
-        $anyStatus = [
-            'any_status' => 'Any Status',
-        ];
-
-        if (\function_exists('wcs_get_subscription_statuses')) {
-            $allSubscriptionStatus = wcs_get_subscription_statuses();
-            $allSubscriptionStatus = array_merge($anyStatus, $allSubscriptionStatus);
-            $subscription_statuses = (array) $allSubscriptionStatus;
-        } else {
-            $subscription_statuses = (array) $anyStatus;
-        }
-        wp_send_json_success($subscription_statuses);
     }
 
     public static function getWooCommerceProduct()

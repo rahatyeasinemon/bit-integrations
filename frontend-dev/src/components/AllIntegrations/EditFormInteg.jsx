@@ -54,8 +54,6 @@ import getAllCommissionType from '../Triggers/TriggerHelpers/SliceWpHelper/Slice
 import getSureCartAllProduct from '../Triggers/TriggerHelpers/SureCartHelper/SureCartCommonFunction'
 import {
   getAllOrderStatus,
-  getAllSubscriptionProduct,
-  getAllSubscriptionStatus,
   getAllWCProductCategory,
   getAllWCProducts
 } from '../Triggers/TriggerHelpers/WooCommerceHelper/WooCommerceCommonFunction'
@@ -85,6 +83,10 @@ import {
   getWPJobManagerJobs,
   getWPJobManagerJobTypes
 } from '../Triggers/TriggerHelpers/WPJobManager/WPJobManagerCommonFunction.js'
+import {
+  getWCSubscriptionsAllSubscriptionProducts,
+  getWCSubscriptionsAllSubscriptions
+} from '../Triggers/TriggerHelpers/WCSubscriptions/WCSubscriptionsCommonFunction.js'
 
 function EditFormInteg({ setSnackbar, className = '' }) {
   const [forms, setForms] = useState([])
@@ -105,12 +107,7 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     tmpInteg[name] = value
     setFlow(tmpInteg)
     let queryData = { id: value }
-    if (
-      flow.triggered_entity === 'Bricks' ||
-      flow.triggered_entity === 'Brizy' ||
-      flow.triggered_entity === 'PiotnetAddon' ||
-      flow.triggered_entity === 'CartFlow'
-    ) {
+    if (flow.triggered_entity === 'PiotnetAddon' || flow.triggered_entity === 'CartFlow') {
       queryData = { ...queryData, postId: formPost[value] ?? flow.flow_details.postId }
     } else {
       baseDataLoad(flow.triggered_entity, tmpInteg)
@@ -188,12 +185,6 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       }
       if (['11'].includes(data.triggered_entity_id)) {
         getAllOrderStatus(data, setFlow)
-      }
-      if (['12', '13', '14', '15', '16'].includes(data.triggered_entity_id)) {
-        getAllSubscriptionProduct(data, setFlow)
-      }
-      if (['15'].includes(data.triggered_entity_id)) {
-        getAllSubscriptionStatus(data, setFlow)
       }
       if (['17'].includes(data.triggered_entity_id)) {
         getAllWCProductCategory(data, setFlow)
@@ -365,6 +356,19 @@ function EditFormInteg({ setSnackbar, className = '' }) {
       }
       if (data.triggered_entity_id === 'wp_job_manager-9') {
         getApplicationStatuses(data, setFlow)
+      }
+    }
+
+    if (trigger === 'WCSubscriptions') {
+      if (
+        ['user_subscribes_to_product', 'user_purchases_variable_subscription'].includes(
+          data.triggered_entity_id
+        )
+      ) {
+        getWCSubscriptionsAllSubscriptionProducts(data, setFlow)
+      } else {
+        getWCSubscriptionsAllSubscriptions(data, setFlow)
+        getWCSubscriptionsAllSubscriptionProducts(data, setFlow)
       }
     }
   }
