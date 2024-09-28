@@ -167,10 +167,10 @@ export default function SelectTrigger() {
                       <div className="pro-filter">
                         <span className="txt-pro">
                           <a
-                            href="https://bitapps.pro/bit-integrations#pricing"
+                            href="https://towp.io/"
                             target="_blank"
                             rel="noreferrer">
-                            {__('Pro', 'bit-integrations')}
+                            {__('Try now', 'bit-integrations')}
                           </a>
                         </span>
                       </div>
