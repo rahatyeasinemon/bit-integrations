@@ -7,7 +7,9 @@ import { __ } from '../../../Utils/i18nwrap'
 import ConfirmModal from '../../Utilities/ConfirmModal'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import Loader from '../../Loaders/Loader'
-import { refreshTags, refreshUsers } from './ZohoBiginCommonFunc'
+import { refreshUsers, refreshTags } from './ZohoBiginCommonFunc'
+import { useRecoilValue } from 'recoil'
+import { $btcbi } from '../../../GlobalStates'
 
 export default function ZohoBiginActions({
   tab,
@@ -21,6 +23,9 @@ export default function ZohoBiginActions({
   const [notesMdl, setNotesMdl] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false })
   const [isLoading, setIsLoading] = useState(false)
+  const btcbi = useRecoilValue($btcbi)
+  const { isPro } = btcbi
+
   const actionHandler = (val, typ, checked) => {
     const newConf = { ...biginConf }
     if (tab === 0) {
@@ -39,22 +44,6 @@ export default function ZohoBiginActions({
   }
 
   const module = tab === 0 ? biginConf.module : biginConf.relatedlists[tab - 1].module
-  const getTags = () => {
-    const arr = [
-      { title: __('Tags', 'bit-integrations'), type: 'group', childs: [] },
-      { title: __('Form Fields', 'bit-integrations'), type: 'group', childs: [] }
-    ]
-
-    if (biginConf?.default?.moduleData?.[module]?.tags) {
-      arr[0].childs = Object.values(biginConf.default.moduleData[module].tags).map((tag) => ({
-        label: tag.tagName,
-        value: tag.tagId
-      }))
-    }
-
-    arr[1].childs = formFields.map((itm) => ({ label: itm.name, value: `\${${itm.key}}` }))
-    return arr
-  }
 
   const clsActionMdl = () => {
     setActionMdl({ show: false })
@@ -148,7 +137,31 @@ export default function ZohoBiginActions({
           title={__('Attachment', 'bit-integrations')}
           subTitle={__('Add attachments from BitForm to Zoho Bigin.', 'bit-integrations')}
         />
-        {/* <TableCheckBox onChange={() => setActionMdl({ show: 'tag_rec' })} checked={tab === 0 ? 'tag_rec' in biginConf.actions : 'tag_rec' in biginConf.relatedlists[tab - 1].actions} className="wdt-200 mt-4 mr-2" value="Tag_Records"title={__('Tag Records', 'bit-integrations')} subTitle={__('Add a tag to records pushed to Zoho Bigin.', 'bit-integrations')} /> */}
+
+        <TableCheckBox
+          onChange={() => setActionMdl({ show: 'tags' })}
+          checked={
+            tab === 0
+              ? 'selectedTags' in biginConf.actions
+              : 'selectedTags' in biginConf.relatedlists[tab - 1].actions
+          }
+          className="wdt-200 mt-4 mr-2"
+          value="tags"
+          isInfo={!isPro}
+          title={`${__('Tags', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
+          subTitle={
+            isPro
+              ? __('add tags to records', 'bit-integrations')
+              : sprintf(
+                  __(
+                    'The Bit Integration Pro v(%s) plugin needs to be installed and activated to enable the %s feature',
+                    'bit-integrations'
+                  ),
+                  '2.2.6',
+                  __('Tags', 'bit-integrations')
+                )
+          }
+        />
       </div>
 
       <ConfirmModal
@@ -251,54 +264,6 @@ export default function ZohoBiginActions({
         )}
       </ConfirmModal>
 
-      <ConfirmModal
-        className="custom-conf-mdl"
-        mainMdlCls="o-v"
-        btnClass="purple"
-        btnTxt="Ok"
-        show={actionMdl.show === 'tag_rec'}
-        close={clsActionMdl}
-        action={clsActionMdl}
-        title={__('Tags', 'bit-integrations')}>
-        <div className="btcd-hr mt-2 mb-2" />
-        <small>{`Add a tag to ${module} pushed to Zoho Bigin`}</small>
-        <div className="mt-2">{__('Tag Name', 'bit-integrations')}</div>
-        {isLoading ? (
-          <Loader
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: 45,
-              transform: 'scale(0.5)'
-            }}
-          />
-        ) : (
-          <div className="flx flx-between mt-2">
-            <MultiSelect
-              className="msl-wrp-options"
-              defaultValue={
-                tab === 0
-                  ? biginConf.actions.tag_rec
-                  : biginConf.relatedlists[tab - 1].actions.tag_rec
-              }
-              options={getTags()}
-              onChange={(val) => actionHandler(val, 'tag_rec')}
-            />
-            <button
-              onClick={() =>
-                refreshTags(tab, formID, biginConf, setBiginConf, setIsLoading, setSnackbar)
-              }
-              className="icn-btn sh-sm ml-2 mr-2 tooltip"
-              style={{ '--tooltip-txt': '"Refresh CRM Tags"' }}
-              type="button"
-              disabled={isLoading}>
-              &#x21BB;
-            </button>
-          </div>
-        )}
-      </ConfirmModal>
-
       {tab === 0 && (
         <ConfirmModal
           className="custom-conf-mdl"
@@ -359,6 +324,61 @@ export default function ZohoBiginActions({
                 }
               />
             </>
+          )}
+        </ConfirmModal>
+      )}
+
+      {isPro && (
+        <ConfirmModal
+          className="custom-conf-mdl"
+          mainMdlCls="o-v"
+          btnClass="purple"
+          btnTxt="Ok"
+          show={actionMdl.show === 'tags'}
+          close={clsActionMdl}
+          action={clsActionMdl}
+          title={__('Add Tags', 'bit-integrations')}>
+          <div className="btcd-hr mt-2 mb-2" />
+          {isLoading ? (
+            <Loader
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 45,
+                transform: 'scale(0.5)'
+              }}
+            />
+          ) : (
+            <div className="flx flx-between mt-2">
+              <MultiSelect
+                className="msl-wrp-options"
+                defaultValue={
+                  tab === 0
+                    ? biginConf.actions?.selectedTags
+                    : biginConf.relatedlists[tab - 1].actions?.selectedTags
+                }
+                options={
+                  biginConf.default?.moduleData[module]?.tags &&
+                  Object.values(biginConf.default?.moduleData[module]?.tags).map((tag) => ({
+                    label: tag,
+                    value: tag
+                  }))
+                }
+                onChange={(val) => actionHandler(val, 'selectedTags')}
+                customValue
+              />
+              <button
+                onClick={() =>
+                  refreshTags(tab, formID, biginConf, setBiginConf, setIsLoading, setSnackbar)
+                }
+                className="icn-btn sh-sm ml-2 mr-2 tooltip"
+                style={{ '--tooltip-txt': `'${__('Refresh Tags', 'bit-integrations')}'` }}
+                type="button"
+                disabled={isLoading}>
+                &#x21BB;
+              </button>
+            </div>
           )}
         </ConfirmModal>
       )}

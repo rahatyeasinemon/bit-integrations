@@ -34,7 +34,7 @@ export default function FreshSalesActions({ freshSalesConf, setFreshSalesConf })
             className="wdt-200 mt-4 mr-2"
             value="Upsert_Record"
             isInfo={!isPro}
-            title={__(`Upsert Record ${!isPro ? '(Pro)' : ''}`, 'bit-integrations')}
+            title={`${__('Upsert Record', 'bit-integrations')} ${isPro ? '' : `(${__('Pro', 'bit-integrations')})`}`}
             subTitle={
               isPro
                 ? __(
