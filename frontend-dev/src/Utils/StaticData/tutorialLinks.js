@@ -586,6 +586,14 @@ const tutorialLinks = {
   drip: {
     youTubeLink: '#',
     docLink: 'https://bit-integrations.com/wp-docs/actions/drip-integrations/'
+  },
+  jetEngine: {
+    youTubeLink: '#',
+    docLink: '#'
+  },
+  highLevel: {
+    youTubeLink: '#',
+    docLink: '#'
   }
 }
 export default tutorialLinks

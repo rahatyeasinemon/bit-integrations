@@ -3,7 +3,14 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { sprintf, __ } from '../../../Utils/i18nwrap'
 
-export const handleInput = (e, buddyBossConf, setBuddyBossConf, setIsLoading, setSnackbar, formID) => {
+export const handleInput = (
+  e,
+  buddyBossConf,
+  setBuddyBossConf,
+  setIsLoading,
+  setSnackbar,
+  formID
+) => {
   const newConf = { ...buddyBossConf }
   const { name } = e.target
   if (e.target.value !== '') {
@@ -12,16 +19,19 @@ export const handleInput = (e, buddyBossConf, setBuddyBossConf, setIsLoading, se
     delete newConf[name]
   }
   if (name === 'mainAction') {
-    newConf.field_map = [
-      { formField: '', buddyBossFormField: '' },
-    ]
+    newConf.field_map = [{ formField: '', buddyBossFormField: '' }]
   }
 
   newConf[e.target.name] = e.target.value
   setBuddyBossConf({ ...newConf })
 }
 
-export const getAllBuddyBossGroup = (buddyBossConf, setBuddyBossConf, setIsLoading, setSnackbar) => {
+export const getAllBuddyBossGroup = (
+  buddyBossConf,
+  setBuddyBossConf,
+  setIsLoading,
+  setSnackbar
+) => {
   setIsLoading(true)
   // const requestParams = {  }
   bitsFetch(null, 'fetch_all_group')
@@ -158,7 +168,9 @@ export const generateMappedField = (buddyBossConf, mainAction) => {
 }
 
 export const checkMappedFields = (buddyBossConf) => {
-  const mappedFleld = buddyBossConf.field_map ? buddyBossConf.field_map.filter((mapped) => !mapped.formField && !mapped.buddyBossFormField) : []
+  const mappedFleld = buddyBossConf.field_map
+    ? buddyBossConf.field_map.filter((mapped) => !mapped.formField && !mapped.buddyBossFormField)
+    : []
   if (mappedFleld.length > 0) {
     return false
   }

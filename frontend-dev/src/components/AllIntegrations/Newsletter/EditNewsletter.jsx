@@ -18,7 +18,7 @@ function EditNewsletter({ allIntegURL }) {
   const [newsletterConf, setNewsletterConf] = useRecoilState($actionConf)
   const [isLoading, setIsLoading] = useState(false)
   const [loading, setLoading] = useState({
-    auth: false,
+    auth: false
   })
   const [snack, setSnackbar] = useState({ show: false })
   const formField = useRecoilValue($formFields)
@@ -28,7 +28,15 @@ function EditNewsletter({ allIntegURL }) {
       setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
       return
     }
-    saveActionConf({ flow, allIntegURL, conf: newsletterConf, navigate, edit: 1, setLoading, setSnackbar })
+    saveActionConf({
+      flow,
+      allIntegURL,
+      conf: newsletterConf,
+      navigate,
+      edit: 1,
+      setLoading,
+      setSnackbar
+    })
   }
 
   return (
@@ -37,7 +45,14 @@ function EditNewsletter({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={e => handleInput(e, newsletterConf, setNewsletterConf)} name="name" defaultValue={newsletterConf.name || ''} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={(e) => handleInput(e, newsletterConf, setNewsletterConf)}
+          name="name"
+          defaultValue={newsletterConf.name || ''}
+          type="text"
+          placeholder={__('Integration Name...', 'bit-integrations')}
+        />
       </div>
       <br />
 
@@ -45,7 +60,9 @@ function EditNewsletter({ allIntegURL }) {
       <NewsletterIntegLayout
         formID={flow.triggered_entity_id}
         formFields={formField}
-        handleInput={(e) => handleInput(e, newsletterConf, setNewsletterConf, setLoading, setSnackbar)}
+        handleInput={(e) =>
+          handleInput(e, newsletterConf, setNewsletterConf, setLoading, setSnackbar)
+        }
         newsletterConf={newsletterConf}
         setNewsletterConf={setNewsletterConf}
         loading={loading}

@@ -184,6 +184,8 @@ const SureMembersAuthorization = lazy(() => import('./SureMembers/SureMembersAut
 const MailsterAuthentication = lazy(() => import('./Mailster/MailsterAuthorization'))
 const WPForoAuthorization = lazy(() => import('./WPForo/WPForoAuthorization'))
 const DokanAuthorization = lazy(() => import('./Dokan/DokanAuthorization'))
+const JetEngineAuthorization = lazy(() => import('./JetEngine/JetEngineAuthorization'))
+const HighLevelAuthorization = lazy(() => import('./HighLevel/HighLevelAuthorization'))
 
 export default function IntegInfo() {
   const { id, type } = useParams()
@@ -567,6 +569,10 @@ export default function IntegInfo() {
         return <WPForoAuthorization wpforoConf={integrationConf} step={1} isInfo />
       case 'Dokan':
         return <DokanAuthorization dokanConf={integrationConf} step={1} isInfo />
+      case 'JetEngine':
+        return <JetEngineAuthorization jetEngineConf={integrationConf} step={1} isInfo />
+      case 'High Level':
+        return <HighLevelAuthorization highLevelConf={integrationConf} step={1} isInfo />
       default:
         return <></>
     }

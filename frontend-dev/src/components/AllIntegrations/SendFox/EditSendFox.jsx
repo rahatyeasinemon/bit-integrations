@@ -23,7 +23,7 @@ function EditSendFox({ allIntegURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
 
-  const setIntegName = e => {
+  const setIntegName = (e) => {
     const newConf = { ...sendFoxConf }
     newConf[e.target.name] = e.target.value
     setSendFoxConf(newConf)
@@ -35,7 +35,14 @@ function EditSendFox({ allIntegURL }) {
 
       <div className="flx mt-3">
         <b className="wdt-200 d-in-b">{__('Integration Name:', 'bit-integrations')}</b>
-        <input className="btcd-paper-inp w-5" onChange={setIntegName} name="name" value={sendFoxConf.name} type="text" placeholder={__('Integration Name...', 'bit-integrations')} />
+        <input
+          className="btcd-paper-inp w-5"
+          onChange={setIntegName}
+          name="name"
+          value={sendFoxConf.name}
+          type="text"
+          placeholder={__('Integration Name...', 'bit-integrations')}
+        />
       </div>
       <br />
       <br />
@@ -44,7 +51,9 @@ function EditSendFox({ allIntegURL }) {
 
       <SendFoxIntegLayout
         formFields={formFields}
-        handleInput={(e) => handleInput(e, sendFoxConf, setSendFoxConf, setIsLoading, setSnackbar, formID)}
+        handleInput={(e) =>
+          handleInput(e, sendFoxConf, setSendFoxConf, setIsLoading, setSnackbar, formID)
+        }
         sendFoxConf={sendFoxConf}
         setSendFoxConf={setSendFoxConf}
         isLoading={isLoading}
@@ -54,7 +63,17 @@ function EditSendFox({ allIntegURL }) {
 
       <IntegrationStepThree
         edit
-        saveConfig={() => saveActionConf({ flow, allIntegURL, conf: sendFoxConf, navigate, edit: 1, setIsLoading, setSnackbar })}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            allIntegURL,
+            conf: sendFoxConf,
+            navigate,
+            edit: 1,
+            setIsLoading,
+            setSnackbar
+          })
+        }
         disabled={isDisabled(sendFoxConf)}
         isLoading={isLoading}
         dataConf={sendFoxConf}

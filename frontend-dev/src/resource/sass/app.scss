@@ -3112,6 +3112,10 @@ nav.top-nav {
   --menu-max-height: 250px !important;
 }
 
+.msl-vars.msl-wrp-options.height-s {
+  --menu-max-height: 150px !important;
+}
+
 select.btcd-paper-inp {
   background: url($select-arrow) no-repeat right #fff;
   color: $dp-bg !important;

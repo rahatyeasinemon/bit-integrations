@@ -329,7 +329,7 @@ class ZohoBiginController
         wp_send_json_success($response, 200);
     }
 
-    public function getTagList($queryParams)
+    public static function getTagList($queryParams)
     {
         if (
             empty($queryParams->tokenDetails)
@@ -352,33 +352,13 @@ class ZohoBiginController
             $response['tokenDetails'] = self::_refreshAccessToken($queryParams);
         }
 
-        $tagsMetaApiEndpoint = "http://www.zohoapis.{$queryParams->dataCenter}/bigin/v1/settings/tags?module={$queryParams->module}";
-        $authorizationHeader['Authorization'] = "Zoho-oauthtoken {$queryParams->tokenDetails->access_token}";
-        $tagsMetaResponse = HttpHelper::get($tagsMetaApiEndpoint, null, $authorizationHeader);
+        $accessToken = isset($response['tokenDetails']->access_token) ? $response['tokenDetails']->access_token : $queryParams->tokenDetails->access_token;
+        $response['tags'] = apply_filters('btcbi_zbigin_get_tags', [], $accessToken, $queryParams->dataCenter, $queryParams->module);
 
-        if (!is_wp_error($tagsMetaResponse)) {
-            $tags = $tagsMetaResponse->tags;
-
-            if (\count($tags) > 0) {
-                $allTags = [];
-                foreach ($tags as $tag) {
-                    $allTags[$tag->name] = (object) [
-                        'tagId'   => $tag->id,
-                        'tagName' => $tag->name
-                    ];
-                }
-                uksort($allTags, 'strnatcasecmp');
-                $response['tags'] = $allTags;
-            }
-        } else {
-            wp_send_json_error(
-                empty($tagsMetaResponse->data) ? 'Unknown' : $tagsMetaResponse->error,
-                400
-            );
-        }
         if (!empty($response['tokenDetails']) && !empty($queryParams->id)) {
             self::saveRefreshedToken($queryParams->id, $response['tokenDetails'], $response['lists']);
         }
+
         wp_send_json_success($response, 200);
     }
 

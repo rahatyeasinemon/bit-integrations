@@ -22,19 +22,18 @@ function ZohoDesk({ formFields, setFlow, flow, allIntegURL }) {
     name: 'Zoho Desk',
     type: 'Zoho Desk',
     clientId: process.env.NODE_ENV === 'development' ? '1000.KY0PGSWT3ZVY841014BSQYV1K1C4XH' : '',
-    clientSecret: process.env.NODE_ENV === 'development' ? '97fd44705c7bb79b51eae4d220d2c66a7c1d3fe59e' : '',
+    clientSecret:
+      process.env.NODE_ENV === 'development' ? '97fd44705c7bb79b51eae4d220d2c66a7c1d3fe59e' : '',
     orgId: '',
     department: '',
-    field_map: [
-      { formField: '', zohoFormField: '' },
-    ],
-    actions: {},
+    field_map: [{ formField: '', zohoFormField: '' }],
+    actions: {}
   })
   useEffect(() => {
     window.opener && setGrantTokenResponse('zohoDesk')
   }, [])
 
-  const nextPage = val => {
+  const nextPage = (val) => {
     if (val === 3) {
       if (!checkMappedFields(deskConf)) {
         setSnackbar({ show: true, msg: __('Please map mandatory fields', 'bit-integrations') })
@@ -60,7 +59,9 @@ function ZohoDesk({ formFields, setFlow, flow, allIntegURL }) {
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
-      <div className="txt-center mt-2"><Steps step={3} active={step} /></div>
+      <div className="txt-center mt-2">
+        <Steps step={3} active={step} />
+      </div>
 
       {/* STEP 1 */}
       <ZohoDeskAuthorization
@@ -75,11 +76,15 @@ function ZohoDesk({ formFields, setFlow, flow, allIntegURL }) {
       />
 
       {/* STEP 2 */}
-      <div className="btcd-stp-page" style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
+      <div
+        className="btcd-stp-page"
+        style={{ width: step === 2 && 900, height: step === 2 && 'auto' }}>
         <ZohoDeskIntegLayout
           formID={formID}
           formFields={formFields}
-          handleInput={(e) => handleInput(e, deskConf, setDeskConf, formID, setIsLoading, setSnackbar)}
+          handleInput={(e) =>
+            handleInput(e, deskConf, setDeskConf, formID, setIsLoading, setSnackbar)
+          }
           deskConf={deskConf}
           setDeskConf={setDeskConf}
           isLoading={isLoading}
@@ -89,20 +94,30 @@ function ZohoDesk({ formFields, setFlow, flow, allIntegURL }) {
 
         <button
           onClick={() => nextPage(3)}
-          disabled={deskConf.department === '' || deskConf.table === '' || deskConf.field_map.length < 1}
+          disabled={
+            deskConf.department === '' || deskConf.table === '' || deskConf.field_map.length < 1
+          }
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
+          type="button">
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
-
       </div>
 
       {/* STEP 3 */}
       <IntegrationStepThree
         step={step}
-        saveConfig={() => saveActionConf({ flow, setFlow, allIntegURL, navigate, conf: deskConf, setIsLoading, setSnackbar })}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            setFlow,
+            allIntegURL,
+            navigate,
+            conf: deskConf,
+            setIsLoading,
+            setSnackbar
+          })
+        }
       />
     </div>
   )

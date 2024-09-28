@@ -20,44 +20,6 @@ export const getAllOrderStatus = (data, setFlow) => {
   })
 }
 
-export const getAllSubscriptionProduct = (data, setFlow) => {
-  const loadQuizType = bitsFetch(null, 'get_all_subscription_product', null, 'GET').then(
-    (result) => {
-      if (result && result.success) {
-        const tmpFlow = { ...data }
-        tmpFlow.flow_details.subscriptions = result.data
-        setFlow({ ...tmpFlow })
-        return __('Fetched subscription product successfully', 'bit-integrations')
-      }
-      return __('Subscription product fetching failed. please try again', 'bit-integrations')
-    }
-  )
-  toast.promise(loadQuizType, {
-    success: (data) => data,
-    error: __('Error Occurred', 'bit-integrations'),
-    loading: __('Loading subscription product...')
-  })
-}
-
-export const getAllSubscriptionStatus = (data, setFlow) => {
-  const loadQuizType = bitsFetch(null, 'get_all_subscription_status', null, 'GET').then(
-    (result) => {
-      if (result && result.success) {
-        const tmpFlow = { ...data }
-        tmpFlow.flow_details.subscriptionStatus = result.data
-        setFlow({ ...tmpFlow })
-        return __('Fetched subscription status successfully', 'bit-integrations')
-      }
-      return __('Subscription status fetching failed. please try again', 'bit-integrations')
-    }
-  )
-  toast.promise(loadQuizType, {
-    success: (data) => data,
-    error: __('Error Occurred', 'bit-integrations'),
-    loading: __('Loading subscription status product...')
-  })
-}
-
 export const getAllWCProducts = (data, setFlow) => {
   const loadQuizType = bitsFetch(null, 'get_all_woocommerce_product', null, 'GET').then(
     (result) => {

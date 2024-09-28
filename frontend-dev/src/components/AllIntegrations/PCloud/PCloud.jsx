@@ -27,7 +27,7 @@ function PCloud({ formFields, setFlow, flow, allIntegURL }) {
     clientSecret: process.env.NODE_ENV === 'development' ? 'wsWwLNCI3nLiQlJVMYFry0V1rJg7' : '',
     field_map: [{ formField: '', pCloudFormField: '' }],
     foldersList: [],
-    actions: {},
+    actions: {}
   })
 
   useEffect(() => {
@@ -35,7 +35,15 @@ function PCloud({ formFields, setFlow, flow, allIntegURL }) {
   }, [])
 
   const saveConfig = () => {
-    saveActionConf({ flow, setFlow, allIntegURL, conf: pCloudConf, navigate, setIsLoading, setSnackbar })
+    saveActionConf({
+      flow,
+      setFlow,
+      allIntegURL,
+      conf: pCloudConf,
+      navigate,
+      setIsLoading,
+      setSnackbar
+    })
   }
 
   return (
@@ -64,10 +72,9 @@ function PCloud({ formFields, setFlow, flow, allIntegURL }) {
           ...(step === 2 && {
             width: 900,
             height: 'auto',
-            overflow: 'visible',
-          }),
-        }}
-      >
+            overflow: 'visible'
+          })
+        }}>
         <PCloudIntegLayout
           flowID={flowID}
           formFields={formFields}
@@ -79,20 +86,14 @@ function PCloud({ formFields, setFlow, flow, allIntegURL }) {
           onClick={() => setStep(3)}
           disabled={!checkMappedFields(pCloudConf)}
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
-          {__('Next', 'bit-integrations')}
-          {' '}
+          type="button">
+          {__('Next', 'bit-integrations')}{' '}
           <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
         </button>
       </div>
 
       {/* STEP 3 */}
-      <IntegrationStepThree
-        step={step}
-        saveConfig={() => saveConfig()}
-        isLoading={isLoading}
-      />
+      <IntegrationStepThree step={step} saveConfig={() => saveConfig()} isLoading={isLoading} />
     </div>
   )
 }

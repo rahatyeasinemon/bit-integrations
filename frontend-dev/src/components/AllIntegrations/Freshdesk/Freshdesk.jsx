@@ -33,7 +33,7 @@ function Freshdesk({ formFields, setFlow, flow, allIntegURL }) {
     status: '',
     priority: '',
     updateContact: '',
-    actions: {},
+    actions: {}
   })
 
   const nextPage = (val) => {
@@ -75,13 +75,14 @@ function Freshdesk({ formFields, setFlow, flow, allIntegURL }) {
           ...(step === 2 && {
             width: 900,
             height: 'auto',
-            overflow: 'visible',
-          }),
-        }}
-      >
+            overflow: 'visible'
+          })
+        }}>
         <FreshdeskIntegLayout
           formFields={formFields}
-          handleInput={(e) => handleInput(e, freshdeskConf, setFreshdeskConf, setIsLoading, setSnackbar)}
+          handleInput={(e) =>
+            handleInput(e, freshdeskConf, setFreshdeskConf, setIsLoading, setSnackbar)
+          }
           freshdeskConf={freshdeskConf}
           setFreshdeskConf={setFreshdeskConf}
           isLoading={isLoading}
@@ -91,10 +92,15 @@ function Freshdesk({ formFields, setFlow, flow, allIntegURL }) {
         {checkMappedFields(freshdeskConf?.field_map_contact)}
         <button
           onClick={() => nextPage(3)}
-          disabled={!freshdeskConf.priority || !freshdeskConf.status || !checkMappedFields(freshdeskConf?.field_map) || (freshdeskConf.contactShow && !checkMappedFieldsContact(freshdeskConf?.field_map_contact))}
+          disabled={
+            !freshdeskConf.priority ||
+            !freshdeskConf.status ||
+            !checkMappedFields(freshdeskConf?.field_map) ||
+            (freshdeskConf.contactShow &&
+              !checkMappedFieldsContact(freshdeskConf?.field_map_contact))
+          }
           className="btn f-right btcd-btn-lg purple sh-sm flx"
-          type="button"
-        >
+          type="button">
           {__('Next', 'bit-integrations')}
           <BackIcn className="ml-1 rev-icn" />
         </button>
@@ -103,7 +109,17 @@ function Freshdesk({ formFields, setFlow, flow, allIntegURL }) {
       {/* STEP 3 */}
       <IntegrationStepThree
         step={step}
-        saveConfig={() => saveActionConf({ flow, setFlow, allIntegURL, conf: freshdeskConf, navigate, setIsLoading, setSnackbar })}
+        saveConfig={() =>
+          saveActionConf({
+            flow,
+            setFlow,
+            allIntegURL,
+            conf: freshdeskConf,
+            navigate,
+            setIsLoading,
+            setSnackbar
+          })
+        }
         isLoading={isLoading}
         dataConf={freshdeskConf}
         setDataConf={setFreshdeskConf}

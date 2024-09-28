@@ -63,8 +63,12 @@ export const checkMappedMbFields = (data) => {
   return true
 }
 
-export const checkMappedJEFields = data => {
-  const mappedFields = data?.je_cpt_meta_map ? data.je_cpt_meta_map.filter(mappedField => !mappedField.formField && mappedField.jeCPTField && mappedField.required) : []
+export const checkMappedJEFields = (data) => {
+  const mappedFields = data?.je_cpt_meta_map
+    ? data.je_cpt_meta_map.filter(
+        (mappedField) => !mappedField.formField && mappedField.jeCPTField && mappedField.required
+      )
+    : []
   if (mappedFields.length > 0) {
     return false
   }

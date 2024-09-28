@@ -68,48 +68,6 @@ const WooCommerceHelper = ({ flow, setFlowData, edit = false }) => {
           />
         </div>
       )}
-      {(id === '12' || id === '13' || id === '14' || id === '15' || id === '16') && (
-        <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
-            {__('Select a subscription', 'bit-integrations')}
-          </b>
-          <MultiSelect
-            className="msl-wrp-options"
-            defaultValue={triggerData?.selectedSubscription}
-            options={
-              triggerData?.subscriptions &&
-              triggerData.subscriptions.map((item) => ({
-                label: item.post_title,
-                value: item.id.toString()
-              }))
-            }
-            onChange={(val) => setFlowData(val, 'selectedSubscription')}
-            singleSelect
-            style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
-          />
-        </div>
-      )}
-      {triggerData?.selectedSubscription && id === '15' && (
-        <div className={edit ? 'flx mt-3' : ''}>
-          <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
-            {__('Select a Subscription status', 'bit-integrations')}
-          </b>
-          <MultiSelect
-            className="msl-wrp-options"
-            defaultValue={triggerData?.selectedSubscriptionStatus}
-            options={
-              triggerData?.subscriptionStatus &&
-              Object.entries(triggerData.subscriptionStatus).map(([key, value]) => ({
-                label: value,
-                value: key.toString()
-              }))
-            }
-            onChange={(val) => setFlowData(val, 'selectedSubscriptionStatus')}
-            singleSelect
-            style={{ width: '100%', minWidth: 300, maxWidth: 400 }}
-          />
-        </div>
-      )}
       {id === '17' && (
         <div className={edit ? 'flx mt-3' : ''}>
           <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>

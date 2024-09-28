@@ -16,7 +16,8 @@ export const customFormIntegrations = [
   'Divi',
   'SiteOriginWidgets',
   'Bricksforge',
-  'PopupMaker'
+  'PopupMaker',
+  'DiviFormBuilder'
 ]
 export const actionHookIntegrations = ['ActionHook']
 export const freeTriggers = ['BitForm', 'CF7', 'CustomTrigger', 'Elementor', 'WC', 'WPF']
