@@ -999,7 +999,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 = 2.2.6  =
 _Release Date -28th September 2024_
 - **New Actions :**
-  - Go High Level: Now available as an action, allowing seamless integration with Go High Level for better automation and CRM workflows. (Pro)
+  - Go High Level: Now available as an action, allowing seamless integration with Go High Level for better automation and CRM workflows.
 
 - **New Triggers :**
   - Divi Form Builder: Create complex forms with the Divi Builder and trigger actions based on form submissions. (Pro)
