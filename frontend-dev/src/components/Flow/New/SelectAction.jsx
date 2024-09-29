@@ -162,7 +162,7 @@ export default function SelectAction() {
     { type: 'WPForo' },
     { type: 'Dokan' },
     { type: 'JetEngine' },
-    { type: 'High Level' }
+    { type: 'GoHighLevel' }
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(

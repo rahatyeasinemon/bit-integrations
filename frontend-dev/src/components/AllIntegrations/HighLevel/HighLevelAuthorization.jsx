@@ -41,9 +41,9 @@ export default function HighLevelAuthorization({
   }
 
   const ActiveInstructions = `
-            <h4>${__('Get High Level Api Key', 'bit-integrations')}</h4>
+            <h4>${__('Get GoHighLevel Api Key', 'bit-integrations')}</h4>
             <ul>
-                <li>${__('First go to your High Level sub account settings then business profile tab', 'bit-integrations')}.</li>
+                <li>${__('First go to your GoHighLevel sub account settings then business profile tab', 'bit-integrations')}.</li>
                 <li>${__('Copy the the API key.', 'bit-integrations')}</li>
                 <li>${__('You can also get the API key from Agency view. Navigate to settings then API keys tab.', 'bit-integrations')}</li>
             </ul>`
@@ -72,7 +72,7 @@ export default function HighLevelAuthorization({
       <div style={{ color: 'red', fontSize: '15px' }}>{error.name}</div>
 
       <div className="mt-3 wdt-250">
-        <b>{__('High Level Api Key:', 'bit-integrations')}</b>
+        <b>{__('GoHighLevel Api Key:', 'bit-integrations')}</b>
       </div>
       <input
         className="btcd-paper-inp w-6 mt-1"
@@ -80,7 +80,7 @@ export default function HighLevelAuthorization({
         name="api_key"
         value={highLevelConf.api_key}
         type="text"
-        placeholder={__('High Level Api Key...', 'bit-integrations')}
+        placeholder={__('GoHighLevel Api Key...', 'bit-integrations')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
