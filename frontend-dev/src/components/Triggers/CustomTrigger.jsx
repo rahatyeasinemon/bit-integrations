@@ -1,18 +1,20 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable no-console */
+import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $btcbi, $flowStep, $formFields, $newFlow } from '../../GlobalStates'
+import CloseIcn from '../../Icons/CloseIcn'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
-import SnackMsg from '../Utilities/SnackMsg'
-import WebhookDataTable from '../Utilities/WebhookDataTable'
+import CopyTextTrigger from '../Utilities/CopyTextTrigger'
 import EyeIcn from '../Utilities/EyeIcn'
 import EyeOffIcn from '../Utilities/EyeOffIcn'
-import CopyTextTrigger from '../Utilities/CopyTextTrigger'
 import Note from '../Utilities/Note'
+import SnackMsg from '../Utilities/SnackMsg'
 import TreeViewer from '../Utilities/treeViewer/TreeViewer'
 
 const CustomTrigger = () => {
@@ -312,7 +314,7 @@ const CustomTrigger = () => {
             onClick={setTriggerData}
             className="btn btcd-btn-lg purple sh-sm flx"
             type="button"
-            disabled={!selectedFields.length || !primaryKey}>
+            disabled={!selectedFields.length}>
             {__('Set Action', 'bit-integrations')}
           </button>
         </div>
