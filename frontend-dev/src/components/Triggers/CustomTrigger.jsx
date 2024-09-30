@@ -125,32 +125,6 @@ const CustomTrigger = () => {
             controller.abort()
             clearInterval(fetchIntervalRef.current)
             const tmpNewFlow = { ...newFlow }
-            // const data = resp.data.custom_trigger
-
-            // let convertedData =
-            //   data &&
-            //   Object.entries(data).reduce((outObj, item) => {
-            //     const [name, obj] = item
-            //     if (typeof obj === 'object' && obj !== null && obj !== undefined) {
-            //       const objArr = Object.entries(obj)
-            //       const inObj = objArr.reduce((out, [n, v]) => {
-            //         const propName = `${name}_${n}`
-
-            //         return { ...out, [propName]: v }
-            //       }, {})
-            //       return { ...outObj, ...inObj }
-            //     }
-            //     return data
-            //   }, {})
-
-            // if (typeof resp.data.custom_trigger === 'object') {
-            //   convertedData = Object.keys(convertedData).map((fld) => ({
-            //     name: fld,
-            //     label: `${convertedData[fld]}-${fld}`,
-            //     type: 'text'
-            //   }))
-            // }
-
             tmpNewFlow.triggerDetail.tmp = resp.data.custom_trigger
             tmpNewFlow.triggerDetail.data = resp.data.custom_trigger
             tmpNewFlow.triggerDetail.hook_id = hookID
@@ -172,14 +146,6 @@ const CustomTrigger = () => {
   const showResponseTable = () => {
     setShowResponse((prevState) => !prevState)
   }
-
-  // const info = `<h4>${sprintf(__('Follow these simple steps to set up the %s', 'bit-integrations'), 'Custom Trigger')}</h4>
-  //           <a className="btcd-link" href="https://bitapps.pro/docs/bit-integrations/trigger/custom-trigger-integrations" target="_blank" rel="noreferrer">${__('Details on Documentation', 'bit-integrations')}</a>
-  //           <ul>
-  //               <li>${__('Copy <b>do action hook</b> & past in your form submiting function', 'bit-integrations')}</li>
-  //               <li>${__('Click on the <b>Fetch</b> button & Submit your <b>Form</b> to get the form data', 'bit-integrations')}</li>
-  //           </ul>
-  // `
 
   const info = `<h4>${sprintf(__('Follow these simple steps to set up the %s', 'bit-integrations'), 'Action Hook')}</h4>
             <ul>
@@ -261,32 +227,6 @@ const CustomTrigger = () => {
         </button>
       </div>
 
-      {/* <div className="flx flx-between">
-        <button
-          onClick={handleFetch}
-          className="btn btcd-btn-lg purple sh-sm flx"
-          type="button"
-          disabled={!hookID}>
-          {newFlow.triggerDetail?.data
-            ? __('Fetched ✔', 'bit-integrations')
-            : __('Fetch', 'bit-integrations')}
-          {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
-        </button>
-        {newFlow.triggerDetail?.data && (
-          <button onClick={showResponseTable} className="btn btcd-btn-lg sh-sm flx">
-            <span className="txt-webhook-resbtn font-inter-500">
-              {showResponse
-                ? __('Hide Response', 'bit-integrations')
-                : __('View Response', 'bit-integrations')}
-            </span>
-            {!showResponse ? (
-              <EyeIcn width="20" height="20" strokeColor="#000000" />
-            ) : (
-              <EyeOffIcn width="20" height="20" strokeColor="#000000" />
-            )}
-          </button>
-        )}
-      </div> */}
       {newFlow.triggerDetail?.data && showResponse && (
         <>
           <div className="mt-3">
@@ -320,18 +260,6 @@ const CustomTrigger = () => {
         </div>
       )}
       <Note note={info} />
-
-      {/* {showResponse && newFlow?.triggerDetail?.data && (
-        <WebhookDataTable data={newFlow?.triggerDetail?.data} flow={newFlow} setFlow={setNewFlow} />
-      )}
-      <button
-        onClick={setTriggerData}
-        className="btn btcd-btn-lg purple sh-sm flx"
-        type="button"
-        disabled={!newFlow.triggerDetail?.data}>
-        {__('Set Action', 'bit-integrations')}
-      </button>
-      <Note note={info} /> */}
     </div>
   )
 }
