@@ -35,7 +35,7 @@ function EditCustomTrigger() {
 
   const setSelectedFieldsData = (value = null, remove = false, index = null) => {
     if (remove) {
-      index = index ? index : selectedFields.indexOf(value)
+      index = index ? index : flow.flow_details.fields.indexOf(value)
 
       if (index !== -1) {
         removeSelectedField(index)
@@ -110,8 +110,8 @@ function EditCustomTrigger() {
     setShowResponse(false)
     setFlow((prevFlow) =>
       create(prevFlow, (draftFlow) => {
-        delete draftFlow.triggerDetail?.tmp
-        delete draftFlow.triggerDetail?.data
+        delete draftFlow.flow_details?.tmp
+        delete draftFlow.flow_details?.rawData
       })
     )
     fetchIntervalRef.current = setInterval(() => {
@@ -122,8 +122,8 @@ function EditCustomTrigger() {
             clearInterval(fetchIntervalRef.current)
             setFlow((prevFlow) =>
               create(prevFlow, (draftFlow) => {
-                draftFlow.flow_details['rawData'] = resp.data.custom_trigger
-                draftFlow.flow_details['fields'] = []
+                draftFlow.flow_details.rawData = resp.data.custom_trigger
+                draftFlow.flow_details.fields = []
 
                 if (draftFlow.flow_details?.body?.data) {
                   draftFlow.flow_details.body.data = []
@@ -134,8 +134,8 @@ function EditCustomTrigger() {
             )
             setActionConf((prevConf) =>
               create(prevConf, (draftConf) => {
-                draftConf['rawData'] = resp.data.custom_trigger
-                draftConf['fields'] = []
+                draftConf.rawData = resp.data.custom_trigger
+                draftConf.fields = []
 
                 if (draftConf?.body?.data) {
                   draftConf.body.data = []
@@ -144,7 +144,7 @@ function EditCustomTrigger() {
                 }
               })
             )
-            console.log('first')
+
             setFormFields([])
             setIsLoading(false)
             setShowResponse(true)
@@ -177,35 +177,39 @@ function EditCustomTrigger() {
         readOnly
       />
 
-      {flow.triggerDetail?.data && (
+      <div className="flx flx-between">
+        <button
+          onClick={handleFetch}
+          className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'purple'}`}
+          type="button"
+          disabled={isLoading}>
+          {isLoading
+            ? __('Stop', 'bit-integrations')
+            : flow.flow_details?.rawData
+              ? __('Fetched ✔', 'bit-integrations')
+              : __('Fetch', 'bit-integrations')}
+          {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
+        </button>
+      </div>
+
+      {flow.flow_details?.rawData && (
         <>
           <div className="my-3">
             <b>{__('Selected Fields:', 'bit-integrations')}</b>
-            <button
-              onClick={() => setShowSelectedFields((prev) => !prev)}
-              className="btn btcd-btn-md sh-sm flx">
-              <span className="txt-actionHook-resbtn font-inter-500">
-                {showSelectedFields ? 'Hide Selected Fields' : 'View Selected Fields'}
-              </span>
-              {!showSelectedFields ? (
-                <EyeIcn width="20" height="20" strokeColor="#000000" />
-              ) : (
-                <EyeOffIcn width="20" height="20" strokeColor="#000000" />
-              )}
-            </button>
           </div>
+
           {showSelectedFields && (
             <div
               className="bg-white rounded border my-1 table-webhook-div p-2"
               style={{ minHeight: '40px', maxHeight: '14rem' }}>
-              {selectedFields.map((field, index) => (
+              {flow.flow_details.fields.map((field, index) => (
                 <div key={index} style={{ position: 'relative' }}>
                   <input
                     key={index}
                     className="btcd-paper-inp w-100 m-1"
                     type="text"
                     onChange={(e) => setSelectedFieldsData(e.target.value, index)}
-                    value={field.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')}
+                    value={field?.name?.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')}
                     disabled={isLoading}
                   />
                   <button
@@ -224,41 +228,43 @@ function EditCustomTrigger() {
               ))}
             </div>
           )}
+          <button
+            onClick={() => setShowSelectedFields((prev) => !prev)}
+            className="btn btcd-btn-md sh-sm flx gray">
+            <span className="txt-actionHook-resbtn font-inter-500">
+              {showSelectedFields ? 'Hide Selected Fields' : 'View Selected Fields'}
+            </span>
+            &nbsp;
+            {!showSelectedFields ? (
+              <EyeIcn width="20" height="20" strokeColor="#000000" />
+            ) : (
+              <EyeOffIcn width="20" height="20" strokeColor="#000000" />
+            )}
+          </button>
         </>
       )}
 
-      <div className="flx flx-between">
-        <button
-          onClick={handleFetch}
-          className={`btn btcd-btn-lg sh-sm flx ${isLoading ? 'red' : 'purple'}`}
-          type="button"
-          disabled={isLoading}>
-          {isLoading
-            ? __('Stop', 'bit-integrations')
-            : flow.triggerDetail?.data
-              ? __('Fetched ✔', 'bit-integrations')
-              : __('Fetch', 'bit-integrations')}
-          {isLoading && <LoaderSm size="20" clr="#022217" className="ml-2" />}
-        </button>
-      </div>
-
-      {flow.triggerDetail?.data && showResponse && (
+      {flow.flow_details?.rawData && (
         <>
           <div className="mt-3">
             <b>{__('Select Fields:', 'bit-integrations')}</b>
           </div>
-          <TreeViewer data={flow?.triggerDetail?.data} onChange={setSelectedFieldsData} />
+
+          {showResponse && (
+            <TreeViewer data={flow?.flow_details?.rawData} onChange={setSelectedFieldsData} />
+          )}
         </>
       )}
 
-      {flow.triggerDetail?.data && (
+      {flow.flow_details?.rawData && (
         <div className="flx flx-between">
-          <button onClick={showResponseTable} className="btn btcd-btn-lg sh-sm flx">
+          <button onClick={showResponseTable} className="btn btcd-btn-md sh-sm flx gray">
             <span className="txt-actionHook-resbtn font-inter-500">
               {showResponse
                 ? __('Hide Response', 'bit-integrations')
                 : __('View Response', 'bit-integrations')}
             </span>
+            &nbsp;
             {!showResponse ? (
               <EyeIcn width="20" height="20" strokeColor="#000000" />
             ) : (
