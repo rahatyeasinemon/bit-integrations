@@ -16,6 +16,7 @@ import EyeOffIcn from '../Utilities/EyeOffIcn'
 import Note from '../Utilities/Note'
 import SnackMsg from '../Utilities/SnackMsg'
 import TreeViewer from '../Utilities/treeViewer/TreeViewer'
+import FieldContainer from '../Utilities/FieldContainer'
 
 const CustomTrigger = () => {
   const [selectedFields, setSelectedFields] = useState([])
@@ -46,7 +47,7 @@ const CustomTrigger = () => {
     const tmpNewFlow = { ...newFlow }
     tmpNewFlow.triggerData = {
       formID: hookID,
-      fields: selectedFields.map((field) => ({ label: field, name: field })),
+      fields: selectedFields,
       rawData: newFlow.triggerDetail?.data
     }
     tmpNewFlow.triggered_entity_id = hookID
@@ -57,7 +58,7 @@ const CustomTrigger = () => {
 
   const setSelectedFieldsData = (value = null, remove = false, index = null) => {
     if (remove) {
-      index = index ? index : selectedFields.indexOf(value)
+      index = index ? index : selectedFields.findIndex((field) => field.name === value)
 
       if (index !== -1) {
         removeSelectedField(index)
@@ -70,7 +71,15 @@ const CustomTrigger = () => {
   const addSelectedField = (value) => {
     setSelectedFields((prevFields) =>
       create(prevFields, (draftFields) => {
-        draftFields.push(value)
+        draftFields.push({ label: value, name: value })
+      })
+    )
+  }
+
+  const onUpdateField = (value, index, key) => {
+    setSelectedFields((prevFields) =>
+      create(prevFields, (draftFields) => {
+        draftFields[index][key] = value
       })
     )
   }
@@ -188,34 +197,11 @@ const CustomTrigger = () => {
           <div className="my-3">
             <b>{__('Selected Fields:', 'bit-integrations')}</b>
           </div>
-          <div
-            className="bg-white rounded border my-1 table-webhook-div p-2"
-            style={{ minHeight: '40px', maxHeight: '14rem' }}>
-            {selectedFields.map((field, index) => (
-              <div key={index} style={{ position: 'relative' }}>
-                <input
-                  key={index}
-                  className="btcd-paper-inp w-100 m-1"
-                  type="text"
-                  onChange={(e) => setSelectedFieldsData(e.target.value, index)}
-                  value={field.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')}
-                  disabled={isLoading}
-                />
-                <button
-                  className="btn btcd-btn-lg sh-sm"
-                  onClick={() => removeSelectedField(index)}
-                  style={{
-                    position: 'absolute',
-                    top: -5,
-                    right: -5,
-                    color: '#ff4646',
-                    padding: '2px'
-                  }}>
-                  <CloseIcn size={12} />
-                </button>
-              </div>
-            ))}
-          </div>
+          <FieldContainer
+            data={selectedFields}
+            onUpdateField={onUpdateField}
+            onRemoveField={removeSelectedField}
+          />
         </>
       )}
 
@@ -245,7 +231,7 @@ const CustomTrigger = () => {
 
       {newFlow.triggerDetail?.data && (
         <div className="flx flx-between">
-          <button onClick={showResponseTable} className="btn btcd-btn-lg sh-sm flx">
+          <button onClick={showResponseTable} className="btn btcd-btn-lg sh-sm flx gray">
             <span className="txt-actionHook-resbtn font-inter-500">
               {showResponse
                 ? __('Hide Response', 'bit-integrations')

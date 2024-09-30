@@ -10,7 +10,6 @@ function FieldContainer({ data = [], onRemoveField, onUpdateField }) {
   const [fieldIndex, setFieldIndex] = useState()
 
   const onFieldClick = (index) => {
-    console.log(index)
     setFieldIndex(index)
     setActionMdl(true)
   }
