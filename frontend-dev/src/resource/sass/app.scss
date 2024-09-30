@@ -5496,17 +5496,17 @@ _:-ms-fullscreen,
   margin-top: 5px;
 }
 
-.tag-container {
+.field-container {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 
-  .tag-wrapper {
+  .field-wrapper {
     position: relative;
     display: inline-block;
     height: 30px;
 
-    .tag {
+    .field {
       background-color: #f0f0f0;
       // background-color: lightgray;
       border-radius: 20px 0px 20px;
@@ -5520,7 +5520,7 @@ _:-ms-fullscreen,
       -o-border-radius: 20px 0px 20px;
     }
 
-    .remove-tag {
+    .remove-field {
       background-color: transparent;
       border: none;
       color: #d31f1f;

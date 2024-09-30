@@ -15,29 +15,29 @@ function FieldContainer({ data = [], onRemoveField, onUpdateField }) {
   }
 
   const types = [
-    { key: 'text', value: 'text' },
-    { key: 'email', value: 'email' },
-    { key: 'select', value: 'select' },
-    { key: 'radio', value: 'radio' },
-    { key: 'checkbox', value: 'checkbox' },
-    { key: 'number', value: 'number' },
-    { key: 'tel', value: 'tel' },
-    { key: 'textarea', value: 'textarea' },
-    { key: 'datepicker', value: 'datepicker' },
-    { key: 'url', value: 'url' },
-    { key: 'file', value: 'file' },
-    { key: 'array', value: 'array' },
-    { key: 'object', value: 'object' }
+    { label: 'Text', value: 'text' },
+    { label: 'Email', value: 'email' },
+    { label: 'Select', value: 'select' },
+    { label: 'Radio', value: 'radio' },
+    { label: 'Checkbox', value: 'checkbox' },
+    { label: 'Number', value: 'number' },
+    { label: 'Phone Number', value: 'tel' },
+    { label: 'Textarea', value: 'textarea' },
+    { label: 'Date Picker', value: 'datepicker' },
+    { label: 'URL', value: 'url' },
+    { label: 'File', value: 'file' },
+    { label: 'Array', value: 'array' },
+    { label: 'Object', value: 'object' }
   ]
 
   return (
     <div
-      className="bg-white rounded border my-1 table-webhook-div p-2 tag-container"
+      className="bg-white rounded border my-1 table-webhook-div p-2 field-container"
       style={{ minHeight: '6rem', maxHeight: '14rem' }}>
       {data.map((field, index) => (
-        <div key={index} class="tag-wrapper">
+        <div key={index} class="field-wrapper">
           <button
-            className="tag purple-sh tooltip"
+            className="field purple-sh tooltip"
             onClick={() => onFieldClick(index)}
             style={{
               '--tooltip-txt': `'${__('Click to edit this field', 'bit-integrations')}'`
@@ -46,7 +46,7 @@ function FieldContainer({ data = [], onRemoveField, onUpdateField }) {
             {field?.label?.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')}
           </button>
           <button
-            className="remove-tag tooltip"
+            className="remove-field tooltip"
             onClick={() => onRemoveField(index)}
             style={{
               '--tooltip-txt': `'${__('Click to remove this field', 'bit-integrations')}'`
@@ -94,10 +94,7 @@ function FieldContainer({ data = [], onRemoveField, onUpdateField }) {
           <MultiSelect
             className="msl-wrp-options w-10"
             defaultValue={data[fieldIndex]?.type || 'text'}
-            options={types.map((type) => ({
-              label: type.value,
-              value: type.key
-            }))}
+            options={types}
             onChange={(val) => onUpdateField(val, fieldIndex, 'type')}
             singleSelect
             closeOnSelect
