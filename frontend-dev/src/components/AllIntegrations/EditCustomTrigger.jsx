@@ -14,6 +14,7 @@ import EyeIcn from '../Utilities/EyeIcn'
 import EyeOffIcn from '../Utilities/EyeOffIcn'
 import SnackMsg from '../Utilities/SnackMsg'
 import TreeViewer from '../Utilities/treeViewer/TreeViewer'
+import FieldContainer from '../Utilities/FieldContainer'
 
 function EditCustomTrigger() {
   const [actionConf, setActionConf] = useRecoilState($actionConf)
@@ -164,6 +165,24 @@ function EditCustomTrigger() {
     setShowResponse((prevState) => !prevState)
   }
 
+  const onUpdateField = (value, index, key) => {
+    setFlow((prevFlow) =>
+      create(prevFlow, (draftFlow) => {
+        draftFlow.flow_details.fields[index][key] = value
+      })
+    )
+    setActionConf((prevConf) =>
+      create(prevConf, (draftConf) => {
+        draftConf.fields[index][key] = value
+      })
+    )
+    setFormFields((prevFields) =>
+      create(prevFields, (draftFields) => {
+        draftFields[index][key] = value
+      })
+    )
+  }
+
   return (
     <div className="trigger-custom-width">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -199,34 +218,11 @@ function EditCustomTrigger() {
           </div>
 
           {showSelectedFields && (
-            <div
-              className="bg-white rounded border my-1 table-webhook-div p-2"
-              style={{ minHeight: '40px', maxHeight: '14rem' }}>
-              {flow.flow_details.fields.map((field, index) => (
-                <div key={index} style={{ position: 'relative' }}>
-                  <input
-                    key={index}
-                    className="btcd-paper-inp w-100 m-1"
-                    type="text"
-                    onChange={(e) => setSelectedFieldsData(e.target.value, index)}
-                    value={field?.name?.replace(/[,]/gi, '.').replace(/["{\}[\](\)]/gi, '')}
-                    disabled={isLoading}
-                  />
-                  <button
-                    className="btn btcd-btn-lg sh-sm"
-                    onClick={() => removeSelectedField(index)}
-                    style={{
-                      position: 'absolute',
-                      top: -5,
-                      right: -5,
-                      color: '#ff4646',
-                      padding: '2px'
-                    }}>
-                    <CloseIcn size={12} />
-                  </button>
-                </div>
-              ))}
-            </div>
+            <FieldContainer
+              data={flow.flow_details.fields}
+              onUpdateField={onUpdateField}
+              onRemoveField={removeSelectedField}
+            />
           )}
           <button
             onClick={() => setShowSelectedFields((prev) => !prev)}
@@ -246,7 +242,7 @@ function EditCustomTrigger() {
 
       {flow.flow_details?.rawData && (
         <>
-          <div className="mt-3">
+          <div className="mt-5">
             <b>{__('Select Fields:', 'bit-integrations')}</b>
           </div>
 
