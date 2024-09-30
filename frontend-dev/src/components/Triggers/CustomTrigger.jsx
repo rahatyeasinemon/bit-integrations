@@ -118,6 +118,13 @@ const CustomTrigger = () => {
     }
 
     setIsLoading(true)
+    setShowResponse(false)
+    setNewFlow((prevFlow) =>
+      create(prevFlow, (draftFlow) => {
+        delete draftFlow.triggerDetail?.tmp
+        delete draftFlow.triggerDetail?.data
+      })
+    )
     fetchIntervalRef.current = setInterval(() => {
       bitsFetch({ hook_id: hookID }, 'custom_trigger/test', null, 'post', signal)
         .then((resp) => {
