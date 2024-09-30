@@ -4,6 +4,7 @@ import { FaRegCheckSquare, FaRegSquare, FaRegMinusSquare } from 'react-icons/fa'
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io'
 import cx from 'classnames'
 import './style.css'
+import { __ } from '../../../Utils/i18nwrap'
 
 function TreeViewer({ data = [], onChange }) {
   const formatedData = useMemo(() => flattenTree(processData(data)), [data])
@@ -153,9 +154,15 @@ const ArrowIcon = ({ isOpen, className }) => {
     className
   )
   return isOpen ? (
-    <IoMdRemoveCircleOutline className={classes} />
+    <IoMdRemoveCircleOutline
+      title={`${__('Collapse the tree view', 'bit-integrations')}`}
+      className={classes}
+    />
   ) : (
-    <IoMdAddCircleOutline className={classes} />
+    <IoMdAddCircleOutline
+      title={`${__('Expand the tree view', 'bit-integrations')}`}
+      className={classes}
+    />
   )
 }
 
