@@ -23,6 +23,7 @@ import ChangelogToggle from './pages/ChangelogToggle'
 import CashbackModal from './pages/CashbackModal'
 import { useRecoilValue } from 'recoil'
 import 'regenerator-runtime/runtime.js'
+import AnnouncementModal from './pages/AnnouncementModal'
 const AllIntegrations = lazy(() => import('./pages/AllIntegrations'))
 const Error404 = lazy(() => import('./pages/Error404'))
 
@@ -73,6 +74,9 @@ function App() {
               {/* <span className="ml-2 mr-2  ">Bit Integrations</span> */}
               {/* </Link> */}
             </div>
+            <nav className='top-nav ml-2'>
+            <AnnouncementModal />
+            </nav>
             <nav className="top-nav ml-2">
               <a
                 target="_blank"
