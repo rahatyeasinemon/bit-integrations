@@ -13,7 +13,7 @@ const REVIEW_URL = 'https://bit-social.com/'
 export default function AnnouncementModal() {
   const [show, setShow] = useState(false)
 
-  if (!btcbi.isPro) return
+  // if (!btcbi.isPro) return
 
   return (
     <div className="announcement-modal">

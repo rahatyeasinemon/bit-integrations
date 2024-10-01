@@ -1498,6 +1498,7 @@ input[type='checkbox'].disabled:checked:before {
     // height: 100%;
     width: 100%;
     z-index: 9;
+    top: 0;
 
     & div {
       background: #ffffff78;

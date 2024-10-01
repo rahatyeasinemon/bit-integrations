@@ -105,7 +105,7 @@ export default function ChangelogToggle() {
                 dangerouslySetInnerHTML={{
                   __html: sprintf(
                     __('Updated at:  <b>%s</b>', 'bit-integrations'),
-                    '28th September 2024'
+                    '1st October 2024'
                   )
                 }}></small>
             </div>
