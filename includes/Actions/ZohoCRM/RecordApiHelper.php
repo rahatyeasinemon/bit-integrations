@@ -6,11 +6,11 @@
 
 namespace BitCode\FI\Actions\ZohoCRM;
 
-use BitCode\FI\Core\Util\DateTimeHelper;
-use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 use stdClass;
 use WP_Error;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\HttpHelper;
+use BitCode\FI\Core\Util\DateTimeHelper;
 
 /**
  * Provide functionality for Record insert,upsert
@@ -268,7 +268,7 @@ class RecordApiHelper
         }
         $formatedValue = '';
         $fieldFormat = \gettype($value);
-        if ($fieldFormat === $apiFormat && $formatSpecs->data_type !== 'datetime') {
+        if ($fieldFormat === $apiFormat && $formatSpecs->data_type !== 'datetime' && $formatSpecs->data_type !== 'date') {
             $formatedValue = $fieldFormat === 'string' ? html_entity_decode($value) : $value;
         } else {
             if ($apiFormat === 'array' || $apiFormat === 'object') {

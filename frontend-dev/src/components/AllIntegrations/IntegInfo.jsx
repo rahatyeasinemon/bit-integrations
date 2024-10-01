@@ -571,7 +571,7 @@ export default function IntegInfo() {
         return <DokanAuthorization dokanConf={integrationConf} step={1} isInfo />
       case 'JetEngine':
         return <JetEngineAuthorization jetEngineConf={integrationConf} step={1} isInfo />
-      case 'High Level':
+      case 'GoHighLevel':
         return <HighLevelAuthorization highLevelConf={integrationConf} step={1} isInfo />
       default:
         return <></>

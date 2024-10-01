@@ -25,7 +25,7 @@ export default function CashbackModal() {
 
         <span>{__('$10 Cashback', 'bit-integrations')}</span>
       </button>
-      <Modal sm show={show} setModal={() => setShow(false)} noPadding={true}>
+      <Modal sm show={show} setModal={() => setShow(false)} noPadding={true} closeIcon={true}>
         <div>
           <div id="title-wrapper">
             <h3 className="title">{__('Get $10 Cashback', 'bit-integrations')}</h3>

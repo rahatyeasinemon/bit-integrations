@@ -1318,8 +1318,7 @@ input[type='checkbox'].disabled:checked:before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: stretch;
-
+  justify-content: space-around;
   position: relative;
   cursor: pointer;
   width: 160px;
@@ -1334,6 +1333,10 @@ input[type='checkbox'].disabled:checked:before {
   transition:
     box-shadow 0.2s,
     transform 0.3s;
+
+  & > .txt-center {
+    word-break: break-word;
+  }
 
   & > .btcd-inte-atn {
     background: white;
@@ -1411,7 +1414,7 @@ input[type='checkbox'].disabled:checked:before {
 .inte-sm {
   background: aliceblue;
   position: relative;
-  width: 110px;
+  width: 115px;
   height: 150px;
   border-radius: 15px;
   font-size: 12px;
@@ -1425,8 +1428,8 @@ input[type='checkbox'].disabled:checked:before {
     max-height: 100px;
     object-fit: contain;
     // margin: 0 auto;
-    margin-top: 12px;
-    padding: 12px;
+    // margin-top: 12px;
+    // padding: 12px;
   }
 
   &:before {
@@ -1495,6 +1498,7 @@ input[type='checkbox'].disabled:checked:before {
     // height: 100%;
     width: 100%;
     z-index: 9;
+    top: 0;
 
     & div {
       background: #ffffff78;
@@ -1534,6 +1538,19 @@ input[type='checkbox'].disabled:checked:before {
   & input {
     margin-top: 6px;
   }
+}
+
+#modal-title-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Outfit", sans-serif;
+  background-image: url(../img/bit-social-promo.png);
+  background-repeat: no-repeat;
+  background-position: left;
+  color: #fff;
+  padding: 35px;
 }
 
 .opt {
@@ -2599,10 +2616,10 @@ nav.top-nav {
 .submit-btn {
   background: #1296ef;
   // position: absolute;
-  bottom: 10px;
-  right: 0;
-  float: right;
-  margin: 10px;
+    margin: 25px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 .btcd-mdl-close {
@@ -5494,4 +5511,42 @@ _:-ms-fullscreen,
   background-color: rgba(212, 212, 0, 0.333);
   padding: 2px;
   margin-top: 5px;
+}
+
+.field-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .field-wrapper {
+    position: relative;
+    display: inline-block;
+    height: 30px;
+
+    .field {
+      background-color: #f0f0f0;
+      // background-color: lightgray;
+      border-radius: 20px 0px 20px;
+      padding: 8px 12px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      -webkit-border-radius: 20px 0px 20px;
+      -moz-border-radius: 20px 0px 20px;
+      -ms-border-radius: 20px 0px 20px;
+      -o-border-radius: 20px 0px 20px;
+    }
+
+    .remove-field {
+      background-color: transparent;
+      border: none;
+      color: #d31f1f;
+      cursor: pointer;
+      padding: 7px;
+      line-height: 5px;
+      position: absolute;
+      right: -10px;
+      top: -8px;
+    }
+  }
 }

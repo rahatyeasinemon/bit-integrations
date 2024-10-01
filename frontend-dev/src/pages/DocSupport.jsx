@@ -2,22 +2,28 @@ import { Suspense, useEffect, useState } from 'react'
 import SnackMsg from '../components/Utilities/SnackMsg'
 import ExternalLinkIcn from '../resource/img/supportIcon/ExternalLinkIcn'
 import FacebookIcn from '../resource/img/supportIcon/FbIcon'
-import MailIcn from '../resource/img/supportIcon/MailIcon'
 import MessagesCircle from '../resource/img/supportIcon/MessengerIcon'
 import ReviewStarIcn from '../resource/img/supportIcon/ReviewStarIcon'
 import YoutubeIcn from '../resource/img/supportIcon/YoutubeIcon'
 import { __ } from '../Utils/i18nwrap'
+import bitSocial from '../resource/img/products/bit-social.gif'
 import bitForm from '../resource/img/products/bitForm.gif'
 import bitAssist from '../resource/img/products/bitAssist.svg'
 import bitFileManager from '../resource/img/products/bitFileManager.png'
 import bitSmtp from '../resource/img/products/bitSmtp.gif'
-import Loader from '../components/Loaders/Loader'
 import SupportIcon from '../resource/img/supportIcon/SupportIcon'
 
 function DocSupport() {
   const [snack, setSnackbar] = useState({ show: false })
 
   const products = [
+    {
+      name: 'Bit Social',
+      description: 'Auto Post Scheduler & Poster for Blog to Social Media Share.',
+      slug: 'bit-social',
+      url: 'https://wordpress.org/plugins/bit-social/',
+      image: bitSocial
+    },
     {
       name: 'Bit Form',
       description: 'WordPress Drag & Drop Contact Form, Payment Form Builder.',

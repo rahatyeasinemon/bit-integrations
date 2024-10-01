@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.2
 Requires PHP: 7.0
-Stable tag: 2.2.6
+Stable tag: 2.2.7
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -996,8 +996,25 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 
 == Changelog ==
 
+= 2.2.7  =
+_Release Date -1st October 2024_
+
+- **Note :**
+  - Custom Trigger: Moved to the Pro version with an enhanced trigger UI for better user experience, improved data-fetching capabilities.
+
+- **New Triggers :**
+  - Eventin - Events Manager & Event Tickets Plugin. (Pro)
+
+- **New Improvements :**
+  - Custom Trigger: Introduced new improvements for modifying selected fields.
+
+- **New Fixes :**
+  - ZohoCRM: Resolved issue with Date field not being processed correctly.
+  - ConvertKit: Fixed problem with querying existing subscribers.
+
 = 2.2.6  =
 _Release Date -28th September 2024_
+
 - **New Actions :**
   - Go High Level: Now available as an action, allowing seamless integration with Go High Level for better automation and CRM workflows.
 
@@ -1017,6 +1034,7 @@ _Release Date -28th September 2024_
 
 = 2.2.5  =
 _Release Date -19th September 2024_
+
 - **New Fixes :**
   - Klaviyo: Resolved the issue with excessive setState calls, preventing performance bottlenecks.
   - Core: Fixed the Tagify event handling issue.

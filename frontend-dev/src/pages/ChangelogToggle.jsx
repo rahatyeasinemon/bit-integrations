@@ -2,9 +2,9 @@ import { Suspense, useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { $btcbi } from '../GlobalStates'
 import ChangelogIcn from '../Icons/ChangeLogIcn'
+import promo from '../resource/img/bit-social-promo.webp'
 import { __, sprintf } from '../Utils/i18nwrap'
 import Modal from '../components/Utilities/Modal'
-import changelogInfo from '../Utils/StaticData/changelogInfo'
 import bitsFetch from '../Utils/bitsFetch'
 import Loader from '../components/Loaders/Loader'
 import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
@@ -13,9 +13,10 @@ export default function ChangelogToggle() {
   const [btcbi, setBtcbi] = useRecoilState($btcbi)
   const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
   const [showAnalyticsOptin, setShowAnalyticsOptin] = useState([])
-  const currentChangelog = '2.2.4'
-  const currenChangelog = changelogInfo[currentChangelog]
   const [loading, setLoading] = useState('')
+  const [step,setStep] = useState(1);
+
+  const Early_Bird_URL = 'https://bit-social.com/?utm_source=bit-integrations&utm_medium=inside-plugin&utm_campaign=early-bird-offer'
 
   const setChangeLogVersion = (val) => {
     setShow(val)
@@ -36,8 +37,6 @@ export default function ChangelogToggle() {
     setShow(false)
   }
 
-  const [isChecked, setIsChecked] = useState(true)
-
   const closeModal = () => {
     setShow(false)
     setChangeLogVersion()
@@ -50,6 +49,10 @@ export default function ChangelogToggle() {
         setShowAnalyticsOptin(res.data)
         setLoading(false)
       })
+    }else{
+      if (step === 2) {
+        setStep(1)
+      }
     }
   }, [show])
 
@@ -63,11 +66,12 @@ export default function ChangelogToggle() {
         <ChangelogIcn size={25} />
       </button>
       <Modal
-        sm
+        md={step === 1 && !loading}
+        sm={step !== 1 || loading}
         show={show}
         setModal={setChangeLogVersion}
         closeIcon={showAnalyticsOptin}
-        style={{ position: `absolute`, top: `60px`, left: `50%`, transform: `translateX(-50%)` }}>
+        style={{ position: `absolute`, top: `60px`, left: `50%`, transform: `translateX(-50%)` , height: `80%` }}>
         {loading ? (
           <Loader
             style={{
@@ -79,7 +83,22 @@ export default function ChangelogToggle() {
             }}
           />
         ) : (
-          <div className="changelog">
+          ((step === 1 && show === true) && <div>
+            <div>
+              <a href={Early_Bird_URL} target="_blank" rel="noreferrer">
+              <img src={promo} style={{width: '100%', marginTop:'-10px'}} alt="" />
+              </a>
+            </div>
+              <button
+                type="button"
+                className="btn round btcd-btn-lg purple purple-sh submit-btn"
+                onClick={() => setStep(2)}>
+                {__('Next', 'bit-integrations')}
+              </button>
+          </div>
+          )
+          ||
+          (step === 2 && <div className="changelog">
             <div className="flx flx-col flx-center whats-new">
               <h3>{sprintf(__("What's New in %s", 'bit-integrations'), btcbi.version)}?</h3>
               <small
@@ -87,12 +106,12 @@ export default function ChangelogToggle() {
                 dangerouslySetInnerHTML={{
                   __html: sprintf(
                     __('Updated at:  <b>%s</b>', 'bit-integrations'),
-                    '28th September 2024'
+                    '1st October 2024'
                   )
                 }}></small>
             </div>
             <div className="changelog-content">
-              <span className="new-integration">
+              {/* <span className="new-integration">
                 <b>{__('New Action', 'bit-integrations')}</b>
               </span>
 
@@ -100,15 +119,14 @@ export default function ChangelogToggle() {
                 <ul>
                   <li> Go High Level </li>
                 </ul>
-              </div>
+              </div> */}
               <span className="new-feature">
                 <b>{__('New Trigger', 'bit-integrations')}</b>
               </span>
 
               <div className="integration-list">
                 <ul>
-                  <li> Divi Form Builder (Pro) </li>
-                  <li> WooCommerce Subscriptions (Pro) </li>
+                  <li> Eventin - Events Manager & Event Tickets Plugin. (Pro) </li>
                 </ul>
               </div>
 
@@ -118,18 +136,18 @@ export default function ChangelogToggle() {
 
               <div className="integration-list">
                 <ul>
-                  <li> Plugin Translations Enhanced </li>
+                  <li> Custom Trigger: Introduced new improvements for modifying selected fields. </li>
                 </ul>
               </div> */}
-              {/* <span className="new-integration">
+              <span className="new-integration">
                 <b>{__('Note', 'bit-integrations')}</b>
-              </span> */}
+              </span>
 
-              {/* <div className="integration-list">
+              <div className="integration-list">
                 <ul>
-                  <li>Action Hook trigger moved to pro version.</li>
+                  <li>Custom Trigger: Moved to the Pro version with an enhanced trigger UI for better user experience, improved data-fetching capabilities.</li>
                 </ul>
-              </div> */}
+              </div>
 
               {/* <span className="new-feature">
                 <b>{__('New Features', 'bit-integrations')}</b>
@@ -186,8 +204,7 @@ export default function ChangelogToggle() {
                 </button>
               </div>
             )}
-          </div>
-        )}
+          </div>))}
       </Modal>
     </div>
   )

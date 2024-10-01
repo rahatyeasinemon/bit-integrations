@@ -39,7 +39,7 @@ class RecordApiHelper
     }
 
     // for updating subscribers data through email id.
-    public function updateRecord($id, $data, $existSubscriber)
+    public function updateRecord($id, $data)
     {
         $queries = $this->httpBuildQuery($data);
         $updateRecordEndpoint = "{$this->_apiEndpoint}/subscribers/{$id}?" . $queries;
@@ -84,35 +84,30 @@ class RecordApiHelper
         if (!empty($customFields)) {
             $fieldData['fieldValues'] = $customFields;
         }
-        $convertKit = (object) $fieldData;
 
+        $convertKit = (object) $fieldData;
         $existSubscriber = $this->existSubscriber($convertKit->email);
 
-        if (isset($existSubscriber->subscribers) && (\count($existSubscriber->subscribers)) !== 1 && !isset($existSubscriber->error)) {
+        if (empty($existSubscriber)) {
             $recordApiResponse = $this->storeOrModifyRecord('subscribe', $formId, $convertKit);
+
             if (isset($tags) && (\count($tags)) > 0 && $recordApiResponse) {
                 $this->addTagToSubscriber($convertKit->email, $tags);
             }
             $type = 'insert';
-        } elseif (!isset($existSubscriber->error)) {
+        } else {
             if ($actions->update == 'true') {
-                $this->updateRecord($existSubscriber->subscribers[0]->id, $convertKit, $existSubscriber);
+                $this->updateRecord($existSubscriber->id, $convertKit);
                 $type = 'update';
             } else {
                 LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', __('Email address already exists in the system', 'bit-integrations'));
 
-                wp_send_json_error(
-                    [
-                        'type'    => 'error',
-                        'message' => __('Check your email for confirmation.', 'bit-integrations')
-                    ],
-                    400
-                );
+                return;
             }
         }
 
         if (isset($existSubscriber->error)) {
-            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', $existSubscriber->error);
+            LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => 'insert'], 'error', $existSubscriber->error);
         } elseif ($recordApiResponse && isset($recordApiResponse->error)) {
             LogHandler::save($this->_integrationID, ['type' => 'record', 'type_name' => $type], 'error', $recordApiResponse->error);
         } else {
@@ -141,15 +136,28 @@ class RecordApiHelper
         return http_build_query($query);
     }
 
-    // Check if a subscriber exists through email.
-    private function existSubscriber($email)
+    private function existSubscriber($email, $page = 1)
     {
         $queries = http_build_query([
-            'api_secret'    => $this->_defaultHeader,
-            'email_address' => $email,
+            'api_secret' => $this->_defaultHeader,
+            'page'       => $page,
+            'status'     => 'all',
         ]);
-        $searchEndPoint = "{$this->_apiEndpoint}/subscribers?{$queries}";
 
-        return HttpHelper::get($searchEndPoint, null);
+        $response = HttpHelper::get("{$this->_apiEndpoint}/subscribers?{$queries}", null);
+
+        if (is_wp_error($response) || empty($response->subscribers)) {
+            return false;
+        }
+
+        foreach ($response->subscribers as $subscriber) {
+            if ($subscriber->email_address === $email) {
+                return $subscriber;
+            }
+        }
+
+        if ($response->total_pages > $response->page) {
+            return $this->existSubscriber($email, $page + 1);
+        }
     }
 }
