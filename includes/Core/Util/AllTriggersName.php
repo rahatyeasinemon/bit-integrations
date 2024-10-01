@@ -27,6 +27,7 @@ final class AllTriggersName
             'Dokan'             => ['name' => 'Dokan',  'isPro' => true, 'is_active' => false],
             'EDD'               => ['name' => 'Easy Digital Downloads',  'isPro' => true, 'is_active' => false],
             'EssentialBlocks'   => ['name' => 'Essential Blocks',  'isPro' => true, 'is_active' => false],
+            'Eventin'           => ['name' => 'Eventin',  'isPro' => true, 'is_active' => false],
             'EVF'               => ['name' => 'Everest Forms',  'isPro' => true, 'is_active' => false],
             'FF'                => ['name' => 'Fluent Forms',  'isPro' => true, 'is_active' => false],
             'FluentBooking'     => ['name' => 'Fluent Booking',  'isPro' => true, 'is_active' => false],
