@@ -36,10 +36,14 @@ class RecordApiHelper
         $phoneNumber
     ) {
         $templateName = $this->_integrationDetails->templateName;
-        $apiEndPoint = "{$this->_baseUrl}{$businessAccountID}/message_templates?fields=language&name={$templateName}";
+        $apiEndPoint = "{$this->_baseUrl}{$businessAccountID}/message_templates?name={$templateName}";
         $response = HttpHelper::get($apiEndPoint, null, static::setHeaders($token));
-        $language = $response->data[0]->language ?? 'en_US';
 
+        if (is_wp_error($response) || property_exists($response, 'error')) {
+            return $response;
+        }
+
+        $language = $response->data[0]->language ?? 'en_US';
         $apiEndPoint = "{$this->_baseUrl}{$numberId}/messages";
         $data = [
             'messaging_product' => 'whatsapp',
@@ -52,6 +56,12 @@ class RecordApiHelper
                 ]
             ]
         ];
+
+        $components = static::buildParameters($response->data[0]->components);
+
+        if (!empty($components)) {
+            $data['template']['components'] = $components;
+        }
 
         return HttpHelper::post($apiEndPoint, $data, static::setHeaders($token));
     }
@@ -150,6 +160,83 @@ class RecordApiHelper
         }
 
         return $apiResponse;
+    }
+
+    private static function buildParameters($components)
+    {
+        $builtParameters = [];
+
+        foreach ($components as $component) {
+            $type = strtolower($component->type);
+
+            if ($type === 'body' || $type === 'footer') {
+                continue;
+            }
+
+            if ($type === 'header') {
+                $format = strtolower($component->format);
+
+                if ($format === 'location' || $format === 'text') {
+                    continue;
+                }
+
+                if (\in_array($format, ['image', 'video', 'document'])) {
+                    $formatValue = (object) [
+                        'link' => $component->example->header_handle[0]
+                    ];
+                } else {
+                    $formatValue = $component->{$format} ?? null;
+                }
+
+                $builtParameters[] = (object) [
+                    'type'       => 'header',
+                    'parameters' => [
+                        (object) [
+                            'type'  => $format,
+                            $format => $formatValue
+                        ]
+                    ]
+                ];
+            }
+
+            if ($type === 'buttons') {
+                foreach ($component->buttons as $key => $button) {
+                    $btnType = strtolower($button->type);
+
+                    if ($btnType === 'url') {
+                        continue;
+                    }
+
+                    if ($btnType === 'copy_code') {
+                        $paramType = 'coupon_code';
+                        $paramValue = $button->example[0] ?? null;
+                    } elseif ($btnType === 'quick_reply') {
+                        $paramType = 'payload';
+                        $paramValue = $button->payload ?? null;
+                    } elseif ($btnType === 'url') {
+                        $paramType = 'text';
+                        $paramValue = $button->url ?? null;
+                    } else {
+                        $paramType = $btnType;
+                        $paramValue = $button->{$btnType} ?? null;
+                    }
+
+                    $builtParameters[] = (object) [
+                        'type'       => 'button',
+                        'sub_type'   => $btnType,
+                        'index'      => $key,
+                        'parameters' => [
+                            (object) [
+                                'type'     => $paramType,
+                                $paramType => $paramValue
+                            ]
+                        ]
+                    ];
+                }
+            }
+        }
+
+        return $builtParameters;
     }
 
     private function handleFilterResponse($response)
