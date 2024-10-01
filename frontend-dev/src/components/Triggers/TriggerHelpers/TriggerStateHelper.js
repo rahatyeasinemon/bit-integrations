@@ -934,6 +934,13 @@ export const actionHookStateIH = (dataFlow, tmpConf) => {
   return tmpConf
 }
 
+export const customTriggerStateIH = (dataFlow, tmpConf) => {
+  tmpConf['fields'] = dataFlow?.fields
+  tmpConf['rawData'] = dataFlow?.rawData
+
+  return tmpConf
+}
+
 export const CFSStateIH = (dataFlow, tmpConf) => {
   tmpConf['primaryKey'] = dataFlow?.primaryKey
   tmpConf['fields'] = dataFlow?.fields

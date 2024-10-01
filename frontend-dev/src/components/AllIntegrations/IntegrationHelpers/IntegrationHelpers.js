@@ -24,6 +24,7 @@ import {
   actionHookStateIH,
   affiliateStateIH,
   buddybossStateIH,
+  customTriggerStateIH,
   fluentBookingStateIH,
   fluentCrmStateIH,
   groundhoggStateIH,
@@ -179,6 +180,9 @@ export const saveIntegConfig = async (
   ) {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = CFSStateIH(dataFlow, tmpConf)
+  } else if (flow.triggered_entity === 'CustomTrigger') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = customTriggerStateIH(dataFlow, tmpConf)
   }
 
   if (isPro && !freeTriggers.includes(flow.triggered_entity)) {
@@ -348,6 +352,9 @@ export const saveActionConf = async ({
   ) {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = CFSStateIH(dataFlow, tmpConf)
+  } else if (flow.triggered_entity === 'CustomTrigger') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = customTriggerStateIH(dataFlow, tmpConf)
   }
 
   if (isPro && !freeTriggers.includes(flow.triggered_entity)) {
