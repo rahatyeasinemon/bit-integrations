@@ -169,24 +169,18 @@ class RecordApiHelper
         foreach ($components as $component) {
             $type = strtolower($component->type);
 
-            if ($type === 'body' || $type === 'footer') {
+            if (!\in_array($type, ['header', 'buttons'])) {
                 continue;
             }
 
             if ($type === 'header') {
                 $format = strtolower($component->format);
 
-                if ($format === 'location' || $format === 'text') {
+                if (\in_array($format, ['location', 'text'])) {
                     continue;
                 }
 
-                if (\in_array($format, ['image', 'video', 'document'])) {
-                    $formatValue = (object) [
-                        'link' => $component->example->header_handle[0]
-                    ];
-                } else {
-                    $formatValue = $component->{$format} ?? null;
-                }
+                $formatValue = \in_array($format, ['image', 'video', 'document']) ? (object) ['link' => $component->example->header_handle[0]] : $component->{$format} ?? null;
 
                 $builtParameters[] = (object) [
                     'type'       => 'header',
