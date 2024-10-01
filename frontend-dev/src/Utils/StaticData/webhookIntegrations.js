@@ -17,7 +17,13 @@ export const customFormIntegrations = [
   'SiteOriginWidgets',
   'Bricksforge',
   'PopupMaker',
-  'DiviFormBuilder'
+  'DiviFormBuilder',
+  'Bricks',
+  'Bricksforge',
+  'Brizy',
+  'GutenaForms'
 ]
+
 export const actionHookIntegrations = ['ActionHook']
+export const customTriggerIntegrations = ['CustomTrigger']
 export const freeTriggers = ['BitForm', 'CF7', 'CustomTrigger', 'Elementor', 'WC', 'WPF']

@@ -21,6 +21,7 @@ final class AllTriggersName
             'Brizy'             => ['name' => 'Brizy',  'isPro' => true, 'is_active' => false],
             'BuddyBoss'         => ['name' => 'BuddyBoss',  'isPro' => true, 'is_active' => false],
             'CartFlow'          => ['name' => 'CartFlow',  'isPro' => true, 'is_active' => false],
+            'CustomTrigger'     => ['name' => 'Custom Trigger',  'isPro' => true, 'is_active' => false],
             'Coblocks'          => ['name' => 'CoBlocks Form',  'isPro' => true, 'is_active' => false],
             'Divi'              => ['name' => 'Divi',  'isPro' => true, 'is_active' => false],
             'DiviFormBuilder'   => ['name' => 'Divi Form by Divi Engine',  'isPro' => true, 'is_active' => false],
