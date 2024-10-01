@@ -8,7 +8,7 @@ import Modal from '../components/Utilities/Modal'
 import '../resource/css/newRelease.css'
 
 const PRODUCT_NAME = 'Bit Integrations'
-const REVIEW_URL = 'https://bit-social.com/'
+const Early_Bird_URL = 'https://bit-social.com/?utm_source=bit-integrations&utm_medium=inside-plugin&utm_campaign=early-bird-offer'
 
 export default function AnnouncementModal() {
   const [show, setShow] = useState(false)
@@ -18,24 +18,24 @@ export default function AnnouncementModal() {
   return (
     <div className="announcement-modal">
       <button
-        title={__('New Product Realease', 'bit-integrations')}
+        title={__('New Product Release', 'bit-integrations')}
         type="button"
         className="announcement-btn"
         onClick={() => setShow(true)}>
         <img src={announcement} style={{ marginRight: '8px', width: '30px' }} />
-        {__('New Product Realease', 'bit-integrations')}
+        {__('New Product Release', 'bit-integrations')}
         <span className="star" />
         <span className="star" />
         <span className="star" />
       </button>
       <Modal md show={show} style={{ width: '33%',height:'85%'}} setModal={() => setShow(false)} noPadding={true} closeIcon={true}>
         <div>
-          <a href={REVIEW_URL} target="_blank" rel="noreferrer">
+          <a href={Early_Bird_URL} target="_blank" rel="noreferrer">
           <img src={promo} style={{width: '100%', marginTop:'-10px'}} alt="" />
           </a>
         </div>
         <div className="footer-wrapper" style={{ position: 'absolute', zIndex: '1', bottom:'-25px', left: '50%', transform:'translateX(-50%)' }} >
-          <a className="footer-btn purple" href={REVIEW_URL} target="_blank" rel="noreferrer">
+          <a className="footer-btn purple" href={Early_Bird_URL} target="_blank" rel="noreferrer">
             {__('Grab the Deal', 'bit-integrations')}
             <ExternalLinkIcn size={16} className="" />
           </a>

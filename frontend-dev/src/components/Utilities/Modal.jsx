@@ -33,7 +33,7 @@ export default function Modal({ show, setModal, sm, lg, style, cssTransStyle, cl
             }
             {title ? <h2 className="btcd-mdl-title flx" style={{ color: warning ? 'red' : '' }}>{title}</h2> : ''}
             <small className="btcd-mdl-subtitle">{subTitle}</small>
-            {!sm && <div className="btcd-mdl-div" />}
+            {/* {!sm && <div className="btcd-mdl-div" />} */}
             {children}
           </div>
         </div>
