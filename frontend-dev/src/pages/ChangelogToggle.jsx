@@ -16,7 +16,7 @@ export default function ChangelogToggle() {
   const [loading, setLoading] = useState('')
   const [step,setStep] = useState(1);
 
-  const REVIEW_URL = 'https://bit-social.com/'
+  const Early_Bird_URL = 'https://bit-social.com/?utm_source=bit-integrations&utm_medium=inside-plugin&utm_campaign=early-bird-offer'
 
   const setChangeLogVersion = (val) => {
     setShow(val)
@@ -84,7 +84,7 @@ export default function ChangelogToggle() {
         ) : (
           ((step === 1 && show === true) && <div>
             <div>
-              <a href={REVIEW_URL} target="_blank" rel="noreferrer">
+              <a href={Early_Bird_URL} target="_blank" rel="noreferrer">
               <img src={promo} style={{width: '100%', marginTop:'-10px'}} alt="" />
               </a>
             </div>
