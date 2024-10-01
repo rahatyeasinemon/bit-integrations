@@ -1536,6 +1536,19 @@ input[type='checkbox'].disabled:checked:before {
   }
 }
 
+#modal-title-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Outfit", sans-serif;
+  background-image: url(../img/bit-social-promo.png);
+  background-repeat: no-repeat;
+  background-position: left;
+  color: #fff;
+  padding: 35px;
+}
+
 .opt {
   background: #ecf1f9;
   margin-top: 20px;

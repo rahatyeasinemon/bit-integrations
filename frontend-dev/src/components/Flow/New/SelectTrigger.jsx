@@ -167,7 +167,7 @@ export default function SelectTrigger() {
                       <div className="pro-filter">
                         <span className="txt-pro">
                           <a
-                            href="https://towp.io/"
+                            href="https://towp.io/?demo&plugin=bit-integrations"
                             target="_blank"
                             rel="noreferrer">
                             {__('Try now', 'bit-integrations')}
