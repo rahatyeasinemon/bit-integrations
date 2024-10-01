@@ -18,12 +18,12 @@ export default function AnnouncementModal() {
   return (
     <div className="announcement-modal">
       <button
-        title={__('New Product Realease', 'bit-integrations')}
+        title={__('New Product Release', 'bit-integrations')}
         type="button"
         className="announcement-btn"
         onClick={() => setShow(true)}>
         <img src={announcement} style={{ marginRight: '8px', width: '30px' }} />
-        {__('New Product Realease', 'bit-integrations')}
+        {__('New Product Release', 'bit-integrations')}
         <span className="star" />
         <span className="star" />
         <span className="star" />

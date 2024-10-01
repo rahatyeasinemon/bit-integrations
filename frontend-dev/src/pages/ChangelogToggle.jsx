@@ -66,11 +66,12 @@ export default function ChangelogToggle() {
         <ChangelogIcn size={25} />
       </button>
       <Modal
-        sm
+        md={step === 1 && !loading}
+        sm={step !== 1 || loading}
         show={show}
         setModal={setChangeLogVersion}
         closeIcon={showAnalyticsOptin}
-        style={{ position: `absolute`, top: `60px`, left: `50%`, transform: `translateX(-50%)` }}>
+        style={{ position: `absolute`, top: `60px`, left: `50%`, transform: `translateX(-50%)` , height: `80%` }}>
         {loading ? (
           <Loader
             style={{
