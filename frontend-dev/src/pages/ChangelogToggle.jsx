@@ -98,7 +98,7 @@ export default function ChangelogToggle() {
 
               <div className="integration-list">
                 <ul>
-                  <li> Go High Level (Pro) </li>
+                  <li> Go High Level </li>
                 </ul>
               </div>
               <span className="new-feature">
