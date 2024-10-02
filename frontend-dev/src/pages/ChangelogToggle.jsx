@@ -70,9 +70,9 @@ export default function ChangelogToggle() {
         sm={step !== 1}
         show={show}
         setModal={closeModal}
-        closeIcon={step === 1}
+        closeIcon={showAnalyticsOptin}
         style={{
-          height: '500px',
+          height: 'auto',
           width: '550px'
         }}>
         {(step === 1 && show === true && (
