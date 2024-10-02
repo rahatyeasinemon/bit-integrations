@@ -14,9 +14,10 @@ export default function ChangelogToggle() {
   const [show, setShow] = useState(btcbi.changelogVersion !== btcbi.version)
   const [showAnalyticsOptin, setShowAnalyticsOptin] = useState([])
   const [loading, setLoading] = useState('')
-  const [step,setStep] = useState(1);
+  const [step, setStep] = useState(1)
 
-  const Early_Bird_URL = 'https://bit-social.com/?utm_source=bit-integrations&utm_medium=inside-plugin&utm_campaign=early-bird-offer'
+  const Early_Bird_URL =
+    'https://bit-social.com/?utm_source=bit-integrations&utm_medium=inside-plugin&utm_campaign=early-bird-offer'
 
   const setChangeLogVersion = (val) => {
     setShow(val)
@@ -49,10 +50,6 @@ export default function ChangelogToggle() {
         setShowAnalyticsOptin(res.data)
         setLoading(false)
       })
-    }else{
-      if (step === 2) {
-        setStep(1)
-      }
     }
   }, [show])
 
@@ -62,56 +59,54 @@ export default function ChangelogToggle() {
         title={__("What's New", 'bit-integrations')}
         type="button"
         className="changelog-btn"
-        onClick={() => setShow(true)}>
+        onClick={() => {
+          setStep(1)
+          setShow(true)
+        }}>
         <ChangelogIcn size={25} />
       </button>
       <Modal
-        md={step === 1 && !loading}
-        sm={step !== 1 || loading}
+        md={step === 1}
+        sm={step !== 1}
         show={show}
-        setModal={setChangeLogVersion}
-        closeIcon={showAnalyticsOptin}
-        style={{ position: `absolute`, top: `60px`, left: `50%`, transform: `translateX(-50%)` , height: `80%` }}>
-        {loading ? (
-          <Loader
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: 45,
-              transform: 'scale(0.5)'
-            }}
-          />
-        ) : (
-          ((step === 1 && show === true) && <div>
+        setModal={closeModal}
+        closeIcon={step === 1}
+        style={{
+          height: '500px',
+          width: '550px'
+        }}>
+        {(step === 1 && show === true && (
+          <>
             <div>
               <a href={Early_Bird_URL} target="_blank" rel="noreferrer">
-              <img src={promo} style={{width: '100%', marginTop:'-10px'}} alt="" />
+                <img src={promo} style={{ width: '100%', marginTop: '-10px' }} alt="" />
               </a>
             </div>
+            <div className="txt-right" style={{ marginTop: '-20px' }}>
               <button
                 type="button"
-                className="btn round btcd-btn-lg purple purple-sh submit-btn"
+                className="btn round btcd-btn-lg purple purple-sh"
                 onClick={() => setStep(2)}>
                 {__('Next', 'bit-integrations')}
               </button>
-          </div>
-          )
-          ||
-          (step === 2 && <div className="changelog">
-            <div className="flx flx-col flx-center whats-new">
-              <h3>{sprintf(__("What's New in %s", 'bit-integrations'), btcbi.version)}?</h3>
-              <small
-                className="date"
-                dangerouslySetInnerHTML={{
-                  __html: sprintf(
-                    __('Updated at:  <b>%s</b>', 'bit-integrations'),
-                    '1st October 2024'
-                  )
-                }}></small>
             </div>
-            <div className="changelog-content">
-              {/* <span className="new-integration">
+          </>
+        )) ||
+          (step === 2 && (
+            <div className="changelog content">
+              <div className="flx flx-col flx-center whats-new">
+                <h3>{sprintf(__("What's New in %s", 'bit-integrations'), btcbi.version)}?</h3>
+                <small
+                  className="date"
+                  dangerouslySetInnerHTML={{
+                    __html: sprintf(
+                      __('Updated at:  <b>%s</b>', 'bit-integrations'),
+                      '1st October 2024'
+                    )
+                  }}></small>
+              </div>
+              <div className="changelog-content">
+                {/* <span className="new-integration">
                 <b>{__('New Action', 'bit-integrations')}</b>
               </span>
 
@@ -120,17 +115,17 @@ export default function ChangelogToggle() {
                   <li> Go High Level </li>
                 </ul>
               </div> */}
-              <span className="new-feature">
-                <b>{__('New Trigger', 'bit-integrations')}</b>
-              </span>
+                <span className="new-feature">
+                  <b>{__('New Trigger', 'bit-integrations')}</b>
+                </span>
 
-              <div className="integration-list">
-                <ul>
-                  <li> Eventin - Events Manager & Event Tickets Plugin. (Pro) </li>
-                </ul>
-              </div>
+                <div className="integration-list">
+                  <ul>
+                    <li> Eventin - Events Manager & Event Tickets Plugin. (Pro) </li>
+                  </ul>
+                </div>
 
-              {/* <span className="new-integration">
+                {/* <span className="new-integration">
                 <b>{__('New Improvements', 'bit-integrations')}</b>
               </span>
 
@@ -139,17 +134,20 @@ export default function ChangelogToggle() {
                   <li> Custom Trigger: Introduced new improvements for modifying selected fields. </li>
                 </ul>
               </div> */}
-              <span className="new-integration">
-                <b>{__('Note', 'bit-integrations')}</b>
-              </span>
+                <span className="new-integration">
+                  <b>{__('Note', 'bit-integrations')}</b>
+                </span>
 
-              <div className="integration-list">
-                <ul>
-                  <li>Custom Trigger: Moved to the Pro version with an enhanced trigger UI for better user experience, improved data-fetching capabilities.</li>
-                </ul>
-              </div>
+                <div className="integration-list">
+                  <ul>
+                    <li>
+                      Custom Trigger: Moved to the Pro version with an enhanced trigger UI for
+                      better user experience, improved data-fetching capabilities.
+                    </li>
+                  </ul>
+                </div>
 
-              {/* <span className="new-feature">
+                {/* <span className="new-feature">
                 <b>{__('New Features', 'bit-integrations')}</b>
               </span>
 
@@ -158,53 +156,70 @@ export default function ChangelogToggle() {
                   <li>Zoho Bigin: Added the functionality to add tags to records, enhancing customization and organization within your Zoho Bigin CRM. (Pro)</li>
                 </ul>
               </div> */}
-              <div>
-                <span className="footer">{__('For more details,')}</span>
-                <a
-                  href="https://bitapps.pro/docs/bit-integrations/free-changelogs/"
-                  target="_blank"
-                  rel="noreferrer">
-                  {__('Click here')}&nbsp;
-                  <ExternalLinkIcn size="14" />
-                </a>
-              </div>
-            </div>
-            {!showAnalyticsOptin && (
-              <div>
-                <div className="btcd-hr mt-2"></div>
-                <div className="flx flx-col flx-center">
-                  <h4 className="mt-2 mb-0">
-                    {__('Opt-In For Plugin Improvement', 'bit-integrations')}
-                  </h4>
-                </div>
-                <div className="m-2 txt-sm">
-                  {__(
-                    'Accept and continue to share usage data to help us improve the plugin, the plugin will still function if you skip.',
-                    'bit-integrations'
-                  )}
-                  <br />
+                <div>
+                  <span className="footer">{__('For more details,')}</span>
                   <a
-                    className="app-link-active"
-                    target="blank"
-                    href="https://bitapps.pro/terms-of-service/">
-                    {__('Click here to see terms', 'bit-integrations')}
+                    href="https://bitapps.pro/docs/bit-integrations/free-changelogs/"
+                    target="_blank"
+                    rel="noreferrer">
+                    {__('Click here')}&nbsp;
+                    <ExternalLinkIcn size="14" />
                   </a>
                 </div>
-                <button
-                  type="button"
-                  className="btn round btn-md gray gray-sh"
-                  onClick={() => closeModal()}>
-                  Skip
-                </button>
-                <button
-                  type="button"
-                  className="btn round btcd-btn-lg purple purple-sh submit-btn"
-                  onClick={() => handleSubmit()}>
-                  {__('Accept and continue', 'bit-integrations')}
-                </button>
               </div>
-            )}
-          </div>))}
+              {loading ? (
+                <div className="flx flx-center" style={{ height: '150px' }}>
+                  <Loader
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: 45,
+                      transform: 'scale(0.5)'
+                    }}
+                  />
+                </div>
+              ) : (
+                !showAnalyticsOptin && (
+                  <div>
+                    <div className="btcd-hr mt-2"></div>
+                    <div className="flx flx-col flx-center">
+                      <h4 className="mt-2 mb-0">
+                        {__('Opt-In For Plugin Improvement', 'bit-integrations')}
+                      </h4>
+                    </div>
+                    <div className="m-2 txt-sm">
+                      {__(
+                        'Accept and continue to share usage data to help us improve the plugin, the plugin will still function if you skip.',
+                        'bit-integrations'
+                      )}
+                      <br />
+                      <a
+                        className="app-link-active"
+                        target="blank"
+                        href="https://bitapps.pro/terms-of-service/">
+                        {__('Click here to see terms', 'bit-integrations')}
+                      </a>
+                    </div>
+                    <div className="flx flx-between">
+                      <button
+                        type="button"
+                        className="btn round btn-md gray gray-sh"
+                        onClick={() => closeModal()}>
+                        Skip
+                      </button>
+                      <button
+                        type="button"
+                        className="btn round btcd-btn-lg purple purple-sh"
+                        onClick={() => handleSubmit()}>
+                        {__('Accept and continue', 'bit-integrations')}
+                      </button>
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          ))}
       </Modal>
     </div>
   )
