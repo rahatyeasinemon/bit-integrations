@@ -94,7 +94,7 @@ class PipeDriveController
 
             'Activities' => ['created_by_user_id', 'last_notification_time', 'deal_id', 'type', 'busy_flag',  'marked_as_done_time', 'lead_id', 'org_id', 'person_id',  'user_id', 'id', 'done', 'add_time', 'update_time', 'location_subpremise', 'location_street_number', 'location_route', 'location_sublocality', 'location_locality', 'location_admin_area_level_1', 'location_admin_area_level_2', 'location_country', 'location_postal_code', 'location_formatted_address'],
 
-            'Organization' => ['id', 'people_count', 'label_ids', 'add_time', 'update_time', 'owner_id', 'open_deals_count', 'label', 'next_activity_date', 'last_activity_date',  'visible_to', 'activities_count', 'done_activities_count', 'undone_activities_count', 'email_messages_count', 'picture_id', 'won_deals_count', 'lost_deals_count', 'closed_deals_count'],
+            'Organization' => ['id', 'people_count', 'label_ids', 'add_time', 'update_time', 'owner_id', 'open_deals_count', 'next_activity_date', 'last_activity_date',  'visible_to', 'activities_count', 'done_activities_count', 'undone_activities_count', 'email_messages_count', 'picture_id', 'won_deals_count', 'lost_deals_count', 'closed_deals_count'],
 
             'Persons' => ['label', 'last_name', 'first_name', 'add_time', 'update_time', 'org_id', 'owner_id', 'open_deals_count', 'label', 'status', 'next_activity_date', 'last_activity_date', 'last_incoming_mail_time', 'last_outgoing_mail_time',  'visible_to', 'id', 'activities_count', 'done_activities_count', 'undone_activities_count', 'email_messages_count', 'picture_id', 'won_deals_count', 'lost_deals_count', 'closed_deals_count'],
 
@@ -145,7 +145,6 @@ class PipeDriveController
                 array_push($formattedResponse, ...$addFields);
             }
 
-            error_log(print_r($formattedResponse, true));
             wp_send_json_success($formattedResponse, 200);
         } else {
             wp_send_json_error(
