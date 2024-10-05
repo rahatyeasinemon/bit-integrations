@@ -144,7 +144,7 @@ https://youtu.be/eFuficjF_F4
 * [**Campaign Monitor**](https://www.campaignmonitor.com/)
 * [**CompanyHub**](https://companyhub.com/)
 * [**Constant Contact**](https://www.constantcontact.com/)
-* [**ConvertKit**](https://convertkit.com/)
+* [**Kit (ConvertKit)**](https://convertkit.com/)
 * [**Custom Action**](https://bitapps.pro/docs/bit-integrations/actions/custom-action-integrations/)
 * [**Custom Api :**](https://bitapps.pro/docs/bit-integrations/actions/customapi-integrations/)
 * [**Capsule CRM**](https://capsulecrm.com/)
@@ -400,7 +400,7 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 
 * [**Contact Form 7**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AL85-ajsYQ7LOhs1t2y6toV)
 
-* [**Convertkit**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AITR_K9KlAnPTJeYBFcFEcy)
+* [**Kit (ConvertKit)**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AITR_K9KlAnPTJeYBFcFEcy)
 
 * [**Copper CRM**](https://www.youtube.com/playlist?list=PL7c6CDwwm-AIDfH9sPdxJ9vuUdWuJFx_p)
 
@@ -765,7 +765,7 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 
 * [**Constant Contact**](https://bitapps.pro/docs/bit-integrations/trigger/constantcontact/)
 
-* [**ConvertKit**](https://bitapps.pro/docs/bit-integrations/trigger/convertkit/)
+* [**Kit (ConvertKit)**](https://bitapps.pro/docs/bit-integrations/trigger/convertkit/)
 
 * [**Custom Action**](https://bitapps.pro/docs/bit-integrations/trigger/custom-action/)
 
@@ -1016,7 +1016,7 @@ _Release Date -1st October 2024_
 
 - **New Fixes :**
   - ZohoCRM: Resolved issue with Date field not being processed correctly.
-  - ConvertKit: Fixed problem with querying existing subscribers.
+  - Kit (ConvertKit): Fixed problem with querying existing subscribers.
 
 = 2.2.6  =
 _Release Date -28th September 2024_
@@ -1073,7 +1073,7 @@ _Release Date -17th September 2024_
   - ClickUp: Resolved the issue with custom field values.
   - ClinchPad: Addressed the issue with custom field values.
   - CompanyHub: Fixed the issue with custom field values.
-  - ConvertKit: Resolved the issue with custom field values.
+  - Kit (ConvertKit): Resolved the issue with custom field values.
   - CopperCRM: Addressed the issue with custom field values.
 
 = 2.2.3  =
@@ -1108,7 +1108,7 @@ _Release Date -28th August 2024_
 
 - **New Fixes :**
   - Core: Fixed operator precedence deprecation issue in PHP 8 (Pro)
-  - ConvertKit: Resolved the issue with custom field value mapping
+  - Kit (ConvertKit): Resolved the issue with custom field value mapping
 
 = 2.2.1  =
 _Release Date -22th August 2024_
@@ -1461,7 +1461,7 @@ _Release Date -6th April 2024_
   - Mailup: Lists & Groups limitation
   - Sendinblue (Brevo): Lists limitation
   - SendGrid: Authorization error response
-  - ConvertKit: Existing subscriber
+  - Kit (ConvertKit): Existing subscriber
   - MailChimp: Required field missing
   - Divi: Theme active check
   - Freshsales: Contact Module: Account
@@ -1533,7 +1533,7 @@ _Release Date -5th February 2024_
   - Custom Api: Fixed HTTP method
   - Mail Mint: FIxed update contact status
   - Post: Create a new post : Fixed multiple data sending issue
-  - ConvertKit: Fixed authorization
+  - Kit (ConvertKit): Fixed authorization
   - Zoho Bigin: integration update validation
   - WooCommerce: custom field mapping
 
