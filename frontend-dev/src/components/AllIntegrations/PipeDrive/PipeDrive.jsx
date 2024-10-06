@@ -37,13 +37,15 @@ function PipeDrive({ formFields, setFlow, flow, allIntegURL }) {
           relatedlists: [{ name: 'Notes' }, { name: 'Activities' }]
         },
         Activities: { required: true },
-        Organization: {
+        Organizations: {
           required: true,
-          requiredFields: ['name']
+          requiredFields: ['name'],
+          relatedlists: [{ name: 'Notes' }, { name: 'Activities' }]
         },
         Persons: {
           required: true,
-          requiredFields: ['name']
+          requiredFields: ['name'],
+          relatedlists: [{ name: 'Notes' }, { name: 'Activities' }]
         },
         Products: {
           requiredFields: ['name']

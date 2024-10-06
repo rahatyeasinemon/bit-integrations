@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\PipeDrive;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -168,8 +168,10 @@ class RecordApiHelper
 
             if ($parentModule === 'leads') {
                 $finalData['lead_id'] = $parendId;
-            } else {
+            } elseif ($parentModule === 'deals') {
                 $finalData['deal_id'] = (int) $parendId;
+            } elseif ($parentModule === 'organizations') {
+                $finalData['org_id'] = (int) $parendId;
             }
 
             return HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $this->_defaultHeader);
