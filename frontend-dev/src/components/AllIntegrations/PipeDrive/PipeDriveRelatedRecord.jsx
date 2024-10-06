@@ -53,8 +53,8 @@ export default function PipeDriveRelatedRecord({
       )}
       <br />
       <br />
-      {!isPro && (
-        <div className="pos-rel">
+      <div className="pos-rel">
+        {!isPro && (
           <div className="pro-blur flx p-3">
             <div className="pro">
               <a
@@ -66,87 +66,86 @@ export default function PipeDriveRelatedRecord({
               </a>
             </div>
           </div>
-          <b className="wdt-100 d-in-b">{__('Related List:', 'bit-integrations')}</b>
-          <select
-            onChange={handleInput}
-            name="module"
-            value={pipeDriveConf?.relatedlists?.[tab - 1]?.module}
-            className="btcd-paper-inp w-7"
-            disabled={!pipeDriveConf.moduleData?.module}>
-            <option value="">{__('Select Related Module', 'bit-integrations')}</option>
-            {pipeDriveConf.default.modules[pipeDriveConf.moduleData.module]?.relatedlists?.map(
-              (relatedlistApiName) => (
-                <option key={relatedlistApiName.name} value={relatedlistApiName.name}>
-                  {relatedlistApiName.name}
-                </option>
-              )
-            )}
-          </select>
-          <br />
-          <br />
-          {pipeDriveConf.default.modules[pipeDriveConf?.relatedlists?.[tab - 1]?.module]
-            ?.fields && (
-            <>
-              <div className="mt-4">
-                <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
+        )}
+        <b className="wdt-100 d-in-b">{__('Related List:', 'bit-integrations')}</b>
+        <select
+          onChange={handleInput}
+          name="module"
+          value={pipeDriveConf?.relatedlists?.[tab - 1]?.module}
+          className="btcd-paper-inp w-7"
+          disabled={!pipeDriveConf.moduleData?.module}>
+          <option value="">{__('Select Related Module', 'bit-integrations')}</option>
+          {pipeDriveConf.default.modules[pipeDriveConf.moduleData.module]?.relatedlists?.map(
+            (relatedlistApiName) => (
+              <option key={relatedlistApiName.name} value={relatedlistApiName.name}>
+                {relatedlistApiName.name}
+              </option>
+            )
+          )}
+        </select>
+        <br />
+        <br />
+        {pipeDriveConf.default.modules[pipeDriveConf?.relatedlists?.[tab - 1]?.module]?.fields && (
+          <>
+            <div className="mt-4">
+              <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
+            </div>
+            <div className="btcd-hr mt-1" />
+            <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
+              <div className="txt-dp">
+                <b>{__('Form Fields', 'bit-integrations')}</b>
               </div>
-              <div className="btcd-hr mt-1" />
-              <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-                <div className="txt-dp">
-                  <b>{__('Form Fields', 'bit-integrations')}</b>
-                </div>
-                <div className="txt-dp">
-                  <b>{__('PipeDrive Fields', 'bit-integrations')}</b>
-                </div>
+              <div className="txt-dp">
+                <b>{__('PipeDrive Fields', 'bit-integrations')}</b>
               </div>
+            </div>
 
-              {pipeDriveConf.relatedlists?.[tab - 1]?.field_map?.map((itm, i) => (
-                <PipeDriveFieldMap
-                  key={`crm-m-${i + 9}`}
-                  i={i}
-                  field={itm}
-                  pipeDriveConf={pipeDriveConf}
-                  formFields={formFields}
-                  setPipeDriveConf={setPipeDriveConf}
-                  tab={tab}
-                  setSnackbar={setSnackbar}
-                />
-              ))}
-              <div className="txt-center btcbi-field-map-button mt-2">
-                <button
-                  onClick={() =>
-                    addFieldMap(
-                      pipeDriveConf.relatedlists[tab - 1].field_map.length,
-                      pipeDriveConf,
-                      setPipeDriveConf,
-                      false,
-                      tab
-                    )
-                  }
-                  className="icn-btn sh-sm"
-                  type="button">
-                  +
-                </button>
-              </div>
-              <br />
-              <br />
-              <div className="mt-4">
-                <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
-              </div>
-              <div className="btcd-hr mt-1" />
-
-              <PipeDriveActions
+            {pipeDriveConf.relatedlists?.[tab - 1]?.field_map?.map((itm, i) => (
+              <PipeDriveFieldMap
+                key={`crm-m-${i + 9}`}
+                i={i}
+                field={itm}
                 pipeDriveConf={pipeDriveConf}
+                formFields={formFields}
                 setPipeDriveConf={setPipeDriveConf}
                 tab={tab}
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
                 setSnackbar={setSnackbar}
               />
-            </>
-          )}
-        </div>
-      )}
+            ))}
+            <div className="txt-center btcbi-field-map-button mt-2">
+              <button
+                onClick={() =>
+                  addFieldMap(
+                    pipeDriveConf.relatedlists[tab - 1].field_map.length,
+                    pipeDriveConf,
+                    setPipeDriveConf,
+                    false,
+                    tab
+                  )
+                }
+                className="icn-btn sh-sm"
+                type="button">
+                +
+              </button>
+            </div>
+            <br />
+            <br />
+            <div className="mt-4">
+              <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
+            </div>
+            <div className="btcd-hr mt-1" />
+
+            <PipeDriveActions
+              pipeDriveConf={pipeDriveConf}
+              setPipeDriveConf={setPipeDriveConf}
+              tab={tab}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              setSnackbar={setSnackbar}
+            />
+          </>
+        )}
+      </div>
 
       {pipeDriveConf.default.modules[pipeDriveConf.relatedlists[tab - 1]?.module] &&
         !pipeDriveConf.default.modules[pipeDriveConf?.relatedlists?.[tab - 1]?.module]?.fields && (
