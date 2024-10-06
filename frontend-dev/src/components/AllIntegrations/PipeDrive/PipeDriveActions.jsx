@@ -321,7 +321,7 @@ export default function PipeDriveActions({
             />
           </>
         )}
-        {['Leads', 'Deals', 'Persons', 'Products', 'Organization'].includes(module) && (
+        {['Leads', 'Deals', 'Persons', 'Products', 'Organizations'].includes(module) && (
           <TableCheckBox
             checked={pipeDriveConf.actions?.visible_to || false}
             onChange={(e) => actionHandler(e, 'visible_to')}
