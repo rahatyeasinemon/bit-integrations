@@ -180,7 +180,7 @@ class PipeDriveController
         }
 
         if (isset($pipeDriveApiResponse->success, $pipeDriveApiResponse->data) && $pipeDriveApiResponse->success && \count($integrationDetails->relatedlists)) {
-            $recordApiHelper->addRelatedList($pipeDriveApiResponse, $integrationDetails, $fieldValues, $module);
+            do_action('btcbi_pipedrive_store_related_list', $pipeDriveApiResponse, $integrationDetails, $fieldValues, $module, $integrationDetails->api_key, $integId);
         }
 
         return $pipeDriveApiResponse;

@@ -134,68 +134,6 @@ class RecordApiHelper
         return HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $this->_defaultHeader);
     }
 
-    public function addRelatedList($pipeDriveApiResponse, $integrationDetails, $fieldValues, $parentModule)
-    {
-        $parentId = $pipeDriveApiResponse->data->id;
-
-        foreach ($integrationDetails->relatedlists as $item) {
-            $module = strtolower($item->module);
-            $finalData = $this->generateReqDataFromFieldMap($fieldValues, $item->field_map);
-
-            $mapFields = [
-                'activities_type' => 'type',
-                'lead_label'      => 'label_ids',
-                'deal_stage'      => 'stage_id',
-                'deal_status'     => 'status',
-                'currency'        => 'currency',
-                'visible_to'      => 'visible_to',
-                'busy_flag'       => 'busy_flag',
-                'active_flag'     => 'active_flag'
-            ];
-
-            foreach ($mapFields as $moduleKey => $finalDataKey) {
-                if (!empty($item->moduleData->{$moduleKey}) && $moduleKey === 'lead_label') {
-                    $finalData[$finalDataKey] = explode(',', $item->moduleData->{$moduleKey});
-                } elseif (!empty($item->moduleData->{$moduleKey})) {
-                    $finalData[$finalDataKey] = $item->moduleData->{$moduleKey};
-                }
-            }
-
-            if (!empty($item->actions->activities_participants)) {
-                $finalData['participants'] = array_map(function ($participant) {
-                    return (object) [
-                        'person_id'    => (int) $participant,
-                        'primary_flag' => false
-                    ];
-                }, explode(',', $item->moduleData->activities_participants));
-            }
-
-            switch ($parentModule) {
-                case 'leads':
-                    $finalData['lead_id'] = $parentId;
-
-                    break;
-                case 'deals':
-                    $finalData['deal_id'] = (int) $parentId;
-
-                    break;
-                case 'organizations':
-                    $finalData[$module === 'leads' ? 'organization_id' : 'org_id'] = (int) $parentId;
-
-                    break;
-            }
-
-            $apiEndpoints = $this->baseUrl . $module . '?api_token=' . $this->_integrationDetails->api_key;
-            $apiResponse = HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $this->_defaultHeader);
-
-            $logType = isset($apiResponse->error) ? 'error' : 'success';
-            LogHandler::save($this->_integrationID, wp_json_encode([
-                'type'      => $parentModule,
-                'type_name' => 'add-related-list-' . $module
-            ]), $logType, wp_json_encode($apiResponse));
-        }
-    }
-
     public function generateReqDataFromFieldMap($data, $fieldMap)
     {
         $dataFinal = [];
