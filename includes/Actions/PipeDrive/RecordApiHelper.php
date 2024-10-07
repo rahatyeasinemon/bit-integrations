@@ -136,45 +136,63 @@ class RecordApiHelper
 
     public function addRelatedList($pipeDriveApiResponse, $integrationDetails, $fieldValues, $parentModule)
     {
-        $parendId = $pipeDriveApiResponse->data->id;
+        $parentId = $pipeDriveApiResponse->data->id;
 
         foreach ($integrationDetails->relatedlists as $item) {
-            $fieldMap = $item->field_map;
             $module = strtolower($item->module);
-            $moduleData = $item->moduleData;
-            $actions = $item->actions;
-            $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-            if (isset($moduleData->activities_type) && !empty($moduleData->activities_type)) {
-                $finalData['type'] = $moduleData->activities_type;
+            $finalData = $this->generateReqDataFromFieldMap($fieldValues, $item->field_map);
+
+            $mapFields = [
+                'activities_type' => 'type',
+                'lead_label'      => 'label_ids',
+                'deal_stage'      => 'stage_id',
+                'deal_status'     => 'status',
+                'currency'        => 'currency',
+                'visible_to'      => 'visible_to',
+                'busy_flag'       => 'busy_flag',
+                'active_flag'     => 'active_flag'
+            ];
+
+            foreach ($mapFields as $moduleKey => $finalDataKey) {
+                if (!empty($item->moduleData->{$moduleKey}) && $moduleKey === 'lead_label') {
+                    $finalData[$finalDataKey] = explode(',', $item->moduleData->{$moduleKey});
+                } elseif (!empty($item->moduleData->{$moduleKey})) {
+                    $finalData[$finalDataKey] = $item->moduleData->{$moduleKey};
+                }
             }
-            if (isset($actions->busy_flag) && !empty($actions->busy_flag)) {
-                $finalData['busy_flag'] = true;
-            }
-            if (isset($actions->active_flag) && !empty($actions->active_flag)) {
-                $finalData['active_flag'] = 0;
-            }
-            if (isset($actions->activities_participants) && !empty($actions->activities_participants)) {
-                $participants = explode(',', $moduleData->activities_participants);
-                $allParticipants = [];
-                foreach ($participants as $participant) {
-                    $allParticipants[] = (object) [
+
+            if (!empty($item->actions->activities_participants)) {
+                $finalData['participants'] = array_map(function ($participant) {
+                    return (object) [
                         'person_id'    => (int) $participant,
                         'primary_flag' => false
                     ];
-                }
-                $finalData['participants'] = $allParticipants;
+                }, explode(',', $item->moduleData->activities_participants));
             }
+
+            switch ($parentModule) {
+                case 'leads':
+                    $finalData['lead_id'] = $parentId;
+
+                    break;
+                case 'deals':
+                    $finalData['deal_id'] = (int) $parentId;
+
+                    break;
+                case 'organizations':
+                    $finalData[$module === 'leads' ? 'organization_id' : 'org_id'] = (int) $parentId;
+
+                    break;
+            }
+
             $apiEndpoints = $this->baseUrl . $module . '?api_token=' . $this->_integrationDetails->api_key;
+            $apiResponse = HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $this->_defaultHeader);
 
-            if ($parentModule === 'leads') {
-                $finalData['lead_id'] = $parendId;
-            } elseif ($parentModule === 'deals') {
-                $finalData['deal_id'] = (int) $parendId;
-            } elseif ($parentModule === 'organizations') {
-                $finalData['org_id'] = (int) $parendId;
-            }
-
-            return HttpHelper::post($apiEndpoints, wp_json_encode($finalData), $this->_defaultHeader);
+            $logType = isset($apiResponse->error) ? 'error' : 'success';
+            LogHandler::save($this->_integrationID, wp_json_encode([
+                'type'      => $parentModule,
+                'type_name' => 'add-related-list-' . $module
+            ]), $logType, wp_json_encode($apiResponse));
         }
     }
 
