@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.2
 Requires PHP: 7.0
-Stable tag: 2.2.8
+Stable tag: 2.2.9
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -995,6 +995,32 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.2.9  =
+_Release Date -10th October 2024_
+
+- **Note :**
+  - The name ConvertKit has been updated to Kit (ConvertKit).
+
+- **New Features :**
+  - Eventin - New tasks added for better event management (Pro):
+      1. Speaker (or Organizer) Created
+      2. Speaker (or Organizer) Updated
+      3. Speaker (or Organizer) Deleted
+      4. Attendee Updated
+      5. Attendee Deleted
+      6. Order Created
+      7. Order Deleted
+      8. Schedule Deleted
+
+- **New Improvements :**
+  - Constant Contact: Improved contact update functionality.
+  - PipeDrive: Added support for the Organization module and new related lists (Pro).
+
+- **New Fixes :**
+  - HubSpot: Fixed issue with integration execution time for updating records.
+  - Zoho CRM: Resolved custom data submission issue.
+  - MailPoet: Fixed issue with retrieving form data. (Pro)
 
 = 2.2.8  =
 _Release Date -2nd October 2024_
