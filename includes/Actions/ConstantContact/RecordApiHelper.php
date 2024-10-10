@@ -80,7 +80,7 @@ class RecordApiHelper
 
     private function updateContact($contact, $listIds, $tagIds, $sourceType, $finalData)
     {
-        return $this->sendContactRequest('contacts/' . $contact->id, $listIds, $tagIds, $sourceType, $finalData, 'update_source');
+        return $this->sendContactRequest('contacts/' . $contact->contact_id, $listIds, $tagIds, $sourceType, $finalData, 'update_source', $contact);
     }
 
     private function addContact($listIds, $tagIds, $sourceType, $finalData)
@@ -88,7 +88,7 @@ class RecordApiHelper
         return $this->sendContactRequest('contacts', $listIds, $tagIds, $sourceType, $finalData, 'create_source');
     }
 
-    private function sendContactRequest($endpoint, $listIds, $tagIds, $sourceType, $finalData, $sourceKey)
+    private function sendContactRequest($endpoint, $listIds, $tagIds, $sourceType, $finalData, $sourceKey, $contact = null)
     {
         $requestParams = [
             'email_address'    => (object) ['address' => $finalData['email_address']],
@@ -101,7 +101,71 @@ class RecordApiHelper
         $requestParams = $this->prepareCustomFields($finalData, $requestParams);
         $method = $sourceKey === 'create_source' ? 'post' : 'put';
 
+        if ($sourceKey !== 'create_source' && $contact) {
+            $requestParams['taggings'] = array_unique(array_merge($requestParams['taggings'], $contact->taggings ?? []));
+            $requestParams['list_memberships'] = array_unique(array_merge($requestParams['list_memberships'], $contact->list_memberships ?? []));
+            $this->mergeExistingFields($requestParams, $contact);
+
+            foreach ((array) $contact as $key => $value) {
+                if (empty($requestParams[$key]) && !\in_array($key, ['contact_id', 'email_address', 'update_source', 'create_source', 'created_at', 'updated_at', 'custom_fields', 'phone_numbers', 'street_addresses', 'list_memberships', 'taggings', 'notes'])) {
+                    $requestParams[$key] = $value;
+                }
+            }
+        }
+
         return HttpHelper::$method($apiEndpoint, wp_json_encode((object) $requestParams), $this->_defaultHeader);
+    }
+
+    private function mergeExistingFields(&$requestParams, $contact)
+    {
+        $this->mergeCustomFields($requestParams, $contact);
+        $this->mergePhoneNumbers($requestParams, $contact);
+        $this->mergeStreetAddresses($requestParams, $contact);
+    }
+
+    private function mergeCustomFields(&$requestParams, $contact)
+    {
+        $existingCustomFields = array_column($contact->custom_fields ?? [], 'value', 'custom_field_id');
+        foreach ($existingCustomFields as $key => $value) {
+            if (!isset($requestParams['custom_fields']) || !\array_key_exists($key, $requestParams['custom_fields'])) {
+                $requestParams['custom_fields'][] = ['custom_field_id' => $key, 'value' => $value];
+            }
+        }
+    }
+
+    private function mergePhoneNumbers(&$requestParams, $contact)
+    {
+        foreach ($contact->phone_numbers ?? [] as $number) {
+            if (!isset($requestParams['phone_numbers']) || $requestParams['phone_numbers'][0]['kind'] != $number->kind) {
+                $requestParams['phone_numbers'][] = ['kind' => $number->kind, 'phone_number' => $number->phone_number];
+            }
+        }
+    }
+
+    private function mergeStreetAddresses(&$requestParams, $contact)
+    {
+        foreach ($contact->street_addresses ?? [] as $address) {
+            if (!isset($requestParams['street_addresses']) || $requestParams['street_addresses'][0]['kind'] != $address->kind) {
+                $requestParams['street_addresses'][] = [
+                    'kind'        => $address->kind,
+                    'street'      => $address->street ?? '',
+                    'city'        => $address->city ?? '',
+                    'state'       => $address->state ?? '',
+                    'postal_code' => $address->postal_code ?? '',
+                    'country'     => $address->country ?? '',
+                ];
+            } elseif ($requestParams['street_addresses'][0]['kind'] === $address->kind) {
+                $this->fillEmptyAddressFields($requestParams['street_addresses'][0], $address);
+            }
+        }
+    }
+
+    private function fillEmptyAddressFields(&$target, $source)
+    {
+        $fields = ['street', 'city', 'state', 'postal_code', 'country'];
+        foreach ($fields as $field) {
+            $target[$field] = empty($target[$field]) ? $source->{$field} : $target[$field];
+        }
     }
 
     private function splitValues($values)
@@ -157,109 +221,9 @@ class RecordApiHelper
         }
     }
 
-    // private function updateContact(
-    //     $contactId,
-    //     $listIds,
-    //     $tagIds,
-    //     $source_type,
-    //     $finalData
-    // ) {
-    //     $apiEndpoints = $this->baseUrl . 'contacts/' . $contactId;
-    //     $splitListIds = [];
-    //     $splitTagIds = [];
-
-    //     if (!empty($listIds)) {
-    //         $splitListIds = explode(',', $listIds);
-    //     }
-
-    //     if (!empty($tagIds)) {
-    //         $splitTagIds = explode(',', $tagIds);
-    //     }
-    //     if (empty($finalData['email_address'])) {
-    //         return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
-    //     }
-
-    //     $requestParams = [
-    //         'email_address' => (object) [
-    //             'address' => $finalData['email_address'],
-    //         ],
-    //         'update_source'    => $source_type,
-    //         'list_memberships' => $splitListIds,
-    //         'taggings'         => $splitTagIds
-    //     ];
-
-    //     $customFields = [];
-    //     foreach ($finalData as $key => $value) {
-    //         if ($key !== 'email_address') {
-    //             if (str_contains($key, 'custom-')) {
-    //                 $replacedStr = str_replace('custom-', '', $key);
-    //                 $customFields[] = [
-    //                     'custom_field_id' => $replacedStr,
-    //                     'value'           => $value
-    //                 ];
-    //             } else {
-    //                 $requestParams[$key] = $value;
-    //             }
-    //         }
-    //     }
-    //     $requestParams['custom_fields'] = $customFields;
-
-    //     return HttpHelper::put($apiEndpoints, wp_json_encode((object) $requestParams), $this->_defaultHeader);
-    // }
-
-    // private function addContact(
-    //     $listIds,
-    //     $tagIds,
-    //     $source_type,
-    //     $finalData
-    // ) {
-    //     $apiEndpoints = $this->baseUrl . 'contacts';
-    //     $splitListIds = [];
-    //     $splitTagIds = [];
-
-    //     if (!empty($listIds)) {
-    //         $splitListIds = explode(',', $listIds);
-    //     }
-
-    //     if (!empty($tagIds)) {
-    //         $splitTagIds = explode(',', $tagIds);
-    //     }
-    //     if (empty($finalData['email_address'])) {
-    //         return ['success' => false, 'message' => __('Required field Email is empty', 'bit-integrations'), 'code' => 400];
-    //     }
-
-    //     $requestParams = [
-    //         'email_address' => (object) [
-    //             'address' => $finalData['email_address'],
-    //         ],
-    //         'create_source'    => $source_type,
-    //         'list_memberships' => $splitListIds,
-    //         'taggings'         => $splitTagIds
-    //     ];
-
-    //     $customFields = [];
-    //     foreach ($finalData as $key => $value) {
-    //         if ($key !== 'email_address') {
-    //             if (str_contains($key, 'custom-')) {
-    //                 $replacedStr = str_replace('custom-', '', $key);
-    //                 $customFields[] = [
-    //                     'custom_field_id' => $replacedStr,
-    //                     'value'           => $value
-    //                 ];
-    //             } else {
-    //                 $requestParams[$key] = $value;
-    //             }
-    //         }
-    //     }
-
-    //     $requestParams['custom_fields'] = $customFields;
-
-    //     return HttpHelper::post($apiEndpoints, wp_json_encode((object) $requestParams), $this->_defaultHeader);
-    // }
-
     private function existContact($email)
     {
-        $apiEndpoints = $apiEndpoints = $this->baseUrl . 'contacts?email=' . $email;
+        $apiEndpoints = $apiEndpoints = $this->baseUrl . 'contacts?email=' . $email . '&include=custom_fields,list_memberships,taggings,notes,phone_numbers,street_addresses,sms_channel';
         $apiResponse = HttpHelper::get($apiEndpoints, null, $this->_defaultHeader);
 
         if (is_wp_error($apiResponse) || empty($apiResponse->contacts) || isset($apiResponse->error_key) || (\gettype($apiResponse) === 'array' && $apiResponse[0]->error_key)) {
