@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\PipeDrive;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for PipeDrive integration
@@ -90,7 +90,7 @@ class PipeDriveController
         $unnecessaryFields = (object) [
             'Leads' => ['creator_user_id', 'user_id', 'weighted_value', 'currency', 'weighted_value_currency', 'probability', 'org_id', 'pipeline', 'person_id', 'stage_id', 'label', 'status', 'add_time', 'update_time', 'stage_change_time', 'next_activity_date', 'last_activity_date', 'won_time', 'last_incoming_mail_time', 'last_outgoing_mail_time', 'lost_time', 'close_time', 'lost_reason', 'visible_to', 'id', 'activities_count', 'done_activities_count', 'undone_activities_count', 'email_messages_count', 'product_quantity', 'product_amount'],
 
-            'Deals' => ['creator_user_id', 'user_id', 'weighted_value', 'pipeline', 'currency',  'weighted_value_currency', 'probability', 'org_id', 'person_id', 'stage_id', 'label', 'status', 'add_time', 'update_time', 'stage_change_time', 'next_activity_date', 'last_activity_date', 'won_time', 'last_incoming_mail_time', 'last_outgoing_mail_time', 'lost_time', 'close_time', 'lost_reason', 'visible_to', 'id', 'activities_count', 'done_activities_count', 'undone_activities_count', 'email_messages_count', 'product_quantity', 'product_amount'],
+            'Deals' => ['creator_user_id', 'product_name', 'user_id', 'weighted_value', 'pipeline', 'currency',  'weighted_value_currency', 'probability', 'org_id', 'person_id', 'stage_id', 'label', 'status', 'add_time', 'update_time', 'stage_change_time', 'next_activity_date', 'last_activity_date', 'won_time', 'last_incoming_mail_time', 'last_outgoing_mail_time', 'lost_time', 'close_time', 'lost_reason', 'visible_to', 'id', 'activities_count', 'done_activities_count', 'undone_activities_count', 'email_messages_count', 'product_quantity', 'product_amount'],
 
             'Activities' => ['created_by_user_id', 'last_notification_time', 'deal_id', 'type', 'busy_flag',  'marked_as_done_time', 'lead_id', 'org_id', 'person_id',  'user_id', 'id', 'done', 'add_time', 'update_time', 'location_subpremise', 'location_street_number', 'location_route', 'location_sublocality', 'location_locality', 'location_admin_area_level_1', 'location_admin_area_level_2', 'location_country', 'location_postal_code', 'location_formatted_address'],
 
