@@ -997,7 +997,7 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 == Changelog ==
 
 = 2.2.9  =
-_Release Date -10th October 2024_
+_Release Date -12th October 2024_
 
 - **Note :**
   - The name ConvertKit has been updated to Kit (ConvertKit).
