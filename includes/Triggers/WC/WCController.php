@@ -48,12 +48,15 @@ final class WCController
         }
 
         /**
-         * Deprecated SUbscriptions Events
+         * Deprecated Subscriptions Events
          * ['id' => 12, 'title' => __('User-Subscribes-Product', 'bit-integrations')],
          * ['id' => 13, 'title' => __('User-Cancel-Subscription-Product', 'bit-integrations')],
          * ['id' => 14, 'title' => __('Expired-Subscription-Product', 'bit-integrations')],
          * ['id' => 15, 'title' => __('Subscription-Product-Status-Change', 'bit-integrations')],
          * ['id' => 16, 'title' => __('Subscription-Trial-Period-End', 'bit-integrations')],
+         * 
+         * Deprecated Bookings Events
+         * ['id' => 18, 'title' => __('Booking-Created', 'bit-integrations')]
          */
         $wc_action = [
             (object) ['id' => 1, 'title' => __('Customer-Create', 'bit-integrations')],
@@ -68,7 +71,6 @@ final class WCController
             (object) ['id' => 10, 'title' => __('Order-Specific-Product', 'bit-integrations'), 'note' => __('Flexible Checkout Fields are a feature available in the Pro version', 'bit-integrations')],
             (object) ['id' => 11, 'title' => __('Order-Status-Change-Specific-Status', 'bit-integrations'), 'note' => __('Flexible Checkout Fields are a feature available in the Pro version', 'bit-integrations')],
             (object) ['id' => 17, 'title' => __('Order-Specific-Category', 'bit-integrations'), 'note' => __('Flexible Checkout Fields are a feature available in the Pro version', 'bit-integrations')],
-            (object) ['id' => 18, 'title' => __('Booking-Created', 'bit-integrations')],
             (object) ['id' => 19, 'title' => __('User reviews a product', 'bit-integrations')],
             (object) ['id' => 20, 'title' => __('User purchases a variable product with selected variation', 'bit-integrations'), 'note' => __('Flexible Checkout Fields are a feature available in the Pro version', 'bit-integrations')],
         ];
@@ -137,8 +139,6 @@ final class WCController
             $entity = 'product';
         } elseif ($id <= 11 || $id == 17 || $id == 20) {
             $entity = 'order';
-        } elseif ($id <= 18) {
-            $entity = 'booking';
         } elseif ($id <= 19) {
             $entity = 'review';
         }
@@ -488,114 +488,6 @@ final class WCController
             }
         } elseif ($entity === 'order') {
             $fields = WCStaticFields::getWCOrderFields($id);
-        } elseif ($entity === 'booking') {
-            $fields = [
-                'Product Id' => (object) [
-                    'fieldKey'  => 'product_id',
-                    'fieldName' => __('Product Id', 'bit-integrations')
-                ],
-                'Product Name' => (object) [
-                    'fieldKey'  => 'product_name',
-                    'fieldName' => __('Product Name', 'bit-integrations')
-                ],
-                'Product Slug' => (object) [
-                    'fieldKey'  => 'product_slug',
-                    'fieldName' => __('Product Slug', 'bit-integrations')
-                ],
-                'Product Type' => (object) [
-                    'fieldKey'  => 'product_type',
-                    'fieldName' => __('Product Type', 'bit-integrations')
-                ],
-                'Product status' => (object) [
-                    'fieldKey'  => 'product_status',
-                    'fieldName' => __('Product status', 'bit-integrations')
-                ],
-                'Product Featured' => (object) [
-                    'fieldKey'  => 'product_featured',
-                    'fieldName' => __('Product Featured', 'bit-integrations')
-                ],
-                'Product Description' => (object) [
-                    'fieldKey'  => 'product_description',
-                    'fieldName' => __('Product Description', 'bit-integrations')
-                ],
-                'Product Short Description' => (object) [
-                    'fieldKey'  => 'product_short_description',
-                    'fieldName' => __('Product Short Description', 'bit-integrations')
-                ],
-                'Product Price' => (object) [
-                    'fieldKey'  => 'product_price',
-                    'fieldName' => __('Product Price', 'bit-integrations')
-                ],
-                'Product Regular Price' => (object) [
-                    'fieldKey'  => 'product_regular_price',
-                    'fieldName' => __('Product Regular Price', 'bit-integrations')
-                ],
-                'Product Sale Price' => (object) [
-                    'fieldKey'  => 'product_sale_price',
-                    'fieldName' => __('Product Sale Price', 'bit-integrations')
-                ],
-                'total Sales' => (object) [
-                    'fieldKey'  => 'total_sales',
-                    'fieldName' => __('Total Sales', 'bit-integrations')
-                ],
-                'Product Quantity' => (object) [
-                    'fieldKey'  => 'product_quantity',
-                    'fieldName' => __('Product quantity', 'bit-integrations')
-                ],
-                'Product SKU' => (object) [
-                    'fieldKey'  => 'product_sku',
-                    'fieldName' => __('Product SKU', 'bit-integrations')
-                ],
-
-                'Product Categories Ids' => (object) [
-                    'fieldKey'  => 'product_categories_ids',
-                    'fieldName' => __('Product Categories Ids', 'bit-integrations')
-                ],
-                'Stock Status' => (object) [
-                    'fieldKey'  => 'stock_status',
-                    'fieldName' => __('Stock Status', 'bit-integrations')
-                ],
-                'Product Tags' => (object) [
-                    'fieldKey'  => 'product_tags',
-                    'fieldName' => __('Product Tags', 'bit-integrations')
-                ],
-                'Image Url' => (object) [
-                    'fieldKey'  => 'image_url',
-                    'fieldName' => __('Image Url', 'bit-integrations')
-                ],
-                'Cost' => (object) [
-                    'fieldKey'  => 'cost',
-                    'fieldName' => __('Cost', 'bit-integrations')
-                ],
-                'Display Cost' => (object) [
-                    'fieldKey'  => 'display_cost',
-                    'fieldName' => __('Display Cost', 'bit-integrations')
-                ],
-                'Qty' => (object) [
-                    'fieldKey'  => 'qty',
-                    'fieldName' => __('Qty', 'bit-integrations')
-                ],
-                'Customer Id' => (object) [
-                    'fieldKey'  => 'customer_id',
-                    'fieldName' => __('Customer Id', 'bit-integrations')
-                ],
-                'Customer First Name' => (object) [
-                    'fieldKey'  => 'customer_first_name',
-                    'fieldName' => __('Customer First Name', 'bit-integrations')
-                ],
-                'Customer Last Name' => (object) [
-                    'fieldKey'  => 'customer_last_name',
-                    'fieldName' => __('Customer Last Name', 'bit-integrations')
-                ],
-                'Customer Email' => (object) [
-                    'fieldKey'  => 'customer_email',
-                    'fieldName' => __('Customer Email', 'bit-integrations')
-                ],
-                'Customer Nickname' => (object) [
-                    'fieldKey'  => 'customer_nickname',
-                    'fieldName' => __('Customer Nickname', 'bit-integrations')
-                ],
-            ];
         } elseif ($entity == 'review') {
             $fields = WCHelper::getReviewFields();
         }
