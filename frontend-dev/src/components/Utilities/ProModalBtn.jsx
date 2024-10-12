@@ -39,7 +39,7 @@ export default function ProModalBtn({ title, sub, className, children, warning }
             {children}
             <div className={`d-flx flx-center ${warning && 'mt-3'}`}>
               <a
-                href="https://towp.io/?demo&plugin=bit-integrations"
+                href="https://towp.io"
                 target="_blank"
                 className="btn btcd-btn-o-gray gray gray-sh w-4 mr-2 br-50 btn-lg "
                 rel="noreferrer">
