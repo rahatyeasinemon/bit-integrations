@@ -102,7 +102,7 @@ export const saveIntegConfig = async (
     tmpConf = RestrictContentStateIH(tmpConf, dataFlow)
   } else if (flow.triggered_entity === 'LearnDash') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
-    tmpConf = learndashStateIH(tmpConf, dataFlow)
+    tmpConf = learndashStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (flow.triggered_entity === 'GamiPress') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = GamiPressStateIH(tmpConf, dataFlow)
@@ -274,7 +274,7 @@ export const saveActionConf = async ({
     tmpConf = RestrictContentStateIH(tmpConf, dataFlow)
   } else if (flow.triggered_entity === 'LearnDash') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
-    tmpConf = learndashStateIH(tmpConf, dataFlow)
+    tmpConf = learndashStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (flow.triggered_entity === 'GamiPress') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = GamiPressStateIH(tmpConf, dataFlow)

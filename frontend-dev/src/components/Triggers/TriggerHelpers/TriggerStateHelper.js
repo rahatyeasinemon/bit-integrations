@@ -675,34 +675,37 @@ export const buddybossStateIH = (tmpConf, flowData) => {
   return tmpConf
 }
 
-export const learndashStateIH = (tmpConf, flowData) => {
-  if (flowData.formID === '1') {
+export const learndashStateIH = (tmpConf, flowData, formId) => {
+  const formID = flowData?.formID || formId
+
+  if (formID === '1') {
     tmpConf.selectedCourse = flowData.selectedCourse
     tmpConf.courses = flowData.courses
-  } else if (flowData.formID === '2') {
+  } else if (formID === '2') {
     tmpConf.unenrollCourse = flowData.unenrollCourse
     tmpConf.courses = flowData.courses
-  } else if (flowData.formID === '3') {
+  } else if (formID === '3') {
     tmpConf.completeCourse = flowData.completeCourse
     tmpConf.courses = flowData.courses
-  } else if (flowData.formID === '4' || flowData.formID === '11') {
+  } else if (formID === '4' || formID === '11') {
     tmpConf.selectedLesson = flowData.selectedLesson
     tmpConf.courses = flowData.courses
     tmpConf.lessons = flowData.lessons
-  } else if (flowData.formID === '5') {
+  } else if (formID === '5') {
     tmpConf.selectedCourse = flowData.selectedCourse
     tmpConf.selectedLesson = flowData.selectedLesson
     tmpConf.selectedTopic = flowData.selectedTopic
     tmpConf.courses = flowData.courses
     tmpConf.lessons = flowData.lessons
     tmpConf.topics = flowData.topics
-  } else if (flowData.formID === '6' || flowData.formID === '7' || flowData.formID === '8') {
+  } else if (formID === '6' || formID === '7' || formID === '8') {
     tmpConf.selectedQuiz = flowData.selectedQuiz
     tmpConf.quizes = flowData.quizes
-  } else if (flowData.formID === '9' || flowData.formID === '10') {
+  } else if (formID === '9' || formID === '10') {
     tmpConf.selectedGroup = flowData.selectedGroup
     tmpConf.groups = flowData.groups
   }
+
   return tmpConf
 }
 
