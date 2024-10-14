@@ -9,6 +9,7 @@ import TagifyInput from '../../Utilities/TagifyInput'
 
 export default function TrelloFieldMap({
   i,
+  fieldKey,
   mapKey,
   formFields,
   field,
@@ -19,8 +20,8 @@ export default function TrelloFieldMap({
 }) {
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
-  const requiredFlds = trelloConf[mapKey]?.filter((fld) => fld.required === true) || []
-  const nonRequiredFlds = trelloConf[mapKey]?.filter((fld) => fld.required === false) || []
+  const requiredFlds = trelloConf[fieldKey]?.filter((fld) => fld.required === true) || []
+  const nonRequiredFlds = trelloConf[fieldKey]?.filter((fld) => fld.required === false) || []
 
   return (
     <div className="flx mt-2 mb-2 btcbi-field-map">
@@ -30,7 +31,7 @@ export default function TrelloFieldMap({
             className="btcd-paper-inp mr-2"
             name="formField"
             value={field.formField || ''}
-            onChange={(ev) => handleFieldMapping(ev, i, trelloConf, setTrelloConf)}>
+            onChange={(ev) => handleFieldMapping(ev, i, setTrelloConf, mapKey)}>
             <option value="">{__('Select Field', 'bit-integrations')}</option>
             <optgroup label={__('Form Fields', 'bit-integrations')}>
               {formFields?.map((f) => (
@@ -73,8 +74,8 @@ export default function TrelloFieldMap({
             value={
               i < requiredFlds.length ? requiredFlds[i].key || '' : field.trelloFormField || ''
             }
-            onChange={(ev) => handleFieldMapping(ev, i, trelloConf, setTrelloConf)}>
-            <option value="">{__('Select Field', 'bit-integrations')}</option>
+            onChange={(ev) => handleFieldMapping(ev, i, setTrelloConf, mapKey)}>
+            <option value="">{__('Select  Field', 'bit-integrations')}</option>
             {i < requiredFlds.length ? (
               <option key={requiredFlds[i].key} value={requiredFlds[i].key}>
                 {requiredFlds[i].label}

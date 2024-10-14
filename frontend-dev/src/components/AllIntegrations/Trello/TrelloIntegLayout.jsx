@@ -4,8 +4,9 @@ import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import TrelloActions from './TrelloActions'
 // import { addFieldMap } from './IntegrationHelpers'
-import { fetchAllBoard, fetchAllList } from './TrelloCommonFunc'
+import { fetchAllBoard, fetchAllCustomFields, fetchAllList } from './TrelloCommonFunc'
 import TrelloFieldMap from './TrelloFieldMap'
+import TrelloCustomFieldMap from './TrelloCustomFieldMap'
 
 export default function TrelloIntegLayout({
   formFields,
@@ -16,11 +17,6 @@ export default function TrelloIntegLayout({
   setIsLoading,
   setSnackbar
 }) {
-  useEffect(() => {
-    // eslint-disable-next-line no-unused-expressions
-    trelloConf?.boardId && fetchAllList(trelloConf, setTrelloConf, setIsLoading, setSnackbar)
-  }, [trelloConf?.boardId])
-
   return (
     <>
       <br />
@@ -76,53 +72,28 @@ export default function TrelloIntegLayout({
         </>
       )}
       <br />
-      {isLoading && (
-        <Loader
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 100,
-            transform: 'scale(0.7)'
-          }}
-        />
-      )}
-      <div className="mt-5">
-        <b className="wdt-100">{__('Field Map', 'bit-integrations')}</b>
-      </div>
-      <div className="btcd-hr mt-1" />
-      <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
-        <div className="txt-dp">
-          <b>{__('Form Fields', 'bit-integrations')}</b>
-        </div>
-        <div className="txt-dp">
-          <b>{__('Trello Fields', 'bit-integrations')}</b>
-        </div>
-      </div>
 
-      {trelloConf?.listId &&
-        trelloConf?.field_map.map((itm, i) => (
-          <TrelloFieldMap
-            key={`rp-m-${i + 9}`}
-            i={i}
-            field={itm}
-            trelloConf={trelloConf}
-            formFields={formFields}
-            setTrelloConf={setTrelloConf}
-            setSnackbar={setSnackbar}
-          />
-        ))}
-      <div className="txt-center btcbi-field-map-button mt-2">
-        <button
-          onClick={() => addFieldMap(trelloConf.field_map.length, trelloConf, setTrelloConf, false)}
-          className="icn-btn sh-sm"
-          type="button">
-          +
-        </button>
-      </div>
+      <TrelloCustomFieldMap
+        mapKey="field_map"
+        formFields={formFields}
+        handleInput={handleInput}
+        trelloConf={trelloConf}
+        setTrelloConf={setTrelloConf}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        setSnackbar={setSnackbar}
+      />
+      <TrelloCustomFieldMap
+        mapKey="custom_field_map"
+        formFields={formFields}
+        handleInput={handleInput}
+        trelloConf={trelloConf}
+        setTrelloConf={setTrelloConf}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
+        setSnackbar={setSnackbar}
+      />
 
-      <br />
-      <br />
       <div className="mt-4">
         <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
       </div>
