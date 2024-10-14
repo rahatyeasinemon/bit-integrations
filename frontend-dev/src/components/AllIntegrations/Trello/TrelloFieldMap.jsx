@@ -1,29 +1,26 @@
 import { useRecoilValue } from 'recoil'
 import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
-import {
-  addFieldMap,
-  delFieldMap,
-  handleCustomValue,
-  handleFieldMapping
-} from './IntegrationHelpers'
+import { handleCustomValue, handleFieldMapping } from './IntegrationHelpers'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import { $btcbi } from '../../../GlobalStates'
 import { generateMappedField } from './TrelloCommonFunc'
 import TagifyInput from '../../Utilities/TagifyInput'
 
-export default function TrelloFieldMap({ i, formFields, field, trelloConf, setTrelloConf }) {
-  if (trelloConf?.field_map?.length === 1 && field.trelloFormField === '') {
-    const newConf = { ...trelloConf }
-    const tmp = generateMappedField(newConf)
-    newConf.field_map = tmp
-    setTrelloConf(newConf)
-  }
-  const requiredFlds = trelloConf?.cardFields.filter((fld) => fld.required === true) || []
-  const nonRequiredFlds = trelloConf?.cardFields.filter((fld) => fld.required === false) || []
-
+export default function TrelloFieldMap({
+  i,
+  mapKey,
+  formFields,
+  field,
+  trelloConf,
+  setTrelloConf,
+  addFieldMap,
+  delFieldMap
+}) {
   const btcbi = useRecoilValue($btcbi)
   const { isPro } = btcbi
+  const requiredFlds = trelloConf[mapKey]?.filter((fld) => fld.required === true) || []
+  const nonRequiredFlds = trelloConf[mapKey]?.filter((fld) => fld.required === false) || []
 
   return (
     <div className="flx mt-2 mb-2 btcbi-field-map">
@@ -94,13 +91,13 @@ export default function TrelloFieldMap({ i, formFields, field, trelloConf, setTr
         {i >= requiredFlds.length && (
           <>
             <button
-              onClick={() => addFieldMap(i, trelloConf, setTrelloConf)}
+              onClick={() => addFieldMap(setTrelloConf)}
               className="icn-btn sh-sm ml-2 mr-1"
               type="button">
               +
             </button>
             <button
-              onClick={() => delFieldMap(i, trelloConf, setTrelloConf)}
+              onClick={() => delFieldMap(i, setTrelloConf)}
               className="icn-btn sh-sm ml-1"
               type="button"
               aria-label="btn">
