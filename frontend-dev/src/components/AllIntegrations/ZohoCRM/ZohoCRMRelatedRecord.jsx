@@ -24,7 +24,6 @@ export default function ZohoCRMRelatedRecord({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // eslint-disable-next-line no-undef
   const isPro = typeof btcbi !== 'undefined' && btcbi.isPro
   return (
     <>
