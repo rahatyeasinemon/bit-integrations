@@ -130,7 +130,8 @@ class TrelloController
             $allFields[] = (object) [
                 'key'      => $field->id,
                 'label'    => $field->name,
-                'options'  => empty($field->options) ? [] : array_map(fn ($option) => (object) ['id' => $option->id, 'label' => $option->value->text ?? ''], $field->options),
+                'type'     => $field->type,
+                'options'  => empty($field->options) ? [] : $field->options,
                 'required' => false
             ];
         }
