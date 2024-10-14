@@ -30,9 +30,10 @@ function Trello({ formFields, setFlow, flow, allIntegURL }) {
     listName: '',
     tags: '',
     pos: '',
-    field_map: [{ formField: '', trelloFormField: '' }],
+    field_map: generateMappedField(cardFields),
+    custom_field_map: [{ formField: '', trelloFormField: '' }],
     cardFields,
-    address_field: [],
+    customFields: [],
     actions: {}
   })
 
