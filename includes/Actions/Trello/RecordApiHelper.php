@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Trello;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -62,10 +62,14 @@ class RecordApiHelper
 
         $finalData = $finalData + ['pos' => $this->_integrationDetails->pos];
         $apiResponse = $this->insertCard($finalData);
+
+        if (!empty($apiResponse->id)) {
+        }
+
         if (property_exists($apiResponse, 'errors')) {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', wp_json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Card', 'type_name' => 'add-Card']), 'error', wp_json_encode($apiResponse));
         } else {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'add-contact']), 'success', wp_json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Card', 'type_name' => 'add-Card']), 'success', wp_json_encode($apiResponse));
         }
 
         return $apiResponse;
