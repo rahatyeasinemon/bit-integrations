@@ -208,11 +208,11 @@ export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
 }
 
 export const eventsCalendarStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
-  if (val === 'events_calendar-1') {
+  if (val === 'events_calendar-1' || val === 'events_calendar-2') {
     tmpNewFlow.triggerData = {
       ...tmpNewFlow.triggerData,
       events: resp.data.events,
-      selectedEvents: 'any'
+      selectedEvent: 'any'
     }
   }
 
@@ -583,7 +583,7 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
 export const eventsCalendarIH = (tmpConf, flowData, triggered_entity_id) => {
   const formId = flowData.formID ? flowData.formID : triggered_entity_id
 
-  if (formId === 'events_calendar-1') {
+  if (formId === 'events_calendar-1' || formId === 'events_calendar-2') {
     tmpConf.selectedEvent = flowData.selectedEvent
     tmpConf.events = flowData.events
   }
