@@ -6,8 +6,8 @@
 
 namespace BitCode\FI\Actions\Trello;
 
-use BitCode\FI\Core\Util\HttpHelper;
 use WP_Error;
+use BitCode\FI\Core\Util\HttpHelper;
 
 /**
  * Provide functionality for Trello integration
@@ -92,11 +92,51 @@ class TrelloController
             $response['alllists'] = $allList;
         } else {
             wp_send_json_error(
-                $allBoardResponse->response->error->message,
+                $getListsResponse->response->error->message,
                 400
             );
         }
         wp_send_json_success($response, 200);
+    }
+
+    public function fetchAllCustomFields($queryParams)
+    {
+        if (
+            empty($queryParams->accessToken)
+            || empty($queryParams->clientId)
+        ) {
+            wp_send_json_error(
+                __(
+                    'Requested parameter is empty',
+                    'bit-integrations'
+                ),
+                400
+            );
+        }
+        $response = [];
+
+        $apiEndpoint = $this->baseUrl . 'boards/' . $queryParams->boardId . '/customFields?key=' . $queryParams->clientId . '&token=' . $queryParams->accessToken;
+        $response = HttpHelper::get($apiEndpoint, null);
+
+        if (is_wp_error($response) || !empty($response->response->error)) {
+            wp_send_json_error(
+                $response->response->error->message,
+                400
+            );
+        }
+
+        $allFields = [];
+        foreach ($response as $field) {
+            $allFields[] = (object) [
+                'key'      => $field->id,
+                'label'    => $field->name,
+                'options'  => empty($field->options) ? [] : array_map(fn ($option) => (object) ['id' => $option->id, 'label' => $option->value->text ?? ''], $field->options),
+                'required' => false
+            ];
+        }
+
+        uksort($allFields, 'strnatcasecmp');
+        wp_send_json_success($allFields, 200);
     }
 
     /**
