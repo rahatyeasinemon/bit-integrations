@@ -113,30 +113,8 @@ class TrelloController
                 400
             );
         }
-        $response = [];
 
-        $apiEndpoint = $this->baseUrl . 'boards/' . $queryParams->boardId . '/customFields?key=' . $queryParams->clientId . '&token=' . $queryParams->accessToken;
-        $response = HttpHelper::get($apiEndpoint, null);
-
-        if (is_wp_error($response) || !empty($response->response->error)) {
-            wp_send_json_error(
-                $response->response->error->message,
-                400
-            );
-        }
-
-        $allFields = [];
-        foreach ($response as $field) {
-            $allFields[] = (object) [
-                'key'      => $field->id,
-                'label'    => $field->name,
-                'type'     => $field->type,
-                'options'  => empty($field->options) ? [] : $field->options,
-                'required' => false
-            ];
-        }
-
-        uksort($allFields, 'strnatcasecmp');
+        $allFields = apply_filters('btcbi_trello_get_all_custom_fields', [], $queryParams->boardId, $queryParams->clientId, $queryParams->accessToken);
         wp_send_json_success($allFields, 200);
     }
 
