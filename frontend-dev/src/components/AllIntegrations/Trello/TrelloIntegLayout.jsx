@@ -1,12 +1,12 @@
-import { useEffect } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
-import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
 import TrelloActions from './TrelloActions'
-// import { addFieldMap } from './IntegrationHelpers'
-import { fetchAllBoard, fetchAllCustomFields, fetchAllList } from './TrelloCommonFunc'
-import TrelloFieldMap from './TrelloFieldMap'
+import { useRecoilValue } from 'recoil'
+import { $btcbi } from '../../../GlobalStates'
+import { fetchAllBoard, fetchAllList } from './TrelloCommonFunc'
 import TrelloCustomFieldMap from './TrelloCustomFieldMap'
+import ProModal from '../../Utilities/ProModal'
+import { useState } from 'react'
 
 export default function TrelloIntegLayout({
   formFields,
@@ -17,6 +17,10 @@ export default function TrelloIntegLayout({
   setIsLoading,
   setSnackbar
 }) {
+  const [showProModal, setShowProModal] = useState(false)
+  const btcbi = useRecoilValue($btcbi)
+  const { isPro } = btcbi
+
   return (
     <>
       <br />
@@ -72,7 +76,17 @@ export default function TrelloIntegLayout({
         </>
       )}
       <br />
-
+      {isLoading && (
+        <Loader
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 100,
+            transform: 'scale(0.7)'
+          }}
+        />
+      )}
       <TrelloCustomFieldMap
         mapKey="field_map"
         formFields={formFields}
@@ -83,17 +97,40 @@ export default function TrelloIntegLayout({
         setIsLoading={setIsLoading}
         setSnackbar={setSnackbar}
       />
-      <TrelloCustomFieldMap
-        mapKey="custom_field_map"
-        formFields={formFields}
-        handleInput={handleInput}
-        trelloConf={trelloConf}
-        setTrelloConf={setTrelloConf}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-        setSnackbar={setSnackbar}
-      />
+      <div className="pos-rel">
+        {!isPro && (
+          <div className="pro-blur flx p-3">
+            <div className="pro">
+              <button
+                className="btn p-0 m-0"
+                type="button"
+                onClick={() => setShowProModal(true)}
+                style={{ color: '#344054', background: 'transparent' }}>
+                {__('Custom Fields', 'bit-integrations')} {__('Available On', 'bit-integrations')}
+                &nbsp;
+                <span className="txt-pro"> ({__('Pro', 'bit-integrations')})</span>
+              </button>
+            </div>
+          </div>
+        )}
 
+        <TrelloCustomFieldMap
+          mapKey="custom_field_map"
+          formFields={formFields}
+          handleInput={handleInput}
+          trelloConf={trelloConf}
+          setTrelloConf={setTrelloConf}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          setSnackbar={setSnackbar}
+        />
+      </div>
+      <ProModal
+        show={showProModal}
+        setShow={setShowProModal}
+        sub={__('Custom Fields', 'bit-integrations')}
+      />
+      <br />
       <div className="mt-4">
         <b className="wdt-100">{__('Utilities', 'bit-integrations')}</b>
       </div>
