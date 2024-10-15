@@ -22,7 +22,7 @@ export default function TrelloCustomFieldMap({
         if (!draftConf[mapKey]) {
           draftConf[mapKey] = []
         }
-        console.log(mapKey)
+
         draftConf[mapKey].splice(draftConf[mapKey].length, 0, {})
       })
     )

@@ -6,6 +6,7 @@ import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 import { $btcbi } from '../../../GlobalStates'
 import { generateMappedField } from './TrelloCommonFunc'
 import TagifyInput from '../../Utilities/TagifyInput'
+import Cooltip from '../../Utilities/Cooltip'
 
 export default function TrelloFieldMap({
   i,
@@ -89,6 +90,18 @@ export default function TrelloFieldMap({
             )}
           </select>
         </div>
+        {trelloConf[mapKey][i]?.options?.length > 0 && (
+          <div>
+            <Cooltip width={250} icnSize={17} className="ml-2">
+              <div className="txt-body">
+                <p>{__('Custom field options', 'bit-integrations')}</p>
+                {trelloConf[mapKey][i].options.map((option) => (
+                  <li key={option.id}>{option?.value?.text}</li>
+                ))}
+              </div>
+            </Cooltip>
+          </div>
+        )}
         {i >= requiredFlds.length && (
           <>
             <button
