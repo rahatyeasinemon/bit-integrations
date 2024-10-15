@@ -11,7 +11,7 @@ const EventsCalendarHelper = ({ flow, setFlowData, edit = false }) => {
 
   return (
     <div>
-      {(id === 'events_calendar-1' || id === 'events_calendar-2') && (
+      {(id === 'events_calendar-1' || id === 'events_calendar-2' || id === 'events_calendar-3') && (
         <div className={edit ? 'flx mt-3' : ''}>
           <b className={edit ? 'wdt-200 d-in-b' : 'wdt-200 d-in-b mt-3 mb-3'}>
             {__('Select Event:', 'bit-integrations')}

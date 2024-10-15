@@ -376,7 +376,8 @@ function EditFormInteg({ setSnackbar, className = '' }) {
     if (trigger === 'EventsCalendar') {
       if (
         data.triggered_entity_id === 'events_calendar-1' ||
-        data.triggered_entity_id === 'events_calendar-2'
+        data.triggered_entity_id === 'events_calendar-2' ||
+        data.triggered_entity_id === 'events_calendar-3'
       ) {
         getEventsCalendarEvents(data, setFlow)
       }
