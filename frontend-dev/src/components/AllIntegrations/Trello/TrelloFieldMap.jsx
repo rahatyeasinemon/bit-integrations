@@ -57,7 +57,7 @@ export default function TrelloFieldMap({
 
           {field.formField === 'custom' && (
             <TagifyInput
-              onChange={(e) => handleCustomValue(e, i, trelloConf, setTrelloConf)}
+              onChange={(e) => handleCustomValue(e, i, setTrelloConf, mapKey)}
               label={__('Custom Value', 'bit-integrations')}
               className="mr-2"
               type="text"
