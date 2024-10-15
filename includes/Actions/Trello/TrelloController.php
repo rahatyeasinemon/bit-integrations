@@ -152,28 +152,19 @@ class TrelloController
     {
         $integrationDetails = $integrationData->flow_details;
         $integId = $integrationData->id;
-        $listId = $integrationDetails->listId;
-        $tags = $integrationDetails->tags;
         $fieldMap = $integrationDetails->field_map;
-        $actions = $integrationDetails->actions;
+        $customFieldMap = $integrationDetails->custom_field_map ?? [];
         $defaultDataConf = $integrationDetails->default;
 
         if (
-            empty($listId)
+            empty($integrationDetails->listId)
             || empty($fieldMap)
             || empty($defaultDataConf)
         ) {
             return new WP_Error('REQ_FIELD_EMPTY', wp_sprintf(__('module, fields are required for %s api', 'bit-integrations'), 'Trello'));
         }
         $recordApiHelper = new RecordApiHelper($integrationDetails, $integId);
-        $trelloApiResponse = $recordApiHelper->execute(
-            $listId,
-            $tags,
-            $defaultDataConf,
-            $fieldValues,
-            $fieldMap,
-            $actions
-        );
+        $trelloApiResponse = $recordApiHelper->execute($fieldValues, $fieldMap, $customFieldMap);
 
         if (is_wp_error($trelloApiResponse)) {
             return $trelloApiResponse;

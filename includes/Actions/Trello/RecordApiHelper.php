@@ -49,27 +49,20 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute(
-        $listId,
-        $tags,
-        $defaultDataConf,
-        $fieldValues,
-        $fieldMap,
-        $actions
-    ) {
-        $fieldData = [];
+    public function execute($fieldValues, $fieldMap, $customFieldMap)
+    {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-
-        $finalData = $finalData + ['pos' => $this->_integrationDetails->pos];
+        $finalData['pos'] = $this->_integrationDetails->pos;
         $apiResponse = $this->insertCard($finalData);
-
-        if (!empty($apiResponse->id)) {
-        }
 
         if (property_exists($apiResponse, 'errors')) {
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Card', 'type_name' => 'add-Card']), 'error', wp_json_encode($apiResponse));
         } else {
             LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Card', 'type_name' => 'add-Card']), 'success', wp_json_encode($apiResponse));
+        }
+
+        if (!empty($apiResponse->id) && !empty($customFieldMap)) {
+            do_action('btcbi_trello_store_custom_fields', $apiResponse->id, $customFieldMap, $fieldValues, $this->_integrationID, $this->_integrationDetails);
         }
 
         return $apiResponse;
