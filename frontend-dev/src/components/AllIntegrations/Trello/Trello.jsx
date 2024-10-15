@@ -8,7 +8,12 @@ import Steps from '../../Utilities/Steps'
 import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import TrelloAuthorization from './TrelloAuthorization'
-import { handleInput, setGrantTokenResponse, checkMappedFields } from './TrelloCommonFunc'
+import {
+  handleInput,
+  setGrantTokenResponse,
+  checkMappedFields,
+  generateMappedField
+} from './TrelloCommonFunc'
 import TrelloIntegLayout from './TrelloIntegLayout'
 
 function Trello({ formFields, setFlow, flow, allIntegURL }) {
