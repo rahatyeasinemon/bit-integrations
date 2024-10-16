@@ -4,6 +4,7 @@ import ZohoCRMNewRecord from './ZohoCRMNewRecord'
 import ZohoCRMRelatedRecord from './ZohoCRMRelatedRecord'
 import { refreshModules } from './ZohoCRMCommonFunc'
 import CloseIcn from '../../../Icons/CloseIcn'
+import { Fragment } from 'react'
 
 export default function ZohoCRMIntegLayout({
   tab,
@@ -81,8 +82,8 @@ export default function ZohoCRMIntegLayout({
 
             {crmConf?.relatedlists &&
               crmConf.relatedlists.map((_, indx) => (
-                <>
-                  <Tab key={`t-${indx * 3}`}>
+                <Fragment key={`t-${indx * 3}`}>
+                  <Tab>
                     <button
                       className={`btcd-s-tab-link ${tab === indx + 1 && 's-t-l-active'}`}
                       type="button">
@@ -97,7 +98,7 @@ export default function ZohoCRMIntegLayout({
                     type="button">
                     <CloseIcn size="14" />
                   </button>
-                </>
+                </Fragment>
               ))}
             {crmConf.relatedlists.length < 3 && (
               <button

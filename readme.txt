@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.2
 Requires PHP: 7.0
-Stable tag: 2.2.9
+Stable tag: 2.3.0
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -118,6 +118,7 @@ https://youtu.be/eFuficjF_F4
 * [**WP Post**]()
 * [**WP Job Manager**](https://wordpress.org/plugins/wp-job-manager/)
 * [**WooCommerce**](https://wordpress.org/plugins/woocommerce/)
+* [**WooCommerce Subscriptions**](https://woocommerce.com/products/woocommerce-subscriptions/)
 * [**WP Courseware**](https://flyplugins.com/wp-courseware-wordpress-lms/)
 * [**WPForms**](https://wordpress.org/plugins/wpforms-lite/)
 * [**wpForo**](https://wordpress.org/plugins/wpforo/)
@@ -648,6 +649,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 
 * [**Easy Digital Downloads**](https://bitapps.pro/docs/bit-integrations/trigger/easy-digital-downloads/)
 
+* [**Eventin **](https://bit-integrations.com/wp-docs/trigger/eventin-integrations/)
+
 * [**eForm**](https://bitapps.pro/docs/bit-integrations/trigger/eform/)
 
 * [**Elementor Form**](https://bitapps.pro/docs/bit-integrations/trigger/elementor-form/)
@@ -727,6 +730,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 * [**Webhook**](https://bitapps.pro/docs/bit-integrations/trigger/webhook/)
 
 * [**Woocommerce**](https://bitapps.pro/docs/bit-integrations/trigger/woocommerce/)
+
+* [**WooCommerce Subscriptions**](https://bit-integrations.com/wp-docs/trigger/woocommerce-subscriptions-integrations/)
 
 * [**WP Courseware**](https://bitapps.pro/docs/bit-integrations/trigger/wp-courseware/)
 
@@ -995,6 +1000,26 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.3.0  =
+_Release Date -16th October 2024_
+
+- **New Trigger :**
+  - The Events Calendar (Pro): Now supports triggers for calendars and tickets for WordPress.
+
+- **New Features :**
+  - Trello (Pro): Added support for Custom Fields.
+
+- **New Fixes :**
+  - Core: Fixed the table page navigation issue.
+  - Moosend: Resolved the issue causing a blank page during authorization.
+  - PerfexCRM: Fixed the custom data submission issue.
+  - WooCommerce: Fixed the custom field value issue.
+  - JetEngine (Pro): Resolved the blank page issue.
+  - LearnDash (Pro): Resolved the trigger dependency update issue.
+  - ZohoCRM: 
+      1. Addressed the issue with relatedList custom field values.
+      2. Fixed the relatedList key issue.
 
 = 2.2.9  =
 _Release Date -12th October 2024_

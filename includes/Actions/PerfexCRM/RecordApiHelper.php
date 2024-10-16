@@ -7,6 +7,7 @@
 namespace BitCode\FI\Actions\PerfexCRM;
 
 use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
 
 /**
@@ -159,7 +160,7 @@ class RecordApiHelper
         foreach ($fieldMap as $value) {
             $triggerValue = $value->formField;
             $actionValue = $value->perfexCRMFormField;
-            $dataFinal[$actionValue] = ($triggerValue === 'custom') ? $value->customValue : $data[$triggerValue];
+            $dataFinal[$actionValue] = ($triggerValue === 'custom') ? Common::replaceFieldWithValue($value->customValue, $data) : $data[$triggerValue];
         }
 
         return $dataFinal;

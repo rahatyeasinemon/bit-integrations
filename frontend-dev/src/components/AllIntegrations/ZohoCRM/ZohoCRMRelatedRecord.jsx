@@ -24,8 +24,8 @@ export default function ZohoCRMRelatedRecord({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // eslint-disable-next-line no-undef
   const isPro = typeof btcbi !== 'undefined' && btcbi.isPro
+
   return (
     <>
       {isLoading && (
@@ -52,8 +52,10 @@ export default function ZohoCRMRelatedRecord({
           <option value="">{__('Select Related Module', 'bit-integrations')}</option>
           {crmConf?.default?.relatedlists?.[crmConf.module] &&
             Object.values(crmConf.default.relatedlists[crmConf.module]).map(
-              (relatedlistApiName) => (
-                <option key={relatedlistApiName.module} value={relatedlistApiName.module}>
+              (relatedlistApiName, index) => (
+                <option
+                  key={`${relatedlistApiName?.name}-${indx}-${index}`}
+                  value={relatedlistApiName.module}>
                   {relatedlistApiName.name}
                 </option>
               )
@@ -80,8 +82,8 @@ export default function ZohoCRMRelatedRecord({
         <option value="">{__('Select Layout', 'bit-integrations')}</option>
         {crmConf?.default?.layouts?.[crmConf.relatedlists?.[tab - 1]?.module] &&
           Object.keys(crmConf.default.layouts[crmConf.relatedlists[tab - 1].module]).map(
-            (layoutApiName) => (
-              <option key={layoutApiName} value={layoutApiName}>
+            (layoutApiName, index) => (
+              <option key={`${layoutApiName}-${indx}-${index}`} value={layoutApiName}>
                 {layoutApiName}
               </option>
             )

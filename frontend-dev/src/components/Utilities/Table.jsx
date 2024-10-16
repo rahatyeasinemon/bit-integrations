@@ -134,7 +134,7 @@ function Table(props) {
       columns,
       data,
       manualPagination: typeof props.pageCount !== 'undefined',
-      // pageCount: props.pageCount,
+      pageCount: props?.pageCount || Math.ceil(data?.length / 10),
       autoResetPage: false,
       autoResetHiddenColumns: false,
       autoResetSortBy: false,
@@ -170,12 +170,15 @@ function Table(props) {
         }
       : ''
   )
+
   const [search, setSearch] = useState(globalFilter)
+
   useEffect(() => {
     if (fetchData) {
       fetchData({ pageIndex, pageSize })
     }
   }, [fetchData, pageIndex, pageSize])
+
   useEffect(() => {
     if (pageIndex > pageCount) {
       gotoPage(0)
