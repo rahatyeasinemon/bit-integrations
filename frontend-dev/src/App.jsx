@@ -79,7 +79,7 @@ function App() {
             <nav className="top-nav ml-2">
               <a
                 target="_blank"
-                href="https://wordpress.org/plugins/bit-integrations/#reviews"
+                href="https://wordpress.org/support/plugin/bit-integrations/reviews/#new-post"
                 className={`app-link ${btcbi.isPro ? '' : 'green blink'} `}
                 rel="noreferrer">
                 {__('Review us', 'bit-integrations')}

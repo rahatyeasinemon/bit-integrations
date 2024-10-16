@@ -59,6 +59,8 @@ export const FormPluginStateHelper = (val, tmpNewFlow, resp, setNewFlow) => {
     wpForoStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else if (tmpNewFlow?.triggered_entity === 'WPJobManager') {
     wpJobManagerStateFP(val, tmpNewFlow, resp, setNewFlow)
+  } else if (tmpNewFlow?.triggered_entity === 'EventsCalendar') {
+    eventsCalendarStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else if (tmpNewFlow?.triggered_entity === 'WCSubscriptions') {
     WCSubscriptionsStateFP(val, tmpNewFlow, resp, setNewFlow)
   } else {
@@ -199,6 +201,18 @@ export const wpJobManagerStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
       selectedJobType: 'any',
       statusList: resp.data.statusList,
       selectedStatus: 'any'
+    }
+  }
+
+  setNewFlow(tmpNewFlow)
+}
+
+export const eventsCalendarStateFP = (val, tmpNewFlow, resp, setNewFlow) => {
+  if (val === 'events_calendar-1' || val === 'events_calendar-2' || val === 'events_calendar-3') {
+    tmpNewFlow.triggerData = {
+      ...tmpNewFlow.triggerData,
+      events: resp.data.events,
+      selectedEvent: 'any'
     }
   }
 
@@ -561,6 +575,17 @@ export const wpJobManagerStateIH = (tmpConf, flowData, triggered_entity_id) => {
   if (formId === 'wp_job_manager-9' || formId === 'wp_job_manager-10') {
     tmpConf.selectedStatus = flowData.selectedStatus
     tmpConf.statusList = flowData.statusList
+  }
+
+  return tmpConf
+}
+
+export const eventsCalendarIH = (tmpConf, flowData, triggered_entity_id) => {
+  const formId = flowData.formID ? flowData.formID : triggered_entity_id
+
+  if (formId === 'events_calendar-1' || formId === 'events_calendar-2' || formId === 'events_calendar-3') {
+    tmpConf.selectedEvent = flowData.selectedEvent
+    tmpConf.events = flowData.events
   }
 
   return tmpConf
