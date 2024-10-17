@@ -1,4 +1,5 @@
 import { atom } from 'recoil'
+import { atomWithBroadcast } from './components/atomWithBroadcast'
 
 // atoms
 // eslint-disable-next-line no-undef
@@ -7,3 +8,6 @@ export const $newFlow = atom({ key: '$newFlow', default: {}, dangerouslyAllowMut
 export const $actionConf = atom({ key: '$actionConf', default: {}, dangerouslyAllowMutability: true })
 export const $formFields = atom({ key: '$formFields', default: {}, dangerouslyAllowMutability: true })
 export const $flowStep = atom({ key: '$flowStep', default: 1, dangerouslyAllowMutability: true })
+export const $redirectURI = atom({ key: '$redirectURI', default: 'https://auth-apps.bitapps.pro/redirect/v2' })
+
+export const grantTokenAtom = atomWithBroadcast('grantToken', null);

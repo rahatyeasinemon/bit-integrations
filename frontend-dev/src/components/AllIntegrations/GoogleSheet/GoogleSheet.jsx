@@ -5,14 +5,18 @@ import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
-import { setGrantTokenResponse } from '../IntegrationHelpers/GoogleIntegrationHelpers'
 import { saveActionConf } from '../IntegrationHelpers/IntegrationHelpers'
 import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import GoogleSheetAuthorization from './GoogleSheetAuthorization'
 import { handleInput, checkMappedFields } from './GoogleSheetCommonFunc'
 import GoogleSheetIntegLayout from './GoogleSheetIntegLayout'
+import { useRecoilState } from 'recoil'
+import { grantTokenAtom } from '../../../GlobalStates'
+import bitsFetch from '../../../Utils/bitsFetch'
+
 
 function GoogleSheet({ formFields, setFlow, flow, allIntegURL }) {
+  const [grantToken, setGrantToken] = useRecoilState(grantTokenAtom);
   const navigate = useNavigate()
   const { formID } = useParams()
   const [isLoading, setIsLoading] = useState(false)
@@ -36,8 +40,31 @@ function GoogleSheet({ formFields, setFlow, flow, allIntegURL }) {
   })
 
   useEffect(() => {
-    window.opener && setGrantTokenResponse('googleSheet')
+    if (sheetConf.oneClickAuth === undefined) {
+      const requestParams = {
+        actionName: "googleSheet",
+      }
+      bitsFetch(requestParams, 'get/credentials', '', 'Post').then((res) => {
+        const confTmp = {...sheetConf}
+        confTmp.oneClickAuth = res.data
+        setSheetConf(confTmp)
+      })
+    }
   }, [])
+  
+
+  // popup window: called when redirected from google auth to bit-integration with code
+  useEffect(() => {
+    const hash = window.location.hash;
+    const urlParams = new URLSearchParams(hash.split('?')[1] || hash.split('&')[1])
+    const code = urlParams.get('code');
+    if (code) {
+      setGrantToken(code); 
+    }
+    if (grantToken) {
+      window.close()
+    }    
+  }, [])  
 
   const nextPage = () => {
     setTimeout(() => {
