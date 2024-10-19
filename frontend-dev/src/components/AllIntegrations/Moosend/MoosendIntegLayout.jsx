@@ -18,24 +18,39 @@ function MoosendIntegLayout({ moosendConf, setMoosendConf, formFields, loading, 
     let tmp
     const newConf = { ...moosendConf }
     const { name, value } = e.target
+
     if (value !== '') {
       newConf[name] = value
     } else {
       delete newConf[name]
     }
+
     switch (name) {
       case 'listId':
-        newConf.field_map = [{ formFields: '', moosendFormFields: '' }]
-        tmp = generateMappedField(newConf)
-        newConf.field_map = tmp
+        if (value !== '') {
+          const list = newConf.default.lists.find((list) => list.ID === value)
+          const customFIelds =
+            (list.CustomFieldsDefinition &&
+              list.CustomFieldsDefinition.map((field) => ({
+                key: field.ID,
+                label: field.Name,
+                required: field.IsRequired
+              }))) ||
+            []
+          if (!newConf.basicFields) {
+            newConf.basicFields = newConf.moosendFields
+          }
+
+          newConf.moosendFields = [...(newConf.basicFields || []), ...(customFIelds || [])]
+          newConf.field_map = generateMappedField(newConf)
+        }
+
         break
       case 'method':
         newConf.listId = ''
-        newConf.field_map = [{ formFields: '', moosendFormFields: '' }]
-        // if (moosendConf?.field_map?.length === 1 && moosendConf.field_map[0].moosendFormFields === '') {
-        tmp = generateMappedField(newConf)
-        newConf.field_map = tmp
-        // }
+        newConf.moosendFields = newConf?.basicFields || newConf.moosendFields || []
+        newConf.field_map = generateMappedField(newConf)
+
         break
     }
     setMoosendConf({ ...newConf })
