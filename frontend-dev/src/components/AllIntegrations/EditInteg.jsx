@@ -159,6 +159,7 @@ const EditWPForo = lazy(() => import('./WPForo/EditWPForo'))
 const EditDokan = lazy(() => import('./Dokan/EditDokan'))
 const EditJetEngine = lazy(() => import('./JetEngine/EditJetEngine'))
 const EditHighLevel = lazy(() => import('./HighLevel/EditHighLevel'))
+const EditTheEventsCalendar = lazy(() => import('./TheEventsCalendar/EditTheEventsCalendar'))
 
 const loaderStyle = {
   display: 'flex',
@@ -543,6 +544,8 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditJetEngine allIntegURL={allIntegURL} />
     case 'GoHighLevel':
       return <EditHighLevel allIntegURL={allIntegURL} />
+    case 'The Events Calendar':
+      return <EditTheEventsCalendar allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />
   }

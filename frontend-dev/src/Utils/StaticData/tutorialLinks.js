@@ -594,6 +594,10 @@ const tutorialLinks = {
   highLevel: {
     youTubeLink: '#',
     docLink: '#'
+  },
+  theEventsCalendar: {
+    youTubeLink: '#',
+    docLink: '#'
   }
 }
 export default tutorialLinks

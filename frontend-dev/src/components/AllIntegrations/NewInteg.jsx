@@ -159,6 +159,7 @@ const WPForo = lazy(() => import('./WPForo/WPForo'))
 const Dokan = lazy(() => import('./Dokan/Dokan'))
 const JetEngine = lazy(() => import('./JetEngine/JetEngine'))
 const HighLevel = lazy(() => import('./HighLevel/HighLevel'))
+const TheEventsCalendar = lazy(() => import('./TheEventsCalendar/TheEventsCalendar'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
@@ -1505,6 +1506,15 @@ export default function NewInteg({ allIntegURL }) {
       case 'GoHighLevel':
         return (
           <HighLevel
+            allIntegURL={allIntegURL}
+            formFields={flow?.triggerData?.fields}
+            flow={flow}
+            setFlow={setFlow}
+          />
+        )
+      case 'The Events Calendar':
+        return (
+          <TheEventsCalendar
             allIntegURL={allIntegURL}
             formFields={flow?.triggerData?.fields}
             flow={flow}
