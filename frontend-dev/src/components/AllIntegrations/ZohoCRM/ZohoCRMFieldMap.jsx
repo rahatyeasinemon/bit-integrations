@@ -86,7 +86,7 @@ export default function ZohoCRMFieldMap({
 
           {field.formField === 'custom' && (
             <TagifyInput
-              onChange={(e) => handleCustomValue(e, i, crmConf, setCrmConf)}
+              onChange={(e) => handleCustomValue(e, i, crmConf, setCrmConf, tab)}
               label={__('Custom Value', 'bit-integrations')}
               className="mr-2"
               type="text"
