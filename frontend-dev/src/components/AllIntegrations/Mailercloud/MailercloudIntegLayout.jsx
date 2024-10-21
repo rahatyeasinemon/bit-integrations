@@ -99,6 +99,7 @@ function MailercloudIntegLayout({
           &#x21BB;
         </button>
       </div>
+      <div className="btcd-hr mt-2 mb-4" />
 
       {/* --- PAGE Loader --- */}
 
@@ -114,10 +115,7 @@ function MailercloudIntegLayout({
         />
       )}
       {mailercloudConf?.listId && mailercloudConf.default.fields && (
-        <div className="mt-5">
-          <b className="wdt-100">{__('Field Map')}</b>
-
-          <div className="btcd-hr mt-2 mb-4" />
+        <>
           <div className="flx flx-around mt-2 mb-2 btcbi-field-map-label">
             <div className="txt-dp">
               <b>{__('Form Fields')}</b>
@@ -151,7 +149,7 @@ function MailercloudIntegLayout({
               +
             </button>
           </div>
-        </div>
+        </>
       )}
     </div>
   )

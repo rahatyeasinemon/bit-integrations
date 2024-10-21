@@ -8,6 +8,7 @@ import StepPage from '../../Utilities/StepPage'
 import { getAllLists, handleAuthorize, handleInput } from './MailercloudCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
+import { __ } from '../../../Utils/i18nwrap'
 
 function MailercloudAuthorization({
   mailercloudConf,
