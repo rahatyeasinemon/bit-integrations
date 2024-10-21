@@ -27,16 +27,28 @@ class RecordApiHelper
 
     public function generateReqDataFromFieldMap($data, $field_map)
     {
-        $dataFinal = [];
+        $dataFinal = ['CustomFields' => []];
 
         foreach ($field_map as $key => $value) {
             $triggerValue = $value->formFields;
             $actionValue = $value->moosendFormFields;
-            if ($triggerValue === 'custom') {
-                $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
-            } elseif (!\is_null($data[$triggerValue])) {
-                $dataFinal[$actionValue] = self::formatPhoneNumber($data[$triggerValue]);
+
+            $formattedValue = isset($data[$triggerValue]) ? self::formatPhoneNumber($data[$triggerValue]) : null;
+
+            if (strpos($actionValue, 'custom_field_') === 0) {
+                $actionValue = str_replace('custom_field_', '', $actionValue);
+                $dataFinal['CustomFields'][] = "{$actionValue}=" . ($triggerValue === 'custom'
+                    ? Common::replaceFieldWithValue($value->customValue, $data)
+                    : $formattedValue);
+            } else {
+                $dataFinal[$actionValue] = ($triggerValue === 'custom')
+                    ? Common::replaceFieldWithValue($value->customValue, $data)
+                    : $formattedValue;
             }
+        }
+
+        if (empty($dataFinal['CustomFields'])) {
+            unset($dataFinal['CustomFields']);
         }
 
         return $dataFinal;
@@ -53,10 +65,7 @@ class RecordApiHelper
     public function subscribe($authKey, $listId, $formData)
     {
         $apiEndpoints = "{$this->baseUrl}subscribers/{$listId}/subscribe.json?apikey={$authKey}";
-
-        $headers = [
-            'Content-Type' => 'application/json'
-        ];
+        $headers = ['Content-Type' => 'application/json'];
 
         return HttpHelper::post($apiEndpoints, wp_json_encode($formData), $headers);
     }

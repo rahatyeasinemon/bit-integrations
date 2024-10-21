@@ -32,7 +32,7 @@ function MoosendIntegLayout({ moosendConf, setMoosendConf, formFields, loading, 
           const customFIelds =
             (list.CustomFieldsDefinition &&
               list.CustomFieldsDefinition.map((field) => ({
-                key: field.ID,
+                key: `custom_field_${field.ID}`,
                 label: field.Name,
                 required: field.IsRequired
               }))) ||
