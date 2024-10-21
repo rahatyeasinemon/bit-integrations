@@ -102,7 +102,7 @@ class GoogleSheetController
         }
         $spreadSheets = "https://www.googleapis.com/drive/v3/files?q=mimeType%20%3D%20'application%2Fvnd.google-apps.spreadsheet'";
         $response = [];
-        if ((\intval($queryParams->tokenDetails->generates_on) + (55 * 60)) > time()) {
+        if ((\intval($queryParams->tokenDetails->generates_on) + (55 * 60)) < time()) {
             $response['tokenDetails'] = GoogleSheetController::refreshAccessToken($queryParams);
             $authorizationHeader['Authorization'] = "Bearer ".$response['tokenDetails']->access_token;
         }else{

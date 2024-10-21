@@ -61,7 +61,7 @@ function GoogleSheet({ formFields, setFlow, flow, allIntegURL }) {
     if (code) {
       setGrantToken(code); 
     }
-    if (grantToken) {
+    if (grantToken && code) {
       window.close()
     }    
   }, [])  

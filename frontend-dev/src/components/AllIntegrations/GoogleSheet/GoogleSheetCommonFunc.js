@@ -2,8 +2,8 @@ import { __, sprintf } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { handleAuthData } from '../GlobalIntegrationHelper'
-import { $redirectURI } from '../../../GlobalStates'
-import { getRecoil } from 'recoil-nexus'
+import { $redirectURI, grantTokenAtom } from '../../../GlobalStates'
+import { getRecoil, setRecoil } from 'recoil-nexus'
 
 
 export const handleInput = (
@@ -78,6 +78,7 @@ export const refreshSpreadsheets = (formID, sheetConf, setSheetConf, setIsLoadin
     tokenDetails: sheetConf.tokenDetails,
     ownerEmail: sheetConf.ownerEmail
   }
+  setIsLoading(true)
   bitsFetch(refreshModulesRequestParams, 'gsheet_refresh_spreadsheets')
     .then((result) => {
       if (result && result.success) {
@@ -245,29 +246,37 @@ export const handleAuthorize = (confTmp, selectedAuthType, setError, setIsLoadin
   const finalRedirectUri = selectedAuthType === 'One Click Authorization' ? redirectURI : `${btcbi.api.base}/redirect`
   const apiEndpoint = `https://accounts.google.com/o/oauth2/v2/auth?scope=${scopes}&access_type=offline&prompt=consent&response_type=code&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(finalRedirectUri)}&client_id=${clientId}`
   const authWindow = window.open(apiEndpoint, 'googleSheet', 'width=400,height=609,toolbar=off')
+  if (selectedAuthType === 'Custom Authorization') {
+    const popupURLCheckTimer = setInterval(() => {
+      if (authWindow.closed) {
+        clearInterval(popupURLCheckTimer)
+        setIsLoading(false)
+      }
+    }, 500)
+  }
 
 }
 
 
-export const setGrantTokenResponse = (grantToken, confTmp, setConf, selectedAuthType, authData, setAuthData, setError, setisAuthorized, setIsLoading, setSnackbar) => {
+export const setGrantTokenResponse = (grantToken, confTmp, setConf, selectedAuthType, authData, setAuthData, setError, setIsLoading, setSnackbar) => {
   const newConf = { ...confTmp }
   tokenHelper(
-    grantToken, newConf, setConf, selectedAuthType, authData, setAuthData, setisAuthorized, setIsLoading, setSnackbar
+    grantToken, newConf, setConf, selectedAuthType, authData, setAuthData, setIsLoading, setSnackbar
   )
 }
 
-const tokenHelper = (grantToken, confTmp, setConf, selectedAuthType, authData, setAuthData, setisAuthorized, setIsLoading, setSnackbar) => {
+const tokenHelper = (grantToken, confTmp, setConf, selectedAuthType, authData, setAuthData, setIsLoading, setSnackbar) => {
 
 
   const tokenRequestParams = {}
   tokenRequestParams.code = grantToken
   tokenRequestParams.clientId = selectedAuthType === 'One Click Authorization' ? confTmp.oneClickAuth.clientId : confTmp.clientId
   tokenRequestParams.clientSecret = selectedAuthType === 'One Click Authorization' ? confTmp.oneClickAuth.clientSecret : confTmp.clientSecret
-
   // eslint-disable-next-line no-undef
   const redirectURI = getRecoil($redirectURI);
   tokenRequestParams.redirectURI = selectedAuthType === 'One Click Authorization' ? redirectURI : `${btcbi.api.base}/redirect`
 
+  setIsLoading(true)
   bitsFetch(tokenRequestParams, 'gsheet_generate_token')
     .then(result => result)
     .then(async result => {

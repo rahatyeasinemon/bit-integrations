@@ -1665,6 +1665,11 @@ textarea:focus {
   }
 }
 
+.btcd-btn-purple-active {
+  background-color: $purple;
+  color: white;
+}
+
 .btcd-btn-o-red {
   background: transparent;
   color: $red !important;
@@ -5470,6 +5475,7 @@ _:-ms-fullscreen,
 }
 
 .user-radio-input {
+
   .auth-list {
     display: flex;
     flex-direction: column;
@@ -5532,6 +5538,49 @@ _:-ms-fullscreen,
     font-size: 20px;
     cursor: pointer;
     margin-left: auto;
+  }
+  
+  .confirmation-popover {
+    position: absolute;
+    top: 50%;
+    left: calc(80% + 10px); /* Show it to the right of the delete button */
+    transform: translateY(-50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .confirmation-popover p {
+    margin: 0;
+    font-size: 1em;
+    color: #333;
+  }
+  
+  .confirm-button, .cancel-button {
+    background-color: #f10000;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    color: white;
+    cursor: pointer;
+    margin-right: 5px;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+  }
+  
+  .confirm-button:hover {
+    background-color: #ce0000;
+  }
+  
+  .cancel-button {
+    background-color: #6c757d;
+  }
+  
+  .cancel-button:hover {
+    background-color: #5a6268;
   }
 }
 

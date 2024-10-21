@@ -11,6 +11,7 @@ import TutorialLink from '../../Utilities/TutorialLink'
 import RadioInput from '../../Utilities/RadioInput'
 import UserRadioButton from '../../Utilities/UserRadioButton'
 import bitsFetch from '../../../Utils/bitsFetch'
+import Loader from '../../Loaders/Loader'
 
 
 export default function GoogleSheetAuthorization({
@@ -47,6 +48,11 @@ export default function GoogleSheetAuthorization({
     setSelectedAuthType(option);
     setisAuthorized(false)
     if (option === "One Click Authorization") {
+      if (process.env.NODE_ENV !== 'development') {
+        confTmp.clientId = ''
+        confTmp.clientSecret = '' 
+      }
+      setSheetConf(confTmp)
       manageAuth(option);
       setIsLoading(false)
     }
@@ -57,26 +63,29 @@ export default function GoogleSheetAuthorization({
   }
 
   useEffect(() => {
+    setIsLoading(true)
     bitsFetch(sheetConf.type, 'auth/get').then((res) => {
-      if (res.success) {
-        if (res.data.data.length > 0) {
+        if (res.success && res.data.data.length > 0) {
           setAuthData(res.data.data);
+          setIsLoading(false)
+        }else{
+          setIsLoading(false)
         }
-      }
     })
   }, []);
 
   useEffect(() => {
       if (grantToken) {
-        setGrantTokenResponse(grantToken, sheetConf, setSheetConf, selectedAuthType, authData, setAuthData, setError, setisAuthorized, setIsLoading, setSnackbar);
+        setGrantTokenResponse(grantToken, sheetConf, setSheetConf, selectedAuthType, authData, setAuthData, setError, setIsLoading, setSnackbar);
       }
-  }, [grantToken]);
+      return () => {
+        if (grantToken) {
+          setGrantToken('')
+        }
+      }
+  }, [grantToken]);  
 
-  useEffect(() => {
-    setGrantToken('')
-  }, [authData])
   
-
   const handleInput = (e) => {
     const newConf = { ...sheetConf }
       const rmError = { ...error }
@@ -87,23 +96,18 @@ export default function GoogleSheetAuthorization({
   }
   
   const nextPage = () => {
+    const newConf = { ...sheetConf }
+    newConf.tokenDetails = authData[selectedUser] ? authData[selectedUser].tokenDetails : '';
+    newConf.authId = authData[selectedUser] ? authData[selectedUser].id : '';
+    setSheetConf(newConf)
+
     setTimeout(() => {
       document.getElementById('btcd-settings-wrp').scrollTop = 0;
     }, 300);
-
     setstep(2);
-    const updatedConf = { ...sheetConf };
-      refreshSpreadsheets(formID, updatedConf, setSheetConf, setIsLoading, setSnackbar);
-  };
 
-  useEffect(()=>{
-      if (authData.length > 0) {
-        const newConf = { ...sheetConf }
-        newConf.tokenDetails = authData[selectedUser] ? authData[selectedUser].tokenDetails : '';
-        newConf.authId = authData[selectedUser] ? authData[selectedUser].id : '';
-        setSheetConf(newConf)
-      }
-  },[selectedUser]);
+    refreshSpreadsheets(formID, newConf, setSheetConf, setIsLoading, setSnackbar);
+  };
 
   return (
     <div
@@ -160,15 +164,29 @@ export default function GoogleSheetAuthorization({
               
         </div>
       }
-      {authData.length > 0 &&<div>
-        <h2>Choose your connected account</h2>
-         <UserRadioButton
-          authData={authData}
-          setAuthData = {setAuthData}
-          selectedUser={selectedUser}
-          handleAuthUser={handleAuthUser}
+      {isLoading && selectedAuthType !== 'Custom Authorization' && (
+        <Loader
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 100,
+            transform: 'scale(0.7)'
+          }}
         />
-      </div>}
+      )}
+      {authData.length > 0 &&
+        <>
+          <h2>Choose your connected account</h2>
+          <UserRadioButton
+            authData={authData}
+            setAuthData = {setAuthData}
+            selectedUser={selectedUser}
+            setSelectedUser={setSelectedUser}
+            handleAuthUser={handleAuthUser}
+          />
+        </>
+      }
       {(isAuthorized &&  selectedAuthType === "One Click Authorization")&&
         (<button onClick={() =>  manageAuth()} className="btn btcd-btn-lg purple sh-sm flx" type="button" disabled={isLoading}>
           {isAuthorized ? __('Authorized ✔', 'bit-integrations') : __('Authorize', 'bit-integrations')}
@@ -176,7 +194,7 @@ export default function GoogleSheetAuthorization({
         </button>
       )}
       <br />
-      <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button" disabled={ selectedUser == null}>
+      <button onClick={() => nextPage(2)} className="btn f-right btcd-btn-lg purple sh-sm flx" type="button" disabled={ selectedUser == null || authData.length === 0}>
         {__('Next', 'bit-integrations')}
         <BackIcn className="ml-1 rev-icn" />
       </button>

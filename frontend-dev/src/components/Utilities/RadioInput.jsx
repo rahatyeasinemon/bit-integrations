@@ -2,15 +2,16 @@ import React from 'react';
 
 const RadioInput = ({ name, options, selectedAuthType, handleChange }) => {
   return (
-    <div>
+    <div className='user-radio-input'>
       {options.map((option, index) => (
-        <label key={index} className='btn btcd-btn-o-purple ml-2'>
+        <label key={index} className={`btn ml-2 ${selectedAuthType === option ? 'btcd-btn-purple-active' : 'btcd-btn-o-purple'}`}>
           <input
             type="radio"
             name={name}
             value={option}
             checked={selectedAuthType === option}
             onClick={() => handleChange(option)}
+            className="radio-input"
           />
           {option}
         </label>
