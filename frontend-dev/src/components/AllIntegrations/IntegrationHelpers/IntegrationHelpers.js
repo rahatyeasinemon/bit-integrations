@@ -24,6 +24,8 @@ import {
   actionHookStateIH,
   affiliateStateIH,
   buddybossStateIH,
+  customTriggerStateIH,
+  eventsCalendarIH,
   fluentBookingStateIH,
   fluentCrmStateIH,
   groundhoggStateIH,
@@ -101,7 +103,7 @@ export const saveIntegConfig = async (
     tmpConf = RestrictContentStateIH(tmpConf, dataFlow)
   } else if (flow.triggered_entity === 'LearnDash') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
-    tmpConf = learndashStateIH(tmpConf, dataFlow)
+    tmpConf = learndashStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (flow.triggered_entity === 'GamiPress') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = GamiPressStateIH(tmpConf, dataFlow)
@@ -162,6 +164,9 @@ export const saveIntegConfig = async (
   } else if (flow.triggered_entity === 'WPJobManager') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = wpJobManagerStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
+  } else if (flow.triggered_entity === 'EventsCalendar') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = eventsCalendarIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (flow.triggered_entity === 'WCSubscriptions') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = WCSubscriptionsStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
@@ -179,6 +184,9 @@ export const saveIntegConfig = async (
   ) {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = CFSStateIH(dataFlow, tmpConf)
+  } else if (flow.triggered_entity === 'CustomTrigger') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = customTriggerStateIH(dataFlow, tmpConf)
   }
 
   if (isPro && !freeTriggers.includes(flow.triggered_entity)) {
@@ -270,7 +278,7 @@ export const saveActionConf = async ({
     tmpConf = RestrictContentStateIH(tmpConf, dataFlow)
   } else if (flow.triggered_entity === 'LearnDash') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
-    tmpConf = learndashStateIH(tmpConf, dataFlow)
+    tmpConf = learndashStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (flow.triggered_entity === 'GamiPress') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = GamiPressStateIH(tmpConf, dataFlow)
@@ -331,6 +339,9 @@ export const saveActionConf = async ({
   } else if (flow.triggered_entity === 'WPJobManager') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = wpJobManagerStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
+  } else if (flow.triggered_entity === 'EventsCalendar') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = eventsCalendarIH(tmpConf, dataFlow, flow.triggered_entity_id)
   } else if (flow.triggered_entity === 'WCSubscriptions') {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = WCSubscriptionsStateIH(tmpConf, dataFlow, flow.triggered_entity_id)
@@ -348,6 +359,9 @@ export const saveActionConf = async ({
   ) {
     const dataFlow = edit ? flow?.flow_details : flow?.triggerData
     tmpConf = CFSStateIH(dataFlow, tmpConf)
+  } else if (flow.triggered_entity === 'CustomTrigger') {
+    const dataFlow = edit ? flow?.flow_details : flow?.triggerData
+    tmpConf = customTriggerStateIH(dataFlow, tmpConf)
   }
 
   if (isPro && !freeTriggers.includes(flow.triggered_entity)) {
@@ -446,13 +460,11 @@ export const handleAuthorize = (
     return
   }
   setIsLoading(true)
-  const apiEndpoint = `https://accounts.zoho.${
-    confTmp.dataCenter
-  }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${
-    confTmp.clientId
-  }&prompt=Consent&access_type=offline&state=${encodeURIComponent(
-    window.location.href
-  )}/redirect&redirect_uri=${encodeURIComponent(`${btcbi.api.base}`)}/redirect`
+  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter
+    }/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId
+    }&prompt=Consent&access_type=offline&state=${encodeURIComponent(
+      window.location.href
+    )}/redirect&redirect_uri=${encodeURIComponent(`${btcbi.api.base}`)}/redirect`
   const authWindow = window.open(apiEndpoint, integ, 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
@@ -533,9 +545,8 @@ const tokenHelper = (
       ) {
         setSnackbar({
           show: true,
-          msg: `${__('Authorization failed Cause:', 'bit-integrations')}${
-            result.data.data || result.data
-          }. ${__('please try again', 'bit-integrations')}`
+          msg: `${__('Authorization failed Cause:', 'bit-integrations')}${result.data.data || result.data
+            }. ${__('please try again', 'bit-integrations')}`
         })
       } else {
         setSnackbar({
@@ -602,9 +613,9 @@ export const handleFieldMapping = (event, index, conftTmp, setConf, uploadFields
 export const handleCustomValue = (event, index, conftTmp, setConf, tab) => {
   const newConf = { ...conftTmp }
   if (tab) {
-    newConf.relatedlists[tab - 1].field_map[index].customValue = event.target.value
+    newConf.relatedlists[tab - 1].field_map[index].customValue = event?.target?.value || event
   } else {
-    newConf.field_map[index].customValue = event
+    newConf.field_map[index].customValue = event?.target?.value || event
   }
   setConf({ ...newConf })
 }

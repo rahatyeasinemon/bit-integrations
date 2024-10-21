@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { create } from 'mutative'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilState, useSetRecoilState } from 'recoil'

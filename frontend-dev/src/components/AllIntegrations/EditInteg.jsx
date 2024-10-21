@@ -422,6 +422,7 @@ const IntegType = memo(({ allIntegURL, flow }) => {
     case 'Agiled CRM':
       return <EditAgiled allIntegURL={allIntegURL} />
     case 'ConvertKit':
+    case 'Kit(ConvertKit)':
       return <EditConvertKit allIntegURL={allIntegURL} />
     case 'BenchMark':
       return <EditBenchMark allIntegURL={allIntegURL} />
@@ -540,7 +541,7 @@ const IntegType = memo(({ allIntegURL, flow }) => {
       return <EditDokan allIntegURL={allIntegURL} />
     case 'JetEngine':
       return <EditJetEngine allIntegURL={allIntegURL} />
-    case 'High Level':
+    case 'GoHighLevel':
       return <EditHighLevel allIntegURL={allIntegURL} />
     default:
       return <Loader style={loaderStyle} />

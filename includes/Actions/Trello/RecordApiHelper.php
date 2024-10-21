@@ -6,9 +6,9 @@
 
 namespace BitCode\FI\Actions\Trello;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 /**
  * Provide functionality for Record insert, upsert
@@ -40,7 +40,7 @@ class RecordApiHelper
             $triggerValue = $value->formField;
             $actionValue = $value->trelloFormField;
             if ($triggerValue === 'custom') {
-                $dataFinal[$actionValue] = Common::replaceFieldWithValue(Common::replaceFieldWithValue($value->customValue, $data), $data);
+                $dataFinal[$actionValue] = Common::replaceFieldWithValue($value->customValue, $data);
             } elseif (!\is_null($data[$triggerValue])) {
                 $dataFinal[$actionValue] = $data[$triggerValue];
             }
@@ -49,23 +49,20 @@ class RecordApiHelper
         return $dataFinal;
     }
 
-    public function execute(
-        $listId,
-        $tags,
-        $defaultDataConf,
-        $fieldValues,
-        $fieldMap,
-        $actions
-    ) {
-        $fieldData = [];
+    public function execute($fieldValues, $fieldMap, $customFieldMap)
+    {
         $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-
-        $finalData = $finalData + ['pos' => $this->_integrationDetails->pos];
+        $finalData['pos'] = $this->_integrationDetails->pos;
         $apiResponse = $this->insertCard($finalData);
+
         if (property_exists($apiResponse, 'errors')) {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'contact', 'type_name' => 'add-contact']), 'error', wp_json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Card', 'type_name' => 'add-Card']), 'error', wp_json_encode($apiResponse));
         } else {
-            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'record', 'type_name' => 'add-contact']), 'success', wp_json_encode($apiResponse));
+            LogHandler::save($this->_integrationID, wp_json_encode(['type' => 'Card', 'type_name' => 'add-Card']), 'success', wp_json_encode($apiResponse));
+        }
+
+        if (!empty($apiResponse->id) && !empty($customFieldMap)) {
+            do_action('btcbi_trello_store_custom_fields', $apiResponse->id, $customFieldMap, $fieldValues, $this->_integrationID, $this->_integrationDetails);
         }
 
         return $apiResponse;

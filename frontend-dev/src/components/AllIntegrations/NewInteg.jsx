@@ -971,6 +971,7 @@ export default function NewInteg({ allIntegURL }) {
           />
         )
       case 'ConvertKit':
+      case 'Kit(ConvertKit)':
         return (
           <ConvertKit
             allIntegURL={allIntegURL}
@@ -1501,7 +1502,7 @@ export default function NewInteg({ allIntegURL }) {
             setFlow={setFlow}
           />
         )
-      case 'High Level':
+      case 'GoHighLevel':
         return (
           <HighLevel
             allIntegURL={allIntegURL}
@@ -1529,6 +1530,9 @@ export default function NewInteg({ allIntegURL }) {
       break
     case 'Zoho Marketing Hub':
       integrationName = 'Zoho Marketing Automation(Zoho Marketing Hub)'
+      break
+    case 'ConvertKit':
+      integrationName = 'Kit(ConvertKit)'
       break
 
     default:

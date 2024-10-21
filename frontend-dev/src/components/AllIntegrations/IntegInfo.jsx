@@ -446,6 +446,7 @@ export default function IntegInfo() {
       case 'Agiled CRM':
         return <AgiledAuthorization agiledConf={integrationConf} step={1} isInfo />
       case 'ConvertKit':
+      case 'Kit(ConvertKit)':
         return <ConvertKitAuthorization convertKitConf={integrationConf} step={1} isInfo />
       case 'BenchMark':
         return <BenchMarkAuthorization benchMarkConf={integrationConf} step={1} isInfo />
@@ -571,7 +572,7 @@ export default function IntegInfo() {
         return <DokanAuthorization dokanConf={integrationConf} step={1} isInfo />
       case 'JetEngine':
         return <JetEngineAuthorization jetEngineConf={integrationConf} step={1} isInfo />
-      case 'High Level':
+      case 'GoHighLevel':
         return <HighLevelAuthorization highLevelConf={integrationConf} step={1} isInfo />
       default:
         return <></>
