@@ -1,14 +1,20 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable default-case */
 /* eslint-disable no-console */
+import { useRecoilValue } from 'recoil'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import LoaderSm from '../../Loaders/LoaderSm'
 import { addFieldMap } from '../GlobalIntegrationHelper'
 import { generateMappedField, getAllLists } from './MoosendCommonFunc'
 import MoosendFieldMap from './MoosendFieldMap'
+import { $btcbi } from '../../../GlobalStates'
+import Note from '../../Utilities/Note'
 
 function MoosendIntegLayout({ moosendConf, setMoosendConf, formFields, loading, setLoading }) {
+  const btcbi = useRecoilValue($btcbi)
+  const { isPro } = btcbi
+
   const moosendMethod = [
     { key: '1', name: __('Subscribe', 'bit-integrations') },
     { key: '0', name: __('Unsubscribe', 'bit-integrations') },
@@ -28,20 +34,13 @@ function MoosendIntegLayout({ moosendConf, setMoosendConf, formFields, loading, 
     switch (name) {
       case 'listId':
         if (value !== '') {
-          const list = newConf.default.lists.find((list) => list.ID === value)
-          const customFIelds =
-            (list.CustomFieldsDefinition &&
-              list.CustomFieldsDefinition.map((field) => ({
-                key: `custom_field_${field.ID}`,
-                label: field.Name,
-                required: field.IsRequired
-              }))) ||
-            []
           if (!newConf.basicFields) {
             newConf.basicFields = newConf.moosendFields
           }
 
-          newConf.moosendFields = [...(newConf.basicFields || []), ...(customFIelds || [])]
+          const moosendFields = isPro ? getCustomFields(newConf, value) : [...newConf.basicFields]
+
+          newConf.moosendFields = moosendFields
           newConf.field_map = generateMappedField(newConf)
         }
 
@@ -55,6 +54,9 @@ function MoosendIntegLayout({ moosendConf, setMoosendConf, formFields, loading, 
     }
     setMoosendConf({ ...newConf })
   }
+
+  const note = `<h4>${__('Custom Field Available in Pro (v2.3.1)', 'bit-integrations')}</h4>
+  <p>${__('With the release of version 2.3.1, Pro users can now take advantage of the custom field feature.', 'bit-integrations')}</p>`
 
   return (
     <div className="mt-2">
@@ -141,6 +143,8 @@ function MoosendIntegLayout({ moosendConf, setMoosendConf, formFields, loading, 
         </div>
       )}
 
+      {!isPro && <Note note={note} />}
+
       {/* --- PAGE Loader --- */}
 
       {loading.page && (
@@ -159,3 +163,15 @@ function MoosendIntegLayout({ moosendConf, setMoosendConf, formFields, loading, 
 }
 
 export default MoosendIntegLayout
+
+const getCustomFields = (newConf, listId) => {
+  const list = newConf.default.lists.find((list) => list.ID === listId)
+  const customFields =
+    list?.CustomFieldsDefinition?.map((field) => ({
+      key: `custom_field_${field.ID}`,
+      label: field.Name,
+      required: field.IsRequired
+    })) || []
+
+  return [...newConf.basicFields, ...customFields]
+}
