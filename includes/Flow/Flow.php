@@ -398,11 +398,13 @@ final class Flow
     {
         $specialTagFieldValue = [];
         foreach ($fieldMap as $value) {
-            if (isset($value->formField)) {
-                $triggerValue = $value->formField;
+            $triggerValue = $value->formField ?? $value->formFields ?? null;
+
+            if (isset($triggerValue)) {
                 $smartTagValue = SmartTags::getSmartTagValue($triggerValue, true);
+
                 if (!empty($smartTagValue)) {
-                    $specialTagFieldValue[$value->formField] = $smartTagValue;
+                    $specialTagFieldValue[$triggerValue] = $smartTagValue;
                 }
             }
         }
