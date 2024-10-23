@@ -111,6 +111,7 @@ https://youtu.be/eFuficjF_F4
 * [**SureCart**](https://wordpress.org/plugins/surecart/)
 * [**SureForms**](https://wordpress.org/plugins/sureforms/)
 * [**SureMembers**](https://suremembers.com/)
+* [**The Events Calendar**](https://wordpress.org/plugins/the-events-calendar/)
 * [**Tripetto**](https://wordpress.org/plugins/tripetto/)
 * [**Tutor LMS**](https://wordpress.org/plugins/tutor/)
 * [**Thrive Apprentice**](https://thrivethemes.com/apprentice/)
@@ -249,6 +250,7 @@ https://youtu.be/eFuficjF_F4
 * [**SuiteDash**](https://suitedash.com/)
 * [**SureMembers**](https://suremembers.com/)
 * [**SystemeIO**](https://systeme.io/home)
+* [**The Events Calendar**](https://wordpress.org/plugins/the-events-calendar/)
 * [**Telegram**](https://telegram.org/)
 * [**Thrive Automator**](https://wordpress.org/plugins/thrive-automator/)
 * [**Tutor LMS**](https://wordpress.org/plugins/tutor/)
@@ -719,6 +721,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 
 * [**SureCart**](https://bitapps.pro/docs/bit-integrations/trigger/surecart/)
 
+* [**The Events Calendar**](https://bit-integrations.com/wp-docs/trigger/the-events-calendar-integrations-as-a-trigger/)
+
 * [**Tripetto**](https://bitapps.pro/docs/bit-integrations/trigger/tripetto/)
 
 * [**Tutor LMS**](https://bitapps.pro/docs/bit-integrations/trigger/tutor-lms/)
@@ -893,6 +897,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 * [**SliceWp**](https://bitapps.pro/docs/bit-integrations/trigger/slicewp/)
 
 * [**SureCart**](https://bitapps.pro/docs/bit-integrations/trigger/surecart/)
+
+* [**The Events Calendar**](https://bit-integrations.com/wp-docs/actions/the-events-calendar-integrations-as-an-action/)
 
 * [**Telegram**](https://bitapps.pro/docs/bit-integrations/trigger/telegram/)
 
