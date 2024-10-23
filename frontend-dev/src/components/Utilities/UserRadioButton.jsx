@@ -5,16 +5,13 @@ const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser,
   const [showConfirm, setShowConfirm] = useState(null);
   const popoverRef = useRef(null); // Ref to the popover container
 
-  const handleDelete = (id, index) => {
+  const handleDelete = (id) => {
     const newAuthData = authData.filter(item => item.id !== id);
     
     bitsFetch(id, 'auth/account/delete').then((res) => {
       if (res.success) {
         setAuthData(newAuthData);
-        
-        if (selectedUser === index) {
-          setSelectedUser(null);
-        }
+        setSelectedUser(null);
       }
     });
     
@@ -77,7 +74,7 @@ const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser,
                 {showConfirm === index ? (
                   <div className="confirmation-popover" ref={popoverRef}>
                     <p>Are you sure?</p>
-                    <button className="confirm-button" onClick={() => handleDelete(user.id, index)}>Yes</button>
+                    <button className="confirm-button" onClick={() => handleDelete(user.id)}>Yes</button>
                     <button className="cancel-button" onClick={handleCancel}>No</button>
                   </div>
                 ) : (
