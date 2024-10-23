@@ -6,9 +6,10 @@
 
 namespace BitCode\FI\Actions\WooCommerce;
 
-use BitCode\FI\Log\LogHandler;
-use WC_Product_Download;
 use WP_Error;
+use WC_Product_Download;
+use BitCode\FI\Log\LogHandler;
+use BitCode\FI\Core\Util\Common;
 
 /**
  * Provide functionality for Record insert,upsert.
@@ -247,7 +248,7 @@ class RecordApiHelper
         foreach ($fieldMap as $fieldPair) {
             if (!empty($fieldPair->wcField) && !empty($fieldPair->formField)) {
                 if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
-                    $fieldData[$fieldPair->wcField] = $fieldPair->customValue;
+                    $fieldData[$fieldPair->wcField] = Common::replaceFieldWithValue($fieldPair->customValue, $fieldValues);
                 } else {
                     $fieldData[$fieldPair->wcField] = $fieldValues[$fieldPair->formField];
                 }
@@ -680,7 +681,7 @@ class RecordApiHelper
         foreach ($fieldMapLine as $fieldPair) {
             if (!empty($fieldPair->wcField) && !empty($fieldPair->formField)) {
                 if ($fieldPair->formField === 'custom' && isset($fieldPair->customValue)) {
-                    $fieldDataLineTemp[$fieldPair->wcField] = $fieldPair->customValue;
+                    $fieldDataLineTemp[$fieldPair->wcField] = Common::replaceFieldWithValue($fieldPair->customValue, $fieldValues);
                 } elseif ($FF) {
                     $fldDigit = preg_replace('/[^0-9.]+/', '', $fieldPair->formField);
                     $formFld = 'repeater_field:' . $key . '-' . $fldDigit;

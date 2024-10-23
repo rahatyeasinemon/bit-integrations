@@ -101,7 +101,7 @@ export default function ChangelogToggle() {
                   dangerouslySetInnerHTML={{
                     __html: sprintf(
                       __('Updated at:  <b>%s</b>', 'bit-integrations'),
-                      '12th October 2024'
+                      '16th October 2024'
                     )
                   }}></small>
               </div>
@@ -115,15 +115,15 @@ export default function ChangelogToggle() {
                   <li> Go High Level </li>
                 </ul>
               </div> */}
-                {/* <span className="new-feature">
+                <span className="new-integration">
                   <b>{__('New Trigger', 'bit-integrations')}</b>
                 </span>
 
                 <div className="integration-list">
                   <ul>
-                    <li> Eventin - Events Manager & Event Tickets Plugin. (Pro) </li>
+                    <li> The Events Calendar (Pro) </li>
                   </ul>
-                </div> */}
+                </div>
 
                 {/* <span className="new-integration">
                 <b>{__('New Improvements', 'bit-integrations')}</b>
@@ -134,7 +134,7 @@ export default function ChangelogToggle() {
                   <li> Custom Trigger: Introduced new improvements for modifying selected fields. </li>
                 </ul>
               </div> */}
-                <span className="new-integration">
+                {/* <span className="new-integration">
                   <b>{__('Note', 'bit-integrations')}</b>
                 </span>
 
@@ -142,15 +142,15 @@ export default function ChangelogToggle() {
                   <ul>
                     <li>The name ConvertKit has been updated to Kit (ConvertKit).</li>
                   </ul>
-                </div>
+                </div> */}
 
                 <span className="new-feature">
-                  <b>{__('New Features', 'bit-integrations')}</b>
+                  <b>{__('New Feature', 'bit-integrations')}</b>
                 </span>
 
                 <div className="feature-list">
                   <ul>
-                    <li>Eventin - New tasks added for better event management. (Pro)</li>
+                    <li>Trello: Added support for Custom Fields. (Pro)</li>
                   </ul>
                 </div>
                 <div>
