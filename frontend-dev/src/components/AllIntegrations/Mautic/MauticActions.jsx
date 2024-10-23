@@ -15,26 +15,14 @@ export default function MauticActions({ mauticConf, setMauticConf, formFields })
   const [snack, setSnackbar] = useState({ show: false })
   const actionHandler = (e, type) => {
     const newConf = { ...mauticConf }
+
     if (type === 'tag') {
-      if (e.target.checked) {
-        getAllTags(mauticConf, setMauticConf, setIsLoading, setSnackbar)
-        newConf.actions.tag = true
-        setActionMdl({ show: 'tag' })
-      } else {
-        setActionMdl({ show: false })
-        delete newConf.actions.tag
-      }
+      getAllTags(mauticConf, setMauticConf, setIsLoading, setSnackbar)
     } else if (type === 'owner') {
-      if (e.target.checked) {
-        getAllUsers(mauticConf, setMauticConf, setIsLoading, setSnackbar)
-        // newConf.actions.owner = true
-        setActionMdl({ show: 'owner' })
-      } else {
-        setActionMdl({ show: false })
-        // delete newConf.actions.owner
-      }
+      getAllUsers(mauticConf, setMauticConf, setIsLoading, setSnackbar)
     }
 
+    setActionMdl({ show: type })
     setMauticConf({ ...newConf })
   }
   const clsActionMdl = () => {
@@ -55,7 +43,7 @@ export default function MauticActions({ mauticConf, setMauticConf, formFields })
   return (
     <div className="pos-rel d-flx w-8">
       <TableCheckBox
-        checked={mauticConf.actions?.tag || false}
+        checked={mauticConf?.tag?.length > 0 || false}
         onChange={(e) => actionHandler(e, 'tag')}
         className="wdt-200 mt-4 mr-2"
         value="tag"
@@ -82,7 +70,6 @@ export default function MauticActions({ mauticConf, setMauticConf, formFields })
         title={__('Tag Records', 'bit-integrations')}>
         <div className="btcd-hr mt-2 mb-2" />
         <small>{__('Add a tag to contacts', 'bit-integrations')}</small>
-        <div className="mt-2">{__('Tag Name', 'bit-integrations')}</div>
         {isLoading ? (
           <Loader
             style={{
@@ -127,7 +114,6 @@ export default function MauticActions({ mauticConf, setMauticConf, formFields })
         title={__('Contact Owner', 'bit-integrations')}>
         <div className="btcd-hr mt-2 mb-2" />
         <small>{__('Add a owner to contacts', 'bit-integrations')}</small>
-        {/* <div className="mt-2">{__('Tag Name', 'bit-integrations')}</div> */}
         {isLoading ? (
           <Loader
             style={{
