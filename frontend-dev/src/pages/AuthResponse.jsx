@@ -7,16 +7,15 @@ export default function AuthResponse() {
   const [, setGrantToken] = useRecoilState(grantTokenAtom)
 
   useEffect(() => {
-    const hash = window.location.hash
-
-    const urlParams = new URLSearchParams(hash.split('?')[1] || hash.split('&')[1])
-
+    const urlParams = new URLSearchParams(window.location.hash)
     const code = urlParams.get('code')
 
     if (code) {
       setGrantToken(code)
 
-      window.close()
+      setTimeout(() => {
+        window.close()
+      }, 100)
     }
   }, [])
 
