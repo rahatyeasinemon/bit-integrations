@@ -2,12 +2,12 @@
 
 namespace BitCode\FI\Triggers\WC;
 
+use BitCode\FI\Core\Util\Helper;
+use BitCode\FI\Flow\Flow;
 use WC_Booking;
 use WC_Checkout;
 use WC_Product_Simple;
-use BitCode\FI\Flow\Flow;
 use WC_Subscriptions_Product;
-use BitCode\FI\Core\Util\Helper;
 
 final class WCController
 {
@@ -54,7 +54,7 @@ final class WCController
          * ['id' => 14, 'title' => __('Expired-Subscription-Product', 'bit-integrations')],
          * ['id' => 15, 'title' => __('Subscription-Product-Status-Change', 'bit-integrations')],
          * ['id' => 16, 'title' => __('Subscription-Trial-Period-End', 'bit-integrations')],
-         * 
+         *
          * Deprecated Bookings Events
          * ['id' => 18, 'title' => __('Booking-Created', 'bit-integrations')]
          */
@@ -830,7 +830,7 @@ final class WCController
             'checkout_order_received_url' => $order->get_checkout_order_received_url(),
             'customer_note'               => $order->get_customer_note()
         ];
-        if (version_compare(WC_VERSION, '8.5.1', '>=')) {
+        if (\defined('WC_VERSION') && version_compare(WC_VERSION, '8.5.1', '>=')) {
             $data += [
                 '_wc_order_attribution_referrer'           => $order->get_meta('_wc_order_attribution_referrer'),
                 '_wc_order_attribution_user_agent'         => $order->get_meta('_wc_order_attribution_user_agent'),
