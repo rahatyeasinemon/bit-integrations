@@ -34,12 +34,12 @@ export const handleCustomValue = (event, index, conftTmp, setConf) => {
   setConf({ ...newConf })
 }
 
-export const handleAuthData = (actionName, tokenDetails, userInfo, setAuthData) => {
+export const handleAuthData = async (actionName, tokenDetails, userInfo, setAuthData) => {
   const requestParams = {};
   requestParams.actionName = actionName
   requestParams.tokenDetails = tokenDetails
   requestParams.userInfo = userInfo
-  bitsFetch(requestParams, 'store/authData').then((resp) => {
+  await bitsFetch(requestParams, 'store/authData').then((resp) => {
     if (resp.success) {
       if (resp.data.data.length > 0) {
         setAuthData(resp.data.data);

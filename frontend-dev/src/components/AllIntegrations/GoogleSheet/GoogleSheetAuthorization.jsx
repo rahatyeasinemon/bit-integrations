@@ -5,7 +5,7 @@ import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import LoaderSm from '../../Loaders/LoaderSm'
 import CopyText from '../../Utilities/CopyText'
-import { handleAuthorize, refreshSpreadsheets, setGrantTokenResponse } from './GoogleSheetCommonFunc'
+import { handleAuthorize, refreshSpreadsheets, tokenHelper } from './GoogleSheetCommonFunc'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import TutorialLink from '../../Utilities/TutorialLink'
 import RadioInput from '../../Utilities/RadioInput'
@@ -74,15 +74,16 @@ export default function GoogleSheetAuthorization({
     })
   }, []);
 
+  const handleGrantToken = async (grantToken) => {
+    await tokenHelper(grantToken, sheetConf, setSheetConf, selectedAuthType, authData, setAuthData, setIsLoading, setSnackbar);
+    
+    setGrantToken(undefined)
+  }
+
   useEffect(() => {
-      if (grantToken) {
-        setGrantTokenResponse(grantToken, sheetConf, setSheetConf, selectedAuthType, authData, setAuthData, setError, setIsLoading, setSnackbar);
-      }
-      return () => {
-        if (grantToken) {
-          setGrantToken('')
-        }
-      }
+    if (!grantToken) return;
+    
+    handleGrantToken(grantToken);
   }, [grantToken]);  
 
   

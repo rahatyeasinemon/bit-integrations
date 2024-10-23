@@ -10,13 +10,10 @@ import IntegrationStepThree from '../IntegrationHelpers/IntegrationStepThree'
 import GoogleSheetAuthorization from './GoogleSheetAuthorization'
 import { handleInput, checkMappedFields } from './GoogleSheetCommonFunc'
 import GoogleSheetIntegLayout from './GoogleSheetIntegLayout'
-import { useRecoilState } from 'recoil'
-import { grantTokenAtom } from '../../../GlobalStates'
 import bitsFetch from '../../../Utils/bitsFetch'
 
 
 function GoogleSheet({ formFields, setFlow, flow, allIntegURL }) {
-  const [grantToken, setGrantToken] = useRecoilState(grantTokenAtom);
   const navigate = useNavigate()
   const { formID } = useParams()
   const [isLoading, setIsLoading] = useState(false)
@@ -52,19 +49,6 @@ function GoogleSheet({ formFields, setFlow, flow, allIntegURL }) {
     }
   }, [])
   
-
-  // popup window: called when redirected from google auth to bit-integration with code
-  useEffect(() => {
-    const hash = window.location.hash;
-    const urlParams = new URLSearchParams(hash.split('?')[1] || hash.split('&')[1])
-    const code = urlParams.get('code');
-    if (code) {
-      setGrantToken(code); 
-    }
-    if (grantToken && code) {
-      window.close()
-    }    
-  }, [])  
 
   const nextPage = () => {
     setTimeout(() => {
