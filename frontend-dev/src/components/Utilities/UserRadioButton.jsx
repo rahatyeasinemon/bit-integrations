@@ -1,16 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import bitsFetch from '../../Utils/bitsFetch';
 
 const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser, handleAuthUser, isInfo }) => {
   const [showConfirm, setShowConfirm] = useState(null);
+  const popoverRef = useRef(null); // Ref to the popover container
 
-  const handleDelete = (id) => {
+  const handleDelete = (id, index) => {
     const newAuthData = authData.filter(item => item.id !== id);
+    
     bitsFetch(id, 'auth/account/delete').then((res) => {
       if (res.success) {
         setAuthData(newAuthData);
+        
+        if (selectedUser === index) {
+          setSelectedUser(null);
+        }
       }
     });
+    
     setShowConfirm(null);
   };
 
@@ -21,6 +28,21 @@ const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser,
   const handleCancel = () => {
     setShowConfirm(null);
   };
+
+  // Listen for clicks outside the popover
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popoverRef.current && !popoverRef.current.contains(event.target)) {
+        setShowConfirm(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     if (authData.length > 0 && selectedUser === null) {
@@ -53,9 +75,9 @@ const UserRadioButton = ({ authData, setAuthData, selectedUser, setSelectedUser,
             {!isInfo && (
               <div className="delete-section">
                 {showConfirm === index ? (
-                  <div className="confirmation-popover">
+                  <div className="confirmation-popover" ref={popoverRef}>
                     <p>Are you sure?</p>
-                    <button className="confirm-button" onClick={() => handleDelete(user.id)}>Yes</button>
+                    <button className="confirm-button" onClick={() => handleDelete(user.id, index)}>Yes</button>
                     <button className="cancel-button" onClick={handleCancel}>No</button>
                   </div>
                 ) : (
