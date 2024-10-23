@@ -129,7 +129,7 @@ export default function MauticActions({ mauticConf, setMauticConf, formFields })
             <MultiSelect
               className="msl-wrp-options"
               defaultValue={mauticConf?.owner}
-              options={mauticConf.default?.users?.map((user) => ({
+              options={mauticConf?.default?.users?.map((user) => ({
                 label: user.label,
                 value: user.id.toString()
               }))}

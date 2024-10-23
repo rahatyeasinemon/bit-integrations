@@ -131,7 +131,7 @@ export const getAllUsers = (mauticConf, setMauticConf, setIsLoading, setSnackbar
           if (!newConf.default?.users) {
             newConf.default.users = {}
           }
-          newConf.default.users = result.data
+          newConf.default.users = result.data.allUsers
         }
 
         if (result.data?.tokenDetails) {

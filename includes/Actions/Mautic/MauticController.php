@@ -166,7 +166,7 @@ class MauticController
 
         if (!is_wp_error($apiResponse) && isset($apiResponse->users)) {
             foreach ($apiResponse->users as $user) {
-                $response[] = (object) [
+                $response['allUsers'][] = (object) [
                     'id'    => $user->id,
                     'label' => "{$user->firstName} {$user->lastName}"
                 ];
