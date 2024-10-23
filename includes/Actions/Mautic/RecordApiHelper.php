@@ -2,9 +2,9 @@
 
 namespace BitCode\FI\Actions\Mautic;
 
+use BitCode\FI\Log\LogHandler;
 use BitCode\FI\Core\Util\Common;
 use BitCode\FI\Core\Util\HttpHelper;
-use BitCode\FI\Log\LogHandler;
 
 class RecordApiHelper
 {
@@ -13,6 +13,8 @@ class RecordApiHelper
     private $_tokenDetails;
 
     private $_integrationID;
+
+    private $_baseUrl;
 
     public function __construct($tokenDetails, $integId, $baseUrl)
     {
@@ -50,13 +52,15 @@ class RecordApiHelper
 
     public function execute($integrationDetails, $defaultConf, $fieldValues, $fieldMap, $actions)
     {
-        $tags = [];
+        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
+
         if (property_exists($integrationDetails, 'tag')) {
-            $tags = $integrationDetails->tag;
+            $finalData['tags'] = $integrationDetails->tag;
+        }
+        if (property_exists($integrationDetails, 'owner')) {
+            $finalData['owner'] = $integrationDetails->owner;
         }
 
-        $finalData = $this->generateReqDataFromFieldMap($fieldValues, $fieldMap);
-        $finalData['tags'] = $tags;
         $apiResponse = $this->insertRecord($finalData);
 
         if (isset($apiResponse->errors)) {
