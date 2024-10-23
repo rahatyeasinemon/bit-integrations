@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.2
 Requires PHP: 7.0
-Stable tag: 2.3.0
+Stable tag: 2.3.1
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -1000,6 +1000,27 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.3.1  =
+_Release Date -23th October 2024_
+
+- **New Action :**
+  - The Events Calendar: Now supports actions for calendars and tickets for WordPress.
+
+- **New Features :**
+  - The Events Calendar: Added new task for attendee registration with WooCommerce (Pro).
+  - Moosend: Added support for custom fields (Pro).
+
+- **New Improvements :**
+  - Campaign Monitor: Added custom field value support.
+  - Mautic: Added functionality for contact owner.
+  - Telegram: Enhanced Markdown and HTML message support.
+
+- **New Fixes :**
+  - Contact Form 7: Fixed issue with empty checkbox values.
+  - Mailercloud: Resolved the blank page issue.
+  - WpForo: Resolved the blank page issue.
+  - Selzy: Resolved the blank page issue.
 
 = 2.3.0  =
 _Release Date -16th October 2024_

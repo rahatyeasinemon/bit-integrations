@@ -30,25 +30,32 @@ export default function ChangelogToggle() {
       label: __('New Actions', 'bit-integrations'),
       headClass: 'new-integration',
       itemClass: 'integration-list',
-      items: []
+      items: ['The Events Calendar']
     },
     {
       label: __('New Triggers', 'bit-integrations'),
       headClass: 'new-integration',
       itemClass: 'integration-list',
-      items: ['The Events Calendar (Pro)']
+      items: []
     },
     {
       label: __('New Features', 'bit-integrations'),
       headClass: 'new-feature',
       itemClass: 'feature-list',
-      items: ['Trello: Added support for Custom Fields. (Pro)']
+      items: [
+        'The Events Calendar: Added new task for attendee registration with WooCommerce (Pro).',
+        'Moosend: Added support for custom fields (Pro).'
+      ]
     },
     {
       label: __('New Improvements', 'bit-integrations'),
       headClass: 'new-integration',
       itemClass: 'integration-list',
-      items: []
+      items: [
+        'Campaign Monitor: Added custom field value support.',
+        'Telegram: Enhanced Markdown and HTML message support.',
+        'Mautic: Added functionality for contact owner.'
+      ]
     }
   ]
 
@@ -130,7 +137,7 @@ export default function ChangelogToggle() {
               <div className="flx flx-col flx-center whats-new">
                 <h3>{sprintf(__("What's New in %s", 'bit-integrations'), btcbi.version)}?</h3>
                 <small className="date">
-                  {__('Updated at:', 'bit-integrations')} <b>16th October 2024</b>
+                  {__('Updated at:', 'bit-integrations')} <b>23th October 2024</b>
                 </small>
               </div>
               <div className="changelog-content">
