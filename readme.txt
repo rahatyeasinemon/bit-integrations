@@ -4,7 +4,7 @@ Tags: automation,forms,integration,automator,webhooks
 Requires at least: 5.1
 Tested up to: 6.6.2
 Requires PHP: 7.0
-Stable tag: 2.3.0
+Stable tag: 2.3.1
 License: GPLv2 or later
 
 Automation Plugin for WordPress like Zapier. Integration of 80+ Triggers & 150+ Actions.The #1 highest no-code platform Automator plugin in WordPress
@@ -111,6 +111,7 @@ https://youtu.be/eFuficjF_F4
 * [**SureCart**](https://wordpress.org/plugins/surecart/)
 * [**SureForms**](https://wordpress.org/plugins/sureforms/)
 * [**SureMembers**](https://suremembers.com/)
+* [**The Events Calendar**](https://wordpress.org/plugins/the-events-calendar/)
 * [**Tripetto**](https://wordpress.org/plugins/tripetto/)
 * [**Tutor LMS**](https://wordpress.org/plugins/tutor/)
 * [**Thrive Apprentice**](https://thrivethemes.com/apprentice/)
@@ -249,6 +250,7 @@ https://youtu.be/eFuficjF_F4
 * [**SuiteDash**](https://suitedash.com/)
 * [**SureMembers**](https://suremembers.com/)
 * [**SystemeIO**](https://systeme.io/home)
+* [**The Events Calendar**](https://wordpress.org/plugins/the-events-calendar/)
 * [**Telegram**](https://telegram.org/)
 * [**Thrive Automator**](https://wordpress.org/plugins/thrive-automator/)
 * [**Tutor LMS**](https://wordpress.org/plugins/tutor/)
@@ -719,6 +721,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 
 * [**SureCart**](https://bitapps.pro/docs/bit-integrations/trigger/surecart/)
 
+* [**The Events Calendar**](https://bit-integrations.com/wp-docs/trigger/the-events-calendar-integrations-as-a-trigger/)
+
 * [**Tripetto**](https://bitapps.pro/docs/bit-integrations/trigger/tripetto/)
 
 * [**Tutor LMS**](https://bitapps.pro/docs/bit-integrations/trigger/tutor-lms/)
@@ -894,6 +898,8 @@ Please check [**Bit Integrations Pro**](https://www.bitapps.pro/bit-integrations
 
 * [**SureCart**](https://bitapps.pro/docs/bit-integrations/trigger/surecart/)
 
+* [**The Events Calendar**](https://bit-integrations.com/wp-docs/actions/the-events-calendar-integrations-as-an-action/)
+
 * [**Telegram**](https://bitapps.pro/docs/bit-integrations/trigger/telegram/)
 
 * [**Trello**](https://bitapps.pro/docs/bit-integrations/trigger/trello/)
@@ -1000,6 +1006,27 @@ Yes, It sends data to other platforms from wordpress site. Suppose someone submi
 6. All integration list
 
 == Changelog ==
+
+= 2.3.1  =
+_Release Date -23th October 2024_
+
+- **New Action :**
+  - The Events Calendar: Now supports actions for calendars and tickets for WordPress.
+
+- **New Features :**
+  - The Events Calendar: Added new task for attendee registration with WooCommerce (Pro).
+  - Moosend: Added support for custom fields (Pro).
+
+- **New Improvements :**
+  - Campaign Monitor: Added custom field value support.
+  - Mautic: Added functionality for contact owner.
+  - Telegram: Enhanced Markdown and HTML message support.
+
+- **New Fixes :**
+  - Contact Form 7: Fixed issue with empty checkbox values.
+  - Mailercloud: Resolved the blank page issue.
+  - WpForo: Resolved the blank page issue.
+  - Selzy: Resolved the blank page issue.
 
 = 2.3.0  =
 _Release Date -16th October 2024_

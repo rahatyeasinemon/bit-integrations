@@ -51,7 +51,7 @@ function MoosendFieldMap({ i, field, formFields, moosendConf, setMoosendConf }) 
 
           {/* When user select custom field */}
 
-          {field.formField === 'custom' && (
+          {field.formFields === 'custom' && (
             <TagifyInput
               onChange={(e) => handleCustomValue(e, i, moosendConf, setMoosendConf)}
               label={__('Custom Value', 'bit-integrations')}
